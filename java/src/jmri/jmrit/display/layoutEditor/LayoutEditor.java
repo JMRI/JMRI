@@ -9647,12 +9647,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private void drawHiddenLayoutTracks(Graphics2D g2) {
         g2.setColor(defaultTrackColor);
-        setTrackStrokeWidth(g2, false);
+        setTrackStrokeWidth(g2, !main);
         for (LayoutTrack tr : layoutTrackList) {
             // TrackSegments drawn seperately
             if (!(tr instanceof TrackSegment)) {
                 if (tr.isHidden()) {
-                    tr.draw(g2);
+                    tr.drawHidden(g2);
                 }
             }
         }

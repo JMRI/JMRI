@@ -8,13 +8,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -1497,64 +1494,19 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     protected void draw(Graphics2D g2) {
-        int mainlineTrackWidth = layoutEditor.getMainlineTrackWidth();
-        Rectangle2D bounds = MathUtil.inset(getBounds(), -mainlineTrackWidth, -mainlineTrackWidth);
-        if ((bounds.getWidth() > mainlineTrackWidth) && (bounds.getHeight() > mainlineTrackWidth)) {
-            // hidden, dashed & solid track segments are drawn interleaved
-            // so save and restore the previous stroke before & after drawing
-            //Stroke oldStroke = g2.getStroke();  // save previous stroke
+        setColorForTrackBlock(g2, getLayoutBlock());
+        float trackWidth = layoutEditor.setTrackStrokeWidth(g2, mainline);
 
-            BufferedImage bufferedImage = new BufferedImage(
-                    (int) bounds.getWidth(),
-                    (int) bounds.getHeight(),
-                    BufferedImage.TYPE_INT_ARGB);
-            Graphics2D gI = bufferedImage.createGraphics();
-            AffineTransform at = new AffineTransform();
-            at.translate(-bounds.getX(), -bounds.getY());
-            gI.transform(at);
-
-            Color drawingColor = setColorForTrackBlock(gI, getLayoutBlock());
-            float trackWidth = layoutEditor.setTrackStrokeWidth(gI, mainline);
-
-            int transparentColorRGB = 0xFF | (drawingColor.getRGB() ^ 0xA5A5A5);
-            Color transparentColor = new Color(transparentColorRGB);
-            gI.setColor(transparentColor);
-            gI.fill(bounds);
-
-            gI.setColor(drawingColor);
-
-            for (int pass = 0; pass < 2; pass++) {
-                if (isHidden()) {
-                    if (layoutEditor.isEditable()) {
-                        trackWidth = 1;
-                    } else {
-                        break;
-                    }
-                } else {
-                    if (isDashed()) {
-                        gI.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0));
-                    } else {
-                        gI.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-                    }
-                }
-                drawSolid(gI);
-
-                gI.setColor(transparentColor);
-                trackWidth -= 2.5F;
-                if (trackWidth < 1.F) {
-                    break;
-                }
+        if (!isHidden() || (isHidden() && layoutEditor.isEditable())) {
+            if (isHidden()) {
+                trackWidth = mainline ? 2.F : 1.F;
             }
-            int[] buf = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
-            for (int i = 0; i < buf.length; i++) {
-                if (buf[i] == transparentColorRGB) {
-                    buf[i] = 0x00000000;
-                }
+            if (isDashed()) {
+                g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0));
+            } else {
+                g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
             }
-
-            g2.drawImage(bufferedImage, null, (int) bounds.getX(), (int) bounds.getY());
-            //g2.drawImage(bufferedImage, (int) bounds.getX(), (int) bounds.getY(), null);
-            //g2.setStroke(oldStroke);    // restore previous stroke
+            drawSolid(g2);
         }
     }
 
@@ -1562,7 +1514,18 @@ public class TrackSegment extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void drawBallast(Graphics2D g2) {
+    protected void drawHidden(Graphics2D g2) {
+        float trackWidth = layoutEditor.setTrackStrokeWidth(g2, isMainline());
+        g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0));
+        drawSolid(g2);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawBallast(Graphics2D g2
+    ) {
         if (!isDashed()) {
             layoutEditor.setBallastStroke(g2, isMainline());
             drawSolid(g2);
@@ -1573,7 +1536,8 @@ public class TrackSegment extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void drawTies(Graphics2D g2) {
+    protected void drawTies(Graphics2D g2
+    ) {
         if (!isDashed()) {
             drawSolid(g2);
         }
@@ -1583,7 +1547,8 @@ public class TrackSegment extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void drawUnconnected(Graphics2D g2) {
+    protected void drawUnconnected(Graphics2D g2
+    ) {
         // TrackSegments are always connected
         // nothing to see here... move along...
     }
@@ -1900,6 +1865,7 @@ public class TrackSegment extends LayoutTrack {
         setLayoutBlock(layoutBlock);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class);
+    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class
+    );
 
 }

@@ -150,7 +150,19 @@ public abstract class LayoutTrack {
     protected abstract void draw(Graphics2D g2);
 
     /**
-     * draw routine draw track ballast
+     * draw hidden track
+     *
+     * @param g2 the graphics context
+     */
+    //protected abstract void drawHidden(Graphics2D g2);
+    //note: placeholder until I get this implemented in all sub-classes
+    //TODO: replace with abstract declaration (above)
+    protected void drawHidden(Graphics2D g2) {
+        //nothing to do here... move along...
+    }
+
+    /**
+     * draw track ballast
      *
      * @param g2 the graphics context
      */

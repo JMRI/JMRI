@@ -3396,6 +3396,7 @@ public class LayoutTurnout extends LayoutTrack {
         boolean mainlineC = isMainlineC();
         boolean mainlineD = isMainlineD();
 
+        Point2D center = getCoordsCenter();
         Point2D midPointAB = MathUtil.midPoint(pointA, pointB);
         Point2D midPointAC = MathUtil.midPoint(pointA, pointC);
         Point2D midPointAD = MathUtil.midPoint(pointA, pointD);
@@ -3451,15 +3452,6 @@ public class LayoutTurnout extends LayoutTrack {
                 layoutEditor.setBallastStroke(g2, mainlineC);
                 g2.draw(new Line2D.Double(midPointAC, pointC));
             }
-            // draw A<=+=>D
-            layoutEditor.setBallastStroke(g2, mainlineA);
-            if (mainlineA == mainlineD) {
-                g2.draw(new Line2D.Double(pointA, pointD));
-            } else {
-                g2.draw(new Line2D.Double(pointA, midPointAD));
-                layoutEditor.setBallastStroke(g2, mainlineD);
-                g2.draw(new Line2D.Double(midPointAD, pointD));
-            }
             // draw B<=+=>D
             layoutEditor.setBallastStroke(g2, mainlineB);
             if (mainlineB == mainlineD) {
@@ -3469,12 +3461,23 @@ public class LayoutTurnout extends LayoutTrack {
                 layoutEditor.setBallastStroke(g2, mainlineD);
                 g2.draw(new Line2D.Double(midPointBD, pointD));
             }
+            // draw A<=+=>D
+            layoutEditor.setBallastStroke(g2, mainlineA);
+            if (mainlineA == mainlineD) {
+                MathUtil.drawBezier(g2, pointA, center, center, pointD);
+                //g2.draw(new Line2D.Double(pointA, pointD));
+            } else {
+                g2.draw(new Line2D.Double(pointA, midPointAD));
+                layoutEditor.setBallastStroke(g2, mainlineD);
+                g2.draw(new Line2D.Double(midPointAD, pointD));
+            }
 
             if (getTurnoutType() == DOUBLE_SLIP) {
                 // draw B<=+=>C
                 layoutEditor.setBallastStroke(g2, mainlineB);
                 if (mainlineB == mainlineC) {
-                    g2.draw(new Line2D.Double(pointB, pointC));
+                    MathUtil.drawBezier(g2, pointB, center, center, pointC);
+                    //g2.draw(new Line2D.Double(pointB, pointC));
                 } else {
                     g2.draw(new Line2D.Double(pointB, midPointBC));
                     layoutEditor.setBallastStroke(g2, mainlineC);
