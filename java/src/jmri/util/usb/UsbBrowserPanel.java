@@ -448,38 +448,24 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                         UsbDevice usbDevice = node.getUsbDevice();
                         switch (rowIndex) {
                             case 0:
-                                result = "?";
                                 return usbDevice.getManufacturerString();
                             case 1:
-                                result = "?";
                                 return usbDevice.getProductString();
                             case 2:
-                                result = "?";
                                 return usbDevice.getSerialNumberString();
                             case 3:
-                                result = "????";
                                 return String.format("%04X", usbDevice.getUsbDeviceDescriptor().idVendor());
                             case 4:
-                                result = "????";
                                 return String.format("%04X", usbDevice.getUsbDeviceDescriptor().idProduct());
                             case 5:
-                                result = "??";
                                 return String.format("%02X", usbDevice.getUsbDeviceDescriptor().bDeviceClass());
                             case 6:
-                                result = "??";
                                 return String.format("%02X", usbDevice.getUsbDeviceDescriptor().bDeviceSubClass());
                             case 7:
-                                result = "?";
                                 return String.format("%d", usbDevice.getUsbDeviceDescriptor().bDeviceProtocol());
                             case 8:
-                                log.info("*: " + usbDevice.getUsbDeviceDescriptor());
-                                result = "##.##";
-                                short version = usbDevice.getUsbDeviceDescriptor().bcdDevice();
-                                byte hiVersion = (byte) (version >> 8);
-                                byte loVersion = (byte) version;
-                                return String.format("%X.%02X", hiVersion, loVersion);
+                                return String.format("%04X", usbDevice.getUsbDeviceDescriptor().bcdDevice());
                             case 9:
-                                result = "########";
                                 return USBUtil.getLocationID(usbDevice);
                             default:
                                 break;
