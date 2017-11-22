@@ -429,9 +429,9 @@ Anything you wrote that remains in lower case has not been completely internatio
 
 <a name="bundlekeysreport"></a>
 <h3>Bundle Keys Report</h3>
-<p>BundleKeysReport.py, located in the <strong>scripts</strong> (not jython) directory,
+<p><strong>BundleKeysReport.py</strong>, located in the <strong>scripts</strong> (not jython) directory,
 is used to analyse the bundle keys within a property file.  The primary function is
-to identify unused keys.  The program is run using <strong><em>PanelPro Panels >>
+to identify unused keys.  The script is run using <strong><em>PanelPro Panels >>
 Run Script...</em></strong>  The output from the script is written to the Script
 Output window.  The run time will vary based on the number of keys to be checked
 along with the position in the source hierarchy.  It will range from several to many
@@ -460,6 +460,54 @@ then scanned for the unused keys.  When one is found, the line is updated with
 actually required, the comment can be removed.  <strong>Note:</strong>  <em>If
 the source tree is managed by Git, the backups will be included in the current
 branch.  Either move the backups or don't select them when doing a commit</em>.
+
+<a name="classkeysreport"></a>
+<h3>Class Keys Report</h3>
+<p><strong>ClassKeysReport.py</strong>, located in the <strong>scripts</strong> (not jython) directory,
+is used to identify the bundle keys used by a class. The script is run using
+<strong><em>PanelPro Panels >> Run Script...</em></strong>  The output from the
+script is written to the Script Output window.</p>
+
+<p>When the script is started, a file selection dialog is displayed.  Select either
+a Java class file or a Java package directory.  If a directory is selected, all
+of the *.java files within the directory will be processed.  The Bundle.java file
+is excluded.</p>
+
+<p>For each file, the script scans for <strong>Bundle.getMessage(</strong> and 
+<strong>getString(</strong>.  The first <strong><em>word</em></strong> after the
+parenthesis is returned as the bundle key.  A word is defined as the characters
+a-z, A-Z, 0-9 and underscore.  If the first word is a Locale reference, the
+second word is returned.</p>
+
+<p>Here is a typical output line:
+<pre style="font-family: monospace;">
+   783, Search Type = Local, Key Type = Variable, Key = 'titleId', 	Text = addLogixFrame = new JmriJFrame(rbx.getString(titleId));
+</pre>
+Field List
+<ul>
+    <li>The source code line number</li>
+    <li>Search Type
+        <ul>
+            <li>Local: getString, such as rbx.getString()</li>
+            <li>Bundle: getMessage()</li>
+        </ul>
+    </li>
+    <li>Key Type
+        <ul>
+            <li>String: A <strong>word</strong> wrapped in double quotes</li>
+            <li>Variable: A plain <strong>word</strong></li>
+        </ul>
+    </li>
+    <li>The key</li>
+    <li>The source code line</li>
+</ul>
+Only the variable key types are displayed in the script output window.<br>
+<strong>Note</strong>: A key that contains non-word characters will be truncated
+and assigned the Variable key type.
+</p>
+
+<p>When the script is done scanning, it provides an option to export the <strong>entire</strong>
+key list to a CSV file.</p>
 
 <!--#include virtual="/Footer" -->
 
