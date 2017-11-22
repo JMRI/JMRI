@@ -378,7 +378,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                 UsbDevice usbDevice = (UsbDevice) userObject;
                 String fullProductName = USBUtil.getFullProductName(usbDevice);
                 if ((fullProductName == null) || fullProductName.isEmpty()) {
-                    return "" + userObject;
+                    return userObject.toString();
                 }
                 return fullProductName;
             }
@@ -457,28 +457,29 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                                 result = "?";
                                 return usbDevice.getSerialNumberString();
                             case 3:
-                                result = "0x????";
-                                return String.format("0x%04X", usbDevice.getUsbDeviceDescriptor().idVendor());
+                                result = "????";
+                                return String.format("%04X", usbDevice.getUsbDeviceDescriptor().idVendor());
                             case 4:
-                                result = "0x????";
-                                return String.format("0x%04X", usbDevice.getUsbDeviceDescriptor().idProduct());
+                                result = "????";
+                                return String.format("%04X", usbDevice.getUsbDeviceDescriptor().idProduct());
                             case 5:
-                                result = "?";
-                                return String.format("%d", usbDevice.getUsbDeviceDescriptor().bDeviceClass());
+                                result = "??";
+                                return String.format("%02X", usbDevice.getUsbDeviceDescriptor().bDeviceClass());
                             case 6:
-                                result = "?";
-                                return String.format("%d", usbDevice.getUsbDeviceDescriptor().bDeviceSubClass());
+                                result = "??";
+                                return String.format("%02X", usbDevice.getUsbDeviceDescriptor().bDeviceSubClass());
                             case 7:
                                 result = "?";
                                 return String.format("%d", usbDevice.getUsbDeviceDescriptor().bDeviceProtocol());
                             case 8:
+                                log.info("*: " + usbDevice.getUsbDeviceDescriptor());
                                 result = "##.##";
                                 short version = usbDevice.getUsbDeviceDescriptor().bcdDevice();
                                 byte hiVersion = (byte) (version >> 8);
                                 byte loVersion = (byte) version;
                                 return String.format("%X.%02X", hiVersion, loVersion);
                             case 9:
-                                result = "0x########";
+                                result = "########";
                                 return USBUtil.getLocationID(usbDevice);
                             default:
                                 break;
