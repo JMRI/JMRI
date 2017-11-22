@@ -567,7 +567,7 @@
                                     <element>SOURCEFILE</element>
                                     <limits>
                                         <limit>
-                                            <counter>METHOD</counter>
+                                            <counter>LINE</counter>
                                             <value>COVEREDCOUNT</value>
                                             <minimum>1</minimum>
                                         </limit>
