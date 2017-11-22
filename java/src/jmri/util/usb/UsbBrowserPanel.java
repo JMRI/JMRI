@@ -140,21 +140,25 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
             int w = openIcon.getIconWidth();
             int h = openIcon.getIconHeight();
 
-            // get the usb port icon
-            ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Hub.png"));
+            // setup the usb open icon
+            ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Open.jpg"));
             Image image = imageIcon.getImage(); // convert it to an image
             image = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way 
             imageIcon = new ImageIcon(image);  // convert it back to an icon
-            // use it for both the open and closed icons
             renderer.setOpenIcon(imageIcon);
-            renderer.setClosedIcon(imageIcon);
 
-            // get the usb plug icon
-            imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Plug.jpg"));
+            // setup the usb closed icon
+            imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Closed.jpg"));
             image = imageIcon.getImage(); // convert it to an image
             image = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way 
             imageIcon = new ImageIcon(image);  // convert it back to an icon
-            // use it for the leaf icon
+            renderer.setClosedIcon(imageIcon);
+
+            // get the usb leaf icon
+            imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Leaf.jpg"));
+            image = imageIcon.getImage(); // convert it to an image
+            image = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way 
+            imageIcon = new ImageIcon(image);  // convert it back to an icon
             renderer.setLeafIcon(imageIcon);
         } catch (RuntimeException e) {
             throw e;    // runtime exceptions make me throw up
@@ -175,7 +179,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
             List<UsbDevice> usbDevices = usbHub.getAttachedUsbDevices();
             for (UsbDevice usbDevice : usbDevices) {
                 UsbTreeNode node = new UsbTreeNode(usbDevice);
-                log.debug("*	Adding {} to {}, depth: {}", node, root, depth);
+                log.debug("Adding {} to {}, depth: {}", node, root, depth);
                 buildTree(node, depth + 1);
                 root.add(node);
             }
@@ -255,7 +259,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                 if (treeNode instanceof UsbTreeNode) {
                     UsbTreeNode usbTreeNode = (UsbTreeNode) treeNode;
                     UsbDevice tryUsbDevice = usbTreeNode.getUsbDevice();
-                    log.debug("* findNodeForDevice-usbTreeNode device: " + tryUsbDevice);
+                    log.debug("findNodeForDevice-usbTreeNode device: " + tryUsbDevice);
                     if ((tryUsbDevice != null) && (tryUsbDevice == usbDevice)) {
                         result = usbTreeNode;
                         break;
@@ -468,8 +472,6 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                                 result = "?";
                                 return String.format("%d", usbDevice.getUsbDeviceDescriptor().bDeviceProtocol());
                             case 8:
-                                log.info("* usbDevice: " + usbDevice);
-                                log.info("* usbDevice.getUsbDeviceDescriptor():\n" + usbDevice.getUsbDeviceDescriptor());
                                 result = "##.##";
                                 short version = usbDevice.getUsbDeviceDescriptor().bcdDevice();
                                 byte hiVersion = (byte) (version >> 8);
