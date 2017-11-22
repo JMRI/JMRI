@@ -222,15 +222,13 @@ public class ZeroConfServiceTest {
      * Test of stop method, of class ZeroConfService.
      */
     @Test
-    @Ignore("duplicate")
     public void testStop() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         Assert.assertFalse(instance.isPublished());
         instance.publish();
-/*        JUnitUtil.waitFor(() -> {
-            return instance.isPublished() == true;
-        }, "Publishing ZeroConf Service");
-        Assert.assertTrue(instance.isPublished());*/
+        // note that we don't make sure the service
+        // is actually published before calling stop,
+        // so this is different than the PublishAndStop test.
         instance.stop();
         JUnitUtil.waitFor(() -> {
             return instance.isPublished() == false;
