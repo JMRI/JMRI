@@ -36,9 +36,7 @@ public class NullAudioSource extends AbstractAudioSource {
      * @param systemName AudioSource object system name (e.g. IAS1)
      */
     public NullAudioSource(String systemName) {
-        super(systemName);
-        log.debug("New NullAudioSource: {}", systemName);
-        initialised = init();
+       this(systemName,null);
     }
 
     /**
