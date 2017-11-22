@@ -6,12 +6,53 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
+import javax.annotation.Nonnull;
 
 /**
  *
  * @author geowar
  */
-public class LayoutTrackDrawingOptions {
+public class LayoutTrackDrawingOptions implements Cloneable {
+
+    private String name;
+
+    protected LayoutTrackDrawingOptions(String name) {
+        this.name = name;
+    }
+
+    protected LayoutTrackDrawingOptions(LayoutTrackDrawingOptions ltdo) {
+        name = ltdo.getName();
+        sideBallastWidth = ltdo.getSideBallastWidth();
+        sideBallastColor = ltdo.getSideBallastColor();
+        sideTieLength = ltdo.getSideBallastWidth();
+        sideTieWidth = ltdo.getSideTieWidth();
+        sideTieColor = ltdo.getSideTieColor();
+        sideTieGap = ltdo.getSideTieGap();
+        sideRailCount = ltdo.getSideRailCount();
+        sideRailWidth = ltdo.getSideRailWidth();
+        sideRailGap = ltdo.getSideRailGap();
+        sideRailColor = ltdo.getSideRailColor();
+        sideBlockLineWidth = ltdo.getSideBlockLineWidth();
+        mainBallastWidth = ltdo.getMainBallastWidth();
+        mainBallastColor = ltdo.getMainBallastColor();
+        mainTieLength = ltdo.getMainTieLength();
+        mainTieWidth = ltdo.getMainTieWidth();
+        mainTieGap = ltdo.getMainTieGap();
+        mainTieColor = ltdo.getMainTieColor();
+        mainRailCount = ltdo.getMainRailCount();
+        mainRailWidth = ltdo.getMainRailWidth();
+        mainRailGap = ltdo.getMainRailGap();
+        mainRailColor = ltdo.getMainRailColor();
+        mainBlockLineWidth = ltdo.getMainBlockLineWidth();
+    }
+
+    protected String getName() {
+        return name;
+    }
+
+    protected void setName(String name) {
+        this.name = name;
+    }
 
     private int sideBallastWidth = 13;   // defaults to zero (off)
 
@@ -29,7 +70,7 @@ public class LayoutTrackDrawingOptions {
         return sideBallastColor;
     }
 
-    protected void setSideBallastColor(Color val) {
+    protected void setSideBallastColor(@Nonnull Color val) {
         sideBallastColor = val;
     }
 
@@ -49,7 +90,7 @@ public class LayoutTrackDrawingOptions {
         return sideTieColor;
     }
 
-    protected void setSideTieColor(Color val) {
+    protected void setSideTieColor(@Nonnull Color val) {
         sideTieColor = val;
     }
 
@@ -109,7 +150,7 @@ public class LayoutTrackDrawingOptions {
         return sideRailColor;
     }
 
-    protected void setSideRailColor(Color val) {
+    protected void setSideRailColor(@Nonnull Color val) {
         sideRailColor = val;
     }
 
@@ -139,7 +180,7 @@ public class LayoutTrackDrawingOptions {
         return mainBallastColor;
     }
 
-    protected void setMainBallastColor(Color val) {
+    protected void setMainBallastColor(@Nonnull Color val) {
         mainBallastColor = val;
     }
 
@@ -159,7 +200,7 @@ public class LayoutTrackDrawingOptions {
         return mainTieColor;
     }
 
-    protected void setMainTieColor(Color val) {
+    protected void setMainTieColor(@Nonnull Color val) {
         mainTieColor = val;
     }
 
@@ -219,7 +260,7 @@ public class LayoutTrackDrawingOptions {
         return mainRailColor;
     }
 
-    protected void setMainRailColor(Color val) {
+    protected void setMainRailColor(@Nonnull Color val) {
         mainRailColor = val;
     }
 
@@ -232,4 +273,143 @@ public class LayoutTrackDrawingOptions {
     protected void setMainBlockLineWidth(int val) {
         mainBlockLineWidth = val;
     }
+
+    // 
+    protected boolean equalsAllButName(@Nonnull LayoutTrackDrawingOptions ltdo) {
+        boolean result = true;  // assume success (optimist!)
+        if (this != ltdo) {
+            result = false; // assume failure (pessimist!)
+            if (ltdo != null) {
+                String tempName = name;
+                name = ltdo.getName();
+                result = this.equals(ltdo);
+                name = tempName;
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = true;  // assume success (optimist!)
+        if (obj != this) {
+            result = false; // assume failure (pessimist!)
+            if ((obj != null) && (getClass() == obj.getClass())) {
+                LayoutTrackDrawingOptions ltdo = (LayoutTrackDrawingOptions) obj;
+
+                do {
+                    if (!name.equals(ltdo.getName())) {
+                        break;
+                    }
+                    if (sideBallastWidth != ltdo.getSideBallastWidth()) {
+                        break;
+                    }
+                    if (!sideBallastColor.equals(ltdo.getSideBallastColor())) {
+                        break;
+                    }
+                    if (sideTieLength != ltdo.getSideTieLength()) {
+                        break;
+                    }
+                    if (!sideTieColor.equals(ltdo.getSideTieColor())) {
+                        break;
+                    }
+
+                    if (sideTieGap != ltdo.getSideTieGap()) {
+                        break;
+                    }
+                    if (sideRailCount != ltdo.getSideRailCount()) {
+                        break;
+                    }
+                    if (sideRailWidth != ltdo.getSideRailWidth()) {
+                        break;
+                    }
+                    if (sideRailGap != ltdo.getSideRailGap()) {
+                        break;
+                    }
+                    if (!sideRailColor.equals(ltdo.getSideRailColor())) {
+                        break;
+                    }
+
+                    if (sideBlockLineWidth != ltdo.getSideBlockLineWidth()) {
+                        break;
+                    }
+
+                    if (mainBallastWidth != ltdo.getMainBallastWidth()) {
+                        break;
+                    }
+                    if (!mainBallastColor.equals(ltdo.getMainBallastColor())) {
+                        break;
+                    }
+
+                    if (mainTieLength != ltdo.getMainTieLength()) {
+                        break;
+                    }
+                    if (!mainTieColor.equals(ltdo.getMainTieColor())) {
+                        break;
+                    }
+
+                    if (mainTieWidth != ltdo.getMainTieWidth()) {
+                        break;
+                    }
+                    if (mainTieGap != ltdo.getMainTieGap()) {
+                        break;
+                    }
+                    if (mainRailCount != ltdo.getMainRailCount()) {
+                        break;
+                    }
+                    if (mainRailWidth != ltdo.getMainRailWidth()) {
+                        break;
+                    }
+                    if (mainRailGap != ltdo.getMainRailGap()) {
+                        break;
+                    }
+                    if (!mainRailColor.equals(ltdo.getMainRailColor())) {
+                        break;
+                    }
+                    if (mainBlockLineWidth != ltdo.getMainBlockLineWidth()) {
+                        break;
+                    }
+                } while (false);
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Hash on the header
+     */
+    @Override
+    public int hashCode() {
+        int result = 7;
+        result = (37 * result) + (name != null ? name.hashCode() : 0);
+
+        // sideline values
+        result = (37 * result) + sideBallastWidth;
+        result = (37 * result) + (sideBallastColor == null ? 0 : sideBallastColor.hashCode());
+        result = (37 * result) + sideTieLength;
+        result = (37 * result) + (sideTieColor == null ? 0 : sideTieColor.hashCode());
+        result = (37 * result) + sideTieGap;
+        result = (37 * result) + sideRailCount;
+        result = (37 * result) + sideRailWidth;
+        result = (37 * result) + sideRailGap;
+        result = (37 * result) + (sideRailColor == null ? 0 : sideRailColor.hashCode());
+        result = (37 * result) + sideBlockLineWidth;
+
+        // mainline values
+        result = (37 * result) + mainBallastWidth;
+        result = (37 * result) + (mainBallastColor == null ? 0 : mainBallastColor.hashCode());
+        result = (37 * result) + mainTieLength;
+        result = (37 * result) + (mainTieColor == null ? 0 : mainTieColor.hashCode());
+        result = (37 * result) + mainTieWidth;
+        result = (37 * result) + mainTieGap;
+        result = (37 * result) + mainRailCount;
+        result = (37 * result) + mainRailWidth;
+        result = (37 * result) + mainRailGap;
+        result = (37 * result) + (mainRailColor == null ? 0 : mainRailColor.hashCode());
+        result = (37 * result) + mainBlockLineWidth;
+
+        return result;
+    }
+
 }

@@ -2842,10 +2842,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /*============================================*\
     |* LayoutTrackDrawingOptions accessor methods *|
     \*============================================*/
-    private LayoutTrackDrawingOptions layoutTrackDrawingOptions
-            = new LayoutTrackDrawingOptions();
+    private LayoutTrackDrawingOptions layoutTrackDrawingOptions = null;
 
     protected LayoutTrackDrawingOptions getLayoutTrackDrawingOptions() {
+        if (layoutTrackDrawingOptions == null) {
+            layoutTrackDrawingOptions = new LayoutTrackDrawingOptions(getLayoutName());
+        }
         return layoutTrackDrawingOptions;
     }
 
@@ -5196,7 +5198,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //    }
     //    return result;
     //}
-
     // this is a method to iterate over a list of lists of items
     // calling the predicate tester.test on each one
     // and return the first one that matches
@@ -5215,7 +5216,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //    }
     //    return result;
     //}
-
     private boolean checkControls(boolean useRectangles) {
         Optional<LayoutTrack> opt = layoutTrackList.stream().filter(o -> {
             LayoutTrack layoutTrack = (LayoutTrack) o;
@@ -9618,20 +9618,25 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 || (ballastColor == null)
                 || (ballastMain != needMain)) {
             //get ballast stroke width
-            if (needMain) {
-                int mainBallastWidth = layoutTrackDrawingOptions.getMainBallastWidth();
-                ballastColor = layoutTrackDrawingOptions.getMainBallastColor();
-                ballastStroke = new BasicStroke(mainBallastWidth,
-                                BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
-            } else {
-                int sideBallastWidth = layoutTrackDrawingOptions.getSideBallastWidth();
-                ballastColor = layoutTrackDrawingOptions.getSideBallastColor();
-                ballastStroke = new BasicStroke(sideBallastWidth,
-                                BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+            if (layoutTrackDrawingOptions != null) {
+                if (needMain) {
+                    int mainBallastWidth = layoutTrackDrawingOptions.getMainBallastWidth();
+                    ballastColor = layoutTrackDrawingOptions.getMainBallastColor();
+                    ballastStroke = new BasicStroke(mainBallastWidth,
+                            BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+                } else {
+                    int sideBallastWidth = layoutTrackDrawingOptions.getSideBallastWidth();
+                    ballastColor = layoutTrackDrawingOptions.getSideBallastColor();
+                    ballastStroke = new BasicStroke(sideBallastWidth,
+                            BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+                }
             }
-            g2.setColor(ballastColor);
-            g2.setStroke(ballastStroke);
-
+            if (ballastColor != null) {
+                g2.setColor(ballastColor);
+            }
+            if (ballastStroke != null) {
+                g2.setStroke(ballastStroke);
+            }
             ballastMain = needMain;
         }
         return ballastStroke;
