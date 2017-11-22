@@ -42,79 +42,68 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        mainlineTracksPanel = new javax.swing.JPanel();
-        mainBallastWidthLabel = new javax.swing.JLabel();
+        OptionsPanel = new javax.swing.JPanel();
+        ballastWidthLabel = new javax.swing.JLabel();
         mainBallastWidthSpinner = new javax.swing.JSpinner();
-        javax.swing.JLabel mainBallastColorLabel = new javax.swing.JLabel();
+        javax.swing.JLabel ballastColorLabel = new javax.swing.JLabel();
         mainBallastColorButton = new javax.swing.JButton();
-        mainTieLengthLabel = new javax.swing.JLabel();
+        tieLengthLabel = new javax.swing.JLabel();
         mainTieLengthSpinner = new javax.swing.JSpinner();
-        mainTieWidthLabel = new javax.swing.JLabel();
+        tieWidthLabel = new javax.swing.JLabel();
         mainTieWidthSpinner = new javax.swing.JSpinner();
-        mainTieGapLabel = new javax.swing.JLabel();
+        tieGapLabel = new javax.swing.JLabel();
         mainTieGapSpinner = new javax.swing.JSpinner();
-        javax.swing.JLabel mainTieColorLabel = new javax.swing.JLabel();
+        javax.swing.JLabel tieColorLabel = new javax.swing.JLabel();
         mainTieColorButton = new javax.swing.JButton();
-        mainRailCountLabel = new javax.swing.JLabel();
+        railCountLabel = new javax.swing.JLabel();
         mainRailCountSpinner = new javax.swing.JSpinner();
-        mainRailWidthLabel = new javax.swing.JLabel();
+        railWidthLabel = new javax.swing.JLabel();
         mainRailWidthSpinner = new javax.swing.JSpinner();
-        mainRailGapLabel = new javax.swing.JLabel();
+        railGapLabel = new javax.swing.JLabel();
         mainRailGapSpinner = new javax.swing.JSpinner();
-        javax.swing.JLabel mainRailColorLabel = new javax.swing.JLabel();
+        javax.swing.JLabel railColorLabel = new javax.swing.JLabel();
         mainRailColorButton = new javax.swing.JButton();
-        mainBlockLineWidthLabel = new javax.swing.JLabel();
+        blockLineWidthLabel = new javax.swing.JLabel();
         mainBlockLineSpinner = new javax.swing.JSpinner();
-        sidelineTracksPanel = new javax.swing.JPanel();
-        sideBallastWidthLabel = new javax.swing.JLabel();
-        sideBallastWidthSpinner = new javax.swing.JSpinner();
-        javax.swing.JLabel sideBallastColorLabel = new javax.swing.JLabel();
-        sideBallastColorButton = new javax.swing.JButton();
-        sideTieLengthLabel = new javax.swing.JLabel();
-        sideTieLengthSpinner = new javax.swing.JSpinner();
-        sideTieWidthLabel = new javax.swing.JLabel();
         sideTieWidthSpinner = new javax.swing.JSpinner();
-        sideTieGapLabel = new javax.swing.JLabel();
-        sideTieGapSpinner = new javax.swing.JSpinner();
-        javax.swing.JLabel sideTieColorLabel = new javax.swing.JLabel();
-        sideTieColorButton = new javax.swing.JButton();
-        sideRailCountLabel = new javax.swing.JLabel();
-        sideRailCountSpinner = new javax.swing.JSpinner();
-        sideRailWidthLabel = new javax.swing.JLabel();
-        sideRailWidthSpinner = new javax.swing.JSpinner();
-        sideRailGapLabel = new javax.swing.JLabel();
-        sideRailGapSpinner = new javax.swing.JSpinner();
-        javax.swing.JLabel sideRailColorLabel = new javax.swing.JLabel();
         sideRailColorButton = new javax.swing.JButton();
-        sideBlockLineWidthLabel = new javax.swing.JLabel();
+        sideTieGapSpinner = new javax.swing.JSpinner();
         sideBlockLineWidthSpinner = new javax.swing.JSpinner();
+        sideTieColorButton = new javax.swing.JButton();
+        sideBallastWidthSpinner = new javax.swing.JSpinner();
+        sideRailCountSpinner = new javax.swing.JSpinner();
+        sideBallastColorButton = new javax.swing.JButton();
+        sideRailWidthSpinner = new javax.swing.JSpinner();
+        sideTieLengthSpinner = new javax.swing.JSpinner();
+        sideRailGapSpinner = new javax.swing.JSpinner();
+        optionLabel = new javax.swing.JLabel();
+        sideLineLabel = new javax.swing.JLabel();
+        mainlineLabel = new javax.swing.JLabel();
         previewPanel = new javax.swing.JPanel();
         previewLayeredPane = new javax.swing.JLayeredPane();
         presetsLabel = new javax.swing.JLabel();
         presetsComboBox = new javax.swing.JComboBox<>();
         cancelButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        mainlineTracksPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mainline Tracks", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
+        OptionsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(presetsComboBox.getSelectedItem());
 
-        mainBallastWidthLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        mainBallastWidthLabel.setText("Ballast Width:");
+        ballastWidthLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        ballastWidthLabel.setText("Ballast Width:");
 
         mainBallastWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         mainBallastWidthSpinner.setToolTipText("Set the width of the mainline ballast");
-        mainBallastWidthSpinner.setValue(ltdOptions.getSideBallastWidth());
+        mainBallastWidthSpinner.setValue(ltdOptions.getMainBallastWidth());
         mainBallastWidthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
             public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
                 mainBallastWidthSpinnerVetoableChange(evt);
             }
         });
 
-        mainBallastColorLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        mainBallastColorLabel.setText("Ballast Color:");
+        ballastColorLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        ballastColorLabel.setText("Ballast Color:");
 
         mainBallastColorButton.setToolTipText("Set the color of the mainline ballast");
         mainBallastColorButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -135,41 +124,41 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             .addGap(0, 22, Short.MAX_VALUE)
         );
 
-        mainTieLengthLabel.setText("Tie Length:");
+        tieLengthLabel.setText("Tie Length:");
 
         mainTieLengthSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         mainTieLengthSpinner.setToolTipText("Set the length of the mainline ties");
-        mainTieLengthSpinner.setValue(ltdOptions.getSideTieLength());
+        mainTieLengthSpinner.setValue(ltdOptions.getMainTieLength());
         mainTieLengthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
             public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
                 mainTieLengthSpinnerVetoableChange(evt);
             }
         });
 
-        mainTieWidthLabel.setText("Tie Width:");
+        tieWidthLabel.setText("Tie Width:");
 
         mainTieWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         mainTieWidthSpinner.setToolTipText("Set the width of the mainline ties");
-        mainTieWidthSpinner.setValue(ltdOptions.getSideTieWidth());
+        mainTieWidthSpinner.setValue(ltdOptions.getMainTieWidth());
         mainTieWidthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
             public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
                 mainTieWidthSpinnerVetoableChange(evt);
             }
         });
 
-        mainTieGapLabel.setText("Tie Gap:");
+        tieGapLabel.setText("Tie Gap:");
 
         mainTieGapSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         mainTieGapSpinner.setToolTipText("Set the gap between the mainline ties");
-        mainTieGapSpinner.setValue(ltdOptions.getSideTieGap());
+        mainTieGapSpinner.setValue(ltdOptions.getMainTieGap());
         mainTieGapSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
             public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
                 mainTieGapSpinnerVetoableChange(evt);
             }
         });
 
-        mainTieColorLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        mainTieColorLabel.setText("Tie Color:");
+        tieColorLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        tieColorLabel.setText("Tie Color:");
 
         mainTieColorButton.setToolTipText("Set the color of the mainline ties");
         mainTieColorButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -190,44 +179,44 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             .addGap(0, 22, Short.MAX_VALUE)
         );
 
-        mainRailCountLabel.setText("Rail Count:");
+        railCountLabel.setText("Rail Count:");
 
         mainRailCountSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 3, 1));
         mainRailCountSpinner.setToolTipText("Select the number of mainline rails (1...3)");
         mainRailCountSpinner.setName(""); // NOI18N
-        mainRailCountSpinner.setValue(ltdOptions.getSideRailCount());
+        mainRailCountSpinner.setValue(ltdOptions.getMainRailCount());
         mainRailCountSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
             public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
                 mainRailCountSpinnerVetoableChange(evt);
             }
         });
 
-        mainRailWidthLabel.setText("Rail Width:");
+        railWidthLabel.setText("Rail Width:");
 
         mainRailWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         mainRailWidthSpinner.setToolTipText("Select the number of mainline rails (1...3)");
         mainRailWidthSpinner.setName(""); // NOI18N
-        mainRailWidthSpinner.setValue(ltdOptions.getSideRailWidth());
+        mainRailWidthSpinner.setValue(ltdOptions.getMainRailWidth());
         mainRailWidthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
             public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
                 mainRailWidthSpinnerVetoableChange(evt);
             }
         });
 
-        mainRailGapLabel.setText("Rail Gap:");
+        railGapLabel.setText("Rail Gap:");
 
         mainRailGapSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         mainRailGapSpinner.setToolTipText("Select the gap between the mainline rails");
         mainRailGapSpinner.setName(""); // NOI18N
-        mainRailGapSpinner.setValue(ltdOptions.getSideRailGap());
+        mainRailGapSpinner.setValue(ltdOptions.getMainRailGap());
         mainRailGapSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
             public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
                 mainRailGapSpinnerVetoableChange(evt);
             }
         });
 
-        mainRailColorLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        mainRailColorLabel.setText("Rail Color:");
+        railColorLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        railColorLabel.setText("Rail Color:");
 
         mainRailColorButton.setToolTipText("Set the color of the mainline ties");
         mainRailColorButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -248,159 +237,17 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             .addGap(0, 22, Short.MAX_VALUE)
         );
 
-        mainBlockLineWidthLabel.setText("Block Line Width:");
+        blockLineWidthLabel.setText("Block Line Width:");
 
         mainBlockLineSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         mainBlockLineSpinner.setToolTipText("Select the gap between the mainline rails");
         mainBlockLineSpinner.setName(""); // NOI18N
-        mainBlockLineSpinner.setValue(ltdOptions.getSideRailGap());
+        mainBlockLineSpinner.setValue(ltdOptions.getMainRailGap());
         mainBlockLineSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
             public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
                 mainBlockLineSpinnerVetoableChange(evt);
             }
         });
-
-        javax.swing.GroupLayout mainlineTracksPanelLayout = new javax.swing.GroupLayout(mainlineTracksPanel);
-        mainlineTracksPanel.setLayout(mainlineTracksPanelLayout);
-        mainlineTracksPanelLayout.setHorizontalGroup(
-            mainlineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainlineTracksPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(mainlineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mainTieGapLabel)
-                    .addComponent(mainRailWidthLabel)
-                    .addComponent(mainTieLengthLabel)
-                    .addComponent(mainTieColorLabel)
-                    .addComponent(mainBallastWidthLabel)
-                    .addComponent(mainRailGapLabel)
-                    .addComponent(mainTieWidthLabel)
-                    .addComponent(mainRailCountLabel)
-                    .addComponent(mainBlockLineWidthLabel)
-                    .addComponent(mainBallastColorLabel)
-                    .addComponent(mainRailColorLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
-                .addGroup(mainlineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mainTieWidthSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(mainRailCountSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(mainBlockLineSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(mainRailWidthSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(mainTieLengthSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(mainRailColorButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mainTieGapSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(mainTieColorButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mainRailGapSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(mainBallastColorButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mainBallastWidthSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
-        mainlineTracksPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {mainBallastColorLabel, mainBallastWidthLabel, mainBlockLineWidthLabel, mainRailColorLabel, mainRailCountLabel, mainRailGapLabel, mainRailWidthLabel, mainTieColorLabel, mainTieGapLabel, mainTieLengthLabel, mainTieWidthLabel});
-
-        mainlineTracksPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {mainBallastColorButton, mainBallastWidthSpinner, mainBlockLineSpinner, mainRailColorButton, mainRailCountSpinner, mainRailGapSpinner, mainRailWidthSpinner, mainTieColorButton, mainTieGapSpinner, mainTieLengthSpinner, mainTieWidthSpinner});
-
-        mainlineTracksPanelLayout.setVerticalGroup(
-            mainlineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainlineTracksPanelLayout.createSequentialGroup()
-                .addGroup(mainlineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainlineTracksPanelLayout.createSequentialGroup()
-                        .addComponent(mainBallastWidthLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainBallastColorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainTieLengthLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainTieWidthLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainTieGapLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainTieColorLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainRailCountLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(mainRailWidthLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainRailGapLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainRailColorLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainBlockLineWidthLabel))
-                    .addGroup(mainlineTracksPanelLayout.createSequentialGroup()
-                        .addComponent(mainBallastWidthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainBallastColorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainTieLengthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainTieWidthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(mainlineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(mainTieGapSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(mainlineTracksPanelLayout.createSequentialGroup()
-                                .addGap(32, 32, 32)
-                                .addComponent(mainTieColorButton)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainRailCountSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(mainRailWidthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainRailGapSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainRailColorButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mainBlockLineSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(12, Short.MAX_VALUE))
-        );
-
-        mainlineTracksPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {mainBallastColorButton, mainBallastColorLabel, mainBallastWidthLabel, mainBallastWidthSpinner, mainBlockLineSpinner, mainBlockLineWidthLabel, mainRailColorButton, mainRailColorLabel, mainRailCountLabel, mainRailCountSpinner, mainRailGapLabel, mainRailGapSpinner, mainRailWidthLabel, mainRailWidthSpinner, mainTieColorButton, mainTieColorLabel, mainTieGapLabel, mainTieGapSpinner, mainTieLengthLabel, mainTieLengthSpinner, mainTieWidthLabel, mainTieWidthSpinner});
-
-        sidelineTracksPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sideline Tracks", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
-
-        sideBallastWidthLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        sideBallastWidthLabel.setText("Ballast Width:");
-
-        sideBallastWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        sideBallastWidthSpinner.setToolTipText("Set the width of the sideline ballast");
-        sideBallastWidthSpinner.setValue(ltdOptions.getSideBallastWidth());
-        sideBallastWidthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                sideBallastWidthSpinnerVetoableChange(evt);
-            }
-        });
-
-        sideBallastColorLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        sideBallastColorLabel.setText("Ballast Color:");
-
-        sideBallastColorButton.setToolTipText("Set the color of the sideline ballast");
-        sideBallastColorButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        sideBallastColorButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                sideBallastColorButtonMouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout sideBallastColorButtonLayout = new javax.swing.GroupLayout(sideBallastColorButton);
-        sideBallastColorButton.setLayout(sideBallastColorButtonLayout);
-        sideBallastColorButtonLayout.setHorizontalGroup(
-            sideBallastColorButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 60, Short.MAX_VALUE)
-        );
-        sideBallastColorButtonLayout.setVerticalGroup(
-            sideBallastColorButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-
-        sideTieLengthLabel.setText("Tie Length:");
-
-        sideTieLengthSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        sideTieLengthSpinner.setToolTipText("Set the length of the sideline ties");
-        sideTieLengthSpinner.setValue(ltdOptions.getSideTieLength());
-        sideTieLengthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                sideTieLengthSpinnerVetoableChange(evt);
-            }
-        });
-
-        sideTieWidthLabel.setText("Tie Width:");
 
         sideTieWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         sideTieWidthSpinner.setToolTipText("Set the width of the sideline ties");
@@ -410,78 +257,6 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
                 sideTieWidthSpinnerVetoableChange(evt);
             }
         });
-
-        sideTieGapLabel.setText("Tie Gap:");
-
-        sideTieGapSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        sideTieGapSpinner.setToolTipText("Set the gap between the sideline ties");
-        sideTieGapSpinner.setValue(ltdOptions.getSideTieGap());
-        sideTieGapSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                sideTieGapSpinnerVetoableChange(evt);
-            }
-        });
-
-        sideTieColorLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        sideTieColorLabel.setText("Tie Color:");
-
-        sideTieColorButton.setToolTipText("Set the color of the sideline ties");
-        sideTieColorButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        sideTieColorButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                mainRailColorButtonMouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout sideTieColorButtonLayout = new javax.swing.GroupLayout(sideTieColorButton);
-        sideTieColorButton.setLayout(sideTieColorButtonLayout);
-        sideTieColorButtonLayout.setHorizontalGroup(
-            sideTieColorButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 60, Short.MAX_VALUE)
-        );
-        sideTieColorButtonLayout.setVerticalGroup(
-            sideTieColorButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-
-        sideRailCountLabel.setText("Rail Count:");
-
-        sideRailCountSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 3, 1));
-        sideRailCountSpinner.setToolTipText("Select the number of sideline rails (1...3)");
-        sideRailCountSpinner.setName(""); // NOI18N
-        sideRailCountSpinner.setValue(ltdOptions.getSideRailCount());
-        sideRailCountSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                sideRailCountSpinnerVetoableChange(evt);
-            }
-        });
-
-        sideRailWidthLabel.setText("Rail Width:");
-
-        sideRailWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        sideRailWidthSpinner.setToolTipText("Select the width of the sideline rails");
-        sideRailWidthSpinner.setName(""); // NOI18N
-        sideRailWidthSpinner.setValue(ltdOptions.getSideRailWidth());
-        sideRailWidthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                sideRailWidthSpinnerVetoableChange(evt);
-            }
-        });
-
-        sideRailGapLabel.setText("Rail Gap:");
-
-        sideRailGapSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        sideRailGapSpinner.setToolTipText("Select the gap between the sideline rails");
-        sideRailGapSpinner.setName(""); // NOI18N
-        sideRailGapSpinner.setValue(ltdOptions.getSideRailGap());
-        sideRailGapSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                sideRailGapSpinnerVetoableChange(evt);
-            }
-        });
-
-        sideRailColorLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        sideRailColorLabel.setText("Rail Color:");
 
         sideRailColorButton.setToolTipText("Set the color of the sideline ties");
         sideRailColorButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -502,7 +277,14 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             .addGap(0, 22, Short.MAX_VALUE)
         );
 
-        sideBlockLineWidthLabel.setText("Block Line Width:");
+        sideTieGapSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        sideTieGapSpinner.setToolTipText("Set the gap between the sideline ties");
+        sideTieGapSpinner.setValue(ltdOptions.getSideTieGap());
+        sideTieGapSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
+            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
+                sideTieGapSpinnerVetoableChange(evt);
+            }
+        });
 
         sideBlockLineWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         sideBlockLineWidthSpinner.setToolTipText("Select the gap between the sideline rails");
@@ -514,28 +296,136 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             }
         });
 
-        javax.swing.GroupLayout sidelineTracksPanelLayout = new javax.swing.GroupLayout(sidelineTracksPanel);
-        sidelineTracksPanel.setLayout(sidelineTracksPanelLayout);
-        sidelineTracksPanelLayout.setHorizontalGroup(
-            sidelineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sidelineTracksPanelLayout.createSequentialGroup()
+        sideTieColorButton.setToolTipText("Set the color of the sideline ties");
+        sideTieColorButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        sideTieColorButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mainRailColorButtonMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout sideTieColorButtonLayout = new javax.swing.GroupLayout(sideTieColorButton);
+        sideTieColorButton.setLayout(sideTieColorButtonLayout);
+        sideTieColorButtonLayout.setHorizontalGroup(
+            sideTieColorButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 60, Short.MAX_VALUE)
+        );
+        sideTieColorButtonLayout.setVerticalGroup(
+            sideTieColorButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 22, Short.MAX_VALUE)
+        );
+
+        sideBallastWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        sideBallastWidthSpinner.setToolTipText("Set the width of the sideline ballast");
+        sideBallastWidthSpinner.setValue(ltdOptions.getSideBallastWidth());
+        sideBallastWidthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
+            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
+                sideBallastWidthSpinnerVetoableChange(evt);
+            }
+        });
+
+        sideRailCountSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 3, 1));
+        sideRailCountSpinner.setToolTipText("Select the number of sideline rails (1...3)");
+        sideRailCountSpinner.setName(""); // NOI18N
+        sideRailCountSpinner.setValue(ltdOptions.getSideRailCount());
+        sideRailCountSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
+            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
+                sideRailCountSpinnerVetoableChange(evt);
+            }
+        });
+
+        sideBallastColorButton.setToolTipText("Set the color of the sideline ballast");
+        sideBallastColorButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        sideBallastColorButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sideBallastColorButtonMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout sideBallastColorButtonLayout = new javax.swing.GroupLayout(sideBallastColorButton);
+        sideBallastColorButton.setLayout(sideBallastColorButtonLayout);
+        sideBallastColorButtonLayout.setHorizontalGroup(
+            sideBallastColorButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 60, Short.MAX_VALUE)
+        );
+        sideBallastColorButtonLayout.setVerticalGroup(
+            sideBallastColorButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 22, Short.MAX_VALUE)
+        );
+
+        sideRailWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        sideRailWidthSpinner.setToolTipText("Select the width of the sideline rails");
+        sideRailWidthSpinner.setName(""); // NOI18N
+        sideRailWidthSpinner.setValue(ltdOptions.getSideRailWidth());
+        sideRailWidthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
+            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
+                sideRailWidthSpinnerVetoableChange(evt);
+            }
+        });
+
+        sideTieLengthSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        sideTieLengthSpinner.setToolTipText("Set the length of the sideline ties");
+        sideTieLengthSpinner.setValue(ltdOptions.getSideTieLength());
+        sideTieLengthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
+            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
+                sideTieLengthSpinnerVetoableChange(evt);
+            }
+        });
+
+        sideRailGapSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        sideRailGapSpinner.setToolTipText("Select the gap between the sideline rails");
+        sideRailGapSpinner.setName(""); // NOI18N
+        sideRailGapSpinner.setValue(ltdOptions.getSideRailGap());
+        sideRailGapSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
+            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
+                sideRailGapSpinnerVetoableChange(evt);
+            }
+        });
+
+        optionLabel.setText("Option");
+
+        sideLineLabel.setText("Sideline");
+
+        mainlineLabel.setText("Mainline");
+
+        javax.swing.GroupLayout OptionsPanelLayout = new javax.swing.GroupLayout(OptionsPanel);
+        OptionsPanel.setLayout(OptionsPanelLayout);
+        OptionsPanelLayout.setHorizontalGroup(
+            OptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(OptionsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(sidelineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(sidelineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(sideTieWidthLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(sideTieGapLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(sideBallastWidthLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(sideBallastColorLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(sideRailCountLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(sideTieLengthLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(sideTieColorLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(sideRailWidthLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(sideRailGapLabel, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addComponent(sideRailColorLabel)
-                    .addComponent(sideBlockLineWidthLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                .addGroup(sidelineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(sidelineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(OptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tieGapLabel)
+                    .addComponent(railWidthLabel)
+                    .addComponent(tieLengthLabel)
+                    .addComponent(tieColorLabel)
+                    .addComponent(railGapLabel)
+                    .addComponent(tieWidthLabel)
+                    .addComponent(railCountLabel)
+                    .addComponent(blockLineWidthLabel)
+                    .addComponent(ballastColorLabel)
+                    .addComponent(railColorLabel)
+                    .addComponent(optionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ballastWidthLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(OptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(OptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(mainTieWidthSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(mainRailCountSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(mainBlockLineSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(mainRailWidthSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(mainTieLengthSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(mainRailColorButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(mainTieGapSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(mainTieColorButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(mainRailGapSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(mainBallastColorButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(mainBallastWidthSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(mainlineLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(OptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sideLineLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, OptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(sideRailWidthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(sideRailGapSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(sideTieLengthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -544,67 +434,107 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
                         .addComponent(sideTieGapSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(sideRailCountSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(sideBallastColorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(sideRailColorButton)
-                    .addComponent(sideBlockLineWidthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sideBallastWidthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
-        sidelineTracksPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {sideBallastColorLabel, sideBallastWidthLabel, sideRailColorLabel, sideRailCountLabel, sideRailGapLabel, sideRailWidthLabel, sideTieColorLabel, sideTieGapLabel, sideTieLengthLabel, sideTieWidthLabel});
-
-        sidelineTracksPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {sideBallastColorButton, sideBallastWidthSpinner, sideBlockLineWidthSpinner, sideRailColorButton, sideRailCountSpinner, sideRailGapSpinner, sideRailWidthSpinner, sideTieColorButton, sideTieGapSpinner, sideTieLengthSpinner, sideTieWidthSpinner});
-
-        sidelineTracksPanelLayout.setVerticalGroup(
-            sidelineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sidelineTracksPanelLayout.createSequentialGroup()
-                .addGroup(sidelineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sideBallastWidthLabel)
-                    .addComponent(sideBallastWidthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(sidelineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(sideBallastColorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(sideBallastColorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(sidelineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sideTieLengthLabel)
-                    .addComponent(sideTieLengthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(sidelineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sideTieWidthLabel)
-                    .addComponent(sideTieWidthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(sidelineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sideTieGapSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(sidelineTracksPanelLayout.createSequentialGroup()
-                        .addComponent(sideTieGapLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(sidelineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(sideTieColorLabel)
-                            .addComponent(sideTieColorButton))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(sidelineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sideRailCountLabel)
-                    .addComponent(sideRailCountSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(sidelineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sideRailWidthLabel)
-                    .addComponent(sideRailWidthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(sidelineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sideRailGapLabel)
-                    .addComponent(sideRailGapSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(sidelineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sideRailColorLabel)
-                    .addComponent(sideRailColorButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(sidelineTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sideBlockLineWidthLabel)
-                    .addComponent(sideBlockLineWidthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sideRailColorButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(sideBlockLineWidthSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sideBallastWidthSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        sidelineTracksPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {sideBallastColorButton, sideBallastColorLabel, sideBallastWidthLabel, sideBallastWidthSpinner, sideBlockLineWidthLabel, sideBlockLineWidthSpinner, sideRailColorButton, sideRailColorLabel, sideRailCountLabel, sideRailCountSpinner, sideRailGapLabel, sideRailGapSpinner, sideRailWidthLabel, sideRailWidthSpinner, sideTieColorButton, sideTieColorLabel, sideTieGapLabel, sideTieGapSpinner, sideTieLengthLabel, sideTieLengthSpinner, sideTieWidthLabel, sideTieWidthSpinner});
+        OptionsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {sideBallastColorButton, sideBallastWidthSpinner, sideBlockLineWidthSpinner, sideLineLabel, sideRailColorButton, sideRailCountSpinner, sideRailGapSpinner, sideRailWidthSpinner, sideTieColorButton, sideTieGapSpinner, sideTieLengthSpinner, sideTieWidthSpinner});
+
+        OptionsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {ballastColorLabel, ballastWidthLabel, blockLineWidthLabel, optionLabel, railColorLabel, railCountLabel, railGapLabel, railWidthLabel, tieColorLabel, tieGapLabel, tieLengthLabel, tieWidthLabel});
+
+        OptionsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {mainBallastColorButton, mainBallastWidthSpinner, mainBlockLineSpinner, mainRailColorButton, mainRailCountSpinner, mainRailGapSpinner, mainRailWidthSpinner, mainTieColorButton, mainTieGapSpinner, mainTieLengthSpinner, mainTieWidthSpinner, mainlineLabel});
+
+        OptionsPanelLayout.setVerticalGroup(
+            OptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(OptionsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(OptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(OptionsPanelLayout.createSequentialGroup()
+                        .addComponent(mainlineLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mainBallastWidthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mainBallastColorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mainTieLengthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mainTieWidthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(OptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(mainTieGapSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(OptionsPanelLayout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addComponent(mainTieColorButton)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mainRailCountSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(mainRailWidthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mainRailGapSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mainRailColorButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mainBlockLineSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(OptionsPanelLayout.createSequentialGroup()
+                        .addGroup(OptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(sideLineLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(optionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(OptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(OptionsPanelLayout.createSequentialGroup()
+                                .addComponent(ballastWidthLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ballastColorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tieLengthLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tieWidthLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tieGapLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tieColorLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(railCountLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(railWidthLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(railGapLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(railColorLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(blockLineWidthLabel))
+                            .addGroup(OptionsPanelLayout.createSequentialGroup()
+                                .addComponent(sideBallastWidthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sideBallastColorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sideTieLengthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sideTieWidthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(OptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(sideTieGapSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(OptionsPanelLayout.createSequentialGroup()
+                                        .addGap(32, 32, 32)
+                                        .addComponent(sideTieColorButton)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sideRailCountSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(sideRailWidthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sideRailGapSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sideRailColorButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sideBlockLineWidthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        OptionsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {sideBallastColorButton, sideBallastWidthSpinner, sideBlockLineWidthSpinner, sideLineLabel, sideRailColorButton, sideRailCountSpinner, sideRailGapSpinner, sideRailWidthSpinner, sideTieColorButton, sideTieGapSpinner, sideTieLengthSpinner, sideTieWidthSpinner});
+
+        OptionsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {ballastColorLabel, ballastWidthLabel, blockLineWidthLabel, mainBallastColorButton, mainBallastWidthSpinner, mainBlockLineSpinner, mainRailColorButton, mainRailCountSpinner, mainRailGapSpinner, mainRailWidthSpinner, mainTieColorButton, mainTieGapSpinner, mainTieLengthSpinner, mainTieWidthSpinner, mainlineLabel, railColorLabel, railCountLabel, railGapLabel, railWidthLabel, tieColorLabel, tieGapLabel, tieLengthLabel, tieWidthLabel});
 
         previewPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Preview"));
 
@@ -616,7 +546,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         );
         previewLayeredPaneLayout.setVerticalGroup(
             previewLayeredPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
+            .addGap(0, 116, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout previewPanelLayout = new javax.swing.GroupLayout(previewPanel);
@@ -631,6 +561,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         previewPanelLayout.setVerticalGroup(
             previewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, previewPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(previewLayeredPane)
                 .addContainerGap())
         );
@@ -659,55 +590,33 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(previewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(mainlineTracksPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(sidelineTracksPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(presetsLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(presetsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cancelButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(okButton)))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(previewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(presetsLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(presetsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cancelButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(okButton))))
+                    .addComponent(OptionsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addComponent(jScrollPane1)
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {mainlineTracksPanel, sidelineTracksPanel});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mainlineTracksPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sidelineTracksPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(78, 78, 78)
-                .addComponent(previewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(OptionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(previewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(presetsLabel)
@@ -716,8 +625,6 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
                     .addComponent(okButton))
                 .addContainerGap())
         );
-
-        sidelineTracksPanel.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -733,6 +640,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
     private void presetsComboBoxActionPerformed(ActionEvent evt) {//GEN-FIRST:event_presetsComboBoxActionPerformed
         log.info("presetsComboBoxActionPerformed({}", evt);
+        OptionsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(presetsComboBox.getSelectedItem());
     }//GEN-LAST:event_presetsComboBoxActionPerformed
 
     private void cancelButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -840,9 +748,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         // TODO add your handling code here:
     }
 
-    private void sideBlockLineWidthSpinnerVetoableChange(PropertyChangeEvent evt)throws java.beans.PropertyVetoException {                                                         
+    private void sideBlockLineWidthSpinnerVetoableChange(PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
         // TODO add your handling code here:
-    }                                                        
+    }
 
     private void demoButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_demoButtonActionPerformed
         // TODO add your handling code here:
@@ -909,55 +817,47 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     }//GEN-LAST:event_mainBlockLineSpinnerVetoableChange
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel OptionsPanel;
+    private javax.swing.JLabel ballastWidthLabel;
+    private javax.swing.JLabel blockLineWidthLabel;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton mainBallastColorButton;
-    private javax.swing.JLabel mainBallastWidthLabel;
     private javax.swing.JSpinner mainBallastWidthSpinner;
     private javax.swing.JSpinner mainBlockLineSpinner;
-    private javax.swing.JLabel mainBlockLineWidthLabel;
     private javax.swing.JButton mainRailColorButton;
-    private javax.swing.JLabel mainRailCountLabel;
     private javax.swing.JSpinner mainRailCountSpinner;
-    private javax.swing.JLabel mainRailGapLabel;
     private javax.swing.JSpinner mainRailGapSpinner;
-    private javax.swing.JLabel mainRailWidthLabel;
     private javax.swing.JSpinner mainRailWidthSpinner;
     private javax.swing.JButton mainTieColorButton;
-    private javax.swing.JLabel mainTieGapLabel;
     private javax.swing.JSpinner mainTieGapSpinner;
-    private javax.swing.JLabel mainTieLengthLabel;
     private javax.swing.JSpinner mainTieLengthSpinner;
-    private javax.swing.JLabel mainTieWidthLabel;
     private javax.swing.JSpinner mainTieWidthSpinner;
-    private javax.swing.JPanel mainlineTracksPanel;
+    private javax.swing.JLabel mainlineLabel;
     private javax.swing.JButton okButton;
+    private javax.swing.JLabel optionLabel;
     private javax.swing.JComboBox<String> presetsComboBox;
     private javax.swing.JLabel presetsLabel;
     private javax.swing.JLayeredPane previewLayeredPane;
     private javax.swing.JPanel previewPanel;
+    private javax.swing.JLabel railCountLabel;
+    private javax.swing.JLabel railGapLabel;
+    private javax.swing.JLabel railWidthLabel;
     private javax.swing.JButton sideBallastColorButton;
-    private javax.swing.JLabel sideBallastWidthLabel;
     private javax.swing.JSpinner sideBallastWidthSpinner;
-    private javax.swing.JLabel sideBlockLineWidthLabel;
     private javax.swing.JSpinner sideBlockLineWidthSpinner;
+    private javax.swing.JLabel sideLineLabel;
     private javax.swing.JButton sideRailColorButton;
-    private javax.swing.JLabel sideRailCountLabel;
     private javax.swing.JSpinner sideRailCountSpinner;
-    private javax.swing.JLabel sideRailGapLabel;
     private javax.swing.JSpinner sideRailGapSpinner;
-    private javax.swing.JLabel sideRailWidthLabel;
     private javax.swing.JSpinner sideRailWidthSpinner;
     private javax.swing.JButton sideTieColorButton;
-    private javax.swing.JLabel sideTieGapLabel;
     private javax.swing.JSpinner sideTieGapSpinner;
-    private javax.swing.JLabel sideTieLengthLabel;
     private javax.swing.JSpinner sideTieLengthSpinner;
-    private javax.swing.JLabel sideTieWidthLabel;
     private javax.swing.JSpinner sideTieWidthSpinner;
-    private javax.swing.JPanel sidelineTracksPanel;
+    private javax.swing.JLabel tieGapLabel;
+    private javax.swing.JLabel tieLengthLabel;
+    private javax.swing.JLabel tieWidthLabel;
     // End of variables declaration//GEN-END:variables
 
     /*====================*\
