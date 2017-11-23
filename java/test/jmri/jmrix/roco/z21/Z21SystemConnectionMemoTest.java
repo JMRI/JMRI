@@ -67,7 +67,8 @@ public class Z21SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
         JUnitUtil.setUp();
         Z21InterfaceScaffold tc = new Z21InterfaceScaffold();
         Z21SystemConnectionMemo memo = new Z21SystemConnectionMemo();
-        memo.setTrafficController(tc);  
+        memo.setTrafficController(tc);
+        memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
         scm = memo;
     }
 
