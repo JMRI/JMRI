@@ -479,7 +479,7 @@ parenthesis is returned as the bundle key.  A word is defined as the characters
 a-z, A-Z, 0-9 and underscore.  If the first word is a Locale reference, the
 second word is returned.</p>
 
-<p>Here is a typical output line:
+<p>Here is a typical output line:</p>
 <pre style="font-family: monospace;">
    783, Search Type = Local, Key Type = Variable, Key = 'titleId', 	Text = addLogixFrame = new JmriJFrame(rbx.getString(titleId));
 </pre>
@@ -501,7 +501,7 @@ Field List
     <li>The key</li>
     <li>The source code line</li>
 </ul>
-Only the variable key types are displayed in the script output window.<br>
+<p>Only the variable key types are displayed in the script output window.<br>
 <strong>Note</strong>: A key that contains non-word characters will be truncated
 and assigned the Variable key type.
 </p>
