@@ -1,4 +1,4 @@
-package jmri.jmrix.dccpp;
+package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -10,17 +10,18 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterTestBase{
+public class Z21MultiMeterTest extends jmri.implementation.AbstractMultiMeterTestBase{
 
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
-        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
-
-        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
-        mm = new DCCppMultiMeter(memo);
+        Z21InterfaceScaffold tc = new Z21InterfaceScaffold();
+        Z21SystemConnectionMemo memo = new Z21SystemConnectionMemo();
+        memo.setTrafficController(tc);  
+        memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
+        mm = new Z21MultiMeter(memo);
     }
 
     @After
