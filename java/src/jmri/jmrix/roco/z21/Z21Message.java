@@ -224,6 +224,17 @@ public class Z21Message extends AbstractMRMessage {
         return retval;
     }
 
+    /**
+     * @return z21 message for LAN_SYSTEMSTATE_GETDATA
+     */
+    public static Z21Message getLanSystemStateDataChangedRequestMessage(){
+        Z21Message retval = new Z21Message(4);
+        retval.setElement(0, 0x04);
+        retval.setElement(1, 0x00);
+        retval.setElement(2, 0x85);
+        retval.setElement(3, 0x00);
+        return retval;
+    }
 
     public String toMonitorString() {
         switch(getOpCode()){
