@@ -20,6 +20,7 @@ public class Z21MultiMeterTest extends jmri.implementation.AbstractMultiMeterTes
         Z21InterfaceScaffold tc = new Z21InterfaceScaffold();
         Z21SystemConnectionMemo memo = new Z21SystemConnectionMemo();
         memo.setTrafficController(tc);  
+        memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
         mm = new Z21MultiMeter(memo);
     }
 
