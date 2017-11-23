@@ -15,6 +15,7 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrack;
+import jmri.jmrit.display.layoutEditor.LayoutTrackDrawingOptions;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import jmri.jmrit.display.layoutEditor.LevelXing;
@@ -105,6 +106,17 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         p.resetDirty();
         panel.setAttribute("openDispatcher", p.getOpenDispatcherOnLoad() ? "yes" : "no");
         panel.setAttribute("useDirectTurnoutControl", p.getDirectTurnoutControl() ? "yes" : "no");
+
+        // store layout track drawing options
+        try {
+            LayoutTrackDrawingOptions ltdo = p.getLayoutTrackDrawingOptions();
+            Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(ltdo);
+            if (e != null) {
+                panel.addContent(e);
+            }
+        } catch (Exception e) {
+            log.error("Error storing contents element: " + e);
+        }
 
         // note: moving zoom attribute into per-window user preference
         //panel.setAttribute("zoom", Double.toString(p.getZoom()));

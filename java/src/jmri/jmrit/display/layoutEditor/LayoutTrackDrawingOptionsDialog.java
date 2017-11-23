@@ -8,7 +8,6 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -23,121 +22,32 @@ import org.slf4j.LoggerFactory;
  */
 public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
+    private final LayoutEditor layoutEditor;
+    private final LayoutTrackDrawingOptions leLTDOptions;
     private LayoutTrackDrawingOptions ltdOptions = null;
+
+    private String classicPresetName = Bundle.getMessage("ClassicPresetName");
+    private String draftingPresetName = Bundle.getMessage("DraftingPresetName");
+    private String realisticPresetName = Bundle.getMessage("RealisticPresetName");
+    private String garishPresetName = Bundle.getMessage("GarishPresetName");
+    private String customPresetName = Bundle.getMessage("CustomPresetName");
 
     private final List<LayoutTrackDrawingOptions> ltdoList = new ArrayList<>();
 
     /**
      * Creates new form LayoutTrackDrawingOptionsDialog
      */
-    public LayoutTrackDrawingOptionsDialog(Frame parent, boolean modal,
+    public LayoutTrackDrawingOptionsDialog(Frame parentFrame, boolean modal,
             LayoutTrackDrawingOptions ltdOptions) {
-        super(parent, modal);
+        super(parentFrame, modal);
+
+        this.layoutEditor = (LayoutEditor) parentFrame;
+        this.leLTDOptions = ltdOptions;
         this.ltdOptions = new LayoutTrackDrawingOptions(ltdOptions);
+
         initComponents();
-
-        // define the presets
-        LayoutTrackDrawingOptions tempLTDO = new LayoutTrackDrawingOptions("Classic JMRI");
-        tempLTDO.setSideBallastWidth(0);
-        tempLTDO.setSideBallastColor(null);
-        tempLTDO.setSideTieLength(0);
-        tempLTDO.setSideTieWidth(0);
-        tempLTDO.setSideTieColor(null);
-        tempLTDO.setSideTieGap(0);
-        tempLTDO.setSideRailCount(1);
-        tempLTDO.setSideRailWidth(2);
-        tempLTDO.setSideRailGap(0);
-        tempLTDO.setSideRailColor(Color.BLACK);
-        tempLTDO.setSideBlockLineWidth(0);
-        tempLTDO.setMainBallastWidth(0);
-        tempLTDO.setMainBallastColor(null);
-        tempLTDO.setMainTieLength(0);
-        tempLTDO.setMainTieWidth(0);
-        tempLTDO.setMainTieGap(0);
-        tempLTDO.setMainTieColor(null);
-        tempLTDO.setMainRailCount(1);
-        tempLTDO.setMainRailWidth(4);
-        tempLTDO.setMainRailGap(0);
-        tempLTDO.setMainRailColor(Color.BLACK);
-        tempLTDO.setMainBlockLineWidth(0);
-        ltdoList.add(tempLTDO);
-
-        tempLTDO = new LayoutTrackDrawingOptions("Drafting");
-        tempLTDO.setSideBallastWidth(0);
-        tempLTDO.setSideBallastColor(null);
-        tempLTDO.setSideTieLength(0);
-        tempLTDO.setSideTieWidth(0);
-        tempLTDO.setSideTieColor(null);
-        tempLTDO.setSideTieGap(0);
-        tempLTDO.setSideRailCount(1);
-        tempLTDO.setSideRailWidth(1);
-        tempLTDO.setSideRailGap(0);
-        tempLTDO.setSideRailColor(Color.DARK_GRAY);
-        tempLTDO.setSideBlockLineWidth(0);
-        tempLTDO.setMainBallastWidth(0);
-        tempLTDO.setMainBallastColor(null);
-        tempLTDO.setMainTieLength(0);
-        tempLTDO.setMainTieWidth(0);
-        tempLTDO.setMainTieGap(0);
-        tempLTDO.setMainTieColor(null);
-        tempLTDO.setMainRailCount(1);
-        tempLTDO.setMainRailWidth(2);
-        tempLTDO.setMainRailGap(0);
-        tempLTDO.setMainRailColor(Color.DARK_GRAY);
-        tempLTDO.setMainBlockLineWidth(0);
-        ltdoList.add(tempLTDO);
-
-        tempLTDO = new LayoutTrackDrawingOptions("Realistic");
-        tempLTDO.setSideBallastWidth(13);
-        tempLTDO.setSideBallastColor(Color.decode("#B0B0B0"));
-        tempLTDO.setSideTieLength(9);
-        tempLTDO.setSideTieWidth(3);
-        tempLTDO.setSideTieColor(Color.decode("#391E16"));
-        tempLTDO.setSideTieGap(4);
-        tempLTDO.setSideRailCount(2);
-        tempLTDO.setSideRailWidth(1);
-        tempLTDO.setSideRailGap(3);
-        tempLTDO.setSideRailColor(Color.decode("#9B705E"));
-        tempLTDO.setSideBlockLineWidth(3);
-        tempLTDO.setMainBallastWidth(15);
-        tempLTDO.setMainBallastColor(Color.decode("#909090"));
-        tempLTDO.setMainTieLength(11);
-        tempLTDO.setMainTieWidth(2);
-        tempLTDO.setMainTieGap(5);
-        tempLTDO.setMainTieColor(Color.decode("#D5CFCC"));
-        tempLTDO.setMainRailCount(2);
-        tempLTDO.setMainRailWidth(2);
-        tempLTDO.setMainRailGap(3);
-        tempLTDO.setMainRailColor(Color.decode("#F0F0F0"));
-        tempLTDO.setMainBlockLineWidth(3);
-        ltdoList.add(tempLTDO);
-
-        tempLTDO = new LayoutTrackDrawingOptions("Garrish");
-        tempLTDO.setSideBallastWidth(13);
-        tempLTDO.setSideBallastColor(Color.decode("#CA0024"));
-        tempLTDO.setSideTieLength(9);
-        tempLTDO.setSideTieWidth(3);
-        tempLTDO.setSideTieColor(Color.decode("#F26308"));
-        tempLTDO.setSideTieGap(4);
-        tempLTDO.setSideRailCount(2);
-        tempLTDO.setSideRailWidth(1);
-        tempLTDO.setSideRailGap(3);
-        tempLTDO.setSideRailColor(Color.decode("#FDB3C2"));
-        tempLTDO.setSideBlockLineWidth(3);
-        tempLTDO.setMainBallastWidth(15);
-        tempLTDO.setMainBallastColor(Color.decode("#B25A2B"));
-        tempLTDO.setMainTieLength(11);
-        tempLTDO.setMainTieWidth(2);
-        tempLTDO.setMainTieGap(5);
-        tempLTDO.setMainTieColor(Color.decode("#468FE3"));
-        tempLTDO.setMainRailCount(2);
-        tempLTDO.setMainRailWidth(2);
-        tempLTDO.setMainRailGap(3);
-        tempLTDO.setMainRailColor(Color.decode("#39FF12"));
-        tempLTDO.setMainBlockLineWidth(3);
-        ltdoList.add(tempLTDO);
-
-        ltdoList.add(ltdOptions);
+        setLocationRelativeTo(parentFrame);
+        definePresets();
     }
 
     /**
@@ -187,8 +97,6 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainTieColorButton = new javax.swing.JButton();
         sideTieColorButton = new javax.swing.JButton();
         sideLineLabel = new javax.swing.JLabel();
-        previewPanel = new javax.swing.JPanel();
-        previewLayeredPane = new javax.swing.JLayeredPane();
         presetsComboBox = new javax.swing.JComboBox<>();
         cancelButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
@@ -196,8 +104,10 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         applyButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(512, 2147483647));
-        setMinimumSize(new java.awt.Dimension(512, 512));
+        setMaximumSize(new java.awt.Dimension(512, 329));
+        setMinimumSize(new java.awt.Dimension(512, 329));
+        setResizable(false);
+        setSize(new java.awt.Dimension(512, 329));
 
         OptionsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(ltdOptions.getName()));
         OptionsPanel.setMaximumSize(new java.awt.Dimension(800, 529));
@@ -232,9 +142,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainRailCountSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         mainRailCountSpinner.setSize(new java.awt.Dimension(64, 16));
         mainRailCountSpinner.setValue(ltdOptions.getMainRailCount());
-        mainRailCountSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                mainRailCountSpinnerVetoableChange(evt);
+        mainRailCountSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                mainRailCountSpinnerStateChanged(evt);
             }
         });
 
@@ -245,9 +155,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideRailCountSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         sideRailCountSpinner.setSize(new java.awt.Dimension(64, 16));
         sideRailCountSpinner.setValue(ltdOptions.getSideRailCount());
-        sideRailCountSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                sideRailCountSpinnerVetoableChange(evt);
+        sideRailCountSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sideRailCountSpinnerStateChanged(evt);
             }
         });
 
@@ -264,9 +174,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainRailWidthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         mainRailWidthSpinner.setSize(new java.awt.Dimension(64, 16));
         mainRailWidthSpinner.setValue(ltdOptions.getMainRailWidth());
-        mainRailWidthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                mainRailWidthSpinnerVetoableChange(evt);
+        mainRailWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                mainRailWidthSpinnerStateChanged(evt);
             }
         });
 
@@ -277,9 +187,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideRailWidthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         sideRailWidthSpinner.setSize(new java.awt.Dimension(64, 16));
         sideRailWidthSpinner.setValue(ltdOptions.getSideRailWidth());
-        sideRailWidthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                sideRailWidthSpinnerVetoableChange(evt);
+        sideRailWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sideRailWidthSpinnerStateChanged(evt);
             }
         });
 
@@ -296,9 +206,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainRailGapSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         mainRailGapSpinner.setSize(new java.awt.Dimension(64, 16));
         mainRailGapSpinner.setValue(ltdOptions.getMainRailGap());
-        mainRailGapSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                mainRailGapSpinnerVetoableChange(evt);
+        mainRailGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                mainRailGapSpinnerStateChanged(evt);
             }
         });
 
@@ -309,9 +219,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideRailGapSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         sideRailGapSpinner.setSize(new java.awt.Dimension(64, 16));
         sideRailGapSpinner.setValue(ltdOptions.getSideRailGap());
-        sideRailGapSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                sideRailGapSpinnerVetoableChange(evt);
+        sideRailGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sideRailGapSpinnerStateChanged(evt);
             }
         });
 
@@ -383,9 +293,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainBlockLineWidthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         mainBlockLineWidthSpinner.setSize(new java.awt.Dimension(64, 16));
         mainBlockLineWidthSpinner.setValue(ltdOptions.getMainBlockLineWidth());
-        mainBlockLineWidthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                mainBlockLineWidthSpinnerVetoableChange(evt);
+        mainBlockLineWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                mainBlockLineWidthSpinnerStateChanged(evt);
             }
         });
 
@@ -396,9 +306,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideBlockLineWidthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         sideBlockLineWidthSpinner.setSize(new java.awt.Dimension(64, 16));
         sideBlockLineWidthSpinner.setValue(ltdOptions.getSideBlockLineWidth());
-        sideBlockLineWidthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                sideBlockLineWidthSpinnerVetoableChange(evt);
+        sideBlockLineWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sideBlockLineWidthSpinnerStateChanged(evt);
             }
         });
 
@@ -415,9 +325,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainBallastWidthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         mainBallastWidthSpinner.setSize(new java.awt.Dimension(64, 16));
         mainBallastWidthSpinner.setValue(ltdOptions.getMainBallastWidth());
-        mainBallastWidthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                mainBallastWidthSpinnerVetoableChange(evt);
+        mainBallastWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                mainBallastWidthSpinnerStateChanged(evt);
             }
         });
 
@@ -427,9 +337,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideBallastWidthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         sideBallastWidthSpinner.setSize(new java.awt.Dimension(64, 16));
         sideBallastWidthSpinner.setValue(ltdOptions.getSideBallastWidth());
-        sideBallastWidthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                sideBallastWidthSpinnerVetoableChange(evt);
+        sideBallastWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sideBallastWidthSpinnerStateChanged(evt);
             }
         });
 
@@ -500,9 +410,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainTieLengthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         mainTieLengthSpinner.setSize(new java.awt.Dimension(64, 16));
         mainTieLengthSpinner.setValue(ltdOptions.getMainTieLength());
-        mainTieLengthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                mainTieLengthSpinnerVetoableChange(evt);
+        mainTieLengthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                mainTieLengthSpinnerStateChanged(evt);
             }
         });
 
@@ -512,9 +422,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideTieLengthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         sideTieLengthSpinner.setSize(new java.awt.Dimension(64, 16));
         sideTieLengthSpinner.setValue(ltdOptions.getSideTieLength());
-        sideTieLengthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                sideTieLengthSpinnerVetoableChange(evt);
+        sideTieLengthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sideTieLengthSpinnerStateChanged(evt);
             }
         });
 
@@ -530,9 +440,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainTieWidthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         mainTieWidthSpinner.setSize(new java.awt.Dimension(64, 16));
         mainTieWidthSpinner.setValue(ltdOptions.getMainTieWidth());
-        mainTieWidthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                mainTieWidthSpinnerVetoableChange(evt);
+        mainTieWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                mainTieWidthSpinnerStateChanged(evt);
             }
         });
 
@@ -542,9 +452,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideTieWidthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         sideTieWidthSpinner.setSize(new java.awt.Dimension(64, 16));
         sideTieWidthSpinner.setValue(ltdOptions.getSideTieWidth());
-        sideTieWidthSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                sideTieWidthSpinnerVetoableChange(evt);
+        sideTieWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sideTieWidthSpinnerStateChanged(evt);
             }
         });
 
@@ -560,9 +470,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainTieGapSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         mainTieGapSpinner.setSize(new java.awt.Dimension(64, 16));
         mainTieGapSpinner.setValue(ltdOptions.getMainTieGap());
-        mainTieGapSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                mainTieGapSpinnerVetoableChange(evt);
+        mainTieGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                mainTieGapSpinnerStateChanged(evt);
             }
         });
 
@@ -572,9 +482,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideTieGapSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         sideTieGapSpinner.setSize(new java.awt.Dimension(64, 16));
         sideTieGapSpinner.setValue(ltdOptions.getSideTieGap());
-        sideTieGapSpinner.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                sideTieGapSpinnerVetoableChange(evt);
+        sideTieGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sideTieGapSpinnerStateChanged(evt);
             }
         });
 
@@ -766,33 +676,6 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
         OptionsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {ballastColorLabel, ballastWidthLabel, blockLineWidthLabel, mainBallastColorButton, mainBallastWidthSpinner, mainBlockLineWidthSpinner, mainRailColorButton, mainRailCountSpinner, mainRailGapSpinner, mainRailWidthSpinner, mainTieColorButton, mainTieGapSpinner, mainTieLengthSpinner, mainTieWidthSpinner, mainlineLabel, optionLabel, railColorLabel, railCountLabel, railGapLabel, railWidthLabel, sideBallastColorButton, sideBallastWidthSpinner, sideBlockLineWidthSpinner, sideLineLabel, sideRailColorButton, sideRailCountSpinner, sideRailGapSpinner, sideRailWidthSpinner, sideTieColorButton, sideTieGapSpinner, sideTieLengthSpinner, sideTieWidthSpinner, tieColorLabel, tieGapLabel, tieLengthLabel, tieWidthLabel});
 
-        previewPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Preview"));
-
-        javax.swing.GroupLayout previewLayeredPaneLayout = new javax.swing.GroupLayout(previewLayeredPane);
-        previewLayeredPane.setLayout(previewLayeredPaneLayout);
-        previewLayeredPaneLayout.setHorizontalGroup(
-            previewLayeredPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 482, Short.MAX_VALUE)
-        );
-        previewLayeredPaneLayout.setVerticalGroup(
-            previewLayeredPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 153, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout previewPanelLayout = new javax.swing.GroupLayout(previewPanel);
-        previewPanel.setLayout(previewPanelLayout);
-        previewPanelLayout.setHorizontalGroup(
-            previewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(previewPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(previewLayeredPane)
-                .addContainerGap())
-        );
-        previewPanelLayout.setVerticalGroup(
-            previewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(previewLayeredPane, javax.swing.GroupLayout.Alignment.TRAILING)
-        );
-
         presetsComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Classic JMRI", "Drafting", "Realistic", "Garrish", "--", "Custom" }));
         presetsComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -842,17 +725,12 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(OptionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 506, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(previewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(OptionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(previewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(presetsLabel)
                     .addComponent(presetsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -865,7 +743,204 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*==========================*\
+    |* action performed methods *|
+    \*==========================*/
+
+    private void okButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        log.debug("okButtonActionPerformed({}", evt);
+        ltdOptions.setName(layoutEditor.getLayoutName());
+        layoutEditor.setLayoutTrackDrawingOptions(ltdOptions);
+        ltdOptions = null;
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_okButtonActionPerformed
+
+    private void presetsComboBoxActionPerformed(ActionEvent evt) {//GEN-FIRST:event_presetsComboBoxActionPerformed
+        log.debug("presetsComboBoxActionPerformed({}", evt);
+        int modifiers = evt.getModifiers();
+        if (modifiers != 0) {   // don't do this unless it's a mouse click
+            String presetName = (String) presetsComboBox.getSelectedItem();
+            for (LayoutTrackDrawingOptions ltdo : ltdoList) {
+                if (ltdo.getName().equals(presetName)) {
+                    if (!ltdOptions.getName().equals(ltdo.getName())) {
+                        ltdOptions = ltdo;
+                        setupControls();
+                        OptionsPanel.setBorder(BorderFactory.createTitledBorder(presetName));
+                        presetsComboBox.setSelectedItem(presetName);
+                    }
+                    break;
+                }
+            }
+        }
+    }//GEN-LAST:event_presetsComboBoxActionPerformed
+
+    private void cancelButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        log.debug("cancelButtonActionPerformed({}", evt);
+        // restore orginal settings
+        layoutEditor.setLayoutTrackDrawingOptions(leLTDOptions);
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void mainRailColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainRailColorButtonMouseClicked
+        log.debug("mainRailColorButtonMouseClicked()");
+    }//GEN-LAST:event_mainRailColorButtonMouseClicked
+
+    private void mainTieColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainTieColorButtonMouseClicked
+        log.debug("mainTieColorButtonMouseClicked()");
+    }//GEN-LAST:event_mainTieColorButtonMouseClicked
+
+    private void sideTieGapSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sideTieGapSpinnerStateChanged
+        JSpinner spinner = (JSpinner) evt.getSource();
+        Integer value = (Integer) spinner.getValue();
+        makeCustomPreset();
+        ltdOptions.setSideTieGap(value.intValue());
+        log.debug("sideTieGapSpinnerStateChanged({})", value);
+    }//GEN-LAST:event_sideTieGapSpinnerStateChanged
+
+    private void mainTieGapSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainTieGapSpinnerStateChanged
+        JSpinner spinner = (JSpinner) evt.getSource();
+        Integer value = (Integer) spinner.getValue();
+        makeCustomPreset();
+        ltdOptions.setMainTieGap(value.intValue());
+        log.debug("mainTieGapSpinnerStateChanged({})", value);
+    }//GEN-LAST:event_mainTieGapSpinnerStateChanged
+
+    private void sideTieWidthSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sideTieWidthSpinnerStateChanged
+        JSpinner spinner = (JSpinner) evt.getSource();
+        Integer value = (Integer) spinner.getValue();
+        makeCustomPreset();
+        ltdOptions.setSideTieWidth(value.intValue());
+        log.debug("sideTieWidthSpinnerStateChanged({})", value);
+    }//GEN-LAST:event_sideTieWidthSpinnerStateChanged
+
+    private void mainTieWidthSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainTieWidthSpinnerStateChanged
+        JSpinner spinner = (JSpinner) evt.getSource();
+        Integer value = (Integer) spinner.getValue();
+        makeCustomPreset();
+        ltdOptions.setMainTieWidth(value.intValue());
+        log.debug("mainTieWidthSpinnerStateChanged({})", value);
+    }//GEN-LAST:event_mainTieWidthSpinnerStateChanged
+
+    private void sideTieLengthSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sideTieLengthSpinnerStateChanged
+        JSpinner spinner = (JSpinner) evt.getSource();
+        Integer value = (Integer) spinner.getValue();
+        makeCustomPreset();
+        ltdOptions.setSideTieLength(value.intValue());
+        log.debug("sideTieLengthSpinnerStateChanged({})", value);
+    }//GEN-LAST:event_sideTieLengthSpinnerStateChanged
+
+    private void mainTieLengthSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainTieLengthSpinnerStateChanged
+        JSpinner spinner = (JSpinner) evt.getSource();
+        Integer value = (Integer) spinner.getValue();
+        makeCustomPreset();
+        ltdOptions.setMainTieLength(value.intValue());
+        log.debug("mainTieLengthSpinnerStateChanged({})", value);
+    }//GEN-LAST:event_mainTieLengthSpinnerStateChanged
+
+    private void sideBallastColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideBallastColorButtonMouseClicked
+        log.debug("sideBallastColorButtonMouseClicked()");
+    }//GEN-LAST:event_sideBallastColorButtonMouseClicked
+
+    private void mainBallastColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainBallastColorButtonMouseClicked
+        log.debug("mainBallastColorButtonMouseClicked()");
+    }//GEN-LAST:event_mainBallastColorButtonMouseClicked
+
+    private void sideBallastWidthSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sideBallastWidthSpinnerStateChanged
+        JSpinner spinner = (JSpinner) evt.getSource();
+        Integer value = (Integer) spinner.getValue();
+        makeCustomPreset();
+        ltdOptions.setSideBallastWidth(value.intValue());
+        log.debug("sideBallastWidthSpinnerStateChanged({})", value);
+    }//GEN-LAST:event_sideBallastWidthSpinnerStateChanged
+
+    private void mainBallastWidthSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainBallastWidthSpinnerStateChanged
+        JSpinner spinner = (JSpinner) evt.getSource();
+        Integer value = (Integer) spinner.getValue();
+        makeCustomPreset();
+        ltdOptions.setMainBallastWidth(value.intValue());
+        log.debug("mainBallastWidthSpinnerStateChanged({})", value);
+    }//GEN-LAST:event_mainBallastWidthSpinnerStateChanged
+
+    private void sideBlockLineWidthSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sideBlockLineWidthSpinnerStateChanged
+        JSpinner spinner = (JSpinner) evt.getSource();
+        Integer value = (Integer) spinner.getValue();
+        makeCustomPreset();
+        ltdOptions.setSideBlockLineWidth(value.intValue());
+        log.debug("sideBlockLineWidthSpinnerStateChanged({})", value);
+    }//GEN-LAST:event_sideBlockLineWidthSpinnerStateChanged
+
+    private void mainBlockLineWidthSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainBlockLineWidthSpinnerStateChanged
+        JSpinner spinner = (JSpinner) evt.getSource();
+        Integer value = (Integer) spinner.getValue();
+        makeCustomPreset();
+        ltdOptions.setMainBlockLineWidth(value.intValue());
+        log.debug("mainBlockLineWidthSpinnerStateChanged({})", value);
+    }//GEN-LAST:event_mainBlockLineWidthSpinnerStateChanged
+
+    private void sideRailColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideRailColorButtonMouseClicked
+        log.debug("sideRailColorButtonMouseClicked()");
+    }//GEN-LAST:event_sideRailColorButtonMouseClicked
+
+    private void sideRailGapSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sideRailGapSpinnerStateChanged
+        JSpinner spinner = (JSpinner) evt.getSource();
+        Integer value = (Integer) spinner.getValue();
+        makeCustomPreset();
+        ltdOptions.setSideRailGap(value.intValue());
+        log.debug("sideRailGapSpinnerStateChanged({})", value);
+    }//GEN-LAST:event_sideRailGapSpinnerStateChanged
+
+    private void mainRailGapSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainRailGapSpinnerStateChanged
+        JSpinner spinner = (JSpinner) evt.getSource();
+        Integer value = (Integer) spinner.getValue();
+        makeCustomPreset();
+        ltdOptions.setMainRailGap(value.intValue());
+        log.debug("mainRailGapSpinnerStateChanged({})", value);
+    }//GEN-LAST:event_mainRailGapSpinnerStateChanged
+
+    private void sideRailWidthSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sideRailWidthSpinnerStateChanged
+        JSpinner spinner = (JSpinner) evt.getSource();
+        Integer value = (Integer) spinner.getValue();
+        makeCustomPreset();
+        ltdOptions.setSideRailWidth(value.intValue());
+        log.debug("sideRailWidthSpinnerStateChanged({})", value);
+    }//GEN-LAST:event_sideRailWidthSpinnerStateChanged
+
+    private void mainRailWidthSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainRailWidthSpinnerStateChanged
+        JSpinner spinner = (JSpinner) evt.getSource();
+        Integer value = (Integer) spinner.getValue();
+        makeCustomPreset();
+        ltdOptions.setMainRailWidth(value.intValue());
+        log.debug("mainRailWidthSpinnerStateChanged({})", value);
+    }//GEN-LAST:event_mainRailWidthSpinnerStateChanged
+
+    private void sideRailCountSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sideRailCountSpinnerStateChanged
+        JSpinner spinner = (JSpinner) evt.getSource();
+        Integer value = (Integer) spinner.getValue();
+        makeCustomPreset();
+        ltdOptions.setSideRailCount(value.intValue());
+        log.debug("sideRailCountSpinnerStateChanged({})", value);
+    }//GEN-LAST:event_sideRailCountSpinnerStateChanged
+
+    private void mainRailCountSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainRailCountSpinnerStateChanged
+        JSpinner spinner = (JSpinner) evt.getSource();
+        Integer value = (Integer) spinner.getValue();
+        makeCustomPreset();
+        ltdOptions.setMainRailCount(value.intValue());
+        log.debug("mainRailCountSpinnerStateChanged({})", value);
+    }//GEN-LAST:event_mainRailCountSpinnerStateChanged
+
+    private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
+        layoutEditor.setLayoutTrackDrawingOptions(ltdOptions);
+    }//GEN-LAST:event_applyButtonActionPerformed
+
+    /*=========================*\
+    |* local (private) methods *|
+    \*=========================*/
     private void setupControls() {
+        copyToCustom = false;   // prevent xxx.setValue's from creating custom preset
+
         mainBallastColorButton.setBackground(ltdOptions.getMainBallastColor());
         mainBallastWidthSpinner.setValue(ltdOptions.getMainBallastWidth());
         mainBlockLineWidthSpinner.setValue(ltdOptions.getMainBlockLineWidth());
@@ -888,165 +963,139 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideTieGapSpinner.setValue(ltdOptions.getSideTieGap());
         sideTieLengthSpinner.setValue(ltdOptions.getSideTieLength());
         sideTieWidthSpinner.setValue(ltdOptions.getSideTieWidth());
+        copyToCustom = true;
     }   // setupControls
 
-    /*==========================*\
-    |* action performed methods *|
-    \*==========================*/
+    // used to prevent xxx.setValue's in setupControls from creating custom preset
+    private boolean copyToCustom = true;
 
-    private void okButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        log.info("okButtonActionPerformed({}", evt);
-        this.setVisible(false);
-    }//GEN-LAST:event_okButtonActionPerformed
-
-    private void presetsComboBoxActionPerformed(ActionEvent evt) {//GEN-FIRST:event_presetsComboBoxActionPerformed
-        log.info("presetsComboBoxActionPerformed({}", evt);
-        String presetName = (String) presetsComboBox.getSelectedItem();
-        //TODO: load new preset;
-        for (LayoutTrackDrawingOptions ltdo : ltdoList) {
-            if (ltdo.getName().equals(presetName)) {
-                if (!ltdOptions.getName().equals(ltdo.getName())) {
-                    ltdOptions = ltdo;
-                    OptionsPanel.setBorder(BorderFactory.createTitledBorder((String) presetName));
-                    setupControls();
-                }
-                break;
+    private void makeCustomPreset() {
+        if (copyToCustom && !ltdOptions.getName().equals(customPresetName)) {
+            ltdOptions = new LayoutTrackDrawingOptions(ltdOptions);
+            ltdOptions.setName(customPresetName);
+            if (!ltdoList.get(ltdoList.size() - 1).getName().equals(customPresetName)) {
+                ltdoList.add(ltdOptions);
+                presetsComboBox.addItem(ltdOptions.getName());
             }
+            presetsComboBox.setSelectedItem(ltdOptions.getName());
+            OptionsPanel.setBorder(BorderFactory.createTitledBorder((String) customPresetName));
         }
-    }//GEN-LAST:event_presetsComboBoxActionPerformed
-
-    private void cancelButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        log.info("cancelButtonActionPerformed({}", evt);
-        this.setVisible(false);
-    }//GEN-LAST:event_cancelButtonActionPerformed
-
-    private void sideTieColorButtonMouseClicked(MouseEvent evt) {
-        log.info("sideTieColorButtonMouseClicked()");
     }
+    // define the presets
 
-    private void demoButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_demoButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_demoButtonActionPerformed
+    private void definePresets() {
+        LayoutTrackDrawingOptions tempLTDO = new LayoutTrackDrawingOptions(classicPresetName);
+        tempLTDO.setSideBallastWidth(0);
+        tempLTDO.setSideBallastColor(null);
+        tempLTDO.setSideTieLength(0);
+        tempLTDO.setSideTieWidth(0);
+        tempLTDO.setSideTieColor(null);
+        tempLTDO.setSideTieGap(0);
+        tempLTDO.setSideRailCount(1);
+        tempLTDO.setSideRailWidth(2);
+        tempLTDO.setSideRailGap(0);
+        tempLTDO.setSideRailColor(Color.BLACK);
+        tempLTDO.setSideBlockLineWidth(0);
+        tempLTDO.setMainBallastWidth(0);
+        tempLTDO.setMainBallastColor(null);
+        tempLTDO.setMainTieLength(0);
+        tempLTDO.setMainTieWidth(0);
+        tempLTDO.setMainTieGap(0);
+        tempLTDO.setMainTieColor(null);
+        tempLTDO.setMainRailCount(1);
+        tempLTDO.setMainRailWidth(4);
+        tempLTDO.setMainRailGap(0);
+        tempLTDO.setMainRailColor(Color.BLACK);
+        tempLTDO.setMainBlockLineWidth(0);
+        ltdoList.add(tempLTDO);
 
-    private void mainRailColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainRailColorButtonMouseClicked
-        log.info("mainRailColorButtonMouseClicked()");
-    }//GEN-LAST:event_mainRailColorButtonMouseClicked
+        tempLTDO = new LayoutTrackDrawingOptions(draftingPresetName);
+        tempLTDO.setSideBallastWidth(0);
+        tempLTDO.setSideBallastColor(null);
+        tempLTDO.setSideTieLength(0);
+        tempLTDO.setSideTieWidth(0);
+        tempLTDO.setSideTieColor(null);
+        tempLTDO.setSideTieGap(0);
+        tempLTDO.setSideRailCount(1);
+        tempLTDO.setSideRailWidth(1);
+        tempLTDO.setSideRailGap(0);
+        tempLTDO.setSideRailColor(Color.DARK_GRAY);
+        tempLTDO.setSideBlockLineWidth(0);
+        tempLTDO.setMainBallastWidth(0);
+        tempLTDO.setMainBallastColor(null);
+        tempLTDO.setMainTieLength(0);
+        tempLTDO.setMainTieWidth(0);
+        tempLTDO.setMainTieGap(0);
+        tempLTDO.setMainTieColor(null);
+        tempLTDO.setMainRailCount(1);
+        tempLTDO.setMainRailWidth(2);
+        tempLTDO.setMainRailGap(0);
+        tempLTDO.setMainRailColor(Color.DARK_GRAY);
+        tempLTDO.setMainBlockLineWidth(0);
+        ltdoList.add(tempLTDO);
 
-    private void mainTieColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainTieColorButtonMouseClicked
-        log.info("mainTieColorButtonMouseClicked()");
-    }//GEN-LAST:event_mainTieColorButtonMouseClicked
+        tempLTDO = new LayoutTrackDrawingOptions(realisticPresetName);
+        tempLTDO.setSideBallastWidth(13);
+        tempLTDO.setSideBallastColor(Color.decode("#B0B0B0"));
+        tempLTDO.setSideTieLength(9);
+        tempLTDO.setSideTieWidth(3);
+        tempLTDO.setSideTieColor(Color.decode("#391E16"));
+        tempLTDO.setSideTieGap(4);
+        tempLTDO.setSideRailCount(2);
+        tempLTDO.setSideRailWidth(1);
+        tempLTDO.setSideRailGap(3);
+        tempLTDO.setSideRailColor(Color.decode("#9B705E"));
+        tempLTDO.setSideBlockLineWidth(3);
+        tempLTDO.setMainBallastWidth(15);
+        tempLTDO.setMainBallastColor(Color.decode("#909090"));
+        tempLTDO.setMainTieLength(11);
+        tempLTDO.setMainTieWidth(2);
+        tempLTDO.setMainTieGap(5);
+        tempLTDO.setMainTieColor(Color.decode("#D5CFCC"));
+        tempLTDO.setMainRailCount(2);
+        tempLTDO.setMainRailWidth(2);
+        tempLTDO.setMainRailGap(3);
+        tempLTDO.setMainRailColor(Color.decode("#F0F0F0"));
+        tempLTDO.setMainBlockLineWidth(3);
+        ltdoList.add(tempLTDO);
 
-    private void sideTieGapSpinnerVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_sideTieGapSpinnerVetoableChange
-        JSpinner spinner = (JSpinner) evt.getSource();
-        Object value = spinner.getValue();
-        log.info("sideTieGapSpinnerVetoableChange({})", value);
-    }//GEN-LAST:event_sideTieGapSpinnerVetoableChange
+        tempLTDO = new LayoutTrackDrawingOptions(garishPresetName);
+        tempLTDO.setSideBallastWidth(13);
+        tempLTDO.setSideBallastColor(Color.decode("#CA0024"));
+        tempLTDO.setSideTieLength(9);
+        tempLTDO.setSideTieWidth(3);
+        tempLTDO.setSideTieColor(Color.decode("#F26308"));
+        tempLTDO.setSideTieGap(4);
+        tempLTDO.setSideRailCount(2);
+        tempLTDO.setSideRailWidth(1);
+        tempLTDO.setSideRailGap(3);
+        tempLTDO.setSideRailColor(Color.decode("#FDB3C2"));
+        tempLTDO.setSideBlockLineWidth(3);
+        tempLTDO.setMainBallastWidth(15);
+        tempLTDO.setMainBallastColor(Color.decode("#B25A2B"));
+        tempLTDO.setMainTieLength(11);
+        tempLTDO.setMainTieWidth(2);
+        tempLTDO.setMainTieGap(5);
+        tempLTDO.setMainTieColor(Color.decode("#468FE3"));
+        tempLTDO.setMainRailCount(2);
+        tempLTDO.setMainRailWidth(2);
+        tempLTDO.setMainRailGap(3);
+        tempLTDO.setMainRailColor(Color.decode("#39FF12"));
+        tempLTDO.setMainBlockLineWidth(3);
+        ltdoList.add(tempLTDO);
 
-    private void mainTieGapSpinnerVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_mainTieGapSpinnerVetoableChange
-        JSpinner spinner = (JSpinner) evt.getSource();
-        Object value = spinner.getValue();
-        log.info("mainTieGapSpinnerVetoableChange({})", value);
-    }//GEN-LAST:event_mainTieGapSpinnerVetoableChange
+        ltdoList.add(ltdOptions);
 
-    private void sideTieWidthSpinnerVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_sideTieWidthSpinnerVetoableChange
-        JSpinner spinner = (JSpinner) evt.getSource();
-        Object value = spinner.getValue();
-        log.info("sideTieWidthSpinnerVetoableChange({})", value);
-    }//GEN-LAST:event_sideTieWidthSpinnerVetoableChange
+        presetsComboBox.removeAllItems();
+        ltdoList.forEach((ltdo) -> {
+            presetsComboBox.addItem(ltdo.getName());
+        });
+        presetsComboBox.setSelectedItem(leLTDOptions.getName());
+    }   // definePresets
 
-    private void mainTieWidthSpinnerVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_mainTieWidthSpinnerVetoableChange
-        JSpinner spinner = (JSpinner) evt.getSource();
-        Object value = spinner.getValue();
-        log.info("mainTieWidthSpinnerVetoableChange({})", value);
-    }//GEN-LAST:event_mainTieWidthSpinnerVetoableChange
-
-    private void sideTieLengthSpinnerVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_sideTieLengthSpinnerVetoableChange
-        JSpinner spinner = (JSpinner) evt.getSource();
-        Object value = spinner.getValue();
-        log.info("sideTieLengthSpinnerVetoableChange({})", value);
-    }//GEN-LAST:event_sideTieLengthSpinnerVetoableChange
-
-    private void mainTieLengthSpinnerVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_mainTieLengthSpinnerVetoableChange
-        JSpinner spinner = (JSpinner) evt.getSource();
-        Object value = spinner.getValue();
-        log.info("mainTieLengthSpinnerVetoableChange({})", value);
-    }//GEN-LAST:event_mainTieLengthSpinnerVetoableChange
-
-    private void sideBallastColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideBallastColorButtonMouseClicked
-        log.info("sideBallastColorButtonMouseClicked()");
-    }//GEN-LAST:event_sideBallastColorButtonMouseClicked
-
-    private void mainBallastColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainBallastColorButtonMouseClicked
-        log.info("mainBallastColorButtonMouseClicked()");
-    }//GEN-LAST:event_mainBallastColorButtonMouseClicked
-
-    private void sideBallastWidthSpinnerVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_sideBallastWidthSpinnerVetoableChange
-        JSpinner spinner = (JSpinner) evt.getSource();
-        Object value = spinner.getValue();
-        log.info("sideBallastWidthSpinnerVetoableChange({})", value);
-    }//GEN-LAST:event_sideBallastWidthSpinnerVetoableChange
-
-    private void mainBallastWidthSpinnerVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_mainBallastWidthSpinnerVetoableChange
-        JSpinner spinner = (JSpinner) evt.getSource();
-        Object value = spinner.getValue();
-        log.info("mainBallastWidthSpinnerVetoableChange({})", value);
-    }//GEN-LAST:event_mainBallastWidthSpinnerVetoableChange
-
-    private void sideBlockLineWidthSpinnerVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_sideBlockLineWidthSpinnerVetoableChange
-        JSpinner spinner = (JSpinner) evt.getSource();
-        Object value = spinner.getValue();
-        log.info("sideBlockLineWidthSpinnerVetoableChange({})", value);
-    }//GEN-LAST:event_sideBlockLineWidthSpinnerVetoableChange
-
-    private void mainBlockLineWidthSpinnerVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_mainBlockLineWidthSpinnerVetoableChange
-        JSpinner spinner = (JSpinner) evt.getSource();
-        Object value = spinner.getValue();
-        log.info("mainBlockLineWidthSpinnerVetoableChange({})", value);
-    }//GEN-LAST:event_mainBlockLineWidthSpinnerVetoableChange
-
-    private void sideRailColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideRailColorButtonMouseClicked
-        log.info("sideRailColorButtonMouseClicked()");
-    }//GEN-LAST:event_sideRailColorButtonMouseClicked
-
-    private void sideRailGapSpinnerVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_sideRailGapSpinnerVetoableChange
-        JSpinner spinner = (JSpinner) evt.getSource();
-        Object value = spinner.getValue();
-        log.info("sideRailGapSpinnerVetoableChange({})", value);
-    }//GEN-LAST:event_sideRailGapSpinnerVetoableChange
-
-    private void mainRailGapSpinnerVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_mainRailGapSpinnerVetoableChange
-        JSpinner spinner = (JSpinner) evt.getSource();
-        Object value = spinner.getValue();
-        log.info("mainRailGapSpinnerVetoableChange({})", value);
-    }//GEN-LAST:event_mainRailGapSpinnerVetoableChange
-
-    private void sideRailWidthSpinnerVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_sideRailWidthSpinnerVetoableChange
-        JSpinner spinner = (JSpinner) evt.getSource();
-        Object value = spinner.getValue();
-        log.info("sideRailWidthSpinnerVetoableChange({})", value);
-    }//GEN-LAST:event_sideRailWidthSpinnerVetoableChange
-
-    private void mainRailWidthSpinnerVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_mainRailWidthSpinnerVetoableChange
-        JSpinner spinner = (JSpinner) evt.getSource();
-        Object value = spinner.getValue();
-        log.info("mainRailWidthSpinnerVetoableChange({})", value);
-    }//GEN-LAST:event_mainRailWidthSpinnerVetoableChange
-
-    private void sideRailCountSpinnerVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_sideRailCountSpinnerVetoableChange
-        JSpinner spinner = (JSpinner) evt.getSource();
-        Object value = spinner.getValue();
-        log.info("sideRailCountSpinnerVetoableChange({})", value);
-    }//GEN-LAST:event_sideRailCountSpinnerVetoableChange
-
-    private void mainRailCountSpinnerVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_mainRailCountSpinnerVetoableChange
-        JSpinner spinner = (JSpinner) evt.getSource();
-        Object value = spinner.getValue();
-        log.info("mainRailCountSpinnerVetoableChange({})", value);
-    }//GEN-LAST:event_mainRailCountSpinnerVetoableChange
-
-    private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
-        layoutEditor.
-    }//GEN-LAST:event_applyButtonActionPerformed
+    /*===========================*\
+    |* local (private) variables *|
+    \*===========================*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel OptionsPanel;
@@ -1071,8 +1120,6 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private javax.swing.JLabel optionLabel;
     private javax.swing.JComboBox<String> presetsComboBox;
     private javax.swing.JLabel presetsLabel;
-    private javax.swing.JLayeredPane previewLayeredPane;
-    private javax.swing.JPanel previewPanel;
     private javax.swing.JLabel railCountLabel;
     private javax.swing.JLabel railGapLabel;
     private javax.swing.JLabel railWidthLabel;

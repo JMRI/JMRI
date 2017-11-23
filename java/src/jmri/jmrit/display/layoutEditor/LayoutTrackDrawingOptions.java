@@ -16,11 +16,11 @@ public class LayoutTrackDrawingOptions implements Cloneable {
 
     private String name;
 
-    protected LayoutTrackDrawingOptions(String name) {
+    public LayoutTrackDrawingOptions(String name) {
         this.name = name;
     }
 
-    protected LayoutTrackDrawingOptions(LayoutTrackDrawingOptions ltdo) {
+    public LayoutTrackDrawingOptions(LayoutTrackDrawingOptions ltdo) {
         name = ltdo.getName();
         sideBallastWidth = ltdo.getSideBallastWidth();
         sideBallastColor = ltdo.getSideBallastColor();
@@ -46,236 +46,236 @@ public class LayoutTrackDrawingOptions implements Cloneable {
         mainBlockLineWidth = ltdo.getMainBlockLineWidth();
     }
 
-    protected String getName() {
+    public String getName() {
         return name;
     }
 
-    protected void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
     private int sideBallastWidth = 13;   // defaults to zero (off)
 
-    protected int getSideBallastWidth() {
+    public int getSideBallastWidth() {
         return sideBallastWidth;
     }
 
-    protected void setSideBallastWidth(int val) {
+    public void setSideBallastWidth(int val) {
         sideBallastWidth = val;
     }
 
     private Color sideBallastColor = Color.decode("#AEACAD");
 
-    protected Color getSideBallastColor() {
+    public Color getSideBallastColor() {
         return sideBallastColor;
     }
 
-    protected void setSideBallastColor(@Nonnull Color val) {
+    public void setSideBallastColor(@Nonnull Color val) {
         sideBallastColor = val;
     }
 
     private int sideTieLength = 9;
 
-    protected int getSideTieLength() {
+    public int getSideTieLength() {
         return sideTieLength;
     }
 
-    protected void setSideTieLength(int val) {
+    public void setSideTieLength(int val) {
         sideTieLength = val;
     }
 
     private Color sideTieColor = Color.decode("#391E16");
 
-    protected Color getSideTieColor() {
+    public Color getSideTieColor() {
         return sideTieColor;
     }
 
-    protected void setSideTieColor(@Nonnull Color val) {
+    public void setSideTieColor(@Nonnull Color val) {
         sideTieColor = val;
     }
 
     private int sideTieWidth = 3;
 
-    protected int getSideTieWidth() {
+    public int getSideTieWidth() {
         return sideTieWidth;
     }
 
-    protected void setSideTieWidth(int val) {
+    public void setSideTieWidth(int val) {
         sideTieWidth = val;
     }
 
     private int sideTieGap = 4;
 
-    protected int getSideTieGap() {
+    public int getSideTieGap() {
         return sideTieGap;
     }
 
-    protected void setSideTieGap(int val) {
+    public void setSideTieGap(int val) {
         sideTieGap = val;
     }
 
     private int sideRailCount = 2;
 
-    protected int getSideRailCount() {
+    public int getSideRailCount() {
         return sideRailCount;
     }
 
-    protected void setSideRailCount(int val) {
+    public void setSideRailCount(int val) {
         sideRailCount = val;
     }
 
     private int sideRailWidth = 1;
 
-    protected int getSideRailWidth() {
+    public int getSideRailWidth() {
         return sideRailWidth;
     }
 
-    protected void setSideRailWidth(int val) {
+    public void setSideRailWidth(int val) {
         sideRailWidth = val;
     }
 
     private int sideRailGap = 3;
 
-    protected int getSideRailGap() {
+    public int getSideRailGap() {
         return sideRailGap;
     }
 
-    protected void setSideRailGap(int val) {
+    public void setSideRailGap(int val) {
         sideRailGap = val;
     }
 
     private Color sideRailColor = Color.decode("#9B705E");
 
-    protected Color getSideRailColor() {
+    public Color getSideRailColor() {
         return sideRailColor;
     }
 
-    protected void setSideRailColor(@Nonnull Color val) {
+    public void setSideRailColor(@Nonnull Color val) {
         sideRailColor = val;
     }
 
     private int sideBlockLineWidth = 3;
 
-    protected int getSideBlockLineWidth() {
+    public int getSideBlockLineWidth() {
         return sideBlockLineWidth;
     }
 
-    protected void setSideBlockLineWidth(int val) {
+    public void setSideBlockLineWidth(int val) {
         sideBlockLineWidth = val;
     }
 
     private int mainBallastWidth = 15;   // defaults to zero (off)
 
-    protected int getMainBallastWidth() {
+    public int getMainBallastWidth() {
         return mainBallastWidth;
     }
 
-    protected void setMainBallastWidth(int val) {
+    public void setMainBallastWidth(int val) {
         mainBallastWidth = val;
     }
 
     private Color mainBallastColor = Color.decode("#9E9C9D");
 
-    protected Color getMainBallastColor() {
+    public Color getMainBallastColor() {
         return mainBallastColor;
     }
 
-    protected void setMainBallastColor(@Nonnull Color val) {
+    public void setMainBallastColor(@Nonnull Color val) {
         mainBallastColor = val;
     }
 
     private int mainTieLength = 11;
 
-    protected int getMainTieLength() {
+    public int getMainTieLength() {
         return mainTieLength;
     }
 
-    protected void setMainTieLength(int val) {
+    public void setMainTieLength(int val) {
         mainTieLength = val;
     }
 
     private Color mainTieColor = Color.decode("#D5CFCC");
 
-    protected Color getMainTieColor() {
+    public Color getMainTieColor() {
         return mainTieColor;
     }
 
-    protected void setMainTieColor(@Nonnull Color val) {
+    public void setMainTieColor(@Nonnull Color val) {
         mainTieColor = val;
     }
 
     private int mainTieWidth = 2;
 
-    protected int getMainTieWidth() {
+    public int getMainTieWidth() {
         return mainTieWidth;
     }
 
-    protected void setMainTieWidth(int val) {
+    public void setMainTieWidth(int val) {
         mainTieWidth = val;
     }
 
     private int mainTieGap = 5;
 
-    protected int getMainTieGap() {
+    public int getMainTieGap() {
         return mainTieGap;
     }
 
-    protected void setMainTieGap(int val) {
+    public void setMainTieGap(int val) {
         mainTieGap = val;
     }
 
     private int mainRailCount = 2;
 
-    protected int getMainRailCount() {
+    public int getMainRailCount() {
         return mainRailCount;
     }
 
-    protected void setMainRailCount(int val) {
+    public void setMainRailCount(int val) {
         mainRailCount = val;
     }
 
     private int mainRailWidth = 2;
 
-    protected int getMainRailWidth() {
+    public int getMainRailWidth() {
         return mainRailWidth;
     }
 
-    protected void setMainRailWidth(int val) {
+    public void setMainRailWidth(int val) {
         mainRailWidth = val;
     }
 
     private int mainRailGap = 3;
 
-    protected int getMainRailGap() {
+    public int getMainRailGap() {
         return mainRailGap;
     }
 
-    protected void setMainRailGap(int val) {
+    public void setMainRailGap(int val) {
         mainRailGap = val;
     }
 
     private Color mainRailColor = Color.decode("#C0BFBF");
 
-    protected Color getMainRailColor() {
+    public Color getMainRailColor() {
         return mainRailColor;
     }
 
-    protected void setMainRailColor(@Nonnull Color val) {
+    public void setMainRailColor(@Nonnull Color val) {
         mainRailColor = val;
     }
 
     private int mainBlockLineWidth = 3;
 
-    protected int getMainBlockLineWidth() {
+    public int getMainBlockLineWidth() {
         return mainBlockLineWidth;
     }
 
-    protected void setMainBlockLineWidth(int val) {
+    public void setMainBlockLineWidth(int val) {
         mainBlockLineWidth = val;
     }
 
     // 
-    protected boolean equalsAllButName(@Nonnull LayoutTrackDrawingOptions ltdo) {
+    public boolean equalsAllButName(@Nonnull LayoutTrackDrawingOptions ltdo) {
         boolean result = true;  // assume success (optimist!)
         if (this != ltdo) {
             result = false; // assume failure (pessimist!)

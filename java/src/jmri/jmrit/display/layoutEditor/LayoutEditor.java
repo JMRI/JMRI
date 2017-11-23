@@ -2690,10 +2690,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         trackMenu.add(jmi);
         jmi.setToolTipText(Bundle.getMessage("SetTrackDrawingOptionsToolTip"));
         jmi.addActionListener((ActionEvent event) -> {
-            LayoutTrackDrawingOptionsDialog ltdod = new LayoutTrackDrawingOptionsDialog(
-                    this, true, getLayoutTrackDrawingOptions());
-
-            ltdod.pack();
+            LayoutTrackDrawingOptionsDialog ltdod
+                    = new LayoutTrackDrawingOptionsDialog(
+                            this, true, getLayoutTrackDrawingOptions());
             ltdod.setVisible(true);
         });
 
@@ -2844,15 +2843,16 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     \*============================================*/
     private LayoutTrackDrawingOptions layoutTrackDrawingOptions = null;
 
-    protected LayoutTrackDrawingOptions getLayoutTrackDrawingOptions() {
+    public LayoutTrackDrawingOptions getLayoutTrackDrawingOptions() {
         if (layoutTrackDrawingOptions == null) {
             layoutTrackDrawingOptions = new LayoutTrackDrawingOptions(getLayoutName());
         }
         return layoutTrackDrawingOptions;
     }
 
-    protected void setLayoutTrackDrawingOptions(LayoutTrackDrawingOptions ltdo) {
+    public void setLayoutTrackDrawingOptions(LayoutTrackDrawingOptions ltdo) {
         layoutTrackDrawingOptions = ltdo;
+        redrawPanel();
     }
 
     private JCheckBoxMenuItem skipTurnoutCheckBoxMenuItem = null;

@@ -8,10 +8,14 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[512, 2147483647]"/>
+      <Dimension value="[512, 329]"/>
     </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[512, 512]"/>
+      <Dimension value="[512, 329]"/>
+    </Property>
+    <Property name="resizable" type="boolean" value="false"/>
+    <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[512, 329]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -49,19 +53,13 @@
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="OptionsPanel" pref="506" max="32767" attributes="0"/>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="previewPanel" max="32767" attributes="0"/>
-          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="OptionsPanel" min="-2" pref="288" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="previewPanel" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="presetsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="presetsComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -323,7 +321,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="mainRailCountSpinnerVetoableChange"/>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mainRailCountSpinnerStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JSpinner" name="sideRailCountSpinner">
@@ -347,7 +345,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="sideRailCountSpinnerVetoableChange"/>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sideRailCountSpinnerStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="railWidthLabel">
@@ -388,7 +386,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="mainRailWidthSpinnerVetoableChange"/>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mainRailWidthSpinnerStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JSpinner" name="sideRailWidthSpinner">
@@ -412,7 +410,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="sideRailWidthSpinnerVetoableChange"/>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sideRailWidthSpinnerStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="railGapLabel">
@@ -453,7 +451,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="mainRailGapSpinnerVetoableChange"/>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mainRailGapSpinnerStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JSpinner" name="sideRailGapSpinner">
@@ -477,7 +475,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="sideRailGapSpinnerVetoableChange"/>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sideRailGapSpinnerStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="railColorLabel">
@@ -621,7 +619,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="mainBlockLineWidthSpinnerVetoableChange"/>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mainBlockLineWidthSpinnerStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JSpinner" name="sideBlockLineWidthSpinner">
@@ -645,7 +643,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="sideBlockLineWidthSpinnerVetoableChange"/>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sideBlockLineWidthSpinnerStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="ballastWidthLabel">
@@ -688,7 +686,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="mainBallastWidthSpinnerVetoableChange"/>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mainBallastWidthSpinnerStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JSpinner" name="sideBallastWidthSpinner">
@@ -711,7 +709,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="sideBallastWidthSpinnerVetoableChange"/>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sideBallastWidthSpinnerStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="ballastColorLabel">
@@ -854,7 +852,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="mainTieLengthSpinnerVetoableChange"/>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mainTieLengthSpinnerStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JSpinner" name="sideTieLengthSpinner">
@@ -877,7 +875,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="sideTieLengthSpinnerVetoableChange"/>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sideTieLengthSpinnerStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="tieWidthLabel">
@@ -917,7 +915,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="mainTieWidthSpinnerVetoableChange"/>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mainTieWidthSpinnerStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JSpinner" name="sideTieWidthSpinner">
@@ -940,7 +938,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="sideTieWidthSpinnerVetoableChange"/>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sideTieWidthSpinnerStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="tieGapLabel">
@@ -980,7 +978,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="mainTieGapSpinnerVetoableChange"/>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mainTieGapSpinnerStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JSpinner" name="sideTieGapSpinner">
@@ -1003,7 +1001,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="sideTieGapSpinnerVetoableChange"/>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sideTieGapSpinnerStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="tieColorLabel">
@@ -1129,49 +1127,6 @@
             </Property>
           </Properties>
         </Component>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JPanel" name="previewPanel">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Preview"/>
-          </Border>
-        </Property>
-      </Properties>
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="previewLayeredPane" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="previewLayeredPane" alignment="1" max="32767" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Container class="javax.swing.JLayeredPane" name="previewLayeredPane">
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="482" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="153" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-        </Container>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JComboBox" name="presetsComboBox">
