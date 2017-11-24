@@ -251,7 +251,7 @@
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;OptionLabelText&quot;)" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;OptionToolTip&quot;)" type="code"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -276,8 +276,8 @@
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;MainlineLabelText&quot;)" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="Bundle.getMessage(&quot;MainLineToolTip&quot;)" type="code"/>
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Bundle.getMessage(&quot;MainlineToolTip&quot;)" type="code"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[32767, 32767]"/>
@@ -298,7 +298,7 @@
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;RailCountLabelText&quot;)" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;RailCountToolTip&quot;)" type="code"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -320,7 +320,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" maximum="3" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;MainRailCountToolTip&quot;)" type="code"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -346,7 +346,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" maximum="3" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;SideRailCountToolTip&quot;)" type="code"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -372,7 +372,7 @@
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;RailWidthLabelText&quot;)" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;RailWidthToolTip&quot;)" type="code"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -394,7 +394,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;MainRailWidthToolTip&quot;)" type="code"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -420,7 +420,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;SideRailWidthToolTip&quot;)" type="code"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -446,7 +446,7 @@
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;RailGapLabelText&quot;)" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;RailGapToolTip&quot;)" type="code"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -468,7 +468,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;MainRailGapToolTip&quot;)" type="code"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -494,7 +494,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;SideRailGapToolTip&quot;)" type="code"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -523,7 +523,7 @@
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;RailColorLabelText&quot;)" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;RailColorToolTip&quot;)" type="code"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -550,7 +550,7 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="ltdOptions.getMainRailColor()" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;MainRailColorToolTip&quot;)" type="code"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -594,7 +594,7 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="ltdOptions.getSideRailColor()" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;SideRailColorToolTip&quot;)" type="code"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -638,7 +638,7 @@
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;BlockLineWidthLabelText&quot;)" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;BlockLineWidthToolTip&quot;)" type="code"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -660,7 +660,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;MainBlockLineWidthToolTip&quot;)" type="code"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -686,7 +686,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;SideBlockLineWidthToolTip&quot;)" type="code"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -715,7 +715,7 @@
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;BallastWidthLabelText&quot;)" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;BallastWidthToolTip&quot;)" type="code"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -737,7 +737,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;MainBallastWidthToolTip&quot;)" type="code"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -762,7 +762,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;SideBallastWidthToolTip&quot;)" type="code"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -790,7 +790,7 @@
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;BallastColorLabelText&quot;)" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;BallastColorToolTip&quot;)" type="code"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -817,7 +817,7 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="ltdOptions.getMainBallastColor()" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;MainBallastColorToolTip&quot;)" type="code"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -861,7 +861,7 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="ltdOptions.getSideBallastColor()" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;SideBallastColorToolTip&quot;)" type="code"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -905,7 +905,7 @@
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;TieLengthLabelText&quot;)" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;TieLengthToolTip&quot;)" type="code"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -927,7 +927,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;MainTieLengthToolTip&quot;)" type="code"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -952,7 +952,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;SideTieLengthToolTip&quot;)" type="code"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -977,7 +977,7 @@
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;TieWidthLabelText&quot;)" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;TieWidthToolTip&quot;)" type="code"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -999,7 +999,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;MainTieWidthToolTip&quot;)" type="code"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -1024,7 +1024,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;SideTieWidthToolTip&quot;)" type="code"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -1049,7 +1049,7 @@
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;TieGapLabelText&quot;)" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;TieGapToolTip&quot;)" type="code"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -1071,7 +1071,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;MainTieGapToolTip&quot;)" type="code"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -1096,7 +1096,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;SideTieGapToolTip&quot;)" type="code"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -1124,7 +1124,7 @@
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;TieColorLabelText&quot;)" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;TieColorToolTip&quot;)" type="code"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -1151,7 +1151,7 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="ltdOptions.getMainTieColor()" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;MainTieColorToolTip&quot;)" type="code"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -1195,7 +1195,7 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="ltdOptions.getSideTieColor()" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;SideTieColorToolTip&quot;)" type="code"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -1242,7 +1242,7 @@
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;SidelineLabelText&quot;)" type="code"/>
             </Property>
-            <Property name="ToolTip" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;SideLineToolTip&quot;)" type="code"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
