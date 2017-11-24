@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeListener;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -13,10 +14,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
+@SuppressWarnings("serial")
+@SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
 public class LayoutBlockThroughPathsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
     //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
-
     public static final int SOURCECOL = 0;
     static final int DESTINATIONCOL = 1;
     static final int ACTIVECOL = 2;

@@ -35,7 +35,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
@@ -50,7 +49,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
@@ -173,7 +171,7 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("serial")
 @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
-public class LayoutEditor extends PanelEditor implements VetoableChangeListener, MouseWheelListener {
+public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     //Operational instance variables - not saved to disk
     private transient JmriJFrame floatingEditToolBoxFrame = null;
@@ -2352,21 +2350,22 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             //if it matches the 1st choice then select it (for now; it will be updated later)
             ddldoChoiceMenuItem.setSelected(ddldoChoice.equals(ddldoChoices[0]));
         }
-        dropDownListsDisplayOrderMenu.addMenuListener(new MenuListener() {
-            @Override
-            public void menuSelected(MenuEvent event) {
-                ///TODO: update menu item based on focused combobox (if any)
-                log.debug("update menu item based on focused combobox");
-            }
-
-            @Override
-            public void menuDeselected(MenuEvent event) {
-            }
-
-            @Override
-            public void menuCanceled(MenuEvent event) {
-            }
-        });
+        //TODO: update menu item based on focused combobox (if any)
+        //note: commented out to avoid findbug warning
+        //dropDownListsDisplayOrderMenu.addMenuListener(new MenuListener() {
+        //    @Override
+        //    public void menuSelected(MenuEvent event) {
+        //        log.debug("update menu item based on focused combobox");
+        //    }
+        //
+        //    @Override
+        //    public void menuDeselected(MenuEvent event) {
+        //    }
+        //
+        //    @Override
+        //    public void menuCanceled(MenuEvent event) {
+        //    }
+        //});
         toolBarMenu.add(dropDownListsDisplayOrderMenu);
 
         //
@@ -5160,34 +5159,36 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     // this is a method to iterate over a list of lists of items
     // calling the predicate tester.test on each one
     // all matching items are then added to the resulting List
-    private static List testEachItemInListOfLists(
-            @Nonnull List<List> listOfListsOfObjects,
-            @Nonnull Predicate<Object> tester) {
-        List result = new ArrayList<>();
-        for (List<Object> listOfObjects : listOfListsOfObjects) {
-            List<Object> l = listOfObjects.stream().filter(o -> tester.test(o)).collect(Collectors.toList());
-            result.addAll(l);
-        }
-        return result;
-    }
+    //note: currently unused; commented out to avoid findbugs warning
+    //private static List testEachItemInListOfLists(
+    //        @Nonnull List<List> listOfListsOfObjects,
+    //        @Nonnull Predicate<Object> tester) {
+    //    List result = new ArrayList<>();
+    //    for (List<Object> listOfObjects : listOfListsOfObjects) {
+    //        List<Object> l = listOfObjects.stream().filter(o -> tester.test(o)).collect(Collectors.toList());
+    //        result.addAll(l);
+    //    }
+    //    return result;
+    //}
 
     // this is a method to iterate over a list of lists of items
     // calling the predicate tester.test on each one
     // and return the first one that matches
     //TODO: make this public? (it is useful! ;-)
-    private static Object findFirstMatchingItemInListOfLists(
-            @Nonnull List<List> listOfListsOfObjects,
-            @Nonnull Predicate<Object> tester) {
-        Object result = null;
-        for (List listOfObjects : listOfListsOfObjects) {
-            Optional<Object> opt = listOfObjects.stream().filter(o -> tester.test(o)).findFirst();
-            if (opt.isPresent()) {
-                result = opt.get();
-                break;
-            }
-        }
-        return result;
-    }
+    //note: currently unused; commented out to avoid findbugs warning
+    //private static Object findFirstMatchingItemInListOfLists(
+    //        @Nonnull List<List> listOfListsOfObjects,
+    //        @Nonnull Predicate<Object> tester) {
+    //    Object result = null;
+    //    for (List listOfObjects : listOfListsOfObjects) {
+    //        Optional<Object> opt = listOfObjects.stream().filter(o -> tester.test(o)).findFirst();
+    //        if (opt.isPresent()) {
+    //            result = opt.get();
+    //            break;
+    //        }
+    //    }
+    //    return result;
+    //}
 
     private boolean checkControls(boolean useRectangles) {
         Optional<LayoutTrack> opt = layoutTrackList.stream().filter(o -> {
@@ -9327,7 +9328,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
      * @param inLayoutBlock the layout block
      * @return true if layout block was highlighted
      */
-    public boolean highlightLayoutBlock(@Nullable LayoutBlock inLayoutBlock) {
+    public boolean highlightLayoutBlock(@Nonnull LayoutBlock inLayoutBlock) {
         return highlightBlock(inLayoutBlock.getBlock());
     } //highlightLayoutBlock
 
@@ -10273,7 +10274,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     // and therefore "event.getButton() == MouseEvent.BUTTON3" doesn't work.
     // event.getButton() always return 0 for MouseMoveEvent.
     private boolean isMetaDown(MouseEvent event) {
-        if (SystemType.isWindows()) {
+        if (SystemType.isWindows() || SystemType.isLinux()) {
             return SwingUtilities.isRightMouseButton(event);
         } else {
             return event.isMetaDown();
