@@ -107,11 +107,11 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         if (opsAccyMode) {
             log.debug("   getting AccessoryOpsModeProgrammerFacade");
             facadeProgrammer = new AccessoryOpsModeProgrammerFacade(programmer,
-                    longAddrButton.isSelected() ? "accessory" : "decoder");
+                    longAddrButton.isSelected() ? "accessory" : "decoder", 200);
             return facadeProgrammer;
         } else if (opsSigMode) {
             log.debug("   getting AccessoryOpsModeProgrammerFacade signal mode");
-            facadeProgrammer = new AccessoryOpsModeProgrammerFacade(programmer, "signal");
+            facadeProgrammer = new AccessoryOpsModeProgrammerFacade(programmer, "signal", 200);
             return facadeProgrammer;
         }
         return programmer;
