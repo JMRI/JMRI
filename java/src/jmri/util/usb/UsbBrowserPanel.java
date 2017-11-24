@@ -131,40 +131,34 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
         //
         // Change the default JTree icons
         //
-        try {
-            // get the tree cell renderer
-            DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) usbTree.getCellRenderer();
+        // get the tree cell renderer
+        DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) usbTree.getCellRenderer();
 
-            // get the size of the current icon
-            Icon openIcon = renderer.getOpenIcon();
-            int w = openIcon.getIconWidth();
-            int h = openIcon.getIconHeight();
+        // get the size of the current icon
+        Icon openIcon = renderer.getOpenIcon();
+        int w = openIcon.getIconWidth();
+        int h = openIcon.getIconHeight();
 
-            // setup the usb open icon
-            ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Open.jpg"));
-            Image image = imageIcon.getImage(); // convert it to an image
-            image = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way 
-            imageIcon = new ImageIcon(image);  // convert it back to an icon
-            renderer.setOpenIcon(imageIcon);
+        // setup the usb open icon
+        ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Open.jpg"));
+        Image image = imageIcon.getImage(); // convert it to an image
+        image = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way 
+        imageIcon = new ImageIcon(image);  // convert it back to an icon
+        renderer.setOpenIcon(imageIcon);
 
-            // setup the usb closed icon
-            imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Closed.jpg"));
-            image = imageIcon.getImage(); // convert it to an image
-            image = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way 
-            imageIcon = new ImageIcon(image);  // convert it back to an icon
-            renderer.setClosedIcon(imageIcon);
+        // setup the usb closed icon
+        imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Closed.jpg"));
+        image = imageIcon.getImage(); // convert it to an image
+        image = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way 
+        imageIcon = new ImageIcon(image);  // convert it back to an icon
+        renderer.setClosedIcon(imageIcon);
 
-            // get the usb leaf icon
-            imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Leaf.jpg"));
-            image = imageIcon.getImage(); // convert it to an image
-            image = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way 
-            imageIcon = new ImageIcon(image);  // convert it back to an icon
-            renderer.setLeafIcon(imageIcon);
-        } catch (RuntimeException e) {
-            throw e;    // runtime exceptions make me throw up
-        } catch (Exception e) {
-            // ignore others
-        }
+        // get the usb leaf icon
+        imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Leaf.jpg"));
+        image = imageIcon.getImage(); // convert it to an image
+        image = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way 
+        imageIcon = new ImageIcon(image);  // convert it back to an icon
+        renderer.setLeafIcon(imageIcon);
     }
 
     private void buildTree(UsbTreeNode root) {
