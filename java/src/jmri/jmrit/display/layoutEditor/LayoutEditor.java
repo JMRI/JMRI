@@ -9519,16 +9519,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 inPoint.getY() - circleRadius, circleDiameter, circleDiameter);
     }
 
-    private boolean drawRailsFlag = false;
-
-    protected boolean isDrawRailsFlag() {
-        return drawRailsFlag;
-    }
-
-    protected void setDrawRailsFlag(boolean bool) {
-        drawRailsFlag = bool;
-    }
-
     /**
      * Special internal class to allow drawing of layout to a JLayeredPane This
      * is the 'target' pane where the layout is displayed
@@ -9728,15 +9718,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             //change track stroke width
             trackWidth = main ? mainlineTrackWidth : sideTrackWidth;
-            if (isDrawRailsFlag() && (mainlineTrackWidth > 3.F) && (sideTrackWidth > 2.F)) {
-                trackWidth -= main ? 3.F : 2.F;
-                //float dash_phase = 0.F;
-                //Stroke stroke = g2.getStroke();
-                //if (stroke instanceof BasicStroke) {
-                //    dash_phase = ((BasicStroke) stroke).getDashPhase();
-                //}
-                //g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 0, new float[]{2.F, 3.F}, dash_phase));
-            }
             g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         }
         return trackWidth;

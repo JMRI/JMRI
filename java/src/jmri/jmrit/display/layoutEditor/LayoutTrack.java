@@ -119,16 +119,12 @@ public abstract class LayoutTrack {
     }
 
     protected Color setColorForTrackBlock(Graphics2D g2, @Nullable LayoutBlock lb, boolean forceBlockTrackColor) {
-        Color result = defaultTrackColor;
-        if (layoutEditor.isDrawRailsFlag()) {
-            result = defaultBallastColor;
-        } else {
-            if (lb != null) {
-                if (forceBlockTrackColor) {
-                    result = lb.getBlockTrackColor();
-                } else {
-                    result = lb.getBlockColor();
-                }
+        Color result = ColorUtil.setAlpha(Color.BLACK, 0);  // transparent
+        if (lb != null) {
+            if (forceBlockTrackColor) {
+                result = lb.getBlockTrackColor();
+            } else {
+                result = lb.getBlockColor();
             }
         }
         g2.setColor(result);
@@ -145,8 +141,8 @@ public abstract class LayoutTrack {
     /**
      * draw one line
      *
-     * @param g2 the graphics context
-     * @param isMain true if drawing mainlines
+     * @param g2      the graphics context
+     * @param isMain  true if drawing mainlines
      * @param isBlock true if drawing block lines
      */
     //protected abstract void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
@@ -159,8 +155,8 @@ public abstract class LayoutTrack {
     /**
      * draw two lines
      *
-     * @param g2 the graphics context
-     * @param isMain true if drawing mainlines
+     * @param g2      the graphics context
+     * @param isMain  true if drawing mainlines
      * @param isBlock true if drawing block lines
      */
     //protected abstract void draw2(Graphics2D g2, boolean isMain, boolean isBlock);
