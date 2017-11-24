@@ -14,8 +14,9 @@ import javax.usb.UsbException;
 import javax.usb.UsbHostManager;
 import javax.usb.UsbHub;
 import javax.usb.UsbInterface;
-import javax.usb.UsbInterfacePolicy;
 import javax.usb.UsbNotActiveException;
+import javax.usb.UsbNotClaimedException;
+import javax.usb.UsbNotOpenException;
 import javax.usb.UsbPipe;
 import javax.usb.UsbPort;
 import javax.usb.event.UsbPipeDataEvent;
@@ -26,15 +27,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * useful usb utilities
+ * USB utilities.
  *
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
  */
 public final class UsbUtil {
 
+    // Ideally, we would bar contruction of a utility class, but until I can
+    // mock a UsbDevice, allow the default constructor to stand
+//    /**
+//     * Prevent construction, since this is a stateless utility class
+//     */
+//    private UsbUtil() {
+//        // prevent construction, since this is a stateless utility class
+//    }
+
     /**
-     * get all USB devices
+     * Get all USB devices.
      *
      * @return a list of all UsbDevice's
      */
@@ -43,20 +53,18 @@ public final class UsbUtil {
     }
 
     /**
-     * get matching USB devices
+     * Get matching USB devices.
      *
      * @param idVendor  the vendor id to match (or zero to always match)
      * @param idProduct the product id to match (or zero to always match)
      * @return a list of matching UsbDevices
      */
     public static List<UsbDevice> getMatchingDevices(short idVendor, short idProduct) {
-        List<UsbDevice> result = new ArrayList<>();
-        recursivelyCollectUSBDevices(null, idVendor, idProduct, result);
-        return result;
+        return recursivelyCollectUsbDevices(null, idVendor, idProduct);
     }
 
     /**
-     * get matching USB device
+     * Get matching USB device.
      *
      * @param idVendor   the vendor id to match (or zero to always match)
      * @param idProduct  the product id to match (or zero to always match)
@@ -64,30 +72,25 @@ public final class UsbUtil {
      * @return a list of matching UsbDevices
      */
     public static UsbDevice getMatchingDevice(short idVendor, short idProduct, String idLocation) {
-        UsbDevice result = null;    // assume failure (pessimist!)
-
         if ((idLocation != null) && !idLocation.isEmpty()) {
-            long longLocationID = Long.decode(idLocation).longValue();
+            long longLocationID = Long.decode(idLocation);
             if (longLocationID > 0) {
-                List<UsbDevice> usbDevices = new ArrayList<>();
-                recursivelyCollectUSBDevices(null, idVendor, idProduct, usbDevices);
-                for (UsbDevice usbDevice : usbDevices) {
+                for (UsbDevice usbDevice : recursivelyCollectUsbDevices(null, idVendor, idProduct)) {
                     String locationID = getLocationID(usbDevice);
                     if (locationID.equals(idLocation)) {
-                        result = usbDevice;
-                        break;
+                        return usbDevice;
                     }
                 }
             }
         }
-        return result;
+        return null;
     }
 
     /**
-     * get a USB device's full product (manufacturer + product) name
+     * Get a USB device's full product (manufacturer + product) name.
      *
-     * @param usbDevice the usb device you want to full product name of
-     * @return the full product name (String)
+     * @param usbDevice the USB device to get the full product name of
+     * @return the full product name
      */
     public static String getFullProductName(@Nonnull UsbDevice usbDevice) {
         String result = "";
@@ -110,83 +113,80 @@ public final class UsbUtil {
     }
 
     /**
-     * get a USB device's serial number (String)
+     * Get a USB device's serial number.
      *
-     * @param usbDevice the usb device who's serial number you want
-     * @return serial number (String)
+     * @param usbDevice the USB device to get the serial number of
+     * @return serial number
      */
+    @Nullable
     public static String getSerialNumber(@Nonnull UsbDevice usbDevice) {
-        String result = "";
         try {
-            result = usbDevice.getSerialNumberString();
-            result = (result == null) ? "" : result;
-        } catch (UsbException
-                | UnsupportedEncodingException
-                | UsbDisconnectedException ex) {
-            // Nothing to see here... move along...
+            return usbDevice.getSerialNumberString();
+        } catch (UsbException | UnsupportedEncodingException | UsbDisconnectedException ex) {
+            log.error("Unable to get serial number of {}", usbDevice);
         }
-        return result;
+        return null;
     }
 
     /**
-     * get a USB device's location id (String)
+     * Get a USB device's location id. This encoding the USB device location
+     * does not match any operating system's encoding scheme; it is not intended
+     * to be displayed to the end user.
      *
-     * @param usbDevice the usb device who's location id you want
-     * @return location id (String)
+     * @param usbDevice the USB device who's location id you want
+     * @return location id
      */
     public static String getLocationID(@Nonnull UsbDevice usbDevice) {
-        String result = "";
-        while (usbDevice != null) {
+        StringBuilder result = new StringBuilder();
+        UsbDevice device = usbDevice;
+        while (device != null) {
             UsbPort usbPort = usbDevice.getParentUsbPort();
             if (usbPort == null) {
                 break;
             }
-            result = "" + usbPort.getPortNumber() + result;
-            usbDevice = usbPort.getUsbHub();
+            result.append(usbPort.getPortNumber());
+            device = usbPort.getUsbHub();
         }
-        result = "0x" + StringUtils.rightPad(result, 8, "0");
-        return result;
+        return String.format("0x%s", StringUtils.rightPad(result.reverse().toString(), 8, "0"));
     }
 
-    /*
-     * recursive routine to collect USB devices
-     * @param usbHub the hub whos devices we want to collect (null for root)
-     * @param idVendor the vendor id to match against
+    /**
+     * Recursive routine to collect USB devices.
+     *
+     * @param usbHub    the hub who's devices we want to collect (null for root)
+     * @param idVendor  the vendor id to match against
      * @param idProduct the product id to match against
-     * @param devices the list of USB devices to add matching devices to
      */
     @Nonnull
-    private static List<UsbDevice> recursivelyCollectUSBDevices(
-            @Nullable UsbHub usbHub, short idVendor,
-            short idProduct, @Nonnull List<UsbDevice> devices) {
+    private static List<UsbDevice> recursivelyCollectUsbDevices(
+            @Nullable UsbHub usbHub, short idVendor, short idProduct) {
         if (usbHub == null) {
             try {
-                usbHub = UsbHostManager.getUsbServices().getRootUsbHub();
+                return recursivelyCollectUsbDevices(UsbHostManager.getUsbServices().getRootUsbHub(), idVendor, idProduct);
             } catch (UsbException | SecurityException ex) {
-                //log.error("Exception: " + ex);
+                log.error("Exception: {}", ex.toString());
             }
         }
-        if (usbHub != null) {
-            List<UsbDevice> usbDevices = usbHub.getAttachedUsbDevices();
-            for (UsbDevice usbDevice : usbDevices) {
-                if (usbDevice instanceof UsbHub) {
-                    UsbHub childUsbHub = (UsbHub) usbDevice;
-                    recursivelyCollectUSBDevices(childUsbHub, idVendor, idProduct, devices);
-                } else {
-                    UsbDeviceDescriptor usbDeviceDescriptor = usbDevice.getUsbDeviceDescriptor();
-                    if ((idVendor == 0) || (idVendor == usbDeviceDescriptor.idVendor())) {
-                        if ((idProduct == 0) || (idProduct == usbDeviceDescriptor.idProduct())) {
-                            devices.add(usbDevice);
-                        }
+        List<UsbDevice> devices = new ArrayList<>();
+        List<UsbDevice> usbDevices = usbHub.getAttachedUsbDevices();
+        usbDevices.forEach((usbDevice) -> {
+            if (usbDevice instanceof UsbHub) {
+                UsbHub childUsbHub = (UsbHub) usbDevice;
+                devices.addAll(recursivelyCollectUsbDevices(childUsbHub, idVendor, idProduct));
+            } else {
+                UsbDeviceDescriptor usbDeviceDescriptor = usbDevice.getUsbDeviceDescriptor();
+                if ((idVendor == 0) || (idVendor == usbDeviceDescriptor.idVendor())) {
+                    if ((idProduct == 0) || (idProduct == usbDeviceDescriptor.idProduct())) {
+                        devices.add(usbDevice);
                     }
                 }
             }
-        }
+        });
         return devices;
-    }   // recursivelyCollectUSBDevices
+    }
 
     /**
-     * read message (synchronous)
+     * Read message synchronously.
      *
      * @param iface    the interface
      * @param endPoint the end point
@@ -196,12 +196,7 @@ public final class UsbUtil {
         UsbPipe pipe = null;
 
         try {
-            iface.claim(new UsbInterfacePolicy() {
-                @Override
-                public boolean forceClaim(UsbInterface usbInterface) {
-                    return true;
-                }
-            });
+            iface.claim((UsbInterface usbInterface) -> true);
 
             UsbEndpoint endpoint = (UsbEndpoint) iface.getUsbEndpoints().get(endPoint); // there can be more 1,2,3..
             pipe = endpoint.getUsbPipe();
@@ -209,40 +204,33 @@ public final class UsbUtil {
 
             byte[] data = new byte[8];
             int received = pipe.syncSubmit(data);
-            log.debug(received + " bytes received");
+            log.debug("{} bytes received", received);
 
             pipe.close();
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (IllegalArgumentException | UsbDisconnectedException | UsbException | UsbNotActiveException | UsbNotClaimedException | UsbNotOpenException ex) {
+            log.error("Unable to read message", ex);
         } finally {
             try {
                 iface.release();
-            } catch (UsbNotActiveException
-                    | UsbDisconnectedException
-                    | UsbException e) {
-                e.printStackTrace();
+            } catch (UsbNotActiveException | UsbDisconnectedException | UsbException ex) {
+                log.error("Unable to release USB device", ex);
             }
         }
     }
 
     /**
-     * read message asynchronous
+     * Read message asynchronously.
      *
      * @param iface    the interface
      * @param endPoint the end point
      */
     public static void readMessageAsynch(@Nonnull UsbInterface iface, int endPoint) {
 
-        UsbPipe pipe = null;
+        UsbPipe pipe;
 
         try {
-            iface.claim(new UsbInterfacePolicy() {
-                @Override
-                public boolean forceClaim(UsbInterface usbInterface) {
-                    return true;
-                }
-            });
+            iface.claim((UsbInterface usbInterface) -> true);
 
             UsbEndpoint endpoint = (UsbEndpoint) iface.getUsbEndpoints().get(endPoint); // there can be more 1,2,3..
             pipe = endpoint.getUsbPipe();
@@ -252,65 +240,55 @@ public final class UsbUtil {
             pipe.addUsbPipeListener(new UsbPipeListener() {
                 @Override
                 public void errorEventOccurred(UsbPipeErrorEvent event) {
-                    log.error("UsbPipeErrorEvent: " + event);
-                    UsbException error = event.getUsbException();
-                    log.error("UsbException: " + error);
+                    log.error("UsbPipeErrorEvent: {}", event, event.getUsbException());
                 }
 
                 @Override
                 public void dataEventOccurred(UsbPipeDataEvent event) {
                     byte[] data = event.getData();
-                    log.debug(data + " bytes received: " + data);
+                    log.debug("{} bytes received: {}", data, data);
                 }
             });
-			pipe.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            pipe.close();
+        } catch (UsbDisconnectedException | UsbException | UsbNotActiveException | UsbNotClaimedException | UsbNotOpenException ex) {
+            log.error("Unable to read USB message.", ex);
         } finally {
             try {
                 iface.release();
-            } catch (UsbNotActiveException
-                    | UsbDisconnectedException
-                    | UsbException e) {
-                e.printStackTrace();
+            } catch (UsbNotActiveException | UsbDisconnectedException | UsbException ex) {
+                log.error("Unable to release USB device.", ex);
             }
         }
     }
 
     /**
-     * get usb device interface
+     * Get USB device interface.
      *
-     * @param device the usb device
-     * @param index  the usb interface index
-     * @return the usb interface
+     * @param device the USB device
+     * @param index  the USB interface index
+     * @return the USB interface
      */
     public static UsbInterface getDeviceInterface(@Nonnull UsbDevice device, int index) {
-        UsbInterface result = null;  // assume failure (pessimist!)
         UsbConfiguration configuration = device.getActiveUsbConfiguration();
         if (configuration != null) {
-            result = (UsbInterface) configuration.getUsbInterfaces().get(index); // there can be more 1,2,3..
+            return (UsbInterface) configuration.getUsbInterfaces().get(index); // there can be more 1,2,3..
         }
-        return result;
+        return null;
     }
 
     /**
-     * send bulk message
+     * Send bulk message.
      *
      * @param iface   the interface
      * @param message the message
-     * @param index   the index
+     * @param index   index of the endpoint attached to the interface
      */
     public static void sendBulkMessage(@Nonnull UsbInterface iface, @Nonnull String message, int index) {
 
-        UsbPipe pipe = null;
+        UsbPipe pipe;
 
         try {
-            iface.claim(new UsbInterfacePolicy() {
-                @Override
-                public boolean forceClaim(UsbInterface usbInterface) {
-                    return true;
-                }
-            });
+            iface.claim((UsbInterface usbInterface) -> true);
 
             UsbEndpoint endpoint = (UsbEndpoint) iface.getUsbEndpoints().get(index);
             pipe = endpoint.getUsbPipe();
@@ -326,23 +304,19 @@ public final class UsbUtil {
             pipe.syncSubmit(str.getBytes());
             pipe.syncSubmit(cutP);
 
-            log.debug(sent + " bytes sent");
+            log.debug("{} bytes sent", sent);
             pipe.close();
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (IllegalArgumentException | UsbDisconnectedException | UsbException | UsbNotActiveException | UsbNotClaimedException | UsbNotOpenException ex) {
+            log.error("Unable to send message.", ex);
         } finally {
             try {
                 iface.release();
-            } catch (UsbNotActiveException
-                    | UsbDisconnectedException
-                    | UsbException e) {
-                e.printStackTrace();
+            } catch (UsbNotActiveException | UsbDisconnectedException | UsbException ex) {
+                log.error("Unable to release USB device.", ex);
             }
         }
     }
 
-    //initialize logging
-    private transient final static Logger log
-            = LoggerFactory.getLogger(UsbUtil.class);
-}   // class UsbUtil
+    private final static Logger log = LoggerFactory.getLogger(UsbUtil.class);
+}
