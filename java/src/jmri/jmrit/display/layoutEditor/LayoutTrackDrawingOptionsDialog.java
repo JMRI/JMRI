@@ -934,57 +934,81 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     }//GEN-LAST:event_mainRailCountSpinnerStateChanged
 
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
-        layoutEditor.setLayoutTrackDrawingOptions(ltdOptions);
+        LayoutTrackDrawingOptions ltdo = new LayoutTrackDrawingOptions(ltdOptions);
+        ltdo.setName(layoutEditor.getLayoutName());
+        layoutEditor.setLayoutTrackDrawingOptions(ltdo);
     }//GEN-LAST:event_applyButtonActionPerformed
 
     private void mainRailColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainRailColorButtonActionPerformed
         JButton button = (JButton) evt.getSource();
         Color value = button.getBackground();
-        Color newColor = JColorChooser.showDialog(null, "Choose a color", Color.RED);
-
-        makeCustomPreset();
-        ltdOptions.setMainRailColor(value);
-        log.info("*mainRailColorButtonActionPerformed({})", value);
+        Color newColor = JColorChooser.showDialog(null, "Choose a color", value);
+        if (!value.equals(newColor)) {
+            makeCustomPreset();
+            button.setBackground(newColor);
+            ltdOptions.setMainRailColor(newColor);
+        }
+        log.info("*mainRailColorButtonActionPerformed({})", newColor);
     }//GEN-LAST:event_mainRailColorButtonActionPerformed
 
     private void sideRailColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sideRailColorButtonActionPerformed
         JButton button = (JButton) evt.getSource();
         Color value = button.getBackground();
-        makeCustomPreset();
-        ltdOptions.setSideRailColor(value);
-        log.info("*sideRailColorButtonActionPerformed({})", value);
+        Color newColor = JColorChooser.showDialog(null, "Choose a color", value);
+        if (!value.equals(newColor)) {
+            makeCustomPreset();
+            button.setBackground(newColor);
+            ltdOptions.setSideRailColor(newColor);
+        }
+        log.info("*sideRailColorButtonActionPerformed({})", newColor);
     }//GEN-LAST:event_sideRailColorButtonActionPerformed
 
     private void mainBallastColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainBallastColorButtonActionPerformed
         JButton button = (JButton) evt.getSource();
         Color value = button.getBackground();
-        makeCustomPreset();
-        ltdOptions.setMainBallastColor(value);
-        log.info("*mainBallastColorButtonActionPerformed({})", value);
+        Color newColor = JColorChooser.showDialog(null, "Choose a color", value);
+        if (!value.equals(newColor)) {
+            makeCustomPreset();
+            button.setBackground(newColor);
+            ltdOptions.setMainBallastColor(newColor);
+        }
+        log.info("*mainBallastColorButtonActionPerformed({})", newColor);
     }//GEN-LAST:event_mainBallastColorButtonActionPerformed
 
     private void sideBallastColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sideBallastColorButtonActionPerformed
         JButton button = (JButton) evt.getSource();
         Color value = button.getBackground();
-        makeCustomPreset();
-        ltdOptions.setSideBallastColor(value);
-        log.info("*sideBallastColorButtonActionPerformed({})", value);
+        Color newColor = JColorChooser.showDialog(null, "Choose a color", value);
+        if (!value.equals(newColor)) {
+            makeCustomPreset();
+            button.setBackground(newColor);
+            ltdOptions.setSideBallastColor(newColor);
+        }
+        log.info("*sideBallastColorButtonActionPerformed({})", newColor);
     }//GEN-LAST:event_sideBallastColorButtonActionPerformed
 
     private void mainTieColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainTieColorButtonActionPerformed
         JButton button = (JButton) evt.getSource();
         Color value = button.getBackground();
-        makeCustomPreset();
-        ltdOptions.setMainTieColor(value);
-        log.info("*mainTieColorButtonActionPerformed({})", value);
+        Color newColor = JColorChooser.showDialog(null, "Choose a color", value);
+        if (!value.equals(newColor)) {
+            makeCustomPreset();
+            button.setBackground(newColor);
+            ltdOptions.setMainTieColor(newColor);
+        }
+        log.info("*mainTieColorButtonActionPerformed({})", newColor);
     }//GEN-LAST:event_mainTieColorButtonActionPerformed
 
     private void sideTieColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sideTieColorButtonActionPerformed
         JButton button = (JButton) evt.getSource();
         Color value = button.getBackground();
-        makeCustomPreset();
-        ltdOptions.setSideTieColor(value);
-        log.info("*sideTieColorButtonActionPerformed({})", value);
+        Color newColor = JColorChooser.showDialog(null, "Choose a color", value);
+        if (!value.equals(newColor)) {
+            makeCustomPreset();
+            button.setBackground(newColor);
+            ltdOptions.setSideTieColor(newColor);
+        }
+        log.info("*sideTieColorButtonActionPerformed({})", newColor);
     }//GEN-LAST:event_sideTieColorButtonActionPerformed
 
     /*=========================*\
