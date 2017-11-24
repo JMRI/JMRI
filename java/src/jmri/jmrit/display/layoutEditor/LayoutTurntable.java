@@ -48,11 +48,11 @@ import org.slf4j.LoggerFactory;
  * <P>
  * The radius of the turntable circle is variable by the user.
  * <P>
- * Each radiating segment (RayTrack) connecting point is a fixed distance
- * from the center of the turntable. The user may vary the angle of the
- * radiating segment. Angles are measured from the vertical (12 o'clock)
- * position in a clockwise manner. For example, 30 degrees is 1 o'clock, 60
- * degrees is 2 o'clock, 90 degrees is 3 o'clock, etc.
+ * Each radiating segment (RayTrack) connecting point is a fixed distance from
+ * the center of the turntable. The user may vary the angle of the radiating
+ * segment. Angles are measured from the vertical (12 o'clock) position in a
+ * clockwise manner. For example, 30 degrees is 1 o'clock, 60 degrees is 2
+ * o'clock, 90 degrees is 3 o'clock, etc.
  * <P>
  * Each radiating segment is drawn from its connection point to the turntable
  * circle in the direction of the turntable center.
@@ -434,7 +434,7 @@ public class LayoutTurntable extends LayoutTrack {
 
         for (int k = 0; k < getNumberRays(); k++) {
             if (!requireUnconnected || (getRayConnectOrdered(k) == null)) {
-                p = getCoordsCenter();
+                p = getRayCoordsOrdered(k);
                 distance = MathUtil.distance(p, hitPoint);
                 if (distance < minDistance) {
                     minDistance = distance;
@@ -521,7 +521,7 @@ public class LayoutTurntable extends LayoutTrack {
 
         for (RayTrack rt : rayList) {
             if (rt.getConnectionIndex() == index) {
-                JMenuItem jmi = rayPopup.add("Turntable Ray " + index);
+                JMenuItem jmi = rayPopup.add("Turntable Ray " + (index + 1));
                 jmi.setEnabled(false);
 
                 rayPopup.add(new AbstractAction(
