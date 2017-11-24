@@ -371,7 +371,6 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
         if (!getDisabled()) {
             if (lightManager == null) {
                 lightManager = new UsbLightManager(this);
-                InstanceManager.setLightManager(lightManager);
             }
             result = lightManager;
         }
