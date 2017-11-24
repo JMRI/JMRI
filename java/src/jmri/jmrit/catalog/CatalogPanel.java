@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+//import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
@@ -22,6 +23,7 @@ import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -49,6 +51,7 @@ import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
 import jmri.util.swing.DrawSquares;
+import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,10 +76,10 @@ public class CatalogPanel extends JPanel implements MouseListener {
     static Color _darkGrayColor = new Color(150, 150, 150);
     protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor};
     protected Color _currentBackground = _grayColor;
-    protected DrawSquares _squaresPanel; // checkered background
+    protected BufferedImage[] _backgrounds; // array of Image backgrounds
 
     JLabel _previewLabel = new JLabel(" ");
-    protected JPanel _preview;
+    protected ImagePanel _preview;
     protected JScrollPane js;
     boolean _noDrag;
 
@@ -391,17 +394,18 @@ public class CatalogPanel extends JPanel implements MouseListener {
         JPanel previewPanel = new JPanel();
         previewPanel.setLayout(new BoxLayout(previewPanel, BoxLayout.Y_AXIS));
         previewPanel.add(_previewLabel);
-        _preview = new JPanel();
-        _preview.setLayout(new OverlayLayout(_preview));
+        _preview = new ImagePanel();
+        log.debug("Catalog ImagePanel created");
+        _preview.setLayout(new BoxLayout(_preview, BoxLayout.Y_AXIS));
         _preview.setOpaque(false);
-        if (_squaresPanel == null) { // add a white checkered background
-            _squaresPanel = new DrawSquares(_preview, 10); // to pick up total size
-            log.debug("CatalogPanel DrawSquares() called");
-        }
-        _preview.add(_squaresPanel, -1); // place behind icons
-        _squaresPanel.setVisible(false); // initially hidden
         js = new JScrollPane(_preview);
-        previewPanel.add(js);            // place icons over the checkered background
+        previewPanel.add(js);
+        // create array of backgrounds
+        _backgrounds = new BufferedImage[4];
+        for (int i = 0; i < 2; i++) {
+            _backgrounds[i] = DrawSquares.getImage(_preview, 10, colorChoice[i], colorChoice[i]);
+        }
+        _backgrounds[3] = DrawSquares.getImage(_preview, 10, Color.white, _grayColor);
         return previewPanel;
     }
 
@@ -419,18 +423,12 @@ public class CatalogPanel extends JPanel implements MouseListener {
         bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option
         bgColorBox.setSelectedIndex(0); // start as "White"
         bgColorBox.addActionListener((ActionEvent e) -> {
-            if (bgColorBox.getSelectedIndex() == 3) {     // display checkers background
-                _currentBackground = null;
-                _squaresPanel.setVisible(true);
-                // _preview.setOpaque(false);
-                // _preview.setBackground(grid); // put BufferedImage directly on _preview background?
-                log.debug("paintCheckers() called");
-            } else {
-                _currentBackground = colorChoice[bgColorBox.getSelectedIndex()];
-                _squaresPanel.setVisible(false);
-                // _preview.setOpaque(true);
-            }
-            setBackground(_preview); // sets all bg colors, revalidate, note: makes them opaque
+            // load background image
+            _preview.setImage(_backgrounds[bgColorBox.getSelectedIndex()]);
+            log.debug("Catalog setImage called");
+            _preview.setOpaque(false);
+            // _preview.repaint(); // force redraw
+            _preview.invalidate();
         });
 
         JPanel backgroundPanel = new JPanel();
@@ -444,15 +442,17 @@ public class CatalogPanel extends JPanel implements MouseListener {
         return backgroundPanel;
     }
 
+    // resets the background
     public void setBackground(Container container) {
-        if (_currentBackground != null) {
-            container.setBackground(_currentBackground);
-        }
+        // container.setBackground(_currentBackground);
+        //        if (_currentBackground != null) {
+        //            container.setBackground(_currentBackground);
+        //        }
         Component[] comp = container.getComponents();
         for (Component comp1 : comp) {
-            comp1.setBackground(_currentBackground);
+        //            comp1.setBackground(_currentBackground);
             if (comp1 instanceof java.awt.Container) {
-                setBackground((Container) comp1);
+        //                setBackground((Container) comp1);
             }
         }
         container.invalidate();
@@ -468,7 +468,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
             comp1.removeMouseListener(this);
         }
         _preview.removeAll();
-        //setBackground(_preview);
         _preview.repaint();
     }
 

@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
@@ -117,8 +118,8 @@ public class MultiSensorItemPanel extends TableItemPanel {
         makeMultiSensorPanel();
         _iconFamilyPanel.add(_multiSensorPanel);
 
-        if (_squaresPanel == null) { // add a white checkered background
-            _squaresPanel = new DrawSquares(_iconFamilyPanel, 10);
+        if (_squaresPanel == null) { // add a white background
+            _squaresPanel = new DrawSquares(_iconFamilyPanel, 10, Color.white);
             log.debug("DrawSquares() called");
         }
         _iconFamilyPanel.add(_squaresPanel, -1); // place behind icons

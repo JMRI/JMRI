@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.OverlayLayout;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
@@ -126,8 +127,11 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _previewPanel.add(Box.createVerticalStrut(STRUT), BorderLayout.PAGE_END);
         _previewPanel.setBackground(_currentBackground);
 
-        _squaresPanel = new DrawSquares(_previewPanel, 10); // create a white checkered background
-        log.debug("DrawSquares() called");
+        _previewPanel.setLayout(new OverlayLayout(_previewPanel));
+        if (_squaresPanel == null) { // add a white background
+            _squaresPanel = new DrawSquares(_previewPanel, 10, Color.white);
+            log.debug("DrawSquares() called");
+        }
 
         _samplePanel = new JPanel();
         _samplePanel.add(Box.createHorizontalStrut(STRUT));
@@ -193,7 +197,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _chooser.setPreviewPanel(new JPanel());
         this.add(_chooser);
         _previewPanel.add(_squaresPanel, BorderLayout.CENTER, -1); // place behind icons
-        _squaresPanel.setVisible(false); // initially hidden
+        _squaresPanel.setVisible(true);
         _previewPanel.add(_samplePanel, BorderLayout.CENTER);
         this.add(_previewPanel);
         updateSamples();
@@ -550,17 +554,18 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             if (bgColorBox.getSelectedIndex() == 0) {
                 // use panel background color
                 _currentBackground = _editor.getTargetPanel().getBackground();
-                _squaresPanel.setVisible(false);
-                _previewPanel.setBackground(_currentBackground);
+                _squaresPanel = new DrawSquares(_previewPanel, 10, _currentBackground);
+//                _previewPanel.setBackground(_currentBackground);
             } else if (bgColorBox.getSelectedIndex() == 4) {
                 // display checkers background
+                _squaresPanel = new DrawSquares(_previewPanel, 10, Color.white, _grayColor);
                 _squaresPanel.setVisible(true);
                 log.debug("DecoratorPanel checkers visible");
-                 _previewPanel.setOpaque(false);
+//                 _previewPanel.setOpaque(false);
             } else {
-                _currentBackground = colorChoice[bgColorBox.getSelectedIndex() -1]; // choice 0 is not in colorChoice[]
-                _squaresPanel.setVisible(false);
-                _previewPanel.setBackground(_currentBackground);
+                _currentBackground = colorChoice[bgColorBox.getSelectedIndex() - 1]; // choice 0 is not in colorChoice[]
+                _squaresPanel = new DrawSquares(_previewPanel, 10, _currentBackground);
+//                _previewPanel.setBackground(_currentBackground);
             }
         });
 

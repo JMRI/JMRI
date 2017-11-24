@@ -175,12 +175,12 @@ public class PreviewDialog extends JDialog {
         previewPanel.add(p);
         _preview = new JPanel();
         _preview.setLayout(new FlowLayout());
-        if (_squaresPanel == null) { // add a white checkered background
-            _squaresPanel = new DrawSquares(_preview, 10); // to pick up total size
+        if (_squaresPanel == null) { // add a white background
+            _squaresPanel = new DrawSquares(_preview, 10, Color.white);
             log.debug("PreviewDialog DrawSquares() called");
         }
         _preview.add(_squaresPanel, -1); // place behind icons
-        _squaresPanel.setVisible(false); // initially hidden
+        _squaresPanel.setVisible(true);
         JScrollPane js = new JScrollPane(_preview);
         previewPanel.add(js);            // place icons over the checkered background
 
@@ -192,15 +192,16 @@ public class PreviewDialog extends JDialog {
         bgColorBox.setSelectedIndex(0); // white
         bgColorBox.addActionListener((ActionEvent e) -> {
             if (bgColorBox.getSelectedIndex() == 3) {
-                // display checkers background
+                // display checkered background
+                _squaresPanel = new DrawSquares(_preview, 10, Color.white, _grayColor);
                 _squaresPanel.setVisible(true);
-                _preview.setOpaque(false);
-                setBackGround(null);
+//                _preview.setOpaque(false);
                 log.debug("paintCheckers() called");
             } else {
-                _squaresPanel.setVisible(false);
-                _preview.setOpaque(true);
-                setBackGround(colorChoice[bgColorBox.getSelectedIndex()]); // sets all bg colors, makes them opaque
+                _squaresPanel = new DrawSquares(_preview, 10, colorChoice[bgColorBox.getSelectedIndex()]); // plain rect
+                _squaresPanel.setVisible(true);
+//                _preview.setOpaque(true);
+//                setBackGround(colorChoice[bgColorBox.getSelectedIndex()]); // sets all bg colors, makes them opaque
             }
         });
         JPanel pp = new JPanel();
@@ -212,6 +213,7 @@ public class PreviewDialog extends JDialog {
         return previewPanel;
     }
 
+    // no longer called
     private void setBackGround(Color color) {
         if (color != null) {
             _preview.setBackground(color);

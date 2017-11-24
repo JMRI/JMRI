@@ -27,7 +27,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-//import javax.swing.OverlayLayout;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.DragJLabel;
@@ -140,8 +139,8 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             log.error("Item type \"{}\" has {} families.", _itemType, (families == null ? "null" : families.size()));
         }
 //        _iconPanel.setLayout(new OverlayLayout(_iconPanel));
-        if (_squaresPanel == null) { // add a white checkered background
-            _squaresPanel = new DrawSquares(_iconPanel, 10);
+        if (_squaresPanel == null) { // add a white background
+            _squaresPanel = new DrawSquares(_iconPanel, 10, Color.white);
             log.debug("DrawSquares() called");
         }
         _iconPanel.add(_squaresPanel, -1); // place behind icons

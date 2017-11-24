@@ -239,7 +239,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 log.debug("FamilyItemPanel checkers visible");
                 _iconFamilyPanel.setOpaque(false);
             } else {
-                _currentBackground = colorChoice[bgColorBox.getSelectedIndex() -1]; // choice 0 is not in colorChoice[]
+                _currentBackground = colorChoice[bgColorBox.getSelectedIndex() - 1]; // choice 0 is not in colorChoice[]
                 _squaresPanel.setVisible(false);
                 _iconFamilyPanel.setBackground(_currentBackground);
             }
@@ -354,12 +354,12 @@ public abstract class FamilyItemPanel extends ItemPanel {
             // make _iconPanel & _dragIconPanel before calls to add icons
             addFamilyPanels(familyPanel);
             _iconPanel.setLayout(new OverlayLayout(_iconPanel));
-            if (_squaresPanel == null) { // add a white checkered background
-                _squaresPanel = new DrawSquares(_iconPanel, 10);
+            if (_squaresPanel == null) { // add a white background
+                _squaresPanel = new DrawSquares(_iconPanel, 10, Color.white);
                 log.debug("DrawSquares() called");
             }
             _iconPanel.add(_squaresPanel, -1); // place behind icons
-            _squaresPanel.setVisible(false);   // initially hidden
+            _squaresPanel.setVisible(true);
 
             if (_currentIconMap == null) {
                 log.error("currentIconMap is null in initIconFamiliesPanel");

@@ -89,8 +89,8 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         addIconsToPanel(_currentIconMap);
         // _iconFamilyPanel.add(_dragIconPanel, 1); // added twice? illegal position error
 
-        if (_squaresPanel == null) { // add a white checkered background
-            _squaresPanel = new DrawSquares(_iconFamilyPanel, 10);
+        if (_squaresPanel == null) { // add a white background
+            _squaresPanel = new DrawSquares(_iconFamilyPanel, 10, Color.white);
             log.debug("DrawSquares() called");
         }
         _iconFamilyPanel.add(_squaresPanel, -1); // place behind icons
