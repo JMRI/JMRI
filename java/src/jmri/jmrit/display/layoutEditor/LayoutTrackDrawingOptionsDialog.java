@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JSpinner;
 import org.slf4j.Logger;
@@ -116,27 +118,30 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         OptionsPanel.setSize(new java.awt.Dimension(800, 529));
 
         optionLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        optionLabel.setText("Option");
+        optionLabel.setText(Bundle.getMessage("OptionLabelText"));
+        optionLabel.setToolTipText(Bundle.getMessage("OptionToolTip"));
         optionLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
         optionLabel.setMinimumSize(new java.awt.Dimension(256, 16));
         optionLabel.setPreferredSize(new java.awt.Dimension(256, 16));
         optionLabel.setSize(new java.awt.Dimension(256, 16));
 
         mainlineLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        mainlineLabel.setText("Mainline");
+        mainlineLabel.setText(Bundle.getMessage("MainlineLabelText"));
+        mainlineLabel.setToolTipText(Bundle.getMessage("MainLineToolTip"));
         mainlineLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
         mainlineLabel.setMinimumSize(new java.awt.Dimension(64, 16));
         mainlineLabel.setPreferredSize(new java.awt.Dimension(64, 16));
         mainlineLabel.setSize(new java.awt.Dimension(64, 16));
 
-        railCountLabel.setText("Rail Count:");
+        railCountLabel.setText(Bundle.getMessage("RailCountLabelText"));
+        railCountLabel.setToolTipText(Bundle.getMessage("RailCountToolTip"));
         railCountLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
         railCountLabel.setMinimumSize(new java.awt.Dimension(256, 16));
         railCountLabel.setPreferredSize(new java.awt.Dimension(256, 16));
         railCountLabel.setSize(new java.awt.Dimension(256, 16));
 
         mainRailCountSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 3, 1));
-        mainRailCountSpinner.setToolTipText("Select the number of mainline rails (1...3)");
+        mainRailCountSpinner.setToolTipText(Bundle.getMessage("MainRailCountToolTip"));
         mainRailCountSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         mainRailCountSpinner.setName(""); // NOI18N
         mainRailCountSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
@@ -149,7 +154,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         });
 
         sideRailCountSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 3, 1));
-        sideRailCountSpinner.setToolTipText("Select the number of sideline rails (1...3)");
+        sideRailCountSpinner.setToolTipText(Bundle.getMessage("SideRailCountToolTip"));
         sideRailCountSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         sideRailCountSpinner.setName(""); // NOI18N
         sideRailCountSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
@@ -161,14 +166,15 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             }
         });
 
-        railWidthLabel.setText("Rail Width:");
+        railWidthLabel.setText(Bundle.getMessage("RailWidthLabelText"));
+        railWidthLabel.setToolTipText(Bundle.getMessage("RailWidthToolTip"));
         railWidthLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
         railWidthLabel.setMinimumSize(new java.awt.Dimension(256, 16));
         railWidthLabel.setPreferredSize(new java.awt.Dimension(256, 16));
         railWidthLabel.setSize(new java.awt.Dimension(256, 16));
 
         mainRailWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        mainRailWidthSpinner.setToolTipText("Select the number of mainline rails (1...3)");
+        mainRailWidthSpinner.setToolTipText(Bundle.getMessage("MainRailWidthToolTip"));
         mainRailWidthSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         mainRailWidthSpinner.setName(""); // NOI18N
         mainRailWidthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
@@ -181,7 +187,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         });
 
         sideRailWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        sideRailWidthSpinner.setToolTipText("Select the width of the sideline rails");
+        sideRailWidthSpinner.setToolTipText(Bundle.getMessage("SideRailWidthToolTip"));
         sideRailWidthSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         sideRailWidthSpinner.setName(""); // NOI18N
         sideRailWidthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
@@ -193,14 +199,15 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             }
         });
 
-        railGapLabel.setText("Rail Gap:");
+        railGapLabel.setText(Bundle.getMessage("RailGapLabelText"));
+        railGapLabel.setToolTipText(Bundle.getMessage("RailGapToolTip"));
         railGapLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
         railGapLabel.setMinimumSize(new java.awt.Dimension(256, 16));
         railGapLabel.setPreferredSize(new java.awt.Dimension(256, 16));
         railGapLabel.setSize(new java.awt.Dimension(256, 16));
 
         mainRailGapSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        mainRailGapSpinner.setToolTipText("Select the gap between the mainline rails");
+        mainRailGapSpinner.setToolTipText(Bundle.getMessage("MainRailGapToolTip"));
         mainRailGapSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         mainRailGapSpinner.setName(""); // NOI18N
         mainRailGapSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
@@ -213,7 +220,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         });
 
         sideRailGapSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        sideRailGapSpinner.setToolTipText("Select the gap between the sideline rails");
+        sideRailGapSpinner.setToolTipText(Bundle.getMessage("SideRailGapToolTip"));
         sideRailGapSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         sideRailGapSpinner.setName(""); // NOI18N
         sideRailGapSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
@@ -226,22 +233,24 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         });
 
         railColorLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        railColorLabel.setText("Rail Color:");
+        railColorLabel.setText(Bundle.getMessage("RailColorLabelText"));
+        railColorLabel.setToolTipText(Bundle.getMessage("RailColorToolTip"));
         railColorLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
         railColorLabel.setMinimumSize(new java.awt.Dimension(256, 16));
         railColorLabel.setPreferredSize(new java.awt.Dimension(256, 16));
         railColorLabel.setSize(new java.awt.Dimension(256, 16));
 
-        mainRailColorButton.setToolTipText("Set the color of the mainline ties");
+        mainRailColorButton.setBackground(ltdOptions.getMainRailColor());
+        mainRailColorButton.setToolTipText(Bundle.getMessage("MainRailColorToolTip"));
         mainRailColorButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         mainRailColorButton.setMaximumSize(new java.awt.Dimension(32767, 32767));
         mainRailColorButton.setMinimumSize(new java.awt.Dimension(64, 16));
         mainRailColorButton.setOpaque(true);
         mainRailColorButton.setPreferredSize(new java.awt.Dimension(64, 16));
         mainRailColorButton.setSize(new java.awt.Dimension(64, 16));
-        mainRailColorButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                mainRailColorButtonMouseClicked(evt);
+        mainRailColorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mainRailColorButtonActionPerformed(evt);
             }
         });
 
@@ -256,16 +265,17 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             .addGap(0, 12, Short.MAX_VALUE)
         );
 
-        sideRailColorButton.setToolTipText("Set the color of the sideline ties");
+        sideRailColorButton.setBackground(ltdOptions.getSideRailColor());
+        sideRailColorButton.setToolTipText(Bundle.getMessage("SideRailColorToolTip"));
         sideRailColorButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         sideRailColorButton.setMaximumSize(new java.awt.Dimension(32767, 32767));
         sideRailColorButton.setMinimumSize(new java.awt.Dimension(64, 16));
         sideRailColorButton.setOpaque(true);
         sideRailColorButton.setPreferredSize(new java.awt.Dimension(64, 16));
         sideRailColorButton.setSize(new java.awt.Dimension(64, 16));
-        sideRailColorButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                sideRailColorButtonMouseClicked(evt);
+        sideRailColorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sideRailColorButtonActionPerformed(evt);
             }
         });
 
@@ -280,14 +290,15 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             .addGap(0, 12, Short.MAX_VALUE)
         );
 
-        blockLineWidthLabel.setText("Block Line Width:");
+        blockLineWidthLabel.setText(Bundle.getMessage("BlockLineWidthLabelText"));
+        blockLineWidthLabel.setToolTipText(Bundle.getMessage("BlockLineWidthToolTip"));
         blockLineWidthLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
         blockLineWidthLabel.setMinimumSize(new java.awt.Dimension(256, 16));
         blockLineWidthLabel.setPreferredSize(new java.awt.Dimension(256, 16));
         blockLineWidthLabel.setSize(new java.awt.Dimension(256, 16));
 
         mainBlockLineWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        mainBlockLineWidthSpinner.setToolTipText("Select the width for the block highlight line");
+        mainBlockLineWidthSpinner.setToolTipText(Bundle.getMessage("MainBlockLineWidthToolTip"));
         mainBlockLineWidthSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         mainBlockLineWidthSpinner.setName(""); // NOI18N
         mainBlockLineWidthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
@@ -300,7 +311,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         });
 
         sideBlockLineWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        sideBlockLineWidthSpinner.setToolTipText("Select the gap between the sideline rails");
+        sideBlockLineWidthSpinner.setToolTipText(Bundle.getMessage("SideBlockLineWidthToolTip"));
         sideBlockLineWidthSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         sideBlockLineWidthSpinner.setName(""); // NOI18N
         sideBlockLineWidthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
@@ -313,14 +324,15 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         });
 
         ballastWidthLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        ballastWidthLabel.setText("Ballast Width:");
+        ballastWidthLabel.setText(Bundle.getMessage("BallastWidthLabelText"));
+        ballastWidthLabel.setToolTipText(Bundle.getMessage("BallastWidthToolTip"));
         ballastWidthLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
         ballastWidthLabel.setMinimumSize(new java.awt.Dimension(256, 16));
         ballastWidthLabel.setPreferredSize(new java.awt.Dimension(256, 16));
         ballastWidthLabel.setSize(new java.awt.Dimension(256, 16));
 
         mainBallastWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        mainBallastWidthSpinner.setToolTipText("Set the width of the mainline ballast");
+        mainBallastWidthSpinner.setToolTipText(Bundle.getMessage("MainBallastWidthToolTip"));
         mainBallastWidthSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         mainBallastWidthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         mainBallastWidthSpinner.setSize(new java.awt.Dimension(64, 16));
@@ -332,7 +344,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         });
 
         sideBallastWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        sideBallastWidthSpinner.setToolTipText("Set the width of the sideline ballast");
+        sideBallastWidthSpinner.setToolTipText(Bundle.getMessage("SideBallastWidthToolTip"));
         sideBallastWidthSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         sideBallastWidthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         sideBallastWidthSpinner.setSize(new java.awt.Dimension(64, 16));
@@ -344,22 +356,24 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         });
 
         ballastColorLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        ballastColorLabel.setText("Ballast Color:");
+        ballastColorLabel.setText(Bundle.getMessage("BallastColorLabelText"));
+        ballastColorLabel.setToolTipText(Bundle.getMessage("BallastColorToolTip"));
         ballastColorLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
         ballastColorLabel.setMinimumSize(new java.awt.Dimension(256, 16));
         ballastColorLabel.setPreferredSize(new java.awt.Dimension(256, 16));
         ballastColorLabel.setSize(new java.awt.Dimension(256, 16));
 
-        mainBallastColorButton.setToolTipText("Set the color of the mainline ballast");
+        mainBallastColorButton.setBackground(ltdOptions.getMainBallastColor());
+        mainBallastColorButton.setToolTipText(Bundle.getMessage("MainBallastColorToolTip"));
         mainBallastColorButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         mainBallastColorButton.setMaximumSize(new java.awt.Dimension(32767, 32767));
         mainBallastColorButton.setMinimumSize(new java.awt.Dimension(64, 16));
         mainBallastColorButton.setOpaque(true);
         mainBallastColorButton.setPreferredSize(new java.awt.Dimension(64, 16));
         mainBallastColorButton.setSize(new java.awt.Dimension(64, 16));
-        mainBallastColorButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                mainBallastColorButtonMouseClicked(evt);
+        mainBallastColorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mainBallastColorButtonActionPerformed(evt);
             }
         });
 
@@ -374,16 +388,17 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             .addGap(0, 12, Short.MAX_VALUE)
         );
 
-        sideBallastColorButton.setToolTipText("Set the color of the sideline ballast");
+        sideBallastColorButton.setBackground(ltdOptions.getSideBallastColor());
+        sideBallastColorButton.setToolTipText(Bundle.getMessage("SideBallastColorToolTip"));
         sideBallastColorButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         sideBallastColorButton.setMaximumSize(new java.awt.Dimension(32767, 32767));
         sideBallastColorButton.setMinimumSize(new java.awt.Dimension(64, 16));
         sideBallastColorButton.setOpaque(true);
         sideBallastColorButton.setPreferredSize(new java.awt.Dimension(64, 16));
         sideBallastColorButton.setSize(new java.awt.Dimension(64, 16));
-        sideBallastColorButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                sideBallastColorButtonMouseClicked(evt);
+        sideBallastColorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sideBallastColorButtonActionPerformed(evt);
             }
         });
 
@@ -398,14 +413,15 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             .addGap(0, 12, Short.MAX_VALUE)
         );
 
-        tieLengthLabel.setText("Tie Length:");
+        tieLengthLabel.setText(Bundle.getMessage("TieLengthLabelText"));
+        tieLengthLabel.setToolTipText(Bundle.getMessage("TieLengthToolTip"));
         tieLengthLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
         tieLengthLabel.setMinimumSize(new java.awt.Dimension(256, 16));
         tieLengthLabel.setPreferredSize(new java.awt.Dimension(256, 16));
         tieLengthLabel.setSize(new java.awt.Dimension(256, 16));
 
         mainTieLengthSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        mainTieLengthSpinner.setToolTipText("Set the length of the mainline ties");
+        mainTieLengthSpinner.setToolTipText(Bundle.getMessage("MainTieLengthToolTip"));
         mainTieLengthSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         mainTieLengthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         mainTieLengthSpinner.setSize(new java.awt.Dimension(64, 16));
@@ -417,7 +433,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         });
 
         sideTieLengthSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        sideTieLengthSpinner.setToolTipText("Set the length of the sideline ties");
+        sideTieLengthSpinner.setToolTipText(Bundle.getMessage("SideTieLengthToolTip"));
         sideTieLengthSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         sideTieLengthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         sideTieLengthSpinner.setSize(new java.awt.Dimension(64, 16));
@@ -428,14 +444,15 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             }
         });
 
-        tieWidthLabel.setText("Tie Width:");
+        tieWidthLabel.setText(Bundle.getMessage("TieWidthLabelText"));
+        tieWidthLabel.setToolTipText(Bundle.getMessage("TieWidthToolTip"));
         tieWidthLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
         tieWidthLabel.setMinimumSize(new java.awt.Dimension(256, 16));
         tieWidthLabel.setPreferredSize(new java.awt.Dimension(256, 16));
         tieWidthLabel.setSize(new java.awt.Dimension(256, 16));
 
         mainTieWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        mainTieWidthSpinner.setToolTipText("Set the width of the mainline ties");
+        mainTieWidthSpinner.setToolTipText(Bundle.getMessage("MainTieWidthToolTip"));
         mainTieWidthSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         mainTieWidthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         mainTieWidthSpinner.setSize(new java.awt.Dimension(64, 16));
@@ -447,7 +464,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         });
 
         sideTieWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        sideTieWidthSpinner.setToolTipText("Set the width of the sideline ties");
+        sideTieWidthSpinner.setToolTipText(Bundle.getMessage("SideTieWidthToolTip"));
         sideTieWidthSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         sideTieWidthSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         sideTieWidthSpinner.setSize(new java.awt.Dimension(64, 16));
@@ -458,14 +475,15 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             }
         });
 
-        tieGapLabel.setText("Tie Gap:");
+        tieGapLabel.setText(Bundle.getMessage("TieGapLabelText"));
+        tieGapLabel.setToolTipText(Bundle.getMessage("TieGapToolTip"));
         tieGapLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
         tieGapLabel.setMinimumSize(new java.awt.Dimension(256, 16));
         tieGapLabel.setPreferredSize(new java.awt.Dimension(256, 16));
         tieGapLabel.setSize(new java.awt.Dimension(256, 16));
 
         mainTieGapSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        mainTieGapSpinner.setToolTipText("Set the gap between the mainline ties");
+        mainTieGapSpinner.setToolTipText(Bundle.getMessage("MainTieGapToolTip"));
         mainTieGapSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         mainTieGapSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         mainTieGapSpinner.setSize(new java.awt.Dimension(64, 16));
@@ -477,7 +495,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         });
 
         sideTieGapSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        sideTieGapSpinner.setToolTipText("Set the gap between the sideline ties");
+        sideTieGapSpinner.setToolTipText(Bundle.getMessage("SideTieGapToolTip"));
         sideTieGapSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         sideTieGapSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
         sideTieGapSpinner.setSize(new java.awt.Dimension(64, 16));
@@ -489,22 +507,24 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         });
 
         tieColorLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        tieColorLabel.setText("Tie Color:");
+        tieColorLabel.setText(Bundle.getMessage("TieColorLabelText"));
+        tieColorLabel.setToolTipText(Bundle.getMessage("TieColorToolTip"));
         tieColorLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
         tieColorLabel.setMinimumSize(new java.awt.Dimension(256, 16));
         tieColorLabel.setPreferredSize(new java.awt.Dimension(256, 16));
         tieColorLabel.setSize(new java.awt.Dimension(256, 16));
 
-        mainTieColorButton.setToolTipText("Set the color of the mainline ties");
+        mainTieColorButton.setBackground(ltdOptions.getMainTieColor());
+        mainTieColorButton.setToolTipText(Bundle.getMessage("MainTieColorToolTip"));
         mainTieColorButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         mainTieColorButton.setMaximumSize(new java.awt.Dimension(32767, 32767));
         mainTieColorButton.setMinimumSize(new java.awt.Dimension(64, 16));
         mainTieColorButton.setOpaque(true);
         mainTieColorButton.setPreferredSize(new java.awt.Dimension(64, 16));
         mainTieColorButton.setSize(new java.awt.Dimension(64, 16));
-        mainTieColorButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                mainTieColorButtonMouseClicked(evt);
+        mainTieColorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mainTieColorButtonActionPerformed(evt);
             }
         });
 
@@ -519,16 +539,17 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             .addGap(0, 12, Short.MAX_VALUE)
         );
 
-        sideTieColorButton.setToolTipText("Set the color of the sideline ties");
+        sideTieColorButton.setBackground(ltdOptions.getSideTieColor());
+        sideTieColorButton.setToolTipText(Bundle.getMessage("SideTieColorToolTip"));
         sideTieColorButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         sideTieColorButton.setMaximumSize(new java.awt.Dimension(32767, 32767));
         sideTieColorButton.setMinimumSize(new java.awt.Dimension(64, 16));
         sideTieColorButton.setOpaque(true);
         sideTieColorButton.setPreferredSize(new java.awt.Dimension(64, 16));
         sideTieColorButton.setSize(new java.awt.Dimension(64, 16));
-        sideTieColorButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                mainRailColorButtonMouseClicked(evt);
+        sideTieColorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sideTieColorButtonActionPerformed(evt);
             }
         });
 
@@ -544,7 +565,8 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         );
 
         sideLineLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        sideLineLabel.setText("Sideline");
+        sideLineLabel.setText(Bundle.getMessage("SidelineLabelText"));
+        sideLineLabel.setToolTipText(Bundle.getMessage("SideLineToolTip"));
         sideLineLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
         sideLineLabel.setMinimumSize(new java.awt.Dimension(64, 16));
         sideLineLabel.setPreferredSize(new java.awt.Dimension(64, 16));
@@ -783,14 +805,6 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void mainRailColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainRailColorButtonMouseClicked
-        log.debug("mainRailColorButtonMouseClicked()");
-    }//GEN-LAST:event_mainRailColorButtonMouseClicked
-
-    private void mainTieColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainTieColorButtonMouseClicked
-        log.debug("mainTieColorButtonMouseClicked()");
-    }//GEN-LAST:event_mainTieColorButtonMouseClicked
-
     private void sideTieGapSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sideTieGapSpinnerStateChanged
         JSpinner spinner = (JSpinner) evt.getSource();
         Integer value = (Integer) spinner.getValue();
@@ -839,14 +853,6 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         log.debug("mainTieLengthSpinnerStateChanged({})", value);
     }//GEN-LAST:event_mainTieLengthSpinnerStateChanged
 
-    private void sideBallastColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideBallastColorButtonMouseClicked
-        log.debug("sideBallastColorButtonMouseClicked()");
-    }//GEN-LAST:event_sideBallastColorButtonMouseClicked
-
-    private void mainBallastColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainBallastColorButtonMouseClicked
-        log.debug("mainBallastColorButtonMouseClicked()");
-    }//GEN-LAST:event_mainBallastColorButtonMouseClicked
-
     private void sideBallastWidthSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sideBallastWidthSpinnerStateChanged
         JSpinner spinner = (JSpinner) evt.getSource();
         Integer value = (Integer) spinner.getValue();
@@ -878,10 +884,6 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         ltdOptions.setMainBlockLineWidth(value.intValue());
         log.debug("mainBlockLineWidthSpinnerStateChanged({})", value);
     }//GEN-LAST:event_mainBlockLineWidthSpinnerStateChanged
-
-    private void sideRailColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideRailColorButtonMouseClicked
-        log.debug("sideRailColorButtonMouseClicked()");
-    }//GEN-LAST:event_sideRailColorButtonMouseClicked
 
     private void sideRailGapSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sideRailGapSpinnerStateChanged
         JSpinner spinner = (JSpinner) evt.getSource();
@@ -934,6 +936,56 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
         layoutEditor.setLayoutTrackDrawingOptions(ltdOptions);
     }//GEN-LAST:event_applyButtonActionPerformed
+
+    private void mainRailColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainRailColorButtonActionPerformed
+        JButton button = (JButton) evt.getSource();
+        Color value = button.getBackground();
+        Color newColor = JColorChooser.showDialog(null, "Choose a color", Color.RED);
+
+        makeCustomPreset();
+        ltdOptions.setMainRailColor(value);
+        log.info("*mainRailColorButtonActionPerformed({})", value);
+    }//GEN-LAST:event_mainRailColorButtonActionPerformed
+
+    private void sideRailColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sideRailColorButtonActionPerformed
+        JButton button = (JButton) evt.getSource();
+        Color value = button.getBackground();
+        makeCustomPreset();
+        ltdOptions.setSideRailColor(value);
+        log.info("*sideRailColorButtonActionPerformed({})", value);
+    }//GEN-LAST:event_sideRailColorButtonActionPerformed
+
+    private void mainBallastColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainBallastColorButtonActionPerformed
+        JButton button = (JButton) evt.getSource();
+        Color value = button.getBackground();
+        makeCustomPreset();
+        ltdOptions.setMainBallastColor(value);
+        log.info("*mainBallastColorButtonActionPerformed({})", value);
+    }//GEN-LAST:event_mainBallastColorButtonActionPerformed
+
+    private void sideBallastColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sideBallastColorButtonActionPerformed
+        JButton button = (JButton) evt.getSource();
+        Color value = button.getBackground();
+        makeCustomPreset();
+        ltdOptions.setSideBallastColor(value);
+        log.info("*sideBallastColorButtonActionPerformed({})", value);
+    }//GEN-LAST:event_sideBallastColorButtonActionPerformed
+
+    private void mainTieColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainTieColorButtonActionPerformed
+        JButton button = (JButton) evt.getSource();
+        Color value = button.getBackground();
+        makeCustomPreset();
+        ltdOptions.setMainTieColor(value);
+        log.info("*mainTieColorButtonActionPerformed({})", value);
+    }//GEN-LAST:event_mainTieColorButtonActionPerformed
+
+    private void sideTieColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sideTieColorButtonActionPerformed
+        JButton button = (JButton) evt.getSource();
+        Color value = button.getBackground();
+        makeCustomPreset();
+        ltdOptions.setSideTieColor(value);
+        log.info("*sideTieColorButtonActionPerformed({})", value);
+    }//GEN-LAST:event_sideTieColorButtonActionPerformed
 
     /*=========================*\
     |* local (private) methods *|
