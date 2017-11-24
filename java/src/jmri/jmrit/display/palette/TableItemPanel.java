@@ -205,11 +205,11 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             NamedBean b = _model.getBeanAt(row);
             _table.clearSelection();
             if (log.isDebugEnabled()) {
-                log.debug("getTableSelection: row= " + row + ", bean= " + (b==null?b:b.getDisplayName()));
+                log.debug("getTableSelection: row = {}, bean = {}", row, (b==null?b:b.getDisplayName()));
             }
             return b;
         } else if (log.isDebugEnabled()) {
-            log.debug("getTableSelection: row= {}", row);
+            log.debug("getTableSelection: row = {}", row);
         }
         return null;
     }
@@ -217,7 +217,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     public void setSelection(NamedBean bean) {
         int row = _model.getIndexOf(bean);
         row = _table.convertRowIndexToView(row);
-        log.debug("setSelection: NamedBean= " + bean + ", row= " + row);
+        log.debug("setSelection: NamedBean = {}, row = {}", bean, row);
         if (row >= 0) {
             _table.addRowSelectionInterval(row, row);
             _scrollPane.getVerticalScrollBar().setValue(row * ROW_HEIGHT);
@@ -235,9 +235,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             return;
         }
         int row = _table.getSelectedRow();
-        if (log.isDebugEnabled()) {
-            log.debug("Table valueChanged: row= " + row);
-        }
+        log.debug("Table valueChanged: row = {}", row);
         if (row >= 0) {
             _updateButton.setEnabled(true);
             _updateButton.setToolTipText(null);
@@ -254,9 +252,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             return null;
         }
         int row = _table.getSelectedRow();
-        if (log.isDebugEnabled()) {
-            log.debug("getDeviceNamedBean: from table \"" + _itemType + "\" at row " + row);
-        }
+        log.debug("getDeviceNamedBean: from table \"{}\" at row {}", _itemType, row);
         if (row < 0) {
             return null;
         }

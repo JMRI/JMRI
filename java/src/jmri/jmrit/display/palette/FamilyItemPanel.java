@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,16 +23,16 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.OverlayLayout;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.util.swing.DrawSquares;
+import jmri.util.swing.ImagePanel;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ItemPanel for items having sets of icons (families).
+ * Abstract ItemPanel for items having sets of icons (families).
  * 
  * @author Pete Cressman Copyright (c) 2010, 2011
  */
@@ -39,23 +40,24 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
     protected String _family;
     protected JPanel _iconFamilyPanel;
-    protected JPanel _iconPanel;         // panel contained in _iconFamilyPanel - all icons in family
-    protected DrawSquares _squaresPanel; // checkered background
-    protected JPanel _dragIconPanel;     // contained in _iconFamilyPanel - to drag to control panel
+    protected ImagePanel _iconPanel; // panel contained in _iconFamilyPanel - all icons in family
+    protected JPanel _dragIconPanel; // contained in _iconFamilyPanel - to drag to control panel
     protected boolean _suppressDragging;
     protected int _buttonPosition = 0;
-    JPanel _bottom1Panel;  // typically _showIconsButton and _editIconsButton
-    JPanel _bottom2Panel;  // createIconFamilyButton - when all families have been deleted 
+    JPanel _bottom1Panel; // typically _showIconsButton and _editIconsButton
+    JPanel _bottom2Panel; // createIconFamilyButton - when all families have been deleted
     JButton _showIconsButton;
     JButton _editIconsButton;
     JButton _updateButton;
     protected HashMap<String, NamedIcon> _currentIconMap;
     IconDialog _dialog;
     ButtonGroup _familyButtonGroup;
-    static Color _grayColor = new Color(235, 235, 235);
-    static Color _darkGrayColor = new Color(150, 150, 150);
+    static final Color _grayColor = new Color(235, 235, 235);
+    static final Color _darkGrayColor = new Color(150, 150, 150);
     protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
     protected Color _currentBackground = _grayColor;
+    protected JPanel bgBoxPanel;
+    protected BufferedImage[] _backgrounds; // array of Image backgrounds
 
     static boolean _suppressNamePrompts = false;
 
@@ -210,51 +212,45 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _bottom1Panel.add(deleteButton);
         }
         // add a SetBackground combo
-        _bottom1Panel.add(makeButtonPanel());
+        bgBoxPanel = makeButtonPanel(_iconPanel, _backgrounds);
+        _bottom1Panel.add(bgBoxPanel); // to enable removing or replacing it
     }
 
-    /**
-     * Create panel element containing [Set background:] drop down list.
-     * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
-     * @see DecoratorPanel
-     *
-     * @return a JPanel with label and drop down
-     */
-    private JPanel makeButtonPanel() {
-        JComboBox<String> bgColorBox = new JComboBox<>();
-        bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, too long for combo
-        bgColorBox.addItem(Bundle.getMessage("White"));
-        bgColorBox.addItem(Bundle.getMessage("LightGray"));
-        bgColorBox.addItem(Bundle.getMessage("DarkGray"));
-        // bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option not yet in combobox, under development
-        bgColorBox.setSelectedIndex(0); // panel bg color
-        bgColorBox.addActionListener((ActionEvent e) -> {
-            if (bgColorBox.getSelectedIndex() == 0) {
-                // use panel background color
-                _currentBackground = _editor.getTargetPanel().getBackground();
-                _squaresPanel.setVisible(false);
-                _iconFamilyPanel.setBackground(_currentBackground);
-            } else if (bgColorBox.getSelectedIndex() == 4) { // display checkers background, under development 4.9.6
-                _squaresPanel.setVisible(true);
-                log.debug("FamilyItemPanel checkers visible");
-                _iconFamilyPanel.setOpaque(false);
-            } else {
-                _currentBackground = colorChoice[bgColorBox.getSelectedIndex() - 1]; // choice 0 is not in colorChoice[]
-                _squaresPanel.setVisible(false);
-                _iconFamilyPanel.setBackground(_currentBackground);
-            }
-        });
-
-        JPanel backgroundPanel = new JPanel();
-        backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
-        JPanel pp = new JPanel();
-        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-        pp.add(new JLabel(Bundle.getMessage("setBackground")));
-        pp.add(bgColorBox);
-        backgroundPanel.add(pp);
-        backgroundPanel.setMaximumSize(backgroundPanel.getPreferredSize());
-        return backgroundPanel;
-    }
+//    /**
+//     * Create panel element containing [Set background:] drop down list.
+//     * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
+//     * @see DecoratorPanel
+//     *
+//     * @return a JPanel with label and drop down
+//     */
+//    @Override
+//    private JPanel makeButtonPanel(ImagePanel preview, BufferedImage[] imgArray) {
+//        JComboBox<String> bgColorBox = new JComboBox<>();
+//        bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, too long for combo
+//        bgColorBox.addItem(Bundle.getMessage("White"));
+//        bgColorBox.addItem(Bundle.getMessage("LightGray"));
+//        bgColorBox.addItem(Bundle.getMessage("DarkGray"));
+//        bgColorBox.addItem(Bundle.getMessage("Checkers"));
+//        bgColorBox.setSelectedIndex(0); // panel bg color
+//        bgColorBox.addActionListener((ActionEvent e) -> {
+//            // load background image
+//            preview.setImage(imgArray[bgColorBox.getSelectedIndex()]);
+//            log.debug("Catalog setImage called");
+//            preview.setOpaque(false);
+//            // preview.repaint();
+//            preview.invalidate(); // force redraw
+//        });
+//
+//        JPanel backgroundPanel = new JPanel();
+//        backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
+//        JPanel pp = new JPanel();
+//        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
+//        pp.add(new JLabel(Bundle.getMessage("setBackground")));
+//        pp.add(bgColorBox);
+//        backgroundPanel.add(pp);
+//        backgroundPanel.setMaximumSize(backgroundPanel.getPreferredSize());
+//        return backgroundPanel;
+//    }
 
     /**
      * Check whether map is one of the families.
@@ -353,13 +349,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
             }
             // make _iconPanel & _dragIconPanel before calls to add icons
             addFamilyPanels(familyPanel);
-            _iconPanel.setLayout(new OverlayLayout(_iconPanel));
-            if (_squaresPanel == null) { // add a white background
-                _squaresPanel = new DrawSquares(_iconPanel, 10, Color.white);
-                log.debug("DrawSquares() called");
-            }
-            _iconPanel.add(_squaresPanel, -1); // place behind icons
-            _squaresPanel.setVisible(true);
 
             if (_currentIconMap == null) {
                 log.error("currentIconMap is null in initIconFamiliesPanel");
@@ -468,12 +457,25 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
     protected void addFamilyPanels(JPanel familyPanel) {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
-        _iconPanel = new JPanel(new FlowLayout());
-        _iconPanel.setOpaque(false);      // to show background color/squares
+
+        _iconPanel = new ImagePanel();
+        _iconPanel.setLayout(new FlowLayout());
+        log.debug("FamilyItemPanel ImagePanel created");
         _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
         _iconFamilyPanel.add(_iconPanel);
-        _iconPanel.setVisible(false); // initially hidden
+        _iconPanel.setVisible(false);
+
+        // create array of backgrounds
+        // if (_backgrounds == null) { // reduces load but will not redraw for new size
+        _backgrounds = new BufferedImage[5];
+        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
+        _backgrounds[0] = DrawSquares.getImage(_iconPanel, 20, _currentBackground, _currentBackground);
+        for (int i = 1; i <= 3; i++) {
+            _backgrounds[i] = DrawSquares.getImage(_iconPanel, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
+        }
+        _backgrounds[4] = DrawSquares.getImage(_iconPanel, 20, Color.white, _grayColor);
+
         if (!_suppressDragging) {
             makeDragIconPanel(0);
         }
@@ -742,18 +744,15 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
     /**
      * Action of family radio button MultisensorItemPanel.
-     * IndicatorTOItem must override
+     * IndicatorTOItem must override.
      *
      * @param family icon family name
      */
     protected void setFamily(String family) {
         _family = family;
-        if (log.isDebugEnabled()) {
-            log.debug("setFamily: for type \"" + _itemType + "\", family \"" + family + "\"");
-        }
+        log.debug("setFamily: for type \"{}\", family \"{}\"", _itemType, family);
         _iconFamilyPanel.remove(_iconPanel);
-        _iconPanel = new JPanel();
-        _iconPanel.setOpaque(false);
+        _iconPanel = new ImagePanel();
         _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
         _iconFamilyPanel.add(_iconPanel, 0);

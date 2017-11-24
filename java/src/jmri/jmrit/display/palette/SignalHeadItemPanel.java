@@ -6,6 +6,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+//import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,6 +27,8 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalHeadIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.DrawSquares;
+import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,7 +73,7 @@ public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelec
     @Override
     protected void showIcons() {
         _iconFamilyPanel.remove(_iconPanel);
-        _iconPanel = new JPanel();
+        _iconPanel = new ImagePanel();
         _iconPanel.setOpaque(false);
         _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));

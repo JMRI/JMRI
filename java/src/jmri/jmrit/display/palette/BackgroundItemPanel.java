@@ -16,15 +16,15 @@ import javax.swing.event.ChangeListener;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.DrawSquares;
 
 /**
- * JPanels for the various item types that come from tool Tables - e.g. Sensors,
- * Turnouts, etc.
+ * JPanels for the Backgrounds.
  */
 public class BackgroundItemPanel extends IconItemPanel {
 
     /**
-     * Constructor for plain icons and backgrounds
+     * Constructor for plain icons and backgrounds.
      */
     public BackgroundItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
         super(parentFrame, type, editor);
@@ -67,6 +67,11 @@ public class BackgroundItemPanel extends IconItemPanel {
         backgroundButton.setToolTipText(Bundle.getMessage("ToolTipEditColor"));
         bottomPanel.add(backgroundButton);
         return bottomPanel;
+    }
+
+    @Override
+    protected JPanel makeBgBoxPanel() {
+        return null; // no button to set Preview Bg for Backgrounds
     }
 
     class ColorDialog extends JDialog implements ChangeListener {
@@ -113,6 +118,8 @@ public class BackgroundItemPanel extends IconItemPanel {
                 @Override
                 public void actionPerformed(ActionEvent a) {
                     _editor.setBackgroundColor(_chooser.getColor());
+                    _backgrounds[0] = DrawSquares.getImage(_iconPanel, 20, _currentBackground, _currentBackground);
+                    _iconPanel.setImage(_backgrounds[0]);
                     dialog.dispose();
                 }
 
@@ -149,5 +156,7 @@ public class BackgroundItemPanel extends IconItemPanel {
             _preview.getParent().setBackground(_chooser.getColor());
         }
     }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BackgroundItemPanel.class);
+
 }

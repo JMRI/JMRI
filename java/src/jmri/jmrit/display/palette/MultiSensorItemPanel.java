@@ -6,6 +6,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ import jmri.jmrit.display.MultiSensorIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.DrawSquares;
+import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,10 +39,12 @@ public class MultiSensorItemPanel extends TableItemPanel {
     JPanel _multiSensorPanel;
     MultiSensorSelectionModel _selectionModel;
     boolean _upDown = false;
+    private ImagePanel _iconFamilyPanel;
 
     public MultiSensorItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, model, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragSelection"));
+        add(makeButtonPanel(_iconFamilyPanel, _backgrounds));
     }
 
     @Override
@@ -118,12 +122,15 @@ public class MultiSensorItemPanel extends TableItemPanel {
         makeMultiSensorPanel();
         _iconFamilyPanel.add(_multiSensorPanel);
 
-        if (_squaresPanel == null) { // add a white background
-            _squaresPanel = new DrawSquares(_iconFamilyPanel, 10, Color.white);
-            log.debug("DrawSquares() called");
+        // create array of backgrounds
+        // if (_backgrounds == null) { // reduces load but will not redraw for new size
+        _backgrounds = new BufferedImage[5];
+        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
+        _backgrounds[0] = DrawSquares.getImage(_iconFamilyPanel, 20, _currentBackground, _currentBackground);
+        for (int i = 1; i <= 3; i++) {
+            _backgrounds[i] = DrawSquares.getImage(_iconFamilyPanel, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
         }
-        _iconFamilyPanel.add(_squaresPanel, -1); // place behind icons
-        _squaresPanel.setVisible(false);
+        _backgrounds[4] = DrawSquares.getImage(_iconFamilyPanel, 20, Color.white, _grayColor);
     }
 
     private void makeMultiSensorPanel() {

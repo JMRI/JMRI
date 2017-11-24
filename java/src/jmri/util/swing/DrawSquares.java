@@ -33,8 +33,8 @@ public class DrawSquares {
         Color bgColor = Color.white;
         int sqSize = 5; // square width in pixels
         BufferedImage back;
-        int w = 1000;
-        int h = 1000;
+        int w = 500;
+        int h = 500;
         if (bg.getWidth() > 0) {
             w = bg.getWidth();
             h = bg.getHeight();

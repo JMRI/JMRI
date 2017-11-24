@@ -29,6 +29,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.util.swing.DrawSquares;
+import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,10 +50,11 @@ public class PreviewDialog extends JDialog {
     static Color _darkGrayColor = new Color(150, 150, 150);
     protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor};
     protected Color _currentBackground = _grayColor;
-    protected DrawSquares _squaresPanel;  // checkered background
+    protected BufferedImage[] _backgrounds; // array of Image backgrounds
 
     JLabel _previewLabel = new JLabel();
-    JPanel _preview;
+    protected ImagePanel _preview;
+    protected JScrollPane js;
 
     int _cnt;           // number of files displayed when setIcons() method runs
     int _startNum;      // total number of files displayed from a directory
@@ -173,36 +175,36 @@ public class PreviewDialog extends JDialog {
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.add(_previewLabel);
         previewPanel.add(p);
-        _preview = new JPanel();
-        _preview.setLayout(new FlowLayout());
-        if (_squaresPanel == null) { // add a white background
-            _squaresPanel = new DrawSquares(_preview, 10, Color.white);
-            log.debug("PreviewDialog DrawSquares() called");
+        _preview = new ImagePanel();
+        log.debug("Preview ImagePanel created");
+        _preview.setLayout(new BoxLayout(_preview, BoxLayout.Y_AXIS));
+        _preview.setOpaque(false);
+        js = new JScrollPane(_preview);
+        previewPanel.add(js);
+
+        // create array of backgrounds
+        _backgrounds = new BufferedImage[4];
+//        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
+//        _backgrounds[0] = DrawSquares.getImage(_iconPanel, 20, _currentBackground, _currentBackground);
+        for (int i = 0; i <= 2; i++) {
+            _backgrounds[i] = DrawSquares.getImage(_preview, 20, colorChoice[i], colorChoice[i]);
         }
-        _preview.add(_squaresPanel, -1); // place behind icons
-        _squaresPanel.setVisible(true);
-        JScrollPane js = new JScrollPane(_preview);
-        previewPanel.add(js);            // place icons over the checkered background
+        _backgrounds[3] = DrawSquares.getImage(_preview, 20, Color.white, _grayColor);
 
         JComboBox<String> bgColorBox = new JComboBox<>();
+        bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, too long for combo
         bgColorBox.addItem(Bundle.getMessage("White"));
         bgColorBox.addItem(Bundle.getMessage("LightGray"));
         bgColorBox.addItem(Bundle.getMessage("DarkGray"));
         bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option, under development
         bgColorBox.setSelectedIndex(0); // white
         bgColorBox.addActionListener((ActionEvent e) -> {
-            if (bgColorBox.getSelectedIndex() == 3) {
-                // display checkered background
-                _squaresPanel = new DrawSquares(_preview, 10, Color.white, _grayColor);
-                _squaresPanel.setVisible(true);
-//                _preview.setOpaque(false);
-                log.debug("paintCheckers() called");
-            } else {
-                _squaresPanel = new DrawSquares(_preview, 10, colorChoice[bgColorBox.getSelectedIndex()]); // plain rect
-                _squaresPanel.setVisible(true);
-//                _preview.setOpaque(true);
-//                setBackGround(colorChoice[bgColorBox.getSelectedIndex()]); // sets all bg colors, makes them opaque
-            }
+            // load background image
+            _preview.setImage(_backgrounds[bgColorBox.getSelectedIndex()]);
+            log.debug("Preview setImage called");
+            _preview.setOpaque(false);
+            // _preview.repaint(); // force redraw
+            _preview.invalidate();
         });
         JPanel pp = new JPanel();
         pp.setLayout(new FlowLayout(FlowLayout.CENTER));

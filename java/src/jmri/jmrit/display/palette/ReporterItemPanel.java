@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import javax.swing.BorderFactory;
@@ -25,12 +26,19 @@ import jmri.jmrit.display.ReporterIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.DrawSquares;
+import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ReporterItemPanel extends TableItemPanel {
 
     ReporterIcon _reporter;
+    private ImagePanel _iconFamilyPanel;
+//    static final Color _grayColor = new Color(235, 235, 235);
+//    static final Color _darkGrayColor = new Color(150, 150, 150);
+//    protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
+//    protected Color _currentBackground = _grayColor;
+    protected BufferedImage[] _backgrounds; // array of Image backgrounds
 
     public ReporterItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel<jmri.Reporter> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
@@ -40,7 +48,7 @@ public class ReporterItemPanel extends TableItemPanel {
     public void init() {
         if (!_initialized) {
             super.init();
-            add(makeButtonPanel());
+//            super.hideBgBoxPanel();
         }
     }
 
@@ -58,26 +66,30 @@ public class ReporterItemPanel extends TableItemPanel {
 
     @Override
     protected void initIconFamiliesPanel() {
-        _iconFamilyPanel = new JPanel();
+        _iconFamilyPanel = new ImagePanel();
         _iconFamilyPanel.setOpaque(true);
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
         if (!_update) {
             _iconFamilyPanel.add(instructions());
         }
-//        _iconPanel = new JPanel();
-//        _iconPanel.setOpaque(false);
-//        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
-//                Bundle.getMessage("PreviewBorderTitle")));
-//        _iconFamilyPanel.add(_iconPanel);
+
+        // create array of backgrounds
+        // if (_backgrounds == null) { // reduces load but will not redraw for new size
+        _backgrounds = new BufferedImage[5];
+        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
+        _backgrounds[0] = DrawSquares.getImage(_iconFamilyPanel, 20, _currentBackground, _currentBackground);
+        for (int i = 1; i <= 3; i++) {
+            _backgrounds[i] = DrawSquares.getImage(_iconFamilyPanel, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
+        }
+        _backgrounds[4] = DrawSquares.getImage(_iconFamilyPanel, 20, Color.white, _grayColor);
+
+        // _iconPanel = new ImagePanel();
+        // _iconPanel.setOpaque(false);
+        // _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
+        //     Bundle.getMessage("PreviewBorderTitle")));
+        // _iconFamilyPanel.add(_iconPanel);
         makeDragIconPanel(1);
         makeDndIconPanel(null, null);
-
-        if (_squaresPanel == null) { // add a white background
-            _squaresPanel = new DrawSquares(_iconFamilyPanel, 10, Color.white);
-            log.debug("DrawSquares() called");
-        }
-        _iconFamilyPanel.add(_squaresPanel, -1); // place behind icons
-        _squaresPanel.setVisible(false);
     }
 
     @Override
@@ -119,53 +131,45 @@ public class ReporterItemPanel extends TableItemPanel {
     protected JPanel makeItemButtonPanel() {
         return new JPanel();
     }
+//
+//    /**
+//     * Create panel element containing [Set background:] drop down list.
+//     * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
+//     * @see DecoratorPanel
+//     * @see FamilyItemPanel
+//     *
+//     * @return a JPanel with label and drop down
+//     */
+//    private JPanel makeButtonPanel(ImagePanel preview, BufferedImage[] imgArray) {
+//        JComboBox<String> bgColorBox = new JComboBox<>();
+//        bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, too long for combo
+//        bgColorBox.addItem(Bundle.getMessage("White"));
+//        bgColorBox.addItem(Bundle.getMessage("LightGray"));
+//        bgColorBox.addItem(Bundle.getMessage("DarkGray"));
+//        // bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option not yet in combobox, under development
+//        bgColorBox.setSelectedIndex(0); // panel bg color
+//        bgColorBox.addActionListener((ActionEvent e) -> {
+//            // load background image
+//            preview.setImage(imgArray[bgColorBox.getSelectedIndex()]);
+//            log.debug("Catalog setImage called");
+//            preview.setOpaque(false);
+//            // preview.repaint();
+//            preview.invalidate(); // force redraw
+//        });
+//
+//        JPanel backgroundPanel = new JPanel();
+//        backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
+//        JPanel pp = new JPanel();
+//        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
+//        pp.add(new JLabel(Bundle.getMessage("setBackground")));
+//        pp.add(bgColorBox);
+//        backgroundPanel.add(pp);
+//        backgroundPanel.setMaximumSize(backgroundPanel.getPreferredSize());
+//        return backgroundPanel;
+//    }
 
     /**
-     * Create panel element containing [Set background:] drop down list.
-     * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
-     * @see DecoratorPanel
-     * @see FamilyItemPanel
-     *
-     * @return a JPanel with label and drop down
-     */
-    private JPanel makeButtonPanel() {
-        JComboBox<String> bgColorBox = new JComboBox<>();
-        bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, too long for combo
-        bgColorBox.addItem(Bundle.getMessage("White"));
-        bgColorBox.addItem(Bundle.getMessage("LightGray"));
-        bgColorBox.addItem(Bundle.getMessage("DarkGray"));
-        // bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option not yet in combobox, under development
-        bgColorBox.setSelectedIndex(0); // panel bg color
-        bgColorBox.addActionListener((ActionEvent e) -> {
-            if (bgColorBox.getSelectedIndex() == 0) {
-                // use panel background color
-                _currentBackground = _editor.getTargetPanel().getBackground();
-                _squaresPanel.setVisible(false);
-                _iconFamilyPanel.setBackground(_currentBackground);
-            } else if (bgColorBox.getSelectedIndex() == 4) { // display checkers background, under development 4.9.6
-                _squaresPanel.setVisible(true);
-                log.debug("FamilyItemPanel checkers visible");
-                _iconFamilyPanel.setOpaque(false);
-            } else {
-                _currentBackground = colorChoice[bgColorBox.getSelectedIndex() -1]; // choice 0 is not in colorChoice[]
-                _squaresPanel.setVisible(false);
-                _iconFamilyPanel.setBackground(_currentBackground);
-            }
-        });
-
-        JPanel backgroundPanel = new JPanel();
-        backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
-        JPanel pp = new JPanel();
-        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-        pp.add(new JLabel(Bundle.getMessage("setBackground")));
-        pp.add(bgColorBox);
-        backgroundPanel.add(pp);
-        backgroundPanel.setMaximumSize(backgroundPanel.getPreferredSize());
-        return backgroundPanel;
-    }
-
-    /**
-     * ListSelectionListener action from table
+     * ListSelectionListener action from table.
      */
     @Override
     public void valueChanged(ListSelectionEvent e) {
@@ -173,9 +177,7 @@ public class ReporterItemPanel extends TableItemPanel {
             return;
         }
         int row = _table.getSelectedRow();
-        if (log.isDebugEnabled()) {
-            log.debug("Table valueChanged: row= " + row);
-        }
+        log.debug("Table valueChanged: row = {}", row);
         if (row >= 0) {
             if (_updateButton != null) {
                 _updateButton.setEnabled(true);
@@ -259,4 +261,5 @@ public class ReporterItemPanel extends TableItemPanel {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ReporterItemPanel.class);
+
 }

@@ -8,7 +8,6 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-//import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
@@ -38,7 +37,6 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.OverlayLayout;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
@@ -400,12 +398,14 @@ public class CatalogPanel extends JPanel implements MouseListener {
         _preview.setOpaque(false);
         js = new JScrollPane(_preview);
         previewPanel.add(js);
+
         // create array of backgrounds
         _backgrounds = new BufferedImage[4];
-        for (int i = 0; i < 2; i++) {
-            _backgrounds[i] = DrawSquares.getImage(_preview, 10, colorChoice[i], colorChoice[i]);
+        for (int i = 0; i <= 2; i++) {
+            _backgrounds[i] = DrawSquares.getImage(_preview, 20, colorChoice[i], colorChoice[i]);
         }
-        _backgrounds[3] = DrawSquares.getImage(_preview, 10, Color.white, _grayColor);
+        _backgrounds[3] = DrawSquares.getImage(_preview, 20, Color.white, _grayColor);
+
         return previewPanel;
     }
 
