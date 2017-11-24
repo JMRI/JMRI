@@ -3,6 +3,7 @@ package jmri.util.usb;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.usb.UsbConfiguration;
@@ -88,19 +89,20 @@ public final class UsbUtil {
      * Get a USB device's full product (manufacturer + product) name.
      *
      * @param usbDevice the USB device to get the full product name of
-     * @return the full product name
+     * @return the full product name or null if the product name is not     *         encoded in the device
      */
+    @CheckForNull
     public static String getFullProductName(@Nonnull UsbDevice usbDevice) {
-        String result = "";
+        String result = null;
         try {
             String manufacturer = usbDevice.getManufacturerString();
-            manufacturer = (manufacturer == null) ? "" : manufacturer;
             String product = usbDevice.getProductString();
-            product = (product == null) ? "" : product;
-            if (product.startsWith(manufacturer)) {
-                result = product;
-            } else {
-                result = manufacturer + " " + product;
+            if (product != null) {
+                if (manufacturer == null || product.startsWith(manufacturer)) {
+                    result = product;
+                } else {
+                    result = manufacturer + " " + product;
+                }
             }
         } catch (UsbException
                 | UnsupportedEncodingException
@@ -117,7 +119,8 @@ public final class UsbUtil {
      * @return serial number
      */
     @Nullable
-    public static String getSerialNumber(@Nonnull UsbDevice usbDevice) {
+    public static String getSerialNumber(@Nonnull UsbDevice usbDevice
+    ) {
         try {
             return usbDevice.getSerialNumberString();
         } catch (UsbException | UnsupportedEncodingException | UsbDisconnectedException ex) {

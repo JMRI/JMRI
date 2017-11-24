@@ -37,16 +37,16 @@ public class UsbUtilTest {
             // test no MFG or product name
             Mockito.when(mockDevice.getManufacturerString()).thenReturn(null);
             Mockito.when(mockDevice.getProductString()).thenReturn(null);
-            Assert.assertEquals("", UsbUtil.getFullProductName(mockDevice));
+            Assert.assertEquals(null, UsbUtil.getFullProductName(mockDevice));
             // test exceptions thrown by device
             Mockito.when(mockDevice.getManufacturerString()).thenThrow(UsbException.class);
-            Assert.assertEquals("", UsbUtil.getFullProductName(mockDevice));
+            Assert.assertEquals(null, UsbUtil.getFullProductName(mockDevice));
             JUnitAppender.assertErrorMessage("Unable to read data from " + mockDevice.toString());
             Mockito.when(mockDevice.getManufacturerString()).thenThrow(UnsupportedEncodingException.class);
-            Assert.assertEquals("", UsbUtil.getFullProductName(mockDevice));
+            Assert.assertEquals(null, UsbUtil.getFullProductName(mockDevice));
             JUnitAppender.assertErrorMessage("Unable to read data from " + mockDevice.toString());
             Mockito.when(mockDevice.getManufacturerString()).thenThrow(UsbDisconnectedException.class);
-            Assert.assertEquals("", UsbUtil.getFullProductName(mockDevice));
+            Assert.assertEquals(null, UsbUtil.getFullProductName(mockDevice));
             JUnitAppender.assertErrorMessage("Unable to read data from " + mockDevice.toString());
             // test that unexpected exception is not caught
             try {
