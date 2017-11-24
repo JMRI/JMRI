@@ -11,12 +11,16 @@
  *============================================================================*/
 package jmri.util.usb;
 
+import java.awt.Image;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -29,6 +33,7 @@ import javax.usb.UsbHub;
 import javax.usb.UsbPort;
 import javax.usb.event.UsbServicesEvent;
 import javax.usb.event.UsbServicesListener;
+import jmri.util.FileUtil;
 import jmri.util.USBUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +46,6 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
 
     private final UsbTreeNode root;
     private final UsbDeviceTableModel deviceModel = new UsbDeviceTableModel();
-    private final static Logger log = LoggerFactory.getLogger(UsbBrowserPanel.class);
     private final UsbServicesListener usbServicesListener = new UsbServicesListener() {
         @Override
         public void usbDeviceAttached(UsbServicesEvent use) {
@@ -116,6 +120,39 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
             }
         }
         initComponents();
+        buildTree(root);
+
+        //
+        // Change the default JTree icons
+        //
+        // get the tree cell renderer
+        DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) usbTree.getCellRenderer();
+
+        // get the size of the current icon
+        Icon openIcon = renderer.getOpenIcon();
+        int w = openIcon.getIconWidth();
+        int h = openIcon.getIconHeight();
+
+        // setup the usb open icon
+        ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Open.jpg"));
+        Image image = imageIcon.getImage(); // convert it to an image
+        image = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way 
+        imageIcon = new ImageIcon(image);  // convert it back to an icon
+        renderer.setOpenIcon(imageIcon);
+
+        // setup the usb closed icon
+        imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Closed.jpg"));
+        image = imageIcon.getImage(); // convert it to an image
+        image = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way 
+        imageIcon = new ImageIcon(image);  // convert it back to an icon
+        renderer.setClosedIcon(imageIcon);
+
+        // get the usb leaf icon
+        imageIcon = new ImageIcon(FileUtil.findURL("resources/icons/USB/USB_Leaf.jpg"));
+        image = imageIcon.getImage(); // convert it to an image
+        image = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way 
+        imageIcon = new ImageIcon(image);  // convert it back to an icon
+        renderer.setLeafIcon(imageIcon);
     }
 
     private void buildTree(UsbTreeNode root) {
@@ -373,4 +410,8 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
         //     return usbPortIndex;
         // }
     }
+
+    //initialize logging
+    private transient final static Logger log
+            = LoggerFactory.getLogger(UsbBrowserPanel.class);
 }
