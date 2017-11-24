@@ -46,7 +46,7 @@ import jmri.jmrit.picker.PickFrame;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickSinglePanel;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.JmriBeanComboBox;
+import jmri.util.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -286,6 +286,7 @@ public class ConditionalEditBase {
                 return null;             // Skip any other items.
         }
         nameBox.setFirstItemBlank(true);
+        JComboBoxUtil.setupComboBoxMaxRows(nameBox);
         return nameBox;
     }
 

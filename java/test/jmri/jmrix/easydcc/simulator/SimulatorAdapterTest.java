@@ -7,12 +7,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for simulator SerialDriverAdapter class.
+ * Tests for simulator SimulatorAdapter class.
  *
  * @author Paul Bender Copyright (C) 2016
  **/
 
-public class SerialDriverAdapterTest {
+public class SimulatorAdapterTest {
 
    @Test
    public void ConstructorTest(){

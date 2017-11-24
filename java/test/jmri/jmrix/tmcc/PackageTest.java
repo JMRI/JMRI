@@ -46,6 +46,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SerialThrottleManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialThrottleTest.class));
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.swing.PackageTest.class));
         return suite;
     }
 
