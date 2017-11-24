@@ -614,11 +614,15 @@
             repository.
 
 <pre style="font-family: monospace;">
-                git pull https://github.com/arnie/JMRI.git arnie-great-tool
+                git remote add https://github.com/arnie/JMRI.git arnie
+
+                git fetch arnie arnie-great-tool
                 git checkout arnie-great-tool
 </pre>
-              where the 1st part of the "pull" is the
-              URL for Arnie's repository.
+              where the 1st part of the "remote add" is the
+              URL for Arnie's repository, and you just have to 
+              do that command once to define "arnie" as an alias
+              you can use in "git fetch".
             </li>
 
             <li>Now Bill can work with that code, and even change
@@ -629,6 +633,9 @@
                 git commit -m"Fixed a bug in sternerstat handling"
                 git push
 </pre>
+              which commits the changes and pushes them up
+              into Bill's repository on Github.
+              <p>
               Then Arnie can merge those changes into
               his own copy with:
 

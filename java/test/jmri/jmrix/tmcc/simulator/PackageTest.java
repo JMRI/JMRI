@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
    SimulatorAdapterTest.class,
-   jmri.jmrix.tmcc.simulator.configurexml.PackageTest.class
-
+   jmri.jmrix.tmcc.simulator.configurexml.PackageTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.tmcc.simulator package.

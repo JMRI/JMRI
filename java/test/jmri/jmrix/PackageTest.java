@@ -103,6 +103,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ztc.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.libusb.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SystemConnectionMemoManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(UsbPortAdapterTest.class));
         return suite;
 
     }
