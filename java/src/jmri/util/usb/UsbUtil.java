@@ -89,7 +89,8 @@ public final class UsbUtil {
      * Get a USB device's full product (manufacturer + product) name.
      *
      * @param usbDevice the USB device to get the full product name of
-     * @return the full product name or null if the product name is not     *         encoded in the device
+     * @return the full product name or null if the product name is not encoded
+     *         in the device
      */
     @CheckForNull
     public static String getFullProductName(@Nonnull UsbDevice usbDevice) {
