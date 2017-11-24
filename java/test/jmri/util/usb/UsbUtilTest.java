@@ -1,5 +1,6 @@
-package jmri.util;
+package jmri.util.usb;
 
+import jmri.util.usb.UsbUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -11,11 +12,11 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class USBUtilTest {
+public class UsbUtilTest {
 
     @Test
     public void testCTor() {
-        USBUtil t = new USBUtil();
+        UsbUtil t = new UsbUtil();
         Assert.assertNotNull("exists",t);
     }
 

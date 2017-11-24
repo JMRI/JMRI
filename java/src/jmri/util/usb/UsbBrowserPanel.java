@@ -29,7 +29,6 @@ import javax.usb.UsbHub;
 import javax.usb.UsbPort;
 import javax.usb.event.UsbServicesEvent;
 import javax.usb.event.UsbServicesListener;
-import jmri.util.USBUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -264,7 +263,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
             if (userObject == null) {
                 return Bundle.getMessage("UnableToGetUsbRootHub");
             } else if (userObject instanceof UsbDevice) {
-                return USBUtil.getFullProductName((UsbDevice) userObject);
+                return UsbUtil.getFullProductName((UsbDevice) userObject);
             }
             return super.toString();
         }
@@ -329,7 +328,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                             case 4:
                                 return String.format("0x%04X", node.getUsbDevice().getUsbDeviceDescriptor().idProduct());
                             case 5:
-                                return USBUtil.getLocationID(node.getUsbDevice());
+                                return UsbUtil.getLocationID(node.getUsbDevice());
                             default:
                                 return null;
                         }

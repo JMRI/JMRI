@@ -8,7 +8,7 @@ import javax.usb.UsbControlIrp;
 import javax.usb.UsbDevice;
 import javax.usb.UsbDisconnectedException;
 import javax.usb.UsbException;
-import jmri.util.USBUtil;
+import jmri.util.usb.UsbUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -102,9 +102,9 @@ public class UsbPortAdapter extends AbstractPortController {
         log.debug("*	getPortNames()");
 
         List<String> results = new ArrayList<>();
-        List<UsbDevice> usbDevices = USBUtil.getMatchingDevices(vendorID, productID);
+        List<UsbDevice> usbDevices = UsbUtil.getMatchingDevices(vendorID, productID);
         for (UsbDevice usbDevice : usbDevices) {
-            results.add(USBUtil.getLocationID(usbDevice));
+            results.add(UsbUtil.getLocationID(usbDevice));
         }
 
         return results;
@@ -117,7 +117,7 @@ public class UsbPortAdapter extends AbstractPortController {
         String result = null;   // assume success (optimist!)
 
         log.debug("*	openPort('{}','{}')", portName, appName);
-        usbDevice = USBUtil.getMatchingDevice(vendorID, productID, portName);
+        usbDevice = UsbUtil.getMatchingDevice(vendorID, productID, portName);
         if (usbDevice == null) {
             result = String.format(
                     "USB device at location ID %s not found.", portName);

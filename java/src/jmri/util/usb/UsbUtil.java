@@ -1,4 +1,4 @@
-package jmri.util;
+package jmri.util.usb;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
  */
-public final class USBUtil {
+public final class UsbUtil {
 
     /**
      * get all USB devices
@@ -344,5 +344,5 @@ public final class USBUtil {
 
     //initialize logging
     private transient final static Logger log
-            = LoggerFactory.getLogger(USBUtil.class);
-}   // class USBUtil
+            = LoggerFactory.getLogger(UsbUtil.class);
+}   // class UsbUtil
