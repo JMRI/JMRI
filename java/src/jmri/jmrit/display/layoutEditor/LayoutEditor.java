@@ -5299,7 +5299,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         // the points below and test if this location is in any of those
         // rectangles just create a hit rectangle for the location and
         // see if any of the points below are in it instead...
-        Rectangle2D r = trackControlCircleRectAt(loc);
+        Rectangle2D r = trackControlRectAt(loc);
 
         //check Track Segments, if any
         for (TrackSegment ts : getTrackSegments()) {
@@ -9485,20 +9485,29 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //reset the panel changed bit
         resetDirty();
-    } //setConnections
+    }
 
     //these are convenience methods to return rectangles
-    //to do point-in-rect (hit) testing
+    //to use when (hit point-in-rect testing
+    //
     //compute the control point rect at inPoint
-    public Rectangle2D trackControlPointRectAt(@Nonnull Point2D inPoint) {
+    public Rectangle2D trackEditControlRectAt(@Nonnull Point2D inPoint) {
         return new Rectangle2D.Double(inPoint.getX() - SIZE,
                 inPoint.getY() - SIZE, SIZE2, SIZE2);
-    } //controlPointRectAt
+    }
 
-    //compute the turnout circle rect at inPoint
-    public Rectangle2D trackControlCircleRectAt(@Nonnull Point2D inPoint) {
+    //compute the turnout circle control rect at inPoint
+    public Rectangle2D trackControlRectAt(@Nonnull Point2D inPoint) {
         return new Rectangle2D.Double(inPoint.getX() - circleRadius,
                 inPoint.getY() - circleRadius, circleDiameter, circleDiameter);
+    }
+
+    //these are convenience methods to return circles used to draw onscreen
+    //
+    //compute the control point rect at inPoint
+    public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
+        return new Ellipse2D.Double(inPoint.getX() - SIZE,
+                inPoint.getY() - SIZE, SIZE2, SIZE2);
     }
 
     //compute the turnout circle at inPoint (used for drawing)
@@ -9539,23 +9548,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             g2.setRenderingHints(antialiasing);
         }
 
+        // things that only get drawn in edit mode
         if (isEditable()) {
             if (getDrawGrid()) {
                 drawPanelGrid(g2);
             }
-            drawHiddenLayoutTracks(g2);
+            drawLayoutTracksHidden(g2);
         }
-
-        drawTrackBallast(g2);
-        drawTrackTies(g2);
-
-        List<TrackSegment> trackSegments = getTrackSegments();
-        drawTrackSegments(g2, trackSegments, true, false);     //dashed, non-mainline
-        drawTrackSegments(g2, trackSegments, true, true);      //dashed, mainline
-        drawTrackSegments(g2, trackSegments, false, false);    //non-dashed, non-mainline
-        drawTrackSegments(g2, trackSegments, false, true);     //non-dashed, mainline
-
-        drawLayoutTracks(g2);
+        drawLayoutTracksBallast(g2);
+        drawLayoutTracksTies(g2);
+        drawLayoutTracksRails(g2);
+        drawLayoutTracksBlockLines(g2);
 
         // things that only get drawn in edit mode
         if (isEditable()) {
@@ -9578,11 +9581,143 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }   // draw
 
+    private void drawLayoutTracksHidden(Graphics2D g2) {
+        //setup for drawing hidden sideline rails
+        g2.setStroke(new BasicStroke(1.0f));
+        g2.setColor(layoutTrackDrawingOptions.getSideRailColor());
+        draw1(g2, false, false, true, false);
+        draw1(g2, false, false, true, true);
+        //setup for drawing mainline rails
+        g2.setStroke(new BasicStroke(2.0f));
+        g2.setColor(layoutTrackDrawingOptions.getMainRailColor());
+        draw1(g2, true, false, true, false);
+        draw1(g2, true, false, true, true);
+    }
+
+    private void drawLayoutTracksBallast(Graphics2D g2) {
+        //setup for drawing sideline ballast
+        int ballastWidth = layoutTrackDrawingOptions.getSideBallastWidth();
+        if (ballastWidth > 0) {
+            g2.setStroke(new BasicStroke(ballastWidth,
+                    BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            g2.setColor(layoutTrackDrawingOptions.getSideBallastColor());
+            draw1(g2, false, false, false, false);
+        }
+
+        //setup for drawing mainline ballast
+        ballastWidth = layoutTrackDrawingOptions.getMainBallastWidth();
+        if (ballastWidth > 0) {
+            g2.setStroke(new BasicStroke(ballastWidth,
+                    BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            g2.setColor(layoutTrackDrawingOptions.getMainBallastColor());
+            draw1(g2, true, false, false, false);
+        }
+    }
+
+    private void drawLayoutTracksTies(Graphics2D g2) {
+        //setup for drawing sideline ties
+        int tieLength = layoutTrackDrawingOptions.getSideTieLength();
+        if (tieLength > 0) {
+            int tieWidth = layoutTrackDrawingOptions.getSideTieWidth();
+            int tieGap = layoutTrackDrawingOptions.getSideTieGap();
+            g2.setStroke(new BasicStroke(tieLength,
+                    BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.F,
+                    new float[]{tieWidth, tieGap}, 0));
+            g2.setColor(layoutTrackDrawingOptions.getSideTieColor());
+            draw1(g2, false, false, false, false);
+        }
+
+        //setup for drawing mainline ties
+        tieLength = layoutTrackDrawingOptions.getMainTieLength();
+        if (tieLength > 0) {
+            int tieWidth = layoutTrackDrawingOptions.getMainTieWidth();
+            int tieGap = layoutTrackDrawingOptions.getMainTieGap();
+            g2.setStroke(new BasicStroke(
+                    layoutTrackDrawingOptions.getMainTieLength(),
+                    BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.F,
+                    new float[]{tieWidth, tieGap}, 0));
+            g2.setColor(layoutTrackDrawingOptions.getMainTieColor());
+            draw1(g2, true, false, false, false);
+        }
+    }
+
+    private void drawLayoutTracksRails(Graphics2D g2) {
+        //setup for drawing sideline rails
+        g2.setStroke(new BasicStroke(
+                layoutTrackDrawingOptions.getSideRailWidth(),
+                BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        g2.setColor(layoutTrackDrawingOptions.getSideRailColor());
+        if (layoutTrackDrawingOptions.getSideRailCount() == 1) {
+            draw1(g2, false, false, false, false);
+            draw1(g2, false, false, false, true);
+        }
+        if (layoutTrackDrawingOptions.getSideRailCount() > 1) {
+            draw2(g2, false, false);
+        }
+        if (layoutTrackDrawingOptions.getSideRailCount() == 3) {
+            draw1(g2, false, false, false, false);
+            draw1(g2, false, false, false, true);
+        }
+        //setup for drawing mainline rails
+        g2.setStroke(new BasicStroke(
+                layoutTrackDrawingOptions.getMainRailWidth(),
+                BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        g2.setColor(layoutTrackDrawingOptions.getMainRailColor());
+        if (layoutTrackDrawingOptions.getMainRailCount() == 1) {
+            draw1(g2, true, false, false, false);
+            draw1(g2, true, false, false, true);
+        }
+        if (layoutTrackDrawingOptions.getMainRailCount() > 1) {
+            draw2(g2, true, false);
+        }
+        if (layoutTrackDrawingOptions.getMainRailCount() == 3) {
+            draw1(g2, true, false, false, false);
+            draw1(g2, true, false, false, true);
+        }
+    }
+
+    private void drawLayoutTracksBlockLines(Graphics2D g2) {
+        //setup for drawing sideline ties
+        g2.setStroke(new BasicStroke(
+                layoutTrackDrawingOptions.getSideBlockLineWidth(),
+                BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        //note: color is set in layout track's draw1 when isBlock is true
+        draw1(g2, false, true, false, false);
+        //setup for drawing mainline ties
+        g2.setStroke(new BasicStroke(
+                layoutTrackDrawingOptions.getMainBlockLineWidth(),
+                BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        //note: color is set in layout track's draw1 when isBlock is true
+        draw1(g2, true, true, false, false);
+    }
+
+    private void draw1(Graphics2D g2,
+            boolean isMain, boolean isBlock,
+            boolean isHidden, boolean isDashed) {
+        for (LayoutTrack layoutTrack : layoutTrackList) {
+            if ((isHidden == layoutTrack.isHidden())
+                    && (!isDashed || ((layoutTrack instanceof TrackSegment)
+                    && (((TrackSegment) layoutTrack).isDashed())))) {
+                layoutTrack.draw1(g2, isMain, isBlock);
+            }
+        }
+    }
+
+    private void draw2(Graphics2D g2, boolean isMain, boolean isHidden) {
+        for (LayoutTrack layoutTrack : layoutTrackList) {
+            if (isHidden == layoutTrack.isHidden()) {
+                layoutTrack.draw2(g2, isMain, isHidden);
+            }
+        }
+    }
+
     private boolean main = true;
     private float trackWidth = sideTrackWidth;
 
     //had to make this protected so the LayoutTrack classes could access it
     //also returned the current value of trackWidth for the callers to use
+    //TODO: remove this after draw1/draw2 are implemented everywhere
+    // (and its usages removed)
     protected float setTrackStrokeWidth(Graphics2D g2, boolean needMain) {
         log.debug("setTrackStrokeWidth(g2, {}), main: {}", needMain, main);
         if (main != needMain) {
@@ -9612,6 +9747,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private Stroke ballastStroke = null;
     private Color ballastColor = null;
 
+    //TODO: remove this (and its usages)
     protected Stroke setBallastStroke(Graphics2D g2, boolean needMain) {
         log.debug("setTrackStrokeWidth(g2, {}), main: {}", needMain, main);
         if ((ballastStroke == null)
@@ -9642,79 +9778,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return ballastStroke;
     }
 
+    //TODO: remove this (and its usages)
     protected Stroke getBallastStroke() {
         return ballastStroke;
     }
 
+    //TODO: remove this (and its usages)
     protected Color getBallastColor() {
         return ballastColor;
     }
-
-    private void drawHiddenLayoutTracks(Graphics2D g2) {
-        g2.setColor(defaultTrackColor);
-        setTrackStrokeWidth(g2, !main);
-        for (LayoutTrack tr : layoutTrackList) {
-            // TrackSegments drawn seperately
-            if (!(tr instanceof TrackSegment)) {
-                if (tr.isHidden()) {
-                    tr.drawHidden(g2);
-                }
-            }
-        }
-    } //drawHiddenLayoutTracks
-
-    private void drawTrackBallast(Graphics2D g2) {
-        for (LayoutTrack tr : layoutTrackList) {
-            if (!tr.isHidden()) {
-                tr.drawBallast(g2);
-            }
-        }
-        setTrackStrokeWidth(g2, !main); // force reset
-    }
-
-    private void drawTrackTies(Graphics2D g2) {
-
-        float dash_phase = 0;
-        Stroke stroke = g2.getStroke();
-        if (stroke instanceof BasicStroke) {
-            dash_phase = ((BasicStroke) stroke).getDashPhase();
-        }
-        g2.setStroke(new BasicStroke(mainlineTrackWidth * 1.33F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.F, new float[]{2.F, 6.F}, dash_phase));
-        g2.setColor(LayoutTrack.defaultTieColor);
-
-        for (LayoutTrack tr : layoutTrackList) {
-            if (!tr.isHidden()) {
-                if (tr.isMainline()) //layoutTrackDrawingOptions
-                {
-                    tr.drawTies(g2);
-                }
-            }
-        }
-        setTrackStrokeWidth(g2, !main); // force reset
-    }
-
-    private void drawLayoutTracks(Graphics2D g2) {
-        for (LayoutTrack tr : layoutTrackList) {
-            // TrackSegments drawn seperately
-            if (!(tr instanceof TrackSegment)) {
-                if (!tr.isHidden()) {
-                    tr.draw(g2);
-                }
-            }
-        }
-    } //drawLayoutTracks
-
-    private void drawTrackSegments(Graphics2D g2,
-            List<TrackSegment> trackSegments,
-            boolean dashed,
-            boolean mainline) {
-        setTrackStrokeWidth(g2, mainline);
-        for (TrackSegment ts : trackSegments) {
-            if ((ts.isDashed() == dashed) && (ts.isMainline() == mainline)) {
-                ts.draw(g2);
-            }
-        }
-    } //drawTrackSegments
 
     private void drawTrackSegmentInProgress(Graphics2D g2) {
         //check for segment in progress
@@ -9744,7 +9816,22 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private void drawLayoutTrackEditControls(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+
         for (LayoutTrack tr : layoutTrackList) {
+            if (tr instanceof TrackSegment) {
+                int showHide = (_layoutTrackSelection contains tr)
+                            ? TrackSegment.SHOWCON : TrackSegment.HIDECON;
+                ((TrackSegment) tr).hideConstructionLines(showHide);
+            }
+        }
+        for (TrackSegment ts : getTrackSegments()) {
+            ts.hideConstructionLines(TrackSegment.HIDECON);
+        }
+
+        for (LayoutTrack tr : _layoutTrackSelection) {
+            if (tr instanceof TrackSegment) {
+                ((TrackSegment) tr).hideConstructionLines(TrackSegment.SHOWCON);
+            }
             tr.drawEditControls(g2);
         }
     }
@@ -9767,7 +9854,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 }
             }
         }
-    }   // drawTurnoutControls
+    }
 
     private Rectangle2D getSelectionRect() {
         double selX = Math.min(selectionX, selectionX + selectionWidth);

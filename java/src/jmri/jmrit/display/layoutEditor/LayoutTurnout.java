@@ -1774,7 +1774,7 @@ public class LayoutTurnout extends LayoutTrack {
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        Rectangle2D r = layoutEditor.trackControlRectAt(hitPoint);
         Point2D p, minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
@@ -3581,7 +3581,7 @@ public class LayoutTurnout extends LayoutTrack {
                 g2.setColor(Color.green);
             }
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        g2.draw(layoutEditor.trackEditControlRectAt(pt));
 
         pt = getCoordsB();
         if (getConnectB() == null) {
@@ -3589,7 +3589,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        g2.draw(layoutEditor.trackEditControlRectAt(pt));
 
         pt = getCoordsC();
         if (getConnectC() == null) {
@@ -3597,7 +3597,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        g2.draw(layoutEditor.trackEditControlRectAt(pt));
 
         if ((getTurnoutType() == DOUBLE_XOVER)
                 || (getTurnoutType() == RH_XOVER)
@@ -3608,7 +3608,7 @@ public class LayoutTurnout extends LayoutTrack {
             } else {
                 g2.setColor(Color.green);
             }
-            g2.draw(layoutEditor.trackControlPointRectAt(pt));
+            g2.draw(layoutEditor.trackEditControlRectAt(pt));
         }
     }   // drawEditControls
 

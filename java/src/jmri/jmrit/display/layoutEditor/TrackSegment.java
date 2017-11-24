@@ -627,7 +627,7 @@ public class TrackSegment extends LayoutTrack {
             //note: optimization here: instead of creating rectangles for all the
             // points to check below, we create a rectangle for the test point
             // and test if the points below are in that rectangle instead.
-            Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+            Rectangle2D r = layoutEditor.trackControlRectAt(hitPoint);
             Point2D p, minPoint = MathUtil.zeroPoint2D;
 
             double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
@@ -1493,6 +1493,32 @@ public class TrackSegment extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
+    protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
+        if (isMain == mainline) {
+            if (isBlock) {
+                setColorForTrackBlock(g2, getLayoutBlock());
+            }
+            drawSolid(g2);  //TODO: fix this
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void draw2(Graphics2D g2, boolean isMain, boolean isBlock) {
+        if (isMain == mainline) {
+            if (isBlock) {
+                setColorForTrackBlock(g2, getLayoutBlock());
+            }
+            drawSolid(g2);  //TODO: fix this
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    //TODO: remove this
     protected void draw(Graphics2D g2) {
         setColorForTrackBlock(g2, getLayoutBlock());
         float trackWidth = layoutEditor.setTrackStrokeWidth(g2, mainline);
@@ -1513,6 +1539,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    //TODO: remove this
     @Override
     protected void drawHidden(Graphics2D g2) {
         float trackWidth = layoutEditor.setTrackStrokeWidth(g2, isMainline());
@@ -1523,6 +1550,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    //TODO: remove this
     @Override
     protected void drawBallast(Graphics2D g2
     ) {
@@ -1535,6 +1563,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    //TODO: remove this
     @Override
     protected void drawTies(Graphics2D g2
     ) {
@@ -1591,20 +1620,20 @@ public class TrackSegment extends LayoutTrack {
                 g2.draw(new Line2D.Double(circleCenterPoint, ep2));
                 // Draw a circle and square at the circles centre, that
                 // allows the user to change the angle by dragging the mouse.
-                g2.draw(layoutEditor.trackControlCircleAt(circleCenterPoint));
-                g2.draw(layoutEditor.trackControlCircleRectAt(circleCenterPoint));
+                g2.draw(layoutEditor.trackEditControlCircleAt(circleCenterPoint));
+                g2.draw(layoutEditor.trackEditControlRectAt(circleCenterPoint));
             } else if (isBezier()) {
                 //draw construction lines and control circles
                 Point2D lastPt = ep1;
                 for (Point2D bcp : bezierControlPoints) {
                     g2.draw(new Line2D.Double(lastPt, bcp));
                     lastPt = bcp;
-                    g2.draw(layoutEditor.trackControlPointRectAt(bcp));
+                    g2.draw(layoutEditor.trackEditControlRectAt(bcp));
                 }
                 g2.draw(new Line2D.Double(lastPt, ep2));
             }
         }
-        g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
+        g2.draw(layoutEditor.trackEditControlCircleAt(getCentreSeg()));
     }   // drawEditControls
 
     protected void drawTurnoutControls(Graphics2D g2) {

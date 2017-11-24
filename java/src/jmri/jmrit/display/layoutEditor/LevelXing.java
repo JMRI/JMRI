@@ -904,7 +904,7 @@ public class LevelXing extends LayoutTrack {
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        Rectangle2D r = layoutEditor.trackControlRectAt(hitPoint);
         Point2D p, minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
@@ -1458,28 +1458,28 @@ public class LevelXing extends LayoutTrack {
         } else {
             g2.setColor(Color.blue);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsA()));
+        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsA()));
 
         if (getConnectB() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsB()));
+        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsB()));
 
         if (getConnectC() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsC()));
+        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsC()));
 
         if (getConnectD() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsD()));
+        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsD()));
     }
 
     protected void drawTurnoutControls(Graphics2D g2) {

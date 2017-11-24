@@ -420,7 +420,7 @@ public class LayoutTurntable extends LayoutTrack {
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        Rectangle2D r = layoutEditor.trackControlRectAt(hitPoint);
         Point2D p, minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
@@ -741,7 +741,6 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-    @Override
     protected void draw(Graphics2D g2) {
         // draw turntable circle - default track color, side track width
         float trackWidth = layoutEditor.setTrackStrokeWidth(g2, false);
@@ -831,7 +830,7 @@ public class LayoutTurntable extends LayoutTrack {
             } else {
                 g2.setColor(Color.green);
             }
-            g2.draw(layoutEditor.trackControlPointRectAt(pt));
+            g2.draw(layoutEditor.trackEditControlRectAt(pt));
         }
     }
 

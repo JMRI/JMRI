@@ -553,12 +553,12 @@ public class LayoutSlip extends LayoutTurnout {
 
             if (useRectangles) {
                 // calculate turnout's left control rectangle
-                Rectangle2D leftRectangle = layoutEditor.trackControlCircleRectAt(leftCenter);
+                Rectangle2D leftRectangle = layoutEditor.trackControlRectAt(leftCenter);
                 if (leftRectangle.contains(hitPoint)) {
                     //point is in this turnout's left control rectangle
                     result = SLIP_LEFT;
                 }
-                Rectangle2D rightRectangle = layoutEditor.trackControlCircleRectAt(rightCenter);
+                Rectangle2D rightRectangle = layoutEditor.trackControlRectAt(rightCenter);
                 if (rightRectangle.contains(hitPoint)) {
                     //point is in this turnout's right control rectangle
                     result = SLIP_RIGHT;
@@ -581,7 +581,7 @@ public class LayoutSlip extends LayoutTurnout {
             // see if the passed in point is in one of those rectangles
             // we can create a rectangle for the passed in point and then
             // test if any of the points below are in that rectangle instead.
-            Rectangle2D r = layoutEditor.trackControlPointRectAt(hitPoint);
+            Rectangle2D r = layoutEditor.trackEditControlRectAt(hitPoint);
 
             if (!requireUnconnected || (getConnectA() == null)) {
                 //check the A connection point
@@ -1203,7 +1203,8 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }   // draw
 
-    // these are implemented in superclass LayoutTrunout
+    // these are implemented in superclass LayoutTurnout
+    //TODO:remove once draw1/draw2 are implemented
     // protected void drawBallast(Graphics2D g2) {}
     // protected void drawTies(Graphics2D g2);
 
@@ -1243,28 +1244,28 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             g2.setColor(Color.blue);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsA()));
+        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsA()));
 
         if (getConnectB() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsB()));
+        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsB()));
 
         if (getConnectC() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsC()));
+        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsC()));
 
         if (getConnectD() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsD()));
+        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsD()));
     }   // drawEditControls
 
     static class TurnoutState {
