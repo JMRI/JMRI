@@ -7,7 +7,6 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  *
@@ -71,7 +70,7 @@ public class LayoutTrackDrawingOptions implements Cloneable {
         return sideBallastColor;
     }
 
-    public void setSideBallastColor(@Nullable Color val) {
+    public void setSideBallastColor(@Nonnull Color val) {
         sideBallastColor = val;
     }
 
@@ -91,7 +90,7 @@ public class LayoutTrackDrawingOptions implements Cloneable {
         return sideTieColor;
     }
 
-    public void setSideTieColor(@Nullable Color val) {
+    public void setSideTieColor(@Nonnull Color val) {
         sideTieColor = val;
     }
 
@@ -151,7 +150,7 @@ public class LayoutTrackDrawingOptions implements Cloneable {
         return sideRailColor;
     }
 
-    public void setSideRailColor(@Nullable Color val) {
+    public void setSideRailColor(@Nonnull Color val) {
         sideRailColor = val;
     }
 
@@ -181,7 +180,7 @@ public class LayoutTrackDrawingOptions implements Cloneable {
         return mainBallastColor;
     }
 
-    public void setMainBallastColor(@Nullable Color val) {
+    public void setMainBallastColor(@Nonnull Color val) {
         mainBallastColor = val;
     }
 
@@ -201,7 +200,7 @@ public class LayoutTrackDrawingOptions implements Cloneable {
         return mainTieColor;
     }
 
-    public void setMainTieColor(@Nullable Color val) {
+    public void setMainTieColor(@Nonnull Color val) {
         mainTieColor = val;
     }
 
@@ -261,7 +260,7 @@ public class LayoutTrackDrawingOptions implements Cloneable {
         return mainRailColor;
     }
 
-    public void setMainRailColor(@Nullable Color val) {
+    public void setMainRailColor(@Nonnull Color val) {
         mainRailColor = val;
     }
 
