@@ -34,14 +34,12 @@ import org.slf4j.LoggerFactory;
  */
 public final class UsbUtil {
 
-    // Ideally, we would bar contruction of a utility class, but until I can
-    // mock a UsbDevice, allow the default constructor to stand
-//    /**
-//     * Prevent construction, since this is a stateless utility class
-//     */
-//    private UsbUtil() {
-//        // prevent construction, since this is a stateless utility class
-//    }
+    /**
+     * Prevent construction, since this is a stateless utility class
+     */
+    private UsbUtil() {
+        // prevent construction, since this is a stateless utility class
+    }
 
     /**
      * Get all USB devices.
@@ -107,7 +105,7 @@ public final class UsbUtil {
         } catch (UsbException
                 | UnsupportedEncodingException
                 | UsbDisconnectedException ex) {
-            // Nothing to see here... move along...
+            log.error("Unable to read data from {}", usbDevice, ex);
         }
         return result;
     }
