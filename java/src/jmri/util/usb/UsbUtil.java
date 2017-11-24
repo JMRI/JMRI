@@ -102,7 +102,7 @@ public final class UsbUtil {
                 if (manufacturer == null || product.startsWith(manufacturer)) {
                     result = product;
                 } else {
-                    result = manufacturer + " " + product;
+                    result = Bundle.getMessage("UsbDevice", manufacturer, product);
                 }
             }
         } catch (UsbException

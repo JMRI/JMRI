@@ -56,6 +56,9 @@
           <SubComponents>
             <Component class="javax.swing.JTree" name="usbTree">
               <Properties>
+                <Property name="cellRenderer" type="javax.swing.tree.TreeCellRenderer" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="new UsbTreeCellRenderer()" type="code"/>
+                </Property>
                 <Property name="rootVisible" type="boolean" value="false"/>
                 <Property name="showsRootHandles" type="boolean" value="true"/>
               </Properties>

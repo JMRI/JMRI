@@ -11,12 +11,15 @@
  *============================================================================*/
 package jmri.util.usb;
 
+import java.awt.Image;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -192,6 +195,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
 
         jScrollPane1.setBorder(null);
 
+        usbTree.setCellRenderer(new UsbTreeCellRenderer());
         usbTree.setRootVisible(false);
         usbTree.setShowsRootHandles(true);
         usbTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -286,7 +290,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
 
         @Override
         public int getRowCount() {
-            return ((node != null) && (node.getUsbDevice() != null)) ? 5 : 1;
+            return ((node != null) && (node.getUsbDevice() != null)) ? 10 : 1;
         }
 
         @Override
@@ -317,6 +321,16 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                             return Bundle.getMessage("UsbDeviceVendorId");
                         case 4:
                             return Bundle.getMessage("UsbDeviceProductId");
+                        case 5:
+                            return Bundle.getMessage("UsbDeviceClass");
+                        case 6:
+                            return Bundle.getMessage("UsbDeviceSubClass");
+                        case 7:
+                            return Bundle.getMessage("UsbDeviceProtocol");
+                        case 8:
+                            return Bundle.getMessage("UsbDeviceReleaseNumber");
+                        case 9:
+                            return Bundle.getMessage("UsbDeviceNumConfigurations");
                         default:
                             break;
                     }
@@ -335,6 +349,16 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                                 return String.format("%04X", node.getUsbDevice().getUsbDeviceDescriptor().idVendor());
                             case 4:
                                 return String.format("%04X", node.getUsbDevice().getUsbDeviceDescriptor().idProduct());
+                            case 5:
+                                return node.getUsbDevice().getUsbDeviceDescriptor().bDeviceClass();
+                            case 6:
+                                return node.getUsbDevice().getUsbDeviceDescriptor().bDeviceSubClass();
+                            case 7:
+                                return node.getUsbDevice().getUsbDeviceDescriptor().bDeviceProtocol();
+                            case 8:
+                                return node.getUsbDevice().getUsbDeviceDescriptor().bcdDevice();
+                            case 9:
+                                return node.getUsbDevice().getUsbDeviceDescriptor().bNumConfigurations();
                             default:
                                 return null;
                         }
@@ -358,5 +382,35 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
             }
             fireTableDataChanged();
         }
+    }
+
+    private final static class UsbTreeCellRenderer extends DefaultTreeCellRenderer {
+
+        public UsbTreeCellRenderer() {
+            int width = getOpenIcon().getIconWidth();
+            int height = getOpenIcon().getIconHeight();
+            try {
+                setOpenIcon(new ImageIcon(new ImageIcon(getClass().getResource("/jmri/util/usb/topology.png"))
+                        .getImage()
+                        .getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+            } catch (NullPointerException ex) {
+                log.error("Unable to get resource /jmri/util/usb/topology.png from JMRI classpath");
+            }
+            try {
+                setClosedIcon(new ImageIcon(new ImageIcon(getClass().getResource("/jmri/util/usb/topology.png"))
+                        .getImage()
+                        .getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+            } catch (NullPointerException ex) {
+                log.error("Unable to get resource /jmri/util/usb/topology.png from JMRI classpath");
+            }
+            try {
+                setLeafIcon(new ImageIcon(new ImageIcon(getClass().getResource("/jmri/util/usb/usb.png"))
+                        .getImage()
+                        .getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+            } catch (NullPointerException ex) {
+                log.error("Unable to get resource /jmri/util/usb/usb.png from JMRI classpath");
+            }
+        }
+
     }
 }
