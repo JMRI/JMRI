@@ -46,7 +46,6 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
 
     private final UsbTreeNode root;
     private final UsbDeviceTableModel deviceModel = new UsbDeviceTableModel();
-    private final static Logger log = LoggerFactory.getLogger(UsbBrowserPanel.class);
     private final UsbServicesListener usbServicesListener = new UsbServicesListener() {
         @Override
         public void usbDeviceAttached(UsbServicesEvent use) {
@@ -411,4 +410,8 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
         //     return usbPortIndex;
         // }
     }
+
+    //initialize logging
+    private transient final static Logger log
+            = LoggerFactory.getLogger(UsbBrowserPanel.class);
 }
