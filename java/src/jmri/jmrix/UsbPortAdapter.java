@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.usb.UsbControlIrp;
 import javax.usb.UsbDevice;
 import javax.usb.UsbDisconnectedException;
@@ -88,7 +89,13 @@ public class UsbPortAdapter extends AbstractPortController {
             if (usbDevices.size() == 1) {
                 usbDevice = usbDevices.get(0);
             } else {
-                return String.format("USB device with serial number %s at location %s not found.", serialNumber, portName);
+                // search for device with same vendor/product ID, but possibly different serial number
+                usbDevices = UsbUtil.getMatchingDevices(vendorID, productID, null);
+                if (usbDevices.size() == 1) {
+                    usbDevice = usbDevices.get(0);
+                } else {
+                    return String.format("Single USB device with vendor id {} and product id {} not found.", vendorID, productID);
+                }
             }
         }
         return null;
@@ -136,11 +143,20 @@ public class UsbPortAdapter extends AbstractPortController {
         log.debug("configure()");
     }
 
+    /**
+     * Get the list of USB locations with devices matching a single
+     * vendor/product ID combination. These are "portNames" to match the calling
+     * API.
+     *
+     * @return the list of locations with matching devices; this is an empty
+     *         list if there are no matches
+     */
+    @Nonnull
     public List<String> getPortNames() {
         log.debug("getPortNames()");
 
         List<String> results = new ArrayList<>();
-        List<UsbDevice> usbDevices = UsbUtil.getMatchingDevices(vendorID, productID, serialNumber);
+        List<UsbDevice> usbDevices = UsbUtil.getMatchingDevices(vendorID, productID, null);
         usbDevices.forEach((device) -> {
             results.add(UsbUtil.getLocation(device));
         });
