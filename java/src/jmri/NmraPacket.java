@@ -493,7 +493,7 @@ public class NmraPacket {
      * @return true if a Signal Decoder Packet; false otherwise
      */
     public static boolean isAccSignalDecoderPkt(byte[] packet) {
-        if (packet.length != 3 && packet.length != 4) {
+        if (packet == null || packet.length != 3 && packet.length != 4) {
             return false;   // allow ECC to be present or not
         }
         if ((packet[0] & 0xC0) != 0x80) {
