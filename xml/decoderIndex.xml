@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.9.6ish+heap+20171112T0626Z+R3a565e8 on Sun Nov 12 17:26:17 AEDT 2017-->
-  <decoderIndex version="860">
+  <!--Written by JMRI version 4.9.7ish+heap+20171124T1118Z+R6c4d2a5 on Fri Nov 24 22:19:07 AEDT 2017-->
+  <decoderIndex version="862">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -10526,6 +10526,66 @@
           <output name="8" label="Pad 8" connection="solder" maxcurrent="500 mA" />
           <output name="9" label="Pad 9" connection="solder" maxcurrent="500 mA" />
           <size length="2.3" width="1.2" height="0.375" units="inches" />
+        </model>
+      </family>
+      <family name="Signal and Lighting" mfg="North Coast Engineering" file="NCE_Light-It_accessory.xml">
+        <model model="Light-It - Accessory mode" connector="Wires">
+          <output name="1" label="White/Green" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <size length="18" width="15" height="5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
+        <model model="Illuminator - Accessory mode" connector="Wires">
+          <output name="1" label="White/Green" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <size length="18" width="15" height="5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Signal and Lighting" mfg="North Coast Engineering" file="NCE_Light-It_mobile.xml">
+        <model model="Light-It - Mobile mode" connector="Wires">
+          <output name="1" label="White/Green" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <size length="18" width="15" height="5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
+        <model model="Illuminator - Mobile mode" connector="Wires">
+          <output name="1" label="White/Green" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <size length="18" width="15" height="5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Signal and Lighting" mfg="North Coast Engineering" file="NCE_Light-It_signal.xml">
+        <model model="Light-It - Signal mode" connector="Wires">
+          <output name="1" label="White/Green" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <size length="18" width="15" height="5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
+        <model model="Illuminator - Signal mode" connector="Wires">
+          <output name="1" label="White/Green" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <size length="18" width="15" height="5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
         </model>
       </family>
       <family name="NYB Dual Mode Decoder" mfg="New York Byano Limited" type="locomotive" file="NYB_dualmode.xml">

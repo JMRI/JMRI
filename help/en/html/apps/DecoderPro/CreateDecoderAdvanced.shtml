@@ -461,7 +461,8 @@ and uses a special syntax:
       CV programming in the command station. "Capability" elements
       are used to tell DecoderPro about these.
 
-      <h4>Access to High CV addresses</h4>Certain command stations
+      <h4>Access to High CV addresses</h4>
+      Certain command stations
       can only access up to CV 256 or CV512. Some decoder
       manufacturers have built in mechanisms to bypass this. For
       example, some ESU decoders can use writes to various CVs to
@@ -624,22 +625,35 @@ selects the different algorithm needed here.
       </ul>
 
       <a id="accessoryops" name="accessoryops"></a>
-      <h4>Accessory Decoder Ops Mode</h4>Special programming
-      packets are used by certain accessory decoders to configure
-      their CVs from the DCC track signal. The capability to do
-      that is written:
+      <h4>Accessory Decoder Ops Mode</h4>
+      Certain accessory decoders require special
+      programming packets to configure their CVs from the DCC track signal.
+      The capability to do that is written:
       <pre style="font-family: monospace;">
         &lt;capability&gt;
             &lt;name&gt;Ops Mode Accessory Programming&lt;/name&gt;
-            &lt;parameter name="Address Type"&gt;decoder&lt;/name&gt;
+            &lt;parameter name="Address Type"&gt;decoder&lt;/parameter&gt;
+            &lt;parameter name="Delay"&gt;200&lt;/parameter&gt;
         &lt;/capability&gt;
 </pre>The "Address Type" parameter is optional:
       <ul>
           <li>If it is "decoder" or omitted, the current address is interpreted as a 9-bit accessory decoder address.</li>
           <li>If it is "accessory" or "output", the current address is interpreted as an 11-bit accessory output address.</li>
           <li>If it is "signal", the current address is interpreted as an 11-bit signal decoder address.</li>
+          <li>
+              If it is "legacy", the current address is interpreted as a 9-bit address (as for "decoder")
+              but a "legacy" programming packet (as per Appendix A of
+     <a href=
+      "http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf"
+            target="_blank">
+      NMRA standard 9.2.2</a>)
+           is sent.
+          </li>
       </ul>
-      <p>
+      The "Delay" parameter is optional and specifies a minimum delay (in milliseconds)
+      between successive writes. Some decoders will miss commands if the delay is too short.
+      If this is parameter is omitted, the default delay is 500 milliseconds.
+       <p>
         Note that this only works for
         ops-mode writes; these particular NMRA DCC packets do not perform
         read operations, nor do they work in the service mode (programming
@@ -668,6 +682,36 @@ selects the different algorithm needed here.
       "http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf"
             target="_blank">
       NMRA standard 9.2.2</a>.
+      </p>
+
+      <a id="opsdelayed" name="opsdelayed"></a>
+      <h4>Ops Mode Delayed Programming</h4>
+       <p>
+      Most locomotive decoders accept special programming packets
+      to configure their CVs from the DCC track signal (Programming on Main).
+      </p>
+      However these packets take time to process and if subsequent packets are sent
+      too soon they can be missed.
+      The capability to do add a delay after programming each CV is written:
+      <pre style="font-family: monospace;">
+        &lt;capability&gt;
+            &lt;name&gt;Ops Mode Delayed Programming&lt;/name&gt;
+            &lt;parameter name="Delay"&gt;500&lt;/parameter&gt;
+        &lt;/capability&gt;
+</pre>The "Delay" parameter specifies
+      a minimum delay (in milliseconds) between successive writes.
+      Some decoders miss commands if the delay is too short.
+      If this is parameter is omitted, the default delay is 500 milliseconds.
+       <p>
+        Note that this only works for
+        ops-mode writes; these particular NMRA DCC packets do not perform
+        read operations, nor do they work in the service mode (programming track).
+      </p>
+       <p>
+        Note also that this particular capability only works for multi-function
+        decoders. Accessory decoders need to use the
+        <a href="#accessoryops">Accessory Decoder Ops Mode</a>
+        capability, which has its own "Delay" parameter.
       </p>
 
       <a name="indexedcap" id="indexedcap"></a>

@@ -119,15 +119,8 @@ public class UsbPortAdapter extends AbstractPortController {
         log.debug("*	openPort('{}','{}')", portName, appName);
         usbDevice = USBUtil.getMatchingDevice(vendorID, productID, portName);
         if (usbDevice == null) {
-            // didn't find one at that location... see if we can find any anywhere
-            List<UsbDevice> usbDevices = USBUtil.getMatchingDevices(vendorID, productID);
-            if (usbDevices.size() == 1) {   // if we found one...
-                // ...its location must have changed so...
-                usbDevice = usbDevices.get(0);  // use it
-            } else {    // otherwise... return error string
-                result = String.format(
-                        "USB device at location ID %s not found.", portName);
-            }
+            result = String.format(
+                    "USB device at location ID %s not found.", portName);
         }
         return result;
     }
@@ -153,12 +146,11 @@ public class UsbPortAdapter extends AbstractPortController {
 
     /**
      * send USB control transfer
-     *
      * @param requestType the request type
-     * @param request     the request
-     * @param value       the value
-     * @param index       the index
-     * @param data        the data
+     * @param request the request
+     * @param value the value
+     * @param index the index
+     * @param data the data
      * @return true if successful sent
      */
     public boolean sendControlTransfer(int requestType, int request, int value, int index, byte[] data) {
