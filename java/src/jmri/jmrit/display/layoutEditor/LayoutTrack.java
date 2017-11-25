@@ -179,25 +179,6 @@ public abstract class LayoutTrack {
     }
 
     /**
-     * draw track ballast
-     *
-     * @param g2 the graphics context
-     */
-    protected abstract void drawBallast(Graphics2D g2);
-
-    /**
-     * draw routine draw track ties
-     *
-     * @param g2 the graphics context
-     */
-    //protected abstract void drawTies(Graphics2D g2);
-    //note: placeholder until I get this implemented in all sub-classes
-    //TODO: replace with abstract declaration (above)
-    protected void drawTies(Graphics2D g2) {
-        //nothing to do here... move along...
-    }
-
-    /**
      * highlight unconnected connections
      *
      * @param g2 the graphics context

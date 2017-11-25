@@ -939,7 +939,7 @@ public class LevelXing extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = LEVEL_XING_A;
+                result = LEVEL_XING_B;
             }
         }
 
@@ -950,7 +950,7 @@ public class LevelXing extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = LEVEL_XING_A;
+                result = LEVEL_XING_C;
             }
         }
 
@@ -961,7 +961,7 @@ public class LevelXing extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = LEVEL_XING_A;
+                result = LEVEL_XING_D;
             }
         }
         if ((useRectangles && !r.contains(minPoint))
@@ -1380,51 +1380,19 @@ public class LevelXing extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
-    protected void draw(Graphics2D g2) {
-        if (isMainlineBD() && (!isMainlineAC())) {
-            drawXingAC(g2);
-            drawXingBD(g2);
-        } else {
-            drawXingBD(g2);
-            drawXingAC(g2);
+    protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
+        if (isMain == isMainlineAC()) {
+            if (isBlock) {
+                setColorForTrackBlock(g2, getLayoutBlockAC());
+            }
+            g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
         }
-    }   // drawHidden(Graphics2D g2)
-
-    private void drawXingAC(Graphics2D g2) {
-        // set color for an AC block
-        setColorForTrackBlock(g2, getLayoutBlockAC());
-        // set track width for AC block
-        layoutEditor.setTrackStrokeWidth(g2, isMainlineAC());
-        // draw AC segment
-        g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
-    }
-
-    private void drawXingBD(Graphics2D g2) {
-        // set color - check for an BD block
-        setColorForTrackBlock(g2, getLayoutBlockBD());
-        // set track width for BD block
-        layoutEditor.setTrackStrokeWidth(g2, isMainlineBD());
-        // draw BD segment
+        if (isMain == isMainlineBD()) {
+            if (isBlock) {
+                setColorForTrackBlock(g2, getLayoutBlockBD());
+            }
         g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void drawBallast(Graphics2D g2) {
-        // draw AC segment
-        g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
-        // draw BD segment
-        g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void drawTies(Graphics2D g2) {
-        drawBallast(g2);    // same code; DRY!
+        }
     }
 
     /**
@@ -1451,7 +1419,7 @@ public class LevelXing extends LayoutTrack {
 
     protected void drawEditControls(Graphics2D g2) {
         g2.setColor(defaultTrackColor);
-        g2.draw(layoutEditor.trackControlCircleAt(getCoordsCenter()));
+        g2.draw(layoutEditor.trackEditControlCircleAt(getCoordsCenter()));
 
         if (getConnectA() == null) {
             g2.setColor(Color.magenta);

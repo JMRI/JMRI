@@ -3385,7 +3385,7 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void drawBallast(Graphics2D g2) {
+    protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
         Point2D pointA = getCoordsA();
         Point2D pointB = getCoordsB();
         Point2D pointC = getCoordsC();
@@ -3395,6 +3395,23 @@ public class LayoutTurnout extends LayoutTrack {
         boolean mainlineB = isMainlineB();
         boolean mainlineC = isMainlineC();
         boolean mainlineD = isMainlineD();
+
+        Color color = g2.getColor();
+        Color colorA = null;
+        Color colorB = null;
+        Color colorC = null;
+        Color colorD = null;
+
+        if (isBlock) {
+            LayoutBlock lb = getLayoutBlock();
+            colorA = (lb == null) ? color : lb.getBlockColor();
+            lb = getLayoutBlockB();
+            colorB = (lb == null) ? color : lb.getBlockColor();
+            lb = getLayoutBlockC();
+            colorC = (lb == null) ? color : lb.getBlockColor();
+            lb = getLayoutBlockD();
+            colorD = (lb == null) ? color : lb.getBlockColor();
+        }
 
         Point2D center = getCoordsCenter();
         Point2D midPointAB = MathUtil.midPoint(pointA, pointB);
@@ -3406,135 +3423,283 @@ public class LayoutTurnout extends LayoutTrack {
 
         if (getTurnoutType() == DOUBLE_XOVER) {
             // draw A<=+=>B
-            layoutEditor.setBallastStroke(g2, mainlineA);
             if (mainlineA == mainlineB) {
-                g2.draw(new Line2D.Double(pointA, pointB));
+                if (isMain == mainlineA) {
+                    if (isBlock) {
+                        g2.setColor(colorA);
+                    }
+                    g2.draw(new Line2D.Double(pointA, pointB));
+                }
             } else {
-                g2.draw(new Line2D.Double(pointA, midPointAB));
-                layoutEditor.setBallastStroke(g2, mainlineB);
-                g2.draw(new Line2D.Double(midPointAB, pointB));
+                if (isMain == mainlineA) {
+                    if (isBlock) {
+                        g2.setColor(colorA);
+                    }
+                    g2.draw(new Line2D.Double(pointA, midPointAB));
+                }
+                if (isMain == mainlineB) {
+                    if (isBlock) {
+                        g2.setColor(colorB);
+                    }
+                    g2.draw(new Line2D.Double(midPointAB, pointB));
+                }
             }
             // draw A<=+=>C
-            layoutEditor.setBallastStroke(g2, mainlineA);
             if (mainlineA == mainlineC) {
-                g2.draw(new Line2D.Double(pointA, pointC));
+                if (isMain == mainlineA) {
+                    if (isBlock) {
+                        g2.setColor(colorA);
+                    }
+                    g2.draw(new Line2D.Double(pointA, pointC));
+                }
             } else {
-                g2.draw(new Line2D.Double(pointA, midPointAC));
-                layoutEditor.setBallastStroke(g2, mainlineC);
-                g2.draw(new Line2D.Double(midPointAC, pointC));
+                if (isMain == mainlineA) {
+                    if (isBlock) {
+                        g2.setColor(colorA);
+                    }
+                    g2.draw(new Line2D.Double(pointA, midPointAC));
+                }
+                if (isMain == mainlineC) {
+                    if (isBlock) {
+                        g2.setColor(colorC);
+                    }
+                    g2.draw(new Line2D.Double(midPointAC, pointC));
+                }
             }
             // draw B<=+=>D
-            layoutEditor.setBallastStroke(g2, mainlineB);
             if (mainlineB == mainlineD) {
-                g2.draw(new Line2D.Double(pointB, pointD));
+                if (isMain == mainlineB) {
+                    if (isBlock) {
+                        g2.setColor(colorB);
+                    }
+                    g2.draw(new Line2D.Double(pointB, pointD));
+                }
             } else {
-                g2.draw(new Line2D.Double(pointB, midPointBD));
-                layoutEditor.setBallastStroke(g2, mainlineD);
-                g2.draw(new Line2D.Double(midPointBD, pointD));
+                if (isMain == mainlineB) {
+                    if (isBlock) {
+                        g2.setColor(colorB);
+                    }
+                    g2.draw(new Line2D.Double(pointB, midPointBD));
+                }
+                if (isMain == mainlineD) {
+                    if (isBlock) {
+                        g2.setColor(colorD);
+                    }
+                    g2.draw(new Line2D.Double(midPointBD, pointD));
+                }
             }
             // draw C<=+=>D
-            layoutEditor.setBallastStroke(g2, mainlineC);
             if (mainlineC == mainlineD) {
-                g2.draw(new Line2D.Double(pointC, pointD));
+                if (isMain == mainlineC) {
+                    if (isBlock) {
+                        g2.setColor(colorC);
+                    }
+                    g2.draw(new Line2D.Double(pointC, pointD));
+                }
             } else {
-                g2.draw(new Line2D.Double(pointC, midPointCD));
-                layoutEditor.setBallastStroke(g2, mainlineD);
-                g2.draw(new Line2D.Double(midPointCD, pointD));
+                if (isMain == mainlineC) {
+                    if (isBlock) {
+                        g2.setColor(colorC);
+                    }
+                    g2.draw(new Line2D.Double(pointC, midPointCD));
+                }
+                if (isMain == mainlineD) {
+                    if (isBlock) {
+                        g2.setColor(colorD);
+                    }
+                    g2.draw(new Line2D.Double(midPointCD, pointD));
+                }
             }
         } else if ((getTurnoutType() == SINGLE_SLIP)
                 || (getTurnoutType() == DOUBLE_SLIP)) {
             // draw A<=+=>C
-            layoutEditor.setBallastStroke(g2, mainlineA);
             if (mainlineA == mainlineC) {
-                g2.draw(new Line2D.Double(pointA, pointC));
+                if (isMain == mainlineA) {
+                    if (isBlock) {
+                        g2.setColor(colorA);
+                    }
+                    g2.draw(new Line2D.Double(pointA, pointC));
+                }
             } else {
-                g2.draw(new Line2D.Double(pointA, midPointAC));
-                layoutEditor.setBallastStroke(g2, mainlineC);
-                g2.draw(new Line2D.Double(midPointAC, pointC));
+                if (isMain == mainlineA) {
+                    if (isBlock) {
+                        g2.setColor(colorA);
+                    }
+                    g2.draw(new Line2D.Double(pointA, midPointAC));
+                }
+                if (isMain == mainlineC) {
+                    if (isBlock) {
+                        g2.setColor(colorC);
+                    }
+                    g2.draw(new Line2D.Double(midPointAC, pointC));
+                }
             }
             // draw B<=+=>D
-            layoutEditor.setBallastStroke(g2, mainlineB);
             if (mainlineB == mainlineD) {
-                g2.draw(new Line2D.Double(pointB, pointD));
+                if (isMain == mainlineB) {
+                    if (isBlock) {
+                        g2.setColor(colorB);
+                    }
+                    g2.draw(new Line2D.Double(pointB, pointD));
+                }
             } else {
-                g2.draw(new Line2D.Double(pointB, midPointBD));
-                layoutEditor.setBallastStroke(g2, mainlineD);
-                g2.draw(new Line2D.Double(midPointBD, pointD));
+                if (isMain == mainlineB) {
+                    if (isBlock) {
+                        g2.setColor(colorB);
+                    }
+                    g2.draw(new Line2D.Double(pointB, midPointBD));
+                }
+                if (isMain == mainlineD) {
+                    if (isBlock) {
+                        g2.setColor(colorD);
+                    }
+                    g2.draw(new Line2D.Double(midPointBD, pointD));
+                }
             }
             // draw A<=+=>D
-            layoutEditor.setBallastStroke(g2, mainlineA);
             if (mainlineA == mainlineD) {
-                MathUtil.drawBezier(g2, pointA, center, center, pointD);
-                //g2.draw(new Line2D.Double(pointA, pointD));
+                if (isMain == mainlineA) {
+                    if (isBlock) {
+                        g2.setColor(colorA);
+                    }
+                    MathUtil.drawBezier(g2, pointA, center, center, pointD);
+                }
             } else {
-                g2.draw(new Line2D.Double(pointA, midPointAD));
-                layoutEditor.setBallastStroke(g2, mainlineD);
-                g2.draw(new Line2D.Double(midPointAD, pointD));
+                if (isMain == mainlineA) {
+                    if (isBlock) {
+                        g2.setColor(colorA);
+                    }
+                    g2.draw(new Line2D.Double(pointA, midPointAD));
+                }
+                if (isMain == mainlineD) {
+                    if (isBlock) {
+                        g2.setColor(colorD);
+                    }
+                    g2.draw(new Line2D.Double(midPointAD, pointD));
+                }
             }
 
             if (getTurnoutType() == DOUBLE_SLIP) {
                 // draw B<=+=>C
-                layoutEditor.setBallastStroke(g2, mainlineB);
                 if (mainlineB == mainlineC) {
-                    MathUtil.drawBezier(g2, pointB, center, center, pointC);
-                    //g2.draw(new Line2D.Double(pointB, pointC));
+                    if (isMain == mainlineB) {
+                        if (isBlock) {
+                            g2.setColor(colorB);
+                        }
+                        MathUtil.drawBezier(g2, pointB, center, center, pointC);
+                    }
                 } else {
-                    g2.draw(new Line2D.Double(pointB, midPointBC));
-                    layoutEditor.setBallastStroke(g2, mainlineC);
-                    g2.draw(new Line2D.Double(midPointBC, pointC));
+                    if (isMain == mainlineB) {
+                        if (isBlock) {
+                            g2.setColor(colorB);
+                        }
+                        g2.draw(new Line2D.Double(pointB, midPointBC));
+                    }
+                    if (isMain == mainlineC) {
+                        if (isBlock) {
+                            g2.setColor(colorC);
+                        }
+                        g2.draw(new Line2D.Double(midPointBC, pointC));
+                    }
                 }
             }
         } else if ((getTurnoutType() == RH_XOVER)
                 || (getTurnoutType() == LH_XOVER)) {
             // draw A<=+=>B
-            layoutEditor.setBallastStroke(g2, mainlineA);
             if (mainlineA == mainlineB) {
-                g2.draw(new Line2D.Double(pointA, pointB));
+                if (isMain == mainlineA) {
+                    if (isBlock) {
+                        g2.setColor(colorA);
+                    }
+                    g2.draw(new Line2D.Double(pointA, pointB));
+                }
             } else {
-                g2.draw(new Line2D.Double(pointA, midPointAB));
-                layoutEditor.setBallastStroke(g2, mainlineB);
-                g2.draw(new Line2D.Double(midPointAB, pointB));
+                if (isMain == mainlineA) {
+                    if (isBlock) {
+                        g2.setColor(colorA);
+                    }
+                    g2.draw(new Line2D.Double(pointA, midPointAB));
+                }
+                if (isMain == mainlineB) {
+                    if (isBlock) {
+                        g2.setColor(colorB);
+                    }
+                    g2.draw(new Line2D.Double(midPointAB, pointB));
+                }
             }
 
             // draw (rh & lh) cross overs
             if (getTurnoutType() == RH_XOVER) {
-                layoutEditor.setBallastStroke(g2, mainlineA);
-                g2.draw(new Line2D.Double(MathUtil.midPoint(pointA, pointB), center));
-                layoutEditor.setBallastStroke(g2, mainlineC);
-                g2.draw(new Line2D.Double(MathUtil.midPoint(pointC, pointD), center));
+                if (isMain == mainlineA) {
+                    if (isBlock) {
+                        g2.setColor(colorA);
+                    }
+                    g2.draw(new Line2D.Double(MathUtil.midPoint(pointA, pointB), center));
+                }
+                if (isMain == mainlineC) {
+                    if (isBlock) {
+                        g2.setColor(colorC);
+                    }
+                    g2.draw(new Line2D.Double(MathUtil.midPoint(pointC, pointD), center));
+                }
             }
             if (getTurnoutType() == LH_XOVER) {
-                layoutEditor.setBallastStroke(g2, mainlineB);
-                g2.draw(new Line2D.Double(MathUtil.midPoint(pointA, pointB), center));
-                layoutEditor.setBallastStroke(g2, mainlineD);
-                g2.draw(new Line2D.Double(MathUtil.midPoint(pointC, pointD), center));
+                if (isMain == mainlineB) {
+                    if (isBlock) {
+                        g2.setColor(colorB);
+                    }
+                    g2.draw(new Line2D.Double(MathUtil.midPoint(pointA, pointB), center));
+                }
+                if (isMain == mainlineD) {
+                    if (isBlock) {
+                        g2.setColor(colorD);
+                    }
+                    g2.draw(new Line2D.Double(MathUtil.midPoint(pointC, pointD), center));
+                }
             }
 
             // draw C<=+=>D
-            layoutEditor.setBallastStroke(g2, mainlineC);
             if (mainlineC == mainlineD) {
-                g2.draw(new Line2D.Double(pointC, pointD));
+                if (isMain == mainlineC) {
+                    if (isBlock) {
+                        g2.setColor(colorC);
+                    }
+                    g2.draw(new Line2D.Double(pointC, pointD));
+                }
             } else {
-                g2.draw(new Line2D.Double(pointC, midPointCD));
-                layoutEditor.setBallastStroke(g2, mainlineD);
-                g2.draw(new Line2D.Double(midPointCD, pointD));
+                if (isMain == mainlineC) {
+                    if (isBlock) {
+                        g2.setColor(colorC);
+                    }
+                    g2.draw(new Line2D.Double(pointC, midPointCD));
+                }
+                if (isMain == mainlineD) {
+                    if (isBlock) {
+                        g2.setColor(colorD);
+                    }
+                    g2.draw(new Line2D.Double(midPointCD, pointD));
+                }
             }
         } else {    // LH, RH, or WYE Turnouts
-            layoutEditor.setBallastStroke(g2, mainlineA);
-            g2.draw(new Line2D.Double(pointA, center));
-            layoutEditor.setBallastStroke(g2, mainlineB);
-            g2.draw(new Line2D.Double(pointB, center));
-            layoutEditor.setBallastStroke(g2, mainlineC);
-            g2.draw(new Line2D.Double(pointC, center));
+            if (isMain == mainlineA) {
+                if (isBlock) {
+                    g2.setColor(colorA);
+                }
+                g2.draw(new Line2D.Double(pointA, center));
+            }
+            if (isMain == mainlineB) {
+                if (isBlock) {
+                    g2.setColor(colorB);
+                }
+                g2.draw(new Line2D.Double(pointB, center));
+            }
+            if (isMain == mainlineC) {
+                if (isBlock) {
+                    g2.setColor(colorC);
+                }
+                g2.draw(new Line2D.Double(pointC, center));
+            }
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void drawTies(Graphics2D g2) {
-        drawBallast(g2);    // same code; DRY!
     }
 
     /**
