@@ -60,6 +60,17 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         this.p = null;
         // Check mode
         if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+            /**
+             * CV format is e.g. "113/12" where the first part defines the
+             * typeword for the specific board type and the second is the specific bit number
+             * Known values:
+             * <UL>
+             * <LI>0x70 112 - PM4
+             * <LI>0x71 113 - BDL16
+             * <LI>0x72 114 - SE8
+             * <LI>0x73 115 - DS64
+             * </ul>
+             */
             this.p = p;
             doingWrite = true;
             // Board programming mode
@@ -67,15 +78,6 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             String[] parts = CV.split("/");
             int state = Integer.parseInt(parts[1]);
             int typeWord = Integer.parseInt(parts[0]);
-            /**
-             * Known values:
-             * </P><UL>
-             * <LI>0x70 112 - PM4
-             * <LI>0x71 113 - BDL16
-             * <LI>0x72 114 - SE8
-             * <LI>0x73 115 - DS64
-             * </ul>
-             */
             
             // make message
             LocoNetMessage m = new LocoNetMessage(6);
@@ -130,22 +132,24 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         this.p = null;
         // Check mode
         if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
-            this.p = p;
-            doingWrite = true;
-            // Board programming mode
-            log.debug("read CV \"{}\" addr:{}", CV, mAddress);
-            String[] parts = CV.split("/");
-            int state = Integer.parseInt(parts[1]);
-            int typeWord = Integer.parseInt(parts[0]);
             /**
+             * CV format is e.g. "113/12" where the first part defines the
+             * typeword for the specific board type and the second is the specific bit number
              * Known values:
-             * </P><UL>
+             * <UL>
              * <LI>0x70 112 - PM4
              * <LI>0x71 113 - BDL16
              * <LI>0x72 114 - SE8
              * <LI>0x73 115 - DS64
              * </ul>
              */
+            this.p = p;
+            doingWrite = false;
+            // Board programming mode
+            log.debug("read CV \"{}\" addr:{}", CV, mAddress);
+            String[] parts = CV.split("/");
+            int state = Integer.parseInt(parts[1]);
+            int typeWord = Integer.parseInt(parts[0]);
             
             // make message
             LocoNetMessage m = new LocoNetMessage(6);
