@@ -641,12 +641,16 @@ selects the different algorithm needed here.
           <li>If it is "accessory" or "output", the current address is interpreted as an 11-bit accessory output address.</li>
           <li>If it is "signal", the current address is interpreted as an 11-bit signal decoder address.</li>
           <li>
+              If it is "altsignal", the current address is interpreted as an 11-bit signal decoder address,
+              using an alternative interpretation of
+              <a href="https://www.nmra.org/sites/default/files/s-9.2.1_2012_07.pdf"
+                target="_blank">NMRA standard 9.2.1</a>).
+           </li>
+          <li>
               If it is "legacy", the current address is interpreted as a 9-bit address (as for "decoder")
               but a "legacy" programming packet (as per Appendix A of
-     <a href=
-      "http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf"
-            target="_blank">
-      NMRA standard 9.2.2</a>)
+              <a href="https://www.nmra.org/sites/default/files/s-9.2.1_2012_07.pdf"
+                target="_blank">NMRA standard 9.2.1</a>)
            is sent.
           </li>
       </ul>
