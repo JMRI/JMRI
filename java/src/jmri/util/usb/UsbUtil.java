@@ -102,10 +102,10 @@ public final class UsbUtil {
                     result = Bundle.getMessage("UsbDevice", manufacturer, product);
                 }
             }
-        } catch (UsbException
-                | UnsupportedEncodingException
-                | UsbDisconnectedException ex) {
+        } catch (UsbException | UnsupportedEncodingException ex) {
             log.error("Unable to read data from {}", usbDevice, ex);
+        } catch (UsbDisconnectedException ex) {
+            log.error("Unable to read data from disconnected device {}", usbDevice);
         }
         return result;
     }
@@ -141,7 +141,8 @@ public final class UsbUtil {
      * product ID, vendor ID, and serial number, as using this alone could mean
      * that two devices with the same product and vendor IDs, but different
      * serial numbers could be misidentified if unplugged and reconnected in
-     * ports previously used by the other device.
+     * ports previously used by the other device, or if the hub does not
+     * consistently enumerate ports the same way.
      *
      * @param usbDevice the device to get the location of
      * @return the location
