@@ -290,7 +290,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
 
         @Override
         public int getRowCount() {
-            return ((node != null) && (node.getUsbDevice() != null)) ? 10 : 1;
+            return ((node != null) && (node.getUsbDevice() != null)) ? 11 : 1;
         }
 
         @Override
@@ -331,6 +331,8 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                             return Bundle.getMessage("UsbDeviceReleaseNumber");
                         case 9:
                             return Bundle.getMessage("UsbDeviceNumConfigurations");
+                        case 10:
+                            return Bundle.getMessage("UsbDeviceLocation");
                         default:
                             break;
                     }
@@ -346,19 +348,21 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                             case 2:
                                 return node.getUsbDevice().getSerialNumberString();
                             case 3:
-                                return String.format("%04X", node.getUsbDevice().getUsbDeviceDescriptor().idVendor());
+                                return String.format("%04x", node.getUsbDevice().getUsbDeviceDescriptor().idVendor());
                             case 4:
-                                return String.format("%04X", node.getUsbDevice().getUsbDeviceDescriptor().idProduct());
+                                return String.format("%04x", node.getUsbDevice().getUsbDeviceDescriptor().idProduct());
                             case 5:
-                                return node.getUsbDevice().getUsbDeviceDescriptor().bDeviceClass();
+                                return String.format("%02X", node.getUsbDevice().getUsbDeviceDescriptor().bDeviceClass());
                             case 6:
-                                return node.getUsbDevice().getUsbDeviceDescriptor().bDeviceSubClass();
+                                return String.format("%02X", node.getUsbDevice().getUsbDeviceDescriptor().bDeviceSubClass());
                             case 7:
-                                return node.getUsbDevice().getUsbDeviceDescriptor().bDeviceProtocol();
+                                return String.format("%02X", node.getUsbDevice().getUsbDeviceDescriptor().bDeviceProtocol());
                             case 8:
-                                return String.format("%04X", node.getUsbDevice().getUsbDeviceDescriptor().bcdDevice());
+                                return String.format("%04x", node.getUsbDevice().getUsbDeviceDescriptor().bcdDevice());
                             case 9:
                                 return node.getUsbDevice().getUsbDeviceDescriptor().bNumConfigurations();
+                            case 10:
+                                return UsbUtil.getLocation(node.getUsbDevice());
                             default:
                                 return null;
                         }
