@@ -104,6 +104,7 @@
         general has made more contributions than can be
         counted.</li>
 
+        <li>Daniel Bergqvist, who 
         <li>Andrew Berridge, who debugged and fixed problems with
         the SPROG serial interface</li>
 
@@ -472,7 +473,8 @@
         <li>Ian Havercroft, who provided the correct identification
         codes for ESU decoders</li>
 
-        <li>David Heap, who provided a QSI decoder fix</li>
+        <li>David Heap, who provided a QSI decoder fix
+        and improved how signal head aspects are supported.</li>
 
         <li>Rob Heikens, who created ESU decoder definitions and
         programmer pages</li>
@@ -975,7 +977,9 @@
         comboboxes (with drop-down menus); added a 2nd turnout
         circle for slips and added left, right & bottom options
         for the toolbar (and re-laid out same) in the Layout Editor.
-        Also wrote all the slip code for the web server.</li>
+        Added support for DMX512 lighting.
+        Also wrote all the slip code for the web server.
+        </li>
 
         <li>Mark Waters, who provided numerous Zimo decoder
         definitions and new Zimo MX620 definitions.</li>
