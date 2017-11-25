@@ -2,11 +2,11 @@ package jmri.jmrit.operations.routes;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
+import jmri.util.JUnitOperationsUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -16,10 +16,17 @@ import org.junit.Test;
 public class SetTrainIconRouteFrameTest {
 
     @Test
-    @Ignore("needs more setup, causes NPE")
-    public void testCTor() {
+    public void testCTorNull() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SetTrainIconRouteFrame t = new SetTrainIconRouteFrame("Test");
+        SetTrainIconRouteFrame t = new SetTrainIconRouteFrame(null);
+        Assert.assertNotNull("exists",t);
+        JUnitUtil.dispose(t);
+    }
+
+    @Test
+    public void testCTorRoute() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SetTrainIconRouteFrame t = new SetTrainIconRouteFrame("Southbound Main Route");
         Assert.assertNotNull("exists",t);
     }
 
@@ -27,6 +34,8 @@ public class SetTrainIconRouteFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitOperationsUtil.resetOperationsManager();
+        JUnitOperationsUtil.initOperationsData();
     }
 
     @After

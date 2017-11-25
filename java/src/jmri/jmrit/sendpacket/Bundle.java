@@ -21,7 +21,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.jmrix.Bundle { // Note: uses specific jmrix labels
+public class Bundle extends jmri.jmrit.Bundle { // Note: uses specific jmrix labels
 
     @Nullable
     private static final String name = null; // No local resources
