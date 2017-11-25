@@ -356,7 +356,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                             case 7:
                                 return node.getUsbDevice().getUsbDeviceDescriptor().bDeviceProtocol();
                             case 8:
-                                return node.getUsbDevice().getUsbDeviceDescriptor().bcdDevice();
+                                return String.format("%04X", node.getUsbDevice().getUsbDeviceDescriptor().bcdDevice());
                             case 9:
                                 return node.getUsbDevice().getUsbDeviceDescriptor().bNumConfigurations();
                             default:
