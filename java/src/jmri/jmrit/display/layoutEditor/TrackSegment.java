@@ -3,7 +3,6 @@ package jmri.jmrit.display.layoutEditor;
 import static java.lang.Float.POSITIVE_INFINITY;
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -1512,63 +1511,6 @@ public class TrackSegment extends LayoutTrack {
                 setColorForTrackBlock(g2, getLayoutBlock());
             }
             drawSolid(g2);  //TODO: fix this
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    //TODO: remove this
-    protected void draw(Graphics2D g2) {
-        setColorForTrackBlock(g2, getLayoutBlock());
-        float trackWidth = layoutEditor.setTrackStrokeWidth(g2, mainline);
-
-        if (!isHidden() || (isHidden() && layoutEditor.isEditable())) {
-            if (isHidden()) {
-                trackWidth = mainline ? 2.F : 1.F;
-            }
-            if (isDashed()) {
-                g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0));
-            } else {
-                g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-            }
-            drawSolid(g2);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    //TODO: remove this
-    @Override
-    protected void drawHidden(Graphics2D g2) {
-        float trackWidth = layoutEditor.setTrackStrokeWidth(g2, isMainline());
-        g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0));
-        drawSolid(g2);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    //TODO: remove this
-    @Override
-    protected void drawBallast(Graphics2D g2
-    ) {
-        if (!isDashed()) {
-            layoutEditor.setBallastStroke(g2, isMainline());
-            drawSolid(g2);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    //TODO: remove this
-    @Override
-    protected void drawTies(Graphics2D g2
-    ) {
-        if (!isDashed()) {
-            drawSolid(g2);
         }
     }
 

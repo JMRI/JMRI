@@ -777,15 +777,6 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void drawBallast(Graphics2D g2) {
-        //layoutEditor.setBallastStroke(g2, isMainline());
-        // nothing to do here... (yet?) Move along...
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     protected void drawUnconnected(Graphics2D g2) {
         for (int j = 0; j < getNumberRays(); j++) {
             if (getRayConnectOrdered(j) == null) {

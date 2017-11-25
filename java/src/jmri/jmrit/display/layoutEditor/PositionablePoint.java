@@ -1427,16 +1427,6 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    //TODO: remove this
-    protected void drawBallast(Graphics2D g2) {
-        //layoutEditor.setBallastStroke(g2, isMainline());
-        // nothing to do here... (yet!) Move along...
-    }
-
-    /**
      * draw this PositionablePoint
      *
      * @param g2 the graphics port to draw to
