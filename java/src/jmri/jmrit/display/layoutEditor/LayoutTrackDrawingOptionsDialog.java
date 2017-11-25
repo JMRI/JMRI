@@ -127,7 +127,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
         mainlineLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         mainlineLabel.setText(Bundle.getMessage("MainlineLabelText"));
-        mainlineLabel.setToolTipText(Bundle.getMessage("MainlineToolTip"));
+        mainlineLabel.setToolTipText(Bundle.getMessage("MainlineColumnToolTip"));
         mainlineLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
         mainlineLabel.setMinimumSize(new java.awt.Dimension(64, 16));
         mainlineLabel.setPreferredSize(new java.awt.Dimension(64, 16));
@@ -566,7 +566,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
         sideLineLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         sideLineLabel.setText(Bundle.getMessage("SidelineLabelText"));
-        sideLineLabel.setToolTipText(Bundle.getMessage("SideLineToolTip"));
+        sideLineLabel.setToolTipText(Bundle.getMessage("SidelineColumnToolTip"));
         sideLineLabel.setMaximumSize(new java.awt.Dimension(32767, 32767));
         sideLineLabel.setMinimumSize(new java.awt.Dimension(64, 16));
         sideLineLabel.setPreferredSize(new java.awt.Dimension(64, 16));
