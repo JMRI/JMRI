@@ -120,8 +120,7 @@ public final class UsbUtil {
      * @return serial number
      */
     @Nullable
-    public static String getSerialNumber(@Nonnull UsbDevice usbDevice
-    ) {
+    public static String getSerialNumber(@Nonnull UsbDevice usbDevice) {
         try {
             return usbDevice.getSerialNumberString();
         } catch (UsbException | UnsupportedEncodingException | UsbDisconnectedException ex) {
@@ -276,48 +275,6 @@ public final class UsbUtil {
             return (UsbInterface) configuration.getUsbInterfaces().get(index); // there can be more 1,2,3..
         }
         return null;
-    }
-
-    /**
-     * Send bulk message.
-     *
-     * @param iface   the interface
-     * @param message the message
-     * @param index   index of the endpoint attached to the interface
-     */
-    public static void sendBulkMessage(@Nonnull UsbInterface iface, @Nonnull String message, int index) {
-
-        UsbPipe pipe;
-
-        try {
-            iface.claim((UsbInterface usbInterface) -> true);
-
-            UsbEndpoint endpoint = (UsbEndpoint) iface.getUsbEndpoints().get(index);
-            pipe = endpoint.getUsbPipe();
-            pipe.open();
-
-            byte[] initEP = new byte[]{0x1b, '@'};
-            byte[] cutP = new byte[]{0x1d, 'V', 1};
-
-            String str = "nnnnnnnnn";
-
-            pipe.syncSubmit(initEP);
-            int sent = pipe.syncSubmit(message.getBytes());
-            pipe.syncSubmit(str.getBytes());
-            pipe.syncSubmit(cutP);
-
-            log.debug("{} bytes sent", sent);
-            pipe.close();
-
-        } catch (IllegalArgumentException | UsbDisconnectedException | UsbException | UsbNotActiveException | UsbNotClaimedException | UsbNotOpenException ex) {
-            log.error("Unable to send message.", ex);
-        } finally {
-            try {
-                iface.release();
-            } catch (UsbNotActiveException | UsbDisconnectedException | UsbException ex) {
-                log.error("Unable to release USB device.", ex);
-            }
-        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(UsbUtil.class);
