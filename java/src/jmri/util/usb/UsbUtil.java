@@ -23,7 +23,6 @@ import javax.usb.UsbPort;
 import javax.usb.event.UsbPipeDataEvent;
 import javax.usb.event.UsbPipeErrorEvent;
 import javax.usb.event.UsbPipeListener;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,38 +47,36 @@ public final class UsbUtil {
      * @return a list of all UsbDevice's
      */
     public static List<UsbDevice> getAllDevices() {
-        return getMatchingDevices((short) 0, (short) 0);
+        return getMatchingDevices((short) 0, (short) 0, null);
     }
 
     /**
      * Get matching USB devices.
      *
-     * @param idVendor  the vendor id to match (or zero to always match)
-     * @param idProduct the product id to match (or zero to always match)
+     * @param idVendor     the vendor id to match (zero matches any)
+     * @param idProduct    the product id to match (zero matches any)
+     * @param serialNumber the serial number to match (null matches any)
      * @return a list of matching UsbDevices
      */
-    public static List<UsbDevice> getMatchingDevices(short idVendor, short idProduct) {
-        return recursivelyCollectUsbDevices(null, idVendor, idProduct);
+    public static List<UsbDevice> getMatchingDevices(short idVendor, short idProduct, @Nullable String serialNumber) {
+        return findUsbDevices(null, idVendor, idProduct, serialNumber);
     }
 
     /**
      * Get matching USB device.
      *
-     * @param idVendor   the vendor id to match (or zero to always match)
-     * @param idProduct  the product id to match (or zero to always match)
-     * @param idLocation the location id to match (never zero)
-     * @return a list of matching UsbDevices
+     * @param idVendor     the vendor id to match (zero matches any)
+     * @param idProduct    the product id to match (zero matches any)
+     * @param serialNumber the serial number to match (null matches any)
+     * @param idLocation   the location to match
+     * @return the matching UsbDevice or null if no match could be found
      */
-    public static UsbDevice getMatchingDevice(short idVendor, short idProduct, String idLocation) {
-        if ((idLocation != null) && !idLocation.isEmpty()) {
-            long longLocationID = Long.decode(idLocation);
-            if (longLocationID > 0) {
-                for (UsbDevice usbDevice : recursivelyCollectUsbDevices(null, idVendor, idProduct)) {
-                    String locationID = getLocationID(usbDevice);
-                    if (locationID.equals(idLocation)) {
-                        return usbDevice;
-                    }
-                }
+    @CheckForNull
+    public static UsbDevice getMatchingDevice(short idVendor, short idProduct, @Nullable String serialNumber, @Nonnull String idLocation) {
+        for (UsbDevice usbDevice : findUsbDevices(null, idVendor, idProduct, serialNumber)) {
+            String locationID = getLocation(usbDevice);
+            if (locationID.equals(idLocation)) {
+                return usbDevice;
             }
         }
         return null;
@@ -119,7 +116,7 @@ public final class UsbUtil {
      * @param usbDevice the USB device to get the serial number of
      * @return serial number
      */
-    @Nullable
+    @CheckForNull
     public static String getSerialNumber(@Nonnull UsbDevice usbDevice) {
         try {
             return usbDevice.getSerialNumberString();
@@ -130,40 +127,57 @@ public final class UsbUtil {
     }
 
     /**
-     * Get a USB device's location id. This encoding the USB device location
-     * does not match any operating system's encoding scheme; it is not intended
-     * to be displayed to the end user.
+     * Get a unique value that represents the device's location in the USB
+     * device topology.
+     * <p>
+     * The location is a series of USB ports separated by colons (:) starting
+     * from the the root hub (a virtual hub maintained by the operating system),
+     * represented as {@code USB} in the location, passing through hubs (which
+     * may be virtual or physical), to the port the requested device is plugged
+     * into.
+     * <p>
+     * <strong>Note:</strong> this method should only be used to uniquely
+     * identify USB devices in combination with consideration of the USB device
+     * product ID, vendor ID, and serial number, as using this alone could mean
+     * that two devices with the same product and vendor IDs, but different
+     * serial numbers could be misidentified if unplugged and reconnected in
+     * ports previously used by the other device.
      *
-     * @param usbDevice the USB device who's location id you want
-     * @return location id
+     * @param usbDevice the device to get the location of
+     * @return the location
      */
-    public static String getLocationID(@Nonnull UsbDevice usbDevice) {
-        StringBuilder result = new StringBuilder();
+    public static String getLocation(@Nonnull UsbDevice usbDevice) {
         UsbDevice device = usbDevice;
+        StringBuilder path = new StringBuilder();
         while (device != null) {
-            UsbPort usbPort = usbDevice.getParentUsbPort();
-            if (usbPort == null) {
+            UsbPort port = device.getParentUsbPort();
+            if (port == null) {
                 break;
             }
-            result.append(usbPort.getPortNumber());
-            device = usbPort.getUsbHub();
+            path.append(Byte.toString(port.getPortNumber())).append(':');
+            device = port.getUsbHub();
         }
-        return String.format("0x%s", StringUtils.rightPad(result.reverse().toString(), 8, "0"));
+        return String.format("USB%s", path.reverse().toString());
     }
 
     /**
      * Recursive routine to collect USB devices.
      *
-     * @param usbHub    the hub who's devices we want to collect (null for root)
-     * @param idVendor  the vendor id to match against
-     * @param idProduct the product id to match against
+     * @param usbHub       the hub who's devices we want to collect (null for
+     *                     root)
+     * @param idVendor     the vendor id to match against
+     * @param idProduct    the product id to match against
+     * @param serialNumber the serial number to match against
      */
     @Nonnull
-    private static List<UsbDevice> recursivelyCollectUsbDevices(
-            @Nullable UsbHub usbHub, short idVendor, short idProduct) {
+    private static List<UsbDevice> findUsbDevices(
+            @Nullable UsbHub usbHub,
+            short idVendor,
+            short idProduct,
+            @Nullable String serialNumber) {
         if (usbHub == null) {
             try {
-                return recursivelyCollectUsbDevices(UsbHostManager.getUsbServices().getRootUsbHub(), idVendor, idProduct);
+                return findUsbDevices(UsbHostManager.getUsbServices().getRootUsbHub(), idVendor, idProduct, serialNumber);
             } catch (UsbException | SecurityException ex) {
                 log.error("Exception: {}", ex.toString());
             }
@@ -173,13 +187,17 @@ public final class UsbUtil {
         usbDevices.forEach((usbDevice) -> {
             if (usbDevice instanceof UsbHub) {
                 UsbHub childUsbHub = (UsbHub) usbDevice;
-                devices.addAll(recursivelyCollectUsbDevices(childUsbHub, idVendor, idProduct));
+                devices.addAll(findUsbDevices(childUsbHub, idVendor, idProduct, serialNumber));
             } else {
                 UsbDeviceDescriptor usbDeviceDescriptor = usbDevice.getUsbDeviceDescriptor();
-                if ((idVendor == 0) || (idVendor == usbDeviceDescriptor.idVendor())) {
-                    if ((idProduct == 0) || (idProduct == usbDeviceDescriptor.idProduct())) {
+                try {
+                    if (((idVendor == 0) || (idVendor == usbDeviceDescriptor.idVendor()))
+                            && ((idProduct == 0) || (idProduct == usbDeviceDescriptor.idProduct()))
+                            && ((serialNumber == null) || serialNumber.equals(usbDevice.getSerialNumberString()))) {
                         devices.add(usbDevice);
                     }
+                } catch (UsbException | UnsupportedEncodingException | UsbDisconnectedException ex) {
+                    log.error("Unable to request serial number from device {}", usbDevice, ex);
                 }
             }
         });

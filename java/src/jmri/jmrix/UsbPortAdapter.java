@@ -21,6 +21,7 @@ public class UsbPortAdapter extends AbstractPortController {
 
     private Short vendorID = 0;
     private Short productID = 0;
+    private String serialNumber = null;
     protected UsbDevice usbDevice = null;
 
     public UsbPortAdapter(SystemConnectionMemo memo) {
@@ -43,20 +44,54 @@ public class UsbPortAdapter extends AbstractPortController {
         productID = value;
     }
 
+    /**
+     * Get the device serial number.
+     *
+     * @return the serial number or null if there is no serial number
+     */
+    public String getSerialNumber() {
+        if (serialNumber != null && serialNumber.trim().isEmpty()) {
+            serialNumber = null;
+        }
+        return serialNumber;
+    }
+
+    /**
+     * Set the device serial number.
+     *
+     * @param serialNumber the serial number; if null, empty, or only containing
+     *                     whitespace, sets property to null
+     */
+    public void setSerialNumber(String serialNumber) {
+        if (serialNumber == null || serialNumber.trim().isEmpty()) {
+            this.serialNumber = null;
+        } else {
+            this.serialNumber = serialNumber;
+        }
+    }
+
     public UsbDevice getUsbDevice() {
         if (usbDevice == null) {
             log.debug("Getting device at {}", port);
-            usbDevice = UsbUtil.getMatchingDevice(vendorID, productID, port);
-            if (usbDevice == null) {
-                List< UsbDevice> usbDevices = UsbUtil.getMatchingDevices(vendorID, productID);
-                if (usbDevices.size() == 1) {
-                    usbDevice = usbDevices.get(0);
-                } else {
-                    log.error("USB device at location ID {} not found.", port);
-                }
+            String error = openPort(port, serialNumber);
+            if (error != null) {
+                log.error(error);
             }
         }
         return usbDevice;
+    }
+
+    public String openPort(String portName, String serialNumber) {
+        usbDevice = UsbUtil.getMatchingDevice(vendorID, productID, serialNumber, portName);
+        if (usbDevice == null) {
+            List< UsbDevice> usbDevices = UsbUtil.getMatchingDevices(vendorID, productID, serialNumber);
+            if (usbDevices.size() == 1) {
+                usbDevice = usbDevices.get(0);
+            } else {
+                return String.format("USB device with serial number %s at location %s not found.", serialNumber, portName);
+            }
+        }
+        return null;
     }
 
     /**
@@ -105,10 +140,10 @@ public class UsbPortAdapter extends AbstractPortController {
         log.debug("getPortNames()");
 
         List<String> results = new ArrayList<>();
-        List<UsbDevice> usbDevices = UsbUtil.getMatchingDevices(vendorID, productID);
-        for (UsbDevice usbDevice : usbDevices) {
-            results.add(UsbUtil.getLocationID(usbDevice));
-        }
+        List<UsbDevice> usbDevices = UsbUtil.getMatchingDevices(vendorID, productID, serialNumber);
+        usbDevices.forEach((device) -> {
+            results.add(UsbUtil.getLocation(device));
+        });
 
         return results;
     }
@@ -162,5 +197,6 @@ public class UsbPortAdapter extends AbstractPortController {
         return result;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UsbPortAdapter.class);
+    private final static Logger log = LoggerFactory.getLogger(UsbPortAdapter.class
+    );
 }
