@@ -33,6 +33,10 @@ import org.slf4j.LoggerFactory;
  */
 public final class USBUtil {
 
+    // all methods are static, so don't allow instantiation.
+    private USBUtil(){
+    }
+
     /**
      * get all USB devices
      *
