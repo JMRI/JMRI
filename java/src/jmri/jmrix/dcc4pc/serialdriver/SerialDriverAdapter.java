@@ -211,8 +211,6 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
         control.connectPort(this);
         this.getSystemConnectionMemo().configureManagers();
 
-        jmri.jmrix.dcc4pc.ActiveFlag.setActive();
-
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);

@@ -7,27 +7,50 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.io.UnsupportedEncodingException;
+import javax.usb.UsbDevice;
+import javax.usb.UsbException;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
+import org.powermock.core.classloader.annotations.MockPolicy;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
+
+@MockPolicy(Slf4jMockPolicy.class)
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
+@RunWith(PowerMockRunner.class)
 public class USBUtilTest {
 
     @Test
-    public void testCTor() {
-        USBUtil t = new USBUtil();
-        Assert.assertNotNull("exists",t);
+    public void testSerialNumberNull() throws UsbException,UnsupportedEncodingException {
+       UsbDevice usbd = PowerMockito.mock(UsbDevice.class);
+       Mockito.when(usbd.getSerialNumberString()).thenReturn(null);
+
+       Assert.assertEquals("Null Serial Number returned","",USBUtil.getSerialNumber(usbd));
+    }
+
+    @Test
+    public void testSerialNumber() throws UsbException,UnsupportedEncodingException {
+       UsbDevice usbd = PowerMockito.mock(UsbDevice.class);
+       Mockito.when(usbd.getSerialNumberString()).thenReturn("12345678");
+
+       Assert.assertEquals("Null Serial Number returned","12345678",USBUtil.getSerialNumber(usbd));
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();  // logging is mocked.
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.resetInstanceManager();
     }
 
 }

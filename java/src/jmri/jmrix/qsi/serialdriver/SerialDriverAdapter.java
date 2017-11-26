@@ -123,8 +123,6 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
         sinkThread.start();
 
         // jmri.InstanceManager.setThrottleManager(new jmri.jmrix.qsi.QsiThrottleManager());
-        jmri.jmrix.qsi.ActiveFlag.setActive();
-
     }
 
     private Thread sinkThread;
