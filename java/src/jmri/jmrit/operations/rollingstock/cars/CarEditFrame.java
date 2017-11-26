@@ -92,7 +92,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
     JComboBox<Track> trackLocationBox = new JComboBox<>();
     JComboBox<String> loadComboBox = InstanceManager.getDefault(CarLoads.class).getComboBox(null);
     JComboBox<String> kernelComboBox = carManager.getKernelComboBox();
-    JComboBox<IdTag> rfidComboBox = new JComboBox<IdTag>();
+    JComboBox<IdTag> rfidComboBox = new JComboBox<>();
 
     // panels
     JPanel pBlocking = new JPanel();
@@ -693,8 +693,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
                     new Object[]{_car.getTypeName()}), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 // go through the entire list and change the passenger setting
                 // for all cars of this type
-                for (RollingStock rs : carManager.getList()) {
-                    Car c = (Car) rs;
+                for (Car c : carManager.getList()) {
                     if (c.getTypeName().equals(_car.getTypeName())) {
                         c.setPassenger(passengerCheckBox.isSelected());
                     }
@@ -719,8 +718,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
                     .getMessage("carModifyAllType"), new Object[]{_car.getTypeName()}), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 // go through the entire list and change the passenger setting
                 // for all cars of this type
-                for (RollingStock rs : carManager.getList()) {
-                    Car c = (Car) rs;
+                for (Car c : carManager.getList()) {
                     if (c.isPassenger() && c.getTypeName().equals(_car.getTypeName())) {
                         c.setBlocking(blocking);
                     }
@@ -735,8 +733,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
                     new Object[]{_car.getTypeName()}), MessageFormat.format(Bundle.getMessage("carModifyAllType"),
                     new Object[]{_car.getTypeName()}), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 // go through the entire list and change the caboose setting for all cars of this type
-                for (RollingStock rs : carManager.getList()) {
-                    Car c = (Car) rs;
+                for (Car c : carManager.getList()) {
                     if (c.getTypeName().equals(_car.getTypeName())) {
                         c.setCaboose(cabooseCheckBox.isSelected());
                     }
@@ -751,8 +748,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
                     new Object[]{_car.getTypeName()}), MessageFormat.format(Bundle.getMessage("carModifyAllType"),
                     new Object[]{_car.getTypeName()}), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 // go through the entire list and change the utility for all cars of this type
-                for (RollingStock rs : carManager.getList()) {
-                    Car c = (Car) rs;
+                for (Car c : carManager.getList()) {
                     if (c.getTypeName().equals(_car.getTypeName())) {
                         c.setUtility(utilityCheckBox.isSelected());
                     }
@@ -767,8 +763,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
                     new Object[]{_car.getTypeName()}), MessageFormat.format(Bundle.getMessage("carModifyAllType"),
                     new Object[]{_car.getTypeName()}), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 // go through the entire list and change the hazardous setting for all cars of this type
-                for (RollingStock rs : carManager.getList()) {
-                    Car c = (Car) rs;
+                for (Car c : carManager.getList()) {
                     if (c.getTypeName().equals(_car.getTypeName())) {
                         c.setHazardous(hazardousCheckBox.isSelected());
                     }
