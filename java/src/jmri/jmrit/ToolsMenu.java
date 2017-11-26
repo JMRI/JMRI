@@ -7,7 +7,7 @@ import jmri.InstanceManager;
 
 /**
  * Create a "Tools" menu containing the Jmri system-independent tools
- * <P>
+ * <p>
  * As a best practice, we are migrating the action names (constructor arguments)
  * out of this class and into the contructors themselves.
  *
@@ -129,6 +129,6 @@ public class ToolsMenu extends JMenu {
         add(new JSeparator());
         // add start web server
         add(new jmri.web.server.WebServerAction());
-
     }
+
 }

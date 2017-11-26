@@ -72,7 +72,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
         Document doc = newDocument(root, dtdLocation + "operations-trains.dtd"); // NOI18N
 
         // add XSLT processing instruction
-        java.util.Map<String, String> m = new java.util.HashMap<String, String>();
+        java.util.Map<String, String> m = new java.util.HashMap<>();
         m.put("type", "text/xsl"); // NOI18N
         m.put("href", xsltLocation + "operations-trains.xsl"); // NOI18N
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
@@ -388,12 +388,14 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
             File file = findFile(getDefaultSwitchListName(name));
             if (file == null) {
                 log.debug("No ({}) switch list file to backup", name);
-            } else if (file.canWrite()) {
+            } else if (file.canRead()) {
                 String lastModified = new SimpleDateFormat("yyyyMMdd-HHmmss").format(file.lastModified()); // NOI18N
                 String backupName = getBackupSwitchListFileName(name, lastModified); // NOI18N
-                if (file.renameTo(new File(backupName))) {
-                    log.debug("created new switch list backup file {}", backupName);
-                } else {
+                File backupCopy = new File(backupName);
+                try {
+                FileUtil.copy(file, backupCopy);
+                log.debug("created new switch list backup file {}", backupName);
+                } catch (Exception e) {
                     log.error("could not create switch list backup file {}", backupName);
                 }
             }

@@ -21,12 +21,19 @@ public class DccConsistTest extends AbstractConsistTestBase {
         Assert.assertNotNull(c);
     }
 
+    @Test public void testCtor3() {
+        // integer constructor test.
+        DccConsist c = new DccConsist(new DccLocoAddress(12, true));
+        Assert.assertNotNull(c);
+    }
+
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
-        JUnitUtil.setUp();        jmri.util.JUnitUtil.initDebugProgrammerManager();
-        c = new DccConsist(new DccLocoAddress(12, true));
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initDebugProgrammerManager();
+        c = new DccConsist(new DccLocoAddress(12, true), jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class));
     }
    
     @After

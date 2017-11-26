@@ -130,24 +130,25 @@
     </condition>
 
     <!-- set global properties for this build -->
-    <property name="dist"         value="${basedir}/dist"/>
-    <property name="jartarget"    value="${basedir}"/>
-    <property name="libdir"       value="${basedir}/lib"/>
-    <property name="resourcedir"  value="${basedir}/resources"/>
-    <property name="scriptdir"    value="${basedir}/scripts"/>
-    <property name="javadir"      value="${basedir}/java"/>
-    <property name="doctarget"    value="${javadir}/doc"/>
+    <property name="dist"           value="${basedir}/dist"/>
+    <property name="jartarget"      value="${basedir}"/>
+    <property name="libdir"         value="${basedir}/lib"/>
+    <property name="resourcedir"    value="${basedir}/resources"/>
+    <property name="scriptdir"      value="${basedir}/scripts"/>
+    <property name="javadir"        value="${basedir}/java"/>
+    <property name="doctarget"      value="${javadir}/doc"/>
     <property name="coveragetarget" value="${basedir}/coveragereport"/>
-    <property name="source"       value="${javadir}/src"/>
-    <property name="maventarget"  value="${basedir}/target"/>
-    <property name="target"       value="${maventarget}/classes"/>
-    <property name="testtarget"   value="${maventarget}/test-classes"/>
-    <property name="test"         value="${javadir}/test"/>
+    <property name="source"         value="${javadir}/src"/>
+    <property name="maventarget"    value="${basedir}/target"/>
+    <property name="target"         value="${maventarget}/classes"/>
+    <property name="testtarget"     value="${maventarget}/test-classes"/>
+    <property name="test"           value="${javadir}/test"/>
     <property name="acceptancetest" value="${javadir}/acceptancetest"/>
-    <property name="templatedir"  value="${javadir}/template"/>
-    <property name="tmptarget"    value="${javadir}/tmp"/>
-    <property name="lineendtmp"   value="${tmptarget}/lineend"/>
-    <property name="tempdir"      value="${basedir}/temp"/>    <!-- actual tmp files -->
+    <property name="templatedir"    value="${javadir}/template"/>
+    <property name="tmptarget"      value="${javadir}/tmp"/>
+    <property name="lineendtmp"     value="${tmptarget}/lineend"/>
+    <property name="tempdir"        value="${basedir}/temp"/>    <!-- actual tmp files -->
+    <property name="jacocoexec"     value="${maventarget}/jacoco.exec"/>
     <property name="java.debugging" value="yes" />
 
     <!-- location for all generated java code -->
@@ -1227,7 +1228,7 @@
     </target>
 
     <target name="headlesstest" depends="tests, runtime-library-selection" description="run headless test suite">
-        <jacoco:coverage destfile="jacoco.exec">
+        <jacoco:coverage destfile="${jacocoexec}">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." >
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1253,7 +1254,7 @@
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
        <jacoco:report>
           <executiondata>
-              <file file="jacoco.exec" />
+              <file file="${jacocoexec}" />
           </executiondata>
 
           <structure name="AntTestReporting">
@@ -1263,6 +1264,8 @@
           </structure>
 
           <html destdir="${coveragetarget}" />
+          <csv destfile="${coveragetarget}/report.csv"/>
+          <xml destfile="${coveragetarget}/report.xml"/>
        </jacoco:report>
     </target>
 
@@ -1271,7 +1274,7 @@
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
        <jacoco:report>
           <executiondata>
-              <file file="jacoco.exec" />
+              <file file="${jacocoexec}" />
           </executiondata>
 
           <structure name="AntTestReporting">
@@ -1314,7 +1317,7 @@
     </target>
 
     <target name="ci-test-travis" depends="tests, runtime-library-selection" description="run ci-test using Travis-CI">
-        <jacoco:coverage destfile="jacoco.exec" excludes="org.slf4j.*">
+        <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1341,7 +1344,7 @@
 
     <target name="ci-test-appveyor" depends="tests, runtime-library-selection" description="run ci-test using Appveyor">
         <!-- identical to ci-test target except test output is different -->
-        <jacoco:coverage destfile="jacoco.exec" excludes="org.slf4j.*">
+        <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" showoutput="yes" fork="yes" maxmemory="2048m" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1385,7 +1388,7 @@
     </target>
 
     <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite">
-        <jacoco:coverage destfile="jacoco.exec" excludes="org.slf4j.*">
+        <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
 
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
@@ -1414,7 +1417,7 @@
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
        <jacoco:report>
           <executiondata>
-              <file file="jacoco.exec" />
+              <file file="${jacocoexec}" />
           </executiondata>
 
           <structure name="AntTestReporting">
@@ -1424,6 +1427,8 @@
           </structure>
 
           <html destdir="${coveragetarget}" />
+          <csv destfile="${coveragetarget}/report.csv"/>
+          <xml destfile="${coveragetarget}/report.xml"/>
        </jacoco:report>
     </target>
 
@@ -1432,7 +1437,7 @@
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
        <jacoco:report>
           <executiondata>
-              <file file="jacoco.exec" />
+              <file file="${jacocoexec}" />
           </executiondata>
 
           <structure name="AntTestReporting">
@@ -1458,7 +1463,7 @@
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
        <jacoco:report>
           <executiondata>
-              <file file="jacoco.exec" />
+              <file file="${jacocoexec}" />
           </executiondata>
 
           <structure name="AntTestReporting">
@@ -1484,7 +1489,7 @@
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
        <jacoco:report>
           <executiondata>
-              <file file="jacoco.exec" />
+              <file file="${jacocoexec}" />
           </executiondata>
 
           <structure name="AntTestReporting">

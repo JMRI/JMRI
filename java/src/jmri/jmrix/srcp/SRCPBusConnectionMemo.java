@@ -195,7 +195,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
         if (T.equals(jmri.ClockControl.class)) {
             return (T) getClockControl();
         }
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     /**
@@ -224,7 +224,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
         if (type.equals(jmri.ClockControl.class)) {
             return (null != clockControl);
         }
-        return false; // nothing, by default
+        return super.provides(type); 
     }
 
     @Override

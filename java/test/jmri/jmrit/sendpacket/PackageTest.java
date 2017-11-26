@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
    SendPacketActionTest.class,
    SendPacketFrameTest.class,
-   SendPacketTest.class
+   SendPacketTest.class,
+   BundleTest.class
 })
 
 /**

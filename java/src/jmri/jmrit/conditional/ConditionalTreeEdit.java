@@ -58,6 +58,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -2028,6 +2029,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         for (int i = 0; i <= Conditional.ITEM_TYPE_LAST_STATE_VAR; i++) {
             _variableTypeBox.addItem(ConditionalVariable.getItemTypeString(i));
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_variableTypeBox);
         _variableTypeBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -2718,6 +2720,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             }
         }
         _selectLogixBox.setSelectedItem(itemKey);
+        JComboBoxUtil.setupComboBoxMaxRows(_selectLogixBox);
         loadSelectConditionalBox(lgxName);
     }
 
@@ -2768,6 +2771,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             }
         }
         _selectConditionalBox.setSelectedItem(itemKey);
+        JComboBoxUtil.setupComboBoxMaxRows(_selectConditionalBox);
     }
 
     /**
@@ -3194,6 +3198,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         for (int i = 0; i <= Conditional.ITEM_TYPE_LAST_ACTION; i++) {
             _actionItemTypeBox.addItem(DefaultConditionalAction.getItemTypeString(i));
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_actionItemTypeBox);
         _actionItemTypeBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
