@@ -11,7 +11,6 @@ import javax.usb.UsbConfiguration;
 import javax.usb.UsbDevice;
 import javax.usb.UsbDeviceDescriptor;
 import javax.usb.UsbDisconnectedException;
-import javax.usb.UsbEndpoint;
 import javax.usb.UsbException;
 import javax.usb.UsbHostManager;
 import javax.usb.UsbHub;
@@ -212,15 +211,11 @@ public final class UsbUtil {
      * @param iface    the interface
      * @param endPoint the end point
      */
-    public static void readMessage(@Nonnull UsbInterface iface, int endPoint) {
-
-        UsbPipe pipe = null;
+    public static void readMessage(@Nonnull UsbInterface iface, byte endPoint) {
 
         try {
             iface.claim((UsbInterface usbInterface) -> true);
-
-            UsbEndpoint endpoint = (UsbEndpoint) iface.getUsbEndpoints().get(endPoint); // there can be more 1,2,3..
-            pipe = endpoint.getUsbPipe();
+            UsbPipe pipe = iface.getUsbEndpoint(endPoint).getUsbPipe();
             pipe.open();
 
             byte[] data = new byte[8];
@@ -246,15 +241,12 @@ public final class UsbUtil {
      * @param iface    the interface
      * @param endPoint the end point
      */
-    public static void readMessageAsynch(@Nonnull UsbInterface iface, int endPoint) {
-
-        UsbPipe pipe;
+    public static void readMessageAsynch(@Nonnull UsbInterface iface, byte endPoint) {
 
         try {
             iface.claim((UsbInterface usbInterface) -> true);
 
-            UsbEndpoint endpoint = (UsbEndpoint) iface.getUsbEndpoints().get(endPoint); // there can be more 1,2,3..
-            pipe = endpoint.getUsbPipe();
+            UsbPipe pipe = iface.getUsbEndpoint(endPoint).getUsbPipe();
 
             pipe.open();
 
@@ -291,10 +283,10 @@ public final class UsbUtil {
      * @param index  the USB interface index
      * @return the USB interface
      */
-    public static UsbInterface getDeviceInterface(@Nonnull UsbDevice device, int index) {
+    public static UsbInterface getDeviceInterface(@Nonnull UsbDevice device, byte index) {
         UsbConfiguration configuration = device.getActiveUsbConfiguration();
         if (configuration != null) {
-            return (UsbInterface) configuration.getUsbInterfaces().get(index); // there can be more 1,2,3..
+            return configuration.getUsbInterface(index);
         }
         return null;
     }
