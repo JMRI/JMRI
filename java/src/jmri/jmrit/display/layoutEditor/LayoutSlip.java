@@ -1250,17 +1250,17 @@ public class LayoutSlip extends LayoutTurnout {
      * @param g2 the graphics port to draw to
      */
     protected void draw(Graphics2D g2) {
-        Color mainColourA = getColorForTrackBlock(g2, getLayoutBlock());
-        Color subColourA = getColorForTrackBlock(g2, getLayoutBlock(), true);
+        Color mainColourA = getColorForTrackBlock(getLayoutBlock());
+        Color subColourA = getColorForTrackBlock(getLayoutBlock(), true);
 
-        Color mainColourB = getColorForTrackBlock(g2, getLayoutBlockB());
-        Color subColourB = getColorForTrackBlock(g2, getLayoutBlockB(), true);
+        Color mainColourB = getColorForTrackBlock(getLayoutBlockB());
+        Color subColourB = getColorForTrackBlock(getLayoutBlockB(), true);
 
-        Color mainColourC = getColorForTrackBlock(g2, getLayoutBlockC());
-        Color subColourC = getColorForTrackBlock(g2, getLayoutBlockC(), true);
+        Color mainColourC = getColorForTrackBlock(getLayoutBlockC());
+        Color subColourC = getColorForTrackBlock(getLayoutBlockC(), true);
 
-        Color mainColourD = getColorForTrackBlock(g2, getLayoutBlockD());
-        Color subColourD = getColorForTrackBlock(g2, getLayoutBlockD(), true);
+        Color mainColourD = getColorForTrackBlock(getLayoutBlockD());
+        Color subColourD = getColorForTrackBlock(getLayoutBlockD(), true);
 
         layoutEditor.setTrackStrokeWidth(g2, isMainline());
 

@@ -118,9 +118,9 @@ public abstract class LayoutTrack {
         defaultTrackColor = color;
     }
 
-    protected Color getColorForTrackBlock(Graphics2D g2,
+    protected Color getColorForTrackBlock(
             @Nullable LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
-        Color result = ColorUtil.setAlpha(Color.BLACK, 0);  // transparent
+        Color result = ColorUtil.CLEAR;  // transparent
         if (layoutBlock != null) {
             if (forceBlockTrackColor) {
                 result = layoutBlock.getBlockTrackColor();
@@ -132,13 +132,13 @@ public abstract class LayoutTrack {
     }
 
     // optional prameter forceTrack = false
-    protected Color getColorForTrackBlock(Graphics2D g2, @Nullable LayoutBlock lb) {
-        return getColorForTrackBlock(g2, lb, false);
+    protected Color getColorForTrackBlock(@Nullable LayoutBlock lb) {
+        return getColorForTrackBlock(lb, false);
     }
 
     protected Color setColorForTrackBlock(Graphics2D g2,
             @Nullable LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
-        Color result = getColorForTrackBlock(g2, layoutBlock, forceBlockTrackColor);
+        Color result = getColorForTrackBlock(layoutBlock, forceBlockTrackColor);
         g2.setColor(result);
         return result;
     }
