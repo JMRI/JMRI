@@ -185,11 +185,11 @@ public class PreviewDialog extends JDialog {
         // create array of backgrounds
         _backgrounds = new BufferedImage[4];
 //        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
-//        _backgrounds[0] = DrawSquares.getImage(_iconPanel, 20, _currentBackground, _currentBackground);
+//        _backgrounds[0] = DrawSquares.getImage(500, 500, 20, _currentBackground, _currentBackground);
         for (int i = 0; i <= 2; i++) {
-            _backgrounds[i] = DrawSquares.getImage(_preview, 20, colorChoice[i], colorChoice[i]);
+            _backgrounds[i] = DrawSquares.getImage(500, 500, 20, colorChoice[i], colorChoice[i]);
         }
-        _backgrounds[3] = DrawSquares.getImage(_preview, 20, Color.white, _grayColor);
+        _backgrounds[3] = DrawSquares.getImage(500, 500, 20, Color.white, _grayColor);
 
         JComboBox<String> bgColorBox = new JComboBox<>();
         bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, too long for combo

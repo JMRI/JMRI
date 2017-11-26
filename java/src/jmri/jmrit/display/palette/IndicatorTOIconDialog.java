@@ -71,10 +71,8 @@ public class IndicatorTOIconDialog extends IconDialog {
      * Action item for add new status set in makeAddIconButtonPanel.
      */
     private void addFamilySet() {
-        if (log.isDebugEnabled()) {
-            log.debug("addFamilySet: type= \""
-                    + _type + "\", family= \"" + _family + "\" key= " + _key);
-        }
+        log.debug("addFamilySet: type= \"{}\", family= \"{}\" key= {}",
+                _type, _family, _key);
         setVisible(false);
         IndicatorTOItemPanel parent = (IndicatorTOItemPanel) _parent;
         if (parent._iconGroupsMap.size() < IndicatorTOItemPanel.STATUS_KEYS.length) {
@@ -107,8 +105,8 @@ public class IndicatorTOIconDialog extends IconDialog {
      */
     private void createNewStatusSet() {
         if (log.isDebugEnabled()) {
-            log.debug("createNewFamily: type= \""
-                    + _type + "\", family= \"" + _family + "\" key= " + _key);
+            log.debug("createNewFamily: type= \"{}\", family \"{}\" key = \"{}\"",
+                    _type, _family, _key);
         }
         //check text
         HashMap<String, NamedIcon> iconMap = ItemPanel.makeNewIconMap("Turnout");
@@ -142,8 +140,8 @@ public class IndicatorTOIconDialog extends IconDialog {
 
     private boolean addFamilySet(String family, HashMap<String, NamedIcon> iconMap, String subFamily) {
         if (log.isDebugEnabled()) {
-            log.debug("addFamily _type= \"" + _type + "\", family= \"" + family + "\""
-                    + ", key= \"" + _key + "\", _iconMap.size= " + iconMap.size());
+            log.debug("addFamily _type= \"{}\", family= \"{}\", key=\"{}\", _iconMap.size= {}",
+                    _type, family, _key, iconMap.size());
         }
         IndicatorTOItemPanel parent = (IndicatorTOItemPanel) _parent;
         parent.updateIconGroupsMap(subFamily, iconMap);

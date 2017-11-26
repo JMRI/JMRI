@@ -44,7 +44,7 @@ public class IconDialog extends ItemDialog {
     public IconDialog(String type, String family, FamilyItemPanel parent, HashMap<String, NamedIcon> iconMap) {
         super(type, Bundle.getMessage("ShowIconsTitle", family));
         if (log.isDebugEnabled()) {
-            log.debug("IconDialog ctor: for " + type + " Family " + family);
+            log.debug("IconDialog ctor: for {}, family = {}", type, family);
         }
         _family = family;
         _parent = parent;
@@ -136,7 +136,7 @@ public class IconDialog extends ItemDialog {
 
     protected JPanel makeIconPanel(HashMap<String, NamedIcon> iconMap) {
         if (iconMap == null) {
-            log.error("iconMap is null for type " + _type + " family " + _family);
+            log.error("iconMap is null for type {}, family {}", _type, _family);
             return null;
         }
         JPanel iconPanel = new JPanel();
@@ -160,7 +160,7 @@ public class IconDialog extends ItemDialog {
         c.gridy = 0;
 
         if (log.isDebugEnabled()) {
-            log.debug("makeIconPanel: for " + iconMap.size() + " icons. gridwidth= " + gridwidth);
+            log.debug("makeIconPanel: for {} icons. gridwidth = {}", iconMap.size(), gridwidth);
         }
         int panelWidth = 0;
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();

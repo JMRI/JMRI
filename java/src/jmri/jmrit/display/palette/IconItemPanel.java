@@ -63,7 +63,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
     protected Color _currentBackground = _grayColor;
     private JPanel bgBoxPanel;
-    protected BufferedImage[] _backgrounds; // array of Image backgrounds
+    // protected BufferedImage[] _backgrounds; // array of Image backgrounds, shared to save on RAM
 
     /**
      * Constructor for plain icons and backgrounds.
@@ -143,7 +143,6 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             // make create message
             log.error("Item type \"{}\" has {} families.", _itemType, (families == null ? "null" : families.size()));
         }
-
     }
 
     /**
@@ -152,18 +151,22 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
      * @param iconMap set of icons to add to panel
      */
     protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
+        // create array of backgrounds
+        if (_backgrounds == null) { // don't repeat unneeded while adding families
+            _backgrounds = new BufferedImage[5];
+            for (int i = 1; i <= 3; i++) {
+                _backgrounds[i] = DrawSquares.getImage(500, 100, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
+            }
+            _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
+        }
+        // update from Panel Editor
+        _currentBackground = _editor.getTargetPanel().getBackground(); // pick up Panel background color
+        _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
+
         _iconPanel = new ImagePanel();
         _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
-
-        // create array of backgrounds
-        _backgrounds = new BufferedImage[5];
-        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
-        _backgrounds[0] = DrawSquares.getImage(_iconPanel, 20, _currentBackground, _currentBackground);
-        for (int i = 1; i <= 3; i++) {
-            _backgrounds[i] = DrawSquares.getImage(_iconPanel, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
-        }
-        _backgrounds[4] = DrawSquares.getImage(_iconPanel, 20, Color.white, _grayColor);
+        _iconPanel.setImage(_backgrounds[PreviewBgPref]); // pick up shared setting
 
         JPanel iPanel = new JPanel();
         iPanel.setOpaque(false);
@@ -205,7 +208,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     protected void setEditor(Editor ed) {
         super.setEditor(ed);
         if (_initialized) {
-            removeIconFamiliesPanel();
+            removeIconFamiliesPanel(); // clean up by replacing
             addIconsToPanel(_iconMap);
         }
     }
@@ -221,9 +224,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     }
 
     protected void updateFamiliesPanel() {
-        if (log.isDebugEnabled()) {
-            log.debug("updateFamiliesPanel for " + _itemType);
-        }
+        log.debug("updateFamiliesPanel for {}", _itemType);
         removeIconFamiliesPanel();
         initIconFamiliesPanel();
         validate();
@@ -275,8 +276,8 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         bottomPanel.add(deleteIconButton);
         deleteIconButton.setEnabled(false);
 
-        if (makeBgBoxPanel() != null) {
-            bottomPanel.add(makeBgBoxPanel()); // to enable returning null for Backgrounds
+        if (makeBgButtonPanel(_iconPanel, _backgrounds) != null) {
+            bottomPanel.add(makeBgButtonPanel(_iconPanel, _backgrounds)); // to enable returning null for Backgrounds
         }
         add(bottomPanel);
     }
@@ -286,17 +287,12 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         _catalogButton.setText(Bundle.getMessage("ButtonShowCatalog"));
     }
 
-    protected JPanel makeBgBoxPanel() {
-        return makeButtonPanel(_iconPanel, _backgrounds);
-        // to enable not adding it for Background
-    }
-
     /**
      * Action item for initButtonPanel.
      */
     protected void addNewIcon() {
         if (log.isDebugEnabled()) {
-            log.debug("addNewIcon Action: iconMap.size()= " + _iconMap.size());
+            log.debug("addNewIcon Action: iconMap.size()= {}", _iconMap.size());
         }
         String name = JOptionPane.showInputDialog(this,
                 Bundle.getMessage("NoIconName"), null);
@@ -357,42 +353,6 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         }
         return name;
     }
-
-//    /**
-//     * Create panel element containing [Set background:] drop down list.
-//     * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
-//     * @see ReporterItemPanel
-//     * @see FamilyItemPanel
-//     *
-//     * @return a JPanel with label and drop down
-//     */
-//    private JPanel makeButtonPanel(ImagePanel preview, BufferedImage[] imgArray) {
-//        JComboBox<String> bgColorBox = new JComboBox<>();
-//        bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, too long for combo
-//        bgColorBox.addItem(Bundle.getMessage("White"));
-//        bgColorBox.addItem(Bundle.getMessage("LightGray"));
-//        bgColorBox.addItem(Bundle.getMessage("DarkGray"));
-//        bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option not yet in combobox, under development
-//        bgColorBox.setSelectedIndex(0); // panel bg color
-//        bgColorBox.addActionListener((ActionEvent e) -> {
-//            // load background image
-//            preview.setImage(imgArray[bgColorBox.getSelectedIndex()]);
-//            log.debug("Palette setImage called");
-//            preview.setOpaque(false);
-//            // _preview.repaint();
-//            preview.invalidate(); // force redraw
-//        });
-//
-//        JPanel backgroundPanel = new JPanel();
-//        backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
-//        JPanel pp = new JPanel();
-//        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-//        pp.add(new JLabel(Bundle.getMessage("setBackground")));
-//        pp.add(bgColorBox);
-//        backgroundPanel.add(pp);
-//        backgroundPanel.setMaximumSize(backgroundPanel.getPreferredSize());
-//        return backgroundPanel;
-//    }
 
     private void clickEvent(MouseEvent event) {
         java.awt.Component[] comp = _iconPanel.getComponents();

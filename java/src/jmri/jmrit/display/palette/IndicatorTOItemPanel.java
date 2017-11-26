@@ -33,8 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * JPanels for the various item types that come from tool Tables - e.g. Sensors,
- * Turnouts, etc.
+ * JPanel for IndicatorTurnout items.
  */
 public class IndicatorTOItemPanel extends TableItemPanel {
 
@@ -44,7 +43,6 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     private DetectionPanel _detectPanel;
     private JPanel _tablePanel;
     protected HashMap<String, HashMap<String, NamedIcon>> _iconGroupsMap;
-//    private ImagePanel _iconFamilyPanel;
 
     public IndicatorTOItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel<jmri.Turnout> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
@@ -64,7 +62,6 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             add(_detectPanel, 1);
             add(_iconFamilyPanel, 2);
             _buttonPosition = 2;
-            add(makeButtonPanel(_iconPanel, _backgrounds));
         }
     }
 
@@ -98,7 +95,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
 
     /**
      * iconMap is existing map of the icon. Check whether map is one of the
-     * families. If so, return. if not, does user want to add it to families? if
+     * families. If so, return. If not, does user want to add it to families? If
      * so, add. If not, save for return when updated.
      */
     private void checkCurrentMaps(HashMap<String, HashMap<String, NamedIcon>> iconMaps) {
@@ -174,9 +171,8 @@ public class IndicatorTOItemPanel extends TableItemPanel {
      */
     @Override
     protected void initIconFamiliesPanel() {
-        _iconFamilyPanel = new JPanel();
+        _iconFamilyPanel = new ImagePanel();
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
-        _iconFamilyPanel.setOpaque(true);
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> families
                 = ItemPalette.getLevel4FamilyMaps(_itemType);
         if (families != null && families.size() > 0) {
@@ -201,15 +197,15 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         }
 
         // create array of backgrounds
-        // if (_backgrounds == null) { // reduces load but will not redraw for new size
-        _backgrounds = new BufferedImage[5];
-        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
-        _backgrounds[0] = DrawSquares.getImage(_iconPanel, 20, _currentBackground, _currentBackground);
-        for (int i = 1; i <= 3; i++) {
-            _backgrounds[i] = DrawSquares.getImage(_iconPanel, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
+        if (_backgrounds == null) { // reduces load but will not redraw for new size
+            _backgrounds = new BufferedImage[5];
+            _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
+            _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
+            for (int i = 1; i <= 3; i++) {
+                _backgrounds[i] = DrawSquares.getImage(500, 100, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
+            }
+            _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
         }
-        _backgrounds[4] = DrawSquares.getImage(_iconPanel, 20, Color.white, _grayColor);
-
         log.debug("initIconFamiliesPanel done");
     }
 
@@ -427,7 +423,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         _family = family;
         log.debug("setFamily: for type \"{}\", family \"{}\"", _itemType, family);
         _iconFamilyPanel.remove(_iconPanel);
-        _iconPanel = new ImagePanel();
+        _iconPanel = new JPanel();
         _iconPanel.setOpaque(false);
         _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),Bundle.getMessage("PreviewBorderTitle")));
         _iconFamilyPanel.add(_iconPanel, 0);
@@ -461,7 +457,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
 
     private void openStatusEditDialog(String key) {
         if (log.isDebugEnabled()) {
-            log.debug("openStatusEditDialog for family \"" + _family + "\" and \"" + key + "\"");
+            log.debug("openStatusEditDialog for family \"{}\" and \"{}\"", _family, key);
         }
         _currentIconMap = _iconGroupsMap.get(key);
         _dialog = new IndicatorTOIconDialog(_itemType, _family, this, key, _currentIconMap);
@@ -582,4 +578,5 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     private final static Logger log = LoggerFactory.getLogger(IndicatorTOItemPanel.class);
+
 }

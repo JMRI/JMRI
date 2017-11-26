@@ -402,9 +402,9 @@ public class CatalogPanel extends JPanel implements MouseListener {
         // create array of backgrounds
         _backgrounds = new BufferedImage[4];
         for (int i = 0; i <= 2; i++) {
-            _backgrounds[i] = DrawSquares.getImage(_preview, 20, colorChoice[i], colorChoice[i]);
+            _backgrounds[i] = DrawSquares.getImage(500, 500, 20, colorChoice[i], colorChoice[i]);
         }
-        _backgrounds[3] = DrawSquares.getImage(_preview, 20, Color.white, _grayColor);
+        _backgrounds[3] = DrawSquares.getImage(500, 500, 20, Color.white, _grayColor);
 
         return previewPanel;
     }

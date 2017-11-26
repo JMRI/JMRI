@@ -5,6 +5,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,6 +29,8 @@ import jmri.jmrit.display.LightIcon;
 import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.TurnoutIcon;
 import jmri.jmrit.picker.PickListModel;
+import jmri.util.swing.DrawSquares;
+import jmri.util.swing.ImagePanel;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +47,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
 
     protected JTable _table;
     protected PickListModel _model;
+    protected JPanel bgBoxPanel;
 
     JScrollPane _scrollPane;
     JDialog _addTableDialog;
@@ -53,13 +57,13 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
 
     /**
      * Constructor for all table types. When item is a bean, the itemType is the
-     * name key for the item in jmri.NamedBeanBundle.properties
-     * @param parentFrame parentFrame
-     * @param type type
-     * @param family family
-     * @param model model
-     * @param editor editor
-     * 
+     * name key for the item in jmri.NamedBeanBundle.properties.
+     *
+     * @param parentFrame the enclosing parentFrame
+     * @param type        item type
+     * @param family      icon family
+     * @param model       list model
+     * @param editor      associated Panel editor
      */
     public TableItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, editor);
@@ -90,7 +94,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     }
 
     /**
-     * top Panel
+     * Top Panel.
      */
     protected JPanel initTablePanel(PickListModel model, Editor editor) {
         _table = model.makePickTable();
@@ -174,7 +178,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
                 if (bean != null) {
                     int setRow = _model.getIndexOf(bean);
                     if (log.isDebugEnabled()) {
-                        log.debug("addToTable: row= " + setRow + ", bean= " + bean.getDisplayName());
+                        log.debug("addToTable: row = {}, bean = {}", setRow, bean.getDisplayName());
                     }
                     _table.setRowSelectionInterval(setRow, setRow);
                     _scrollPane.getVerticalScrollBar().setValue(setRow * ROW_HEIGHT);
@@ -227,7 +231,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     }
 
     /**
-     * ListSelectionListener action
+     * ListSelectionListener action.
      */
     @Override
     public void valueChanged(ListSelectionEvent e) {

@@ -39,12 +39,13 @@ public class MultiSensorItemPanel extends TableItemPanel {
     JPanel _multiSensorPanel;
     MultiSensorSelectionModel _selectionModel;
     boolean _upDown = false;
-    private ImagePanel _iconFamilyPanel;
+//    private ImagePanel _iconFamilyPanel;
+    protected JPanel bgBoxPanel;
 
     public MultiSensorItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, model, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragSelection"));
-        add(makeButtonPanel(_iconFamilyPanel, _backgrounds));
+        //add(makeBgButtonPanel(_dragIconPanel, _backgrounds));
     }
 
     @Override
@@ -126,11 +127,11 @@ public class MultiSensorItemPanel extends TableItemPanel {
         // if (_backgrounds == null) { // reduces load but will not redraw for new size
         _backgrounds = new BufferedImage[5];
         _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
-        _backgrounds[0] = DrawSquares.getImage(_iconFamilyPanel, 20, _currentBackground, _currentBackground);
+        _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
         for (int i = 1; i <= 3; i++) {
-            _backgrounds[i] = DrawSquares.getImage(_iconFamilyPanel, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
+            _backgrounds[i] = DrawSquares.getImage(500, 100, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
         }
-        _backgrounds[4] = DrawSquares.getImage(_iconFamilyPanel, 20, Color.white, _grayColor);
+        _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
     }
 
     private void makeMultiSensorPanel() {
@@ -248,8 +249,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
 
         protected ArrayList<NamedBean> getSelections() {
             if (log.isDebugEnabled()) {
-                log.debug("getSelections: size= " + _selections.size()
-                        + ", _nextPosition= " + _nextPosition);
+                log.debug("getSelections: size = {}, _nextPosition = {}", _selections.size(), _nextPosition);
             }
             return _selections;
         }
@@ -286,23 +286,17 @@ public class MultiSensorItemPanel extends TableItemPanel {
         public boolean isSelectedIndex(int index) {
             for (int i = 0; i < _positions.length; i++) {
                 if (_positions[i] == index) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("isSelectedIndex(" + index + ") returned true");
-                    }
+                    log.debug("isSelectedIndex({}) returned true", index);
                     return true;
                 }
             }
-            if (log.isDebugEnabled()) {
-                log.debug("isSelectedIndex(" + index + ") returned false");
-            }
+            log.debug("isSelectedIndex({}) returned false", index);
             return false;
         }
 
         @Override
         public void clearSelection() {
-            if (log.isDebugEnabled()) {
-                log.debug("clearSelection()");
-            }
+            log.debug("clearSelection()");
             for (int i = 0; i < _positions.length; i++) {
                 if (_positions[i] >= 0) {
                     _tableModel.setValueAt(null, _positions[i], PickListModel.POSITION_COL);
@@ -317,9 +311,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
 
         @Override
         public void addSelectionInterval(int index0, int index1) {
-            if (log.isDebugEnabled()) {
-                log.debug("addSelectionInterval(" + index0 + ", " + index1 + ") - stubbed");
-            }
+            log.debug("addSelectionInterval({}), {}) - stubbed", index0, index1);
 //            super.addSelectionInterval(index0, index1);
         }
 
@@ -332,7 +324,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
                 return;
             }
             if (log.isDebugEnabled()) {
-                log.debug("setSelectionInterval(" + row + ", " + index1 + ")");
+                log.debug("setSelectionInterval({}, {})", row, index1);
             }
             NamedBean bean = _tableModel.getBeanAt(row);
             String position = (String) _tableModel.getValueAt(row, PickListModel.POSITION_COL);

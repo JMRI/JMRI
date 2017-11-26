@@ -159,21 +159,19 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
                     HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap
                             = loadIndicatorFamilyMap(node, ed);
                     if (log.isDebugEnabled()) {
-                        log.debug("Add " + familyTOMap.size()
-                                + " indicatorTO families to item type " + typeName + " to _indicatorTOMaps.");
+                        log.debug("Add {} indicatorTO families to item type {} for _indicatorTOMaps.",
+                                familyTOMap.size(), typeName );
                     }
                     _indicatorTOMaps.put(typeName, familyTOMap);
                 } else {
                     HashMap<String, HashMap<String, NamedIcon>> familyMap
                             = loadFamilyMap(node, ed);
                     _iconMaps.put(typeName, familyMap);
-                    if (log.isDebugEnabled()) {
-                        log.debug("Add item type " + typeName + " to _iconMaps.");
-                    }
+                    log.debug("Add item type {} to _iconMaps.", typeName);
                 }
             }
             if (log.isDebugEnabled()) {
-                log.debug("Icon Map has " + _iconMaps.size() + " members");
+                log.debug("Icon Map has {} members", _iconMaps.size());
             }
             return true;
         }
@@ -213,7 +211,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
                 if (icon == null) {
                     icon = ed.loadFailed(iconName, path);
                     if (icon == null) {
-                        log.info(iconName + " removed for url= " + path);
+                        log.info("{} removed for url = {}", iconName, path);
                     } else {
                         InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
                     }
@@ -221,7 +219,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
                 if (icon != null) {
                     iconMap.put(iconName, icon);
                     if (log.isDebugEnabled()) {
-                        log.debug("Add " + iconName + " icon to family " + familyName);
+                        log.debug("Add {} icon to family \"{}\"", iconName, familyName);
                     }
                 }
                 Thread.yield();
@@ -268,15 +266,15 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
                     = loadDefaultIndicatorTOMap(families, ed);
             _indicatorTOMaps.put(typeName, familyTOMap);
             if (log.isDebugEnabled()) {
-                log.debug("Add " + familyTOMap.size()
-                        + " indicatorTO families to item type " + typeName + " to _indicatorTOMaps.");
+                log.debug("Add {} indicatorTO families to item type {} to _indicatorTOMaps.",
+                        familyTOMap.size(), typeName);
             }
         } else {
             HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(families, ed);
             _iconMaps.put(typeName, familyMap);
             if (log.isDebugEnabled()) {
-                log.debug("Add " + familyMap.size()
-                        + " families to item type " + typeName + " to _iconMaps.");
+                log.debug("Add {} families to item type \"{}\" to _iconMaps.",
+                        familyMap.size(), typeName);
             }
         }
     }
@@ -313,13 +311,13 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
                 String fileName = iconfiles.get(j).getText().trim();
                 if (fileName.length() == 0) {
                     fileName = "resources/icons/misc/X-red.gif";
-                    log.warn("loadDefaultFamilyMap: iconName= " + iconName + " in family " + familyName + " has no image file.");
+                    log.warn("loadDefaultFamilyMap: iconName = {} in family {} has no image file.", iconName, familyName);
                 }
                 NamedIcon icon = NamedIcon.getIconByName(fileName);
                 if (icon == null) {
                     icon = ed.loadFailed(iconName, fileName);
                     if (icon == null) {
-                        log.info(iconName + " removed for url= " + fileName);
+                        log.info("{} removed for url= {}", iconName, fileName);
                     }
                 }
                 if (icon != null) {
@@ -328,7 +326,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             }
             familyMap.put(familyName, iconMap);
             if (log.isDebugEnabled()) {
-                log.debug("Add " + iconMap.size() + " icons to family " + familyName);
+                log.debug("Add {}  icons to family \"{}\"", iconMap.size(), familyName);
             }
         }
         return familyMap;
@@ -344,8 +342,8 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(types, ed);
             familyTOMap.put(familyName, familyMap);
             if (log.isDebugEnabled()) {
-                log.debug("Add " + familyMap.size()
-                        + " IndicatorTO sub-families to item type " + familyName + " to IndicatorTO families.");
+                log.debug("Add {}  IndicatorTO sub-families to item type {}  to IndicatorTO families.",
+                        familyMap.size(), familyName);
             }
         }
         return familyTOMap;
@@ -368,7 +366,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         if (name == null || name.equals("")) {
             name = Bundle.getMessage("untitled");
         }
-        instance.setTitle(Bundle.getMessage("MenuItemItemPalette") + "-" + name);
+        instance.setTitle(Bundle.getMessage("MenuItemItemPalette") + " - " + name);
         // Either of these positioning calls puts the instance on the primary monitor. ???
         java.awt.Point pt = ed.getLocation();
         instance.setLocation(pt.x, pt.y);
@@ -618,7 +616,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
      */
     static protected void removeIconMap(String type, String family) {
         if (log.isDebugEnabled()) {
-            log.debug("removeIconMap for family \"" + family + " \" in type \"" + type + "\"");
+            log.debug("removeIconMap for family \"{}\" in type \"{}\"", family, type);
         }
         _iconMaps.get(type).remove(family);
         InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
@@ -627,7 +625,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             if (families != null && families.size() > 0) {
                 Iterator<String> it = families.keySet().iterator();
                 while (it.hasNext()) {
-                    log.debug("removeIconMap remaining Keys: family \"" + it.next() + " \" in type \"" + type + "\"");
+                    log.debug("removeIconMap remaining Keys: family \"{}\" in type \"{}\"", it.next(), type);
                 }
             }
         }
@@ -639,12 +637,12 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     static protected HashMap<String, NamedIcon> getIconMap(String type, String family) {
         HashMap<String, HashMap<String, NamedIcon>> itemMap = _iconMaps.get(type);
         if (itemMap == null) {
-            log.error("getIconMap failed. item type \"" + type + "\" not found.");
+            log.error("getIconMap failed. item type \"{}\" not found.", type);
             return null;
         }
         HashMap<String, NamedIcon> iconMap = itemMap.get(family);
         if (iconMap == null) {
-            log.error("getIconMap failed. family \"" + family + "\" not found in item type \"" + type + "\".");
+            log.error("getIconMap failed. family \"{}\" not found in item type \"{}\"", family, type);
             return null;
         }
         return cloneMap(iconMap);
@@ -694,8 +692,8 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     // Currently only needed for IndicatorTO type
     static protected void removeLevel4IconMap(String type, String family, String key) {
         if (log.isDebugEnabled()) {
-            log.debug("removelvl4IconMap for indicator family \"" + family + " \" in type \"" + type
-                    + "\" with key = \"" + key + "\"");
+            log.debug("removelvl4IconMap for indicator family \"{}\" in type \"{}\" with key \"{}\"",
+                    family, type, key);
         }
         if (key != null) {
             _indicatorTOMaps.get(type).get(family).remove(key);

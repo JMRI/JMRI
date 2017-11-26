@@ -20,25 +20,24 @@ import org.slf4j.LoggerFactory;
 public class DrawSquares {
 
     /**
-     * Produce either a plain/grid of white squares.
+     * Produce either a plain image or a grid of gray/white squares.
      *
-     * @param bg     parent frame to match size
-     * @param dim    squere sides in pixels
+     * @param width  image width in pixels to match parent frame size
+     * @param height image height in pixels to match parent frame size
+     * @param dim    length of sides of squares in pixels
      * @param color1 background color
      * @param color2 contrasting squares fill color
      * @see jmri.jmrit.catalog.PreviewDialog#paintCheckers()
      */
-    public static BufferedImage getImage(JPanel bg, int dim, Color color1, Color color2) {
+    public static BufferedImage getImage(int width, int height, int dim, Color color1, Color color2) {
         Color sqColor = new Color(235, 235, 235); // light gray
         Color bgColor = Color.white;
-        int sqSize = 5; // square width in pixels
+        int sqSize = 10; // square width in pixels
         BufferedImage back;
         int w = 500;
         int h = 500;
-        if (bg.getWidth() > 0) {
-            w = bg.getWidth();
-            h = bg.getHeight();
-        }
+        if (width > 0) { w = width; }
+        if (height > 0) { h = height; }
         sqSize = dim;
         bgColor = color1;
         sqColor = color2;
@@ -53,7 +52,7 @@ public class DrawSquares {
             for (int j = 0; j <= (w / sqSize); j++) {
                 for (int k = 0; k <= (h / sqSize); k++) {
                     if ((j + k) % 2 == 0) { // skip every other square
-                        g2d.fillRect(k * sqSize, j * sqSize, sqSize, sqSize); // gray squares
+                        g2d.fillRect(j * sqSize, k * sqSize, sqSize, sqSize); // gray squares
                     }
                 }
             }

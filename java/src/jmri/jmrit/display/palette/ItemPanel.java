@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -14,7 +15,6 @@ import javax.swing.JTextField;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
-//import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
@@ -48,7 +48,8 @@ public abstract class ItemPanel extends JPanel {
     static Color _darkGrayColor = new Color(150, 150, 150);
     protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
     protected Color _currentBackground = _grayColor;
-    protected BufferedImage[] _backgrounds; // array of Image backgrounds
+    protected BufferedImage[] _backgrounds; // array of Image backgrounds, shared to save on RAM
+    protected int PreviewBgPref = 0; // shared setting for preview background color, starts as 0 = use Panel bg
 
     /**
      * Constructor for all table types.
@@ -92,23 +93,30 @@ public abstract class ItemPanel extends JPanel {
      * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
      * @see DecoratorPanel
      *
-     * @return a JPanel with label and drop down
+     * @param preview   preview pane1 to set background image
+     * @param imgArray  the image array to choose from
+     * @return          a JPanel with label and drop down with actions
      */
-    public JPanel makeButtonPanel(ImagePanel preview, BufferedImage[] imgArray) {
+    protected JPanel makeBgButtonPanel(@Nonnull ImagePanel preview, BufferedImage[] imgArray) {
         JComboBox<String> bgColorBox = new JComboBox<>();
-        bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, too long for combo
+        bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, but too long for combo
         bgColorBox.addItem(Bundle.getMessage("White"));
         bgColorBox.addItem(Bundle.getMessage("LightGray"));
         bgColorBox.addItem(Bundle.getMessage("DarkGray"));
         bgColorBox.addItem(Bundle.getMessage("Checkers"));
-        bgColorBox.setSelectedIndex(0); // panel bg color
+        bgColorBox.setSelectedIndex(PreviewBgPref); // Global field, starts as 0 = panel bg color
         bgColorBox.addActionListener((ActionEvent e) -> {
-            // load background image
-            preview.setImage(imgArray[bgColorBox.getSelectedIndex()]);
-            log.debug("Palette setImage called {}", bgColorBox.getSelectedIndex());
-            preview.setOpaque(false);
-            // _preview.repaint();
-            preview.invalidate(); // force redraw
+            if (imgArray != null) {
+                PreviewBgPref = bgColorBox.getSelectedIndex(); // store user choice in field
+                // load background image
+                log.debug("Palette setImage called {}", PreviewBgPref);
+                // if (preview == null) log.debug("preview = null");
+                preview.setImage(imgArray[PreviewBgPref]);
+                preview.setOpaque(false); // needed?
+                preview.invalidate();     // force redraw
+            } else {
+                log.debug("imgArray is empty");
+            }
         });
 
         JPanel backgroundPanel = new JPanel();

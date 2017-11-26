@@ -28,16 +28,10 @@ import org.slf4j.LoggerFactory;
  */
 public class ClockItemPanel extends IconItemPanel {
 
-//    static Color _grayColor = new Color(235, 235, 235);
-//    static Color _darkGrayColor = new Color(150, 150, 150);
-//    protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
-//    protected Color _currentBackground = _grayColor;
-//    private JPanel bgBoxPanel;
-    protected BufferedImage[] _backgrounds; // array of Image backgrounds
-
     public ClockItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
         super(parentFrame, type, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
+
     }
 
     protected JPanel instructions() {
@@ -56,19 +50,26 @@ public class ClockItemPanel extends IconItemPanel {
         _iconPanel = new ImagePanel();
 
         // create array of backgrounds
-        _backgrounds = new BufferedImage[5];
-        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
-        _backgrounds[0] = DrawSquares.getImage(_iconPanel, 20, _currentBackground, _currentBackground);
-        for (int i = 1; i <= 3; i++) {
-            _backgrounds[i] = DrawSquares.getImage(_iconPanel, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
+        if (_backgrounds == null) { // don't repeat unneeded while adding families
+            _backgrounds = new BufferedImage[5];
+            _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
+            _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
+            for (int i = 1; i <= 3; i++) {
+                _backgrounds[i] = DrawSquares.getImage(500, 100, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
+            }
+            _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
+//        } else {
+//            // update from Panel Editor
+//            _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
+//            _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
         }
-        _backgrounds[4] = DrawSquares.getImage(_iconPanel, 20, Color.white, _grayColor);
 
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
             NamedIcon icon = new NamedIcon(entry.getValue()); // make copy for possible reduction
             JPanel panel = new JPanel();
+            panel.setOpaque(false);
             String borderName = ItemPalette.convertText(entry.getKey());
             panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                     borderName));
@@ -93,6 +94,7 @@ public class ClockItemPanel extends IconItemPanel {
 
     @Override
     public void initButtonPanel() {
+        add(makeBgButtonPanel(_iconPanel, _backgrounds));
     }
 
     public class ClockDragJLabel extends DragJLabel {
@@ -107,9 +109,7 @@ public class ClockItemPanel extends IconItemPanel {
                 return null;
             }
             String url = ((NamedIcon) getIcon()).getURL();
-            if (log.isDebugEnabled()) {
-                log.debug("DragJLabel.getTransferData url= " + url);
-            }
+            log.debug("DragJLabel.getTransferData url= {}", url);
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
                 AnalogClock2Display c;
                 String link = _linkName.getText().trim();
@@ -127,7 +127,7 @@ public class ClockItemPanel extends IconItemPanel {
                 sb.append(" icon \"");
                 sb.append(url);
                 sb.append("\"");
-                return  sb.toString();
+                return sb.toString();
             }
             return null;
         }

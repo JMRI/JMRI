@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Icons may be added or deleted from a family
+ * Icons may be added or deleted from a family.
  *
  * @author Pete Cressman Copyright (c) 2010
  */

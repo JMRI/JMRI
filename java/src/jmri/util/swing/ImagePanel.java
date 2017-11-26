@@ -33,9 +33,9 @@ public class ImagePanel extends JPanel {
         log.debug("DrawPanel ready");
     }
 
-    public Dimension getPreferredSize() {
-        return new Dimension(imgWidth, imgHeight);
-    }
+    //public Dimension getPreferredSize() {
+    //    return new Dimension(imgWidth, imgHeight);
+    //}
 
     @Override
     protected void paintComponent(Graphics g) {

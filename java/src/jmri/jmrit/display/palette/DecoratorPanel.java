@@ -131,11 +131,11 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         // create array of backgrounds
         _backgrounds = new BufferedImage[5];
         _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
-        _backgrounds[0] = DrawSquares.getImage(_previewPanel, 20, _currentBackground, _currentBackground);
+        _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
         for (int i = 1; i <= 3; i++) {
-            _backgrounds[i] = DrawSquares.getImage(_previewPanel, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
+            _backgrounds[i] = DrawSquares.getImage(500, 100, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
         }
-        _backgrounds[4] = DrawSquares.getImage(_previewPanel, 20, Color.white, _grayColor);
+        _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
 
         _samplePanel = new JPanel();
         _samplePanel.add(Box.createHorizontalStrut(STRUT));
@@ -455,7 +455,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             }
         }.init(button));
         // add a SetBackground combo
-        p.add(makeButtonPanel(_previewPanel, _backgrounds));
+        p.add(makeBgButtonPanel(_previewPanel, _backgrounds));
 
         panel.add(p);
         return panel;
@@ -544,7 +544,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
      *
      * @return a JPanel with label and drop down
      */
-    private JPanel makeButtonPanel(ImagePanel preview, BufferedImage[] imgArray) {
+    private JPanel makeBgButtonPanel(ImagePanel preview, BufferedImage[] imgArray) {
         JComboBox<String> bgColorBox = new JComboBox<>();
         bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, too long for combo
         bgColorBox.addItem(Bundle.getMessage("White"));

@@ -6,7 +6,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -39,6 +39,8 @@ import org.slf4j.LoggerFactory;
 public class SignalMastItemPanel extends TableItemPanel implements ListSelectionListener {
 
     SignalMast _mast;
+    protected ImagePanel _iconPanel; // panel on _iconFamilyPanel - all icons in family, shown upon [Show Icons]
+    // Note that _dragIconPanel also is of class ImagePanel, but not used as background on the SignalMastItemPanel
 
     public SignalMastItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel<jmri.SignalMast> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
@@ -85,20 +87,16 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         makeDragIconPanel(1);
         makeDndIconPanel(null, null);
         _iconPanel = new ImagePanel();
-        _iconPanel.setOpaque(false);
+//        _iconPanel.setOpaque(false);
         _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
+        if (_backgrounds != null) {
+            _iconPanel.setImage(_backgrounds[PreviewBgPref]); // pick up shared setting
+        } else {
+            log.debug("SignalMastItemPanel - no value for PreviewBgPref");
+        }
         addIconsToPanel(_currentIconMap);
-        // _iconFamilyPanel.add(_dragIconPanel, 1); // added twice? illegal position error
-
-//        // create array of backgrounds
-//        _backgrounds = new BufferedImage[5];
-//        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
-//        _backgrounds[0] = DrawSquares.getImage(_iconPanel, 20, _currentBackground, _currentBackground);
-//        for (int i = 1; i <= 3; i++) {
-//            _backgrounds[i] = DrawSquares.getImage(_iconPanel, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
-//        }
-//        _backgrounds[4] = DrawSquares.getImage(_iconPanel, 20, Color.white, _grayColor);
+        // removed line: _iconFamilyPanel.add(_dragIconPanel, 1); // added twice, already in makeDndIconPanel() = illegal position error
 
         JPanel panel = new JPanel();
         if (_mast != null) {
@@ -164,52 +162,22 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             addUpdateButtonToBottom(doneAction);
         }
         initIconFamiliesPanel();
-        _bottom1Panel.add(makeButtonPanel(_iconPanel, _backgrounds));
+
+        // create array of backgrounds
+        if (_backgrounds == null) { // reduces load but will not redraw for new size
+            _backgrounds = new BufferedImage[5];
+            _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
+            _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
+            for (int i = 1; i <= 3; i++) {
+                _backgrounds[i] = DrawSquares.getImage(500, 100, 20, colorChoice[i - 1], colorChoice[i - 1]);
+                // [i-1] because choice 0 is not in colorChoice[]
+            }
+            _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
+        }
+        _bottom1Panel.add(makeBgButtonPanel(_iconPanel, _backgrounds));
+
         add(_bottom1Panel);
     }
-
-//    /**
-//     * Create panel element containing [Set background:] drop down list.
-//     * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
-//     * @see DecoratorPanel
-//     * @see FamilyItemPanel
-//     *
-//     * @return a JPanel with label and drop down
-//     */
-//    private JPanel makeButtonPanel() {
-//        JComboBox<String> bgColorBox = new JComboBox<>();
-//        bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, too long for combo
-//        bgColorBox.addItem(Bundle.getMessage("White"));
-//        bgColorBox.addItem(Bundle.getMessage("LightGray"));
-//        bgColorBox.addItem(Bundle.getMessage("DarkGray"));
-//        // bgColorBox.addItem(Bundle.getMessage("Checkers")); // checkers option not yet in combobox, under development
-//        bgColorBox.setSelectedIndex(0); // panel bg color
-//        bgColorBox.addActionListener((ActionEvent e) -> {
-//            if (bgColorBox.getSelectedIndex() == 0) {
-//                // use panel background color
-//                _currentBackground = _editor.getTargetPanel().getBackground();
-//                _squaresPanel.setVisible(false);
-//                _iconFamilyPanel.setBackground(_currentBackground);
-//            } else if (bgColorBox.getSelectedIndex() == 4) { // display checkers background, under development 4.9.6
-//                _squaresPanel.setVisible(true);
-//                log.debug("FamilyItemPanel checkers visible");
-//                _iconFamilyPanel.setOpaque(false);
-//            } else {
-//                _currentBackground = colorChoice[bgColorBox.getSelectedIndex() - 1]; // choice 0 is not in colorChoice[]
-//                _squaresPanel.setVisible(false);
-//                _iconFamilyPanel.setBackground(_currentBackground);
-//            }
-//        });
-//        JPanel backgroundPanel = new JPanel();
-//        backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
-//        JPanel pp = new JPanel();
-//        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-//        pp.add(new JLabel(Bundle.getMessage("setBackground")));
-//        pp.add(bgColorBox);
-//        backgroundPanel.add(pp);
-//        backgroundPanel.setMaximumSize(backgroundPanel.getPreferredSize());
-//        return backgroundPanel;
-//    }
 
     private void getIconMap(int row) {
         if (row < 0) {

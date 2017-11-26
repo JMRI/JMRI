@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
@@ -17,9 +18,10 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.DrawSquares;
+import jmri.util.swing.ImagePanel;
 
 /**
- * JPanels for the Backgrounds.
+ * JPanels for the Panel Backgrounds.
  */
 public class BackgroundItemPanel extends IconItemPanel {
 
@@ -70,8 +72,8 @@ public class BackgroundItemPanel extends IconItemPanel {
     }
 
     @Override
-    protected JPanel makeBgBoxPanel() {
-        return null; // no button to set Preview Bg for Backgrounds
+    protected JPanel makeBgButtonPanel(ImagePanel preview, BufferedImage[] imgArray) {
+        return null; // no button to set Preview Bg on BackgroundItemPanel
     }
 
     class ColorDialog extends JDialog implements ChangeListener {
@@ -118,7 +120,8 @@ public class BackgroundItemPanel extends IconItemPanel {
                 @Override
                 public void actionPerformed(ActionEvent a) {
                     _editor.setBackgroundColor(_chooser.getColor());
-                    _backgrounds[0] = DrawSquares.getImage(_iconPanel, 20, _currentBackground, _currentBackground);
+                    _currentBackground = _chooser.getColor();
+                    _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
                     _iconPanel.setImage(_backgrounds[0]);
                     dialog.dispose();
                 }

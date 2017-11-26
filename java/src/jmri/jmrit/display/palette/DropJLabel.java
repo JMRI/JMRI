@@ -104,8 +104,7 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         DropTarget target = (DropTarget) e.getSource();
         DropJLabel label = (DropJLabel) target.getComponent();
         if (log.isDebugEnabled()) {
-            log.debug("accept drop for " + label.getName()
-                    + ", " + newIcon.getURL());
+            log.debug("accept drop for {}, {}", label.getName(),newIcon.getURL());
         }
         if (newIcon == null || newIcon.getIconWidth() < 1 || newIcon.getIconHeight() < 1) {
             label.setText(Bundle.getMessage("invisibleIcon"));
@@ -125,10 +124,11 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         }
         e.dropComplete(true);
         if (log.isDebugEnabled()) {
-            log.debug("DropJLabel.drop COMPLETED for " + label.getName()
-                    + ", " + (newIcon != null ? newIcon.getURL() : " newIcon==null "));
+            log.debug("DropJLabel.drop COMPLETED for {}, {}",
+                    label.getName(), (newIcon != null ? newIcon.getURL() : " newIcon==null "));
         }
     }
 
     private final static Logger log = LoggerFactory.getLogger(DropJLabel.class);
+
 }
