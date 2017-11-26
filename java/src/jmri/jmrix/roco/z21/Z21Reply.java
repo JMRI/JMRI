@@ -155,7 +155,7 @@ public class Z21Reply extends AbstractMRReply {
      */
     jmri.DccLocoAddress getRailComLocoAddress(int n){
          int offset = 4+(n*13);
-         int address = ((0xff&getElement(offset))<<8)+(0xff&(getElement(offset+1)));
+         int address = ((0xff&getElement(offset+1))<<8)+(0xff&(getElement(offset)));
          return new jmri.DccLocoAddress(address,address>=100);
     }
 
@@ -167,10 +167,10 @@ public class Z21Reply extends AbstractMRReply {
      */
     int getRailComRcvCount(int n){
          int offset = 6+(n*13); // +2 to get past the address.
-         int rcvcount = ((0xff&getElement(offset))<<24) +
-                       ((0xff&(getElement(offset+1))<<16) + 
-                       ((0xff&getElement(offset+2))<<8) + 
-                       (0xff&(getElement(offset+3))));
+         int rcvcount = ((0xff&getElement(offset+3))<<24) +
+                       ((0xff&(getElement(offset+2))<<16) + 
+                       ((0xff&getElement(offset+1))<<8) + 
+                       (0xff&(getElement(offset))));
          return rcvcount;
     }
 
@@ -182,10 +182,10 @@ public class Z21Reply extends AbstractMRReply {
      */
     int getRailComErrCount(int n){
          int offset = 10+(n*13); // +6 to get past the address and rcv count.
-         int errorcount = ((0xff&getElement(offset))<<24) +
-                       ((0xff&(getElement(offset+1))<<16) + 
-                       ((0xff&getElement(offset+2))<<8) + 
-                       (0xff&(getElement(offset+3))));
+         int errorcount = ((0xff&getElement(offset+3))<<24) +
+                       ((0xff&(getElement(offset+2))<<16) + 
+                       ((0xff&getElement(offset+1))<<8) + 
+                       (0xff&(getElement(offset))));
          return errorcount;
     }
 
@@ -222,4 +222,105 @@ public class Z21Reply extends AbstractMRReply {
          return (0xff&(getElement(offset)));
     }
 
+    // handle System data replies
+    boolean isSystemDataChangedReply(){
+        return (getOpCode() == 0x0085);
+    }
+
+    /**
+     * Get the Main Track Current from the SystemStateDataChanged 
+     * message.
+     *
+     * @return the current in mA.
+     */
+    int getSystemDataMainCurrent(){
+         if(!isSystemDataChangedReply()){
+            throw new IllegalArgumentException("Wrong Reply Type");
+         }
+         int offset = 4; //skip the headers
+         int current = ((0xff&getElement(offset+1))<<8) +
+                       (0xff&(getElement(offset)));
+         return current;
+    }
+
+    /**
+     * Get the Programming Track Current from the SystemStateDataChanged 
+     * message.
+     *
+     * @return the current in mA.
+     */
+    int getSystemDataProgCurrent(){
+         if(!isSystemDataChangedReply()){
+            throw new IllegalArgumentException("Wrong Reply Type");
+         }
+         int offset = 6; //skip the headers
+         int current = ((0xff&getElement(offset+1))<<8) +
+                       (0xff&(getElement(offset)));
+         return current;
+    }
+
+    /**
+     * Get the Filtered Main Track Current from the SystemStateDataChanged 
+     * message.
+     *
+     * @return the current in mA.
+     */
+    int getSystemDataFilteredMainCurrent(){
+         if(!isSystemDataChangedReply()){
+            throw new IllegalArgumentException("Wrong Reply Type");
+         }
+         int offset = 8; //skip the headers
+         int current = ((0xff&getElement(offset+1))<<8) +
+                       (0xff&(getElement(offset)));
+         return current;
+    }
+
+    /**
+     * Get the Temperature from the SystemStateDataChanged 
+     * message.
+     *
+     * @return the current in degrees C.
+     */
+    int getSystemDataTemperature(){
+         if(!isSystemDataChangedReply()){
+            throw new IllegalArgumentException("Wrong Reply Type");
+         }
+         int offset = 10; //skip the headers
+         int current = ((0xff&getElement(offset+1))<<8) +
+                       (0xff&(getElement(offset)));
+         return current;
+    }
+
+    /**
+     * Get the Supply Voltage from the SystemStateDataChanged 
+     * message.
+     *
+     * @return the current in mV.
+     */
+    int getSystemDataSupplyVoltage(){
+         if(!isSystemDataChangedReply()){
+            throw new IllegalArgumentException("Wrong Reply Type");
+         }
+         int offset = 12; //skip the headers
+         int current = ((0xff&getElement(offset+1))<<8) +
+                       (0xff&(getElement(offset)));
+         return current;
+    }
+
+    /**
+     * Get the VCC (and track) Voltage from the SystemStateDataChanged 
+     * message.
+     *
+     * @return the current in mV.
+     */
+    int getSystemDataVCCVoltage(){
+         if(!isSystemDataChangedReply()){
+            throw new IllegalArgumentException("Wrong Reply Type");
+         }
+         int offset = 14; //skip the headers
+         int current = ((0xff&getElement(offset+1))<<8) +
+                       (0xff&(getElement(offset)));
+         return current;
+    }
+    
 }
