@@ -661,11 +661,12 @@ public final class InstanceManager {
         setDefault(SignalHeadManager.class, p);
     }
 
-    //
-    // This updates the consist manager, which must be
-    // either built into instances of calling code or a
-    // new service, before this can be deprecated.
-    //
+    /**
+     * @param p CommandStation to make default
+     * @deprecated Since 4.9.5, use
+     * {@link #store(java.lang.Object,java.lang.Class)} directly.
+     */
+    @Deprecated
     static public void setCommandStation(CommandStation p) {
         store(p, CommandStation.class);
 
@@ -715,12 +716,12 @@ public final class InstanceManager {
         }
     }
 
-    //
-    // Note: Also provides consist manager services on store operation.
-    // Do we need a new mechanism for this? Or just move this code to
-    // the 30+ classes that reference it? Or maybe have a default of the
-    // DccConsistManager that's smarter?
-    //
+    /**
+     * @param p CommandStation to make default
+     * @deprecated Since 4.9.5, use
+     * {@link #store(java.lang.Object,java.lang.Class)} directly.
+     */
+    @Deprecated
     static public void setAddressedProgrammerManager(AddressedProgrammerManager p) {
         store(p, AddressedProgrammerManager.class);
 

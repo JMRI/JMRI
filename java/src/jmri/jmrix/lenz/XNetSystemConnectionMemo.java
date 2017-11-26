@@ -164,21 +164,6 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
     private LightManager lightManager = null;
 
     /**
-     * Provide access to the Consist Manager for this particular connection.
-     * <p>
-     * NOTE: Consist manager defaults to NULL
-     */
-    public ConsistManager getConsistManager() {
-        return consistManager;
-    }
-
-    public void setConsistManager(ConsistManager c) {
-        consistManager = c;
-    }
-
-    private ConsistManager consistManager = null;
-
-    /**
      * Provide access to the Command Station for this particular connection.
      * <p>
      * NOTE: Command Station defaults to NULL
@@ -237,7 +222,7 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
         } else if (type.equals(jmri.CommandStation.class)) {
             return true;
         }
-        return false; // nothing, by default
+        return super.provides(type);
     }
 
     @SuppressWarnings("unchecked")
@@ -274,7 +259,7 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
         if (T.equals(jmri.CommandStation.class)) {
             return (T) getCommandStation();
         }
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     @Override

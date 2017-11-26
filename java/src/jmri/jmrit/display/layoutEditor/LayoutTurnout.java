@@ -3872,7 +3872,7 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             } else {    // (#3)
-                log.info("-New block ('{}') trackNameSets", theBlockName); // encode the dash as \u2022 to show a bullet in UTF-8
+                log.info("-New block ('{}') trackNameSets", theBlockName);
                 TrackNameSets = new ArrayList<>();
                 blockNamesToTrackNameSetsMap.put(theBlockName, TrackNameSets);
             }

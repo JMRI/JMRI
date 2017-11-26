@@ -98,7 +98,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         commandStation = new jmri.jmrix.easydcc.EasyDccCommandStation(this);
 
-        InstanceManager.setCommandStation(commandStation);
+        InstanceManager.store(commandStation,jmri.CommandStation.class);
     }
 
     /**
@@ -131,7 +131,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (type.equals(jmri.CommandStation.class)) {
             return true;
         }
-        return false; // nothing, by default
+        return super.provides(type); // nothing, by default
     }
 
     /**
@@ -165,7 +165,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (T.equals(jmri.CommandStation.class)) {
             return (T) commandStation;
         }
-        return null; // nothing, by default
+        return super.get(T); // nothing, by default
     }
 
     private EasyDccPowerManager powerManager;

@@ -8,6 +8,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Setup;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,6 +27,8 @@ public class OperationsLoggerTest extends OperationsTestCase {
         // load a car
         CarManager manager = InstanceManager.getDefault(CarManager.class);
         Car c1 = manager.newCar("CP", "1");
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
+        ct.addName("Boxcar");
         c1.setTypeName("Boxcar");
         c1.setLength("40");
         // turn on logging

@@ -367,7 +367,8 @@ public class ConsistController extends AbstractController implements ProgListene
 
     }
 
-    public DccLocoAddress stringToDcc(String s) {
+    // this method may belong somewhere else.
+    static public DccLocoAddress stringToDcc(String s) {
         int num = Integer.parseInt(s.substring(1));
         boolean isLong = (s.charAt(0) == 'L');
         return (new DccLocoAddress(num, isLong));

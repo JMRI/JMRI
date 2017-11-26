@@ -1361,6 +1361,182 @@ public class NmraPacketTest {
     }
 
     @Test
+    public void testAltAccSignalDecoderPktOpsMode1() {
+        int address = 1;
+        int cv = 384;
+        int data = 255;
+        byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
+
+        Assert.assertEquals("length", 6, ba.length);
+        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x71, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0xED, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0x7F, ba[3] & 0xFF);
+        Assert.assertEquals("byte 4", 0xFF, ba[4] & 0xFF);
+        Assert.assertEquals("byte 5", 0x9C, ba[5] & 0xFF);
+    }
+
+    @Test
+    public void testAltAccSignalDecoderPktOpsMode4() {
+        int address = 4;
+        int cv = 384;
+        int data = 255;
+        byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
+
+        Assert.assertEquals("length", 6, ba.length);
+        Assert.assertEquals("byte 1", 0x77, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0xED, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0x7F, ba[3] & 0xFF);
+        Assert.assertEquals("byte 4", 0xFF, ba[4] & 0xFF);
+        Assert.assertEquals("byte 5", 0x9A, ba[5] & 0xFF);
+    }
+
+    @Test
+    public void testAltAccSignalDecoderPktOpsMode5() {
+        int address = 5;
+        int cv = 384;
+        int data = 255;
+        byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
+
+        Assert.assertEquals("length", 6, ba.length);
+        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x71, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0xED, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0x7F, ba[3] & 0xFF);
+        Assert.assertEquals("byte 4", 0xFF, ba[4] & 0xFF);
+        Assert.assertEquals("byte 5", 0x9D, ba[5] & 0xFF);
+    }
+
+    @Test
+    public void testAltAccSignalDecoderPktOpsMode8() {
+        int address = 8;
+        int cv = 56;
+        int data = 0;
+        byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
+
+        Assert.assertEquals("length", 6, ba.length);
+        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x77, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0x37, ba[3] & 0xFF);
+        Assert.assertEquals("byte 4", 0x00, ba[4] & 0xFF);
+        Assert.assertEquals("byte 5", 0x2D, ba[5] & 0xFF);
+    }
+
+    @Test
+    public void testAltAccSignalDecoderPktOpsMode9() {
+        int address = 9;
+        int cv = 1;
+        int data = 30;
+        byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
+
+        Assert.assertEquals("length", 6, ba.length);
+        Assert.assertEquals("byte 0", 0x82, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x71, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0x00, ba[3] & 0xFF);
+        Assert.assertEquals("byte 4", 0x1E, ba[4] & 0xFF);
+        Assert.assertEquals("byte 5", 0x01, ba[5] & 0xFF);
+    }
+
+    @Test
+    public void testAltAccSignalDecoderPktOpsMode256() {
+        int address = 256;
+        int cv = 999;
+        int data = 179;
+        byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
+
+        Assert.assertEquals("length", 6, ba.length);
+        Assert.assertEquals("byte 0", 0xBF, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x77, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0xEF, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0xE6, ba[3] & 0xFF);
+        Assert.assertEquals("byte 4", 0xB3, ba[4] & 0xFF);
+        Assert.assertEquals("byte 5", 0x72, ba[5] & 0xFF);
+    }
+
+    @Test
+    public void testAltAccSignalDecoderPktOpsMode257() {
+        int address = 257;
+        int cv = 1;
+        int data = 241;
+        byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
+
+        Assert.assertEquals("length", 6, ba.length);
+        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x61, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0x00, ba[3] & 0xFF);
+        Assert.assertEquals("byte 4", 0xF1, ba[4] & 0xFF);
+        Assert.assertEquals("byte 5", 0xFC, ba[5] & 0xFF);
+    }
+
+    @Test
+    public void testAltAccSignalDecoderPktOpsMode260() {
+        int address = 260;
+        int cv = 55;
+        int data = 127;
+        byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
+
+        Assert.assertEquals("length", 6, ba.length);
+        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x67, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0x36, ba[3] & 0xFF);
+        Assert.assertEquals("byte 4", 0x7F, ba[4] & 0xFF);
+        Assert.assertEquals("byte 5", 0x42, ba[5] & 0xFF);
+    }
+
+    @Test
+    public void testAltAccSignalDecoderPktOpsMode261() {
+        int address = 261;
+        int cv = 55;
+        int data = 99;
+        byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
+
+        Assert.assertEquals("length", 6, ba.length);
+        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x61, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0x36, ba[3] & 0xFF);
+        Assert.assertEquals("byte 4", 0x63, ba[4] & 0xFF);
+        Assert.assertEquals("byte 5", 0x59, ba[5] & 0xFF);
+    }
+
+    @Test
+    public void testAltAccSignalDecoderPktOpsMode2041() {
+        int address = 2041;
+        int cv = 556;
+        int data = 175;
+        byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
+
+        Assert.assertEquals("length", 6, ba.length);
+        Assert.assertEquals("byte 0", 0xBE, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x01, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0xEE, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0x2B, ba[3] & 0xFF);
+        Assert.assertEquals("byte 4", 0xAF, ba[4] & 0xFF);
+        Assert.assertEquals("byte 5", 0xD5, ba[5] & 0xFF);
+    }
+
+    @Test
+    public void testAltAccSignalDecoderPktOpsMode2044() {
+        int address = 2044;
+        int cv = 771;
+        int data = 102;
+        byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
+
+        Assert.assertEquals("length", 6, ba.length);
+        Assert.assertEquals("byte 0", 0xBE, ba[0] & 0xFF);
+        Assert.assertEquals("byte 1", 0x07, ba[1] & 0xFF);
+        Assert.assertEquals("byte 2", 0xEF, ba[2] & 0xFF);
+        Assert.assertEquals("byte 3", 0x02, ba[3] & 0xFF);
+        Assert.assertEquals("byte 4", 0x66, ba[4] & 0xFF);
+        Assert.assertEquals("byte 5", 0x32, ba[5] & 0xFF);
+    }
+
+
+    @Test
     public void testExtractAddressTypeAcc() {
         byte[] ba = NmraPacket.accSignalDecoderPkt(123, 12);
         Assert.assertEquals("Accessory", NmraPacket.DccAddressType.ACCESSORY_ADDRESS, NmraPacket.extractAddressType(ba));

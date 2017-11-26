@@ -6,14 +6,12 @@ import org.jdom2.Attribute;
 import org.jdom2.Element;
 
 /**
- *
- * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -54,4 +52,5 @@ public class XmlConfig extends XmlFile {
 
   // initialize logging
     //private final static Logger log = LoggerFactory.getLogger(XmlConfig.class);
+
 }

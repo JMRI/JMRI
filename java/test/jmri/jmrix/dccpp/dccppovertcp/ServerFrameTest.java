@@ -27,6 +27,7 @@ public class ServerFrameTest {
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        Server.getInstance();
     }
 
     @After

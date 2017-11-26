@@ -16,7 +16,6 @@ import org.junit.Test;
 public class AmpMeterFrameTest {
 
     @Test
-    @Ignore("need to create default jmri.MultiMeter object")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AmpMeterFrame t = new AmpMeterFrame();
@@ -27,12 +26,46 @@ public class AmpMeterFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.InstanceManager.setDefault(jmri.MultiMeter.class,new TestMeter());
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
+    private class TestMeter extends jmri.implementation.AbstractMultiMeter {
+             public TestMeter(){
+               super(0);
+             }
+             @Override
+             public void initializeHardwareMeter(){
+             }
+             @Override
+             public void requestUpdateFromLayout(){
+             }
+             @Override
+             public void dispose(){
+             }
+             @Override
+             public boolean hasCurrent(){
+                return false;
+             }
+             @Override
+             public boolean hasVoltage(){
+                return false;
+             }
+             @Override
+             public String getHardwareMeterName(){
+                return "test";
+             }
+             @Override
+             public void enable(){
+             }
+             @Override
+             public void disable(){
+             }
+        }
 
     // private final static Logger log = LoggerFactory.getLogger(AmpMeterFrameTest.class);
 

@@ -18,20 +18,20 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2009
  * @author Jan Boen and Sergiu Costan
- * 
+ *
  *          Rework Poll for status using binary commands send xEvtSen (78 CB)h
  *          this returns multiple bytes first byte address of the S88 sensor,
  *          second and third bytes = values of that sensor this repeats for each
  *          sensor with changes the last byte contains 00h this means all
  *          reports have been received
- * 
+ *
  *          xEvtSen reports sensor changes
  */
 public class TamsSensorManager extends jmri.managers.AbstractSensorManager implements TamsListener {
 
     //Create a local TamsMessage Queue which we will use in combination with TamsReplies
     private Queue<TamsMessage> tmq = new LinkedList<TamsMessage>();
-        
+
     //This dummy message is used in case we expect a reply from polling
     static private TamsMessage myDummy() {
         //log.info("*** myDummy ***");

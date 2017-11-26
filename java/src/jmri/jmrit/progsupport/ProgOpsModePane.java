@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -48,11 +49,14 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     ButtonGroup addrGroup = new ButtonGroup();
     JRadioButton shortAddrButton = new JRadioButton(Bundle.getMessage("ShortAddress"));
     JRadioButton longAddrButton = new JRadioButton(Bundle.getMessage("LongAddress"));
+    JCheckBox offsetAddrCheckBox = new JCheckBox(Bundle.getMessage("DccAccessoryAddressOffSet"));
+    JLabel addressLabel = new JLabel(Bundle.getMessage("AddressLabel"));
     boolean oldLongAddr = false;
     boolean opsAccyMode = false;
     boolean oldOpsAccyMode = false;
     boolean opsSigMode = false;
     boolean oldOpsSigMode = false;
+    boolean oldoffsetAddrCheckBox = false;
     AddressedProgrammer programmer = null;
     AccessoryOpsModeProgrammerFacade facadeProgrammer = null;
 
@@ -61,10 +65,11 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
      */
     @Override
     public Programmer getProgrammer() {
-        log.debug("getProgrammer mLongAddrCheck.isSelected()={}, oldLongAddr={}, mAddrField.getValue()={}, oldAddrValue={}, opsAccyMode={}, oldOpsAccyMode={}, opsSigMode={}, oldOpsSigMode={})",
-                longAddrButton.isSelected(), oldLongAddr, mAddrField.getValue(), oldAddrValue, opsAccyMode, oldOpsAccyMode, opsSigMode, oldOpsSigMode);
-        if ((longAddrButton.isSelected() == oldLongAddr)
+        log.debug("getProgrammer mLongAddrCheck.isSelected()={}, oldLongAddr={}, mAddrField.getValue()={}, oldAddrValue={}, opsAccyMode={}, oldOpsAccyMode={}, opsSigMode={}, oldOpsSigMode={}, oldoffsetAddrCheckBox={})",
+                longAddrButton.isSelected(), oldLongAddr, mAddrField.getValue(), oldAddrValue, opsAccyMode, oldOpsAccyMode, opsSigMode, oldOpsSigMode, oldoffsetAddrCheckBox);
+        if (longAddrButton.isSelected() == oldLongAddr
                 && mAddrField.getValue().equals(oldAddrValue)
+                && offsetAddrCheckBox.isSelected() == oldoffsetAddrCheckBox
                 && opsAccyMode == oldOpsAccyMode
                 && opsSigMode == oldOpsSigMode) {
             log.debug("getProgrammer hasn't changed");
@@ -82,6 +87,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         oldAddrValue = (Integer) mAddrField.getValue();
         oldOpsAccyMode = opsAccyMode;
         oldOpsSigMode = opsSigMode;
+        oldoffsetAddrCheckBox = offsetAddrCheckBox.isSelected();
         setAddrParams();
 
         if (pm != null) {
@@ -107,11 +113,12 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         if (opsAccyMode) {
             log.debug("   getting AccessoryOpsModeProgrammerFacade");
             facadeProgrammer = new AccessoryOpsModeProgrammerFacade(programmer,
-                    longAddrButton.isSelected() ? "accessory" : "decoder");
+                    longAddrButton.isSelected() ? "accessory" : "decoder", 200);
             return facadeProgrammer;
         } else if (opsSigMode) {
-            log.debug("   getting AccessoryOpsModeProgrammerFacade signal mode");
-            facadeProgrammer = new AccessoryOpsModeProgrammerFacade(programmer, "signal");
+            String addrType = offsetAddrCheckBox.isSelected() ? "signal" : "altsignal";
+            log.debug("   getting AccessoryOpsModeProgrammerFacade {}", addrType);
+            facadeProgrammer = new AccessoryOpsModeProgrammerFacade(programmer, addrType, 200);
             return facadeProgrammer;
         }
         return programmer;
@@ -180,9 +187,11 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         add(new JLabel(" "));
         add(shortAddrButton);
         add(longAddrButton);
+        add(offsetAddrCheckBox);
+        offsetAddrCheckBox.setToolTipText(Bundle.getMessage("DccOffsetTooltip"));
         JPanel panel = new JPanel();
         panel.setLayout(new java.awt.FlowLayout());
-        panel.add(new JLabel(Bundle.getMessage("AddressLabel")));
+        panel.add(addressLabel);
         panel.add(mAddrField);
         mAddrField.setToolTipText(Bundle.getMessage("ToolTipEnterDecoderAddress"));
         add(panel);
@@ -211,7 +220,17 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
             }
         });
 
+        offsetAddrCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                // new programmer selection
+                programmerSelected(); // in case it has valid address now
+            }
+        });
+
         shortAddrButton.setSelected(true);
+        offsetAddrCheckBox.setSelected(false);
+        offsetAddrCheckBox.setVisible(false);
 
         // and execute the setup for 1st time
         programmerSelected();
@@ -390,6 +409,8 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
             shortAddrButton.setVisible(true);
             longAddrButton.setText(Bundle.getMessage("AccessoryAddress"));
             longAddrButton.setToolTipText(Bundle.getMessage("ToolTipAccessoryAddress"));
+            offsetAddrCheckBox.setVisible(false);
+            addressLabel.setText(Bundle.getMessage("AddressLabel"));
             if (longAddrButton.isSelected()) {
                 lowAddrLimit = 1;
                 highAddrLimit = 2044;
@@ -399,9 +420,9 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
             }
         } else if (opsSigMode) {
             shortAddrButton.setVisible(false);
-            longAddrButton.setSelected(true);
-            longAddrButton.setText(Bundle.getMessage("SignalAddress"));
-            longAddrButton.setToolTipText(Bundle.getMessage("ToolTipSignalAddress"));
+            longAddrButton.setVisible(false);
+            offsetAddrCheckBox.setVisible(true);
+            addressLabel.setText(Bundle.getMessage("SignalAddressLabel"));
             lowAddrLimit = 1;
             highAddrLimit = 2044;
         } else {
@@ -410,6 +431,8 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
             shortAddrButton.setVisible(true);
             longAddrButton.setText(Bundle.getMessage("LongAddress"));
             longAddrButton.setToolTipText(Bundle.getMessage("ToolTipLongAddress"));
+            offsetAddrCheckBox.setVisible(false);
+            addressLabel.setText(Bundle.getMessage("AddressLabel"));
             if (longAddrButton.isSelected()) {
                 lowAddrLimit = 0;
                 highAddrLimit = 10239;

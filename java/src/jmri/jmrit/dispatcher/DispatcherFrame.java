@@ -179,6 +179,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     } else {
                         log.warn("failed to create create Active Train {}", info.getTrainName());
                     }
+                    // give time for throttles to be allocated.
+                    try {
+                        Thread.sleep(500);
+                    }
+                    catch (InterruptedException e) {
+                        log.warn("Sleep Interupted in loading trains, likely being stopped",e);
+                    }
                 }
 
             }

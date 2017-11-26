@@ -12,15 +12,15 @@ import org.junit.Test;
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class SerialSystemConnectionMemoTest {
+public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
      
-    SerialSystemConnectionMemo memo = null;
-
+    @Override
     @Test
-    public void testCtor(){
-       Assert.assertNotNull("exists",memo);
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
+    @Override
     @Before
     public void setUp(){
        JUnitUtil.setUp();
@@ -29,9 +29,10 @@ public class SerialSystemConnectionMemoTest {
           public void sendSerialMessage(SerialMessage m,SerialListener reply) {
           }
        };
-       memo = new SerialSystemConnectionMemo();
+       scm = new SerialSystemConnectionMemo();
     }
 
+    @Override
     @After
     public void tearDown(){
        JUnitUtil.tearDown();
