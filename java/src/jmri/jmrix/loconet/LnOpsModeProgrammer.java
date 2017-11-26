@@ -61,7 +61,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         // Check mode
         if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             /**
-             * CV format is e.g. "113/12" where the first part defines the
+             * CV format is e.g. "113.12" where the first part defines the
              * typeword for the specific board type and the second is the specific bit number
              * Known values:
              * <UL>
@@ -75,9 +75,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             doingWrite = true;
             // Board programming mode
             log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
-            String[] parts = CV.split("/");
-            int state = Integer.parseInt(parts[1]);
+            String[] parts = CV.split("\\.");
             int typeWord = Integer.parseInt(parts[0]);
+            int state = Integer.parseInt(parts[parts.length>1 ? 1 : 0]);
             
             // make message
             LocoNetMessage m = new LocoNetMessage(6);
@@ -133,7 +133,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         // Check mode
         if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             /**
-             * CV format is e.g. "113/12" where the first part defines the
+             * CV format is e.g. "113.12" where the first part defines the
              * typeword for the specific board type and the second is the specific bit number
              * Known values:
              * <UL>
@@ -147,9 +147,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             doingWrite = false;
             // Board programming mode
             log.debug("read CV \"{}\" addr:{}", CV, mAddress);
-            String[] parts = CV.split("/");
-            int state = Integer.parseInt(parts[1]);
+            String[] parts = CV.split("\\.");
             int typeWord = Integer.parseInt(parts[0]);
+            int state = Integer.parseInt(parts[parts.length>1 ? 1 : 0]);
             
             // make message
             LocoNetMessage m = new LocoNetMessage(6);

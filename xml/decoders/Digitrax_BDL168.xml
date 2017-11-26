@@ -31,14 +31,22 @@
 
         <variables>
           <variable CV="1" comment="Board address" item="Short Address" default="03" infoOnly="yes">
-            <decVal/>
+            <!-- needed to set the board address value -->            
+            <decVal min="1" max="16" />
             <label>Primary Address</label>
           </variable>
 
-            <variable CV="113/3" item="Vstart"
-                      comment="needs a better definition...">
-                <decVal/>
-            </variable>
+          <variable CV="112.3" item="Vstart"
+                      comment="This is Vstart so it shows up on a pane for testing">
+            <enumVal>
+              <enumChoice>
+                <choice>Thrown</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>Closed</choice>
+              </enumChoice>
+            </enumVal>
+          </variable>
 
         </variables>
     </decoder>

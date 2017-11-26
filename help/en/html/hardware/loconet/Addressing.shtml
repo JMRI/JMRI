@@ -619,8 +619,8 @@
         If you specify a programming mode of LOCONETBDOPSWMODE,
         DecoderPro will use that protocol.</p>
         
-        <p>CVs are specified with the format "113/3", 
-        where the part after the slash is the specific
+        <p>CVs are specified with the format "113.3", 
+        where the part after the period is the specific
         Op Switch number, and the part before is 
         board-specific:<p>
         <UL>
