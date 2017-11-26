@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>Outputs</name>
+    <column>
+        <group>
+            <column>
+                <display item="W/G Brightness"/>
+                <display item="Y Brightness"/>
+                <display item="R Brightness"/>
+            </column>
+        </group>
+        <group>
+            <qualifier>
+                <variableref>W/G Effect</variableref>
+                <relation>exists</relation>
+                <value>1</value>
+            </qualifier>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="W/G Function" label="" layout="above"/>
+                <display item="W/G Effect" layout="above"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Y Function" label="" layout="above"/>
+                <display item="Y Effect" layout="above"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="R Function" label="" layout="above"/>
+                <display item="R Effect" layout="above"/>
+            </row>
+        </group>
+        <group>
+            <qualifier>
+                <variableref>Aspect 0</variableref>
+                <relation>exists</relation>
+                <value>1</value>
+            </qualifier>
+                <label>
+                    <text> </text>
+                </label>
+            <row>
+            <column>
+                <display item="Aspect 0"/>
+                <display item="Aspect 1"/>
+                <display item="Aspect 2"/>
+                <display item="Aspect 3"/>
+                <display item="Aspect 4"/>
+                <display item="Aspect 5"/>
+                <display item="Aspect 6"/>
+                <display item="Aspect 7"/>
+                <display item="Aspect 8"/>
+            </column>
+            <column>
+                <label>
+                    <text>     </text>
+                </label>
+            </column>
+            <column>
+                <display item="Aspect 9"/>
+                <display item="Aspect 10"/>
+                <display item="Aspect 11"/>
+                <display item="Aspect 12"/>
+                <display item="Aspect 13"/>
+                <display item="Aspect 14"/>
+                <display item="Aspect 15"/>
+                <display item="Aspect 30"/>
+                <display item="Aspect 31"/>
+            </column>
+            </row>
+        </group>
+    </column>
+</pane>

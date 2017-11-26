@@ -1,7 +1,5 @@
 package jmri.jmrix.qsi;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 /**
  * Carries the reply to an QsiMessage.
  *
@@ -29,9 +27,6 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
         super(s);
     }
 
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     public QsiReply(String s, boolean b) {
         super(s);
         _isBoot = b;
@@ -129,7 +124,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
 
     /**
      * Extracts Read-CV returned value from a message.
-     *
+     * <p>
      * QSI is assumed to not be echoing commands. A reply to a command may
      * include the prompt that was printed after the previous command Reply to a
      * CV read is of the form " = hvv" where vv is the CV value in hex.

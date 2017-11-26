@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Locale;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -61,7 +62,7 @@ public class JsonUtil {
     public JsonNode getCar(Locale locale, String id) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, CAR);
-        root.put(DATA, this.getCar(CarManager.instance().getById(id)));
+        root.put(DATA, this.getCar(InstanceManager.getDefault(CarManager.class).getById(id)));
         return root;
     }
 
@@ -81,7 +82,7 @@ public class JsonUtil {
     public JsonNode getEngine(Locale locale, String id) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ENGINE);
-        root.put(DATA, this.getEngine(EngineManager.instance().getById(id)));
+        root.put(DATA, this.getEngine(InstanceManager.getDefault(EngineManager.class).getById(id)));
         return root;
     }
 
@@ -117,7 +118,7 @@ public class JsonUtil {
         root.put(TYPE, LOCATION);
         ObjectNode data = root.putObject(DATA);
         try {
-            Location location = LocationManager.instance().getLocationById(id);
+            Location location = InstanceManager.getDefault(LocationManager.class).getLocationById(id);
             data.put(NAME, location.getName());
             data.put(ID, location.getId());
             data.put(LENGTH, location.getLength());
@@ -182,7 +183,7 @@ public class JsonUtil {
         root.put(TYPE, JsonOperations.TRAIN);
         ObjectNode data = root.putObject(JSON.DATA);
         try {
-            Train train = TrainManager.instance().getTrainById(id);
+            Train train = InstanceManager.getDefault(TrainManager.class).getTrainById(id);
             data.put(NAME, train.getName());
             data.put(JSON.ICON_NAME, train.getIconName());
             data.put(ID, train.getId());
@@ -223,7 +224,7 @@ public class JsonUtil {
 
     public ArrayNode getTrains(Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (Train train : TrainManager.instance().getTrainsByNameList()) {
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByNameList()) {
             root.add(getTrain(locale, train.getId()));
         }
         return root;
@@ -231,7 +232,7 @@ public class JsonUtil {
 
     private ArrayNode getCarsForTrain(Locale locale, Train train) {
         ArrayNode clan = mapper.createArrayNode();
-        CarManager carManager = CarManager.instance();
+        CarManager carManager = InstanceManager.getDefault(CarManager.class);
         List<Car> carList = carManager.getByTrainDestinationList(train);
         carList.forEach((car) -> {
             clan.add(getCar(locale, car.getId()).get(DATA)); //add each car's data to the carList array
@@ -241,7 +242,7 @@ public class JsonUtil {
 
     private ArrayNode getEnginesForTrain(Locale locale, Train train) {
         ArrayNode elan = mapper.createArrayNode();
-        EngineManager engineManager = EngineManager.instance();
+        EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
         List<Engine> engineList = engineManager.getByTrainBlockingList(train);
         engineList.forEach((engine) -> {
             elan.add(getEngine(locale, engine.getId()).get(DATA)); //add each engine's data to the engineList array

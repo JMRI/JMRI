@@ -1,10 +1,13 @@
 package jmri.jmrit.operations.automation;
 
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import org.jdom2.Element;
@@ -17,38 +20,24 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2016
  */
-public class AutomationManager implements java.beans.PropertyChangeListener {
+public class AutomationManager implements InstanceManagerAutoDefault, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "automationListLength"; // NOI18N
+    private int _id = 0; // retain highest automation Id seen to ensure no Id collisions
 
     public AutomationManager() {
     }
 
     /**
-     * record the single instance *
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
-    private int _id = 0;
-
+    @Deprecated
     public static synchronized AutomationManager instance() {
-        AutomationManager instance = jmri.InstanceManager.getNullableDefault(AutomationManager.class);
-        if (instance == null) {
-            log.debug("AutomationManager creating instance");
-            // create and load
-            instance = new AutomationManager();
-            jmri.InstanceManager.setDefault(AutomationManager.class,instance);
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("AutomationManager returns instance {}", instance);
-        }
-        return instance;
-    }
-
-    /**
-     * For tests
-     */
-    public void dispose() {
-        _automationHashTable.clear();
-        _id = 0;
+        return InstanceManager.getDefault(AutomationManager.class);
     }
 
     // stores known Automation instances by id
@@ -84,6 +73,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
     /**
      * Finds an existing automation or creates a new automation if needed
      * requires automation's name creates a unique id for this automation
+     *
      * @param name The string name of the automation.
      *
      *
@@ -104,6 +94,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     *
      * @param automation The automation that is being registered.
      */
     public void register(Automation automation) {
@@ -120,6 +111,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     *
      * @param automation The automation to be deleted.
      */
     public void deregister(Automation automation) {
@@ -219,9 +211,9 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
 
     /**
      * Makes a new copy of automation
-     * 
+     *
      * @param automation the automation to copy
-     * @param newName name for the copy of automation
+     * @param newName    name for the copy of automation
      * @return new copy of automation
      */
     public Automation copyAutomation(Automation automation, String newName) {
@@ -282,12 +274,10 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // set dirty
-        TrainManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutomationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutomationManager.class);
 
 }
-
-

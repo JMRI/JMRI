@@ -1,14 +1,13 @@
 package jmri.jmrit.ampmeter;
 
+import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -17,7 +16,6 @@ import java.awt.GraphicsEnvironment;
 public class AmpMeterFrameTest {
 
     @Test
-    @Ignore("need to create default jmri.MultiMeter object")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AmpMeterFrame t = new AmpMeterFrame();
@@ -27,16 +25,48 @@ public class AmpMeterFrameTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        jmri.InstanceManager.setDefault(jmri.MultiMeter.class,new TestMeter());
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AmpMeterFrameTest.class.getName());
+    private class TestMeter extends jmri.implementation.AbstractMultiMeter {
+             public TestMeter(){
+               super(0);
+             }
+             @Override
+             public void initializeHardwareMeter(){
+             }
+             @Override
+             public void requestUpdateFromLayout(){
+             }
+             @Override
+             public void dispose(){
+             }
+             @Override
+             public boolean hasCurrent(){
+                return false;
+             }
+             @Override
+             public boolean hasVoltage(){
+                return false;
+             }
+             @Override
+             public String getHardwareMeterName(){
+                return "test";
+             }
+             @Override
+             public void enable(){
+             }
+             @Override
+             public void disable(){
+             }
+        }
+
+    // private final static Logger log = LoggerFactory.getLogger(AmpMeterFrameTest.class);
 
 }

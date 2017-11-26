@@ -2,6 +2,7 @@ package jmri;
 
 import java.util.List;
 import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 /**
@@ -157,5 +158,10 @@ public interface ReporterManager extends Manager<Reporter> {
      * @return the next available address
      */
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix);
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    public String getEntryToolTip();
 
 }

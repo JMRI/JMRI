@@ -10,7 +10,6 @@ import org.junit.runners.Suite;
     DefaultLogixManagerTest.class,
     LogixSystemTest.class,
     DefaultSignalSystemManagerTest.class,
-    DefaultUserMessagePreferencesTest.class, // no longer used in JMRI - may be used in other applications
     InternalLightManagerTest.class,
     InternalSensorManagerTest.class,
     ProxyLightManagerTest.class,
@@ -34,8 +33,7 @@ import org.junit.runners.Suite;
     DefaultSignalMastLogicManagerTest.class,
     DefaultSignalMastManagerTest.class,
     DeferringProgrammerManagerTest.class,
-    InternalTurnoutManagerTest.class,
-    WarningProgrammerManagerTest.class
+    InternalTurnoutManagerTest.class
 })
 
 /**

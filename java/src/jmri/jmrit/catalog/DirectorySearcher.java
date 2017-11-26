@@ -13,60 +13,45 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileSystemView;
 import jmri.CatalogTreeManager;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * A file system directory searcher to locate Image files to include in an Image
- * Catalog. This is a singleton class.
- * <BR>
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
+ * Catalog.
  *
  * @author Pete Cressman Copyright 2010
- *
  */
-public class DirectorySearcher {
+public class DirectorySearcher implements InstanceManagerAutoDefault {
 
     // For choosing image directories
-    static JFileChooser _directoryChooser = null;
-    static DirectorySearcher _instance;
+    private JFileChooser _directoryChooser = null;
 
     PreviewDialog _previewDialog = null;
     Seacher _searcher;
     JFrame _waitDialog;
     JLabel _waitText;
 
-    private DirectorySearcher() {
+    public DirectorySearcher() {
     }
 
     public static DirectorySearcher instance() {
-        if (_instance == null) {
-            _instance = new DirectorySearcher();
-        }
-        return _instance;
+        return InstanceManager.getDefault(DirectorySearcher.class);
     }
 
     /**
      * Open file anywhere in the file system and let the user decide whether to
-     * add it to the Catalog
+     * add it to the Catalog.
      *
-     * @param msg     title
+     * @param msg     Bundle property key (string) for i18n title string
      * @param recurse if directory choice has no images, set chooser to sub
      *                directory so user can continue looking
      * @return chosen directory or null to cancel operation
      */
-    private static File getDirectory(String msg, boolean recurse) {
+    private File getDirectory(String msg, boolean recurse) {
         if (_directoryChooser == null) {
             _directoryChooser = new JFileChooser(FileSystemView.getFileSystemView());
             jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Graphics Files");
@@ -97,7 +82,7 @@ public class DirectorySearcher {
                     int choice = JOptionPane.showOptionDialog(null,
                             Bundle.getMessage("NoImagesInDir", dir), Bundle.getMessage("QuestionTitle"),
                             JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                            new String[]{Bundle.getMessage("Quit"), Bundle.getMessage("ButtonKeepLooking")}, 1);
+                            new String[]{Bundle.getMessage("ButtonStop"), Bundle.getMessage("ButtonKeepLooking")}, 1);
                     switch (choice) {
                         case 0:
                             return null;
@@ -179,7 +164,7 @@ public class DirectorySearcher {
      */
     public void openDirectory() {
         clearSearch();
-        File dir = getDirectory("openDirMenu", true);
+        File dir = getDirectory("openDirMenu", true); // NOI18N
         if (dir != null) {
             doPreviewDialog(dir, new MActionListener(dir, true),
                     null, new CActionListener(), 0);
@@ -189,7 +174,7 @@ public class DirectorySearcher {
 
     public void searchFS() {
         clearSearch();
-        File dir = getDirectory("searchFSMenu", false);
+        File dir = getDirectory("searchFSMenu", false); // NOI18N
         showWaitFrame("searchWait", dir);
         if (dir != null) {
             _searcher = new Seacher(dir);
@@ -203,7 +188,7 @@ public class DirectorySearcher {
         }
         closeWaitFrame();
         JOptionPane.showMessageDialog(null, Bundle.getMessage("numFound", count, dir.getAbsolutePath()),
-                Bundle.getMessage("info"), JOptionPane.INFORMATION_MESSAGE);
+                Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
     }
 
     class Seacher extends Thread implements Runnable {
@@ -273,7 +258,7 @@ public class DirectorySearcher {
                     ThreadingUtil.runOnGUI(() -> {
                         showWaitFrame("searchWait", f);
                     });
-//                    if (log.isDebugEnabled()) log.debug("getImageDirectory SubDir= {} of {} has {} files", 
+//                    if (log.isDebugEnabled()) log.debug("getImageDirectory SubDir= {} of {} has {} files",
 //                            files[k].getName(), dir.getName(), numImageFiles(files[k]));
                     getImageDirectory(files[k], filter);
                 }
@@ -281,7 +266,7 @@ public class DirectorySearcher {
         }
     }
 
-    // More action.  Directory dir has too many icons - display in separate windows 
+    // More action.  Directory dir has too many icons - display in separate windows
     class MActionListener implements ActionListener {
 
         File dir;
@@ -388,5 +373,5 @@ public class DirectorySearcher {
         cancelLooking();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DirectorySearcher.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DirectorySearcher.class);
 }

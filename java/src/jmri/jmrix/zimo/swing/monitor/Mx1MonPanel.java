@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a MonFrame object
+ * Swing action to create and register a MonFrame object.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author	kcameron Copyright (C) 2011 copied from SerialMonPane.java
@@ -25,7 +25,7 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.zimo.swing.monitor.Mx1MonPanel";
-    }//IN18N
+    } // NOI18N
 
     @Override
     public String getTitle() {
@@ -33,10 +33,10 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
         if (memo != null) {
             x.append(memo.getUserName());
         } else {
-            x.append("Mx1_"); //IN18N
+            x.append("Mx1_"); // NOI18N
         }
         x.append(": "); //IN18N
-        x.append("Command Monitor"); //IN18N
+        x.append("Command Monitor"); // I18N
         return x.toString();
     }
 
@@ -62,14 +62,14 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
         }
     }
 
-    JCheckBox includePoll = new JCheckBox("Include Poll Messages"); //IN18N
+    JCheckBox includePoll = new JCheckBox("Include Poll Messages"); // NOI18N
 
     @Override
     public void initComponents(Mx1SystemConnectionMemo memo) {
         this.memo = memo;
         // connect to the LnTrafficController
         if (memo.getMx1TrafficController() == null) {
-            log.error("No traffic controller is available"); //IN18N
+            log.error("No traffic controller is available"); // NOI18N
             return;
         }
         memo.getMx1TrafficController().addMx1Listener(~0, this);
@@ -88,7 +88,7 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
 
     public synchronized void notifyRcv(Date timestamp, Mx1Message m) {
 
-        String prefix = "Rx:"; //IN18N
+        String prefix = "Rx:"; // NOI18N
         logMessage(timestamp, m, prefix);
     }
 
@@ -107,7 +107,7 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
         nextLine(l.getStringMsg() + "\n", raw.toString());
     }
 
-    private void logMessage(Date timestamp, Mx1Message m, String src) {  // receive a Mrc message and log it
+    private void logMessage(Date timestamp, Mx1Message m, String src) { // receive a Mrc message and log it
         StringBuilder raw = new StringBuilder("");
         for (int i = 0; i < m.getNumDataElements(); i++) {
             if (i > 0) {
@@ -122,7 +122,7 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
     }
 
     /**
-     * Nested class to create one of these using old-style defaults
+     * Nested class to create one of these using old-style defaults.
      */
     static public class Default extends jmri.jmrix.zimo.swing.Mx1NamedPaneAction {
 
@@ -130,10 +130,10 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
             super("Mx1 Command Monitor",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     Mx1MonPanel.class.getName(),
-                    jmri.InstanceManager.getDefault(Mx1SystemConnectionMemo.class)); //IN18N
+                    jmri.InstanceManager.getDefault(Mx1SystemConnectionMemo.class)); // NOI18N
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1MonPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1MonPanel.class);
 
 }

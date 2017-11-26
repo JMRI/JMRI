@@ -39,15 +39,14 @@ public abstract class ItemPanel extends JPanel {
     JTextField _linkName = new JTextField(30);
 
     /**
-     * Constructor for all table types. When item is a bean, the itemType is the
-     * name key for the item in jmri.NamedBeanBundle.properties
-     * This is actually not true at present, i.e. key = BeanNameTurnout but _itemType = Turnout
-     * (this prohibits using the JMRI-wide translation) TODO split type and Bundle-key
+     * Constructor for all table types.
+     * @param parentFrame ItemPalette instance
+     * @param type identifier of the ItemPanel type
+     * @param editor Editor that last called for the ItemPalette
      */
     public ItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
         _paletteFrame = parentFrame;
         _itemType = type;
-        // TODO when calling _itemType: use existing NamedBeanBundle property for basic beans like "Turnout", Sensor etc. I18N
         _editor = editor;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
@@ -59,6 +58,10 @@ public abstract class ItemPanel extends JPanel {
      */
     public void init() {
         _initialized = true;
+    }
+    
+    protected void setEditor(Editor ed) {
+        _editor = ed;
     }
 
     protected void initLinkPanel() {
@@ -76,7 +79,7 @@ public abstract class ItemPanel extends JPanel {
     }
 
     protected void reset() {
-        _paletteFrame.repaint();
+//        _paletteFrame.repaint();
     }
 
     protected final boolean isUpdate() {
@@ -95,7 +98,7 @@ public abstract class ItemPanel extends JPanel {
         "SignalHeadStateHeld", "SignalHeadStateLunar",
         "SignalHeadStateFlashingRed", "SignalHeadStateFlashingYellow",
         "SignalHeadStateFlashingGreen", "SignalHeadStateFlashingLunar"};
-    static final String[] LIGHT = {"LightStateOff", "LightStateOn",
+    static final String[] LIGHT = {"StateOff", "StateOn",
         "BeanStateInconsistent", "BeanStateUnknown"};
     static final String[] MULTISENSOR = {"SensorStateInactive", "BeanStateInconsistent",
         "BeanStateUnknown", "first", "second", "third"};
@@ -159,5 +162,5 @@ public abstract class ItemPanel extends JPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ItemPanel.class);
 }

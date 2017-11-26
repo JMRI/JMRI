@@ -8,7 +8,7 @@ import jmri.util.swing.WindowInterface;
 import jmri.util.swing.sdi.JmriJFrameInterface;
 
 /**
- * Create a "Systems" menu containing the Jmri rfid-specific tools
+ * Create a "Systems" menu containing the Jmri RFID-specific tools.
  *
  * @author	Bob Jacobsen Copyright 2003, 2006, 2007, 2008
  * @author Matthew Harris Copyright 2011
@@ -23,14 +23,11 @@ public class RfidMenu extends JMenu {
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rfid.RfidBundle");
 
-        String title;
         if (memo != null) {
-            title = memo.getUserName();
+            setText(memo.getUserName());
         } else {
-            title = rb.getString("MenuSystem");
+            setText(rb.getString("MenuSystem"));
         }
-
-        setText(title);
 
         WindowInterface wi = new JmriJFrameInterface();
 
@@ -57,4 +54,5 @@ public class RfidMenu extends JMenu {
             this.load = load;
         }
     }
+
 }

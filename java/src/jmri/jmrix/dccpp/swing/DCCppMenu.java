@@ -4,7 +4,7 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
- * Create a menu containing the DCC++ specific tools
+ * Create a menu containing the DCC++ specific tools.
  *
  * @author Paul Bender Copyright 2003,2010
  * @author Mark Underwood Copyright 2015
@@ -22,7 +22,6 @@ public class DCCppMenu extends JMenu {
     public DCCppMenu(jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo) {
 
         super();
-
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.dccpp.swing.DCCppSwingBundle");
 
         if (memo != null) {
@@ -32,8 +31,10 @@ public class DCCppMenu extends JMenu {
         }
 
         add(new jmri.jmrix.dccpp.swing.mon.DCCppMonAction());
-        add(new jmri.jmrix.dccpp.swing.packetgen.PacketGenAction(rb.getString("MenuItemSendDCCppCommand"), memo));
- add(new jmri.jmrit.ampmeter.AmpMeterAction());
+        if (memo != null) {
+            add(new jmri.jmrix.dccpp.swing.packetgen.PacketGenAction(rb.getString("MenuItemSendDCCppCommand"), memo));
+        }
+        add(new jmri.jmrit.ampmeter.AmpMeterAction());
         add(new jmri.jmrix.dccpp.swing.ConfigBaseStationAction(rb.getString("MenuItemConfigBaseStation"), null));
         add(new javax.swing.JSeparator());
         add(new jmri.jmrix.dccpp.dccppovertcp.ServerAction(rb.getString("MenuItemDCCppOverTCPServer")));

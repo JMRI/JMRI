@@ -8,13 +8,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Base for TurnoutManager tests in specific jmrix.packages
+ * Base for TurnoutManager tests in specific jmrix.* packages
  * <p>
  * This is not itself a test class, e.g. should not be added to a suite.
  * Instead, this forms the base for test classes, including providing some
- * common tests
+ * common tests.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public abstract class AbstractTurnoutMgrTestBase {
 
@@ -25,7 +25,7 @@ public abstract class AbstractTurnoutMgrTestBase {
      * Overload to load l with actual object; create scaffolds as needed
      */
     @Before
-    abstract public void setUp(); 
+    abstract public void setUp();
 
     protected TurnoutManager l = null;	// holds objects under test
 
@@ -45,7 +45,6 @@ public abstract class AbstractTurnoutMgrTestBase {
     public void testCreate() {
     }
 
-
     @Test
     public void testDispose() {
         if (l != null) {
@@ -56,13 +55,13 @@ public abstract class AbstractTurnoutMgrTestBase {
     @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
         try {
-            Turnout t = l.provideTurnout("");
+            l.provideTurnout("");
         } catch (IllegalArgumentException ex) {
           jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for turnout: "+l.getSystemPrefix()+l.typeLetter()+" needed "+l.getSystemPrefix()+l.typeLetter());
           throw ex;
         }
     }
-    
+
     @Test
     public void testTurnoutPutGet() {
         // create

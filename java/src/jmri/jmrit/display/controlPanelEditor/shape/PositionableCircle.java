@@ -9,14 +9,13 @@ import jmri.jmrit.display.Positionable;
 
 /**
  * PositionableCircle PositionableShapes.
- * <P>
+ *
  * @author Pete Cressman Copyright (c) 2012
  */
 public class PositionableCircle extends PositionableShape {
 
     public PositionableCircle(Editor editor) {
         super(editor);
-        makeShape();
     }
 
     public PositionableCircle(Editor editor, Shape shape) {
@@ -29,13 +28,9 @@ public class PositionableCircle extends PositionableShape {
         _width = _height;
     }
 
-    /**
-     * this class must be overridden by its subclasses and executed only after
-     * its parameters have been set
-     */
     @Override
-    public void makeShape() {
-        setShape(new Ellipse2D.Double(0, 0, _width, _width));
+    protected Shape makeShape() {
+        return new Ellipse2D.Double(0, 0, _width, _width);
     }
 
     @Override
@@ -57,12 +52,17 @@ public class PositionableCircle extends PositionableShape {
         popup.add(new javax.swing.AbstractAction(txt) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (_editFrame == null) {
-                    _editFrame = new DrawCircle("editShape", "Circle", null);
-                    setEditParams();
-                }
+                makeEditFrame();
             }
         });
         return true;
     }
+    
+    private void makeEditFrame() {
+        if (_editFrame == null) {
+            _editFrame = new DrawCircle("editShape", "Circle", this);
+            setEditParams();
+        }
+    }
+        
 }

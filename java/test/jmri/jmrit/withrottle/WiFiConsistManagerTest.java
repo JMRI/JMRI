@@ -1,13 +1,8 @@
 package jmri.jmrit.withrottle;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Test simple functioning of WiFiConsistManager
@@ -20,14 +15,14 @@ public class WiFiConsistManagerTest extends jmri.implementation.AbstractConsistM
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.initDebugCommandStation();
         cm = new WiFiConsistManager();
     }
     
     @After
     @Override
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
         cm = null;
     }
 }

@@ -13,6 +13,7 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -46,7 +47,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 
     public SchedulesTableModel() {
         super();
-        scheduleManager = ScheduleManager.instance();
+        scheduleManager = InstanceManager.getDefault(ScheduleManager.class);
         scheduleManager.addPropertyChangeListener(this);
         updateList();
     }
@@ -356,13 +357,13 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 
     private void addPropertyChangeTracks() {
         // only spurs have schedules
-        for (Track track : LocationManager.instance().getTracks(Track.SPUR)) {
+        for (Track track : InstanceManager.getDefault(LocationManager.class).getTracks(Track.SPUR)) {
             track.addPropertyChangeListener(this);
         }
     }
 
     private void removePropertyChangeTracks() {
-        for (Track track : LocationManager.instance().getTracks(Track.SPUR)) {
+        for (Track track : InstanceManager.getDefault(LocationManager.class).getTracks(Track.SPUR)) {
             track.removePropertyChangeListener(this);
         }
     }
@@ -412,5 +413,5 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SchedulesTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SchedulesTableModel.class);
 }

@@ -1,33 +1,30 @@
 package jmri.jmrit.operations.trains;
 
-import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.util.List;
-import jmri.jmrit.display.PanelMenu;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.engines.Consist;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.timetable.TrainsScheduleTableFrame;
 import jmri.jmrit.operations.trains.tools.TrainByCarTypeFrame;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Trains GUI class
@@ -36,12 +33,12 @@ import org.junit.Ignore;
  */
 public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
-    private final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
+//    private final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
     @Test
     public void testTrainsTableFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrainManager tmanager = TrainManager.instance();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
 
         TrainsTableFrame f = new TrainsTableFrame();
         f.setLocation(10, 20);
@@ -75,20 +72,20 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.addButton);
 
         // confirm panel creation
-        JmriJFrame tef = JmriJFrame.getFrame("Add Train");
+        JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("TitleTrainAdd"));
         Assert.assertNotNull("train edit frame", tef);
 
         // create the TrainSwichListEditFrame
         enterClickAndLeave(f.switchListsButton);
 
         // confirm panel creation
-        JmriJFrame tsle = JmriJFrame.getFrame("Switch Lists by Location");
+        JmriJFrame tsle = JmriJFrame.getFrame(Bundle.getMessage("TitleSwitchLists"));
         Assert.assertNotNull("train switchlist edit frame", tsle);
 
         // kill panels
-        tef.dispose();
-        tsle.dispose();
-        f.dispose();
+        JUnitUtil.dispose(tef);
+        JUnitUtil.dispose(tsle);
+        JUnitUtil.dispose(f);
     }
 
     /**
@@ -100,7 +97,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainEditFrame trainEditFrame = new TrainEditFrame(null);
         trainEditFrame.setTitle("Test Edit Train Frame");
-        ThreadingUtil.runOnGUI(()->{
+        ThreadingUtil.runOnGUI(() -> {
             // fill in name and description fields
             trainEditFrame.trainNameTextField.setText("Test Train Name");
             trainEditFrame.trainDescriptionTextField.setText("Test Train Description");
@@ -108,7 +105,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         });
         enterClickAndLeave(trainEditFrame.addTrainButton);
 
-        TrainManager tmanager = TrainManager.instance();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train t = tmanager.getTrainByName("Test Train Name");
 
         // test defaults
@@ -129,13 +126,13 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(trainEditFrame.saveTrainButton);
 
         // clear no route dialogue box
-        pressDialogButton(trainEditFrame,Bundle.getMessage("TrainNoRoute"), "OK");
+        pressDialogButton(trainEditFrame, Bundle.getMessage("TrainNoRoute"), "OK");
 
         Assert.assertEquals("train comment", "15:45", t.getDepartureTime());
 
         // test route field, 5 routes and a blank
         Assert.assertEquals("Route Combobox item count", 6, trainEditFrame.routeBox.getItemCount());
-        ThreadingUtil.runOnGUI(()->{
+        ThreadingUtil.runOnGUI(() -> {
             trainEditFrame.routeBox.setSelectedIndex(3); // the 3rd item should be "Test Route C"
         });
         Assert.assertEquals("train route 2", "Test Route C", t.getRoute().getName());
@@ -143,15 +140,15 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(trainEditFrame.editButton);
 
         // confirm panel creation
-        JmriJFrame ref = JmriJFrame.getFrame("Edit Route");
+        JmriJFrame ref = JmriJFrame.getFrame(Bundle.getMessage("TitleRouteEdit"));
         Assert.assertNotNull("route add frame", ref);
 
         // increase screen size so clear and set buttons are shown
-        ThreadingUtil.runOnGUI(()->{
+        ThreadingUtil.runOnGUI(() -> {
             trainEditFrame.setLocation(10, 0);
             trainEditFrame.setSize(trainEditFrame.getWidth(), trainEditFrame.getHeight() + 200);
         });
-        
+
         // test car types using the clear and set buttons
         enterClickAndLeave(trainEditFrame.clearButton);
 
@@ -194,11 +191,12 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("train requirements 3", Train.CABOOSE, t.getRequirements());
         Assert.assertEquals("caboose road 1", "", t.getCabooseRoad());
         // shouldn't change until Save
-        trainEditFrame.roadCabooseBox.setSelectedItem("NH");
+        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
+        trainEditFrame.roadCabooseBox.setSelectedItem(roadNames[2]);
         Assert.assertEquals("caboose road 2", "", t.getCabooseRoad());
         enterClickAndLeave(trainEditFrame.saveTrainButton);
 
-        Assert.assertEquals("caboose road 3", "NH", t.getCabooseRoad());
+        Assert.assertEquals("caboose road 3", roadNames[2], t.getCabooseRoad());
         enterClickAndLeave(trainEditFrame.noneRadioButton);
 
         enterClickAndLeave(trainEditFrame.saveTrainButton);
@@ -206,7 +204,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("train requirements 4", Train.NO_CABOOSE_OR_FRED, t.getRequirements());
 
         // test frame size and location
-        ThreadingUtil.runOnGUI(()->{
+        ThreadingUtil.runOnGUI(() -> {
             trainEditFrame.setSize(650, 600);
             trainEditFrame.setLocation(25, 30);
         });
@@ -218,19 +216,19 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
         // don't delete, we need this train for the next two tests
         // testTrainBuildOptionFrame() and testTrainEditFrameRead()
-        pressDialogButton(trainEditFrame,Bundle.getMessage("deleteTrain"),"No");
+        pressDialogButton(trainEditFrame, Bundle.getMessage("deleteTrain"), Bundle.getMessage("ButtonNo"));
 
-        ThreadingUtil.runOnGUI(()->{
-            ref.dispose();
-            trainEditFrame.dispose();
+        ThreadingUtil.runOnGUI(() -> {
+            JUnitUtil.dispose(ref);
+            JUnitUtil.dispose(trainEditFrame);
         });
-        
+
         // now reload the window
         Train t2 = tmanager.getTrainByName("Test Train Name");
         Assert.assertNotNull(t);
 
         // change the train so it doesn't match the add test
-        ThreadingUtil.runOnGUI(()->{
+        ThreadingUtil.runOnGUI(() -> {
             t2.setRequirements(Train.CABOOSE);
             t2.setCabooseRoad("CP");
 
@@ -238,7 +236,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
         TrainEditFrame f = new TrainEditFrame(t2);
         f.setTitle("Test Edit Train Frame");
-        
+
         Assert.assertEquals("train name", "Test Train Name", f.trainNameTextField.getText());
         Assert.assertEquals("train description", "Test Train Description", f.trainDescriptionTextField
                 .getText());
@@ -255,8 +253,8 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         Assert.assertFalse("none selected", f.noneRadioButton.isSelected());
         Assert.assertFalse("FRED selected", f.fredRadioButton.isSelected());
 
-        ThreadingUtil.runOnGUI(()->{
-            f.dispose();
+        ThreadingUtil.runOnGUI(() -> {
+            JUnitUtil.dispose(f);
         });
     }
 
@@ -264,14 +262,14 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
     public void testTrainEditFrameBuildOptionFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // test build options
-        TrainManager tmanager = TrainManager.instance();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train t = tmanager.newTrain("Test Train New Name");
 
         // Add a route to this train
-        Route route = RouteManager.instance().newRoute("Test Train Route");
-        route.addLocation(LocationManager.instance().newLocation("Test Train Location A"));
-        route.addLocation(LocationManager.instance().newLocation("Test Train Location B"));
-        route.addLocation(LocationManager.instance().newLocation("Test Train Location C"));
+        Route route = InstanceManager.getDefault(RouteManager.class).newRoute("Test Train Route");
+        route.addLocation(InstanceManager.getDefault(LocationManager.class).newLocation("Test Train Location A"));
+        route.addLocation(InstanceManager.getDefault(LocationManager.class).newLocation("Test Train Location B"));
+        route.addLocation(InstanceManager.getDefault(LocationManager.class).newLocation("Test Train Location C"));
         t.setRoute(route);
 
         TrainEditFrame trainEditFrame = new TrainEditFrame(t);
@@ -383,7 +381,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f,Bundle.getMessage("CanNotSave"), "OK");
+        pressDialogButton(f, Bundle.getMessage("CanNotSave"), "OK");
 
         Assert.assertEquals("loco 1 change", Train.CHANGE_ENGINES, t.getSecondLegOptions());
         Assert.assertEquals("loco 1 departure name", "", t.getSecondLegStartLocationName());
@@ -405,18 +403,19 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.modify1Caboose);
 
         f.routePickup1Box.setSelectedIndex(0);
-        f.roadCaboose1Box.setSelectedItem("NH");
+        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
+        f.roadCaboose1Box.setSelectedItem(roadNames[2]);
         enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f,Bundle.getMessage("CanNotSave"), "OK");
+        pressDialogButton(f, Bundle.getMessage("CanNotSave"), "OK");
 
         Assert.assertEquals("caboose 1 change", Train.ADD_CABOOSE, t.getSecondLegOptions());
 
         f.routePickup1Box.setSelectedIndex(2);
         enterClickAndLeave(f.saveTrainButton);
 
-        Assert.assertEquals("caboose 1 road", "NH", t.getSecondLegCabooseRoad());
+        Assert.assertEquals("caboose 1 road", roadNames[2], t.getSecondLegCabooseRoad());
 
         enterClickAndLeave(f.helper1Service);
 
@@ -424,7 +423,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f,Bundle.getMessage("CanNotSave"), "OK");
+        pressDialogButton(f, Bundle.getMessage("CanNotSave"), "OK");
 
         Assert.assertEquals("helper 1 change", Train.HELPER_ENGINES, t.getSecondLegOptions());
 
@@ -447,7 +446,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f,Bundle.getMessage("CanNotSave"), "OK");
+        pressDialogButton(f, Bundle.getMessage("CanNotSave"), "OK");
 
         Assert.assertEquals("loco 2 change", Train.CHANGE_ENGINES, t.getThirdLegOptions());
         Assert.assertEquals("loco 2 departure name", "", t.getThirdLegStartLocationName());
@@ -469,18 +468,18 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.modify2Caboose);
 
         f.routePickup2Box.setSelectedIndex(0);
-        f.roadCaboose2Box.setSelectedItem("NH");
+        f.roadCaboose2Box.setSelectedItem(roadNames[2]);
         enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f,Bundle.getMessage("CanNotSave"), "OK");
+        pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("OK"));
 
         Assert.assertEquals("caboose 2 change", Train.ADD_CABOOSE, t.getThirdLegOptions());
 
         f.routePickup2Box.setSelectedIndex(2);
         enterClickAndLeave(f.saveTrainButton);
 
-        Assert.assertEquals("caboose 2 road", "NH", t.getThirdLegCabooseRoad());
+        Assert.assertEquals("caboose 2 road", roadNames[2], t.getThirdLegCabooseRoad());
 
         enterClickAndLeave(f.helper2Service);
 
@@ -488,7 +487,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f,Bundle.getMessage("CanNotSave"), "OK");
+        pressDialogButton(f, Bundle.getMessage("CanNotSave"), "OK");
 
         Assert.assertEquals("helper 2 change", Train.HELPER_ENGINES, t.getThirdLegOptions());
 
@@ -506,8 +505,8 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
         Assert.assertEquals("none 2", 0, t.getThirdLegOptions());
 
-        trainEditFrame.dispose();
-        f.dispose();
+        JUnitUtil.dispose(trainEditFrame);
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -519,11 +518,11 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         Assert.assertTrue("Real Time", Setup.isSwitchListRealTime());
 
         TrainSwitchListEditFrame f = new TrainSwitchListEditFrame();
-        ThreadingUtil.runOnGUI(()->{
+        ThreadingUtil.runOnGUI(() -> {
             f.initComponents();
         });
-        
-        LocationManager lmanager = LocationManager.instance();
+
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
         List<Location> locations = lmanager.getLocationsByNameList();
 
         // default switch list will print all locations
@@ -570,9 +569,8 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         //		Assert.assertFalse("All Trains", Setup.isSwitchListAllTrainsEnabled());
         //		Assert.assertTrue("Page per Train", Setup.isSwitchListPagePerTrainEnabled());
         //		Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
-
-        ThreadingUtil.runOnGUI(()->{
-            f.dispose();
+        ThreadingUtil.runOnGUI(() -> {
+            JUnitUtil.dispose(f);
         });
     }
 
@@ -582,7 +580,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
     @Test
     public void testTrainEditFrameDelete() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrainManager tmanager = TrainManager.instance();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train t = tmanager.getTrainByName("Test_Train 1");
         Assert.assertNotNull(t);
 
@@ -592,7 +590,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(trainEditFrame.deleteTrainButton);
 
         // And now press the confirmation button
-        pressDialogButton(trainEditFrame,Bundle.getMessage("deleteTrain"),"Yes");
+        pressDialogButton(trainEditFrame, Bundle.getMessage("deleteTrain"), Bundle.getMessage("ButtonYes"));
 
         t = tmanager.getTrainByName("Test_Train 1");
         Assert.assertNull("train deleted", t);
@@ -603,42 +601,41 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         t = tmanager.getTrainByName("Test_Train 1");
         Assert.assertNotNull("train added", t);
 
-        trainEditFrame.dispose();
+        JUnitUtil.dispose(trainEditFrame);
     }
 
     @Test
     public void testTrainByCarTypeFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrainManager tmanager = TrainManager.instance();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train train = tmanager.getTrainByName("Test Train Name");
         TrainByCarTypeFrame f = new TrainByCarTypeFrame();
         f.initComponents(train);
 
         Assert.assertNotNull("frame exists", f);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
     public void testTrainsScheduleTableFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainsScheduleTableFrame f = new TrainsScheduleTableFrame();
-        ThreadingUtil.runOnGUI(()->{
+        ThreadingUtil.runOnGUI(() -> {
             f.setVisible(true);
         });
 
         Assert.assertNotNull("frame exists", f);
-        ThreadingUtil.runOnGUI(()->{
-            f.dispose();
+        ThreadingUtil.runOnGUI(() -> {
+            JUnitUtil.dispose(f);
         });
     }
 
     @Test
     @Ignore("commented out in JUnit3")
     public void testTrainTestPanel() {
-    		// confirm panel creation
-    		JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
-    		Assert.assertNotNull(f);
-    
+        // confirm panel creation
+        JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
+        Assert.assertNotNull(f);
     }
 
     // Ensure minimal setup for log4J
@@ -646,21 +643,22 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
     @Before
     public void setUp() throws Exception {
         super.setUp();
-
+        InstanceManager.getDefault(CarTypes.class).addName("Boxcar");
         loadTrains();
     }
 
     private void loadTrains() {
         // Add some cars for the various tests in this suite
-        CarManager cm = CarManager.instance();
+        CarManager cm = InstanceManager.getDefault(CarManager.class);
+        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         // add caboose to the roster
-        Car c = cm.newCar("NH", "687");
+        Car c = cm.newCar(roadNames[2], "687");
         c.setCaboose(true);
         c = cm.newCar("CP", "435");
         c.setCaboose(true);
 
         // load engines
-        EngineManager emanager = EngineManager.instance();
+        EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
         Engine e1 = emanager.newEngine("E", "1");
         e1.setModel("GP40");
         Engine e2 = emanager.newEngine("E", "2");
@@ -670,7 +668,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         Engine e4 = emanager.newEngine("UP", "4");
         e4.setModel("FT");
 
-        TrainManager tmanager = TrainManager.instance();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         // turn off build fail messages
         tmanager.setBuildMessagesEnabled(true);
         // turn off print preview
@@ -683,15 +681,15 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
         // load 6 locations
         for (int i = 0; i < 6; i++) {
-            LocationManager.instance().newLocation("Test_Location " + i);
+            InstanceManager.getDefault(LocationManager.class).newLocation("Test_Location " + i);
         }
 
         // load 5 routes
-        RouteManager.instance().newRoute("Test Route A");
-        RouteManager.instance().newRoute("Test Route B");
-        RouteManager.instance().newRoute("Test Route C");
-        RouteManager.instance().newRoute("Test Route D");
-        RouteManager.instance().newRoute("Test Route E");
+        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route A");
+        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route B");
+        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route C");
+        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route D");
+        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route E");
     }
 
     @Override

@@ -43,6 +43,7 @@ public class ConsistControllerTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.initDebugCommandStation();
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
     }
@@ -50,7 +51,6 @@ public class ConsistControllerTest extends TestCase {
     @Override
     public void tearDown() throws Exception {
         super.tearDown();
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

@@ -14,7 +14,6 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-import java.util.ResourceBundle;
 import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -312,5 +311,5 @@ public class GraphPane extends JPanel implements Printable {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GraphPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(GraphPane.class);
 }

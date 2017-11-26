@@ -18,14 +18,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * PositionableRoundRect.
- * <P>
  * @author Pete cresman Copyright (c) 2013
  */
 public class PositionablePolygon extends PositionableShape {
 
     private ArrayList<Rectangle> _vertexHandles;
-    private boolean _editing = false;
+//    protected boolean _isClosed;
 
     // there is no default PositionablePolygon
     private PositionablePolygon(Editor editor) {
@@ -80,21 +78,16 @@ public class PositionablePolygon extends PositionableShape {
         popup.add(new javax.swing.AbstractAction(txt) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (_editFrame == null) {
-                    _editFrame = new DrawPolygon("editShape", "Polygon", null);
-                    setEditParams();
-                }
+                makeEditFrame();
             }
         });
         return true;
     }
-
-    protected void editing(boolean edit) {
-        _editing = edit;
-    }
-
-    protected int getHitIndex() {
-        return _hitIndex;
+    private void makeEditFrame() {
+        if (_editFrame == null) {
+            _editFrame = new DrawPolygon("editShape", "Polygon", this);
+            setEditParams();
+        }
     }
 
     @Override
@@ -106,7 +99,7 @@ public class PositionablePolygon extends PositionableShape {
     @Override
     public void drawHandles() {
         if (_editing) {
-            _vertexHandles = new ArrayList<Rectangle>();
+            _vertexHandles = new ArrayList<>();
             PathIterator iter = getPathIterator(null);
             float[] coord = new float[6];
             while (!iter.isDone()) {
@@ -137,7 +130,7 @@ public class PositionablePolygon extends PositionableShape {
                 try {
                     pt = getInversePoint(x, y);
                 } catch (java.awt.geom.NoninvertibleTransformException nte) {
-                    log.error("Can't locate Hit Rectangles " + nte.getMessage());
+                    log.error("Can't locate Hit Rectangles {}", nte.getMessage());
                     return;
                 }
                 for (int i = 0; i < _vertexHandles.size(); i++) {
@@ -181,7 +174,7 @@ public class PositionablePolygon extends PositionableShape {
                 float width = _width;
                 float height = _height;
                 if (_height < SIZE || _width < SIZE) {
-                    log.error("Bad size _width= " + _width + ", _height= " + _height);
+                    log.error("Bad size _width= {}, _height= {}", _width, _height);
                 }
                 GeneralPath path = null;
                 switch (_hitIndex) {
@@ -304,5 +297,16 @@ public class PositionablePolygon extends PositionableShape {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePolygon.class.getName());
+    @Override
+    protected void invalidateShape() {
+        // do nothing to prevent PositionableShape from invalidating this path
+    }
+
+    @Override
+    protected Shape makeShape() {
+        // return an empty shape so it can be appended to
+        return new GeneralPath(GeneralPath.WIND_EVEN_ODD);
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(PositionablePolygon.class);
 }

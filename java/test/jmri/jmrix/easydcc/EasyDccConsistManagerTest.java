@@ -1,29 +1,23 @@
 /**
- * EasyDccConsistManagerTest.java
+ * Tests for the jmri.jmrix.nce.EasyDccConsistManager class
  *
- * Description:	tests for the jmri.jmrix.nce.EasyDccConsistManager class
- *
- * @author	Paul Bender Copyright (C) 2012,2017
+ * @author Paul Bender Copyright (C) 2012,2017
  */
 package jmri.jmrix.easydcc;
 
-import java.util.Vector;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase{
 
     private EasyDccTrafficControlScaffold t = null;
 
-    // test the initilization loop
+    // test the initialization loop
     @Test
     public void testInitSequence() {
-        EasyDccConsistManager m = (EasyDccConsistManager)cm;
+        EasyDccConsistManager m = (EasyDccConsistManager) cm;
         // we need to call requestUpdateFromLayout() to trigger the 
         // init sequence.
         m.requestUpdateFromLayout();
@@ -105,17 +99,19 @@ public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsi
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        t = new EasyDccTrafficControlScaffold();
-        cm = new EasyDccConsistManager();
+        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
+        t = new EasyDccTrafficControlScaffold(memo);
+        memo.setEasyDccTrafficController(t); // important for successful getTrafficController()
+        cm = new EasyDccConsistManager(memo);
     }
 
     @After
     @Override
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
         cm = null;
+        apps.tests.Log4JFixture.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManagerTest.class);
 
 }

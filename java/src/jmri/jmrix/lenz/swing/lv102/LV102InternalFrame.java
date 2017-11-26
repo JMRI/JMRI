@@ -30,10 +30,10 @@ import org.slf4j.LoggerFactory;
  */
 public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
-    private progReplyListener progListener = null;
+    private ProgReplyListener progListener = null;
     private Thread progListenerThread = null;
 
-    final static int waitValue = 1000; // number of ms to wait after a 
+    final static int WAIT_VALUE = 1000; // number of ms to wait after a 
     // programming operation.  This 
     // should not be more than 15.
 
@@ -43,7 +43,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
     public LV102InternalFrame() {
 
         // Set up the programmer listener
-        progListener = new progReplyListener(this);
+        progListener = new ProgReplyListener(this);
         progListenerThread = new Thread(progListener);
         progListenerThread.start();
 
@@ -137,12 +137,12 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         }
         railComTimingBox.setSelectedIndex(4);
 
-        synchronized (CurrentStatus) {
-            CurrentStatus.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-            CurrentStatus.setVisible(true);
-            CurrentStatus.setText(" ");
+        synchronized (currentStatus) {
+            currentStatus.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+            currentStatus.setVisible(true);
+            currentStatus.setText(" ");
             log.debug("Current Status: ");
-            getContentPane().add(CurrentStatus);
+            getContentPane().add(currentStatus);
         }
 
         // and prep for display
@@ -182,8 +182,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         eLineBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-                synchronized (CurrentStatus) {
-                    CurrentStatus.setText(Bundle.getMessage("LV102StatusChanged"));
+                synchronized (currentStatus) {
+                    currentStatus.setText(Bundle.getMessage("LV102StatusChanged"));
                     log.debug("Current Status: {}", Bundle.getMessage("LV102StatusChanged"));
                 }
             }
@@ -195,8 +195,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         railComBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-                synchronized (CurrentStatus) {
-                    CurrentStatus.setText(Bundle.getMessage("LV102StatusChanged"));
+                synchronized (currentStatus) {
+                    currentStatus.setText(Bundle.getMessage("LV102StatusChanged"));
                     log.debug("Current Status: {}", Bundle.getMessage("LV102StatusChanged"));
                 }
             }
@@ -208,8 +208,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         railComModeBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-                synchronized (CurrentStatus) {
-                    CurrentStatus.setText(Bundle.getMessage("LV102StatusChanged"));
+                synchronized (currentStatus) {
+                    currentStatus.setText(Bundle.getMessage("LV102StatusChanged"));
                     log.debug("Current Status: {}", Bundle.getMessage("LV102StatusChanged"));
                 }
             }
@@ -221,8 +221,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         railComTimingBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-                synchronized (CurrentStatus) {
-                    CurrentStatus.setText(Bundle.getMessage("LV102StatusChanged"));
+                synchronized (currentStatus) {
+                    currentStatus.setText(Bundle.getMessage("LV102StatusChanged"));
                     log.debug("Current Status: {}", Bundle.getMessage("LV102StatusChanged"));
                 }
             }
@@ -234,8 +234,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         voltBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-                synchronized (CurrentStatus) {
-                    CurrentStatus.setText(Bundle.getMessage("LV102StatusChanged"));
+                synchronized (currentStatus) {
+                    currentStatus.setText(Bundle.getMessage("LV102StatusChanged"));
                     log.debug("Current Status: {}", Bundle.getMessage("LV102StatusChanged"));
                 }
             }
@@ -260,7 +260,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
     JComboBox<String> railComModeBox = new javax.swing.JComboBox<String>();
     JComboBox<String> railComTimingBox = new javax.swing.JComboBox<String>();
 
-    JLabel CurrentStatus = new JLabel(" ");
+    JLabel currentStatus = new JLabel(" ");
 
     JToggleButton writeSettingsButton = new JToggleButton(Bundle.getMessage("LV102WriteSettingsButtonLabel"));
     JButton defaultButton = new JButton(Bundle.getMessage("ButtonResetDefaults"));
@@ -288,7 +288,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         jmri.AddressedProgrammerManager pm = jmri.InstanceManager.getNullableDefault(jmri.AddressedProgrammerManager.class);
         if(pm == null) {
            // no addressed programmer manager, cannot proceed.
-           CurrentStatus.setText(Bundle.getMessage("LV102StatusNoPM"));
+           currentStatus.setText(Bundle.getMessage("LV102StatusNoPM"));
            log.error("No Programmer Manager Available, cannot configure LV102");
            return;
         }
@@ -298,7 +298,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
         if(opsProg == null) {
            // no ops mode programmer programmer, cannot proceed.
-           CurrentStatus.setText(Bundle.getMessage("LV102StatusNoPOM"));
+           currentStatus.setText(Bundle.getMessage("LV102StatusNoPOM"));
            log.error("Failed to obtain Operations Mode Programmer, cannot configure LV102");
            return;
         }
@@ -320,43 +320,43 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 && (String) voltBox.getSelectedItem() != null) {
 
             log.debug("Selected Voltage: {}", voltBox.getSelectedItem());
-            synchronized (CurrentStatus) {
-                CurrentStatus.setText(Bundle.getMessage("LV102StatusProgMode"));
-                CurrentStatus.doLayout();
+            synchronized (currentStatus) {
+                currentStatus.setText(Bundle.getMessage("LV102StatusProgMode"));
+                currentStatus.doLayout();
                 log.debug("Current Status: {}", Bundle.getMessage("LV102StatusProgMode"));
                 /* Pause briefly to give the user a chance to see what is 
                  happening */
-                new jmri.util.WaitHandler(this,waitValue);
+                new jmri.util.WaitHandler(this,WAIT_VALUE);
 
                 /* First, send the ops mode programing command to enter
                  programing mode */
                 try {
-                    opsProg.writeCV(7, 50, progListener);
+                    opsProg.writeCV("7", 50, progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
 
                 /* Pause briefly to give the booster a chance to change 
                  into It's programming mode */
-                new jmri.util.WaitHandler(this,waitValue);
+                new jmri.util.WaitHandler(this,WAIT_VALUE);
 
-                CurrentStatus.setText(Bundle.getMessage("LV102StatusWriteVolt"));
-                CurrentStatus.doLayout();
+                currentStatus.setText(Bundle.getMessage("LV102StatusWriteVolt"));
+                currentStatus.doLayout();
                 log.debug("Current Status: {}", Bundle.getMessage("LV102StatusWriteVolt"));
 
                 /* Next, send the ops mode programing command for the voltage 
                  we want */
                 try {
-                    opsProg.writeCV(7, validVoltageValues[voltBox.getSelectedIndex()], progListener);
+                    opsProg.writeCV("7", validVoltageValues[voltBox.getSelectedIndex()], progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
 
                 /* Pause briefly to wait for the programmer to send back a 
                  reply */
-                new jmri.util.WaitHandler(this,waitValue);
+                new jmri.util.WaitHandler(this,WAIT_VALUE);
 
-            }  // End of synchronized(CurrentStatus) block for voltage setting
+            }  // End of synchronized(currentStatus) block for voltage setting
         } else {
             log.debug("No Voltage Selected");
         }
@@ -368,44 +368,44 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 && (String) eLineBox.getSelectedItem() != null) {
 
             log.debug("E-Line Setting: {}", eLineBox.getSelectedItem());
-            synchronized (CurrentStatus) {
-                CurrentStatus.setText(Bundle.getMessage("LV102StatusProgMode"));
-                CurrentStatus.doLayout();
+            synchronized (currentStatus) {
+                currentStatus.setText(Bundle.getMessage("LV102StatusProgMode"));
+                currentStatus.doLayout();
                 log.debug("Current Status: {}", Bundle.getMessage("LV102StatusProgMode"));
 
                 /* Pause briefly to give the user a chance to see what is 
                  happening */
-                new jmri.util.WaitHandler(this,waitValue);
+                new jmri.util.WaitHandler(this,WAIT_VALUE);
 
                 /* First, send the ops mode programing command to enter
                  programing mode */
                 try {
-                    opsProg.writeCV(7, 50, progListener);
+                    opsProg.writeCV("7", 50, progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
 
                 /* Pause briefly to give the booster a chance to change 
                  into It's programming mode */
-                new jmri.util.WaitHandler(this,waitValue);
+                new jmri.util.WaitHandler(this,WAIT_VALUE);
 
-                CurrentStatus.setText(Bundle.getMessage("LV102StatusWriteELine"));
-                CurrentStatus.doLayout();
+                currentStatus.setText(Bundle.getMessage("LV102StatusWriteELine"));
+                currentStatus.doLayout();
                 log.debug("Current Status: {}" + Bundle.getMessage("LV102StatusWriteELine"));
 
                 /* Next, send the ops mode programing command for the E line 
                  Status we want */
                 try {
-                    opsProg.writeCV(7, validELineStatusValues[eLineBox.getSelectedIndex()], progListener);
+                    opsProg.writeCV("7", validELineStatusValues[eLineBox.getSelectedIndex()], progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
 
                 /* Pause briefly to wait for the programmer to send back a 
                  reply */
-                new jmri.util.WaitHandler(this,waitValue);
+                new jmri.util.WaitHandler(this,WAIT_VALUE);
 
-            } // End of synchronized(CurrentStatus) block for E-line setting
+            } // End of synchronized(currentStatus) block for E-line setting
         } else {
             log.debug("No E-Line value Selected");
         }
@@ -418,44 +418,44 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 && (String) railComBox.getSelectedItem() != null) {
 
             log.debug("RailCom Setting: {}", railComBox.getSelectedItem());
-            synchronized (CurrentStatus) {
-                CurrentStatus.setText(Bundle.getMessage("LV102StatusProgMode"));
-                CurrentStatus.doLayout();
+            synchronized (currentStatus) {
+                currentStatus.setText(Bundle.getMessage("LV102StatusProgMode"));
+                currentStatus.doLayout();
                 log.debug("Current Status: {}", Bundle.getMessage("LV102StatusProgMode"));
 
                 /* Pause briefly to give the user a chance to see what is 
                  happening */
-                new jmri.util.WaitHandler(this,waitValue);
+                new jmri.util.WaitHandler(this,WAIT_VALUE);
 
                 /* First, send the ops mode programing command to enter
                  programing mode */
                 try {
-                    opsProg.writeCV(7, 50, progListener);
+                    opsProg.writeCV("7", 50, progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
 
                 /* Pause briefly to give the booster a chance to change 
                  into It's programming mode */
-                new jmri.util.WaitHandler(this,waitValue);
+                new jmri.util.WaitHandler(this,WAIT_VALUE);
 
-                CurrentStatus.setText(Bundle.getMessage("LV102StatusWriteRailCom"));
-                CurrentStatus.doLayout();
+                currentStatus.setText(Bundle.getMessage("LV102StatusWriteRailCom"));
+                currentStatus.doLayout();
                 log.debug("Current Status: {}", Bundle.getMessage("LV102StatusWriteRailCom"));
 
                 /* Next, send the ops mode programing command for the RailComm
                  Status we want */
                 try {
-                    opsProg.writeCV(7, validRailComStatusValues[railComBox.getSelectedIndex()], progListener);
+                    opsProg.writeCV("7", validRailComStatusValues[railComBox.getSelectedIndex()], progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
 
                 /* Pause briefly to wait for the programmer to send back a 
                  reply */
-                new jmri.util.WaitHandler(this,waitValue);
+                new jmri.util.WaitHandler(this,WAIT_VALUE);
 
-            } // End of synchronized(CurrentStatus) block for RailCom Setting
+            } // End of synchronized(currentStatus) block for RailCom Setting
         } else {
             log.debug("No RailCom value Selected");
         }
@@ -467,44 +467,44 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 && (String) railComModeBox.getSelectedItem() != null) {
 
             log.debug("RailCom Setting: {}", railComModeBox.getSelectedItem());
-            synchronized (CurrentStatus) {
-                CurrentStatus.setText(Bundle.getMessage("LV102StatusProgMode"));
-                CurrentStatus.doLayout();
+            synchronized (currentStatus) {
+                currentStatus.setText(Bundle.getMessage("LV102StatusProgMode"));
+                currentStatus.doLayout();
                 log.debug("Current Status: {}", Bundle.getMessage("LV102StatusProgMode"));
 
                 /* Pause briefly to give the user a chance to see what is 
                  happening */
-                new jmri.util.WaitHandler(this,waitValue);
+                new jmri.util.WaitHandler(this,WAIT_VALUE);
 
                 /* First, send the ops mode programing command to enter
                  programing mode */
                 try {
-                    opsProg.writeCV(7, 50, progListener);
+                    opsProg.writeCV("7", 50, progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
 
                 /* Pause briefly to give the booster a chance to change 
                  into It's programming mode */
-                new jmri.util.WaitHandler(this,waitValue);
+                new jmri.util.WaitHandler(this,WAIT_VALUE);
 
-                CurrentStatus.setText(Bundle.getMessage("LV102StatusWriteRailComMode"));
-                CurrentStatus.doLayout();
+                currentStatus.setText(Bundle.getMessage("LV102StatusWriteRailComMode"));
+                currentStatus.doLayout();
                 log.debug("Current Status: {}", Bundle.getMessage("LV102StatusWriteRailComMode"));
 
                 /* Next, send the ops mode programing command for the RailCom Mode
                  Status we want */
                 try {
-                    opsProg.writeCV(7, validRailComModeValues[railComModeBox.getSelectedIndex()], progListener);
+                    opsProg.writeCV("7", validRailComModeValues[railComModeBox.getSelectedIndex()], progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
 
                 /* Pause briefly to wait for the programmer to send back a 
                  reply */
-                new jmri.util.WaitHandler(this,waitValue);
+                new jmri.util.WaitHandler(this,WAIT_VALUE);
 
-            } // End of synchronized(CurrentStatus) block for RailCom Mode
+            } // End of synchronized(currentStatus) block for RailCom Mode
         } else {
             log.debug("No RailCom Mode Selected");
         }
@@ -516,44 +516,44 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 && (String) railComTimingBox.getSelectedItem() != null) {
 
             log.debug("RailCom Timing Setting: {}", railComTimingBox.getSelectedItem());
-            synchronized (CurrentStatus) {
-                CurrentStatus.setText(Bundle.getMessage("LV102StatusProgMode"));
-                CurrentStatus.doLayout();
+            synchronized (currentStatus) {
+                currentStatus.setText(Bundle.getMessage("LV102StatusProgMode"));
+                currentStatus.doLayout();
                 log.debug("Current Status: {}", Bundle.getMessage("LV102StatusProgMode"));
 
                 /* Pause briefly to give the user a chance to see what is 
                  happening */
-                new jmri.util.WaitHandler(this,waitValue);
+                new jmri.util.WaitHandler(this,WAIT_VALUE);
 
                 /* First, send the ops mode programing command to enter
                  programing mode */
                 try {
-                    opsProg.writeCV(7, 50, progListener);
+                    opsProg.writeCV("7", 50, progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
 
                 /* Pause briefly to give the booster a chance to change 
                  into It's programming mode */
-                new jmri.util.WaitHandler(this,waitValue);
+                new jmri.util.WaitHandler(this,WAIT_VALUE);
 
-                CurrentStatus.setText(Bundle.getMessage("LV102StatusWriteRailComMode"));
-                CurrentStatus.doLayout();
+                currentStatus.setText(Bundle.getMessage("LV102StatusWriteRailComMode"));
+                currentStatus.doLayout();
                 log.debug("Current Status: {}", Bundle.getMessage("LV102StatusWriteRailComMode"));
 
                 /* Next, send the ops mode programing command for the RailCom 
                  Timing we want */
                 try {
-                    opsProg.writeCV(7, validRailComTimingValues[railComTimingBox.getSelectedIndex()], progListener);
+                    opsProg.writeCV("7", validRailComTimingValues[railComTimingBox.getSelectedIndex()], progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
 
                 /* Pause briefly to wait for the programmer to send back a 
                  reply */
-                new jmri.util.WaitHandler(this,waitValue);
+                new jmri.util.WaitHandler(this,WAIT_VALUE);
 
-            } // End of synchronized(CurrentStatus) block for RailCom Mode
+            } // End of synchronized(currentStatus) block for RailCom Mode
         } else {
             log.debug("No RailCom Timing Mode Selected");
         }
@@ -568,8 +568,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         railComModeBox.setSelectedIndex(0);
         // also set RailCom Timing, 435uS is named Default
         railComTimingBox.setSelectedIndex(0);
-        synchronized (CurrentStatus) {
-            CurrentStatus.setText(Bundle.getMessage("LV102StatusInitial"));
+        synchronized (currentStatus) {
+            currentStatus.setText(Bundle.getMessage("LV102StatusInitial"));
             log.debug("Current Status: Factory Default Settings. May Not match actual configuration");
         }
     }
@@ -580,8 +580,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         eLineBox.setSelectedIndex(3);
         railComBox.setSelectedIndex(2);
         railComModeBox.setSelectedIndex(2);
-        synchronized (CurrentStatus) {
-            CurrentStatus.setText(Bundle.getMessage("StatusOK"));
+        synchronized (currentStatus) {
+            currentStatus.setText(Bundle.getMessage("StatusOK"));
             log.debug("Current Status: OK");
         }
     }
@@ -592,10 +592,10 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         super.dispose();
     }
 
-    private class progReplyListener implements Runnable, jmri.ProgListener {
+    private class ProgReplyListener implements Runnable, jmri.ProgListener {
 
         //private Object parent = null;
-        progReplyListener(Object Parent) {
+        ProgReplyListener(Object Parent) {
             //parent = Parent; 
         }
 
@@ -613,35 +613,35 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         public void programmingOpReply(int value, int status) {
             log.debug("Programming Operation reply received, value is {}, status is {}", value, status);
             if (status == ProgListener.ProgrammerBusy) {
-                synchronized (CurrentStatus) {
-                    CurrentStatus.setText(Bundle.getMessage("LV102StatusBUSY"));
+                synchronized (currentStatus) {
+                    currentStatus.setText(Bundle.getMessage("LV102StatusBUSY"));
                     log.debug("Current Status: {}", Bundle.getMessage("LV102StatusBUSY"));
-                    CurrentStatus.notify();
+                    currentStatus.notify();
                 }
             } else if (status == ProgListener.OK) {
-                if (CurrentStatus.getText().equals(Bundle.getMessage("LV102StatusProgMode"))) {
-                    synchronized (CurrentStatus) {
-                        CurrentStatus.setText(Bundle.getMessage("LV102StatusReadyProg"));
+                if (currentStatus.getText().equals(Bundle.getMessage("LV102StatusProgMode"))) {
+                    synchronized (currentStatus) {
+                        currentStatus.setText(Bundle.getMessage("LV102StatusReadyProg"));
                         log.debug("Current Status: {}", Bundle.getMessage("LV102StatusReadyProg"));
-                        CurrentStatus.notify();
+                        currentStatus.notify();
                     }
                 } else {
-                    synchronized (CurrentStatus) {
-                        CurrentStatus.setText(Bundle.getMessage("LV102StatusWritten"));
+                    synchronized (currentStatus) {
+                        currentStatus.setText(Bundle.getMessage("LV102StatusWritten"));
                         log.debug("Current Status: {}", Bundle.getMessage("LV102StatusWritten"));
-                        CurrentStatus.notify();
+                        currentStatus.notify();
                     }
                 }
             } else {
-                synchronized (CurrentStatus) {
-                    CurrentStatus.setText(Bundle.getMessage("LV102StatusUnknown"));
+                synchronized (currentStatus) {
+                    currentStatus.setText(Bundle.getMessage("LV102StatusUnknown"));
                     log.debug("Current Status: {}", Bundle.getMessage("LV102StatusUnknown"));
-                    CurrentStatus.notify();
+                    currentStatus.notify();
                 }
             }
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LV102InternalFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LV102InternalFrame.class);
 
 }

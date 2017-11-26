@@ -1,8 +1,7 @@
 package jmri.jmrix.powerline.swing.packetgen;
 
-import apps.tests.Log4JFixture;
-import jmri.util.JUnitUtil;
 import jmri.jmrix.powerline.SerialTrafficControlScaffold;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,28 +12,23 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class SerialPacketGenPaneTest {
+public class SerialPacketGenPaneTest extends jmri.util.swing.JmriPanelTest {
 
 
     private SerialTrafficControlScaffold tc = null;
 
-    @Test
-    public void testCtor() {
-        SerialPacketGenPane action = new SerialPacketGenPane();
-        Assert.assertNotNull("exists", action);
-    }
-
+    @Override
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         tc = new SerialTrafficControlScaffold();
+        panel = new SerialPacketGenPane();
+        title = "Powerline_: Command Generator";
+        helpTarget="package.jmri.jmrix.powerline.swing.packetgen.PowerlinePacketGenPane";
     }
 
+    @Override
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-        tc = null;
+    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
     }
 }

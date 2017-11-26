@@ -123,7 +123,7 @@ public class VSDecoderPane extends JmriPanel {
      */
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.vsdecoder.VSDecoderPane";
+        return "package.jmri.jmrit.vsdecoder.VSDecoderPane";
     }
 
     /**
@@ -366,7 +366,7 @@ public class VSDecoderPane extends JmriPanel {
     public void setDecoder(VSDecoder dec) {
         if (dec != null) {
             // Store the new decoder
-            decoder_id = dec.getID();
+            decoder_id = dec.getId();
             log.debug("Decoder ID = " + decoder_id + " Decoder = " + dec);
             // Register the decoder as a listener on our frame... so it can react
             // to the window closing
@@ -484,5 +484,5 @@ public class VSDecoderPane extends JmriPanel {
         log.debug("VSDecoderPane windowClosing() called...");
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDecoderPane.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDecoderPane.class);
 }

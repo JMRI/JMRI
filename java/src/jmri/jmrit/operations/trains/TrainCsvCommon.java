@@ -2,6 +2,7 @@ package jmri.jmrit.operations.trains;
 
 import java.io.PrintWriter;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -297,7 +298,7 @@ public class TrainCsvCommon extends TrainCommon {
     }
 
     protected void listCarsLocationUnknown(PrintWriter fileOut) {
-        List<Car> cars = CarManager.instance().getCarsLocationUnknown();
+        List<Car> cars = InstanceManager.getDefault(CarManager.class).getCarsLocationUnknown();
         if (cars.size() == 0) {
             return; // no cars to search for!
         }

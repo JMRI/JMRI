@@ -1,8 +1,6 @@
 package jmri.jmrix.sprog.sprogCS;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
@@ -35,6 +33,6 @@ public class SprogCSSerialDriverAdapter
         return null;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class);
 
 }

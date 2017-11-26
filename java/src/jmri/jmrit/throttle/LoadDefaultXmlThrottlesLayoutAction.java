@@ -3,6 +3,7 @@ package jmri.jmrit.throttle;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.Icon;
+import jmri.InstanceManager;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
@@ -56,7 +57,7 @@ public class LoadDefaultXmlThrottlesLayoutAction extends JmriAbstractAction {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        // load throttle preference 
+        // load throttle preference
         LoadXmlThrottlesLayoutAction lxta = new LoadXmlThrottlesLayoutAction();
         try {
             if (lxta.loadThrottlesLayout(new File(ThrottleFrame.getDefaultThrottleFilename()))) {
@@ -66,12 +67,12 @@ public class LoadDefaultXmlThrottlesLayoutAction extends JmriAbstractAction {
             log.error("No default throttle layout, creating an empty throttle window");
         }
         // need to create a new one
-        ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
+        ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
         tf.toFront();
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ThrottleCreationAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottleCreationAction.class);
 
     @Override
     public JmriPanel makePanel() {

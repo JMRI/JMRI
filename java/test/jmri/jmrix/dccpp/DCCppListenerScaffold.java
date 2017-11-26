@@ -36,6 +36,5 @@ public class DCCppListenerScaffold implements jmri.jmrix.dccpp.DCCppListener {
     int rcvCount;
     DCCppReply rcvdRply;
     DCCppMessage timeOutMsg;
-    @SuppressWarnings("unused")
-    private static DCCppMessage rcvdMsg;
+    DCCppMessage rcvdMsg;
 }

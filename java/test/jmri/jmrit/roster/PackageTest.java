@@ -1,5 +1,6 @@
 package jmri.jmrit.roster;
 
+import jmri.util.JUnitUtil;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -33,7 +34,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(CopyRosterItemActionTest.class));
         suite.addTest(RosterEntryPaneTest.suite());
         suite.addTest(new JUnit4TestAdapter(FunctionLabelPaneTest.class));
-        suite.addTest(IdentifyLocoTest.suite());
+        suite.addTest(new JUnit4TestAdapter(IdentifyLocoTest.class));
         suite.addTest(jmri.jmrit.roster.swing.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(LocoFileTest.class));
         suite.addTest(new JUnit4TestAdapter(RecreateRosterActionTest.class));
@@ -58,12 +59,12 @@ public class PackageTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

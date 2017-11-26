@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
 
 /**
  * Test the SignalMastIcon.
- *
+ * <p>
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2009
@@ -39,7 +39,6 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jf.getContentPane().add(to);
 
         // reset instance manager & create test heads
-        jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
             @Override
@@ -74,7 +73,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jf.setVisible(true);
 
         // close
-        jf.dispose();
+        JUnitUtil.dispose(jf);
 
     }
 
@@ -92,7 +91,6 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jf.getContentPane().add(to);
 
         // reset instance manager & create test heads
-        jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
             @Override
@@ -129,7 +127,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jf.setVisible(true);
 
         // close
-        jf.dispose();
+        JUnitUtil.dispose(jf);
     }
 
     // from here down is testing infrastructure
@@ -152,9 +150,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetWindows(true);  // log existing windows in setup
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new PanelEditor("Test SignalMastIcon Panel");
         }
@@ -168,13 +164,11 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
             for (WindowListener listener : listeners) {
                 panel.getTargetFrame().removeWindowListener(listener);
             }
-            junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
-            panel.dispose();
+            panel.getTargetFrame().dispose();
+            JUnitUtil.dispose(panel);
         }
-        JUnitUtil.resetWindows(false);  // don't log here.  should be from this class.
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignalMastIconTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SignalMastIconTest.class);
 }

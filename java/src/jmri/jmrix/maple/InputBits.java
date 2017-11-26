@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * same set of input bits. Coil bits within Maple Systems HMI's are divided into
  * input (1-1000) and output (1001-9000), so input bits are read starting from
  * HMI address 1, and output bits are written starting at HMI address 1001.
- * <P>
+ *
  * @author Dave Duchamp, Copyright (C) 2009
  */
 public class InputBits {
@@ -82,8 +82,8 @@ public class InputBits {
                 sensorORedSetting[i] = false;
                 try {
                     sensorArray[i].setKnownState(Sensor.UNKNOWN);
-                } catch (jmri.JmriException e) {
-                    log.error("unexpected exception setting sensor i=" + i + ", e: " + e);
+                } catch (jmri.JmriException ex) {
+                    log.error("unexpected exception setting sensor i={}, ex:{}", i, ex);
                 }
             }
         }
@@ -171,7 +171,7 @@ public class InputBits {
     public void registerSensor(Sensor s, int i) {
         // validate the sensor ordinal
         if ((i < 0) || (i >= mNumInputBits)) {
-            log.error("Unexpected sensor ordinal in registerSensor: " + Integer.toString(i + 1));
+            log.error("Unexpected sensor ordinal in registerSensor: {}", Integer.toString(i + 1));
             return;
         }
         if (sensorArray[i] == null) {
@@ -191,7 +191,9 @@ public class InputBits {
         }
         return mInstance;
     }
+
     static InputBits mInstance = null;  // package access for tests
 
-    private final static Logger log = LoggerFactory.getLogger(InputBits.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InputBits.class);
+
 }

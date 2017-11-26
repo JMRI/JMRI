@@ -7,17 +7,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
 import jmri.*;
+import jmri.jmrit.beantable.BeanTableDataModel;
+import jmri.jmrit.entryexit.*;
 import jmri.jmrit.logix.*;
-import jmri.jmrit.signalling.*;
-import jmri.jmrit.signalling.entryexit.*;
 import jmri.util.*;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2009, 2010
  */
-public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.beantable.BeanTableDataModel implements PropertyChangeListener {
+public abstract class PickListModel<E extends NamedBean> extends BeanTableDataModel implements PropertyChangeListener {
 
     protected ArrayList<NamedBean> _pickList;
     protected String _name;
@@ -313,7 +313,7 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
         _table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         _table.setPreferredScrollableViewportSize(new java.awt.Dimension(250, _table.getRowHeight() * 7));
         _table.setDragEnabled(true);
-        _table.setTransferHandler(new jmri.util.DnDTableExportHandler());
+        _table.setTransferHandler(new DnDTableExportHandler());
 
         _table.getTableHeader().setReorderingAllowed(true);
         _table.setColumnModel(new XTableColumnModel());
@@ -484,7 +484,17 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
         return new EntryExitPickModel();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PickListModel.class.getName());
+    public static PickListModel logixPickModelInstance() {
+        Integer num = _listMap.get("logix");
+        if (num != null) {
+            _listMap.put("logix", num + 1);
+        } else {
+            _listMap.put("logix", 1);
+        }
+        return new LogixPickModel();
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(PickListModel.class);
 
     static class TurnoutPickModel extends PickListModel<Turnout> {
 
@@ -572,7 +582,7 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
 
     static class SignalHeadPickModel extends PickListModel<SignalHead> {
 
-        SignalHeadManager manager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
+        SignalHeadManager manager = InstanceManager.getDefault(SignalHeadManager.class);
 
         SignalHeadPickModel() {
             _name = rb.getString("TitleSignalTable");
@@ -580,7 +590,7 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
 
         @Override
         public Manager<SignalHead> getManager() {
-            manager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
+            manager = InstanceManager.getDefault(SignalHeadManager.class);
             return manager;
         }
 
@@ -606,7 +616,7 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
 
     static class SignalMastPickModel extends PickListModel<SignalMast> {
 
-        SignalMastManager manager = InstanceManager.getDefault(jmri.SignalMastManager.class);
+        SignalMastManager manager = InstanceManager.getDefault(SignalMastManager.class);
 
         SignalMastPickModel() {
             _name = rb.getString("TitleSignalMastTable");
@@ -614,7 +624,7 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
 
         @Override
         public Manager<SignalMast> getManager() {
-            manager = InstanceManager.getDefault(jmri.SignalMastManager.class);
+            manager = InstanceManager.getDefault(SignalMastManager.class);
             return manager;
         }
 
@@ -670,7 +680,7 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
 
     static class BlockPickModel extends PickListModel<Block> {
 
-        BlockManager manager = InstanceManager.getDefault(jmri.BlockManager.class);
+        BlockManager manager = InstanceManager.getDefault(BlockManager.class);
 
         BlockPickModel() {
             _name = rb.getString("TitleBlockTable");
@@ -678,7 +688,7 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
 
         @Override
         public Manager<Block> getManager() {
-            manager = InstanceManager.getDefault(jmri.BlockManager.class);
+            manager = InstanceManager.getDefault(BlockManager.class);
             return manager;
         }
 
@@ -700,7 +710,7 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
 
     static class ReporterPickModel extends PickListModel<Reporter> {
 
-        ReporterManager manager = InstanceManager.getDefault(jmri.ReporterManager.class);
+        ReporterManager manager = InstanceManager.getDefault(ReporterManager.class);
 
         ReporterPickModel() {
             _name = rb.getString("TitleReporterTable");
@@ -708,7 +718,7 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
 
         @Override
         public Manager<Reporter> getManager() {
-            manager = InstanceManager.getDefault(jmri.ReporterManager.class);
+            manager = InstanceManager.getDefault(ReporterManager.class);
             return manager;
         }
 
@@ -760,7 +770,7 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
 
     static class OBlockPickModel extends PickListModel<OBlock> {
 
-        OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
+        OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
 
         OBlockPickModel() {
             _name = rb.getString("TitleBlockTable");
@@ -768,7 +778,7 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
 
         @Override
         public Manager<OBlock> getManager() {
-            manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
+            manager = InstanceManager.getDefault(OBlockManager.class);
             return manager;
         }
 
@@ -820,7 +830,7 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
 
     static class EntryExitPickModel extends PickListModel<DestinationPoints> {
 
-        EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
+        EntryExitPairs manager = InstanceManager.getDefault(EntryExitPairs.class);
 
         EntryExitPickModel() {
             _name = rb.getString("TitleEntryExitTable");
@@ -828,7 +838,7 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
 
         @Override
         public Manager<DestinationPoints> getManager() {
-            manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
+            manager = InstanceManager.getDefault(EntryExitPairs.class);
             return manager;
         }
 
@@ -855,6 +865,36 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
                 return Bundle.getMessage("ColumnUserName");
             }
             return "";
+        }
+    }
+
+    static class LogixPickModel extends PickListModel {
+
+        LogixManager manager;
+
+        LogixPickModel() {
+           _name = rb.getString("TitleLogixTable");
+        }
+
+        @Override
+        public Manager getManager() {
+            manager = InstanceManager.getDefault(LogixManager.class);
+            return manager;
+        }
+
+        @Override
+        public NamedBean addBean(String name) {
+            return null;
+        }
+
+        @Override
+        public NamedBean addBean(String sysName, String userName) {
+            return null;
+        }
+
+        @Override
+        public boolean canAddBean() {
+            return false;
         }
     }
 }

@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.7.1-SNAPSHOT</version>
+    <version>4.9.6-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -16,11 +16,12 @@
         <!-- dependency versions (its easier to include version in dependency
         but if multiple dependencies are linked, use a property for single
         dependency source) -->
-        <jetty.version>9.3.9.v20160517</jetty.version>
-        <slf4j.version>1.7.21</slf4j.version>
+        <cucumber.version>1.2.5</cucumber.version>
+        <jetty.version>9.4.7.v20170914</jetty.version>
+        <slf4j.version>1.7.25</slf4j.version>
         <jackson.version>2.8.5</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
-        <openlcb.version>0.7.14</openlcb.version>
+        <openlcb.version>0.7.15</openlcb.version>
         <netbeans.version>RELEASE82</netbeans.version>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
@@ -31,7 +32,6 @@
         <argLine>-Xmx1536m</argLine>
         <powermock.version>1.6.6</powermock.version>
         <surefire.version>2.20</surefire.version>
-        <surefile.printSummary>false</surefile.printSummary>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>
@@ -243,6 +243,13 @@
                     </execution>
                 </executions>
                 -->
+                <configuration>
+                    <target>
+                        <ant antfile="${basedir}/build.xml">
+                            <target name="${anttarget}"/>
+                        </ant>
+                    </target>
+                </configuration>
                 <dependencies>
                     <!-- use the version of ant we specify -->
                     <dependency>
@@ -311,8 +318,6 @@
                         <exclude>%regex[jmri/jmrix/nce/(boosterprog|cab|clockmon|consist|macro|ncemon|networkdriver|packetgen|simulator|swing|usbdriver|usbinterface)/.*/Nce.*]</exclude>
                         <!-- ignore until #3492 is resolved -->
                         <exclude>%regex[jmri.jmrix.loconet.locormi.LnMessage[Client|Server]Test]</exclude>
-                        <!-- ignore until #2601 is resolved -->
-                        <exclude>jmri.jmrit.decoderdefn.DuplicateTest</exclude>
                         <!-- ignore to avoid duplicate test runs -->
                         <exclude>apps.tests.AllTest</exclude>
                         <exclude>jmri.HeadLessTest</exclude>
@@ -339,8 +344,6 @@
                     <!-- uncomment to force each test into new context (DO NOT attempt on CI servers)
                     <reuseForks>false</reuseForks>
                     -->
-                    <!-- uncomment to really ensure tests are independent -->
-                    <!-- <runOrder>random</runOrder> -->
                     <dependencies>
                         <dependency>
                             <groupId>org.apache.maven.surefire</groupId>
@@ -373,7 +376,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <shortRevisionLength>8</shortRevisionLength>
+                    <shortRevisionLength>7</shortRevisionLength>
+                    <revisionOnScmFailure>UNKNOWN</revisionOnScmFailure>
                     <timestampFormat>yyyyMMddHHmm</timestampFormat>
                     <timezone>UTC</timezone>
                     <!-- want false to generate Version.properties -->
@@ -401,6 +405,18 @@
                             <locale>en,US</locale>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${basedir}/java/acceptancetest/step_definitions</source>
+                            </sources>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -412,9 +428,10 @@
                     <maxmemory>512m</maxmemory>
                     <overview>${basedir}/java/src/jmri/overview.html</overview>
                     <sourcepath>${basedir}/java/src:${project.build.directory}/generated-sources/javacc:${project.build.directory}/generated-sources/jjtree</sourcepath>
+                    <show>package</show>
                     <!-- remove -Xdoclint:-missing to get warnings about missing Javadoc tags -->
                     <!-- change from default 100 warnings -->
-                    <additionalparam>-breakiterator -Xdoclint:all -Xdoclint:-missing -Xmaxwarns 2350</additionalparam>
+                    <additionalparam>-breakiterator -Xdoclint:all -Xdoclint:-missing -Xmaxwarns 2300</additionalparam>
                     <author>true</author><!-- default -->
                     <use>true</use><!-- default -->
                     <failOnError>true</failOnError><!-- default -->
@@ -518,6 +535,7 @@
                                 <File>jmri/jmrix/openlcb/SampleFactory.class</File>
                                 <File>jmri/util/swing/SamplePane.class</File>
                                 <File>apps/tests/Log4JFixture.class</File>
+                                <File>jmri/jmrit/display/EditorFrameOperator.class</File>
                             </excludes>
                             <rules>
                                 <rule>
@@ -526,12 +544,12 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.30</minimum>
+                                            <minimum>0.35</minimum>
                                         </limit>
                                         <limit>
                                             <counter>CLASS</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.70</minimum>
+                                            <minimum>0.75</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -550,7 +568,67 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>net.ossindex</groupId>
+                <artifactId>ossindex-maven-plugin</artifactId>
+                <version>2.3.7</version>
+                <configuration>
+                    <failOnError>true</failOnError>
+                    <!-- List packages with vulnerabilities to ignore. -->
+                    <!-- Include an issue in GitHub for each ignored package -->
+                    <!-- documenting why the vulnerability is ignored. -->
+                    <!-- jython 2.7.0: https://github.com/JMRI/JMRI/issues/3712 -->
+                    <ignore>org.python:jython-standalone:2.7.0</ignore>
+                </configuration>
+            </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <!-- This plugin's configuration is used to store Eclipse m2e
+                settings only. It has no influence on the Maven build itself. -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.codehaus.mojo</groupId>
+                                        <artifactId>buildnumber-maven-plugin</artifactId>
+                                        <versionRange>[1.4,)</versionRange>
+                                        <goals>
+                                            <goal>create-metadata</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute>
+                                            <runOnIncremental>false</runOnIncremental>
+                                        </execute>
+                                    </action>
+                                </pluginExecution>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.codehaus.mojo</groupId>
+                                        <artifactId>javacc-maven-plugin</artifactId>
+                                        <versionRange>[2.6,)</versionRange>
+                                        <goals>
+                                            <goal>jjtree-javacc</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute>
+                                            <runOnIncremental>false</runOnIncremental>
+                                        </execute>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
     <reporting>
         <plugins>
@@ -561,6 +639,20 @@
                 <configuration>
                     <showSuccess>false</showSuccess>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.5</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>dependency-updates-report</report>
+                            <report>plugin-updates-report</report>
+                            <report>property-updates-report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
         </plugins>
     </reporting>
@@ -596,6 +688,36 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-java8</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.6.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -648,6 +770,12 @@
             <type>jar</type>
         </dependency>
         <dependency>
+            <groupId>org.eclipse.jetty.websocket</groupId>
+            <artifactId>websocket-server</artifactId>
+            <version>${jetty.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.4</version>
@@ -660,9 +788,11 @@
             <type>jar</type>
         </dependency>
         <dependency>
+            <!-- when updating, remove from net.ossindex list of ignored -->
+            <!-- vulnerabilities elsewhere in this file -->
             <groupId>org.python</groupId>
             <artifactId>jython-standalone</artifactId>
-            <version>2.7.0</version>
+            <version>2.7.0</version><!-- versions < 2.7.1 have CVE against them --> 
         </dependency>
         <!--
         <dependency>
@@ -690,7 +820,7 @@
         <dependency>
             <groupId>org.jmdns</groupId>
             <artifactId>jmdns</artifactId>
-            <version>3.5.1</version>
+            <version>3.5.3</version>
         </dependency>
         <!--
         <dependency>
@@ -847,9 +977,9 @@
         </dependency>
         -->
         <dependency>
-            <groupId>org.netbeans</groupId>
-            <artifactId>jemmy</artifactId>
-            <version>2.2.7.5</version>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>jemmy-2.3.1.1</artifactId>
+            <version>RELEASE802</version>
             <scope>test</scope>
         </dependency>
         <!--

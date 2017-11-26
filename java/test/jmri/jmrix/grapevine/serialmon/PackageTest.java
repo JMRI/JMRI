@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
    SerialMonFrameTest.class,
    SerialMonActionTest.class,
+   BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.grapevine.nodeconfig package

@@ -11,17 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame controlling a single light
- *
- * This was a copy of simple turnout control.
+ * Frame controlling a single light.
+ * <p>
+ * Built from a copy of simple turnout control.
  *
  * @author Ken Cameron Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
-
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.simplelightctrl.SimpleLightCtrlBundle");
-    static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     DecimalFormat threeDigits = new DecimalFormat("000");
     DecimalFormat oneDigits = new DecimalFormat("0");
@@ -69,16 +66,16 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         super();
 
         // configure items for GUI
-        textAdrLabel.setText(rb.getString("LightAdrLabel"));
+        textAdrLabel.setText(Bundle.getMessage("LightAdrLabel"));
         textAdrLabel.setVisible(true);
 
         adrTextField.setText("");
         adrTextField.setVisible(true);
-        adrTextField.setToolTipText(rb.getString("LightAdrTextToolTip"));
+        adrTextField.setToolTipText(Bundle.getMessage("LightAdrTextToolTip"));
 
-        statusButton.setText(rb.getString("LightGetStatusButton"));
+        statusButton.setText(Bundle.getMessage("LightGetStatusButton"));
         statusButton.setVisible(true);
-        statusButton.setToolTipText(rb.getString("LightGetStatusToolTip"));
+        statusButton.setToolTipText(Bundle.getMessage("LightGetStatusToolTip"));
         statusButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -86,26 +83,26 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
             }
         });
 
-        textStateLabel.setText(rb.getString("LightStatusLabel"));
+        textStateLabel.setText(Bundle.getMessage("LightStatusLabel"));
         textStateLabel.setVisible(true);
-        nowStateTextField.setText(rb.getString("LightStatusTextDefault"));
+        nowStateTextField.setText(Bundle.getMessage("BeanStateUnknown"));
         nowStateTextField.setVisible(true);
-        textIsEnabledLabel.setText(rb.getString("LightIsEnabledLabel"));
+        textIsEnabledLabel.setText(Bundle.getMessage("LightIsEnabledLabel"));
         textIsEnabledLabel.setVisible(true);
         statusIsEnabledCheckBox.setVisible(true);
         statusIsEnabledCheckBox.setEnabled(false);
-        textIsVariableLabel.setText(rb.getString("LightIsVariableLabel"));
+        textIsVariableLabel.setText(Bundle.getMessage("LightIsVariableLabel"));
         textIsVariableLabel.setVisible(true);
         statusIsVariableCheckBox.setVisible(true);
         statusIsVariableCheckBox.setEnabled(false);
-        textIsTransitionLabel.setText(rb.getString("LightIsTransitionLabel"));
+        textIsTransitionLabel.setText(Bundle.getMessage("LightIsTransitionLabel"));
         textIsTransitionLabel.setVisible(true);
         statusIsTransitionCheckBox.setVisible(true);
         statusIsTransitionCheckBox.setEnabled(false);
 
-        onButton.setText(rb.getString("LightOnButton"));
+        onButton.setText(Bundle.getMessage("StateOn"));
         onButton.setVisible(true);
-        onButton.setToolTipText(rb.getString("LightOnButtonToolTip"));
+        onButton.setToolTipText(Bundle.getMessage("LightOnButtonToolTip"));
         onButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -113,9 +110,9 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
             }
         });
 
-        offButton.setText(rb.getString("LightOffButton"));
+        offButton.setText(Bundle.getMessage("StateOff"));
         offButton.setVisible(true);
-        offButton.setToolTipText(rb.getString("LightOffButtonToolTip"));
+        offButton.setToolTipText(Bundle.getMessage("LightOffButtonToolTip"));
         offButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -123,37 +120,37 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
             }
         });
 
-        intensityTextLabel1.setText(rb.getString("LightIntensityTextLabel"));
+        intensityTextLabel1.setText(Bundle.getMessage("LightIntensityTextLabel"));
         intensityTextLabel1.setVisible(true);
         nowIntensityLabel.setText("");
         nowIntensityLabel.setVisible(true);
         intensityTextField.setText(oneDigits.format(0));
         intensityTextField.setVisible(true);
         intensityTextLabel2.setText("%");
-        intensityTextField.setToolTipText(rb.getString("LightIntensityTextToolTip"));
+        intensityTextField.setToolTipText(Bundle.getMessage("LightIntensityTextToolTip"));
 
-        intensityMinTextLabel.setText(rb.getString("LightMinIntensityLabel"));
+        intensityMinTextLabel.setText(Bundle.getMessage("LightMinIntensityLabel"));
         nowIntensityMinLabel.setText("");
         nowIntensityMinLabel.setVisible(true);
         intensityMinTextField.setText(oneDigits.format(0));
         intensityMinTextField.setVisible(true);
-        intensityMinTextField.setToolTipText(rb.getString("LightMinIntensityToolTip"));
-        intensityMaxTextLabel.setText(rb.getString("LightMaxIntensityLabel"));
+        intensityMinTextField.setToolTipText(Bundle.getMessage("LightMinIntensityToolTip"));
+        intensityMaxTextLabel.setText(Bundle.getMessage("LightMaxIntensityLabel"));
         nowIntensityMaxLabel.setText("");
         nowIntensityMaxLabel.setVisible(true);
         intensityMaxTextField.setText(oneDigits.format(100));
         intensityMaxTextField.setVisible(true);
-        intensityMaxTextField.setToolTipText(rb.getString("LightMinIntensityToolTip"));
-        transitionTimeTextLabel.setText(rb.getString("LightTransitionTimeLabel"));
+        intensityMaxTextField.setToolTipText(Bundle.getMessage("LightMinIntensityToolTip"));
+        transitionTimeTextLabel.setText(Bundle.getMessage("LightTransitionTimeLabel"));
         nowTransitionTimeLabel.setText("");
         nowTransitionTimeLabel.setVisible(true);
         transitionTimeTextField.setText(oneDigits.format(0));
         transitionTimeTextField.setVisible(true);
         transitionTimeTextField.setEnabled(true);
-        transitionTimeTextField.setToolTipText(rb.getString("LightTransitionTimeToolTip"));
-        intensityButton.setText(rb.getString("LightSetButton"));
+        transitionTimeTextField.setToolTipText(Bundle.getMessage("LightTransitionTimeToolTip"));
+        intensityButton.setText(Bundle.getMessage("LightSetButton"));
         intensityButton.setVisible(true);
-        intensityButton.setToolTipText(rb.getString("LightSetButtonToolTip"));
+        intensityButton.setToolTipText(Bundle.getMessage("LightSetButtonToolTip"));
         intensityButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -161,9 +158,9 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
             }
         });
 
-        applyButton.setText(rb.getString("LightApplyButton")); // TODO reuse ButtonApply from NamedBeanBundle and add a Bundle() method here
+        applyButton.setText(Bundle.getMessage("ButtonApply"));
         applyButton.setVisible(true);
-        applyButton.setToolTipText(rb.getString("LightApplyButtonToolTip"));
+        applyButton.setToolTipText(Bundle.getMessage("LightApplyButtonToolTip"));
         applyButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -172,7 +169,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         });
 
         // general GUI config
-        setTitle(rb.getString("LightBorder"));
+        setTitle(Bundle.getMessage("LightBorder"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // install items in GUI
@@ -233,6 +230,10 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 
     public void offButtonActionPerformed(java.awt.event.ActionEvent e) {
         // load address from switchAddrTextField
+        if (adrTextField.getText().length() < 1) {
+            nowStateTextField.setText(Bundle.getMessage("NoAddressHint"));
+            return;
+        }
         try {
             if (light != null) {
                 // we're changing the light we're watching
@@ -243,23 +244,27 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
                     adrTextField.getText());
 
             } catch (IllegalArgumentException ex) {
-                log.error(rb.getString("LightErrorButtonNameBad") + adrTextField.getText());
+                log.error(Bundle.getMessage("LightErrorButtonNameBad") + adrTextField.getText());
             }
             light.addPropertyChangeListener(this);
             if (log.isDebugEnabled()) {
-                log.debug("about to command CLOSED");
+                log.debug("about to command OFF"); // NOI18N
             }
-            // and set commanded state to CLOSED
+            // and set commanded state to OFF (CLOSED)
             light.setState(Light.OFF);
 
         } catch (Exception ex) {
-            log.error(rb.getString("LightErrorOffButtonException") + ex.toString());
-            nowStateTextField.setText("ERROR");
+            log.error(Bundle.getMessage("LightErrorOffButtonException") + ex.toString());
+            nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
         }
     }
 
     public void onButtonActionPerformed(java.awt.event.ActionEvent e) {
         // load address from switchAddrTextField
+        if (adrTextField.getText().length() < 1) {
+            nowStateTextField.setText(Bundle.getMessage("NoAddressHint"));
+            return;
+        }
         try {
             if (light != null) {
                 // we're changing the light we're watching
@@ -270,17 +275,17 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
                     adrTextField.getText());
 
             } catch (IllegalArgumentException ex) {
-                log.error(rb.getString("LightErrorButtonNameBad") + adrTextField.getText());
+                log.error(Bundle.getMessage("LightErrorButtonNameBad") + adrTextField.getText());
             } 
             light.addPropertyChangeListener(this);
             if (log.isDebugEnabled()) {
-                log.debug("about to command ON");
+                log.debug("about to command ON"); // NOI18N
             }
             // and set commanded state to ON
             light.setState(Light.ON);
         } catch (Exception ex) {
-            log.error(rb.getString("LightErrorOnButtonException") + ex.toString());
-            nowStateTextField.setText("ERROR");
+            log.error(Bundle.getMessage("LightErrorOnButtonException") + ex.toString());
+            nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
         }
     }
 
@@ -296,23 +301,23 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
                     adrTextField.getText());
 
             } catch (IllegalArgumentException ex) {
-                log.error(rb.getString("LightErrorButtonNameBad") + adrTextField.getText());
+                log.error(Bundle.getMessage("LightErrorButtonNameBad") + adrTextField.getText());
             }
             light.addPropertyChangeListener(this);
             if (log.isDebugEnabled()) {
-                log.debug("about to command DIM");
+                log.debug("about to command DIM"); // NOI18N
             }
             // and set commanded state to DIM
             light.setTargetIntensity(Double.parseDouble(intensityTextField.getText().trim()) / 100);
 
         } catch (Exception ex) {
-            log.error(rb.getString("LightErrorIntensityButtonException") + ex.toString());
-            nowStateTextField.setText("ERROR");
+            log.error(Bundle.getMessage("LightErrorIntensityButtonException") + ex.toString());
+            nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
         }
     }
 
     /**
-     * handle changes for intensity, rate, etc...
+     * Handle changes for intensity, rate, etc.
      */
     public void applyButtonActionPerformed(java.awt.event.ActionEvent e) {
         // load address from switchAddrTextField
@@ -325,14 +330,14 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
                 light = InstanceManager.lightManagerInstance().provideLight(adrTextField.getText());
 
             } catch (IllegalArgumentException ex) {
-                nowStateTextField.setText(rb.getString("LightErrorButtonNameBad") + adrTextField.getText());
+                nowStateTextField.setText(Bundle.getMessage("LightErrorButtonNameBad") + adrTextField.getText());
             }
             
             double min = Double.parseDouble(intensityMinTextField.getText()) / 100.;
             double max = Double.parseDouble(intensityMaxTextField.getText()) / 100.;
             double time = Double.parseDouble(transitionTimeTextField.getText());
             if (log.isDebugEnabled()) {
-                log.debug("setting min: " + min + " max: " + max + " transition: " + time);
+                log.debug("setting min: " + min + " max: " + max + " transition: " + time); // NOI18N
             }
             light.setMinIntensity(min);
             light.setMaxIntensity(max);
@@ -340,14 +345,13 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
             updateLightStatusFields(false);
 
         } catch (Exception ex) {
-            log.error(rb.getString("LightErrorApplyButtonException") + ex.toString());
-            nowStateTextField.setText("ERROR");
+            log.error(Bundle.getMessage("LightErrorApplyButtonException") + ex.toString());
+            nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
         }
     }
 
     /**
-     * handles request to update status
-     *
+     * Handle request to update status.
      */
     public void statusButtonActionPerformed(java.awt.event.ActionEvent e) {
         // load address from switchAddrTextField
@@ -356,23 +360,23 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
                 // we're changing the light we're watching
                 light.removePropertyChangeListener(this);
             }
-            
             try {
                 light = InstanceManager.lightManagerInstance().provideLight(adrTextField.getText());
 
             } catch (IllegalArgumentException ex) {
-                nowStateTextField.setText(rb.getString("LightErrorButtonNameBad") + adrTextField.getText());
-            } 
-            
+                nowStateTextField.setText(Bundle.getMessage("LightErrorButtonNameBad") + adrTextField.getText());
+            }
             updateLightStatusFields(true);
 
         } catch (Exception ex) {
-            log.error(rb.getString("LightErrorStatusButtonException") + ex.toString());
-            nowStateTextField.setText("ERROR");
+            log.error(Bundle.getMessage("LightErrorStatusButtonException") + ex.toString());
+            nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
         }
     }
 
-    // update state field in GUI as state of light changes
+    /**
+     * Update state field in GUI as state of light changes.
+     */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
@@ -385,28 +389,28 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         int knownState = light.getState();
         switch (knownState) {
             case Light.ON:
-                nowStateTextField.setText(rbean.getString("LightStateOn"));
+                nowStateTextField.setText(Bundle.getMessage("StateOn"));
                 break;
             case Light.INTERMEDIATE:
-                nowStateTextField.setText(rbean.getString("LightStateIntermediate"));
+                nowStateTextField.setText(Bundle.getMessage("LightStateIntermediate"));
                 break;
             case Light.OFF:
-                nowStateTextField.setText(rbean.getString("LightStateOff"));
+                nowStateTextField.setText(Bundle.getMessage("StateOff"));
                 break;
             case Light.TRANSITIONINGTOFULLON:
-                nowStateTextField.setText(rbean.getString("LightStateTransitioningToFullOn"));
+                nowStateTextField.setText(Bundle.getMessage("LightStateTransitioningToFullOn"));
                 break;
             case Light.TRANSITIONINGHIGHER:
-                nowStateTextField.setText(rbean.getString("LightStateTransitioningHigher"));
+                nowStateTextField.setText(Bundle.getMessage("LightStateTransitioningHigher"));
                 break;
             case Light.TRANSITIONINGLOWER:
-                nowStateTextField.setText(rbean.getString("LightStateTransitioningLower"));
+                nowStateTextField.setText(Bundle.getMessage("LightStateTransitioningLower"));
                 break;
             case Light.TRANSITIONINGTOFULLOFF:
-                nowStateTextField.setText(rbean.getString("LightStateTransitioningToFullOff"));
+                nowStateTextField.setText(Bundle.getMessage("LightStateTransitioningToFullOff"));
                 break;
             default:
-                nowStateTextField.setText("Unexpected value: " + knownState);
+                nowStateTextField.setText(Bundle.getMessage("UnexpectedValueLabel", knownState));
                 break;
         }
         statusIsEnabledCheckBox.setSelected(light.getEnabled());
@@ -424,5 +428,6 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleLightCtrlFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleLightCtrlFrame.class);
+
 }

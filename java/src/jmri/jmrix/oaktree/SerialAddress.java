@@ -1,10 +1,12 @@
 package jmri.jmrix.oaktree;
 
+import jmri.Manager.NameValidity;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Utility Class supporting parsing and testing of addresses
+ * Utility Class supporting parsing and testing of addresses.
  * <P>
  * Two address formats are supported: Otnnnxxx where: t is the type code, 'T'
  * for turnouts, 'S' for sensors, and 'L' for lights nn is the node address
@@ -15,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * lights nnn is the node address of the input or output bit (0-127) xxxx is a
  * bit number of the input or output bit (1-2048) examples: CT0B2 (node address
  * 0, bit 2), CS1B3 (node address 1, bit 3), CL11B234 (node address 11, bit234)
- * <P>
+ *
  * @author Dave Duchamp, Copyright (C) 2004
  * @author Bob Jacobsen, Copyright (C) 2006
  */
@@ -25,45 +27,57 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to parse a system name and return the Serial Node
-     * Note: Returns 'NULL' if illegal systemName format or if the node is not
-     * found
+     * Public static method to parse a system name and return the Serial Node.
+     *
+     * @return 'NULL' if illegal systemName format or if the node is not found
      */
-    public static SerialNode getNodeFromSystemName(String systemName) {
+    public static SerialNode getNodeFromSystemName(String systemName, String prefix) {
+        if (prefix.length() < 1) {
+            return null;
+        }
+        log.debug("systemName = {}", systemName);
+        log.debug("prefix = {}", prefix);
         // validate the system Name leader characters
-        if ((systemName.charAt(0) != 'O') || ((systemName.charAt(1) != 'L')
-                && (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T'))) {
+        if (!(systemName.startsWith(prefix)) || ((systemName.charAt(prefix.length()) != 'L')
+                && (systemName.charAt(prefix.length()) != 'S') && (systemName.charAt(prefix.length()) != 'T'))) {
             // here if an illegal format 
-            log.error("illegal character in header field of system name: " + systemName);
+            log.error("illegal character in header field of system name: {}", systemName);
             return (null);
         }
         String s = "";
         boolean noB = true;
-        for (int i = 2; (i < systemName.length()) && noB; i++) {
+        for (int i = prefix.length() + 1; (i < systemName.length()) && noB; i++) {
             if (systemName.charAt(i) == 'B') {
-                s = systemName.substring(2, i);
+                s = systemName.substring(prefix.length() + 1, i);
                 noB = false;
             }
         }
         int ua;
         if (noB) {
             // This is a OLnnxxx address
-            int num = Integer.valueOf(systemName.substring(2)).intValue();
+            // try to parse remaining system name part
+            int num = 0;
+            try {
+                num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue(); // multi char prefix
+            } catch (NumberFormatException ex) {
+                log.warn("invalid character in number field of system name: {}", systemName);
+                return (null);
+            }
             if (num > 0) {
                 ua = num / 1000;
             } else {
-                log.error("invalid system name: " + systemName);
+                log.error("invalid system name: {}", systemName);
                 return (null);
             }
         } else {
             if (s.length() == 0) {
-                log.error("no node address before 'B' in system name: " + systemName);
+                log.error("no node address before 'B' in system name: {}", systemName);
                 return (null);
             } else {
                 try {
                     ua = Integer.parseInt(s);
                 } catch (Exception e) {
-                    log.error("illegal character in system name: " + systemName);
+                    log.error("illegal character in system name: {}", systemName);
                     return (null);
                 }
             }
@@ -72,20 +86,22 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to parse a system name and return the bit number
-     * Notes: Bits are numbered from 1. If an error is found, 0 is returned.
+     * Public static method to parse a system name and return the bit number.
+     * Note: Bits are numbered from 1.
+     *
+     * @return 0 if an error is found
      */
-    public static int getBitFromSystemName(String systemName) {
+    public static int getBitFromSystemName(String systemName, String prefix) {
         // validate the system Name leader characters
-        if ((systemName.charAt(0) != 'O') || ((systemName.charAt(1) != 'L')
-                && (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T'))) {
-            // here if an illegal format 
-            log.error("illegal character in header field of system name: " + systemName);
+        if (!(systemName.startsWith(prefix)) || ((systemName.charAt(prefix.length()) != 'L')
+                && (systemName.charAt(prefix.length()) != 'S') && (systemName.charAt(prefix.length()) != 'T'))) {
+            // here if an illegal format
+            log.error("illegal character in header field of system name: {}", systemName);
             return (0);
         }
         // Find the beginning of the bit number field
         int k = 0;
-        for (int i = 2; ((i < systemName.length()) && (k == 0)); i++) {
+        for (int i = prefix.length() + 1; ((i < systemName.length()) && (k == 0)); i++) {
             if (systemName.charAt(i) == 'B') {
                 k = i + 1;
             }
@@ -95,15 +111,15 @@ public class SerialAddress {
             // here if 'B' not found, name must be CLnnxxx format
             int num;
             try {
-                num = Integer.valueOf(systemName.substring(2)).intValue();
+                num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
             } catch (Exception e) {
-                log.error("illegal character in number field of system name: " + systemName);
+                log.error("illegal character in number field of system name: {}", systemName);
                 return (0);
             }
             if (num > 0) {
                 n = num - ((num / 1000) * 1000);
             } else {
-                log.error("invalid system name: " + systemName);
+                log.error("invalid system name: {}", systemName);
                 return (0);
             }
         } else {
@@ -111,8 +127,7 @@ public class SerialAddress {
             try {
                 n = Integer.parseInt(systemName.substring(k, systemName.length()));
             } catch (Exception e) {
-                log.error("illegal character in bit number field system name: "
-                        + systemName);
+                log.error("illegal character in bit number field system name: {}", systemName);
                 return (0);
             }
         }
@@ -120,26 +135,25 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to validate system name format
+     * Public static method to validate system name format.
      *
-     * @return 'true' if system name has a valid format, else returns 'false'
      * @param type Letter indicating device type expected
+     * @return 'true' if system name has a valid format, else returns 'false'
      */
-    public static boolean validSystemNameFormat(String systemName, char type) {
+    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
         // validate the system Name leader characters
-        if ((systemName.charAt(0) != 'O') || (systemName.charAt(1) != type)) {
+        if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
             // here if an illegal format 
-            log.error("illegal character in header field system name: "
-                    + systemName);
-            return (false);
+            log.error("invalid character in header field system name: {}", systemName);
+            return NameValidity.INVALID;
         }
         // check for the presence of a 'B' to differentiate the two address formats
         String s = "";
         int k = 0;
         boolean noB = true;
-        for (int i = 2; (i < systemName.length()) && noB; i++) {
+        for (int i = prefix.length() + 1; (i < systemName.length()) && noB; i++) {
             if (systemName.charAt(i) == 'B') {
-                s = systemName.substring(2, i);
+                s = systemName.substring(prefix.length() + 1, i);
                 k = i + 1;
                 noB = false;
             }
@@ -148,88 +162,80 @@ public class SerialAddress {
             // This is a OLnnnxxx address
             int num;
             try {
-                num = Integer.valueOf(systemName.substring(2)).intValue();
+                num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
             } catch (Exception e) {
-                log.error("illegal character in number field system name: "
-                        + systemName);
-                return (false);
+                log.warn("invalid character in number field system name: {}", systemName);
+                return NameValidity.INVALID;
             }
             if ((num < 1) || (num >= 256000)) {
-                log.error("number field out of range in system name: "
-                        + systemName);
-                return (false);
+                log.warn("number field out of range in system name: {}", systemName);
+                return NameValidity.INVALID;
             }
             if ((num - ((num / 1000) * 1000)) == 0) {
-                log.error("bit number not in range 1 - 999 in system name: "
-                        + systemName);
-                return (false);
+                log.warn("bit number not in range 1 - 999 in system name: {}", systemName);
+                return NameValidity.INVALID;
             }
         } else {
             // This is a OLnnnBxxxx address - validate the node address field
             if (s.length() == 0) {
-                log.error("no node address before 'B' in system name: "
-                        + systemName);
-                return (false);
+                log.warn("no node address before 'B' in system name: {}", systemName);
+                return NameValidity.INVALID;
             }
             int num;
             try {
                 num = Integer.valueOf(s).intValue();
             } catch (Exception e) {
-                log.error("illegal character in node address field of system name: "
-                        + systemName);
-                return (false);
+                log.warn("invalid character in node address field of system name: {}", systemName);
+                return NameValidity.INVALID;
             }
             if ((num < 0) || (num >= 128)) {
-                log.error("node address field out of range in system name: "
-                        + systemName);
-                return (false);
+                log.warn("node address field out of range in system name: {}", systemName);
+                return NameValidity.INVALID;
             }
             // validate the bit number field
             try {
                 num = Integer.parseInt(systemName.substring(k, systemName.length()));
             } catch (Exception e) {
-                log.error("illegal character in bit number field of system name: "
-                        + systemName);
-                return (false);
+                log.warn("invalid character in bit number field of system name: {}", systemName);
+                return NameValidity.INVALID;
             }
             if ((num < 1) || (num > 2048)) {
-                log.error("bit number field out of range in system name: "
-                        + systemName);
-                return (false);
+                log.warn("bit number field out of range in system name: {}", systemName);
+                return NameValidity.INVALID;
             }
         }
-
-        return true;
+        return NameValidity.VALID;
     }
 
     /**
-     * Public static method to validate system name for configuration returns
-     * 'true' if system name has a valid meaning in current configuration, else
-     * returns 'false'
+     * Public static method to validate system name for configuration.
+     *
+     * @return 'true' if system name has a valid meaning in current configuration, else
+     * return 'false'
      */
-    public static boolean validSystemNameConfig(String systemName, char type) {
-        if (!validSystemNameFormat(systemName, type)) {
+    public static boolean validSystemNameConfig(String systemName, char type, OakTreeSystemConnectionMemo memo) {
+        if (validSystemNameFormat(systemName, type, memo.getSystemPrefix()) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present
-            log.warn(systemName + " invalid; bad format");
+            log.warn("invalid system name {}; bad format", systemName);
             return false;
         }
-        SerialNode node = getNodeFromSystemName(systemName);
+        SerialNode node = getNodeFromSystemName(systemName, memo.getSystemPrefix());
         if (node == null) {
-            log.warn(systemName + " invalid; no such node");
+            log.warn("invalid system name {}; no such node", systemName);
             // The node indicated by this system address is not present
             return false;
         }
-        int bit = getBitFromSystemName(systemName);
+        int bit = getBitFromSystemName(systemName, memo.getSystemPrefix());
         if ((type == 'T') || (type == 'L')) {
             if ((bit <= 0) || (bit > SerialNode.outputBytes[node.nodeType] * 8)) {
                 // The bit is not valid for this defined Serial node
-                log.warn(systemName + " invalid; bad bit number");
+                log.warn("invalid system name {}; bad bit number", systemName);
                 return false;
             }
         } else if (type == 'S') {
             if ((bit <= 0) || (bit > SerialNode.inputBytes[node.nodeType] * 8)) {
                 // The bit is not valid for this defined Serial node
-                log.warn(systemName + " invalid; bad bit number");
+                log.warn("invalid system name {}; bad bit number", systemName);
                 return false;
             }
         } else {
@@ -242,13 +248,14 @@ public class SerialAddress {
 
     /**
      * Public static method to convert one format system name for the alternate
-     * format. If the supplied system name does not have a valid format, or if
-     * there is no representation in the alternate naming scheme, an empty
-     * string is returned.
+     * format.
+     *
+     * @return an empty string if the supplied system name does not have a valid
+     * format, or if there is no representation in the alternate naming scheme
      */
-    public static String convertSystemNameToAlternate(String systemName) {
+    public static String convertSystemNameToAlternate(String systemName, String prefix) {
         // ensure that input system name has a valid format
-        if (!validSystemNameFormat(systemName, systemName.charAt(1))) {
+        if (validSystemNameFormat(systemName, systemName.charAt(prefix.length()), prefix) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present
             return "";
         }
@@ -257,46 +264,49 @@ public class SerialAddress {
         String s = "";
         int k = 0;
         boolean noB = true;
-        for (int i = 2; (i < systemName.length()) && noB; i++) {
+        for (int i = prefix.length() + 1; (i < systemName.length()) && noB; i++) {
             if (systemName.charAt(i) == 'B') {
-                s = systemName.substring(2, i);
+                s = systemName.substring(prefix.length() + 1, i);
                 k = i + 1;
                 noB = false;
             }
         }
         if (noB) {
-            // This is a OLnnnxxx address
-            int num = Integer.valueOf(systemName.substring(2)).intValue();
+            // This is a OLnnnxxx address, convert to B-style
+            int num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
             int nAddress = num / 1000;
             int bitNum = num - (nAddress * 1000);
-            altName = systemName.substring(0, 2) + Integer.toString(nAddress) + "B"
+            altName = prefix + systemName.charAt(prefix.length()) + Integer.toString(nAddress) + "B"
                     + Integer.toString(bitNum);
         } else {
-            // This is a OLnnnBxxxx address 
+            // This is a OLnnnBxxxx address, convert to num-style
             int nAddress = Integer.valueOf(s).intValue();
             int bitNum = Integer.parseInt(systemName.substring(k, systemName.length()));
             if (bitNum > 999) {
                 // bit number is out-of-range for a CLnnnxxx address
                 return "";
             }
-            altName = systemName.substring(0, 2) + Integer.toString((nAddress * 1000) + bitNum);
+            altName = prefix + systemName.charAt(prefix.length()) + Integer.toString((nAddress * 1000) + bitNum);
         }
         return altName;
     }
 
     /**
-     * Public static method to normalize a system name
+     * Public static method to normalize a system name.
      * <P>
      * This routine is used to ensure that each system name is uniquely linked
      * to one bit, by removing extra zeros inserted by the user.
-     * <P>
-     * If the supplied system name does not have a valid format, an empty string
-     * is returned. Otherwise a normalized name is returned in the same format
-     * as the input name.
+     *
+     * @return an empty string if the supplied system name does not have a valid format.
+     * Otherwise a normalized name is returned in the same format as the input name.
      */
-    public static String normalizeSystemName(String systemName) {
+    public static String normalizeSystemName(String systemName, String prefix) {
+        if (prefix.length() < 1) {
+            log.error("invalid system name prefix: {}", prefix);
+            return "";
+        }
         // ensure that input system name has a valid format
-        if (!validSystemNameFormat(systemName, systemName.charAt(1))) {
+        if (validSystemNameFormat(systemName, systemName.charAt(prefix.length()), prefix) != NameValidity.VALID) {
             // No point in normalizing if a valid system name format is not present
             return "";
         }
@@ -305,30 +315,30 @@ public class SerialAddress {
         String s = "";
         int k = 0;
         boolean noB = true;
-        for (int i = 2; (i < systemName.length()) && noB; i++) {
+        for (int i = prefix.length() + 1; (i < systemName.length()) && noB; i++) {
             if (systemName.charAt(i) == 'B') {
-                s = systemName.substring(2, i);
+                s = systemName.substring(prefix.length() + 1, i);
                 k = i + 1;
                 noB = false;
             }
         }
+        char type = systemName.charAt(prefix.length());
         if (noB) {
             // This is a OLnnnxxx address
-            int num = Integer.valueOf(systemName.substring(2)).intValue();
+            int num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
             int nAddress = num / 1000;
             int bitNum = num - (nAddress * 1000);
-            nName = systemName.substring(0, 2) + Integer.toString((nAddress * 1000) + bitNum);
+            nName = prefix + type + Integer.toString((nAddress * 1000) + bitNum);
         } else {
             // This is a OLnnnBxxxx address 
             int nAddress = Integer.valueOf(s).intValue();
             int bitNum = Integer.parseInt(systemName.substring(k, systemName.length()));
-            nName = systemName.substring(0, 2) + Integer.toString(nAddress) + "B"
+            nName = prefix + type + Integer.toString(nAddress) + "B"
                     + Integer.toString(bitNum);
         }
         return nName;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialAddress.class);
+
 }
-
-

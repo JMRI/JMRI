@@ -1,5 +1,6 @@
 package jmri.jmrix.roco.z21;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -152,16 +153,32 @@ public class Z21MessageTest {
         Assert.assertEquals("Monitor String","04 00 89 00",m.toMonitorString());
     }
 
+    @Test
+    public void GetSystemStateDataChangedRequest(){
+        Z21Message m = Z21Message.getLanSystemStateDataChangedRequestMessage();
+        Assert.assertEquals("length", 4, m.getNumDataElements());
+        Assert.assertEquals("0th byte", 0x04, m.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", 0x00, m.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", 0x85, m.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", 0x00, m.getElement(3) & 0xFF);
+    }
+
+    @Test
+    public void toMonitorStringSystemStateDataChangedRequest(){
+        Z21Message m = Z21Message.getLanSystemStateDataChangedRequestMessage();
+        Assert.assertEquals("Monitor String","04 00 85 00",m.toMonitorString());
+    }
+
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After 
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

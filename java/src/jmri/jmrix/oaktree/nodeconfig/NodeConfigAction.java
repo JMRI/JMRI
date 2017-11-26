@@ -2,6 +2,7 @@ package jmri.jmrix.oaktree.nodeconfig;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,17 +13,21 @@ import org.slf4j.LoggerFactory;
  */
 public class NodeConfigAction extends AbstractAction {
 
-    public NodeConfigAction(String s) {
+    private OakTreeSystemConnectionMemo _memo = null;
+
+    public NodeConfigAction(String s, OakTreeSystemConnectionMemo memo) {
         super(s);
+        _memo = memo;
     }
 
-    public NodeConfigAction() {
-        this("Configure Oak Tree Systems Nodes");
+    public NodeConfigAction(OakTreeSystemConnectionMemo memo) {
+        this(Bundle.getMessage("WindowTitle"), memo);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        NodeConfigFrame f = new NodeConfigFrame();
+        NodeConfigFrame f = new NodeConfigFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {
@@ -31,5 +36,7 @@ public class NodeConfigAction extends AbstractAction {
         f.setLocation(100, 30);
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class);
+
 }

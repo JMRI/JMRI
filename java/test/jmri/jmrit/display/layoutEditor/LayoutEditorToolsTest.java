@@ -14,32 +14,38 @@ import org.junit.Test;
  * @author	Paul Bender Copyright (C) 2016
  */
 public class LayoutEditorToolsTest {
+        
+    private LayoutEditor le = null;
+    private LayoutEditorTools let = null;
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutEditor e = new LayoutEditor();
-        LayoutEditorTools t = new LayoutEditorTools(e);
-        Assert.assertNotNull("exists", t);
-        e.dispose();
+        Assert.assertNotNull("exists", let);
+    }
+
+    @Test
+    public void testHitEndBumper() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // we haven't done anything, so reachedEndBumper should return false.
+        Assert.assertFalse("reached end bumper", let.reachedEndBumper());
     }
 
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        if(!GraphicsEnvironment.isHeadless()) {
+           le = new LayoutEditor();
+           let = new LayoutEditorTools(le);
+        }
     }
 
     @After
     public void tearDown() throws Exception {
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        if(!GraphicsEnvironment.isHeadless()) {
+           JUnitUtil.dispose(le);
+        }
+        JUnitUtil.tearDown();
     }
-
 }

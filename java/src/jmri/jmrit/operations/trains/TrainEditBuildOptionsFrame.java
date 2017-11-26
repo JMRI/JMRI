@@ -19,6 +19,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -122,22 +123,22 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     JTextField builtBeforeTextField = new JTextField(10);
 
     // combo boxes
-    JComboBox<String> ownerBox = CarOwners.instance().getComboBox();
+    JComboBox<String> ownerBox = InstanceManager.getDefault(CarOwners.class).getComboBox();
 
     // train requirements 1st set
     JComboBox<RouteLocation> routePickup1Box = new JComboBox<>();
     JComboBox<RouteLocation> routeDrop1Box = new JComboBox<>();
     JComboBox<String> roadCaboose1Box = new JComboBox<>();
-    JComboBox<String> roadEngine1Box = CarRoads.instance().getComboBox();
-    JComboBox<String> modelEngine1Box = EngineModels.instance().getComboBox();
+    JComboBox<String> roadEngine1Box = InstanceManager.getDefault(CarRoads.class).getComboBox();
+    JComboBox<String> modelEngine1Box = InstanceManager.getDefault(EngineModels.class).getComboBox();
     JComboBox<String> numEngines1Box = new JComboBox<>();
 
     // train requirements 2nd set
     JComboBox<RouteLocation> routePickup2Box = new JComboBox<>();
     JComboBox<RouteLocation> routeDrop2Box = new JComboBox<>();
     JComboBox<String> roadCaboose2Box = new JComboBox<>();
-    JComboBox<String> roadEngine2Box = CarRoads.instance().getComboBox();
-    JComboBox<String> modelEngine2Box = EngineModels.instance().getComboBox();
+    JComboBox<String> roadEngine2Box = InstanceManager.getDefault(CarRoads.class).getComboBox();
+    JComboBox<String> modelEngine2Box = InstanceManager.getDefault(EngineModels.class).getComboBox();
     JComboBox<String> numEngines2Box = new JComboBox<>();
 
     public static final String DISPOSE = "dispose"; // NOI18N
@@ -425,8 +426,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         updateTrainRequires2Option();
 
         // get notified if car owners or engine models gets modified
-        CarOwners.instance().addPropertyChangeListener(this);
-        EngineModels.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarOwners.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(EngineModels.class).addPropertyChangeListener(this);
 
         initMinimumSize();
     }
@@ -866,8 +867,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     }
 
     private void updateModelComboBoxes() {
-        EngineModels.instance().updateComboBox(modelEngine1Box);
-        EngineModels.instance().updateComboBox(modelEngine2Box);
+        InstanceManager.getDefault(EngineModels.class).updateComboBox(modelEngine1Box);
+        InstanceManager.getDefault(EngineModels.class).updateComboBox(modelEngine2Box);
         modelEngine1Box.insertItemAt("", 0);
         modelEngine2Box.insertItemAt("", 0);
         if (_train != null) {
@@ -877,14 +878,14 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     }
 
     private void updateOwnerComboBoxes() {
-        CarOwners.instance().updateComboBox(ownerBox);
+        InstanceManager.getDefault(CarOwners.class).updateComboBox(ownerBox);
     }
 
     // update caboose road box based on radio selection
     private void updateCabooseRoadComboBox(JComboBox<String> box) {
         box.removeAllItems();
         box.addItem("");
-        List<String> roads = CarManager.instance().getCabooseRoadNames();
+        List<String> roads = InstanceManager.getDefault(CarManager.class).getCabooseRoadNames();
         for (String road : roads) {
             box.addItem(road);
         }
@@ -896,7 +897,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         }
         box.removeAllItems();
         box.addItem("");
-        List<String> roads = EngineManager.instance().getEngineRoadNames(engineModel);
+        List<String> roads = InstanceManager.getDefault(EngineManager.class).getEngineRoadNames(engineModel);
         for (String road : roads) {
             box.addItem(road);
         }
@@ -956,7 +957,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 
     /*
      * private boolean checkModel(String model, String numberEngines){ if (numberEngines.equals("0") ||
-     * model.equals("")) return true; String type = EngineModels.instance().getModelType(model);
+     * model.equals("")) return true; String type = InstanceManager.getDefault(EngineModels.class).getModelType(model);
      * if(_train.acceptsTypeName(type)) return true; JOptionPane.showMessageDialog(this,
      * MessageFormat.format(Bundle.getMessage("TrainModelService"), new Object[] {model, type}),
      * MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] {Bundle.getMessage("save")}),
@@ -964,8 +965,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
      */
     @Override
     public void dispose() {
-        CarOwners.instance().removePropertyChangeListener(this);
-        EngineModels.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(EngineModels.class).removePropertyChangeListener(this);
         if (_train != null) {
             _train.removePropertyChangeListener(this);
         }
@@ -992,5 +993,5 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainEditBuildOptionsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainEditBuildOptionsFrame.class);
 }

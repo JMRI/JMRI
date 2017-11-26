@@ -38,6 +38,7 @@
             <xs:sequence>
               <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="metric" type="xs:integer" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
             <xs:attribute name="systemName" type="systemNameType">
                 <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>

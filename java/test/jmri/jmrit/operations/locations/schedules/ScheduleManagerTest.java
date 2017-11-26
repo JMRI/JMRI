@@ -2,16 +2,14 @@
 package jmri.jmrit.operations.locations.schedules;
 
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.schedules.Schedule;
-import jmri.jmrit.operations.locations.schedules.ScheduleItem;
-import jmri.jmrit.operations.locations.schedules.ScheduleManager;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Locations class Last manually cross-checked on
@@ -27,15 +25,15 @@ import junit.framework.TestSuite;
 public class ScheduleManagerTest extends OperationsTestCase {
 
     public void testScheduleManager() {
-        LocationManager lm = LocationManager.instance();
+        LocationManager lm = InstanceManager.getDefault(LocationManager.class);
         Location l = lm.newLocation("new test location");
         Track t = l.addTrack("track 1", Track.SPUR);
 
-        ScheduleManager sm = ScheduleManager.instance();
+        ScheduleManager sm = InstanceManager.getDefault(ScheduleManager.class);
 
         // clear out any previous schedules
         sm.dispose();
-        sm = ScheduleManager.instance();
+        sm = InstanceManager.getDefault(ScheduleManager.class);
 
         Schedule s1 = sm.newSchedule("new schedule");
         Schedule s2 = sm.newSchedule("newer schedule");
@@ -43,7 +41,7 @@ public class ScheduleManagerTest extends OperationsTestCase {
         i1.setRoadName("new road");
         i1.setReceiveLoadName("new load");
         i1.setShipLoadName("new ship load");
-        ScheduleItem i2 = s1.addItem("Caboose");
+        ScheduleItem i2 = s1.addItem(Bundle.getMessage("Caboose"));
         i2.setRoadName("road");
         i2.setReceiveLoadName("load");
         i2.setShipLoadName("ship load");
@@ -80,7 +78,7 @@ public class ScheduleManagerTest extends OperationsTestCase {
         Assert.assertEquals("1 Schedule Item 1 load", "new load", i1.getReceiveLoadName());
         Assert.assertEquals("1 Schedule Item 1 ship", "new ship load", i1.getShipLoadName());
 
-        Assert.assertEquals("1 Schedule Item 2 type", "Caboose", i2.getTypeName());
+        Assert.assertEquals("1 Schedule Item 2 type", Bundle.getMessage("Caboose"), i2.getTypeName());
         Assert.assertEquals("1 Schedule Item 2 road", "road", i2.getRoadName());
         Assert.assertEquals("1 Schedule Item 2 load", "load", i2.getReceiveLoadName());
         Assert.assertEquals("1 Schedule Item 2 ship", "ship load", i2.getShipLoadName());
@@ -92,7 +90,7 @@ public class ScheduleManagerTest extends OperationsTestCase {
         Assert.assertEquals("2 Schedule Item 1 load", "new load", i1.getReceiveLoadName());
         Assert.assertEquals("2 Schedule Item 1 ship", "new ship load", i1.getShipLoadName());
 
-        Assert.assertEquals("2 Schedule Item 2 type", "Caboose", i2.getTypeName());
+        Assert.assertEquals("2 Schedule Item 2 type", Bundle.getMessage("Caboose"), i2.getTypeName());
         Assert.assertEquals("2 Schedule Item 2 road", "road", i2.getRoadName());
         Assert.assertEquals("2 Schedule Item 2 load", "load", i2.getReceiveLoadName());
         Assert.assertEquals("2 Schedule Item 2 ship", "ship load", i2.getShipLoadName());
@@ -104,12 +102,12 @@ public class ScheduleManagerTest extends OperationsTestCase {
         Assert.assertEquals("3 Schedule Item 1 load", "new load", i1.getReceiveLoadName());
         Assert.assertEquals("3 Schedule Item 1 ship", "new ship load", i1.getShipLoadName());
 
-        Assert.assertEquals("3 Schedule Item 2 type", "Caboose", i2.getTypeName());
+        Assert.assertEquals("3 Schedule Item 2 type", Bundle.getMessage("Caboose"), i2.getTypeName());
         Assert.assertEquals("3 Schedule Item 2 road", "road", i2.getRoadName());
         Assert.assertEquals("3 Schedule Item 2 load", "load", i2.getReceiveLoadName());
         Assert.assertEquals("3 Schedule Item 2 ship", "ship load", i2.getShipLoadName());
 
-        sm.replaceType("Caboose", "BoxCar");
+        sm.replaceType(Bundle.getMessage("Caboose"), "BoxCar");
 
         Assert.assertEquals("4 Schedule Item 1 type", "replaced car type", i1.getTypeName());
         Assert.assertEquals("4 Schedule Item 1 road", "replaced road", i1.getRoadName());

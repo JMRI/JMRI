@@ -2,18 +2,17 @@ package jmri.managers;
 
 import java.util.Arrays;
 import java.util.Set;
+import jmri.AddressedProgrammerManager;
 import jmri.AudioManager;
 import jmri.BlockManager;
-import jmri.CatalogTreeManager;
 import jmri.ClockControl;
 import jmri.ConditionalManager;
-import jmri.IdTagManager;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.LogixManager;
 import jmri.MemoryManager;
-import jmri.ProgrammerManager;
 import jmri.RailComManager;
 import jmri.ReporterManager;
 import jmri.RouteManager;
@@ -28,8 +27,6 @@ import jmri.TurnoutManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.audio.DefaultAudioManager;
-import jmri.jmrit.catalog.DefaultCatalogTreeManager;
-import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -64,20 +61,12 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
             return DefaultAudioManager.instance();
         }
 
-        if (type == CatalogTreeManager.class) {
-            return new DefaultCatalogTreeManager();
-        }
-
         if (type == ClockControl.class) {
             return new DefaultClockControl();
         }
 
         if (type == ConditionalManager.class) {
             return new DefaultConditionalManager();
-        }
-
-        if (type == IdTagManager.class) {
-            return new DefaultIdTagManager();
         }
 
         if (type == LightManager.class) {
@@ -92,7 +81,11 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
             return new DefaultMemoryManager();
         }
 
-        if (type == ProgrammerManager.class) {
+        if (type == AddressedProgrammerManager.class) {
+            return new DeferringProgrammerManager();
+        }
+
+        if (type == GlobalProgrammerManager.class) {
             return new DeferringProgrammerManager();
         }
 
@@ -102,10 +95,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
         if (type == ReporterManager.class) {
             return new jmri.managers.ProxyReporterManager();
-        }
-
-        if (type == RosterIconFactory.class) {
-            return RosterIconFactory.instance();
         }
 
         if (type == RouteManager.class) {
@@ -165,17 +154,15 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
         set.addAll(Arrays.asList(
                 AudioManager.class,
                 BlockManager.class,
-                CatalogTreeManager.class,
                 ClockControl.class,
                 ConditionalManager.class,
-                IdTagManager.class,
                 LightManager.class,
                 LogixManager.class,
                 MemoryManager.class,
-                ProgrammerManager.class,
+                AddressedProgrammerManager.class,
+                GlobalProgrammerManager.class,
                 RailComManager.class,
                 ReporterManager.class,
-                RosterIconFactory.class,
                 RouteManager.class,
                 SensorManager.class,
                 SignalGroupManager.class,

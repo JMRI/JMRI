@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,8 +27,8 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
     LocoNetInterfaceScaffold lnis;
 
     @After
-    public void tearDown(){
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
     @Override
@@ -108,6 +109,6 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTurnoutManagerTest.class);
 
 }

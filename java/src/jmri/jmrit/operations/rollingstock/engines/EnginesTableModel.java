@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -23,7 +24,7 @@ import org.slf4j.LoggerFactory;
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    EngineManager manager = EngineManager.instance(); // There is only one manager
+    EngineManager manager = InstanceManager.getDefault(EngineManager.class); // There is only one manager
 
     // Defines the columns
     private static final int NUM_COLUMN = 0;
@@ -74,7 +75,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     /**
      * Not all columns are visible at the same time.
-     * 
+     *
      * @param sort which sort is active
      */
     public void setSort(int sort) {
@@ -125,7 +126,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     private int getIndex(int start, String roadNumber) {
         for (int index = start; index < sysList.size(); index++) {
-            Engine e = (Engine) sysList.get(index);
+            Engine e = sysList.get(index);
             if (e != null) {
                 String[] number = e.getNumber().split("-");
                 // check for wild card '*'
@@ -164,8 +165,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
-    public List<RollingStock> getSelectedEngineList() {
-        List<RollingStock> list;
+    public List<Engine> getSelectedEngineList() {
+        List<Engine> list;
         if (_sort == SORTBY_ROAD) {
             list = manager.getByRoadNameList();
         } else if (_sort == SORTBY_MODEL) {
@@ -196,7 +197,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         return list;
     }
 
-    List<RollingStock> sysList = null;
+    List<Engine> sysList = null;
 
     JTable _table;
     EnginesTableFrame _frame;
@@ -334,7 +335,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
-        Engine eng = (Engine) sysList.get(row);
+        Engine eng = sysList.get(row);
         if (eng == null) {
             return "ERROR engine unknown " + row; // NOI18N
         }
@@ -415,7 +416,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-        Engine engine = (Engine) sysList.get(row);
+        Engine engine = sysList.get(row);
         switch (col) {
             case MOVES_COLUMN:
                 try {
@@ -518,5 +519,5 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EnginesTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EnginesTableModel.class);
 }

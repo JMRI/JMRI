@@ -4,6 +4,7 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
@@ -29,7 +30,7 @@ public class PrintTrainsAction extends PrintTrainAction {
     static final String TAB = "\t"; // NOI18N
     static final char FORM_FEED = '\f'; // NOI18N
 
-    TrainManager trainManager = TrainManager.instance();
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
     TrainsTableFrame trainsTableFrame;
 
     public static final int MAX_NAME_LENGTH = Control.max_len_string_train_name - 10;
@@ -119,5 +120,5 @@ public class PrintTrainsAction extends PrintTrainAction {
         return buf.toString();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintTrainsAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintTrainsAction.class);
 }

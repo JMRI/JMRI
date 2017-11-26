@@ -1,5 +1,6 @@
 package jmri.jmrix.marklin;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 
@@ -23,7 +24,7 @@ public class MarklinTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
     @Override
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

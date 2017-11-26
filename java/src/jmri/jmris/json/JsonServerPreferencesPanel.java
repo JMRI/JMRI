@@ -2,7 +2,6 @@ package jmri.jmris.json;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -10,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
+import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 import org.openide.util.lookup.ServiceProvider;
@@ -24,14 +24,12 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     public static final int MIN_HEARTBEAT_INTERVAL = 1;
     private JSpinner heartbeatIntervalSpinner;
     private JSpinner port;
-    private JButton btnSave;
-    private JButton btnCancel;
     private JsonServerPreferences preferences;
     private JFrame parentFrame = null;
 
     public JsonServerPreferencesPanel() {
         this.preferences = new JsonServerPreferences();
-        this.preferences.apply(JsonServerPreferences.getDefault());
+        this.preferences.apply(InstanceManager.getDefault(JsonServerPreferences.class));
         initGUI();
         setGUI();
     }
@@ -56,14 +54,6 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     }
 
     /**
-     * Show the save and cancel buttons if displayed in its own frame.
-     */
-    public void enableSave() {
-        btnSave.setVisible(true);
-        btnCancel.setVisible(true);
-    }
-
-    /**
      * set the local prefs to match the GUI Local prefs are independent from the
      * singleton instance prefs.
      *
@@ -74,20 +64,6 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
         preferences.setHeartbeatInterval((int) heartbeatIntervalSpinner.getValue() * 1000); // convert to milliseconds from seconds
         preferences.setPort((int) port.getValue());
         return didSet;
-    }
-
-    /**
-     * Update the singleton instance of prefs, then mark (isDirty) that the
-     * values have changed and needs to save to xml file.
-     */
-    protected void applyValues() {
-        this.setValues();
-    }
-
-    protected void cancelValues() {
-        if (getTopLevelAncestor() != null) {
-            ((JFrame) getTopLevelAncestor()).setVisible(false);
-        }
     }
 
     private JPanel heartbeatPanel() {
@@ -159,8 +135,8 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     @Override
     public void savePreferences() {
         if (this.setValues()) {
-            JsonServerPreferences.getDefault().apply(this.preferences);
-            JsonServerPreferences.getDefault().save();
+            InstanceManager.getDefault(JsonServerPreferences.class).apply(this.preferences);
+            InstanceManager.getDefault(JsonServerPreferences.class).save();
             if (this.parentFrame != null) {
                 this.parentFrame.dispose();
             }
@@ -169,13 +145,13 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
 
     @Override
     public boolean isDirty() {
-        return this.preferences.compareValuesDifferent(JsonServerPreferences.getDefault())
-                || JsonServerPreferences.getDefault().isDirty();
+        return this.preferences.compareValuesDifferent(InstanceManager.getDefault(JsonServerPreferences.class))
+                || InstanceManager.getDefault(JsonServerPreferences.class).isDirty();
     }
 
     @Override
     public boolean isRestartRequired() {
-        return JsonServerPreferences.getDefault().isRestartRequired();
+        return InstanceManager.getDefault(JsonServerPreferences.class).isRestartRequired();
     }
 
     @Override

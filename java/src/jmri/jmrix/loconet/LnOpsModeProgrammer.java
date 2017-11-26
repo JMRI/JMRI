@@ -5,7 +5,6 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
-
 import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.Programmer;
@@ -60,7 +59,44 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
         this.p = null;
         // Check mode
-        if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
+        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+            /**
+             * CV format is e.g. "113.12" where the first part defines the
+             * typeword for the specific board type and the second is the specific bit number
+             * Known values:
+             * <UL>
+             * <LI>0x70 112 - PM4
+             * <LI>0x71 113 - BDL16
+             * <LI>0x72 114 - SE8
+             * <LI>0x73 115 - DS64
+             * </ul>
+             */
+            this.p = p;
+            doingWrite = true;
+            // Board programming mode
+            log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
+            String[] parts = CV.split("\\.");
+            int typeWord = Integer.parseInt(parts[0]);
+            int state = Integer.parseInt(parts[parts.length>1 ? 1 : 0]);
+            
+            // make message
+            LocoNetMessage m = new LocoNetMessage(6);
+            m.setOpCode(LnConstants.OPC_MULTI_SENSE);
+            int element = 0x72;
+            if ((mAddress & 0x80) != 0) {
+                element |= 1;
+            }
+            m.setElement(1, element);
+            m.setElement(2, mAddress & 0x7F);  
+            m.setElement(3, typeWord);
+            int loc = (state - 1) / 8;
+            int bit = (state - 1) - loc * 8;
+            m.setElement(4, loc * 16 + bit * 2  + (val&0x01));
+
+            log.debug("  Message {}", m);
+            memo.getLnTrafficController().sendLocoNetMessage(m);      
+                  
+        } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
             this.p = p;
             doingWrite = true;
             // SV1 mode
@@ -95,7 +131,44 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     public void readCV(String CV, ProgListener p) throws ProgrammerException {
         this.p = null;
         // Check mode
-        if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
+        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+            /**
+             * CV format is e.g. "113.12" where the first part defines the
+             * typeword for the specific board type and the second is the specific bit number
+             * Known values:
+             * <UL>
+             * <LI>0x70 112 - PM4
+             * <LI>0x71 113 - BDL16
+             * <LI>0x72 114 - SE8
+             * <LI>0x73 115 - DS64
+             * </ul>
+             */
+            this.p = p;
+            doingWrite = false;
+            // Board programming mode
+            log.debug("read CV \"{}\" addr:{}", CV, mAddress);
+            String[] parts = CV.split("\\.");
+            int typeWord = Integer.parseInt(parts[0]);
+            int state = Integer.parseInt(parts[parts.length>1 ? 1 : 0]);
+            
+            // make message
+            LocoNetMessage m = new LocoNetMessage(6);
+            m.setOpCode(LnConstants.OPC_MULTI_SENSE);
+            int element = 0x62;
+            if ((mAddress & 0x80) != 0) {
+                element |= 1;
+            }
+            m.setElement(1, element);
+            m.setElement(2, mAddress & 0x7F);
+            m.setElement(3, typeWord);
+            int loc = (state - 1) / 8;
+            int bit = (state - 1) - loc * 8;
+            m.setElement(4, loc * 16 + bit * 2);
+
+            log.debug("  Message {}", m);
+            memo.getLnTrafficController().sendLocoNetMessage(m);      
+                  
+        } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
             this.p = p;
             doingWrite = false;
             // SV1 mode
@@ -148,12 +221,46 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
     @Override
     public void message(LocoNetMessage m) {
-        // see if reply to LNSV 1 or LNSV2 request
-        if ((m.getElement( 0) & 0xFF) != 0xE5) return;
-        if ((m.getElement( 1) & 0xFF) != 0x10) return;
 
         log.debug("reply {}",m);
-        if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
+        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+        
+            // are we reading? If not, ignore
+            if (p == null) {
+                log.warn("received board-program reply message with no reply object: {}", m);
+                return;
+            }
+            if (doingWrite) return;
+
+            // check for right type, unit
+            if (m.getOpCode() != 0xb4
+                    || ((m.getElement(1) != 0x00) && (m.getElement(1) != 0x50))) {
+                return;
+            }
+
+            // LACK with 0 in opcode; assume its to us.  Note that there
+            // should be a 0x50 in the opcode, not zero, but this is what we
+            // see...
+            int val = 0;
+            if ((m.getElement(2) & 0x20) != 0) {
+                val = 1;
+            }
+
+            // successful read if LACK return status is not 0x7F
+            int code = ProgListener.OK;
+            if ((m.getElement(2) == 0x7f)) {
+                code = ProgListener.UnknownError;
+            }
+        
+            ProgListener temp = p;
+            p = null;
+            temp.programmingOpReply(val, code);
+        
+        
+        } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
+            // see if reply to LNSV 1 or LNSV2 request
+            if ((m.getElement( 0) & 0xFF) != 0xE5) return;
+            if ((m.getElement( 1) & 0xFF) != 0x10) return;
             if ((m.getElement( 4) & 0xFF) != 0x01) return; // format 1
             if ((m.getElement( 5) & 0x70) != 0x00) return; // 5
         
@@ -185,6 +292,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
                 temp.programmingOpReply(val, code);
             }
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
+            // see if reply to LNSV 1 or LNSV2 request
+            if ((m.getElement( 0) & 0xFF) != 0xE5) return;
+            if ((m.getElement( 1) & 0xFF) != 0x10) return;
             if ((m.getElement(3) != 0x41) && (m.getElement(3) != 0x42)) return; // need a "Write One Reply", or a "Read One Reply"
             if ((m.getElement( 4) & 0xFF) != 0x02) return; // format 2
             if ((m.getElement( 5) & 0x70) != 0x10) return; // need SVX1 high nibble = 1
@@ -260,7 +370,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
     
     // handle mode
-    protected ProgrammingMode mode = DefaultProgrammerManager.OPSBYTEMODE;
+    protected ProgrammingMode mode = ProgrammingMode.OPSBYTEMODE;
 
     @Override
     public final void setMode(ProgrammingMode m) {
@@ -283,9 +393,10 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
         ret.add(LnProgrammerManager.LOCONETSV1MODE);
         ret.add(LnProgrammerManager.LOCONETSV2MODE);
+        ret.add(LnProgrammerManager.LOCONETBDOPSWMODE);
         return ret;
     }
 
@@ -300,7 +411,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     @Nonnull
     @Override
     public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) {
-        if (getMode().equals(DefaultProgrammerManager.OPSBYTEMODE)) return WriteConfirmMode.NotVerified;
+        if (getMode().equals(ProgrammingMode.OPSBYTEMODE)) return WriteConfirmMode.NotVerified;
         return WriteConfirmMode.DecoderReply;
     }
 
@@ -375,6 +486,6 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LnOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnOpsModeProgrammer.class);
 
 }

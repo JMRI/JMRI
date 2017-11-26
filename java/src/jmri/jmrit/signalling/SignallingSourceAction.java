@@ -1,7 +1,6 @@
 package jmri.jmrit.signalling;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +13,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SignallingSourceAction extends AbstractAction {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
-
     public SignallingSourceAction(String s) {
         super(s);
     }
@@ -26,7 +23,7 @@ public class SignallingSourceAction extends AbstractAction {
     }
 
     public SignallingSourceAction() {
-        super(rb.getString("SignallingPairs"));
+        super(Bundle.getMessage("SignallingPairs"));  // NOI18N
     }
 
     public void setMast(jmri.SignalMast source) {
@@ -45,10 +42,10 @@ public class SignallingSourceAction extends AbstractAction {
         try {
             f.initComponents(source);
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: " + ex.toString());  // NOI18N
             ex.printStackTrace();
         }
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(SignallingSourceAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignallingSourceAction.class);
 }

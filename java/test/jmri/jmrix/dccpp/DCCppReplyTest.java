@@ -1,9 +1,10 @@
 package jmri.jmrix.dccpp;
 
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * DCCppReplyTest.java
@@ -13,14 +14,16 @@ import junit.framework.TestSuite;
  * @author	Bob Jacobsen
  * @author	Mark Underwood (C) 2015
  */
-public class DCCppReplyTest extends TestCase {
+public class DCCppReplyTest {
 
+    @Test
     public void testCtor() {
         DCCppReply m = new DCCppReply();
         Assert.assertNotNull(m);
     }
 
     // Test the string constructor.
+    @Test
     public void testStringCtor() {
         DCCppReply m = DCCppReply.parseDCCppReply("H 23 1");
         Assert.assertEquals("length", 6, m.getNumDataElements());
@@ -33,6 +36,7 @@ public class DCCppReplyTest extends TestCase {
     }
 
     // check is direct mode response
+    @Test
     public void testIsDirectModeResponse() {
         // CV 1 in direct mode.
         DCCppReply r = DCCppReply.parseDCCppReply("r 1234|87|23 12");
@@ -44,14 +48,17 @@ public class DCCppReplyTest extends TestCase {
     }
 
     // check get service mode CV Number response code.
+    @Test
     public void testGetServiceModeCVNumber() {
     }
 
     // check get service mode CV Value response code.
+    @Test
     public void testGetServiceModeCVValue() {
     }
     
     // Test Comm Type Reply
+    @Test
     public void testCommTypeReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("N0: SERIAL");
         Assert.assertTrue(l.isCommTypeReply());
@@ -67,32 +74,15 @@ public class DCCppReplyTest extends TestCase {
         
     }
 
-    // from here down is testing infrastructure
-    public DCCppReplyTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DCCppReplyTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DCCppReplyTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

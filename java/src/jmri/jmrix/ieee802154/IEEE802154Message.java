@@ -64,7 +64,7 @@ public class IEEE802154Message extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * check whether the message has a valid parity IEEE 802.15.4 messages have
+     * Check whether the message has a valid parity IEEE 802.15.4 messages have
      * a two byte parity.
      * @return true if parity is valid
      */

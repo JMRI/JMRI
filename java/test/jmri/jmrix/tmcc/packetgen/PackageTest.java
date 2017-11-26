@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     SerialPacketGenActionTest.class,
-    SerialPacketGenFrameTest.class
+    SerialPacketGenFrameTest.class,
+    BundleTest.class
 })
 
 /**
@@ -31,6 +32,6 @@ public class PackageTest{
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

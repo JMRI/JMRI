@@ -53,6 +53,25 @@ public class TransitSection {
     }
 
     /**
+     * Create an alternate or primary TransitSection, and defined as safe or not
+     *
+     * @param s         the section to add to the transit
+     * @param seq       the sequence number of the section in the transit
+     * @param direction the direction of travel within the transit
+     * @param alt       true if the section is an alternate; false if section is
+     *                  primary or has no alternates
+     * @param safe      true if this is a safe section. When dispatcher by safe sections
+     *                  a train is dispatched safe section to safe section with all intervening sections available.
+     */
+    public TransitSection(jmri.Section s, int seq, int direction, boolean alt, boolean safe) {
+        mSection = s;
+        mSequence = seq;
+        mDirection = direction;
+        mAlternate = alt;
+        mSafe = safe;
+    }
+
+    /**
      * Create an alternate or primary TransitSection with a delayed
      * initialization.
      *
@@ -70,12 +89,34 @@ public class TransitSection {
         needsInitialization = true;
     }
 
+    /**
+     * Create an alternate or primary TransitSection with a delayed
+     * initialization.
+     *
+     * @param secName   the name of the section to add to the transit
+     * @param seq       the sequence number of the section in the transit
+     * @param direction the direction of travel within the transit
+     * @param alt       true if the section is an alternate; false if section is
+     *                  primary or has no alternates
+     * @param safe      true if this is a safe section. When dispatcher by safe sections
+     *                  a train is dispatched safe section to safe section with all intervening sections available.
+     */
+    public TransitSection(String secName, int seq, int direction, boolean alt, boolean safe) {
+        tSectionName = secName;
+        mSequence = seq;
+        mDirection = direction;
+        mAlternate = alt;
+        mSafe = safe;
+        needsInitialization = true;
+    }
+
     // instance variables
     private Section mSection = null;
     private int mSequence = 0;
     private int mDirection = 0;
     private final ArrayList<TransitSectionAction> mTransitSectionActionList = new ArrayList<>();
     private boolean mAlternate = false;
+    private boolean mSafe = false;
 
     // temporary variables and method for delayed initialization of Section
     private String tSectionName = "";
@@ -149,6 +190,14 @@ public class TransitSection {
         mAlternate = alt;
     }
 
+    public boolean isSafe() {
+        return mSafe;
+    }
+
+    public void setSafe(boolean safe) {
+        mSafe = safe;
+    }
+
     /**
      * Get a list of the actions for this TransitSection
      *
@@ -158,5 +207,5 @@ public class TransitSection {
         return new ArrayList<>(mTransitSectionActionList);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TransitSection.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TransitSection.class);
 }

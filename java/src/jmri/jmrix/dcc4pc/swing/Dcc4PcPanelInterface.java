@@ -17,6 +17,6 @@ public interface Dcc4PcPanelInterface {
      * This needs to be connected to the initContext() method in implementing
      * classes.
      */
-    public void initComponents(Dcc4PcSystemConnectionMemo memo) throws Exception;
+    public void initComponents(Dcc4PcSystemConnectionMemo memo);
 
 }

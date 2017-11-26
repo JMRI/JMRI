@@ -2,14 +2,15 @@ package jmri.util.swing;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import javax.swing.text.JTextComponent;
 
 /**
  * Extends JTextField to provide a data validation function and a colorization
  * function.
- *
+ * <p>
  * Supports two types of validated field: a generic text fields with length
- * and/or character set limited by a JAVA regular expression or an integral
- * numeric fields with minimum and maximum allowed values.
+ * and/or character set limited by a Java regular expression or an integral
+ * numeric field with minimum and maximum allowed values.
  *
  * @author B. Milhaupt Copyright 2010, 2011
  */
@@ -20,18 +21,19 @@ public class ValidatedTextField extends javax.swing.JTextField {
     /**
      * Provides a validated text field, where the validation mechanism requires
      * a String value which passes the matching defined in validationRegExpr .
-     *
+     * <p>
      * Validation occurs as part of the process of focus leaving the field. When
      * validation fails, the focus remains within the field, and the field
      * foreground and background colors are changed.
-     *
+     * <p>
      * When focus leaves the field and the field value is valid, the value will
      * be checked against the "Last Queried Value". If the current field value
      * matches the "Last Queried Value", the field is colored using the default
      * field foreground and background colors. If instead the current field
      * value does not match the "Last Queried Value", the field background color
      * is changed to reflect that the value is not yet saved. Use the
-     * setLastQueriedValue() method to set the value for this comparison.
+     * {@link #setLastQueriedValue(String)} method to set the value for this
+     * comparison.
      *
      * @param len                    defines the width of the text field entry
      *                               box, in characters
@@ -88,11 +90,11 @@ public class ValidatedTextField extends javax.swing.JTextField {
      * a String value which passes the matching defined in validationRegExpr,
      * and where the string begins with a number which must be within a
      * specified integral range.
-     *
+     * <p>
      * Validation occurs as part of the process of focus leaving the field. When
      * validation fails, the focus remains within the field, and the field
      * foreground and background colors are changed.
-     *
+     * <p>
      * When focus leaves the field and the field value is valid, the value will
      * be checked against the "Last Queried Value". If the current field value
      * matches the "Last Queried Value", the field is colorized using the
@@ -166,11 +168,11 @@ public class ValidatedTextField extends javax.swing.JTextField {
     /**
      * Provides a validated text field for integral values, where the validation
      * mechanism requires a numeric value between a minimum and maximum value.
-     *
+     * <p>
      * Validation occurs as part of the process of focus leaving the field. When
      * validation fails, the focus remains within the field, and the field
      * foreground and background colors are changed.
-     *
+     * <p>
      * When focus leaves the field and the field value is valid, the value will
      * be checked against the "Last Queried Value". If the current field value
      * matches the "Last Queried Value", the field is colored using the default
@@ -224,21 +226,22 @@ public class ValidatedTextField extends javax.swing.JTextField {
     }
 
     /**
-     * Provides a validated text field, where the validation mechanism requires
-     * a Numeric value which is a hexadecimal value which is valid and within a
+     * Provide a validated text field, where the validation mechanism requires a
+     * Numeric value which is a hexadecimal value which is valid and within a
      * given numeric range.
-     *
+     * <p>
      * Validation occurs as part of the process of focus leaving the field. When
      * validation fails, the focus remains within the field, and the field
      * foreground and background colors are changed.
-     *
+     * <p>
      * When focus leaves the field and the field value is valid, the value will
      * be checked against the "Last Queried Value". If the current field value
      * matches the "Last Queried Value", the field is colored using the default
      * field foreground and background colors. If instead the current field
      * value does not match the "Last Queried Value", the field background color
      * is changed to reflect that the value is not yet saved. Use the
-     * setLastQueriedValue() method to set the value for this comparison.
+     * {@link #setLastQueriedValue(String)} method to set the value for this
+     * comparison.
      *
      * @param len                    the length of the field
      * @param minAcceptableVal       defines the lowest acceptable value
@@ -282,16 +285,16 @@ public class ValidatedTextField extends javax.swing.JTextField {
         });
     }
 
-    private String lastQueryValue;    // used for GUI field colorization
-    private String validateRegExpr;     // used for validation of TEXT ValidatedTextField objects
-    private Integer minAllowedValue;    // used for validation of INTEGRALNUMERIC ValidatedTextField objects
-    private Integer maxAllowedValue;    // used for validation of INTEGRALNUMERIC ValidatedTextField objects
-    private boolean allow0Length;  // used for validation
+    private String lastQueryValue;            // used for GUI field colorization
+    private String validateRegExpr;           // used for validation of TEXT ValidatedTextField objects
+    private final Integer minAllowedValue;    // used for validation of INTEGRALNUMERIC ValidatedTextField objects
+    private final Integer maxAllowedValue;    // used for validation of INTEGRALNUMERIC ValidatedTextField objects
+    private final boolean allow0Length;       // used for validation
 
-    private String validationErrorText; // text used when validation fails
-    private FieldType fieldType;        // used to distinguis between INTEGRALNUMERIC-only and TEXT ValidatedTextField objects
-    private boolean forceUpper;         // used for forcing all input to upper-case for TEXT ValidatedTextField objects
-    private MyVerifier verifier;        // internal mechanism used for verifying field data before focus is lost
+    private final String validationErrorText; // text used when validation fails
+    private final FieldType fieldType;        // used to distinguish between INTEGRALNUMERIC-only and TEXT ValidatedTextField objects
+    private final boolean forceUpper;         // used for forcing all input to upper-case for TEXT ValidatedTextField objects
+    private final MyVerifier verifier;        // internal mechanism used for verifying field data before focus is lost
 
     /**
      * Method to colorize enabled field based on comparison with the last
@@ -340,7 +343,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
     }
 
     /**
-     * Validates the field information. Does not make any GUI changes. A field
+     * Validate the field information. Does not make any GUI changes. A field
      * value that is zero-length is considered invalid.
      *
      * @return true if current field information is valid; otherwise false
@@ -352,88 +355,92 @@ public class ValidatedTextField extends javax.swing.JTextField {
             return false;
         }
         value = getText();
-        if (fieldType == FieldType.TEXT) {
-            if ((value.length() < 1) && (allow0Length == false)) {
-                return false;
-            } else if (((allow0Length == true) && (value.length() == 0))
-                    || (value.matches(validateRegExpr))) {
-                return true;
-            } else {
-                return false;
-            }
-        } else if (fieldType == FieldType.INTEGRALNUMERIC) {
-            try {
-                if ((allow0Length == true) && (value.length() == 0)) {
-                    return true;
-                } else if (value.length() == 0) {
-                    return false;
-                } else if ((Integer.parseInt(value) >= minAllowedValue)
-                        && (Integer.parseInt(value) <= maxAllowedValue)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        } else if (fieldType == FieldType.INTEGRALNUMERICPLUSSTRING) {
-            Integer findLocation = 999;
-            Integer location = 999;
-            if ((allow0Length == true) && (value.length() == 0)) {
-                return true;
-            } else if (value.length() == 0) {
-                return false;
-            }
-
-            location = value.indexOf('c');
-            if ((location != -1) && (location < findLocation)) {
-                findLocation = location;
-            }
-            location = value.indexOf('C');
-            if ((location != -1) && (location < findLocation)) {
-                findLocation = location;
-            }
-            location = value.indexOf('t');
-            if ((location != -1) && (location < findLocation)) {
-                findLocation = location;
-            }
-            location = value.indexOf('T');
-            if ((location != -1) && (location < findLocation)) {
-                findLocation = location;
-            }
-            if (findLocation == 999) {
-                return false;
-            }
-
-            try {
-                Integer address = Integer.parseInt(value.substring(0, findLocation));
-                return (address >= minAllowedValue
-                        && address <= maxAllowedValue
-                        && value.length() >= 2
-                        && value.matches(validateRegExpr));
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        } else if (fieldType == FieldType.LIMITEDHEX) {
-            try {
-                if (value.isEmpty()) {
-                    return false;
-                } else {
-                    return Integer.parseInt(value, 16) >= minAllowedValue
-                            && Integer.parseInt(value, 16) <= maxAllowedValue;
-                }
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        } else {
+        if (null == fieldType) {
             // unknown validation field type
             return false;
+        } else {
+            switch (fieldType) {
+                case TEXT:
+                    if ((value.length() < 1) && (allow0Length == false)) {
+                        return false;
+                    } else {
+                        return ((allow0Length == true) && (value.length() == 0))
+                                || (value.matches(validateRegExpr));
+                    }
+                case INTEGRALNUMERIC:
+                    try {
+                        if ((allow0Length == true) && (value.length() == 0)) {
+                            return true;
+                        } else if (value.length() == 0) {
+                            return false;
+                        } else {
+                            return (Integer.parseInt(value) >= minAllowedValue)
+                                    && (Integer.parseInt(value) <= maxAllowedValue);
+                        }
+                    } catch (NumberFormatException e) {
+                        return false;
+                    }
+                case INTEGRALNUMERICPLUSSTRING:
+                    Integer findLocation = -1;
+                    Integer location;
+                    if ((allow0Length == true) && (value.length() == 0)) {
+                        return true;
+                    } else if (value.length() == 0) {
+                        return false;
+                    }
+
+                    location = value.indexOf('c');
+                    if ((location != -1) && (location < findLocation)) {
+                        findLocation = location;
+                    }
+                    location = value.indexOf('C');
+                    if ((location != -1) && (location < findLocation)) {
+                        findLocation = location;
+                    }
+                    location = value.indexOf('t');
+                    if ((location != -1) && (location < findLocation)) {
+                        findLocation = location;
+                    }
+                    location = value.indexOf('T');
+                    if ((location != -1) && (location < findLocation)) {
+                        findLocation = location;
+                    }
+                    if (findLocation == -1) {
+                        return false;
+                    }
+
+                    try {
+                        Integer address = Integer.parseInt(value.substring(0, findLocation));
+                        return (address >= minAllowedValue
+                                && address <= maxAllowedValue
+                                && value.length() >= 2
+                                && value.matches(validateRegExpr));
+                    } catch (NumberFormatException e) {
+                        return false;
+                    }
+                case LIMITEDHEX:
+                    try {
+                        if (value.isEmpty()) {
+                            return false;
+                        } else {
+                            return Integer.parseInt(value, 16) >= minAllowedValue
+                                    && Integer.parseInt(value, 16) <= maxAllowedValue;
+                        }
+                    } catch (NumberFormatException e) {
+                        return false;
+                    }
+                default:
+                    // unknown validation field type
+                    return false;
+            }
         }
     }
 
     /**
-     * Method to set the "Last Queried Value". This value is used by the
-     * colorization process when focus is exiting the field.
+     * Set the "Last Queried Value". This value is used by the colorization
+     * process when focus is exiting the field.
+     *
+     * @see #getLastQueriedValue()
      *
      * @param lastQueriedValue the last value verified
      */
@@ -443,13 +450,37 @@ public class ValidatedTextField extends javax.swing.JTextField {
     }
 
     /**
-     * Method to retrieve the current value of the "Last Queried Value". See
-     * also setLastQueriedValue().
+     * Retrieve the current value of the "Last Queried Value".
+     *
+     * @see #setLastQueriedValue(String)
      *
      * @return the last value verified
      */
     public String getLastQueriedValue() {
         return lastQueryValue;
+    }
+
+    /**
+     * Set the "validationRegExp".
+     *
+     * @see #getValidateRegExp()
+     *
+     * @param validationRegExpr new validation pattern
+     */
+    public void setValidateRegExp(String validationRegExpr) {
+        validateRegExpr = validationRegExpr;
+    }
+
+    /**
+     * Retrieve the current "validationRegExp". Used in eg. Add Turnout to
+     * attach a manager-specific pattern without redrawing the pane
+     *
+     * @see #setValidateRegExp(String)
+     *
+     * @return the current validation pattern
+     */
+    public String getValidateRegExp() {
+        return validateRegExpr;
     }
 
     /**
@@ -471,7 +502,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
 
         @Override
         public boolean shouldYieldFocus(javax.swing.JComponent input) {
-            if (input.getClass() == ValidatedTextField.class) {
+            if (input instanceof ValidatedTextField) {
 
                 if (((ValidatedTextField) input).forceUpper) {
                     ((ValidatedTextField) input).setText(((ValidatedTextField) input).getText().toUpperCase());
@@ -488,7 +519,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
 
                     input.setForeground(COLOR_ERROR_VAL);
                     input.setBackground(invalidBackgroundColor);
-                    ((javax.swing.text.JTextComponent) input).selectAll();
+                    ((JTextComponent) input).selectAll();
                     thisone.firePropertyChange(VTF_PC_STAT_LN_UPDATE, " _ ", validationErrorText);
                     return false;
                 }
@@ -500,7 +531,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
 
         @Override
         public boolean verify(javax.swing.JComponent input) {
-            if (input.getClass() == ValidatedTextField.class) {
+            if (input instanceof ValidatedTextField) {
                 return ((ValidatedTextField) input).isValid();
             } else {
                 return false;
@@ -514,12 +545,13 @@ public class ValidatedTextField extends javax.swing.JTextField {
             source.selectAll();
         }
     }
+
     private java.awt.Color invalidBackgroundColor = null;
 
     /**
-     * Sets the color used for the field background when the field value is
+     * Set the color used for the field background when the field value is
      * invalid.
-     * <p>
+     *
      * @param c background Color to be used when the value is invalid
      */
     public void setInvalidBackgroundColor(java.awt.Color c) {
@@ -535,4 +567,5 @@ public class ValidatedTextField extends javax.swing.JTextField {
     public final static java.awt.Color COLOR_BG_OK = java.awt.Color.white;
     public final static java.awt.Color COLOR_BG_UNEDITED = COLOR_BG_OK;
     public final static java.awt.Color COLOR_BG_ERROR = java.awt.Color.red;
+
 }

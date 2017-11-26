@@ -55,5 +55,5 @@ public class ConsistToolAction extends JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-}
 
+}

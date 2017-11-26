@@ -36,6 +36,7 @@ public class PackageTest extends TestCase {
         suite.addTest(PreferNumericComparatorTest.suite());
         suite.addTest(StringUtilTest.suite());
         suite.addTest(ThreadingUtilTest.suite());
+        suite.addTest(ThreadingDemoAndTest.suite());
         suite.addTest(I18NTest.suite());
         suite.addTest(AlphanumComparatorTest.suite());
         suite.addTest(ColorUtilTest.suite());
@@ -47,6 +48,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.util.swing.PackageTest.suite());
 
         suite.addTest(jmri.util.WaitHandlerTest.suite());
+        suite.addTest(jmri.util.PropertyChangeEventQueueTest.suite());
         suite.addTest(jmri.util.zeroconf.PackageTest.suite());
         suite.addTest(jmri.util.DateUtilTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.prefs.PackageTest.class));
@@ -95,6 +97,13 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(WindowMenuTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.usb.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(FileChooserFilterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JTreeWithPopupTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(MenuScrollerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ExternalLinkContentViewerUITest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PipeListenerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IterableEnumerationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BusyGlassPaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(MultipartMessageTest.class));
 
         // deliberately at end
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.Log4JErrorIsErrorTest.class));
@@ -105,12 +114,12 @@ public class PackageTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

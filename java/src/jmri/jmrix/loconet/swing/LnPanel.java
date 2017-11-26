@@ -18,11 +18,17 @@ abstract public class LnPanel extends jmri.util.swing.JmriPanel implements LnPan
      */
     protected LocoNetSystemConnectionMemo memo;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         this.memo = memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initContext(Object context) {
         if (context instanceof LocoNetSystemConnectionMemo) {

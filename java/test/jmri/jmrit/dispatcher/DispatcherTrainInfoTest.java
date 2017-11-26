@@ -1,5 +1,6 @@
 package jmri.jmrit.dispatcher;
 
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -18,7 +19,7 @@ public class DispatcherTrainInfoTest extends TestCase {
         // set up TrainInfo object
         ti.setTransitName("Transit");
         ti.setTrainName("Train");
-        ti.setDCCAddress("346");
+        ti.setDccAddress("346");
         ti.setTrainInTransit(true);
         ti.setStartBlockName("IB12");
         ti.setDestinationBlockName("IB22");
@@ -40,10 +41,14 @@ public class DispatcherTrainInfoTest extends TestCase {
         ti.setRunInReverse(false);
         ti.setSoundDecoder(true);
         ti.setMaxTrainLength(225);
+        ti.setAllocationMethod(8);
+        ti.setUseSpeedProfile(true);
+        ti.setStopBySpeedProfile(true);
+        ti.setStopBySpeedProfileAdjust(0.5f);
         // test it
         Assert.assertEquals("Transit Name", ti.getTransitName(), "Transit");
         Assert.assertEquals("Train Name", ti.getTrainName(), "Train");
-        Assert.assertEquals("DCC Address", ti.getDCCAddress(), "346");
+        Assert.assertEquals("DCC Address", ti.getDccAddress(), "346");
         Assert.assertTrue("Train In Transit", ti.getTrainInTransit());
         Assert.assertEquals("Start Block Name", ti.getStartBlockName(), "IB12");
         Assert.assertEquals("Destination Block Name", ti.getDestinationBlockName(), "IB22");
@@ -64,7 +69,10 @@ public class DispatcherTrainInfoTest extends TestCase {
         Assert.assertTrue("Resistance Wheels", ti.getResistanceWheels());
         Assert.assertFalse("Run In Reverse", ti.getRunInReverse());
         Assert.assertTrue("Sound Decoder", ti.getSoundDecoder());
-        Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLength(), 225f, 0.0);
+        Assert.assertEquals("Allocation Method", ti.getAllocationMethod(),8,0);
+        Assert.assertTrue("Use Speed Profile", ti.getUseSpeedProfile());
+        Assert.assertTrue("Stop By Speed Profile", ti.getStopBySpeedProfile());
+        Assert.assertEquals("Stop By Speed Profile using percentage of block", ti.getStopBySpeedProfileAdjust(),0.5f, 0.0);
 
     }
 
@@ -89,8 +97,7 @@ public class DispatcherTrainInfoTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @Override

@@ -26,28 +26,17 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Create a Dialog to display the images in a file system directory.
- * <BR>
+ * <p>
  * PreviewDialog is not modal to allow dragNdrop of icons from it to catalog panels and
  * functioning of the catalog panels without dismissing this dialog
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
  *
  * @author Pete Cressman Copyright 2009
- *
  */
 public class PreviewDialog extends JDialog {
 
@@ -82,7 +71,7 @@ public class PreviewDialog extends JDialog {
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                DirectorySearcher.instance().close();
+                InstanceManager.getDefault(DirectorySearcher.class).close();
                 dispose();
             }
         });
@@ -105,9 +94,9 @@ public class PreviewDialog extends JDialog {
         needsMore = setIcons(startNum);
         if (_noMemory) {
             int choice = JOptionPane.showOptionDialog(null,
-                    Bundle.getMessage("OutOfMemory", _cnt), Bundle.getMessage("ErrorTitle"), 
+                    Bundle.getMessage("OutOfMemory", _cnt), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                    new String[]{Bundle.getMessage("Quit"), Bundle.getMessage("ShowContents")}, 1);
+                    new String[]{Bundle.getMessage("ButtonStop"), Bundle.getMessage("ShowContents")}, 1);
             if (choice==0) {
                 return;
             }
@@ -122,8 +111,8 @@ public class PreviewDialog extends JDialog {
                 p.add(moreButton);
             } else {
                 log.error("More ActionListener missing");
-            }            
-            msg.setText(Bundle.getMessage("moreMsg"));
+            }
+            msg.setText(Bundle.getMessage("moreMsg", Bundle.getMessage("ButtonDisplayMore")));
         }
 
         boolean hasButtons = needsMore;
@@ -137,7 +126,7 @@ public class PreviewDialog extends JDialog {
             p.add(lookButton);
             hasButtons = true;
         }
-        
+
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
@@ -147,7 +136,7 @@ public class PreviewDialog extends JDialog {
             cancelButton.addActionListener(cancelAction);
             p.add(cancelButton);
             p.add(Box.createHorizontalStrut(5));
-            p.setPreferredSize(new Dimension(400, cancelButton.getPreferredSize().height));            
+            p.setPreferredSize(new Dimension(400, cancelButton.getPreferredSize().height));
             panel.add(p);
             panel.add(new JSeparator());
         }
@@ -158,7 +147,7 @@ public class PreviewDialog extends JDialog {
         pack();
         setVisible(true);
     }
-    
+
     ActionListener getLookActionListener() {
         return _lookAction;
     }
@@ -178,9 +167,9 @@ public class PreviewDialog extends JDialog {
         _preview = new JPanel();
         JScrollPane js = new JScrollPane(_preview);
         previewPanel.add(js);
-        JRadioButton whiteButton = new JRadioButton(Bundle.getMessage("white"), false);
-        JRadioButton grayButton = new JRadioButton(Bundle.getMessage("lightGray"), true);
-        JRadioButton darkButton = new JRadioButton(Bundle.getMessage("darkGray"), false);
+        JRadioButton whiteButton = new JRadioButton(Bundle.getMessage("White"), false);
+        JRadioButton grayButton = new JRadioButton(Bundle.getMessage("LightGray"), true);
+        JRadioButton darkButton = new JRadioButton(Bundle.getMessage("DarkGray"), false);
         whiteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -268,7 +257,7 @@ public class PreviewDialog extends JDialog {
             _noMemory = true;
             log.error("MemoryExceptionHandler: {} {} files read from directory {}", e, _cnt, _currentDir);
             if (log.isDebugEnabled()) {
-                log.debug("memoryAvailable = ", availableMemory());
+                log.debug("memoryAvailable = {}", availableMemory());
             }
         }
     }
@@ -305,7 +294,7 @@ public class PreviewDialog extends JDialog {
         int nCols = 1;
         int nRows = 1;
         int nAvail = 1;
-        
+
         long memoryAvailable = availableMemory();
         long memoryUsed = 0;        // estmate
         for (int i = 0; i < files.length; i++) {
@@ -329,7 +318,7 @@ public class PreviewDialog extends JDialog {
 
                     if (memoryAvailable < 4*size) {
                         _noMemory = true;
-                        log.debug("Memory calculation caught icon size= {} testSize= {} memoryAvailable= {}", 4*size, memoryAvailable);
+                        log.debug("Memory calculation caught icon size= {} testSize= {} memoryAvailable= {}", size, 4*size, memoryAvailable);
                         break;
                     }
                     double scale = icon.reduceTo(CatalogPanel.ICON_WIDTH,
@@ -354,7 +343,7 @@ public class PreviewDialog extends JDialog {
                         c.gridx = nCols-1;
                         c.gridy = 0;
                     } else if (_cnt > nAvail - nRows) {
-                        if (c.gridx < nCols-1) {                           
+                        if (c.gridx < nCols-1) {
                             c.gridx++;
                         } else {
                             c.gridx = 0;
@@ -363,7 +352,7 @@ public class PreviewDialog extends JDialog {
                     } else {
                         c.gridy++;
                     }
-                    
+
                     c.insets = new Insets(5, 5, 0, 0);
                     JLabel image;
                     try {
@@ -443,5 +432,6 @@ public class PreviewDialog extends JDialog {
         log.debug("PreviewDialog disposed.");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PreviewDialog.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PreviewDialog.class);
+
 }

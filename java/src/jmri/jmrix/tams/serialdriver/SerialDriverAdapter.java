@@ -62,11 +62,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
-            // set RTS high, DTR high
-            activeSerialPort.setRTS(true);        // not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);        // pin 1 in DIN8; on main connector, this is DTR
-
-            activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);//added by Jan
+            configureLeadsAndFlowControl(activeSerialPort, SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
             // set timeout
             try {
@@ -102,7 +98,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
 
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (UnsupportedCommOperationException | IOException ex) {
+        } catch (IOException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;
@@ -167,6 +163,6 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
     private boolean opened = false;
     InputStream serialStream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

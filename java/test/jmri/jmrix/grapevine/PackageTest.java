@@ -1,5 +1,6 @@
 package jmri.jmrix.grapevine;
 
+import jmri.util.JUnitUtil;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -38,7 +39,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SerialTurnoutTest2.class));
         suite.addTest(new JUnit4TestAdapter(SerialTurnoutTest3.class));
         suite.addTest(new JUnit4TestAdapter(SerialTurnoutManagerTest.class));
-        suite.addTest(SerialLightTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SerialLightTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialLightManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialSensorManagerTest.class));
         suite.addTest(SerialNodeTest.suite());
@@ -58,17 +59,18 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SerialConnectionTypeListTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialSensorTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialSignalHeadTest.class));
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

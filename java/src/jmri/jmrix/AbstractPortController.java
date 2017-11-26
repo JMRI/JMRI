@@ -4,6 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.HashMap;
+import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import org.slf4j.Logger;
@@ -35,7 +36,7 @@ abstract public class AbstractPortController implements PortAdapter {
 
     // By making this private, and not protected, we are able to require that
     // all access is through the getter and setter, and that subclasses that
-    // override the getter and setter must call the super implemenations of the
+    // override the getter and setter must call the super implementations of the
     // getter and setter. By channelling setting through a single method, we can
     // ensure this is never null.
     private SystemConnectionMemo connectionMemo;
@@ -144,10 +145,10 @@ abstract public class AbstractPortController implements PortAdapter {
      */
     @Override
     public String[] getOptions() {
-        String[] arr = options.keySet().toArray(new String[0]);
-        java.util.Arrays.sort(arr);
-        return arr;
-
+        Set<String> keySet = options.keySet();
+        String[] result = keySet.toArray(new String[keySet.size()]);
+        java.util.Arrays.sort(result);
+        return result;
     }
 
     /**
@@ -253,7 +254,7 @@ abstract public class AbstractPortController implements PortAdapter {
 
     @Override
     public String getManufacturer() {
-        return this.manufacturerName;
+        return manufacturerName;
     }
 
     @Override
@@ -394,6 +395,6 @@ abstract public class AbstractPortController implements PortAdapter {
         this.connectionMemo = connectionMemo;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractPortController.class);
 
 }

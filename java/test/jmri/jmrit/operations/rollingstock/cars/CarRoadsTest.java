@@ -1,30 +1,34 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
- * Tests for the Operations RollingStock Cars Roads class Last manually cross-checked
- * on 20090131
- *
+ * Tests for the Operations RollingStock Cars Roads class Last manually
+ * cross-checked on 20090131
+ * <p>
  * Still to do: Everything
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
  */
 public class CarRoadsTest extends OperationsTestCase {
 
-    public void testCarRoads() {
-        CarRoads cr1 = CarRoads.instance();
+    public void testDefaultCarRoads() {
+        CarRoads cr1 = InstanceManager.getDefault(CarRoads.class);
+
+        // the previous version of this test looked for specific values,
+        // but those specific road names may not exist in a non-US 
+        // English context. 
+        Assert.assertNotNull("Car Roads not empty", cr1.getNames());
+    }
+
+    public void testAddAndDeleteCarRoads() {
+        CarRoads cr1 = InstanceManager.getDefault(CarRoads.class);
         cr1.getNames();	//load predefined roads
-
-        Assert.assertTrue("Car Roads Predefined AA", cr1.containsName("AA"));
-        Assert.assertTrue("Car Roads Predefined CP", cr1.containsName("CP"));
-        Assert.assertTrue("Car Roads Predefined CN", cr1.containsName("CN"));
-        Assert.assertTrue("Car Roads Predefined UP", cr1.containsName("UP"));
-
         cr1.addName("Road New1");
         Assert.assertTrue("Car Roads Add New1", cr1.containsName("Road New1"));
         Assert.assertFalse("Car Roads Never Added New2", cr1.containsName("Road New2"));
@@ -71,6 +75,6 @@ public class CarRoadsTest extends OperationsTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-       super.tearDown();
+        super.tearDown();
     }
 }

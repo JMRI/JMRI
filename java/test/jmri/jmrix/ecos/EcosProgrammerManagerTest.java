@@ -1,12 +1,10 @@
 package jmri.jmrix.ecos;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -18,23 +16,21 @@ public class EcosProgrammerManagerTest {
     public void testCTor() {
         EcosTrafficController tc = new EcosInterfaceScaffold();
         EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo(tc);
-        EcosProgrammerManager t = new EcosProgrammerManager(new EcosProgrammer(tc),memo);
+        EcosProgrammerManager t = new EcosProgrammerManager(new EcosProgrammer(tc), memo);
         Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EcosProgrammerManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EcosProgrammerManagerTest.class);
 
 }

@@ -12,7 +12,8 @@ import org.slf4j.LoggerFactory;
     jmri.jmrix.powerline.swing.serialmon.PackageTest.class,
     PowerlineComponentFactoryTest.class,
     PowerlineMenuTest.class,
-    PowerlineNamedPaneActionTest.class
+    PowerlineNamedPaneActionTest.class,
+    BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.powerline.swing package.
@@ -34,6 +35,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

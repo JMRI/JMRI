@@ -1,31 +1,29 @@
 package jmri.jmrit.roster;
 
+import jmri.GlobalProgrammerManager;
+import jmri.InstanceManager;
+import jmri.managers.DefaultProgrammerManager;
+import jmri.progdebugger.ProgDebugger;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * IdentifyLocoTest.java
- *
+ * <p>
  * Description:	tests for the jmrit.roster.IdentifyLoco class
  *
  * @author	Bob Jacobsen
-  */
-public class IdentifyLocoTest extends TestCase {
+ */
+public class IdentifyLocoTest {
 
     static int cvRead = -1;
+    private ProgDebugger p;
 
+    @Test
     public void testShort() {
-        // initialize the system
-        jmri.progdebugger.ProgDebugger p = new jmri.progdebugger.ProgDebugger() {
-            @Override
-            public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-                cvRead = CV;
-            }
-        };
-        jmri.InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(p));
-
         // create our test object
         IdentifyLoco i = new IdentifyLoco(p) {
             @Override
@@ -65,16 +63,8 @@ public class IdentifyLocoTest extends TestCase {
 
     }
 
+    @Test
     public void testLong() {
-        // initialize the system
-        jmri.progdebugger.ProgDebugger p = new jmri.progdebugger.ProgDebugger() {
-            @Override
-            public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-                cvRead = CV;
-            }
-        };
-        jmri.InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(p));
-
         // create our test object
         IdentifyLoco i = new IdentifyLoco(p) {
             @Override
@@ -118,22 +108,25 @@ public class IdentifyLocoTest extends TestCase {
         Assert.assertEquals("found address ", 4797, i.address);
 
     }
-    // from here down is testing infrastructure
 
-    public IdentifyLocoTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        // initialize the system
+        p = new ProgDebugger() {
+            @Override
+            public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+                cvRead = CV;
+            }
+        };
+        DefaultProgrammerManager dpm = new DefaultProgrammerManager(p);
+        InstanceManager.setAddressedProgrammerManager(dpm);
+        InstanceManager.store(dpm, GlobalProgrammerManager.class);
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {IdentifyLocoTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @After
+    public void tearDown() {
+        p = null;
+        JUnitUtil.tearDown();
     }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(IdentifyLocoTest.class);
-        return suite;
-    }
-
 }

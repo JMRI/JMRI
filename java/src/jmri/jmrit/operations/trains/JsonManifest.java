@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -50,13 +51,13 @@ public class JsonManifest extends TrainCommon {
     }
 
     public File getFile() {
-        return TrainManagerXml.instance().getManifestFile(this.train.getName(), JSON.JSON);
+        return InstanceManager.getDefault(TrainManagerXml.class).getManifestFile(this.train.getName(), JSON.JSON);
     }
 
     public void build() throws IOException {
         ObjectNode root = this.mapper.createObjectNode();
-        if (!this.train.getRailroadName().equals(Train.NONE)) {
-            root.put(JSON.RAILROAD, StringEscapeUtils.escapeHtml4(this.train.getRailroadName()));
+        if (!this.train.getTrainRailroadName().equals(Train.NONE)) {
+            root.put(JSON.RAILROAD, StringEscapeUtils.escapeHtml4(this.train.getTrainRailroadName()));
         } else {
             root.put(JSON.RAILROAD, StringEscapeUtils.escapeHtml4(Setup.getRailroadName()));
         }
@@ -68,7 +69,7 @@ public class JsonManifest extends TrainCommon {
             root.put(JSON.IMAGE, this.train.getManifestLogoURL());
         }
         root.put(JsonOperations.DATE, TrainCommon.getISO8601Date(true)); // Validity
-        this.mapper.writeValue(TrainManagerXml.instance().createManifestFile(this.train.getName(), JSON.JSON), root);
+        this.mapper.writeValue(InstanceManager.getDefault(TrainManagerXml.class).createManifestFile(this.train.getName(), JSON.JSON), root);
     }
 
     public ArrayNode getLocations() {

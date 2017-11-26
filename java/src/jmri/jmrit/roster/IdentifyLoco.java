@@ -34,7 +34,7 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
     public boolean test1() {
         // request contents of CV 29
         statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("READ CV 29"));
-        readCV(29);
+        readCV("29");
         return false;
     }
 
@@ -45,12 +45,12 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
             // long address needed
             shortAddr = false;
             statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("LONG ADDRESS - READ CV 17"));
-            readCV(17);
+            readCV("17");
         } else {
             // short - read address
             shortAddr = true;
             statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("SHORT ADDRESS - READ CV 1"));
-            readCV(1);
+            readCV("1");
         }
         return false;
     }
@@ -62,13 +62,13 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
             // short - this is the address
             address = value;
             statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("READMFG"));
-            readCV(7);
+            readCV("7");
             return false;
         } else {
             // long - need CV18 also
             cv17val = value;
             statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("LONG ADDRESS - READ CV 18"));
-            readCV(18);
+            readCV("18");
             return false;
         }
     }
@@ -79,7 +79,7 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
         if (shortAddr) {
             cv7val = value;
             statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("READMFGVER"));
-            readCV(8);
+            readCV("8");
             return false;
 
         }
@@ -88,7 +88,7 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
         cv18val = value;
         address = (cv17val & 0x3f) * 256 + cv18val;
         statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("READMFG"));
-        readCV(7);
+        readCV("7");
         return false;
     }
 
@@ -100,7 +100,7 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
             return true;
         }
         statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("READMFGVER"));
-        readCV(8);
+        readCV("8");
         cv7val = value;
         return false;
     }
@@ -147,6 +147,6 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
     abstract protected void message(String m);
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(IdentifyLoco.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IdentifyLoco.class);
 
 }

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -29,16 +30,16 @@ import jmri.profile.ProfileUtils;
 import jmri.server.web.spi.AngularRoute;
 import jmri.server.web.spi.WebManifest;
 import jmri.server.web.spi.WebMenuItem;
+import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
 import jmri.web.server.WebServer;
 import jmri.web.server.WebServerPreferences;
 import org.eclipse.jetty.util.component.LifeCycle;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.spi.PreferencesManager;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Manager for the Angular JMRI Web Application.
@@ -215,10 +216,14 @@ public class WebAppManager extends AbstractPreferencesManager {
             // TODO: handle separator before
             // TODO: handle separator after
             String href = item.getHref();
+            String title = item.getTitle(locale);
+            if (title.startsWith("translate:")) {
+                title = String.format("<span data-translate>%s</span>", title.substring(10));
+            }
             if (href != null && href.startsWith("ng-click:")) { // NOI18N
-                navigation.append(String.format("<li><a ng-click=\"%s\">%s</a></li>", href.substring(href.indexOf(":") + 1, href.length()), item.getTitle(locale))); // NOI18N
+                navigation.append(String.format("<li><a ng-click=\"%s\">%s</a></li>", href.substring(href.indexOf(":") + 1, href.length()), title)); // NOI18N
             } else {
-                navigation.append(String.format("<li><a href=\"%s\">%s</a></li>", href, item.getTitle(locale))); // NOI18N
+                navigation.append(String.format("<li><a href=\"%s\">%s</a></li>", href, title)); // NOI18N
             }
         });
         return navigation.toString();
@@ -281,6 +286,14 @@ public class WebAppManager extends AbstractPreferencesManager {
             }
         });
         return sources.toString();
+    }
+
+    public Set<URI> getPreloadedTranslations(Profile profile, Locale locale) {
+        Set<URI> urls = new HashSet<>();
+        this.getManifests(profile).forEach((WebManifest manifest) -> {
+            urls.addAll(manifest.getPreloadedTranslations(locale));
+        });
+        return urls;
     }
 
     private void lifeCycleStarting(LifeCycle lc, Profile profile) {

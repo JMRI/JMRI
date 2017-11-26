@@ -14,8 +14,8 @@ import jmri.Route;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrit.Sound;
-import jmri.util.ThreadingUtil;
 import jmri.script.JmriScriptEngineManager;
+import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1313,7 +1313,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultRoute.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultRoute.class);
 
     /**
      * Class providing a thread to set route turnouts.
@@ -1414,6 +1414,6 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
 
         private DefaultRoute r;
 
-        private final static Logger log = LoggerFactory.getLogger(SetRouteThread.class.getName());
+        private final static Logger log = LoggerFactory.getLogger(SetRouteThread.class);
     }
 }

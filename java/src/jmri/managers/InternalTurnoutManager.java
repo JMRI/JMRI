@@ -40,12 +40,18 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
     public String createSystemName(String curAddress, String prefix) throws jmri.JmriException {
         return prefix + typeLetter() + curAddress;
     }
-    /*
+
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return NameValidity.VALID;
+    }
+
+    /**
      * Turnout operation support. Internal turnouts don't need retries.
      */
-
     @Override
     public String[] getValidOperationTypes() {
         return new String[]{"NoFeedback"};
     }
+
 }

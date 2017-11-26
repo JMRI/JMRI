@@ -1,19 +1,17 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
+import java.awt.GraphicsEnvironment;
+import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
-import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DrawRoundRectTest {
 
@@ -21,24 +19,34 @@ public class DrawRoundRectTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
-        ShapeDrawer s = new ShapeDrawer(frame);
-        DrawRoundRect t = new DrawRoundRect("newShape","roundRect",s);
-        Assert.assertNotNull("exists",t);
+        DrawRoundRect t = new DrawRoundRect("newShape", "roundRect", null);
+        Assert.assertNotNull("exists", t);
+        JUnitUtil.dispose(t);
+        JUnitUtil.dispose(frame);
     }
 
-    // The minimal setup for log4J
+    public void testCTorEdit() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ControlPanelEditor frame = new ControlPanelEditor();
+        PositionableRoundRect ps =  new PositionableRoundRect(frame);
+        DrawRoundRect t = new DrawRoundRect("editShape", "roundRect", ps);
+        Assert.assertNotNull("exists", t);
+        JUnitUtil.dispose(t);
+        JUnitUtil.dispose(frame);
+    }
+
+   // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DrawRoundRectTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DrawRoundRectTest.class);
 
 }

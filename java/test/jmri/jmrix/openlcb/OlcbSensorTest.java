@@ -1,18 +1,17 @@
 package jmri.jmrix.openlcb;
 
+import java.util.regex.Pattern;
 import jmri.Sensor;
 import jmri.jmrix.can.CanMessage;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
+import org.junit.Assert;
 import org.openlcb.EventID;
 import org.openlcb.implementations.EventTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.regex.Pattern;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensor class.
@@ -20,7 +19,7 @@ import java.util.regex.Pattern;
  * @author	Bob Jacobsen Copyright 2008, 2010
  */
 public class OlcbSensorTest extends TestCase {
-    private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class);
 
     public void testIncomingChange() {
         Assert.assertNotNull("exists", t);
@@ -142,6 +141,13 @@ public class OlcbSensorTest extends TestCase {
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
         t.flush();
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
+
+        // Repeat send
+        t.tc.rcvMessage = null;
+        s.setKnownState(Sensor.INACTIVE);
+        Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
+        t.flush();
+        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
     }
 
     public void testEventTable() {
@@ -198,6 +204,6 @@ public class OlcbSensorTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

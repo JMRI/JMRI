@@ -60,10 +60,13 @@ public class NceTrafficController extends AbstractMRTrafficController implements
                 || getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
                 || getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN));
 
-        if (NmraPacket.isAccSignalDecoderPkt(packet)) {
-            // intercept NMRA signal cmds
+        if (NmraPacket.isAccSignalDecoderPkt(packet)
+                && (NmraPacket.getAccSignalDecoderPktAddress(packet) > 0)
+                && (NmraPacket.getAccSignalDecoderPktAddress(packet) < 2048)) {
+            // intercept only those NMRA signal cmds we can handle with NCE binary commands
             int addr = NmraPacket.getAccSignalDecoderPktAddress(packet);
             int aspect = packet[2];
+            log.debug("isAccSignalDecoderPkt(packet) sigAddr ={}, aspect ={}", addr, aspect);
             m = NceMessage.createAccySignalMacroMessage(this, 5, addr, aspect);
         } else if (isUsb && NmraPacket.isAccDecoderPktOpsMode(packet)) {
             // intercept NMRA accessory decoder ops programming cmds to USB systems
@@ -77,7 +80,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
             int accyAddr = NmraPacket.getAccDecoderPktOpsModeLegacyAddress(packet);
             int cvData = (0xFF & packet[3]);
             int cvAddr = (((0x03 & packet[1]) << 8) | (0xFF & packet[2])) + 1;
-            log.debug("isAaccDecoderPktOpsModeLegacy(packet) accyAddr ={}, cvAddr = {}, cvData ={}", accyAddr, cvAddr, cvData);
+            log.debug("isAccDecoderPktOpsModeLegacy(packet) accyAddr ={}, cvAddr = {}, cvData ={}", accyAddr, cvAddr, cvData);
             m = NceMessage.createAccDecoderPktOpsMode(this, accyAddr, cvAddr, cvData);
         } else {
             m = NceMessage.sendPacketMessage(this, packet);
@@ -171,6 +174,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #OPTION_1_65}
      * <LI>{@link #OPTION_FORCE_BINARY}
      * </UL>
+     *
      * @param val command station options
      *
      */
@@ -198,6 +202,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #OPTION_1_65}
      * <LI>{@link #OPTION_FORCE_BINARY}
      * </UL>
+     *
      * @return command station options value
      *
      */
@@ -249,6 +254,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #USB_SYSTEM_TWIN}
      * <LI>{@link #USB_SYSTEM_SB5}
      * </UL>
+     *
      * @param val usb command station options
      *
      */
@@ -271,6 +277,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #USB_SYSTEM_TWIN}
      * <LI>{@link #USB_SYSTEM_SB5}
      * </UL>
+     *
      * @return usb command station options
      *
      */
@@ -345,6 +352,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #CMDS_NOT_USB}
      * <LI>{@link #CMDS_ALL_SYS}
      * </UL>
+     *
      * @param val command group supported options
      *
      */
@@ -371,6 +379,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #CMDS_NOT_USB}
      * <LI>{@link #CMDS_ALL_SYS}
      * </UL>
+     *
      * @return command group supported options
      *
      */
@@ -589,7 +598,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
                 }
             }
             if (msg.getNumDataElements() >= replyLen) {
-                // reset reply length so we can detect an unsolicited AIU message 
+                // reset reply length so we can detect an unsolicited AIU message
                 replyLen = 0;
                 return true;
             } else {
@@ -652,5 +661,5 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         return adaptermemo.getSystemPrefix();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTrafficController.class);
 }

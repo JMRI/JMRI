@@ -47,7 +47,7 @@ public class JmriUserPreferencesManagerTest {
 
     @Test
     public void testGetInstance() {
-        Assert.assertNull(InstanceManager.getNullableDefault(UserPreferencesManager.class));
+        Assert.assertFalse(InstanceManager.containsDefault(UserPreferencesManager.class));
         Assert.assertNotNull(JmriUserPreferencesManager.getInstance());
         Assert.assertEquals(InstanceManager.getDefault(UserPreferencesManager.class), JmriUserPreferencesManager.getInstance());
         Assert.assertEquals(JmriUserPreferencesManager.getDefault(), JmriUserPreferencesManager.getInstance());
@@ -55,7 +55,7 @@ public class JmriUserPreferencesManagerTest {
 
     @Test
     public void testGetDefault() {
-        Assert.assertNull(InstanceManager.getNullableDefault(UserPreferencesManager.class));
+        Assert.assertFalse(InstanceManager.containsDefault(UserPreferencesManager.class));
         Assert.assertNotNull(JmriUserPreferencesManager.getDefault());
         Assert.assertEquals(InstanceManager.getDefault(UserPreferencesManager.class), JmriUserPreferencesManager.getDefault());
     }
@@ -698,10 +698,15 @@ public class JmriUserPreferencesManagerTest {
         m.setSaveAllowed(false);
         Assert.assertNull(m.getPropertyKeys(strClass));
         m.setProperty(strClass, "test1", log);
-        m.setProperty(strClass, "test2", null);
+        m.setProperty(strClass, "test2", new Object());
         Assert.assertEquals(2, m.getPropertyKeys(strClass).size());
         Assert.assertTrue(m.getPropertyKeys(strClass).contains("test1"));
         Assert.assertTrue(m.getPropertyKeys(strClass).contains("test2"));
+        Assert.assertFalse(m.getPropertyKeys(strClass).contains("test3"));
+        m.setProperty(strClass, "test2", null);
+        Assert.assertEquals(1, m.getPropertyKeys(strClass).size());
+        Assert.assertTrue(m.getPropertyKeys(strClass).contains("test1"));
+        Assert.assertFalse(m.getPropertyKeys(strClass).contains("test2"));
         Assert.assertFalse(m.getPropertyKeys(strClass).contains("test3"));
     }
 
@@ -993,9 +998,10 @@ public class JmriUserPreferencesManagerTest {
 
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.resetPreferencesProviders();
+        // ensure no existing UserPreferencesManager interferes with this test
+        InstanceManager.reset(UserPreferencesManager.class);
     }
 
     @After

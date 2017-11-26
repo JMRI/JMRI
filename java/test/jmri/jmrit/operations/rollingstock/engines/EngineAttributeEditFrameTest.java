@@ -2,15 +2,17 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +20,7 @@ import org.junit.Test;
  * Tests for the Operations Engines GUI class
  *
  * @author	Dan Boudreau Copyright (C) 2010
- * 
+ *
  */
 public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
 
@@ -41,7 +43,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         // push replace button
         enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
-        pressDialogButton(f,Bundle.getMessage("replaceAll"), "Yes");
+        pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         // did the replace work?
         Assert.assertEquals("replaced SD45 with DS54", "DS54", f.comboBox.getItemAt(0));
 
@@ -49,7 +51,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         // new model was next
         Assert.assertEquals("new model after delete", "New Model", f.comboBox.getItemAt(0));
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -57,16 +59,16 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
         f.initComponents(EngineEditFrame.LENGTH);
-        f.dispose();
+        JUnitUtil.dispose(f);
         f = new EngineAttributeEditFrame();
         f.initComponents(EngineEditFrame.OWNER);
-        f.dispose();
+        JUnitUtil.dispose(f);
         f = new EngineAttributeEditFrame();
         f.initComponents(EngineEditFrame.ROAD);
-        f.dispose();
+        JUnitUtil.dispose(f);
         f = new EngineAttributeEditFrame();
         f.initComponents(EngineEditFrame.TYPE);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Override
@@ -80,17 +82,17 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
     private void loadEngines() {
 
         // add Owner1 and Owner2
-        CarOwners co = CarOwners.instance();
+        CarOwners co = InstanceManager.getDefault(CarOwners.class);
         co.addName("Owner1");
         co.addName("Owner2");
         // add road names
-        CarRoads cr = CarRoads.instance();
+        CarRoads cr = InstanceManager.getDefault(CarRoads.class);
         cr.addName("NH");
         cr.addName("UP");
         cr.addName("AA");
         cr.addName("SP");
         // add locations
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location westford = lManager.newLocation("Westford");
         Track westfordYard = westford.addTrack("Yard", Track.YARD);
         westfordYard.setLength(300);
@@ -106,7 +108,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         Track boxfordHood = boxford.addTrack("Hood", Track.SPUR);
         boxfordHood.setLength(300);
 
-        EngineManager eManager = EngineManager.instance();
+        EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
         // add 5 Engines to table
         Engine e1 = eManager.newEngine("NH", "1");
         e1.setModel("RS1");

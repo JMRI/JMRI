@@ -7,6 +7,7 @@ import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;
@@ -44,7 +45,7 @@ public class MultiSensorIconDialog extends IconDialog {
             @Override
             public void actionPerformed(ActionEvent a) {
                 if (addNewIcon(getIconName())) {
-                    ImageIndexEditor.indexChanged(true);
+                    InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
                     JPanel p = (JPanel) (getContentPane().getComponent(0));
                     p.remove(_iconPanel);
                     _iconPanel = makeIconPanel(_iconMap);
@@ -61,7 +62,7 @@ public class MultiSensorIconDialog extends IconDialog {
             @Override
             public void actionPerformed(ActionEvent a) {
                 if (deleteIcon()) {
-                    ImageIndexEditor.indexChanged(true);
+                    InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
                     JPanel p = (JPanel) (getContentPane().getComponent(0));
                     p.remove(_iconPanel);
                     _iconPanel = makeIconPanel(_iconMap);
@@ -122,5 +123,5 @@ public class MultiSensorIconDialog extends IconDialog {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MultiSensorIconDialog.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MultiSensorIconDialog.class);
 }

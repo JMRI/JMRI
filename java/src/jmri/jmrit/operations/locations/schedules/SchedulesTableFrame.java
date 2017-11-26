@@ -131,5 +131,5 @@ public class SchedulesTableFrame extends OperationsFrame {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SchedulesTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SchedulesTableFrame.class);
 }

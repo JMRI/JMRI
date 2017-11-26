@@ -259,7 +259,7 @@
       See also the related section on the <a href=
       "JVMCapabilities.shtml">migration to Java 1.8</a>.
 
-      <h3 id="junit4" name="junit4">From JUnit 3 to JUnit 4</h3>
+      <a id="junit4" name="junit4"></a><h3>From JUnit 3 to JUnit 4</h3>
       JMRI's
       <a href="ContinuousIntegration.shtml">continuous integration</a>
       test suites and infrastructure are migrating from
@@ -267,7 +267,7 @@
       section on
       <a href="JUnit.shtml#junit4">our JUnit page</a>.
 
-      <h3 id="jdom2" name="jdom2">From JDOM 1 to JDOM 2</h3>JMRI
+      <a id="jdom2" name="jdom2"></a><h3>From JDOM 1 to JDOM 2</h3>JMRI
       3.11 moved from JDOM version 1 to JDOM version 2. This
       involved a new jdom-2.0.5.jar file (in place of the earlier
       jdom.jar), changes to startup and build control files, and

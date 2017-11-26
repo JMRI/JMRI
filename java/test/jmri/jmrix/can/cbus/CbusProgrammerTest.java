@@ -1,14 +1,15 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.ProgListener;
+import jmri.ProgrammingMode;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TestTrafficController;
 import jmri.jmrix.can.TrafficControllerScaffold;
-import jmri.managers.DefaultProgrammerManager;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusProgrammer class.
@@ -28,7 +29,7 @@ public class CbusProgrammerTest extends TestCase {
         CbusProgrammer p = new CbusProgrammer(10, new TestTrafficController());
 
         try {
-            p.setMode(DefaultProgrammerManager.PAGEMODE);
+            p.setMode(ProgrammingMode.PAGEMODE);
         } catch (IllegalArgumentException e) {
             return;
         }
@@ -121,12 +122,12 @@ public class CbusProgrammerTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

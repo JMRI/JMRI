@@ -1,5 +1,6 @@
 package jmri.jmrix.bachrus;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,22 +13,26 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class SpeedoSystemConnectionMemoTest {
+public class SpeedoSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-    @Test public void integerConstructorTest() {
-        SpeedoSystemConnectionMemo m = new SpeedoSystemConnectionMemo();
-        Assert.assertNotNull(m);
+    @Override
+    @Test
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
+        scm = new SpeedoSystemConnectionMemo();
     }
    
+    @Override
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

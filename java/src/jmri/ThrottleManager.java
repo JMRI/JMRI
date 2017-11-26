@@ -137,6 +137,53 @@ public interface ThrottleManager {
     public void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l);
 
     /**
+     * Steal a requested throttle.
+     * <P>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
+     *
+     * @param re desired Roster Entry
+     * @param l  ThrottleListener requesting the throttle steal occur.
+     * @param steal true if the request should continue, false otherwise.
+     * @since 4.9.2
+     */
+    public void stealThrottleRequest(BasicRosterEntry re, ThrottleListener l,boolean steal);
+
+    /**
+     * Steal a requested throttle.
+     * <P>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
+     *
+     * @param address desired decoder address
+     * @param l  ThrottleListener requesting the throttle steal occur.
+     * @param steal true if the request should continue, false otherwise.
+     * @since 4.9.2
+     */
+    public void stealThrottleRequest(int address, ThrottleListener l,boolean steal);
+
+    /**
+     * Steal a requested throttle.
+     *
+     * @param address desired decoder address
+     * @param isLong  true if requesting a DCC long (extended) address
+     * @param l  ThrottleListener requesting the throttle steal occur.
+     * @param steal true if the request should continue, false otherwise.
+     * @since 4.9.2
+     */
+    public void stealThrottleRequest(int address, boolean isLong, ThrottleListener l,boolean steal);
+
+    /**
+     * Steal a requested throttle.
+     *
+     * @param address desired DccLocoAddress 
+     * @param l  ThrottleListener requesting the throttle steal occur.
+     * @param steal true if the request should continue, false otherwise.
+     * @since 4.9.2
+     */
+    public void stealThrottleRequest(DccLocoAddress address, ThrottleListener l,boolean steal);
+
+    /**
      * Test if the Dispatch Button should be enabled or not.
      *
      * @return true if dispatch is possible; false otherwise

@@ -164,8 +164,10 @@ displayed from the text in the "label" attribute, which is:
 
         <p>It is important to note that the Manufacturer, Version Code or
         Product ID are not stored in the roster entry, as the values are not
-        reliably determined in all instances (e.g. manual selection). This has implications for when the
-        decoder definition is expanded for programming
+        reliably determined in some instances
+        (e.g. manual selection, firmware update by manufacturer-supplied software,
+        updated ID information from vendor).
+        This has implications for when the decoder definition is expanded for programming
         (<a href="#conditional">Conditional Decoder Definitions</a>)
         or updated
         (<a href="#update">Updates and Migration</a>).</p>
@@ -383,9 +385,9 @@ file to be found.
       model-level attributes that can be added to the old (not the
       new) definition to facilitate that:
       <pre style="font-family: monospace;">
-
-&lt;model show="no" model="A4X" replacementModel="A4X" replacementFamily="Jan 2012"&gt;
-</pre>When the user selects "Update Decoder Definitions" from the
+    &lt;model show="no" model="A4X" replacementModel="A4X" replacementFamily="Jan 2012"&gt;
+      </pre>
+When the user selects "Update Decoder Definitions" from the
 Debug menu on PanelPro window or the Action menu in DecoderPro, all
 their existing roster entries that use a decoder definition with
 replacementModel and/or replacementFamily defined will be updated
@@ -393,11 +395,30 @@ to the specified replacement decoder definition instead. This lets
 people keep using their old, comfortable decoder definition (the
 old file remains in JMRI) until they decide to move forward to a
 new one.
-<p>Note that updates are unconditional; if the family and model attributes match
+<p>Note that an update defined this way is unconditional; if the family and model attributes match
 a roster entry, it will be updated to the new family/model.
-Conditional updates based on versionID or productID are not possible as these values
-are <a href="#id">not stored</a> in the roster entry.
+Automated conditional updates based on versionID or productID are not possible
+as these values are <a href="#id">not stored</a> in the roster entry.
+An interactive update process is now available in these cases
+and uses a special syntax:
+<span class="since">Since <a href="/releasenotes/jmri4.9.5.shtml" target="_blank">JMRI 4.9.5</a></span>
 </p>
+      <pre style="font-family: monospace;">
+    &lt;model show="no" model="DP2X" numOuts="2" numFns="2" replacementFamily="query:Jan 2000&#124;June 2007&#124;Jan 2012"&gt;
+      </pre>
+<p>A replacement field begining with the string  &quot;query:&quot;,
+    optionally (preferably) followed by a vertical bar &quot;&#124;&quot; separated list of possible replacements,
+    triggers interactive user dialogs, containing further explanations and guidance for the user.
+    Click
+      <a href="/help/en/html/apps/DecoderPro/images/UpdDecDef1.png" target="_blank">here</a>
+    and
+      <a href="/help/en/html/apps/DecoderPro/images/UpdDecDef2.png" target="_blank">here</a>
+    for typical samples of these dialogs.
+    Missing decoder definitions will also be detected. Click
+      <a href="/help/en/html/apps/DecoderPro/images/UpdDecDef3.png" target="_blank">here</a> and
+      <a href="/help/en/html/apps/DecoderPro/images/UpdDecDef4.png" target="_blank">here</a>
+    for more samples.
+      </p>
       <p>The model element "show" attribute helps ensure that new
       users starts with the new definition. Its possible values
       are:</p>
@@ -440,7 +461,8 @@ are <a href="#id">not stored</a> in the roster entry.
       CV programming in the command station. "Capability" elements
       are used to tell DecoderPro about these.
 
-      <h4>Access to High CV addresses</h4>Certain command stations
+      <h4>Access to High CV addresses</h4>
+      Certain command stations
       can only access up to CV 256 or CV512. Some decoder
       manufacturers have built in mechanisms to bypass this. For
       example, some ESU decoders can use writes to various CVs to
@@ -603,22 +625,39 @@ selects the different algorithm needed here.
       </ul>
 
       <a id="accessoryops" name="accessoryops"></a>
-      <h4>Accessory Decoder Ops Mode</h4>Special programming
-      packets are used by certain accessory decoders to configure
-      their CVs from the DCC track signal. The capability to do
-      that is written:
+      <h4>Accessory Decoder Ops Mode</h4>
+      Certain accessory decoders require special
+      programming packets to configure their CVs from the DCC track signal.
+      The capability to do that is written:
       <pre style="font-family: monospace;">
         &lt;capability&gt;
             &lt;name&gt;Ops Mode Accessory Programming&lt;/name&gt;
-            &lt;parameter name="Address Type"&gt;decoder&lt;/name&gt;
+            &lt;parameter name="Address Type"&gt;decoder&lt;/parameter&gt;
+            &lt;parameter name="Delay"&gt;200&lt;/parameter&gt;
         &lt;/capability&gt;
 </pre>The "Address Type" parameter is optional:
       <ul>
           <li>If it is "decoder" or omitted, the current address is interpreted as a 9-bit accessory decoder address.</li>
           <li>If it is "accessory" or "output", the current address is interpreted as an 11-bit accessory output address.</li>
           <li>If it is "signal", the current address is interpreted as an 11-bit signal decoder address.</li>
+          <li>
+              If it is "altsignal", the current address is interpreted as an 11-bit signal decoder address,
+              using an alternative interpretation of
+              <a href="https://www.nmra.org/sites/default/files/s-9.2.1_2012_07.pdf"
+                target="_blank">NMRA standard 9.2.1</a>).
+           </li>
+          <li>
+              If it is "legacy", the current address is interpreted as a 9-bit address (as for "decoder")
+              but a "legacy" programming packet (as per Appendix A of
+              <a href="https://www.nmra.org/sites/default/files/s-9.2.1_2012_07.pdf"
+                target="_blank">NMRA standard 9.2.1</a>)
+           is sent.
+          </li>
       </ul>
-      <p>
+      The "Delay" parameter is optional and specifies a minimum delay (in milliseconds)
+      between successive writes. Some decoders will miss commands if the delay is too short.
+      If this is parameter is omitted, the default delay is 500 milliseconds.
+       <p>
         Note that this only works for
         ops-mode writes; these particular NMRA DCC packets do not perform
         read operations, nor do they work in the service mode (programming
@@ -647,6 +686,36 @@ selects the different algorithm needed here.
       "http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf"
             target="_blank">
       NMRA standard 9.2.2</a>.
+      </p>
+
+      <a id="opsdelayed" name="opsdelayed"></a>
+      <h4>Ops Mode Delayed Programming</h4>
+       <p>
+      Most locomotive decoders accept special programming packets
+      to configure their CVs from the DCC track signal (Programming on Main).
+      </p>
+      However these packets take time to process and if subsequent packets are sent
+      too soon they can be missed.
+      The capability to do add a delay after programming each CV is written:
+      <pre style="font-family: monospace;">
+        &lt;capability&gt;
+            &lt;name&gt;Ops Mode Delayed Programming&lt;/name&gt;
+            &lt;parameter name="Delay"&gt;500&lt;/parameter&gt;
+        &lt;/capability&gt;
+</pre>The "Delay" parameter specifies
+      a minimum delay (in milliseconds) between successive writes.
+      Some decoders miss commands if the delay is too short.
+      If this is parameter is omitted, the default delay is 500 milliseconds.
+       <p>
+        Note that this only works for
+        ops-mode writes; these particular NMRA DCC packets do not perform
+        read operations, nor do they work in the service mode (programming track).
+      </p>
+       <p>
+        Note also that this particular capability only works for multi-function
+        decoders. Accessory decoders need to use the
+        <a href="#accessoryops">Accessory Decoder Ops Mode</a>
+        capability, which has its own "Delay" parameter.
       </p>
 
       <a name="indexedcap" id="indexedcap"></a>

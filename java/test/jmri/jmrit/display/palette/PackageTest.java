@@ -20,7 +20,19 @@ import org.junit.runners.Suite;
     RPSItemPanelTest.class,
     TextItemPanelTest.class,
     DecoratorPanelTest.class,
-    DetectionPanelTest.class
+    DetectionPanelTest.class,
+    MemoryItemPanelTest.class,
+    IndicatorTOItemPanelTest.class,
+    MultiSensorItemPanelTest.class,
+    SignalHeadItemPanelTest.class,
+    SignalMastItemPanelTest.class,
+    TableItemPanelTest.class,
+    ReporterItemPanelTest.class,
+    DropJLabelTest.class,
+    ItemDialogTest.class,
+    IconDialogTest.class,
+    IndicatorTOIconDialogTest.class,
+    MultiSensorIconDialogTest.class,
 })
 public class PackageTest {
 }

@@ -18,13 +18,12 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Implements SerialPortAdapter for direct serial drive
- * <P>
+ * Implements SerialPortAdapter for direct serial drive.
+ * <p>
  * Normally controlled by the SerialDriverFrame class.
- * <P>
+ * <p>
  * The current implementation only handles the 19,200 baud rate, and does not
  * use any other options at configuration time.
- *
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004
  */
@@ -50,6 +49,8 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         return portNameVector;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
+                                        justification="this is for skip-chars while loop: no matter how many, we're skipping")
     @Override
     public String openPort(String portName, String appName) {
         try {
@@ -80,12 +81,8 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
                 }
             }
 
-            // set RTS high, DTR low in case power is needed
-            activeSerialPort.setRTS(true);          // not connected in some serial ports and adapters
-            activeSerialPort.setDTR(false);         // pin 1 in DIN8; on main connector, this is DTR
-
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            activeSerialPort.setFlowControlMode(0);
+            configureLeadsAndFlowControl(activeSerialPort, 0);
 
             // activeSerialPort.enableReceiveTimeout(1000);
             log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
@@ -128,7 +125,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     }
 
     /**
-     * set up all of the other objects to operate with direct drive on this port
+     * Set up all of the other objects to operate with direct drive on this port.
      */
     @Override
     public void configure() {
@@ -144,6 +141,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     }
 
     // base class methods for the PortController interface
+
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -167,7 +165,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 19,200 bps
+     * Get an array of valid baud rates. This is currently only 19,200 bps.
      */
     @Override
     public String[] validBaudRates() {
@@ -197,6 +195,6 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     @Deprecated
     static SerialDriverAdapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

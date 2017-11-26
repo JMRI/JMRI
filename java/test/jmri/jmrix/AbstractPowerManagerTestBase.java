@@ -22,7 +22,7 @@ public abstract class AbstractPowerManagerTestBase {
     @Before
     abstract public void setUp();
 
-    // service routines to simulate recieving on, off from interface
+    // service routines to simulate receiving on, off from interface
     protected abstract void hearOn();
 
     protected abstract void hearOff();
@@ -117,7 +117,7 @@ public abstract class AbstractPowerManagerTestBase {
         p.removePropertyChangeListener(ln);
         listenerResult = false;
         hearOn();
-        Assert.assertTrue("listener should not have heard message after removeListner",
+        Assert.assertTrue("listener should not have heard message after removeListener",
                 !listenerResult);
     }
 

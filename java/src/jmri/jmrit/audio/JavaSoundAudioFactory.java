@@ -108,7 +108,7 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
                     log.debug("Removing JavaSoundAudioSource: " + audioName);
                 }
                 // Cast to JavaSoundAudioSource and cleanup
-                ((JavaSoundAudioSource) audio).cleanUp();
+                ((JavaSoundAudioSource) audio).cleanup();
             }
         }
 
@@ -121,7 +121,7 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
                     log.debug("Removing JavaSoundAudioBuffer: " + audioName);
                 }
                 // Cast to JavaSoundAudioBuffer and cleanup
-                ((JavaSoundAudioBuffer) audio).cleanUp();
+                ((JavaSoundAudioBuffer) audio).cleanup();
             }
         }
 
@@ -134,7 +134,7 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
                     log.debug("Removing JavaSoundAudioListener: " + audioName);
                 }
                 // Cast to JavaSoundAudioListener and cleanup
-                ((JavaSoundAudioListener) audio).cleanUp();
+                ((JavaSoundAudioListener) audio).cleanup();
             }
         }
 
@@ -173,6 +173,6 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
         return mixer;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioFactory.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioFactory.class);
 
 }

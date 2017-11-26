@@ -2,8 +2,8 @@ package apps.PacketScript;
 
 import apps.Apps;
 import java.text.MessageFormat;
-import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import jmri.util.JmriJFrame;
 import jmri.util.swing.WindowInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +31,8 @@ import org.slf4j.LoggerFactory;
  */
 public class PacketScript extends Apps {
 
-    PacketScript(JFrame p) {
-        super(p);
+    PacketScript() {
+        super();
     }
 
     @Override
@@ -60,12 +60,13 @@ public class PacketScript extends Apps {
         Apps.setStartupInfo("PacketScript");
 
         setConfigFilename("PacketScriptConfig2.xml", args);
-        JFrame f = new JFrame("PanelPro");
-        createFrame(new PacketScript(f), f);
+        PacketScript p = new PacketScript();
+        JmriJFrame f = new JmriJFrame(jmri.Application.getApplicationName());
+        createFrame(p, f);
 
         log.debug("main initialization done");
         splash(false);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PacketScript.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PacketScript.class);
 }

@@ -1,5 +1,6 @@
 package jmri.jmrix.tmcc;
 
+import jmri.util.JUnitUtil;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -34,26 +35,30 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SerialTrafficControllerTest.class));
         suite.addTest(SerialAddressTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.serialdriver.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.simulator.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.configurexml.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.packetgen.PackageTest.class));
-        suite.addTest(new JUnit4TestAdapter(TMCCMenuTest.class));
+        suite.addTest(new JUnit4TestAdapter(TmccMenuTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.serialmon.PackageTest.class));
-        suite.addTest(new JUnit4TestAdapter(TMCCSystemConnectionMemoTest.class));
+        suite.addTest(new JUnit4TestAdapter(TmccSystemConnectionMemoTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialPortControllerTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialConnectionTypeListTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialThrottleManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialThrottleTest.class));
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.swing.PackageTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
+
 }

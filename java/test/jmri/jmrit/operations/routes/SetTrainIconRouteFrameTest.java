@@ -1,14 +1,13 @@
 package jmri.jmrit.operations.routes;
 
+import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
+import jmri.util.JUnitOperationsUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -17,26 +16,33 @@ import java.awt.GraphicsEnvironment;
 public class SetTrainIconRouteFrameTest {
 
     @Test
-    @Ignore("needs more setup, causes NPE")
-    public void testCTor() {
+    public void testCTorNull() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SetTrainIconRouteFrame t = new SetTrainIconRouteFrame("Test");
+        SetTrainIconRouteFrame t = new SetTrainIconRouteFrame(null);
+        Assert.assertNotNull("exists",t);
+        JUnitUtil.dispose(t);
+    }
+
+    @Test
+    public void testCTorRoute() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SetTrainIconRouteFrame t = new SetTrainIconRouteFrame("Southbound Main Route");
         Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        JUnitOperationsUtil.resetOperationsManager();
+        JUnitOperationsUtil.initOperationsData();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrameTest.class);
 
 }

@@ -55,15 +55,16 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
             try {
                 setSerialPort();
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
             
             // set timeout
             try {
                 activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                          + " " + activeSerialPort.isReceiveTimeoutEnabled());
+                log.debug("Serial timeout was observed as: {} {}",
+                        activeSerialPort.getReceiveTimeout(),
+                        activeSerialPort.isReceiveTimeoutEnabled());
             } catch (Exception et) {
                 log.info("failed to set serial timeout: " + et);
             }
@@ -212,8 +213,8 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     }
     
     /**
-     * set up all of the other objects to operate with a DCC++ Device connected
-     * to this port
+     * Set up all of the other objects to operate with a DCC++ device connected
+     * to this port.
      */
     @Override
     public void configure() {
@@ -229,6 +230,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     }
     
     // base class methods for the XNetSerialPortController interface
+
     public BufferedReader getInputStreamBR() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -240,7 +242,6 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     @Override
     public DataInputStream getInputStream() {
         //log.error("Not Using DataInputStream version anymore!");
-        //return(null);
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
         }
@@ -271,7 +272,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     }
 
     /**
-     * Local method to do specific configuration
+     * Local method to do specific configuration.
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -286,19 +287,11 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
                                        SerialPort.STOPBITS_1,
                                        SerialPort.PARITY_NONE);
         
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
-        
         // find and configure flow control
-        //int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
         int flow = SerialPort.FLOWCONTROL_NONE;
-        //        if (!getOptionState(option1Name).equals(validOption1[0])) {
-        //            flow = SerialPort.FLOWCONTROL_NONE;
-        //        }
-        activeSerialPort.setFlowControlMode(flow);
-        //if (getOptionState(option2Name).equals(validOption2[0]))
-        //    checkBuffer = true;
+        configureLeadsAndFlowControl(activeSerialPort, flow);
+        // if (getOptionState(option2Name).equals(validOption2[0]))
+        // checkBuffer = true;
     }
     
     @Override
@@ -310,7 +303,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     protected int[] validSpeedValues = new int[]{115200};
     
     // meanings are assigned to these above, so make sure the order is consistent
-    //    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHw"), Bundle.getMessage("FlowOptionNo")};
+    // protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHw"), Bundle.getMessage("FlowOptionNo")};
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNo")};
     
     private boolean opened = false;
@@ -325,6 +318,6 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     }
     static volatile DCCppAdapter mInstance = null; // TODO: Rename this?
     
-    private final static Logger log = LoggerFactory.getLogger(DCCppAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppAdapter.class);
 
 }

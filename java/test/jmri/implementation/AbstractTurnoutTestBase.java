@@ -8,11 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Abstract base class for Turnout tests in specific jmrix. packages
+ * Abstract base class for Turnout tests in specific jmrix.* packages
  *
  * This is not itself a test class, e.g. should not be added to a suite.
  * Instead, this forms the base for test classes, including providing some
- * common tests
+ * common tests.
+ *
  * @author	Bob Jacobsen
  */
 public abstract class AbstractTurnoutTestBase {
@@ -69,13 +70,13 @@ public abstract class AbstractTurnoutTestBase {
         t.removePropertyChangeListener(ln);
         listenerResult = false;
         t.setUserName("user id");
-        Assert.assertTrue("listener should not have heard message after removeListner",
+        Assert.assertTrue("listener should not have heard message after removeListener",
                 !listenerResult);
     }
 
     @Test
     public void testDispose() {
-        t.setCommandedState(Turnout.CLOSED);  	// in case registration with TrafficController 
+        t.setCommandedState(Turnout.CLOSED);  	// in case registration with TrafficController
         //is deferred to after first use
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 0, numListeners());

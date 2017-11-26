@@ -22,7 +22,6 @@ import javax.swing.table.TableColumnModel;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTablePersistenceManager;
@@ -40,7 +39,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     EnginesTableModel enginesModel;
     javax.swing.JTable enginesTable;
     JScrollPane enginesPane;
-    EngineManager engineManager = EngineManager.instance();
+    EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
 
     // labels
     JLabel numEngines = new JLabel();
@@ -251,7 +250,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         }
     }
 
-    public List<RollingStock> getSortByList() {
+    public List<Engine> getSortByList() {
         return enginesModel.getSelectedEngineList();
     }
 
@@ -327,5 +326,5 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EnginesTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EnginesTableFrame.class);
 }

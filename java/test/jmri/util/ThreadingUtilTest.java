@@ -1,9 +1,9 @@
 package jmri.util;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for ThreadingUtil class
@@ -98,6 +98,15 @@ public class ThreadingUtilTest extends TestCase {
         JUnitUtil.waitFor( ()->{ return done; }, "Delayed oepration complete");
     }
 
+    /**
+     * Show how to query state of _current_ thread
+     */
+    public void testSelfState() {
+    
+        // To run the tests, this thread has to be running, not waiting
+        Assert.assertTrue(ThreadingUtil.canThreadRun(Thread.currentThread()));
+        Assert.assertFalse(ThreadingUtil.isThreadWaiting(Thread.currentThread()));
+    }
 
     // from here down is testing infrastructure
     public ThreadingUtilTest(String s) {

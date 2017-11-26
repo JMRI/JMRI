@@ -28,18 +28,18 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.dccpp.DCCppTest");  // no tests in this class itself
 	suite.addTest(new TestSuite(DCCppCommandStationTest.class));
         suite.addTest(new TestSuite(DCCppConnectionTypeListTest.class));
-        suite.addTest(new TestSuite(DCCppMessageTest.class));
-        suite.addTest(new TestSuite(DCCppReplyTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppMessageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppReplyTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppPacketizerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppTrafficControllerTest.class));
-        suite.addTest(new TestSuite(DCCppSystemConnectionMemoTest.class));
-        suite.addTest(new TestSuite(DCCppThrottleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppSystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppThrottleTest.class));
         suite.addTest(new TestSuite(DCCppInitializationManagerTest.class));
         suite.addTest(new TestSuite(DCCppProgrammerTest.class));
         suite.addTest(new TestSuite(DCCppProgrammerManagerTest.class));
         suite.addTest(new TestSuite(DCCppPowerManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppThrottleManagerTest.class));
-        suite.addTest(new TestSuite(DCCppLightTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppLightTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppLightManagerTest.class));
         suite.addTest(new TestSuite(DCCppOpsModeProgrammerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppStreamPortControllerTest.class));

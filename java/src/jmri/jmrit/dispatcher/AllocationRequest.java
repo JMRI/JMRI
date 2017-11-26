@@ -1,6 +1,7 @@
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
+import jmri.InstanceManager;
 
 /**
  * This class holds information and options for an AllocationRequestt.
@@ -133,11 +134,11 @@ public class AllocationRequest {
      * Methods
      */
     private void handleSectionChange(java.beans.PropertyChangeEvent e) {
-        DispatcherFrame.instance().sectionOccupancyChanged();
+        InstanceManager.getDefault(DispatcherFrame.class).sectionOccupancyChanged();
         //This forces us to rescan the allocation list if the section has gone unoccupied, thus this might get re-allocated
         if (e.getPropertyName().equals("occupancy")) {
             if (((Integer) e.getNewValue()).intValue() == jmri.Section.UNOCCUPIED) {
-                DispatcherFrame.instance().forceScanOfAllocation();
+                InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
             }
         }
     }
@@ -175,7 +176,7 @@ public class AllocationRequest {
                     if (e.getPropertyName().equals("Held")) {
                         if (!((Boolean) e.getNewValue()).booleanValue()) {
                             mWaitingForSignalMast.removePropertyChangeListener(mSignalMastListener);
-                            DispatcherFrame.instance().forceScanOfAllocation();
+                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
                         }
                     }
                 }
@@ -201,7 +202,7 @@ public class AllocationRequest {
                     if (e.getPropertyName().equals("state")) {
                         if (((Integer) e.getNewValue()).intValue() == jmri.Block.UNOCCUPIED) {
                             mWaitingOnBlock.removePropertyChangeListener(mWaitingOnBlockListener);
-                            DispatcherFrame.instance().forceScanOfAllocation();
+                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
                         }
                     }
                 }

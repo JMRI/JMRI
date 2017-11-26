@@ -8,6 +8,7 @@ import javax.swing.JComponent;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
@@ -18,8 +19,8 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * Swing jfcUnit tests for the turnout table.
- * Do not convert to JUnit4 (no support for enterClickAndLeave() etc.)
+ * Swing jfcUnit tests for the turnout table. Do not convert to JUnit4 (no
+ * support for enterClickAndLeave() etc.)
  *
  * @author	Bob Jacobsen Copyright 2009, 2010, 2017
  */
@@ -30,7 +31,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
             return; // can't Assume in TestCase
         }
 
-       // ask for the window to open
+        // ask for the window to open
         TurnoutTableAction a = new TurnoutTableAction();
         a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
 
@@ -82,19 +83,29 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         JmriJFrame fa = JmriJFrame.getFrame(Bundle.getMessage("TitleAddTurnout"));
         Assert.assertNotNull("Add window found", fa);
 
-        // Find hardware number field
-        NamedComponentFinder ncfinder = new NamedComponentFinder(JComponent.class, "sysName");
-        JTextField sysNameField = (JTextField) ncfinder.find(fa, 0);
-        Assert.assertNotNull(sysNameField);
+        // Find hardware address field
+        NamedComponentFinder ncfinder = new NamedComponentFinder(JComponent.class, "hwAddressTextField");
+        JTextField hwAddressField = (JTextField) ncfinder.find(fa, 0);
+        Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
-        // set to "1"
-        
+        // set to "C/MRI"
+        a.connectionChoice = "C/MRI";
+        // set address to "a" (invalid for C/MRI)
+        hwAddressField.setText("a");
+        // test silent entry validation
+        boolean _valid = hwAddressField.isValid();
+        Assert.assertEquals("invalid entry", false, _valid);
+
+        // set address to "1"
         // The following line works on the CI servers, but not in some standalone cases
-        //getHelper().sendString(new StringEventData(this, sysNameField, "1"));
-        sysNameField.setText("1"); // workaround
-        
+        //getHelper().sendString(new StringEventData(this, hwAddressField, "1"));
+        hwAddressField.setText("1"); // workaround
+        NamedComponentFinder ncfinder2 = new NamedComponentFinder(JComponent.class, "createButton");
+        JButton createButton = (JButton) ncfinder2.find(fa, 0);
+        createButton.setEnabled(true); // skip validation
+
         flushAWT();
-        Assert.assertEquals("name content", "1", sysNameField.getText());
+        Assert.assertEquals("name content", "1", hwAddressField.getText());
 
         // Find system combobox
         ncfinder = new NamedComponentFinder(JComponent.class, "prefixBox");
@@ -104,12 +115,12 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         prefixBox.setSelectedItem("Internal");
         Assert.assertEquals("Selected system item", "Internal", prefixBox.getSelectedItem()); // this connection type is always available
 
-        // Find the Add OK button
-        AbstractButtonFinder okfinder = new AbstractButtonFinder(Bundle.getMessage("ButtonOK"));
-        JButton okbutton = (JButton) okfinder.find(fa, 0);
-        Assert.assertNotNull(okbutton);
+        // Find the Add Create button
+        AbstractButtonFinder createfinder = new AbstractButtonFinder(Bundle.getMessage("ButtonCreate"));
+        JButton createbutton = (JButton) createfinder.find(fa, 0);
+        Assert.assertNotNull(createbutton);
         // Click button to add turnout
-        getHelper().enterClickAndLeave(new MouseEventData(this, okbutton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, createbutton));
         // Ask to close Add pane
         TestHelper.disposeWindow(fa, this);
 
@@ -120,7 +131,6 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         //Assert.assertNotNull(editbutton);
         // Click button to edit turnout
         //getHelper().enterClickAndLeave(new MouseEventData(this, editbutton));
-
         // open Edit pane by method instead
         Turnout it1 = InstanceManager.turnoutManagerInstance().getTurnout("IT1");
         a.editButton(it1); // open edit pane
@@ -141,7 +151,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(ft, this);
 
         flushAWT();
-        
+
         // check that turnout was created
         Assert.assertNotNull(jmri.InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
     }
@@ -167,8 +177,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
@@ -176,7 +185,8 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
         super.tearDown();
     }
+
 }

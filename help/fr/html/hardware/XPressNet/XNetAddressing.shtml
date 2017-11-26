@@ -2,24 +2,21 @@
 
 <html>
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!--  $Id$ -->
-  <!-- UpDated  by Blorec Herv&#233;  2013-09-20-->
+<html lang="fr">
+ <!-- UpDated  by Blorec Herv&#233;  2017-01-12-->
+<title>JMRI Hardware Support - XPressNet - Lenz Feedback Bus Addressing</title>
 
-  <title>Lenz Feedback Bus Addressing</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -124,17 +121,101 @@
       787. L'adresse des r&eacute;tro-signalisations que vous allez
       utiliser est 787.</p>
 
-      <p>Dans les outils JMRI, vous pouvez pr&eacute;fixer
-      l'adresse avec XS pour dire le syst&egrave;me Capteur est
-      accessible via un syst&egrave;me bas&eacute; XPressNet. Si
-      vous n'avez seulement qu'un syst&egrave;me bas&eacute;
-      XPressNet configur&eacute;, vous pouvez simplement utiliser
-      l'adresse et le programmes affectera automatiquement un
-      pr&eacute;fixe XS pour vous</p>
-      <hr>
-      Paul Bender<br>
-      paul.bender@acm.org <!--#include virtual="/Footer" -->
-    </div>
-  </div>
+
+<h1>Structure Mat&#233;rielle: XPressNet - Bus Lenz d'adressage des R&#233;tro-Signalisation </h1>
+<p>
+Sur les syst&#232;mes Lenz, la r&#233;tro-signalisation des p&#233;riph&#233;riques d'entr&#233;e est assur&#233;e par le Bus de &#233;tro-signalisation.
+
+L'entr&#233;e disponible &#224; partir du bus FeedBack (r&#233;tro-signalisation) est fournie par le LR100 Lenz
+et le Codeurs de R&#233;tro-Signalisation LR101 ou d&#233;codeurs d'accessoires Lenz qui fournissent une capacit&#233; de r&#233;tro-signalisation (le LS100 par exemple).
+
+
+<h2>Adressage des D&#233;codeurs d'Accessoires avec XPressNet dans JMRI </h2>
+<p>
+Chaque d&#233;codeur d'accessoires est adress&#233; en lui donnant une adresse dans l'espace d'adresse 
+allou&#233; par le NMRA pour les d&#233;codeurs d'accessoires. Cela autorise aux d&#233;codeurs d'accessoires
+les adresses de 1 &#224; 1024.
+</p>
+<p>
+Dans les outils JMRI, vous pouvez pr&#233;fixer l'adresse avec XT pour dire que le syst&#232;me
+d&#233;codeur est accessible via un syst&#232;me bas&#233; sur XPressNet. Si vous avez seulement un syst&#232;me bas&#233; 
+XPressNet configur&#233;, vous pouvez simplement utiliser l'adresse et le
+programmes affectera automatiquement un pr&#233;fixe XT pour vous.
+</p>
+<p>
+Sur le bus Feedback (R&#233;tro-signalisations), les d&#233;codeurs d'accessoires sont autoris&#233;s &#224; occuper les adresses
+1 &#224; 64. Depuis le retour des d&#233;codeurs &#233;quip&#233;s que Lenz fournit actuellement
+comprennent 4 d&#233;codeurs d'accessoires, cet espace d'adressage limit&#233; en r&#233;alit&#233;,
+correspond &#224; l'adresse d&#233;codeur accessoire de 1 &#224; 256.
+</p>
+<p>
+Pour calculer avec ce dispositif de r&#233;troaction l'Adresses o&#249; r&#233;side un de vos d&#233;codeurs d'accessoires
+arrondir au multiple de 4 suivant, et divisez ce
+nombre par quatre.
+</p>
+<p>
+Par exemple, si vous avez un d&#233;codeur d'accessoires avec l'adresse 121, le prochain
+multiple de 4 est de 124. 124 divis&#233; par 4 &#233;gale  31, donc ce d&#233;codeur est inclus
+avec l'adresse de r&#233;troaction 31.
+</p>
+<p>
+La r&#233;tro-signalisation des d&#233;codeurs d'accessoires est g&#233;r&#233;e automatiquement par les outils aiguillage fournis avec JMRI. 
+Si l'aiguillage est &#233;quip&#233; de r&#233;tro-signalisation, l'Outil Aiguillage, le Tableau Aiguillage, ou un panneau de commande
+ ne mettra pas &#224; jourl'&#233;tat de l'aiguillage de jusqu'&#224; ce que la r&#233;ponse du bus de r&#233;tro-signalisation indique 
+que l'aiguillage a &#233;t&#233; chang&#233;.
+</p>
+<p>
+Le statut des d&#233;codeurs qui ne d&#233;clarent pas la r&#233;tro-signalisation est g&#233;r&#233; par l'attente d'
+un message de r&#233;ponse avant de changer le statut du d&#233;codeur
+<p>
+</p>
+<h2>Adressage du Bus de R&#233;tro-signalisations Lenz des Capteurs dans JMRI </h2>
+<p>
+Les Encodeurs de R&#233;tro-signalisations Lenz LR100 et LR101  sont autoris&#233;s &#224; avoir des adresses de r&#233;tro-signalisation 
+ de 1 &#224; 128. Lenz Recommande de commencer &#224; l'adresse 65 et pour
+&#233;viter les conflits avec les aiguillages fournissant  une r&#233;tro-signalisation.
+</p>
+<p>
+<p> NOTE: le LR100 a actuellement 16 entr&#233;es, et  prends jusqu'&#224; deux adresses.
+</p>
+<p>
+Chaque encodeur de r&#233;tro-signalisation comprend 8 entr&#233;es. Ces entr&#233;es sont soit On
+ou Off. Chaque entr&#233;e est num&#233;rot&#233;e de 1 &#224; 8 sur l'Encodeur de R&#233;trosignalisation.
+</p>
+<p>
+Pour d&#233;terminer quelle adresse de r&#233;tro-signalisation est rapport&#233;e par le dispositif, vous devez
+conna&#238;tre l'adresse de l'encodeur de r&#233;tro-signalisation, et qu'elle entr&#233;e vous
+utilisez. Consultez la documentation de Lenz pour d&#233;terminer comment le programme trouve les
+Adresse des Encodeur de R&#233;tro-signalisation. Cela peut &#234;tre fait avec l'Encodeur en place sur
+le r&#233;seau.
+</p>
+<p>
+Pour calculer l'adresse d'un capteur, il faut soustraire 1 de l'adresse de l'encodeur de r&#233;tro-signalisation, 
+multipliez ce r&#233;sultat par 8, puis ajoutez num&#233;ro de l'entr&#233;e que vous utilisez.
+</p>
+<p>
+Par exemple, si vous utilisez le contact 3 sur un Encodeur de R&#233;tro-signalisation avec l'adresse
+99, 99 - 1 = 98. 98 * 8 = 784. 784+3 = 787. L'adresse des r&#233;tro-signalisations que vous allez utiliser
+est 787.
+</p>
+<p>
+Dans le champ adresse mat&#233;riel du volet "Add Sensor" vous pouvez entrer 
+l'adresse de l'encodeur, suivi par par le contact s&#233;par&#233; par un ":"<br>
+Ainsi pour un caapteur sur l'encodeur de r&#233;trosignalisation adresse 99, contact 3, vous entrerez <b>99:3</b>
+<p>
+Dans les outils JMRI, vous pouvez pr&#233;fixer l'adresse avec XS pour dire au syst&#232;me
+que le Capteur est accessible via un syst&#232;me bas&#233; XPressNet. Si vous n'avez seulement qu'un
+syst&#232;me bas&#233; XPressNet  configur&#233;, vous pouvez simplement utiliser l'adresse et le
+programmes affectera automatiquement un pr&#233;fixe XS pour vous</p>
+
+<p>Retour &#224; la page <a href="index.shtml">Aide XPressNet</a>
+
+<hr>
+Paul Bender<br>
+paul.bender@acm.org
+
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

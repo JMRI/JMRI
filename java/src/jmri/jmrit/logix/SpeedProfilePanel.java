@@ -107,7 +107,7 @@ public class SpeedProfilePanel extends JPanel {
         }
     }
 
-    public class ColorCellRenderer extends DefaultTableCellRenderer {
+    public static class ColorCellRenderer extends DefaultTableCellRenderer {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
             Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
@@ -136,7 +136,7 @@ public class SpeedProfilePanel extends JPanel {
     }
 
 
-    class SpeedTableModel extends javax.swing.table.AbstractTableModel {
+    static class SpeedTableModel extends javax.swing.table.AbstractTableModel {
         static final int STEP_COL = 0;
         static final int THROTTLE_COL = 1;
         static final int FORWARD_SPEED_COL = 2;
@@ -151,7 +151,7 @@ public class SpeedProfilePanel extends JPanel {
         
         SpeedTableModel(RosterSpeedProfile sp, HashMap<Integer, Boolean> anomaly) {
             profile = sp;
-            _editable = (anomaly != null);
+            _editable = (anomaly != null && anomaly.size() > 0);
             _anomaly = anomaly;
             TreeMap<Integer, SpeedStep> speeds = sp.getProfileSpeeds();
             Map.Entry<Integer, SpeedStep> entry = speeds.firstEntry();
@@ -274,5 +274,5 @@ public class SpeedProfilePanel extends JPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpeedProfilePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpeedProfilePanel.class);
 }

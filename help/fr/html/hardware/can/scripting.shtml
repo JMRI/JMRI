@@ -3,41 +3,43 @@
 
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2008 -->
-  <!-- Translated  by Blorec Herv&#233; le 2013-09-10 -->
+<!-- Translated  by Blorec Herv&#233; le 2017-01-20 -->
+<title>JMRI Hardware Support - CAN Network - Scripting</title>
 
-  <title>JMRI: CAN Network Support</title><!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+<!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: Scripts CAN</h1>JMRI script peut &ecirc;tre
-      utilis&eacute; pour envoyer et recevoir des trames CAN. Vous
-      pouvez l'utiliser pour cr&eacute;er des routines de test pour
-      des cartes en cours de d&eacute;veloppement, etc
 
-      <p>Cette page d&eacute;crit les extensions CAN pour les
-      scripts JMRI. Pour plus d'informations sur le script JMRI
-      lui-m&ecirc;me, voir les <a href=
-      "../../tools/scripting/index.shtml">pages d'aide</a>.</p>
 
-      <p>Il y a un <a href=
-      "../../../../../jython/CanExample.py">CanExample.py</a>
-      exemple basique de script dans le r&eacute;pertoire
-      jython.</p>
+<h1>Prise en charge MAt&#233;riel: CAN - Scripts</h1>
+
+<p>Script JMRI peut &#234;tre utilis&#233; pour
+envoyer et recevoir des trames CAN.
+Vous pouvez l'utiliser pour cr&#233;er des routines de test pour
+des cartes en cours de d&#233;veloppement, etc
+
+<p>
+Cette page d&#233;crit les extensions CAN pour les scripts JMRI.
+Pour plus d'informations sur le script JMRI lui-m&#234;me,
+voir les pages d'<a href="../../tools/scripting/index.shtml">Aide Script</a>.
+
+<p>
+Il y a un exemple basique de script dans le r&#233;pertoire jython
+<a href="../../../../../jython/CanExample.py"> CanExample.py</a>.
+
+<h2>Exemples de Script Code</h2>
+
+<h3>Envoi des Trames CAN</h3>
 
       <h2>Envoi des Trames CAN</h2>Les Trames CAN sont
       cr&eacute;&eacute;s comme des objets, puis mis en file
@@ -52,13 +54,12 @@ frame.setElement(1, 0x67)
 jmri.jmrix.can.TrafficController.instance().sendCanMessage(frame, None)
 </pre>
 
-      <h2>R&eacute;ception de Trames CAN</h2>Un script peut
-      &eacute;couter les trames CAN comme elles sont re&ccedil;ues
-      du bus, et s&eacute;par&eacute;ment pour les trames CAN qui
-      sont transmises sur le bus par JMRI. L'interface fournit ces
-      CanListener s&eacute;par&eacute;ment via des
-      proc&eacute;dures "reply"et "message", respectivement.
-      <pre style="font-family: monospace;">
+<h3>R&#233;ception de Trames CAN</h3>
+Un script peut &#233;couter les trames CAN comme elles sont re&#231;ues
+du bus, et s&#233;par&#233;ment pour les trames CAN qui sont
+transmises sur le bus par JMRI.
+L'interface CanListener fournit ceux-ci s&#233;par&#233;ment
+via des proc&#233;dures "reply"et "message", respectivement.
 
 class MyCanListener (jmri.jmrix.can.CanListener) :
     def message(self, msg) :
@@ -71,8 +72,16 @@ class MyCanListener (jmri.jmrix.can.CanListener) :
         return
     
 jmri.jmrix.can.TrafficController.instance().addCanListener(MyCanListener())
-</pre><!--#include virtual="/Footer" -->
-    </div>
-  </div>
+</pre></code>
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Aide JMRI</h3>
+	<ul>
+	<li>Retour &#224; la page <a href="index.shtml">support d'Aide Principale R&#233;seau CAN</a>.
+	</ul>
+
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

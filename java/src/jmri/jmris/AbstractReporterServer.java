@@ -38,13 +38,19 @@ abstract public class AbstractReporterServer {
     synchronized protected void addReporterToList(String reporterName) {
         if (!reporters.containsKey(reporterName)) {
             reporters.put(reporterName, new ReporterListener(reporterName));
-            InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(reporterName).addPropertyChangeListener(reporters.get(reporterName));
+            Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(reporterName);
+            if(reporter!=null) {
+               reporter.addPropertyChangeListener(reporters.get(reporterName));
+            }
         }
     }
 
     synchronized protected void removeReporterFromList(String reporterName) {
         if (reporters.containsKey(reporterName)) {
-            InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(reporterName).removePropertyChangeListener(reporters.get(reporterName));
+            Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(reporterName);
+            if(reporter!=null) {
+               reporter.removePropertyChangeListener(reporters.get(reporterName));
+            }
             reporters.remove(reporterName);
         }
     }
@@ -79,8 +85,11 @@ abstract public class AbstractReporterServer {
     }
 
     public void dispose() {
-        for (Map.Entry<String, ReporterListener> memory : this.reporters.entrySet()) {
-            InstanceManager.memoryManagerInstance().getMemory(memory.getKey()).removePropertyChangeListener(memory.getValue());
+        for (Map.Entry<String, ReporterListener> entry: this.reporters.entrySet()) {
+            Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(entry.getKey());
+            if(reporter!=null) {
+               reporter.removePropertyChangeListener(entry.getValue());
+            }
         }
         this.reporters.clear();
     }

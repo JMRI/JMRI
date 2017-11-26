@@ -39,7 +39,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
     }
 
     @Override
-    public void connect() throws Exception {
+    public void connect() throws java.io.IOException {
         super.connect();
         log.debug("openPort called");
         keepAliveTimer();
@@ -200,6 +200,6 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         return Bundle.getMessage("defaultMDNSServiceType");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LIUSBEthernetAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBEthernetAdapter.class);
 
 }

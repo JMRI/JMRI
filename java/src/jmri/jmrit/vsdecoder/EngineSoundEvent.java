@@ -186,6 +186,6 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
         }
     }  // end setXml()
 
-    private static final Logger log = LoggerFactory.getLogger(SoundEvent.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SoundEvent.class);
 
 }

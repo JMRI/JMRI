@@ -31,18 +31,18 @@
     <row>
       <column>
         <label>
-          <text>                                               1</text>
+          <text>                               1</text>
         </label>
         <label>
-          <text>                                           Front  </text>
-          <text xml:lang="it">                                          Frontale </text>
-          <text xml:lang="cs">                                          Přední  </text>
+          <text>                             Front  </text>
+          <text xml:lang="it">                             Frontale </text>
+          <text xml:lang="cs">                             Přední  </text>
           <text xml:lang="de">                             Lvor </text>
         </label>
         <label>
-          <text>                                           Light  </text>
-          <text xml:lang="it">                                           Luci   </text>
-          <text xml:lang="cs">                                           Světlo  </text>
+          <text>                             Light  </text>
+          <text xml:lang="it">                             Luci   </text>
+          <text xml:lang="cs">                             Světlo  </text>
           <text xml:lang="de"> </text>
         </label>
         <display item="FL(f) controls output 1" format="checkbox" label="Forward Headlight F0(f)">

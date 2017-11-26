@@ -1,7 +1,6 @@
 package jmri.jmrix.lenz.ztc640;
 
 import java.util.Locale;
-
 import org.junit.Assert;
 import org.junit.Test;
 

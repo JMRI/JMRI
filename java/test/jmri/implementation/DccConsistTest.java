@@ -1,12 +1,11 @@
 package jmri.implementation;
 
-import org.junit.Assert;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
 import jmri.DccLocoAddress;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 
 /**
@@ -22,14 +21,19 @@ public class DccConsistTest extends AbstractConsistTestBase {
         Assert.assertNotNull(c);
     }
 
+    @Test public void testCtor3() {
+        // integer constructor test.
+        DccConsist c = new DccConsist(new DccLocoAddress(12, true));
+        Assert.assertNotNull(c);
+    }
+
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDebugProgrammerManager();
-        c = new DccConsist(new DccLocoAddress(12, true));
+        c = new DccConsist(new DccLocoAddress(12, true), jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class));
     }
    
     @After

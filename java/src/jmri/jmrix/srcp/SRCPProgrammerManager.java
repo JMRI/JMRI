@@ -8,8 +8,8 @@ import jmri.managers.DefaultProgrammerManager;
  * Extend DefaultProgrammerManager to provide ops mode programmers for SRCP
  * systems
  *
- * @see jmri.ProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2002, 2008
+ * @see jmri.managers.DefaultProgrammerManager
+ * @author Bob Jacobsen Copyright (C) 2002, 2008
  */
 public class SRCPProgrammerManager extends DefaultProgrammerManager {
 
@@ -36,6 +36,3 @@ public class SRCPProgrammerManager extends DefaultProgrammerManager {
         return null;
     }
 }
-
-
-

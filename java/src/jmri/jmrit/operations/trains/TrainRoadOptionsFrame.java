@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -55,7 +56,7 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
     // check boxes
     // text field
     // combo boxes
-    JComboBox<String> comboBoxRoads = CarRoads.instance().getComboBox();
+    JComboBox<String> comboBoxRoads = InstanceManager.getDefault(CarRoads.class).getComboBox();
 
     public static final String DISPOSE = "dispose"; // NOI18N
 
@@ -165,8 +166,8 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
         updateRoadNames();
 
         // get notified if car roads, roads, and owners gets modified
-        CarTypes.instance().addPropertyChangeListener(this);
-        CarRoads.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
 
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight400));
     }
@@ -280,13 +281,13 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
     }
 
     private void updateRoadComboBoxes() {
-        CarRoads.instance().updateComboBox(comboBoxRoads);
+        InstanceManager.getDefault(CarRoads.class).updateComboBox(comboBoxRoads);
     }
 
     @Override
     public void dispose() {
-        CarTypes.instance().removePropertyChangeListener(this);
-        CarRoads.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);
         if (_train != null) {
             _train.removePropertyChangeListener(this);
         }
@@ -305,5 +306,5 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainRoadOptionsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainRoadOptionsFrame.class);
 }

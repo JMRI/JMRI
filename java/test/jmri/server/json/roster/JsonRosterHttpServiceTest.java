@@ -1,6 +1,5 @@
 package jmri.server.json.roster;
 
-import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
@@ -29,17 +28,14 @@ public class JsonRosterHttpServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+
         JUnitUtil.initConfigureManager();
         InstanceManager.setDefault(Roster.class, new Roster("java/test/jmri/server/json/roster/data/roster.xml"));
     }
 
     @After
-    public void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() throws Exception {        JUnitUtil.tearDown();    }
 
     /**
      * Tests only that this does not throw an error with a valid call, and

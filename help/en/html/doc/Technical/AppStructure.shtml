@@ -85,7 +85,6 @@
             set up logging, set up the console, etc.
         <li><code><a href="http://jmri.org/JavaDoc/doc/apps/AppsBase.html#setConfigFilename-java.lang.String-java.lang.String:A-">apps.gui3.Apps3.setConfigFilename</a></code>
             sets the filename (pathname) for the configuration file, either from system properties, launch arguments, or if needed from a default argument.
-        <p>
         <li>The DecoderPro constructor just refers up to the App3 constructor, which in turn handles some GUI initiatlization
             and relies on the AppsBase constructor for the rest.
         <li>Apps3.start() is then responsible for the program's dynamics.
@@ -94,21 +93,23 @@
         <p>
         Some useful milestones:
         <dl>
-        <dt>Windows, toolbars and menus<dt>
+        <dt>Windows, toolbars and menus</dt>
             <dd>The Gui3 support (see the <a href="Swing.shtml">JMRI Swing page</a>) is used to 
                 define toolsbars and menus.  For example, apps.gui3.dp3.DecoderPro3#getMenuFile() loads
                 from xml/config/parts/jmri/jmrit/roster/swing/RosterFrameMenu.xml and apps.gui3.dp3.DecoderPro3#getToolbarFile()
                 loads from xml/config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml
             </dd>
             
-            <a id="load" name="load"></a>
             <dt>Load configuration</dt>
-            <dd><a href="http://jmri.org/JavaDoc/doc/apps/AppsBase.html#setAndLoadPreferenceFile--"><code>apps.AppsBase.jmri.ConfigureManager()</code></a>
-                loads the configuration file, and in the process loads & activates many of the
+            <dd>
+                <a id="load" name="load"></a>
+                <a href="http://jmri.org/JavaDoc/doc/apps/AppsBase.html#setAndLoadPreferenceFile--"><code>apps.AppsBase.jmri.ConfigureManager()</code></a>
+                loads the configuration file, and in the process loads and activates many of the
                 user level objects in the system.  In particular, this is the start of 
                 loading the 
                 <a href="SystemStructure.shtml">system connections</a>.
             </dd>
+        </dl>
         <p>For more information, see the <code><a href="http://jmri.org/JavaDoc/doc/apps/gui3/Apps3.html">apps.gui3.Apps3</a></code> Javadoc.
 
     

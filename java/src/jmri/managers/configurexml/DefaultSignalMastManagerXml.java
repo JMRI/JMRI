@@ -54,24 +54,22 @@ public class DefaultSignalMastManagerXml
             if (repeaterList.size() > 0) {
                 //Element repeatElem= new Element("signalmastrepeaters");
                 for (SignalMastRepeater smr : repeaterList) {
-                    if (smr.getMasterMast() != null && smr.getSlaveMast() != null) {
-                        Element e = new Element("signalmastrepeater");
-                        e.addContent(new Element("masterMast").addContent(smr.getMasterMastName()));
-                        e.addContent(new Element("slaveMast").addContent(smr.getSlaveMastName()));
-                        e.addContent(new Element("enabled").addContent(smr.getEnabled() ? "true" : "false"));
-                        switch (smr.getDirection()) {
-                            case 1:
-                                e.addContent(new Element("update").addContent("MasterToSlave"));
-                                break;
-                            case 2:
-                                e.addContent(new Element("update").addContent("SlaveToMaster"));
-                                break;
-                            default:
-                                e.addContent(new Element("update").addContent("BothWay"));
-                                break;
-                        }
-                        element.addContent(e);
+                    Element e = new Element("signalmastrepeater");
+                    e.addContent(new Element("masterMast").addContent(smr.getMasterMastName()));
+                    e.addContent(new Element("slaveMast").addContent(smr.getSlaveMastName()));
+                    e.addContent(new Element("enabled").addContent(smr.getEnabled() ? "true" : "false"));
+                    switch (smr.getDirection()) {
+                        case 1:
+                            e.addContent(new Element("update").addContent("MasterToSlave"));
+                            break;
+                        case 2:
+                            e.addContent(new Element("update").addContent("SlaveToMaster"));
+                            break;
+                        default:
+                            e.addContent(new Element("update").addContent("BothWay"));
+                            break;
                     }
+                    element.addContent(e);
                 }
                 //element.add(repeatElem);
             }
@@ -224,5 +222,5 @@ public class DefaultSignalMastManagerXml
         return InstanceManager.getDefault(jmri.SignalMastManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastManagerXml.class);
 }

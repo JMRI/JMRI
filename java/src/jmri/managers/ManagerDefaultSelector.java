@@ -20,19 +20,18 @@ import jmri.ConsistManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.PowerManager;
-import jmri.ProgrammerManager;
 import jmri.ThrottleManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
+import jmri.spi.PreferencesManager;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.spi.PreferencesManager;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Records and executes a desired set of defaults for the JMRI InstanceManager
@@ -149,7 +148,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
         defaults.keySet().stream().forEach((c) -> {
             String connectionName = ManagerDefaultSelector.this.defaults.get(c);
             if (connectionName.equals(removedName)) {
-                log.debug("Connection " + removedName + " has been removed as the default for " + c);
+                log.debug("Connection {} has been removed as the default for {}", removedName, c);
                 tmpArray.add(c);
             }
         });
@@ -243,11 +242,9 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                     currentName = InstanceManager.throttleManagerInstance().getUserName();
                 } else if (c == PowerManager.class && InstanceManager.getOptionalDefault(PowerManager.class).isPresent()) {
                     currentName = InstanceManager.getDefault(PowerManager.class).getUserName();
-                } else if (c == ProgrammerManager.class && InstanceManager.getOptionalDefault(ProgrammerManager.class).isPresent()) {
-                    currentName = InstanceManager.getDefault(ProgrammerManager.class).getUserName();
                 }
                 if (currentName != null) {
-                    log.warn("The configured " + connectionName + " for " + c + " can not be found so will use the default " + currentName);
+                    log.warn("The configured {} for {} can not be found so will use the default {}", connectionName, c, currentName);
                     this.defaults.put(c, currentName);
                 }
             }

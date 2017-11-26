@@ -9,7 +9,7 @@ import javax.swing.table.AbstractTableModel;
 public abstract class NodeConfigModel extends AbstractTableModel {
 
     protected int numrows = 16;          // Trying to make a property here
-    protected boolean editmode = true;  // Trying to make a property here
+    protected boolean editmode = true;   // Trying to make a property here
 
     @Override
     public int getRowCount() {

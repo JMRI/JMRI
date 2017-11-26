@@ -50,11 +50,11 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             clockSensor.setKnownState(Sensor.ACTIVE);
             clockSensor.addPropertyChangeListener(
                     new PropertyChangeListener() {
-                        @Override
-                        public void propertyChange(PropertyChangeEvent e) {
-                            clockSensorChanged();
-                        }
-                    });
+                @Override
+                public void propertyChange(PropertyChangeEvent e) {
+                    clockSensorChanged();
+                }
+            });
         } catch (jmri.JmriException e) {
             log.warn("Exception setting ISCLOCKRUNNING sensor ACTIVE: " + e);
         }
@@ -110,10 +110,9 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      * @param i java.time.Instant
      */
     @Override
-    public void setTime(Instant i){
-       setTime(Date.from(i));
+    public void setTime(Instant i) {
+        setTime(Date.from(i));
     }
-
 
     @Override
     public void userSetTime(Date d) {
@@ -216,7 +215,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 
     @Override
     public void userSetRate(double factor) {
-        // this call is used when user changes fast clock rate either in Setup Fast Clock or via a ClockControl  
+        // this call is used when user changes fast clock rate either in Setup Fast Clock or via a ClockControl
         // implementation
         if (factor < 0.1 || factor > 100) {
             log.error("rate of " + factor + " is out of reasonable range, set to 1");
@@ -481,13 +480,6 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         return (!notInitialized);
     }
 
-    PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
-    @Override
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
     /**
      * Handle a change in the clock running sensor
      */
@@ -505,26 +497,6 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             }
             setRun(false);
         }
-    }
-
-    /**
-     * Request a call-back when the bound Rate or Run property changes.
-     * <P>
-     * Not yet implemented.
-     */
-    @Override
-    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    /**
-     * Remove a request for a call-back when a bound property changes.
-     * <P>
-     * Not yet implemented.
-     */
-    @Override
-    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
     }
 
     /**
@@ -667,6 +639,6 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         return 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleTimebase.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleTimebase.class);
 
 }

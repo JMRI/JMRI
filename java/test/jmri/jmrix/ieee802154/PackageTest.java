@@ -1,5 +1,6 @@
 package jmri.jmrix.ieee802154;
 
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -27,7 +28,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.ieee802154.IEEE802154Test");  // no tests in this class itself
         suite.addTest(new TestSuite(IEEE802154MessageTest.class));
         suite.addTest(new TestSuite(IEEE802154ReplyTest.class));
-        suite.addTest(new TestSuite(IEEE802154SystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IEEE802154SystemConnectionMemoTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(IEEE802154TrafficControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ieee802154.xbee.PackageTest.class));
         suite.addTest(jmri.jmrix.ieee802154.serialdriver.PackageTest.suite());
@@ -42,12 +43,12 @@ public class PackageTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 

@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
    ConnectionConfigTest.class,
    jmri.jmrix.can.adapters.loopback.configurexml.PackageTest.class,
    LoopbackTrafficControllerTest.class,
-   PortTest.class
+   PortTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.can.adapters.loopback package.
@@ -33,6 +34,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

@@ -1,10 +1,10 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.Light;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Implement light manager for CMRI serial systems
@@ -24,7 +24,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Returns the system letter for CMRI
+     * {@inheritDoc}
      */
     @Override
     public String getSystemPrefix() {
@@ -32,11 +32,14 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Method to create a new Light based on the system name Returns null if the
+     * Method to create a new Light based on the system name.
+     * <p>
+     * Assumes calling method has checked that a Light with this system
+     * name does not already exist.
+     *
+     * @return null if the
      * system name is not in a valid format or if the system name does not
-     * correspond to a configured C/MRI digital output bit Assumes calling
-     * method has checked that a Light with this system name does not already
-     * exist
+     * correspond to a configured C/MRI digital output bit
      */
     @Override
     public Light createNewLight(String systemName, String userName) {
@@ -59,7 +62,7 @@ public class SerialLightManager extends AbstractLightManager {
             return (null);
         }
         // Validate the systemName
-        if (_memo.validSystemNameFormat(systemName, 'L')) {
+        if (_memo.validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
             lgt = new SerialLight(systemName, userName,_memo);
             if (!_memo.validSystemNameConfig(systemName, 'L',_memo.getTrafficController())) {
                 log.warn("Light system Name does not refer to configured hardware: "
@@ -81,18 +84,18 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name format returns 'true' if system
-     * name has a valid format, else returns 'false'
+     * {@inheritDoc}
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return _memo.validSystemNameFormat(systemName, 'L');
     }
 
     /**
-     * Public method to validate system name for configuration returns 'true' if
-     * system name has a valid meaning in current configuration, else returns
-     * 'false'
+     * Public method to validate system name for configuration.
+     *
+     * @return 'true' if system name has a valid meaning in current configuration,
+     * else return 'false'
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
@@ -100,10 +103,9 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to normalize a system name
-     * <P>
-     * Returns a normalized system name if system name has a valid format, else
-     * returns "".
+     * Public method to normalize a system name.
+     *
+     * @return a normalized system name if system name has a valid format, else returns ""
      */
     @Override
     public String normalizeSystemName(String systemName) {
@@ -112,15 +114,24 @@ public class SerialLightManager extends AbstractLightManager {
 
     /**
      * Public method to convert system name to its alternate format
-     * <P>
-     * Returns a normalized system name if system name is valid and has a valid
-     * alternate representation, else return "".
+     *
+     * @return a normalized system name if system name is valid and has a valid
+     * alternate representation, else returns ""
      */
     @Override
     public String convertSystemNameToAlternate(String systemName) {
         return _memo.convertSystemNameToAlternate(systemName);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class);
 
 }

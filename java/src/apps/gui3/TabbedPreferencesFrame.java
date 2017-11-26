@@ -10,7 +10,7 @@ import jmri.util.JmriJFrame;
 
 /**
  * Provide a preferences window.
- * <P>
+ *
  * @author Kevin Dickerson Copyright 2010
  */
 public class TabbedPreferencesFrame extends JmriJFrame {
@@ -26,9 +26,9 @@ public class TabbedPreferencesFrame extends JmriJFrame {
 
     public TabbedPreferencesFrame() {
         super();
-        super.add(getTabbedPreferences());
-        super.addHelpMenu("package.apps.TabbedPreferences", true); // NOI18N
-        super.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        add(getTabbedPreferences());
+        addHelpMenu("package.apps.TabbedPreferences", true); // NOI18N
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
 
     public void gotoPreferenceItem(String item, String sub) {

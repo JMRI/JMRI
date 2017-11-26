@@ -3,8 +3,8 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
 
 /**
@@ -12,14 +12,14 @@ import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010
  */
-public class EngineSetFrame extends RollingStockSetFrame implements
+public class EngineSetFrame extends RollingStockSetFrame<Engine> implements
         java.beans.PropertyChangeListener {
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 
-    EngineManager manager = EngineManager.instance();
-    EngineManagerXml managerXml = EngineManagerXml.instance();
+    EngineManager manager = InstanceManager.getDefault(EngineManager.class);
+    EngineManagerXml managerXml = InstanceManager.getDefault(EngineManagerXml.class);
 
     Engine _engine;
 
@@ -68,7 +68,7 @@ public class EngineSetFrame extends RollingStockSetFrame implements
             if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("engineInConsist"),
                     Bundle.getMessage("enginePartConsist"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 // convert cars list to rolling stock list
-                List<RollingStock> list = _engine.getConsist().getGroup();
+                List<Engine> list = _engine.getConsist().getGroup();
                 if (!updateGroup(list)) {
                     return false;
                 }
@@ -78,5 +78,5 @@ public class EngineSetFrame extends RollingStockSetFrame implements
         return true;
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(EngineSetFrame.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(EngineSetFrame.class);
 }

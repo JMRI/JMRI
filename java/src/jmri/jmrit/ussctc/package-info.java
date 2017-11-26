@@ -10,8 +10,8 @@
  * </ul>
  * 
  * Sequence diagrams of how all this goes together:
- * <a href="doc-files/CodeButtonPressTurnout.png"><img src="doc-files/CodeButtonPressTurnout.png" align="right" alt="Code press" height="25%" width="25%"></a>
- * <a href="doc-files/TurnoutChangeIndication.png"><img src="doc-files/TurnoutChangeIndication.png" align="right" alt="Indication" height="25%" width="25%"></a>
+ * <a href="doc-files/CodeButtonPressTurnout.png"><img src="doc-files/CodeButtonPressTurnout.png" style="text-align: right;" alt="Code press" height="25%" width="25%"></a>
+ * <a href="doc-files/TurnoutChangeIndication.png"><img src="doc-files/TurnoutChangeIndication.png" style="text-align: right;" alt="Indication" height="25%" width="25%"></a>
  * <HR>
  *     There are a number of older tools remaining in this package:
  * <UL>

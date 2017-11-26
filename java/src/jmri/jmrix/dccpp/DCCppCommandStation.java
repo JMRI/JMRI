@@ -147,8 +147,8 @@ public class DCCppCommandStation implements jmri.CommandStation {
             return;
         }
 
- int reg = 1; // TODO: Fix this when I understand registers...
- DCCppMessage msg = DCCppMessage.makeWriteDCCPacketMainMsg(reg, packet.length, packet);
+        int reg = 0;  // register 0, so this doesn't repeat
+        DCCppMessage msg = DCCppMessage.makeWriteDCCPacketMainMsg(reg, packet.length, packet);
 
         for (int i = 0; i < repeats; i++) {
             _tc.sendDCCppMessage(msg, null);
@@ -208,7 +208,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     /*
      * We need to register for logging
      */
-    private final static Logger log = LoggerFactory.getLogger(DCCppCommandStation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppCommandStation.class);
 
 }
 

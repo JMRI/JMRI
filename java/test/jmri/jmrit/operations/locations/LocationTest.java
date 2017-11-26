@@ -2,6 +2,7 @@
 package jmri.jmrit.operations.locations;
 
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
@@ -9,19 +10,19 @@ import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Locations class Last manually cross-checked on
  * 20090131
- *
+ * <p>
  * Still to do: ScheduleItem: XML read/write Schedule: Register, List, XML
  * read/write Track: AcceptsDropTrain, AcceptsDropRoute Track:
  * AcceptsPickupTrain, AcceptsPickupRoute Track: CheckScheduleValid Track: XML
  * read/write Location: Track support <-- I am here Location: XML read/write
- *
+ * <p>
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class LocationTest extends OperationsTestCase {
@@ -153,7 +154,7 @@ public class LocationTest extends OperationsTestCase {
     // test typename support
     public void testTypeNameSupport() {
         // use LocationManager to allow replace car type to work properly
-        Location l = LocationManager.instance().newLocation("Test Name");
+        Location l = InstanceManager.getDefault(LocationManager.class).newLocation("Test Name");
         Assert.assertEquals("Location Name", "Test Name", l.getName());
 
         Assert.assertEquals("Location Accepts Type Name undefined", false, l.acceptsTypeName("TestTypeName"));
@@ -161,7 +162,7 @@ public class LocationTest extends OperationsTestCase {
         // l.addTypeName("TestTypeName");
         // Assert.assertEquals("Location Accepts Type Name defined", false, l.acceptsTypeName("TestTypeName"));
         // now add to car types
-        CarTypes ct = CarTypes.instance();
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
         ct.addName("TestTypeName");
         l.addTypeName("TestTypeName");
         Assert.assertEquals("Location Accepts Type Name defined", true, l.acceptsTypeName("TestTypeName"));
@@ -171,7 +172,7 @@ public class LocationTest extends OperationsTestCase {
 
         ct.addName("Baggage");
         ct.addName("BoxCar");
-        ct.addName("Caboose");
+        ct.addName(Bundle.getMessage("Caboose"));
         ct.addName("Coal");
         ct.addName("Engine");
         ct.addName("Hopper");
@@ -183,7 +184,7 @@ public class LocationTest extends OperationsTestCase {
 
         l.addTypeName("Baggage");
         l.addTypeName("BoxCar");
-        l.addTypeName("Caboose");
+        l.addTypeName(Bundle.getMessage("Caboose"));
         l.addTypeName("Coal");
         l.addTypeName("Engine");
         l.addTypeName("Hopper");
@@ -198,19 +199,19 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertEquals("Location Accepts Type Name BoxCar", true, l.acceptsTypeName("BoxCar"));
         Assert.assertEquals("Location Accepts Type Name boxCar", false, l.acceptsTypeName("boxCar"));
         Assert.assertEquals("Location Accepts Type Name MOW", true, l.acceptsTypeName("MOW"));
-        Assert.assertEquals("Location Accepts Type Name Caboose", true, l.acceptsTypeName("Caboose"));
+        Assert.assertEquals("Location Accepts Type Name Caboose", true, l.acceptsTypeName(Bundle.getMessage("Caboose")));
         Assert.assertEquals("Location Accepts Type Name BoxCar", true, l.acceptsTypeName("BoxCar"));
         Assert.assertEquals("Location Accepts Type Name undefined3", false, l.acceptsTypeName("TestTypeName"));
 
         Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.acceptsTypeName("BoxCar"));
         Assert.assertEquals("Track Accepts Type Name boxCar", false, t.acceptsTypeName("boxCar"));
         Assert.assertEquals("Track Accepts Type Name MOW", true, t.acceptsTypeName("MOW"));
-        Assert.assertEquals("Track Accepts Type Name Caboose", true, t.acceptsTypeName("Caboose"));
+        Assert.assertEquals("Track Accepts Type Name Caboose", true, t.acceptsTypeName(Bundle.getMessage("Caboose")));
         Assert.assertEquals("Track Accepts Type Name undefined3", false, t.acceptsTypeName("undefined"));
 
         t.addTypeName("Baggage");
         t.addTypeName("BoxCar");
-        t.addTypeName("Caboose");
+        t.addTypeName(Bundle.getMessage("Caboose"));
         t.addTypeName("Coal");
         t.addTypeName("Engine");
         t.addTypeName("Hopper");
@@ -223,19 +224,19 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.acceptsTypeName("BoxCar"));
         Assert.assertEquals("Track Accepts Type Name boxCar", false, t.acceptsTypeName("boxCar"));
         Assert.assertEquals("Track Accepts Type Name MOW", true, t.acceptsTypeName("MOW"));
-        Assert.assertEquals("Track Accepts Type Name Caboose", true, t.acceptsTypeName("Caboose"));
+        Assert.assertEquals("Track Accepts Type Name Caboose", true, t.acceptsTypeName(Bundle.getMessage("Caboose")));
         Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.acceptsTypeName("BoxCar"));
         Assert.assertEquals("Track Accepts Type Name undefined3", false, t.acceptsTypeName("undefined"));
 
         // test replace
         // also test replace type in schedules
-        ScheduleManager sm = ScheduleManager.instance();
+        ScheduleManager sm = InstanceManager.getDefault(ScheduleManager.class);
         Schedule s = sm.newSchedule("newest schedule");
         ScheduleItem i1 = s.addItem("BoxCar");
-        ScheduleItem i2 = s.addItem("Caboose");
+        ScheduleItem i2 = s.addItem(Bundle.getMessage("Caboose"));
 
         Assert.assertEquals("ScheudleItem i1 Type BoxCar", "BoxCar", i1.getTypeName());
-        Assert.assertEquals("ScheudleItem i2 Type Caboose", "Caboose", i2.getTypeName());
+        Assert.assertEquals("ScheudleItem i2 Type Caboose", Bundle.getMessage("Caboose"), i2.getTypeName());
 
         ct.replaceName("BoxCar", "boxcar");
 
@@ -244,7 +245,7 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertFalse("Track Does Not Accepts Type Name BoxCar", l.acceptsTypeName("BoxCar"));
         Assert.assertTrue("Track Accepts Type Name boxcar", t.acceptsTypeName("boxcar"));
         Assert.assertEquals("ScheudleItem i1 Type boxcar", "boxcar", i1.getTypeName());
-        Assert.assertEquals("Check ScheudleItem i2 Type Caboose", "Caboose", i2.getTypeName());
+        Assert.assertEquals("Check ScheudleItem i2 Type Caboose", Bundle.getMessage("Caboose"), i2.getTypeName());
 
         // remove all schedules
         sm.dispose();
@@ -252,7 +253,7 @@ public class LocationTest extends OperationsTestCase {
 
     public void testRoadNameSupport() {
         // use LocationManager to allow replace car road to work properly
-        Location l = LocationManager.instance().newLocation("Test Name 2");
+        Location l = InstanceManager.getDefault(LocationManager.class).newLocation("Test Name 2");
         Assert.assertEquals("Location Name", "Test Name 2", l.getName());
 
         Track t = l.addTrack("new track", Track.SPUR);
@@ -262,7 +263,7 @@ public class LocationTest extends OperationsTestCase {
         t.addRoadName("Test Road Name");
         t.addRoadName("Test Road Name 2");
 
-        ScheduleManager sm = ScheduleManager.instance();
+        ScheduleManager sm = InstanceManager.getDefault(ScheduleManager.class);
         Schedule s = sm.newSchedule("test schedule");
         ScheduleItem i1 = s.addItem("BoxCar");
         ScheduleItem i2 = s.addItem("BoxCar");
@@ -275,7 +276,7 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertEquals("ScheudleItem i1 Road Test Road Name", "Test Road Name", i1.getRoadName());
         Assert.assertEquals("ScheudleItem i2 Road Test Road Name", "Test Road Name 2", i2.getRoadName());
 
-        CarRoads cr = CarRoads.instance();
+        CarRoads cr = InstanceManager.getDefault(CarRoads.class);
         cr.replaceName("Test Road Name", "New Test Road Name");
 
         Assert.assertFalse("track should Not accept road Test Road Name", t.acceptsRoadName("Test Road Name"));
@@ -466,7 +467,7 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertEquals("2nd track", t2, tracks.get(1));
 
         // tracks with schedules get priority
-        Schedule sch = ScheduleManager.instance().newSchedule("dummy schedule");
+        Schedule sch = InstanceManager.getDefault(ScheduleManager.class).newSchedule("dummy schedule");
         t3.setScheduleId(sch.getId());
 
         // get all tracks ids
@@ -497,7 +498,7 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertEquals("7th track", t6, tracks.get(6));
 
         // remove dummy schedule
-        ScheduleManager.instance().deregister(sch);
+        InstanceManager.getDefault(ScheduleManager.class).deregister(sch);
 
     }
 
@@ -644,7 +645,7 @@ public class LocationTest extends OperationsTestCase {
 
         // test track "capacity" warning when track is spur with schedule
         // add schedule to track
-        // ScheduleManager sm = ScheduleManager.instance();
+        // ScheduleManager sm = InstanceManager.getDefault(ScheduleManager.class);
         // Schedule s1 = sm.newSchedule("Schedule 1 Name");
         // s1.setComment("Schedule 1 Comment");
         // s1.addItem("Boxcar");
@@ -667,6 +668,7 @@ public class LocationTest extends OperationsTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes.class).addName("Boxcar");
     }
 
     public LocationTest(String s) {

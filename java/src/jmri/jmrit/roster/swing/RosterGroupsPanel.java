@@ -534,7 +534,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
                         }
                         Roster.getDefault().writeRoster();
                         setSelectedRosterGroup(p.getLastPathComponent().toString());
-                    } catch (Exception e) {
+                    } catch (java.awt.datatransfer.UnsupportedFlavorException | java.io.IOException | RuntimeException e) {
                         log.warn("Exception dragging RosterEntries onto RosterGroups: " + e);
                     }
                 }
@@ -543,7 +543,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
                     JmriAbstractAction a = new CreateRosterGroupAction("Create From Selection", scrollPane.getTopLevelAncestor());
                     a.setParameter("RosterEntries", RosterEntrySelection.getRosterEntries(t));
                     a.actionPerformed(null);
-                } catch (Exception e) {
+                } catch (java.awt.datatransfer.UnsupportedFlavorException | java.io.IOException | RuntimeException e) {
                     log.warn("Exception creating RosterGroups from selection: " + e);
                 }
             }
@@ -634,5 +634,5 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         }
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(RosterGroupsPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterGroupsPanel.class);
 }

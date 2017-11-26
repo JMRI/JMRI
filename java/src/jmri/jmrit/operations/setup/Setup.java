@@ -6,11 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.JComboBox;
+import jmri.Disposable;
 import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.trains.TrainLogger;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.util.ColorUtil;
 import jmri.web.server.WebServerPreferences;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -21,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010, 2012, 2014
  */
-public class Setup {
+public class Setup implements InstanceManagerAutoDefault, Disposable {
 
     public static final String NONE = "";
 
@@ -160,18 +163,6 @@ public class Setup {
     public static final String NO_LOCATION = "NO_LOCATION"; // NOI18N
     public static final String NO_TRACK = "NO_TRACK"; // NOI18N
 
-    // the supported colors for printed text
-    public static final String BLACK = Bundle.getMessage("Black");
-    public static final String RED = Bundle.getMessage("Red");
-    public static final String ORANGE = Bundle.getMessage("Orange");
-    public static final String YELLOW = Bundle.getMessage("Yellow");
-    public static final String GREEN = Bundle.getMessage("Green");
-    public static final String BLUE = Bundle.getMessage("Blue");
-    public static final String GRAY = Bundle.getMessage("Gray");
-    public static final String PINK = Bundle.getMessage("Pink");
-    public static final String CYAN = Bundle.getMessage("Cyan");
-    public static final String MAGENTA = Bundle.getMessage("Magenta");
-
     // Unit of Length
     public static final String FEET = Bundle.getMessage("Feet");
     public static final String METER = Bundle.getMessage("Meter");
@@ -207,9 +198,9 @@ public class Setup {
     private int buildReportFontSize = 10;
     private String manifestOrientation = PORTRAIT;
     private String switchListOrientation = PORTRAIT;
-    private String pickupColor = BLACK;
-    private String dropColor = BLACK;
-    private String localColor = BLACK;
+    private Color pickupColor = Color.black;
+    private Color dropColor = Color.black;
+    private Color localColor = Color.black;
     private String[] pickupEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, LOCATION, COMMENT};
     private String[] dropEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, DESTINATION, COMMENT};
     private String[] pickupManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
@@ -334,7 +325,7 @@ public class Setup {
     public static final String SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE = "saveTrainManifestChange"; //  NOI18N
 
     public static boolean isMainMenuEnabled() {
-        OperationsSetupXml.instance(); // load file
+        InstanceManager.getDefault(OperationsSetupXml.class); // load file
         return getDefault().mainMenuEnabled;
     }
 
@@ -549,7 +540,7 @@ public class Setup {
         boolean old = getDefault().generateCsvManifest;
         getDefault().generateCsvManifest = enabled;
         if (enabled && !old) {
-            TrainManagerXml.instance().createDefaultCsvManifestDirectory();
+            InstanceManager.getDefault(TrainManagerXml.class).createDefaultCsvManifestDirectory();
         }
         setDirtyAndFirePropertyChange(MANIFEST_CSV_PROPERTY_CHANGE, old, enabled);
     }
@@ -562,7 +553,7 @@ public class Setup {
         boolean old = getDefault().generateCsvSwitchList;
         getDefault().generateCsvSwitchList = enabled;
         if (enabled && !old) {
-            TrainManagerXml.instance().createDefaultCsvSwitchListDirectory();
+            InstanceManager.getDefault(TrainManagerXml.class).createDefaultCsvSwitchListDirectory();
         }
         setDirtyAndFirePropertyChange(SWITCH_LIST_CSV_PROPERTY_CHANGE, old, enabled);
     }
@@ -577,7 +568,7 @@ public class Setup {
 
     public static String getRailroadName() {
         if (getDefault().railroadName == null) {
-            return WebServerPreferences.getDefault().getRailRoadName();
+            return WebServerPreferences.getDefault().getRailroadName();
         }
         return getDefault().railroadName;
     }
@@ -1073,7 +1064,7 @@ public class Setup {
 
     public static void setCarLoggerEnabled(boolean enable) {
         getDefault().carLogger = enable;
-        RollingStockLogger.instance().enableCarLogging(enable);
+        InstanceManager.getDefault(RollingStockLogger.class).enableCarLogging(enable);
     }
 
     public static boolean isEngineLoggerEnabled() {
@@ -1082,7 +1073,7 @@ public class Setup {
 
     public static void setEngineLoggerEnabled(boolean enable) {
         getDefault().engineLogger = enable;
-        RollingStockLogger.instance().enableEngineLogging(enable);
+        InstanceManager.getDefault(RollingStockLogger.class).enableEngineLogging(enable);
     }
 
     public static boolean isTrainLoggerEnabled() {
@@ -1091,7 +1082,7 @@ public class Setup {
 
     public static void setTrainLoggerEnabled(boolean enable) {
         getDefault().trainLogger = enable;
-        TrainLogger.instance().enableTrainLogging(enable);
+        InstanceManager.getDefault(TrainLogger.class).enableTrainLogging(enable);
     }
 
     public static boolean isSaveTrainManifestsEnabled() {
@@ -1429,65 +1420,55 @@ public class Setup {
     }
 
     public static String getDropTextColor() {
-        return getDefault().dropColor;
+        return ColorUtil.colorToColorName(getDefault().dropColor);
     }
 
     public static void setDropTextColor(String color) {
-        getDefault().dropColor = color;
+        getDefault().dropColor = ColorUtil.stringToColor(color);
+    }
+
+    public static void setDropColor(Color c) {
+        getDefault().dropColor = c;
     }
 
     public static String getPickupTextColor() {
-        return getDefault().pickupColor;
+        return ColorUtil.colorToColorName(getDefault().pickupColor);
     }
 
     public static void setPickupTextColor(String color) {
-        getDefault().pickupColor = color;
+        getDefault().pickupColor = ColorUtil.stringToColor(color);
+    }
+
+    public static void setPickupColor(Color c) {
+        getDefault().pickupColor = c;
     }
 
     public static String getLocalTextColor() {
-        return getDefault().localColor;
+        return ColorUtil.colorToColorName(getDefault().localColor);
     }
 
     public static void setLocalTextColor(String color) {
-        getDefault().localColor = color;
+        getDefault().localColor = ColorUtil.stringToColor(color);
+    }
+
+    public static void setLocalColor(Color c) {
+        getDefault().localColor = c;
     }
 
     public static Color getPickupColor() {
-        return getColor(getDefault().pickupColor);
+        return getDefault().pickupColor;
     }
 
     public static Color getDropColor() {
-        return getColor(getDefault().dropColor);
+        return getDefault().dropColor;
     }
 
     public static Color getLocalColor() {
-        return getColor(getDefault().localColor);
+        return getDefault().localColor;
     }
 
     public static Color getColor(String colorName) {
-        if (colorName.equals(BLACK)) {
-            return Color.black;
-        } else if (colorName.equals(BLUE)) {
-            return Color.blue;
-        } else if (colorName.equals(GREEN)) {
-            return Color.green;
-        } else if (colorName.equals(RED)) {
-            return Color.red;
-        } else if (colorName.equals(ORANGE)) {
-            return Color.orange;
-        } else if (colorName.equals(GRAY)) {
-            return Color.gray;
-        } else if (colorName.equals(YELLOW)) {
-            return Color.yellow;
-        } else if (colorName.equals(PINK)) {
-            return Color.pink;
-        } else if (colorName.equals(CYAN)) {
-            return Color.cyan;
-        } else if (colorName.equals(MAGENTA)) {
-            return Color.magenta;
-        } else {
-            return null; // default
-        }
+        return ColorUtil.stringToColor(colorName);
     }
 
     public static String getManifestLogoURL() {
@@ -1640,16 +1621,18 @@ public class Setup {
     /**
      *
      * @return the available text colors used for printing
+     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead. 
      */
+    @Deprecated
     public static JComboBox<String> getPrintColorComboBox() {
         JComboBox<String> box = new JComboBox<>();
-        box.addItem(BLACK);
-        box.addItem(RED);
-        box.addItem(ORANGE);
-        box.addItem(YELLOW);
-        box.addItem(GREEN);
-        box.addItem(BLUE);
-        box.addItem(GRAY);
+        box.addItem(ColorUtil.ColorBlack);
+        box.addItem(ColorUtil.ColorRed);
+        box.addItem(ColorUtil.ColorOrange);
+        box.addItem(ColorUtil.ColorYellow);
+        box.addItem(ColorUtil.ColorGreen);
+        box.addItem(ColorUtil.ColorBlue);
+        box.addItem(ColorUtil.ColorGray);
         return box;
     }
 
@@ -1786,7 +1769,7 @@ public class Setup {
         Element values;
         Element e = new Element(Xml.OPERATIONS);
         e.addContent(values = new Element(Xml.RAIL_ROAD));
-        if (Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailRoadName())) {
+        if (Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailroadName())) {
             values.setAttribute(Xml.NAME, Xml.USE_JMRI_RAILROAD_NAME);
         } else {
             values.setAttribute(Xml.NAME, getRailroadName());
@@ -2095,7 +2078,7 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SCALE)) != null) {
                 String scale = a.getValue();
-                log.debug("scale: " + scale);
+                log.debug("scale: {}", scale);
                 try {
                     setScale(Integer.parseInt(scale));
                 } catch (NumberFormatException ee) {
@@ -2104,7 +2087,7 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_TYPES)) != null) {
                 String types = a.getValue();
-                log.debug("CarTypes: " + types);
+                log.debug("CarTypes: {}", types);
                 setCarTypes(types);
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SWITCH_TIME)) != null) {
@@ -2921,16 +2904,19 @@ public class Setup {
     }
 
     protected static void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
-        OperationsSetupXml.instance().setDirty(true);
+        InstanceManager.getDefault(OperationsSetupXml.class).setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
 
     public static Setup getDefault() {
-        return InstanceManager.getOptionalDefault(Setup.class).orElseGet(() -> {
-            return InstanceManager.setDefault(Setup.class, new Setup());
-        });
+        return InstanceManager.getDefault(Setup.class);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Setup.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(Setup.class);
+
+    @Override
+    public void dispose() {
+        new AutoSave().stop();
+    }
 
 }

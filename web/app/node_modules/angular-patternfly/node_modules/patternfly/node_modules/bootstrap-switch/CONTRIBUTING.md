@@ -1,14 +1,14 @@
 Prerequisites:
 
 - Node and NPM
-- Gulp
 
 Flow:
 
-- Checkout `develop` branch
+- Fork the repository and checkout `master` branch
 - Run `npm install` to get or update the dependencies
-- Run `gulp`. Gulp will run the default task and listen for further files changes
-- Work on the Coffeescript or LESS sources. Gulp will automatically build for you
-- Once completed, submit a Pull Requests. Be sure to target `develop` as destination branch
+- Run `npm start` to build `dist/` and `docs/` directories
+- Change JavaScript or LESS files in `src/` directories
+- Do not commit changes to dist/ or docs/. These will only be built on merge.
+- Once finished, submit a [Pull Request](https://github.com/nostalgiaz/bootstrap-switch/compare/master...master). Remember to target `master` as destination branch
 
 Thank you.

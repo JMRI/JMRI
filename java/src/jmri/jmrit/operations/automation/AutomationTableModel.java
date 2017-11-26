@@ -20,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.automation.actions.Action;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
@@ -373,7 +374,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     private JComboBox<Train> getTrainComboBox(AutomationItem item) {
-        JComboBox<Train> cb = TrainManager.instance().getTrainComboBox();
+        JComboBox<Train> cb = InstanceManager.getDefault(TrainManager.class).getTrainComboBox();
         cb.setSelectedItem(item.getTrain());
         // determine if train combo box is enabled
         cb.setEnabled(item.getAction() != null && item.getAction().isTrainMenuEnabled());
@@ -565,5 +566,5 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutomationTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutomationTableModel.class);
 }

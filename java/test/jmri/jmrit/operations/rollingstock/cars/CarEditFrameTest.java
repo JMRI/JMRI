@@ -3,10 +3,12 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,12 +20,12 @@ import org.junit.Test;
 public class CarEditFrameTest extends OperationsSwingTestCase {
 
     List<String> tempCars;
-    
+
     @Test
     public void testCarEditFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         loadCars();		// load cars
-        CarManager cManager = CarManager.instance();
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
         Assert.assertEquals("number of cars", 5, cManager.getNumEntries());
 
         CarEditFrame f = new CarEditFrame();
@@ -33,27 +35,26 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         // add a new car
         f.roadNumberTextField.setText("6");
         f.roadComboBox.setSelectedItem("SP");
-        f.typeComboBox.setSelectedItem("Caboose");
+        f.typeComboBox.setSelectedItem(Bundle.getMessage("Caboose"));
         f.lengthComboBox.setSelectedItem("38");
         f.colorComboBox.setSelectedItem("Black");
         f.loadComboBox.setSelectedItem("L");
         f.builtTextField.setText("1999");
         f.ownerComboBox.setSelectedItem("Owner1");
         f.commentTextField.setText("test car comment field");
-        
+
         // Save button should be disabled
         // Jemmy has no way to click a disabled button.
         //enterClickAndLeave(f.saveButton);
-
         Car c6 = cManager.getByRoadAndNumber("SP", "6");
         Assert.assertNull("Car should not exist", c6);
-        
+
         // use add button
         enterClickAndLeave(f.addButton);
 
         c6 = cManager.getByRoadAndNumber("SP", "6");
         Assert.assertNotNull("Car did not create", c6);
-        Assert.assertEquals("car type", "Caboose", c6.getTypeName());
+        Assert.assertEquals("car type", Bundle.getMessage("Caboose"), c6.getTypeName());
         Assert.assertEquals("car length", "38", c6.getLength());
         Assert.assertEquals("car color", "Black", c6.getColor());
         Assert.assertEquals("car load", "L", c6.getLoadName());
@@ -71,7 +72,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveButton);
         // Change all car type to caboose dialog window should appear
         // need to push the "No" button in the dialog window to close
-        pressDialogButton(f,java.text.MessageFormat.format(Bundle.getMessage("carModifyAllType"),new Object[]{"Caboose"}), "No");
+        pressDialogButton(f, Bundle.getMessage("carModifyAllType", new Object[]{Bundle.getMessage("Caboose")}), Bundle.getMessage("ButtonNo"));
 
         Assert.assertTrue("now a caboose", c6.isCaboose());
         Assert.assertFalse("not hazardous 2", c6.isHazardous());
@@ -81,7 +82,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         Assert.assertFalse("still no fred", c6.hasFred());
         enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
-        pressDialogButton(f,java.text.MessageFormat.format(Bundle.getMessage("carModifyAllType"),new Object[]{"Caboose"}), "No");
+        pressDialogButton(f, Bundle.getMessage("carModifyAllType", new Object[]{Bundle.getMessage("Caboose")}), Bundle.getMessage("ButtonNo"));
         Assert.assertFalse("no longer a caboose", c6.isCaboose());
         Assert.assertTrue("now has a fred", c6.hasFred());
         Assert.assertFalse("not hazardous 3", c6.isHazardous());
@@ -90,7 +91,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         Assert.assertFalse("still not hazardous 3", c6.isHazardous());
         enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
-        pressDialogButton(f,java.text.MessageFormat.format(Bundle.getMessage("carModifyAllType"),new Object[]{"Caboose"}), "No");
+        pressDialogButton(f, Bundle.getMessage("carModifyAllType", new Object[]{Bundle.getMessage("Caboose")}), Bundle.getMessage("ButtonNo"));
         Assert.assertFalse("still no longer a caboose", c6.isCaboose());
         Assert.assertTrue("still has a fred", c6.hasFred());
         Assert.assertTrue("now hazardous", c6.isHazardous());
@@ -99,7 +100,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         Assert.assertFalse("not utility", c6.isUtility());
         enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
-        pressDialogButton(f,java.text.MessageFormat.format(Bundle.getMessage("carModifyAllType"),new Object[]{"Caboose"}), "No");
+        pressDialogButton(f, Bundle.getMessage("carModifyAllType", new Object[]{Bundle.getMessage("Caboose")}), Bundle.getMessage("ButtonNo"));
         Assert.assertTrue("now utility", c6.isUtility());
         Assert.assertFalse("not a caboose", c6.isCaboose());
         Assert.assertTrue("still has a fred", c6.hasFred());
@@ -108,14 +109,14 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         // should have 6 cars now
         Assert.assertEquals("number of cars", 6, cManager.getNumEntries());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
     public void testCarEditFrameRead() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         loadCars();		// load cars
-        CarManager cManager = CarManager.instance();
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
         // should have 5 cars now
         Assert.assertEquals("number of cars", 5, cManager.getNumEntries());
         Car c1 = cManager.getByRoadAndNumber("NH", "1");
@@ -127,7 +128,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
 
         Assert.assertEquals("car road", "NH", f.roadComboBox.getSelectedItem());
         Assert.assertEquals("car number", "1", f.roadNumberTextField.getText());
-        Assert.assertEquals("car type", "Caboose", f.typeComboBox.getSelectedItem());
+        Assert.assertEquals("car type", Bundle.getMessage("Caboose"), f.typeComboBox.getSelectedItem());
         Assert.assertEquals("car length", "40", f.lengthComboBox.getSelectedItem());
         Assert.assertEquals("car weight", "1.4", f.weightTextField.getText());
         Assert.assertEquals("car weight tons", "Tons of Weight", f.weightTonsTextField.getText());
@@ -147,17 +148,27 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         // should have 5 cars now
         Assert.assertEquals("number of cars", 4, cManager.getNumEntries());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     private void loadCars() {
-        CarManager cManager = CarManager.instance();
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
         // remove previous cars
         cManager.dispose();
         // add Owner1 and Owner2
-        CarOwners co = CarOwners.instance();
+        CarOwners co = InstanceManager.getDefault(CarOwners.class);
         co.addName("Owner1");
         co.addName("Owner2");
+        // register the road names used
+        CarRoads cr = InstanceManager.getDefault(CarRoads.class);
+        cr.addName("UP");
+        cr.addName("SP");
+        cr.addName("NH");
+        CarLengths cl = InstanceManager.getDefault(CarLengths.class);
+        cl.addName("40");
+        cl.addName("38");
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
+        ct.addName(Bundle.getMessage("Caboose"));
         // add 5 cars to table
         Car c1 = cManager.newCar("NH", "1");
         c1.setBuilt("2009");
@@ -170,7 +181,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         // try to add it to a car.
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 3");
         c1.setRfid("RFID 3");
-        c1.setTypeName("Caboose");
+        c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setWeight("1.4");
         c1.setWeightTons("Tons of Weight");
         c1.setCaboose(true);

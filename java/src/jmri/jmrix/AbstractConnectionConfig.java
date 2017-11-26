@@ -3,7 +3,7 @@ package jmri.jmrix;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
-import jmri.UserPreferencesManager;
 
 /**
  * Abstract base class for common implementation of the ConnectionConfig
@@ -27,8 +26,6 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     public AbstractConnectionConfig() {
     }
 
-    protected final UserPreferencesManager pref = InstanceManager.getNullableDefault(UserPreferencesManager.class);
-
     abstract protected void checkInitDone();
 
     abstract public void updateAdapter();
@@ -41,16 +38,14 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     protected JLabel connectionNameLabel = new JLabel(Bundle.getMessage("ConnectionName"));
     protected JTextField systemPrefixField = new JTextField(10);
     protected JTextField connectionNameField = new JTextField(15);
-    protected String systemPrefix;
-    protected String connectionName;
 
-    protected JPanel _details;
+    protected JPanel _details = null;
 
-    protected Hashtable<String, Option> options = new Hashtable<>();
+    protected final HashMap<String, Option> options = new HashMap<>();
 
     /**
      * Determine if configuration needs to be written to disk.
-     *
+     * <p>
      * This default implementation always returns true to maintain the existing
      * behavior.
      *
@@ -64,7 +59,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     /**
      * Determine if application needs to be restarted for configuration changes
      * to be applied.
-     *
+     * <p>
      * The default implementation always returns true to maintain the existing
      * behavior.
      *
@@ -133,9 +128,15 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
 
     protected ArrayList<JComponent> additionalItems = new ArrayList<>(0);
 
-    static java.util.ResourceBundle rb
-            = java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
-
+    /**
+     * Load the Swing widgets needed to configure this connection into a
+     * specified JPanel. Used during the configuration process to fill out the
+     * preferences window with content specific to this Connection type. The
+     * JPanel contents need to handle their own gets/sets to the underlying
+     * Connection content.
+     *
+     * @param details The specific Swing object to be configured and filled.
+     */
     @Override
     abstract public void loadDetails(final JPanel details);
 
@@ -202,10 +203,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     abstract public void setDisabled(boolean disable);
 
     /**
-     * Register the ConnectionConfig with the running JMRI process. It is
-     * strongly recommended that overriding implementations call
-     * super.register() since this implementation performs all required
-     * registration tasks.
+     * {@inheritDoc}
      */
     @Override
     public void register() {

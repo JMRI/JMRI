@@ -1,6 +1,5 @@
 package jmri.jmrix.dccpp;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,7 +74,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     //@SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     //protected int _mClosed = jmri.Turnout.CLOSED;
 
-    protected String _prefix = "DCCPP"; // TODO: Shouldn't this be fetched from the system memo?
+    protected String _prefix = "DCCPP";
     protected DCCppTrafficController tc = null;
 
     public DCCppTurnout(String prefix, int pNumber, DCCppTrafficController controller) {  // a human-readable turnout number must be specified!
@@ -618,6 +617,6 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     protected int mNumber;   // XpressNet turnout number
     DCCppTurnoutStateListener _stateListener;  // Internal class object
     
-    private final static Logger log = LoggerFactory.getLogger(DCCppTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppTurnout.class);
     
 }

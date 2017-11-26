@@ -6,17 +6,15 @@ import org.junit.Before;
 
 /**
  * JUnit tests for the EasyDccNetworkPortController class
- * <p>
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class EasyDccNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPortControllerTestBase {
 
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo();
        apc = new EasyDccNetworkPortController(memo){
             @Override
@@ -28,7 +26,7 @@ public class EasyDccNetworkPortControllerTest extends jmri.jmrix.AbstractNetwork
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
+
 }

@@ -1,9 +1,9 @@
 package jmri.managers;
 
-import jmri.DccThrottle;
-import jmri.ThrottleManager;
-import jmri.ThrottleListener;
 import jmri.DccLocoAddress;
+import jmri.DccThrottle;
+import jmri.ThrottleListener;
+import jmri.ThrottleManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,6 +31,7 @@ public abstract class AbstractThrottleManagerTestBase {
 
     protected boolean throttleFoundResult = false;
     protected boolean throttleNotFoundResult = false;
+    protected boolean throttleStealResult = false;
 
     protected class ThrottleListen implements ThrottleListener {
 
@@ -44,12 +45,17 @@ public abstract class AbstractThrottleManagerTestBase {
              throttleNotFoundResult = true;
        }
 
+       @Override
+       public void notifyStealThrottleRequired(DccLocoAddress address){
+            throttleStealResult = true;
+       }
     }
 
     @After
     public void postTestReset(){
        throttleFoundResult = false;
        throttleNotFoundResult = false;
+       throttleStealResult = false;
     }
 
     // start of common tests
@@ -62,7 +68,6 @@ public abstract class AbstractThrottleManagerTestBase {
     @Test
     public void getUserName() {
         Assert.assertNotNull(tm.getUserName());
-        Assert.assertTrue(tm.getUserName() instanceof String);
     }
 
     @Test

@@ -11,7 +11,7 @@
   <meta content="Bob Jacobsen" name="Author">
   <meta name="keywords" content=
   "JMRI technical code names user name system name">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- The combination of "Define" and {Header, Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
   <!-- easily replace the common header/footer code for all the web pages -->
   <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
@@ -111,12 +111,14 @@
       these "system names". JMRI code will map these to and from
       whatever information the hardware may need.</p>
 
-      <h2>System Name Format</h2>A system name is formed from a
+      <h2>System Name Format</h2>
+      
+      A system name is formed from a
       short prefix representing the hardware system, followed by a
-      single upper case letter indicating the type, followed by
-      system- and type-specific string identifying a specific
-      object. The string is meant to be related to the hardware
-      addressing, but is otherwise unconstrained.
+      single upper case letter indicating the type, followed by a
+      system- and type-specific suffix string identifying a specific
+      object. The suffix string is meant to be related to the hardware
+      addressing for the specific hardware system, but is otherwise unconstrained.
 
       <p>Examples:</p>
 
@@ -292,16 +294,17 @@
       </ul>
 
       <a name="systeminfo" id="systeminfo"></a>
-      <h3>System-specific info</h3>
+      <h3>System-specific suffix</h3>
       <p>"Internal" objects can also be addressed and manipulated,
         but they don't have a strict correspondence with some
         hardware on the layout. For example, if a signal head is
         implemented as three different outputs, LT1, LT2 and LT3, the
-        signal head object might be called IH3. <a name="special" id=
+        signal head object might be called IH3. 
+        <a name="special" id=
                 "special"></a></p>
 
       <p>Each different hardware system
-      can specify the "string" that follows the system and type
+      can specify the "suffix string" that follows the system and type
       letters. Generally, these are small numbers, but their exact
       meaning is very system-specific. For more information, please
         see the specific pages for</p>
@@ -329,12 +332,13 @@
         e.g, X10, Insteon</a></li>
       </ul>
 
-      <p>(If you find any missing or see ommissions in the following
+      <p>(If you find any missing or see omissions in the following
       summary, please <a href="getgitcode.shtml#propose">add
       a reference</a>)</p>
 
       <a name="entrysummary" id="entrysummary"></a>
       <h4>Adding an item to the table - Entry Format Summary</h4>
+      
       <p>When you add an item to one of the tables, many times you only
       have to enter the numbers and have JMRI construct
       the complete system name.<br>
@@ -355,14 +359,14 @@
         </tr>
         <tr>
           <td>C/MRI</td>
-          <td>i</td>
+          <td>i/o</td>
           <td>1003</td>
           <td>Node 1, Input 3</td>
           <td>CS1003</td>
           <td>n digits (node) + 3 digit (pin)</td>
           <td>1:3</td>
           <td>node: 1; pin: 1</td>
-          <td>node: N/A; pin: 999</td>
+          <td>node: 127; pin: 999</td>
         </tr>
         <tr>
           <td>C/MRI</td>
@@ -377,36 +381,36 @@
         </tr>
         <tr>
           <td>C/MRI</td>
-          <td>o</td>
+          <td>i/o</td>
           <td>4003</td>
           <td>Node 4, Output 3</td>
           <td>CT4003</td>
           <td>n digits (node) + 3 digit (pin)</td>
           <td>4:3</td>
           <td>node: 1; pin: 1</td>
-          <td>node: N/A; pin: 999</td>
+          <td>node: 127; pin: 999</td>
         </tr>
         <tr>
           <td>C/MRI</td>
-          <td>o</td>
+          <td>i/o</td>
           <td>4:3</td>
           <td>Node 4, Output 3</td>
           <td>CT4:3</td>
           <td> </td>
           <td>4003</td>
           <td>0:1</td>
-          <td>N/A</td>
+          <td>127:999</td>
         </tr>
         <tr>
           <td>C/MRI</td>
-          <td>o</td>
+          <td>i/o</td>
           <td>4B3</td>
           <td>Node 4, Output 3</td>
           <td>CT4B3</td>
           <td> </td>
           <td>4003</td>
           <td>0B1</td>
-          <td>N/A</td>
+          <td>127B999</td>
         </tr>
         <tr>
           <td>DCC++</td>
@@ -574,6 +578,28 @@
           <td>4096</td>
         </tr>
         <tr>
+          <td>Maple</td>
+          <td>i</td>
+          <td>2010</td>
+          <td>Node 2 Input bit 10</td>
+          <td>KS2010</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>1000</td>
+        </tr>
+        <tr>
+          <td>Maple</td>
+          <td>o</td>
+          <td>1016</td>
+          <td>Node 1 Output (Turnout) 16</td>
+          <td>KT1016</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>8000</td>
+        </tr>
+        <tr>
           <td>MERG CBUS</td>
           <td>i</td>
           <td>200018M07</td>
@@ -603,7 +629,7 @@
           <td>MT18</td>
           <td>integer</td>
           <td>+18;-18</td>
-          <td>Note: not working</td>
+          <td> </td>
           <td> </td>
         </tr>
         <tr>
@@ -684,6 +710,17 @@
           <td>2044</td>
         </tr>
         <tr>
+          <td>TMCC (Lionel)</td>
+          <td>o</td>
+          <td>16</td>
+          <td>Output (Turnout) 16</td>
+          <td>NT16</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>511</td>
+        </tr>
+        <tr>
           <td>X10</td>
           <td>o</td>
           <td>A3</td>
@@ -749,13 +786,12 @@
       object in the program that implements the sensor group.
       Instead, when the user creates sensor group "my group", a
       series of routes with system names like:
-      <pre>
-<code>
+<pre style="font-family: monospace;">
 SENSOR GROUP:my group:LS1
 SENSOR GROUP:my group:LS2
-</code>
-</pre>are created which implements the group. The sensor group tool
-knows to look for routes of this name.
+</pre>
+    are created which implements the group. The sensor group tool
+    knows to look for routes of this name.
 
       <p>To make this possible, two informal rules are used:</p>
 
@@ -825,14 +861,16 @@ knows to look for routes of this name.
       
           The code to make sure that names are in normal form 
           has been localized to a single routine for user names:
-          <br><pre><code>
+          <br>
+<pre style="font-family: monospace;">
           String userName = NamedBean.normalizeUserName(input);
-          </code></pre><br>
+</pre><br>
           Because system names may vary from type to type 
           and manager to manager, this is manager-specific for them:
-          <br><pre><code>
+          <br>
+<pre style="font-family: monospace;">
           String systemName = manager.normalizeSystemName(input);
-          </code></pre><br>
+</pre><br>
           For more information, see the Javadoc for
             <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#normalizeUserName-java.lang.String-">normalizeUserName</a>
             and
@@ -845,7 +883,7 @@ knows to look for routes of this name.
         <li>JComboBox format:
             <a href="images/ComboBox.png"><img src="images/ComboBox.png" align="right" height="50" width="75"/></a>
             
-            <code><pre>
+<pre style="font-family: monospace;">
         import jmri.util.swing.JmriBeanComboBox;
 
         // the first argument is the manager, the 2nd is a bean to select or null
@@ -859,11 +897,11 @@ knows to look for routes of this name.
         selectComboBox.getSystemName()                                       
         selectComboBox.getUserName()                                        
         selectComboBox.getDisplayName()                                       
-            </pre></code>
+</pre>
 
         <li>Table format:
             <a href="images/TableSelector.png"><img src="images/TableSelector.png" align="right" height="119" width="175"/></a>
-            <code><pre>
+<pre style="font-family: monospace;">
 
         import jmri.jmrit.picker.*;
         <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a> tableModel = <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a>.sensorPickModelInstance(); // or another type
@@ -878,7 +916,7 @@ knows to look for routes of this name.
         public void valueChanged(ListSelectionEvent e) {
             System.out.println("  Selected: "+panel.getSelectedBeanHandle());
         }
-            </pre></code>
+</pre>
         This allows the user to select either the system name or (non-blank) user name in a row,
         which then becomes the preferred name for the resulting 
         <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>.
@@ -888,9 +926,9 @@ knows to look for routes of this name.
         <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandleManager.html">NamedBeanHandleManager</a>
         see the page on
         <a href="Patterns.shtml">code patterns page</a>.
-        
-        
+
         </ul>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

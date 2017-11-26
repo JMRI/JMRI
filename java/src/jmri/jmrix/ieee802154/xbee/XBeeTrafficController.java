@@ -1,15 +1,15 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import com.digi.xbee.api.XBeeDevice;
-import com.digi.xbee.api.exceptions.XBeeException;
-import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.RemoteXBeeDevice;
-import com.digi.xbee.api.packet.XBeePacket;
-import com.digi.xbee.api.listeners.IPacketReceiveListener;
-import com.digi.xbee.api.listeners.IModemStatusReceiveListener;
+import com.digi.xbee.api.XBeeDevice;
+import com.digi.xbee.api.exceptions.TimeoutException;
+import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.listeners.IDataReceiveListener;
+import com.digi.xbee.api.listeners.IModemStatusReceiveListener;
+import com.digi.xbee.api.listeners.IPacketReceiveListener;
 import com.digi.xbee.api.models.ModemStatusEvent;
+import com.digi.xbee.api.packet.XBeePacket;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -79,9 +79,9 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
                throw new java.lang.IllegalArgumentException("Wrong adapter type specified when connecting to the port.");
             }
         } catch (TimeoutException te) {
-            log.error("Timeout durring communication with Local XBee on communication start up. Error was {} cause {} ",te,te.getCause());
+            log.error("Timeout during communication with Local XBee on communication start up. Error was {} cause {} ",te,te.getCause());
         } catch (XBeeException xbe ) {
-            log.error("Exception durring XBee communication start up. Error was {} cause {} ",xbe,xbe.getCause());
+            log.error("Exception during XBee communication start up. Error was {} cause {} ",xbe,xbe.getCause());
         }
     }
 
@@ -366,7 +366,6 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     public XBeeDevice getXBee(){
         return xbee;
     }
-
 
     private final static Logger log = LoggerFactory.getLogger(XBeeTrafficController.class);
 

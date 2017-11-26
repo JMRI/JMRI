@@ -1,5 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233; le 2013-09-08-->
+<!-- $Id$ -->
+<!-- UpDated by Blorec Herv&#233; le 2016-08-14-->
 <html lang="fr">
 <head>
     <TITLE>
@@ -41,11 +42,11 @@ mod&#232;le d'organisation et d'utilisation qui est document&#233; sur
 Linux et Windows. Sous Windows uniquement, le paquet de Serialio
 <A HREF="http://Serialio.com"> Serialio.com</a> est &#233;galement utilis&#233;
 pour &#234;tre en mesure d'utiliser la vitesse de transmission  MS100. Pour ce faire, la
-classe jmri.jmrix.loconet.ms100.MS100Adapter a &#233;t&#233; converti pour utiliser la
+classe jmri.jmrix.loconet.ms100.MS100Adapter a &#233;t&#233; convertie pour utiliser la
  r&#233;flexion de Java pour d&#233;cider si le paquet Serialio est 
 disponible; sur d'autres syst&#232;mes, il utilise RXTX.
 Notez que notre licence de Serialio est limit&#233;e &#224; ce seul usage;
-nous ne sommes pas autoris&#233;s &#224; distribuer la biblioth&#232;ques &#224; d'autres fins.
+nous ne sommes pas autoris&#233;s &#224; distribuer les biblioth&#232;ques &#224; d'autres fins.
 
 <LI>Prenez quelques instants pour en apprendre davantage sur les types diff&#233;rents de
 <a href="http://java.sun.com/j2se/1.5.0/docs/guide/collections/overview.html"> collections Java</a>
@@ -62,15 +63,18 @@ JMRI utilise largement les
 <a href="http://java.sun.com/docs/books/tutorial/java/generics/index.html"> g&#233;n&#233;riques Java</a>
 pour
 <href="http://java.sun.com/docs/books/tutorial/java/generics/generics.html"> r&#233;duire les erreurs et am&#233;liorer la compr&#233;hension</a>.
-Avec beaucoup de gens qui &#233;crivent et le partage de code, &#224; l'aide de
-g&#233;n&#233;riques au lieu de casts, il est beaucoup plus facile de comprendre le code, et permettre au compilateur de corriger de nombreux malentendus sur la fa&#231;on dont les choses devraient &#234;tre utilis&#233;es. La plupart des informations importantes &#224; leur sujet peuvent &#234;tre trouv&#233;es sur
+Avec beaucoup de gens qui &#233;crivent et partagent le code, &#224; l'aide de
+g&#233;n&#233;riques au lieu de casts, rend beaucoup plus facile la compr&#233;hension du code, 
+et permets au compilateur de corriger de nombreux malentendus sur la fa&#231;on dont les choses 
+devraient &#234;tre utilis&#233;es. La plupart des informations importantes &#224; leur sujet peuvent 
+&#234;tre trouv&#233;es sur
 <a href="http://java.sun.com/docs/books/tutorial/java/generics/gentypes.html"> cette page</a> du Tutoriel Java.
 
 <LI>
-Si vous avez besoin d'utiliser les variables s&#233;par&#233;es par des virgules (CSV),
+Si vous avez besoin d'utiliser les fichiers de variables s&#233;par&#233;es par des virgules (CSV),
 s'il vous pla&#238;t utiliser les
 <A HREF="http://javacsv.sourceforge.net/"> API javacsv</a>
-si possible. Nous utilisons d&#233;j&#224;, dans un certain nombre de d'endroit,
+si possible. Nous utilisons d&#233;j&#224;, dans un certain nombred'endroit,
 et probablement l'utiliser plus. Si cela ne donne pas
 suffisamment de fonctionnalit&#233;s, nous pourrions &#233;ventuellement passer &#224; l'
 <A HREF="http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/"> API opencsv</a>, mais comme nous voulons n'en utiliser qu'un
@@ -79,23 +83,33 @@ la conversion demandera beaucoup de travail.
 
 <h2>Format du Code</h2>
 Les
-<A HREF="http://www.oracle.com/technetwork/java/codeconventions-150003.pdf"> recommandations Java </A>
+<A HREF="http://www.oracle.com/technetwork/java/codeconventions-150003.pdf"> Conventions Code Java </A>
 pour les noms, mise en forme, etc sont vraiment utiles.
 Si vous trouvez que vous ne pouvez pas lire un morceau de code, ceux-ci vous aideront &#224; mieux faire.
+  
+<p>
+Notez que nous avons quelques conventions locales au-del&#224; de celles qui sont dans les recommandations Java.
+Vous les trouverez sur d'autres pages dans cette section, mais par exemple, nous recommendons
+que vous d&#233;finissiez le <a href="Logging.shtml">r&#233;f&#233;rence de journalisation</a> en bas de chaque fichier. 
 
 <h2>Code Obsol&#232;te</h2>
 
 Comme le d&#233;veloppement se poursuit, parfois d'anciennes fa&#231;ons de faire les choses doivent &#234;tre remplac&#233;es par
 de nouvelles fa&#231;ons.
-Dans de nombreux cas, vous pouvez simplement changer tout le code &#224; l'aide de SVN,
+Dans de nombreux cas, vous pouvez simplement changer tout le code utilis&#233; dans votre r&#233;pertoire
 et avancer.
+
 Pour les interfaces g&#233;n&#233;rales qui pourraient &#234;tre utilis&#233;s &#224; l'ext&#233;rieur de JMRI,
 comme dans les scripts et les CATS,
-il peut &#234;tre bon de laisser l'ancienne interface en place pendant un certain temps, en la marquant comme "obsol&#232;te" de sorte que les gens peuvent d&#233;couvrir qu'elle finira par dispara&#238;tre. Apr&#232;s un nombre suffisant de cycles de lib&#233;ration, l'Interface obsol&#232;te peutt alors &#234;tre retir&#233;e.
+il peut &#234;tre bon de laisser l'ancienne interface en place pendant un certain temps, 
+en la marquant comme "obsol&#232;te" de sorte que les gens peuvent d&#233;couvrir qu'elle 
+finira par dispara&#238;tre.
+ Apr&#232;s un nombre suffisant de cycles de parution, 
+l'Interface obsol&#232;te peut alors &#234;tre retir&#233;e.
 <p>
 Notez que l'interface obsol&#232;te est destin&#233;e &#224; travailler encore.
 Obsol&#232;te devrait seulement dire que vous
-ne pouvez pas compter sur l'interface obsol&#232;te pour travail &#224; l'avenir,
+ne pouvez pas compter sur l'interface obsol&#232;te pour travailler &#224; l'avenir,
 de sorte qu'il serait bon de coder ailleurs, pendant que &#231;a fonctionne toujours.
 
 <p>
@@ -105,7 +119,7 @@ Pour ce faire, changez cette ligne de build.xml:
 &lt;property name="deprecation" value="on" /&gt;
 </pre>
 
-Cela vous permet d'&#234;tre attentif aux nouveaux avertissements de d&#233;sapprobation que vous code.
+Cela vous permet d'&#234;tre attentif aux nouveaux avertissements de d&#233;sapprobation quand vous codez.
 
 <p>
 Il existe deux formes pour marquer quelque chose comme obsol&#232;te (tag Javadoc et Annotation),
@@ -129,4 +143,3 @@ Cela vous permet de savoir facilement depuis combien de temps elle a &#233;t&#23
 	</div> <!-- closes #mBody-->
 </body>
 </html>
-
