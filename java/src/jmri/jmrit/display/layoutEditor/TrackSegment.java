@@ -1506,12 +1506,12 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     protected void draw2(Graphics2D g2, boolean isMain, boolean isBlock) {
-        if (isMain == mainline) {
-            if (isBlock) {
-                setColorForTrackBlock(g2, getLayoutBlock());
-            }
-            drawSolid(g2);  //TODO: fix this
-        }
+        //if (isMain == mainline) {
+        //    if (isBlock) {
+        //        setColorForTrackBlock(g2, getLayoutBlock());
+        //    }
+        //    drawSolid(g2);  //TODO: fix this
+        //}
     }
 
     /**

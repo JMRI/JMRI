@@ -9550,8 +9550,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
         drawLayoutTracksBallast(g2);
         drawLayoutTracksTies(g2);
-        drawLayoutTracksRails(g2);
+        drawLayoutTracksRails2(g2);
         drawLayoutTracksBlockLines(g2);
+        drawLayoutTracksRails1(g2);
 
         // things that only get drawn in edit mode
         if (isEditable()) {
@@ -9578,13 +9579,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //setup for drawing hidden sideline rails
         g2.setStroke(new BasicStroke(1.0f));
         g2.setColor(getLayoutTrackDrawingOptions().getSideRailColor());
-        draw1(g2, false, false, true, false);
-        draw1(g2, false, false, true, true);
+        draw1(g2, false, false, true, false, true);
+        draw1(g2, false, false, true, true, true);
         //setup for drawing mainline rails
         g2.setStroke(new BasicStroke(2.0f));
         g2.setColor(getLayoutTrackDrawingOptions().getMainRailColor());
-        draw1(g2, true, false, true, false);
-        draw1(g2, true, false, true, true);
+        draw1(g2, true, false, true, false, true);
+        draw1(g2, true, false, true, true, true);
     }
 
     private void drawLayoutTracksBallast(Graphics2D g2) {
@@ -9594,7 +9595,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             g2.setStroke(new BasicStroke(ballastWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             g2.setColor(getLayoutTrackDrawingOptions().getSideBallastColor());
-            draw1(g2, false, false, false, false);
+            draw1(g2, false);
         }
 
         //setup for drawing mainline ballast
@@ -9603,7 +9604,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             g2.setStroke(new BasicStroke(ballastWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             g2.setColor(getLayoutTrackDrawingOptions().getMainBallastColor());
-            draw1(g2, true, false, false, false);
+            draw1(g2, true);
         }
     }
 
@@ -9617,7 +9618,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.F,
                     new float[]{tieWidth, tieGap}, 0));
             g2.setColor(getLayoutTrackDrawingOptions().getSideTieColor());
-            draw1(g2, false, false, false, false);
+            draw1(g2, false);
         }
 
         //setup for drawing mainline ties
@@ -9630,26 +9631,26 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.F,
                     new float[]{tieWidth, tieGap}, 0));
             g2.setColor(getLayoutTrackDrawingOptions().getMainTieColor());
-            draw1(g2, true, false, false, false);
+            draw1(g2, true);
         }
     }
 
-    private void drawLayoutTracksRails(Graphics2D g2) {
+    private void drawLayoutTracksRails1(Graphics2D g2) {
         //setup for drawing sideline rails
         g2.setStroke(new BasicStroke(
                 getLayoutTrackDrawingOptions().getSideRailWidth(),
                 BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         g2.setColor(getLayoutTrackDrawingOptions().getSideRailColor());
         if (getLayoutTrackDrawingOptions().getSideRailCount() == 1) {
-            draw1(g2, false, false, false, false);
-            draw1(g2, false, false, false, true);
+            draw1(g2, false, false, false, false, true);
+            draw1(g2, false, false, false, true, true);
         }
         if (getLayoutTrackDrawingOptions().getSideRailCount() > 1) {
             draw2(g2, false, false);
         }
         if (getLayoutTrackDrawingOptions().getSideRailCount() == 3) {
-            draw1(g2, false, false, false, false);
-            draw1(g2, false, false, false, true);
+            draw1(g2, false, false, false, false, true);
+            draw1(g2, false, false, false, true, true);
         }
         //setup for drawing mainline rails
         g2.setStroke(new BasicStroke(
@@ -9657,16 +9658,51 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         g2.setColor(getLayoutTrackDrawingOptions().getMainRailColor());
         if (getLayoutTrackDrawingOptions().getMainRailCount() == 1) {
-            draw1(g2, true, false, false, false);
-            draw1(g2, true, false, false, true);
+            draw1(g2, true, false, false, false, true);
+            draw1(g2, true, false, false, true, true);
         }
         if (getLayoutTrackDrawingOptions().getMainRailCount() > 1) {
             draw2(g2, true, false);
         }
         if (getLayoutTrackDrawingOptions().getMainRailCount() == 3) {
-            draw1(g2, true, false, false, false);
-            draw1(g2, true, false, false, true);
+            draw1(g2, true, false, false, false, true);
+            draw1(g2, true, false, false, true, true);
         }
+    }
+
+    private void drawLayoutTracksRails2(Graphics2D g2) {
+        //setup for drawing sideline rails
+        g2.setStroke(new BasicStroke(
+                getLayoutTrackDrawingOptions().getSideRailWidth(),
+                BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        g2.setColor(getLayoutTrackDrawingOptions().getSideRailColor());
+        //if (getLayoutTrackDrawingOptions().getSideRailCount() == 1) {
+        //    draw1(g2, false, false, false, false);
+        //    draw1(g2, false, false, false, true);
+        //}
+        if (getLayoutTrackDrawingOptions().getSideRailCount() > 1) {
+            draw2(g2, false, false);
+        }
+        //if (getLayoutTrackDrawingOptions().getSideRailCount() == 3) {
+        //    draw1(g2, false, false, false, false);
+        //    draw1(g2, false, false, false, true);
+        //}
+        //setup for drawing mainline rails
+        g2.setStroke(new BasicStroke(
+                getLayoutTrackDrawingOptions().getMainRailWidth(),
+                BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        g2.setColor(getLayoutTrackDrawingOptions().getMainRailColor());
+        //if (getLayoutTrackDrawingOptions().getMainRailCount() == 1) {
+        //    draw1(g2, true, false, false, false);
+        //    draw1(g2, true, false, false, true);
+        //}
+        if (getLayoutTrackDrawingOptions().getMainRailCount() > 1) {
+            draw2(g2, true, false);
+        }
+        //if (getLayoutTrackDrawingOptions().getMainRailCount() == 3) {
+        //    draw1(g2, true, false, false, false);
+        //    draw1(g2, true, false, false, true);
+        //}
     }
 
     private void drawLayoutTracksBlockLines(Graphics2D g2) {
@@ -9684,9 +9720,42 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         draw1(g2, true, true, false, false);
     }
 
+    // isOddRail defaults to false
     private void draw1(Graphics2D g2,
-            boolean isMain, boolean isBlock,
-            boolean isHidden, boolean isDashed) {
+            boolean isMain, 
+            boolean isBlock,
+            boolean isHidden, 
+            boolean isDashed) {
+        draw1(g2, isMain, isBlock, isHidden, isDashed, false);
+    }
+
+    // isDashed defaults to false
+    private void draw1(Graphics2D g2,
+            boolean isMain, 
+            boolean isBlock,
+            boolean isHidden) {
+        draw1(g2, isMain, isBlock, isHidden, false);
+    }
+
+    // isHidden defaults to false
+    private void draw1(Graphics2D g2,
+            boolean isMain, 
+            boolean isBlock) {
+        draw1(g2, isMain, isBlock, false);
+    }
+
+    // isBlock defaults to false
+    private void draw1(Graphics2D g2,
+            boolean isMain) {
+        draw1(g2, isMain, false);
+    }
+            
+    private void draw1(Graphics2D g2,
+            boolean isMain, 
+            boolean isBlock,
+            boolean isHidden, 
+            boolean isDashed,
+            boolean isOddRail) {
         for (LayoutTrack layoutTrack : layoutTrackList) {
             if ((isHidden == layoutTrack.isHidden())
                     && (!isDashed || ((layoutTrack instanceof TrackSegment)

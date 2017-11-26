@@ -529,7 +529,7 @@ public final class MathUtil {
      */
     @CheckReturnValue
     public static Point2D twoThirdPoint(@Nonnull Point2D pA, @Nonnull Point2D pB) {
-        return lerp(pA, pB, 1.0 / 3.0);
+        return lerp(pA, pB, 2.0 / 3.0);
     }
 
     /**
