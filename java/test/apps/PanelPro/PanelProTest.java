@@ -38,27 +38,13 @@ public class PanelProTest {
                 
         try {
             // create a custom profile
-            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/LocoNet_Simulator"), folder.newFolder());
-            System.setProperty("org.jmri.profile", "temp/LocoNet_Simulator");
+            File tempFolder = folder.newFolder();
+            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/LocoNet_Simulator"), tempFolder);
+            System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
 
             // launch!
             PanelPro.main(new String[]{"PanelPro"});
             log.debug("started LocoNetSim");
-            // last few messages from a normal startup are:
-                // INFO  - Starting with profile LocoNet_Simulator.3eac0cdc [main] apps.Apps.?()
-                // INFO  - Using jmri-92FD61C1C87D-3eac0cdc as the JMRI Node identity [main] jmri.util.node.NodeIdentity.?()
-                // INFO  - No local configuration found. [main] jmri.jmrix.ConnectionConfigManager.?()
-                // INFO  - LocoNet Simulator Started [main] jmrix.loconet.hexfile.LnHexFilePort.?()
-                // INFO  - Table preferences not found.
-                // This is expected on the first time the "LocoNet Simulator" profile is used on this computer. [main] jmri.swing.JmriJTablePersistenceManager.?()
-                // INFO  - File path program: is /Users/jake/Documents/Trains/JMRI/projects/JMRI/ [main] jmri.util.FileUtilSupport.?()
-                // INFO  - File path preference: is /Users/jake/Documents/Trains/JMRI/projects/JMRI/temp/LocoNet_Simulator/ [main] jmri.util.FileUtilSupport.?()
-                // INFO  - File path profile: is temp/LocoNet_Simulator/ [main] jmri.util.FileUtilSupport.?()
-                // INFO  - File path settings: is /Users/jake/Documents/Trains/JMRI/projects/JMRI/temp/ [main] jmri.util.FileUtilSupport.?()
-                // INFO  - File path home: is /Users/jake/ [main] jmri.util.FileUtilSupport.?()
-                // INFO  - File path scripts: is /Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ [main] jmri.util.FileUtilSupport.?()
-                // WARN  - Cleaning up frame "LocoNet Simulator" (a class jmri.jmrix.loconet.hexfile.HexFileFrame) from earlier test. [main] jmri.util.JUnitUtil.?()
-                // WARN  - Cleaning up frame "PanelPro" (a class jmri.util.JmriJFrame) from earlier test. [main] jmri.util.JUnitUtil.?()
 
             JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("PanelPro") != null;},"window up");
         
@@ -83,23 +69,13 @@ public class PanelProTest {
 
         try {
             // create a custom profile
-            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/EasyDcc_Simulator"), folder.newFolder());
-            System.setProperty("org.jmri.profile", "temp/EasyDcc_Simulator");
+            File tempFolder = folder.newFolder();
+            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/EasyDcc_Simulator"), tempFolder);
+            System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
 
             // launch!
             PanelPro.main(new String[]{"PanelPro"});
             log.debug("started EasyDccSim");
-            // last few messages from a normal startup are:
-                // INFO  - Starting with profile EasyDcc_Simulator.3f033c2b [main]
-                // INFO  - Using jmri-406C8F33A40D-3f033c2b as the JMRI Node identity [main]
-                // INFO  - EasyDCC Simulator Started [EasyDCC Simulator]
-                // INFO  - File path program: is /Users/me/Documents/JMRI/ [main]
-                // INFO  - File path preference: is /Users/me/Library/Preferences/JMRI/EasyDcc_Simulator/ [main]
-                // INFO  - File path profile: is /Users/me/Library/Preferences/JMRI/EasyDcc_Simulator/ [main]
-                // INFO  - File path settings: is /Users/me/Library/Preferences/JMRI/ [main]
-                // INFO  - File path home: is /Users/me/ [main]
-                // INFO  - File path scripts: is /Users/me/Documents/JMRI/jython/ [main]
-                // INFO  - Main initialization done [main]
 
             JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("PanelPro") != null;},"window up");
 
@@ -120,8 +96,9 @@ public class PanelProTest {
 
         try {
             // create a custom profile
-            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/TMCC_Simulator"), folder.newFolder());
-            System.setProperty("org.jmri.profile", "temp/TMCC_Simulator");
+            File tempFolder = folder.newFolder();
+            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/TMCC_Simulator"), tempFolder);
+            System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
 
             // launch!
             PanelPro.main(new String[]{"PanelPro"});
@@ -145,33 +122,17 @@ public class PanelProTest {
                 
         try {
             // create a custom profile
-            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/Prevent_Init_Loop"), folder.newFolder());
-            System.setProperty("org.jmri.profile", "temp/Prevent_Init_Loop");
+            File tempFolder = folder.newFolder();
+            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/Prevent_Init_Loop"), tempFolder);
+            System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
 
             // launch!
             PanelPro.main(new String[]{"PanelPro"});
-        
-            // last few messages from a normal startup are:
-                // INFO  - Starting with profile LocoNet_Simulator.3eac0cdc [main] apps.Apps.?()
-                // INFO  - Using jmri-92FD61C1C87D-3eac0cdc as the JMRI Node identity [main] jmri.util.node.NodeIdentity.?()
-                // INFO  - No local configuration found. [main] jmri.jmrix.ConnectionConfigManager.?()
-                // INFO  - LocoNet Simulator Started [main] jmrix.loconet.hexfile.LnHexFilePort.?()
-                // INFO  - Table preferences not found.
-                // This is expected on the first time the "LocoNet Simulator" profile is used on this computer. [main] jmri.swing.JmriJTablePersistenceManager.?()
-                // INFO  - File path program: is /Users/jake/Documents/Trains/JMRI/projects/JMRI/ [main] jmri.util.FileUtilSupport.?()
-                // INFO  - File path preference: is /Users/jake/Documents/Trains/JMRI/projects/JMRI/temp/LocoNet_Simulator/ [main] jmri.util.FileUtilSupport.?()
-                // INFO  - File path profile: is temp/LocoNet_Simulator/ [main] jmri.util.FileUtilSupport.?()
-                // INFO  - File path settings: is /Users/jake/Documents/Trains/JMRI/projects/JMRI/temp/ [main] jmri.util.FileUtilSupport.?()
-                // INFO  - File path home: is /Users/jake/ [main] jmri.util.FileUtilSupport.?()
-                // INFO  - File path scripts: is /Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ [main] jmri.util.FileUtilSupport.?()
-                // WARN  - Cleaning up frame "LocoNet Simulator" (a class jmri.jmrix.loconet.hexfile.HexFileFrame) from earlier test. [main] jmri.util.JUnitUtil.?()
-                // WARN  - Cleaning up frame "PanelPro" (a class jmri.util.JmriJFrame) from earlier test. [main] jmri.util.JUnitUtil.?()
 
             JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("PanelPro") != null;},"window up");
         
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("PanelPro version") != null;}, "first Info line seen");
 
-            //JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("File path scripts:") != null;}, "last Info line seen");
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("Main initialization done") != null;}, "last Info line seen");
 
             // maybe have it run a script to indicate that it's really up?
