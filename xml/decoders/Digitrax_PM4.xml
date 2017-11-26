@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2004, 2007, 2015 All rights reserved -->
+<!-- $Id: Public_Domain_FREDi_LNSV2.xml 1810 2015-11-24 12:12:00Z martin $ -->
+<!--                                                                         -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under   -->
+<!-- the terms of version 2 of the GNU General Public License as published   -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy      -->
+<!-- of this license.                                                        -->
+<!--                                                                         -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT     -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or   -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License    -->
+<!-- for more details. -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" 
+                showEmptyPanes="no">
+
+    <version author="Bob Jacobsen" version="1" lastUpdated="20171121" />
+
+    <decoder>
+
+        <family name="PM4" mfg="Digitrax">
+            <model model="PM4"/>
+        </family>
+
+        <programming direct="no" paged="no" register="no" ops="no">
+            <mode>LOCONETBDOPSWMODE</mode>
+        </programming>
+
+        <variables>
+          <variable CV="1" comment="Board address" item="Short Address" default="03" infoOnly="yes">
+            <!-- needed to set the board address value -->            
+            <decVal min="1" max="16" />
+            <label>Primary Address</label>
+          </variable>
+
+          <variable CV="112.3" item="Vstart"
+                      comment="This is Vstart so it shows up on a pane for testing">
+            <enumVal>
+              <enumChoice>
+                <choice>Thrown</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>Closed</choice>
+              </enumChoice>
+            </enumVal>
+          </variable>
+
+        </variables>
+    </decoder>
+
+</decoder-config>
