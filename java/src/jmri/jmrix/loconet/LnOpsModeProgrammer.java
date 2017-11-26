@@ -221,9 +221,6 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
     @Override
     public void message(LocoNetMessage m) {
-        // see if reply to LNSV 1 or LNSV2 request
-        if ((m.getElement( 0) & 0xFF) != 0xE5) return;
-        if ((m.getElement( 1) & 0xFF) != 0x10) return;
 
         log.debug("reply {}",m);
         if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
@@ -233,14 +230,14 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
                 log.warn("received board-program reply message with no reply object: {}", m);
                 return;
             }
-            if (!doingWrite) return;
+            if (doingWrite) return;
 
             // check for right type, unit
             if (m.getOpCode() != 0xb4
                     || ((m.getElement(1) != 0x00) && (m.getElement(1) != 0x50))) {
                 return;
             }
-        
+
             // LACK with 0 in opcode; assume its to us.  Note that there
             // should be a 0x50 in the opcode, not zero, but this is what we
             // see...
@@ -261,6 +258,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         
         
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
+            // see if reply to LNSV 1 or LNSV2 request
+            if ((m.getElement( 0) & 0xFF) != 0xE5) return;
+            if ((m.getElement( 1) & 0xFF) != 0x10) return;
             if ((m.getElement( 4) & 0xFF) != 0x01) return; // format 1
             if ((m.getElement( 5) & 0x70) != 0x00) return; // 5
         
@@ -292,6 +292,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
                 temp.programmingOpReply(val, code);
             }
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
+            // see if reply to LNSV 1 or LNSV2 request
+            if ((m.getElement( 0) & 0xFF) != 0xE5) return;
+            if ((m.getElement( 1) & 0xFF) != 0x10) return;
             if ((m.getElement(3) != 0x41) && (m.getElement(3) != 0x42)) return; // need a "Write One Reply", or a "Read One Reply"
             if ((m.getElement( 4) & 0xFF) != 0x02) return; // format 2
             if ((m.getElement( 5) & 0x70) != 0x10) return; // need SVX1 high nibble = 1
