@@ -412,6 +412,5 @@ public class LayoutEditorChecks {
         return results;
     }   // getCheckMarkedMenuItemNames
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorChecks.class
-    );
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditorChecks.class);
 }
