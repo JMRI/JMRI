@@ -26,7 +26,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
     javax.swing.JToggleButton readButton = new javax.swing.JToggleButton();
     javax.swing.JToggleButton writeButton = new javax.swing.JToggleButton();
     // use JSpinner for CV number input
-    SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 1024, 1); // 1024 is highest CV number documented by NMRA as per 2017
+    SpinnerNumberModel model = new SpinnerNumberModel(1, 1, 1024, 1); // 1024 is highest CV number documented by NMRA as per 2017
     JSpinner addrField = new JSpinner(model);
 
     javax.swing.JTextField valField = new javax.swing.JTextField(4);

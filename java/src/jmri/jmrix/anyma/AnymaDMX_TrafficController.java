@@ -28,6 +28,9 @@ public class AnymaDMX_TrafficController {
      * constructor
      */
     public AnymaDMX_TrafficController() {
+       // this forces first pass to transmit everything
+        Arrays.fill(old_data, (byte) -1);
+
         execService = Executors.newScheduledThreadPool(5);
         execService.scheduleAtFixedRate(() -> {
             // if the new_data has changed...

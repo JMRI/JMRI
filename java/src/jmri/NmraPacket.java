@@ -387,7 +387,7 @@ public class NmraPacket {
 
     /**
      * Create a signal accessory instruction packet.
-     *
+     * <p>
      * From the RP: Extended Accessory Decoder Control Packet Format The
      * Extended Accessory Decoder Control Packet is included for the purpose of
      * transmitting aspect control to signal decoders or data bytes to more
@@ -493,7 +493,7 @@ public class NmraPacket {
      * @return true if a Signal Decoder Packet; false otherwise
      */
     public static boolean isAccSignalDecoderPkt(byte[] packet) {
-        if (packet.length != 3 && packet.length != 4) {
+        if (packet == null || packet.length != 3 && packet.length != 4) {
             return false;   // allow ECC to be present or not
         }
         if ((packet[0] & 0xC0) != 0x80) {
@@ -660,6 +660,54 @@ public class NmraPacket {
         int boardAddr = (outputAddr >> 2); // Board Address
 
         return accSignalDecoderPktCommon(lowAddr, boardAddr, aspect);
+    }
+
+    /**
+     * Provide an extended operations mode accessory CV programming packet via a
+     * simplified interface, given a signal address, using the alternative
+     * interpretation of S-9.2.1, due to an omission in the address definition
+     * of extended accessory packets.
+     *
+     * @param addr  the signal address
+     * @param cvNum the CV
+     * @param data  the data
+     * @return a packet
+     */
+    public static byte[] altAccSignalDecoderPktOpsMode(int addr, int cvNum, int data) {
+
+        if (addr < 1 || addr > 2044) {
+            log.error("invalid address " + addr);
+            throw new IllegalArgumentException();
+        }
+
+        if (cvNum < 1 || cvNum > 1024) {
+            log.error("invalid CV number " + cvNum);
+            return null;
+        }
+
+        if (data < 0 || data > 255) {
+            log.error("invalid data " + data);
+            return null;
+        }
+
+        int outputAddr = addr - 1; // Make the address 0 based
+        int lowAddr = (outputAddr & 0x03);
+        int boardAddr = (outputAddr >> 2); // Board Address
+        int midAddr = (boardAddr & 0x3F);
+        int highAddr = (~(boardAddr >> 6)) & 0x07;
+
+        int lowCVnum = (cvNum - 1) & 0xFF;
+        int highCVnum = ((cvNum - 1) >> 8) & 0x03;
+
+        byte[] retVal = new byte[6];
+        retVal[0] = (byte) (0x80 | midAddr);
+        retVal[1] = (byte) (0x01 | (highAddr << 4) | (lowAddr << 1));
+        retVal[2] = (byte) (0xEC | highCVnum);
+        retVal[3] = (byte) (lowCVnum);
+        retVal[4] = (byte) (0xFF & data);
+        retVal[5] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2] ^ retVal[3] ^ retVal[4]);
+
+        return retVal;
     }
 
     protected static byte[] accSignalDecoderPktCommon(int lowAddr, int boardAddr, int aspect) {
@@ -883,11 +931,11 @@ public class NmraPacket {
      * method in that it cannot create a 28 step speed packet for maximum speed.
      * Input speed value in the range 0 - 28 is converted to speed steps, 0,
      * estop, 1, 2, ..., 27.
-     *
+     * <p>
      * This method should probably be deprecated. It is used only by
      * NceThrottle.java and EasyDccThrottle.java which themselves have issues in
      * the way floating point speed values are converted to integer speed steps.
-     *
+     * <p>
      * A speed and direction instruction is used send information to motors
      * connected to Multi Function Digital Decoders. Instruction "010" indicates
      * a Speed and Direction Instruction for reverse operation and instruction
@@ -935,7 +983,7 @@ public class NmraPacket {
     /**
      * New version of speedStep28Packet to allow access to the whole range of 28
      * step speed packets.
-     *
+     * <p>
      * Simply constructs a packet using the 5 bit speed value. This is
      * consistent with the 128 and 14 step methods which do no further
      * processing of the speed value.
@@ -951,7 +999,7 @@ public class NmraPacket {
     public static byte[] speedStep28Packet(boolean full, int address, boolean longAddr, int speed, boolean fwd) {
         log.debug("28 step packet {} {}", address, speed);
 
-        if (full != true) {
+        if (!full) {
             log.error("invalid method invocation");
             return null;    // failed!
         }
