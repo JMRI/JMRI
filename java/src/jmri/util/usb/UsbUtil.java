@@ -2,6 +2,7 @@ package jmri.util.usb;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -266,7 +267,9 @@ public final class UsbUtil {
                 @Override
                 public void dataEventOccurred(UsbPipeDataEvent event) {
                     byte[] data = event.getData();
-                    log.debug("{} bytes received: {}", data, data);
+                    if (log.isDebugEnabled()) { // avoid array->string conversion unless debugging
+                        log.debug("bytes received: {}", Arrays.toString(data));
+                    }
                 }
             });
             pipe.close();
