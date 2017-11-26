@@ -1,4 +1,4 @@
-package apps.PanelPro;
+package jmri.jmrix.pricom.pockettester;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -8,14 +8,17 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017	
  */
-public class PanelProActionTest {
+public class StatusActionTest {
 
     @Test
     public void testCTor() {
-        PanelProAction t = new PanelProAction();
-        Assert.assertNotNull("exists", t);
+        StatusAction t = new StatusAction(){
+            void connect(StatusFrame l){
+            }
+        };
+        Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
@@ -29,6 +32,6 @@ public class PanelProActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PanelProActionTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(DataSourceActionTest.class);
 
 }
