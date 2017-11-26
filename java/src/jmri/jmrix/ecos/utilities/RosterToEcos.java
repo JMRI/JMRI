@@ -1,7 +1,5 @@
 package jmri.jmrix.ecos.utilities;
 
-import jmri.InstanceManager;
-import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.ecos.EcosListener;
 import jmri.jmrix.ecos.EcosLocoAddress;
@@ -23,23 +21,21 @@ public class RosterToEcos implements EcosListener {
     private boolean createloco;
     EcosSystemConnectionMemo adaptermemo;
 
-    DecoderIndexFile decoderind = InstanceManager.getDefault(DecoderIndexFile.class);
-
-    public RosterToEcos() {
+    public RosterToEcos(EcosSystemConnectionMemo memo) {
+        adaptermemo = memo;
+        tc = adaptermemo.getTrafficController();
+        ep = adaptermemo.getPreferenceManager();
+        objEcosLocoManager = adaptermemo.getLocoAddressManager();
     }
 
-    public void createEcosLoco(RosterEntry re, EcosSystemConnectionMemo memo) {
+    public void createEcosLoco(RosterEntry re) {
         if (createloco == true) {
             return;
         }
         createloco = true;
-        adaptermemo = memo;
-        tc = adaptermemo.getTrafficController();
-        ep = adaptermemo.getPreferenceManager();
         _re = re;
-        objEcosLocoManager = adaptermemo.getLocoAddressManager();
 
-        String protocol = "";
+        String protocol;
         switch (re.getProtocol()) {
             case MOTOROLA:
                 protocol = "MM28";
@@ -65,26 +61,36 @@ public class RosterToEcos implements EcosListener {
 
         String result = "";
         String str = ep.getEcosLocoDescription();
-        if ((str == null) || (str.equals(""))) {
+        if ((str == null) || (str.isEmpty())) {
             return _re.getId();
         }
         char comp = '%';
         for (int i = 0; i < str.length(); i++) {
             if (str.charAt(i) == comp) {
-                if (str.charAt(i + 1) == 'i') {
-                    result = result + _re.getId();
-                } else if (str.charAt(i + 1) == 'r') {
-                    result = result + _re.getRoadName();
-                } else if (str.charAt(i + 1) == 'n') {
-                    result = result + _re.getRoadNumber();
-                } else if (str.charAt(i + 1) == 'm') {
-                    result = result + _re.getMfg();
-                } else if (str.charAt(i + 1) == 'o') {
-                    result = result + _re.getOwner();
-                } else if (str.charAt(i + 1) == 'l') {
-                    result = result + _re.getModel();
-                } else if (str.charAt(i + 1) == 'c') {
-                    result = result + _re.getComment();
+                switch (str.charAt(i + 1)) {
+                    case 'i':
+                        result = result + _re.getId();
+                        break;
+                    case 'r':
+                        result = result + _re.getRoadName();
+                        break;
+                    case 'n':
+                        result = result + _re.getRoadNumber();
+                        break;
+                    case 'm':
+                        result = result + _re.getMfg();
+                        break;
+                    case 'o':
+                        result = result + _re.getOwner();
+                        break;
+                    case 'l':
+                        result = result + _re.getModel();
+                        break;
+                    case 'c':
+                        result = result + _re.getComment();
+                        break;
+                    default:
+                        break;
                 }
                 i++;
             } else {
@@ -109,8 +115,8 @@ public class RosterToEcos implements EcosListener {
                 for (int i = 1; i < lines.length - 1; i++) {
                     if (lines[i].contains("10 id[")) {
 
-                        start = lines[i].indexOf("[") + 1;
-                        end = lines[i].indexOf("]");
+                        start = lines[i].indexOf('[') + 1;
+                        end = lines[i].indexOf(']');
                         String EcosAddr = lines[i].substring(start, end);
                         objEcosLoco = objEcosLocoManager.provideByEcosObject(EcosAddr);
                         objEcosLoco.setEcosTempEntry(false);
