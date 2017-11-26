@@ -94,7 +94,7 @@ public class UsbPortAdapter extends AbstractPortController {
                 if (usbDevices.size() == 1) {
                     usbDevice = usbDevices.get(0);
                 } else {
-                    return String.format("Single USB device with vendor id {} and product id {} not found.", vendorID, productID);
+                    return String.format("Single USB device with vendor id %s and product id %s not found.", vendorID, productID);
                 }
             }
         }
