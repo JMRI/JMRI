@@ -625,7 +625,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
                             .addComponent(sidelineLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
 
-        OptionsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {mainBallastColorButton, mainBallastWidthSpinner, mainBlockLineWidthSpinner, mainRailColorButton, mainRailCountSpinner, mainRailGapSpinner, mainRailWidthSpinner, mainTieColorButton, mainTieGapSpinner, mainTieLengthSpinner, mainTieWidthSpinner, mainlineLabel, sideBallastColorButton, sideBallastWidthSpinner, sideBlockLineWidthSpinner, sidelineLabel, sideRailColorButton, sideRailCountSpinner, sideRailGapSpinner, sideRailWidthSpinner, sideTieColorButton, sideTieGapSpinner, sideTieLengthSpinner, sideTieWidthSpinner});
+        OptionsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {mainBallastColorButton, mainBallastWidthSpinner, mainBlockLineWidthSpinner, mainRailColorButton, mainRailCountSpinner, mainRailGapSpinner, mainRailWidthSpinner, mainTieColorButton, mainTieGapSpinner, mainTieLengthSpinner, mainTieWidthSpinner, mainlineLabel, sideBallastColorButton, sideBallastWidthSpinner, sideBlockLineWidthSpinner, sideRailColorButton, sideRailCountSpinner, sideRailGapSpinner, sideRailWidthSpinner, sideTieColorButton, sideTieGapSpinner, sideTieLengthSpinner, sideTieWidthSpinner, sidelineLabel});
 
         OptionsPanelLayout.setVerticalGroup(
             OptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -696,7 +696,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        OptionsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {ballastColorLabel, ballastWidthLabel, blockLineWidthLabel, mainBallastColorButton, mainBallastWidthSpinner, mainBlockLineWidthSpinner, mainRailColorButton, mainRailCountSpinner, mainRailGapSpinner, mainRailWidthSpinner, mainTieColorButton, mainTieGapSpinner, mainTieLengthSpinner, mainTieWidthSpinner, mainlineLabel, optionLabel, railColorLabel, railCountLabel, railGapLabel, railWidthLabel, sideBallastColorButton, sideBallastWidthSpinner, sideBlockLineWidthSpinner, sidelineLabel, sideRailColorButton, sideRailCountSpinner, sideRailGapSpinner, sideRailWidthSpinner, sideTieColorButton, sideTieGapSpinner, sideTieLengthSpinner, sideTieWidthSpinner, tieColorLabel, tieGapLabel, tieLengthLabel, tieWidthLabel});
+        OptionsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {ballastColorLabel, ballastWidthLabel, blockLineWidthLabel, mainBallastColorButton, mainBallastWidthSpinner, mainBlockLineWidthSpinner, mainRailColorButton, mainRailCountSpinner, mainRailGapSpinner, mainRailWidthSpinner, mainTieColorButton, mainTieGapSpinner, mainTieLengthSpinner, mainTieWidthSpinner, mainlineLabel, optionLabel, railColorLabel, railCountLabel, railGapLabel, railWidthLabel, sideBallastColorButton, sideBallastWidthSpinner, sideBlockLineWidthSpinner, sideRailColorButton, sideRailCountSpinner, sideRailGapSpinner, sideRailWidthSpinner, sideTieColorButton, sideTieGapSpinner, sideTieLengthSpinner, sideTieWidthSpinner, sidelineLabel, tieColorLabel, tieGapLabel, tieLengthLabel, tieWidthLabel});
 
         presetsComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Classic JMRI", "Drafting", "Realistic", "Garrish", "--", "Custom" }));
         presetsComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -1068,10 +1068,10 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO.setSideTieColor(Color.BLACK);
         tempLTDO.setSideTieGap(0);
         tempLTDO.setSideRailCount(1);
-        tempLTDO.setSideRailWidth(2);
+        tempLTDO.setSideRailWidth(1);
         tempLTDO.setSideRailGap(0);
         tempLTDO.setSideRailColor(Color.BLACK);
-        tempLTDO.setSideBlockLineWidth(0);
+        tempLTDO.setSideBlockLineWidth(2);
         tempLTDO.setMainBallastWidth(0);
         tempLTDO.setMainBallastColor(Color.BLACK);
         tempLTDO.setMainTieLength(0);
@@ -1079,10 +1079,10 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO.setMainTieGap(0);
         tempLTDO.setMainTieColor(Color.BLACK);
         tempLTDO.setMainRailCount(1);
-        tempLTDO.setMainRailWidth(4);
+        tempLTDO.setMainRailWidth(1);
         tempLTDO.setMainRailGap(0);
         tempLTDO.setMainRailColor(Color.BLACK);
-        tempLTDO.setMainBlockLineWidth(0);
+        tempLTDO.setMainBlockLineWidth(4);
         ltdoList.add(tempLTDO);
 
         tempLTDO = new LayoutTrackDrawingOptions(draftingPresetName);
@@ -1202,7 +1202,6 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private javax.swing.JButton sideBallastColorButton;
     private javax.swing.JSpinner sideBallastWidthSpinner;
     private javax.swing.JSpinner sideBlockLineWidthSpinner;
-    private javax.swing.JLabel sidelineLabel;
     private javax.swing.JButton sideRailColorButton;
     private javax.swing.JSpinner sideRailCountSpinner;
     private javax.swing.JSpinner sideRailGapSpinner;
@@ -1211,6 +1210,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private javax.swing.JSpinner sideTieGapSpinner;
     private javax.swing.JSpinner sideTieLengthSpinner;
     private javax.swing.JSpinner sideTieWidthSpinner;
+    private javax.swing.JLabel sidelineLabel;
     private javax.swing.JLabel tieGapLabel;
     private javax.swing.JLabel tieLengthLabel;
     private javax.swing.JLabel tieWidthLabel;
