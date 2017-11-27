@@ -1399,6 +1399,19 @@ public class LevelXing extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
+    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+        //if (isMain == mainline) {
+        //    if (isBlock) {
+        //        setColorForTrackBlock(g2, getLayoutBlock());
+        //    }
+        //    drawSolid(g2);  //TODO: fix this
+        //}
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected void drawUnconnected(Graphics2D g2) {
         if (getConnectA() == null) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));

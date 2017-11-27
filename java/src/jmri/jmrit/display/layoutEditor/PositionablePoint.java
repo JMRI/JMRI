@@ -1431,8 +1431,8 @@ public class PositionablePoint extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
-    //TODO: refactor this as draw1
-    protected void draw(Graphics2D g2) {
+    @Override
+    protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
         if (getType() != ANCHOR) {
             Point2D pt = getCoordsCenter();
             boolean mainline = false;
@@ -1449,7 +1449,7 @@ public class PositionablePoint extends LayoutTrack {
                 }
             }
 
-            double trackWidth = Math.min(layoutEditor.setTrackStrokeWidth(g2, mainline), 3.0);
+            double trackWidth = 2.0;
             double tieWidth = trackWidth * 2.0;
             Stroke drawingStroke = new BasicStroke((float) trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
             g2.setColor(defaultTrackColor);
@@ -1483,11 +1483,16 @@ public class PositionablePoint extends LayoutTrack {
                     g2.draw(new Line2D.Double(p2, p4));
                 }
             }
-            // this is to force setTrackStrokeWidth's mainline local to toggle
-            // so next time it's called it will "do the right thing"...
-            layoutEditor.setTrackStrokeWidth(g2, !mainline);
         }   // if (getType() != ANCHOR)
     }   // draw
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+        //nothing to do here... move along...
+    }
 
     /**
      * {@inheritDoc}

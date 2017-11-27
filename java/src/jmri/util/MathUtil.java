@@ -91,6 +91,14 @@ public final class MathUtil {
     }
 
     /**
+     * @param p the point
+     * @return the point orthogonal to this one (relative to {0, 0})
+     */
+    public static Point2D orthogonal(@Nonnull Point2D p) {
+        return new Point2D.Double(p.getY(), p.getX());
+    }
+
+    /**
      * return the minimum coordinates of two points
      *
      * @param pA the first point
@@ -365,10 +373,22 @@ public final class MathUtil {
     }
 
     /**
-     * normalize a point
+     * normalize a point (vector) to a length
      *
-     * @param p the point
-     * @return the normalized point
+     * @param p the point (vector)
+     * @param length the length to normalize to
+     * @return the normalized point (vector)
+     */
+    @CheckReturnValue
+    public static Point2D normalize(@Nonnull Point2D p, double length) {
+        return multiply(normalize(p), length);
+    }
+
+    /**
+     * normalize a point (vector)
+     *
+     * @param p the point (vector)
+     * @return the normalized point (vector)
      */
     @CheckReturnValue
     public static Point2D normalize(@Nonnull Point2D p) {

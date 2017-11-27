@@ -649,7 +649,7 @@ public class TrackSegment extends LayoutTrack {
                     if (distance < minDistance) {
                         minDistance = distance;
                         minPoint = p;
-                        result = TRACK_CIRCLE_CENTRE;
+                        result = BEZIER_CONTROL_POINT_OFFSET_MIN + index;
                     }
                 }
             }
@@ -1056,14 +1056,14 @@ public class TrackSegment extends LayoutTrack {
                     Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
                     Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
 
-                    // compute offset one third the distance from ep1 to ep2
+                    // compute orthogonal offset with length one third the distance from ep1 to ep2
                     Point2D offset = MathUtil.subtract(ep2, ep1);
-                    offset = MathUtil.multiply(MathUtil.normalize(offset), MathUtil.length(offset) / 3);
+                    offset = MathUtil.normalize(offset, MathUtil.length(offset) / 3.0);
+                    offset = MathUtil.orthogonal(offset);
 
-                    // swap x & y so the offset is orthogonal to orginal line
-                    offset = new Point2D.Double(offset.getY(), offset.getX());
+                    // add orthogonal offset to 1/3rd and 2/3rd points
                     Point2D pt1 = MathUtil.add(MathUtil.oneThirdPoint(ep1, ep2), offset);
-                    Point2D pt2 = MathUtil.subtract(MathUtil.oneThirdPoint(ep2, ep1), offset);
+                    Point2D pt2 = MathUtil.subtract(MathUtil.twoThirdPoint(ep1, ep2), offset);
 
                     bezierControlPoints.add(pt1);
                     bezierControlPoints.add(pt2);
@@ -1374,41 +1374,41 @@ public class TrackSegment extends LayoutTrack {
      * Called when the user changes the angle dynamically in edit mode
      * by dragging the centre of the cirle.
      */
-    //NOTE: AFAICT this isn't called from anywhere
     protected void reCalculateTrackSegmentAngle(double x, double y) {
+        if (!isBezier()) {
+            double pt2x;
+            double pt2y;
+            double pt1x;
+            double pt1y;
 
-        double pt2x;
-        double pt2y;
-        double pt1x;
-        double pt1y;
+            if (isFlip()) {
+                pt1x = getTmpPt2().getX();
+                pt1y = getTmpPt2().getY();
+                pt2x = getTmpPt1().getX();
+                pt2y = getTmpPt1().getY();
+            } else {
+                pt1x = getTmpPt1().getX();
+                pt1y = getTmpPt1().getY();
+                pt2x = getTmpPt2().getX();
+                pt2y = getTmpPt2().getY();
+            }
+            //Point 1 to new point distance
+            double a;
+            double o;
+            double la;
+            // Compute arc's chord
+            a = pt2x - x;
+            o = pt2y - y;
+            la = Math.hypot(a, o);
 
-        if (isFlip()) {
-            pt1x = getTmpPt2().getX();
-            pt1y = getTmpPt2().getY();
-            pt2x = getTmpPt1().getX();
-            pt2y = getTmpPt1().getY();
-        } else {
-            pt1x = getTmpPt1().getX();
-            pt1y = getTmpPt1().getY();
-            pt2x = getTmpPt2().getX();
-            pt2y = getTmpPt2().getY();
+            double lb;
+            a = pt1x - x;
+            o = pt1y - y;
+            lb = Math.hypot(a, o);
+
+            double newangle = Math.toDegrees(Math.acos((-getChordLength() * getChordLength() + la * la + lb * lb) / (2 * la * lb)));
+            setAngle(newangle);
         }
-        //Point 1 to new point distance
-        double a;
-        double o;
-        double la;
-        // Compute arc's chord
-        a = pt2x - x;
-        o = pt2y - y;
-        la = Math.hypot(a, o);
-
-        double lb;
-        a = pt1x - x;
-        o = pt1y - y;
-        lb = Math.hypot(a, o);
-
-        double newangle = Math.toDegrees(Math.acos((-getChordLength() * getChordLength() + la * la + lb * lb) / (2 * la * lb)));
-        setAngle(newangle);
     }
 
     /*
@@ -1497,7 +1497,29 @@ public class TrackSegment extends LayoutTrack {
             if (isBlock) {
                 setColorForTrackBlock(g2, getLayoutBlock());
             }
-            drawSolid(g2);  //TODO: fix this
+            if (isArc()) {
+                calculateTrackSegmentAngle();
+                g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
+                trackRedrawn();
+            } else if (isBezier()) {
+                Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
+                Point2D pt2 = layoutEditor.getCoords(getConnect2(), getType2());
+
+                int cnt = bezierControlPoints.size();
+                Point2D[] points = new Point2D[cnt + 2];
+                points[0] = pt1;
+                for (int idx = 0; idx < cnt; idx++) {
+                    points[idx + 1] = bezierControlPoints.get(idx);
+                }
+                points[cnt + 1] = pt2;
+
+                MathUtil.drawBezier(g2, points);
+            } else {
+                Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
+                Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
+
+                g2.draw(new Line2D.Double(end1, end2));
+            }
         }
     }
 
@@ -1505,13 +1527,42 @@ public class TrackSegment extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void draw2(Graphics2D g2, boolean isMain, boolean isBlock) {
-        //if (isMain == mainline) {
-        //    if (isBlock) {
-        //        setColorForTrackBlock(g2, getLayoutBlock());
-        //    }
-        //    drawSolid(g2);  //TODO: fix this
-        //}
+    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+        if (isMain == mainline) {
+            if (isArc()) {
+                calculateTrackSegmentAngle();
+                g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
+                trackRedrawn();
+            } else if (isBezier()) {
+                Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
+                Point2D pt2 = layoutEditor.getCoords(getConnect2(), getType2());
+
+                int cnt = bezierControlPoints.size();
+                Point2D[] points = new Point2D[cnt + 2];
+                points[0] = pt1;
+                for (int idx = 0; idx < cnt; idx++) {
+                    points[idx + 1] = bezierControlPoints.get(idx);
+                }
+                points[cnt + 1] = pt2;
+
+                MathUtil.drawBezier(g2, points);
+            } else {
+                Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
+                Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
+
+                Point2D delta = MathUtil.subtract(end2, end1);
+                Point2D vector = MathUtil.normalize(delta, railDisplacement);
+                vector = MathUtil.orthogonal(vector);
+
+                Point2D ep1L = MathUtil.add(end1, vector);
+                Point2D ep2L = MathUtil.add(end2, vector);
+                g2.draw(new Line2D.Double(ep1L, ep2L));
+
+                Point2D ep1R = MathUtil.subtract(end1, vector);
+                Point2D ep2R = MathUtil.subtract(end2, vector);
+                g2.draw(new Line2D.Double(ep1R, ep2R));
+            }
+        }
     }
 
     /**
@@ -1523,32 +1574,6 @@ public class TrackSegment extends LayoutTrack {
         // TrackSegments are always connected
         // nothing to see here... move along...
     }
-
-    private void drawSolid(Graphics2D g2) {
-        if (isArc()) {
-            calculateTrackSegmentAngle();
-            g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
-        } else if (isBezier()) {
-            Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
-            Point2D pt2 = layoutEditor.getCoords(getConnect2(), getType2());
-
-            int cnt = bezierControlPoints.size();
-            Point2D[] points = new Point2D[cnt + 2];
-            points[0] = pt1;
-            for (int idx = 0; idx < cnt; idx++) {
-                points[idx + 1] = bezierControlPoints.get(idx);
-            }
-            points[cnt + 1] = pt2;
-
-            MathUtil.drawBezier(g2, points);
-        } else {
-            Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
-            Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
-
-            g2.draw(new Line2D.Double(end1, end2));
-        }
-        trackRedrawn();
-    }   // drawSolid
 
     protected void drawEditControls(Graphics2D g2) {
         g2.setColor(Color.black);

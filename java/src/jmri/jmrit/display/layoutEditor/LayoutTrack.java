@@ -151,32 +151,22 @@ public abstract class LayoutTrack {
     public abstract boolean isMainline();
 
     /**
-     * draw one line
+     * draw one line (Ballast, ties, center or 3rd rail, block lines)
      *
      * @param g2      the graphics context
      * @param isMain  true if drawing mainlines
      * @param isBlock true if drawing block lines
      */
-    //protected abstract void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
-    //note: placeholder until I get this implemented in all sub-classes
-    //TODO: replace with abstract declaration (above)
-    protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
-        //nothing to do here... move along...
-    }
+    protected abstract void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
 
     /**
-     * draw two lines
+     * draw two lines (rails)
      *
      * @param g2      the graphics context
      * @param isMain  true if drawing mainlines
-     * @param isBlock true if drawing block lines
+     * @param railDisplacement the offset from center to draw the lines
      */
-    //protected abstract void draw2(Graphics2D g2, boolean isMain, boolean isBlock);
-    //note: placeholder until I get this implemented in all sub-classes
-    //TODO: replace with abstract declaration (above)
-    protected void draw2(Graphics2D g2, boolean isMain, boolean isBlock) {
-        //nothing to do here... move along...
-    }
+    protected abstract void draw2(Graphics2D g2, boolean isMain, float railDisplacement);
 
     /**
      * draw hidden track

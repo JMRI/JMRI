@@ -24,7 +24,7 @@ public class LayoutTrackDrawingOptions implements Cloneable {
         name = ltdo.getName();
         sideBallastWidth = ltdo.getSideBallastWidth();
         sideBallastColor = ltdo.getSideBallastColor();
-        sideTieLength = ltdo.getSideBallastWidth();
+        sideTieLength = ltdo.getSideTieLength();
         sideTieWidth = ltdo.getSideTieWidth();
         sideTieColor = ltdo.getSideTieColor();
         sideTieGap = ltdo.getSideTieGap();

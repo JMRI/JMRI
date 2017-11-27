@@ -72,8 +72,8 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainRailWidthSpinner = new javax.swing.JSpinner();
         sideRailWidthSpinner = new javax.swing.JSpinner();
         railGapLabel = new javax.swing.JLabel();
-        mainRailGapSpinner = new javax.swing.JSpinner();
         sideRailGapSpinner = new javax.swing.JSpinner();
+        mainRailGapSpinner = new javax.swing.JSpinner();
         javax.swing.JLabel railColorLabel = new javax.swing.JLabel();
         mainRailColorButton = new javax.swing.JButton();
         sideRailColorButton = new javax.swing.JButton();
@@ -206,21 +206,8 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         railGapLabel.setPreferredSize(new java.awt.Dimension(256, 16));
         railGapLabel.setSize(new java.awt.Dimension(256, 16));
 
-        mainRailGapSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        mainRailGapSpinner.setToolTipText(Bundle.getMessage("MainRailGapToolTip"));
-        mainRailGapSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
-        mainRailGapSpinner.setName(""); // NOI18N
-        mainRailGapSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
-        mainRailGapSpinner.setSize(new java.awt.Dimension(64, 16));
-        mainRailGapSpinner.setValue(ltdOptions.getMainRailGap());
-        mainRailGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                mainRailGapSpinnerStateChanged(evt);
-            }
-        });
-
         sideRailGapSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        sideRailGapSpinner.setToolTipText(Bundle.getMessage("SideRailGapToolTip"));
+        sideRailGapSpinner.setToolTipText(Bundle.getMessage("MainRailGapToolTip"));
         sideRailGapSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         sideRailGapSpinner.setName(""); // NOI18N
         sideRailGapSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
@@ -229,6 +216,19 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideRailGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideRailGapSpinnerStateChanged(evt);
+            }
+        });
+
+        mainRailGapSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        mainRailGapSpinner.setToolTipText(Bundle.getMessage("SideRailGapToolTip"));
+        mainRailGapSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
+        mainRailGapSpinner.setName(""); // NOI18N
+        mainRailGapSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
+        mainRailGapSpinner.setSize(new java.awt.Dimension(64, 16));
+        mainRailGapSpinner.setValue(ltdOptions.getMainRailGap());
+        mainRailGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                mainRailGapSpinnerStateChanged(evt);
             }
         });
 
@@ -596,7 +596,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
                     .addComponent(mainlineLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(mainRailCountSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(mainRailWidthSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(sideRailGapSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(mainRailGapSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(mainRailColorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(mainBlockLineWidthSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(mainBallastWidthSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -614,7 +614,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
                         .addGroup(OptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(sideRailCountSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(sideRailWidthSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(mainRailGapSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(sideRailGapSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(sideRailColorButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(sideBlockLineWidthSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(sideBallastWidthSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -651,8 +651,8 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(OptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(railGapLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(sideRailGapSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(mainRailGapSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(mainRailGapSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(sideRailGapSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(OptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(railColorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -885,21 +885,21 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         log.debug("mainBlockLineWidthSpinnerStateChanged({})", value);
     }//GEN-LAST:event_mainBlockLineWidthSpinnerStateChanged
 
-    private void sideRailGapSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sideRailGapSpinnerStateChanged
-        JSpinner spinner = (JSpinner) evt.getSource();
-        Integer value = (Integer) spinner.getValue();
-        makeCustomPreset();
-        ltdOptions.setSideRailGap(value.intValue());
-        log.debug("sideRailGapSpinnerStateChanged({})", value);
-    }//GEN-LAST:event_sideRailGapSpinnerStateChanged
-
     private void mainRailGapSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainRailGapSpinnerStateChanged
         JSpinner spinner = (JSpinner) evt.getSource();
         Integer value = (Integer) spinner.getValue();
         makeCustomPreset();
         ltdOptions.setMainRailGap(value.intValue());
-        log.debug("mainRailGapSpinnerStateChanged({})", value);
+        log.debug("sideRailGapSpinnerStateChanged({})", value);
     }//GEN-LAST:event_mainRailGapSpinnerStateChanged
+
+    private void sideRailGapSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sideRailGapSpinnerStateChanged
+        JSpinner spinner = (JSpinner) evt.getSource();
+        Integer value = (Integer) spinner.getValue();
+        makeCustomPreset();
+        ltdOptions.setSideRailGap(value.intValue());
+        log.debug("mainRailGapSpinnerStateChanged({})", value);
+    }//GEN-LAST:event_sideRailGapSpinnerStateChanged
 
     private void sideRailWidthSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sideRailWidthSpinnerStateChanged
         JSpinner spinner = (JSpinner) evt.getSource();
@@ -1061,103 +1061,103 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
     private void definePresets() {
         LayoutTrackDrawingOptions tempLTDO = new LayoutTrackDrawingOptions(classicPresetName);
-        tempLTDO.setSideBallastWidth(0);
-        tempLTDO.setSideBallastColor(Color.BLACK);
-        tempLTDO.setSideTieLength(0);
-        tempLTDO.setSideTieWidth(0);
-        tempLTDO.setSideTieColor(Color.BLACK);
-        tempLTDO.setSideTieGap(0);
-        tempLTDO.setSideRailCount(0);
-        tempLTDO.setSideRailWidth(1);
-        tempLTDO.setSideRailGap(0);
-        tempLTDO.setSideRailColor(Color.BLACK);
-        tempLTDO.setSideBlockLineWidth(2);
-        tempLTDO.setMainBallastWidth(0);
         tempLTDO.setMainBallastColor(Color.BLACK);
+        tempLTDO.setMainBallastWidth(0);
+        tempLTDO.setMainBlockLineWidth(4);
+        tempLTDO.setMainRailColor(Color.BLACK);
+        tempLTDO.setMainRailCount(0);
+        tempLTDO.setMainRailGap(0);
+        tempLTDO.setMainRailWidth(1);
+        tempLTDO.setMainTieColor(Color.BLACK);
+        tempLTDO.setMainTieGap(0);
         tempLTDO.setMainTieLength(0);
         tempLTDO.setMainTieWidth(0);
-        tempLTDO.setMainTieGap(0);
-        tempLTDO.setMainTieColor(Color.BLACK);
-        tempLTDO.setMainRailCount(0);
-        tempLTDO.setMainRailWidth(1);
-        tempLTDO.setMainRailGap(0);
-        tempLTDO.setMainRailColor(Color.BLACK);
-        tempLTDO.setMainBlockLineWidth(4);
+        tempLTDO.setSideBallastColor(Color.BLACK);
+        tempLTDO.setSideBallastWidth(0);
+        tempLTDO.setSideBlockLineWidth(2);
+        tempLTDO.setSideRailColor(Color.BLACK);
+        tempLTDO.setSideRailCount(0);
+        tempLTDO.setSideRailGap(0);
+        tempLTDO.setSideRailWidth(1);
+        tempLTDO.setSideTieColor(Color.BLACK);
+        tempLTDO.setSideTieGap(0);
+        tempLTDO.setSideTieLength(0);
+        tempLTDO.setSideTieWidth(0);
         ltdoList.add(tempLTDO);
 
         tempLTDO = new LayoutTrackDrawingOptions(draftingPresetName);
-        tempLTDO.setSideBallastWidth(0);
-        tempLTDO.setSideBallastColor(Color.BLACK);
-        tempLTDO.setSideTieLength(0);
-        tempLTDO.setSideTieWidth(0);
-        tempLTDO.setSideTieColor(Color.BLACK);
-        tempLTDO.setSideTieGap(0);
-        tempLTDO.setSideRailCount(0);
-        tempLTDO.setSideRailWidth(1);
-        tempLTDO.setSideRailGap(0);
-        tempLTDO.setSideRailColor(Color.DARK_GRAY);
-        tempLTDO.setSideBlockLineWidth(2);
-        tempLTDO.setMainBallastWidth(0);
         tempLTDO.setMainBallastColor(Color.BLACK);
+        tempLTDO.setMainBallastWidth(0);
+        tempLTDO.setMainBlockLineWidth(4);
+        tempLTDO.setMainRailColor(Color.DARK_GRAY);
+        tempLTDO.setMainRailCount(0);
+        tempLTDO.setMainRailGap(0);
+        tempLTDO.setMainRailWidth(1);
+        tempLTDO.setMainTieColor(Color.BLACK);
+        tempLTDO.setMainTieGap(0);
         tempLTDO.setMainTieLength(0);
         tempLTDO.setMainTieWidth(0);
-        tempLTDO.setMainTieGap(0);
-        tempLTDO.setMainTieColor(Color.BLACK);
-        tempLTDO.setMainRailCount(0);
-        tempLTDO.setMainRailWidth(1);
-        tempLTDO.setMainRailGap(0);
-        tempLTDO.setMainRailColor(Color.DARK_GRAY);
-        tempLTDO.setMainBlockLineWidth(4);
+        tempLTDO.setSideBallastColor(Color.BLACK);
+        tempLTDO.setSideBallastWidth(0);
+        tempLTDO.setSideBlockLineWidth(2);
+        tempLTDO.setSideRailColor(Color.DARK_GRAY);
+        tempLTDO.setSideRailCount(0);
+        tempLTDO.setSideRailGap(0);
+        tempLTDO.setSideRailWidth(1);
+        tempLTDO.setSideTieColor(Color.BLACK);
+        tempLTDO.setSideTieGap(0);
+        tempLTDO.setSideTieLength(0);
+        tempLTDO.setSideTieWidth(0);
         ltdoList.add(tempLTDO);
 
         tempLTDO = new LayoutTrackDrawingOptions(realisticPresetName);
-        tempLTDO.setSideBallastWidth(11);
-        tempLTDO.setSideBallastColor(Color.GRAY);
-        tempLTDO.setSideTieLength(9);
-        tempLTDO.setSideTieWidth(3);
-        tempLTDO.setSideTieColor(Color.decode("#391E16"));
-        tempLTDO.setSideTieGap(6);
-        tempLTDO.setSideRailCount(2);
-        tempLTDO.setSideRailWidth(1);
-        tempLTDO.setSideRailGap(3);
-        tempLTDO.setSideRailColor(Color.decode("#9B705E"));
-        tempLTDO.setSideBlockLineWidth(2);
-        tempLTDO.setMainBallastWidth(13);
         tempLTDO.setMainBallastColor(Color.decode("#A0A0A0"));
+        tempLTDO.setMainBallastWidth(13);
+        tempLTDO.setMainBlockLineWidth(2);
+        tempLTDO.setMainRailColor(Color.LIGHT_GRAY);
+        tempLTDO.setMainRailCount(2);
+        tempLTDO.setMainRailGap(3);
+        tempLTDO.setMainRailWidth(2);
+        tempLTDO.setMainTieColor(Color.decode("#E0E0E0"));
+        tempLTDO.setMainTieGap(7);
         tempLTDO.setMainTieLength(11);
         tempLTDO.setMainTieWidth(1);
-        tempLTDO.setMainTieGap(7);
-        tempLTDO.setMainTieColor(Color.decode("#E0E0E0"));
-        tempLTDO.setMainRailCount(2);
-        tempLTDO.setMainRailWidth(2);
-        tempLTDO.setMainRailGap(3);
-        tempLTDO.setMainRailColor(Color.LIGHT_GRAY);
-        tempLTDO.setMainBlockLineWidth(2);
+        tempLTDO.setSideBallastColor(Color.GRAY);
+        tempLTDO.setSideBallastWidth(11);
+        tempLTDO.setSideBlockLineWidth(2);
+        tempLTDO.setSideRailColor(Color.decode("#9B705E"));
+        tempLTDO.setSideRailCount(2);
+        tempLTDO.setSideRailGap(3);
+        tempLTDO.setSideRailWidth(1);
+        tempLTDO.setSideTieColor(Color.decode("#391E16"));
+        tempLTDO.setSideTieGap(6);
+        tempLTDO.setSideTieLength(9);
+        tempLTDO.setSideTieWidth(3);
         ltdoList.add(tempLTDO);
 
         tempLTDO = new LayoutTrackDrawingOptions(garishPresetName);
-        tempLTDO.setSideBallastWidth(11);
-        tempLTDO.setSideBallastColor(Color.decode("#CA0024"));
-        tempLTDO.setSideTieLength(9);
-        tempLTDO.setSideTieWidth(3);
-        tempLTDO.setSideTieColor(Color.decode("#F26308"));
-        tempLTDO.setSideTieGap(4);
-        tempLTDO.setSideRailCount(2);
-        tempLTDO.setSideRailWidth(1);
-        tempLTDO.setSideRailGap(3);
-        tempLTDO.setSideRailColor(Color.decode("#FDB3C2"));
-        tempLTDO.setSideBlockLineWidth(2);
-        tempLTDO.setMainBallastWidth(13);
         tempLTDO.setMainBallastColor(Color.decode("#B25A2B"));
+        tempLTDO.setMainBallastWidth(13);
+        tempLTDO.setMainBlockLineWidth(2);
+        tempLTDO.setMainRailColor(Color.decode("#39FF12"));
+        tempLTDO.setMainRailCount(2);
+        tempLTDO.setMainRailGap(3);
+        tempLTDO.setMainRailWidth(2);
+        tempLTDO.setMainTieColor(Color.decode("#468FE3"));
+        tempLTDO.setMainTieGap(5);
         tempLTDO.setMainTieLength(11);
         tempLTDO.setMainTieWidth(2);
-        tempLTDO.setMainTieGap(5);
-        tempLTDO.setMainTieColor(Color.decode("#468FE3"));
-        tempLTDO.setMainRailCount(2);
-        tempLTDO.setMainRailWidth(2);
-        tempLTDO.setMainRailGap(3);
-        tempLTDO.setMainRailColor(Color.decode("#39FF12"));
-        tempLTDO.setMainBlockLineWidth(2);
+        tempLTDO.setSideBallastColor(Color.decode("#CA0024"));
+        tempLTDO.setSideBallastWidth(11);
+        tempLTDO.setSideBlockLineWidth(2);
+        tempLTDO.setSideRailColor(Color.decode("#FDB3C2"));
+        tempLTDO.setSideRailCount(2);
+        tempLTDO.setSideRailGap(3);
+        tempLTDO.setSideRailWidth(1);
+        tempLTDO.setSideTieColor(Color.decode("#F26308"));
+        tempLTDO.setSideTieGap(4);
+        tempLTDO.setSideTieLength(9);
+        tempLTDO.setSideTieWidth(3);
         ltdoList.add(tempLTDO);
 
         ltdoList.add(ltdOptions);

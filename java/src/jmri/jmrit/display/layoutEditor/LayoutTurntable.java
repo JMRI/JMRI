@@ -48,11 +48,11 @@ import org.slf4j.LoggerFactory;
  * <P>
  * The radius of the turntable circle is variable by the user.
  * <P>
- * Each radiating segment (RayTrack) connecting point is a fixed distance
- * from the center of the turntable. The user may vary the angle of the
- * radiating segment. Angles are measured from the vertical (12 o'clock)
- * position in a clockwise manner. For example, 30 degrees is 1 o'clock, 60
- * degrees is 2 o'clock, 90 degrees is 3 o'clock, etc.
+ * Each radiating segment (RayTrack) connecting point is a fixed distance from
+ * the center of the turntable. The user may vary the angle of the radiating
+ * segment. Angles are measured from the vertical (12 o'clock) position in a
+ * clockwise manner. For example, 30 degrees is 1 o'clock, 60 degrees is 2
+ * o'clock, 90 degrees is 3 o'clock, etc.
  * <P>
  * Each radiating segment is drawn from its connection point to the turntable
  * circle in the direction of the turntable center.
@@ -741,26 +741,71 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-    protected void draw(Graphics2D g2) {
+    @Override
+    protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
         // draw turntable circle - default track color, side track width
-        float trackWidth = layoutEditor.setTrackStrokeWidth(g2, false);
+        float trackWidth = 2.F;
         float halfTrackWidth = trackWidth / 2.f;
+
+        //g2.setColor(defaultTrackColor);
+        //g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         double r = getRadius(), d = r + r;
-        g2.setColor(defaultTrackColor);
         g2.draw(new Ellipse2D.Double(center.getX() - r, center.getY() - r, d, d));
 
         // draw ray tracks
         for (int j = 0; j < getNumberRays(); j++) {
             TrackSegment ts = getRayConnectOrdered(j);
-            if (ts != null) {
-                layoutEditor.setTrackStrokeWidth(g2, ts.isMainline());
-                setColorForTrackBlock(g2, ts.getLayoutBlock());
-            } else {
-                layoutEditor.setTrackStrokeWidth(g2, false);
+            if (ts == null) {
                 g2.setColor(defaultTrackColor);
+            } else {
+                setColorForTrackBlock(g2, ts.getLayoutBlock());
             }
             Point2D pt1 = getRayCoordsOrdered(j);
-            Point2D delta = MathUtil.multiply(MathUtil.normalize(MathUtil.subtract(pt1, center)), r);
+            Point2D delta = MathUtil.normalize(MathUtil.subtract(pt1, center), r);
+            Point2D pt2 = MathUtil.add(center, delta);
+            g2.draw(new Line2D.Double(pt1, pt2));
+            if (isTurnoutControlled() && (getPosition() == j)) {
+                delta = MathUtil.multiply(delta, (r - halfTrackWidth) / r);
+                //pt1 = MathUtil.subtract(center, MathUtil.subtract(pt2, center));
+                pt1 = MathUtil.subtract(center, delta);
+                //g2.setColor(Color.RED); //TODO: remove this
+                g2.draw(new Line2D.Double(pt1, pt2));
+            }
+        }
+    }   // draw
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+        //TODO: FINISH THIS!
+        //if (isMain == mainline) {
+        //    if (isBlock) {
+        //        setColorForTrackBlock(g2, getLayoutBlock());
+        //    }
+        //    drawSolid(g2);  //TODO: fix this
+        //}
+
+        // draw turntable circle - default track color, side track width
+        float trackWidth = 2.F;
+        float halfTrackWidth = trackWidth / 2.f;
+
+        //g2.setColor(defaultTrackColor);
+        //g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+        double r = getRadius(), d = r + r;
+        g2.draw(new Ellipse2D.Double(center.getX() - r, center.getY() - r, d, d));
+
+        // draw ray tracks
+        for (int j = 0; j < getNumberRays(); j++) {
+            TrackSegment ts = getRayConnectOrdered(j);
+            if (ts == null) {
+                g2.setColor(defaultTrackColor);
+            } else {
+                setColorForTrackBlock(g2, ts.getLayoutBlock());
+            }
+            Point2D pt1 = getRayCoordsOrdered(j);
+            Point2D delta = MathUtil.normalize(MathUtil.subtract(pt1, center), r);
             Point2D pt2 = MathUtil.add(center, delta);
             g2.draw(new Line2D.Double(pt1, pt2));
             if (isTurnoutControlled() && (getPosition() == j)) {
