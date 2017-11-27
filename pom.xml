@@ -563,6 +563,16 @@
                                         </limit>
                                     </limits>
                                 </rule>
+                                <rule>
+                                    <element>SOURCEFILE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDCOUNT</value>
+                                            <minimum>1</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
                             </rules>
                         </configuration>
                     </execution>
