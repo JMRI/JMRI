@@ -28,7 +28,7 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
     }
 
     protected void initTimer() {
-        intervalTask = new UpdateTask(this);
+        intervalTask = new UpdateTask();
         intervalTimer = new Timer();
         // At some point this will be dynamic intervals...
         log.debug("Starting Meter Timer");
@@ -44,12 +44,10 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
     // Timer task for periodic updates...
     private class UpdateTask extends TimerTask {
 
-        private AbstractMultiMeter parent = null;
         private boolean is_enabled = false;
 
-        public UpdateTask(AbstractMultiMeter p) {
+        public UpdateTask() {
             super();
-            parent = p;
         }
 
         public void enable() {
@@ -69,7 +67,7 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
                 }
                 Thread.sleep(sleepInterval);
             } catch (InterruptedException e) {
-                log.error("Error running timer update task! {}", e);
+                log.error("Error running timer update task! {}", e.getMessage());
             }
         }
     }
@@ -95,6 +93,7 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
     }
 
     @Override
+    @Deprecated
     public void updateCurrent(float c) {
         setCurrent(c);
     }
@@ -112,6 +111,7 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
     }
 
     @Override
+    @Deprecated
     public void updateVoltage(float v) {
         setVoltage(v);
     }
@@ -122,28 +122,30 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
     }
 
     /**
-     * Request a call-back when the minutes place of the time changes.
+     * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public synchronized void addDataUpdateListener(PropertyChangeListener l) {
         this.addPropertyChangeListener(CURRENT, l);
         this.addPropertyChangeListener(VOLTAGE, l);
     }
 
     /**
-     * Remove a request for call-back when the minutes place of the time
-     * changes.
+     * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public synchronized void removeDataUpdateListener(PropertyChangeListener l) {
         this.removePropertyChangeListener(CURRENT, l);
         this.removePropertyChangeListener(VOLTAGE, l);
     }
 
     /**
-     * Get the list of minute change listeners.
+     * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public PropertyChangeListener[] getDataUpdateListeners() {
         return this.getPropertyChangeListeners(CURRENT);
     }
