@@ -32,9 +32,6 @@ public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmr
         this.getSystemConnectionMemo().setTrafficController(control);
         this.getSystemConnectionMemo().configureManagers();
         this.getSystemConnectionMemo().configureCommandStation();
-
-         // mark OK for menus
-        jmri.jmrix.srcp.ActiveFlag.setActive();
     }
 
     @Override
