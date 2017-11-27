@@ -48,12 +48,21 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return false;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            return ((jmri.GlobalProgrammerManager) get(jmri.GlobalProgrammerManager.class)).isGlobalProgrammerAvailable();
+            jmri.GlobalProgrammerManager mgr = ((jmri.GlobalProgrammerManager) get(jmri.GlobalProgrammerManager.class));
+            if (mgr == null) return false;
+            return mgr.isGlobalProgrammerAvailable();
         }
         if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            return ((jmri.AddressedProgrammerManager) get(jmri.AddressedProgrammerManager.class)).isAddressedModePossible();
+            jmri.AddressedProgrammerManager mgr =((jmri.AddressedProgrammerManager) get(jmri.AddressedProgrammerManager.class));
+            if (mgr == null) return false;
+            return mgr.isAddressedModePossible();
         }
-        return manager.provides(type);
+        boolean result = manager.provides(type);
+        if(result) {
+           return result;
+        } else {
+           return super.provides(type);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -62,7 +71,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (manager != null && !getDisabled()) {
             return (T) manager.get(T);
         }
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     public void setProtocol(String protocol) {

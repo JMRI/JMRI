@@ -69,6 +69,9 @@ public class EngineEditFrameTest extends OperationsSwingTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineManager cManager = InstanceManager.getDefault(EngineManager.class);
         Engine e1 = cManager.getByRoadAndNumber("NH", "1");
+        EngineLengths el = InstanceManager.getDefault(EngineLengths.class);
+        el.addName("51");
+
         EngineEditFrame f = new EngineEditFrame();
         f.initComponents();
         f.loadEngine(e1);
@@ -113,6 +116,8 @@ public class EngineEditFrameTest extends OperationsSwingTestCase {
         cr.addName("UP");
         cr.addName("AA");
         cr.addName("SP");
+        EngineLengths el = InstanceManager.getDefault(EngineLengths.class);
+        el.addName("44");
         // add locations
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location westford = lManager.newLocation("Westford");

@@ -22,6 +22,9 @@ public class AudioCommandTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.AudioManager am = new DefaultAudioManager();
+        jmri.InstanceManager.setDefault(jmri.AudioManager.class,am);
+        am.init();
     }
 
     @After

@@ -163,7 +163,6 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
                 throw new JmriException("Hardware Address passed should be a number");
             }
         }
-
         return prefix + typeLetter() + iName;
     }
 

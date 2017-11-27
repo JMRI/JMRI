@@ -21,12 +21,12 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
         super(new LocoNetSystemConnectionMemo());
         option2Name = "CommandStation";
         option3Name = "TurnoutHandle";
-        options.put(option2Name, new Option("Command station type:", commandStationNames, false));
-        options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
+        options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationNames, false));
+        options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"})); // TODO I18N
     }
 
     /**
-     * set up all of the other objects to operate with a LocoNet connected via
+     * Set up all of the other objects to operate with a LocoNet connected via
      * this class.
      */
     @Override
@@ -60,7 +60,7 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
     @Override
     public void configureOption1(String value) {
         super.configureOption1(value);
-        log.debug("configureOption1: " + value);
+        log.debug("configureOption1: {}", value);
         setCommandStationType(value);
     }
 

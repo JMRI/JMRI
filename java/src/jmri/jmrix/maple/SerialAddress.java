@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Utility Class supporting parsing and testing of Maple addresses
+ * Utility Class supporting parsing and testing of Maple addresses.
  * <p>
  * One address format is supported: Ktxxxx where:
  * <ul>

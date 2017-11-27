@@ -2,6 +2,8 @@ package jmri.util.swing;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -17,9 +19,12 @@ import javax.swing.DefaultListSelectionModel;
 import javax.swing.JComboBox;
 import javax.swing.JComboBox.KeySelectionManager;
 import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import javax.swing.plaf.basic.BasicComboPopup;
 import javax.swing.text.JTextComponent;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -58,7 +63,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         _manager = inManager;
         setSelectedBean(inNamedBean);
         //setEditable(true);
-        _manager.addPropertyChangeListener(this);
+        _manager.addPropertyChangeListener(new DedupingPropertyChangeListener(this));
         setKeySelectionManager(new BeanSelectionManager());
 
         //fires when drop down list item is selected

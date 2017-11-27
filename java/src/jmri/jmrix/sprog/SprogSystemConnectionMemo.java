@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -128,6 +128,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public void setSprogTrafficController(SprogTrafficController st) {
         this.st = st;
     }
+
     private SprogTrafficController st;
     private SprogCommandStation commandStation;
 
@@ -197,7 +198,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                     break;
             }
         }
-        return false; // nothing, by default
+        return super.provides(type);
     }
 
     @Override
@@ -224,7 +225,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (T.equals(jmri.CommandStation.class)) {
             return (T) getCommandStation();
         }
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     /**

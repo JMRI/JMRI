@@ -28,8 +28,9 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.implementation.swing");   // no tests in this class itself
 
-        suite.addTest(SwingShutDownTaskTest.suite());
+        suite.addTest(SwingShutDownTaskDemo.suite());  // Normally a user-invoked demo, but in this case also a test
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SwingShutDownTaskTest.class));
 
         return suite;
     }

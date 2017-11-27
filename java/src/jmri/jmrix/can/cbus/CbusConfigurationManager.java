@@ -65,7 +65,7 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     }
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      *
      * @param type Class type to check
      * @return true if supported; false if not

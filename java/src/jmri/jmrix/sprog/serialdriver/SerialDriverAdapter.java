@@ -20,13 +20,13 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
- * <P>
+ * <p>
  * This connects an Sprog command station via a serial com port. Also used for
  * the USB SPROG, which appears to the computer as a serial port.
- * <P>
+ * <p>
  * The current implementation only handles the 9,600 baud rate, and does not use
  * any other options at configuration time.
- *
+ * <p>
  * Updated January 2010 for gnu io (RXTX) - Andrew Berridge.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
@@ -35,7 +35,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
 
     public SerialDriverAdapter() {
         super(new SprogSystemConnectionMemo(SprogMode.SERVICE));
-        //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
+        // Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
         this.baudRate = 9600;
         this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogProgrammerTitle"));
         // create the traffic controller
@@ -150,7 +150,6 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         } catch (UnsupportedCommOperationException ex) {
             log.error("Unexpected exception while setting COM port handshake mode,", ex);
         }
-
     }
 
     // base class methods for the SprogPortController interface
@@ -187,7 +186,8 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     InputStream serialStream = null;
 
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
+     * multi-system support structure
      */
     @Deprecated
     static public SerialDriverAdapter instance() {
@@ -205,12 +205,6 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
 
         this.getSystemConnectionMemo().configureCommandStation();
         this.getSystemConnectionMemo().configureManagers();
-
-        if (this.getSystemConnectionMemo().getSprogMode() == SprogMode.OPS) {
-            jmri.jmrix.sprog.ActiveFlagCS.setActive();
-        } else {
-            jmri.jmrix.sprog.ActiveFlag.setActive();
-        }
 
         if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals(Bundle.getMessage("PowerStateOn"))) {
             try {

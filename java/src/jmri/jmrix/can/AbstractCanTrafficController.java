@@ -6,6 +6,7 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -299,13 +300,8 @@ abstract public class AbstractCanTrafficController
     public void distributeOneReply(CanReply msg, AbstractMRListener mLastSender) {
         // forward the message to the registered recipients,
         // which includes the communications monitor
-        // return a notification via the Swing event queue to ensure proper thread
         Runnable r = newRcvNotifier(msg, mLastSender, this);
-        try {
-            javax.swing.SwingUtilities.invokeAndWait(r);
-        } catch (java.lang.reflect.InvocationTargetException | InterruptedException | RuntimeException e) {
-            log.error("Unexpected exception in invokeAndWait:", e);
-        }
+        distributeReply(r);
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractCanTrafficController.class);

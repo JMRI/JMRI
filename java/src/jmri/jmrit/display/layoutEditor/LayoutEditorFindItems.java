@@ -2,6 +2,8 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nullable;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SignalHead;
@@ -187,11 +189,13 @@ public class LayoutEditorFindItems {
 
     }
 
+    @CheckReturnValue
     public LayoutTurnout findLayoutTurnoutBySignalMast(String signalMastName) throws IllegalArgumentException {
         return findLayoutTurnoutByBean(jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMastName));
     }
 
-    public LayoutTurnout findLayoutTurnoutByBean(NamedBean bean) {
+    @CheckReturnValue
+    public LayoutTurnout findLayoutTurnoutByBean(@Nullable NamedBean bean) {
         List<LayoutTurnout> layoutTurnouts = layoutEditor.getLayoutTurnouts();
         if (bean instanceof SignalMast) {
             for (LayoutTurnout t : layoutTurnouts) {
@@ -262,6 +266,7 @@ public class LayoutEditorFindItems {
         return null;
     }   // findLayoutTurnoutByBean
 
+    @CheckReturnValue
     public LayoutTurnout findLayoutTurnoutBySensor(String sensorName) throws IllegalArgumentException {
         return findLayoutTurnoutByBean(jmri.InstanceManager.sensorManagerInstance().provideSensor(sensorName));
     }
@@ -417,6 +422,7 @@ public class LayoutEditorFindItems {
         return result;
     }
 
+    @CheckReturnValue
     public LayoutTurnout findLayoutTurnoutByName(String name) {
         LayoutTurnout result = null;
         if ((name != null) && !name.isEmpty()) {
@@ -430,11 +436,12 @@ public class LayoutEditorFindItems {
         return result;
     }
 
-    public LayoutTurnout findLayoutTurnoutByTurnoutName(String name) {
+    @CheckReturnValue
+    public LayoutTurnout findLayoutTurnoutByTurnoutName(String turnoutName) {
         LayoutTurnout result = null;
-        if ((name != null) && !name.isEmpty()) {
+        if ((turnoutName != null) && !turnoutName.isEmpty()) {
             for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
-                if (t.getTurnoutName().equals(name)) {
+                if (t.getTurnoutName().equals(turnoutName)) {
                     result = t;
                 }
             }
@@ -504,7 +511,7 @@ public class LayoutEditorFindItems {
      * @deprecated since 4.7.1 use @link{findObjectByName()} instead.
      */
     @Deprecated
-    public Object findObjectByTypeAndName(int type, String name) {
+    public LayoutTrack findObjectByTypeAndName(int type, String name) {
         if (name.isEmpty()) {
             return null;
         }
@@ -552,8 +559,8 @@ public class LayoutEditorFindItems {
     // move toward encapsulation this routine should see a lot more usage;
     // specifically, instead of a TON of "if (type == XXX) { findXXXByName(...)...}"
     // code you would just call this method instead.
-    public Object findObjectByName(String name) {
-        Object result = null;   // assume failure (pessimist!)
+    public LayoutTrack findObjectByName(String name) {
+        LayoutTrack result = null;   // assume failure (pessimist!)
         if ((name != null) && !name.isEmpty()) {
             if (name.startsWith("TO")) {
                 result = findLayoutTurnoutByName(name);
@@ -578,7 +585,7 @@ public class LayoutEditorFindItems {
         }
         return result;
     }
-    
+
    /**
      * Determine the first unused LayoutTrack object name...
      * @param inPrefix ...with this prefix...

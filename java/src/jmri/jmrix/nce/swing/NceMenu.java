@@ -15,7 +15,7 @@ import jmri.jmrix.nce.NceTrafficController;
 public class NceMenu extends JMenu {
 
     /**
-     * Create a NCE menu. And loads the NceSystemConnectionMemo to the various
+     * Create an NCE menu and load the NceSystemConnectionMemo to the various
      * actions. Actions will open new windows.
      *
      * @param memo the system connection memo to associate menu items with
@@ -74,4 +74,5 @@ public class NceMenu extends JMenu {
         String load;
         long enable;
     }
+
 }

@@ -25,8 +25,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriConnection {
 
-    private Session session = null;
-    private DataOutputStream dataOutputStream = null;
+    private final Session session;
+    private final DataOutputStream dataOutputStream;
     private Locale locale = Locale.getDefault();
     private final static Logger log = LoggerFactory.getLogger(JmriConnection.class);
 
@@ -37,6 +37,7 @@ public class JmriConnection {
      */
     public JmriConnection(Session connection) {
         this.session = connection;
+        this.dataOutputStream = null;
     }
 
     /**
@@ -46,6 +47,7 @@ public class JmriConnection {
      */
     public JmriConnection(DataOutputStream output) {
         this.dataOutputStream = output;
+        this.session = null;
     }
 
     /**
@@ -58,20 +60,16 @@ public class JmriConnection {
     }
 
     /**
-     * Set the WebSocket session.
-     *
-     * @param session the WebSocket session
+     * @deprecated see {@link #getSession() }
+     * @return the WebSocket session
      */
-    public void setSession(Session session) {
-        this.session = session;
+    @Deprecated
+    public Session getWebSocketConnection() {
+        return this.getSession();
     }
 
     public DataOutputStream getDataOutputStream() {
         return dataOutputStream;
-    }
-
-    public void setDataOutputStream(DataOutputStream dataOutputStream) {
-        this.dataOutputStream = dataOutputStream;
     }
 
     /**

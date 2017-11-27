@@ -26,6 +26,7 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.PackageTest");
+
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMRTrafficControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMRNodeTrafficControllerTest.class));
 
@@ -37,6 +38,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ConnectionConfigManagerTest.class));
 
         suite.addTest(jmri.jmrix.acela.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.anyma.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.bachrus.PackageTest.class));
         suite.addTest(jmri.jmrix.can.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.configurexml.PackageTest.class));
@@ -88,7 +90,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(ActiveSystemsMenuTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCManufacturerListTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OtherConnectionTypeListTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SystemsMenuTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.debugthrottle.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMessageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMRMessageTest.class));
@@ -102,6 +103,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ztc.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.libusb.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SystemConnectionMemoManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(UsbPortAdapterTest.class));
         return suite;
 
     }

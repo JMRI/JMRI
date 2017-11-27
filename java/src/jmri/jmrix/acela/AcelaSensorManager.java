@@ -6,18 +6,17 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the Acela-specific Sensor implementation.
- * <P>
+ * <p>
  * System names are "ASnnnn", where nnnn is the sensor number without padding.
- * <P>
+ * <p>
  * Sensors are numbered from 0.
- * <P>
- * This is a AcelaListener to handle the replies to poll messages. Those are
+ * <p>
+ * This is an AcelaListener to handle the replies to poll messages. Those are
  * forwarded to the specific AcelaNode object corresponding to their origin for
  * processing of the data.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2007
  * @author Dave Duchamp, multi node extensions, 2004
- *
  * @author Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
@@ -40,7 +39,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Create a new sensor if all checks are passed System name is normalized to
+     * Create a new sensor if all checks are passed. System name is normalized to
      * ensure uniqueness.
      */
     @Override
@@ -63,13 +62,13 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         String altName = AcelaAddress.convertSystemNameToAlternate(sName, getSystemPrefix());
         s = getBySystemName(altName);
         if (s != null) {
-            log.error("Sensor with name: '{}' already exists as: '{}'",systemName, altName);
+            log.error("Sensor with name: '{}' already exists as: '{}'", systemName, altName);
             return null;
         }
         // check bit number
         int bit = AcelaAddress.getBitFromSystemName(sName, getSystemPrefix());
         if ((bit < 0) || (bit >= 1023)) {
-            log.error("Sensor bit number: {} is outside the supported range, 1-1024", Integer.toString(bit));
+            log.error("Sensor bit number {} is outside the supported range 1-1024", Integer.toString(bit));
             return null;
         }
         // Sensor system name is valid and Sensor doesn't exist, make a new one
@@ -195,7 +194,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
                             }
                         }
                         int tempaddr = i + 1;
-                        new AcelaNode(tempaddr, nodetype,_memo.getTrafficController());
+                        new AcelaNode(tempaddr, nodetype, _memo.getTrafficController());
                         log.info("Created a new Acela Node [{}] as a result of Acela network Poll of type: {}", tempaddr, replynodetype);
                     }
                     _memo.getTrafficController().setAcelaTrafficControllerState(true);
@@ -225,7 +224,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
                 log.error("System Name null during register Sensor");
             } else {
                 log.debug("system Name is {}", sName);
-                if ((sName.startsWith(getSystemPrefix())) && (sName.charAt(getSystemPrefix().length()) == 'S')) { // multichar prefix
+                if (sName.startsWith(getSystemPrefix() + "S")) { // multichar prefix
                     // This is an Acela Sensor
                     tNode = AcelaAddress.getNodeFromSystemName(sName, _memo);
                     if (tNode == node) {

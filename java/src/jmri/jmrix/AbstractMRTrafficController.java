@@ -47,7 +47,7 @@ abstract public class AbstractMRTrafficController {
         // in a clean state prior to exiting.  This is required on systems
         // which have a service mode to ensure we don't leave the system 
         // in an unusable state (This code predates the ShutdownTask 
-        // mechanisim).  Once the , shutdown hook executes, the connection
+        // mechanisim).  Once the shutdown hook executes, the connection
         // must be considered closed.
         shutdownHook = new Thread(new CleanupHook(this));
         Runtime.getRuntime().addShutdownHook(shutdownHook);
@@ -58,7 +58,10 @@ abstract public class AbstractMRTrafficController {
     protected void setSynchronizeRx(boolean val) {
         synchronizeRx = val;
     }
-    
+    protected boolean getSynchronizeRx() {
+        return synchronizeRx;
+    }
+
     // set the instance variable
     abstract protected void setInstance();
 
@@ -894,6 +897,28 @@ abstract public class AbstractMRTrafficController {
     private int retransmitCount = 0;
 
     /**
+     * Executes a reply distribution action on the appropriate thread for JMRI.
+     * @param r a runnable typically encapsulating a MRReply and the iteration code needed to
+     *          send it to all the listeners.
+     */
+    protected void distributeReply(Runnable r) {
+        try {
+            if (synchronizeRx) {
+                SwingUtilities.invokeAndWait(r);
+            } else {
+                SwingUtilities.invokeLater(r);
+            }
+        } catch (InterruptedException ie) {
+            if(threadStopRequest) return;
+            log.error("Unexpected exception in invokeAndWait: {}" + ie.toString(), ie);
+        } catch (java.lang.reflect.InvocationTargetException| RuntimeException e) {
+            log.error("Unexpected exception in invokeAndWait: {}" + e.toString(), e);
+            return;
+        }
+        log.debug("dispatch thread invoked");
+    }
+
+    /**
      * Handle each reply when complete.
      * <P>
      * (This is public for testing purposes) Runs in the "Receive" thread.
@@ -924,17 +949,7 @@ abstract public class AbstractMRTrafficController {
         // which includes the communications monitor
         // return a notification via the Swing event queue to ensure proper thread
         Runnable r = new RcvNotifier(msg, mLastSender, this);
-        try {
-            if (synchronizeRx) {
-                SwingUtilities.invokeAndWait(r);
-            } else {
-                SwingUtilities.invokeLater(r);
-            }
-        } catch (InterruptedException | java.lang.reflect.InvocationTargetException| RuntimeException e) {
-            log.error("Unexpected exception in invokeAndWait: {}" + e.toString(), e);
-            return;
-        }
-        log.debug("dispatch thread invoked");
+        distributeReply(r);
 
         if (!msg.isUnsolicited()) {
             // effect on transmit:
@@ -1183,4 +1198,5 @@ abstract public class AbstractMRTrafficController {
     } // end cleanUpHook
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMRTrafficController.class);
+
 }

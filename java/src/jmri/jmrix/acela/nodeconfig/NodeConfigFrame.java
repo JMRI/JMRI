@@ -43,11 +43,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     protected JLabel thenodesStaticH = new JLabel("  00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19");
     protected JLabel thenodesStaticC = new JLabel("");
-    protected JLabel thenodesStaticP = new JLabel("              Hardware Polling Double Check Not Supported Yet");
+    protected JLabel thenodesStaticP = new JLabel("              " + Bundle.getMessage("HwNotYet"));
 
     protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);
     protected JLabel nodeAddrStatic = new JLabel("000");
-    protected JLabel nodeTypeStatic = new JLabel("Acela");
+    protected JLabel nodeTypeStatic = new JLabel("Acela"); // NOI18N
     protected javax.swing.JComboBox<String> nodeAddrBox;
     protected javax.swing.JComboBox<String> nodeTypeBox;
 

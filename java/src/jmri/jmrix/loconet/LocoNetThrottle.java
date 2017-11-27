@@ -34,6 +34,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
     // slot status to be warned if slot released or dispatched
     protected int slotStatus;
+    protected boolean isDisposing = false;
 
     /**
      * Constructor
@@ -327,8 +328,9 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      */
     @Override
     protected void throttleDispose() {
-        
+        if (isDisposing) return;
         log.debug("throttleDispose - disposing of throttle (and setting slot = null)");
+        isDisposing = true;
         
         // stop timeout
         if (mRefreshTimer != null) {
@@ -352,6 +354,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         network = null;
 
         finishRecord();
+        isDisposing = false;
     }
 
     javax.swing.Timer mRefreshTimer = null;

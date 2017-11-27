@@ -46,10 +46,10 @@ public class SystemConnectionComboBox extends JComboBox {
             if (evt.getSource().equals(InstanceManager.getDefault())) {
                 if (evt instanceof IndexedPropertyChangeEvent) {
                     IndexedPropertyChangeEvent event = (IndexedPropertyChangeEvent) evt;
-                    if (event.getOldValue() == null) {
+                    if (event.getNewValue() != null) {
                         ((SystemConnectionMemo) event.getNewValue()).addPropertyChangeListener(memoListener);
                         this.fireIntervalAdded(this, event.getIndex(), event.getIndex());
-                    } else if (event.getNewValue() == null) {
+                    } else if (event.getOldValue() != null) {
                         ((SystemConnectionMemo) event.getOldValue()).removePropertyChangeListener(memoListener);
                         this.fireIntervalRemoved(this, event.getIndex(), event.getIndex());
                     }

@@ -11,6 +11,7 @@ import jmri.beans.PropertyChangeProvider;
 public interface MultiMeter extends PropertyChangeProvider {
 
     public static final String CURRENT = "MultiMeterCurrent";
+    public static final String VOLTAGE = "MultiMeterVoltage";
 
     public void enable();
 

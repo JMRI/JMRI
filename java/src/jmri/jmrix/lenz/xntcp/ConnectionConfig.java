@@ -9,7 +9,7 @@ import jmri.jmrix.JmrixConfigPane;
 
 /**
  * Handle configuring an XpressNet layout connection via a XnTcp adapter.
- * <P>
+ * <p>
  * This uses the {@link XnTcpAdapter} class to do the actual connection.
  *
  * @author Giorgio Terdina Copyright (C) 2008-2011, based on LI100 Action by Bob

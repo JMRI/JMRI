@@ -665,6 +665,19 @@ public final class MathUtil {
      * @return the value pinned between the min and max values
      */
     @CheckReturnValue
+    public static int pin(int inValue, int inMin, int inMax) {
+        return Math.min(Math.max(inValue, inMin), inMax);
+    }
+
+    /**
+     * pin a value between min and max
+     *
+     * @param inValue the value
+     * @param inMin   the min
+     * @param inMax   the max
+     * @return the value pinned between the min and max values
+     */
+    @CheckReturnValue
     public static double pin(double inValue, double inMin, double inMax) {
         return Math.min(Math.max(inValue, inMin), inMax);
     }
@@ -823,6 +836,19 @@ public final class MathUtil {
     @CheckReturnValue
     public static Rectangle2D inset(@Nonnull Rectangle2D r, double i) {
         return new Rectangle2D.Double(r.getX() + i, r.getY() + i, r.getWidth() - (2 * i), r.getHeight() - (2 * i));
+    }
+
+    /**
+     * inset a rectangle
+     *
+     * @param r the rectangle
+     * @param h the horzontial inset (positive make it smaller, negative, bigger)
+     * @param v the vertical inset (positive make it smaller, negative, bigger)
+     * @return the inset rectangle
+     */
+    @CheckReturnValue
+    public static Rectangle2D inset(@Nonnull Rectangle2D r, double h, double v) {
+        return new Rectangle2D.Double(r.getX() + h, r.getY() + v, r.getWidth() - (2 * h), r.getHeight() - (2 * v));
     }
 
     /**

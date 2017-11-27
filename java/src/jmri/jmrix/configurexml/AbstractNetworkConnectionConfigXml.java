@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Abstract base (and partial implementation) for classes persisting the status
  * of Network port adapters.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003
+ * @author Bob Jacobsen, Copyright (c) 2003
  */
 abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -24,7 +24,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
 
     /**
      * Default implementation for storing the static contents of the Network
-     * port implementation
+     * port implementation.
      *
      * @param o Object to store, of type PositionableLabel
      * @return Element containing the complete info

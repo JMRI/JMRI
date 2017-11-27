@@ -39,6 +39,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(GuiUtilBaseTest.class));
         suite.addTest(new JUnit4TestAdapter(JmriBeanComboBoxTest.class));
         suite.addTest(new JUnit4TestAdapter(JMenuUtilTest.class));
+        suite.addTest(new JUnit4TestAdapter(JComboBoxUtilTest.class));
         suite.addTest(new JUnit4TestAdapter(JToolBarUtilTest.class));
         suite.addTest(new JUnit4TestAdapter(JTreeUtilTest.class));
         suite.addTest(new JUnit4TestAdapter(JmriPanelTest.class));
@@ -54,6 +55,9 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(TextFilterTest.class));
         suite.addTest(new JUnit4TestAdapter(BeanSelectCreatePanelTest.class));
         suite.addTest(new JUnit4TestAdapter(ValidatedTextFieldTest.class));
+        suite.addTest(new JUnit4TestAdapter(ComboBoxColorChooserPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(ButtonGroupColorChooserPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(ButtonSwatchColorChooserPanelTest.class));
 
         return suite;
     }

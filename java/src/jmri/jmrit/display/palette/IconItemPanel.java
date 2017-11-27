@@ -39,8 +39,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ItemPanel for for plain icons and backgrounds Does NOT use IconDialog class
- * to add, replace or delete icons.
+ * ItemPanel for for plain icons and backgrounds.
+ * Does NOT use IconDialog class to add, replace or delete icons.
  */
 public class IconItemPanel extends ItemPanel implements MouseListener {
 
@@ -100,7 +100,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         blurb.add(new JLabel(Bundle.getMessage("ToDeleteIcon", Bundle.getMessage("deleteIcon"))));
         if (!isBackGround) {
             blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-            blurb.add(new JLabel(Bundle.getMessage("ToLinkToURL", "Icon")));
+            blurb.add(new JLabel(Bundle.getMessage("ToLinkToURL", Bundle.getMessage("Icon"))));
             blurb.add(new JLabel(Bundle.getMessage("enterPanel")));
             blurb.add(new JLabel(Bundle.getMessage("enterURL")));
         }
@@ -111,8 +111,8 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     }
 
     /**
-     * Plain icons have only one family, usually named "set" Override for plain
-     * icon {@literal &} background and put all icons here
+     * Plain icons have only one family, usually named "set".
+     * Override for plain icon {@literal &} background and put all icons here.
      */
     protected void initIconFamiliesPanel() {
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
@@ -141,7 +141,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         Color bkgrdColor = _editor.getTargetPanel().getBackground();
         _iconPanel = new JPanel();
         _iconPanel.setBackground(bkgrdColor);
-        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),Bundle.getMessage("PreviewBorderTitle")));
+        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1), Bundle.getMessage("PreviewBorderTitle")));
         JPanel iPanel = new JPanel();
         iPanel.setBackground(bkgrdColor);
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
@@ -187,9 +187,8 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         }
     }
 
-
     /*
-     *  for plain icons and backgrounds, families panel is the icon panel of just one family
+     *  For plain icons and backgrounds, families panel is the icon panel of just one family.
      */
     protected void removeIconFamiliesPanel() {
         if (_iconPanel != null) {
@@ -262,13 +261,12 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     }
 
     /**
-     * Action item for initButtonPanel
+     * Action item for initButtonPanel.
      */
     protected void addNewIcon() {
         if (log.isDebugEnabled()) {
             log.debug("addNewIcon Action: iconMap.size()= " + _iconMap.size());
         }
-//        String name = Bundle.getMessage("RedX");
         String name = JOptionPane.showInputDialog(this,
                 Bundle.getMessage("NoIconName"), null);
         if (name == null || name.trim().length() == 0) {
@@ -296,7 +294,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     }
 
     /**
-     * Action item for initButtonPanel
+     * Action item for initButtonPanel.
      */
     protected void deleteIcon() {
         if (_selectedIcon == null) {
@@ -519,4 +517,5 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     }
 
     private final static Logger log = LoggerFactory.getLogger(IconItemPanel.class);
+
 }

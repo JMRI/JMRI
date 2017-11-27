@@ -18,6 +18,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -93,7 +94,7 @@ abstract class BeanEditAction extends AbstractAction {
         basic.setLayout(new BoxLayout(basic, BoxLayout.Y_AXIS));
 
         basic.addItem(new BeanEditItem(new JLabel(bean.getSystemName()), Bundle.getMessage("ColumnSystemName"), null));
-                //Bundle.getMessage("ConnectionHint", "N/A"))); // TODO get connection name from nbMan.getSystemPrefix()
+        //Bundle.getMessage("ConnectionHint", "N/A"))); // TODO get connection name from nbMan.getSystemPrefix()
 
         basic.addItem(new BeanEditItem(userNameField, Bundle.getMessage("ColumnUserName"), null));
 
@@ -328,8 +329,14 @@ abstract class BeanEditAction extends AbstractAction {
                 cD.gridy = y;
 
                 Component thing = it.getComponent();
-                if (thing instanceof JComboBox || thing instanceof JTextField || thing instanceof JCheckBox|| thing instanceof JRadioButton){
+                //log.debug("descript: '" + it.getDescription() + "', thing: " + thing.getClass().getName());
+                if (thing instanceof JComboBox
+                        || thing instanceof JTextField
+                        || thing instanceof JCheckBox
+                        || thing instanceof JRadioButton) {
                     cD.insets = new Insets(0, 0, 0, 0); // put a little higher than a JLabel
+                } else if (thing instanceof JColorChooser) {
+                    cD.insets = new Insets(-6, 0, 0, 0); // move it up
                 } else {
                     cD.insets = new Insets(4, 0, 0, 0); // reset
                 }
@@ -467,7 +474,7 @@ abstract class BeanEditAction extends AbstractAction {
 
     /**
      * TableModel for edit of Bean properties.
-     *
+     * <p>
      * At this stage we purely use this to allow the user to delete properties,
      * not to add them. Changing properties is possible but only for strings.
      * Based upon the code from the RosterMediaPane

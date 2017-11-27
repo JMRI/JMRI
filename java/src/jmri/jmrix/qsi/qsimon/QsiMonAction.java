@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a QsiMonFrame object
+ * Swing action to create and register a QsiMonFrame object.
  *
  * @author	Bob Jacobsen Copyright (C) 2007
  */
@@ -15,14 +15,14 @@ public class QsiMonAction extends AbstractAction {
 
     private QsiSystemConnectionMemo _memo = null;
 
-    public QsiMonAction(String s,QsiSystemConnectionMemo memo) {
+    public QsiMonAction(String s, QsiSystemConnectionMemo memo) {
         super(s);
         _memo = memo;
     }
 
     public QsiMonAction(QsiSystemConnectionMemo memo) {
         this(java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle")
-                .getString("MenuItemCommandMonitor"),memo);
+                .getString("MenuItemCommandMonitor"), memo);
     }
 
     @Override
@@ -40,6 +40,3 @@ public class QsiMonAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(QsiMonAction.class);
 
 }
-
-
-

@@ -1,6 +1,8 @@
 package jmri.jmrit.display.switchboardEditor;
 
 import java.awt.GraphicsEnvironment;
+import jmri.jmrit.display.AbstractEditorTestBase;
+import jmri.util.ColorUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,126 +16,83 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  * @author Egbert Broerse Copyright (C) 2017
  */
-public class SwitchboardEditorTest {
+public class SwitchboardEditorTest extends AbstractEditorTestBase {
+
+    private SwitchboardEditor swe = null;
 
     @Test
-    public void testCtor() {
+    public void testDefaultCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SwitchboardEditor e = new SwitchboardEditor();
-        Assert.assertNotNull("exists", e);
+        Assert.assertNotNull("exists", new SwitchboardEditor());
     }
 
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SwitchboardEditor e = new SwitchboardEditor("Test Layout");
-        Assert.assertNotNull("exists", e);
-        JUnitUtil.dispose(e);
+        Assert.assertNotNull("exists", swe);
     }
 
-    @Test
-    public void testSetSize() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SwitchboardEditor e = new SwitchboardEditor();
-        e.setSize(100, 100);
-        java.awt.Dimension d = e.getSize();
-        // the java.awt.Dimension stores the values as floating point
-        // numbers, but setSize expects integer parameters.
-        Assert.assertEquals("Width Set", 100.0, d.getWidth(), 0.0);
-        Assert.assertEquals("Height Set", 100.0, d.getHeight(), 0.0);
-        JUnitUtil.dispose(e);
-    }
-
-//    @Test
-//    public void testGetSetZoom() {
-//        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-//        SwitchboardEditor e = new SwitchboardEditor();
-//        Assert.assertEquals("Zoom Get", 1.0, e.getZoom(), 0.0);
-//        Assert.assertEquals("Zoom Set", 3.33, e.setZoom(3.33), 0.0);
-//        Assert.assertEquals("Zoom Get", 3.33, e.getZoom(), 0.0);
-//    }
     @Test
     public void testIsDirty() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SwitchboardEditor e = new SwitchboardEditor();
         // defaults to false.
-        Assert.assertFalse("isDirty", e.isDirty());
-        JUnitUtil.dispose(e);
+        Assert.assertFalse("isDirty", swe.isDirty());
+        JUnitUtil.dispose(swe);
     }
 
     @Test
     public void testSetDirty() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SwitchboardEditor e = new SwitchboardEditor();
         // defaults to false, setDirty() sets it to true.
-        e.setDirty();
-        Assert.assertTrue("isDirty after set", e.isDirty());
-        JUnitUtil.dispose(e);
+        swe.setDirty();
+        Assert.assertTrue("isDirty after set", swe.isDirty());
     }
 
     @Test
     public void testSetDirtyWithParameter() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SwitchboardEditor e = new SwitchboardEditor();
         // defaults to false, so set it to true.
-        e.setDirty(true);
-        Assert.assertTrue("isDirty after set", e.isDirty());
-        JUnitUtil.dispose(e);
+        swe.setDirty(true);
+        Assert.assertTrue("isDirty after set", swe.isDirty());
     }
 
     @Test
     public void testResetDirty() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SwitchboardEditor e = new SwitchboardEditor();
         // defaults to false, so set it to true.
-        e.setDirty(true);
+        swe.setDirty(true);
         // then call resetDirty, which sets it back to false.
-        e.resetDirty();
-        Assert.assertFalse("isDirty after reset", e.isDirty());
-        JUnitUtil.dispose(e);
+        swe.resetDirty();
+        Assert.assertFalse("isDirty after reset", swe.isDirty());
     }
 
     @Test
     public void testGetDefaultTextColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SwitchboardEditor e = new SwitchboardEditor();
-        Assert.assertEquals("Default Text Color", "black", e.getDefaultTextColor());
-        JUnitUtil.dispose(e);
+        Assert.assertEquals("Default Text Color", ColorUtil.ColorBlack, swe.getDefaultTextColor());
     }
 
     @Test
     public void testSetDefaultTextColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SwitchboardEditor e = new SwitchboardEditor();
-        e.setDefaultTextColor("pink");
-        Assert.assertEquals("Default Text Color after Set", "pink", e.getDefaultTextColor());
-        JUnitUtil.dispose(e);
+        swe.setDefaultTextColor(ColorUtil.ColorPink);
+        Assert.assertEquals("Default Text Color after Set", ColorUtil.ColorPink, swe.getDefaultTextColor());
     }
 
-//    @Test
-//    public void testGetShowHelpBar() {
-//        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-//        SwitchboardEditor e = new SwitchboardEditor();
-//        // default to true
-//        Assert.assertTrue("getShowHelpBar", e.getShowHelpBar());
-//    }
-//
-//    @Test
-//    public void testSetShowHelpBar() {
-//        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-//        SwitchboardEditor e = new SwitchboardEditor();
-//        // default to true, so set to false.
-//        e.setShowHelpBar(false);
-//        Assert.assertFalse("getShowHelpBar after set", e.getShowHelpBar());
-//    }
-    // from here down is testing infrastructure
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+            e = swe = new SwitchboardEditor("Test Layout");
+        }
     }
 
     @After
     public void tearDown() {
+        if (swe != null) {
+            JUnitUtil.dispose(swe);
+            e = swe = null;
+        }
         JUnitUtil.tearDown();
     }
 

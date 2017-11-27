@@ -328,6 +328,9 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                 checkBoxes.remove("s" + car.getId());
                 checkBoxes.remove("m" + car.getId());
                 log.debug("Car ({}) removed from list", car.toString());
+                if (car.isUtility()) {
+                    clearAndUpdate(); // need to recalculate number of utility cars
+                }
             }
             update();
         }

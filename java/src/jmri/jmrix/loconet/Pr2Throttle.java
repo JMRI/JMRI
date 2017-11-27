@@ -29,7 +29,7 @@ public class Pr2Throttle extends AbstractThrottle {
         super(memo);
         this.address = address;
         addr = address.getNumber();
-        setSpeedStepMode(DccThrottle.SpeedStepMode128);
+        setSpeedStepMode(DccThrottle.SpeedStepMode28);
         this.speedIncrement = 1;  // 128 step mode only
     }
 
@@ -74,7 +74,7 @@ public class Pr2Throttle extends AbstractThrottle {
             case DccThrottle.SpeedStepMode14:
                 return (int) ((fSpeed * 14) * 8) + 8;
             default:
-                log.warn("Unhandled speed step mode; {}", this.getSpeedStepMode());
+                log.warn("Unhandled speed step mode: {}", this.getSpeedStepMode());
                 break;
         }
         return speed;
