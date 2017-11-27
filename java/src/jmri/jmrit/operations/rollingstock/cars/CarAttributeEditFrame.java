@@ -372,8 +372,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         int number = 0;
         String item = (String) comboBox.getSelectedItem();
         log.debug("Selected item {}", item);
-        for (RollingStock rs : carManager.getList()) {
-            Car car = (Car) rs;
+        for (Car car : carManager.getList()) {
 
             if (_comboboxName.equals(CarEditFrame.ROAD)) {
                 if (car.getRoadName().equals(item)) {

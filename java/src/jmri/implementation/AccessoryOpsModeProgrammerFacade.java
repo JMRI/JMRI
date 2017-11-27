@@ -141,6 +141,12 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
                         aprog.getAddressNumber(), Integer.parseInt(cv), val);
                 b = NmraPacket.accSignalDecoderPktOpsMode(aprog.getAddressNumber(), Integer.parseInt(cv), val);
                 break;
+            case "altsignal":
+                // interpret address as signal address using the alternative interpretation of S-9.2.1
+                log.debug("Send an altAccSignalDecoderPktOpsMode: address={}, cv={}, value={}",
+                        aprog.getAddressNumber(), Integer.parseInt(cv), val);
+                b = NmraPacket.altAccSignalDecoderPktOpsMode(aprog.getAddressNumber(), Integer.parseInt(cv), val);
+                break;
             case "decoder":
                 // interpet address as decoder address
                 log.debug("Send an accDecPktOpsMode: address={}, cv={}, value={}",
