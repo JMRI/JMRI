@@ -119,7 +119,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _editor = editor;
         _dialog = dialog;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        _currentBackground = _editor.getTargetPanel().getBackground();
+        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
         _chooser = new JColorChooser(_currentBackground);
         _sample = new Hashtable<>();
 
@@ -130,9 +130,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _previewPanel.add(Box.createVerticalStrut(STRUT), BorderLayout.PAGE_START);
         _previewPanel.add(Box.createVerticalStrut(STRUT), BorderLayout.PAGE_END);
 
-        // create array of backgrounds
+        // create array of backgrounds, _currentBackground already set and used
         _backgrounds = new BufferedImage[5];
-        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
         _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
         for (int i = 1; i <= 3; i++) {
             _backgrounds[i] = DrawSquares.getImage(500, 100, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]

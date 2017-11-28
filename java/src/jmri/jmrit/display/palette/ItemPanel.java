@@ -50,6 +50,7 @@ public abstract class ItemPanel extends JPanel {
     protected Color _currentBackground = _grayColor;
     protected BufferedImage[] _backgrounds; // array of Image backgrounds, shared to save on RAM
     protected int previewBgSet = 0; // shared setting for preview background color, starts as 0 = use Panel bg
+    //protected JComboBox<String> bgColorBox; // TODO use a shared JComboBox + listeners in ImagePanels to respond to state changes
 
     /**
      * Constructor for all table types.
@@ -69,6 +70,7 @@ public abstract class ItemPanel extends JPanel {
      * Initializes panel for selecting a new Control Panel item or for updating
      * an existing item. Adds table if item is a bean. i.e. customizes for the
      * item type.
+     * Called by enclosing TabbedPanel on change of displayed tab Pane.
      */
     public void init() {
         _initialized = true;
@@ -121,15 +123,21 @@ public abstract class ItemPanel extends JPanel {
         });
 
         JPanel backgroundPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-//        backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
-//        JPanel pp = new JPanel();
-//        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
         backgroundPanel.add(new JLabel(Bundle.getMessage("setBackground")));
         backgroundPanel.add(bgColorBox);
-//        backgroundPanel.add(pp);
         backgroundPanel.setMaximumSize(backgroundPanel.getPreferredSize());
         return backgroundPanel;
     }
+
+    /**
+     * TODO: Synchronise View On: ComboBox choice across tabs
+     */
+//    protected void updateBgCombo() {
+//        if (bgColorBox != null) {
+//            bgColorBox.setSelectedIndex(previewBgSet);
+//        }
+//        log.debug("BgCombo updated");
+//    }
 
     protected void closeDialogs() {
     }

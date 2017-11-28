@@ -72,6 +72,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
     /**
      * Init for creation.
+     * Also called by enclosing TabbedPanel on change of displayed tab Pane.
      */
     @Override
     public void init() {
@@ -83,11 +84,13 @@ public abstract class FamilyItemPanel extends ItemPanel {
             makeBottomPanel(null);
             super.init();
         }
+        // updateBgCombo(); // TODO (see method in ItemPanel class
+        log.debug("tab redisplayed. BgSet = {}", previewBgSet);
     }
 
     /**
-     * Init for update of existing track block _bottom3Panel has an [Update Panel]
-     * button put into _bottom1Panel.
+     * Init for update of existing track block.
+     * _bottom3Panel has an [Update Panel] button put onto _bottom1Panel.
      *
      * @param doneAction doneAction
      * @param iconMap iconMap
@@ -135,10 +138,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
      * @param doneAction the calling action
      */
     protected void makeBottomPanel(ActionListener doneAction) {
-        _currentBackground = _editor.getTargetPanel().getBackground();
         _bottom2Panel = makeCreateNewFamilyPanel();
 
         // create array of backgrounds
+        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
         if (_backgrounds == null) { // reduces load but will not redraw for new size
             _backgrounds = new BufferedImage[5];
             for (int i = 1; i <= 3; i++) {
@@ -148,7 +151,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
         }
         // always update background from Panel Editor
-        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
         _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
 
         makeItemButtonPanel();
@@ -190,8 +192,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
 
     private void makeItemButtonPanel() {
-        _bottom1Panel = new JPanel();
-        _bottom1Panel.setLayout(new FlowLayout());
+        _bottom1Panel = new JPanel(new FlowLayout());
         addShowButtonToBottom();
         _editIconsButton = new JButton(Bundle.getMessage("ButtonEditIcons"));
         _editIconsButton.addActionListener(new ActionListener() {
@@ -387,7 +388,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         String txt = Bundle.getMessage("IconFamiliesLabel", Bundle.getMessage(thisType));
         JPanel p = new JPanel(new FlowLayout());
         p.add(new JLabel(txt));
-        // p.setOpaque(false);
+        p.setOpaque(false);
         familyPanel.add(p);
         _familyButtonGroup = new ButtonGroup();
         JPanel buttonPanel = new JPanel(new FlowLayout());
@@ -403,7 +404,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    setFamily(fam);
+                    setFamily(fam); // NPE special for SignalMast (_iconPanel = class ImagePanel)
                 }
 
                 ActionListener init(String f) {
@@ -443,7 +444,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected void addFamilyPanels(JPanel familyPanel) {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
 
-        if (_itemType == "SignalMast") {
+        if ("SignalMast".equals(_itemType)) {
             _iconPanel = new ImagePanel(); // take care of ImagePanel class on SignalMastItemPanel
         } else {
             _iconPanel = new JPanel();
@@ -452,8 +453,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _iconPanel.setOpaque(false);
         _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
-        _iconPanel.setBackground(Color.orange); // debug EB
-        _iconPanel.setOpaque(true); // debug EB
+        //_iconPanel.setBackground(Color.orange); // debug EB
+        //_iconPanel.setOpaque(true); // debug EB
         _iconFamilyPanel.add(_iconPanel);
         _iconPanel.setVisible(false);
         log.debug("_iconPanel created");
@@ -478,7 +479,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _iconFamilyPanel.remove(_dragIconPanel);
             if (_bottom1Panel != null && bgBoxPanel != null) {
                 _bottom1Panel.remove(bgBoxPanel); // also remove the coupled combo (if present)
-                // TODO use indirect setting via previewBgSet, so removing/adding is not needed
+                // TODO use indirect setting via previewBgSet and Listener, so removing/adding is not needed
             }
         }
         _dragIconPanel = new ImagePanel();
@@ -496,7 +497,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _dragIconPanel.setVisible(true);
 
         // add a SetBackground combo
-        bgBoxPanel = makeBgButtonPanel(_dragIconPanel, _backgrounds); // TODO use indirect setting of panel upon display via previewBgSet
+        bgBoxPanel = makeBgButtonPanel(_dragIconPanel, _backgrounds);
+        // TODO use indirect setting of panel upon display via previewBgSet
         if (_bottom1Panel != null && bgBoxPanel != null) { // to enable returning null for some types, skip Reporter
             _bottom1Panel.add(bgBoxPanel);
         }
@@ -519,7 +521,12 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
     protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
         if (iconMap == null) {
-            log.debug("iconMap is null for type {} in family {}", _itemType, _family);
+            log.debug("iconMap is null for type {} family {}", _itemType, _family);
+            return;
+        }
+        if (_iconPanel == null) { // happens for SignalMast icons (class ImagePanel instead of JPanel
+            // but GUI shows 1 icon that can be dragged fine
+            log.debug("iconPanel is null for type {}", _itemType);
             return;
         }
         _iconPanel.setOpaque(false);
@@ -648,7 +655,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected void showIcons() {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _iconPanel.setVisible(true);
-        _iconPanel.invalidate();
+        _iconPanel.invalidate(); // force redraw
         if (!_suppressDragging) {
             _dragIconPanel.setVisible(false);
         }
@@ -752,8 +759,12 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _family = family;
         log.debug("setFamily: for type \"{}\", family \"{}\"", _itemType, family);
         _iconFamilyPanel.remove(_iconPanel); // note this implies recreating the Set Background combo box
-        // to the -to be created- new _iconPanel, see
-        _iconPanel = new JPanel();
+        // attached to the -yet to be created- new _iconPanel, see
+        if ("SignalMast".equals(_itemType)) {
+            _iconPanel = new ImagePanel(); // take care of ImagePanel class on SignalMastItemPanel
+        } else {
+            _iconPanel = new JPanel();
+        }
         _iconPanel.setOpaque(false); // see through
         _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
@@ -767,7 +778,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             makeDndIconPanel(_currentIconMap, "BeanStateUnknown");
         }
         addIconsToPanel(_currentIconMap);
-        _iconFamilyPanel.invalidate();
+        _iconFamilyPanel.invalidate(); // force redraw
         hideIcons();
         Enumeration<AbstractButton> en = _familyButtonGroup.getElements();
         while (en.hasMoreElements()) {

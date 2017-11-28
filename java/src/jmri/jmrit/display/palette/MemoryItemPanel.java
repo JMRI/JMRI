@@ -96,18 +96,20 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         }
 
         // create array of backgrounds
+        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
         if (_backgrounds == null) {
             _backgrounds = new BufferedImage[5];
-            _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
-            _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
             for (int i = 1; i <= 3; i++) {
                 _backgrounds[i] = DrawSquares.getImage(500, 100, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
             }
             _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
         }
+        // always update background from Panel Editor
+        _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
 
         makeDragIconPanel(1);
         makeDndIconPanel(null, null);
+        log.debug("initIconFamiliesPanel done");
     }
 
     @Override

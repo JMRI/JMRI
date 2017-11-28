@@ -87,7 +87,6 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         makeDragIconPanel(1);
         makeDndIconPanel(null, null);
         _iconPanel = new ImagePanel();
-//        _iconPanel.setOpaque(false);
         _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
         if (_backgrounds != null) {
@@ -96,7 +95,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             log.debug("SignalMastItemPanel - no value for previewBgSet");
         }
         addIconsToPanel(_currentIconMap);
-        // removed line: _iconFamilyPanel.add(_dragIconPanel, 1); // added twice, already in makeDndIconPanel() = illegal position error
+        // removed line: _iconFamilyPanel.add(_dragIconPanel, 1); // was being added twice, earlier by makeDndIconPanel() line 88, gives Illegal position error
 
         JPanel panel = new JPanel();
         if (_mast != null) {
@@ -164,18 +163,19 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         initIconFamiliesPanel();
 
         // create array of backgrounds
+        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
         if (_backgrounds == null) { // reduces load but will not redraw for new size
             _backgrounds = new BufferedImage[5];
-            _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
-            _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
             for (int i = 1; i <= 3; i++) {
                 _backgrounds[i] = DrawSquares.getImage(500, 100, 20, colorChoice[i - 1], colorChoice[i - 1]);
                 // [i-1] because choice 0 is not in colorChoice[]
             }
             _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
         }
-        _bottom1Panel.add(makeBgButtonPanel(_iconPanel, _backgrounds));
+        // always update background from Panel Editor
+        _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
 
+        _bottom1Panel.add(makeBgButtonPanel(_iconPanel, _backgrounds));
         add(_bottom1Panel);
     }
 
@@ -254,8 +254,11 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             return;
         }
         int row = _table.getSelectedRow();
-        if (log.isDebugEnabled()) {
-            log.debug("Table valueChanged: row= " + row);
+        log.debug("Table valueChanged: row= {}", row);
+        // first remove bgComboPanel
+        if (_bottom1Panel != null && bgBoxPanel != null) {
+            _bottom1Panel.remove(bgBoxPanel); // also remove the coupled combo (if present)
+            // TODO use indirect setting via previewBgSet and Listener, so removing/adding is not needed, see note in FamilyItemPanel
         }
         remove(_iconFamilyPanel);
         if (row >= 0) {
@@ -274,8 +277,15 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _showIconsButton.setEnabled(false);
             _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
         }
-        initIconFamiliesPanel();
+        initIconFamiliesPanel(); // creates and adds a new _iconFamilyPanel for the new mast map
+        // reattach new bgComboPanel
         add(_iconFamilyPanel, 1);
+        // add a SetBackground combo
+        if (_bottom1Panel != null) {
+            bgBoxPanel = makeBgButtonPanel(_iconPanel, _backgrounds);
+            // TODO use indirect setting of panel upon display of tab via previewBgSet
+            _bottom1Panel.add(bgBoxPanel);
+        }
         validate();
     }
 

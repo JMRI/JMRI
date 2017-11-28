@@ -139,7 +139,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             if (!loadSavedIcons(ed)) {
                 loadDefaultIcons(ed);
             }
-//            System.out.println("Palette icons loaded in "+ (System.currentTimeMillis()-t)+ " milliseconds.");
+//            System.out.println("Palette icons loaded in " + (System.currentTimeMillis()-t) + " milliseconds.");
         }
     }
 
@@ -486,17 +486,18 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         _tabIndex.put("Portal", itemPanel);
 
         _tabPane.addChangeListener(palette);
-//        _tabPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+        // _tabPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
     }
 
     @Override
     public void stateChanged(ChangeEvent e) {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
-//        long t = System.currentTimeMillis();
+        // long t = System.currentTimeMillis();
         JTabbedPane tp = (JTabbedPane) e.getSource();
         JScrollPane sp = (JScrollPane) tp.getSelectedComponent();
         ItemPanel p = (ItemPanel) sp.getViewport().getView();
         p.init();
+        log.debug("different tab displayed");
         if (_currentItemPanel != null) {
             _currentItemPanel.closeDialogs();
         }
@@ -552,7 +553,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     }
 
     /**
-     * Look for duplicate name of family in the iterated set
+     * Look for duplicate name of family in the iterated set.
      */
     private static boolean familyNameOK(java.awt.Frame frame, String type, String family, Iterator<String> it) {
         if (family == null || family.length() == 0) {
@@ -574,7 +575,8 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     }
 
     /**
-     * Adding a new Family of icons to the device type
+     * Add a new Family of icons to the device type.
+     *
      * @param frame frame
      * @param type type
      * @param family family
@@ -601,7 +603,8 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     }
 
     /**
-     * Getting all the Families of icons for a given device type
+     * Get all the Families of icons for a given device type.
+     *
      * @param type type
      * @return map of families
      */
@@ -610,7 +613,8 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     }
 
     /**
-     * Removing a Family of icons from the device type
+     * Remove a Family of icons from the device type.
+     *
      * @param type type
      * @param family family
      */
@@ -632,7 +636,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     }
 
     /*
-     * Getting a clone of the Family of icons for a given device type and family
+     * Get a clone of the Family of icons for a given device type and family.
      */
     static protected HashMap<String, NamedIcon> getIconMap(String type, String family) {
         HashMap<String, HashMap<String, NamedIcon>> itemMap = _iconMaps.get(type);
@@ -753,4 +757,5 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ItemPalette.class);
+
 }
