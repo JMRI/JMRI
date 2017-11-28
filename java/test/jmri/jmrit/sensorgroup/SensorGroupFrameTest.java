@@ -10,6 +10,7 @@ import org.junit.Test;
 
 /**
  *
+ * @author	Bob Jacobsen Copyright 2003, 2007
  * @author Paul Bender Copyright (C) 2017
  */
 public class SensorGroupFrameTest {
