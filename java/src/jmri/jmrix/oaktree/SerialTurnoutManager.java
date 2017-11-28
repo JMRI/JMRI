@@ -81,14 +81,11 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return true;
     }
 
+    @Deprecated
     static public SerialTurnoutManager instance() {
-        if (_instance == null) {
-            _instance = new SerialTurnoutManager();
-        }
-        return _instance;
+        return null;
     }
 
-    static SerialTurnoutManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 
