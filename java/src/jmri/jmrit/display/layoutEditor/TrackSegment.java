@@ -642,7 +642,6 @@ public class TrackSegment extends LayoutTrack {
                 }
             } else if (isBezier()) {
                 // hit testing for the control points
-                // note: control points will override center circle
                 for (int index = 0; index < bezierControlPoints.size(); index++) {
                     p = bezierControlPoints.get(index);
                     distance = MathUtil.distance(p, hitPoint);
@@ -1056,12 +1055,12 @@ public class TrackSegment extends LayoutTrack {
                     Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
                     Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
 
-                    // compute orthogonal offset with length one third the distance from ep1 to ep2
+                    // compute orthogonal offset0 with length one third the distance from ep1 to ep2
                     Point2D offset = MathUtil.subtract(ep2, ep1);
                     offset = MathUtil.normalize(offset, MathUtil.length(offset) / 3.0);
                     offset = MathUtil.orthogonal(offset);
 
-                    // add orthogonal offset to 1/3rd and 2/3rd points
+                    // add orthogonal offset0 to 1/3rd and 2/3rd points
                     Point2D pt1 = MathUtil.add(MathUtil.oneThirdPoint(ep1, ep2), offset);
                     Point2D pt2 = MathUtil.subtract(MathUtil.twoThirdPoint(ep1, ep2), offset);
 
@@ -1180,7 +1179,6 @@ public class TrackSegment extends LayoutTrack {
         changed = true;
     }
 
-    //private int startadj;
     private double cX;
 
     public double getCX() {
@@ -1221,14 +1219,14 @@ public class TrackSegment extends LayoutTrack {
         cH = CH;
     }
 
-    private double startadj;
+    private double startAdj;
 
-    public double getStartadj() {
-        return startadj;
+    public double getStartAdj() {
+        return startAdj;
     }
 
-    public void setStartadj(double Startadj) {
-        startadj = Startadj;
+    public void setStartAdj(double startAdj) {
+        this.startAdj = startAdj;
     }
 
     // this is the center of the track segment (it is "on" the track segment)
@@ -1452,7 +1450,7 @@ public class TrackSegment extends LayoutTrack {
                 double radius = (chord / 2) / Math.sin(halfAngleRAD);
                 // Circle
                 double startRad = Math.atan2(a, o) - halfAngleRAD;
-                setStartadj(Math.toDegrees(startRad));
+                setStartAdj(Math.toDegrees(startRad));
                 if (isCircle()) {
                     // Circle - Compute center
                     setCentreX(pt2x - Math.cos(startRad) * radius);
@@ -1471,7 +1469,7 @@ public class TrackSegment extends LayoutTrack {
                     setCentreSeg(MathUtil.add(getCentre(), offset));
                 } else {
                     // Ellipse - Round start angle to the closest multiple of 90
-                    setStartadj(Math.round(getStartadj() / 90.0D) * 90.0D);
+                    setStartAdj(Math.round(getStartAdj() / 90.0D) * 90.0D);
                     // Ellipse - Compute rectangle required by Arc2D.Double
                     setCW(Math.abs(a) * 2.0D);
                     setCH(Math.abs(o) * 2.0D);
@@ -1499,7 +1497,7 @@ public class TrackSegment extends LayoutTrack {
             }
             if (isArc()) {
                 calculateTrackSegmentAngle();
-                g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
+                g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN));
                 trackRedrawn();
             } else if (isBezier()) {
                 Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
@@ -1531,7 +1529,23 @@ public class TrackSegment extends LayoutTrack {
         if (isMain == mainline) {
             if (isArc()) {
                 calculateTrackSegmentAngle();
-                g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
+                Rectangle2D cRectangle2D = new Rectangle2D.Double(
+                        getCX(), getCY(), getCW(), getCH());
+                Rectangle2D cLeftRectangle2D = MathUtil.inset(cRectangle2D, -railDisplacement);
+                double startAdj = getStartAdj(), tmpAngle = getTmpAngle();
+                g2.draw(new Arc2D.Double(
+                        cLeftRectangle2D.getX(),
+                        cLeftRectangle2D.getY(),
+                        cLeftRectangle2D.getWidth(),
+                        cLeftRectangle2D.getHeight(),
+                        startAdj, tmpAngle, Arc2D.OPEN));
+                Rectangle2D cLRightRectangle2D = MathUtil.inset(cRectangle2D, +railDisplacement);
+                g2.draw(new Arc2D.Double(
+                        cLRightRectangle2D.getX(),
+                        cLRightRectangle2D.getY(),
+                        cLRightRectangle2D.getWidth(),
+                        cLRightRectangle2D.getHeight(),
+                        startAdj, tmpAngle, Arc2D.OPEN));
                 trackRedrawn();
             } else if (isBezier()) {
                 Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
@@ -1544,8 +1558,22 @@ public class TrackSegment extends LayoutTrack {
                     points[idx + 1] = bezierControlPoints.get(idx);
                 }
                 points[cnt + 1] = pt2;
+                cnt += 2;
 
-                MathUtil.drawBezier(g2, points);
+                Point2D[] pointsL = new Point2D[cnt];
+                Point2D[] pointsR = new Point2D[cnt];
+                for (int idx = 0; idx < cnt; idx++) {
+                    Point2D p0 = (idx > 0) ? points[idx - 1] : points[0];
+                    Point2D p1 = points[idx];
+                    Point2D p2 = (idx < cnt - 1) ? points[idx + 1] : points[cnt - 1];
+                    Point2D pM = MathUtil.midPoint(p0, p2);
+                    Point2D offsetP = MathUtil.normalize(MathUtil.subtract(p1, pM), railDisplacement);
+                    offsetP = MathUtil.orthogonal(offsetP);
+                    pointsL[idx] = MathUtil.subtract(points[idx], offsetP);
+                    pointsR[idx] = MathUtil.add(points[idx], offsetP);
+                }
+                MathUtil.drawBezier(g2, pointsL);
+                MathUtil.drawBezier(g2, pointsR);
             } else {
                 Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
                 Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
