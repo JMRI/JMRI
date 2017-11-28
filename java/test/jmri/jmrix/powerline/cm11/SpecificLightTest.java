@@ -4,7 +4,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -18,7 +17,6 @@ public class SpecificLightTest {
    private SpecificTrafficController tc = null;
 
    @Test
-   @Ignore("seems correct per the documentation, but results in a null light")
    public void ConstructorTest(){
       Assert.assertNotNull("SpecificLight constructor",new SpecificLight("PLA2",tc));
    }
@@ -28,7 +26,11 @@ public class SpecificLightTest {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        tc = new SpecificTrafficController(new SpecificSystemConnectionMemo());
+        SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
+        tc = new SpecificTrafficController(memo);
+        memo.setTrafficController(tc);
+        memo.configureManagers();
+        memo.setSerialAddress(new jmri.jmrix.powerline.SerialAddress(memo));
    }
 
    @After

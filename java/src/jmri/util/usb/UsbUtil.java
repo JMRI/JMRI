@@ -181,6 +181,7 @@ public final class UsbUtil {
                 return findUsbDevices(UsbHostManager.getUsbServices().getRootUsbHub(), idVendor, idProduct, serialNumber);
             } catch (UsbException | SecurityException ex) {
                 log.error("Exception: {}", ex.toString());
+                return new ArrayList<>(); // abort with an empty list
             }
         }
         List<UsbDevice> devices = new ArrayList<>();
