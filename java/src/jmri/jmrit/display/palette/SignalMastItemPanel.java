@@ -91,9 +91,9 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
         if (_backgrounds != null) {
-            _iconPanel.setImage(_backgrounds[PreviewBgPref]); // pick up shared setting
+            _iconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
         } else {
-            log.debug("SignalMastItemPanel - no value for PreviewBgPref");
+            log.debug("SignalMastItemPanel - no value for previewBgSet");
         }
         addIconsToPanel(_currentIconMap);
         // removed line: _iconFamilyPanel.add(_dragIconPanel, 1); // added twice, already in makeDndIconPanel() = illegal position error

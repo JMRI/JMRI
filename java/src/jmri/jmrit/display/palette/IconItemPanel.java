@@ -166,7 +166,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         _iconPanel = new ImagePanel();
         _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
-        _iconPanel.setImage(_backgrounds[PreviewBgPref]); // pick up shared setting
+        _iconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
 
         JPanel iPanel = new JPanel();
         iPanel.setOpaque(false);

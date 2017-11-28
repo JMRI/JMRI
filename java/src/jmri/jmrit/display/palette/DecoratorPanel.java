@@ -13,6 +13,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.Hashtable;
 import java.util.Iterator;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -103,12 +104,13 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     private int _selectedButton;
     ButtonGroup _buttonGroup = new ButtonGroup();
 
-    protected DrawSquares _squaresPanel;  // checkered background
+    protected DrawSquares _squaresPanel; // checkered background
     static Color _grayColor = new Color(235, 235, 235);
     static Color _darkGrayColor = new Color(150, 150, 150);
-    protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
+    private Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
     protected Color _currentBackground;
     protected BufferedImage[] _backgrounds; // array of Image backgrounds
+    private int previewBgSet = 0; // setting for preview background color, starts as 0 = use Panel bg
 
     Editor _editor;
     java.awt.Window _dialog;
@@ -539,28 +541,34 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
 
     /**
      * Create panel element containing [Set background:] drop down list.
+     * Special version for Decorator, no access to shared variable previewBgSet.
      * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
      * @see ItemPanel
      *
      * @return a JPanel with label and drop down
      */
-    private JPanel makeBgButtonPanel(ImagePanel preview, BufferedImage[] imgArray) {
+    private JPanel makeBgButtonPanel(@Nonnull ImagePanel preview, BufferedImage[] imgArray) {
         JComboBox<String> bgColorBox = new JComboBox<>();
         bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, too long for combo
         bgColorBox.addItem(Bundle.getMessage("White"));
         bgColorBox.addItem(Bundle.getMessage("LightGray"));
         bgColorBox.addItem(Bundle.getMessage("DarkGray"));
         bgColorBox.addItem(Bundle.getMessage("Checkers"));
-        bgColorBox.setSelectedIndex(0); // panel bg color
+        bgColorBox.setSelectedIndex(previewBgSet); // starts as 0 = panel bg color, cannot read shared choice
         bgColorBox.addActionListener((ActionEvent e) -> {
-            // load background image
-            preview.setImage(imgArray[bgColorBox.getSelectedIndex()]);
-            log.debug("Catalog setImage called");
-            preview.setOpaque(false);
-            // preview.repaint();
-            preview.invalidate(); // force redraw
+            if (imgArray != null) {
+                if (previewBgSet != bgColorBox.getSelectedIndex()) {
+                    previewBgSet = bgColorBox.getSelectedIndex(); // store user choice
+                    // load background image
+                    log.debug("Palette Decorator setImage called {}", previewBgSet);
+                    preview.setImage(imgArray[previewBgSet]);
+                }
+                // preview.setOpaque(false); // needed?
+                preview.invalidate();        // force redraw
+            } else {
+                log.debug("imgArray is empty");
+            }
         });
-
         JPanel backgroundPanel = new JPanel();
         backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
         JPanel pp = new JPanel();

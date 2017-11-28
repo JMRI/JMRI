@@ -49,7 +49,7 @@ public abstract class ItemPanel extends JPanel {
     protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
     protected Color _currentBackground = _grayColor;
     protected BufferedImage[] _backgrounds; // array of Image backgrounds, shared to save on RAM
-    protected int PreviewBgPref = 0; // shared setting for preview background color, starts as 0 = use Panel bg
+    protected int previewBgSet = 0; // shared setting for preview background color, starts as 0 = use Panel bg
 
     /**
      * Constructor for all table types.
@@ -104,14 +104,15 @@ public abstract class ItemPanel extends JPanel {
         bgColorBox.addItem(Bundle.getMessage("LightGray"));
         bgColorBox.addItem(Bundle.getMessage("DarkGray"));
         bgColorBox.addItem(Bundle.getMessage("Checkers"));
-        bgColorBox.setSelectedIndex(PreviewBgPref); // Global field, starts as 0 = panel bg color
+        bgColorBox.setSelectedIndex(previewBgSet); // Global field, starts as 0 = panel bg color
         bgColorBox.addActionListener((ActionEvent e) -> {
             if (imgArray != null) {
-                PreviewBgPref = bgColorBox.getSelectedIndex(); // store user choice in field
-                // load background image
-                log.debug("Palette setImage called {}", PreviewBgPref);
-                // if (preview == null) log.debug("preview = null");
-                preview.setImage(imgArray[PreviewBgPref]);
+                if (previewBgSet != bgColorBox.getSelectedIndex()) {
+                    previewBgSet = bgColorBox.getSelectedIndex(); // store user choice in field
+                    // load background image
+                    log.debug("Palette setImage called {}", previewBgSet);
+                    preview.setImage(imgArray[previewBgSet]);
+                }
                 preview.setOpaque(false); // needed?
                 preview.invalidate();     // force redraw
             } else {
@@ -119,13 +120,13 @@ public abstract class ItemPanel extends JPanel {
             }
         });
 
-        JPanel backgroundPanel = new JPanel();
-        backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
-        JPanel pp = new JPanel();
-        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-        pp.add(new JLabel(Bundle.getMessage("setBackground")));
-        pp.add(bgColorBox);
-        backgroundPanel.add(pp);
+        JPanel backgroundPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+//        backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
+//        JPanel pp = new JPanel();
+//        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
+        backgroundPanel.add(new JLabel(Bundle.getMessage("setBackground")));
+        backgroundPanel.add(bgColorBox);
+//        backgroundPanel.add(pp);
         backgroundPanel.setMaximumSize(backgroundPanel.getPreferredSize());
         return backgroundPanel;
     }

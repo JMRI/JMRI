@@ -478,15 +478,15 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _iconFamilyPanel.remove(_dragIconPanel);
             if (_bottom1Panel != null && bgBoxPanel != null) {
                 _bottom1Panel.remove(bgBoxPanel); // also remove the coupled combo (if present)
-                // TODO use indirect setting via PreviewBgPref, so this is not needed
+                // TODO use indirect setting via previewBgSet, so removing/adding is not needed
             }
         }
         _dragIconPanel = new ImagePanel();
         _dragIconPanel.setOpaque(true); // to show background color/squares
         if (_backgrounds != null) {
-            _dragIconPanel.setImage(_backgrounds[PreviewBgPref]); // pick up shared setting
+            _dragIconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
         } else {
-            log.debug("FamilyItemPanel - no value for PreviewBgPref");
+            log.debug("FamilyItemPanel - no value for previewBgSet");
         }
         _dragIconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
@@ -496,7 +496,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _dragIconPanel.setVisible(true);
 
         // add a SetBackground combo
-        bgBoxPanel = makeBgButtonPanel(_dragIconPanel, _backgrounds);
+        bgBoxPanel = makeBgButtonPanel(_dragIconPanel, _backgrounds); // TODO use indirect setting of panel upon display via previewBgSet
         if (_bottom1Panel != null && bgBoxPanel != null) { // to enable returning null for some types, skip Reporter
             _bottom1Panel.add(bgBoxPanel);
         }
@@ -519,9 +519,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
     protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
         if (iconMap == null) {
-            log.debug("iconMap is null for type {} family {}", _itemType, _family);
+            log.debug("iconMap is null for type {} in family {}", _itemType, _family);
             return;
         }
+        _iconPanel.setOpaque(false);
         GridBagLayout gridbag = new GridBagLayout();
         _iconPanel.setLayout(gridbag);
 
@@ -612,6 +613,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                         label.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
                         // label.setIcon(icon);
                         label.setName(borderName);
+                        label.setOpaque(false);
                         panel.add(label);
                     }
                 } catch (java.lang.ClassNotFoundException cnfe) {
@@ -750,7 +752,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _family = family;
         log.debug("setFamily: for type \"{}\", family \"{}\"", _itemType, family);
         _iconFamilyPanel.remove(_iconPanel); // note this implies recreating the Set Background combo box
-        // to the to be created new _iconPanel, see
+        // to the -to be created- new _iconPanel, see
         _iconPanel = new JPanel();
         _iconPanel.setOpaque(false); // see through
         _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
