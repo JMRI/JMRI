@@ -14,15 +14,15 @@
 <!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" 
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
                 showEmptyPanes="no">
 
     <version author="Bob Jacobsen" version="1" lastUpdated="20171121" />
 
     <decoder>
 
-        <family name="BDL168" mfg="Digitrax">
-            <model model="BDL168"/>
+        <family name="BDL16/BDL162/BDL168" mfg="Digitrax">
+            <model model="BDL16/BDL162/BDL168"/>
         </family>
 
         <programming direct="no" paged="no" register="no" ops="no">
@@ -30,25 +30,477 @@
         </programming>
 
         <variables>
-          <variable CV="1" comment="Board address" item="Short Address" default="03" infoOnly="yes">
-            <!-- needed to set the board address value -->            
-            <decVal min="1" max="16" />
+          <variable CV="1" comment="Board address" item="Short Address" default="1" infoOnly="yes">
+            <!-- needed to set the board address value -->
+            <decVal min="1" max="127" />
             <label>Primary Address</label>
           </variable>
 
-          <variable CV="112.3" item="Vstart"
-                      comment="This is Vstart so it shows up on a pane for testing">
+          <variable CV="113.01" item="Wiring Type">
             <enumVal>
               <enumChoice>
-                <choice>Thrown</choice>
+                <choice>Direct Home Wiring</choice>
               </enumChoice>
               <enumChoice>
-                <choice>Closed</choice>
+                <choice>Whole-layout Common Rail Wiring</choice>
               </enumChoice>
             </enumVal>
+            <label>Wiring type is</label>
           </variable>
+
+          <variable CV="113.03" item="Swap RailSync sensitivity">
+            <enumVal>
+              <enumChoice>
+                <choice>normal</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>reversed (pay attention to other RailSync wire) (BDL162/BDL168 only)</choice>
+              </enumChoice>
+            </enumVal>
+            <label>LocoNet cabling is</label>
+          </variable>
+
+          <variable CV="113.05" item="Transponding Enable1">
+            <enumVal>
+              <enumChoice>
+                <choice>Disable Transponding</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>Enable Transponding</choice>
+              </enumChoice>
+            </enumVal>
+            <label> </label>
+          </variable>
+
+          <variable CV="113.06" item="Transponding Enable2">
+            <enumVal>
+              <enumChoice>
+                <choice>Enable Transponding</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>Unsupported</choice>
+              </enumChoice>
+            </enumVal>
+            <label> </label>
+          </variable>
+
+          <variable CV="113.07" item="Transponding Enable3">
+            <enumVal>
+              <enumChoice>
+                <choice>Enable Transponding</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>Unsupported</choice>
+              </enumChoice>
+            </enumVal>
+            <label> </label>
+          </variable>
+
+          <variable item="Transponding Enable">
+            <compositeVal>
+              <compositeChoice choice="Disabled">
+                <compositeSetting label="Transponding Enable1" value="0"/>
+                <compositeSetting label="Transponding Enable2" value="0"/>
+                <compositeSetting label="Transponding Enable3" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Enabled">
+                <compositeSetting label="Transponding Enable1" value="1"/>
+                <compositeSetting label="Transponding Enable2" value="0"/>
+                <compositeSetting label="Transponding Enable3" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Unsupported option - not recommended">
+                <compositeSetting label="Transponding Enable1" value="0"/>
+                <compositeSetting label="Transponding Enable2" value="1"/>
+                <compositeSetting label="Transponding Enable3" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Unsupported option - not recommended">
+                <compositeSetting label="Transponding Enable1" value="1"/>
+                <compositeSetting label="Transponding Enable2" value="1"/>
+                <compositeSetting label="Transponding Enable3" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Unsupported option - not recommended">
+                <compositeSetting label="Transponding Enable1" value="0"/>
+                <compositeSetting label="Transponding Enable2" value="0"/>
+                <compositeSetting label="Transponding Enable3" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="Unsupported option - not recommended">
+                <compositeSetting label="Transponding Enable1" value="1"/>
+                <compositeSetting label="Transponding Enable2" value="0"/>
+                <compositeSetting label="Transponding Enable3" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="Unsupported option - not recommended">
+                <compositeSetting label="Transponding Enable1" value="0"/>
+                <compositeSetting label="Transponding Enable2" value="1"/>
+                <compositeSetting label="Transponding Enable3" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="Unsupported option - not recommended">
+                <compositeSetting label="Transponding Enable1" value="1"/>
+                <compositeSetting label="Transponding Enable2" value="1"/>
+                <compositeSetting label="Transponding Enable3" value="1"/>
+              </compositeChoice>
+            </compositeVal>
+            <label>Transponding is </label>
+          </variable>
+
+          <variable CV="113.09" item="Occupancy Force when Zone Power Off">
+              <enumVal>
+                  <enumChoice>
+                      <choice>report occupied when zone power is off</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>are not forced when zone power is off</choice>
+                  </enumChoice>
+              </enumVal>
+              <label>Detection Sections</label>
+          </variable>
+
+          <variable CV="113.10" item="Detection section 16">
+              <enumVal>
+                  <enumChoice>
+                      <choice>is a normal Detection Section</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>is a Zone Power ON qualifier for whole-layout common-rail wired systems</choice>
+                  </enumChoice>
+              </enumVal>
+              <label>Detection Section 16</label>
+          </variable>
+
+          <variable CV="113.11" item="BDL as LocoNet Master">
+              <enumVal>
+                  <enumChoice>
+                      <choice>acts as the LocoNet Master</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>is not the LocoNet Master</choice>
+                  </enumChoice>
+              </enumVal>
+              <label>This BDL16x</label>
+          </variable>
+
+          <variable CV="113.12" item="BDL as LocoNet Termination">
+              <enumVal>
+                  <enumChoice>
+                      <choice>provides LocoNet termination</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>does not terminate LocoNet</choice>
+                  </enumChoice>
+              </enumVal>
+              <label>This BDL16x</label>
+          </variable>
+
+          <variable CV="113.13" item="Power-up delay">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Wait for 5-second power-up delay (for DB150 compatibility)</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Wait for 0.5 second power-up delay</choice>
+                  </enumChoice>
+              </enumVal>
+              <label>This BDL16x will</label>
+          </variable>
+
+          <variable CV="113.19" item="Detection threshold">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Resistance below about 22K Ohms is shown as Occupied</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Resistance below about 10K Ohms is shown as Occupied</choice>
+                  </enumChoice>
+              </enumVal>
+              <label>Detection Section Sensitivity:</label>
+          </variable>
+
+          <variable CV="113.25" item="LED Output Mode">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Closed</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable CV="113.26" item="Switch Mode LEDs source">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Closed</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable CV="113.30" item="RailSync Sample Delay1">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Closed</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable CV="113.31" item="RailSync Sample Delay2">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Closed</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable item="RailSync Sample Delay">
+            <compositeVal>
+              <compositeChoice choice="Normal">
+                <compositeSetting label="RailSync Sample Delay1" value="0"/>
+                <compositeSetting label="RailSync Sample Delay2" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="slightly delayed (BDL162/BDL168 only)">
+                <compositeSetting label="RailSync Sample Delay1" value="1"/>
+                <compositeSetting label="RailSync Sample Delay2" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="moderately delayed (BDL162/BDL168 only)">
+                <compositeSetting label="RailSync Sample Delay1" value="0"/>
+                <compositeSetting label="RailSync Sample Delay2" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="significantly delayed (BDL162/BDL168 only)">
+                <compositeSetting label="RailSync Sample Delay1" value="1"/>
+                <compositeSetting label="RailSync Sample Delay2" value="1"/>
+              </compositeChoice>
+            </compositeVal>
+            <label>Sampling of RailSync is </label>
+          </variable>
+
+          <variable item="LED Outputs">
+            <compositeVal>
+              <compositeChoice choice="show Detection Section Occupancy">
+                <compositeSetting label="LED Output Mode" value="0"/>
+                <compositeSetting label="Switch Mode LEDs source" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="show Switch state (from DCC track signal)">
+                <compositeSetting label="LED Output Mode" value="1"/>
+                <compositeSetting label="Switch Mode LEDs source" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="show Detection Section Occupancy (Alternate)">
+                <compositeSetting label="LED Output Mode" value="0"/>
+                <compositeSetting label="Switch Mode LEDs source" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="show Switch state (from LocoNet Switch messages)">
+                <compositeSetting label="LED Output Mode" value="1"/>
+                <compositeSetting label="Switch Mode LEDs source" value="1"/>
+              </compositeChoice>
+            </compositeVal>
+            <label>BDL16x LED outputs </label>
+          </variable>
+
+          <variable CV="113.36" item="Interrogation Response">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Responds with status at GPON and interrogate commmands</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Responds only to interrogate commmands (BDL168 only)</choice>
+                  </enumChoice>
+              </enumVal>
+              <label>This BDL168 </label>
+          </variable>
+
+          <variable CV="113.42" item="First Interrogate Enable">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Standard interrogation</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Ignore OpSw36 setting; reply at every interrogation (BDL168 only)</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable item="Interrogation actions">
+              <compositeVal>
+                  <compositeChoice choice="Reports detection section status at GPON and all except first Interrogation attempt">
+                      <compositeSetting label="Interrogation Response" value="0"/>
+                      <compositeSetting label="First Interrogate Enable" value="0"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Reports detection section status at all except first Interrofation attempt (BDL168 only)">
+                      <compositeSetting label="Interrogation Response" value="1"/>
+                      <compositeSetting label="First Interrogate Enable" value="0"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Reports detection section status at GPON and at all Interrogage attempt (BDL168 only)">
+                      <compositeSetting label="Interrogation Response" value="0"/>
+                      <compositeSetting label="First Interrogate Enable" value="1"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Reports detection section status at all Interrogate attempt (BDL168 only)">
+                      <compositeSetting label="Interrogation Response" value="1"/>
+                      <compositeSetting label="First Interrogate Enable" value="1"/>
+                  </compositeChoice>
+              </compositeVal>
+              <label>This BDL168 </label>
+          </variable>
+
+          <variable CV="113.37" item="Detection Section Timing1">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Closed (BDL168 only)</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable CV="113.38" item="Detection Section Timing2">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Closed (BDL168 only)</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable item="Detection Section Timing">
+              <compositeVal>
+                <compositeChoice choice="Standard">
+                  <compositeSetting label="Detection Section Timing1" value="0"/>
+                  <compositeSetting label="Detection Section Timing2" value="0"/>
+                </compositeChoice>
+                <compositeChoice choice="Slow (BDL168 only)">
+                  <compositeSetting label="Detection Section Timing1" value="1"/>
+                  <compositeSetting label="Detection Section Timing2" value="0"/>
+                </compositeChoice>
+                <compositeChoice choice="Standard (alternate) (BDL168 only)">
+                  <compositeSetting label="Detection Section Timing1" value="0"/>
+                  <compositeSetting label="Detection Section Timing2" value="1"/>
+                </compositeChoice>
+                <compositeChoice choice="Twice slow (BDL160 only)">
+                  <compositeSetting label="Detection Section Timing1" value="1"/>
+                  <compositeSetting label="Detection Section Timing2" value="1"/>
+                </compositeChoice>
+              </compositeVal>
+              <label>Detection Section timing is</label>
+          </variable>
+
+          <variable CV="113.39" item="Transponder Tracking Mode">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Sequential Mode</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Verbose Mode (BDL168 only)</choice>
+                  </enumChoice>
+              </enumVal>
+              <label>Transponder Tracking uses</label>
+          </variable>
+
+          <variable CV="113.43" item="Anti-chatter Sensitivity1">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Closed</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable CV="113.44" item="Anti-chatter Sensitivity2">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Closed</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable item="Anti-Chatter Filtering">
+            <compositeVal>
+              <compositeChoice choice="Maximum Anti-Chatter Filter sensitivity">
+                <compositeSetting label="Anti-chatter Sensitivity1" value="0"/>
+                <compositeSetting label="Anti-chatter Sensitivity2" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Anti-Chatter Filter is disabled (BDL168 only)">
+                <compositeSetting label="Anti-chatter Sensitivity1" value="1"/>
+                <compositeSetting label="Anti-chatter Sensitivity2" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Standard Anti-Chatter Filter sensitivity (BDL168 only)">
+                <compositeSetting label="Anti-chatter Sensitivity1" value="0"/>
+                <compositeSetting label="Anti-chatter Sensitivity2" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="Anti-Chatter Filter is disabled (Alternate) (BDL168 only)">
+                <compositeSetting label="Anti-chatter Sensitivity1" value="1"/>
+                <compositeSetting label="Anti-chatter Sensitivity2" value="1"/>
+              </compositeChoice>
+            </compositeVal>
+            <label>BDL16x LED outputs </label>
+          </variable>
+
+          <variable CV="113.45" item="Transponding Messages at GPOFF">
+              <enumVal>
+                  <enumChoice>
+                      <choice>sends Transponding messages</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>does not send Transponding messages (BDL168 only)</choice>
+                  </enumChoice>
+              </enumVal>
+              <label>At reception of GPOFF: </label>
+          </variable>
+
 
         </variables>
     </decoder>
+    <pane>
+        <name>Basic BDL16/BDL162/BDL168 OpSw Settings</name>
+        <column>
+            <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Detection Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+            <display item="Wiring Type"/>
+            <display item="Occupancy Force when Zone Power Off"/>
+            <display item="Detection section 16"/>
+            <display item="Detection threshold"/>
+            <display item="Detection Section Timing"/>
+            <label><text> </text></label>
+            <separator/>
+
+            <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;LocoNet Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+            <display item="BDL as LocoNet Master"/>
+            <display item="BDL as LocoNet Termination"/>
+            <display item="Power-up delay"/>
+            <display item="Swap RailSync sensitivity"/>
+            <display item="RailSync Sample Delay"/>
+
+            <display item="Interrogation actions"/>
+
+            <label><text> </text></label>
+            <separator/>
+            <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;LED Output Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+            <display item="LED Outputs"/>
+            <label><text>   </text></label>
+
+        </column>
+    </pane>
+    <pane>
+        <name>Transponding Controls</name>
+        <column>
+            <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Transponding Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+            <display item="Transponding Enable"/>
+            <display item="Anti-chatter Filtering"/>
+            <display item="Transponding Messages at GPOFF"/>
+            <display item="Transponder Tracking Mode"/>
+            <label><text>   </text></label>
+        </column>
+    </pane>
 
 </decoder-config>

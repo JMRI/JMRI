@@ -467,7 +467,7 @@
   <pane>
     <name>DS64 Basic Settings</name>
     <column>
-        <label><text>Output Controls</text></label>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Output Controls Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
         <display item="Output Type"/>
 
         <label><text>   </text></label>
@@ -487,22 +487,23 @@
         <display item="Crossing Gate 4"/>
         <label><text>   </text></label>
         <separator/>
-        <label><text>Command Sources</text></label>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Control Source Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
         <display item="Command Source"/>
         <display item="Controls From"/>
 
         <label><text>   </text></label>
 
         <separator/>
-        <label><text>DS64 Routes</text></label>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Local Routes Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
         <display item="Routes trigger"/>
 
         <label><text>   </text></label>
 
         <separator/>
-        <label><text>Local Input Signal Effects</text></label>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Local Input Signals Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
         <display item="Local Input Effects"/>
         <display item="Input Messages"/>
+        <label><text>   </text></label>
 
     </column>
   </pane>

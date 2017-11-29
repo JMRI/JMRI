@@ -14,7 +14,7 @@
 <!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" 
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
                 showEmptyPanes="no">
 
     <version author="Bob Jacobsen" version="1" lastUpdated="20171121" />
@@ -31,14 +31,35 @@
 
         <variables>
           <variable CV="1" comment="Board address" item="Short Address" default="03" infoOnly="yes">
-            <!-- needed to set the board address value -->            
-            <decVal min="1" max="16" />
+            <!-- needed to set the board address value -->
+            <decVal min="1" max="36" />
             <label>Primary Address</label>
           </variable>
 
-          <variable CV="112.3" item="Vstart"
-                      comment="This is Vstart so it shows up on a pane for testing">
-            <enumVal>
+          <variable CV="114.01" item="Mode of operation" default="0">
+              <enumVal>
+              <enumChoice>
+                <choice>SE8c Mode</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>Reserved</choice>
+              </enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="114.02" item="Number of Aspects Per head" default="0">
+              <enumVal>
+              <enumChoice>
+                <choice>4 aspects per head</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>2 aspects per head</choice>
+              </enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="114.03" item="Drv1-4 Head Type 1" default="0">
+              <enumVal>
               <enumChoice>
                 <choice>Thrown</choice>
               </enumChoice>
@@ -48,7 +69,287 @@
             </enumVal>
           </variable>
 
+          <variable CV="114.04" item="Drv1-4 Head Type 2" default="0">
+              <enumVal>
+              <enumChoice>
+                <choice>Thrown</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>Closed</choice>
+              </enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="114.05" item="Drv1-4 Head Type 3" default="0">
+              <enumVal>
+              <enumChoice>
+                <choice>Thrown</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>Closed</choice>
+              </enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable item="Head Type For DRV1 to DRV4">
+              <compositeVal>
+                  <compositeChoice choice="3/3 Dual-heads, common anode">
+                      <compositeSetting label="Drv1-4 Head Type 1" value="0"/>
+                      <compositeSetting label="Drv1-4 Head Type 2" value="0"/>
+                      <compositeSetting label="Drv1-4 Head Type 3" value="0"/>
+                  </compositeChoice>
+                  <compositeChoice choice="3/3 Dual-heads, common cathode">
+                      <compositeSetting label="Drv1-4 Head Type 1" value="0"/>
+                      <compositeSetting label="Drv1-4 Head Type 2" value="0"/>
+                      <compositeSetting label="Drv1-4 Head Type 3" value="1"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Searchlight, 3-wire, common anode">
+                      <compositeSetting label="Drv1-4 Head Type 1" value="0"/>
+                      <compositeSetting label="Drv1-4 Head Type 2" value="1"/>
+                      <compositeSetting label="Drv1-4 Head Type 3" value="0"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Searchlight, 3-wire, common cathode">
+                      <compositeSetting label="Drv1-4 Head Type 1" value="0"/>
+                      <compositeSetting label="Drv1-4 Head Type 2" value="1"/>
+                      <compositeSetting label="Drv1-4 Head Type 3" value="1"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Searchlight, 2-wire, common anode">
+                      <compositeSetting label="Drv1-4 Head Type 1" value="1"/>
+                      <compositeSetting label="Drv1-4 Head Type 2" value="1"/>
+                      <compositeSetting label="Drv1-4 Head Type 3" value="0"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Searchlight, 2-wire, common cathode">
+                      <compositeSetting label="Drv1-4 Head Type 1" value="1"/>
+                      <compositeSetting label="Drv1-4 Head Type 2" value="1"/>
+                      <compositeSetting label="Drv1-4 Head Type 3" value="1"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Undefined (1)">
+                      <compositeSetting label="Drv1-4 Head Type 1" value="1"/>
+                      <compositeSetting label="Drv1-4 Head Type 2" value="0"/>
+                      <compositeSetting label="Drv1-4 Head Type 3" value="0"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Undefined (2)">
+                      <compositeSetting label="Drv1-4 Head Type 1" value="1"/>
+                      <compositeSetting label="Drv1-4 Head Type 2" value="0"/>
+                      <compositeSetting label="Drv1-4 Head Type 3" value="1"/>
+                  </compositeChoice>
+              </compositeVal>
+          </variable>
+
+
+
+
+
+          <variable CV="114.06" item="Drv5-8 Head Type 1" default="0">
+              <enumVal>
+              <enumChoice>
+                <choice>Thrown</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>Closed</choice>
+              </enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="114.07" item="Drv5-8 Head Type 2" default="0">
+              <enumVal>
+              <enumChoice>
+                <choice>Thrown</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>Closed</choice>
+              </enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="114.08" item="Drv5-8 Head Type 3" default="0">
+              <enumVal>
+              <enumChoice>
+                <choice>Thrown</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>Closed</choice>
+              </enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable item="Head Type For DRV1 to DRV8">
+              <compositeVal>
+                  <compositeChoice choice="3/3 Dual-heads, common anode">
+                      <compositeSetting label="Drv5-8 Head Type 1" value="0"/>
+                      <compositeSetting label="Drv5-8 Head Type 2" value="0"/>
+                      <compositeSetting label="Drv5-8 Head Type 3" value="0"/>
+                  </compositeChoice>
+                  <compositeChoice choice="3/3 Dual-heads, common cathode">
+                      <compositeSetting label="Drv5-8 Head Type 1" value="0"/>
+                      <compositeSetting label="Drv5-8 Head Type 2" value="0"/>
+                      <compositeSetting label="Drv5-8 Head Type 3" value="1"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Searchlight, 3-wire, common anode">
+                      <compositeSetting label="Drv5-8 Head Type 1" value="0"/>
+                      <compositeSetting label="Drv5-8 Head Type 2" value="1"/>
+                      <compositeSetting label="Drv5-8 Head Type 3" value="0"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Searchlight, 3-wire, common cathode">
+                      <compositeSetting label="Drv5-8 Head Type 1" value="0"/>
+                      <compositeSetting label="Drv5-8 Head Type 2" value="1"/>
+                      <compositeSetting label="Drv5-8 Head Type 3" value="1"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Searchlight, 2-wire, common anode">
+                      <compositeSetting label="Drv5-8 Head Type 1" value="1"/>
+                      <compositeSetting label="Drv5-8 Head Type 2" value="1"/>
+                      <compositeSetting label="Drv5-8 Head Type 3" value="0"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Searchlight, 2-wire, common cathode">
+                      <compositeSetting label="Drv5-8 Head Type 1" value="1"/>
+                      <compositeSetting label="Drv5-8 Head Type 2" value="1"/>
+                      <compositeSetting label="Drv5-8 Head Type 3" value="1"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Undefined (1)">
+                      <compositeSetting label="Drv5-8 Head Type 1" value="1"/>
+                      <compositeSetting label="Drv5-8 Head Type 2" value="0"/>
+                      <compositeSetting label="Drv5-8 Head Type 3" value="0"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Undefined (2)">
+                      <compositeSetting label="Drv5-8 Head Type 1" value="1"/>
+                      <compositeSetting label="Drv5-8 Head Type 2" value="0"/>
+                      <compositeSetting label="Drv5-8 Head Type 3" value="1"/>
+                  </compositeChoice>
+              </compositeVal>
+          </variable>
+
+          <variable CV="114.09" item="4th Aspect 1" default="0">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Closed</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable CV="114.10" item="4th Aspect 2" default="0">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Closed</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable item="Fourth Aspect">
+              <compositeVal>
+                  <compositeChoice choice="Flashing Yellow">
+                      <compositeSetting label="4th Aspect 1" value="0"/>
+                      <compositeSetting label="4th Aspect 2" value="0"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Flashing Red">
+                      <compositeSetting label="4th Aspect 1" value="0"/>
+                      <compositeSetting label="4th Aspect 2" value="1"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Dark (unlit)">
+                      <compositeSetting label="4th Aspect 1" value="1"/>
+                      <compositeSetting label="4th Aspect 2" value="0"/>
+                  </compositeChoice>
+                  <compositeChoice choice="Flashing Green">
+                      <compositeSetting label="4th Aspect 1" value="1"/>
+                      <compositeSetting label="4th Aspect 2" value="1"/>
+                  </compositeChoice>
+              </compositeVal>
+          </variable>
+
+          <variable CV="114.11" item="Semaphore Mode" default="0">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Pulsed outputs</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Static outputs for Semaphores or slow-motion turnout machines</choice>
+                  </enumChoice>
+              </enumVal>
+              <label>SMTM outputs are</label>
+          </variable>
+
+          <variable CV="114.13" item="DS reporting" default="0">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Enabled</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Disabled</choice>
+                  </enumChoice>
+              </enumVal>
+              <label>Detection Section reporting is</label>
+          </variable>
+
+          <variable CV="114.14" item="Switch commands from" default="0">
+              <enumVal>
+                  <enumChoice>
+                      <choice>RailSync wires</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>LocoNet messages</choice>
+                  </enumChoice>
+              </enumVal>
+              <label>Switch messages are taken from</label>
+          </variable>
+
+          <variable CV="114.15" item="Local Switch Toggle" default="0">
+              <enumVal>
+                  <enumChoice>
+                      <choice>toggle the corresponding SMTM0x outputs</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>are ignored</choice>
+                  </enumChoice>
+              </enumVal>
+              <label>DS0x inputs</label>
+          </variable>
+
+          <variable CV="114.21" item="Test Mode" default="0">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Disabled</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Enabled</choice>
+                  </enumChoice>
+              </enumVal>
+              <label>Signal Head Test Pattern is</label>
+          </variable>
         </variables>
     </decoder>
+    <pane>
+        <name>Basic SE8c OpSw Settings</name>
+        <column>
+            <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Operating Mode&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+            <display item="Mode of operation"/>
+            <label><text> </text></label>
+            <separator/>
+            <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Signal Head Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+            <display item="Number of Aspects Per head"/>
+            <display item="Head Type For DRV1 to DRV4"/>
+            <display item="Head Type For DRV5 to DRV8"/>
+            <display item="Fourth Aspect"/>
+            <display item="Test Mode"/>
+            <label><text> </text></label>
+            <separator/>
+            <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;LocoNet Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+            <display item="Switch commands from"/>
+            <label><text> </text></label>
+            <separator/>
+            <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Inputs Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+            <display item="DS reporting"/>
+            <display item="Local Switch Toggle"/>
+            <label><text> </text></label>
+            <separator/>
+            <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Outputs Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+            <display item="Semaphore Mode"/>
+            <label><text> </text></label>
+        </column>
+    </pane>
 
 </decoder-config>
