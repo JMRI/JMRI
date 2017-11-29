@@ -136,7 +136,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
      */
     @Override
     public void configure() {
-
         // Connect the control objects:
         //   connect an Engine to the Distributor
         Engine e = Engine.instance();
@@ -145,8 +144,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         // start the reader
         readerThread = new Thread(new Reader());
         readerThread.start();
-
-        jmri.jmrix.rps.ActiveFlag.setActive();
 
     }
 
@@ -207,6 +204,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
     volatile OutputStream ostream = null;
     int[] offsetArray = null;
 
+    @Deprecated
     static public SerialAdapter instance() {
         if (mInstance == null) {
             mInstance = new SerialAdapter();

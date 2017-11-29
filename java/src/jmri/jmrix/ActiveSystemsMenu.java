@@ -49,10 +49,6 @@ public class ActiveSystemsMenu extends JMenu {
             m.add(getMenu("jmri.jmrix.grapevine.GrapevineMenu"));
         }
 
-        if (jmri.jmrix.rps.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.rps.RpsMenu"));
-        }
-
         if (jmri.jmrix.secsi.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.secsi.SecsiMenu"));
         }
@@ -81,9 +77,6 @@ public class ActiveSystemsMenu extends JMenu {
 
         if (jmri.jmrix.grapevine.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.grapevine.GrapevineMenu"));
-        }
-        if (jmri.jmrix.rps.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.rps.RpsMenu"));
         }
         if (jmri.jmrix.secsi.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.secsi.SecsiMenu"));
