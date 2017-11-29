@@ -13468,7 +13468,7 @@ public class LayoutEditorTools {
         String turnoutName = turn.getDisplayName();
         String farTurnoutName = farTurn.getDisplayName();
 
-        String logixName = "SYS_LAYOUTSLIP:" + slip.ident;
+        String logixName = "IX_LAYOUTSLIP:" + slip.ident;
         String sensorName = "IS:" + logixName + "C" + number;
         try {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
@@ -13543,19 +13543,19 @@ public class LayoutEditorTools {
     private void addNearSensorToSlipLogic(String name) {
         if ((name != null) && !name.isEmpty()) {
             // return if a sensor by this name is already present
-            if (logic.getSensor1().equals(name)) {
+            if (logic.getSensor1() != null && logic.getSensor1().equals(name)) {
                 return;
             }
-            if (logic.getSensor2().equals(name)) {
+            if (logic.getSensor2() != null && logic.getSensor2().equals(name)) {
                 return;
             }
-            if (logic.getSensor3().equals(name)) {
+            if (logic.getSensor3() != null && logic.getSensor3().equals(name)) {
                 return;
             }
-            if (logic.getSensor4().equals(name)) {
+            if (logic.getSensor4() != null && logic.getSensor4().equals(name)) {
                 return;
             }
-            if (logic.getSensor5().equals(name)) {
+            if (logic.getSensor5() != null && logic.getSensor5().equals(name)) {
                 return;
             }
             // add in the first available slot
