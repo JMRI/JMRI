@@ -32,9 +32,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract ItemPanel for items having sets of icons (families).
+ * ItemPanel general implementation for placing of CPE items having sets of icons (families).
  * 
  * @author Pete Cressman Copyright (c) 2010, 2011
+ * @author Egbert Broerse 2017
  */
 public abstract class FamilyItemPanel extends ItemPanel {
 

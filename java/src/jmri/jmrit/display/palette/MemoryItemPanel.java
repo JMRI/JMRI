@@ -237,7 +237,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
                 _updateButton.setEnabled(false);
                 _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
             }
-            _iconFamilyPanel.remove(_dragIconPanel);
+            _dragIconPanel.removeAll();
             makeDragIconPanel(1);
             makeDndIconPanel(null, null);
         }
@@ -248,7 +248,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
     protected void setEditor(Editor ed) {
         _editor = ed;
         if (_initialized) {
-            _iconFamilyPanel.remove(_dragIconPanel);
+            _dragIconPanel.removeAll();
             makeDragIconPanel(1);
             makeDndIconPanel(null, null);
         }

@@ -36,6 +36,12 @@ import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * TableItemPanel extension for placing of SignalMast items with a fixed set of icons.
+ *
+ * @author Pete Cressman Copyright (c) 2010, 2011
+ * @author Egbert Broerse 2017
+ */
 public class SignalMastItemPanel extends TableItemPanel implements ListSelectionListener {
 
     SignalMast _mast;

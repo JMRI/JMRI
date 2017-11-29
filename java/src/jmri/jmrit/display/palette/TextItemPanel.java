@@ -60,12 +60,14 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
 
     private void makeDecoratorPanel() {
         if (_decorator != null) {
-            remove(_decorator);
+            _decorator.removeAll();
+            _decorator.updateSamples();
+        } else {
+            DragDecoratorLabel sample = new DragDecoratorLabel(Bundle.getMessage("sample"), _editor);
+            _decorator = new DecoratorPanel(_editor, null);
+            _decorator.initDecoratorPanel(sample);
+            add(_decorator, 1);
         }
-        DragDecoratorLabel sample = new DragDecoratorLabel(Bundle.getMessage("sample"), _editor);
-        _decorator = new DecoratorPanel(_editor, null);
-        _decorator.initDecoratorPanel(sample);
-        add(_decorator, 1);
     }
 
     @Override

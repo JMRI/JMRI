@@ -36,10 +36,10 @@ import org.slf4j.LoggerFactory;
 
 public class MultiSensorItemPanel extends TableItemPanel {
 
-    JPanel _multiSensorPanel;
+    JPanel _multiSensorPanel; // TODO convert to ImagePanel
     MultiSensorSelectionModel _selectionModel;
     boolean _upDown = false;
-//    private ImagePanel _iconFamilyPanel;
+    // private ImagePanel _iconFamilyPanel;
     protected JPanel bgBoxPanel;
 
     public MultiSensorItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {

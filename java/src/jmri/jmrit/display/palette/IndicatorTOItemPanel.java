@@ -171,8 +171,12 @@ public class IndicatorTOItemPanel extends TableItemPanel {
      */
     @Override
     protected void initIconFamiliesPanel() {
-        _iconFamilyPanel = new ImagePanel();
-        _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
+        if (_iconFamilyPanel == null) { // keep existing panels
+            _iconFamilyPanel = new ImagePanel();
+            _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
+        } else {
+            _iconFamilyPanel.removeAll(); // TODO use a function in _iconFamilyPanel
+        }
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> families
                 = ItemPalette.getLevel4FamilyMaps(_itemType);
         if (families != null && families.size() > 0) {
@@ -423,11 +427,14 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     protected void setFamily(String family) {
         _family = family;
         log.debug("setFamily: for type \"{}\", family \"{}\"", _itemType, family);
-        _iconFamilyPanel.remove(_iconPanel);
-        _iconPanel = new JPanel();
-        _iconPanel.setOpaque(false);
-        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),Bundle.getMessage("PreviewBorderTitle")));
-        _iconFamilyPanel.add(_iconPanel, 0);
+        if (_iconPanel == null) {
+            _iconPanel = new ImagePanel();
+            _iconPanel.setOpaque(false);
+            _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1), Bundle.getMessage("PreviewBorderTitle")));
+            _iconFamilyPanel.add(_iconPanel, 0);
+        } else {
+            _iconPanel.removeAll();
+        }
         if (!_suppressDragging) {
             _iconFamilyPanel.remove(_dragIconPanel);
             makeDragIconPanel(1);

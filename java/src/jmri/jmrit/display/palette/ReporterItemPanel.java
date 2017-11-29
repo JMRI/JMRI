@@ -168,7 +168,7 @@ public class ReporterItemPanel extends TableItemPanel {
         _family = null;
         super.setEditor(ed);
         if (_initialized) {
-            remove(_iconFamilyPanel);
+            _iconFamilyPanel.removeAll();
             initIconFamiliesPanel();
             add(_iconFamilyPanel, 1);
             validate();

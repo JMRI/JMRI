@@ -486,8 +486,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         return button;
     }
 
-    private void updateSamples() {
-        if (_previewPanel==null) {
+    protected void updateSamples() {
+        if (_previewPanel == null) {
             return;            
         }
         

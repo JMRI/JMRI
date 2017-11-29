@@ -36,8 +36,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ItemPanel for the various item types that come from tool Tables - e.g.
- * Memory, Signal Head etc.
+ * FamilyItemPanel extension for placing of CPE item types that come from tool Tables
+ * - e.g. Turnouts, Sensors, Lights, Signal Heads, etc.
  * 
  * @author Pete Cressman Copyright (c) 2010, 2011
  */
