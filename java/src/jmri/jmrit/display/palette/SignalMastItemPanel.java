@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
 public class SignalMastItemPanel extends TableItemPanel implements ListSelectionListener {
 
     SignalMast _mast;
-    protected ImagePanel _iconPanel; // panel on _iconFamilyPanel - all icons in family, shown upon [Show Icons]
+    // protected ImagePanel _iconPanel; // panel on _iconFamilyPanel - all icons in family, shown upon [Show Icons]
     // Note that _dragIconPanel also is of class ImagePanel, but not used as background on the SignalMastItemPanel
 
     public SignalMastItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel<jmri.SignalMast> model, Editor editor) {
@@ -74,9 +74,12 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
 
     @Override
     protected void initIconFamiliesPanel() {
-        _iconFamilyPanel = new JPanel();
-        _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
-        _iconFamilyPanel.setOpaque(true);
+        if (_iconFamilyPanel == null) { // move under (!_update) ?
+            log.debug("new _iconFamilyPanel created");
+            _iconFamilyPanel = new JPanel();
+            _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
+            _iconFamilyPanel.setOpaque(true);
+        }
         if (!_update) {
             _iconFamilyPanel.add(instructions());
         }
@@ -86,9 +89,11 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         }
         makeDragIconPanel(1);
         makeDndIconPanel(null, null);
-        _iconPanel = new ImagePanel();
-        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
-                Bundle.getMessage("PreviewBorderTitle")));
+        if (_iconPanel == null) { // keep an existing panel
+            _iconPanel = new ImagePanel();
+            _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
+                    Bundle.getMessage("PreviewBorderTitle")));
+        }
         if (_backgrounds != null) {
             _iconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
         } else {
@@ -104,7 +109,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             panel.add(new JLabel(Bundle.getMessage("PickRowMast")));
         }
         _iconFamilyPanel.add(panel);
-        _iconFamilyPanel.add(_iconPanel);
+        _iconFamilyPanel.add(_iconPanel); // on update, _iconPanel was removed from _iconFamilyPanel
         _iconPanel.setVisible(false);
         hideIcons();
     }
@@ -160,7 +165,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         if (doneAction != null) {
             addUpdateButtonToBottom(doneAction);
         }
-        initIconFamiliesPanel();
+        initIconFamiliesPanel(); // (if null: creates and) adds a new _iconFamilyPanel for the new mast map
 
         // create array of backgrounds
         _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
@@ -175,7 +180,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         // always update background from Panel Editor
         _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
 
-        _bottom1Panel.add(makeBgButtonPanel(_iconPanel, _backgrounds));
+        _bottom1Panel.add(makeBgButtonPanel(_dragIconPanel, _backgrounds));
         add(_bottom1Panel);
     }
 
@@ -255,12 +260,13 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         }
         int row = _table.getSelectedRow();
         log.debug("Table valueChanged: row= {}", row);
-        // first remove bgComboPanel
-        if (_bottom1Panel != null && bgBoxPanel != null) {
-            _bottom1Panel.remove(bgBoxPanel); // also remove the coupled combo (if present)
-            // TODO use indirect setting via previewBgSet and Listener, so removing/adding is not needed, see note in FamilyItemPanel
-        }
-        remove(_iconFamilyPanel);
+        // update the family icons
+//        if (_bottom1Panel != null && bgBoxPanel != null) {
+//            _bottom1Panel.remove(bgBoxPanel); // first remove the coupled combo (if present)
+//            // TODO use indirect setting via previewBgSet and Listener, so removing/adding is not needed, see note in FamilyItemPanel
+//        }
+        //remove(_iconFamilyPanel); // remove completely - loses connection from Combo
+        _iconFamilyPanel.remove(1); // or remove objects from _iconFamilyPanel
         if (row >= 0) {
             if (_updateButton != null) {
                 _updateButton.setEnabled(true);
@@ -277,15 +283,15 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _showIconsButton.setEnabled(false);
             _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
         }
-        initIconFamiliesPanel(); // creates and adds a new _iconFamilyPanel for the new mast map
+        initIconFamiliesPanel(); // (if null: creates and) adds a new _iconFamilyPanel for the new mast map
         // reattach new bgComboPanel
-        add(_iconFamilyPanel, 1);
+        //add(_iconFamilyPanel, 1); // already present in case of a refresh
         // add a SetBackground combo
-        if (_bottom1Panel != null) {
-            bgBoxPanel = makeBgButtonPanel(_iconPanel, _backgrounds);
-            // TODO use indirect setting of panel upon display of tab via previewBgSet
-            _bottom1Panel.add(bgBoxPanel);
-        }
+//        if (_bottom1Panel != null) {
+//            bgBoxPanel = makeBgButtonPanel(_dragIconPanel, _backgrounds);
+//            // TODO use indirect setting of panel upon display of tab via previewBgSet
+//            _bottom1Panel.add(bgBoxPanel);
+//        }
         validate();
     }
 

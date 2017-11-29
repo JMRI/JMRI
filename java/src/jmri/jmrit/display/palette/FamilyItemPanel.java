@@ -41,8 +41,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected String _family;
     protected JPanel _iconFamilyPanel;
     protected JPanel familyPanel;
-    protected ImagePanel _dragIconPanel; // panel on _iconFamilyPanel - to drag to control panel
-    protected JPanel _iconPanel;         // panel on _iconFamilyPanel - all icons in family, shown upon [Show Icons]
+    protected ImagePanel _dragIconPanel; // a panel on _iconFamilyPanel - to drag to control panel, hidden upon [Show Icons]
+    protected ImagePanel _iconPanel;     // a panel on _iconFamilyPanel - all icons in family, shown upon [Show Icons]
     protected boolean _suppressDragging;
     protected int _buttonPosition = 0;
     JPanel _bottom1Panel; // typically displays the _showIconsButton and _editIconsButton
@@ -314,6 +314,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
         return true;
     }
 
+    /**
+     * Build lower (icon) element.
+     * Overridden for SignalMastItemPanel.
+     */
     protected void initIconFamiliesPanel() {
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
         if (families != null && families.size() > 0) {
@@ -404,7 +408,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    setFamily(fam); // NPE special for SignalMast (_iconPanel = class ImagePanel)
+                    setFamily(fam); // NPE special for SignalMast (where _iconPanel is of class ImagePanel)
                 }
 
                 ActionListener init(String f) {
@@ -443,21 +447,17 @@ public abstract class FamilyItemPanel extends ItemPanel {
      */
     protected void addFamilyPanels(JPanel familyPanel) {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
-
-        if ("SignalMast".equals(_itemType)) {
-            _iconPanel = new ImagePanel(); // take care of ImagePanel class on SignalMastItemPanel
-        } else {
-            _iconPanel = new JPanel();
+        if (_iconPanel == null) { // don't overwrite existing _iconPanel
+            _iconPanel = new ImagePanel();
+            _iconFamilyPanel.add(_iconPanel);
+            log.debug("_iconPanel created");
         }
         _iconPanel.setLayout(new FlowLayout());
-        _iconPanel.setOpaque(false);
         _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
         //_iconPanel.setBackground(Color.orange); // debug EB
         //_iconPanel.setOpaque(true); // debug EB
-        _iconFamilyPanel.add(_iconPanel);
         _iconPanel.setVisible(false);
-        log.debug("_iconPanel created");
 
         if (!_suppressDragging) {
             makeDragIconPanel(0);
@@ -472,35 +472,39 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
 
     /**
-     * Position initial Preview component on _iconFamilyPanel.
+     * Position initial Preview component on _iconFamilyPanel. If already present, only clear it.
      */
     protected void makeDragIconPanel(int position) {
         if (_dragIconPanel != null) {
-            _iconFamilyPanel.remove(_dragIconPanel);
-            if (_bottom1Panel != null && bgBoxPanel != null) {
-                _bottom1Panel.remove(bgBoxPanel); // also remove the coupled combo (if present)
+            _dragIconPanel.removeAll();
+            //if (_bottom1Panel != null && bgBoxPanel != null) {
+                //_bottom1Panel.remove(bgBoxPanel); // also remove the coupled combo (if present)
                 // TODO use indirect setting via previewBgSet and Listener, so removing/adding is not needed
-            }
-        }
-        _dragIconPanel = new ImagePanel();
-        _dragIconPanel.setOpaque(true); // to show background color/squares
-        if (_backgrounds != null) {
-            _dragIconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
+            //}
         } else {
-            log.debug("FamilyItemPanel - no value for previewBgSet");
+            _dragIconPanel = new ImagePanel();
+            _dragIconPanel.setOpaque(true); // to show background color/squares
+            if (_backgrounds != null) {
+                _dragIconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
+            } else {
+                log.debug("FamilyItemPanel - no value for previewBgSet");
+            }
+            _dragIconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
+                    Bundle.getMessage("PreviewBorderTitle")));
+            _dragIconPanel.setLayout(new FlowLayout());
+            _dragIconPanel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
+            _iconFamilyPanel.add(_dragIconPanel, position); // place icons over background
         }
-        _dragIconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
-                Bundle.getMessage("PreviewBorderTitle")));
-        _dragIconPanel.setLayout(new FlowLayout());
-        _dragIconPanel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
-        _iconFamilyPanel.add(_dragIconPanel, position); // place icons over background
         _dragIconPanel.setVisible(true);
 
         // add a SetBackground combo
-        bgBoxPanel = makeBgButtonPanel(_dragIconPanel, _backgrounds);
         // TODO use indirect setting of panel upon display via previewBgSet
-        if (_bottom1Panel != null && bgBoxPanel != null) { // to enable returning null for some types, skip Reporter
-            _bottom1Panel.add(bgBoxPanel);
+        if (_bottom1Panel != null && bgBoxPanel == null && !"SignalMast".equals(_itemType)) {
+            bgBoxPanel = makeBgButtonPanel(_dragIconPanel, _backgrounds);
+            // to enable returning null for some types, skip Reporter. Don't add for SignalMast (it takes care of its own combo)
+            if (bgBoxPanel != null) {
+                _bottom1Panel.add(bgBoxPanel);
+            }
         }
     }
 
@@ -524,9 +528,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
             log.debug("iconMap is null for type {} family {}", _itemType, _family);
             return;
         }
-        if (_iconPanel == null) { // happens for SignalMast icons (class ImagePanel instead of JPanel
-            // but GUI shows 1 icon that can be dragged fine
-            log.debug("iconPanel is null for type {}", _itemType);
+        if (_iconPanel == null) { // bug for SignalMast icons (is of class ImagePanel)
+            log.debug("_iconPanel is null for type {}", _itemType);
             return;
         }
         _iconPanel.setOpaque(false);
@@ -639,6 +642,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
     protected void hideIcons() {
         if (_iconPanel == null) {
+            log.debug("hideIcons() _iconPanel = null");
             return;
         }
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
@@ -758,17 +762,17 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected void setFamily(String family) {
         _family = family;
         log.debug("setFamily: for type \"{}\", family \"{}\"", _itemType, family);
-        _iconFamilyPanel.remove(_iconPanel); // note this implies recreating the Set Background combo box
+        //_iconFamilyPanel.remove(_iconPanel); // this implies recreating the Set Background combo box
         // attached to the -yet to be created- new _iconPanel, see
-        if ("SignalMast".equals(_itemType)) {
-            _iconPanel = new ImagePanel(); // take care of ImagePanel class on SignalMastItemPanel
-        } else {
-            _iconPanel = new JPanel();
-        }
-        _iconPanel.setOpaque(false); // see through
-        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
-                Bundle.getMessage("PreviewBorderTitle")));
-        _iconFamilyPanel.add(_iconPanel, 0);
+        //if ("SignalMast".equals(_itemType)) {
+            _iconPanel.removeAll(); // = new ImagePanel(); // take care of ImagePanel class on SignalMastItemPanel
+        //} else {
+        //    _iconPanel = new JPanel();
+        //}
+        //_iconPanel.setOpaque(false); // see through
+        //_iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
+        //        Bundle.getMessage("PreviewBorderTitle")));
+        //_iconFamilyPanel.add(_iconPanel, 0);
         HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
         if (map != null) {
             _currentIconMap = map;
