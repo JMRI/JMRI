@@ -2614,7 +2614,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem turntableItem = new JMenuItem(Bundle.getMessage("AddTurntable"));
         optionsAddMenu.add(turntableItem);
         turntableItem.addActionListener((ActionEvent event) -> {
-            addTurntable(windowCenter());
+            Point2D pt = windowCenter();
+            if (selectionActive) {
+                pt = MathUtil.midPoint(getSelectionRect());
+            }
+            addTurntable(pt);
             //note: panel resized in addTurntable
             setDirty();
             redrawPanel();
@@ -2625,6 +2629,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         optionsAddMenu.add(reporterItem);
         reporterItem.addActionListener((ActionEvent event) -> {
             Point2D pt = windowCenter();
+            if (selectionActive) {
+                pt = MathUtil.midPoint(getSelectionRect());
+            }
             enterReporter((int) pt.getX(), (int) pt.getY());
             //note: panel resized in enterReporter
             setDirty();
@@ -5873,7 +5880,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         popup.show((Component) p, p.getWidth() / 2 + (int) ((getZoom() - 1.0) * p.getX()),
                 p.getHeight() / 2 + (int) ((getZoom() - 1.0) * p.getY()));
 
-        /*popup.show((Component)p, event.getX(), event.getY());*/
+        /*popup.show((Component)pt, event.getX(), event.getY());*/
     } //showPopUp()
 
     private long whenReleased = 0; //used to identify event that was popup trigger
@@ -8609,6 +8616,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public LocoIcon addLocoIcon(@Nonnull String name) {
         LocoIcon l = new LocoIcon(this);
         Point2D pt = windowCenter();
+        if (selectionActive) {
+            pt = MathUtil.midPoint(getSelectionRect());
+        }
         l.setLocation((int) pt.getX(), (int) pt.getY());
         putLocoIcon(l, name);
         l.setPositionable(true);
@@ -9714,8 +9724,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     // isBlock defaults to false
-    private void draw1(Graphics2D g2,
-            boolean isMain) {
+    private void draw1(Graphics2D g2, boolean isMain) {
         draw1(g2, isMain, false);
     }
 
