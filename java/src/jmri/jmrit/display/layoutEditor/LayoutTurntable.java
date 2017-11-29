@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import static java.lang.Float.POSITIVE_INFINITY;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -244,13 +245,14 @@ public class LayoutTurntable extends LayoutTrack {
 
     public Point2D getRayCoordsIndexed(int index) {
         Point2D result = MathUtil.zeroPoint2D;
+        double rayRadius = radius + LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
         for (RayTrack rt : rayList) {
             if (rt.getConnectionIndex() == index) {
                 double angle = Math.toRadians(rt.getAngle());
                 // calculate coordinates
                 result = new Point2D.Double(
-                        (center.getX() + ((1.25 * radius) * Math.sin(angle))),
-                        (center.getY() - ((1.25 * radius) * Math.cos(angle))));
+                        (center.getX() + (rayRadius * Math.sin(angle))),
+                        (center.getY() - (rayRadius * Math.cos(angle))));
                 break;
             }
         }
@@ -262,10 +264,11 @@ public class LayoutTurntable extends LayoutTrack {
         RayTrack rt = rayList.get(i);
         if (rt != null) {
             double angle = Math.toRadians(rt.getAngle());
+            double rayRadius = radius + LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
             // calculate coordinates
             result = new Point2D.Double(
-                    (center.getX() + ((1.25 * radius) * Math.sin(angle))),
-                    (center.getY() - ((1.25 * radius) * Math.cos(angle))));
+                    (center.getX() + (rayRadius * Math.sin(angle))),
+                    (center.getY() - (rayRadius * Math.cos(angle))));
         }
         return result;
     }
@@ -438,7 +441,7 @@ public class LayoutTurntable extends LayoutTrack {
 
         for (int k = 0; k < getNumberRays(); k++) {
             if (!requireUnconnected || (getRayConnectOrdered(k) == null)) {
-                p = getCoordsCenter();
+                p = getRayCoordsOrdered(k);
                 distance = MathUtil.distance(p, hitPoint);
                 if (distance < minDistance) {
                     minDistance = distance;
@@ -743,80 +746,84 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
-        // draw turntable circle - default track color, side track width
         float trackWidth = 2.F;
         float halfTrackWidth = trackWidth / 2.f;
+        double radius = getRadius(), diameter = radius + radius;
+        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
 
-        //g2.setColor(defaultTrackColor);
-        //g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-        double r = getRadius(), d = r + r;
-        g2.draw(new Ellipse2D.Double(center.getX() - r, center.getY() - r, d, d));
+        if (isBlock && isMain) {
+            // draw turntable circle - default track color, side track width
+            g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+            g2.setColor(defaultTrackColor);
+            g2.draw(new Ellipse2D.Double(center.getX() - radius, center.getY() - radius, diameter, diameter));
+        }
 
         // draw ray tracks
         for (int j = 0; j < getNumberRays(); j++) {
+            boolean main = false;
             TrackSegment ts = getRayConnectOrdered(j);
-            if (ts == null) {
-                g2.setColor(defaultTrackColor);
-            } else {
-                setColorForTrackBlock(g2, ts.getLayoutBlock());
+            if (ts != null) {
+                main = ts.isMainline();
             }
-            Point2D pt1 = getRayCoordsOrdered(j);
-            Point2D delta = MathUtil.normalize(MathUtil.subtract(pt1, center), r);
-            Point2D pt2 = MathUtil.add(center, delta);
-            g2.draw(new Line2D.Double(pt1, pt2));
-            if (isTurnoutControlled() && (getPosition() == j)) {
-                delta = MathUtil.multiply(delta, (r - halfTrackWidth) / r);
-                //pt1 = MathUtil.subtract(center, MathUtil.subtract(pt2, center));
-                pt1 = MathUtil.subtract(center, delta);
-                //g2.setColor(Color.RED); //TODO: remove this
+            if (isBlock) {
+                if (ts == null) {
+                    g2.setColor(defaultTrackColor);
+                } else {
+                    setColorForTrackBlock(g2, ts.getLayoutBlock());
+                }
+            }
+            if (main == isMain) {
+                Point2D pt2 = getRayCoordsOrdered(j);
+                Point2D delta = MathUtil.normalize(MathUtil.subtract(pt2, center), radius);
+                Point2D pt1 = MathUtil.add(center, delta);
                 g2.draw(new Line2D.Double(pt1, pt2));
+                if (isTurnoutControlled() && (getPosition() == j)) {
+                    delta = MathUtil.normalize(delta, radius - halfTrackWidth);
+                    pt1 = MathUtil.subtract(center, delta);
+                    g2.draw(new Line2D.Double(pt1, pt2));
+                }
             }
         }
-    }   // draw
+    }   // draw1
 
     /**
      * {@inheritDoc}
      */
     @Override
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
-        //TODO: FINISH THIS!
-        //if (isMain == mainline) {
-        //    if (isBlock) {
-        //        setColorForTrackBlock(g2, getLayoutBlock());
-        //    }
-        //    drawSolid(g2);  //TODO: fix this
-        //}
-
-        // draw turntable circle - default track color, side track width
         float trackWidth = 2.F;
         float halfTrackWidth = trackWidth / 2.f;
-
-        //g2.setColor(defaultTrackColor);
-        //g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-        double r = getRadius(), d = r + r;
-        g2.draw(new Ellipse2D.Double(center.getX() - r, center.getY() - r, d, d));
+        double radius = getRadius(), diameter = radius + radius;
 
         // draw ray tracks
         for (int j = 0; j < getNumberRays(); j++) {
+            boolean main = false;
             TrackSegment ts = getRayConnectOrdered(j);
-            if (ts == null) {
-                g2.setColor(defaultTrackColor);
-            } else {
-                setColorForTrackBlock(g2, ts.getLayoutBlock());
+            if (ts != null) {
+                main = ts.isMainline();
             }
-            Point2D pt1 = getRayCoordsOrdered(j);
-            Point2D delta = MathUtil.normalize(MathUtil.subtract(pt1, center), r);
-            Point2D pt2 = MathUtil.add(center, delta);
-            g2.draw(new Line2D.Double(pt1, pt2));
-            if (isTurnoutControlled() && (getPosition() == j)) {
-                delta = MathUtil.multiply(delta, (r - halfTrackWidth) / r);
-                //pt1 = MathUtil.subtract(center, MathUtil.subtract(pt2, center));
-                pt1 = MathUtil.subtract(center, delta);
-                //g2.setColor(Color.RED); //TODO: remove this
-                g2.draw(new Line2D.Double(pt1, pt2));
+            if (main == isMain) {
+                Point2D pt2 = getRayCoordsOrdered(j);
+                Point2D vDelta = MathUtil.normalize(MathUtil.subtract(pt2, center), radius);
+                Point2D vDeltaO = MathUtil.normalize(MathUtil.orthogonal(vDelta), railDisplacement);
+                Point2D pt1 = MathUtil.add(center, vDelta);
+                Point2D pt1L = MathUtil.subtract(pt1, vDeltaO);
+                Point2D pt1R = MathUtil.add(pt1, vDeltaO);
+                Point2D pt2L = MathUtil.subtract(pt2, vDeltaO);
+                Point2D pt2R = MathUtil.add(pt2, vDeltaO);
+                g2.draw(new Line2D.Double(pt1L, pt2L));
+                g2.draw(new Line2D.Double(pt1R, pt2R));
+                if (isTurnoutControlled() && (getPosition() == j)) {
+                    vDelta = MathUtil.normalize(vDelta, radius - halfTrackWidth);
+                    pt1 = MathUtil.subtract(center, vDelta);
+                    pt1L = MathUtil.subtract(pt1, vDeltaO);
+                    pt1R = MathUtil.add(pt1, vDeltaO);
+                    g2.draw(new Line2D.Double(pt1L, pt2L));
+                    g2.draw(new Line2D.Double(pt1R, pt2R));
+                }
             }
         }
-    }   // draw
+    }   // draw2
 
     /**
      * {@inheritDoc}

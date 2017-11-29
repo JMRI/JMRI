@@ -1,7 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
 import static java.lang.Float.POSITIVE_INFINITY;
+import static java.lang.Math.PI;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -1391,7 +1393,7 @@ public class LevelXing extends LayoutTrack {
             if (isBlock) {
                 setColorForTrackBlock(g2, getLayoutBlockBD());
             }
-        g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
+            g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
         }
     }
 
@@ -1400,12 +1402,86 @@ public class LevelXing extends LayoutTrack {
      */
     @Override
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
-        //if (isMain == mainline) {
-        //    if (isBlock) {
-        //        setColorForTrackBlock(g2, getLayoutBlock());
-        //    }
-        //    drawSolid(g2);  //TODO: fix this
-        //}
+        g2.setStroke(new BasicStroke(1.F));
+
+        Point2D pM = getCoordsCenter();
+        Point2D pA = getCoordsA();
+        Point2D pB = getCoordsB();
+        Point2D pC = getCoordsC();
+        Point2D pD = getCoordsD();
+
+        Point2D vAC = MathUtil.subtract(pC, pA);
+        double dirAC_DEG = MathUtil.computeAngleDEG(pA, pC);
+        vAC = MathUtil.normalize(vAC, railDisplacement);
+        Point2D vACO = MathUtil.orthogonal(vAC);
+        Point2D pAL = MathUtil.subtract(pA, vACO);
+        Point2D pAR = MathUtil.add(pA, vACO);
+        Point2D pCL = MathUtil.subtract(pC, vACO);
+        Point2D pCR = MathUtil.add(pC, vACO);
+
+        Point2D vBD = MathUtil.subtract(pD, pB);
+        double dirBD_DEG = MathUtil.computeAngleDEG(pB, pD);
+        vBD = MathUtil.normalize(vBD, railDisplacement);
+        Point2D vBDO = MathUtil.orthogonal(vBD);
+        Point2D pBL = MathUtil.subtract(pB, vBDO);
+        Point2D pBR = MathUtil.add(pB, vBDO);
+        Point2D pDL = MathUtil.subtract(pD, vBDO);
+        Point2D pDR = MathUtil.add(pD, vBDO);
+
+        double deltaDEG = MathUtil.absDiffAngleDEG(dirAC_DEG, dirBD_DEG);
+        double deltaRAD = Math.toRadians(deltaDEG);
+
+        double hypotK = railDisplacement / Math.cos((PI - deltaRAD) / 2.0);
+        double hypotV = railDisplacement / Math.cos(deltaRAD / 2.0);
+
+        log.info("dir AC: {}, BD: {}, diff: {}",
+                dirAC_DEG, dirBD_DEG, deltaDEG);
+
+        Point2D vDisK = MathUtil.normalize(MathUtil.add(vAC, vBD), hypotK);
+        Point2D vDisV = MathUtil.normalize(MathUtil.orthogonal(vDisK), hypotV);
+        Point2D pKL = MathUtil.subtract(pM, vDisK);
+        Point2D pKR = MathUtil.add(pM, vDisK);
+        Point2D pVL = MathUtil.subtract(pM, vDisV);
+        Point2D pVR = MathUtil.add(pM, vDisV);
+
+        if (isMain == isMainlineAC()) {
+            // this is the *2.0 vector (rail gap) for the AC diamon parts
+            Point2D vAC2 = MathUtil.normalize(vAC, 2.0);
+            // KL toward C, VR toward A, VL toward C and KR toward A
+            Point2D pKLtC = MathUtil.add(pKL, vAC2);
+            Point2D pVRtA = MathUtil.subtract(pVR, vAC2);
+            Point2D pVLtC = MathUtil.add(pVL, vAC2);
+            Point2D pKRtA = MathUtil.subtract(pKR, vAC2);
+
+            // draw right AC rail: AR====KL == VR====CR
+            g2.draw(new Line2D.Double(pAR, pKL));
+            g2.draw(new Line2D.Double(pKLtC, pVRtA));
+            g2.draw(new Line2D.Double(pVR, pCR));
+
+            // draw left AC rail: AL====VL == KR====CL
+            g2.draw(new Line2D.Double(pAL, pVL));
+            g2.draw(new Line2D.Double(pVLtC, pKRtA));
+            g2.draw(new Line2D.Double(pKR, pCL));
+        }
+        if (isMain == isMainlineBD()) {
+            // this is the *2.0 vector (rail gap) for the BD diamon parts
+            Point2D vBD2 = MathUtil.normalize(vBD, 2.0);
+            // VR toward D, KR toward B, KL toward D and VL toward B
+            Point2D pVRtD = MathUtil.add(pVR, vBD2);
+            Point2D pKRtB = MathUtil.subtract(pKR, vBD2);
+            Point2D pKLtD = MathUtil.add(pKL, vBD2);
+            Point2D pVLtB = MathUtil.subtract(pVL, vBD2);
+
+            // draw right BD rail: BR====VR == KR====DR
+            g2.draw(new Line2D.Double(pBR, pVR));
+            g2.draw(new Line2D.Double(pVRtD, pKRtB));
+            g2.draw(new Line2D.Double(pKR, pDR));
+
+            // draw left BD rail: BL====KL == VL====DL
+            g2.draw(new Line2D.Double(pBL, pKL));
+            g2.draw(new Line2D.Double(pKLtD, pVLtB));
+            g2.draw(new Line2D.Double(pVL, pDL));
+        }
     }
 
     /**
@@ -1432,7 +1508,7 @@ public class LevelXing extends LayoutTrack {
 
     protected void drawEditControls(Graphics2D g2) {
         g2.setColor(defaultTrackColor);
-        g2.draw(layoutEditor.trackEditControlCircleAt(getCoordsCenter()));
+        //TODO:uncomment this line g2.draw(layoutEditor.trackEditControlCircleAt(getCoordsCenter()));
 
         if (getConnectA() == null) {
             g2.setColor(Color.magenta);

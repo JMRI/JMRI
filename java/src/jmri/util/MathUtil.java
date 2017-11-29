@@ -2,6 +2,7 @@ package jmri.util;
 
 import static java.lang.Float.NEGATIVE_INFINITY;
 import static java.lang.Float.POSITIVE_INFINITY;
+import static java.lang.Math.PI;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -88,14 +89,6 @@ public final class MathUtil {
      */
     public static boolean isEqualToZeroPoint2D(@Nonnull Point2D p) {
         return p.equals(zeroPoint2D);
-    }
-
-    /**
-     * @param p the point
-     * @return the point orthogonal to this one (relative to {0, 0})
-     */
-    public static Point2D orthogonal(@Nonnull Point2D p) {
-        return new Point2D.Double(p.getY(), p.getX());
     }
 
     /**
@@ -323,6 +316,14 @@ public final class MathUtil {
     public static Point2D rotateDEG(
             @Nonnull Point2D p, @Nonnull Point2D c, double aDEG) {
         return rotateRAD(p, c, Math.toRadians(aDEG));
+    }
+
+    /**
+     * @param p the point
+     * @return the point orthogonal to this one (relative to {0, 0})
+     */
+    public static Point2D orthogonal(@Nonnull Point2D p) {
+        return new Point2D.Double(-p.getY(), p.getX());
     }
 
     /**
@@ -657,7 +658,7 @@ public final class MathUtil {
      *
      * @param a the first angle
      * @param b the second angle
-     * @return the relative difference between the two angles
+     * @return the relative difference between the two angles (in degrees)
      */
     @CheckReturnValue
     public static double diffAngleDEG(double a, double b) {
@@ -669,11 +670,36 @@ public final class MathUtil {
      *
      * @param a the first angle
      * @param b the second angle
-     * @return the absolute difference between the two angles
+     * @return the absolute difference between the two angles (in degrees)
      */
     @CheckReturnValue
     public static double absDiffAngleDEG(double a, double b) {
         return Math.abs(diffAngleDEG(a, b));
+    }
+
+    /**
+     * calculate the relative difference (+/-PI) between two angles
+     *
+     * @param a the first angle
+     * @param b the second angle
+     * @return the relative difference between the two angles (in radians)
+     */
+    @CheckReturnValue
+    public static double diffAngleRAD(double a, double b) {
+        return wrap(a - b, -PI, +PI);
+
+    }
+
+    /**
+     * calculate the absolute difference (0-PI) between two angles
+     *
+     * @param a the first angle
+     * @param b the second angle
+     * @return the absolute difference between the two angles (in radians)
+     */
+    @CheckReturnValue
+    public static double absDiffAngleRAD(double a, double b) {
+        return Math.abs(diffAngleRAD(a, b));
     }
 
     /**
