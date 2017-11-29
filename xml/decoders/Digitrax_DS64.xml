@@ -35,7 +35,7 @@
             <decVal min="1" max="128" />
             <label>Primary Address</label>
           </variable>
-          <variable CV="115.1" comment="Output type" item="Output Type" default="0" infoOnly="no">
+          <variable CV="115.01" comment="Output type" item="Output Type" default="0" infoOnly="no">
               <enumVal>
                   <enumChoice>
                       <choice>Outputs are pulsed (OpSw1=t)</choice>
@@ -47,7 +47,7 @@
                   </enumChoice>
               </enumVal>
           </variable>
-          <variable CV="115.2" comment="Pulse or Blink rate - needs expansion to four bits!" item="Pulse or blink rate1" default="0" infoOnly="no">
+          <variable CV="115.02" comment="Pulse or Blink rate - needs expansion to four bits!" item="Pulse or blink rate1" default="0" infoOnly="no">
               <enumVal>
                   <enumChoice>
                       <choice>Outputs pulse active or blink for 0.1 second (OpSw2=t)</choice>
@@ -58,7 +58,7 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.3" comment="Pulse or Blink rate - needs expansion to four bits!" item="Pulse or blink rate2" default="0" infoOnly="no">
+          <variable CV="115.03" comment="Pulse or Blink rate - needs expansion to four bits!" item="Pulse or blink rate2" default="0" infoOnly="no">
               <enumVal>
                   <enumChoice>
                       <choice>Add 0 seconds to the pulse or blink rate (OpSw3=t)</choice>
@@ -69,7 +69,7 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.4" comment="Pulse or Blink rate - needs expansion to four bits!" item="Pulse or blink rate3" default="0" infoOnly="no">
+          <variable CV="115.04" comment="Pulse or Blink rate - needs expansion to four bits!" item="Pulse or blink rate3" default="0" infoOnly="no">
               <enumVal>
                   <enumChoice>
                       <choice>Add 0 seconds to the pulse or blink rate (OpSw4=t)</choice>
@@ -81,7 +81,7 @@
           </variable>
 
 
-          <variable CV="115.5" comment="Pulse or Blink rate - needs expansion to four bits!" item="Pulse or blink rate4" default="0" infoOnly="no">
+          <variable CV="115.05" comment="Pulse or Blink rate - needs expansion to four bits!" item="Pulse or blink rate4" default="0" infoOnly="no">
               <enumVal>
                   <enumChoice>
                       <choice>Add 0 seconds to the pulse or blink rate (OpSw5=t)</choice>
@@ -92,7 +92,7 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.6" comment="Output Auto Power-up" item="Output Auto Power-up" default="0" infoOnly="no">
+          <variable CV="115.06" item="Output Auto Power-up" default="0" infoOnly="no">
               <enumVal>
                   <enumChoice>
                       <choice>Outputs automatically power-up to the last known state (OpSw6=t)</choice>
@@ -103,8 +103,9 @@
                       <comment>Thrown is first choice; Closed is second choice</comment>
                   </enumChoice>
               </enumVal>
+              <label> </label>
           </variable>
-          <variable CV="115.8" comment="Start-up Delay" item="Start-Up Delay" default="0" infoOnly="no">
+          <variable CV="115.08" comment="Start-up Delay" item="Start-Up Delay" default="0" infoOnly="no">
               <enumVal>
                   <enumChoice>
                       <choice>Short delay for interrogation requests (OpSw8=t)</choice>
@@ -115,9 +116,10 @@
                       <comment>Thrown is first choice; Closed is second choice</comment>
                   </enumChoice>
               </enumVal>
+              <label> </label>
           </variable>
 
-          <variable CV="115.9" comment="Static Output Shutoff" item="Static Output Shutoff" default="0" infoOnly="no">
+          <variable CV="115.09" comment="Static Output Shutoff" item="Static Output Shutoff" default="0" infoOnly="no">
               <enumVal>
                   <enumChoice>
                       <choice>Static Outputs remain powered (OpSw9=t)</choice>
@@ -128,6 +130,7 @@
                       <comment>Thrown is first choice; Closed is second choice</comment>
                   </enumChoice>
               </enumVal>
+              <label> </label>
           </variable>
 
           <variable CV="115.10" comment="Command Source" item="Command Source" default="0" infoOnly="no">
@@ -192,6 +195,7 @@
                       <comment>Thrown is first choice; Closed is second choice</comment>
                   </enumChoice>
               </enumVal>
+              <label> </label>
           </variable>
 
           <variable CV="115.15" comment="Inputs control outputs" item="Inputs Control Outputs" default="0" infoOnly="no">
@@ -231,6 +235,7 @@
                       <comment>Thrown is first choice; Closed is second choice</comment>
                   </enumChoice>
               </enumVal>
+              <label> </label>
           </variable>
 
           <variable CV="115.18" comment="Crossing Gate on Output 2" item="Crossing Gate 2" default="0" infoOnly="no">
@@ -244,6 +249,7 @@
                       <comment>Thrown is first choice; Closed is second choice</comment>
                   </enumChoice>
               </enumVal>
+              <label> </label>
           </variable>
 
           <variable CV="115.19" comment="Crossing Gate on Output 3" item="Crossing Gate 3" default="0" infoOnly="no">
@@ -257,6 +263,7 @@
                       <comment>Thrown is first choice; Closed is second choice</comment>
                   </enumChoice>
               </enumVal>
+              <label> </label>
           </variable>
 
           <variable CV="115.20" comment="Crossing Gate on Output 4" item="Crossing Gate 4" default="0" infoOnly="no">
@@ -270,6 +277,7 @@
                       <comment>Thrown is first choice; Closed is second choice</comment>
                   </enumChoice>
               </enumVal>
+              <label> </label>
           </variable>
 
           <variable CV="115.21" comment="LocoNet Message Type for Inputs" item="Input LocoNet Message" default="0" infoOnly="no">
@@ -284,32 +292,219 @@
                   </enumChoice>
               </enumVal>
           </variable>
+          <variable item="Output Pulse or Blink Time">
+            <compositeVal>
+              <compositeChoice choice="0.1 Second">
+                <compositeSetting label="Pulse or blink rate1" value="0"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="0"/>
+                <compositeSetting label="Pulse or blink rate4" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="0.2 Second">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="0"/>
+                <compositeSetting label="Pulse or blink rate4" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="0.4 Second">
+                <compositeSetting label="Pulse or blink rate1" value="0"/>
+                <compositeSetting label="Pulse or blink rate2" value="1"/>
+                <compositeSetting label="Pulse or blink rate3" value="0"/>
+                <compositeSetting label="Pulse or blink rate4" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="0.6 Second">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="1"/>
+                <compositeSetting label="Pulse or blink rate3" value="0"/>
+                <compositeSetting label="Pulse or blink rate4" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="0.8 Second">
+                <compositeSetting label="Pulse or blink rate1" value="0"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="1"/>
+                <compositeSetting label="Pulse or blink rate4" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="1.0 Second">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="1"/>
+                <compositeSetting label="Pulse or blink rate4" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="1.2 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="0"/>
+                <compositeSetting label="Pulse or blink rate2" value="1"/>
+                <compositeSetting label="Pulse or blink rate3" value="1"/>
+                <compositeSetting label="Pulse or blink rate4" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="1.4 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="1"/>
+                <compositeSetting label="Pulse or blink rate3" value="1"/>
+                <compositeSetting label="Pulse or blink rate4" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="1.6 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="0"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="0"/>
+                <compositeSetting label="Pulse or blink rate4" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="1.8 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="0"/>
+                <compositeSetting label="Pulse or blink rate4" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="2.0 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="0"/>
+                <compositeSetting label="Pulse or blink rate2" value="1"/>
+                <compositeSetting label="Pulse or blink rate3" value="0"/>
+                <compositeSetting label="Pulse or blink rate4" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="2.2 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="1"/>
+                <compositeSetting label="Pulse or blink rate3" value="0"/>
+                <compositeSetting label="Pulse or blink rate4" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="2.4 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="0"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="1"/>
+                <compositeSetting label="Pulse or blink rate4" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="2.6 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="1"/>
+                <compositeSetting label="Pulse or blink rate4" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="2.8 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="1"/>
+                <compositeSetting label="Pulse or blink rate4" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="3.0 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="1"/>
+                <compositeSetting label="Pulse or blink rate3" value="1"/>
+                <compositeSetting label="Pulse or blink rate4" value="1"/>
+              </compositeChoice>
+            </compositeVal>
+            <label>Outputs pulse or blink at </label>
+          </variable>
+
+
+
+          <variable item="Routes trigger">
+            <compositeVal>
+              <compositeChoice choice="are triggered by switch commands on LocoNet">
+                <compositeSetting label="Route Command Source" value="0"/>
+                <compositeSetting label="Routes Enable" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="are triggered by local inputs or LocoNet switch commands">
+                <compositeSetting label="Route Command Source" value="1"/>
+                <compositeSetting label="Routes Enable" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="are disabled">
+                <compositeSetting label="Route Command Source" value="0"/>
+                <compositeSetting label="Routes Enable" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="are disabled (alternate)">
+                <compositeSetting label="Route Command Source" value="1"/>
+                <compositeSetting label="Routes Enable" value="1"/>
+              </compositeChoice>
+            </compositeVal>
+            <label>DS64 Routes</label>
+          </variable>
+
+          <variable item="Local Input Effects">
+            <compositeVal>
+              <compositeChoice choice="Sx inputs toggle the corresponding local output">
+                <compositeSetting label="Sensor Actions" value="0"/>
+                <compositeSetting label="Routes Enable" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="AX and Sx input control corresponding local output">
+                <compositeSetting label="Sensor Actions" value="1"/>
+                <compositeSetting label="Routes Enable" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Ax and Sx do not control corresponding local output">
+                <compositeSetting label="Sensor Actions" value="0"/>
+                <compositeSetting label="Routes Enable" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="Ax and Sx have difficult-to-describe effect on local output">
+                <compositeSetting label="Sensor Actions" value="1"/>
+                <compositeSetting label="Routes Enable" value="1"/>
+              </compositeChoice>
+            </compositeVal>
+            <label>Local Inputs</label>
+          </variable>
+
+          <variable item="Input Messages">
+            <compositeVal>
+              <compositeChoice choice="General Sensor messages are sent only for Ax input changes">
+                <compositeSetting label="Input LocoNet Message" value="0"/>
+                <compositeSetting label="Input Signals" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Switch Feedback messages are sent only for Ax input changes">
+                <compositeSetting label="Input LocoNet Message" value="1"/>
+                <compositeSetting label="Input Signals" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="General Sensor messages are sent for Ax and Sx input changes">
+                <compositeSetting label="Input LocoNet Message" value="0"/>
+                <compositeSetting label="Input Signals" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="Switch Feedback messges are sent for Ax and Sx input changes">
+                <compositeSetting label="Input LocoNet Message" value="1"/>
+                <compositeSetting label="Input Signals" value="1"/>
+              </compositeChoice>
+            </compositeVal>
+            <label> </label>
+          </variable>
+
         </variables>
     </decoder>
   <pane>
-    <column>
-      <display item="Output Type"/>
-      <display item="Pulse or blink rate1"/>
-      <display item="Pulse or blink rate2"/>
-      <display item="Pulse or blink rate3"/>
-      <display item="Pulse or blink rate4"/>
-      <display item="Output Auto Power-up"/>
-      <display item="Start-Up Delay"/>
-      <display item="Static Output Shutoff"/>
-      <display item="Command Source"/>
-      <display item="Route Command Source"/>
-      <display item="Sensor Actions"/>
-      <display item="Input Signals"/>
-      <display item="Controls From"/>
-      <display item="Inputs Control Outputs"/>
-      <display item="Routes Enable"/>
-      <display item="Crossing Gate 1"/>
-      <display item="Crossing Gate 2"/>
-      <display item="Crossing Gate 3"/>
-      <display item="Crossing Gate 4"/>
-      <display item="Input LocoNet Message"/>
-    </column>
     <name>DS64 Basic Settings</name>
+    <column>
+        <label><text>Output Controls</text></label>
+        <display item="Output Type"/>
+
+        <label><text>   </text></label>
+
+        <display item="Output Pulse or Blink Time"/>
+
+        <label><text>   </text></label>
+
+        <display item="Output Auto Power-up"/>
+        <display item="Start-Up Delay"/>
+        <display item="Static Output Shutoff"/>
+        <label><text>   </text></label>
+
+        <display item="Crossing Gate 1"/>
+        <display item="Crossing Gate 2"/>
+        <display item="Crossing Gate 3"/>
+        <display item="Crossing Gate 4"/>
+        <label><text>   </text></label>
+        <separator/>
+        <label><text>Command Sources</text></label>
+        <display item="Command Source"/>
+        <display item="Controls From"/>
+
+        <label><text>   </text></label>
+
+        <separator/>
+        <label><text>DS64 Routes</text></label>
+        <display item="Routes trigger"/>
+
+        <label><text>   </text></label>
+
+        <separator/>
+        <label><text>Local Input Signal Effects</text></label>
+        <display item="Local Input Effects"/>
+        <display item="Input Messages"/>
+
+    </column>
   </pane>
 
 </decoder-config>
