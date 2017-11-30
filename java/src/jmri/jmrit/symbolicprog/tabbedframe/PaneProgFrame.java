@@ -500,11 +500,12 @@ abstract public class PaneProgFrame extends JmriJFrame
                     Programmer pf = mProgrammer;
                     if (getDoConfirmRead()) {
                         pf = new jmri.implementation.VerifyWriteProgrammerFacade(pf);
+                        log.debug("adding VerifyWriteProgrammerFacade, new programmer is {}", pf);
                     }
                     // add any facades defined in the decoder file
                     pf = jmri.implementation.ProgrammerFacadeSelector
-                            .loadFacadeElements(programming, pf, getCanCacheDefault());
-                    log.debug("new programmer {}", pf);
+                            .loadFacadeElements(programming, pf, getCanCacheDefault(), pProg);
+                    log.debug("added any other FacadeElements, new programmer is {}", pf);
                     mProgrammer = pf;
                     cvModel.setProgrammer(pf);
                     resetModel.setProgrammer(pf);
