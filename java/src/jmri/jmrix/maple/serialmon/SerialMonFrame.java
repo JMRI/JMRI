@@ -4,6 +4,7 @@ import jmri.jmrix.maple.SerialListener;
 import jmri.jmrix.maple.SerialMessage;
 import jmri.jmrix.maple.SerialReply;
 import jmri.jmrix.maple.SerialTrafficController;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 
 /**
  * Frame displaying (and logging) serial command messages
@@ -12,8 +13,11 @@ import jmri.jmrix.maple.SerialTrafficController;
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
-    public SerialMonFrame() {
+    private MapleSystemConnectionMemo memo = null;
+
+    public SerialMonFrame(MapleSystemConnectionMemo _memo) {
         super();
+        memo = _memo;
     }
 
     @Override
@@ -24,12 +28,12 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     @Override
     protected void init() {
         // connect to TrafficController
-        SerialTrafficController.instance().addSerialListener(this);
+        memo.getTrafficController().addSerialListener(this);
     }
 
     @Override
     public void dispose() {
-        SerialTrafficController.instance().removeSerialListener(this);
+        memo.getTrafficController().removeSerialListener(this);
         super.dispose();
     }
 
