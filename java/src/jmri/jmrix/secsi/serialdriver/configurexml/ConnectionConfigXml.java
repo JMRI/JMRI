@@ -60,7 +60,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     @Override
     protected void getInstance() {
         if(adapter == null ) {
-           adapter = SerialDriverAdapter.instance();
+           adapter = new SerialDriverAdapter();
         }
     }
 
@@ -71,12 +71,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             Element n = l.get(i);
             int addr = Integer.parseInt(n.getAttributeValue("name"));
             int type = Integer.parseInt(findParmValue(n, "nodetype"));
-
+ 
+            SerialTrafficController tc = ((SecsiSystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController();
             // create node (they register themselves)
-            SerialNode node = new SerialNode(addr, type);
-
+            SerialNode node = new SerialNode(addr, type, tc);
             // Trigger initialization of this Node to reflect these parameters
-            SerialTrafficController.instance().initializeSerialNode(node);
+            tc.initializeSerialNode(node);
         }
     }
 
@@ -103,5 +103,11 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
+    }
+
 
 }

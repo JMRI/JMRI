@@ -4,6 +4,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrix.secsi.nodeconfig.NodeConfigAction;
+import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 
 /**
  * Definition of objects to handle configuring a SECSI layout connection
@@ -42,7 +43,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
         details.add(b);
 
-        b.addActionListener(new NodeConfigAction());
+        b.addActionListener(new NodeConfigAction((SecsiSystemConnectionMemo)adapter.getSystemConnectionMemo()));
 
     }
 
@@ -54,7 +55,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     @Override
     protected void setInstance() {
         if(adapter == null ) {
-           adapter = SerialDriverAdapter.instance();
+           adapter = new SerialDriverAdapter();
         }
     }
 

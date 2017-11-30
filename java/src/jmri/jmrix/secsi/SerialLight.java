@@ -64,7 +64,7 @@ public class SerialLight extends AbstractLight {
      */
     @Override
     protected void doNewState(int oldState, int newState) {
-        SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName());
+        SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName(),memo.getTrafficController());
         if (mNode != null) {
             if (newState == ON) {
                 mNode.setOutputBit(mBit, false);

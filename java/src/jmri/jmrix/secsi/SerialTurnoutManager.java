@@ -48,7 +48,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         t = new SerialTurnout(sName, userName,memo);
 
         // does system name correspond to configured hardware
-        if (!SerialAddress.validSystemNameConfig(sName, 'T')) {
+        if (!SerialAddress.validSystemNameConfig(sName, 'T', memo.getTrafficController())) {
             // system name does not correspond to configured hardware
             log.warn("Turnout '" + sName + "' refers to an undefined Serial Node.");
         }

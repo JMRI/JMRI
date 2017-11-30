@@ -45,7 +45,7 @@ public class SerialLightManager extends AbstractLightManager {
         // Validate the systemName
         if (SerialAddress.validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
             lgt = new SerialLight(systemName, userName,memo);
-            if (!SerialAddress.validSystemNameConfig(systemName, 'L')) {
+            if (!SerialAddress.validSystemNameConfig(systemName, 'L', memo.getTrafficController())) {
                 log.warn("Light system Name does not refer to configured hardware: "
                         + systemName);
             }
@@ -72,7 +72,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        return (SerialAddress.validSystemNameConfig(systemName, 'L'));
+        return (SerialAddress.validSystemNameConfig(systemName, 'L',memo.getTrafficController()));
     }
 
     /**
