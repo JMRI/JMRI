@@ -168,7 +168,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
     protected void setFamily(String family) {
         super.setFamily(family);
         if (_multiSensorPanel != null) {
-            _iconFamilyPanel.remove(_multiSensorPanel);
+            _iconFamilyPanel.remove(_multiSensorPanel); // TODO EB leave _mutiSensorPanel in place, just clear it to keep connection to combo
         }
         makeMultiSensorPanel();
         _iconFamilyPanel.add(_multiSensorPanel);

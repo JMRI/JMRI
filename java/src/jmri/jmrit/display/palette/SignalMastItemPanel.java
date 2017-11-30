@@ -267,12 +267,8 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         int row = _table.getSelectedRow();
         log.debug("Table valueChanged: row= {}", row);
         // update the family icons
-//        if (_bottom1Panel != null && bgBoxPanel != null) {
-//            _bottom1Panel.remove(bgBoxPanel); // first remove the coupled combo (if present)
-//            // TODO use indirect setting via previewBgSet and Listener, so removing/adding is not needed, see note in FamilyItemPanel
-//        }
-        //remove(_iconFamilyPanel); // remove completely - loses connection from Combo
-        _iconFamilyPanel.remove(1); // or remove objects from _iconFamilyPanel
+        // remove completely would lose connection from Combo
+        //_iconFamilyPanel.remove(1); // TODO clear  remove objects from _iconFamilyPanel
         if (row >= 0) {
             if (_updateButton != null) {
                 _updateButton.setEnabled(true);
@@ -290,14 +286,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
         }
         initIconFamiliesPanel(); // (if null: creates and) adds a new _iconFamilyPanel for the new mast map
-        // reattach new bgComboPanel
         //add(_iconFamilyPanel, 1); // already present in case of a refresh
-        // add a SetBackground combo
-//        if (_bottom1Panel != null) {
-//            bgBoxPanel = makeBgButtonPanel(_dragIconPanel, _backgrounds);
-//            // TODO use indirect setting of panel upon display of tab via previewBgSet
-//            _bottom1Panel.add(bgBoxPanel);
-//        }
         validate();
     }
 

@@ -63,7 +63,6 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
     protected Color _currentBackground = _grayColor;
     private JPanel bgBoxPanel;
-    // protected BufferedImage[] _backgrounds; // array of Image backgrounds, shared to save on RAM
 
     /**
      * Constructor for plain icons and backgrounds.
@@ -163,9 +162,13 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         _currentBackground = _editor.getTargetPanel().getBackground(); // pick up Panel background color
         _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
 
-        _iconPanel = new ImagePanel();
-        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
-                Bundle.getMessage("PreviewBorderTitle")));
+        if (_iconPanel == null) { // create a new one
+            _iconPanel = new ImagePanel();
+            _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
+                    Bundle.getMessage("PreviewBorderTitle")));
+        } else { // clear existing to keep connection to combo
+            _iconPanel.removeAll();
+        }
         _iconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
 
         JPanel iPanel = new JPanel();

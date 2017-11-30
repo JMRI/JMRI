@@ -215,7 +215,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     private void resetFamiliesPanel() {
-        remove(_iconFamilyPanel);
+        //_iconFamilyPanel.removeAll();
         _tablePanel.setVisible(true);
         initIconFamiliesPanel();
         int n = _iconFamilyPanel.getComponentCount();
@@ -430,16 +430,18 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         if (_iconPanel == null) {
             _iconPanel = new ImagePanel();
             _iconPanel.setOpaque(false);
-            _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1), Bundle.getMessage("PreviewBorderTitle")));
+            _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
+                    Bundle.getMessage("PreviewBorderTitle")));
             _iconFamilyPanel.add(_iconPanel, 0);
         } else {
             _iconPanel.removeAll();
         }
         if (!_suppressDragging) {
-            _iconFamilyPanel.remove(_dragIconPanel);
-            makeDragIconPanel(1);
-//            _dragIconPanel = new JPanel();
-//            _iconFamilyPanel.add(_dragIconPanel, 0);
+            if (_dragIconPanel == null) {
+                makeDragIconPanel(1);
+            } else {
+                _dragIconPanel.removeAll();
+            }
         }
         _iconGroupsMap = ItemPalette.getLevel4Family(_itemType, _family);
         addIcons2Panel(_iconGroupsMap);

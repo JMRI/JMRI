@@ -47,7 +47,7 @@ public class MultiSensorIconDialog extends IconDialog {
                 if (addNewIcon(getIconName())) {
                     InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
                     JPanel p = (JPanel) (getContentPane().getComponent(0));
-                    p.remove(_iconPanel); // TODO keep _iconPanel + combo connection but clear + refill?
+                    p.remove(_iconPanel); // OK to replace on a Dialog
                     _iconPanel = makeIconPanel(_iconMap);
                     p.add(_iconPanel, 1);
                     pack();
@@ -64,7 +64,7 @@ public class MultiSensorIconDialog extends IconDialog {
                 if (deleteIcon()) {
                     InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
                     JPanel p = (JPanel) (getContentPane().getComponent(0));
-                    p.remove(_iconPanel); // TODO keep _iconPanel + combo connection but clear + refill?
+                    p.remove(_iconPanel); // OK to replace on a Dialog
                     _iconPanel = makeIconPanel(_iconMap);
                     p.add(_iconPanel, 1);
                     pack();
