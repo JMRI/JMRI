@@ -1,14 +1,15 @@
 package jmri.implementation;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.AddressedProgrammer;
 import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.NmraPacket;
 import jmri.ProgListener;
+import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammerFacade;
@@ -45,7 +46,8 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     /**
      * Programmer facade for access to Accessory Decoder Ops Mode programming.
      *
-     * @param prog     The Ops Mode Programmer we are piggybacking on.
+     * @param prog     The (possibly already decorated) programmer we are
+     *                 piggybacking on.
      * @param addrType A string. "accessory" or "output" causes the address to
      *                 be interpreted as an 11 bit accessory output address.
      *                 "decoder" causes the address to be interpreted as a 9 bit
@@ -53,10 +55,12 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
      *                 be interpreted as an 11 bit signal decoder address.
      * @param delay    A string representing the desired delay between
      *                 programming operations, in milliseconds.
+     * @param baseProg The underlying undecorated Ops Mode Programmer we are
+     *                 piggybacking on.
      */
     @SuppressFBWarnings(value = "DM_CONVERT_CASE",
             justification = "parameter value is never localised")  // NOI18N
-    public AccessoryOpsModeProgrammerFacade(AddressedProgrammer prog, @Nonnull String addrType, int delay) {
+    public AccessoryOpsModeProgrammerFacade(Programmer prog, @Nonnull String addrType, int delay, AddressedProgrammer baseProg) {
         super(prog);
         log.debug("Constructing AccessoryOpsModeProgrammerFacade");
         this._usingProgrammer = null;
@@ -64,6 +68,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
         this.aprog = prog;
         this._addrType = (addrType == null) ? "" : addrType.toLowerCase(); // NOI18N
         this._delay = delay;
+        this._baseProg = baseProg;
     }
 
     // ops accessory mode can't read locally
@@ -89,7 +94,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     public void setMode(ProgrammingMode p) {
     }
 
-    AddressedProgrammer aprog;
+    Programmer aprog;
 
     @Override
     public boolean getCanRead() {
@@ -112,10 +117,11 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     }
 
     // members for handling the programmer interface
-    int _val;           // remember the value being read/written for confirmative reply
-    String _cv;         // remember the cv number being read/written
-    String _addrType;   // remember the address type: ("decoder" or null) or ("accessory" or "output")
-    int _delay;         // remember the programming delay, in milliseconds
+    int _val;                       // remember the value being read/written for confirmative reply
+    String _cv;                     // remember the cv number being read/written
+    String _addrType;               // remember the address type: ("decoder" or null) or ("accessory" or "output")
+    int _delay;                     // remember the programming delay, in milliseconds
+    AddressedProgrammer _baseProg;   // remember the underlying programmer
 
     // programming interface
     @Override
@@ -132,32 +138,32 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
             case "output":
                 // interpret address as accessory address
                 log.debug("Send an accDecoderPktOpsMode: address={}, cv={}, value={}",
-                        aprog.getAddressNumber(), Integer.parseInt(cv), val);
-                b = NmraPacket.accDecoderPktOpsMode(aprog.getAddressNumber(), Integer.parseInt(cv), val);
+                        _baseProg.getAddressNumber(), Integer.parseInt(cv), val);
+                b = NmraPacket.accDecoderPktOpsMode(_baseProg.getAddressNumber(), Integer.parseInt(cv), val);
                 break;
             case "signal":
                 // interpret address as signal address
                 log.debug("Send an accSignalDecoderPktOpsMode: address={}, cv={}, value={}",
-                        aprog.getAddressNumber(), Integer.parseInt(cv), val);
-                b = NmraPacket.accSignalDecoderPktOpsMode(aprog.getAddressNumber(), Integer.parseInt(cv), val);
+                        _baseProg.getAddressNumber(), Integer.parseInt(cv), val);
+                b = NmraPacket.accSignalDecoderPktOpsMode(_baseProg.getAddressNumber(), Integer.parseInt(cv), val);
                 break;
             case "altsignal":
                 // interpret address as signal address using the alternative interpretation of S-9.2.1
                 log.debug("Send an altAccSignalDecoderPktOpsMode: address={}, cv={}, value={}",
-                        aprog.getAddressNumber(), Integer.parseInt(cv), val);
-                b = NmraPacket.altAccSignalDecoderPktOpsMode(aprog.getAddressNumber(), Integer.parseInt(cv), val);
+                        _baseProg.getAddressNumber(), Integer.parseInt(cv), val);
+                b = NmraPacket.altAccSignalDecoderPktOpsMode(_baseProg.getAddressNumber(), Integer.parseInt(cv), val);
                 break;
             case "decoder":
                 // interpet address as decoder address
                 log.debug("Send an accDecPktOpsMode: address={}, cv={}, value={}",
-                        aprog.getAddressNumber(), Integer.parseInt(cv), val);
-                b = NmraPacket.accDecPktOpsMode(aprog.getAddressNumber(), Integer.parseInt(cv), val);
+                        _baseProg.getAddressNumber(), Integer.parseInt(cv), val);
+                b = NmraPacket.accDecPktOpsMode(_baseProg.getAddressNumber(), Integer.parseInt(cv), val);
                 break;
             case "legacy":
                 // interpet address as decoder address and send legacy packet
                 log.debug("Send an accDecPktOpsModeLegacy: address={}, cv={}, value={}",
-                        aprog.getAddressNumber(), Integer.parseInt(cv), val);
-                b = NmraPacket.accDecPktOpsModeLegacy(aprog.getAddressNumber(), Integer.parseInt(cv), val);
+                        _baseProg.getAddressNumber(), Integer.parseInt(cv), val);
+                b = NmraPacket.accDecPktOpsModeLegacy(_baseProg.getAddressNumber(), Integer.parseInt(cv), val);
                 break;
             default:
                 log.error("Unknown Address Type \"{}\"", _addrType);
