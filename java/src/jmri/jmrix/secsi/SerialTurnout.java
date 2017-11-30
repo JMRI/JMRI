@@ -19,13 +19,16 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialTurnout extends AbstractTurnout {
 
+    private SecsiSystemConnectionMemo memo = null;
+
     /**
      * Create a Turnout object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialTurnoutManager
      */
-    public SerialTurnout(String systemName, String userName) {
+    public SerialTurnout(String systemName, String userName,SecsiSystemConnectionMemo _memo) {
         super(systemName, userName);
+        memo = _memo;
         // Save system Name
         tSystemName = systemName;
         // Extract the Bit from the name

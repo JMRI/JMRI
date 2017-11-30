@@ -71,7 +71,7 @@ public class SerialAddress {
                 }
             }
         }
-        return (SerialNode) SerialTrafficController.instance().getNodeFromAddress(ua);
+        return (SerialNode) memo.getTrafficController().getNodeFromAddress(ua);
     }
 
     /**

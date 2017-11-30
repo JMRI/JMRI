@@ -98,7 +98,7 @@ public class SerialNode extends AbstractNode {
         setMustSend();
         hasActiveSensors = false;
         // register this node
-        SerialTrafficController.instance().registerNode(this);
+        memo.getTrafficController().registerNode(this);
     }
 
     /**
