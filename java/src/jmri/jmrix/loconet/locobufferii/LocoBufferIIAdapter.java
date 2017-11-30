@@ -26,6 +26,6 @@ public class LocoBufferIIAdapter extends LocoBufferAdapter {
     }
 
     public String option1Name() {
-        return "LocoBuffer-II connection uses ";
+        return Bundle.getMessage("XconnectionUsesLabel", "LocoBuffer-II");
     }
 }

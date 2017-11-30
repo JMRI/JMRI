@@ -18,20 +18,19 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2009
  * @author Jan Boen and Sergiu Costan
- * 
- *          Rework Poll for status using binary commands send xEvtSen (78 CB)h
- *          this returns multiple bytes first byte address of the S88 sensor,
- *          second and third bytes = values of that sensor this repeats for each
- *          sensor with changes the last byte contains 00h this means all
- *          reports have been received
- * 
- *          xEvtSen reports sensor changes
+ *
+ * Rework Poll for status using binary commands send xEvtSen (78 CB)h this
+ * returns multiple bytes first byte address of the S88 sensor, second and third
+ * bytes = values of that sensor this repeats for each sensor with changes the
+ * last byte contains 00h this means all reports have been received
+ *
+ * xEvtSen reports sensor changes
  */
 public class TamsSensorManager extends jmri.managers.AbstractSensorManager implements TamsListener {
 
     //Create a local TamsMessage Queue which we will use in combination with TamsReplies
-    private Queue<TamsMessage> tmq = new LinkedList<TamsMessage>();
-        
+    private final Queue<TamsMessage> tmq = new LinkedList<>();
+
     //This dummy message is used in case we expect a reply from polling
     static private TamsMessage myDummy() {
         //log.info("*** myDummy ***");
@@ -43,6 +42,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         m.setReplyType('S');
         return m;
     }
+
     static private TamsMessage xSR() {
         //log.info("*** xSR ***");
         TamsMessage m = new TamsMessage("xSR 1");
@@ -78,7 +78,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     TamsSystemConnectionMemo memo;
     TamsTrafficController tc;
     //The hash table simply holds the object number against the TamsSensor ref.
-    private Hashtable<Integer, Hashtable<Integer, TamsSensor>> _ttams = new Hashtable<Integer, Hashtable<Integer, TamsSensor>>(); // stores known Tams Obj
+    private Hashtable<Integer, Hashtable<Integer, TamsSensor>> _ttams = new Hashtable<>(); // stores known Tams Obj
 
     @Override
     public String getSystemPrefix() {
@@ -94,12 +94,12 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
             int channel = 0;
 
             String curAddress = systemName.substring(getSystemPrefix().length() + 1, systemName.length());
-            int seperator = curAddress.indexOf(":");
+            int seperator = curAddress.indexOf(':');
             try {
-                board = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
+                board = Integer.parseInt(curAddress.substring(0, seperator));
                 //log.info("Creating new TamsSensor with board: " + board);
                 if (!_ttams.containsKey(board)) {
-                    _ttams.put(board, new Hashtable<Integer, TamsSensor>());
+                    _ttams.put(board, new Hashtable<>());
                     //log.info("_ttams: " + _ttams.toString());
                     /*if (_ttams.size() == 1) {
                         synchronized (pollHandler) {
@@ -113,7 +113,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
             }
             Hashtable<Integer, TamsSensor> sensorList = _ttams.get(board);
             try {
-                channel = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+                channel = Integer.parseInt(curAddress.substring(seperator + 1));
                 if (!sensorList.containsKey(channel)) {
                     sensorList.put(channel, s);
                 }
@@ -147,15 +147,15 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         }
 
         //Address format passed is in the form of board:channel or T:turnout address
-        int seperator = curAddress.indexOf(":");
+        int seperator = curAddress.indexOf(':');
         try {
-            board = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
+            board = Integer.parseInt(curAddress.substring(0, seperator));
         } catch (NumberFormatException ex) {
             log.error("First part of {} in front of : should be a number", curAddress);
             throw new JmriException("Module Address passed should be a number");
         }
         try {
-            port = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+            port = Integer.parseInt(curAddress.substring(seperator + 1));
         } catch (NumberFormatException ex) {
             log.error("Second part of {} after : should be a number", curAddress);
             throw new JmriException("Port Address passed should be a number");
@@ -184,7 +184,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
-        String tmpSName = "";
+        String tmpSName;
 
         try {
             tmpSName = createSystemName(curAddress, prefix);
@@ -203,7 +203,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
                 try {
                     tmpSName = createSystemName(board + ":" + port, prefix);
                 } catch (JmriException e) {
-                    log.error("Error creating system name for " + board + ":" + port);
+                    log.error("Error creating system name for {}:{}", board, port);
                 }
                 s = getBySystemName(tmpSName);
                 if (s == null) {
@@ -235,9 +235,11 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     /**
-     * Determine if it is possible to add a range of sensors in
-     * numerical order eg 1 to 16, primarily used to enable/disable the add
-     * range box in the add sensor panel
+     * Determine if it is possible to add a range of sensors in numerical order
+     * eg 1 to 16, primarily used to enable/disable the add range box in the add
+     * sensor panel.
+     *
+     * @return true
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
@@ -248,20 +250,19 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public void reply(TamsReply r) {
         //log.info("*** TamsReply ***");
-        if(tmq.isEmpty()){
+        if (tmq.isEmpty()) {
             tm = myDummy();
-        } else
-        {
+        } else {
             tm = tmq.poll();
         }
         //log.info("ReplyType = " + tm.getReplyType() + ", Binary? = " +  tm.isBinary()+ ", OneByteReply = " + tm.getReplyOneByte());
-        if (tm.getReplyType() == 'S'){//Only handle Sensor events
-            if (tm.isBinary() == true){//Typical polling message
-                if ((r.getNumDataElements() > 1) && (r.getElement(0) > 0x00)){
+        if (tm.getReplyType() == 'S') {//Only handle Sensor events
+            if (tm.isBinary() == true) {//Typical polling message
+                if ((r.getNumDataElements() > 1) && (r.getElement(0) > 0x00)) {
                     //Here we break up a long sensor related TamsReply into individual S88 module status'
                     int numberOfReplies = r.getNumDataElements() / 3;
                     //log.info("Incoming Reply = ");
-                    for (int i = 0; i < r.getNumDataElements(); i++){
+                    for (int i = 0; i < r.getNumDataElements(); i++) {
                         //log.info("Byte " + i + " = " + jmri.util.StringUtil.appendTwoHexFromInt(r.getElement(i) & 0xFF, ""));
                     }
                     //log.info("length of reply = " + r.getNumDataElements() + " & number of replies = " + numberOfReplies);
@@ -309,10 +310,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
 
     static class PollHandler implements Runnable {//Why do we need this?
 
-        TamsSensorManager sm = null;
-
         PollHandler(TamsSensorManager tsm) {
-            sm = tsm;
         }
 
         @Override

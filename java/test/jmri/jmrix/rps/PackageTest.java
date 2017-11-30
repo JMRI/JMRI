@@ -34,7 +34,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(RpsSensorManagerTest.class));
         suite.addTest(jmri.jmrix.rps.RpsSensorTest.suite());
         suite.addTest(jmri.jmrix.rps.RegionTest.suite());
-        suite.addTest(jmri.jmrix.rps.TransformTest.suite());
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.rps.serial.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.rps.configurexml.PackageTest.class));

@@ -4,7 +4,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -14,7 +13,6 @@ import org.junit.Test;
 public class AudioCommandTest {
 
     @Test
-    @Ignore("Fails because there's no AudioSource in the InstanceManager")
     public void testCTor() {
         AudioCommand t = new AudioCommand(new NullAudioSource("test"),1);
         Assert.assertNotNull("exists",t);
@@ -24,6 +22,9 @@ public class AudioCommandTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.AudioManager am = new DefaultAudioManager();
+        jmri.InstanceManager.setDefault(jmri.AudioManager.class,am);
+        am.init();
     }
 
     @After

@@ -34,7 +34,8 @@ public class PackageTest extends TestCase {
 
         // implementations
         suite.addTest(AbstractSensorTest.suite());
-        suite.addTest(AccessoryOpsModeProgrammerFacadeTest.suite());
+        suite.addTest(new JUnit4TestAdapter(AccessoryOpsModeProgrammerFacadeTest.class));
+        suite.addTest(new JUnit4TestAdapter(OpsModeDelayedProgrammerFacadeTest.class));
         suite.addTest(AddressedHighCvProgrammerFacadeTest.suite());
         suite.addTest(new JUnit4TestAdapter(DccSignalHeadTest.class));
         suite.addTest(new JUnit4TestAdapter(DccSignalMastTest.class));

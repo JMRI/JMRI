@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec  2013-10-12-->
+<!-- UpDated by Herv&#233; Blorec  2017-11-15-->
 
 <html lang="fr">
 <head>
@@ -9,8 +8,6 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Signal Head Table Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta content="Bob Jacobsen" name="Author">
   <meta name="keywords" content="JMRI help Signal Head Table">
   <!-- Style -->
@@ -30,9 +27,9 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>Le Tableau T&ecirc;te de Signal</h1><a href=
-      "../../../../html/tools/images/SigTable.gif"><img src=
-      "../../../../%20html/outils/images/SigTable.gif" align=
-      "=&quot;" height=" 166" hspace=" 0" vspace=" 0" alt=""></a>
+      "images/SigHeadTable.png"><img src=
+      "images/SigHeadTable.png" align=
+      "right" height="119" width="312" hspace="0" vspace=" 0" alt=""></a>
 
       <p>Toutes les t&ecirc;tes de signal que JMRI conna&icirc;t
       peuvent &ecirc;tre r&eacute;f&eacute;renc&eacute;es en

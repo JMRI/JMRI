@@ -40,8 +40,6 @@ public class SpecificTrafficController extends SerialTrafficController {
         mWaitBeforePoll = 1000;  // can take a long time to send
     }
 
-    SerialSystemConnectionMemo memo = null;
-
     /**
      * Send a sequence of X10 messages.
      * <p>
