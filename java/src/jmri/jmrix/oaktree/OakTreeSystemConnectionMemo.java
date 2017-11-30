@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  */
 public class OakTreeSystemConnectionMemo extends SystemConnectionMemo {
 
-    jmri.jmrix.swing.ComponentFactory cf = null;
+    private jmri.jmrix.swing.ComponentFactory cf = null;
 
     public OakTreeSystemConnectionMemo() {
         this("O", SerialConnectionTypeList.OAK);
@@ -42,7 +42,7 @@ public class OakTreeSystemConnectionMemo extends SystemConnectionMemo {
     /**
      * Set the traffic controller instance associated with this connection memo.
      *
-     * @param s jmri.jmrix.aoktree.SerialTrafficController object to use.
+     * @param s jmri.jmrix.oaktree.SerialTrafficController object to use.
      */
     public void setTrafficController(SerialTrafficController s){
         tc = s;

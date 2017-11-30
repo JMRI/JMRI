@@ -27,7 +27,7 @@ public class SerialLightManager extends AbstractLightManager {
 
     public SerialLightManager(OakTreeSystemConnectionMemo memo) {
         _memo = memo;
-        prefix = memo.getSystemPrefix();
+        prefix = getSystemPrefix();
     }
 
     /**
@@ -35,7 +35,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String getSystemPrefix() {
-        return prefix;
+        return _memo.getSystemPrefix();
 
     }
 

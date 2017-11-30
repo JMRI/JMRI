@@ -24,7 +24,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     public SerialTurnoutManager(OakTreeSystemConnectionMemo memo) {
         _memo = memo;
-        prefix = memo.getSystemPrefix();
+        prefix = getSystemPrefix();
     }
 
     /**
@@ -32,7 +32,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     public String getSystemPrefix() {
-        return prefix;
+        return _memo.getSystemPrefix();
 
     }
 
