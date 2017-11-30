@@ -35,7 +35,8 @@
             <decVal min="1" max="128" />
             <label>Primary Address</label>
           </variable>
-          <variable CV="115.01" comment="Output type" item="Output Type" default="0" infoOnly="no">
+          <variable CV="115.01" comment="Output type" item="Output Type" default="0" infoOnly="no"
+                    tooltip="OpSw01">
               <enumVal>
                   <enumChoice>
                       <choice>Outputs are pulsed (OpSw1=t)</choice>
@@ -47,7 +48,9 @@
                   </enumChoice>
               </enumVal>
           </variable>
-          <variable CV="115.02" comment="Pulse or Blink rate - needs expansion to four bits!" item="Pulse or blink rate1" default="0" infoOnly="no">
+          <variable CV="115.02" comment="Pulse or Blink rate - needs expansion to four bits!" 
+                    item="Pulse or blink rate1" default="0" infoOnly="no"
+                    tooltip="OpSw02">
               <enumVal>
                   <enumChoice>
                       <choice>Outputs pulse active or blink for 0.1 second (OpSw2=t)</choice>
@@ -58,7 +61,9 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.03" comment="Pulse or Blink rate - needs expansion to four bits!" item="Pulse or blink rate2" default="0" infoOnly="no">
+          <variable CV="115.03" comment="Pulse or Blink rate - needs expansion to four bits!" 
+                    item="Pulse or blink rate2" default="0" infoOnly="no"
+                    tooltip="OpSw03">
               <enumVal>
                   <enumChoice>
                       <choice>Add 0 seconds to the pulse or blink rate (OpSw3=t)</choice>
@@ -69,7 +74,9 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.04" comment="Pulse or Blink rate - needs expansion to four bits!" item="Pulse or blink rate3" default="0" infoOnly="no">
+          <variable CV="115.04" comment="Pulse or Blink rate - needs expansion to four bits!" 
+                    item="Pulse or blink rate3" default="0" infoOnly="no"
+                    tooltip="OpSw04">
               <enumVal>
                   <enumChoice>
                       <choice>Add 0 seconds to the pulse or blink rate (OpSw4=t)</choice>
@@ -81,7 +88,9 @@
           </variable>
 
 
-          <variable CV="115.05" comment="Pulse or Blink rate - needs expansion to four bits!" item="Pulse or blink rate4" default="0" infoOnly="no">
+          <variable CV="115.05" comment="Pulse or Blink rate - needs expansion to four bits!" 
+                    item="Pulse or blink rate4" default="0" infoOnly="no"
+                    tooltip="OpSw05">
               <enumVal>
                   <enumChoice>
                       <choice>Add 0 seconds to the pulse or blink rate (OpSw5=t)</choice>
@@ -92,7 +101,8 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.06" item="Output Auto Power-up" default="0" infoOnly="no">
+          <variable CV="115.06" item="Output Auto Power-up" default="0" infoOnly="no"
+                    tooltip="OpSw06">
               <enumVal>
                   <enumChoice>
                       <choice>Outputs automatically power-up to the last known state (OpSw6=t)</choice>
@@ -105,7 +115,8 @@
               </enumVal>
               <label> </label>
           </variable>
-          <variable CV="115.08" comment="Start-up Delay" item="Start-Up Delay" default="0" infoOnly="no">
+          <variable CV="115.08" comment="Start-up Delay" item="Start-Up Delay" default="0" infoOnly="no"
+                    tooltip="OpSw08">
               <enumVal>
                   <enumChoice>
                       <choice>Short delay for interrogation requests (OpSw8=t)</choice>
@@ -119,7 +130,9 @@
               <label> </label>
           </variable>
 
-          <variable CV="115.09" comment="Static Output Shutoff" item="Static Output Shutoff" default="0" infoOnly="no">
+          <variable CV="115.09" comment="Static Output Shutoff" 
+                    item="Static Output Shutoff" default="0" infoOnly="no"
+                    tooltip="OpSw09">
               <enumVal>
                   <enumChoice>
                       <choice>Static Outputs remain powered (OpSw9=t)</choice>
@@ -133,7 +146,9 @@
               <label> </label>
           </variable>
 
-          <variable CV="115.10" comment="Command Source" item="Command Source" default="0" infoOnly="no">
+          <variable CV="115.10" comment="Command Source" item="Command Source" 
+                    default="0" infoOnly="no"
+                    tooltip="OpSw10">
               <enumVal>
                   <enumChoice>
                       <choice>Throttle and Computer commands are accepted (OpSw10=t)</choice>
@@ -145,7 +160,9 @@
                   </enumChoice>
               </enumVal>
           </variable>
-          <variable CV="115.11" comment="Route Command Source" item="Route Command Source" default="0" infoOnly="no">
+          <variable CV="115.11" comment="Route Command Source" 
+                    item="Route Command Source" default="0" infoOnly="no"
+                    tooltip="OpSw11">
               <enumVal>
                   <enumChoice>
                       <choice>Routes are triggered by Switch commands from Computers or Throttles (OpSw11=t)</choice>
@@ -158,7 +175,9 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.12" comment="Sensor actions" item="Sensor Actions" default="0" infoOnly="no">
+          <variable CV="115.12" comment="Sensor actions" 
+                    item="Sensor Actions" default="0" infoOnly="no"
+                    tooltip="OpSw12">
               <enumVal>
                   <enumChoice>
                       <choice>S inputs affect output; A inputs send Sensor messages (OpSw12=t)</choice>
@@ -171,7 +190,9 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.13" comment="Input Signal effects" item="Input Signals" default="0" infoOnly="no">
+          <variable CV="115.13" comment="Input Signal effects" 
+                    item="Input Signals" default="0" infoOnly="no"
+                    tooltip="OpSw13">
               <enumVal>
                   <enumChoice>
                       <choice>Inputs have no effect (OpSw13=t)</choice>
@@ -184,7 +205,9 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.14" comment="Controls From" item="Controls From" default="0" infoOnly="no">
+          <variable CV="115.14" comment="Controls From" 
+                    item="Controls From" default="0" infoOnly="no"
+                    tooltip="OpSw14">
               <enumVal>
                   <enumChoice>
                       <choice>Accepts commands from LocoNet messages and Track (OpSw14=t)</choice>
@@ -198,7 +221,9 @@
               <label> </label>
           </variable>
 
-          <variable CV="115.15" comment="Inputs control outputs" item="Inputs Control Outputs" default="0" infoOnly="no">
+          <variable CV="115.15" comment="Inputs control outputs" 
+                    item="Inputs Control Outputs" default="0" infoOnly="no"
+                    tooltip="OpSw15">
               <enumVal>
                   <enumChoice>
                       <choice>Inputs can control outputs (OpSw15=t)</choice>
@@ -211,7 +236,9 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.16" comment="Routes Enable" item="Routes Enable" default="0" infoOnly="no">
+          <variable CV="115.16" comment="Routes Enable" 
+                    item="Routes Enable" default="0" infoOnly="no"
+                    tooltip="OpSw16">
               <enumVal>
                   <enumChoice>
                       <choice>Routes are enabled (OpSw16=t)</choice>
@@ -224,7 +251,9 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.17" comment="Crossing Gate on Output 1" item="Crossing Gate 1" default="0" infoOnly="no">
+          <variable CV="115.17" comment="Crossing Gate on Output 1" 
+                    item="Crossing Gate 1" default="0" infoOnly="no"
+                    tooltip="OpSw17">
               <enumVal>
                   <enumChoice>
                       <choice>Output 1 does not provide "crossing-gate" output (OpSw17=t)</choice>
@@ -238,7 +267,9 @@
               <label> </label>
           </variable>
 
-          <variable CV="115.18" comment="Crossing Gate on Output 2" item="Crossing Gate 2" default="0" infoOnly="no">
+          <variable CV="115.18" comment="Crossing Gate on Output 2" 
+                    item="Crossing Gate 2" default="0" infoOnly="no"
+                    tooltip="OpSw18">
               <enumVal>
                   <enumChoice>
                       <choice>Output 2 does not provide "crossing-gate" output (OpSw18=t)</choice>
@@ -252,7 +283,9 @@
               <label> </label>
           </variable>
 
-          <variable CV="115.19" comment="Crossing Gate on Output 3" item="Crossing Gate 3" default="0" infoOnly="no">
+          <variable CV="115.19" comment="Crossing Gate on Output 3" 
+                    item="Crossing Gate 3" default="0" infoOnly="no"
+                    tooltip="OpSw19">
               <enumVal>
                   <enumChoice>
                       <choice>Output 3 does not provide "crossing-gate" output (OpSw19=t)</choice>
@@ -266,7 +299,9 @@
               <label> </label>
           </variable>
 
-          <variable CV="115.20" comment="Crossing Gate on Output 4" item="Crossing Gate 4" default="0" infoOnly="no">
+          <variable CV="115.20" comment="Crossing Gate on Output 4" 
+                    item="Crossing Gate 4" default="0" infoOnly="no"
+                    tooltip="OpSw20">
               <enumVal>
                   <enumChoice>
                       <choice>Output 4 does not provide "crossing-gate" output (OpSw20=t)</choice>
@@ -280,7 +315,9 @@
               <label> </label>
           </variable>
 
-          <variable CV="115.21" comment="LocoNet Message Type for Inputs" item="Input LocoNet Message" default="0" infoOnly="no">
+          <variable CV="115.21" comment="LocoNet Message Type for Inputs" 
+                    item="Input LocoNet Message" default="0" infoOnly="no"
+                    tooltip="OpSw21">
               <enumVal>
                   <enumChoice>
                       <choice>Inputs generate LocoNet "General Sensor" messages (OpSw21=t)</choice>
@@ -292,7 +329,8 @@
                   </enumChoice>
               </enumVal>
           </variable>
-          <variable item="Output Pulse or Blink Time">
+          <variable item="Output Pulse or Blink Time"
+                    tooltip="OpSw02, OpSw03, OpSw04, OpSw05">
             <compositeVal>
               <compositeChoice choice="0.1 Second">
                 <compositeSetting label="Pulse or blink rate1" value="0"/>
@@ -396,7 +434,8 @@
 
 
 
-          <variable item="Routes trigger">
+          <variable item="Routes trigger"
+                    tooltip="OpSw11, OpSw16">
             <compositeVal>
               <compositeChoice choice="are triggered by switch commands on LocoNet">
                 <compositeSetting label="Route Command Source" value="0"/>
@@ -418,29 +457,31 @@
             <label>DS64 Routes</label>
           </variable>
 
-          <variable item="Local Input Effects">
+          <variable item="Local Input Effects"
+                tooltip="OpSw12, OpSw15">
             <compositeVal>
               <compositeChoice choice="Sx inputs toggle the corresponding local output">
                 <compositeSetting label="Sensor Actions" value="0"/>
-                <compositeSetting label="Routes Enable" value="0"/>
+                <compositeSetting label="Inputs Control Outputs" value="0"/>
               </compositeChoice>
               <compositeChoice choice="AX and Sx input control corresponding local output">
                 <compositeSetting label="Sensor Actions" value="1"/>
-                <compositeSetting label="Routes Enable" value="0"/>
+                <compositeSetting label="Inputs Control Outputs" value="0"/>
               </compositeChoice>
               <compositeChoice choice="Ax and Sx do not control corresponding local output">
                 <compositeSetting label="Sensor Actions" value="0"/>
-                <compositeSetting label="Routes Enable" value="1"/>
+                <compositeSetting label="Inputs Control Outputs" value="1"/>
               </compositeChoice>
               <compositeChoice choice="Ax and Sx have difficult-to-describe effect on local output">
                 <compositeSetting label="Sensor Actions" value="1"/>
-                <compositeSetting label="Routes Enable" value="1"/>
+                <compositeSetting label="Inputs Control Outputs" value="1"/>
               </compositeChoice>
             </compositeVal>
             <label>Local Inputs</label>
           </variable>
 
-          <variable item="Input Messages">
+          <variable item="Input Messages"
+                    tooltip="OpSw21, OpSw13">
             <compositeVal>
               <compositeChoice choice="General Sensor messages are sent only for Ax input changes">
                 <compositeSetting label="Input LocoNet Message" value="0"/>
