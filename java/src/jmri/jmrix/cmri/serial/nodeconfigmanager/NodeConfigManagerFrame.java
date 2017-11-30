@@ -57,42 +57,42 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
     NodeConfigManagerFrame curFrame;
 
-    protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);
-    protected javax.swing.JLabel nodeAddrStatic = new javax.swing.JLabel("000");
-    protected javax.swing.JComboBox nodeTypeBox;
-    protected javax.swing.JTextField receiveDelayField = new javax.swing.JTextField(3);
-    protected javax.swing.JTextField nodeDescription = new javax.swing.JTextField(32);
-    protected javax.swing.JTextField pulseWidthField = new javax.swing.JTextField(4);
-    protected javax.swing.JComboBox cardSizeBox;
-    protected javax.swing.JComboBox cardSize8Box;
-    protected javax.swing.JLabel cardSizeText = new javax.swing.JLabel("   " + Bundle.getMessage("LabelCardSize"));
-    protected javax.swing.JLabel onBoardBytesText = new javax.swing.JLabel(Bundle.getMessage("LabelOnBoardBytes") + " 3 Input Bytes, 6 Output Bytes");
+    protected JTextField nodeAddrField = new JTextField(3);
+    protected JLabel nodeAddrStatic = new JLabel("000");
+    protected JComboBox<String> nodeTypeBox;
+    protected JTextField receiveDelayField = new JTextField(3);
+    protected JTextField nodeDescription = new JTextField(32);
+    protected JTextField pulseWidthField = new JTextField(4);
+    protected JComboBox<String> cardSizeBox;
+    protected JComboBox<String> cardSize8Box;
+    protected JLabel cardSizeText = new JLabel("   " + Bundle.getMessage("LabelCardSize"));
+    protected JLabel onBoardBytesText = new JLabel(Bundle.getMessage("LabelOnBoardBytes") + " 3 Input Bytes, 6 Output Bytes");
 
-    protected javax.swing.JButton addNodeButton = new javax.swing.JButton(Bundle.getMessage("ButtonAdd"));
-    protected javax.swing.JButton editNodeButton = new javax.swing.JButton(Bundle.getMessage("ButtonEdit"));
-    protected javax.swing.JButton deleteNodeButton = new javax.swing.JButton(Bundle.getMessage("ButtonDelete"));
-    protected javax.swing.JButton doneNodeButton = new javax.swing.JButton(Bundle.getMessage("ButtonDone"));
-    protected javax.swing.JButton updateNodeButton = new javax.swing.JButton(Bundle.getMessage("ButtonUpdate"));
-    protected javax.swing.JButton cancelNodeButton = new javax.swing.JButton(Bundle.getMessage("ButtonCancel"));
+    protected JButton addNodeButton = new JButton(Bundle.getMessage("ButtonAdd"));
+    protected JButton editNodeButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    protected JButton deleteNodeButton = new JButton(Bundle.getMessage("ButtonDelete"));
+    protected JButton doneNodeButton = new JButton(Bundle.getMessage("ButtonDone"));
+    protected JButton updateNodeButton = new JButton(Bundle.getMessage("ButtonUpdate"));
+    protected JButton cancelNodeButton = new JButton(Bundle.getMessage("ButtonCancel"));
 
-    protected javax.swing.JLabel statusText1 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusText2 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusText3 = new javax.swing.JLabel();
+    protected JLabel statusText1 = new JLabel();
+    protected JLabel statusText2 = new JLabel();
+    protected JLabel statusText3 = new JLabel();
 
-    protected javax.swing.JPanel panel2 = new JPanel();
-    protected javax.swing.JPanel panel2a = new JPanel();
-    protected javax.swing.JPanel panel2b = new JPanel();
-    protected javax.swing.JPanel panel2c = new JPanel();  //c2 IOX config
-    protected javax.swing.JPanel panelnodeDescBox = new JPanel();   //c2 node desctipion box
-    protected javax.swing.JPanel panelnodeDesc = new JPanel();  //c2 node description
-    protected javax.swing.JPanel panelnetOpt = new JPanel();  //c2 CMRInet options
-    protected javax.swing.JPanel panelnetOptBox = new JPanel();  //c2 CMRInet options frame
-    protected javax.swing.JPanel panelnodeOpt = new JPanel();   //c2 node options
+    protected JPanel panel2 = new JPanel();
+    protected JPanel panel2a = new JPanel();
+    protected JPanel panel2b = new JPanel();
+    protected JPanel panel2c = new JPanel();  //c2 IOX config
+    protected JPanel panelnodeDescBox = new JPanel();   //c2 node desctipion box
+    protected JPanel panelnodeDesc = new JPanel();  //c2 node description
+    protected JPanel panelnetOpt = new JPanel();  //c2 CMRInet options
+    protected JPanel panelnetOptBox = new JPanel();  //c2 CMRInet options frame
+    protected JPanel panelnodeOpt = new JPanel();   //c2 node options
 
     protected boolean changedNode = false;  // true if a node was changed, deleted, or added
     protected boolean editMode = false;     // true if in edit mode
 
-    protected SerialNode curNode = null;    // Serial Node being editted
+    protected SerialNode curNode = null;    // Serial Node being edited
     protected int nodeAddress = 0;          // Node address
     protected int nodeType = SerialNode.SMINI; // Node type - default SMINI
     protected int bitsPerCard = 24;         // number of bits per card
@@ -276,51 +276,34 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
         contentPane.add(nodeTablePanel);
 
-        /**
-         * ------------------------- Setup main window buttons
-         * -------------------------
-         */
+        // Setup main window buttons
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, FlowLayout.RIGHT));
         panel3.setPreferredSize(new Dimension(950, 50));
 
-        /**
-         * ----------------- Set up Add button -----------------
-         */
+        // Set up Add button
         addButton.setVisible(true);
         addButton.setToolTipText(Bundle.getMessage("AddButtonTip"));
-        addButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                addButtonActionPerformed(e);
-            }
-
+        addButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            addButtonActionPerformed(e);
         });
         panel3.add(addButton);
 
-        /**
-         * ------------------- Set up Print button -------------------
-         */
+        // Set up Print button
         printButton.setVisible(true);
         printButton.setToolTipText(Bundle.getMessage("PrintButtonTip"));
         if (numConfigNodes > 0) {
-            printButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    printButtonActionPerformed(e);
-                }
+            printButton.addActionListener((java.awt.event.ActionEvent e) -> {
+                printButtonActionPerformed(e);
             });
         }
         panel3.add(printButton);
 
-        /**
-         * ------------------ Set up Done button ------------------
-         */
+        // Set up Done button
         doneButton.setVisible(true);
         doneButton.setToolTipText(Bundle.getMessage("DoneButtonTip"));
-        doneButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                doneButtonActionPerformed();
-            }
-
+        doneButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            doneButtonActionPerformed();
         });
         panel3.add(doneButton);
 
@@ -332,18 +315,14 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * -------------------------------------------- Extract the node address
-     * from the node table --------------------------------------------
+     * Get the selected node address from the node table.
      */
     public int getSelectedNodeAddr() {
         return (Integer) nodeTable.getValueAt(nodeTable.getSelectedRow(), 0);
     }
 
     /**
-     * ------------------------------------------------------------------ Node
-     * browser button handlers The reminder to save changes is only done at the
-     * main window close
-     * ------------------------------------------------------------------
+     * Handle the done button click.
      */
     public void doneButtonActionPerformed() {
         if (changedNode) {
@@ -372,7 +351,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * --------------- Print Button --------------
+     * Print.
+     *
+     * @param e the triggering event
      */
     public void printButtonActionPerformed(java.awt.event.ActionEvent e) {
         int[] colWidth = new int[10];
@@ -404,11 +385,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * --------------------------------- Node table SELECT button handlers
-     * ---------------------------------
-     */
-    /**
-     * -------- EDIT --------
+     * Edit node table selection.
      */
     public void editActionSelected() {
         selectedNodeAddr = getSelectedNodeAddr();
@@ -421,7 +398,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             f.initNodeConfigWindow();
             f.editNodeButtonActionPerformed(selectedNodeAddr);
         } catch (Exception ex) {
-            log.info("editActionSelected Exception-C2: " + ex.toString());
+            log.info("editActionSelected", ex);
 
         }
         f.setLocation(200, 200);
@@ -429,9 +406,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         f.setVisible(true);
     }
 
-    /* ----------
-     *   DELETE
-     * ----------
+    /**
+     * Handle the delete button click
      */
     public void deleteActionSelected() {
         selectedNodeAddr = getSelectedNodeAddr();
@@ -443,7 +419,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             f.initNodeConfigWindow();
             f.deleteNodeButtonActionPerformed(selectedNodeAddr);
         } catch (Exception ex) {
-            log.info("deleteActionSelected Exception-C2: " + ex.toString());
+            log.info("deleteActionSelected", ex);
 
         }
         f.setLocation(200, 200);
@@ -452,7 +428,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * ------------ I/O BIT INFO ------------
+     * Handle info action.
      */
     public void infoActionSelected() {
         selectedNodeAddr = getSelectedNodeAddr();
@@ -495,7 +471,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     /**
      * Set up table for displaying bit assignments
      */
-    public class NodeTableModel extends AbstractTableModel    {
+    public class NodeTableModel extends AbstractTableModel {
 
         public String getColumnName(int c) {
             return nodeTableColumnsNames[c];
@@ -785,13 +761,12 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
     private String[] nodeTableTypes = {"--", "SMINI", "SUSIC", "CPNODE", "CPMEGA"};
 
-    /**
-     * --------------------------------------------------------- ------ Node
-     * Configuration Management Routines ------
+    /*
+     * ----------------------------------------------------------
+     *    ------ Node Configuration Management Routines ------
      * ----------------------------------------------------------
      */
     public void initNodeVariables() {
-//    	super();
         // Clear information arrays
         for (int i = 0; i < 64; i++) {
             cardType[i] = Bundle.getMessage("CardTypeNone");
@@ -843,11 +818,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         nodeTypeBox.addItem("USIC_SUSIC");
         nodeTypeBox.addItem("CPNODE");
 
-        //---------------------------------------------------------------
         //  Hide the menu item until MRCS are ready to release the cpMega
         //  nodeTypeBox.addItem("CPMEGA");
-        //---------------------------------------------------------------
-        /**
+
+        /*
          * Here add code for other types of nodes
          */
         nodeTypeBox.addActionListener(new java.awt.event.ActionListener() {
@@ -884,7 +858,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     panelnodeOpt.setVisible(false);
                     nodeType = SerialNode.USIC_SUSIC;
                     onBoardBytesText.setText("  ");
-                } else if (s.equals("CPNODE"))                {
+                } else if (s.equals("CPNODE")) {
                     panel2.setVisible(false);
                     panel2a.setVisible(false);
                     panel2b.setVisible(true);
@@ -899,7 +873,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     panelnodeOpt.setVisible(true);
                     nodeType = SerialNode.CPNODE;
                     onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes") + " 2 Bytes");
-                } else if (s.equals("CPMEGA"))                {
+                } else if (s.equals("CPMEGA")) {
                     panel2.setVisible(false);
                     panel2a.setVisible(false);
                     panel2b.setVisible(true);
@@ -915,13 +889,11 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     nodeType = SerialNode.CPMEGA;
                     onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes") + " 8 Bytes");
                 }
-                /**
+                /*
                  * Here add code for other types of nodes
                  */
 
-                /**
-                 * reset notes as appropriate
-                 */
+                // reset notes as appropriate
                 resetNotes();
             }
         });
@@ -941,7 +913,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         cardSizeBox.addItem(Bundle.getMessage("CardSize24"));
         cardSizeBox.addItem(Bundle.getMessage("CardSize32"));
         cardSize8Box.addItem(Bundle.getMessage("CardSize8"));
-        /**
+        /*
          * Here add code for other types of nodes
          */
 
@@ -976,17 +948,13 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         panel14.setVisible(true);
 
         // Load the top half of the common window
-        //---------------------------------------
         panel1.add(panel11);
         panel1.add(panel12);
         panel1.add(panel13);
         panel1.add(panel14);
         contentPane.add(panel1);
 
-        /**
-         * Set up USIC/SUSIC card type configuration table
-         * -------------------------------------------------
-         */
+        // Set up USIC/SUSIC card type configuration table
         JPanel panel21 = new JPanel();
         panel21.setLayout(new BoxLayout(panel21, BoxLayout.Y_AXIS));
         panel21.add(new JLabel(Bundle.getMessage("HintCardTypePartA")));
@@ -1022,10 +990,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         contentPane.add(panel2);
         panel2.setVisible(false);
 
-        /**
-         * Set up SMINI oscillating 2-lead searchlight configuration table
-         * ----------------------------------------------------------------
-         */
+        // Set up SMINI oscillating 2-lead searchlight configuration table
         JPanel panel2a1 = new JPanel();
         panel2a1.setLayout(new BoxLayout(panel2a1, BoxLayout.Y_AXIS));
         panel2a1.add(new JLabel(Bundle.getMessage("HintSearchlightPartA")));
@@ -1050,10 +1015,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         contentPane.add(panel2a);
         panel2.setVisible(false);
 
-        /**
-         * Set up CPMEGA on board byte I/O assignments
-         * ------------------------------------------
-         */
+        // Set up CPMEGA on board byte I/O assignments
         JPanel panel2b3 = new JPanel();
         panel2b3.setLayout(new BoxLayout(panel2b3, BoxLayout.Y_AXIS));
         panel2b3.add(new JLabel("Assign Onboard Bytes"));
@@ -1084,10 +1046,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         contentPane.add(panel2c);
         panel2.setVisible(false);
 
-        /**
-         * Set up I/O Expander (IOX) port assignments
-         * ------------------------------------------
-         */
+        // Set up I/O Expander (IOX) port assignments
         JPanel panel2b1 = new JPanel();
         panel2b1.setLayout(new BoxLayout(panel2b1, BoxLayout.Y_AXIS));
         panel2b1.add(new JLabel("Assign IOX Ports"));
@@ -1119,10 +1078,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         contentPane.add(panel2b);
         panel2b.setVisible(false);
 
-        /**
-         * node Description field - all node types have this field
-         * -------------------------------------------------------
-         */
+        // node Description field - all node types have this field
         panelnodeDescBox.setLayout(new BoxLayout(panelnodeDescBox, BoxLayout.Y_AXIS));
         panelnodeDesc.setLayout(new FlowLayout());
         panelnodeDesc.add(new JLabel("Description:"));
@@ -1131,9 +1087,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         panelnodeDesc.setVisible(true);
         contentPane.add(panelnodeDesc);
 
-        /**
-         * Set up CMRInet Options ----------------------
-         */
+        // Set up CMRInet Options
         panelnetOpt.setLayout(new GridLayout(0, 2));
 
         panelnetOpt.add(cbx_cmrinetopt_AUTOPOLL);
@@ -1141,52 +1095,50 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
         panelnetOpt.add(cbx_cmrinetopt_USECMRIX);
         cbx_cmrinetopt_USECMRIX.addItemListener(nodeOptHandler);
-        cbx_cmrinetopt_USECMRIX.setVisible(false); //---------
+        cbx_cmrinetopt_USECMRIX.setVisible(false);
 
         panelnetOpt.add(cbx_cmrinetopt_USEBCC);
         cbx_cmrinetopt_USEBCC.addItemListener(nodeOptHandler);
-        cbx_cmrinetopt_USEBCC.setVisible(false); //---------
+        cbx_cmrinetopt_USEBCC.setVisible(false);
 
         panelnetOpt.add(cbx_cmrinetopt_BIT8);
         cbx_cmrinetopt_BIT8.addItemListener(nodeOptHandler);
-        cbx_cmrinetopt_BIT8.setVisible(false); //---------
+        cbx_cmrinetopt_BIT8.setVisible(false);
 
         panelnetOpt.add(cbx_cmrinetopt_BIT15);
         cbx_cmrinetopt_BIT15.addItemListener(nodeOptHandler);
-        cbx_cmrinetopt_BIT15.setVisible(false); //---------
+        cbx_cmrinetopt_BIT15.setVisible(false);
 
         Border panelnetOptBorder = BorderFactory.createEtchedBorder();
         Border panelnetOptTitled = BorderFactory.createTitledBorder(panelnetOptBorder, "CMRInet Options");
         panelnetOpt.setBorder(panelnetOptTitled);
-        panelnetOpt.setVisible(true); //---------
+        panelnetOpt.setVisible(true);
         contentPane.add(panelnetOpt);
 
         panelnetOptBox.add(Box.createHorizontalStrut(50));
         contentPane.add(panelnetOptBox);
 
-        /**
-         * Set up cpNode Options ----------------------
-         */
+        // Set up cpNode Options
         panelnodeOpt.setLayout(new GridLayout(0, 2));
         panelnodeOpt.add(cbx_cpnodeopt_SENDEOT);
         cbx_cpnodeopt_SENDEOT.addItemListener(nodeOptHandler);
-        cbx_cpnodeopt_SENDEOT.setVisible(true); //---------
+        cbx_cpnodeopt_SENDEOT.setVisible(true);
 
         panelnodeOpt.add(cbx_cpnodeopt_BIT1);
         cbx_cpnodeopt_BIT1.addItemListener(nodeOptHandler);
-        cbx_cpnodeopt_BIT1.setVisible(false); //---------
+        cbx_cpnodeopt_BIT1.setVisible(false);
 
         panelnodeOpt.add(cbx_cpnodeopt_BIT2);
         cbx_cpnodeopt_BIT2.addItemListener(nodeOptHandler);
-        cbx_cpnodeopt_BIT2.setVisible(false); //---------
+        cbx_cpnodeopt_BIT2.setVisible(false);
 
         panelnodeOpt.add(cbx_cpnodeopt_BIT8);
         cbx_cpnodeopt_BIT8.addItemListener(nodeOptHandler);
-        cbx_cpnodeopt_BIT8.setVisible(false); //---------
+        cbx_cpnodeopt_BIT8.setVisible(false);
 
         panelnodeOpt.add(cbx_cpnodeopt_BIT15);
         cbx_cpnodeopt_BIT15.addItemListener(nodeOptHandler);
-        cbx_cpnodeopt_BIT15.setVisible(false); //---------
+        cbx_cpnodeopt_BIT15.setVisible(false);
 
         Border panelnodeOptBorder = BorderFactory.createEtchedBorder();
         Border panelnodeOptTitled = BorderFactory.createTitledBorder(panelnodeOptBorder, "cpNode Options");
@@ -1194,10 +1146,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         panelnodeOpt.setVisible(false);
         contentPane.add(panelnodeOpt);
 
-        /**
-         * Set up the notes area panel for various message displays
-         * --------------------------------------------------------
-         */
+        // Set up the notes area panel for various message displays
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
         JPanel panel31 = new JPanel();
@@ -1220,59 +1169,47 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         panel3.setBorder(panel3Titled);
         contentPane.add(panel3);
 
-        /**
-         * Set up the functions buttons -----------------------------
-         */
+        // Set up the functions buttons
         JPanel panel4 = new JPanel();
         panel4.setLayout(new FlowLayout());
 
         addNodeButton.setText(Bundle.getMessage("ButtonAdd"));
         addNodeButton.setVisible(false);
         addNodeButton.setToolTipText(Bundle.getMessage("TipAddButton"));
-        addNodeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                addNodeButtonActionPerformed();
-            }
+        addNodeButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            addNodeButtonActionPerformed();
         });
         panel4.add(addNodeButton);
 
         deleteNodeButton.setText(Bundle.getMessage("ButtonDelete"));
         deleteNodeButton.setVisible(false);
         deleteNodeButton.setToolTipText(Bundle.getMessage("TipDeleteButton"));
-        deleteNodeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                deleteNodeButtonActionConfirm();
-            }
+        deleteNodeButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            deleteNodeButtonActionConfirm();
         });
         panel4.add(deleteNodeButton);
 
         updateNodeButton.setText(Bundle.getMessage("ButtonUpdate"));
         updateNodeButton.setVisible(false);
         updateNodeButton.setToolTipText(Bundle.getMessage("TipUpdateButton"));
-        updateNodeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                updateNodeButtonActionPerformed();
-            }
+        updateNodeButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            updateNodeButtonActionPerformed();
         });
         panel4.add(updateNodeButton);
 
         cancelNodeButton.setText(Bundle.getMessage("ButtonCancel"));
         cancelNodeButton.setVisible(false);
         cancelNodeButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
-        cancelNodeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                cancelNodeButtonActionPerformed();
-            }
+        cancelNodeButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            cancelNodeButtonActionPerformed();
         });
         panel4.add(cancelNodeButton);
 
         doneNodeButton.setText(Bundle.getMessage("ButtonDone"));
         doneNodeButton.setVisible(false);
         doneNodeButton.setToolTipText(Bundle.getMessage("TipDoneButton"));
-        doneNodeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                doneNodeButtonActionPerformed();
-            }
+        doneNodeButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            doneNodeButtonActionPerformed();
         });
         panel4.add(doneNodeButton);
 
@@ -1280,9 +1217,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         pack();
     }
 
-    /**
-     * ------------------------------------------------------- Methods to set
-     * the correct states of the window buttons
+    /*
+     * -------------------------------------------------------
+     * Methods to set the correct states of the window buttons
      * -------------------------------------------------------
      */
     public void buttonSet_ADD() {
@@ -1336,19 +1273,17 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     }
 
     public void addNodeButtonActionPerformed() {
-        /**
-         * Check that a node with this address does not exist
-         */
+        // Check that a node with this address does not exist
         curNode = null;
         int nodeAddress = readNodeAddress();
         if (nodeAddress < 0) {
             return;
         }
 
-        /**
-         * get a SerialNode corresponding to this node address if one exists
-         */
+        // get a SerialNode corresponding to this node address if one exists
         curNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
+        // curNode can never be null at this point. Was this intended to catch
+        // an exception?
         if (curNode != null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("Error1") + Integer.toString(nodeAddress)
                     + Bundle.getMessage("Error2"), "", JOptionPane.ERROR_MESSAGE);
@@ -1361,9 +1296,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             return;
         }
 
-        /**
-         * get node information from window and check for data consistency
-         */
+        // get node information from window and check for data consistency
         if (!readReceiveDelay()) {
             return;
         }
@@ -1374,11 +1307,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             return;
         }
 
-        /**
-         * ------------------------------ all ready, create the new node
-         * ------------------------------
-         */
+        // all ready, create the new node
         curNode = new SerialNode(nodeAddress, nodeType, _memo.getTrafficController());
+        // curNode cannot be null or an execption would have been thrown;
+        // what exceptions should this be catching (no documented exceptions are thrown by constructor)?
         if (curNode == null) {
             statusText1.setText(Bundle.getMessage("Error3"));
             statusText1.setVisible(true);
@@ -1391,22 +1323,18 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         nodeTableModel.addRow(curNode);
 
         // configure the new node
-        //-----------------------
         setNodeParameters();
 
         // register any orphan sensors that this node may have
-        //----------------------------------------------------
         if (_memo.getSensorManager() != null) {
             (_memo.getSensorManager()).registerSensorsForNode(curNode);
         }
 
         // reset text displays after succefully adding node
-        //-------------------------------------------------
         resetNotes();
         changedNode = true;
 
         // provide user feedback
-        //----------------------
         statusText1.setText(Bundle.getMessage("FeedBackAdd") + " " + Integer.toString(nodeAddress));
         statusText2.setVisible(false);
         statusText3.setVisible(true);
@@ -1416,19 +1344,18 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to load all of the configured node information from the serial
-     * node class. This method is called by Edit and Delete node.
+     * Load all of the configured node information from the serial node class.
+     *
+     * @param nodeaddr the node address
      */
     public void setupNodeInformationWindow(int nodeaddr) {
         // Find Serial Node address
-        //-------------------------
         nodeAddress = nodeaddr;
         if (nodeAddress < 0) {
             return;
         }
 
         // get the SerialNode corresponding to this node address
-        //------------------------------------------------------
         curNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
             statusText1.setText(Bundle.getMessage("Error4"));
@@ -1439,18 +1366,15 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         }
 
         // Set up static node address from the table, cannot be changed
-        //-------------------------------------------------------------
         nodeAddrStatic.setText(Integer.toString(nodeAddress));
         nodeAddrField.setVisible(false);
         nodeAddrStatic.setVisible(true);
 
         // get information for this node and set up combo box
-        //---------------------------------------------------
         nodeType = curNode.getNodeType();
-        switch (nodeType)        {
-            //------
+        switch (nodeType) {
+
             // SMINI
-            //------
             case SerialNode.SMINI:
                 nodeTypeBox.setSelectedItem("SMINI");
                 bitsPerCard = 24;
@@ -1472,9 +1396,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     }
                 }
                 break;
-            //-----------
+
             // USIC/SUSIC
-            //-----------
             case SerialNode.USIC_SUSIC:
                 nodeTypeBox.setSelectedItem("USIC_SUSIC");
                 bitsPerCard = curNode.getNumBitsPerCard();
@@ -1487,36 +1410,30 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 onBoardBytesText.setText("  ");
 
                 break;
-            //-------
+
             // CPNODE
-            //-------
             case SerialNode.CPNODE:
                 nodeTypeBox.setSelectedItem("CPNODE");
                 bitsPerCard = 8;
                 cardSize8Box.setSelectedItem(Bundle.getMessage("CardSize8"));
                 onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes") + " 2 Bytes");
 
-                // --------------
                 // cpNode Options
-                // --------------
                 cbx_cpnodeopt_SENDEOT.setSelected(curNode.iscpnodeBit(SerialNode.optbitNode_SENDEOT));
                 cbx_cpnodeopt_BIT1.setSelected(false);
                 cbx_cpnodeopt_BIT2.setSelected(false);
                 cbx_cpnodeopt_BIT8.setSelected(curNode.iscpnodeBit(SerialNode.optbitNode_BIT8));
                 cbx_cpnodeopt_BIT15.setSelected(curNode.iscpnodeBit(SerialNode.optbitNode_BIT15));
                 break;
-            //-------
+
             // CPMEGA
-            //-------
             case SerialNode.CPMEGA:
                 nodeTypeBox.setSelectedItem("CPMEGA");
                 bitsPerCard = 8;
                 cardSize8Box.setSelectedItem(Bundle.getMessage("CardSize8"));
                 onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes") + " 8 Bytes");
 
-                // --------------
                 // cpMega Options
-                // --------------
                 cbx_cpnodeopt_SENDEOT.setSelected(curNode.iscpnodeBit(SerialNode.optbitNode_SENDEOT));
                 cbx_cpnodeopt_BIT1.setSelected(false);
                 cbx_cpnodeopt_BIT2.setSelected(false);
@@ -1525,14 +1442,11 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 break;
 
             default:
-                log.error("Unknown Node Type " + nodeType);
+                log.error("Unknown Node Type {}", nodeType);
                 break;
         }
 
-        /**
-         * ---------------------------------- CMRInet Options for all node types
-         * -----------------------------------
-         */
+        // CMRInet Options for all node types
         cbx_cmrinetopt_AUTOPOLL.setSelected(curNode.isCMRInetBit(SerialNode.optbitNet_AUTOPOLL));
         cbx_cmrinetopt_USECMRIX.setSelected(curNode.isCMRInetBit(SerialNode.optbitNet_USECMRIX));
         cbx_cmrinetopt_USEBCC.setSelected(curNode.isCMRInetBit(SerialNode.optbitNet_USEBCC));
@@ -1593,19 +1507,19 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to create and load edit function window
+     * Create and load edit function window.
+     *
+     * @param nodeaddr the node address
      */
-//    public void editNodeButtonActionPerformed(int nodeaddr) {
     public void editNodeButtonActionPerformed(int nodeaddr) {
         // Find Serial Node address
-        //-------------------------
+
         nodeAddress = nodeaddr;
         if (nodeAddress < 0) {
             return;
         }
 
         // get the SerialNode corresponding to this node address
-        //------------------------------------------------------
         curNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
             statusText1.setText(Bundle.getMessage("Error4"));
@@ -1616,11 +1530,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         }
 
         // Load the node data into the window
-        //-----------------------------------
         setupNodeInformationWindow(nodeAddress);
 
         // Switch to edit notes
-        //---------------------
         editMode = true;
         statusText1.setText(editStatus1);
         statusText1.setVisible(true);
@@ -1631,7 +1543,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle update button
+     * Handle update button clicked.
      */
     public void updateNodeButtonActionPerformed() {
         // get node information from window
@@ -1674,11 +1586,11 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle delete button pressed
+     * Handle delete button pressed.
      */
     public void deleteNodeButtonActionConfirm() {
         // confirm deletion with the user
-        //-------------------------------
+
         if (JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
                 this, Bundle.getMessage("ConfirmDelete1") + "\n"
                 + Bundle.getMessage("ConfirmDelete2"), Bundle.getMessage("ConfirmDeleteTitle"),
@@ -1708,7 +1620,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to set up delete node window
+     * Set up delete node window.
+     *
+     * @param nodeAddr the node address
      */
     public void deleteNodeButtonActionPerformed(int nodeAddr) {
         // Set up static node address
@@ -1724,15 +1638,13 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         }
 
         // get the SerialNode corresponding to this node address
-        //------------------------------------------------------
         curNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         deleteNodeAddress = nodeAddr;
         // Load the node data into the window
-        //-----------------------------------
+
         setupNodeInformationWindow(nodeAddress);
 
         // get the node corresponding to this node address
-        //------------------------------------------------
         if (curNode == null) {
             statusText1.setText(Bundle.getMessage("Error4"));
             statusText1.setVisible(true);
@@ -1745,7 +1657,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle done button
+     * Handle done button clicked.
      */
     public void doneNodeButtonActionPerformed() {
         if (editMode) {
@@ -1763,25 +1675,12 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             nodeAddrStatic.setVisible(false);
         }
 
-        /**
-         * The reminder dialog is now only displayed when closing the node
-         * config manager window
-         */
-        /*
-        if (changedNode) {
-         Remind user to Save new configuration
-         JOptionPane.showMessageDialog(this,
-         Bundle.getMessage("Reminder1")+"\n"+Bundle.getMessage("Reminder2"),
-         Bundle.getMessage("ReminderTitle"),
-         JOptionPane.INFORMATION_MESSAGE);
-        }
-         */
         setVisible(false);
         dispose();
     }
 
     /**
-     * Method to handle cancel button
+     * Handle cancel button clicked.
      */
     public void cancelNodeButtonActionPerformed() {
         // Reset
@@ -1806,9 +1705,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         dispose();
     }
 
-    /**
-     * Method to close the window when the close box is clicked
-     */
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         doneNodeButtonActionPerformed();
         super.windowClosing(e);
@@ -1816,7 +1713,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
     /**
      * Set the node parameters by type. Some parameters are specific to a
-     * particular node type
+     * particular node type.
      */
     void setNodeParameters() {
         // receive delay is common for all node types
@@ -1829,9 +1726,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
         // continue in a node specific way
         switch (nodeType) {
-            //------
+
             // SMINI
-            //------
             case SerialNode.SMINI:
 
                 // Note: most parameters are set by default on creation
@@ -1871,9 +1767,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 curNode.setOptNet_AUTOPOLL(1);
                 break;
 
-            //-----------
             // USIC/SUSIC
-            //-----------
             case SerialNode.USIC_SUSIC:
                 // set number of bits per card
                 curNode.setNumBitsPerCard(bitsPerCard);
@@ -1902,9 +1796,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 curNode.setOptNet_AUTOPOLL(1);
                 break;
 
-            //-------
             // CPNODE
-            //-------
             case SerialNode.CPNODE:
                 // set number of bits per card
                 bitsPerCard = 8;
@@ -1928,7 +1820,6 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 }
 
                 // Set the node option bits.  Some are moved from the CMRInet options
-                //-------------------------------------------------------------------
                 curNode.setOptNet_AUTOPOLL(cbx_cmrinetopt_AUTOPOLL.isSelected() ? 1 : 0);
 
                 curNode.setOptNode_SENDEOT(cbx_cpnodeopt_SENDEOT.isSelected() ? 1 : 0);
@@ -1939,9 +1830,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
                 break;
 
-            //-------
             // CPMEGA
-            //-------
             case SerialNode.CPMEGA:
                 // set number of bits per card
                 bitsPerCard = 8;
@@ -1981,7 +1870,6 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 }
 
                 // Set the node option bits.  Some are moved from the CMRInet options
-                //-------------------------------------------------------------------
                 curNode.setOptNet_AUTOPOLL(1);  // Default node to be polled
 
                 curNode.setOptNode_SENDEOT(cbx_cpnodeopt_SENDEOT.isSelected() ? 1 : 0);
@@ -1997,20 +1885,15 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 break;
         }
 
-        /**
-         * Set the node description for all types
-         */
+        // Set the node description for all types
         curNode.setcmriNodeDesc(nodeDescription.getText());
 
-        /**
-         * Cause reinitialization of this Node to reflect these parameters
-         * ---------------------------------------------------------------
-         */
+        // Cause reinitialization of this Node to reflect these parameters
         _memo.getTrafficController().initializeSerialNode(curNode);
     }
 
     /**
-     * Method to reset the notes error after error display
+     * Reset the notes error after error display.
      */
     private void resetNotes() {
         if (errorInStatus1) {
@@ -2025,7 +1908,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Reset the second line of Notes area
+     * Reset the second line of Notes area.
      */
     private void resetNotes2() {
         if (errorInStatus2) {
@@ -2039,15 +1922,16 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read node address and check for legal range If successful, a node address
-     * in the range 0-127 is returned. If not successful, -1 is returned and an
-     * appropriate error message is placed in statusText1.
+     * Read node address and check for legal range. Sets the error message in
+     * {@link #statusText1} if not legal.
+     *
+     * @return A node address in the range 0-127 if legal; -1 if not legal
      */
     private int readNodeAddress() {
         int addr = -1;
         try {
             addr = Integer.parseInt(nodeAddrField.getText());
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             statusText1.setText(Bundle.getMessage("Error5"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
@@ -2067,15 +1951,16 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read receive delay from window Returns 'true' if successful, 'false' if
-     * an error was detected. If an error is detected, a suitable error message
-     * is placed in the Notes area
+     * Read receive delay from window. If an error is detected, a suitable error
+     * message is placed in the Notes area.
+     *
+     * @return true if successful; false otherwise
      */
     protected boolean readReceiveDelay() {
         // get the transmission delay
         try {
             receiveDelay = Integer.parseInt(receiveDelayField.getText());
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             statusText1.setText(Bundle.getMessage("Error7"));
             statusText1.setVisible(true);
             JOptionPane.showMessageDialog(this, Bundle.getMessage("Error7"), "", JOptionPane.ERROR_MESSAGE);
@@ -2107,15 +1992,16 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read pulse width from window Returns 'true' if successful, 'false' if an
-     * error was detected. If an error is detected, a suitable error message is
-     * placed in the Notes area
+     * Read pulse width from window. If an error is detected, a suitable error
+     * message is placed in the Notes area.
+     *
+     * @return true if successful; false otherwise
      */
     protected boolean readPulseWidth() {
         // get the pulse width
         try {
             pulseWidth = Integer.parseInt(pulseWidthField.getText());
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             statusText1.setText(Bundle.getMessage("Error18"));
             statusText1.setVisible(true);
             JOptionPane.showMessageDialog(this, Bundle.getMessage("Error18"), "", JOptionPane.ERROR_MESSAGE);
@@ -2149,9 +2035,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Check for consistency errors by node type Returns 'true' if successful,
-     * 'false' if an error was detected. If an error is detected, a suitable
-     * error message is placed in the Notes area
+     * Check for consistency errors by node type. If an error is detected, a
+     * suitable error message is placed in the Notes area.
+     *
+     * @return true if successful; false otherwise
      */
     protected boolean checkConsistency() {
         switch (nodeType) {
@@ -2223,13 +2110,13 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     int numInput = curNode.numInputCards();
                     // will the number of cards be reduced by this edit?
                     if (numCards < (numOutput + numInput)) {
-                        if (javax.swing.JOptionPane.NO_OPTION == javax.swing.JOptionPane.showConfirmDialog(this,
+                        if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(this,
                                 Bundle.getMessage("ConfirmUpdate1") + "\n"
                                 + Bundle.getMessage("ConfirmUpdate2") + "\n"
                                 + Bundle.getMessage("ConfirmUpdate3"),
                                 Bundle.getMessage("ConfirmUpdateTitle"),
-                                javax.swing.JOptionPane.YES_NO_OPTION,
-                                javax.swing.JOptionPane.WARNING_MESSAGE)) {
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.WARNING_MESSAGE)) {
                             // user said don't update - cancel the update
                             return (false);
                         }
@@ -2255,7 +2142,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
             // here add code for other types of nodes
             default:
-                log.warn("Unexpected node type - " + Integer.toString(nodeType));
+                log.warn("Unexpected node type - {}", nodeType);
                 break;
         }
         return true;
@@ -2266,22 +2153,27 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
      */
     public class CardConfigModel extends AbstractTableModel {
 
+        @Override
         public String getColumnName(int c) {
             return cardConfigColumnNames[c];
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             return String.class;
         }
 
+        @Override
         public int getColumnCount() {
             return 2;
         }
 
+        @Override
         public int getRowCount() {
             return 64;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (c == 0) {
                 return "       " + Integer.toString(r);
@@ -2291,12 +2183,14 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             return "";
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             if (c == 1) {
                 cardType[r] = (String) type;
             }
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             return (c == 1);
         }
@@ -2304,10 +2198,12 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         public static final int ADDRESS_COLUMN = 0;
         public static final int TYPE_COLUMN = 1;
     }
-    private String[] cardConfigColumnNames = {Bundle.getMessage("HeadingCardAddress"),
-        " " + Bundle.getMessage("HeadingCardType")};
-    private String[] cardType = new String[64];
-    private String[] onBoardType = new String[16];
+    private final String[] cardConfigColumnNames = {
+        Bundle.getMessage("HeadingCardAddress"),
+        Bundle.getMessage("HeadingCardType")
+    };
+    private final String[] cardType = new String[64];
+    private final String[] onBoardType = new String[16];
 
     /**
      * Set up model for SMINI table for designating oscillating 2-lead
@@ -2315,10 +2211,12 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
      */
     public class SearchlightConfigModel extends AbstractTableModel {
 
+        @Override
         public String getColumnName(int c) {
             return searchlightConfigColumnNames[c];
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c > 0) {
                 return Boolean.class;
@@ -2327,14 +2225,17 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public int getColumnCount() {
             return 9;
         }
 
+        @Override
         public int getRowCount() {
             return 6;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (c == 0) {
                 switch (r) {
@@ -2355,18 +2256,15 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 }
             } else {
                 int index = (r * 8) + (c - 1);
-                if (searchlightBits[index]) {
-                    return (Boolean.TRUE);
-                } else {
-                    return (Boolean.FALSE);
-                }
+                return searchlightBits[index];
             }
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             if (c > 0) {
                 int index = (r * 8) + (c - 1);
-                if (!((Boolean) type).booleanValue()) {
+                if (!((Boolean) type)) {
                     searchlightBits[index] = false;
                     if (firstSearchlight[index]) {
                         searchlightBits[index + 1] = false;
@@ -2395,26 +2293,26 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             return (c != 0);
         }
 
         public static final int PORT_COLUMN = 0;
     }
-    private String[] searchlightConfigColumnNames = {Bundle.getMessage("HeadingPort"), "0", "1", "2", "3", "4", "5", "6", "7"};
-    private boolean[] searchlightBits = new boolean[48];   // true if this bit is a searchlight bit
-    private boolean[] firstSearchlight = new boolean[48];  // true if first of a pair of searchlight bits
+    private final String[] searchlightConfigColumnNames = {Bundle.getMessage("HeadingPort"), "0", "1", "2", "3", "4", "5", "6", "7"};
+    private final boolean[] searchlightBits = new boolean[48];   // true if this bit is a searchlight bit
+    private final boolean[] firstSearchlight = new boolean[48];  // true if first of a pair of searchlight bits
 
-    /* ------------------------------- */
- /* cpNode options checkbox handler */
- /* ------------------------------- */
+    /**
+     * Handles checkboxes for cpNode options
+     */
     private class HandlerClass implements ItemListener {
 
+        @Override
         public void itemStateChanged(ItemEvent e) {
             JCheckBox checkbox = (JCheckBox) e.getSource();
 
-            // Network options
-            //----------------
             if (checkbox == cbx_cmrinetopt_AUTOPOLL) {
                 curNode.setCMRInetOpts(SerialNode.optbitNet_AUTOPOLL, (cbx_cmrinetopt_AUTOPOLL.isSelected() ? 1 : 0));
             } else if (checkbox == cbx_cmrinetopt_USECMRIX) {
@@ -2427,9 +2325,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 curNode.setCMRInetOpts(SerialNode.optbitNet_BIT8, (cbx_cmrinetopt_BIT8.isSelected() ? 1 : 0));
             } else if (checkbox == cbx_cmrinetopt_BIT15) {
                 curNode.setCMRInetOpts(SerialNode.optbitNet_BIT15, (cbx_cmrinetopt_BIT15.isSelected() ? 1 : 0));
-            } else // cpNode options
-            //---------------
-            if (checkbox == cbx_cpnodeopt_SENDEOT) {
+            } else if (checkbox == cbx_cpnodeopt_SENDEOT) {
                 curNode.setcpnodeOpts(SerialNode.optbitNode_SENDEOT, (cbx_cpnodeopt_SENDEOT.isSelected() ? 1 : 0));
             } else if (checkbox == cbx_cpnodeopt_BIT1) {
                 cbx_cpnodeopt_BIT1.setSelected(false);
@@ -2437,8 +2333,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 cbx_cpnodeopt_BIT2.setSelected(false);
             } else if (checkbox == cbx_cpnodeopt_BIT8) {
                 curNode.setcpnodeOpts(SerialNode.optbitNode_BIT8, (cbx_cpnodeopt_BIT8.isSelected() ? 1 : 0));
-            }
-            if (checkbox == cbx_cpnodeopt_BIT15) {
+            } else if (checkbox == cbx_cpnodeopt_BIT15) {
                 curNode.setcpnodeOpts(SerialNode.optbitNode_BIT15, (cbx_cpnodeopt_BIT15.isSelected() ? 1 : 0));
             }
             changedNode = true;
@@ -2448,24 +2343,29 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     /**
      * Set up table for selecting card type by address for CPNODE/CPMEGA nodes
      */
-    public class CPnodeConfigModel extends AbstractTableModel    {
+    public class CPnodeConfigModel extends AbstractTableModel {
 
+        @Override
         public String getColumnName(int c) {
             return cpnodeConfigColumnNames[c];
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             return String.class;
         }
 
+        @Override
         public int getColumnCount() {
             return 2;
         }
 
+        @Override
         public int getRowCount() {
             return 16;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             String[] cdPort = {"  A", "  B"};
             String val = "     ";
@@ -2483,12 +2383,14 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             if (c == 1) {
                 cardType[r + cpNodeOnboard] = (String) type;
             }
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             return (c == 1);
         }
@@ -2496,36 +2398,39 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         public static final int CARDNUM_COLUMN = 0;
         public static final int CARDTYPE_COLUMN = 1;
     }
-    private String[] cpnodeConfigColumnNames = {"IOX Addr  Port", "Port Type"};
+    private final String[] cpnodeConfigColumnNames = {"IOX Addr Port", "Port Type"};
 
     /**
      * Set up table for selecting card type by address for CPNODE/CPMEGA nodes
      */
-    public class OSnodeConfigModel extends AbstractTableModel    {
+    public class OSnodeConfigModel extends AbstractTableModel {
 
+        @Override
         public String getColumnName(int c) {
             return osnodeConfigColumnNames[c];
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             return String.class;
         }
 
+        @Override
         public int getColumnCount() {
             return 2;
         }
 
+        @Override
         public int getRowCount() {
             return 8;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
-            String val = "     ";
             switch (c) {
                 case CARDNUM_COLUMN:
                     int i = r;
-                    val = i + " ";
-                    return "    " + val;
+                    return "    " + i + " ";
                 case CARDTYPE_COLUMN:
                     return " " + onBoardType[r];
                 default:
@@ -2533,12 +2438,14 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             if (c == CARDTYPE_COLUMN) {
                 onBoardType[r] = (String) type;
             }
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             return (c == 1);
         }
@@ -2546,10 +2453,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         public static final int CARDNUM_COLUMN = 0;
         public static final int CARDTYPE_COLUMN = 1;
     }
-    private String[] osnodeConfigColumnNames = {"  Byte ", "Port Type"};
+    private final String[] osnodeConfigColumnNames = {"  Byte ", "Port Type"};
 
-    private int[] cpnodeOpts = new int[16];  // Local storage for node options
-    private int[] cmrinetOpts = new int[16];  // Local storage for node options
+    private final int[] cpnodeOpts = new int[16];  // Local storage for node options
+    private final int[] cmrinetOpts = new int[16];  // Local storage for node options
 
     private final static Logger log = LoggerFactory.getLogger(NodeConfigManagerFrame.class);
 
