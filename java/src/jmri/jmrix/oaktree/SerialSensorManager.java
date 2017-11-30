@@ -27,7 +27,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     public SerialSensorManager(OakTreeSystemConnectionMemo memo) {
         super();
         _memo = memo;
-        prefix = memo.getSystemPrefix();
+        prefix = getSystemPrefix();
     }
 
     /**
@@ -47,7 +47,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     public String getSystemPrefix() {
-        return prefix;
+        return _memo.getSystemPrefix();
 
     }
 
