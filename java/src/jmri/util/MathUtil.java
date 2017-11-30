@@ -327,6 +327,32 @@ public final class MathUtil {
     }
 
     /**
+     * create a vector given a direction and a magnitude
+     *
+     * @param dirDEG    the direction (in degrees)
+     * @param magnitude the magnitude
+     * @return the vector with the specified direction and magnitude
+     */
+    @CheckReturnValue
+    public static Point2D vectorDEG(double dirDEG, double magnitude) {
+        Point2D result = new Point2D.Double(magnitude, 0.0);
+        return rotateDEG(result, dirDEG);
+    }
+
+    /**
+     * create a vector given a direction and a magnitude
+     *
+     * @param dirRAD    the direction (in radians)
+     * @param magnitude the magnitude
+     * @return the vector with the specified direction and magnitude
+     */
+    @CheckReturnValue
+    public static Point2D vectorRAD(double dirRAD, double magnitude) {
+        Point2D result = new Point2D.Double(magnitude, 0.0);
+        return rotateRAD(result, dirRAD);
+    }
+
+    /**
      * dot product of two points (vectors)
      *
      * @param pA the first point
@@ -376,7 +402,7 @@ public final class MathUtil {
     /**
      * normalize a point (vector) to a length
      *
-     * @param p the point (vector)
+     * @param p      the point (vector)
      * @param length the length to normalize to
      * @return the normalized point (vector)
      */
@@ -402,7 +428,7 @@ public final class MathUtil {
     }
 
     /**
-     * compute the angle (direction in radians) for a vector 
+     * compute the angle (direction in radians) for a vector
      *
      * @param p the vector (point relative to zeroPoint2D)
      * @return the angle in radians
@@ -909,7 +935,8 @@ public final class MathUtil {
      * inset a rectangle
      *
      * @param r the rectangle
-     * @param h the horzontial inset (positive make it smaller, negative, bigger)
+     * @param h the horzontial inset (positive make it smaller, negative,
+     *          bigger)
      * @param v the vertical inset (positive make it smaller, negative, bigger)
      * @return the inset rectangle
      */

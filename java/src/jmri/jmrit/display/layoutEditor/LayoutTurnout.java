@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -3068,11 +3069,7 @@ public class LayoutTurnout extends LayoutTrack {
         Point2D midPointCD = MathUtil.midPoint(pointC, pointD);
         Point2D twoThirdPointCD = MathUtil.twoThirdPoint(pointC, pointD);
 
-        int state = Turnout.UNKNOWN;
-        Turnout to = getTurnout();
-        if ((to != null) && layoutEditor.isAnimating()) {
-            state = to.getKnownState();
-        }
+        int state = getState();
         int type = getTurnoutType();
         if (type == DOUBLE_XOVER) {
             // Common drawing (not dependant on turnout state)
@@ -3275,7 +3272,6 @@ public class LayoutTurnout extends LayoutTrack {
     @Override
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
         Color color = g2.getColor();
-        g2.setColor(Color.GREEN);
 
         Point2D pA = getCoordsA();
         Point2D pB = getCoordsB();
@@ -3283,90 +3279,165 @@ public class LayoutTurnout extends LayoutTrack {
         Point2D pD = getCoordsD();
         Point2D pM = getCoordsCenter();
 
+        Point2D vAM = MathUtil.normalize(MathUtil.subtract(pM, pA));
+        double dirAM_DEG = MathUtil.computeAngleDEG(vAM);
+        Point2D vAMo = MathUtil.orthogonal(MathUtil.normalize(vAM, railDisplacement));
+        Point2D pML = MathUtil.subtract(pM, vAMo);
+        Point2D pMR = MathUtil.add(pM, vAMo);
+
         Point2D vAB = MathUtil.subtract(pB, pA);
         Point2D vABo = MathUtil.orthogonal(MathUtil.normalize(vAB, railDisplacement));
-        Point2D pAL = MathUtil.subtract(pA, vABo);
-        Point2D pAR = MathUtil.add(pA, vABo);
+
+        Point2D pAL = MathUtil.subtract(pA, vAMo);
+        Point2D pAR = MathUtil.add(pA, vAMo);
+
         Point2D pBL = MathUtil.subtract(pB, vABo);
         Point2D pBR = MathUtil.add(pB, vABo);
+
         Point2D pABm = MathUtil.midPoint(pA, pB);
         Point2D pABmL = MathUtil.subtract(pABm, vABo);
         Point2D pABmR = MathUtil.add(pABm, vABo);
 
-        Point2D vAM = MathUtil.subtract(pM, pA);
-        double dirAM_DEG = MathUtil.computeAngleDEG(vAM);
+        Point2D vCM = MathUtil.normalize(MathUtil.subtract(pC, pM));
+        double dirCM_DEG = MathUtil.computeAngleDEG(vCM);
 
-        Point2D vCM = MathUtil.subtract(pC, pM);
-        Point2D vCMo = MathUtil.orthogonal(MathUtil.normalize(vCM, railDisplacement));
+        Point2D vCMo = MathUtil.normalize(MathUtil.orthogonal(vCM), railDisplacement);
         Point2D pCL = MathUtil.subtract(pC, vCMo);
         Point2D pCR = MathUtil.add(pC, vCMo);
 
-        double dirCM_DEG = MathUtil.computeAngleDEG(vCM);
+        double deltaAMC_DEG = MathUtil.absDiffAngleDEG(dirAM_DEG, dirCM_DEG);
+        double deltaAMC_RAD = Math.toRadians(deltaAMC_DEG);
 
-        double deltaAC_DEG = MathUtil.absDiffAngleDEG(dirAM_DEG, dirCM_DEG);
-        double deltaAC_RAD = Math.toRadians(deltaAC_DEG);
+        double hypotF = railDisplacement / Math.sin((deltaAMC_RAD) / 2.0);
 
-        double disABF = railDisplacement / Math.tan(deltaAC_RAD / 2.0);
-        Point2D vABF = MathUtil.normalize(vAB, disABF);
-        Point2D pABF = MathUtil.add(pM, vABF);
-//        double hypotV = railDisplacement / Math.cos(deltaAC_RAD / 2.0);
+        if ((getName().equals("TO1")) || (getName().equals("TO2"))) {
+            log.info("LT #{}, deltaAMC_DEG: {}°, rd: {}, hypotF: {}",
+                    getName(), deltaAMC_DEG, railDisplacement, hypotF);
+        }
 
-//        Point2D vDisK = MathUtil.normalize(MathUtil.add(vAM, vBD), hypotK);
-//        Point2D vDisV = MathUtil.normalize(MathUtil.orthogonal(vDisK), hypotV);
-//        Point2D pKL = MathUtil.subtract(pM, vDisK);
-//        Point2D pKR = MathUtil.add(pM, vDisK);
-//        Point2D pVL = MathUtil.subtract(pM, vDisV);
-//        Point2D pVR = MathUtil.add(pM, vDisV);
-//
-//        Point2D vFK = MathUtil.normalize(vCM, hypotK);
-//        Point2D vFV = MathUtil.normalize(vCM, hypotV);
-//        Point2D pFK = MathUtil.add(pM, vFK);
-//        Point2D pFV = MathUtil.add(pM, vFV);
+        Point2D vDisF = MathUtil.normalize(MathUtil.add(vAM, vCM), hypotF);
+        Point2D pF = MathUtil.add(pM, vDisF);
+        Point2D vFP = MathUtil.multiply(vCMo, 2.0);
+        Point2D pFPR = MathUtil.add(pF, vFP);
+        Point2D pFPL = MathUtil.subtract(pF, vFP);
+
+        Point2D vDisAP = MathUtil.normalize(vAM, hypotF);
+        Point2D pAP = MathUtil.subtract(pM, vDisAP);
+        Point2D pAPR = MathUtil.add(pAP, vAMo);
+        Point2D pAPL = MathUtil.subtract(pAP, vAMo);
+
+        Point2D vSo = MathUtil.normalize(vABo, 2.0);
+
         boolean mainlineA = isMainlineA();
         boolean mainlineB = isMainlineB();
         boolean mainlineC = isMainlineC();
         boolean mainlineD = isMainlineD();
 
+        int state = getState();
         int type = getTurnoutType();
 
+        g2.setColor(Color.GREEN);
         switch (type) {
             case RH_TURNOUT: {
                 if (isMain == mainlineA) {
                     g2.draw(new Line2D.Double(pAL, pABmL));
+                    g2.draw(new Line2D.Double(pAR, pAPR));
                 }
                 if (isMain == mainlineB) {
                     g2.draw(new Line2D.Double(pABmL, pBL));
+                    g2.draw(new Line2D.Double(pF, pBR));
+                    Point2D pFR = MathUtil.subtract(pF, MathUtil.normalize(vAB, 2.0));
+                    if (state != Turnout.CLOSED) {  // unknown or diverting path
+                        Point2D pSR = MathUtil.subtract(pAPR, vSo);
+                        g2.draw(new Line2D.Double(pSR, pFR));
+                    } else {
+                        g2.draw(new Line2D.Double(pAPR, pF));
+                    }
                 }
                 if (isMain == mainlineC) {
-                    g2.setColor(Color.RED);
-                    g2.draw(new Line2D.Double(pM, pABF));
+                    g2.draw(new Line2D.Double(pF, pCL));
+                    g2.draw(new Line2D.Double(pFPR, pCR));
+                    GeneralPath path = new GeneralPath();
+                    path.moveTo(pAPR.getX(), pAPR.getY());
+                    path.quadTo(pMR.getX(), pMR.getY(), pFPR.getX(), pFPR.getY());
+                    path.lineTo(pCR.getX(), pCR.getY());
+                    g2.draw(path);
+                    Point2D pSL = MathUtil.add(pAPL, vSo);
+                    if (state != Turnout.CLOSED) {  // unknown or diverting path
+                        path = new GeneralPath();
+                        path.moveTo(pAPL.getX(), pAPL.getY());
+                        path.quadTo(pML.getX(), pML.getY(), pF.getX(), pF.getY());
+                        g2.draw(path);
+                    } else {
+                        Point2D pFL = MathUtil.subtract(pF, MathUtil.normalize(vABo, 2.0));
+                        path = new GeneralPath();
+                        path.moveTo(pSL.getX(), pSL.getY());
+                        path.quadTo(pML.getX(), pML.getY(), pFL.getX(), pFL.getY());
+                        g2.draw(path);
+                    }
                 }
                 break;
             }
             case LH_TURNOUT: {
                 if (isMain == mainlineA) {
                     g2.draw(new Line2D.Double(pAR, pABmR));
+                    g2.draw(new Line2D.Double(pAL, pAPL));
                 }
                 if (isMain == mainlineB) {
                     g2.draw(new Line2D.Double(pABmR, pBR));
+                    g2.draw(new Line2D.Double(pF, pBL));
+                    Point2D pFL = MathUtil.subtract(pF, MathUtil.normalize(vAB, 2.0));
+                    if (state != Turnout.CLOSED) {  // unknown or diverting path
+                        Point2D pSL = MathUtil.add(pAPL, vSo);
+                        g2.draw(new Line2D.Double(pSL, pFL));
+                    } else {
+                        g2.draw(new Line2D.Double(pAPL, pF));
+                    }
                 }
                 if (isMain == mainlineC) {
-                    g2.setColor(Color.RED);
-                    g2.draw(new Line2D.Double(pM, pABF));
+                    g2.draw(new Line2D.Double(pF, pCR));
+                    GeneralPath path = new GeneralPath();
+                    path.moveTo(pAPL.getX(), pAPL.getY());
+                    path.quadTo(pML.getX(), pML.getY(), pFPL.getX(), pFPL.getY());
+                    path.lineTo(pCL.getX(), pCL.getY());
+                    g2.draw(path);
+                    Point2D pSR = MathUtil.subtract(pAPR, vSo);
+                    if (state != Turnout.CLOSED) {  // unknown or diverting path
+                        path = new GeneralPath();
+                        path.moveTo(pAPR.getX(), pAPR.getY());
+                        path.quadTo(pMR.getX(), pMR.getY(), pF.getX(), pF.getY());
+                        g2.draw(path);
+                    } else {
+                        Point2D pFR = MathUtil.add(pF, MathUtil.normalize(vABo, 2.0));
+                        path = new GeneralPath();
+                        path.moveTo(pSR.getX(), pSR.getY());
+                        path.quadTo(pMR.getX(), pMR.getY(), pFR.getX(), pFR.getY());
+                        g2.draw(path);
+                    }
                 }
                 break;
             }
 
             case WYE_TURNOUT: {
                 if (isMain == mainlineA) {
-                    g2.draw(new Line2D.Double(pAL, pABmL));
-                    g2.draw(new Line2D.Double(pAR, pABmR));
+                    g2.draw(new Line2D.Double(pAL, pAPL));
+                    g2.draw(new Line2D.Double(pAR, pAPR));
                 }
                 if (isMain == mainlineB) {
-                    g2.draw(new Line2D.Double(pABmL, pBL));
+                    g2.setColor(Color.YELLOW);
+                    GeneralPath path = new GeneralPath();
+                    path.moveTo(pAPR.getX(), pAPR.getY());
+                    path.quadTo(pMR.getX(), pMR.getY(), pFPR.getX(), pFPR.getY());
+                    path.lineTo(pBR.getX(), pBR.getY());
+                    g2.draw(path);
                 }
                 if (isMain == mainlineC) {
-                    g2.draw(new Line2D.Double(pABmR, pCR));
+                    g2.setColor(Color.PINK);
+                    GeneralPath path = new GeneralPath();
+                    path.moveTo(pAPL.getX(), pAPL.getY());
+                    path.quadTo(pML.getX(), pML.getY(), pFPL.getX(), pFPL.getY());
+                    path.lineTo(pCL.getX(), pCL.getY());
+                    g2.draw(path);
                 }
                 break;
             }

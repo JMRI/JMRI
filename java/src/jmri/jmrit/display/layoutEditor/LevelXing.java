@@ -1413,20 +1413,20 @@ public class LevelXing extends LayoutTrack {
         Point2D vAC = MathUtil.subtract(pC, pA);
         double dirAC_DEG = MathUtil.computeAngleDEG(pA, pC);
         vAC = MathUtil.normalize(vAC, railDisplacement);
-        Point2D vACO = MathUtil.orthogonal(vAC);
-        Point2D pAL = MathUtil.subtract(pA, vACO);
-        Point2D pAR = MathUtil.add(pA, vACO);
-        Point2D pCL = MathUtil.subtract(pC, vACO);
-        Point2D pCR = MathUtil.add(pC, vACO);
+        Point2D vACo = MathUtil.orthogonal(vAC);
+        Point2D pAL = MathUtil.subtract(pA, vACo);
+        Point2D pAR = MathUtil.add(pA, vACo);
+        Point2D pCL = MathUtil.subtract(pC, vACo);
+        Point2D pCR = MathUtil.add(pC, vACo);
 
         Point2D vBD = MathUtil.subtract(pD, pB);
         double dirBD_DEG = MathUtil.computeAngleDEG(pB, pD);
         vBD = MathUtil.normalize(vBD, railDisplacement);
-        Point2D vBDO = MathUtil.orthogonal(vBD);
-        Point2D pBL = MathUtil.subtract(pB, vBDO);
-        Point2D pBR = MathUtil.add(pB, vBDO);
-        Point2D pDL = MathUtil.subtract(pD, vBDO);
-        Point2D pDR = MathUtil.add(pD, vBDO);
+        Point2D vBDo = MathUtil.orthogonal(vBD);
+        Point2D pBL = MathUtil.subtract(pB, vBDo);
+        Point2D pBR = MathUtil.add(pB, vBDo);
+        Point2D pDL = MathUtil.subtract(pD, vBDo);
+        Point2D pDR = MathUtil.add(pD, vBDo);
 
         double deltaDEG = MathUtil.absDiffAngleDEG(dirAC_DEG, dirBD_DEG);
         double deltaRAD = Math.toRadians(deltaDEG);
