@@ -1445,7 +1445,7 @@ public class LevelXing extends LayoutTrack {
         Point2D pVR = MathUtil.add(pM, vDisV);
 
         if (isMain == isMainlineAC()) {
-            // this is the *2.0 vector (rail gap) for the AC diamon parts
+            // this is the *2.0 vector (rail gap) for the AC diamond parts
             Point2D vAC2 = MathUtil.normalize(vAC, 2.0);
             // KL toward C, VR toward A, VL toward C and KR toward A
             Point2D pKLtC = MathUtil.add(pKL, vAC2);
@@ -1464,7 +1464,7 @@ public class LevelXing extends LayoutTrack {
             g2.draw(new Line2D.Double(pKR, pCL));
         }
         if (isMain == isMainlineBD()) {
-            // this is the *2.0 vector (rail gap) for the BD diamon parts
+            // this is the *2.0 vector (rail gap) for the BD diamond parts
             Point2D vBD2 = MathUtil.normalize(vBD, 2.0);
             // VR toward D, KR toward B, KL toward D and VL toward B
             Point2D pVRtD = MathUtil.add(pVR, vBD2);

@@ -3018,6 +3018,9 @@ public class LayoutTurnout extends LayoutTrack {
      */
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
+        if (isBlock) {
+            return; //TODO: remove this!
+        }
         Point2D pointA = getCoordsA();
         Point2D pointB = getCoordsB();
         Point2D pointC = getCoordsC();
@@ -3271,12 +3274,142 @@ public class LayoutTurnout extends LayoutTrack {
      */
     @Override
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
-        //if (isMain == mainline) {
-        //    if (isBlock) {
-        //        setColorForTrackBlock(g2, getLayoutBlock());
-        //    }
-        //    drawSolid(g2);  //TODO: fix this
-        //}
+        Color color = g2.getColor();
+        g2.setColor(Color.GREEN);
+
+        Point2D pA = getCoordsA();
+        Point2D pB = getCoordsB();
+        Point2D pC = getCoordsC();
+        Point2D pD = getCoordsD();
+        Point2D pM = getCoordsCenter();
+
+        Point2D vAB = MathUtil.subtract(pB, pA);
+        Point2D vABo = MathUtil.orthogonal(MathUtil.normalize(vAB, railDisplacement));
+        Point2D pAL = MathUtil.subtract(pA, vABo);
+        Point2D pAR = MathUtil.add(pA, vABo);
+        Point2D pBL = MathUtil.subtract(pB, vABo);
+        Point2D pBR = MathUtil.add(pB, vABo);
+        Point2D pABm = MathUtil.midPoint(pA, pB);
+        Point2D pABmL = MathUtil.subtract(pABm, vABo);
+        Point2D pABmR = MathUtil.add(pABm, vABo);
+
+        Point2D vAM = MathUtil.subtract(pM, pA);
+        double dirAM_DEG = MathUtil.computeAngleDEG(vAM);
+
+        Point2D vCM = MathUtil.subtract(pC, pM);
+        Point2D vCMo = MathUtil.orthogonal(MathUtil.normalize(vCM, railDisplacement));
+        Point2D pCL = MathUtil.subtract(pC, vCMo);
+        Point2D pCR = MathUtil.add(pC, vCMo);
+
+        double dirCM_DEG = MathUtil.computeAngleDEG(vCM);
+
+        double deltaAC_DEG = MathUtil.absDiffAngleDEG(dirAM_DEG, dirCM_DEG);
+        double deltaAC_RAD = Math.toRadians(deltaAC_DEG);
+
+        double disABF = railDisplacement / Math.tan(deltaAC_RAD / 2.0);
+        Point2D vABF = MathUtil.normalize(vAB, disABF);
+        Point2D pABF = MathUtil.add(pM, vABF);
+//        double hypotV = railDisplacement / Math.cos(deltaAC_RAD / 2.0);
+
+//        Point2D vDisK = MathUtil.normalize(MathUtil.add(vAM, vBD), hypotK);
+//        Point2D vDisV = MathUtil.normalize(MathUtil.orthogonal(vDisK), hypotV);
+//        Point2D pKL = MathUtil.subtract(pM, vDisK);
+//        Point2D pKR = MathUtil.add(pM, vDisK);
+//        Point2D pVL = MathUtil.subtract(pM, vDisV);
+//        Point2D pVR = MathUtil.add(pM, vDisV);
+//
+//        Point2D vFK = MathUtil.normalize(vCM, hypotK);
+//        Point2D vFV = MathUtil.normalize(vCM, hypotV);
+//        Point2D pFK = MathUtil.add(pM, vFK);
+//        Point2D pFV = MathUtil.add(pM, vFV);
+        boolean mainlineA = isMainlineA();
+        boolean mainlineB = isMainlineB();
+        boolean mainlineC = isMainlineC();
+        boolean mainlineD = isMainlineD();
+
+        int type = getTurnoutType();
+
+        switch (type) {
+            case RH_TURNOUT: {
+                if (isMain == mainlineA) {
+                    g2.draw(new Line2D.Double(pAL, pABmL));
+                }
+                if (isMain == mainlineB) {
+                    g2.draw(new Line2D.Double(pABmL, pBL));
+                }
+                if (isMain == mainlineC) {
+                    g2.setColor(Color.RED);
+                    g2.draw(new Line2D.Double(pM, pABF));
+                }
+                break;
+            }
+            case LH_TURNOUT: {
+                if (isMain == mainlineA) {
+                    g2.draw(new Line2D.Double(pAR, pABmR));
+                }
+                if (isMain == mainlineB) {
+                    g2.draw(new Line2D.Double(pABmR, pBR));
+                }
+                if (isMain == mainlineC) {
+                    g2.setColor(Color.RED);
+                    g2.draw(new Line2D.Double(pM, pABF));
+                }
+                break;
+            }
+
+            case WYE_TURNOUT: {
+                if (isMain == mainlineA) {
+                    g2.draw(new Line2D.Double(pAL, pABmL));
+                    g2.draw(new Line2D.Double(pAR, pABmR));
+                }
+                if (isMain == mainlineB) {
+                    g2.draw(new Line2D.Double(pABmL, pBL));
+                }
+                if (isMain == mainlineC) {
+                    g2.draw(new Line2D.Double(pABmR, pCR));
+                }
+                break;
+            }
+
+            case DOUBLE_XOVER:
+            case RH_XOVER:
+            case LH_XOVER: {
+                Point2D pABLm = MathUtil.midPoint(pAL, pBL);
+                Point2D pABRm = MathUtil.midPoint(pAR, pBR);
+
+                Point2D vCD = MathUtil.subtract(pC, pD);
+                Point2D vCDo = MathUtil.orthogonal(MathUtil.normalize(vCD, railDisplacement));
+
+                pCL = MathUtil.subtract(pC, vCDo);
+                pCR = MathUtil.add(pC, vCDo);
+                Point2D pDL = MathUtil.subtract(pD, vCDo);
+                Point2D pDR = MathUtil.add(pD, vCDo);
+
+                Point2D pCDLm = MathUtil.midPoint(pCL, pDL);
+                Point2D pCDRm = MathUtil.midPoint(pCR, pDR);
+
+                if (isMain == mainlineA) {
+                    g2.draw(new Line2D.Double(pAL, pABLm));
+                }
+                if (isMain == mainlineB) {
+                    g2.draw(new Line2D.Double(pABLm, pBL));
+                }
+                if (isMain == mainlineC) {
+                    g2.draw(new Line2D.Double(pCR, pCDRm));
+                }
+                if (isMain == mainlineD) {
+                    g2.draw(new Line2D.Double(pCDRm, pDR));
+                }
+                break;
+            }
+
+            case SINGLE_SLIP:
+            case DOUBLE_SLIP: {
+                log.error("slips should be being drawn by LayoutSlip sub-class");
+                break;
+            }
+        }
+        g2.setColor(color);
     }
 
     /**

@@ -1244,6 +1244,15 @@ public class LayoutSlip extends LayoutTurnout {
         }   // DOUBLE_SLIP
     }   // draw1
 
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+        // nothing to see here (yet)... move along...
+    }
+    
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {
         // drawHidden left/right turnout control circles

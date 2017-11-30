@@ -402,6 +402,28 @@ public final class MathUtil {
     }
 
     /**
+     * compute the angle (direction in radians) for a vector 
+     *
+     * @param p the vector (point relative to zeroPoint2D)
+     * @return the angle in radians
+     */
+    @CheckReturnValue
+    public static double computeAngleRAD(@Nonnull Point2D p) {
+        return Math.atan2(p.getX(), p.getY());
+    }
+
+    /**
+     * compute the angle (direction in degrees) for a vector
+     *
+     * @param p the vector (point relative to zeroPoint2D)
+     * @return the angle in degrees
+     */
+    @CheckReturnValue
+    public static double computeAngleDEG(@Nonnull Point2D p) {
+        return Math.toDegrees(computeAngleRAD(p));
+    }
+
+    /**
      * compute the angle (direction in radians) from point 1 to point 2
      *
      * @param p1 the first Point2D
@@ -410,8 +432,7 @@ public final class MathUtil {
      */
     @CheckReturnValue
     public static double computeAngleRAD(@Nonnull Point2D p1, @Nonnull Point2D p2) {
-        Point2D delta = subtract(p1, p2);
-        return Math.atan2(delta.getX(), delta.getY());
+        return computeAngleRAD(subtract(p1, p2));
     }
 
     /**
@@ -423,7 +444,7 @@ public final class MathUtil {
      */
     @CheckReturnValue
     public static double computeAngleDEG(@Nonnull Point2D p1, @Nonnull Point2D p2) {
-        return Math.toDegrees(computeAngleRAD(p1, p2));
+        return Math.toDegrees(computeAngleRAD(subtract(p1, p2)));
     }
 
     /**
