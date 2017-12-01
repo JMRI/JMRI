@@ -18,6 +18,9 @@ public class ServerFrameTest {
     @Test
     public void getInstanceTest() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // Server is provided by InstanceManagerAutoInitialize
+        // and it is required to be available before we start the Server Frame
+        Server s = jmri.InstanceManager.getDefault(Server.class);
         // ServerFrame is provided by InstanceManagerAutoInitialize
         ServerFrame f = jmri.InstanceManager.getDefault(ServerFrame.class);
         Assert.assertNotNull("ServerFrame getInstance", f);
@@ -28,7 +31,6 @@ public class ServerFrameTest {
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        Server.getInstance();
     }
 
     @After
