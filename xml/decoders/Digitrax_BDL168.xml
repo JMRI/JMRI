@@ -36,7 +36,8 @@
             <label>Primary Address</label>
           </variable>
 
-          <variable CV="113.01" item="Wiring Type">
+          <variable CV="113.01" item="Wiring Type"
+                tooltip="OpSw01">
             <enumVal>
               <enumChoice>
                 <choice>Direct Home Wiring</choice>
@@ -48,7 +49,8 @@
             <label>Wiring type is</label>
           </variable>
 
-          <variable CV="113.03" item="Swap RailSync sensitivity">
+          <variable CV="113.03" item="Swap RailSync sensitivity"
+                tooltip="OpSw03">
             <enumVal>
               <enumChoice>
                 <choice>normal</choice>
@@ -60,7 +62,8 @@
             <label>LocoNet cabling is</label>
           </variable>
 
-          <variable CV="113.05" item="Transponding Enable1">
+          <variable CV="113.05" item="Transponding Enable1"
+                tooltip="OpSw05">
             <enumVal>
               <enumChoice>
                 <choice>Disable Transponding</choice>
@@ -72,7 +75,8 @@
             <label> </label>
           </variable>
 
-          <variable CV="113.06" item="Transponding Enable2">
+          <variable CV="113.06" item="Transponding Enable2"
+                tooltip="OpSw06">
             <enumVal>
               <enumChoice>
                 <choice>Enable Transponding</choice>
@@ -84,7 +88,8 @@
             <label> </label>
           </variable>
 
-          <variable CV="113.07" item="Transponding Enable3">
+          <variable CV="113.07" item="Transponding Enable3"
+                tooltip="OpSw07">
             <enumVal>
               <enumChoice>
                 <choice>Enable Transponding</choice>
@@ -96,7 +101,8 @@
             <label> </label>
           </variable>
 
-          <variable item="Transponding Enable">
+          <variable item="Transponding Enable"
+                tooltip="OpSw05, OpSw06, OpSw07">
             <compositeVal>
               <compositeChoice choice="Disabled">
                 <compositeSetting label="Transponding Enable1" value="0"/>
@@ -142,7 +148,8 @@
             <label>Transponding is </label>
           </variable>
 
-          <variable CV="113.09" item="Occupancy Force when Zone Power Off">
+          <variable CV="113.09" item="Occupancy Force when Zone Power Off"
+                tooltip="OpSw09">
               <enumVal>
                   <enumChoice>
                       <choice>report occupied when zone power is off</choice>
@@ -154,7 +161,8 @@
               <label>Detection Sections</label>
           </variable>
 
-          <variable CV="113.10" item="Detection section 16">
+          <variable CV="113.10" item="Detection section 16"
+                tooltip="OpSw10">
               <enumVal>
                   <enumChoice>
                       <choice>is a normal Detection Section</choice>
@@ -166,7 +174,8 @@
               <label>Detection Section 16</label>
           </variable>
 
-          <variable CV="113.11" item="BDL as LocoNet Master">
+          <variable CV="113.11" item="BDL as LocoNet Master"
+                tooltip="OpSw11">
               <enumVal>
                   <enumChoice>
                       <choice>acts as the LocoNet Master</choice>
@@ -178,7 +187,8 @@
               <label>This BDL16x</label>
           </variable>
 
-          <variable CV="113.12" item="BDL as LocoNet Termination">
+          <variable CV="113.12" item="BDL as LocoNet Termination"
+                tooltip="OpSw12">
               <enumVal>
                   <enumChoice>
                       <choice>provides LocoNet termination</choice>
@@ -190,7 +200,8 @@
               <label>This BDL16x</label>
           </variable>
 
-          <variable CV="113.13" item="Power-up delay">
+          <variable CV="113.13" item="Power-up delay"
+                tooltip="OpSw13">
               <enumVal>
                   <enumChoice>
                       <choice>Wait for 5-second power-up delay (for DB150 compatibility)</choice>
@@ -202,7 +213,8 @@
               <label>This BDL16x will</label>
           </variable>
 
-          <variable CV="113.19" item="Detection threshold">
+          <variable CV="113.19" item="Detection threshold"
+                tooltip="OpSw19">
               <enumVal>
                   <enumChoice>
                       <choice>Resistance below about 22K Ohms is shown as Occupied</choice>
@@ -214,7 +226,8 @@
               <label>Detection Section Sensitivity:</label>
           </variable>
 
-          <variable CV="113.25" item="LED Output Mode">
+          <variable CV="113.25" item="LED Output Mode"
+                tooltip="OpSw25">
               <enumVal>
                   <enumChoice>
                       <choice>Thrown</choice>
@@ -225,7 +238,8 @@
               </enumVal>
           </variable>
 
-          <variable CV="113.26" item="Switch Mode LEDs source">
+          <variable CV="113.26" item="Switch Mode LEDs source"
+                tooltip="OpSw26">
               <enumVal>
                   <enumChoice>
                       <choice>Thrown</choice>
@@ -236,7 +250,8 @@
               </enumVal>
           </variable>
 
-          <variable CV="113.30" item="RailSync Sample Delay1">
+          <variable CV="113.30" item="RailSync Sample Delay1"
+                tooltip="OpSw30">
               <enumVal>
                   <enumChoice>
                       <choice>Thrown</choice>
@@ -247,7 +262,8 @@
               </enumVal>
           </variable>
 
-          <variable CV="113.31" item="RailSync Sample Delay2">
+          <variable CV="113.31" item="RailSync Sample Delay2"
+                tooltip="OpSw31">
               <enumVal>
                   <enumChoice>
                       <choice>Thrown</choice>
@@ -258,7 +274,8 @@
               </enumVal>
           </variable>
 
-          <variable item="RailSync Sample Delay">
+          <variable item="RailSync Sample Delay"
+                tooltip="OpSw30, OpSw31">
             <compositeVal>
               <compositeChoice choice="Normal">
                 <compositeSetting label="RailSync Sample Delay1" value="0"/>
@@ -280,7 +297,8 @@
             <label>Sampling of RailSync is </label>
           </variable>
 
-          <variable item="LED Outputs">
+          <variable item="LED Outputs"
+                tooltip="OpSw25, OpSw26">
             <compositeVal>
               <compositeChoice choice="show Detection Section Occupancy">
                 <compositeSetting label="LED Output Mode" value="0"/>
@@ -302,7 +320,8 @@
             <label>BDL16x LED outputs </label>
           </variable>
 
-          <variable CV="113.36" item="Interrogation Response">
+          <variable CV="113.36" item="Interrogation Response"
+                tooltip="OpSw36">
               <enumVal>
                   <enumChoice>
                       <choice>Responds with status at GPON and interrogate commmands</choice>
@@ -314,7 +333,8 @@
               <label>This BDL168 </label>
           </variable>
 
-          <variable CV="113.42" item="First Interrogate Enable">
+          <variable CV="113.42" item="First Interrogate Enable"
+                tooltip="OpSw42">
               <enumVal>
                   <enumChoice>
                       <choice>Standard interrogation</choice>
@@ -325,7 +345,8 @@
               </enumVal>
           </variable>
 
-          <variable item="Interrogation actions">
+          <variable item="Interrogation actions"
+                tooltip="OpSw36, OpSw42">
               <compositeVal>
                   <compositeChoice choice="Reports detection section status at GPON and all except first Interrogation attempt">
                       <compositeSetting label="Interrogation Response" value="0"/>
@@ -347,7 +368,8 @@
               <label>This BDL168 </label>
           </variable>
 
-          <variable CV="113.37" item="Detection Section Timing1">
+          <variable CV="113.37" item="Detection Section Timing1"
+                tooltip="OpSw37">
               <enumVal>
                   <enumChoice>
                       <choice>Thrown</choice>
@@ -358,7 +380,8 @@
               </enumVal>
           </variable>
 
-          <variable CV="113.38" item="Detection Section Timing2">
+          <variable CV="113.38" item="Detection Section Timing2"
+                tooltip="OpSw38">
               <enumVal>
                   <enumChoice>
                       <choice>Thrown</choice>
@@ -369,7 +392,8 @@
               </enumVal>
           </variable>
 
-          <variable item="Detection Section Timing">
+          <variable item="Detection Section Timing"
+                tooltip="OpSw37, OpSw38">
               <compositeVal>
                 <compositeChoice choice="Standard">
                   <compositeSetting label="Detection Section Timing1" value="0"/>
@@ -391,7 +415,8 @@
               <label>Detection Section timing is</label>
           </variable>
 
-          <variable CV="113.39" item="Transponder Tracking Mode">
+          <variable CV="113.39" item="Transponder Tracking Mode"
+                tooltip="OpSw39">
               <enumVal>
                   <enumChoice>
                       <choice>Sequential Mode</choice>
@@ -403,7 +428,8 @@
               <label>Transponder Tracking uses</label>
           </variable>
 
-          <variable CV="113.43" item="Anti-chatter Sensitivity1">
+          <variable CV="113.43" item="Anti-chatter Sensitivity1"
+                tooltip="OpSw43">
               <enumVal>
                   <enumChoice>
                       <choice>Thrown</choice>
@@ -414,7 +440,8 @@
               </enumVal>
           </variable>
 
-          <variable CV="113.44" item="Anti-chatter Sensitivity2">
+          <variable CV="113.44" item="Anti-chatter Sensitivity2"
+                tooltip="OpSw44">
               <enumVal>
                   <enumChoice>
                       <choice>Thrown</choice>
@@ -425,7 +452,8 @@
               </enumVal>
           </variable>
 
-          <variable item="Anti-Chatter Filtering">
+          <variable item="Anti-Chatter Filtering"
+                tooltip="OpSw43, OpSw44">
             <compositeVal>
               <compositeChoice choice="Maximum Anti-Chatter Filter sensitivity">
                 <compositeSetting label="Anti-chatter Sensitivity1" value="0"/>
@@ -447,7 +475,8 @@
             <label>BDL16x LED outputs </label>
           </variable>
 
-          <variable CV="113.45" item="Transponding Messages at GPOFF">
+          <variable CV="113.45" item="Transponding Messages at GPOFF"
+                tooltip="OpSw45">
               <enumVal>
                   <enumChoice>
                       <choice>sends Transponding messages</choice>
@@ -499,6 +528,7 @@
             <display item="Anti-chatter Filtering"/>
             <display item="Transponding Messages at GPOFF"/>
             <display item="Transponder Tracking Mode"/>
+            <display item="Anti-Chatter Filtering"/>
             <label><text>   </text></label>
         </column>
     </pane>
