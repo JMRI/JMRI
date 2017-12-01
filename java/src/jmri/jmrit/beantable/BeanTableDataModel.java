@@ -573,10 +573,6 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         table.getTableHeader().setReorderingAllowed(true);
         table.setColumnModel(new XTableColumnModel());
         table.createDefaultColumnsFromModel();
-        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent((mgr) -> {
-            mgr.persist(table);
-            mgr.resetState(table);
-        });
         addMouseListenerToHeader(table);
         return table;
     }
@@ -783,31 +779,6 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     }
 
     /**
-     * Rendered obsolete by changes to
-     * {@link #loadTableColumnDetails(javax.swing.JTable)}.
-     *
-     * @param table the table to save
-     * @deprecated since 4.5.4 without direct replacement
-     */
-    @Deprecated
-    public void saveTableColumnDetails(JTable table) {
-        // do nothing
-    }
-
-    /**
-     * Rendered obsolete by changes to
-     * {@link #loadTableColumnDetails(javax.swing.JTable, java.lang.String)}.
-     *
-     * @param table        the table to save
-     * @param beantableref the name of the table
-     * @deprecated since 4.5.4 without direct replacement
-     */
-    @Deprecated
-    public void saveTableColumnDetails(JTable table, String beantableref) {
-        // do nothing
-    }
-
-    /**
      * Persist the state of the table after first setting the table to the last
      * persisted state.
      *
@@ -815,11 +786,10 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      * @throws NullPointerException if the name of the table is null
      */
     public void persistTable(@Nonnull JTable table) throws NullPointerException {
-        JTablePersistenceManager manager = InstanceManager.getNullableDefault(JTablePersistenceManager.class);
-        if (manager != null) {
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent((manager) -> {
             manager.resetState(table); // throws NPE if table name is null
             manager.persist(table);
-        }
+        });
     }
 
     /**
@@ -829,38 +799,9 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      * @throws NullPointerException if the name of the table is null
      */
     public void stopPersistingTable(@Nonnull JTable table) throws NullPointerException {
-        JTablePersistenceManager manager = InstanceManager.getNullableDefault(JTablePersistenceManager.class);
-        if (manager != null) {
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent((manager) -> {
             manager.stopPersisting(table); // throws NPE if table name is null
-        }
-    }
-
-    /**
-     * Load table column settings from persistent storage.
-     *
-     * @param table the table
-     * @deprecated since 4.5.4; use {@link #persistTable(javax.swing.JTable)}
-     * instead.
-     */
-    @Deprecated
-    public void loadTableColumnDetails(JTable table) {
-        loadTableColumnDetails(table, getMasterClassName());
-    }
-
-    /**
-     * Load table column settings from persistent storage.
-     *
-     * @param table        the table
-     * @param beantableref name of the table
-     * @deprecated since 4.5.4; use {@link #persistTable(javax.swing.JTable)}
-     * instead.
-     */
-    @Deprecated
-    public void loadTableColumnDetails(JTable table, String beantableref) {
-        if (table.getName() == null) {
-            table.setName(beantableref);
-        }
-        this.persistTable(table);
+        });
     }
 
     static class HeaderActionListener implements ActionListener {

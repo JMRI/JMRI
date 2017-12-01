@@ -62,9 +62,11 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
     private final static Logger log = LoggerFactory.getLogger(JmriJTablePersistenceManager.class);
 
     /**
-     * {@inheritDoc} Persisting a table that is already persisted may cause the
-     * persistence state to be updated, but will not cause additional listeners
-     * to be added to the table.
+     * {@inheritDoc}
+     * <p>
+     * Persisting a table that is already persisted may cause the persistence
+     * state to be updated, but will not cause additional listeners to be added
+     * to the table.
      */
     @Override
     public void persist(@Nonnull JTable table) throws IllegalArgumentException, NullPointerException {
