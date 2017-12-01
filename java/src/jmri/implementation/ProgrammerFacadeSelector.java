@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import jmri.AddressedProgrammer;
 import jmri.Programmer;
@@ -8,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Utility to load a specific ProgrammerFacade from an XML element
+ * Utility to load a specific ProgrammerFacade from an XML element.
  * <P>
  * @author Bob Jacobsen Copyright (C) 2013
  */
@@ -21,9 +22,13 @@ public class ProgrammerFacadeSelector {
      * @param element    Contains "capability" elements that define the Facades
      * @param programmer Programmer implementation to decorate
      * @param allowCache Passed to facades that optionally cache
+     * @param baseProg   The original underlying programmer, less any facades
      * @return the programmer with added facades
      */
-    public static Programmer loadFacadeElements(Element element, Programmer programmer, boolean allowCache) {
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST",
+            justification = "cast is checked by conditional surrounding the code block")  // NOI18N
+    public static Programmer loadFacadeElements(
+            Element element, Programmer programmer, boolean allowCache, Programmer baseProg) {
         // iterate over any facades and add them
         List<Element> facades = element.getChildren("capability");
         if (log.isDebugEnabled()) {
@@ -84,7 +89,7 @@ public class ProgrammerFacadeSelector {
                 case "Indexed CV access": {
                     String PI = parameters.get(0).getText();
                     String SI = (parameters.size() > 1) ? parameters.get(1).getText() : null;
-                    boolean cvFirst = (parameters.size() > 2) ? (parameters.get(2).getText().equals("false") ? false : true) : true;
+                    boolean cvFirst = (parameters.size() > 2) ? (!parameters.get(2).getText().equals("false")) : true;
                     boolean skipDupIndexWrite = (parameters.size() > 3) ? (parameters.get(3).getText().equals("false") ? false : allowCache) : allowCache; // if not present, use default
                     jmri.implementation.MultiIndexProgrammerFacade pf
                             = new jmri.implementation.MultiIndexProgrammerFacade(programmer, PI, SI, cvFirst, skipDupIndexWrite);
@@ -100,7 +105,7 @@ public class ProgrammerFacadeSelector {
                     break;
                 }
                 case "Ops Mode Accessory Programming":
-                    if (programmer instanceof AddressedProgrammer) {  // create if relevant to current mode, otherwise silently ignore
+                    if (AddressedProgrammer.class.isAssignableFrom(baseProg.getClass())) {  // create if relevant to current mode, otherwise silently ignore
                         String addrType = "decoder";
                         int delay = 500;
                         for (Element x : parameters) {
@@ -116,16 +121,16 @@ public class ProgrammerFacadeSelector {
                                     break;
                             }
                         }
-                        log.debug("\"{}\": addrType=\"{}\", delay=\"{}\"", fname, addrType, delay);
+                        log.debug("\"{}\": addrType=\"{}\", delay=\"{}\", baseProg=\"{}\"", fname, addrType, delay, baseProg);
 
                         jmri.implementation.AccessoryOpsModeProgrammerFacade pf
-                                = new jmri.implementation.AccessoryOpsModeProgrammerFacade((AddressedProgrammer) programmer, addrType, delay);
+                                = new jmri.implementation.AccessoryOpsModeProgrammerFacade(programmer, addrType, delay, (AddressedProgrammer) baseProg);
                         log.debug("new programmer '{}' {}", fname, pf);
                         programmer = pf; // to go around and see if there are more
                     }
                     break;
                 case "Ops Mode Delayed Programming":
-                    if (programmer instanceof AddressedProgrammer) {  // create if relevant to current mode, otherwise silently ignore
+                    if (AddressedProgrammer.class.isAssignableFrom(baseProg.getClass())) {  // create if relevant to current mode, otherwise silently ignore
                         int delay = 500;
                         for (Element x : parameters) {
                             switch (x.getAttributeValue("name")) {
