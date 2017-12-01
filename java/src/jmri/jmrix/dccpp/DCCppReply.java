@@ -71,7 +71,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         super();
         setBinary(false);
         valueList = new ArrayList<Integer>();
-        char charList[] = reply.toCharArray();
+        //char charList[] = reply.toCharArray();
         //for(int i=0;i<charList.length;i++){
         //    valueList.add((int)charList[i]);
         //}
@@ -849,7 +849,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     public String getOutputCmdStateString() {
         if (this.isOutputCmdReply()) {
-            return(this.getValueBool(2) ? "THROWN" : "CLOSED");
+            return(this.getValueBool(2) ? "HIGH" : "LOW");
         } else {
             log.error("OutputCmdReply Parser called on non-OutputCmdReply message type {}", this.getOpCodeChar());
             return("0");
