@@ -45,10 +45,6 @@ public class ActiveSystemsMenu extends JMenu {
             }
         }
 
-        if (jmri.jmrix.grapevine.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.grapevine.GrapevineMenu"));
-        }
-
     }
 
     /**
@@ -68,9 +64,6 @@ public class ActiveSystemsMenu extends JMenu {
             }
         }
 
-        if (jmri.jmrix.grapevine.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.grapevine.GrapevineMenu"));
-        }
     }
 
     static JMenu getMenu(String className) {
