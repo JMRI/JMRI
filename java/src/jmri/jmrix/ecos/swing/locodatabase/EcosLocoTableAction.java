@@ -39,7 +39,6 @@ import jmri.jmrix.ecos.EcosMessage;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.jmrix.ecos.utilities.EcosLocoToRoster;
 import jmri.jmrix.ecos.utilities.RemoveObjectFromEcos;
-import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -231,17 +230,8 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 }
             }
 
-            /**
-             * {@inheritDoc }
-             */
             @Override
-            @Deprecated
-            public JTable makeJTable(TableSorter sorter) {
-                return this.makeJTable((TableModel) sorter);
-            }
-
-            @Override
-            public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter sorter) {
+            public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
                 JTable table = this.makeJTable(model);
                 table.setName(name);
                 table.setRowSorter(sorter);

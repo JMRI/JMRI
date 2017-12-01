@@ -58,7 +58,6 @@ import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
-import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
@@ -703,17 +702,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                 JTable table = this.makeJTable(model);
                 table.setName(name);
                 table.setRowSorter(sorter);
-                table.getTableHeader().setReorderingAllowed(true);
-                table.setColumnModel(new XTableColumnModel());
-                table.createDefaultColumnsFromModel();
-
-                addMouseListenerToHeader(table);
-                return table;
-            }
-
-            @Override
-            public JTable makeJTable(TableSorter sorter) {
-                JTable table = this.makeJTable((TableModel) sorter);
                 table.getTableHeader().setReorderingAllowed(true);
                 table.setColumnModel(new XTableColumnModel());
                 table.createDefaultColumnsFromModel();

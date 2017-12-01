@@ -50,7 +50,6 @@ import jmri.NamedBean;
 import jmri.NamedBeanHandleManager;
 import jmri.UserPreferencesManager;
 import jmri.swing.JTablePersistenceManager;
-import jmri.util.com.sun.TableSorter;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
@@ -556,26 +555,6 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         JTable table = new JTable(model);
         table.setName(name);
         table.setRowSorter(sorter);
-        table.getTableHeader().setReorderingAllowed(true);
-        table.setColumnModel(new XTableColumnModel());
-        table.createDefaultColumnsFromModel();
-
-        addMouseListenerToHeader(table);
-        return table;
-    }
-
-    /**
-     * Create a new table.
-     *
-     * @param sorter the sorter and model for the table
-     * @return a new table
-     * @deprecated since 4.5.4; use
-     * {@link #makeJTable(java.lang.String, javax.swing.table.TableModel, javax.swing.RowSorter)}
-     * instead.
-     */
-    @Deprecated
-    public JTable makeJTable(TableSorter sorter) {
-        JTable table = new JTable(sorter);
         table.getTableHeader().setReorderingAllowed(true);
         table.setColumnModel(new XTableColumnModel());
         table.createDefaultColumnsFromModel();
