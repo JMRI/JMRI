@@ -30,10 +30,11 @@
         </programming>
 
         <variables>
-          <variable CV="1" comment="Board address" item="Short Address" default="03" infoOnly="yes">
+          <variable CV="1" comment="Board address" item="Short Address" default="03"
+                    infoOnly="yes" tooltip="The DS64 Board ID, in the range 1-128">
             <!-- needed to set the board address value -->
             <decVal min="1" max="128" />
-            <label>Primary Address</label>
+            <label>Board ID (Primary Address)</label>
           </variable>
           <variable CV="115.01" comment="Output type" item="Output Type" default="0" infoOnly="no"
                     tooltip="OpSw01">
@@ -48,7 +49,7 @@
                   </enumChoice>
               </enumVal>
           </variable>
-          <variable CV="115.02" comment="Pulse or Blink rate - needs expansion to four bits!" 
+          <variable CV="115.02" comment="Pulse or Blink rate - needs expansion to four bits!"
                     item="Pulse or blink rate1" default="0" infoOnly="no"
                     tooltip="OpSw02">
               <enumVal>
@@ -61,7 +62,7 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.03" comment="Pulse or Blink rate - needs expansion to four bits!" 
+          <variable CV="115.03" comment="Pulse or Blink rate - needs expansion to four bits!"
                     item="Pulse or blink rate2" default="0" infoOnly="no"
                     tooltip="OpSw03">
               <enumVal>
@@ -74,7 +75,7 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.04" comment="Pulse or Blink rate - needs expansion to four bits!" 
+          <variable CV="115.04" comment="Pulse or Blink rate - needs expansion to four bits!"
                     item="Pulse or blink rate3" default="0" infoOnly="no"
                     tooltip="OpSw04">
               <enumVal>
@@ -88,7 +89,7 @@
           </variable>
 
 
-          <variable CV="115.05" comment="Pulse or Blink rate - needs expansion to four bits!" 
+          <variable CV="115.05" comment="Pulse or Blink rate - needs expansion to four bits!"
                     item="Pulse or blink rate4" default="0" infoOnly="no"
                     tooltip="OpSw05">
               <enumVal>
@@ -130,7 +131,7 @@
               <label> </label>
           </variable>
 
-          <variable CV="115.09" comment="Static Output Shutoff" 
+          <variable CV="115.09" comment="Static Output Shutoff"
                     item="Static Output Shutoff" default="0" infoOnly="no"
                     tooltip="OpSw09">
               <enumVal>
@@ -146,7 +147,7 @@
               <label> </label>
           </variable>
 
-          <variable CV="115.10" comment="Command Source" item="Command Source" 
+          <variable CV="115.10" comment="Command Source" item="Command Source"
                     default="0" infoOnly="no"
                     tooltip="OpSw10">
               <enumVal>
@@ -160,7 +161,7 @@
                   </enumChoice>
               </enumVal>
           </variable>
-          <variable CV="115.11" comment="Route Command Source" 
+          <variable CV="115.11" comment="Route Command Source"
                     item="Route Command Source" default="0" infoOnly="no"
                     tooltip="OpSw11">
               <enumVal>
@@ -175,7 +176,7 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.12" comment="Sensor actions" 
+          <variable CV="115.12" comment="Sensor actions"
                     item="Sensor Actions" default="0" infoOnly="no"
                     tooltip="OpSw12">
               <enumVal>
@@ -190,7 +191,7 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.13" comment="Input Signal effects" 
+          <variable CV="115.13" comment="Input Signal effects"
                     item="Input Signals" default="0" infoOnly="no"
                     tooltip="OpSw13">
               <enumVal>
@@ -205,7 +206,7 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.14" comment="Controls From" 
+          <variable CV="115.14" comment="Controls From"
                     item="Controls From" default="0" infoOnly="no"
                     tooltip="OpSw14">
               <enumVal>
@@ -221,7 +222,7 @@
               <label> </label>
           </variable>
 
-          <variable CV="115.15" comment="Inputs control outputs" 
+          <variable CV="115.15" comment="Inputs control outputs"
                     item="Inputs Control Outputs" default="0" infoOnly="no"
                     tooltip="OpSw15">
               <enumVal>
@@ -236,7 +237,7 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.16" comment="Routes Enable" 
+          <variable CV="115.16" comment="Routes Enable"
                     item="Routes Enable" default="0" infoOnly="no"
                     tooltip="OpSw16">
               <enumVal>
@@ -251,7 +252,7 @@
               </enumVal>
           </variable>
 
-          <variable CV="115.17" comment="Crossing Gate on Output 1" 
+          <variable CV="115.17" comment="Crossing Gate on Output 1"
                     item="Crossing Gate 1" default="0" infoOnly="no"
                     tooltip="OpSw17">
               <enumVal>
@@ -267,7 +268,7 @@
               <label> </label>
           </variable>
 
-          <variable CV="115.18" comment="Crossing Gate on Output 2" 
+          <variable CV="115.18" comment="Crossing Gate on Output 2"
                     item="Crossing Gate 2" default="0" infoOnly="no"
                     tooltip="OpSw18">
               <enumVal>
@@ -283,7 +284,7 @@
               <label> </label>
           </variable>
 
-          <variable CV="115.19" comment="Crossing Gate on Output 3" 
+          <variable CV="115.19" comment="Crossing Gate on Output 3"
                     item="Crossing Gate 3" default="0" infoOnly="no"
                     tooltip="OpSw19">
               <enumVal>
@@ -299,7 +300,7 @@
               <label> </label>
           </variable>
 
-          <variable CV="115.20" comment="Crossing Gate on Output 4" 
+          <variable CV="115.20" comment="Crossing Gate on Output 4"
                     item="Crossing Gate 4" default="0" infoOnly="no"
                     tooltip="OpSw20">
               <enumVal>
@@ -315,7 +316,7 @@
               <label> </label>
           </variable>
 
-          <variable CV="115.21" comment="LocoNet Message Type for Inputs" 
+          <variable CV="115.21" comment="LocoNet Message Type for Inputs"
                     item="Input LocoNet Message" default="0" infoOnly="no"
                     tooltip="OpSw21">
               <enumVal>
@@ -506,6 +507,37 @@
         </variables>
     </decoder>
   <pane>
+      <name>Basic</name>
+      <column>
+          <display item="Short Address"/>
+          <label>
+              <text> </text>
+          </label>
+          <label>
+            <text>&lt;html&gt;&lt;p&gt;
+                LocoNet messaging limits the supported Board ID (Active Address)
+                range to addresses between 1 and 128.  This tool cannot access DS64s
+                &lt;p&gt;outside of this range.
+                &lt;p&gt;
+                &lt;p&gt;This roster entry will only access the specified DS64 if the
+                Board ID (Active Address), on the "Basic" sheet, is correct when the
+                &lt;p&gt;programmer is opened.
+                &lt;p&gt;
+                &lt;p&gt;If the Board ID (Active Address) has been changed since
+                the programmer was opened, the programmer will attempt to access the
+                &lt;p&gt;DS64 address which was specified in the Roster entry
+                when the progammer was opened.
+                &lt;p&gt;
+                &lt;p&gt;After making a change to the Roster entry's Board ID
+                (Active Address) on the "Basic" sheet, save and close the programmer
+                &lt;p&gt;window and re-open the Roster entry to ensure that the
+                the programmer will use the modified Active Address for accesses
+                &lt;p&gt;to the device.
+            &lt;/html&gt;</text>
+          </label>
+      </column>
+  </pane>
+  <pane>
     <name>DS64 Basic Settings</name>
     <column>
         <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Output Controls Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
@@ -548,5 +580,27 @@
 
     </column>
   </pane>
-
+  <pane>
+      <name>Notes</name>
+      <column>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
+            &lt;h2&gt;&lt;strong&gt;Notes on DS64 Roster Entries and Programming
+            &lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+        </label>
+        <label><text> </text></label>
+        <label>
+            <text>&lt;html&gt;&lt;/strong&gt;&lt;p&gt;&lt;ul&gt;
+                &lt;li&gt;
+                The DS64 &lt;em&gt;must&lt;/em&gt; be in its normal
+                operating mode in order to respond to this programmer's read and
+                write operations.&lt;/li&gt;
+                &lt;li&gt;
+                &lt;p&gt;See the "Basic" sheet for the programmer's limitations with
+                respect to Board ID.&lt;/li&gt;
+                &lt;li&gt;&lt;p&gt;This programmer is not currently capable of displaying, changing, or saving the DS64 output addresses.&lt;/p&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;p&gt;This programmer is not currently capable of displaying, changing, or saving the DS64 Routes.&lt;/p&gt;&lt;/li&gt;
+            &lt;/ul&gt;&lt;/html&gt;</text>
+        </label>
+      </column>
+  </pane>
 </decoder-config>
