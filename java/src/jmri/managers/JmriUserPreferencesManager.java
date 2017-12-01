@@ -635,7 +635,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 desc = (String) method.invoke(t);
                 classDesFound = true;
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                log.debug(ex.toString());
+                log.debug("Unable to call declared method \"getClassDescription\" with exception {}", ex.toString());
                 classDesFound = false;
             }
             if (!classDesFound) {
@@ -643,7 +643,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     method = cl.getMethod("getClassDescription");
                     desc = (String) method.invoke(t);
                 } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                    log.debug(ex.toString());
+                    log.debug("Unable to call undeclared method \"getClassDescription\" with exception {}", ex.toString());
                     classDesFound = false;
                 }
             }
@@ -661,7 +661,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 method.invoke(t);
                 classSetFound = true;
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                log.debug(ex.toString()); // *TableAction.setMessagePreferencesDetails() method is routinely not present in multiple classes
+                // TableAction.setMessagePreferencesDetails() method is routinely not present in multiple classes
+                log.debug("Unable to call declared method \"setMessagePreferencesDetails\" with exception {}", ex.toString());
                 classSetFound = false;
             }
             if (!classSetFound) {
@@ -669,7 +670,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     method = cl.getMethod("setMessagePreferencesDetails");
                     method.invoke(t);
                 } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                    log.debug(ex.toString());
+                    log.debug("Unable to call undeclared method \"setMessagePreferencesDetails\" with exception {}", ex.toString());
                 }
             }
 
@@ -824,14 +825,15 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     @Override
+    @Deprecated
     public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden) {
-        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
-        if (manager != null) {
+        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((manager) -> {
             manager.setTableColumnPreferences(table, column, order, width, sort, hidden);
-        }
+        });
     }
 
     @Override
+    @Deprecated
     public int getTableColumnOrder(String table, String column) {
         JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
         if (manager != null) {
@@ -844,6 +846,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     @Override
+    @Deprecated
     public int getTableColumnWidth(String table, String column) {
         JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
         if (manager != null) {
@@ -856,6 +859,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     @Override
+    @Deprecated
     public SortOrder getTableColumnSort(String table, String column) {
         JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
         if (manager != null) {
@@ -868,6 +872,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     @Override
+    @Deprecated
     public boolean getTableColumnHidden(String table, String column) {
         JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
         if (manager != null) {
@@ -880,6 +885,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     @Override
+    @Deprecated
     public String getTableColumnAtNum(String table, int i) {
         JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
         if (manager != null) {
@@ -899,11 +905,13 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * @return an empty list
      */
     @Override
+    @Deprecated
     public List<String> getTablesList() {
         return new ArrayList<>();
     }
 
     @Override
+    @Deprecated
     public List<String> getTablesColumnList(String table) {
         JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
         if (manager != null) {
@@ -1142,7 +1150,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 for (Entry<String, WindowLocations> entry : windowDetails.entrySet()) {
                     Element window = new Element("window");
                     window.setAttribute("class", entry.getKey());
-                    if (entry.getValue().saveLocation) {
+                    if (entry.getValue().getSaveLocation()) {
                         try {
                             window.setAttribute("locX", Double.toString(entry.getValue().getLocation().getX()));
                             window.setAttribute("locY", Double.toString(entry.getValue().getLocation().getY()));
@@ -1150,7 +1158,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                             // Expected if the location has not been set or the window is open
                         }
                     }
-                    if (entry.getValue().saveSize) {
+                    if (entry.getValue().getSaveSize()) {
                         try {
                             double height = entry.getValue().getSize().getHeight();
                             double width = entry.getValue().getSize().getWidth();
