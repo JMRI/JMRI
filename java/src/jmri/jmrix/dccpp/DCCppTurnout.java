@@ -139,30 +139,6 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         return mNumber;
     }
 
-    // Set the Commanded State.   This method overrides setCommandedState in 
-    // the Abstract Turnout class.
-    /*
-    //@Override
-    //public void setCommandedState(int s) {
-    //    if (log.isDebugEnabled()) {
-    //        log.debug("set commanded state for turnout " + getSystemName() + " to " + s);
-    //    }
-    //    synchronized (this) {
-    //        newCommandedState(s);
-    //    }
-    //    myOperator = getTurnoutOperator();        // MUST set myOperator before starting the thread
-    //    if (myOperator == null) {
-    //        forwardCommandChangeToLayout(s);
-    //        synchronized (this) {
-    //            newKnownState(INCONSISTENT);
-    //        }
-    //    } else {
-    //        myOperator.start();
-    //    }
-    //
-    //}
-    */
-
     @Override
     public void setCommandedState(int s) {
         if (log.isDebugEnabled()) {
@@ -431,7 +407,8 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
                 // This is a feedback message, we need to check and see if it
                 // indicates this turnout is to change state or if it is for 
                 // another turnout.
-                log.debug("Turnout " + mNumber + " EXACT feedback mode - state change from feedback.");
+                log.debug("Turnout " + mNumber + " EXACT feedback mode - state change from feedback."); 
+                newKnownState(l.getOutputIsLow()?CLOSED:THROWN);
             }
         } else if (getCommandedState() != getKnownState()
                    || internalState == COMMANDSENT) {
@@ -441,11 +418,10 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
                 // feedback.  i.e. just interpret the feedback 
                 // message, don't check to see if the motion is complete
                 if (parseExactFeedbackMessage(l, 0) != -1) {
-                    // We need to tell the turnout to shut off the output.
-                    // No we don't we're just pretending...
                     if (log.isDebugEnabled()) {
                         log.debug("Turnout " + mNumber + " EXACT feedback mode - state change from feedback, CommandedState != KnownState.");
                     }
+                    newKnownState(l.getOutputIsLow()?CLOSED:THROWN);
                 }
             }
         }
