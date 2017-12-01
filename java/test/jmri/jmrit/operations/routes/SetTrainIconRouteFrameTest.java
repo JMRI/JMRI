@@ -1,8 +1,8 @@
 package jmri.jmrit.operations.routes;
 
 import java.awt.GraphicsEnvironment;
-import jmri.util.JUnitUtil;
 import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -28,6 +28,7 @@ public class SetTrainIconRouteFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SetTrainIconRouteFrame t = new SetTrainIconRouteFrame("Southbound Main Route");
         Assert.assertNotNull("exists",t);
+        JUnitUtil.dispose(t);
     }
 
     // The minimal setup for log4J
