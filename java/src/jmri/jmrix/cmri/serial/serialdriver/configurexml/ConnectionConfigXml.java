@@ -19,9 +19,9 @@ import org.slf4j.LoggerFactory;
  * of a ConnectionConfig object, but it's actually persisting the
  * SerialDriverAdapter.
  * <P>
- * This class is invoked from {@link jmri.jmrix.JmrixConfigPaneXml} on write, as
- * that class is the one actually registered. Reads are brought here directly
- * via the class attribute in the XML.
+ * This class is invoked from {@link jmri.jmrix.configurexml.JmrixConfigPaneXml}
+ * on write, as that class is the one actually registered. Reads are brought
+ * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c)
  * @author Chuck Catania Copyright: Copyright (c) 2014, 2015, 2016, 2017
