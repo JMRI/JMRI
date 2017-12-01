@@ -3,6 +3,7 @@ package jmri.jmrix.cmri.serial.nodeconfig;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
@@ -21,7 +22,6 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
-import jmri.jmrix.cmri.serial.SerialSensorManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,7 +58,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected boolean changedNode = false;  // true if a node was changed, deleted, or added
     protected boolean editMode = false;     // true if in edit mode
 
-    protected SerialNode curNode = null;    // Serial Node being editted
+    protected transient SerialNode curNode = null;    // Serial Node being editted
     protected int nodeAddress = 0;          // Node address
     protected int nodeType = SerialNode.SMINI; // Node type
     protected int bitsPerCard = 24;         // number of bits per card
@@ -77,9 +77,9 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected String editStatus2 = Bundle.getMessage("NotesEdit2", Bundle.getMessage("ButtonUpdate")); // NOI18N
     protected String editStatus3 = Bundle.getMessage("NotesEdit3", Bundle.getMessage("ButtonCancel")); // NOI18N
 
-    private CMRISystemConnectionMemo _memo = null;
+    private final transient CMRISystemConnectionMemo _memo;
 
-    public NodeConfigFrame(CMRISystemConnectionMemo memo) {
+    public NodeConfigFrame(@Nonnull CMRISystemConnectionMemo memo) {
         super();
         _memo = memo;
 
@@ -121,27 +121,24 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeTypeBox.addItem("SMINI"); // NOI18N
         nodeTypeBox.addItem("USIC_SUSIC"); // NOI18N
         // Here add code for other types of nodes
-        nodeTypeBox.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent event) {
-                String s = (String) nodeTypeBox.getSelectedItem();
-                if (s.equals("SMINI")) { // NOI18N
-                    panel2.setVisible(false);
-                    panel2a.setVisible(true);
-                    cardSizeText.setVisible(false);
-                    cardSizeBox.setVisible(false);
-                    nodeType = SerialNode.SMINI;
-                } else if (s.equals("USIC_SUSIC")) { // NOI18N
-                    panel2.setVisible(true);
-                    panel2a.setVisible(false);
-                    cardSizeText.setVisible(true);
-                    cardSizeBox.setVisible(true);
-                    nodeType = SerialNode.USIC_SUSIC;
-                }
-                // Here add code for other types of nodes
-                // reset notes as appropriate
-                resetNotes();
+        nodeTypeBox.addActionListener((java.awt.event.ActionEvent event) -> {
+            String s = (String) nodeTypeBox.getSelectedItem();
+            if (s.equals("SMINI")) { // NOI18N
+                panel2.setVisible(false);
+                panel2a.setVisible(true);
+                cardSizeText.setVisible(false);
+                cardSizeBox.setVisible(false);
+                nodeType = SerialNode.SMINI;
+            } else if (s.equals("USIC_SUSIC")) { // NOI18N
+                panel2.setVisible(true);
+                panel2a.setVisible(false);
+                cardSizeText.setVisible(true);
+                cardSizeBox.setVisible(true);
+                nodeType = SerialNode.USIC_SUSIC;
             }
+            // Here add code for other types of nodes
+            // reset notes as appropriate
+            resetNotes();
         });
         nodeTypeBox.setToolTipText(Bundle.getMessage("TipNodeType")); // NOI18N
         JPanel panel12 = new JPanel();
@@ -156,17 +153,14 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         cardSizeBox.addItem(Bundle.getMessage("CardSize24")); // NOI18N
         cardSizeBox.addItem(Bundle.getMessage("CardSize32")); // NOI18N
         // here add code for other node types, if required
-        cardSizeBox.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent event) {
-                String s = (String) cardSizeBox.getSelectedItem();
-                if (s.equals(Bundle.getMessage("CardSize24"))) { // NOI18N
-                    bitsPerCard = 24;
-                } else if (s.equals(Bundle.getMessage("CardSize32"))) { // NOI18N
-                    bitsPerCard = 32;
-                }
-// here add code for other node types, if required
+        cardSizeBox.addActionListener((java.awt.event.ActionEvent event) -> {
+            String s = (String) cardSizeBox.getSelectedItem();
+            if (s.equals(Bundle.getMessage("CardSize24"))) { // NOI18N
+                bitsPerCard = 24;
+            } else if (s.equals(Bundle.getMessage("CardSize32"))) { // NOI18N
+                bitsPerCard = 32;
             }
+            // here add code for other node types, if required
         });
         cardSizeBox.setToolTipText(Bundle.getMessage("TipCardSize")); // NOI18N
         cardSizeText.setVisible(false);
@@ -276,55 +270,40 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         addButton.setText(Bundle.getMessage("ButtonAdd")); // NOI18N
         addButton.setVisible(true);
         addButton.setToolTipText(Bundle.getMessage("TipAddButton")); // NOI18N
-        addButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                addButtonActionPerformed();
-            }
+        addButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            addButtonActionPerformed();
         });
         panel4.add(addButton);
         editButton.setText(Bundle.getMessage("ButtonEdit")); // NOI18N
         editButton.setVisible(true);
         editButton.setToolTipText(Bundle.getMessage("TipEditButton")); // NOI18N
         panel4.add(editButton);
-        editButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                editButtonActionPerformed();
-            }
+        editButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            editButtonActionPerformed();
         });
         panel4.add(deleteButton);
         deleteButton.setText(Bundle.getMessage("ButtonDelete")); // NOI18N
         deleteButton.setVisible(true);
         deleteButton.setToolTipText(Bundle.getMessage("TipDeleteButton")); // NOI18N
         panel4.add(deleteButton);
-        deleteButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                deleteButtonActionPerformed();
-            }
+        deleteButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            deleteButtonActionPerformed();
         });
         panel4.add(doneButton);
         doneButton.setText(Bundle.getMessage("ButtonDone")); // NOI18N
         doneButton.setVisible(true);
         doneButton.setToolTipText(Bundle.getMessage("TipDoneButton")); // NOI18N
         panel4.add(doneButton);
-        doneButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                doneButtonActionPerformed();
-            }
+        doneButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            doneButtonActionPerformed();
         });
         panel4.add(updateButton);
         updateButton.setText(Bundle.getMessage("ButtonUpdate")); // NOI18N
         updateButton.setVisible(true);
         updateButton.setToolTipText(Bundle.getMessage("TipUpdateButton")); // NOI18N
         panel4.add(updateButton);
-        updateButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                updateButtonActionPerformed();
-            }
+        updateButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            updateButtonActionPerformed();
         });
         updateButton.setVisible(false);
         panel4.add(cancelButton);
@@ -332,11 +311,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         cancelButton.setVisible(true);
         cancelButton.setToolTipText(Bundle.getMessage("TipCancelButton")); // NOI18N
         panel4.add(cancelButton);
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                cancelButtonActionPerformed();
-            }
+        cancelButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            cancelButtonActionPerformed();
         });
         cancelButton.setVisible(false);
         contentPane.add(panel4);
@@ -388,8 +364,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // configure the new node
         setNodeParameters();
         // register any orphan sensors that this node may have
-        if (_memo != null && _memo.getSensorManager() != null) {
-            ((SerialSensorManager) _memo.getSensorManager()).registerSensorsForNode(curNode);
+        if (_memo.getSensorManager() != null) {
+            _memo.getSensorManager().registerSensorsForNode(curNode);
         }
         // reset after succefully adding node
         resetNotes();
@@ -429,7 +405,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         } else if (nodeType == SerialNode.USIC_SUSIC) {
             nodeTypeBox.setSelectedItem("USIC_SUSIC"); // NOI18N
         }
-// here add code for other node types
+        // here add code for other node types
         // Node specific initialization
         if (nodeType == SerialNode.USIC_SUSIC) {
             bitsPerCard = curNode.getNumBitsPerCard();
@@ -482,7 +458,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         } else if (nodeType == SerialNode.SMINI) {
             panel2a.setVisible(true);
         }
-// here insert code for other node types
+        // here insert code for other node types
         // Switch buttons
         editMode = true;
         addButton.setVisible(false);
@@ -632,7 +608,9 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to close the window when the close box is clicked
+     * Handle a closing window.
+     *
+     * @param e the triggering event
      */
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -680,9 +658,9 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                 }
                 // consistency check
                 if (numSet != num2LSearchLights) {
-                    log.error("Inconsistent numbers of 2-lead searchlights. numSet = " // NOI18N
-                            + Integer.toString(numSet) + ", num2LSearchLights = " // NOI18N
-                            + Integer.toString(num2LSearchLights));
+                    log.error("Inconsistent numbers of 2-lead searchlights. numSet = {}, num2LSearchLights = {}",
+                            numSet,
+                            num2LSearchLights);
                 }
                 break;
             case SerialNode.USIC_SUSIC:
@@ -692,16 +670,25 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                 int numInput = 0;
                 int numOutput = 0;
                 for (int i = 0; i < 64; i++) {
-                    if ("No Card".equals(cardType[i])) { // NOI18N
-                        curNode.setCardTypeByAddress(i, SerialNode.NO_CARD);
-                    } else if ("Input Card".equals(cardType[i])) { // NOI18N
-                        curNode.setCardTypeByAddress(i, SerialNode.INPUT_CARD);
-                        numInput++;
-                    } else if ("Output Card".equals(cardType[i])) { // NOI18N
-                        curNode.setCardTypeByAddress(i, SerialNode.OUTPUT_CARD);
-                        numOutput++;
+                    if (null == cardType[i]) {
+                        log.error("Unexpected card type - {}", cardType[i]); // NOI18N
                     } else {
-                        log.error("Unexpected card type - " + cardType[i]); // NOI18N
+                        switch (cardType[i]) {
+                            case "No Card": // NOI18N
+                                curNode.setCardTypeByAddress(i, SerialNode.NO_CARD);
+                                break;
+                            case "Input Card": // NOI18N
+                                curNode.setCardTypeByAddress(i, SerialNode.INPUT_CARD);
+                                numInput++;
+                                break;
+                            case "Output Card": // NOI18N
+                                curNode.setCardTypeByAddress(i, SerialNode.OUTPUT_CARD);
+                                numOutput++;
+                                break;
+                            default:
+                                log.error("Unexpected card type - {}", cardType[i]); // NOI18N
+                                break;
+                        }
                     }
                 }
                 // consistency check
@@ -711,8 +698,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                 break;
             // here add code for other node types
             default:
-                log.error("Unexpected node type in setNodeParameters- " // NOI18N
-                        + Integer.toString(nodeType));
+                log.error("Unexpected node type in setNodeParameters- {}", nodeType); // NOI18N
                 break;
         }
         // Cause reinitialization of this Node to reflect these parameters
@@ -756,24 +742,24 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      *         is placed in statusText1.
      */
     private int readNodeAddress() {
-        int addr = -1;
+        int addr;
         try {
             addr = Integer.parseInt(nodeAddrField.getText());
-        } catch (Exception e) {
+            if ((addr < 0) || (addr > 127)) {
+                statusText1.setText(Bundle.getMessage("Error6"));
+                statusText1.setVisible(true);
+                errorInStatus1 = true;
+                resetNotes2();
+                addr = -1;
+            }
+        } catch (NumberFormatException e) {
             statusText1.setText(Bundle.getMessage("Error5"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
-            return -1;
+            addr = -1;
         }
-        if ((addr < 0) || (addr > 127)) {
-            statusText1.setText(Bundle.getMessage("Error6"));
-            statusText1.setVisible(true);
-            errorInStatus1 = true;
-            resetNotes2();
-            return -1;
-        }
-        return (addr);
+        return addr;
     }
 
     /**
@@ -786,7 +772,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // get the transmission delay
         try {
             receiveDelay = Integer.parseInt(receiveDelayField.getText());
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             statusText1.setText(Bundle.getMessage("Error7")); // NOI18N
             statusText1.setVisible(true);
             receiveDelay = 0;
@@ -824,7 +810,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // get the pulse width
         try {
             pulseWidth = Integer.parseInt(pulseWidthField.getText());
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             statusText1.setText(Bundle.getMessage("Error18")); // NOI18N
             statusText1.setVisible(true);
             pulseWidth = 500;
@@ -942,7 +928,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                 break;
             // here add code for other types of nodes
             default:
-                log.warn("Unexpected node type - " + Integer.toString(nodeType)); // NOI18N
+                log.warn("Unexpected node type - {}", nodeType); // NOI18N
                 break;
         }
         return true;
@@ -998,9 +984,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         public static final int ADDRESS_COLUMN = 0;
         public static final int TYPE_COLUMN = 1;
     }
-    private String[] cardConfigColumnNames = {Bundle.getMessage("HeadingCardAddress"),
-        Bundle.getMessage("HeadingCardType")};
-    private String[] cardType = new String[64];
+    private final String[] cardConfigColumnNames = {
+        Bundle.getMessage("HeadingCardAddress"),
+        Bundle.getMessage("HeadingCardType")
+    };
+    private final String[] cardType = new String[64];
 
     /**
      * Set up model for SMINI table for designating oscillating 2-lead
@@ -1053,11 +1041,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                 }
             } else {
                 int index = (r * 8) + (c - 1);
-                if (searchlightBits[index]) {
-                    return (Boolean.TRUE);
-                } else {
-                    return (Boolean.FALSE);
-                }
+                return searchlightBits[index];
             }
         }
 
@@ -1065,7 +1049,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         public void setValueAt(Object type, int r, int c) {
             if (c > 0) {
                 int index = (r * 8) + (c - 1);
-                if (!((Boolean) type).booleanValue()) {
+                if (!((Boolean) type)) {
                     searchlightBits[index] = false;
                     if (firstSearchlight[index]) {
                         searchlightBits[index + 1] = false;
@@ -1101,10 +1085,12 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         public static final int PORT_COLUMN = 0;
     }
-    private String[] searchlightConfigColumnNames = {Bundle.getMessage("HeadingPort"), // NOI18N
-        "0", "1", "2", "3", "4", "5", "6", "7"};
-    private boolean[] searchlightBits = new boolean[48];   // true if this bit is a searchlight bit
-    private boolean[] firstSearchlight = new boolean[48];  // true if first of a pair of searchlight bits
+    private final String[] searchlightConfigColumnNames = {
+        Bundle.getMessage("HeadingPort"), // NOI18N
+        "0", "1", "2", "3", "4", "5", "6", "7"
+    };
+    private final boolean[] searchlightBits = new boolean[48];   // true if this bit is a searchlight bit
+    private final boolean[] firstSearchlight = new boolean[48];  // true if first of a pair of searchlight bits
 
     private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class);
 
