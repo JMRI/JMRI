@@ -699,15 +699,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
             @Override
             public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
-                JTable table = this.makeJTable(model);
-                table.setName(name);
-                table.setRowSorter(sorter);
-                table.getTableHeader().setReorderingAllowed(true);
-                table.setColumnModel(new XTableColumnModel());
-                table.createDefaultColumnsFromModel();
-
-                addMouseListenerToHeader(table);
-                return table;
+                return this.configureJTable(name, this.makeJTable(model), sorter);
             }
 
             private JTable makeJTable(TableModel model) {

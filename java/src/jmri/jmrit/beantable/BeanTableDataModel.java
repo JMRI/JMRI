@@ -50,6 +50,7 @@ import jmri.NamedBean;
 import jmri.NamedBeanHandleManager;
 import jmri.UserPreferencesManager;
 import jmri.swing.JTablePersistenceManager;
+import jmri.swing.JmriJTablePersistenceManager;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
@@ -470,7 +471,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                 if (value == null) {
                     columnStrings[j] = spaces.toString();
                 } else if (value instanceof JComboBox<?>) {
-                    columnStrings[j] = ((JComboBox<String>) value).getSelectedItem().toString();
+                    columnStrings[j] = ((JComboBox<?>) value).getSelectedItem().toString();
                 } else {
                     // Boolean or String
                     columnStrings[j] = value.toString();
@@ -547,18 +548,36 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      * @param sorter the row sorter for the table; if null, the table will not
      *               be sortable
      * @return the table
-     * @throws NullPointerException if name or model are null
+     * @throws NullPointerException if name or model is null
      */
     public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
         Objects.requireNonNull(name, "the table name must be nonnull");
         Objects.requireNonNull(model, "the table model must be nonnull");
-        JTable table = new JTable(model);
-        table.setName(name);
+        return this.configureJTable(name, new JTable(model), sorter);
+    }
+
+    /**
+     * Configure a new table using the given model and row sorter.
+     *
+     * @param table  the table to configure
+     * @param name   the table name
+     * @param sorter the row sorter for the table; if null, the table will not
+     *               be sortable
+     * @return the table
+     * @throws NullPointerException if table or the table name is null
+     */
+    protected JTable configureJTable(@Nonnull String name, @Nonnull JTable table, @Nullable RowSorter<? extends TableModel> sorter) {
+        Objects.requireNonNull(table, "the table must be nonnull");
+        Objects.requireNonNull(name, "the table name must be nonnull");
         table.setRowSorter(sorter);
+        table.setName(name);
         table.getTableHeader().setReorderingAllowed(true);
         table.setColumnModel(new XTableColumnModel());
         table.createDefaultColumnsFromModel();
-
+        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((mgr) -> {
+            mgr.persist(table);
+            mgr.resetState(table);
+        });
         addMouseListenerToHeader(table);
         return table;
     }
