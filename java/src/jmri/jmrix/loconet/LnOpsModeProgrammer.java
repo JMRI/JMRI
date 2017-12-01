@@ -30,6 +30,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     ProgListener p;
     boolean doingWrite;
     boolean BoardOpSwWriteVal;
+    javax.swing.Timer bdOpSwAccessTimer = null;
 
     public LnOpsModeProgrammer(SlotManager pSlotMgr,
             LocoNetSystemConnectionMemo memo,
@@ -47,11 +48,13 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
      * Forward a write request to an ops-mode write operation
      */
     @Override
+    @Deprecated
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         mSlotMgr.writeCVOpsMode(CV, val, p, mAddress, mLongAddr);
     }
 
     @Override
+    @Deprecated
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
         mSlotMgr.readCVOpsMode(CV, p, mAddress, mLongAddr);
     }
@@ -102,7 +105,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
-            
+
             bdOpSwAccessTimer.start();
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
             this.p = p;
@@ -212,6 +215,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
 
     @Override
+    @Deprecated
     @SuppressWarnings("deprecation") // parent Programmer method deprecated, will remove at same time
     public final void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
         confirmCV(""+CV, val, p);
@@ -286,14 +290,18 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
             // see if reply to LNSV 1 or LNSV2 request
-            if ((m.getElement( 0) & 0xFF) != 0xE5) return;
-            if ((m.getElement( 1) & 0xFF) != 0x10) return;
-            if ((m.getElement( 4) & 0xFF) != 0x01) return; // format 1
-            if ((m.getElement( 5) & 0x70) != 0x00) return; // 5
+            if (((m.getElement( 0) & 0xFF) != 0xE5) |
+                    ((m.getElement( 1) & 0xFF) != 0x10) |
+                    ((m.getElement( 4) & 0xFF) != 0x01) | // format 1
+                    ((m.getElement( 5) & 0x70) != 0x00)) {
+                return;
+            }
 
             // check for src address (?) moved to 0x50
             // this might not be the right way to tell....
-            if ((m.getElement(3) & 0x7F) != 0x50) return;
+            if ((m.getElement(3) & 0x7F) != 0x50) {
+                return;
+            }
 
             // more checks needed? E.g. addresses?
 
@@ -320,12 +328,15 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             }
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             // see if reply to LNSV 1 or LNSV2 request
-            if ((m.getElement( 0) & 0xFF) != 0xE5) return;
-            if ((m.getElement( 1) & 0xFF) != 0x10) return;
-            if ((m.getElement(3) != 0x41) && (m.getElement(3) != 0x42)) return; // need a "Write One Reply", or a "Read One Reply"
-            if ((m.getElement( 4) & 0xFF) != 0x02) return; // format 2
-            if ((m.getElement( 5) & 0x70) != 0x10) return; // need SVX1 high nibble = 1
-            if ((m.getElement(10) & 0x70) != 0x10) return; // need SVX2 high nibble = 1
+            if (((m.getElement( 0) & 0xFF) != 0xE5) |
+                    ((m.getElement( 1) & 0xFF) != 0x10) |
+                    ((m.getElement(3) != 0x41) && (m.getElement(3) != 0x42)) | // need a "Write One Reply", or a "Read One Reply"
+                    ((m.getElement( 4) & 0xFF) != 0x02) | // format 2)
+                    ((m.getElement( 5) & 0x70) != 0x10) | // need SVX1 high nibble = 1
+                    ((m.getElement(10) & 0x70) != 0x10) // need SVX2 high nibble = 1
+                    ) {
+                return;
+            }
 
             // more checks needed? E.g. addresses?
 
@@ -419,7 +430,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
      */
     @Override
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        List<ProgrammingMode> ret = new ArrayList<>(4);
         ret.add(ProgrammingMode.OPSBYTEMODE);
         ret.add(LnProgrammerManager.LOCONETSV1MODE);
         ret.add(LnProgrammerManager.LOCONETSV2MODE);
@@ -438,7 +449,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     @Nonnull
     @Override
     public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) {
-        if (getMode().equals(ProgrammingMode.OPSBYTEMODE)) return WriteConfirmMode.NotVerified;
+        if (getMode().equals(ProgrammingMode.OPSBYTEMODE)) {
+            return WriteConfirmMode.NotVerified;
+        }
         return WriteConfirmMode.DecoderReply;
     }
 
@@ -512,18 +525,13 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
-    javax.swing.Timer bdOpSwAccessTimer = null;
-
     void initiializeBdOpsAccessTimer() {
         if (bdOpSwAccessTimer == null) {
-            bdOpSwAccessTimer = new javax.swing.Timer(1000, new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            bdOpSwAccessTimer = new javax.swing.Timer(1000, (java.awt.event.ActionEvent e) -> {
                 ProgListener temp = p;
                 p = null;
                 temp.programmingOpReply(0, ProgListener.FailedTimeout);
-            }
-        });
+            });
         bdOpSwAccessTimer.setInitialDelay(1000);
         bdOpSwAccessTimer.setRepeats(false);
         }
