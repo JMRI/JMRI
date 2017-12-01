@@ -1137,19 +1137,19 @@ public class LayoutSlip extends LayoutTurnout {
 
         Point2D oneThirdPointAC = MathUtil.oneThirdPoint(pointA, pointC);
         Point2D midPointAC = MathUtil.midPoint(pointA, pointC);
-        Point2D twoThirdPointAC = MathUtil.twoThirdPoint(pointA, pointC);
+        Point2D twoThirdPointAC = MathUtil.twoThirdsPoint(pointA, pointC);
 
         Point2D oneThirdPointAD = MathUtil.oneThirdPoint(pointA, pointD);
         Point2D midPointAD = MathUtil.midPoint(pointA, pointD);
-        Point2D twoThirdPointAD = MathUtil.twoThirdPoint(pointA, pointD);
+        Point2D twoThirdPointAD = MathUtil.twoThirdsPoint(pointA, pointD);
 
         Point2D oneThirdPointBC = MathUtil.oneThirdPoint(pointB, pointC);
         Point2D midPointBC = MathUtil.midPoint(pointB, pointC);
-        Point2D twoThirdPointBC = MathUtil.twoThirdPoint(pointB, pointC);
+        Point2D twoThirdPointBC = MathUtil.twoThirdsPoint(pointB, pointC);
 
         Point2D oneThirdPointBD = MathUtil.oneThirdPoint(pointB, pointD);
         Point2D midPointBD = MathUtil.midPoint(pointB, pointD);
-        Point2D twoThirdPointBD = MathUtil.twoThirdPoint(pointB, pointD);
+        Point2D twoThirdPointBD = MathUtil.twoThirdsPoint(pointB, pointD);
 
         int slipState = getSlipState();
 

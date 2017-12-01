@@ -3051,23 +3051,26 @@ public class LayoutTurnout extends LayoutTrack {
             colorD = (lb == null) ? color : lb.getBlockColor();
         }
 
-        Point2D center = getCoordsCenter();
+        Point2D pM = getCoordsCenter();
 
-        Point2D oneThirdPointAB = MathUtil.oneThirdPoint(pointA, pointB);
-        Point2D midPointAB = MathUtil.midPoint(pointA, pointB);
-        Point2D twoThirdPointAB = MathUtil.twoThirdPoint(pointA, pointB);
+        Point2D pAM = MathUtil.oneFourthPoint(pointA, pointB);
+        Point2D pAMP = MathUtil.oneThirdPoint(pointA, pointB);
+        Point2D pAB = MathUtil.midPoint(pointA, pointB);
+        Point2D pBMP = MathUtil.twoThirdsPoint(pointA, pointB);
+        Point2D pBM = MathUtil.threeFourthsPoint(pointA, pointB);
+        Point2D pCM = MathUtil.oneFourthPoint(pointC, pointD);
+        Point2D pCMP = MathUtil.oneThirdPoint(pointC, pointD);
+        Point2D pCD = MathUtil.midPoint(pointC, pointD);
+        Point2D pDMP = MathUtil.twoThirdsPoint(pointC, pointD);
+        Point2D pDM = MathUtil.threeFourthsPoint(pointC, pointD);
 
-        Point2D oneThirdPointAC = MathUtil.oneThirdPoint(pointA, pointC);
-        Point2D midPointAC = MathUtil.midPoint(pointA, pointC);
-        Point2D twoThirdPointAC = MathUtil.twoThirdPoint(pointA, pointC);
+        Point2D pAFM = MathUtil.oneThirdPoint(pAM, pCM);
+        Point2D midPointAC = MathUtil.midPoint(pAM, pCM);
+        Point2D twoThirdsPointAC = MathUtil.twoThirdsPoint(pAM, pCM);
 
-        Point2D oneThirdPointBD = MathUtil.oneThirdPoint(pointB, pointD);
-        Point2D midPointBD = MathUtil.midPoint(pointB, pointD);
-        Point2D twoThirdPointBD = MathUtil.twoThirdPoint(pointB, pointD);
-
-        Point2D oneThirdPointCD = MathUtil.oneThirdPoint(pointC, pointD);
-        Point2D midPointCD = MathUtil.midPoint(pointC, pointD);
-        Point2D twoThirdPointCD = MathUtil.twoThirdPoint(pointC, pointD);
+        Point2D oneThirdPointBD = MathUtil.oneThirdPoint(pBM, pDM);
+        Point2D midPointBD = MathUtil.midPoint(pBM, pDM);
+        Point2D twoThirdsPointBD = MathUtil.twoThirdsPoint(pBM, pDM);
 
         int state = getState();
         int type = getTurnoutType();
@@ -3075,55 +3078,54 @@ public class LayoutTurnout extends LayoutTrack {
             // Common drawing (not dependant on turnout state)
             if (isMain == mainlineA) {
                 g2.setColor(colorA);
-                g2.draw(new Line2D.Double(pointA, oneThirdPointAB));
-                // draw A<= =>C
-                g2.draw(new Line2D.Double(pointA, oneThirdPointAC));
+                g2.draw(new Line2D.Double(pointA, pAMP));
+                g2.draw(new Line2D.Double(pAM, pAFM));
             }
             if (isMain == mainlineB) {
                 g2.setColor(colorB);
-                g2.draw(new Line2D.Double(twoThirdPointAB, pointB));
-                g2.draw(new Line2D.Double(pointB, oneThirdPointBD));
+                g2.draw(new Line2D.Double(pBMP, pointB));
+                g2.draw(new Line2D.Double(pBM, oneThirdPointBD));
             }
             if (isMain == mainlineC) {
                 g2.setColor(colorC);
-                g2.draw(new Line2D.Double(twoThirdPointAC, pointC));
-                g2.draw(new Line2D.Double(pointC, oneThirdPointCD));
+                g2.draw(new Line2D.Double(pCMP, pointC));
+                g2.draw(new Line2D.Double(pCM, twoThirdsPointAC));
             }
             if (isMain == mainlineD) {
                 g2.setColor(colorD);
-                g2.draw(new Line2D.Double(twoThirdPointBD, pointD));
-                g2.draw(new Line2D.Double(twoThirdPointCD, pointD));
+                g2.draw(new Line2D.Double(pointD, pDMP));
+                g2.draw(new Line2D.Double(pDM, twoThirdsPointBD));
             }
 
             if (!isBlock || (state != Turnout.THROWN)) { // unknown or continuing path - not crossed over
                 // draw A<===>B
                 if (isMain == mainlineA) {
                     g2.setColor(colorA);
-                    g2.draw(new Line2D.Double(oneThirdPointAB, midPointAB));
+                    g2.draw(new Line2D.Double(pAMP, pAB));
                 }
                 if (isMain == mainlineB) {
                     g2.setColor(colorB);
-                    g2.draw(new Line2D.Double(midPointAB, twoThirdPointAB));
+                    g2.draw(new Line2D.Double(pAB, pBMP));
                 }
                 // draw C<===>D
                 if (isMain == mainlineC) {
                     g2.setColor(colorC);
-                    g2.draw(new Line2D.Double(oneThirdPointCD, midPointCD));
+                    g2.draw(new Line2D.Double(pCMP, pCD));
                 }
                 if (isMain == mainlineD) {
                     g2.setColor(colorD);
-                    g2.draw(new Line2D.Double(midPointCD, twoThirdPointCD));
+                    g2.draw(new Line2D.Double(pCD, pDMP));
                 }
             }
             if (!isBlock || (state != Turnout.CLOSED)) { // unknown or diverting path - crossed over
                 // draw A<===>C
                 if (isMain == mainlineA) {
                     g2.setColor(colorA);
-                    g2.draw(new Line2D.Double(oneThirdPointAC, midPointAC));
+                    g2.draw(new Line2D.Double(pAFM, midPointAC));
                 }
                 if (isMain == mainlineC) {
                     g2.setColor(colorC);
-                    g2.draw(new Line2D.Double(midPointAC, twoThirdPointAC));
+                    g2.draw(new Line2D.Double(midPointAC, twoThirdsPointAC));
                 }
                 // draw B<= =>D
                 if (isMain == mainlineB) {
@@ -3132,7 +3134,7 @@ public class LayoutTurnout extends LayoutTrack {
                 }
                 if (isMain == mainlineD) {
                     g2.setColor(colorD);
-                    g2.draw(new Line2D.Double(midPointBD, twoThirdPointBD));
+                    g2.draw(new Line2D.Double(midPointBD, twoThirdsPointBD));
                 }
             }
         } else if ((type == RH_XOVER)
@@ -3142,41 +3144,41 @@ public class LayoutTurnout extends LayoutTrack {
                 // draw A<===>B
                 if (isMain == mainlineA) {
                     g2.setColor(colorA);
-                    g2.draw(new Line2D.Double(pointA, midPointAB));
+                    g2.draw(new Line2D.Double(pointA, pAB));
                 }
                 if (isMain == mainlineB) {
                     g2.setColor(colorB);
-                    g2.draw(new Line2D.Double(midPointAB, pointB));
+                    g2.draw(new Line2D.Double(pAB, pointB));
                 }
                 // draw C<===>D
                 if (isMain == mainlineC) {
                     g2.setColor(colorC);
-                    g2.draw(new Line2D.Double(pointC, midPointCD));
+                    g2.draw(new Line2D.Double(pointC, pCD));
                 }
                 if (isMain == mainlineD) {
                     g2.setColor(colorD);
-                    g2.draw(new Line2D.Double(midPointCD, pointD));
+                    g2.draw(new Line2D.Double(pCD, pointD));
                 }
                 if (getTurnoutType() == RH_XOVER) {
                     // draw midAB<=-=>midCD
                     if (isMain == mainlineA) {
                         g2.setColor(colorA);
-                        g2.draw(new Line2D.Double(midPointAB, MathUtil.oneThirdPoint(midPointAB, center)));
+                        g2.draw(new Line2D.Double(pAB, MathUtil.oneThirdPoint(pAB, pM)));
                     }
                     if (isMain == mainlineC) {
                         g2.setColor(colorC);
-                        g2.draw(new Line2D.Double(MathUtil.twoThirdPoint(center, midPointCD), midPointCD));
+                        g2.draw(new Line2D.Double(MathUtil.twoThirdsPoint(pM, pCD), pCD));
                     }
                 }
                 if (getTurnoutType() == LH_XOVER) {
                     // draw midAB<=-=>midCD
                     if (isMain == mainlineB) {
                         g2.setColor(colorB);
-                        g2.draw(new Line2D.Double(midPointAB, MathUtil.oneThirdPoint(midPointAB, center)));
+                        g2.draw(new Line2D.Double(pAB, MathUtil.oneThirdPoint(pAB, pM)));
                     }
                     if (isMain == mainlineD) {
                         g2.setColor(colorD);
-                        g2.draw(new Line2D.Double(MathUtil.twoThirdPoint(center, midPointCD), midPointCD));
+                        g2.draw(new Line2D.Double(MathUtil.twoThirdsPoint(pM, pCD), pCD));
                     }
                 }
             }
@@ -3185,46 +3187,46 @@ public class LayoutTurnout extends LayoutTrack {
                     // draw A<==*--=>B
                     if (isMain == mainlineB) {
                         g2.setColor(colorB);
-                        g2.draw(new Line2D.Double(MathUtil.twoThirdPoint(midPointAB, pointB), pointB));
+                        g2.draw(new Line2D.Double(MathUtil.twoThirdsPoint(pAB, pointB), pointB));
                     }
                     if (isMain == mainlineA) {
                         g2.setColor(colorA);
-                        g2.draw(new Line2D.Double(pointA, midPointAB));
+                        g2.draw(new Line2D.Double(pointA, pAB));
                         // draw midAB<===>midCD
-                        g2.draw(new Line2D.Double(midPointAB, center));
+                        g2.draw(new Line2D.Double(pAB, pM));
                     }
                     if (isMain == mainlineC) {
                         g2.setColor(colorC);
-                        g2.draw(new Line2D.Double(center, midPointCD));
+                        g2.draw(new Line2D.Double(pM, pCD));
                         // draw C<==*--=>D
-                        g2.draw(new Line2D.Double(pointC, midPointCD));
+                        g2.draw(new Line2D.Double(pointC, pCD));
                     }
                     if (isMain == mainlineD) {
                         g2.setColor(colorD);
-                        g2.draw(new Line2D.Double(MathUtil.twoThirdPoint(midPointCD, pointD), pointD));
+                        g2.draw(new Line2D.Double(MathUtil.twoThirdsPoint(pCD, pointD), pointD));
                     }
                 }
                 if (getTurnoutType() == LH_XOVER) {
                     // draw A<=--*===>B
                     if (isMain == mainlineA) {
                         g2.setColor(colorA);
-                        g2.draw(new Line2D.Double(pointA, MathUtil.oneThirdPoint(pointA, midPointAB)));
+                        g2.draw(new Line2D.Double(pointA, MathUtil.oneThirdPoint(pointA, pAB)));
                     }
                     if (isMain == mainlineB) {
                         g2.setColor(colorB);
-                        g2.draw(new Line2D.Double(midPointAB, pointB));
+                        g2.draw(new Line2D.Double(pAB, pointB));
                         // draw midAB<===>midCD
-                        g2.draw(new Line2D.Double(midPointAB, center));
+                        g2.draw(new Line2D.Double(pAB, pM));
                     }
                     if (isMain == mainlineD) {
                         g2.setColor(colorD);
-                        g2.draw(new Line2D.Double(midPointCD, center));
+                        g2.draw(new Line2D.Double(pCD, pM));
                         // draw C<=--*===>D
-                        g2.draw(new Line2D.Double(midPointCD, pointD));
+                        g2.draw(new Line2D.Double(pCD, pointD));
                     }
                     if (isMain == mainlineC) {
                         g2.setColor(colorC);
-                        g2.draw(new Line2D.Double(pointC, MathUtil.oneThirdPoint(pointC, midPointCD)));
+                        g2.draw(new Line2D.Double(pointC, MathUtil.oneThirdPoint(pointC, pCD)));
                     }
                 }
             }
@@ -3235,32 +3237,32 @@ public class LayoutTurnout extends LayoutTrack {
             // draw A<===>center
             if (isMain == mainlineA) {
                 g2.setColor(colorA);
-                g2.draw(new Line2D.Double(pointA, center));
+                g2.draw(new Line2D.Double(pointA, pM));
             }
             if (!isBlock || (state != Turnout.THROWN)) { // unknown or continuing path
                 // draw center<===>B
                 if (isMain == mainlineB) {
                     g2.setColor(colorB);
-                    g2.draw(new Line2D.Double(center, pointB));
+                    g2.draw(new Line2D.Double(pM, pointB));
                 }
             } else {
                 // draw center<--=>B
                 if (isMain == mainlineB) {
                     g2.setColor(colorB);
-                    g2.draw(new Line2D.Double(MathUtil.twoThirdPoint(center, pointB), pointB));
+                    g2.draw(new Line2D.Double(MathUtil.twoThirdsPoint(pM, pointB), pointB));
                 }
             }
             if (!isBlock || (state != Turnout.CLOSED)) { // unknown or diverting path
                 // draw center<===>C
                 if (isMain == mainlineC) {
                     g2.setColor(colorC);
-                    g2.draw(new Line2D.Double(center, pointC));
+                    g2.draw(new Line2D.Double(pM, pointC));
                 }
             } else {
                 // draw center<--=>C
                 if (isMain == mainlineC) {
                     g2.setColor(colorC);
-                    g2.draw(new Line2D.Double(MathUtil.twoThirdPoint(center, pointC), pointC));
+                    g2.draw(new Line2D.Double(MathUtil.twoThirdsPoint(pM, pointC), pointC));
                 }
             }
         }
@@ -3282,6 +3284,7 @@ public class LayoutTurnout extends LayoutTrack {
         Point2D pM = getCoordsCenter();
 
         Point2D vAM = MathUtil.normalize(MathUtil.subtract(pM, pA));
+        double dirAM_DEG = MathUtil.computeAngleDEG(vAM);
         Point2D vAMo = MathUtil.orthogonal(MathUtil.normalize(vAM, railDisplacement));
 
         Point2D pAL = MathUtil.subtract(pA, vAMo);
@@ -3315,15 +3318,6 @@ public class LayoutTurnout extends LayoutTrack {
 
         Point2D pFR = MathUtil.add(pF, MathUtil.multiply(vBMo, 2.0));
         Point2D pFL = MathUtil.subtract(pF, MathUtil.multiply(vCMo, 2.0));
-
-        if (getName().equals("TO1")
-                || getName().equals("TO2")
-                || getName().equals("TO2")) {
-            log.info("LT #{}, deltaBMC_DEG: {}°, rd: {}, hypotF: {}",
-                    getName(), deltaBMC_DEG, railDisplacement, hypotF);
-            log.info("  pF {}, vBMo {}, pFR {}, vCMo {}, pFL {}",
-                    pF, vBMo, pFR, vCMo, pFL);
-        }
 
         Point2D pFPR = MathUtil.add(pF, MathUtil.normalize(vBMo, 2.0));
         Point2D pFPL = MathUtil.subtract(pF, MathUtil.normalize(vCMo, 2.0));
@@ -3381,7 +3375,8 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
                 break;
-            }
+            }   // case RH_TURNOUT
+
             case LH_TURNOUT: {
                 if (isMain == mainlineA) {
                     g2.draw(new Line2D.Double(pAR, pMR));
@@ -3416,7 +3411,7 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
                 break;
-            }
+            }   // case LH_TURNOUT
 
             case WYE_TURNOUT: {
                 if (isMain == mainlineA) {
@@ -3463,40 +3458,241 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
                 break;
-            }
+            }   // case WYE_TURNOUT
 
-            case DOUBLE_XOVER:
-            case RH_XOVER:
-            case LH_XOVER: {
-                Point2D pABLm = MathUtil.midPoint(pAL, pBL);
-                Point2D pABRm = MathUtil.midPoint(pAR, pBR);
-
-                Point2D vCD = MathUtil.subtract(pC, pD);
+            case DOUBLE_XOVER: {
+                // A, B, C, D end points (left and right)
+                Point2D vAB = MathUtil.normalize(MathUtil.subtract(pB, pA), railDisplacement);
+                double dirAB_DEG = MathUtil.computeAngleDEG(vAB);
+                Point2D vABo = MathUtil.orthogonal(MathUtil.normalize(vAB, railDisplacement));
+                pAL = MathUtil.subtract(pA, vABo);
+                pAR = MathUtil.add(pA, vABo);
+                pBL = MathUtil.subtract(pB, vABo);
+                pBR = MathUtil.add(pB, vABo);
+                Point2D vCD = MathUtil.normalize(MathUtil.subtract(pD, pC), railDisplacement);
                 Point2D vCDo = MathUtil.orthogonal(MathUtil.normalize(vCD, railDisplacement));
+                pCL = MathUtil.add(pC, vCDo);
+                pCR = MathUtil.subtract(pC, vCDo);
+                Point2D pDL = MathUtil.add(pD, vCDo);
+                Point2D pDR = MathUtil.subtract(pD, vCDo);
 
-                pCL = MathUtil.subtract(pC, vCDo);
-                pCR = MathUtil.add(pC, vCDo);
-                Point2D pDL = MathUtil.subtract(pD, vCDo);
-                Point2D pDR = MathUtil.add(pD, vCDo);
+                // AB, CD mid points (left and right)
+                Point2D pAB = MathUtil.midPoint(pA, pB);
+                Point2D pABL = MathUtil.midPoint(pAL, pBL);
+                Point2D pABR = MathUtil.midPoint(pAR, pBR);
+                Point2D pCD = MathUtil.midPoint(pC, pD);
+                Point2D pCDL = MathUtil.midPoint(pCL, pDL);
+                Point2D pCDR = MathUtil.midPoint(pCR, pDR);
 
-                Point2D pCDLm = MathUtil.midPoint(pCL, pDL);
-                Point2D pCDRm = MathUtil.midPoint(pCR, pDR);
+                // A, B, C, D mid points
+                double halfParallelDistance = MathUtil.distance(pAB, pCD) / 2.0;
+                Point2D pAM = MathUtil.subtract(pAB, MathUtil.normalize(vAB, halfParallelDistance));
+                Point2D pAML = MathUtil.subtract(pAM, vABo);
+                Point2D pAMR = MathUtil.add(pAM, vABo);
+                Point2D pBM = MathUtil.add(pAB, MathUtil.normalize(vAB, halfParallelDistance));
+                Point2D pBML = MathUtil.subtract(pBM, vABo);
+                Point2D pBMR = MathUtil.add(pBM, vABo);
+                Point2D pCM = MathUtil.subtract(pCD, MathUtil.normalize(vCD, halfParallelDistance));
+                Point2D pCML = MathUtil.subtract(pCM, vABo);
+                Point2D pCMR = MathUtil.add(pCM, vABo);
+                Point2D pDM = MathUtil.add(pCD, MathUtil.normalize(vCD, halfParallelDistance));
+                Point2D pDML = MathUtil.subtract(pDM, vABo);
+                Point2D pDMR = MathUtil.add(pDM, vABo);
+
+                // crossing points
+                Point2D vACM = MathUtil.normalize(MathUtil.subtract(pCM, pAM), railDisplacement);
+                Point2D vACMo = MathUtil.orthogonal(vACM);
+                Point2D vBDM = MathUtil.normalize(MathUtil.subtract(pDM, pBM), railDisplacement);
+                Point2D vBDMo = MathUtil.orthogonal(vBDM);
+                Point2D pBDR = MathUtil.add(pM, vACM);
+                Point2D pBDL = MathUtil.subtract(pM, vACM);
+
+                // crossing diamond point (no gaps)
+                Point2D pVR = MathUtil.add(pBDL, vBDM);
+                Point2D pKL = MathUtil.subtract(pBDL, vBDM);
+                Point2D pKR = MathUtil.add(pBDR, vBDM);
+                Point2D pVL = MathUtil.subtract(pBDR, vBDM);
+
+                // crossing diamond points (with gaps)
+                Point2D vACM2 = MathUtil.normalize(vACM, 2.0);
+                Point2D vBDM2 = MathUtil.normalize(vBDM, 2.0);
+                // (syntax of "pKLtC" is "point LK toward C", etc.)
+                Point2D pKLtC = MathUtil.add(pKL, vACM2);
+                Point2D pKLtD = MathUtil.add(pKL, vBDM2);
+                Point2D pVLtA = MathUtil.subtract(pVL, vACM2);
+                Point2D pVLtD = MathUtil.add(pVL, vBDM2);
+                Point2D pKRtA = MathUtil.subtract(pKR, vACM2);
+                Point2D pKRtB = MathUtil.subtract(pKR, vBDM2);
+                Point2D pVRtB = MathUtil.subtract(pVR, vBDM2);
+                Point2D pVRtC = MathUtil.add(pVR, vACM2);
+
+                // A, B, C, D frogs
+                vCM = MathUtil.normalize(MathUtil.subtract(pCM, pM));
+                dirCM_DEG = MathUtil.computeAngleDEG(vCM);
+                double deltaBAC_DEG = MathUtil.absDiffAngleDEG(dirAB_DEG, dirCM_DEG);
+                double deltaBAC_RAD = Math.toRadians(deltaBAC_DEG);
+                hypotF = railDisplacement / Math.sin(deltaBAC_RAD / 2.0);
+                Point2D vACF = MathUtil.normalize(MathUtil.add(vACM, vAB), hypotF);
+                Point2D pAF = MathUtil.add(pAM, vACF);
+                Point2D pCF = MathUtil.subtract(pCM, vACF);
+                Point2D vBDF = MathUtil.normalize(MathUtil.add(vBDM, vCD), hypotF);
+                Point2D pBF = MathUtil.add(pBM, vBDF);
+                Point2D pDF = MathUtil.subtract(pDM, vBDF);
+
+                // A, B, C, D frog primes
+                Point2D pAFP = MathUtil.add(MathUtil.add(pAF, vACMo), vACMo);
+                Point2D pBFP = MathUtil.subtract(MathUtil.subtract(pBF, vBDMo), vBDMo);
+                Point2D pCFP = MathUtil.subtract(MathUtil.subtract(pCF, vACMo), vACMo);
+                Point2D pDFP = MathUtil.add(MathUtil.add(pDF, vBDMo), vBDMo);
+
+                // end of switch rails (closed)
+                Point2D vABF = MathUtil.normalize(vAB, hypotF);
+                pAP = MathUtil.subtract(pAM, vABF);
+                pAPL = MathUtil.subtract(pAP, vABo);
+                pAPR = MathUtil.add(pAP, vABo);
+                Point2D pBP = MathUtil.add(pBM, vABF);
+                Point2D pBPL = MathUtil.subtract(pBP, vABo);
+                Point2D pBPR = MathUtil.add(pBP, vABo);
+
+                Point2D vCDF = MathUtil.normalize(vCD, hypotF);
+                Point2D pCP = MathUtil.subtract(pCM, vCDF);
+                Point2D pCPL = MathUtil.add(pCP, vCDo);
+                Point2D pCPR = MathUtil.subtract(pCP, vCDo);
+                Point2D pDP = MathUtil.add(pDM, vCDF);
+                Point2D pDPL = MathUtil.add(pDP, vCDo);
+                Point2D pDPR = MathUtil.subtract(pDP, vCDo);
+
+                // end of switch rails (open)
+                Point2D vS = MathUtil.normalize(vABo, 2.0);
+                Point2D pASL = MathUtil.add(pAPL, vS);
+                Point2D pASR = MathUtil.subtract(pAPR, vS);
+                Point2D pBSL = MathUtil.add(pBPL, vS);
+                Point2D pBSR = MathUtil.subtract(pBPR, vS);
+                Point2D pCSR = MathUtil.subtract(pCPR, vS);
+                Point2D pCSL = MathUtil.add(pCPL, vS);
+                Point2D pDSR = MathUtil.subtract(pDPR, vS);
+                Point2D pDSL = MathUtil.add(pDPL, vS);
+
+                // end of switch rails (open at frogs)
+                Point2D pAFS = MathUtil.subtract(pAF, vS);
+                Point2D pBFS = MathUtil.subtract(pBF, vS);
+                Point2D pCFS = MathUtil.add(pCF, vS);
+                Point2D pDFS = MathUtil.add(pDF, vS);
+                vSo = MathUtil.orthogonal(vS);
+                Point2D pAFSR = MathUtil.add(pAF, vSo);
+                Point2D pBFSR = MathUtil.subtract(pBF, vSo);
+                Point2D pCFSL = MathUtil.subtract(pCF, vSo);
+                Point2D pDFSL = MathUtil.add(pDF, vSo);
 
                 if (isMain == mainlineA) {
-                    g2.draw(new Line2D.Double(pAL, pABLm));
+                    g2.draw(new Line2D.Double(pAL, pABL));
+                    g2.draw(new Line2D.Double(pVRtB, pKLtD));
+                    g2.draw(new Line2D.Double(pAF, pABR));
+                    g2.draw(new Line2D.Double(pAF, pKL));
+                    GeneralPath path = new GeneralPath();
+                    path.moveTo(pAR.getX(), pAR.getY());
+                    path.lineTo(pAPR.getX(), pAPR.getY());
+                    path.quadTo(pAMR.getX(), pAMR.getY(), pAFP.getX(), pAFP.getY());
+                    path.lineTo(pVR.getX(), pVR.getY());
+                    g2.draw(path);
+                    if (state != Turnout.CLOSED) {  // unknown or diverting path
+                        path = new GeneralPath();
+                        path.moveTo(pAPL.getX(), pAPL.getY());
+                        path.quadTo(pAML.getX(), pAML.getY(), pAF.getX(), pAF.getY());
+                        g2.draw(path);
+                        g2.draw(new Line2D.Double(pASR, pAFSR));
+                    } else {                        // continuing path
+                        g2.draw(new Line2D.Double(pAPR, pAF));
+                        path = new GeneralPath();
+                        path.moveTo(pASL.getX(), pASL.getY());
+                        path.quadTo(pAML.getX(), pAML.getY(), pAFS.getX(), pAFS.getY());
+                        g2.draw(path);
+                    }
                 }
                 if (isMain == mainlineB) {
-                    g2.draw(new Line2D.Double(pABLm, pBL));
+                    g2.draw(new Line2D.Double(pABL, pBL));
+                    g2.draw(new Line2D.Double(pKLtC, pVLtA));
+                    g2.draw(new Line2D.Double(pBF, pABR));
+                    g2.draw(new Line2D.Double(pBF, pKL));
+                    GeneralPath path = new GeneralPath();
+                    path.moveTo(pBR.getX(), pBR.getY());
+                    path.lineTo(pBPR.getX(), pBPR.getY());
+                    path.quadTo(pBMR.getX(), pBMR.getY(), pBFP.getX(), pBFP.getY());
+                    path.lineTo(pVL.getX(), pVL.getY());
+                    g2.draw(path);
+                    if (state != Turnout.CLOSED) {  // unknown or diverting path
+                        path = new GeneralPath();
+                        path.moveTo(pBPL.getX(), pBPL.getY());
+                        path.quadTo(pBML.getX(), pBML.getY(), pBF.getX(), pBF.getY());
+                        g2.draw(path);
+                        g2.draw(new Line2D.Double(pBSR, pBFSR));
+                    } else {
+                        g2.draw(new Line2D.Double(pBPR, pBF));
+                        path = new GeneralPath();
+                        path.moveTo(pBSL.getX(), pBSL.getY());
+                        path.quadTo(pBML.getX(), pBML.getY(), pBFS.getX(), pBFS.getY());
+                        g2.draw(path);
+                    }
                 }
                 if (isMain == mainlineC) {
-                    g2.draw(new Line2D.Double(pCR, pCDRm));
+                    g2.draw(new Line2D.Double(pCR, pCDR));
+                    g2.draw(new Line2D.Double(pKRtB, pVLtD));
+                    g2.draw(new Line2D.Double(pCF, pCDL));
+                    g2.draw(new Line2D.Double(pCF, pKR));
+                    GeneralPath path = new GeneralPath();
+                    path.moveTo(pCL.getX(), pCL.getY());
+                    path.lineTo(pCPL.getX(), pCPL.getY());
+                    path.quadTo(pCML.getX(), pCML.getY(), pCFP.getX(), pCFP.getY());
+                    path.lineTo(pVL.getX(), pVL.getY());
+                    g2.draw(path);
+                    if (state != Turnout.CLOSED) {  // unknown or diverting path
+                        path = new GeneralPath();
+                        path.moveTo(pCPR.getX(), pCPR.getY());
+                        path.quadTo(pCMR.getX(), pCMR.getY(), pCF.getX(), pCF.getY());
+                        g2.draw(path);
+                        g2.draw(new Line2D.Double(pCSL, pCFSL));
+                    } else {
+                        g2.draw(new Line2D.Double(pCPL, pCF));
+                        path = new GeneralPath();
+                        path.moveTo(pCSR.getX(), pCSR.getY());
+                        path.quadTo(pCMR.getX(), pCMR.getY(), pCFS.getX(), pCFS.getY());
+                        g2.draw(path);
+                    }
                 }
                 if (isMain == mainlineD) {
-                    g2.draw(new Line2D.Double(pCDRm, pDR));
+                    g2.draw(new Line2D.Double(pCDR, pDR));
+                    g2.draw(new Line2D.Double(pKRtA, pVRtC));
+                    g2.draw(new Line2D.Double(pDF, pCDL));
+                    g2.draw(new Line2D.Double(pDF, pKR));
+                    GeneralPath path = new GeneralPath();
+                    path.moveTo(pDL.getX(), pDL.getY());
+                    path.lineTo(pDPL.getX(), pDPL.getY());
+                    path.quadTo(pDML.getX(), pDML.getY(), pDFP.getX(), pDFP.getY());
+                    path.lineTo(pVR.getX(), pVR.getY());
+                    g2.draw(path);
+                    if (state != Turnout.CLOSED) {  // unknown or diverting path
+                        path = new GeneralPath();
+                        path.moveTo(pDPR.getX(), pDPR.getY());
+                        path.quadTo(pDMR.getX(), pDMR.getY(), pDF.getX(), pDF.getY());
+                        g2.draw(path);
+                        g2.draw(new Line2D.Double(pDSL, pDFSL));
+                    } else {
+                        g2.draw(new Line2D.Double(pDPL, pDF));
+                        path = new GeneralPath();
+                        path.moveTo(pDSR.getX(), pDSR.getY());
+                        path.quadTo(pDMR.getX(), pDMR.getY(), pDFS.getX(), pDFS.getY());
+                        g2.draw(path);
+                    }
                 }
                 break;
-            }
+            }   // case DOUBLE_XOVER
+            case RH_XOVER: {
+                break;
+            }   // case RH_XOVER
 
+            case LH_XOVER: {
+                break;
+            }   // case LH_XOVER
             case SINGLE_SLIP:
             case DOUBLE_SLIP: {
                 log.error("slips should be being drawn by LayoutSlip sub-class");

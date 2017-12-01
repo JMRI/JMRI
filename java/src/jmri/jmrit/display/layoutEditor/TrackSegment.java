@@ -1062,7 +1062,7 @@ public class TrackSegment extends LayoutTrack {
 
                     // add orthogonal offset0 to 1/3rd and 2/3rd points
                     Point2D pt1 = MathUtil.add(MathUtil.oneThirdPoint(ep1, ep2), offset);
-                    Point2D pt2 = MathUtil.subtract(MathUtil.twoThirdPoint(ep1, ep2), offset);
+                    Point2D pt2 = MathUtil.subtract(MathUtil.twoThirdsPoint(ep1, ep2), offset);
 
                     bezierControlPoints.add(pt1);
                     bezierControlPoints.add(pt2);

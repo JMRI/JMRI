@@ -596,7 +596,7 @@ public final class MathUtil {
      * @return the point two thirds of the way from pA to pB
      */
     @CheckReturnValue
-    public static Point2D twoThirdPoint(@Nonnull Point2D pA, @Nonnull Point2D pB) {
+    public static Point2D twoThirdsPoint(@Nonnull Point2D pA, @Nonnull Point2D pB) {
         return lerp(pA, pB, 2.0 / 3.0);
     }
 
