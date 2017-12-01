@@ -219,7 +219,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             p.programmingOpReply(0, ProgListener.UnknownError);
         } else {
             // DCC ops mode
-            confirmCV(Integer.parseInt(CV), val, p);
+            mSlotMgr.confirmCVOpsMode(CV, val, p, mAddress, mLongAddr);
         }
     }
 
