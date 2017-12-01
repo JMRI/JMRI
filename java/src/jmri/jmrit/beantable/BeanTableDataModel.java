@@ -50,7 +50,6 @@ import jmri.NamedBean;
 import jmri.NamedBeanHandleManager;
 import jmri.UserPreferencesManager;
 import jmri.swing.JTablePersistenceManager;
-import jmri.swing.JmriJTablePersistenceManager;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
@@ -574,7 +573,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         table.getTableHeader().setReorderingAllowed(true);
         table.setColumnModel(new XTableColumnModel());
         table.createDefaultColumnsFromModel();
-        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((mgr) -> {
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent((mgr) -> {
             mgr.persist(table);
             mgr.resetState(table);
         });
