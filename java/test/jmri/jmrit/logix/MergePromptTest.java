@@ -14,7 +14,6 @@ import org.netbeans.jemmy.operators.JDialogOperator;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 
-
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
@@ -30,11 +29,11 @@ public class MergePromptTest {
 
         new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
-            JDialogOperator jdo = new JDialogOperator("test");
+            JDialogOperator jdo = new JDialogOperator("Merge Prompt CTor Test");
             jdo.close();
         }).start();
 
-        MergePrompt t = new MergePrompt("test",new HashMap<String,Boolean>(),
+        MergePrompt t = new MergePrompt("Merge Prompt CTor Test",new HashMap<String,Boolean>(),
                         new HashMap<String, HashMap<Integer,Boolean>>());
         Assert.assertNotNull("exists",t);
         t.dispose();
