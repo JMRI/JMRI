@@ -236,14 +236,14 @@ public class JmriJTablePersistenceManagerTest {
         String name = "test name";
         JTable table = testTable(name);
         JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
-        Assert.assertFalse(instance.getDirty());
+        Assert.assertFalse(instance.isDirty());
         instance.cacheState(table);
-        Assert.assertTrue(instance.getDirty());
+        Assert.assertTrue(instance.isDirty());
         Assert.assertNotNull(instance.getColumnsMap(name));
         instance.setDirty(false);
         instance.clearState(table);
         Assert.assertNull(instance.getColumnsMap(name));
-        Assert.assertTrue(instance.getDirty());
+        Assert.assertTrue(instance.isDirty());
     }
 
     /**
@@ -416,8 +416,8 @@ public class JmriJTablePersistenceManagerTest {
     private final static class JmriJTablePersistenceManagerSpy extends JmriJTablePersistenceManager {
 
         @Override
-        public boolean getDirty() {
-            return super.getDirty();
+        public boolean isDirty() {
+            return super.isDirty();
         }
 
         @Override
