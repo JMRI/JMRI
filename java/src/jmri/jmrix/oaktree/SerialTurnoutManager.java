@@ -17,11 +17,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     OakTreeSystemConnectionMemo _memo = null;
     protected String prefix = "O";
 
-    public SerialTurnoutManager() {
-        prefix = getSystemPrefix();
-
-    }
-
     public SerialTurnoutManager(OakTreeSystemConnectionMemo memo) {
         _memo = memo;
         prefix = getSystemPrefix();

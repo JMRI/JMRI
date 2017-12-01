@@ -20,11 +20,6 @@ public class SerialLightManager extends AbstractLightManager {
     OakTreeSystemConnectionMemo _memo = null;
     protected String prefix = "O";
 
-    public SerialLightManager() {
-        prefix = getSystemPrefix();
-
-    }
-
     public SerialLightManager(OakTreeSystemConnectionMemo memo) {
         _memo = memo;
         prefix = getSystemPrefix();
