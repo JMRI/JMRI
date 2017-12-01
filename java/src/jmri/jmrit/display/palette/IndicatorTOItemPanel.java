@@ -429,7 +429,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         log.debug("setFamily: for type \"{}\", family \"{}\"", _itemType, family);
         if (_iconPanel == null) {
             _iconPanel = new ImagePanel();
-            _iconPanel.setOpaque(false);
+            _iconPanel.setOpaque(true);
             _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                     Bundle.getMessage("PreviewBorderTitle")));
             _iconFamilyPanel.add(_iconPanel, 0);

@@ -52,7 +52,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
             add(initTablePanel(_model, _editor));
             initIconFamiliesPanel();
             add(_iconFamilyPanel);
-//            add(makeBgButtonPanel(_dragIconPanel, _backgrounds)); // TODO replace upon removal
+            add(makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds));
             _initialized = true;
         }
     }
@@ -96,7 +96,6 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         }
 
         // create array of backgrounds
-        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
         if (_backgrounds == null) {
             _backgrounds = new BufferedImage[5];
             for (int i = 1; i <= 3; i++) {
@@ -105,6 +104,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
             _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
         }
         // always update background from Panel Editor
+        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
         _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
 
         makeDragIconPanel(1);

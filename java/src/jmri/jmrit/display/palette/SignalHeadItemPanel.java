@@ -70,12 +70,15 @@ public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelec
 
     @Override
     protected void showIcons() {
-        _iconPanel.removeAll();
-        // _iconPanel = new JPanel();
-        // _iconPanel.setOpaque(false);
-        //_iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
-        //        Bundle.getMessage("PreviewBorderTitle")));
-        //_iconFamilyPanel.add(_iconPanel, 0);
+        if (_iconPanel == null) { // create a new one
+            _iconPanel = new ImagePanel();
+            _iconPanel.setOpaque(false);
+            _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
+                    Bundle.getMessage("PreviewBorderTitle")));
+            _iconFamilyPanel.add(_iconPanel, 0);
+        } else {
+            _iconPanel.removeAll(); // clear old icons
+        }
         addIconsToPanel(_currentIconMap);
         _iconPanel.setVisible(true);
         if (!_update && _dragIconPanel != null) { // prevent NPE
@@ -89,7 +92,7 @@ public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelec
         HashMap<String, NamedIcon> iconMap = getFilteredIconMap(allIconsMap);
         if (iconMap == null) {
             iconMap = ItemPalette.getIconMap(_itemType, _family);
-            if (iconMap == null) {
+            if (iconMap == null) { // none found
                 _updateButton.setEnabled(false);
                 _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
             }
@@ -123,7 +126,6 @@ public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelec
         if (_iconPanel.isVisible()) {
             showIcons();
         }
-        //       hideIcons();
     }
 
     protected HashMap<String, NamedIcon> getFilteredIconMap(HashMap<String, NamedIcon> allIconsMap) {

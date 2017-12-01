@@ -72,7 +72,7 @@ public class BackgroundItemPanel extends IconItemPanel {
     }
 
     @Override
-    protected JPanel makeBgButtonPanel(ImagePanel preview, BufferedImage[] imgArray) {
+    protected JPanel makeBgButtonPanel(ImagePanel preview1, ImagePanel preview2, BufferedImage[] imgArray) {
         return null; // no button to set Preview Bg on BackgroundItemPanel
     }
 

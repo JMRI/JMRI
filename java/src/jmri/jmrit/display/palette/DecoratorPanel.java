@@ -456,7 +456,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             }
         }.init(button));
         // add a SetBackground combo
-        p.add(makeBgButtonPanel(_previewPanel, _backgrounds));
+        p.add(makeBgButtonPanel(_previewPanel, null, _backgrounds));
 
         panel.add(p);
         return panel;
@@ -544,9 +544,12 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
      * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
      * @see ItemPanel
      *
+     * @param preview1 ImagePanel containing icon set
+     * @param preview2 not used, matches method in ItemPanel
+     * @param imgArray array of colored background images
      * @return a JPanel with label and drop down
      */
-    private JPanel makeBgButtonPanel(@Nonnull ImagePanel preview, BufferedImage[] imgArray) {
+    private JPanel makeBgButtonPanel(@Nonnull ImagePanel preview1, ImagePanel preview2, BufferedImage[] imgArray) {
         JComboBox<String> bgColorBox = new JComboBox<>();
         bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, too long for combo
         bgColorBox.addItem(Bundle.getMessage("White"));
@@ -560,10 +563,10 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     previewBgSet = bgColorBox.getSelectedIndex(); // store user choice
                     // load background image
                     log.debug("Palette Decorator setImage called {}", previewBgSet);
-                    preview.setImage(imgArray[previewBgSet]);
+                    preview1.setImage(imgArray[previewBgSet]);
                 }
                 // preview.setOpaque(false); // needed?
-                preview.invalidate();        // force redraw
+                preview1.revalidate();        // force redraw
             } else {
                 log.debug("imgArray is empty");
             }

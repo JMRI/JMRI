@@ -279,8 +279,8 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         bottomPanel.add(deleteIconButton);
         deleteIconButton.setEnabled(false);
 
-        if (makeBgButtonPanel(_iconPanel, _backgrounds) != null) {
-            bottomPanel.add(makeBgButtonPanel(_iconPanel, _backgrounds)); // to enable returning null for Backgrounds
+        if (makeBgButtonPanel(_iconPanel, null, _backgrounds) != null) {
+            bottomPanel.add(makeBgButtonPanel(_iconPanel, null, _backgrounds)); // to enable returning null for Backgrounds
         }
         add(bottomPanel);
     }

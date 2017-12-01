@@ -99,7 +99,7 @@ public abstract class ItemPanel extends JPanel {
      * @param imgArray  the image array to choose from
      * @return          a JPanel with label and drop down with actions
      */
-    protected JPanel makeBgButtonPanel(@Nonnull ImagePanel preview, BufferedImage[] imgArray) {
+    protected JPanel makeBgButtonPanel(@Nonnull ImagePanel preview1, ImagePanel preview2, BufferedImage[] imgArray) {
         JComboBox<String> bgColorBox = new JComboBox<>();
         bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, but too long for combo
         bgColorBox.addItem(Bundle.getMessage("White"));
@@ -113,10 +113,15 @@ public abstract class ItemPanel extends JPanel {
                     previewBgSet = bgColorBox.getSelectedIndex(); // store user choice in field
                     // load background image
                     log.debug("Palette setImage called {}", previewBgSet);
-                    preview.setImage(imgArray[previewBgSet]);
+                    preview1.setImage(imgArray[previewBgSet]);
+                    preview1.setOpaque(false); // needed?
+                    preview1.revalidate(); // force redraw
+                    if (preview2 != null) {
+                        preview2.setImage(imgArray[previewBgSet]);
+                        preview2.setOpaque(false); // needed?
+                        preview2.revalidate(); // force redraw
+                    }
                 }
-                preview.setOpaque(false); // needed?
-                preview.invalidate();     // force redraw
             } else {
                 log.debug("imgArray is empty");
             }

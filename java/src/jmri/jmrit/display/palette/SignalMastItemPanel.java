@@ -45,8 +45,6 @@ import org.slf4j.LoggerFactory;
 public class SignalMastItemPanel extends TableItemPanel implements ListSelectionListener {
 
     SignalMast _mast;
-    // protected ImagePanel _iconPanel; // panel on _iconFamilyPanel - all icons in family, shown upon [Show Icons]
-    // Note that _dragIconPanel also is of class ImagePanel, but not used as background on the SignalMastItemPanel
 
     public SignalMastItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel<jmri.SignalMast> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
@@ -80,13 +78,13 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
 
     @Override
     protected void initIconFamiliesPanel() {
-        if (_iconFamilyPanel == null) { // move under (!_update) ?
+        boolean initialize = false;
+        if (_iconFamilyPanel == null) {
             log.debug("new _iconFamilyPanel created");
+            initialize = true;
             _iconFamilyPanel = new JPanel();
             _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
             _iconFamilyPanel.setOpaque(true);
-        }
-        if (!_update) {
             _iconFamilyPanel.add(instructions());
         }
         if (_table != null) {
@@ -106,16 +104,17 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             log.debug("SignalMastItemPanel - no value for previewBgSet");
         }
         addIconsToPanel(_currentIconMap);
-        // removed line: _iconFamilyPanel.add(_dragIconPanel, 1); // was being added twice, earlier by makeDndIconPanel() line 88, gives Illegal position error
 
-        JPanel panel = new JPanel();
-        if (_mast != null) {
-            panel.add(new JLabel(Bundle.getMessage("IconSetName", _mast.getSignalSystem().getSystemName())));
-        } else {
-            panel.add(new JLabel(Bundle.getMessage("PickRowMast")));
+        if (initialize) {
+            JPanel panel = new JPanel();
+            if (_mast != null) {
+                panel.add(new JLabel(Bundle.getMessage("IconSetName", _mast.getSignalSystem().getSystemName())));
+            } else {
+                panel.add(new JLabel(Bundle.getMessage("PickRowMast")));
+            }
+            _iconFamilyPanel.add(panel);
+            _iconFamilyPanel.add(_iconPanel);
         }
-        _iconFamilyPanel.add(panel);
-        _iconFamilyPanel.add(_iconPanel); // on update, _iconPanel was removed from _iconFamilyPanel
         _iconPanel.setVisible(false);
         hideIcons();
     }
@@ -174,7 +173,6 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         initIconFamiliesPanel(); // (if null: creates and) adds a new _iconFamilyPanel for the new mast map
 
         // create array of backgrounds
-        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
         if (_backgrounds == null) { // reduces load but will not redraw for new size
             _backgrounds = new BufferedImage[5];
             for (int i = 1; i <= 3; i++) {
@@ -184,9 +182,10 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
         }
         // always update background from Panel Editor
+        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
         _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
 
-        _bottom1Panel.add(makeBgButtonPanel(_dragIconPanel, _backgrounds));
+        _bottom1Panel.add(makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds));
         add(_bottom1Panel);
     }
 
@@ -267,8 +266,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         int row = _table.getSelectedRow();
         log.debug("Table valueChanged: row= {}", row);
         // update the family icons
-        // remove completely would lose connection from Combo
-        //_iconFamilyPanel.remove(1); // TODO clear  remove objects from _iconFamilyPanel
+        _iconPanel.removeAll();
         if (row >= 0) {
             if (_updateButton != null) {
                 _updateButton.setEnabled(true);
@@ -286,7 +284,6 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
         }
         initIconFamiliesPanel(); // (if null: creates and) adds a new _iconFamilyPanel for the new mast map
-        //add(_iconFamilyPanel, 1); // already present in case of a refresh
         validate();
     }
 

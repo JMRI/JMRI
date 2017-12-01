@@ -36,16 +36,14 @@ import org.slf4j.LoggerFactory;
 
 public class MultiSensorItemPanel extends TableItemPanel {
 
-    JPanel _multiSensorPanel; // TODO convert to ImagePanel
+    JPanel _multiSensorPanel;
     MultiSensorSelectionModel _selectionModel;
     boolean _upDown = false;
-    // private ImagePanel _iconFamilyPanel;
     protected JPanel bgBoxPanel;
 
     public MultiSensorItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, model, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragSelection"));
-        //add(makeBgButtonPanel(_dragIconPanel, _backgrounds));
     }
 
     @Override
@@ -120,11 +118,11 @@ public class MultiSensorItemPanel extends TableItemPanel {
     @Override
     protected void initIconFamiliesPanel() {
         super.initIconFamiliesPanel();
-        makeMultiSensorPanel();
-        _iconFamilyPanel.add(_multiSensorPanel);
-
+        if (_multiSensorPanel == null) {
+            makeMultiSensorPanel();
+            _iconFamilyPanel.add(_multiSensorPanel); // Panel containing up-dn, le-ri radio buttons
+        }
         // create array of backgrounds
-        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
         if (_backgrounds == null) { // reduces load but will not redraw for new size
             _backgrounds = new BufferedImage[5];
             for (int i = 1; i <= 3; i++) {
@@ -133,6 +131,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
             _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
         }
         // always update background from Panel Editor
+        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
         _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
     }
 
@@ -167,11 +166,10 @@ public class MultiSensorItemPanel extends TableItemPanel {
     @Override
     protected void setFamily(String family) {
         super.setFamily(family);
-        if (_multiSensorPanel != null) {
-            _iconFamilyPanel.remove(_multiSensorPanel); // TODO EB leave _mutiSensorPanel in place, just clear it to keep connection to combo
+        if (_multiSensorPanel == null) {
+            makeMultiSensorPanel();
+            _iconFamilyPanel.add(_multiSensorPanel);
         }
-        makeMultiSensorPanel();
-        _iconFamilyPanel.add(_multiSensorPanel);
         _iconFamilyPanel.repaint();
         updateFamiliesPanel();
         setSelections();

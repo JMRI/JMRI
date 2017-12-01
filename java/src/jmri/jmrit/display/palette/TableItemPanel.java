@@ -197,7 +197,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
      * Used by Panel Editor to make the final installation of the icon(s) into
      * the user's Panel.
      * <p>
-     * Note! the selection is cleared. When two successive calls are made, the
+     * Note: the selection is cleared. When two successive calls are made, the
      * 2nd will always return null, regardless of the 1st return.
      *
      * @return bean selected in the table

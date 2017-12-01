@@ -91,13 +91,13 @@ public class IconDialog extends ItemDialog {
     }
 
     /**
-     * Action for both create new family and change existing family
+     * Action for both create new family and change existing family.
      */
     protected boolean doDoneAction() {
         _parent.reset();
 //        checkIconSizes();
         _parent._currentIconMap = _iconMap;
-        if (!_parent.isUpdate()) {  // don't touch palette's maps.  just modify individual device icons
+        if (!_parent.isUpdate()) {  // don't touch palette's maps. just modify individual device icons
             ItemPalette.removeIconMap(_type, _family);
             if (!ItemPalette.addFamily(_parent._paletteFrame, _type, _family, _iconMap)) {
                 return false;

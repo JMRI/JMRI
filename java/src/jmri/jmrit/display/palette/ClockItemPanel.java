@@ -91,7 +91,7 @@ public class ClockItemPanel extends IconItemPanel {
 
     @Override
     public void initButtonPanel() {
-        add(makeBgButtonPanel(_iconPanel, _backgrounds));
+        add(makeBgButtonPanel(_iconPanel, null, _backgrounds));
     }
 
     public class ClockDragJLabel extends DragJLabel {

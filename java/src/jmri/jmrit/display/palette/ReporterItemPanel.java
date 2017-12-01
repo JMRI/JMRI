@@ -58,20 +58,43 @@ public class ReporterItemPanel extends TableItemPanel {
     }
 
     /**
-     * ReporterItemPanel uses familyPanel as Preview pane.
-     * TODO override inherited panel class and add makeBgButtonPanel()
+     * ReporterItemPanel displays no _iconFamilyPanel.
      */
     @Override
     protected void initIconFamiliesPanel() {
-        _iconFamilyPanel = new JPanel();
-        _iconFamilyPanel.setOpaque(true);
-        _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
-        if (!_update) {
-            _iconFamilyPanel.add(instructions());
+        boolean initialize = false;
+        if (_iconFamilyPanel == null) {
+            log.debug("new _iconFamilyPanel created");
+            initialize = true;
+            _iconFamilyPanel = new JPanel();
+            _iconFamilyPanel.setOpaque(true);
+            _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
+            if (!_update) {
+                _iconFamilyPanel.add(instructions());
+            }
         }
+        makeDragIconPanel(1);
+        makeDndIconPanel(null, null);
+        if (_iconPanel == null) { // keep an existing panel
+            _iconPanel = new ImagePanel(); // never shown, so don't bother to configure, but element must exist
+            //_iconPanel.setOpaque(false);
+            //_iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
+            //        Bundle.getMessage("PreviewBorderTitle")));
+            //_iconFamilyPanel.add(_iconPanel); // On Reporter, no icon family to choose
+        }
+        if (_backgrounds != null) {
+            _dragIconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
+        } else {
+            log.debug("ReporterItemPanel - no value for previewBgSet");
+        }
+    }
 
+    @Override
+    protected void makeBottomPanel(ActionListener doneAction) {
+        if (doneAction != null) {
+            addUpdateButtonToBottom(doneAction);
+        }
         // create array of backgrounds
-        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
         if (_backgrounds == null) { // reduces load but will not redraw for new size
             _backgrounds = new BufferedImage[5];
             for (int i = 1; i <= 3; i++) {
@@ -81,23 +104,17 @@ public class ReporterItemPanel extends TableItemPanel {
             _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
         }
         // always update background from Panel Editor
+        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
         _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
-        // _iconPanel = new JPanel();
-        // _iconPanel.setOpaque(false);
-        // _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
-        //     Bundle.getMessage("PreviewBorderTitle")));
-        // _iconFamilyPanel.add(_iconPanel);
-        makeDragIconPanel(1);
-        makeDndIconPanel(null, null);
-    }
 
-    @Override
-    protected void makeBottomPanel(ActionListener doneAction) {
-        if (doneAction != null) {
-            addUpdateButtonToBottom(doneAction);
-        }
         initIconFamiliesPanel();
         add(_iconFamilyPanel);
+        // add a SetBackground combo
+        // TODO add indirect updating of panel upon display via previewBgSet
+        if (bgBoxPanel == null) {
+            bgBoxPanel = makeBgButtonPanel(_dragIconPanel, null, _backgrounds);
+            add(bgBoxPanel);
+        }
     }
     
     @Override
@@ -168,9 +185,10 @@ public class ReporterItemPanel extends TableItemPanel {
         _family = null;
         super.setEditor(ed);
         if (_initialized) {
-            _iconFamilyPanel.removeAll();
+            _dragIconPanel.removeAll();
+            _iconPanel.removeAll();
             initIconFamiliesPanel();
-            add(_iconFamilyPanel, 1);
+            //add(_iconFamilyPanel, 1);
             validate();
         }
     }

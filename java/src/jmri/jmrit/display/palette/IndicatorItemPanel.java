@@ -35,7 +35,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     /**
-     * Init for creation insert panels for detection and train id.
+     * Init for creation of insert panels for detection and train id.
      */
     @Override
     public void init() {
@@ -51,8 +51,8 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     /**
-     * Init for update of existing track block _bottom3Panel has "Update Panel"
-     * button put into _bottom1Panel.
+     * Init for update of existing track block.
+     * _bottom3Panel has "Update Panel" button put onto _bottom1Panel.
      */
     @Override
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
