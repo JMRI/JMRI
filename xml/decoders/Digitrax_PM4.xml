@@ -33,7 +33,7 @@
           <variable CV="1" comment="Board address" item="Short Address" default="03" infoOnly="yes">
             <!-- needed to set the board address value -->
             <decVal min="1" max="127" />
-            <label>Primary Address</label>
+            <label>Board Address (Board ID)</label>
           </variable>
 
           <variable CV="112.01" item="Trip Current 1"
@@ -297,7 +297,41 @@
 
         </variables>
     </decoder>
-
+  <pane>
+      <name>Basic</name>
+      <column>
+          <display item="Short Address"/>
+          <label>
+              <text> </text>
+          </label>
+          <label>
+            <text>&lt;html&gt;&lt;p&gt;
+                LocoNet messaging limits the supported Board Address (Board ID)
+                range to addresses between 1 and 128.  This tool cannot access PM4/PM42
+                &lt;p&gt;devices outside of this range.
+                &lt;p&gt;
+                &lt;p&gt;This roster entry will only access the specified PM4/PM42 if the
+                Board Address (Active Address), on the "Basic" sheet, is correct when the
+                &lt;p&gt;programmer is opened.
+                &lt;p&gt;
+                &lt;p&gt;If the Board Address (Active Address) has been changed since
+                the programmer was opened, the programmer will attempt to access the
+                &lt;p&gt;DS64 address which was specified in the Roster entry
+                when the progammer was opened.
+                &lt;p&gt;
+                &lt;p&gt;After making a change to the Roster entry's Board Address
+                (Active Address) on the "Basic" sheet, save and close the programmer
+                &lt;p&gt;window and re-open the Roster entry to ensure that the
+                the programmer will use the modified Active Address for accesses
+                &lt;p&gt;to the device.
+                &lt;p&gt;
+                &lt;p&gt;Note that PM4 and PM42 documentation refers to Board Address,
+                while DS64 documentation refers to Board ID.  These are equivalent
+                concepts.
+            &lt;/html&gt;</text>
+          </label>
+      </column>
+  </pane>
     <pane>
         <name>PM4/PM42 Basic Settings</name>
         <column>
@@ -348,5 +382,36 @@
             <label><text>   </text></label>
         </column>
     </pane>
-
+  <pane>
+      <name>Notes</name>
+      <column>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
+            &lt;h2&gt;&lt;strong&gt;Notes on PM4/PM42 Roster Entries and Programming
+            &lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+        </label>
+        <label><text> </text></label>
+        <label>
+            <text>&lt;html&gt;&lt;/strong&gt;&lt;ul&gt;
+                &lt;li&gt;The PM4/PM42 &lt;em&gt;must&lt;/em&gt; be in its normal
+                operating mode in order to respond to this programmer's read and
+                write operations.&lt;/li&gt;
+                &lt;li&gt;This decoder definition is suitable for PM4 and PM42 devices.
+                &lt;li&gt;When used with a PM4 device, select only those settings which are
+                not marked as "PM42 only".  PM4 device
+                &lt;p&gt;operation is undefined when PM42-specific settings are configured.
+                &lt;li&gt;
+                &lt;p&gt;See the "Basic" sheet for the programmer's limitations with
+                respect to Board Address.&lt;/li&gt;
+                &lt;li&gt;This programmer is not currently capable of 
+                displaying the short-circuit and autoreversing status of each section.
+                &lt;li&gt;Some PM4 devices do not respond to the LocoNet messages
+                used by this tool.  Programming of these devices may 
+                &lt;p&gt;be done as described in the PM4 manual.  It is also possible
+                to upgrade the PM4 to a PM42 via a simple chip change.
+                &lt;p&gt;Upgrade chips may be available from your Digitrax dealer 
+                or from Digitrax.
+            &lt;/ul&gt;&lt;/html&gt;</text>
+        </label>
+      </column>
+  </pane>
 </decoder-config>
