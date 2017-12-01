@@ -1434,8 +1434,7 @@ public class LevelXing extends LayoutTrack {
         double hypotK = railDisplacement / Math.cos((PI - deltaRAD) / 2.0);
         double hypotV = railDisplacement / Math.cos(deltaRAD / 2.0);
 
-        log.info("dir AC: {}, BD: {}, diff: {}",
-                dirAC_DEG, dirBD_DEG, deltaDEG);
+        log.debug("dir AC: {}, BD: {}, diff: {}", dirAC_DEG, dirBD_DEG, deltaDEG);
 
         Point2D vDisK = MathUtil.normalize(MathUtil.add(vAC, vBD), hypotK);
         Point2D vDisV = MathUtil.normalize(MathUtil.orthogonal(vDisK), hypotV);
