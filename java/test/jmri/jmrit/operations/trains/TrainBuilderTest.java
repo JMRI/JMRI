@@ -1,8 +1,6 @@
 package jmri.jmrit.operations.trains;
 
-import java.util.List;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -28,10 +26,10 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.JUnitUtil;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -319,8 +317,6 @@ public class TrainBuilderTest {
 
         Engine e1 = emanager.getByRoadAndNumber("E", "1");
         Engine e2 = emanager.getByRoadAndNumber("E", "2");
-        Engine e3 = emanager.getByRoadAndNumber("E", "3");
-        Engine e4 = emanager.getByRoadAndNumber("E", "4");
 
         // change requirements
         rA.setMaxCarMoves(12);
@@ -346,8 +342,6 @@ public class TrainBuilderTest {
     
     @Test
     public void testAutoEnginesGrade() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
         // This test uses the maximum length of a train in route
         Setup.setMaxTrainLength(1000);
         Setup.setMaxNumberEngines(6);
@@ -502,7 +496,6 @@ public class TrainBuilderTest {
     // tests consists and kernels
     @Test
     public void testSidingsYards() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
         // register the car and engine types used
@@ -1115,7 +1108,6 @@ public class TrainBuilderTest {
     // test train staging to staging
     @Test
     public void testStagingtoStaging() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1123,33 +1115,33 @@ public class TrainBuilderTest {
 
         Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
-        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
-        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
-        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
-        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
-        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
-        Car c7 = cmanager.getByRoadAndNumber("CP","777");
-        Car c8 = cmanager.getByRoadAndNumber("CP","888");
-        Car c9 = cmanager.getByRoadAndNumber("CP","99");
-        Engine e1 = emanager.getByRoadAndNumber("PC","5016");
-        Engine e2 = emanager.getByRoadAndNumber("PC","5019");
-        Engine e3 = emanager.getByRoadAndNumber("PC","5524");
-        Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
-        Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
-        Location l3 = lmanager.getLocationById("3");
-        Track l1s1 = l1.getTrackById("1s1");
-        Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
+//        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
+//        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
+//        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
+//        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
+//        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
+//        Car c7 = cmanager.getByRoadAndNumber("CP","777");
+//        Car c8 = cmanager.getByRoadAndNumber("CP","888");
+//        Car c9 = cmanager.getByRoadAndNumber("CP","99");
+//        Engine e1 = emanager.getByRoadAndNumber("PC","5016");
+//        Engine e2 = emanager.getByRoadAndNumber("PC","5019");
+//        Engine e3 = emanager.getByRoadAndNumber("PC","5524");
+//        Engine e4 = emanager.getByRoadAndNumber("PC","5559");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
+//        Location l1 = lmanager.getLocationById("1");
+//        Location l2 = lmanager.getLocationById("2");
+//        Location l3 = lmanager.getLocationById("3");
+//        Track l1s1 = l1.getTrackById("1s1");
+//        Track l1s2 = l1.getTrackById("1s2");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
 
         // Try building without engines
         train1.reset();
@@ -1171,32 +1163,32 @@ public class TrainBuilderTest {
         Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
         Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
+//        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
         Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
         Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
-        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
-        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
-        Car c7 = cmanager.getByRoadAndNumber("CP","777");
+//        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
+//        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
+//        Car c7 = cmanager.getByRoadAndNumber("CP","777");
         Car c8 = cmanager.getByRoadAndNumber("CP","888");
-        Car c9 = cmanager.getByRoadAndNumber("CP","99");
-        Engine e1 = emanager.getByRoadAndNumber("PC","5016");
-        Engine e2 = emanager.getByRoadAndNumber("PC","5019");
-        Engine e3 = emanager.getByRoadAndNumber("PC","5524");
-        Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
-        Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
-        Location l3 = lmanager.getLocationById("3");
-        Track l1s1 = l1.getTrackById("1s1");
-        Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Car c9 = cmanager.getByRoadAndNumber("CP","99");
+//        Engine e1 = emanager.getByRoadAndNumber("PC","5016");
+//        Engine e2 = emanager.getByRoadAndNumber("PC","5019");
+//        Engine e3 = emanager.getByRoadAndNumber("PC","5524");
+//        Engine e4 = emanager.getByRoadAndNumber("PC","5559");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
+//        Location l1 = lmanager.getLocationById("1");
+//        Location l2 = lmanager.getLocationById("2");
+//        Location l3 = lmanager.getLocationById("3");
+//        Track l1s1 = l1.getTrackById("1s1");
+//        Track l1s2 = l1.getTrackById("1s2");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
 
         // Try building without engines
         train1.reset();
@@ -1272,8 +1264,8 @@ public class TrainBuilderTest {
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
         Location l2 = lmanager.getLocationById("2");
         Location l3 = lmanager.getLocationById("3");
@@ -1438,7 +1430,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingC() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1446,33 +1437,33 @@ public class TrainBuilderTest {
 
         Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
-        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
-        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
-        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
-        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
-        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
-        Car c7 = cmanager.getByRoadAndNumber("CP","777");
-        Car c8 = cmanager.getByRoadAndNumber("CP","888");
-        Car c9 = cmanager.getByRoadAndNumber("CP","99");
+//        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
+//        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
+//        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
+//        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
+//        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
+//        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
+//        Car c7 = cmanager.getByRoadAndNumber("CP","777");
+//        Car c8 = cmanager.getByRoadAndNumber("CP","888");
+//        Car c9 = cmanager.getByRoadAndNumber("CP","99");
         Engine e1 = emanager.getByRoadAndNumber("PC","5016");
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
-        Location l3 = lmanager.getLocationById("3");
+//        Location l2 = lmanager.getLocationById("2");
+//        Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         train1.setEngineRoad("PC");
         train1.setEngineModel("GP40");
         train1.setNumberEngines("2");
@@ -1494,7 +1485,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingD() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1502,33 +1492,33 @@ public class TrainBuilderTest {
 
         Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
-        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
-        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
-        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
-        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
-        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
-        Car c7 = cmanager.getByRoadAndNumber("CP","777");
-        Car c8 = cmanager.getByRoadAndNumber("CP","888");
-        Car c9 = cmanager.getByRoadAndNumber("CP","99");
+//        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
+//        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
+//        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
+//        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
+//        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
+//        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
+//        Car c7 = cmanager.getByRoadAndNumber("CP","777");
+//        Car c8 = cmanager.getByRoadAndNumber("CP","888");
+//        Car c9 = cmanager.getByRoadAndNumber("CP","99");
         Engine e1 = emanager.getByRoadAndNumber("PC","5016");
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
-        Location l3 = lmanager.getLocationById("3");
+//        Location l2 = lmanager.getLocationById("2");
+//        Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         train1.setEngineRoad("PC");
         train1.setEngineModel("GP40");
         train1.setNumberEngines("2");
@@ -1553,7 +1543,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingE() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1562,32 +1551,32 @@ public class TrainBuilderTest {
         Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
         Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
-        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
-        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
-        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
-        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
-        Car c7 = cmanager.getByRoadAndNumber("CP","777");
-        Car c8 = cmanager.getByRoadAndNumber("CP","888");
-        Car c9 = cmanager.getByRoadAndNumber("CP","99");
+//        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
+//        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
+//        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
+//        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
+//        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
+//        Car c7 = cmanager.getByRoadAndNumber("CP","777");
+//        Car c8 = cmanager.getByRoadAndNumber("CP","888");
+//        Car c9 = cmanager.getByRoadAndNumber("CP","99");
         Engine e1 = emanager.getByRoadAndNumber("PC","5016");
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
         Location l2 = lmanager.getLocationById("2");
         Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         train1.setEngineRoad("PC");
         train1.setEngineModel("GP40");
         train1.setNumberEngines("2");
@@ -1613,7 +1602,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingF() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1621,33 +1609,33 @@ public class TrainBuilderTest {
 
         Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
-        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
-        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
-        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
-        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
-        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
-        Car c7 = cmanager.getByRoadAndNumber("CP","777");
-        Car c8 = cmanager.getByRoadAndNumber("CP","888");
-        Car c9 = cmanager.getByRoadAndNumber("CP","99");
+//        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
+//        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
+//        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
+//        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
+//        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
+//        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
+//        Car c7 = cmanager.getByRoadAndNumber("CP","777");
+//        Car c8 = cmanager.getByRoadAndNumber("CP","888");
+//        Car c9 = cmanager.getByRoadAndNumber("CP","99");
         Engine e1 = emanager.getByRoadAndNumber("PC","5016");
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
+//        Location l2 = lmanager.getLocationById("2");
         Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         train1.setEngineRoad("PC");
         train1.setEngineModel("GP40");
         train1.setNumberEngines("2");
@@ -1668,7 +1656,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingG() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1676,33 +1663,33 @@ public class TrainBuilderTest {
 
         Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
-        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
-        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
+//        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
+//        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
+//        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
         Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
-        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
-        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
-        Car c7 = cmanager.getByRoadAndNumber("CP","777");
-        Car c8 = cmanager.getByRoadAndNumber("CP","888");
-        Car c9 = cmanager.getByRoadAndNumber("CP","99");
+//        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
+//        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
+//        Car c7 = cmanager.getByRoadAndNumber("CP","777");
+//        Car c8 = cmanager.getByRoadAndNumber("CP","888");
+//        Car c9 = cmanager.getByRoadAndNumber("CP","99");
         Engine e1 = emanager.getByRoadAndNumber("PC","5016");
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
-        Location l3 = lmanager.getLocationById("3");
+//        Location l2 = lmanager.getLocationById("2");
+//        Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         train1.setEngineRoad("PC");
         train1.setEngineModel("GP40");
         train1.setNumberEngines("2");
@@ -1746,33 +1733,33 @@ public class TrainBuilderTest {
 
         Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
-        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
-        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
-        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
-        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
-        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
-        Car c7 = cmanager.getByRoadAndNumber("CP","777");
-        Car c8 = cmanager.getByRoadAndNumber("CP","888");
-        Car c9 = cmanager.getByRoadAndNumber("CP","99");
+//        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
+//        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
+//        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
+//        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
+//        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
+//        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
+//        Car c7 = cmanager.getByRoadAndNumber("CP","777");
+//        Car c8 = cmanager.getByRoadAndNumber("CP","888");
+//        Car c9 = cmanager.getByRoadAndNumber("CP","99");
         Engine e1 = emanager.getByRoadAndNumber("PC","5016");
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
-        Location l3 = lmanager.getLocationById("3");
+//        Location l2 = lmanager.getLocationById("2");
+//        Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         train1.setEngineRoad("PC");
         train1.setEngineModel("GP40");
         train1.setNumberEngines("2");
@@ -1796,7 +1783,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingI() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1804,33 +1790,33 @@ public class TrainBuilderTest {
 
         Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
-        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
-        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
-        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
-        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
-        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
-        Car c7 = cmanager.getByRoadAndNumber("CP","777");
-        Car c8 = cmanager.getByRoadAndNumber("CP","888");
-        Car c9 = cmanager.getByRoadAndNumber("CP","99");
+//        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
+//        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
+//        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
+//        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
+//        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
+//        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
+//        Car c7 = cmanager.getByRoadAndNumber("CP","777");
+//        Car c8 = cmanager.getByRoadAndNumber("CP","888");
+//        Car c9 = cmanager.getByRoadAndNumber("CP","99");
         Engine e1 = emanager.getByRoadAndNumber("PC","5016");
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
-        Location l3 = lmanager.getLocationById("3");
+//        Location l2 = lmanager.getLocationById("2");
+//        Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         train1.setEngineRoad("PC");
         train1.setEngineModel("GP40");
         train1.setNumberEngines("2");
@@ -1867,7 +1853,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingJ() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1876,32 +1861,32 @@ public class TrainBuilderTest {
         Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
         Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
+//        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
         Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
         Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
-        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
-        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
-        Car c7 = cmanager.getByRoadAndNumber("CP","777");
+//        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
+//        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
+//        Car c7 = cmanager.getByRoadAndNumber("CP","777");
         Car c8 = cmanager.getByRoadAndNumber("CP","888");
-        Car c9 = cmanager.getByRoadAndNumber("CP","99");
+//        Car c9 = cmanager.getByRoadAndNumber("CP","99");
         Engine e1 = emanager.getByRoadAndNumber("PC","5016");
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
-        Location l3 = lmanager.getLocationById("3");
+//        Location l2 = lmanager.getLocationById("2");
+//        Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         train1.setEngineRoad("PC");
         train1.setEngineModel("GP40");
         train1.setNumberEngines("2");
@@ -1968,7 +1953,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingK() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -1976,33 +1960,33 @@ public class TrainBuilderTest {
 
         Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
-        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
-        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
-        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
-        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
-        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
-        Car c7 = cmanager.getByRoadAndNumber("CP","777");
-        Car c8 = cmanager.getByRoadAndNumber("CP","888");
-        Car c9 = cmanager.getByRoadAndNumber("CP","99");
+//        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
+//        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
+//        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
+//        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
+//        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
+//        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
+//        Car c7 = cmanager.getByRoadAndNumber("CP","777");
+//        Car c8 = cmanager.getByRoadAndNumber("CP","888");
+//        Car c9 = cmanager.getByRoadAndNumber("CP","99");
         Engine e1 = emanager.getByRoadAndNumber("PC","5016");
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
-        Location l3 = lmanager.getLocationById("3");
+//        Location l2 = lmanager.getLocationById("2");
+//        Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         train1.setEngineRoad("PC");
         train1.setEngineModel("GP40");
         train1.setNumberEngines("2");
@@ -2032,7 +2016,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingL() {
-        String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setSwitchTime(11);
         Setup.setTravelTime(111);
 
@@ -2040,33 +2023,33 @@ public class TrainBuilderTest {
 
         Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
-        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
-        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
+//        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
+//        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
+//        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
         Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
-        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
-        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
-        Car c7 = cmanager.getByRoadAndNumber("CP","777");
-        Car c8 = cmanager.getByRoadAndNumber("CP","888");
-        Car c9 = cmanager.getByRoadAndNumber("CP","99");
+//        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
+//        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
+//        Car c7 = cmanager.getByRoadAndNumber("CP","777");
+//        Car c8 = cmanager.getByRoadAndNumber("CP","888");
+//        Car c9 = cmanager.getByRoadAndNumber("CP","99");
         Engine e1 = emanager.getByRoadAndNumber("PC","5016");
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
-        Location l3 = lmanager.getLocationById("3");
+//        Location l2 = lmanager.getLocationById("2");
+//        Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         train1.setEngineRoad("PC");
         train1.setEngineModel("GP40");
         train1.setNumberEngines("2");
@@ -2120,8 +2103,8 @@ public class TrainBuilderTest {
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
         Location l2 = lmanager.getLocationById("2");
         Location l3 = lmanager.getLocationById("3");
@@ -2132,8 +2115,8 @@ public class TrainBuilderTest {
         Track l3s2 = l3.getTrackById("3s2");
         Route route1 = rmanager.getRouteById("1");
         RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         train1.setEngineRoad("PC");
         train1.setEngineModel("GP40");
         train1.setNumberEngines("2");
@@ -2356,35 +2339,35 @@ public class TrainBuilderTest {
 
         JUnitOperationsUtil.initOperationsData();
 
-        Train train1 = tmanager.getTrainById("1");
+//        Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
-        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
-        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
-        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
-        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
-        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
-        Car c7 = cmanager.getByRoadAndNumber("CP","777");
-        Car c8 = cmanager.getByRoadAndNumber("CP","888");
-        Car c9 = cmanager.getByRoadAndNumber("CP","99");
+//        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
+//        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
+//        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
+//        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
+//        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
+//        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
+//        Car c7 = cmanager.getByRoadAndNumber("CP","777");
+//        Car c8 = cmanager.getByRoadAndNumber("CP","888");
+//        Car c9 = cmanager.getByRoadAndNumber("CP","99");
         Engine e1 = emanager.getByRoadAndNumber("PC","5016");
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
-        Location l3 = lmanager.getLocationById("3");
+//        Location l2 = lmanager.getLocationById("2");
+//        Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         // Place Engines on Staging tracks
         Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(l1, l1s1));
         Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(l1, l1s1));
@@ -2422,35 +2405,35 @@ public class TrainBuilderTest {
 
         JUnitOperationsUtil.initOperationsData();
 
-        Train train1 = tmanager.getTrainById("1");
+//        Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
-        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
-        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
-        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
-        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
-        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
-        Car c7 = cmanager.getByRoadAndNumber("CP","777");
-        Car c8 = cmanager.getByRoadAndNumber("CP","888");
-        Car c9 = cmanager.getByRoadAndNumber("CP","99");
+//        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
+//        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
+//        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
+//        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
+//        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
+//        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
+//        Car c7 = cmanager.getByRoadAndNumber("CP","777");
+//        Car c8 = cmanager.getByRoadAndNumber("CP","888");
+//        Car c9 = cmanager.getByRoadAndNumber("CP","99");
         Engine e1 = emanager.getByRoadAndNumber("PC","5016");
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
-        Location l3 = lmanager.getLocationById("3");
+//        Location l2 = lmanager.getLocationById("2");
+//        Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         // Place Engines on Staging tracks
         Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(l1, l1s1));
         Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(l1, l1s1));
@@ -2482,33 +2465,33 @@ public class TrainBuilderTest {
 
         Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
-        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
-        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
-        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
-        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
-        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
-        Car c7 = cmanager.getByRoadAndNumber("CP","777");
-        Car c8 = cmanager.getByRoadAndNumber("CP","888");
-        Car c9 = cmanager.getByRoadAndNumber("CP","99");
+//        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
+//        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
+//        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
+//        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
+//        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
+//        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
+//        Car c7 = cmanager.getByRoadAndNumber("CP","777");
+//        Car c8 = cmanager.getByRoadAndNumber("CP","888");
+//        Car c9 = cmanager.getByRoadAndNumber("CP","99");
         Engine e1 = emanager.getByRoadAndNumber("PC","5016");
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
-        Location l3 = lmanager.getLocationById("3");
+//        Location l2 = lmanager.getLocationById("2");
+//        Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         // Place Engines on Staging tracks
         Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(l1, l1s1));
         Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(l1, l1s1));
@@ -2540,35 +2523,35 @@ public class TrainBuilderTest {
 
         JUnitOperationsUtil.initOperationsData();
 
-        Train train1 = tmanager.getTrainById("1");
+//        Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
-        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
-        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
-        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
-        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
-        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
-        Car c7 = cmanager.getByRoadAndNumber("CP","777");
-        Car c8 = cmanager.getByRoadAndNumber("CP","888");
-        Car c9 = cmanager.getByRoadAndNumber("CP","99");
+//        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
+//        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
+//        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
+//        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
+//        Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
+//        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
+//        Car c7 = cmanager.getByRoadAndNumber("CP","777");
+//        Car c8 = cmanager.getByRoadAndNumber("CP","888");
+//        Car c9 = cmanager.getByRoadAndNumber("CP","99");
         Engine e1 = emanager.getByRoadAndNumber("PC","5016");
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
-        Location l3 = lmanager.getLocationById("3");
+//        Location l2 = lmanager.getLocationById("2");
+//        Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         // Place Engines on Staging tracks
         Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(l1, l1s1));
         Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(l1, l1s1));
@@ -2591,35 +2574,35 @@ public class TrainBuilderTest {
 
         JUnitOperationsUtil.initOperationsData();
 
-        Train train1 = tmanager.getTrainById("1");
+//        Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
-        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
-        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
-        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
-        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
+//        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
+//        Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
+//        Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
+//        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
         Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
-        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
-        Car c7 = cmanager.getByRoadAndNumber("CP","777");
-        Car c8 = cmanager.getByRoadAndNumber("CP","888");
-        Car c9 = cmanager.getByRoadAndNumber("CP","99");
+//        Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
+//        Car c7 = cmanager.getByRoadAndNumber("CP","777");
+//        Car c8 = cmanager.getByRoadAndNumber("CP","888");
+//        Car c9 = cmanager.getByRoadAndNumber("CP","99");
         Engine e1 = emanager.getByRoadAndNumber("PC","5016");
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
-        Location l3 = lmanager.getLocationById("3");
+//        Location l2 = lmanager.getLocationById("2");
+//        Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         // Place Engines on Staging tracks
         Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(l1, l1s1));
         Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(l1, l1s1));
@@ -2646,35 +2629,35 @@ public class TrainBuilderTest {
 
         JUnitOperationsUtil.initOperationsData();
 
-        Train train1 = tmanager.getTrainById("1");
+//        Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
-        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
+//        Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
         Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
         Car c3 = cmanager.getByRoadAndNumber("CP","X10001");
-        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
+//        Car c4 = cmanager.getByRoadAndNumber("CP","X10002");
         Car c5 = cmanager.getByRoadAndNumber("CP","X20001");
         Car c6 = cmanager.getByRoadAndNumber("CP","X20002");
         Car c7 = cmanager.getByRoadAndNumber("CP","777");
-        Car c8 = cmanager.getByRoadAndNumber("CP","888");
+//        Car c8 = cmanager.getByRoadAndNumber("CP","888");
         Car c9 = cmanager.getByRoadAndNumber("CP","99");
         Engine e1 = emanager.getByRoadAndNumber("PC","5016");
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
-        Location l3 = lmanager.getLocationById("3");
+//        Location l2 = lmanager.getLocationById("2");
+//        Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
-        Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
+//        Track l3s2 = l3.getTrackById("3s2");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         // Place Engines on Staging tracks
         Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(l1, l1s1));
         Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(l1, l1s1));
@@ -2713,7 +2696,7 @@ public class TrainBuilderTest {
 
         JUnitOperationsUtil.initOperationsData();
 
-        Train train1 = tmanager.getTrainById("1");
+//        Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
         Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
         Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
@@ -2728,15 +2711,15 @@ public class TrainBuilderTest {
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
-        Location l2 = lmanager.getLocationById("2");
+//        Location l2 = lmanager.getLocationById("2");
         Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
-        Track l3s1 = l3.getTrackById("3s1");
+//        Track l2s1 = l2.getTrackById("2s1");
+//        Track l3s1 = l3.getTrackById("3s1");
         Track l3s2 = l3.getTrackById("3s2");
         Route route1 = rmanager.getRouteById("1");
         RouteLocation rl1 = route1.getLocationById("1r1");
@@ -2826,7 +2809,7 @@ public class TrainBuilderTest {
 
         JUnitOperationsUtil.initOperationsData();
 
-        Train train1 = tmanager.getTrainById("1");
+//        Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
         Car c1 = cmanager.getByRoadAndNumber("CP","C10099");
         Car c2 = cmanager.getByRoadAndNumber("CP","C20099");
@@ -2841,20 +2824,20 @@ public class TrainBuilderTest {
         Engine e2 = emanager.getByRoadAndNumber("PC","5019");
         Engine e3 = emanager.getByRoadAndNumber("PC","5524");
         Engine e4 = emanager.getByRoadAndNumber("PC","5559");
-        Consist con1 = emanager.getConsistByName("C16");
-        Consist con2 = emanager.getConsistByName("C14");
+//        Consist con1 = emanager.getConsistByName("C16");
+//        Consist con2 = emanager.getConsistByName("C14");
         Location l1 = lmanager.getLocationById("1");
         Location l2 = lmanager.getLocationById("2");
         Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
-        Track l1s2 = l1.getTrackById("1s2");
+//        Track l1s2 = l1.getTrackById("1s2");
         Track l2s1 = l2.getTrackById("2s1");
         Track l3s1 = l3.getTrackById("3s1");
         Track l3s2 = l3.getTrackById("3s2");
-        Route route1 = rmanager.getRouteById("1");
-        RouteLocation rl1 = route1.getLocationById("1r1");
-        RouteLocation rl2 = route1.getLocationById("1r2");
-        RouteLocation rl3 = route1.getLocationById("1r3");
+//        Route route1 = rmanager.getRouteById("1");
+//        RouteLocation rl1 = route1.getLocationById("1r1");
+//        RouteLocation rl2 = route1.getLocationById("1r2");
+//        RouteLocation rl3 = route1.getLocationById("1r3");
         // Place Engines on Staging tracks
         Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(l3, l3s1));
         Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(l3, l3s1));
@@ -2992,7 +2975,6 @@ public class TrainBuilderTest {
     // test train staging to staging
     @Test
     public void testStagingtoStaging2() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
         // register the car colors used
@@ -3273,7 +3255,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testStagingtoStagingCustomLoads() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
         // register the car colors used
@@ -4524,7 +4505,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testInterchange() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
         Setup.setMaxTrainLength(500);
@@ -5184,7 +5164,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testCaboose() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
         // register the car and engine types used
@@ -5851,7 +5830,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testTrainBuildOptions() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
         // register the car and engine types used
@@ -6238,7 +6216,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testCarBlockingFromStaging() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
         // create 5 locations with tracks
@@ -6528,8 +6505,6 @@ public class TrainBuilderTest {
      */
     @Test
     public void testEngineChanges() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
         et.addName("Diesel");
 
@@ -6697,7 +6672,6 @@ public class TrainBuilderTest {
      */
     @Test
     public void testCabooseChanges() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
         // test confirms the order cabooses are assigned to the train
         Setup.setBuildAggressive(true);
@@ -6874,7 +6848,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testAutoHP() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
         Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon());
@@ -7010,7 +6983,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testAggressiveBuildOption() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
         String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
         Setup.setBuildAggressive(true);
@@ -7455,7 +7427,6 @@ public class TrainBuilderTest {
     // test private method getCarOrder
     @Test
     public void testCarOrderNORMAL() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
         TrainBuilder tb = new TrainBuilder();
         // start by creating a track
@@ -7505,7 +7476,7 @@ public class TrainBuilderTest {
         getCarOrderMethod.setAccessible(true);
 
         // and set the car list up.
-        tb._carList = new java.util.ArrayList<Car>();
+        tb._carList = new java.util.ArrayList<>();
         tb._carList.add(a);
         tb._carList.add(b);
         tb._carList.add(c);
@@ -7529,7 +7500,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testCarOrderFIFO() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
         TrainBuilder tb = new TrainBuilder();
         // start by creating a track
@@ -7579,7 +7549,7 @@ public class TrainBuilderTest {
         getCarOrderMethod.setAccessible(true);
 
         // and set the car list up.
-        tb._carList = new java.util.ArrayList<Car>();
+        tb._carList = new java.util.ArrayList<>();
         tb._carList.add(a);
         tb._carList.add(b);
         tb._carList.add(c);
@@ -7602,7 +7572,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testCarOrderLIFO() {
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
         TrainBuilder tb = new TrainBuilder();
         // start by creating a track
@@ -7652,7 +7621,7 @@ public class TrainBuilderTest {
         getCarOrderMethod.setAccessible(true);
 
         // and set the car list up.
-        tb._carList = new java.util.ArrayList<Car>();
+        tb._carList = new java.util.ArrayList<>();
         tb._carList.add(a);
         tb._carList.add(b);
         tb._carList.add(c);
