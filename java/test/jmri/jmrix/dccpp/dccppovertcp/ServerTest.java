@@ -16,13 +16,14 @@ public class ServerTest {
 
    @Test
    public void getInstanceTest(){
-      Assert.assertNotNull("Server getInstance",Server.getInstance());
+      // Server is provided by InstanceManagerAutoInitialize
+      Server s = jmri.InstanceManager.getDefault(Server.class);
+      Assert.assertNotNull("Server getInstance", s);
    }
 
    @Before
    public void setUp() {
         JUnitUtil.setUp();
-
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
    }
 

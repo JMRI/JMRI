@@ -15,7 +15,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
@@ -160,7 +159,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     JCheckBox fdRestrictingBox;
     JCheckBox fFlashBox;
     JCheckBox fDistantBox;
-    
+
     private transient JmriBeanComboBox approachSensor1ComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private transient JmriBeanComboBox outSignalHeadComboBox = new JmriBeanComboBox(
@@ -208,7 +207,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     /**
      * Ctor for named SSL edit frame.
      *
-     * @param frameName
+     * @param frameName the name to use for this frame
      */
     public BlockBossFrame(String frameName) {
 
@@ -304,7 +303,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         // share turnout data model
         tmProtectTurnoutComboBox.setModel(tdProtectTurnoutComboBox.getModel());
         fProtectTurnoutComboBox.setModel(tdProtectTurnoutComboBox.getModel());
-        
+
         tdNextSignalComboBox1.setModel(sNextSignalComboBox1.getModel());
         tdNextSignalComboBox1Alt.setModel(sNextSignalComboBox1Alt.getModel());
         tmNextSignalComboBox1.setModel(sNextSignalComboBox1.getModel());
@@ -998,7 +997,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
             return;
         }
 
-        // find existing logic  
+        // find existing logic
         BlockBossLogic b;
         if (sh != null) {
             b = BlockBossLogic.getExisting(sh);
