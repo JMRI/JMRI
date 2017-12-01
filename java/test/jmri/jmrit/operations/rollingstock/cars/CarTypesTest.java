@@ -3,8 +3,8 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.util.Locale;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
-import jmri.util.JUnitUtil;
 import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,7 +36,6 @@ public class CarTypesTest {
     
     @Test
     public void testAddAndDeleteCarTypes() {
-        String carTypes[]=Bundle.getMessage("carTypeNames").split(","); 
         CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
         ct1.getNames();	//Load predefined car types
 
