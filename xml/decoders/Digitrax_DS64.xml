@@ -34,7 +34,7 @@
                     infoOnly="yes" tooltip="The DS64 Board ID, in the range 1-128">
             <!-- needed to set the board address value -->
             <decVal min="1" max="128" />
-            <label>Board ID (Primary Address)</label>
+            <label>Board ID</label>
           </variable>
           <variable CV="115.01" comment="Output type" item="Output Type" default="0" infoOnly="no"
                     tooltip="OpSw01">
@@ -515,15 +515,15 @@
           </label>
           <label>
             <text>&lt;html&gt;&lt;p&gt;
-                LocoNet messaging limits the supported Board ID (Active Address)
+                LocoNet messaging limits the supported Board ID
                 range to addresses between 1 and 128.  This tool cannot access DS64s
                 &lt;p&gt;outside of this range.
                 &lt;p&gt;
                 &lt;p&gt;This roster entry will only access the specified DS64 if the
-                Board ID (Active Address), on the "Basic" sheet, is correct when the
+                Board ID, on the "Basic" sheet, is correct when the
                 &lt;p&gt;programmer is opened.
                 &lt;p&gt;
-                &lt;p&gt;If the Board ID (Active Address) has been changed since
+                &lt;p&gt;If the Board ID has been changed since
                 the programmer was opened, the programmer will attempt to access the
                 &lt;p&gt;DS64 address which was specified in the Roster entry
                 when the progammer was opened.
