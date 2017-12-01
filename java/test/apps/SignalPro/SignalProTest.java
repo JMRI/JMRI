@@ -12,6 +12,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
+import org.junit.rules.Timeout;
 
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
@@ -31,6 +32,10 @@ public class SignalProTest {
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
+
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(90); // 90 second timeout for methods in this test class.
+
 
     @Test
     public void testLaunchLocoNet() throws IOException {
