@@ -36,7 +36,8 @@
             <label>Primary Address</label>
           </variable>
 
-          <variable CV="114.01" item="Mode of operation" default="0">
+          <variable CV="114.01" item="Mode of operation" default="0"
+                tooltip="OpSw01">
               <enumVal>
               <enumChoice>
                 <choice>SE8c Mode</choice>
@@ -47,7 +48,8 @@
             </enumVal>
           </variable>
 
-          <variable CV="114.02" item="Number of Aspects Per head" default="0">
+          <variable CV="114.02" item="Number of Aspects Per head" default="0"
+                tooltip="OpSw02">
               <enumVal>
               <enumChoice>
                 <choice>4 aspects per head</choice>
@@ -58,7 +60,8 @@
             </enumVal>
           </variable>
 
-          <variable CV="114.03" item="Drv1-4 Head Type 1" default="0">
+          <variable CV="114.03" item="Drv1-4 Head Type 1" default="0"
+                tooltip="OpSw03">
               <enumVal>
               <enumChoice>
                 <choice>Thrown</choice>
@@ -69,7 +72,8 @@
             </enumVal>
           </variable>
 
-          <variable CV="114.04" item="Drv1-4 Head Type 2" default="0">
+          <variable CV="114.04" item="Drv1-4 Head Type 2" default="0"
+                tooltip="OpSw04">
               <enumVal>
               <enumChoice>
                 <choice>Thrown</choice>
@@ -80,7 +84,8 @@
             </enumVal>
           </variable>
 
-          <variable CV="114.05" item="Drv1-4 Head Type 3" default="0">
+          <variable CV="114.05" item="Drv1-4 Head Type 3" default="0"
+                tooltip="OpSw05">
               <enumVal>
               <enumChoice>
                 <choice>Thrown</choice>
@@ -91,7 +96,8 @@
             </enumVal>
           </variable>
 
-          <variable item="Head Type For DRV1 to DRV4">
+          <variable item="Head Type For DRV1 to DRV4"
+                tooltip="OpSw03, OpSw04, OpSw05">
               <compositeVal>
                   <compositeChoice choice="3/3 Dual-heads, common anode">
                       <compositeSetting label="Drv1-4 Head Type 1" value="0"/>
@@ -136,11 +142,8 @@
               </compositeVal>
           </variable>
 
-
-
-
-
-          <variable CV="114.06" item="Drv5-8 Head Type 1" default="0">
+          <variable CV="114.06" item="Drv5-8 Head Type 1" default="0"
+                tooltip="OpSw06">
               <enumVal>
               <enumChoice>
                 <choice>Thrown</choice>
@@ -151,7 +154,8 @@
             </enumVal>
           </variable>
 
-          <variable CV="114.07" item="Drv5-8 Head Type 2" default="0">
+          <variable CV="114.07" item="Drv5-8 Head Type 2" default="0"
+                tooltip="OpSw07">
               <enumVal>
               <enumChoice>
                 <choice>Thrown</choice>
@@ -162,7 +166,8 @@
             </enumVal>
           </variable>
 
-          <variable CV="114.08" item="Drv5-8 Head Type 3" default="0">
+          <variable CV="114.08" item="Drv5-8 Head Type 3" default="0"
+                tooltip="OpSw08">
               <enumVal>
               <enumChoice>
                 <choice>Thrown</choice>
@@ -173,7 +178,8 @@
             </enumVal>
           </variable>
 
-          <variable item="Head Type For DRV1 to DRV8">
+          <variable item="Head Type For DRV5 to DRV8"
+                tooltip="OpSw06, OpSw07, OpSw08">
               <compositeVal>
                   <compositeChoice choice="3/3 Dual-heads, common anode">
                       <compositeSetting label="Drv5-8 Head Type 1" value="0"/>
@@ -218,7 +224,8 @@
               </compositeVal>
           </variable>
 
-          <variable CV="114.09" item="4th Aspect 1" default="0">
+          <variable CV="114.09" item="4th Aspect 1" default="0"
+                tooltip="OpSw09">
               <enumVal>
                   <enumChoice>
                       <choice>Thrown</choice>
@@ -229,7 +236,8 @@
               </enumVal>
           </variable>
 
-          <variable CV="114.10" item="4th Aspect 2" default="0">
+          <variable CV="114.10" item="4th Aspect 2" default="0"
+                tooltip="OpSw10">
               <enumVal>
                   <enumChoice>
                       <choice>Thrown</choice>
@@ -240,7 +248,8 @@
               </enumVal>
           </variable>
 
-          <variable item="Fourth Aspect">
+          <variable item="Fourth Aspect"
+                tooltip="OpSw09, OpSw10">
               <compositeVal>
                   <compositeChoice choice="Flashing Yellow">
                       <compositeSetting label="4th Aspect 1" value="0"/>
@@ -261,7 +270,8 @@
               </compositeVal>
           </variable>
 
-          <variable CV="114.11" item="Semaphore Mode" default="0">
+          <variable CV="114.11" item="Semaphore Mode" default="0"
+                tooltip="OpSw11">
               <enumVal>
                   <enumChoice>
                       <choice>Pulsed outputs</choice>
@@ -273,7 +283,8 @@
               <label>SMTM outputs are</label>
           </variable>
 
-          <variable CV="114.13" item="DS reporting" default="0">
+          <variable CV="114.13" item="DS reporting" default="0"
+                tooltip="OpSw13">
               <enumVal>
                   <enumChoice>
                       <choice>Enabled</choice>
@@ -285,7 +296,8 @@
               <label>Detection Section reporting is</label>
           </variable>
 
-          <variable CV="114.14" item="Switch commands from" default="0">
+          <variable CV="114.14" item="Switch commands from" default="0"
+                tooltip="OpSw14">
               <enumVal>
                   <enumChoice>
                       <choice>RailSync wires</choice>
@@ -297,7 +309,8 @@
               <label>Switch messages are taken from</label>
           </variable>
 
-          <variable CV="114.15" item="Local Switch Toggle" default="0">
+          <variable CV="114.15" item="Local Switch Toggle" default="0"
+                tooltip="OpSw15">
               <enumVal>
                   <enumChoice>
                       <choice>toggle the corresponding SMTM0x outputs</choice>
@@ -309,7 +322,8 @@
               <label>DS0x inputs</label>
           </variable>
 
-          <variable CV="114.21" item="Test Mode" default="0">
+          <variable CV="114.21" item="Test Mode" default="0"
+                tooltip="OpSw21">
               <enumVal>
                   <enumChoice>
                       <choice>Disabled</choice>
