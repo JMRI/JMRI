@@ -20,7 +20,6 @@ import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.implementation.AccessoryOpsModeProgrammerFacade;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,8 +56,8 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     boolean opsSigMode = false;
     boolean oldOpsSigMode = false;
     boolean oldoffsetAddrCheckBox = false;
-    AddressedProgrammer programmer = null;
-    AccessoryOpsModeProgrammerFacade facadeProgrammer = null;
+    transient volatile AddressedProgrammer programmer = null;
+    transient volatile AccessoryOpsModeProgrammerFacade facadeProgrammer = null;
 
     /**
      * Get the selected programmer
@@ -113,12 +112,12 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         if (opsAccyMode) {
             log.debug("   getting AccessoryOpsModeProgrammerFacade");
             facadeProgrammer = new AccessoryOpsModeProgrammerFacade(programmer,
-                    longAddrButton.isSelected() ? "accessory" : "decoder", 200);
+                    longAddrButton.isSelected() ? "accessory" : "decoder", 200, programmer);
             return facadeProgrammer;
         } else if (opsSigMode) {
             String addrType = offsetAddrCheckBox.isSelected() ? "signal" : "altsignal";
             log.debug("   getting AccessoryOpsModeProgrammerFacade {}", addrType);
-            facadeProgrammer = new AccessoryOpsModeProgrammerFacade(programmer, addrType, 200);
+            facadeProgrammer = new AccessoryOpsModeProgrammerFacade(programmer, addrType, 200, programmer);
             return facadeProgrammer;
         }
         return programmer;
@@ -254,7 +253,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
 
         // configure buttons
         int index = 0;
-        List<ProgrammingMode> modes = new ArrayList<ProgrammingMode>();
+        List<ProgrammingMode> modes = new ArrayList<>();
         if (getProgrammer() != null) {
             modes.addAll(programmer.getSupportedModes());
         } else {
