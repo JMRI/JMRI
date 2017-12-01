@@ -72,6 +72,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
              * <LI>0x73 115 - DS64
              * </ul>
              */
+            if (bdOpSwAccessTimer == null) {
+                initiializeBdOpsAccessTimer();
+            }
             this.p = p;
             doingWrite = true;
             // Board programming mode
@@ -99,7 +102,8 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
-
+            
+            bdOpSwAccessTimer.start();
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
             this.p = p;
             doingWrite = true;
@@ -147,6 +151,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
              * <LI>0x73 115 - DS64
              * </ul>
              */
+            if (bdOpSwAccessTimer == null) {
+                initiializeBdOpsAccessTimer();
+            }
             this.p = p;
             doingWrite = false;
             // Board programming mode
@@ -171,6 +178,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
+            bdOpSwAccessTimer.start();
 
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
             this.p = p;
@@ -213,7 +221,10 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         this.p = null;
         // Check mode
-        if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
+        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+            readCV(CV, p);
+        }
+        else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             // SV2 mode
             log.error("confirm CV \"{}\" addr:{} in SV2 mode not implemented", CV, mAddress);
             p.programmingOpReply(0, ProgListener.UnknownError);
@@ -240,6 +251,8 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
                     || ((m.getElement(1) != 0x00) && (m.getElement(1) != 0x50))) {
                 return;
             }
+            // got a message that is LONG_ACK reply to an BdOpsSw access
+            bdOpSwAccessTimer.stop();    // kill the timeout timer
 
             // LACK with 0x00 or 0x50 in byte 1; assume its to us.
 
@@ -497,6 +510,23 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
+    }
+
+    javax.swing.Timer bdOpSwAccessTimer = null;
+
+    void initiializeBdOpsAccessTimer() {
+        if (bdOpSwAccessTimer == null) {
+            bdOpSwAccessTimer = new javax.swing.Timer(1000, new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                ProgListener temp = p;
+                p = null;
+                temp.programmingOpReply(0, ProgListener.FailedTimeout);
+            }
+        });
+        bdOpSwAccessTimer.setInitialDelay(1000);
+        bdOpSwAccessTimer.setRepeats(false);
+        }
     }
 
     // initialize logging
