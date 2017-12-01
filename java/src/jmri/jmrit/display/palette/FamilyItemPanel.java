@@ -54,7 +54,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected HashMap<String, NamedIcon> _currentIconMap;
     IconDialog _dialog;
     ButtonGroup _familyButtonGroup;
-    protected JPanel bgBoxPanel;
+    protected JPanel bgBoxPanel; // panel with a combo box to set a contrasting background behind the icon preview
 
     static boolean _suppressNamePrompts = false;
 
@@ -85,7 +85,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             makeBottomPanel(null);
             super.init();
         }
-        // updateBgCombo(); // TODO (see method in ItemPanel class
+        // updateBgCombo(); // TODO (see proposed method in ItemPanel class
         log.debug("tab redisplayed. BgSet = {}", previewBgSet);
     }
 
@@ -99,7 +99,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _update = true;
-        _suppressDragging = true; // do dragging when updating
+        _suppressDragging = true; // no dragging when updating
         _currentIconMap = iconMap;
         if (iconMap != null) {
             checkCurrentMap(iconMap); // is map in families?, does user want to add it? etc.
@@ -115,7 +115,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
      */
     public void init(ActionListener doneAction) {
         _update = false;
-        _suppressDragging = true; // do dragging in circuitBuilder
+        _suppressDragging = true; // no dragging in circuitBuilder
         _bottom1Panel = new JPanel();
         addShowButtonToBottom();
         addUpdateButtonToBottom(doneAction);
@@ -138,7 +138,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _bottom2Panel = makeCreateNewFamilyPanel();
 
         // create array of backgrounds
-        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
         if (_backgrounds == null) { // reduces load but will not redraw for new size
             _backgrounds = new BufferedImage[5];
             for (int i = 1; i <= 3; i++) {
@@ -148,23 +147,27 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
         }
         // always update background from Panel Editor
+        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
         _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
 
         makeItemButtonPanel();
-        if (doneAction != null) {
-            addUpdateButtonToBottom(doneAction);
-        }
         initIconFamiliesPanel();
         add(_iconFamilyPanel);
         JPanel bottomPanel = new JPanel(new FlowLayout());
         bottomPanel.add(_bottom1Panel);
         bottomPanel.add(_bottom2Panel);
         //_bottom2Panel.setVisible(false); // to prevent showing it on Reporter tab?
+        if (doneAction != null) {
+            addUpdateButtonToBottom(doneAction);
+            addBgComboToBottom(); // add combo
+        }
         add(bottomPanel);
         log.debug("init done for family {}", _family);
     }
 
-    // add [Update] button to _bottom1Panel
+    /**
+     * Add [Update] button to _bottom1Panel.
+     */
     protected void addUpdateButtonToBottom(ActionListener doneAction) {
         _updateButton = new JButton(Bundle.getMessage("updateButton")); // custom update label
         _updateButton.addActionListener(doneAction);
@@ -186,6 +189,18 @@ public abstract class FamilyItemPanel extends ItemPanel {
         });
         _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipShowIcons"));
         _bottom1Panel.add(_showIconsButton);
+    }
+
+    private void addBgComboToBottom() {
+        if (_iconPanel == null || _backgrounds == null) {
+            log.debug("null panels for combo");
+            return;
+        }
+        bgBoxPanel = makeBgButtonPanel(_iconPanel, null, _backgrounds);
+        // to enable returning null for some types, skip Reporter. Don't add here for SignalMast (takes care of its own combo)
+        if (bgBoxPanel != null) {
+            _bottom1Panel.add(bgBoxPanel);
+        }
     }
 
     private void makeItemButtonPanel() {
@@ -222,6 +237,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
             });
             deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeleteFamily"));
             _bottom1Panel.add(deleteButton);
+        } else {
+            addBgComboToBottom(); // add combo
         }
     }
 
@@ -345,8 +362,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
             if (_iconPanel != null) {
                 _iconPanel.removeAll();
             }
-            if (_iconPanel != null) {
-                _iconPanel.removeAll();
+            if (_dragIconPanel != null) {
+                _dragIconPanel.removeAll();
             }
         }
         initIconFamiliesPanel();
@@ -474,6 +491,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _dragIconPanel.setOpaque(true); // to show background color/squares
             if (_backgrounds != null) {
                 _dragIconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
+                if (_iconPanel != null) {
+                    _iconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
+                }
             } else {
                 log.debug("FamilyItemPanel - no value for previewBgSet");
             }

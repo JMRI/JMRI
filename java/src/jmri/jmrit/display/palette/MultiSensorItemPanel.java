@@ -100,10 +100,10 @@ public class MultiSensorItemPanel extends TableItemPanel {
     public void clearSelections() {
         _selectionModel.clearSelection();
         int size = 6;
-//        if (_family!=null) {
-//            HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
-//            size = map.size();
-//        }
+        // if (_family!=null) {
+        //     HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
+        //     size = map.size();
+        // }
         if (_currentIconMap != null) {
             size = _currentIconMap.size();
         }
@@ -312,7 +312,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         @Override
         public void addSelectionInterval(int index0, int index1) {
             log.debug("addSelectionInterval({}), {}) - stubbed", index0, index1);
-//            super.addSelectionInterval(index0, index1);
+            // super.addSelectionInterval(index0, index1);
         }
 
         @Override
