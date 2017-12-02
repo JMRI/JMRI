@@ -325,9 +325,9 @@
                 the programmer will use the modified Active Address for accesses
                 &lt;p&gt;to the device.
                 &lt;p&gt;
-                &lt;p&gt;Note that PM4 and PM42 documentation refers to Board Address,
-                while DS64 documentation refers to Board ID.  These are equivalent
-                concepts.
+                &lt;p&gt;Note that BDL16x and PM4x documentation refers 
+                to Board Address, while DS64 and SE8C documentation refers to 
+                &lt;p&gt;Board ID.  These are equivalent concepts.
             &lt;/html&gt;</text>
           </label>
       </column>
