@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-//import java.awt.Image;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 import org.slf4j.Logger;
@@ -39,9 +38,12 @@ public class DrawSquares {
         if (width > 0) { w = width; }
         if (height > 0) { h = height; }
         sqSize = dim;
-        bgColor = color1;
-        sqColor = color2;
-
+        if (color1 != null) {
+            bgColor = color1;
+        }
+        if (color2 != null) {
+            sqColor = color2;
+        }
         // paint alternate squares
         back = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = back.createGraphics();
@@ -68,55 +70,6 @@ public class DrawSquares {
         log.debug("DrawSquares ready");
         return back;
     }
-
-//    @Override
-//    protected void paint(Graphics g) {
-//        log.debug("Checkers w = {} h = {}", w, h);
-//        // paint alternate squares
-//        g.setColor(bgColor);
-//        g.fillRect(0, 0, w, h); // plain rect background
-//        if (sqColor != bgColor) {
-//        g.setColor(sqColor);
-//            for (int j = 0; j <= (w / sqSize); j++) {
-//                for (int k = 0; k <= (h / sqSize); k++) {
-//                    if ((j + k) % 2 == 0) { // skip every other square
-//                        g.fillRect(k * sqSize, j * sqSize, sqSize, sqSize); // gray squares
-//                    }
-//                }
-//            }
-//        }
-//        g.dispose();
-//    }
-
-    /* alternative graphic to replace the above paint() method */
-    //    @Override
-    //    public void paint(Graphics g) {
-    //        // paint the gray squares
-    //        if (grid == null) {
-    //            BufferedImage back = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-    //            Graphics2D g2d = back.createGraphics();
-    //            g2d.setColor(sqColor);
-    //            g2d.setClip(g.getClip());
-    //            super.paint(g2d);
-    //    log.debug("Checkers w = {} h = {}", w, h);
-    //    // paint alternate squares
-    //        g.setColor(bgColor);
-    //        g.fillRect(0, 0, w, h); // plain rect background
-    //        g.setColor(sqColor);
-    //        if (bgColor != sqColor) {
-    //        for (int j = 0; j <= (w / sqSize); j++) {
-    //            for (int k = 0; k <= (h / sqSize); k++) {
-    //                if ((j + k) % 2 == 0) { // skip every other square
-    //                    g.fillRect(k * sqSize, j * sqSize, sqSize, sqSize); // gray squares
-    //                }
-    //            }
-    //        }
-    //        g.dispose();
-    //    }
-
-//     private void update() {
-//        repaint();
-//    }
 
     private static final Logger log = LoggerFactory.getLogger(DrawSquares.class);
 

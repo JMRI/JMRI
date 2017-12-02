@@ -50,9 +50,9 @@ public class ImagePanel extends JPanel {
         }
     }
 
-    private void update() {
-        repaint();
-    }
+    //private void update() {
+    //    repaint();
+    //}
 
     private static final Logger log = LoggerFactory.getLogger(ImagePanel.class);
 

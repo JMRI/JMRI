@@ -402,15 +402,15 @@ public class CatalogPanel extends JPanel implements MouseListener {
         // create array of backgrounds
         _backgrounds = new BufferedImage[4];
         for (int i = 0; i <= 2; i++) {
-            _backgrounds[i] = DrawSquares.getImage(500, 500, 20, colorChoice[i], colorChoice[i]);
+            _backgrounds[i] = DrawSquares.getImage(500, 500, 15, colorChoice[i], colorChoice[i]);
         }
-        _backgrounds[3] = DrawSquares.getImage(500, 500, 20, Color.white, _grayColor);
+        _backgrounds[3] = DrawSquares.getImage(500, 500, 15, Color.white, _grayColor);
 
         return previewPanel;
     }
 
     /**
-     * Create panel element containing a "Set background:" drop down list.
+     * Create panel element containing a "View on:" drop down list.
      * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
      *
      * @return the JPanel with label and drop down
@@ -442,17 +442,21 @@ public class CatalogPanel extends JPanel implements MouseListener {
         return backgroundPanel;
     }
 
-    // resets the background
+    /**
+     * Reset the background to _currentBackground.
+     * Visible on JPanels and JLabels, not on ImagePanels used as Preview background.
+     *
+     * @param container the parent to set plus all its children's background color
+     * @deprecated since 4.9.6 use transparent icon panels on a graphic ImagePanel background
+     * @link jmri.util.swing.ImagePanel#setImage(Image)
+     */
+    @Deprecated
     public void setBackground(Container container) {
-        // container.setBackground(_currentBackground);
-        //        if (_currentBackground != null) {
-        //            container.setBackground(_currentBackground);
-        //        }
+        container.setBackground(_currentBackground);
         Component[] comp = container.getComponents();
         for (Component comp1 : comp) {
-        //            comp1.setBackground(_currentBackground);
             if (comp1 instanceof java.awt.Container) {
-        //                setBackground((Container) comp1);
+                setBackground((Container) comp1);
             }
         }
         container.invalidate();
@@ -564,11 +568,13 @@ public class CatalogPanel extends JPanel implements MouseListener {
             nameLabel.setIcon(icon);
 
             JPanel p = new JPanel();
+            p.setOpaque(false);
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             p.add(nameLabel);
             JLabel label = new JLabel(Bundle.getMessage("scale", CatalogPanel.printDbl(scale, 2)));
             p.add(label);
             label = new JLabel(leaf.getName());
+            label.setOpaque(false);
             p.add(label);
             if (_noDrag) {
                 p.addMouseListener(this);
@@ -626,7 +632,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
     }
 
     /**
-     * Utility returns a number as a string
+     * Utility returning a number as a string.
      *
      * @param z             double
      * @param decimalPlaces number of decimal places
@@ -745,6 +751,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
      * to DnD. _selectedImage = null; return (NamedIcon)l.getIcon(); } return
      * null; }
      */
+
     private void showPopUp(MouseEvent e, NamedIcon icon) {
         if (log.isDebugEnabled()) {
             log.debug("showPopUp {}", icon.toString());

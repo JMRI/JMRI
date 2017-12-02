@@ -1,5 +1,6 @@
 package jmri.jmrit.display.palette;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -177,6 +178,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _bottom1Panel.add(_showIconsButton);
     }
 
+    @SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", justification="makeBgButtonPanel can return null")
     private void addBgComboToBottom() {
         if (_iconPanel == null || _backgrounds == null) {
             log.debug("null panels for combo");
@@ -471,6 +473,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     /**
      * Position initial Preview component on _iconFamilyPanel. If already present, keep and clear it.
      */
+    @SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", justification="makeBgButtonPanel can return null")
     protected void makeDragIconPanel(int position) {
         if (_dragIconPanel == null) {
             _dragIconPanel = new ImagePanel();

@@ -207,7 +207,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             NamedBean b = _model.getBeanAt(row);
             _table.clearSelection();
             if (log.isDebugEnabled()) {
-                log.debug("getTableSelection: row = {}, bean = {}", row, (b==null?b:b.getDisplayName()));
+                log.debug("getTableSelection: row = {}, bean = {}", row, (b == null ? "null" : b.getDisplayName()));
             }
             return b;
         } else if (log.isDebugEnabled()) {

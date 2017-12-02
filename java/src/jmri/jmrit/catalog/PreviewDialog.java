@@ -106,7 +106,7 @@ public class PreviewDialog extends JDialog {
                     Bundle.getMessage("OutOfMemory", _cnt), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                     new String[]{Bundle.getMessage("ButtonStop"), Bundle.getMessage("ShowContents")}, 1);
-            if (choice==0) {
+            if (choice == 0) {
                 return;
             }
         }
@@ -163,7 +163,7 @@ public class PreviewDialog extends JDialog {
 
     /**
      * Set up a display panel to display icons.
-     * Includes a Set background: drop down list.
+     * Includes a "View on:" drop down list.
      * @see jmri.jmrit.catalog.CatalogPanel#makeButtonPanel()
      *
      * @return the JPanel with preview pane and background color drop down
@@ -184,15 +184,12 @@ public class PreviewDialog extends JDialog {
 
         // create array of backgrounds
         _backgrounds = new BufferedImage[4];
-//        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
-//        _backgrounds[0] = DrawSquares.getImage(500, 500, 20, _currentBackground, _currentBackground);
         for (int i = 0; i <= 2; i++) {
-            _backgrounds[i] = DrawSquares.getImage(500, 500, 20, colorChoice[i], colorChoice[i]);
+            _backgrounds[i] = DrawSquares.getImage(500, 500, 15, colorChoice[i], colorChoice[i]);
         }
-        _backgrounds[3] = DrawSquares.getImage(500, 500, 20, Color.white, _grayColor);
+        _backgrounds[3] = DrawSquares.getImage(500, 500, 15, Color.white, _grayColor);
 
         JComboBox<String> bgColorBox = new JComboBox<>();
-        bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, too long for combo
         bgColorBox.addItem(Bundle.getMessage("White"));
         bgColorBox.addItem(Bundle.getMessage("LightGray"));
         bgColorBox.addItem(Bundle.getMessage("DarkGray"));
@@ -215,53 +212,14 @@ public class PreviewDialog extends JDialog {
         return previewPanel;
     }
 
-    // no longer called
-    private void setBackGround(Color color) {
-        if (color != null) {
-            _preview.setBackground(color);
-            _currentBackground = color;
-        }
-        Component[] comp = _preview.getComponents();
-        for (int i = 0; i < comp.length; i++) {
-            JLabel l = null;
-            if (comp[i].getClass().getName().equals("javax.swing.JPanel")) {
-                JPanel p = (JPanel) comp[i];
-                if (color != null) {
-                    p.setBackground(color);
-                } else {
-                    p.setOpaque(false);
-                }
-                l = (JLabel) p.getComponent(0);
-            } else if (comp[i].getClass().getName().equals("javax.swing.JLabel")) {
-                l = (JLabel) comp[i];
-            } else {
-                if (log.isDebugEnabled()) {
-                    log.debug("setBackGround label #{}, class= {}", i, comp[i].getClass().getName());
-                }
-                return;
-            }
-            if (color != null) {
-                l.setBackground(color);
-            } else {
-                l.setOpaque(false);
-            }
-        }
-        _preview.invalidate();
-    }
-
     void resetPanel() {
         _selectedImage = null;
         if (_preview == null) {
             return;
         }
         log.debug("resetPanel");
-        Component[] comp = _preview.getComponents();
-        for (int i = comp.length - 1; i >= 0; i--) {
-            _preview.remove(i);
-            comp[i] = null;
-        }
         _preview.removeAll();
-        _preview.setBackground(_currentBackground);
+        _preview.setImage(_backgrounds[0]);
         _preview.invalidate();
         pack();
     }
@@ -379,9 +337,8 @@ public class PreviewDialog extends JDialog {
                         cnfe.printStackTrace();
                         image = new JLabel(cnfe.getMessage());
                     }
-                    image.setOpaque(true);
-                    // image.setName(name);
-                    // image.setBackground(_currentBackground);
+                    image.setOpaque(false);
+                    image.setName(name);
                     image.setIcon(icon);
                     JPanel p = new JPanel();
                     p.setOpaque(false);

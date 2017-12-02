@@ -38,12 +38,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Container for adding items to control panels. Loads and stores icons used in
- * control editor panels. For background colors to work on a particular editor
+ * Container for adding items to Control Panels. Loads and stores icons used in
+ * Control Panel Editor panels. For background colors to work on a particular editor
  * instance, select the 'Item Palette' item under 'Add Items' menu to configure 
- * ItemPalette for that editor.  Otherwise any item can be dragged and
- * dropped to any editor.  The icons are displayed on the background 
- * of the last editor to call the ItemPalette instance.
+ * ItemPalette for that editor. Otherwise any item can be dragged and
+ * dropped to any editor. The icons are displayed on the background
+ * of the last editor to call the ItemPalette instance. The user can set it
+ * to another color or a white/gray squares pattern using the "View on:" combo.
  *
  * @author Pete Cressman Copyright (c) 2010
  */
@@ -130,7 +131,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
 
     static public void loadIcons(Editor ed) {
         if (_iconMaps == null) {
-//         long t = System.currentTimeMillis();
+            // long t = System.currentTimeMillis();
             new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
             _iconMaps = new HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>();
             _indicatorTOMaps
@@ -139,7 +140,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             if (!loadSavedIcons(ed)) {
                 loadDefaultIcons(ed);
             }
-//            System.out.println("Palette icons loaded in " + (System.currentTimeMillis()-t) + " milliseconds.");
+            // System.out.println("Palette icons loaded in " + (System.currentTimeMillis()-t) + " milliseconds.");
         }
     }
 
@@ -370,7 +371,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         // Either of these positioning calls puts the instance on the primary monitor. ???
         java.awt.Point pt = ed.getLocation();
         instance.setLocation(pt.x, pt.y);
-//        instance.setLocationRelativeTo(ed);            
+        // instance.setLocationRelativeTo(ed);
         instance.pack();
         instance.setVisible(true);
         return instance;
@@ -403,7 +404,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         pack();
     }
 
-    /*
+    /**
      * Add the tabs on the the Control Panel Editor.
      */
     static void buildTabPane(ItemPalette palette, Editor editor) {
@@ -464,7 +465,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         _tabIndex.put("Text", iconPanel);
 
         iconPanel = new RPSItemPanel(palette, "RPSReporter", null, editor);
-//        itemPanel.init();  // show panel on start
+        // itemPanel.init();  // show panel on start
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("RPSreporter")); // stored in jmri.jmrit.display.DisplayBundle
         _tabIndex.put("RPSReporter", iconPanel);
 
@@ -587,7 +588,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         if (ItemPalette.getFamilyMaps(type) == null) {
             HashMap<String, HashMap<String, NamedIcon>> typeMap = new HashMap<String, HashMap<String, NamedIcon>>();
             _iconMaps.put(type, typeMap);
-//      typeMap.put(family, iconMap);
+            // typeMap.put(family, iconMap);
         }
         Iterator<String> iter = ItemPalette.getFamilyMaps(type).keySet().iterator();
         if (familyNameOK(frame, type, family, iter)) {
@@ -751,7 +752,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         c.gridx = 1;
         c.anchor = java.awt.GridBagConstraints.CENTER;
         c.weightx = 1.0;
-        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
+        c.fill = java.awt.GridBagConstraints.HORIZONTAL; // text field will expand
         panel.add(field, c);
         return panel;
     }
