@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Common utility to draw a BufferedImage as background behind a JPanel.
- * Used in jmrit.catalog, jmrit.display.LE#AddItems, Palette.
+ * Used in jmri.jmrit.catalog, jmri.jmrit.display.palette (via LayoutEditor 'Add Items' menu).
  *
  * @author Egbert Broerse copyright (c) 2017
  */
@@ -25,7 +25,10 @@ public class ImagePanel extends JPanel {
 
     /**
      * Set background images for ImagePanel.
-     * @see jmri.jmrit.catalog.PreviewDialog#makeButtonPanel()
+     * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
+     * @see jmri.jmrit.catalog.CatalogPanel#makeButtonPanel()
+     *
+     * @param img Image to load as background
      */
     public void setImage(Image img) {
         back = img;

@@ -42,7 +42,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ItemPanel for for plain Icons and Backgrounds.
+ * ItemPanel for plain Icons and Backgrounds.
  * Does NOT use IconDialog class to add, replace or delete icons.
  */
 public class IconItemPanel extends ItemPanel implements MouseListener {
@@ -55,12 +55,6 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     JLabel _selectedIcon;
     JButton deleteIconButton;
     protected int _level = Editor.ICONS; // sub classes can override (e.g. Background)
-
-    static Color _grayColor = new Color(235, 235, 235);
-    static Color _darkGrayColor = new Color(150, 150, 150);
-    protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
-    protected Color _currentBackground = _grayColor;
-    private JPanel bgBoxPanel;
 
     /**
      * Constructor for plain icons and backgrounds.
