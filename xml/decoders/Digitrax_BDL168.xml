@@ -362,7 +362,6 @@
                       <compositeSetting label="First Interrogate Enable" value="1"/>
                   </compositeChoice>
               </compositeVal>
-              <label>This BDL16x </label>
           </variable>
 
           <variable CV="113.37" item="Detection Section Timing1" default="0"
@@ -561,7 +560,6 @@
             <display item="Anti-chatter Filtering"/>
             <display item="Transponding Messages at GPOFF"/>
             <display item="Transponder Tracking Mode"/>
-            <display item="Anti-Chatter Filtering"/>
             <label><text>   </text></label>
         </column>
     </pane>
