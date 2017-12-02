@@ -287,14 +287,7 @@
 
           <variable CV="114.13" item="DS reporting" default="0"
                 tooltip="OpSw13">
-              <enumVal>
-                  <enumChoice>
-                      <choice>Enabled</choice>
-                  </enumChoice>
-                  <enumChoice>
-                      <choice>Disabled</choice>
-                  </enumChoice>
-              </enumVal>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
               <label>Detection Section reporting is</label>
           </variable>
 
@@ -326,14 +319,7 @@
 
           <variable CV="114.21" item="Test Mode" default="0"
                 tooltip="OpSw21">
-              <enumVal>
-                  <enumChoice>
-                      <choice>Disabled</choice>
-                  </enumChoice>
-                  <enumChoice>
-                      <choice>Enabled</choice>
-                  </enumChoice>
-              </enumVal>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
               <label>Signal Head Test Pattern is</label>
           </variable>
         </variables>
@@ -364,6 +350,10 @@
                 &lt;p&gt;window and re-open the Roster entry to ensure that the
                 the programmer will use the modified Active Address for accesses
                 &lt;p&gt;to the device.
+                &lt;p&gt;Note that BDL16x and PM4x documentation refers 
+                to Board Address, while DS64 and SE8C documentation refers to 
+                &lt;p&gt;Board ID.  These are equivalent concepts.
+
             &lt;/html&gt;</text>
           </label>
       </column>
