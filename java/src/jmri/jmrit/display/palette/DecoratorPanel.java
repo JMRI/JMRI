@@ -132,11 +132,11 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
 
         // create array of backgrounds, _currentBackground already set and used
         _backgrounds = new BufferedImage[5];
-        _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
+        _backgrounds[0] = DrawSquares.getImage(500, 150, 15, _currentBackground, _currentBackground);
         for (int i = 1; i <= 3; i++) {
-            _backgrounds[i] = DrawSquares.getImage(500, 100, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
+            _backgrounds[i] = DrawSquares.getImage(500, 150, 15, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
         }
-        _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
+        _backgrounds[4] = DrawSquares.getImage(500, 150, 15, Color.white, _grayColor);
 
         _samplePanel = new JPanel();
         _samplePanel.add(Box.createHorizontalStrut(STRUT));

@@ -25,7 +25,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
-import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
@@ -136,31 +135,18 @@ public abstract class FamilyItemPanel extends ItemPanel {
      */
     protected void makeBottomPanel(ActionListener doneAction) {
         _bottom2Panel = makeCreateNewFamilyPanel();
-
-        // create array of backgrounds
-        if (_backgrounds == null) { // reduces load but will not redraw for new size
-            _backgrounds = new BufferedImage[5];
-            for (int i = 1; i <= 3; i++) {
-                _backgrounds[i] = DrawSquares.getImage(500, 100, 20, colorChoice[i - 1], colorChoice[i - 1]);
-                // [i-1] because choice 0 is not in colorChoice[]
-            }
-            _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
-        }
-        // always update background from Panel Editor
-        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
-        _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
-
+        updateBackgrounds(); // create array of backgrounds
         makeItemButtonPanel();
         initIconFamiliesPanel();
         add(_iconFamilyPanel);
+        if (doneAction != null) {
+            addUpdateButtonToBottom(doneAction);
+            addBgComboToBottom();
+        }
         JPanel bottomPanel = new JPanel(new FlowLayout());
         bottomPanel.add(_bottom1Panel);
         bottomPanel.add(_bottom2Panel);
         //_bottom2Panel.setVisible(false); // to prevent showing it on Reporter tab?
-        if (doneAction != null) {
-            addUpdateButtonToBottom(doneAction);
-            addBgComboToBottom(); // add combo
-        }
         add(bottomPanel);
         log.debug("init done for family {}", _family);
     }

@@ -31,7 +31,6 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -171,20 +170,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             addUpdateButtonToBottom(doneAction);
         }
         initIconFamiliesPanel(); // (if null: creates and) adds a new _iconFamilyPanel for the new mast map
-
-        // create array of backgrounds
-        if (_backgrounds == null) { // reduces load but will not redraw for new size
-            _backgrounds = new BufferedImage[5];
-            for (int i = 1; i <= 3; i++) {
-                _backgrounds[i] = DrawSquares.getImage(500, 100, 20, colorChoice[i - 1], colorChoice[i - 1]);
-                // [i-1] because choice 0 is not in colorChoice[]
-            }
-            _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
-        }
-        // always update background from Panel Editor
-        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
-        _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
-
+        updateBackgrounds(); // create array of backgrounds
         _bottom1Panel.add(makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds));
         add(_bottom1Panel);
     }

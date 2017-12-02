@@ -37,7 +37,6 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LinkingLabel;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +50,6 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     HashMap<String, NamedIcon> _iconMap;
     HashMap<String, NamedIcon> _tmpIconMap;
     ImagePanel _iconPanel;
-    protected DrawSquares _squaresPanel; // checkered background
     JButton _catalogButton;
     CatalogPanel _catalog;
     JLabel _selectedIcon;
@@ -150,17 +148,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
      * @param iconMap set of icons to add to panel
      */
     protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
-        // create array of backgrounds
-        if (_backgrounds == null) { // don't repeat unneeded while adding families
-            _backgrounds = new BufferedImage[5];
-            for (int i = 1; i <= 3; i++) {
-                _backgrounds[i] = DrawSquares.getImage(500, 100, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
-            }
-            _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
-        }
-        // update from Panel Editor
-        _currentBackground = _editor.getTargetPanel().getBackground(); // pick up Panel background color
-        _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
+        updateBackgrounds(); // create array of backgrounds
 
         if (_iconPanel == null) { // create a new one
             _iconPanel = new ImagePanel();

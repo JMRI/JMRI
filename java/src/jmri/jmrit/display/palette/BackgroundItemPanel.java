@@ -121,7 +121,7 @@ public class BackgroundItemPanel extends IconItemPanel {
                 public void actionPerformed(ActionEvent a) {
                     _editor.setBackgroundColor(_chooser.getColor());
                     _currentBackground = _chooser.getColor();
-                    _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
+                    _backgrounds[0] = DrawSquares.getImage(500, 150, 15, _currentBackground, _currentBackground);
                     _iconPanel.setImage(_backgrounds[0]);
                     dialog.dispose();
                 }

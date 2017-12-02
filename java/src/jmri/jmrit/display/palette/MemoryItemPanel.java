@@ -30,7 +30,6 @@ import jmri.jmrit.display.MemoryIcon;
 import jmri.jmrit.display.MemoryInputIcon;
 import jmri.jmrit.display.MemorySpinnerIcon;
 import jmri.jmrit.picker.PickListModel;
-import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,18 +93,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         if (!_update) {
             _iconFamilyPanel.add(instructions());
         }
-
-        // create array of backgrounds
-        if (_backgrounds == null) {
-            _backgrounds = new BufferedImage[5];
-            for (int i = 1; i <= 3; i++) {
-                _backgrounds[i] = DrawSquares.getImage(500, 100, 20, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
-            }
-            _backgrounds[4] = DrawSquares.getImage(500, 100, 20, Color.white, _grayColor);
-        }
-        // always update background from Panel Editor
-        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
-        _backgrounds[0] = DrawSquares.getImage(500, 100, 20, _currentBackground, _currentBackground);
+        updateBackgrounds(); // create array of backgrounds
 
         makeDragIconPanel(1);
         makeDndIconPanel(null, null);

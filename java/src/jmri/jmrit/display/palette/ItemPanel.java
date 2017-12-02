@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
+import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
@@ -143,6 +144,23 @@ public abstract class ItemPanel extends JPanel {
 //        }
 //        log.debug("BgCombo updated");
 //    }
+
+    /**
+     * Create array of backgrounds.
+     */
+    protected void updateBackgrounds() {
+        if (_backgrounds == null) { // reduces load but will not redraw for new size
+            _backgrounds = new BufferedImage[5];
+            for (int i = 1; i <= 3; i++) {
+                _backgrounds[i] = DrawSquares.getImage(500, 150, 15, colorChoice[i - 1], colorChoice[i - 1]);
+                // [i-1] because choice 0 is not in colorChoice[]
+            }
+            _backgrounds[4] = DrawSquares.getImage(500, 150, 15, Color.white, _grayColor);
+        }
+        // always update background from Panel Editor
+        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
+        _backgrounds[0] = DrawSquares.getImage(500, 150, 15, _currentBackground, _currentBackground);
+    }
 
     protected void closeDialogs() {
     }
