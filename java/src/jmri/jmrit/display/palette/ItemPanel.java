@@ -96,9 +96,10 @@ public abstract class ItemPanel extends JPanel {
      * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
      * @see DecoratorPanel
      *
-     * @param preview   preview pane1 to set background image
+     * @param preview1  preview pane1 to set background image on
+     * @param preview2  (optional) second preview pane1 to set background image on
      * @param imgArray  the image array to choose from
-     * @return          a JPanel with label and drop down with actions
+     * @return          JPanel with label and drop down with actions
      */
     protected JPanel makeBgButtonPanel(@Nonnull ImagePanel preview1, ImagePanel preview2, BufferedImage[] imgArray) {
         JComboBox<String> bgColorBox = new JComboBox<>();

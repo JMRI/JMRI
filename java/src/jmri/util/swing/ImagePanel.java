@@ -25,7 +25,7 @@ public class ImagePanel extends JPanel {
 
     /**
      * Set background images for ImagePanel.
-     * @see jmri.jmrit.catalog.PreviewDialog#paintCheckers()
+     * @see jmri.jmrit.catalog.PreviewDialog#makeButtonPanel()
      */
     public void setImage(Image img) {
         back = img;
