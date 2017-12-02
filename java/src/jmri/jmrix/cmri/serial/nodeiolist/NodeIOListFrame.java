@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public class NodeIOListFrame extends jmri.util.JmriJFrame {
 
-    ArrayList<SerialNode> cmriNode = new ArrayList<SerialNode>();  //c2
+    ArrayList<SerialNode> cmriNode = new ArrayList<SerialNode>();
 
     protected boolean inputSelected = true;  // true if displaying input assignments, false for output
     protected SerialNode selNode = null;
@@ -39,7 +39,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
     JRadioButton outputBits = new JRadioButton(Bundle.getMessage("ShowOutputButton"), false);
     JLabel nodeInfoText = new JLabel("Node Information Text");
 
-    JLabel nodeDesc = new JLabel("Description:");  //c2
+    JLabel nodeDesc = new JLabel("Description:");
 
     // assignment pane items
     protected JPanel assignmentPanel = null;
@@ -114,7 +114,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         JPanel panel12 = new JPanel();
         panel12.add(nodeInfoText);
 
-        JPanel panel13 = new JPanel();  //c2
+        JPanel panel13 = new JPanel();
         panel13.add(nodeDesc);
         panel13.setVisible(true);
         nodeDesc.setVisible(false);
@@ -279,7 +279,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         ((AssignmentTableModel) assignmentListModel).fireTableDataChanged();
     }
 
-    /*  Done button handler */  //c2
+    /*  Done button handler */
     public void doneButtonActionPerformed() {
         setVisible(false);
         dispose();
