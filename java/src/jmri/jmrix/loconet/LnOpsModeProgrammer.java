@@ -29,7 +29,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     boolean mLongAddr;
     ProgListener p;
     boolean doingWrite;
-    boolean BoardOpSwWriteVal;
+    boolean boardOpSwWriteVal;
     javax.swing.Timer bdOpSwAccessTimer = null;
 
     public LnOpsModeProgrammer(SlotManager pSlotMgr,
@@ -101,7 +101,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             m.setElement(4, loc * 16 + bit * 2  + (val&0x01));
 
             // save a copy of the written value for use during reply
-            BoardOpSwWriteVal = ((val & 0x01) == 1);
+            boardOpSwWriteVal = ((val & 0x01) == 1);
 
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
@@ -263,7 +263,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             if (doingWrite) {
 
                 int code = ProgListener.OK;
-                int val = BoardOpSwWriteVal?1:0;
+                int val = boardOpSwWriteVal?1:0;
 
                 ProgListener temp = p;
                 p = null;
@@ -290,9 +290,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
             // see if reply to LNSV 1 or LNSV2 request
-            if (((m.getElement( 0) & 0xFF) != 0xE5) |
-                    ((m.getElement( 1) & 0xFF) != 0x10) |
-                    ((m.getElement( 4) & 0xFF) != 0x01) | // format 1
+            if (((m.getElement( 0) & 0xFF) != 0xE5) ||
+                    ((m.getElement( 1) & 0xFF) != 0x10) ||
+                    ((m.getElement( 4) & 0xFF) != 0x01) || // format 1
                     ((m.getElement( 5) & 0x70) != 0x00)) {
                 return;
             }
@@ -328,11 +328,11 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             }
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             // see if reply to LNSV 1 or LNSV2 request
-            if (((m.getElement( 0) & 0xFF) != 0xE5) |
-                    ((m.getElement( 1) & 0xFF) != 0x10) |
-                    ((m.getElement(3) != 0x41) && (m.getElement(3) != 0x42)) | // need a "Write One Reply", or a "Read One Reply"
-                    ((m.getElement( 4) & 0xFF) != 0x02) | // format 2)
-                    ((m.getElement( 5) & 0x70) != 0x10) | // need SVX1 high nibble = 1
+            if (((m.getElement( 0) & 0xFF) != 0xE5) ||
+                    ((m.getElement( 1) & 0xFF) != 0x10) ||
+                    ((m.getElement( 3) != 0x41) && (m.getElement(3) != 0x42)) || // need a "Write One Reply", or a "Read One Reply"
+                    ((m.getElement( 4) & 0xFF) != 0x02) || // format 2)
+                    ((m.getElement( 5) & 0x70) != 0x10) || // need SVX1 high nibble = 1
                     ((m.getElement(10) & 0x70) != 0x10) // need SVX2 high nibble = 1
                     ) {
                 return;
