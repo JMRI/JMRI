@@ -30,13 +30,13 @@
         </programming>
 
         <variables>
-          <variable CV="1" comment="Board address" item="Short Address" default="03" infoOnly="yes">
+          <variable CV="1" comment="Board address" item="Short Address" default="01" infoOnly="yes">
             <!-- needed to set the board address value -->
             <decVal min="1" max="127" />
             <label>Board Address (Board ID)</label>
           </variable>
 
-          <variable CV="112.01" item="Trip Current 1"
+          <variable CV="112.01" item="Trip Current 1" default="0"
                 tooltip="OpSw01">
             <enumVal>
               <enumChoice><choice>Thrown</choice></enumChoice>
@@ -44,7 +44,7 @@
             </enumVal>
           </variable>
 
-          <variable CV="112.02" item="Trip Current 2"
+          <variable CV="112.02" item="Trip Current 2" default="0"
                 tooltip="OpSw02">
             <enumVal>
               <enumChoice><choice>Thrown</choice></enumChoice>
@@ -52,7 +52,7 @@
             </enumVal>
           </variable>
 
-          <variable CV="112.09" item="Trip Current 3"
+          <variable CV="112.09" item="Trip Current 3" default="0"
                 tooltip="OpSw09">
             <enumVal>
               <enumChoice><choice>Thrown</choice></enumChoice>
@@ -60,7 +60,7 @@
             </enumVal>
           </variable>
 
-          <variable CV="112.03" item="Section 1 Trip Speed2"
+          <variable CV="112.03" item="Section 1 Trip Speed2" default="0"
                 tooltip="OpSw03">
             <enumVal>
               <enumChoice><choice>Thrown</choice></enumChoice>
@@ -68,7 +68,7 @@
             </enumVal>
           </variable>
 
-          <variable CV="112.05" item="Section 1 Trip Speed1"
+          <variable CV="112.05" item="Section 1 Trip Speed1" default="0"
                 tooltip="OpSw05">
             <enumVal>
               <enumChoice><choice>Thrown</choice></enumChoice>
@@ -76,7 +76,7 @@
             </enumVal>
           </variable>
 
-          <variable CV="112.06" item="Section 1 AutoReversing Mode"
+          <variable CV="112.06" item="Section 1 AutoReversing Mode" default="0"
                 tooltip="OpSw06">
             <enumVal>
               <enumChoice><choice>Short-circuit Protection (pins 5 and 6 unconnected)</choice></enumChoice>
@@ -84,7 +84,7 @@
             </enumVal>
           </variable>
 
-          <variable CV="112.11" item="Section 2 Trip Speed2"
+          <variable CV="112.11" item="Section 2 Trip Speed2" default="0"
                 tooltip="OpSw11">
             <enumVal>
               <enumChoice><choice>Thrown</choice></enumChoice>
@@ -92,7 +92,7 @@
             </enumVal>
           </variable>
 
-          <variable CV="112.13" item="Section 2 Trip Speed1"
+          <variable CV="112.13" item="Section 2 Trip Speed1" default="0"
                 tooltip="OpSw13">
             <enumVal>
               <enumChoice><choice>Thrown</choice></enumChoice>
@@ -100,7 +100,7 @@
             </enumVal>
           </variable>
 
-          <variable CV="112.14" item="Section 2 AutoReversing Mode"
+          <variable CV="112.14" item="Section 2 AutoReversing Mode" default="0"
                 tooltip="OpSw14">
             <enumVal>
               <enumChoice><choice>Short-circuit Protection (pins 9 and 10 unconnected)</choice></enumChoice>
@@ -108,7 +108,7 @@
             </enumVal>
           </variable>
 
-          <variable CV="112.19" item="Section 3 Trip Speed2"
+          <variable CV="112.19" item="Section 3 Trip Speed2" default="0"
                 tooltip="OpSw019">
             <enumVal>
               <enumChoice><choice>Thrown</choice></enumChoice>
@@ -116,7 +116,7 @@
             </enumVal>
           </variable>
 
-          <variable CV="112.21" item="Section 3 Trip Speed1"
+          <variable CV="112.21" item="Section 3 Trip Speed1" default="0"
                 tooltip="OpSw21">
             <enumVal>
               <enumChoice><choice>Thrown</choice></enumChoice>
@@ -124,7 +124,7 @@
             </enumVal>
           </variable>
 
-          <variable CV="112.22" item="Section 3 AutoReversing Mode"
+          <variable CV="112.22" item="Section 3 AutoReversing Mode" default="0"
                 tooltip="OpSw22">
             <enumVal>
               <enumChoice><choice>Short-circuit Protection (pins 13 and 14 unconnected)</choice></enumChoice>
@@ -132,7 +132,7 @@
             </enumVal>
           </variable>
 
-          <variable CV="112.27" item="Section 4 Trip Speed2"
+          <variable CV="112.27" item="Section 4 Trip Speed2" default="0"
                 tooltip="OpSw27">
             <enumVal>
               <enumChoice><choice>Thrown</choice></enumChoice>
@@ -140,7 +140,7 @@
             </enumVal>
           </variable>
 
-          <variable CV="112.29" item="Section 4 Trip Speed1"
+          <variable CV="112.29" item="Section 4 Trip Speed1" default="0"
                 tooltip="OpSw29">
             <enumVal>
               <enumChoice><choice>Thrown</choice></enumChoice>
@@ -148,7 +148,7 @@
             </enumVal>
           </variable>
 
-          <variable CV="112.30" item="Section 4 AutoReversing Mode"
+          <variable CV="112.30" item="Section 4 AutoReversing Mode" default="0"
                 tooltip="OpSw30">
             <enumVal>
               <enumChoice><choice>Short-circuit Protection (pins 17 and 18 unconnected)</choice></enumChoice>
@@ -156,7 +156,7 @@
             </enumVal>
           </variable>
 
-          <variable item="Trip Current"
+          <variable item="Trip Current" default="0"
                 tooltip="OpSw01, OpSw02, OpSw09">
             <compositeVal>
               <compositeChoice choice="1.5 Amps">
@@ -203,7 +203,7 @@
             <label>Trip Current is</label>
           </variable>
 
-          <variable item="Section 1 Short-Circuit Detection Speed"
+          <variable item="Section 1 Short-Circuit Detection Speed" default="0"
                 tooltip="OpSw03, OpSw05">
             <compositeVal>
               <compositeChoice choice="Slow">
@@ -226,7 +226,7 @@
             <label>Section 1 Trip Speed is</label>
           </variable>
 
-          <variable item="Section 2 Short-Circuit Detection Speed"
+          <variable item="Section 2 Short-Circuit Detection Speed" default="0"
                 tooltip="OpSw11, OpSw13">
             <compositeVal>
               <compositeChoice choice="Slow">
@@ -249,7 +249,7 @@
             <label>Section 2 Trip Speed is</label>
           </variable>
 
-          <variable item="Section 3 Short-Circuit Detection Speed"
+          <variable item="Section 3 Short-Circuit Detection Speed" default="0"
                 tooltip="OpSw19, OpSw21">
             <compositeVal>
               <compositeChoice choice="Slow">
@@ -272,7 +272,7 @@
             <label>Section 3 Trip Speed is</label>
           </variable>
 
-          <variable item="Section 4 Short-Circuit Detection Speed"
+          <variable item="Section 4 Short-Circuit Detection Speed" default="0"
                 tooltip="OpSw27, OpSw29">
             <compositeVal>
               <compositeChoice choice="Slow">
