@@ -240,16 +240,8 @@
           <variable CV="115.16" comment="Routes Enable"
                     item="Routes Enable" default="0" infoOnly="no"
                     tooltip="OpSw16">
-              <enumVal>
-                  <enumChoice>
-                      <choice>Routes are enabled (OpSw16=t)</choice>
-                      <comment>Thrown is first choice; Closed is second choice</comment>
-                  </enumChoice>
-                  <enumChoice>
-                      <choice>Routes are disabled (OpSw16=c)</choice>
-                      <comment>Thrown is first choice; Closed is second choice</comment>
-                  </enumChoice>
-              </enumVal>
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+              <label>Routes are</label>
           </variable>
 
           <variable CV="115.17" comment="Crossing Gate on Output 1"
@@ -533,6 +525,9 @@
                 &lt;p&gt;window and re-open the Roster entry to ensure that the
                 the programmer will use the modified Active Address for accesses
                 &lt;p&gt;to the device.
+                &lt;p&gt;Note that BDL16x and PM4x documentation refers 
+                to Board Address, while DS64 and SE8C documentation refers to 
+                &lt;p&gt;Board ID.  These are equivalent concepts.
             &lt;/html&gt;</text>
           </label>
       </column>
