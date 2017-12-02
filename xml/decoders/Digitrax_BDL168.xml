@@ -21,8 +21,8 @@
 
     <decoder>
 
-        <family name="BDL16/BDL162/BDL168" mfg="Digitrax">
-            <model model="BDL16/BDL162/BDL168"/>
+        <family name="BDL162/BDL168" mfg="Digitrax">
+            <model model="BDL162/BDL168"/>
         </family>
 
         <programming direct="no" paged="no" register="no" ops="no">
@@ -32,11 +32,11 @@
         <variables>
           <variable CV="1" comment="Board address" item="Short Address" default="1" infoOnly="yes">
             <!-- needed to set the board address value -->
-            <decVal min="1" max="127" />
-            <label>Primary Address</label>
+            <decVal min="1" max="128" />
+            <label>Board Address (Board ID)</label>
           </variable>
 
-          <variable CV="113.01" item="Wiring Type"
+          <variable CV="113.01" item="Wiring Type" default="0"
                 tooltip="OpSw01">
             <enumVal>
               <enumChoice>
@@ -49,20 +49,20 @@
             <label>Wiring type is</label>
           </variable>
 
-          <variable CV="113.03" item="Swap RailSync sensitivity"
+          <variable CV="113.03" item="Swap RailSync sensitivity" default="0"
                 tooltip="OpSw03">
             <enumVal>
               <enumChoice>
                 <choice>normal</choice>
               </enumChoice>
               <enumChoice>
-                <choice>reversed (pay attention to other RailSync wire) (BDL162/BDL168 only)</choice>
+                <choice>reversed (pay attention to other RailSync wire)</choice>
               </enumChoice>
             </enumVal>
             <label>LocoNet cabling is</label>
           </variable>
 
-          <variable CV="113.05" item="Transponding Enable1"
+          <variable CV="113.05" item="Transponding Enable1" default="1"
                 tooltip="OpSw05">
             <enumVal>
               <enumChoice>
@@ -72,10 +72,9 @@
                 <choice>Enable Transponding</choice>
               </enumChoice>
             </enumVal>
-            <label> </label>
           </variable>
 
-          <variable CV="113.06" item="Transponding Enable2"
+          <variable CV="113.06" item="Transponding Enable2" default="0"
                 tooltip="OpSw06">
             <enumVal>
               <enumChoice>
@@ -85,10 +84,9 @@
                 <choice>Unsupported</choice>
               </enumChoice>
             </enumVal>
-            <label> </label>
           </variable>
 
-          <variable CV="113.07" item="Transponding Enable3"
+          <variable CV="113.07" item="Transponding Enable3" default="0"
                 tooltip="OpSw07">
             <enumVal>
               <enumChoice>
@@ -98,10 +96,9 @@
                 <choice>Unsupported</choice>
               </enumChoice>
             </enumVal>
-            <label> </label>
           </variable>
 
-          <variable item="Transponding Enable"
+          <variable item="Transponding Enable" 
                 tooltip="OpSw05, OpSw06, OpSw07">
             <compositeVal>
               <compositeChoice choice="Disabled">
@@ -148,7 +145,7 @@
             <label>Transponding is </label>
           </variable>
 
-          <variable CV="113.09" item="Occupancy Force when Zone Power Off"
+          <variable CV="113.09" item="Occupancy Force when Zone Power Off" default="0"
                 tooltip="OpSw09">
               <enumVal>
                   <enumChoice>
@@ -161,7 +158,7 @@
               <label>Detection Sections</label>
           </variable>
 
-          <variable CV="113.10" item="Detection section 16"
+          <variable CV="113.10" item="Detection section 16" default="0"
                 tooltip="OpSw10">
               <enumVal>
                   <enumChoice>
@@ -174,7 +171,7 @@
               <label>Detection Section 16</label>
           </variable>
 
-          <variable CV="113.11" item="BDL as LocoNet Master"
+          <variable CV="113.11" item="BDL as LocoNet Master" default="1" 
                 tooltip="OpSw11">
               <enumVal>
                   <enumChoice>
@@ -187,7 +184,7 @@
               <label>This BDL16x</label>
           </variable>
 
-          <variable CV="113.12" item="BDL as LocoNet Termination"
+          <variable CV="113.12" item="BDL as LocoNet Termination" default="1" 
                 tooltip="OpSw12">
               <enumVal>
                   <enumChoice>
@@ -200,7 +197,7 @@
               <label>This BDL16x</label>
           </variable>
 
-          <variable CV="113.13" item="Power-up delay"
+          <variable CV="113.13" item="Power-up delay" default="0"
                 tooltip="OpSw13">
               <enumVal>
                   <enumChoice>
@@ -213,7 +210,7 @@
               <label>This BDL16x will</label>
           </variable>
 
-          <variable CV="113.19" item="Detection threshold"
+          <variable CV="113.19" item="Detection threshold" default="0"
                 tooltip="OpSw19">
               <enumVal>
                   <enumChoice>
@@ -226,7 +223,7 @@
               <label>Detection Section Sensitivity:</label>
           </variable>
 
-          <variable CV="113.25" item="LED Output Mode"
+          <variable CV="113.25" item="LED Output Mode" default="0"
                 tooltip="OpSw25">
               <enumVal>
                   <enumChoice>
@@ -238,7 +235,7 @@
               </enumVal>
           </variable>
 
-          <variable CV="113.26" item="Switch Mode LEDs source"
+          <variable CV="113.26" item="Switch Mode LEDs source" default="0"
                 tooltip="OpSw26">
               <enumVal>
                   <enumChoice>
@@ -250,7 +247,7 @@
               </enumVal>
           </variable>
 
-          <variable CV="113.30" item="RailSync Sample Delay1"
+          <variable CV="113.30" item="RailSync Sample Delay1" default="0"
                 tooltip="OpSw30">
               <enumVal>
                   <enumChoice>
@@ -262,7 +259,7 @@
               </enumVal>
           </variable>
 
-          <variable CV="113.31" item="RailSync Sample Delay2"
+          <variable CV="113.31" item="RailSync Sample Delay2" default="0"
                 tooltip="OpSw31">
               <enumVal>
                   <enumChoice>
@@ -281,15 +278,15 @@
                 <compositeSetting label="RailSync Sample Delay1" value="0"/>
                 <compositeSetting label="RailSync Sample Delay2" value="0"/>
               </compositeChoice>
-              <compositeChoice choice="slightly delayed (BDL162/BDL168 only)">
+              <compositeChoice choice="slightly delayed">
                 <compositeSetting label="RailSync Sample Delay1" value="1"/>
                 <compositeSetting label="RailSync Sample Delay2" value="0"/>
               </compositeChoice>
-              <compositeChoice choice="moderately delayed (BDL162/BDL168 only)">
+              <compositeChoice choice="moderately delayed">
                 <compositeSetting label="RailSync Sample Delay1" value="0"/>
                 <compositeSetting label="RailSync Sample Delay2" value="1"/>
               </compositeChoice>
-              <compositeChoice choice="significantly delayed (BDL162/BDL168 only)">
+              <compositeChoice choice="significantly delayed">
                 <compositeSetting label="RailSync Sample Delay1" value="1"/>
                 <compositeSetting label="RailSync Sample Delay2" value="1"/>
               </compositeChoice>
@@ -320,7 +317,7 @@
             <label>BDL16x LED outputs </label>
           </variable>
 
-          <variable CV="113.36" item="Interrogation Response"
+          <variable CV="113.36" item="Interrogation Response" default="0"
                 tooltip="OpSw36">
               <enumVal>
                   <enumChoice>
@@ -333,7 +330,7 @@
               <label>This BDL168 </label>
           </variable>
 
-          <variable CV="113.42" item="First Interrogate Enable"
+          <variable CV="113.42" item="First Interrogate Enable" default="0"
                 tooltip="OpSw42">
               <enumVal>
                   <enumChoice>
@@ -365,10 +362,10 @@
                       <compositeSetting label="First Interrogate Enable" value="1"/>
                   </compositeChoice>
               </compositeVal>
-              <label>This BDL168 </label>
+              <label>This BDL16x </label>
           </variable>
 
-          <variable CV="113.37" item="Detection Section Timing1"
+          <variable CV="113.37" item="Detection Section Timing1" default="0"
                 tooltip="OpSw37">
               <enumVal>
                   <enumChoice>
@@ -380,7 +377,7 @@
               </enumVal>
           </variable>
 
-          <variable CV="113.38" item="Detection Section Timing2"
+          <variable CV="113.38" item="Detection Section Timing2" default="0"
                 tooltip="OpSw38">
               <enumVal>
                   <enumChoice>
@@ -407,7 +404,7 @@
                   <compositeSetting label="Detection Section Timing1" value="0"/>
                   <compositeSetting label="Detection Section Timing2" value="1"/>
                 </compositeChoice>
-                <compositeChoice choice="Twice slow (BDL160 only)">
+                <compositeChoice choice="Twice slow (BDL168 only)">
                   <compositeSetting label="Detection Section Timing1" value="1"/>
                   <compositeSetting label="Detection Section Timing2" value="1"/>
                 </compositeChoice>
@@ -415,7 +412,7 @@
               <label>Detection Section timing is</label>
           </variable>
 
-          <variable CV="113.39" item="Transponder Tracking Mode"
+          <variable CV="113.39" item="Transponder Tracking Mode" default="0"
                 tooltip="OpSw39">
               <enumVal>
                   <enumChoice>
@@ -428,7 +425,7 @@
               <label>Transponder Tracking uses</label>
           </variable>
 
-          <variable CV="113.43" item="Anti-chatter Sensitivity1"
+          <variable CV="113.43" item="Anti-chatter Sensitivity1" default="0"
                 tooltip="OpSw43">
               <enumVal>
                   <enumChoice>
@@ -440,7 +437,7 @@
               </enumVal>
           </variable>
 
-          <variable CV="113.44" item="Anti-chatter Sensitivity2"
+          <variable CV="113.44" item="Anti-chatter Sensitivity2" default="0"
                 tooltip="OpSw44">
               <enumVal>
                   <enumChoice>
@@ -475,7 +472,7 @@
             <label>BDL16x LED outputs </label>
           </variable>
 
-          <variable CV="113.45" item="Transponding Messages at GPOFF"
+          <variable CV="113.45" item="Transponding Messages at GPOFF" default="0"
                 tooltip="OpSw45">
               <enumVal>
                   <enumChoice>
@@ -491,8 +488,44 @@
 
         </variables>
     </decoder>
+  <pane>
+      <name>Basic</name>
+      <column>
+          <display item="Short Address"/>
+          <label>
+              <text> </text>
+          </label>
+          <label>
+            <text>&lt;html&gt;&lt;p&gt;
+                LocoNet messaging limits the supported Board Address (Board ID)
+                range to addresses between 1 and 128.  This tool cannot access 
+                &lt;p&gt;BDL162/BDL168 devices outside of this range.
+                &lt;p&gt;
+                &lt;p&gt;This roster entry will only access the specified 
+                BDL162/BDL168 if the Board Address (Active Address), on the 
+                &lt;p&gt;"Basic" sheet, is correct when the programmer is opened.
+                &lt;p&gt;
+                &lt;p&gt;If the Board Address (Active Address) has been changed since
+                the programmer was opened, the programmer will attempt to access the
+                &lt;p&gt;BDL162/BDL168 address which was specified in the 
+                Roster entry when the progammer was opened.
+                &lt;p&gt;
+                &lt;p&gt;After making a change to the Roster entry's Board Address
+                (Active Address) on the "Basic" sheet, save and close the programmer
+                &lt;p&gt;window and re-open the Roster entry to ensure that the
+                the programmer will use the modified Active Address for accesses
+                &lt;p&gt;to the device.
+                &lt;p&gt;
+                &lt;p&gt;Note that BDL16x and PM4x documentation refers 
+                to Board Address, while DS64 and SE8C documentation refers to 
+                &lt;p&gt;Board ID.  These are equivalent concepts.
+            &lt;/html&gt;</text>
+          </label>
+      </column>
+  </pane>
+
     <pane>
-        <name>Basic BDL16/BDL162/BDL168 OpSw Settings</name>
+        <name>Basic BDL162/BDL168 OpSw Settings</name>
         <column>
             <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Detection Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
             <display item="Wiring Type"/>
@@ -532,5 +565,23 @@
             <label><text>   </text></label>
         </column>
     </pane>
-
+  <pane>
+      <name>Notes</name>
+      <column>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
+            &lt;h2&gt;&lt;strong&gt;Notes on BDL162/BDL168 Roster Entries and Programming
+            &lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+        </label>
+        <label>
+            <text>&lt;html&gt;&lt;/strong&gt;&lt;ul&gt;
+                &lt;li&gt;The BDL162/BDL168 &lt;em&gt;must&lt;/em&gt; be in its normal
+                operating mode in order to respond to this programmer's read and
+                write operations.&lt;/li&gt;
+                &lt;li&gt;
+                &lt;p&gt;See the "Basic" sheet for the programmer's limitations with
+                respect to Board Address.&lt;/li&gt;
+            &lt;/ul&gt;&lt;/html&gt;</text>
+        </label>
+      </column>
+  </pane>
 </decoder-config>
