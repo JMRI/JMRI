@@ -30,10 +30,12 @@
         </programming>
 
         <variables>
-          <variable CV="1" comment="Board address" item="Short Address" default="03" infoOnly="yes">
+          <variable CV="1" comment="Board address" item="Short Address" default="01" infoOnly="yes">
             <!-- needed to set the board address value -->
             <decVal min="1" max="36" />
-            <label>Primary Address</label>
+            <label>Board ID</label>
+            <tooltip>Board IDs may be in the range 1-24 or 1-36, depending on the
+                number of aspects per head</tooltip>
           </variable>
 
           <variable CV="114.01" item="Mode of operation" default="0"
@@ -52,10 +54,10 @@
                 tooltip="OpSw02">
               <enumVal>
               <enumChoice>
-                <choice>4 aspects per head</choice>
+                <choice>Four aspects per head</choice>
               </enumChoice>
               <enumChoice>
-                <choice>2 aspects per head</choice>
+                <choice>Two aspects per head</choice>
               </enumChoice>
             </enumVal>
           </variable>
@@ -300,7 +302,7 @@
                 tooltip="OpSw14">
               <enumVal>
                   <enumChoice>
-                      <choice>RailSync wires</choice>
+                      <choice>DCC Track Signal (RailSync wires in LocoNet cable)</choice>
                   </enumChoice>
                   <enumChoice>
                       <choice>LocoNet messages</choice>
@@ -336,6 +338,36 @@
           </variable>
         </variables>
     </decoder>
+  <pane>
+      <name>Basic</name>
+      <column>
+          <display item="Short Address"/>
+          <label>
+              <text> </text>
+          </label>
+          <label>
+            <text>&lt;html&gt;&lt;p&gt;
+                Board ID may be between 1 and 24 if using "Four Aspects per head" mode
+                or may be between 1 and 36 if using "Two aspects per head" mode.
+                &lt;p&gt;
+                &lt;p&gt;This roster entry will only access the specified SE8C if the
+                Board ID, on the "Basic" sheet, is correct when the
+                &lt;p&gt;programmer is opened.
+                &lt;p&gt;
+                &lt;p&gt;If the Board ID has been changed since
+                the programmer was opened, the programmer will attempt to access the
+                &lt;p&gt;SE8C address which was specified in the Roster entry
+                when the progammer was opened.
+                &lt;p&gt;
+                &lt;p&gt;After making a change to the Roster entry's Board ID
+                (Active Address) on the "Basic" sheet, save and close the programmer
+                &lt;p&gt;window and re-open the Roster entry to ensure that the
+                the programmer will use the modified Active Address for accesses
+                &lt;p&gt;to the device.
+            &lt;/html&gt;</text>
+          </label>
+      </column>
+  </pane>
     <pane>
         <name>Basic SE8c OpSw Settings</name>
         <column>
@@ -365,5 +397,75 @@
             <label><text> </text></label>
         </column>
     </pane>
+  <pane>
+      <name>Notes</name>
+      <column>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
+            &lt;h2&gt;&lt;strong&gt;Notes on SE8C Roster Entries and Programming
+            &lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+        </label>
+        <label>
+            <text>&lt;html&gt;&lt;/strong&gt;&lt;ul&gt;
+                &lt;li&gt;The SE8C &lt;em&gt;must&lt;/em&gt; be in its normal
+                operating mode in order to respond to this programmer's read and
+                write operations.&lt;/li&gt;
+                &lt;li&gt;
+                &lt;p&gt;See the "Basic" sheet for the programmer's limitations with
+                respect to Board Address.&lt;/li&gt;
+                &lt;li&gt;This programmer is neither able to query nor change the SE8C
+                to determine the addresses which control the signals.
+                &lt;p&gt;Users should
+                keep careful records of any such change to each SE8C's configuration.&lt;/li&gt;
+                &lt;li&gt;When using "Four aspects per head" mode with the SE8C configured
+                with a Board ID in the range 13 thru 24 the SE8c
+                &lt;p&gt;will (by default)
+                control the signal heads using Switch addresses which cannot be
+                actuated by the typical LocoNet throttle.
+                &lt;p&gt;Similarly, when using "Two aspects per head" mode with the SE8C configured
+                with a Board ID in the range 18 thru 36, the
+                &lt;p&gt;SE8c will (by default) control the signal heads using
+                Switch addresses which cannot be actuated by the typical LocoNet
+                &lt;p&gt;throttle.
+                &lt;p&gt;If you wish to be able to control SE8C signal heads using a typical
+                throttle, be sure to use a Board ID number below the
+                &lt;p&gt;ranges listed above.
+                &lt;p&gt;This implied switch address configuration may be overriden
+                by setting OpSw17 to "Closed" and then issuing a turnout
+                &lt;p&gt;control message on LocoNet.
+                &lt;p&gt;See Digitrax SE8C documentation for details.&lt;/li&gt;
+                &lt;li&gt;By default, the SE8C requires that its switch control
+                messages arrive on the LocoNet cable's low-voltage
+                &lt;p&gt;equivalent of the DCC track signals.  This means that
+                the SE8C will only react to switch control messages
+                &lt;p&gt;on the DCC track signal, by default, so the command
+                station track power must be on.  If using the SE8C
+                &lt;p&gt;on a "Standalone" LocoNet, it will be necessary to configure the
+                SE8C to take its switch control messages
+                &lt;p&gt;from "LocoNet messages",
+                instead of from the "DCC track signal".&lt;/li&gt;
+                &lt;li&gt;JMRI's "SE8C Signal Head" assumes that the SE8C is
+                configured in "Four aspects per head" mode.&lt;/li&gt;
+                &lt;li&gt;JMRI's support for flashing aspects on SE8C signal heads
+                assumes that the SE8C is configured for "Fourth aspect is
+                &lt;p&gt;Dark".
+                &lt;p&gt;Note that when JMRI is flashing a signal head, there will
+                be two LocoNet messages for each flash of the lamp.  This can be
+                &lt;p&gt;a significant amount of LocoNet traffic if many signal heads are
+                flashing.
+                &lt;p&gt;Additionally, the LocoNet switch commands are passed to
+                the DCC track signal by the command station.  The command
+                &lt;p&gt;station can only process a limited number of LocoNet
+                switch control messages.  When LocoNet traffic exceeds that
+                &lt;p&gt;capacity, the command
+                station will reject the switch control message.  This can manifest
+                as "missed" flashes, "stuck lit"
+                &lt;p&gt;and "stuck off" signal heads, as well as excessive LocoNet
+                traffic.  This problem may be mitigated by using the
+                &lt;p&gt;SE8C on a "Standalone LocoNet" and configuring the
+                SE8C to take switch control messages from "LocoNet messages".
 
+            &lt;/ul&gt;&lt;/html&gt;</text>
+        </label>
+      </column>
+  </pane>
 </decoder-config>
