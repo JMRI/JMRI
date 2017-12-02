@@ -13,17 +13,13 @@ public class SerialSensor extends AbstractSensor {
 
     public SerialSensor(String systemName, SerialTrafficController tc) {
         super(systemName);
-        this.tc = tc;
         _knownState = UNKNOWN;
     }
 
     public SerialSensor(String systemName, SerialTrafficController tc, String userName) {
         super(systemName, userName);
-        this.tc = tc;
         _knownState = UNKNOWN;
     }
-
-    SerialTrafficController tc = null;
 
     /**
      * Request an update on status.

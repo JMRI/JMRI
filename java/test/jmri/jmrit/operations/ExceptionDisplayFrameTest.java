@@ -2,7 +2,6 @@ package jmri.jmrit.operations;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import jmri.util.ThreadingUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -31,6 +30,7 @@ public class ExceptionDisplayFrameTest {
             return !dialog.isVisible();
         }, "Exception Frame did not close");
         dialog.dispose();
+        JUnitUtil.dispose(dialog);
     }
 
     // The minimal setup for log4J

@@ -138,6 +138,41 @@ public class LnOpsModeProgrammerTest extends TestCase {
         
      }
 
+     public void testBoardRead() throws ProgrammerException {
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        
+        lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBDOPSWMODE);
+        lnopsmodeprogrammer.readCV("113.6",pl);
+        
+        // should have written and not returned
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        
+        Assert.assertEquals("sent byte 0", 0xD0, lnis.outbound.get(0).getElement(0) & 0xFF);
+        Assert.assertEquals("sent byte 1", 0x62, lnis.outbound.get(0).getElement(1) & 0xFF);
+        Assert.assertEquals("sent byte 2", 0x04, lnis.outbound.get(0).getElement(2) & 0xFF);
+        Assert.assertEquals("sent byte 3", 113, lnis.outbound.get(0).getElement(3) & 0xFF);
+        Assert.assertEquals("sent byte 4", 0x0A, lnis.outbound.get(0).getElement(4) & 0xFF);
+
+        int testVal = 1;
+        
+        // check echo of sent message has no effect
+        LocoNetMessage m = lnis.outbound.get(0);
+        lnopsmodeprogrammer.message(m);
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+      
+        // Known-good message in reply
+        m = new LocoNetMessage(new int[]{0xB4, 0x50, 0x60, 0x00});
+        lnopsmodeprogrammer.message(m);
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+        Assert.assertEquals("Reply value matches", testVal, pl.getRcvdValue());
+        
+     }
+
+
      public void testSv1ARead() throws ProgrammerException {
         LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
         

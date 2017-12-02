@@ -1,6 +1,5 @@
 package jmri.jmrit.operations;
 
-import java.util.Locale;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import junit.framework.TestCase;

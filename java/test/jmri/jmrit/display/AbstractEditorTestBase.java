@@ -1,7 +1,9 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+import javax.swing.UIManager;
 import jmri.util.JUnitUtil;
+import jmri.util.SystemType;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -54,7 +56,13 @@ abstract public class AbstractEditorTestBase {
         EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuHelp"));
         Assert.assertNotNull("Help Menu Exists", jmo);
-        Assert.assertEquals("Menu Item Count", 10, jmo.getItemCount());
+        if (SystemType.isMacOSX() && UIManager.getLookAndFeel().isNativeLookAndFeel()) {
+            // macOS w/ native L&F help menu does not include "About" menu item
+            // or the preceding separator
+            Assert.assertEquals("Menu Item Count", 8, jmo.getItemCount());
+        } else {
+            Assert.assertEquals("Menu Item Count", 10, jmo.getItemCount());
+        }
     }
 
     @Test
