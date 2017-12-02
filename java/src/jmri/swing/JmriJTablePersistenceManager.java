@@ -12,7 +12,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JTable;
 import javax.swing.RowSorter;
@@ -396,24 +395,6 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
      * instance (a {@link jmri.managers.JmriUserPreferencesManager}) so it does
      * not need to maintain separate knowledge of table column state.
      *
-     * @param table  the requested table name
-     * @param column the requested column name
-     * @return the preferences for the column or null if none have been set
-     *
-     * @throws NullPointerException if either name is null
-     * @deprecated since 4.5.2
-     */
-    @Deprecated
-    @CheckForNull
-    public TableColumnPreferences getTableColumnPreferences(@Nonnull String table, @Nonnull String column) {
-        return this.getPersistedState(table, column);
-    }
-
-    /**
-     * Transition support for the standard {@link jmri.UserPreferencesManager}
-     * instance (a {@link jmri.managers.JmriUserPreferencesManager}) so it does
-     * not need to maintain separate knowledge of table column state.
-     *
      * @param table  the table name
      * @param column the column name
      * @param order  order of the column
@@ -432,47 +413,6 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
             this.sortKeys.put(table, keys);
         }
         this.setPersistedState(table, column, order, width, sort, hidden);
-    }
-
-    /**
-     * Transition support for the standard {@link jmri.UserPreferencesManager}
-     * instance (a {@link jmri.managers.JmriUserPreferencesManager}) so it does
-     * not need to maintain separate knowledge of table column state.
-     *
-     * @param table name of the table
-     * @return a map of TableColumnPreferences indexed by column name
-     * @throws NullPointerException if table name is null
-     * @deprecated since 4.5.2
-     */
-    @Deprecated
-    @Nonnull
-    public Map<String, TableColumnPreferences> getTableColumnPreferences(@Nonnull String table) {
-        Objects.requireNonNull(table, "table name cannot be null");
-        Map<String, TableColumnPreferences> map = this.columns.get(table);
-        if (map != null) {
-            return map;
-        }
-        return new HashMap<>();
-    }
-
-    /**
-     * Transition support for {@link jmri.UserPreferencesManager} instances so
-     * they do not need to maintain separate knowledge of table column state.
-     *
-     * @param table  the requested table name
-     * @param column the requested column name
-     * @throws NullPointerException if either name is null
-     * @return the preferences for the column or null if none have been set
-     */
-    @CheckForNull
-    protected TableColumnPreferences getPersistedState(@Nonnull String table, @Nonnull String column) {
-        Objects.requireNonNull(table, "table name must be nonnull");
-        Objects.requireNonNull(column, "column name must be nonnull");
-        HashMap<String, TableColumnPreferences> map = this.columns.get(table);
-        if (map != null) {
-            return map.get(column);
-        }
-        return null;
     }
 
     /**

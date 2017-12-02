@@ -1,6 +1,5 @@
 package jmri.swing;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import apps.tests.Log4JFixture;
@@ -338,23 +337,6 @@ public class JmriJTablePersistenceManagerTest {
         expected.add(JTablePersistenceManager.class);
         expected.add(JmriJTablePersistenceManager.class);
         Assert.assertEquals(expected, instance.getProvides());
-    }
-
-    /**
-     * Test of getPersistedState method, of class JmriJTablePersistenceManager.
-     */
-    @Test
-    @Ignore
-    public void testGetPersistedState() {
-        System.out.println("getPersistedState");
-        String table = "";
-        String column = "";
-        JmriJTablePersistenceManager instance = new JmriJTablePersistenceManager();
-        JmriJTablePersistenceManager.TableColumnPreferences expResult = null;
-        JmriJTablePersistenceManager.TableColumnPreferences result = instance.getPersistedState(table, column);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**

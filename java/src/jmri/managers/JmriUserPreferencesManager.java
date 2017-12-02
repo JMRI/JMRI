@@ -10,8 +10,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -36,7 +34,6 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 import jmri.swing.JmriJTablePersistenceManager;
-import jmri.swing.JmriJTablePersistenceManager.TableColumnPreferences;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.jdom.JDOMUtil;
@@ -830,95 +827,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((manager) -> {
             manager.setTableColumnPreferences(table, column, order, width, sort, hidden);
         });
-    }
-
-    @Override
-    @Deprecated
-    public int getTableColumnOrder(String table, String column) {
-        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
-        if (manager != null) {
-            TableColumnPreferences preferences = manager.getTableColumnPreferences(table, column);
-            if (preferences != null) {
-                return preferences.getOrder();
-            }
-        }
-        return -1;
-    }
-
-    @Override
-    @Deprecated
-    public int getTableColumnWidth(String table, String column) {
-        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
-        if (manager != null) {
-            TableColumnPreferences preferences = manager.getTableColumnPreferences(table, column);
-            if (preferences != null) {
-                return preferences.getWidth();
-            }
-        }
-        return -1;
-    }
-
-    @Override
-    @Deprecated
-    public SortOrder getTableColumnSort(String table, String column) {
-        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
-        if (manager != null) {
-            TableColumnPreferences preferences = manager.getTableColumnPreferences(table, column);
-            if (preferences != null) {
-                return preferences.getSort();
-            }
-        }
-        return SortOrder.UNSORTED;
-    }
-
-    @Override
-    @Deprecated
-    public boolean getTableColumnHidden(String table, String column) {
-        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
-        if (manager != null) {
-            TableColumnPreferences preferences = manager.getTableColumnPreferences(table, column);
-            if (preferences != null) {
-                return preferences.getHidden();
-            }
-        }
-        return false;
-    }
-
-    @Override
-    @Deprecated
-    public String getTableColumnAtNum(String table, int i) {
-        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
-        if (manager != null) {
-            Map<String, TableColumnPreferences> map = manager.getTableColumnPreferences(table);
-            for (Map.Entry<String, TableColumnPreferences> entry : map.entrySet()) {
-                if ((entry.getValue()).getOrder() == i) {
-                    return entry.getKey();
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Returns an empty list, since this class does not track table state.
-     *
-     * @return an empty list
-     */
-    @Override
-    @Deprecated
-    public List<String> getTablesList() {
-        return new ArrayList<>();
-    }
-
-    @Override
-    @Deprecated
-    public List<String> getTablesColumnList(String table) {
-        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
-        if (manager != null) {
-            Map<String, TableColumnPreferences> map = manager.getTableColumnPreferences(table);
-            return new ArrayList<>(map.keySet());
-        }
-        return new ArrayList<>();
     }
 
     public String getClassDescription() {
