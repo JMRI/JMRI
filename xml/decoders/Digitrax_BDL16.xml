@@ -49,16 +49,6 @@
             <label>Wiring type is</label>
           </variable>
 
-          <variable CV="113.03" item="Swap RailSync sensitivity" default="0"
-                tooltip="OpSw03">
-            <enumVal>
-              <enumChoice>
-                <choice>normal</choice>
-              </enumChoice>
-            </enumVal>
-            <label>LocoNet cabling is</label>
-          </variable>
-
           <variable CV="113.05" item="Transponding Enable1" default="1"
                 tooltip="OpSw05">
             <enumVal>
@@ -304,176 +294,6 @@
             </compositeVal>
             <label>BDL16x LED outputs </label>
           </variable>
-
-          <variable CV="113.36" item="Interrogation Response" default="0"
-                tooltip="OpSw36">
-              <enumVal>
-                  <enumChoice>
-                      <choice>Responds with status at GPON and interrogate commmands</choice>
-                  </enumChoice>
-                  <enumChoice>
-                      <choice>Responds only to interrogate commmands (BDL168 only)</choice>
-                  </enumChoice>
-              </enumVal>
-              <label>This BDL168 </label>
-          </variable>
-
-          <variable CV="113.42" item="First Interrogate Enable" default="0"
-                tooltip="OpSw42">
-              <enumVal>
-                  <enumChoice>
-                      <choice>Standard interrogation</choice>
-                  </enumChoice>
-                  <enumChoice>
-                      <choice>Ignore OpSw36 setting; reply at every interrogation (BDL168 only)</choice>
-                  </enumChoice>
-              </enumVal>
-          </variable>
-
-          <variable item="Interrogation actions"
-                tooltip="OpSw36, OpSw42">
-              <compositeVal>
-                  <compositeChoice choice="Reports detection section status at GPON and all except first Interrogation attempt">
-                      <compositeSetting label="Interrogation Response" value="0"/>
-                      <compositeSetting label="First Interrogate Enable" value="0"/>
-                  </compositeChoice>
-                  <compositeChoice choice="Reports detection section status at all except first Interrofation attempt (BDL168 only)">
-                      <compositeSetting label="Interrogation Response" value="1"/>
-                      <compositeSetting label="First Interrogate Enable" value="0"/>
-                  </compositeChoice>
-                  <compositeChoice choice="Reports detection section status at GPON and at all Interrogage attempt (BDL168 only)">
-                      <compositeSetting label="Interrogation Response" value="0"/>
-                      <compositeSetting label="First Interrogate Enable" value="1"/>
-                  </compositeChoice>
-                  <compositeChoice choice="Reports detection section status at all Interrogate attempt (BDL168 only)">
-                      <compositeSetting label="Interrogation Response" value="1"/>
-                      <compositeSetting label="First Interrogate Enable" value="1"/>
-                  </compositeChoice>
-              </compositeVal>
-              <label>This BDL168 </label>
-          </variable>
-
-          <variable CV="113.37" item="Detection Section Timing1" default="0"
-                tooltip="OpSw37">
-              <enumVal>
-                  <enumChoice>
-                      <choice>Thrown</choice>
-                  </enumChoice>
-                  <enumChoice>
-                      <choice>Closed (BDL168 only)</choice>
-                  </enumChoice>
-              </enumVal>
-          </variable>
-
-          <variable CV="113.38" item="Detection Section Timing2" default="0"
-                tooltip="OpSw38">
-              <enumVal>
-                  <enumChoice>
-                      <choice>Thrown</choice>
-                  </enumChoice>
-                  <enumChoice>
-                      <choice>Closed (BDL168 only)</choice>
-                  </enumChoice>
-              </enumVal>
-          </variable>
-
-          <variable item="Detection Section Timing"
-                tooltip="OpSw37, OpSw38">
-              <compositeVal>
-                <compositeChoice choice="Standard">
-                  <compositeSetting label="Detection Section Timing1" value="0"/>
-                  <compositeSetting label="Detection Section Timing2" value="0"/>
-                </compositeChoice>
-                <compositeChoice choice="Slow (BDL168 only)">
-                  <compositeSetting label="Detection Section Timing1" value="1"/>
-                  <compositeSetting label="Detection Section Timing2" value="0"/>
-                </compositeChoice>
-                <compositeChoice choice="Standard (alternate) (BDL168 only)">
-                  <compositeSetting label="Detection Section Timing1" value="0"/>
-                  <compositeSetting label="Detection Section Timing2" value="1"/>
-                </compositeChoice>
-                <compositeChoice choice="Twice slow (BDL160 only)">
-                  <compositeSetting label="Detection Section Timing1" value="1"/>
-                  <compositeSetting label="Detection Section Timing2" value="1"/>
-                </compositeChoice>
-              </compositeVal>
-              <label>Detection Section timing is</label>
-          </variable>
-
-          <variable CV="113.39" item="Transponder Tracking Mode" default="0"
-                tooltip="OpSw39">
-              <enumVal>
-                  <enumChoice>
-                      <choice>Sequential Mode</choice>
-                  </enumChoice>
-                  <enumChoice>
-                      <choice>Verbose Mode (BDL168 only)</choice>
-                  </enumChoice>
-              </enumVal>
-              <label>Transponder Tracking uses</label>
-          </variable>
-
-          <variable CV="113.43" item="Anti-chatter Sensitivity1" default="0"
-                tooltip="OpSw43">
-              <enumVal>
-                  <enumChoice>
-                      <choice>Thrown</choice>
-                  </enumChoice>
-                  <enumChoice>
-                      <choice>Closed</choice>
-                  </enumChoice>
-              </enumVal>
-          </variable>
-
-          <variable CV="113.44" item="Anti-chatter Sensitivity2" default="0"
-                tooltip="OpSw44">
-              <enumVal>
-                  <enumChoice>
-                      <choice>Thrown</choice>
-                  </enumChoice>
-                  <enumChoice>
-                      <choice>Closed</choice>
-                  </enumChoice>
-              </enumVal>
-          </variable>
-
-          <variable item="Anti-Chatter Filtering"
-                tooltip="OpSw43, OpSw44">
-            <compositeVal>
-              <compositeChoice choice="Maximum Anti-Chatter Filter sensitivity">
-                <compositeSetting label="Anti-chatter Sensitivity1" value="0"/>
-                <compositeSetting label="Anti-chatter Sensitivity2" value="0"/>
-              </compositeChoice>
-              <compositeChoice choice="Anti-Chatter Filter is disabled (BDL168 only)">
-                <compositeSetting label="Anti-chatter Sensitivity1" value="1"/>
-                <compositeSetting label="Anti-chatter Sensitivity2" value="0"/>
-              </compositeChoice>
-              <compositeChoice choice="Standard Anti-Chatter Filter sensitivity (BDL168 only)">
-                <compositeSetting label="Anti-chatter Sensitivity1" value="0"/>
-                <compositeSetting label="Anti-chatter Sensitivity2" value="1"/>
-              </compositeChoice>
-              <compositeChoice choice="Anti-Chatter Filter is disabled (Alternate) (BDL168 only)">
-                <compositeSetting label="Anti-chatter Sensitivity1" value="1"/>
-                <compositeSetting label="Anti-chatter Sensitivity2" value="1"/>
-              </compositeChoice>
-            </compositeVal>
-            <label>BDL16x LED outputs </label>
-          </variable>
-
-          <variable CV="113.45" item="Transponding Messages at GPOFF" default="0"
-                tooltip="OpSw45">
-              <enumVal>
-                  <enumChoice>
-                      <choice>sends Transponding messages</choice>
-                  </enumChoice>
-                  <enumChoice>
-                      <choice>does not send Transponding messages (BDL168 only)</choice>
-                  </enumChoice>
-              </enumVal>
-              <label>At reception of GPOFF: </label>
-          </variable>
-
-
         </variables>
     </decoder>
   <pane>
@@ -520,7 +340,6 @@
             <display item="Occupancy Force when Zone Power Off"/>
             <display item="Detection section 16"/>
             <display item="Detection threshold"/>
-            <display item="Detection Section Timing"/>
             <label><text> </text></label>
             <separator/>
 
@@ -529,28 +348,18 @@
             <display item="BDL as LocoNet Termination"/>
             <display item="Power-up delay"/>
             <display item="Swap RailSync sensitivity"/>
-            <display item="RailSync Sample Delay"/>
 
-            <display item="Interrogation actions"/>
 
             <label><text> </text></label>
             <separator/>
             <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;LED Output Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
             <display item="LED Outputs"/>
             <label><text>   </text></label>
-
-        </column>
-    </pane>
-    <pane>
-        <name>Transponding Controls</name>
-        <column>
+            <separator/>
             <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Transponding Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
             <display item="Transponding Enable"/>
-            <display item="Anti-chatter Filtering"/>
-            <display item="Transponding Messages at GPOFF"/>
-            <display item="Transponder Tracking Mode"/>
-            <display item="Anti-Chatter Filtering"/>
             <label><text>   </text></label>
+
         </column>
     </pane>
   <pane>
