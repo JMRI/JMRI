@@ -316,7 +316,7 @@
                 &lt;p&gt;
                 &lt;p&gt;If the Board Address (Active Address) has been changed since
                 the programmer was opened, the programmer will attempt to access the
-                &lt;p&gt;DS64 address which was specified in the Roster entry
+                &lt;p&gt;PM4/PM42 address which was specified in the Roster entry
                 when the progammer was opened.
                 &lt;p&gt;
                 &lt;p&gt;After making a change to the Roster entry's Board Address
