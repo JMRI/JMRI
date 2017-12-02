@@ -46,7 +46,6 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
 
     protected JTable _table;
     protected PickListModel _model;
-    protected JPanel bgBoxPanel;
 
     JScrollPane _scrollPane;
     JDialog _addTableDialog;

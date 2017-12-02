@@ -38,7 +38,6 @@ public class MultiSensorItemPanel extends TableItemPanel {
     JPanel _multiSensorPanel;
     MultiSensorSelectionModel _selectionModel;
     boolean _upDown = false;
-    protected JPanel bgBoxPanel;
 
     public MultiSensorItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, model, editor);
