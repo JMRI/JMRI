@@ -448,7 +448,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
      *
      * @param container the parent to set plus all its children's background color
      * @deprecated since 4.9.6 use transparent icon panels on a graphic ImagePanel background
-     * @link jmri.util.swing.ImagePanel#setImage(Image)
+     * @see jmri.util.swing.ImagePanel#setImage(Image)
      */
     @Deprecated
     public void setBackground(Container container) {
