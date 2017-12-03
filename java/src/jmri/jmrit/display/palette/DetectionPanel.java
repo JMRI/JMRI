@@ -25,11 +25,11 @@ import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickPanel;
 
 /**
- * Panel for Occupancy and Error detection,
+ * Panel for Occupancy and Error detection.
  */
 public class DetectionPanel extends JPanel {
 
-    private JTextField _occDetectorName = new JTextField();   // can be either a Sensor or OBlock name
+    private JTextField _occDetectorName = new JTextField(); // can be either a Sensor or OBlock name
     private JFrame _pickFrame;
     private JButton _openPicklistButton;
     private JPanel _trainIdPanel;
@@ -41,6 +41,7 @@ public class DetectionPanel extends JPanel {
     private JPanel _checkBoxPanel;
 
     /**
+     * Add _blockPathPanel to this ItemPanel.
      */
     public DetectionPanel(ItemPanel parent) {
         super();
@@ -296,4 +297,5 @@ public class DetectionPanel extends JPanel {
         _blockPathPanel.add(_checkBoxPanel, 1);
         _blockPathPanel.setVisible(true);
     }
+
 }
