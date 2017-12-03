@@ -95,11 +95,11 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
 
     void format(String prefix, boolean extended, int header, int len, int[] content) {
         String raw = formatFrame(extended, header, len, content);
-        String formatted = prefix + ": Unknown frame " + raw;
+        String formatted;
         if (extended && (header & 0x08000000) != 0) {
             // is a message type
             java.util.List<Message> list = frameToMessages(header, len, content);
-            if (list == null || list.size() == 0) {
+            if (list == null || list.isEmpty()) {
                 // didn't format, check for partial datagram
                 if ((header & 0x0F000000) == 0x0B000000) {
                     formatted = prefix + ": (Start of Datagram)";
@@ -107,14 +107,19 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                     formatted = prefix + ": (Middle of Datagram)";
                 } else if (((header & 0x0FFFF000) == 0x09A08000) && (content.length > 0)) {
                     // SNIP multi frame reply
-                    if ((content[0] & 0xF0) == 0x10) {
-                        formatted = prefix + ": SNIP Reply 1st frame";
-                    } else if ((content[0] & 0xF0) == 0x20) {
-                        formatted = prefix + ": SNIP Reply last frame";
-                    } else if ((content[0] & 0xF0) == 0x30) {
-                        formatted = prefix + ": SNIP Reply middle frame";
-                    } else {
-                        formatted = prefix + ": SNIP Reply unknown";
+                    switch (content[0] & 0xF0) {
+                        case 0x10:
+                            formatted = prefix + ": SNIP Reply 1st frame";
+                            break;
+                        case 0x20:
+                            formatted = prefix + ": SNIP Reply last frame";
+                            break;
+                        case 0x30:
+                            formatted = prefix + ": SNIP Reply middle frame";
+                            break;
+                        default:
+                            formatted = prefix + ": SNIP Reply unknown";
+                            break;
                     }
                 } else {
                     formatted = prefix + ": Unknown message " + raw;
@@ -154,31 +159,14 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
 
     @Override
     public synchronized void message(CanMessage l) {  // receive a message and log it
-        if (log.isDebugEnabled()) {
-            log.debug("Message: " + l.toString());
-        }
+        log.debug("Message: {}", l);
         format("S", l.isExtended(), l.getHeader(), l.getNumDataElements(), l.getData());
     }
 
     @Override
     public synchronized void reply(CanReply l) {  // receive a reply and log it
-        if (log.isDebugEnabled()) {
-            log.debug("Reply: " + l.toString());
-        }
+        log.debug("Reply: {}", l);
         format("R", l.isExtended(), l.getHeader(), l.getNumDataElements(), l.getData());
-    }
-
-    /**
-     * Nested class to create one of these using old-style defaults
-     */
-    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-
-        public Default() {
-            super(Bundle.getMessage("MonitorTitle"),
-                    new jmri.util.swing.sdi.JmriJFrameInterface(),
-                    MonitorPane.class.getName(),
-                    jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
-        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(MonitorPane.class);

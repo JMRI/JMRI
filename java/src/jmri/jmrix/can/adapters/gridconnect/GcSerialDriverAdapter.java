@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-
 import jmri.jmrix.can.TrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +24,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Balazs Racz Copyright (C) 2017
  */
-public class GcSerialDriverAdapter extends GcPortController implements jmri.jmrix.SerialPortAdapter {
+public class GcSerialDriverAdapter extends GcPortController {
 
     protected SerialPort activeSerialPort = null;
 
@@ -61,7 +60,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
                 }
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -71,8 +70,9 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}",
+                    activeSerialPort.getReceiveTimeout(),
+                    activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -97,8 +97,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (UnsupportedCommOperationException | IOException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -123,7 +122,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
 
         this.getSystemConnectionMemo().setProtocol(getOptionState(option1Name));
 
-        // do central protocol-specific configuration    
+        // do central protocol-specific configuration
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
         this.getSystemConnectionMemo().configureManagers();
 
@@ -134,14 +133,15 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
     }
 
     /**
-     * Helper class wrapping the input serial port's InputStream. It starts a helper thread at
-     * high priority that reads the input serial port as fast as it can, buffering all incoming
-     * data in memory in a queue. The queue in unbounded and readers will get the data from the
-     * queue.
+     * Helper class wrapping the input serial port's InputStream. It starts a
+     * helper thread at high priority that reads the input serial port as fast
+     * as it can, buffering all incoming data in memory in a queue. The queue in
+     * unbounded and readers will get the data from the queue.
      * <p>
      * This class is thread-safe.
      */
-    private class AsyncBufferInputStream extends FilterInputStream {
+    private static class AsyncBufferInputStream extends FilterInputStream {
+
         AsyncBufferInputStream(InputStream inputStream, String portName) {
             super(inputStream);
             this.portName = portName;
@@ -153,12 +153,14 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
         }
 
         /**
-         * Helper function that tries to perform a read from the underlying port with a given
-         * maximum length.
-         * @param len how many bytes to request from the port. Setting this to 1 will apparently
-         *            block the thread if there are zero bytes available.
-         * @return a block of data read, or nullptr if fatal IO errors make further use
-         * of this port impossible.
+         * Helper function that tries to perform a read from the underlying port
+         * with a given maximum length.
+         *
+         * @param len how many bytes to request from the port. Setting this to 1
+         *            will apparently block the thread if there are zero bytes
+         *            available.
+         * @return a block of data read, or nullptr if fatal IO errors make
+         *         further use of this port impossible.
          */
         private BufferEntry tryRead(int len) {
             BufferEntry tail = new BufferEntry();
@@ -172,7 +174,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
                     log.error("Closing read thread due to too many IO errors", e);
                     return null;
                 } else {
-                    log.warn("Error reading serial port " + portName, e);
+                    log.warn("Error reading serial port {}", portName, e);
                 }
             }
             return tail;
@@ -183,7 +185,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
          */
         private void readThreadBody() {
             BufferEntry tail;
-            while(true) {
+            while (true) {
                 // Try to read one byte to block the thread.
                 tail = tryRead(1);
                 if (tail == null) {
@@ -210,14 +212,16 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
                     } else {
                         break;
                     }
-                } while(true);
+                } while (true);
             }
         }
 
         /**
-         * We queue objects of this class between the read thread and the actual read() methods.
+         * We queue objects of this class between the read thread and the actual
+         * read() methods.
          */
-        private class BufferEntry {
+        private static class BufferEntry {
+
             // data payload
             byte[] data;
             // how many bytes of data are filled in
@@ -269,7 +273,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
         // the read thread and return the last exception to the reader.
         private final static int MAX_IO_ERRORS_TO_ABORT = 10;
         // Queue holding the buffered data.
-        private BlockingQueue<BufferEntry> readAhead = new LinkedBlockingQueue<>();
+        private final BlockingQueue<BufferEntry> readAhead = new LinkedBlockingQueue<>();
         // The last entry we got from the queue if there are still bytes we need to return from it.
         BufferEntry head = null;
         // Offset of next live byte in head.
@@ -301,7 +305,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
+            log.error("getOutputStream exception: {}", e.getMessage());
         }
         return null;
     }
@@ -312,7 +316,9 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
     }
 
     /**
-     * Get an array of valid baud rates.
+     * Get an array of valid baud rates in US English locale.
+     *
+     * @return valid baud rates in US English locale
      */
     @Override
     public String[] validBaudRates() {
@@ -320,7 +326,9 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
     }
 
     /**
-     * And the corresponding values.
+     * Get an array of valid baud rates.
+     *
+     * @return valid baud rates
      */
     public int[] validBaudValues() {
         return new int[]{57600, 115200, 230400, 250000, 333333, 460800};

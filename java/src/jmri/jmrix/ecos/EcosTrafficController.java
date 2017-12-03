@@ -2,7 +2,6 @@ package jmri.jmrix.ecos;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
-import jmri.CommandStation;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -23,13 +22,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface, CommandStation {
+public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface {
 
     public EcosTrafficController() {
         super();
         log.debug("creating a new EcosTrafficController object");
         // set as command station too
-        jmri.InstanceManager.setCommandStation(this);
         this.setAllowUnexpectedReply(true);
         this.setSynchronizeRx(false);
     }
@@ -55,14 +53,6 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     protected int enterProgModeDelayTime() {
         // we should to wait at least a second after enabling the programming track
         return 1000;
-    }
-
-    /**
-     * CommandStation implementation.
-     * This is NOT Supported in the ECoS
-     */
-    @Override
-    public void sendPacket(byte[] packet, int count) {
     }
 
     /**
@@ -305,22 +295,6 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
             }
 
         }
-    }
-
-    @Override
-    public String getUserName() {
-        if (adaptermemo == null) {
-            return "ECoS"; // NOI18N
-        }
-        return adaptermemo.getUserName();
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        if (adaptermemo == null) {
-            return "U";
-        }
-        return adaptermemo.getSystemPrefix();
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosTrafficController.class);

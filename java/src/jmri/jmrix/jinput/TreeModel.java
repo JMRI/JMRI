@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * jinput requires that there be only one of these for a given USB system in a
  * given JVM so we use a pseudo-singlet "instance" approach
- *
+ * <p>
  * Class is final because it starts a survey thread, which runs while
  * constructor is still active.
  *
@@ -43,8 +43,10 @@ public final class TreeModel extends DefaultTreeModel {
 
         // load initial USB objects
         boolean pass = loadSystem();
-        if (!pass) log.error("loadSystem failed");
-        
+        if (!pass) {
+            log.error("loadSystem failed");
+        }
+
         // If you don't call loadSystem, the following line was
         // needed to get the display to start
         // insertNodeInto(new UsbNode("System", null, null), dRoot, 0);
@@ -53,8 +55,9 @@ public final class TreeModel extends DefaultTreeModel {
         runner.setName("jinput.TreeModel loader");
         runner.start();
     }
+
     Runner runner;
-    
+
     /**
      * Add a node to the tree if it doesn't already exist
      *
@@ -64,7 +67,7 @@ public final class TreeModel extends DefaultTreeModel {
      *                where in the tree to insert it.
      * @return node, regardless of whether needed or not
      */
-    DefaultMutableTreeNode insertNode(DefaultMutableTreeNode pChild, DefaultMutableTreeNode pParent) {
+    private DefaultMutableTreeNode insertNode(DefaultMutableTreeNode pChild, DefaultMutableTreeNode pParent) {
         // if already exists, just return it
         int index;
         index = getIndexOfChild(pParent, pChild);
@@ -73,7 +76,11 @@ public final class TreeModel extends DefaultTreeModel {
         }
         // represent this one
         index = pParent.getChildCount();
-        insertNodeInto(pChild, pParent, index);
+        try {
+            insertNodeInto(pChild, pParent, index);
+        } catch (IllegalArgumentException e) {
+            log.error("insertNode({}, {}) Exception {}", pChild, pParent, e);
+        }
         return pChild;
     }
 
@@ -94,11 +101,13 @@ public final class TreeModel extends DefaultTreeModel {
 
     // intended for test routines only
     void terminateThreads() throws InterruptedException {
-        if (runner == null) return;
+        if (runner == null) {
+            return;
+        }
         runner.interrupt();
         runner.join();
     }
-    
+
     static private TreeModel instanceValue = null;
 
     class Runner extends Thread {
@@ -208,12 +217,19 @@ public final class TreeModel extends DefaultTreeModel {
             // ensure controller node exists directly under root
             String cname = controller.getName() + " [" + controller.getType().toString() + "]";
             UsbNode cNode = UsbNode.getNode(cname, controller, null);
-            cNode = (UsbNode) insertNode(cNode, dRoot);
-
+            try {
+                cNode = (UsbNode) insertNode(cNode, dRoot);
+            } catch (IllegalArgumentException e) {
+                log.error("insertNode({}, {}) Exception {}", cNode, dRoot, e);
+            }
             // Device (component) node
             String dname = component.getName() + " [" + component.getIdentifier().toString() + "]";
             UsbNode dNode = UsbNode.getNode(dname, controller, component);
-            dNode = (UsbNode) insertNode(dNode, cNode);
+            try {
+                dNode = (UsbNode) insertNode(dNode, cNode);
+            } catch (IllegalArgumentException e) {
+                log.error("insertNode({}, {}) Exception {}", dNode, cNode, e);
+            }
 
             dNode.setValue(value);
 
@@ -231,36 +247,50 @@ public final class TreeModel extends DefaultTreeModel {
         try {
             ca = ControllerEnvironment.getDefaultEnvironment().getControllers();
             log.debug("Found " + ca.length + " controllers");
-        } catch (Exception ex) { // this is probably ClassNotFoundException, but that's not part of the interface
+        } catch (Exception ex) {
+            // this is probably ClassNotFoundException, but that's not part of the interface
             // could not load some component(s)
             log.debug("Found no controllers, handled Exception", ex);
             ca = null;
             return false;
         }
 
-        for (int i = 0; i < ca.length; i++) {
+        for (Controller controller : controllers()) {
+            UsbNode controllerNode = null;
+            UsbNode deviceNode = null;
             // Get this controllers components (buttons and axis)
-            Component[] components = ca[i].getComponents();
-            log.info("Controller " + ca[i].getName() + " has " + components.length + " components");
-            for (int j = 0; j < components.length; j++) {
-
-                Controller controller = ca[i];
-                Component component = components[j];
-
-                // ensure controller node exists directly under root
-                String cname = controller.getName() + " [" + controller.getType().toString() + "]";
-                UsbNode cNode = UsbNode.getNode(cname, controller, null);
-                cNode = (UsbNode) insertNode(cNode, dRoot);
-
-                // Device (component) node
-                String dname = component.getName() + " [" + component.getIdentifier().toString() + "]";
-                UsbNode dNode = UsbNode.getNode(dname, controller, component);
-                dNode = (UsbNode) insertNode(dNode, cNode);
-
-                dNode.setValue(0.0f);
+            Component[] components = controller.getComponents();
+            log.info("Controller " + controller.getName() + " has " + components.length + " components");
+            for (Component component : components) {
+                try {
+                    if (controllerNode == null) {
+                        // ensure controller node exists directly under root
+                        String controllerName = controller.getName() + " [" + controller.getType().toString() + "]";
+                        controllerNode = UsbNode.getNode(controllerName, controller, null);
+                        controllerNode = (UsbNode) insertNode(controllerNode, dRoot);
+                    }
+                    // Device (component) node
+                    String componentName = component.getName();
+                    String componentIdentifierString = component.getIdentifier().toString();
+                    // Skip unknown components
+                    if (!componentName.equals("Unknown") && !componentIdentifierString.equals("Unknown")) {
+                        String deviceName = componentName + " [" + componentIdentifierString + "]";
+                        deviceNode = UsbNode.getNode(deviceName, controller, component);
+                        deviceNode = (UsbNode) insertNode(deviceNode, controllerNode);
+                        deviceNode.setValue(0.0f);
+                    }
+                } catch (IllegalStateException e) {
+                    // node does not allow children
+                    break;  // skip this controller
+                } catch (IllegalArgumentException e) {
+                    // ignore components that throw IllegalArgumentExceptions
+                    log.error("insertNode({}, {}) Exception {}", deviceNode, controllerNode, e);
+                } catch (Exception e) {
+                    // log all others
+                    log.error("Exception " + e);
+                }
             }
         }
-
         return true;
     }
 

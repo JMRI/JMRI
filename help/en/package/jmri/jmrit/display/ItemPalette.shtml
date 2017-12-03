@@ -25,7 +25,8 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>The Item Palette</h1><b>The Item Palette</b> is used to
+      <h1>The Item Palette</h1>
+      <b>The Item Palette</b> is used to
       place icons and text onto <b>Control Panel Editor</b> panels.
       The palette is a tabbed window with tabs for each item type.
       The common method all items use to add an item to a panel is
@@ -36,14 +37,17 @@
       row from a table to associate that particular device with the
       icon - and then drag the icon to the panel.
 
-      <h2>Iconic Items</h2>For those items using icons, multiple
+      <h2>Iconic Items</h2>
+      For those items using icons, multiple
       sets of icons are offered by the Item Palette. In each of
       these cases several different icon sets are provided by
       default. Radio buttons are used to select an icon set.For
       example, under the sensor tab you may have sets of large
       jewels, small jewels, each size with several sets with
       different colors for active and inactive - e.g. red-green,
-      yellow-dark, etc.
+      yellow-dark, etc.<br>
+      The individual icons are displayed in the preview on the
+      background of the last editor to open the Item Palette.
 
       <p>The <b>Show Icons</b> button displays all the icons in the
       selected set.</p>

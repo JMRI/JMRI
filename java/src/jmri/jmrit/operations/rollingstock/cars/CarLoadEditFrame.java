@@ -18,7 +18,6 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -315,8 +314,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         }
         int number = 0;
         String item = (String) loadComboBox.getSelectedItem();
-        for (RollingStock rs : InstanceManager.getDefault(CarManager.class).getList()) {
-            Car car = (Car) rs;
+        for (Car car : InstanceManager.getDefault(CarManager.class).getList()) {
             if (car.getLoadName().equals(item)) {
                 number++;
             }

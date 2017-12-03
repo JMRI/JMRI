@@ -48,7 +48,7 @@ public class DCCppMessageTest {
 
     // Test the canned messages.
     @Test
-    public void testGetAccessoryDecoderMsg() {
+    public void testGetAccessoryDecoderMsgActivateTrue() {
 	    DCCppMessage m = DCCppMessage.makeAccessoryDecoderMsg(23, 2, true);
 	    log.debug("accessory decoder message = {}", m.toString());
         Assert.assertEquals("length", 8, m.getNumDataElements());
@@ -63,13 +63,34 @@ public class DCCppMessageTest {
     }
 
     @Test
-    public void testMonitorStringAccessoryDecoderMsg() {
+    public void testGetAccessoryDecoderMsgActivateFalse() {
+	    DCCppMessage m = DCCppMessage.makeAccessoryDecoderMsg(23, 2, false);
+	    log.debug("accessory decoder message = {}", m.toString());
+        Assert.assertEquals("length", 8, m.getNumDataElements());
+        Assert.assertEquals("0th byte", 'a', m.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '2', m.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", '3', m.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", ' ', m.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", '2', m.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", ' ', m.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", '0', m.getElement(7) & 0xFF);
+    }
+
+    @Test
+    public void testMonitorStringAccessoryDecoderMsgActivateTrue() {
 	    DCCppMessage m = DCCppMessage.makeAccessoryDecoderMsg(23, 2, true);
         Assert.assertEquals("Monitor string","Accessory Decoder Cmd: \n\tAddress: 23\n\tSubaddr: 2\n\tState: ON",m.toMonitorString());
     }
 
     @Test
-    public void testGetTurnoutCommandMsg() {
+    public void testMonitorStringAccessoryDecoderMsgActivateFalse() {
+	    DCCppMessage m = DCCppMessage.makeAccessoryDecoderMsg(23, 2, false);
+        Assert.assertEquals("Monitor string","Accessory Decoder Cmd: \n\tAddress: 23\n\tSubaddr: 2\n\tState: OFF",m.toMonitorString());
+    }
+
+    @Test
+    public void testGetTurnoutCommandMsgThrown() {
 	    DCCppMessage m = DCCppMessage.makeTurnoutCommandMsg(23, true);
 	    log.debug("turnout message = {}", m.toString());
         Assert.assertEquals("length", 6, m.getNumDataElements());
@@ -82,9 +103,27 @@ public class DCCppMessageTest {
     }
 
     @Test
-    public void testMonitorStringTurnoutCommandMsg() {
+    public void testGetTurnoutCommandMsgClosed() {
+	    DCCppMessage m = DCCppMessage.makeTurnoutCommandMsg(23, false);
+	    log.debug("turnout message = {}", m.toString());
+        Assert.assertEquals("length", 6, m.getNumDataElements());
+        Assert.assertEquals("0th byte", 'T', m.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '2', m.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", '3', m.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", ' ', m.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", '0', m.getElement(5) & 0xFF);
+    }
+
+    @Test
+    public void testMonitorStringTurnoutCommandMsgThrown() {
 	    DCCppMessage m = DCCppMessage.makeTurnoutCommandMsg(23, true);
         Assert.assertEquals("Monitor string","Turnout Cmd: \n\tT/O ID: 23\n\tState: THROWN",m.toMonitorString());
+    }
+    @Test
+    public void testMonitorStringTurnoutCommandMsgClosed() {
+	    DCCppMessage m = DCCppMessage.makeTurnoutCommandMsg(23, false);
+        Assert.assertEquals("Monitor string","Turnout Cmd: \n\tT/O ID: 23\n\tState: CLOSED",m.toMonitorString());
     }
 
     @Test
@@ -392,6 +431,45 @@ public class DCCppMessageTest {
 	    DCCppMessage m = DCCppMessage.makeWriteDCCPacketProgMsg(0, 5, packet);
         Assert.assertEquals("Monitor string","Write DCC Packet Prog Cmd: \n\tRegister: 0\n\tPacket: C4 D2 12 0C 08",m.toMonitorString());
     }
+
+    @Test
+    public void testGetOutputCmdMsgOn() {
+	    DCCppMessage m = DCCppMessage.makeOutputCmdMsg(23, true);
+	    log.debug("turnout message = {}", m.toString());
+        Assert.assertEquals("length", 6, m.getNumDataElements());
+        Assert.assertEquals("0th byte", 'Z', m.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '2', m.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", '3', m.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", ' ', m.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", '1', m.getElement(5) & 0xFF);
+    }
+
+    @Test
+    public void testGetOutputCmdMsgOff() {
+	    DCCppMessage m = DCCppMessage.makeOutputCmdMsg(23, false);
+	    log.debug("turnout message = {}", m.toString());
+        Assert.assertEquals("length", 6, m.getNumDataElements());
+        Assert.assertEquals("0th byte", 'Z', m.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '2', m.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", '3', m.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", ' ', m.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", '0', m.getElement(5) & 0xFF);
+    }
+
+    @Test
+    public void testMonitorStringOutputCmdMsgOn() {
+	    DCCppMessage m = DCCppMessage.makeOutputCmdMsg(23, true);
+        Assert.assertEquals("Monitor string","Output Cmd: \n\tOutput ID: 23\n\tState: HIGH",m.toMonitorString());
+    }
+    @Test
+    public void testMonitorStringOutputCmdMsgOff() {
+	    DCCppMessage m = DCCppMessage.makeOutputCmdMsg(23, false);
+        Assert.assertEquals("Monitor string","Output Cmd: \n\tOutput ID: 23\n\tState: LOW",m.toMonitorString());
+    }
+
+    @Test
 
     // The minimal setup for log4J
     @Before

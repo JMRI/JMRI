@@ -207,12 +207,6 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         this.getSystemConnectionMemo().configureCommandStation();
         this.getSystemConnectionMemo().configureManagers();
 
-        if (this.getSystemConnectionMemo().getSprogMode() == SprogMode.OPS) {
-            jmri.jmrix.sprog.ActiveFlagCS.setActive();
-        } else {
-            jmri.jmrix.sprog.ActiveFlag.setActive();            
-        }
-        
         if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals(Bundle.getMessage("PowerStateOn"))) {
             try {
                 this.getSystemConnectionMemo().getPowerManager().setPower(jmri.PowerManager.ON);

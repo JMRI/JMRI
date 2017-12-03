@@ -1,13 +1,12 @@
 package jmri.jmrix.marklin;
 
-
 /**
  * Carries the reply to an MarklinMessage.
  * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Kevin Dickerson Copyright (C) 2007
- * 
+ *
  */
 public class MarklinReply extends jmri.jmrix.AbstractMRReply {
 
@@ -29,9 +28,7 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
         //this(header);
         this();
         _nDataChars = d.length;
-        for (int i = 0; i < d.length; i++) {
-            _dataChars[i] = d[i];
-        }
+        System.arraycopy(d, 0, _dataChars, 0, d.length);
     }
 
     //Maximum size of a reply packet is 13 bytes.
@@ -60,9 +57,6 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
         return super.getElement(n) & 0xff;
     }
 
-    //knowing where the end is we can then determine the error code
-    int endAtElement = -1;
-
     //An event message is Unsolicited
     @Override
     public boolean isUnsolicited() {
@@ -70,23 +64,22 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * Returns a hex string representation of this MarklinReply
+     * Get a hex string representation of this MarklinReply.
+     *
+     * @return the hex string
      */
     public String toHexString() {
 
-        StringBuffer buf = new StringBuffer();
-        buf.append("0x" + Integer.toHexString(_dataChars[0]));
+        StringBuilder buf = new StringBuilder();
+        buf.append("0x").append(Integer.toHexString(_dataChars[0]));
         for (int i = 1; i < _nDataChars; i++) {
-            buf.append(", 0x" + Integer.toHexString(_dataChars[i]));
+            buf.append(", 0x").append(Integer.toHexString(_dataChars[i]));
         }
         return buf.toString();
     }
 
     public boolean isResponse() {
-        if ((getElement(1) & 0x01) == 0x01) {
-            return true;
-        }
-        return false;
+        return (getElement(1) & 0x01) == 0x01;
     }
 
     public int getCanDataLength() {

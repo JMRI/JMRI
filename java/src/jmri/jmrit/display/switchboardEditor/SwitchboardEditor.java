@@ -1385,12 +1385,12 @@ public class SwitchboardEditor extends Editor {
             setScroll(SCROLL_VERTICAL);
         });
         //add background color menu item
-        JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor"));
+        JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor", "..."));
         _optionMenu.add(backgroundColorMenuItem);
 
         backgroundColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                                 Bundle.getMessage("SetBackgroundColor"),
+                                 Bundle.getMessage("SetBackgroundColor", ""),
                                  defaultBackgroundColor);
             if (desiredColor!=null && !defaultBackgroundColor.equals(desiredColor)) {
                // if new bgColor matches the defaultTextColor, ask user as labels will become unreadable
@@ -1414,12 +1414,12 @@ public class SwitchboardEditor extends Editor {
 
         //add text color menu item
 
-        JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor"));
+        JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor", "..."));
         _optionMenu.add(textColorMenuItem);
 
         textColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                                 Bundle.getMessage("DefaultTextColor"),
+                                 Bundle.getMessage("DefaultTextColor", ""),
                                  defaultTextColor);
             if (desiredColor!=null && !defaultTextColor.equals(desiredColor)) {
                // if new defaultTextColor matches bgColor, ask user as labels will become unreadable

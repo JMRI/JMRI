@@ -1,10 +1,10 @@
 package jmri.jmrix.srcp;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * SRCPSystemConnectionMemoTest.java
@@ -13,13 +13,9 @@ import org.junit.Assert;
  *
  * @author	Bob Jacobsen
  */
-public class SRCPSystemConnectionMemoTest extends TestCase {
+public class SRCPSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-    public void testCtor() {
-        SRCPSystemConnectionMemo m = new SRCPSystemConnectionMemo();
-        Assert.assertNotNull(m);
-    }
-
+    @Test
     public void testTCCtor() {
         SRCPTrafficController et = new SRCPTrafficController() {
             @Override
@@ -31,43 +27,29 @@ public class SRCPSystemConnectionMemoTest extends TestCase {
         Assert.assertNotNull(m);
     }
 
-    // Full Constructor specifies prefix,name, and traffic controller.
-    public void testFullCtor() {
+    @Override
+    @Test
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    }
+
+    // The minimal setup for log4J
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
         SRCPTrafficController et = new SRCPTrafficController() {
             @Override
             public void sendSRCPMessage(SRCPMessage m, SRCPListener l) {
                 // we aren't actually sending anything to a layout.
             }
         };
-        SRCPSystemConnectionMemo m = new SRCPSystemConnectionMemo("D", "SRCP", et);
-        Assert.assertNotNull(m);
-    }
-
-    // from here down is testing infrastructure
-    public SRCPSystemConnectionMemoTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SRCPSystemConnectionMemoTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SRCPSystemConnectionMemoTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
-        JUnitUtil.setUp();
+        scm = new SRCPSystemConnectionMemo("D", "SRCP", et);
     }
 
     @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

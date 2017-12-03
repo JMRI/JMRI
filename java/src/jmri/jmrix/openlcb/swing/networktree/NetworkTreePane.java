@@ -3,7 +3,6 @@ package jmri.jmrix.openlcb.swing.networktree;
 import java.awt.Dimension;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
@@ -26,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame displaying tree of OpenLCB nodes
+ * Frame displaying tree of OpenLCB nodes.
  *
  * @author Bob Jacobsen Copyright (C) 2009, 2010, 2012
  */
@@ -36,7 +35,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
         super();
     }
 
-    CanSystemConnectionMemo memo;
+    private transient CanSystemConnectionMemo memo;
 
     @Override
     public void initContext(Object context) {
@@ -65,19 +64,16 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
         );
         add(treePane);
 
-        treePane.addTreeSelectionListener(new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent e) {
-                JTree tree = (JTree) e.getSource();
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+        treePane.addTreeSelectionListener((TreeSelectionEvent e) -> {
+            JTree tree = (JTree) e.getSource();
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 
-                if (node == null) {
-                    return;
-                }
+            if (node == null) {
+                return;
+            }
 
-                if (node.getUserObject() instanceof NodeTreeRep.SelectionKey) {
-                    ((NodeTreeRep.SelectionKey) node.getUserObject()).select(node);
-                }
+            if (node.getUserObject() instanceof NodeTreeRep.SelectionKey) {
+                ((NodeTreeRep.SelectionKey) node.getUserObject()).select(node);
             }
         });
     }
@@ -105,35 +101,22 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
     public synchronized void reply(CanReply l) {  // receive a reply and log it
     }
 
-    /**
-     * Nested class to create one of these using old-style defaults
-     */
-    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-
-        public Default() {
-            super("Openlcb Network Tree",
-                    new jmri.util.swing.sdi.JmriJFrameInterface(),
-                    NetworkTreePane.class.getName(),
-                    jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
-        }
-    }
-
     @SuppressWarnings("unused")
     private final static Logger log = LoggerFactory.getLogger(NetworkTreePane.class);
 
     /**
-     * Nested class to open specific windows when proper tree element is picked
+     * Nested class to open specific windows when proper tree element is picked.
      */
-    class ActionLoader extends NodeTreeRep.SelectionKeyLoader {
+    private class ActionLoader extends NodeTreeRep.SelectionKeyLoader {
+
         private final ClientActions actions;
+
         ActionLoader(OlcbInterface iface) {
-            this.iface = iface;
             actions = new ClientActions(iface);
             this.store = iface.getNodeStore();
             this.mcs = iface.getMemoryConfigurationService();
         }
 
-        OlcbInterface iface;
         MimicNodeStore store;
         MemoryConfigurationService mcs;
 
@@ -149,7 +132,9 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                         description.append(ident.getUserName());
                     }
                     if (ident.getUserDesc() != null && ident.getUserDesc().length() > 0) {
-                        if (description.length() > 0) description.append(" - ");
+                        if (description.length() > 0) {
+                            description.append(" - ");
+                        }
                         description.append(ident.getUserDesc());
                     }
                     if (description.length() == 0) {
@@ -157,7 +142,9 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                             description.append(ident.getMfgName());
                         }
                         if (ident.getModelName() != null && ident.getModelName().length() > 0) {
-                            if (description.length() > 0) description.append(" - ");
+                            if (description.length() > 0) {
+                                description.append(" - ");
+                            }
                             description.append(ident.getModelName());
                         }
                     }

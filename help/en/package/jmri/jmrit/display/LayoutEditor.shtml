@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -293,9 +294,9 @@
       horizontally on your panel.</b> To make maximum use of these
       tools, design your panel with turnouts oriented vertically or
       horizontally (the orientation does not have to be exact, just
-      mostly vertical or mostly horizontal).</p><a name="toolbar"
-      id="toolbar"></a>
+      mostly vertical or mostly horizontal).</p>
 
+      <a name="toolbar" id="toolbar"></a>
       <h2>Using the Layout Editor Tool Bar</h2>
 
       <p>The tool bar is used to add items to a panel, and to
@@ -433,10 +434,9 @@
       below, along with which created items they apply to and
       whether they are optional or required.</p>
 
-      <p>
-      <span class="since">Since 4.7.3</span>:
-      Most of the toolbar's <b>text fields</b> have now been replaced with
-      <b>combo boxes</b>. A <b>combo box</b> combines a <b>text field</b>
+      <p></p><span class="since">Since 4.7.3</span>
+      Most of the toolbar's options are set using <b>combo boxes</b>.
+      A <b>combo box</b> combines a <b>text field</b>
       with a <b>drop down list</b>. You may ether type text into the
       <b>text field</b> or select an item from the <b>drop down list</b>.
       Selecting an item from the <b>drop down list</b> will copy it
@@ -548,9 +548,9 @@
       <p>When pressed, the <b>Change Icons...</b> button on the
       tool bar brings up an icon editor for either sensor icons,
       signal mast icons, signal head icons, or general purpose icons,
-      depending uponmwhether <b>Sensor Icon</b>, <b>Signal Mast Icon</b>,
-      <b>Signal Head Icon</b>, or <b>Icon Label</b> is checked.
-      If none of these items is checked, the button press is ignored.
+      depending upon whether <b>Sensor Icon</b>, <b>Signal Mast Icon</b>,
+      <b>Signal Head Icon</b>, or <b>Icon Label</b> is checked in the toolbar.
+      If none of these items is checked, the menu choice is ignored.
       For Signal Mast Icons and Signal Head Icons, the Layout Editor
       defaults to the left-facing short icons found at
       "resources/icons/smallschematics/searchlights/". If you are
@@ -559,11 +559,11 @@
       icons have black borders.</p>
 
       <a name="toolbox" id="toolbox"></a>
-
       <h2>Using the Layout Editor Floating Toolbox</h2>
       <span class="since">since 4.7.2</span>
-      <p>The classic toolbar resides to the top or side of the panel.  The
-      <b>toolbox</b> floats on the screen and can be moved around.  It provides
+
+      <p>The classic toolbar resides to the top or side of the panel. The
+      <b>toolbox</b> floats on the screen and can be moved around. It provides
       all of the same functions as the toolbar.</p>
 
       <p>The radio buttons, checkboxes, combo boxes and labels are grouped
@@ -573,9 +573,9 @@
       of the related panel.</p>
 
       <p>Since the Toolbox is a standard window, it contains the Close
-	  and Minimize buttons.  The Close button <b><em>hides</em></b> the toolbox,
-      it does not delete it.  To show it again, select the toolbox name
-	  from the <b>Window</b> menu.  The minimize button behaves in the
+	  and Minimize buttons. The Close button <b><em>hides</em></b> the toolbox,
+      it does not delete it. To show it again, select the toolbox name
+	  from the <b>Window</b> menu. The minimize button behaves in the
 	  traditional manner with the toolbox becoming an icon on the operating system task
 	  bar.  Use the Window menu or click on the task bar icon to make it
 	  visible.
@@ -648,7 +648,6 @@
             determines the sort order</li>
 
           </ul>
-
         </li>
 
         <li><b>Allow Repositioning</b> - When this item is checked,
@@ -1122,7 +1121,7 @@
       Zoom</b> selected. Since zooming is temporary, the zoom
       factor is not preserved when a panel is saved.</p>
 
-      <p> <span class="since">As of 4.7.3</span> the Layout Editor Zoom
+      <p><span class="since">Since 4.7.3</span>The Layout Editor Zoom
       is saved and restored per-system. Also the mouse wheel (with
       alt-(option-)key) may be used to zoom in and out.</p>
 
@@ -1271,8 +1270,9 @@
       These tools are briefly described above under <a href=
       "#toolsmenu">Using Layout Editor's Tools Menu</a>, and are
       discussed in detail on the help page of the tool's dialog
-      pane.</p><a name="turnouts" id="turnouts"></a>
+      pane.</p>
 
+      <a name="turnouts" id="turnouts"></a>
       <h2>Turnouts</h2>
 
       <p>Layout Editor supports six different types of turnouts
@@ -1401,8 +1401,9 @@
       3</b>, or <b>Block 4</b> entries are blank, the default block
       is used. Block connection points are numbered 1, 2, 3 and 4,
       proceeding from the upper left connection point in a
-      clockwise direction.</p><a name="track" id="track"></a>
+      clockwise direction.</p>
 
+      <a name="track" id="track"></a>
       <h2>Track Segments and Connection Points</h2>
 
       <p>A <b>Track Segment</b> is a two ended piece of track between
@@ -1771,8 +1772,9 @@
       have wheels and track clean, and to have enough cars in each
       train with current drawing wheels to ensure a block doesn't
       loose detection before the train enters the next
-      block.</p><a name="tips" id="tips"></a>
+      block.</p>
 
+      <a name="tips" id="tips"></a>
       <h2>Tips</h2>
 
       <p>Because of the way a Layout Editor panel is refreshed, the
@@ -1925,7 +1927,7 @@
       actually installing them on your layout.</p>
 
       <p>Back to the <a href="../../../../html/apps/PanelPro/PanelPro.shtml">
-        PanelPro help page</a>.
+        PanelPro help page</a>.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
