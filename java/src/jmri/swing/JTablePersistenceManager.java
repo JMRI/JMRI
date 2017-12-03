@@ -46,14 +46,41 @@ public interface JTablePersistenceManager {
      * a later JMRI execution.
      * <p>
      * Note that the current state of the table, if not already persisted, at
-     * the time of this call is retained as the table state.
+     * the time of this call is retained as the table state. Using this method
+     * is the same as calling {@link #persist(javax.swing.JTable, boolean)} with
+     * false for the second argument.
      *
      * @param table the table to persist
      * @throws IllegalArgumentException if another table instance is already
      *                                  persisted by the same name
      * @throws NullPointerException     if the table name is null
      */
-    public void persist(@Nonnull JTable table) throws IllegalArgumentException, NullPointerException;
+    public default void persist(@Nonnull JTable table) throws IllegalArgumentException, NullPointerException {
+        this.persist(table, false);
+    }
+
+    /**
+     * Persist the user interface state for a table. The name returned by
+     * {@link javax.swing.JComponent#getName()} is used to persist the table, so
+     * ensure the name is set such that it can be retrieved by the same name in
+     * a later JMRI execution.
+     * <p>
+     * Note that the current state of the table, if not already persisted, at
+     * the time of this call is retained as the table state unless
+     * {@code resetState} is true.
+     * <p>
+     * Using this method with {@code resetState} set to true is the same as
+     * {@link #resetState(javax.swing.JTable)} immediately prior to calling
+     * {@link #persist(javax.swing.JTable)}.
+     *
+     * @param table      the table to persist
+     * @param resetState reset the table to the stored state if true; retain the
+     *                   current state if false
+     * @throws IllegalArgumentException if another table instance is already
+     *                                  persisted by the same name
+     * @throws NullPointerException     if the table name is null
+     */
+    public void persist(@Nonnull JTable table, boolean resetState) throws IllegalArgumentException, NullPointerException;
 
     /**
      * Stop persisting the table. This does not clear the persistence state, but
