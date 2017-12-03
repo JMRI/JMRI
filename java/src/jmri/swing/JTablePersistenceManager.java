@@ -29,6 +29,10 @@ import javax.swing.JTable;
  * {@link javax.swing.table.TableColumn#getIdentifier()} or
  * {@link javax.swing.table.TableColumn#getHeaderValue()}.
  * <p>
+ * Tables against which {@link #persist(javax.swing.JTable)} is called without
+ * first calling {@link #resetState(javax.swing.JTable)} will not have state
+ * retained across application restarts.
+ * <p>
  * <strong>Note:</strong> A JTable with UI state being persisted must have a
  * unique non-null name.
  *
@@ -41,6 +45,9 @@ public interface JTablePersistenceManager {
      * {@link javax.swing.JComponent#getName()} is used to persist the table, so
      * ensure the name is set such that it can be retrieved by the same name in
      * a later JMRI execution.
+     * <p>
+     * Note that the current state of the table, if not already persisted, at
+     * the time of this call is retained as the table state.
      *
      * @param table the table to persist
      * @throws IllegalArgumentException if another table instance is already
