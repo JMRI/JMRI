@@ -17,9 +17,8 @@ import javax.swing.JTable;
  * </ul>
  * <p>
  * Row sort order is only persisted for JTables that implement the
- * {@link javax.swing.RowSorter} for sorting. Tables using the deprecated
- * {@link jmri.util.com.sun.TableSorter} will not have row sort order persisted.
- * If the RowSorter is null, the row sorting will not be persisted.</p>
+ * {@link javax.swing.RowSorter} for sorting. If the RowSorter is null, the row
+ * sorting will not be persisted.</p>
  * <p>
  * Column attributes (order, visibility, and width) are persisted by listening
  * to changes in the {@link javax.swing.table.TableColumnModel} of the table.
