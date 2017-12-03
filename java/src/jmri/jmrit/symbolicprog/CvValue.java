@@ -384,7 +384,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                                     Bundle.getMessage("StateExceptionDuringConfirm"),
                                     new Object[]{e.toString()}));
                 }
-                log.warn("Exception during CV read: " + e); // NOI18N
+                log.warn("Exception during CV confirm: " + e); // NOI18N
                 setBusy(false);
             }
         } else {
