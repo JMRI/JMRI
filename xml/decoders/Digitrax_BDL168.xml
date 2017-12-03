@@ -21,8 +21,10 @@
 
     <decoder>
 
-        <family name="BDL162/BDL168" mfg="Digitrax">
-            <model model="BDL162/BDL168"/>
+        <family name="BDL16x" mfg="Digitrax">
+            <model model="BDL16"/>
+            <model model="BDL162"/>
+            <model model="BDL168"/>
         </family>
 
         <programming direct="no" paged="no" register="no" ops="no">
@@ -50,7 +52,7 @@
           </variable>
 
           <variable CV="113.03" item="Swap RailSync sensitivity" default="0"
-                tooltip="OpSw03">
+                tooltip="OpSw03" exclude="BDL16">
             <enumVal>
               <enumChoice>
                 <choice>normal</choice>
@@ -248,7 +250,7 @@
           </variable>
 
           <variable CV="113.30" item="RailSync Sample Delay1" default="0"
-                tooltip="OpSw30">
+                tooltip="OpSw30" exclude="BDL16">
               <enumVal>
                   <enumChoice>
                       <choice>Thrown</choice>
@@ -260,7 +262,7 @@
           </variable>
 
           <variable CV="113.31" item="RailSync Sample Delay2" default="0"
-                tooltip="OpSw31">
+                tooltip="OpSw31" exclude="BDL16">
               <enumVal>
                   <enumChoice>
                       <choice>Thrown</choice>
@@ -272,7 +274,7 @@
           </variable>
 
           <variable item="RailSync Sample Delay"
-                tooltip="OpSw30, OpSw31">
+                tooltip="OpSw30, OpSw31" exclude="BDL16">
             <compositeVal>
               <compositeChoice choice="Normal">
                 <compositeSetting label="RailSync Sample Delay1" value="0"/>
@@ -318,46 +320,45 @@
           </variable>
 
           <variable CV="113.36" item="Interrogation Response" default="0"
-                tooltip="OpSw36">
+                tooltip="OpSw36" include="BDL168" exclude="BDL16">
               <enumVal>
                   <enumChoice>
                       <choice>Responds with status at GPON and interrogate commmands</choice>
                   </enumChoice>
                   <enumChoice>
-                      <choice>Responds only to interrogate commmands (BDL168 only)</choice>
+                      <choice>Responds only to interrogate commmands</choice>
                   </enumChoice>
               </enumVal>
-              <label>This BDL168 </label>
           </variable>
 
           <variable CV="113.42" item="First Interrogate Enable" default="0"
-                tooltip="OpSw42">
+                tooltip="OpSw42" include="BDL168" exclude="BDL16">
               <enumVal>
                   <enumChoice>
                       <choice>Standard interrogation</choice>
                   </enumChoice>
                   <enumChoice>
-                      <choice>Ignore OpSw36 setting; reply at every interrogation (BDL168 only)</choice>
+                      <choice>Ignore OpSw36 setting; reply at every interrogation</choice>
                   </enumChoice>
               </enumVal>
           </variable>
 
           <variable item="Interrogation actions"
-                tooltip="OpSw36, OpSw42">
+                tooltip="OpSw36, OpSw42"  include="BDL168" exclude="BDL16">
               <compositeVal>
                   <compositeChoice choice="Reports detection section status at GPON and all except first Interrogation attempt">
                       <compositeSetting label="Interrogation Response" value="0"/>
                       <compositeSetting label="First Interrogate Enable" value="0"/>
                   </compositeChoice>
-                  <compositeChoice choice="Reports detection section status at all except first Interrofation attempt (BDL168 only)">
+                  <compositeChoice choice="Reports detection section status at all except first Interrofation attempt">
                       <compositeSetting label="Interrogation Response" value="1"/>
                       <compositeSetting label="First Interrogate Enable" value="0"/>
                   </compositeChoice>
-                  <compositeChoice choice="Reports detection section status at GPON and at all Interrogage attempt (BDL168 only)">
+                  <compositeChoice choice="Reports detection section status at GPON and at all Interrogage attempt">
                       <compositeSetting label="Interrogation Response" value="0"/>
                       <compositeSetting label="First Interrogate Enable" value="1"/>
                   </compositeChoice>
-                  <compositeChoice choice="Reports detection section status at all Interrogate attempt (BDL168 only)">
+                  <compositeChoice choice="Reports detection section status at all Interrogate attempt">
                       <compositeSetting label="Interrogation Response" value="1"/>
                       <compositeSetting label="First Interrogate Enable" value="1"/>
                   </compositeChoice>
@@ -365,45 +366,45 @@
           </variable>
 
           <variable CV="113.37" item="Detection Section Timing1" default="0"
-                tooltip="OpSw37">
+                tooltip="OpSw37" include="BDL168" exclude="BDL16">
               <enumVal>
                   <enumChoice>
                       <choice>Thrown</choice>
                   </enumChoice>
                   <enumChoice>
-                      <choice>Closed (BDL168 only)</choice>
+                      <choice>Closed</choice>
                   </enumChoice>
               </enumVal>
           </variable>
 
           <variable CV="113.38" item="Detection Section Timing2" default="0"
-                tooltip="OpSw38">
+                tooltip="OpSw38" include="BDL168" exclude="BDL16">
               <enumVal>
                   <enumChoice>
                       <choice>Thrown</choice>
                   </enumChoice>
                   <enumChoice>
-                      <choice>Closed (BDL168 only)</choice>
+                      <choice>Closed</choice>
                   </enumChoice>
               </enumVal>
           </variable>
 
           <variable item="Detection Section Timing"
-                tooltip="OpSw37, OpSw38">
+                tooltip="OpSw37, OpSw38" include="BDL168" exclude="BDL16">
               <compositeVal>
                 <compositeChoice choice="Standard">
                   <compositeSetting label="Detection Section Timing1" value="0"/>
                   <compositeSetting label="Detection Section Timing2" value="0"/>
                 </compositeChoice>
-                <compositeChoice choice="Slow (BDL168 only)">
+                <compositeChoice choice="Slow">
                   <compositeSetting label="Detection Section Timing1" value="1"/>
                   <compositeSetting label="Detection Section Timing2" value="0"/>
                 </compositeChoice>
-                <compositeChoice choice="Standard (alternate) (BDL168 only)">
+                <compositeChoice choice="Standard (alternate)">
                   <compositeSetting label="Detection Section Timing1" value="0"/>
                   <compositeSetting label="Detection Section Timing2" value="1"/>
                 </compositeChoice>
-                <compositeChoice choice="Twice slow (BDL168 only)">
+                <compositeChoice choice="Twice slow">
                   <compositeSetting label="Detection Section Timing1" value="1"/>
                   <compositeSetting label="Detection Section Timing2" value="1"/>
                 </compositeChoice>
@@ -412,20 +413,20 @@
           </variable>
 
           <variable CV="113.39" item="Transponder Tracking Mode" default="0"
-                tooltip="OpSw39">
+                tooltip="OpSw39" include="BDL168" exclude="BDL16">
               <enumVal>
                   <enumChoice>
                       <choice>Sequential Mode</choice>
                   </enumChoice>
                   <enumChoice>
-                      <choice>Verbose Mode (BDL168 only)</choice>
+                      <choice>Verbose Mode</choice>
                   </enumChoice>
               </enumVal>
               <label>Transponder Tracking uses</label>
           </variable>
 
           <variable CV="113.43" item="Anti-chatter Sensitivity1" default="0"
-                tooltip="OpSw43">
+                tooltip="OpSw43" exclude="BDL16">
               <enumVal>
                   <enumChoice>
                       <choice>Thrown</choice>
@@ -437,7 +438,7 @@
           </variable>
 
           <variable CV="113.44" item="Anti-chatter Sensitivity2" default="0"
-                tooltip="OpSw44">
+                tooltip="OpSw44" exclude="BDL16">
               <enumVal>
                   <enumChoice>
                       <choice>Thrown</choice>
@@ -449,21 +450,21 @@
           </variable>
 
           <variable item="Anti-Chatter Filtering"
-                tooltip="OpSw43, OpSw44">
+                tooltip="OpSw43, OpSw44" include="BDL168">
             <compositeVal>
               <compositeChoice choice="Maximum Anti-Chatter Filter sensitivity">
                 <compositeSetting label="Anti-chatter Sensitivity1" value="0"/>
                 <compositeSetting label="Anti-chatter Sensitivity2" value="0"/>
               </compositeChoice>
-              <compositeChoice choice="Anti-Chatter Filter is disabled (BDL168 only)">
+              <compositeChoice choice="Anti-Chatter Filter is disabled">
                 <compositeSetting label="Anti-chatter Sensitivity1" value="1"/>
                 <compositeSetting label="Anti-chatter Sensitivity2" value="0"/>
               </compositeChoice>
-              <compositeChoice choice="Standard Anti-Chatter Filter sensitivity (BDL168 only)">
+              <compositeChoice choice="Standard Anti-Chatter Filter sensitivity">
                 <compositeSetting label="Anti-chatter Sensitivity1" value="0"/>
                 <compositeSetting label="Anti-chatter Sensitivity2" value="1"/>
               </compositeChoice>
-              <compositeChoice choice="Anti-Chatter Filter is disabled (Alternate) (BDL168 only)">
+              <compositeChoice choice="Anti-Chatter Filter is disabled (Alternate)">
                 <compositeSetting label="Anti-chatter Sensitivity1" value="1"/>
                 <compositeSetting label="Anti-chatter Sensitivity2" value="1"/>
               </compositeChoice>
@@ -472,13 +473,13 @@
           </variable>
 
           <variable CV="113.45" item="Transponding Messages at GPOFF" default="0"
-                tooltip="OpSw45">
+                tooltip="OpSw45" include="BDL168">
               <enumVal>
                   <enumChoice>
                       <choice>sends Transponding messages</choice>
                   </enumChoice>
                   <enumChoice>
-                      <choice>does not send Transponding messages (BDL168 only)</choice>
+                      <choice>does not send Transponding messages</choice>
                   </enumChoice>
               </enumVal>
               <label>At reception of GPOFF: </label>
@@ -487,6 +488,55 @@
 
         </variables>
     </decoder>
+  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>OpSws</name>
+    <qualifier>
+          <variableref>Short Address</variableref>
+          <relation>gt</relation>
+          <value>0</value>
+
+    </qualifier>
+    <column>
+        <row>
+            <cvtable/>
+        </row>
+        <row>
+            <column>
+                <label>
+                    <text>&lt;html&gt;The "CV" column in the table above shows "OpSw"
+                        numbers, where the value "113." &lt;p&gt;is pre-pended to 
+                        the OpSw Number.&lt;/html&gt;
+                    </text>
+                </label>
+                <label>
+                    <text> </text>
+                </label>
+            <group include="BDL16">
+                <label>
+                    <text>&lt;html&gt;&lt;p&gt;For example, BDL16 OpSw 1 
+                        is represented as "113.01".&lt;p&gt;&lt;/html&gt;
+                    </text>
+                </label>
+            </group>        
+            <group include="BDL162">
+                <label>
+                    <text>&lt;html&gt;&lt;p&gt;For example, BDL162 OpSw 1 
+                        is represented as "113.01".&lt;p&gt;&lt;/html&gt;
+                    </text>
+                </label>
+            </group>        
+            <group include="BDL168">
+                <label>
+                    <text>&lt;html&gt;&lt;p&gt;For example, BDL168 OpSw 1 
+                        is represented as "113.01".&lt;p&gt;&lt;/html&gt;
+                    </text>
+                </label>
+            </group>
+            </column>        
+        </row>
+    </column>
+        
+  </pane>
   <pane>
       <name>Basic</name>
       <column>
@@ -498,15 +548,15 @@
             <text>&lt;html&gt;&lt;p&gt;
                 LocoNet messaging limits the supported Board Address (Board ID)
                 range to addresses between 1 and 128.  This tool cannot access 
-                &lt;p&gt;BDL162/BDL168 devices outside of this range.
+                &lt;p&gt;BDL16x devices outside of this range.
                 &lt;p&gt;
                 &lt;p&gt;This roster entry will only access the specified 
-                BDL162/BDL168 if the Board Address (Active Address), on the 
+                BDL16x if the Board Address (Active Address), on the 
                 &lt;p&gt;"Basic" sheet, is correct when the programmer is opened.
                 &lt;p&gt;
                 &lt;p&gt;If the Board Address (Active Address) has been changed since
                 the programmer was opened, the programmer will attempt to access the
-                &lt;p&gt;BDL162/BDL168 address which was specified in the 
+                &lt;p&gt;BDL16x address which was specified in the 
                 Roster entry when the progammer was opened.
                 &lt;p&gt;
                 &lt;p&gt;After making a change to the Roster entry's Board Address
@@ -524,7 +574,7 @@
   </pane>
 
     <pane>
-        <name>Basic BDL162/BDL168 OpSw Settings</name>
+        <name>Basic OpSw Settings</name>
         <column>
             <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Detection Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
             <display item="Wiring Type"/>
@@ -566,13 +616,14 @@
   <pane>
       <name>Notes</name>
       <column>
+          <group include="BDL16">
         <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
-            &lt;h2&gt;&lt;strong&gt;Notes on BDL162/BDL168 Roster Entries and Programming
+            &lt;h2&gt;&lt;strong&gt;Notes on BDL16 Roster Entries and Programming
             &lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
         </label>
         <label>
             <text>&lt;html&gt;&lt;/strong&gt;&lt;ul&gt;
-                &lt;li&gt;The BDL162/BDL168 &lt;em&gt;must&lt;/em&gt; be in its normal
+                &lt;li&gt;The BDL16 &lt;em&gt;must&lt;/em&gt; be in its normal
                 operating mode in order to respond to this programmer's read and
                 write operations.&lt;/li&gt;
                 &lt;li&gt;
@@ -580,6 +631,59 @@
                 respect to Board Address.&lt;/li&gt;
             &lt;/ul&gt;&lt;/html&gt;</text>
         </label>
+          </group>
+          <group include="BDL162">
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
+            &lt;h2&gt;&lt;strong&gt;Notes on BDL162 Roster Entries and Programming
+            &lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+        </label>
+        <label>
+            <text>&lt;html&gt;&lt;/strong&gt;&lt;ul&gt;
+                &lt;li&gt;The BDL162 &lt;em&gt;must&lt;/em&gt; be in its normal
+                operating mode in order to respond to this programmer's read and
+                write operations.&lt;/li&gt;
+                &lt;li&gt;
+                &lt;p&gt;See the "Basic" sheet for the programmer's limitations with
+                respect to Board Address.&lt;/li&gt;
+            &lt;/ul&gt;&lt;/html&gt;</text>
+        </label>
+          </group>
+          <group include="BDL168">
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
+            &lt;h2&gt;&lt;strong&gt;Notes on BDL168 Roster Entries and Programming
+            &lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+        </label>
+        <label>
+            <text>&lt;html&gt;&lt;/strong&gt;&lt;ul&gt;
+                &lt;li&gt;The BDL168 &lt;em&gt;must&lt;/em&gt; be in its normal
+                operating mode in order to respond to this programmer's read and
+                write operations.&lt;/li&gt;
+                &lt;li&gt;
+                &lt;p&gt;See the "Basic" sheet for the programmer's limitations with
+                respect to Board Address.&lt;/li&gt;
+            &lt;/ul&gt;&lt;/html&gt;</text>
+        </label>
+          </group>
       </column>
+  </pane>
+  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>CVs</name>
+    <name xml:lang="it">CV</name>
+    <name xml:lang="de">CV-Tabelle</name>
+    <name xml:lang="ca">Taula-CV</name>
+    <name xml:lang="cs">Tabulka CV</name>
+    <name xml:lang="nl">CV-tabel</name>
+    <qualifier>
+          <variableref>Short Address</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+
+    </qualifier>
+    <column>
+        <label>
+            <text>This sheet intentionally un-populated.  See the "OpSws" tab.</text>
+        </label>
+    </column>
+        
   </pane>
 </decoder-config>
