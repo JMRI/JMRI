@@ -49,10 +49,12 @@ public class ReportContext {
 
         addString("JMRI Version: " + jmri.Version.name() + "   ");
         addString("JMRI configuration file name: "
-                + System.getProperty("org.jmri.apps.Apps.configFilename") + "   ");
+                + System.getProperty("org.jmri.apps.Apps.configFilename") + "   (from org.jmri.apps.Apps.configFilename system property)");
         if (!jmri.util.JmriJFrame.getFrameList().isEmpty() && jmri.util.JmriJFrame.getFrameList().get(0) != null) {
             addString("JMRI main window name: "
                     + jmri.util.JmriJFrame.getFrameList().get(0).getTitle() + "   ");
+        } else {
+            addString("No main window present");
         }
 
         addString("JMRI Application: " + jmri.Application.getApplicationName() + "   ");
@@ -65,6 +67,8 @@ public class ReportContext {
                     addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo() + " Disabled " + conn.getDisabled() + "   ");
                 }
             }
+        } else {
+            addString("No connections present");
         }
         
         addString("Available Communication Ports:");
@@ -75,6 +79,8 @@ public class ReportContext {
             addString("Active profile: " + profile.getName() + "   ");
             addString("Profile location: " + profile.getPath().getPath() + "   ");
             addString("Profile ID: " + profile.getId() + "   ");
+        } else {
+            addString("No profile present");
         }
         
         addString("JMRI Node ID: "+ jmri.util.node.NodeIdentity.identity() );
