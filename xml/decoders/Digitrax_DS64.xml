@@ -498,6 +498,33 @@
 
         </variables>
     </decoder>
+  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>OpSws</name>
+    <qualifier>
+          <variableref>Short Address</variableref>
+          <relation>gt</relation>
+          <value>0</value>
+
+    </qualifier>
+    <column>
+        <row>
+            <cvtable/>
+        </row>
+        <row>
+            <label>
+                <text>&lt;html&gt;The "CV" column in the table above shows "OpSw" 
+                    numbers, where the value "115." is pre-pended
+                    &lt;p&gt;to the OpSw Number.  For example, PM4/PM42 OpSw 1 
+                    is represented as "115.01".
+                    &lt;p&gt;&lt;p&gt;The top-most row above reflects the Board 
+                    Address configured on the "Basic" sheet.
+                    &lt;p&gt;&lt;p&gt;OpSw value 0 = "T"hrown.  OpSw value 1 = "C"losed.
+                    &lt;/html&gt;
+                </text>
+            </label>
+        </row>
+    </column>
+  </pane>
   <pane>
       <name>Basic</name>
       <column>
@@ -587,15 +614,33 @@
             <text>&lt;html&gt;&lt;/strong&gt;&lt;p&gt;&lt;ul&gt;
                 &lt;li&gt;
                 The DS64 &lt;em&gt;must&lt;/em&gt; be in its normal
-                operating mode in order to respond to this programmer's read and
+                operating mode in order to respond to this Roster entry's read and
                 write operations.&lt;/li&gt;
                 &lt;li&gt;
                 &lt;p&gt;See the "Basic" sheet for the programmer's limitations with
                 respect to Board ID.&lt;/li&gt;
-                &lt;li&gt;&lt;p&gt;This programmer is not currently capable of displaying, changing, or saving the DS64 output addresses.&lt;/p&gt;&lt;/li&gt;
-                &lt;li&gt;&lt;p&gt;This programmer is not currently capable of displaying, changing, or saving the DS64 Routes.&lt;/p&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;p&gt;This Roster entry is not currently capable of displaying, changing, or saving the DS64 output addresses.&lt;/p&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;p&gt;This Roster entry is not currently capable of displaying, changing, or saving the DS64 Routes.&lt;/p&gt;&lt;/li&gt;
             &lt;/ul&gt;&lt;/html&gt;</text>
         </label>
       </column>
+  </pane>
+  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>CVs</name>
+    <name xml:lang="it">CV</name>
+    <name xml:lang="de">CV-Tabelle</name>
+    <name xml:lang="ca">Taula-CV</name>
+    <name xml:lang="cs">Tabulka CV</name>
+    <name xml:lang="nl">CV-tabel</name>
+    <qualifier>
+          <variableref>Short Address</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+    </qualifier>
+    <column>
+        <label>
+            <text>This sheet intentionally un-populated.  See the "OpSws" tab.</text>
+        </label>
+    </column>
   </pane>
 </decoder-config>

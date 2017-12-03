@@ -505,7 +505,9 @@
                 <label>
                     <text>&lt;html&gt;The "CV" column in the table above shows "OpSw"
                         numbers, where the value "113." &lt;p&gt;is pre-pended to 
-                        the OpSw Number.&lt;/html&gt;
+                        the OpSw Number.
+                        &lt;p&gt;&lt;p&gt;The top-most row above reflects the Board 
+                        Address configured on the "Basic" sheet.
                     </text>
                 </label>
                 <label>
@@ -533,6 +535,15 @@
                 </label>
             </group>
             </column>        
+        </row>
+        <row>
+            <label>
+                <text>&lt;html&gt;
+                    &lt;p&gt;&lt;p&gt;OpSw value 0 = "T"hrown.  OpSw value 1 = "C"losed.&lt;p&gt;
+                    &lt;/html&gt;&lt;/html&gt;
+                </text>
+            </label>
+
         </row>
     </column>
         
@@ -624,7 +635,7 @@
         <label>
             <text>&lt;html&gt;&lt;/strong&gt;&lt;ul&gt;
                 &lt;li&gt;The BDL16 &lt;em&gt;must&lt;/em&gt; be in its normal
-                operating mode in order to respond to this programmer's read and
+                operating mode in order to respond to this Roster entry's read and
                 write operations.&lt;/li&gt;
                 &lt;li&gt;
                 &lt;p&gt;See the "Basic" sheet for the programmer's limitations with
@@ -640,7 +651,7 @@
         <label>
             <text>&lt;html&gt;&lt;/strong&gt;&lt;ul&gt;
                 &lt;li&gt;The BDL162 &lt;em&gt;must&lt;/em&gt; be in its normal
-                operating mode in order to respond to this programmer's read and
+                operating mode in order to respond to this Roster entry's read and
                 write operations.&lt;/li&gt;
                 &lt;li&gt;
                 &lt;p&gt;See the "Basic" sheet for the programmer's limitations with
@@ -656,7 +667,7 @@
         <label>
             <text>&lt;html&gt;&lt;/strong&gt;&lt;ul&gt;
                 &lt;li&gt;The BDL168 &lt;em&gt;must&lt;/em&gt; be in its normal
-                operating mode in order to respond to this programmer's read and
+                operating mode in order to respond to this Roster entry's read and
                 write operations.&lt;/li&gt;
                 &lt;li&gt;
                 &lt;p&gt;See the "Basic" sheet for the programmer's limitations with
