@@ -1404,24 +1404,22 @@ public class LevelXing extends LayoutTrack {
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
         g2.setStroke(new BasicStroke(1.F));
 
-        Point2D pM = getCoordsCenter();
         Point2D pA = getCoordsA();
         Point2D pB = getCoordsB();
         Point2D pC = getCoordsC();
         Point2D pD = getCoordsD();
+        Point2D pM = getCoordsCenter();
 
-        Point2D vAC = MathUtil.subtract(pC, pA);
+        Point2D vAC = MathUtil.normalize(MathUtil.subtract(pC, pA), railDisplacement);
         double dirAC_DEG = MathUtil.computeAngleDEG(pA, pC);
-        vAC = MathUtil.normalize(vAC, railDisplacement);
         Point2D vACo = MathUtil.orthogonal(vAC);
         Point2D pAL = MathUtil.subtract(pA, vACo);
         Point2D pAR = MathUtil.add(pA, vACo);
         Point2D pCL = MathUtil.subtract(pC, vACo);
         Point2D pCR = MathUtil.add(pC, vACo);
 
-        Point2D vBD = MathUtil.subtract(pD, pB);
+        Point2D vBD = MathUtil.normalize(MathUtil.subtract(pD, pB), railDisplacement);
         double dirBD_DEG = MathUtil.computeAngleDEG(pB, pD);
-        vBD = MathUtil.normalize(vBD, railDisplacement);
         Point2D vBDo = MathUtil.orthogonal(vBD);
         Point2D pBL = MathUtil.subtract(pB, vBDo);
         Point2D pBR = MathUtil.add(pB, vBDo);
