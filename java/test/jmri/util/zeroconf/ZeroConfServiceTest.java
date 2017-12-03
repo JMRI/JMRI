@@ -83,7 +83,6 @@ public class ZeroConfServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        //Log4JFixture.setUp(); // log4j is mocked.
         ZeroConfService.reset();
         JUnitUtil.resetProfileManager();
 
@@ -92,8 +91,8 @@ public class ZeroConfServiceTest {
 
         PowerMockito.doNothing().when(jmdnsi).send(any(DNSOutgoing.class));
         PowerMockito.doNothing().when(jmdnsi).respondToQuery(any(DNSIncoming.class));
-        PowerMockito.doNothing().when(jmdnsi).registerService(any(ServiceInfo.class));
-        PowerMockito.doNothing().when(jmdnsi).unregisterService(any(ServiceInfo.class));
+        //PowerMockito.doNothing().when(jmdnsi).registerService(any(ServiceInfo.class));
+        //PowerMockito.doNothing().when(jmdnsi).unregisterService(any(ServiceInfo.class));
         jmdns = jmdnsi;
     }
 

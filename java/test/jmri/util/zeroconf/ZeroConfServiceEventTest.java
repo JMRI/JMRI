@@ -50,25 +50,46 @@ public class ZeroConfServiceEventTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testGetService() {
+        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        JmDNS jmdns[] = ZeroConfService.netServices().values().toArray(new JmDNS[0]);
+        ZeroConfServiceEvent t = new ZeroConfServiceEvent(instance,jmdns[0]);
+        Assert.assertNotNull("Service",t.getService());
+    }
+
+    @Test
+    public void testGetDNS() {
+        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        JmDNS jmdns[] = ZeroConfService.netServices().values().toArray(new JmDNS[0]);
+        ZeroConfServiceEvent t = new ZeroConfServiceEvent(instance,jmdns[0]);
+        Assert.assertEquals("DNS",jmdns[0],t.getDNS());
+    }
+
+    @Test
+    public void testGetAddress() {
+        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        JmDNS jmdns[] = ZeroConfService.netServices().values().toArray(new JmDNS[0]);
+        ZeroConfServiceEvent t = new ZeroConfServiceEvent(instance,jmdns[0]);
+        Assert.assertNotNull("address",t.getAddress());
+    }
+
     @Before
     public void setUp() throws Exception {
+        ZeroConfService.reset();
         JUnitUtil.resetProfileManager();
         java.net.InetAddress addr = java.net.Inet4Address.getLoopbackAddress();
         JmDNSImpl jmdnsi = PowerMockito.spy(new JmDNSImpl(addr,"test"));
 
         PowerMockito.doNothing().when(jmdnsi).send(any(DNSOutgoing.class));
         PowerMockito.doNothing().when(jmdnsi).respondToQuery(any(DNSIncoming.class));
-        PowerMockito.doNothing().when(jmdnsi).registerService(any(ServiceInfo.class));
-        PowerMockito.doNothing().when(jmdnsi).unregisterService(any(ServiceInfo.class));
+        //PowerMockito.doNothing().when(jmdnsi).registerService(any(ServiceInfo.class));
+        //PowerMockito.doNothing().when(jmdnsi).unregisterService(any(ServiceInfo.class));
         jmdns = jmdnsi;
     }
 
     @After
     public void tearDown() throws Exception {
-        //ZeroConfService.stopAll();
-        //JUnitUtil.waitFor(() -> {
-        //    return (ZeroConfService.allServices().isEmpty());
-        //}, "Stopping all ZeroConf Services");
         jmdns = null;
     }
 
