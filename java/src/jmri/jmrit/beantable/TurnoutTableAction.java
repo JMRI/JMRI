@@ -1920,11 +1920,11 @@ public class TurnoutTableAction extends AbstractTableAction {
                 return true;
             } else {
                 boolean validFormat = false;
-                    // try {
-                    validFormat = (InstanceManager.getDefault(TurnoutManager.class).validSystemNameFormat(prefix + "T" + value) == Manager.NameValidity.VALID);
-                    // } catch (jmri.JmriException e) {
-                    // use it for the status bar?
-                    // }
+                // try {
+                validFormat = (InstanceManager.getDefault(TurnoutManager.class).validSystemNameFormat(prefix + "T" + value) == Manager.NameValidity.VALID);
+                // } catch (jmri.JmriException e) {
+                // use it for the status bar?
+                // }
                 if (validFormat) {
                     addButton.setEnabled(true); // directly update Create button
                     return true;
