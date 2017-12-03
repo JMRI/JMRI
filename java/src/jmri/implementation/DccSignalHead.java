@@ -135,7 +135,7 @@ public class DccSignalHead extends AbstractSignalHead {
 
     protected void updateOutput() {
         if (c != null) {
-            int aspect = 8;  // SignalHead.DARK, but default set below
+            int aspect = getOutputForAppearance(SignalHead.DARK);
 
             if (getLit()) {
                 Integer app = Integer.valueOf(mAppearance);
