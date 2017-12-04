@@ -32,6 +32,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private String classicPresetName = Bundle.getMessage("ClassicPresetName");
     private String draftingPresetName = Bundle.getMessage("DraftingPresetName");
     private String realisticPresetName = Bundle.getMessage("RealisticPresetName");
+    private String realisticOhPresetName = Bundle.getMessage("RealisticOhPresetName");
     private String garishPresetName = Bundle.getMessage("GarishPresetName");
     private String customPresetName = Bundle.getMessage("CustomPresetName");
 
@@ -208,7 +209,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         railGapLabel.setSize(new java.awt.Dimension(256, 16));
 
         sideRailGapSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        sideRailGapSpinner.setToolTipText(Bundle.getMessage("MainRailGapToolTip"));
+        sideRailGapSpinner.setToolTipText(Bundle.getMessage("SideRailGapToolTip"));
         sideRailGapSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         sideRailGapSpinner.setName(""); // NOI18N
         sideRailGapSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
@@ -221,7 +222,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         });
 
         mainRailGapSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        mainRailGapSpinner.setToolTipText(Bundle.getMessage("SideRailGapToolTip"));
+        mainRailGapSpinner.setToolTipText(Bundle.getMessage("MainRailGapToolTip"));
         mainRailGapSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         mainRailGapSpinner.setName(""); // NOI18N
         mainRailGapSpinner.setPreferredSize(new java.awt.Dimension(64, 16));
@@ -699,7 +700,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
         OptionsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {ballastColorLabel, ballastWidthLabel, blockLineWidthLabel, mainBallastColorButton, mainBallastWidthSpinner, mainBlockLineWidthSpinner, mainRailColorButton, mainRailCountSpinner, mainRailGapSpinner, mainRailWidthSpinner, mainTieColorButton, mainTieGapSpinner, mainTieLengthSpinner, mainTieWidthSpinner, mainlineLabel, optionLabel, railColorLabel, railCountLabel, railGapLabel, railWidthLabel, sideBallastColorButton, sideBallastWidthSpinner, sideBlockLineWidthSpinner, sideRailColorButton, sideRailCountSpinner, sideRailGapSpinner, sideRailWidthSpinner, sideTieColorButton, sideTieGapSpinner, sideTieLengthSpinner, sideTieWidthSpinner, sidelineLabel, tieColorLabel, tieGapLabel, tieLengthLabel, tieWidthLabel});
 
-        presetsComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Classic JMRI", "Drafting", "Realistic", "Garrish", "--", "Custom" }));
+        presetsComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Classic JMRI", "Drafting", "Realistic", "Realistic Oh!", "Garrish", "--", "Custom" }));
         presetsComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 presetsComboBoxActionPerformed(evt);
@@ -1133,6 +1134,31 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO.setSideTieColor(Color.decode("#391E16"));
         tempLTDO.setSideTieGap(6);
         tempLTDO.setSideTieLength(9);
+        tempLTDO.setSideTieWidth(3);
+        ltdoList.add(tempLTDO);
+
+        tempLTDO = new LayoutTrackDrawingOptions(realisticOhPresetName);
+        tempLTDO.setMainBallastColor(Color.decode("#A0A0A0"));
+        tempLTDO.setMainBallastWidth(16);
+        tempLTDO.setMainBlockLineWidth(3);
+        tempLTDO.setMainRailColor(Color.LIGHT_GRAY);
+        tempLTDO.setMainRailCount(3);
+        tempLTDO.setMainRailGap(6);
+        tempLTDO.setMainRailWidth(2);
+        tempLTDO.setMainTieColor(Color.decode("#E0E0E0"));
+        tempLTDO.setMainTieGap(7);
+        tempLTDO.setMainTieLength(14);
+        tempLTDO.setMainTieWidth(1);
+        tempLTDO.setSideBallastColor(Color.GRAY);
+        tempLTDO.setSideBallastWidth(14);
+        tempLTDO.setSideBlockLineWidth(2);
+        tempLTDO.setSideRailColor(Color.decode("#9B705E"));
+        tempLTDO.setSideRailCount(3);
+        tempLTDO.setSideRailGap(6);
+        tempLTDO.setSideRailWidth(1);
+        tempLTDO.setSideTieColor(Color.decode("#391E16"));
+        tempLTDO.setSideTieGap(6);
+        tempLTDO.setSideTieLength(12);
         tempLTDO.setSideTieWidth(3);
         ltdoList.add(tempLTDO);
 

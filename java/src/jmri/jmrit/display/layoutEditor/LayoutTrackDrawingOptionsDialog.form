@@ -1264,13 +1264,14 @@
     <Component class="javax.swing.JComboBox" name="presetsComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="6">
+          <StringArray count="7">
             <StringItem index="0" value="Classic JMRI"/>
             <StringItem index="1" value="Drafting"/>
             <StringItem index="2" value="Realistic"/>
-            <StringItem index="3" value="Garrish"/>
-            <StringItem index="4" value="--"/>
-            <StringItem index="5" value="Custom"/>
+            <StringItem index="3" value="Realistic Oh!"/>
+            <StringItem index="4" value="Garrish"/>
+            <StringItem index="5" value="--"/>
+            <StringItem index="6" value="Custom"/>
           </StringArray>
         </Property>
       </Properties>
