@@ -46,11 +46,13 @@ import org.slf4j.LoggerFactory;
  * double-slips, B and C.
  * <P>
  * {@literal
- * ==A==-==D==
+ * \\      //
+ *   A==-==D
  *    \\ //
  *      X
  *    // \\
- * ==B==-==C==
+ *   B==-==C
+ *  //      \\
  * literal}
  * <P>
  * For drawing purposes, each LayoutSlip carries a center point and
@@ -1263,42 +1265,44 @@ public class LayoutSlip extends LayoutTurnout {
 
         Point2D vDisK = MathUtil.normalize(MathUtil.subtract(vAC, vBD), hypotK);
         Point2D vDisV = MathUtil.normalize(MathUtil.orthogonal(vDisK), hypotV);
-        Point2D pKL = MathUtil.add(pM, vDisK);
-        Point2D pKR = MathUtil.subtract(pM, vDisK);
-        Point2D pVL = MathUtil.subtract(pM, vDisV);
-        Point2D pVR = MathUtil.add(pM, vDisV);
+        Point2D pKL = MathUtil.subtract(pM, vDisK);
+        Point2D pKR = MathUtil.add(pM, vDisK);
+        Point2D pVL = MathUtil.add(pM, vDisV);
+        Point2D pVR = MathUtil.subtract(pM, vDisV);
 
-        // this is the *2.0 vector (rail gaps) for the diamond parts
-        Point2D vAC2 = MathUtil.normalize(vAC, 2.0);
-        Point2D vBD2 = MathUtil.normalize(vBD, 2.0);
-        // KL toward A, VR toward A, VL toward C and KR toward C
-        Point2D pKLtA = MathUtil.subtract(pKL, vAC2);
+        // this is the vector (rail gaps) for the diamond parts
+        double railGap = 2.0 / Math.sin(deltaRAD);
+        Point2D vAC2 = MathUtil.normalize(vAC, railGap);
+        Point2D vBD2 = MathUtil.normalize(vBD, railGap);
+        // KR and VR toward A, KL and VL toward C
+        Point2D pKRtA = MathUtil.subtract(pKR, vAC2);
         Point2D pVRtA = MathUtil.subtract(pVR, vAC2);
+        Point2D pKLtC = MathUtil.add(pKL, vAC2);
         Point2D pVLtC = MathUtil.add(pVL, vAC2);
-        Point2D pKRtC = MathUtil.add(pKR, vAC2);
-        // KR toward B, VL toward D, VR toward B and KL toward D
-        Point2D pKRtB = MathUtil.subtract(pKR, vBD2);
-        Point2D pVLtD = MathUtil.add(pVL, vBD2);
+
+        // VR and KL toward B, KR and VL toward D
         Point2D pVRtB = MathUtil.subtract(pVR, vBD2);
-        Point2D pKLtD = MathUtil.add(pKL, vBD2);
+        Point2D pKLtB = MathUtil.subtract(pKL, vBD2);
+        Point2D pKRtD = MathUtil.add(pKR, vBD2);
+        Point2D pVLtD = MathUtil.add(pVL, vBD2);
 
         // outer (closed) switch points
-        Point2D pAPR = MathUtil.add(pAR, MathUtil.subtract(pVL, pAL));
-        Point2D pBPL = MathUtil.add(pBL, MathUtil.subtract(pVL, pBR));
-        Point2D pCPL = MathUtil.add(pCL, MathUtil.subtract(pVR, pCR));
-        Point2D pDPR = MathUtil.add(pDR, MathUtil.subtract(pVR, pDL));
+        Point2D pAPL = MathUtil.add(pAL, MathUtil.subtract(pVL, pAR));
+        Point2D pBPR = MathUtil.add(pBR, MathUtil.subtract(pVL, pBL));
+        Point2D pCPR = MathUtil.add(pCR, MathUtil.subtract(pVR, pCL));
+        Point2D pDPL = MathUtil.add(pDL, MathUtil.subtract(pVR, pDR));
 
-        // this is the *2.0 vector (rail gaps) for the inner (open) switch points
+        // this is the vector (rail gaps) for the inner (open) switch points
         Point2D vACo2 = MathUtil.normalize(vACo, 2.0);
         Point2D vBDo2 = MathUtil.normalize(vBDo, 2.0);
-        Point2D pASR = MathUtil.subtract(pAPR, vACo2);
-        Point2D pBSL = MathUtil.add(pBPL, vBDo2);
-        Point2D pCSL = MathUtil.add(pCPL, vACo2);
-        Point2D pDSR = MathUtil.subtract(pDPR, vBDo2);
+        Point2D pASL = MathUtil.add(pAPL, vACo2);
+        Point2D pBSR = MathUtil.subtract(pBPR, vBDo2);
+        Point2D pCSR = MathUtil.subtract(pCPR, vACo2);
+        Point2D pDSL = MathUtil.add(pDPL, vBDo2);
 
-        Point2D pVLP = MathUtil.add(pVLtC, vBD2);
-        Point2D pVRP = MathUtil.subtract(pVRtB, vAC2);
-        
+        Point2D pVLP = MathUtil.add(pVLtD, vAC2);
+        Point2D pVRP = MathUtil.subtract(pVRtA, vBD2);
+
         Point2D pKLH = MathUtil.midPoint(pM, pKL);
         Point2D pKRH = MathUtil.midPoint(pM, pKR);
 
@@ -1308,122 +1312,119 @@ public class LayoutSlip extends LayoutTurnout {
         boolean mainlineD = isMainlineD();
 
         if (drawMain == mainlineA) {
-            g2.draw(new Line2D.Double(pAL, pVL));
-            g2.draw(new Line2D.Double(pVLtD, pKRtB));
+            g2.draw(new Line2D.Double(pAR, pVL));
+            g2.draw(new Line2D.Double(pVLtD, pKL));
             GeneralPath path = new GeneralPath();
-            path.moveTo(pAR.getX(), pAR.getY());
-            path.lineTo(pAPR.getX(), pAPR.getY());
-            path.quadTo(pKR.getX(), pKR.getY(), pDPR.getX(), pDPR.getY());
+            path.moveTo(pAL.getX(), pAL.getY());
+            path.lineTo(pAPL.getX(), pAPL.getY());
+            path.quadTo(pKL.getX(), pKL.getY(), pDPL.getX(), pDPL.getY());
             g2.draw(path);
         }
         if (drawMain == mainlineB) {
-            g2.draw(new Line2D.Double(pBR, pVL));
-            g2.draw(new Line2D.Double(pVLtC, pKLtA));
-            g2.draw(new Line2D.Double(pBL, pBPL));
+            g2.draw(new Line2D.Double(pBL, pVL));
+            g2.draw(new Line2D.Double(pVLtC, pKR));
             if (getTurnoutType() == DOUBLE_SLIP) {
                 GeneralPath path = new GeneralPath();
-                path.moveTo(pBL.getX(), pBL.getY());
-                path.lineTo(pBPL.getX(), pBPL.getY());
-                path.quadTo(pKL.getX(), pKL.getY(), pCPL.getX(), pCPL.getY());
+                path.moveTo(pBR.getX(), pBR.getY());
+                path.lineTo(pBPR.getX(), pBPR.getY());
+                path.quadTo(pKR.getX(), pKR.getY(), pCPR.getX(), pCPR.getY());
                 g2.draw(path);
             } else {
-                g2.draw(new Line2D.Double(pBL, pKL));
+                g2.draw(new Line2D.Double(pBR, pKR));
             }
         }
         if (drawMain == mainlineC) {
-            g2.draw(new Line2D.Double(pCR, pVR));
-            g2.draw(new Line2D.Double(pVRtB, pKLtD));
+            g2.draw(new Line2D.Double(pCL, pVR));
+            g2.draw(new Line2D.Double(pVRtB, pKR));
             if (getTurnoutType() == DOUBLE_SLIP) {
                 GeneralPath path = new GeneralPath();
-                path.moveTo(pCL.getX(), pCL.getY());
-                path.lineTo(pCPL.getX(), pCPL.getY());
-                path.quadTo(pKL.getX(), pKL.getY(), pBPL.getX(), pBPL.getY());
+                path.moveTo(pCR.getX(), pCR.getY());
+                path.lineTo(pCPR.getX(), pCPR.getY());
+                path.quadTo(pKR.getX(), pKR.getY(), pBPR.getX(), pBPR.getY());
                 g2.draw(path);
             } else {
-                g2.draw(new Line2D.Double(pCL, pKL));
+                g2.draw(new Line2D.Double(pCR, pKR));
             }
         }
         if (drawMain == mainlineD) {
-            g2.draw(new Line2D.Double(pDL, pVR));
-            g2.draw(new Line2D.Double(pVRtA, pKRtC));
-            g2.draw(new Line2D.Double(pDR, pDPR));
+            g2.draw(new Line2D.Double(pDR, pVR));
+            g2.draw(new Line2D.Double(pVRtA, pKL));
             GeneralPath path = new GeneralPath();
-            path.moveTo(pDR.getX(), pDR.getY());
-            path.lineTo(pDPR.getX(), pDPR.getY());
-            path.quadTo(pKR.getX(), pKR.getY(), pAPR.getX(), pAPR.getY());
+            path.moveTo(pDL.getX(), pDL.getY());
+            path.lineTo(pDPL.getX(), pDPL.getY());
+            path.quadTo(pKL.getX(), pKL.getY(), pAPL.getX(), pAPL.getY());
             g2.draw(path);
         }
 
         int slipState = getSlipState();
-
         if (slipState == STATE_AD) {
             if (drawMain == mainlineA) {
-                g2.draw(new Line2D.Double(pASR, pKR));
-                g2.draw(new Line2D.Double(pVLP, pKRH));
+                g2.draw(new Line2D.Double(pASL, pKL));
+                g2.draw(new Line2D.Double(pVLP, pKLH));
             }
             if (drawMain == mainlineB) {
-                g2.draw(new Line2D.Double(pBPL, pKL));
-                g2.draw(new Line2D.Double(pVLtC, pKLH));
+                g2.draw(new Line2D.Double(pBPR, pKR));
+                g2.draw(new Line2D.Double(pVLtC, pKRH));
             }
             if (drawMain == mainlineC) {
-                g2.draw(new Line2D.Double(pCPL, pKL));
-                g2.draw(new Line2D.Double(pVRtB, pKLH));
+                g2.draw(new Line2D.Double(pCPR, pKR));
+                g2.draw(new Line2D.Double(pVRtB, pKRH));
             }
             if (drawMain == mainlineD) {
-                g2.draw(new Line2D.Double(pDSR, pKR));
-                g2.draw(new Line2D.Double(pVRP, pKRH));
+                g2.draw(new Line2D.Double(pDSL, pKL));
+                g2.draw(new Line2D.Double(pVRP, pKLH));
             }
         } else if (slipState == STATE_AC) {
             if (drawMain == mainlineA) {
-                g2.draw(new Line2D.Double(pAPR, pKR));
-                g2.draw(new Line2D.Double(pVLtD, pKRH));
+                g2.draw(new Line2D.Double(pAPL, pKL));
+                g2.draw(new Line2D.Double(pVLtD, pKLH));
             }
             if (drawMain == mainlineB) {
-                g2.draw(new Line2D.Double(pBSL, pKL));
-                g2.draw(new Line2D.Double(pVLP, pKLH));
+                g2.draw(new Line2D.Double(pBSR, pKR));
+                g2.draw(new Line2D.Double(pVLP, pKRH));
             }
             if (drawMain == mainlineC) {
-                g2.draw(new Line2D.Double(pCPL, pKL));
-                g2.draw(new Line2D.Double(pVRtB, pKLH));
+                g2.draw(new Line2D.Double(pCPR, pKR));
+                g2.draw(new Line2D.Double(pVRtB, pKRH));
             }
             if (drawMain == mainlineD) {
-                g2.draw(new Line2D.Double(pDSR, pKR));
-                g2.draw(new Line2D.Double(pVRP, pKRH));
+                g2.draw(new Line2D.Double(pDSL, pKL));
+                g2.draw(new Line2D.Double(pVRP, pKLH));
             }
         } else if (slipState == STATE_BD) {
             if (drawMain == mainlineA) {
-                g2.draw(new Line2D.Double(pASR, pKR));
-                g2.draw(new Line2D.Double(pVLP, pKRH));
-            }
-            if (drawMain == mainlineB) {
-                g2.draw(new Line2D.Double(pBPL, pKL));
-                g2.draw(new Line2D.Double(pVLtC, pKLH));
-            }
-            if (drawMain == mainlineC) {
-                g2.draw(new Line2D.Double(pCSL, pKL));
-                g2.draw(new Line2D.Double(pVRP, pKLH));
-            }
-            if (drawMain == mainlineD) {
-                g2.draw(new Line2D.Double(pDPR, pKR));
-                g2.draw(new Line2D.Double(pVRtA, pKRH));
-            }
-        } else if ((getTurnoutType() == DOUBLE_SLIP) 
-            && (slipState == STATE_BC)) {
-            if (drawMain == mainlineA) {
-                g2.draw(new Line2D.Double(pAPR, pKR));
-                g2.draw(new Line2D.Double(pVLtD, pKRH));
-            }
-            if (drawMain == mainlineB) {
-                g2.draw(new Line2D.Double(pBSL, pKL));
+                g2.draw(new Line2D.Double(pASL, pKL));
                 g2.draw(new Line2D.Double(pVLP, pKLH));
             }
+            if (drawMain == mainlineB) {
+                g2.draw(new Line2D.Double(pBPR, pKR));
+                g2.draw(new Line2D.Double(pVLtC, pKRH));
+            }
             if (drawMain == mainlineC) {
-                g2.draw(new Line2D.Double(pCSL, pKL));
-                g2.draw(new Line2D.Double(pVRP, pKLH));
+                g2.draw(new Line2D.Double(pCSR, pKR));
+                g2.draw(new Line2D.Double(pVRP, pKRH));
             }
             if (drawMain == mainlineD) {
-                g2.draw(new Line2D.Double(pDPR, pKR));
-                g2.draw(new Line2D.Double(pVRtA, pKRH));
+                g2.draw(new Line2D.Double(pDPL, pKL));
+                g2.draw(new Line2D.Double(pVRtA, pKLH));
+            }
+        } else if ((getTurnoutType() == DOUBLE_SLIP)
+                && (slipState == STATE_BC)) {
+            if (drawMain == mainlineA) {
+                g2.draw(new Line2D.Double(pAPL, pKL));
+                g2.draw(new Line2D.Double(pVLtD, pKLH));
+            }
+            if (drawMain == mainlineB) {
+                g2.draw(new Line2D.Double(pBSR, pKR));
+                g2.draw(new Line2D.Double(pVLP, pKRH));
+            }
+            if (drawMain == mainlineC) {
+                g2.draw(new Line2D.Double(pCSR, pKR));
+                g2.draw(new Line2D.Double(pVRP, pKRH));
+            }
+            if (drawMain == mainlineD) {
+                g2.draw(new Line2D.Double(pDPL, pKL));
+                g2.draw(new Line2D.Double(pVRtA, pKLH));
             }
         }   // DOUBLE_SLIP
     }   // draw2

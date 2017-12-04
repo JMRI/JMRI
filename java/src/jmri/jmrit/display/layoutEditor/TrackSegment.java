@@ -1559,22 +1559,9 @@ public class TrackSegment extends LayoutTrack {
                     points[idx + 1] = bezierControlPoints.get(idx);
                 }
                 points[cnt + 1] = pt2;
-                cnt += 2;
 
-                Point2D[] pointsL = new Point2D[cnt];
-                Point2D[] pointsR = new Point2D[cnt];
-                for (int idx = 0; idx < cnt; idx++) {
-                    Point2D p0 = (idx > 0) ? points[idx - 1] : points[0];
-                    Point2D p1 = points[idx];
-                    Point2D p2 = (idx < cnt - 1) ? points[idx + 1] : points[cnt - 1];
-                    Point2D pM = MathUtil.midPoint(p0, p2);
-                    Point2D offsetP = MathUtil.normalize(MathUtil.subtract(p1, pM), railDisplacement);
-                    offsetP = MathUtil.orthogonal(offsetP);
-                    pointsL[idx] = MathUtil.subtract(points[idx], offsetP);
-                    pointsR[idx] = MathUtil.add(points[idx], offsetP);
-                }
-                MathUtil.drawBezier(g2, pointsL);
-                MathUtil.drawBezier(g2, pointsR);
+                MathUtil.drawBezier(g2, points, -railDisplacement);
+                MathUtil.drawBezier(g2, points, +railDisplacement);
             } else {
                 Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
                 Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
