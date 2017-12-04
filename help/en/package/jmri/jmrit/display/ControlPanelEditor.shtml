@@ -66,7 +66,7 @@
 
       <h2>Changing the View between Editors</h2>In either editor,
       when in edit mode, the last item in the <b>File</b> menu is
-      <b>Change view to "..."</b> ("..." being the other editor).
+      <b>Change view to "xx"</b> ("xx" being the other editor).
       Selecting this item switches the view from one editor mode to
       the other editor mode.
 
@@ -75,13 +75,14 @@
       Panel Editor does not. In Panel Editor the <b>Edit</b> menu
       opens an edit window. In Control Panel Editor the <b>Edit</b>
       menu adds three additional menus to the panel: <b>File</b>,
-      <b>Options</b>, <b>Zoom</b>, <b>AddItems</b>, <b>Circuit
+      <b>Options</b>, <b>Zoom</b>, <b>Add Items</b>, <b>Circuit
       Builder</b> and <b>Draw Shapes</b>.
 
       <h2>Control Panel Editor Menus</h2>When in Edit mode, the
       following menus are displayed.
 
-      <h3>File Menu</h3>The <b>File</b> menu changes it items
+      <h3>File Menu</h3>
+      The <b>File</b> menu changes its items
       between edit mode and operating mode. In edit mode the items
       are the same as the items in the File menu of the Panel
       Editor's edit window with a few additional items. They are:
@@ -99,7 +100,7 @@
 
         <li><b>Change View to Panel Editor</b></li>
 
-        <li><b>Delete This Panel...</b></li>
+        <li><b>Delete this Panel...</b></li>
 
         <li><b>Close Editor</b></li>
       </ul>
@@ -164,7 +165,8 @@
       <p>The menu also has items for setting <b>Panel
       Scrollbars</b> and to <b>Show Tooltips</b>.</p>
 
-      <h3>Zoom Menu</h3>The <b>Zoom(percentage)...</b> item will
+      <h3>Zoom Menu</h3>
+      The <b>Zoom(percentage)...</b> item will
       enlarge or reduce the panel size.
 
       <p>The <b>Zoom to Fit</b> item will enlarge or reduce the
@@ -178,16 +180,19 @@
       panel window, then you should repeat "Zoom to Fit" to resize
       the display to fit the new panel window dimensions.</p>
 
-      <h3>Add Items Menu</h3>The <b>Item Palette</b> menu item opens
+      <h3>Add Items Menu</h3>
+      The <b>Item Palette</b> menu item opens
       a tabbed window which allows you to add item icons to the
       panel. Each item type has a tab in the window. Adding items
       is done by drag and drop. Iconic items may have multiple sets
       of icons to choose from. Icon sets may be customized and
       added or deleted to suit the user. Details may be found at
-      <a href="ItemPalette.shtml">The Item Palette</a>. Note that
-      the Item Palette can also be opened with the accelerator key,
-      Control P. The icons are displayed on the background
-      of the last editor to call the Item Palette.
+      <a href="ItemPalette.shtml">The Item Palette</a> help.<br>
+      Note that the Item Palette can also be opened with the
+      accelerator key, Control P. The icons are displayed on the
+      background of the last editor to call the Item Palette.
+      Once visible, use the bottom of the pane use the "Show on:"
+      combo box to slect a different background.
 
       <p>The Palette in Control Panel Editor does not support the
       <b>Slip/3-Way/Scissor</b> turnout icons that are available
@@ -212,28 +217,29 @@
       These menu items are described in <a href=
       "../logix/Warrant.shtml">Warrants</a>. .
 
-      <h3>Circuit Builder</h3>When two or more Occupancy Blocks are
-      defined this menu appears. The items under this menu provide
+      <h3>Circuit Builder</h3>
+      <p>This menu appears when two or more Occupancy Blocks are
+      defined. The items under this menu provide
       a graphic user interface (GUI) for defining Occupancy Blocks,
       Portals and Paths, that is, a track circuit. Descriptions of
-      the menu items are found in <a href=
-      "CircuitBuilder.shtml">Circuit Builder</a>.
+      the menu items are found in
+      <a href="CircuitBuilder.shtml">Circuit Builder</a>.</p>
 
-      <h3>Draw Shapes</h3>This menu allows drawing of various
-      geometric shapes.
+      <h3>Draw Shapes</h3>
+      This menu allows drawing of various geometric shapes.
 
       <ul>
-        <li><b>Draw Rectangle</b> .</li>
+        <li><b>Draw Rectangle</b></li>
 
-        <li><b>Draw Round Rectangle</b> .</li>
+        <li><b>Draw Round Rectangle</b></li>
 
-        <li><b>Draw Polygon</b> .</li>
+        <li><b>Draw Polygon</b></li>
 
-        <li><b>Draw Circle</b> .</li>
+        <li><b>Draw Circle</b></li>
 
-        <li><b>Draw Ellipse</b> .</li>
+        <li><b>Draw Ellipse</b></li>
 
-        <li><b>Disable Selecting Shapes</b> .</li>
+        <li><b>Disable Selecting Shapes</b></li>
       </ul>With the exception of Draw Polygon, each of the draw
       items is make with a mouse click and drag. Polygon shapes are
       made with a sequence of mouse clicks and the polygon
@@ -252,11 +258,12 @@
       mode. This feature can be used to mask and unmask help
       information to your panel or to highlight items.</p>
 
-      <h2>Mouse operation in Control Panel Editor</h2>Control Panel
-      Editor does not implement the rollover highlighting found in
-      Panel Editor.
+      <h2>Mouse operation in Control Panel Editor</h2>
+      Control Panel Editor does not implement the rollover
+      highlighting found in Panel Editor.
 
-      <h3>Selection</h3>In Control Panel Editor selection is done
+      <h3>Selection</h3>
+      In Control Panel Editor selection is done
       with a simple click. Items are deselected with Control click
 
       <p>When items are stacked, Shift-click will select the
@@ -266,7 +273,8 @@
       item above the background. Control-click over only the
       background will select the background icon.</p>
 
-      <h3>Multiple Selection</h3>As with Panel Editor, a selection
+      <h3>Multiple Selection</h3>
+      As with Panel Editor, a selection
       group can be made using the "selection fence" - a dotted red
       rectangle that will select all the items completely
       <b><i>within</i></b> the fence. If the <b>Shift</b> key is
@@ -285,7 +293,8 @@
       by dragging it with the control key held down.</p>
 
       <h2>Duplicating Selections Within Control Panel
-      Editor</h2>Copying an item or selection group is done by
+      Editor</h2>
+      Copying an item or selection group is done by
       bringing up the popup for one of the selected items. When the
       <b>Duplicate</b> popup menu item is clicked, a Copy of the
       selection group is made on top of the original selections.
@@ -294,18 +303,19 @@
       original postion. The copy procedure can be repeated on the
       newly positioned copy to continue to make more copies.
 
-      <h2>Item Popups in Control Panel Editor</h2>Right click
-      (meta-click on Mac or Linux) brings up the popup menu for the
-      item.
+      <h2>Item Popups in Control Panel Editor</h2>
+      Right click (meta-click on Mac or Linux) brings up the
+      popup menu for the item.
 
       <p>Hold the <b>Control</b> key down to open the popup menu
       for a background item.</p>
 
-      <h3>Edit Text Attributes</h3>The <b>Edit Text Attributes</b>
-      popup item opens a dialog to set any of the item's text
-      attributes.
+      <h3>Edit Text Attributes</h3>
+      The <b>Edit Text Attributes</b> popup item opens a dialog
+      to set any of the item's text attributes.
 
-      <h3>Multiple Selection Editing</h3>When a popup menu item is
+      <h3>Multiple Selection Editing</h3>
+      <p>When a popup menu item is
       invoked from an item that is a member of a selection group,
       all of the edited values that were made in the popup are
       applied to all members of the selection group if that value
@@ -313,7 +323,8 @@
       changed on one of the items in the selection group then the
       font size is changed in all items in the group. If say, a
       fast clock were included in this group, then no change would
-      be made to the clock. <!--#include virtual="/Footer" -->
+      be made to the clock.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

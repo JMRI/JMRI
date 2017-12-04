@@ -21,7 +21,7 @@ import jmri.util.JmriJFrame;
 public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
 
     /**
-     * Constructor types with multiple families and multiple icon families
+     * Constructor types with multiple families and multiple icon families.
      */
     public PortalItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
         super(parentFrame, type, family, editor);
@@ -31,13 +31,13 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
      * Init for creation _bottom1Panel and _bottom2Panel alternate visibility in
      * bottomPanel depending on whether icon families exist. They are made first
      * because they are referenced in initIconFamiliesPanel(). Subclasses will
-     * insert other panels
+     * insert other panels.
      */
     @Override
     public void init() {
         if (!_initialized) {
             super.init();
-            _supressDragging = true;
+            _suppressDragging = true;
             add(makeChangeDefaultIconsPanel());
         }
     }
@@ -65,4 +65,5 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
     @Override
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
     }
+
 }

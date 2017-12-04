@@ -429,7 +429,7 @@ public class TrackSegment extends LayoutTrack {
      * This implementation returns null because {@link #getConnect1} and
      * {@link #getConnect2} should be used instead.
      */
-    // only implemented here to supress "does not override abstract method " error in compiler
+    // only implemented here to suppress "does not override abstract method " error in compiler
     public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
         // nothing to see here, move along
         return null;
@@ -441,7 +441,7 @@ public class TrackSegment extends LayoutTrack {
      * This implementation does nothing because {@link #setNewConnect1} and
      * {@link #setNewConnect2} should be used instead.
      */
-    // only implemented here to supress "does not override abstract method " error in compiler
+    // only implemented here to suppress "does not override abstract method " error in compiler
     public void setConnection(int connectionType, @Nullable LayoutTrack o, int type) throws jmri.JmriException {
         // nothing to see here, move along
     }
