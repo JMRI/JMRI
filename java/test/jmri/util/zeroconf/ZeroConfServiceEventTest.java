@@ -90,6 +90,7 @@ public class ZeroConfServiceEventTest {
     @After
     public void tearDown() throws Exception {
         ZeroConfService.reset();
+        jmdns.close();
         jmdns = null;
     }
 
