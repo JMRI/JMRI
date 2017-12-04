@@ -168,6 +168,7 @@ import org.slf4j.LoggerFactory;
  * as some of the control design.
  *
  * @author Dave Duchamp Copyright: (c) 2004-2007
+ * @author George Warner Copyright: (c) 2017
  */
 @SuppressWarnings("serial")
 @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present

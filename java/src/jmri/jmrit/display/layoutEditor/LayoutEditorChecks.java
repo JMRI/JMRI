@@ -22,6 +22,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A collection of tools to check various things on the layout editor panel.
+ *
+ * @author George Warner Copyright (C) 2017
  */
 public class LayoutEditorChecks {
 

@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * Provides the functionality for configuring a LayoutBlockManager
  *
  * @author Dave Duchamp Copyright (c) 2007
+ * @author George Warner Copyright (C) 2017
  */
 public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

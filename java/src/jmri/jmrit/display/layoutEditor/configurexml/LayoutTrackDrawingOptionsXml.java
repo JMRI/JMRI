@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This module handles configuration for LayoutTrackDrawingOptions for a
- * LayoutEditor.
+ * This module handles saving and loading LayoutTrackDrawingOptions
+ * for a LayoutEditor.
  *
  * @author George Warner Copyright (c) 2017
  */

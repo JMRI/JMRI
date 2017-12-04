@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 
 /**
  *
- * @author geowar
+ * @author George Warner Copyright (C) 2017
  */
 public class LayoutTrackDrawingOptions implements Cloneable {
 
@@ -274,7 +274,7 @@ public class LayoutTrackDrawingOptions implements Cloneable {
         mainBlockLineWidth = val;
     }
 
-    // 
+    //
     public boolean equalsAllButName(@Nonnull LayoutTrackDrawingOptions ltdo) {
         boolean result = true;  // assume success (optimist!)
         if (this != ltdo) {

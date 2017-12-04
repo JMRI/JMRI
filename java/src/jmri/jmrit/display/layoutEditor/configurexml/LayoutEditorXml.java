@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp Copyright (c) 2007
+ * @author George Warner Copyright (C) 2017
  */
 public class LayoutEditorXml extends AbstractXmlAdapter {
 

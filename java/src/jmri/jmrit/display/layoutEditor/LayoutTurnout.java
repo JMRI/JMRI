@@ -132,6 +132,7 @@ import org.slf4j.LoggerFactory;
  * required to be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
+ * @author George Warner Copyright (C) 2017
  */
 public class LayoutTurnout extends LayoutTrack {
 

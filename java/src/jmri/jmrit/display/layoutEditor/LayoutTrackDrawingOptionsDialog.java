@@ -19,8 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Handle changing layout editor drawing options
  *
- * @author geowar
+ * @author George Warner Copyright (C) 2017
  */
 public class LayoutTrackDrawingOptionsDialog extends JDialog {
 

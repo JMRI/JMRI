@@ -59,6 +59,7 @@ import org.slf4j.LoggerFactory;
  * circle in the direction of the turntable center.
  *
  * @author Dave Duchamp Copyright (c) 2007
+ * @author George Warner Copyright (C) 2017
  */
 public class LayoutTurntable extends LayoutTrack {
 
