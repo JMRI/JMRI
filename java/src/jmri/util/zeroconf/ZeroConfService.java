@@ -242,7 +242,7 @@ public class ZeroConfService {
      */
     public void publish() {
         if (!isPublished()) {
-            ZeroConfService.services.put(this.key(), this);
+            ZeroConfService.services().put(this.key(), this);
             this.listeners.stream().forEach((listener) -> {
                 listener.serviceQueued(new ZeroConfServiceEvent(this, null));
             });
@@ -322,11 +322,12 @@ public class ZeroConfService {
                         log.debug("Unregistering {} from {}", this.key(), netService.getInetAddress());
                         netService.unregisterService(this.serviceInfos.get(netService.getInetAddress()));
                         this.serviceInfos.remove(netService.getInetAddress());
-                        this.listeners.stream().forEach((listener) -> {
-                            listener.serviceUnpublished(new ZeroConfServiceEvent(this, netService));
-                        });
                     } catch (NullPointerException ex) {
                         log.debug("{} already unregistered from {}", this.key(), netService.getInetAddress());
+                    } finally {
+                         this.listeners.stream().forEach((listener) -> {
+                             listener.serviceUnpublished(new ZeroConfServiceEvent(this, netService));
+                         });
                     }
                 } catch (IOException ex) {
                     log.error("Unable to stop ZeroConfService {}. {}", this.key(), ex.getLocalizedMessage());
@@ -478,6 +479,15 @@ public class ZeroConfService {
             }
         }
         return addrList;
+    }
+
+    /*
+     * Package protected method used to clear the static hashmaps.
+     * Primarilly used for testing.
+     */
+    static void reset(){
+       services.clear();
+       netServices.clear();
     }
 
     public void addEventListener(ZeroConfServiceListener l) {
