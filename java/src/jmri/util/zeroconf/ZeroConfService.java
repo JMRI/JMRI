@@ -324,13 +324,14 @@ public class ZeroConfService {
                         this.serviceInfos.remove(netService.getInetAddress());
                     } catch (NullPointerException ex) {
                         log.debug("{} already unregistered from {}", this.key(), netService.getInetAddress());
+                    } finally {
+                         this.listeners.stream().forEach((listener) -> {
+                             listener.serviceUnpublished(new ZeroConfServiceEvent(this, netService));
+                         });
                     }
                 } catch (IOException ex) {
                     log.error("Unable to stop ZeroConfService {}. {}", this.key(), ex.getLocalizedMessage());
                 }
-                this.listeners.stream().forEach((listener) -> {
-                   listener.serviceUnpublished(new ZeroConfServiceEvent(this, netService));
-                });
             });
             ZeroConfService.services().remove(key());
         }
