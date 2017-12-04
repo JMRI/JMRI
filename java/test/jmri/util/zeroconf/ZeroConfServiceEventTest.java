@@ -82,8 +82,8 @@ public class ZeroConfServiceEventTest {
 
         PowerMockito.doNothing().when(jmdnsi).send(any(DNSOutgoing.class));
         PowerMockito.doNothing().when(jmdnsi).respondToQuery(any(DNSIncoming.class));
-        //PowerMockito.doNothing().when(jmdnsi).registerService(any(ServiceInfo.class));
-        //PowerMockito.doNothing().when(jmdnsi).unregisterService(any(ServiceInfo.class));
+        PowerMockito.doNothing().when(jmdnsi).registerService(any(ServiceInfo.class));
+        PowerMockito.doNothing().when(jmdnsi).unregisterService(any(ServiceInfo.class));
         jmdns = jmdnsi;
     }
 
