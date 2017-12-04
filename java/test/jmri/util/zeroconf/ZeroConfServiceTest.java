@@ -150,6 +150,16 @@ public class ZeroConfServiceTest {
      * Test of key method, of class ZeroConfService.
      */
     @Test
+    public void testKey_0args_from_2arg_create() {
+        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        String result = instance.key();
+        Assert.assertEquals(WebServerPreferences.getDefault().getRailroadName().toLowerCase() + "." + HTTP, result);
+    }
+
+    /**
+     * Test of key method, of class ZeroConfService.
+     */
+    @Test
     public void testKey_String_String() {
         String result = ZeroConfService.key("THAT", "THIS");
         Assert.assertEquals("this.that", result);
@@ -190,6 +200,8 @@ public class ZeroConfServiceTest {
     public void testIsPublished() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         Assert.assertFalse(instance.isPublished());
+        instance.publish();
+        Assert.assertTrue(instance.isPublished());
     }
 
     /**
@@ -261,6 +273,30 @@ public class ZeroConfServiceTest {
     }
 
     /**
+     * Test of that the right messages are sent during the publish and stop 
+     * stop sequence.  Does not check status of the JmDNS instance.
+     */
+    @Test
+    public void testPublishAndStopMessageSequence() {
+        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        Assert.assertFalse(instance.isPublished());
+        TestZeroConfServiceListener zcl = new TestZeroConfServiceListener();
+        instance.addEventListener(zcl);
+        // can fail if platform does not release earlier stopped service within 15 seconds
+        instance.publish();
+        Assert.assertTrue("queued event received", JUnitUtil.waitFor(() -> {
+           return zcl.queuedService;
+        }));
+        Assert.assertTrue("published event received", JUnitUtil.waitFor(() -> {
+           return zcl.publishedService;
+        }));
+        instance.stop();
+        Assert.assertTrue("unpublished event received", JUnitUtil.waitFor(() -> {
+           return zcl.unpublishedService;
+        }));
+    }
+
+    /**
      * Test of allServices method, of class ZeroConfService.
      */
     @Test
@@ -271,6 +307,7 @@ public class ZeroConfServiceTest {
         Assert.assertEquals(0, ZeroConfService.allServices().size());
         instance.publish();
         Assert.assertEquals(1, ZeroConfService.allServices().size());
+        Assert.assertTrue(ZeroConfService.allServices().contains(instance));
     }
 
 }
