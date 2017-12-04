@@ -5672,6 +5672,10 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             prevSelectedObject = selectedObject;
             selectedObject = null;
         }
+
+        beginObject = null;
+        foundObject = null;
+
         isDragging = false;
         delayedPopupTrigger = false;
         requestFocusInWindow();
