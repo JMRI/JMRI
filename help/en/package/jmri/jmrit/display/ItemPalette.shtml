@@ -48,13 +48,17 @@
       yellow-dark, etc.<br>
       The individual icons are displayed in the preview on the
       background of the last editor to open the Item Palette.
+      <span class="since">since 4.9.7</span>
+      Choosing a different background in the "View On:" combo box,
+      may help in determining what parts of the icon are opaque
+      and what parts are transparent.
 
       <p>The <b>Show Icons</b> button displays all the icons in the
       selected set.</p>
 
-      <h3>Editing and Creating New Icon Sets</h3>The <b>Edit
-      Icons</b> button opens a dialog where the icons may be
-      changed by dragging new icons from the icon catalog.
+      <h3>Editing and Creating New Icon Sets</h3>
+      The <b>Edit Icons</b> button opens a dialog where the icons
+      may be changed by dragging new icons from the icon catalog.
 
       <p>Additional icon sets may be added with <b>New Icon Set</b>
       button. After giving a name to the new icon set, the edit
@@ -66,7 +70,7 @@
       icon set.</p>
 
       <p>When the Item Palette is customized with other icon sets,
-      closing the Palette with the close button of in the title bar
+      closing the Palette with the close button in the title bar
       will open a dialog box asking whether you want to save your
       changes. When changes are saved the Item Palette is stored in
       the CatalogTrees.xml file in the preferences directory.</p>
