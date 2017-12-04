@@ -242,7 +242,7 @@ public class ZeroConfService {
      */
     public void publish() {
         if (!isPublished()) {
-            ZeroConfService.services.put(this.key(), this);
+            ZeroConfService.services().put(this.key(), this);
             this.listeners.stream().forEach((listener) -> {
                 listener.serviceQueued(new ZeroConfServiceEvent(this, null));
             });
