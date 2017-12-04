@@ -34,6 +34,7 @@ public class PipeListenerTest {
         wr.write("Test String");
         wr.flush();
         jmri.util.JUnitUtil.waitFor(()->{return !(pr.ready());},"buffer empty");
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100); // pause to let the JTextArea catch up.
         Assert.assertEquals("text after character write","Test String",jta.getText());
         t.stop();
     }
