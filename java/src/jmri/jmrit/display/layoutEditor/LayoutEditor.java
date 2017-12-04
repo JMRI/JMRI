@@ -5673,6 +5673,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             selectedObject = null;
         }
 
+        // clear these
         beginObject = null;
         foundObject = null;
 
@@ -9299,6 +9300,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     /**
      * highlight the specified block
+     *
      * @param inBlock the block
      * @return true if block was highlighted
      */
@@ -9328,6 +9330,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     /**
      * highlight the specified layout block
+     *
      * @param inLayoutBlock the layout block
      * @return true if layout block was highlighted
      */
