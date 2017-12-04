@@ -1009,14 +1009,13 @@ public final class MathUtil {
         // (I just kept moving it closer to 1 until I got good results. ;-)
         if ((depth > 12) || (flatness <= 1.001)) {
             Point2D vO = normalize(orthogonal(subtract(p3, p0)), displacement);
-            //Point2D p0P = add(p0, vO);
-            Point2D p3P = add(p3, vO);
             if (bezier1st) {
-                path.moveTo(p3P.getX(), p3P.getY());
+                Point2D p0P = add(p0, vO);
+                path.moveTo(p0P.getX(), p0P.getY());
                 bezier1st = false;
-            } else {
-                path.lineTo(p3P.getX(), p3P.getY());
             }
+            Point2D p3P = add(p3, vO);
+            path.lineTo(p3P.getX(), p3P.getY());
             result = l03;
         } else {
             // first order midpoints
@@ -1088,14 +1087,13 @@ public final class MathUtil {
         if ((depth > 12) || (flatness <= 1.001)) {
             Point2D p0 = points[0], pN = points[len - 1];
             Point2D vO = normalize(orthogonal(subtract(pN, p0)), displacement);
-            //Point2D p0P = add(p0, vO);
-            Point2D pNP = add(pN, vO);
             if (bezier1st) {
-                path.moveTo(pNP.getX(), pNP.getY());
+                Point2D p0P = add(p0, vO);
+                path.moveTo(p0P.getX(), p0P.getY());
                 bezier1st = false;
-            } else {
-                path.lineTo(pNP.getX(), pNP.getY());
             }
+            Point2D pNP = add(pN, vO);
+            path.lineTo(pNP.getX(), pNP.getY());
             result = inner_distance;
         } else {
             // calculate (len - 1) order of points
