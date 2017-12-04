@@ -49,28 +49,41 @@ public class ReportContext {
 
         addString("JMRI Version: " + jmri.Version.name() + "   ");
         addString("JMRI configuration file name: "
-                + System.getProperty("org.jmri.apps.Apps.configFilename") + "   ");
-        if (jmri.util.JmriJFrame.getFrameList().get(0) != null) {
+                + System.getProperty("org.jmri.apps.Apps.configFilename") + "   (from org.jmri.apps.Apps.configFilename system property)");
+        if (!jmri.util.JmriJFrame.getFrameList().isEmpty() && jmri.util.JmriJFrame.getFrameList().get(0) != null) {
             addString("JMRI main window name: "
                     + jmri.util.JmriJFrame.getFrameList().get(0).getTitle() + "   ");
+        } else {
+            addString("No main window present");
         }
 
         addString("JMRI Application: " + jmri.Application.getApplicationName() + "   ");
-        ConnectionConfig[] connList = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections();
-        if (connList != null) {
-            for (int x = 0; x < connList.length; x++) {
-                ConnectionConfig conn = connList[x];
-                addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo() + " Disabled " + conn.getDisabled() + "   ");
+        ConnectionConfigManager cm = InstanceManager.getNullableDefault(ConnectionConfigManager.class);
+        if (cm != null) {
+            ConnectionConfig[] connList = cm.getConnections();
+            if (connList != null) {
+                for (int x = 0; x < connList.length; x++) {
+                    ConnectionConfig conn = connList[x];
+                    addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo() + " Disabled " + conn.getDisabled() + "   ");
+                }
             }
+        } else {
+            addString("No connections present");
         }
-
+        
         addString("Available Communication Ports:");
         addCommunicationPortInfo();
 
         Profile profile = ProfileManager.getDefault().getActiveProfile();
-        addString("Active profile: " + profile.getName() + "   ");
-        addString("Profile location: " + profile.getPath().getPath() + "   ");
-        addString("Profile ID: " + profile.getId() + "   ");
+        if (profile != null) {
+            addString("Active profile: " + profile.getName() + "   ");
+            addString("Profile location: " + profile.getPath().getPath() + "   ");
+            addString("Profile ID: " + profile.getId() + "   ");
+        } else {
+            addString("No profile present");
+        }
+        
+        addString("JMRI Node ID: "+ jmri.util.node.NodeIdentity.identity() );
 
         String prefs = FileUtil.getUserFilesPath();
         addString("Preferences directory: " + prefs + "   ");
@@ -86,7 +99,7 @@ public class ReportContext {
 
         //String operations = jmri.jmrit.operations.setup.OperationsSetupXml.getFileLocation();
         //addString("Operations files location: "+operations+"  ");
-        jmri.jmrit.audio.AudioFactory af = jmri.InstanceManager.getDefault(jmri.AudioManager.class).getActiveAudioFactory();
+        jmri.jmrit.audio.AudioFactory af = jmri.InstanceManager.getNullableDefault(jmri.AudioManager.class).getActiveAudioFactory();
         String audio = af != null ? af.toString() : "[not initialised]";
         addString("Audio factory type: " + audio + "   ");
 
