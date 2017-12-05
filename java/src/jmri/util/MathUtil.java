@@ -451,6 +451,9 @@ public final class MathUtil {
 
     /**
      * compute the angle (direction in radians) from point 1 to point 2
+     * <p>
+     * Note: Goes CCW from south to east to north to west, etc.
+     * For JMRI subtract from PI/2 to get east, south, west, north
      *
      * @param p1 the first Point2D
      * @param p2 the second Point2D
@@ -463,6 +466,9 @@ public final class MathUtil {
 
     /**
      * compute the angle (direction in degrees) from point 1 to point 2
+     * <p>
+     * Note: Goes CCW from south to east to north to west, etc.
+     * For JMRI subtract from 90.0 to get east, south, west, north
      *
      * @param p1 the first Point2D
      * @param p2 the second Point2D

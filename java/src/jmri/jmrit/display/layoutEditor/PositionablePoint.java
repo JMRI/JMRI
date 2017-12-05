@@ -1436,16 +1436,16 @@ public class PositionablePoint extends LayoutTrack {
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
         if (getType() != ANCHOR) {
             Point2D pt = getCoordsCenter();
-            boolean mainline = false;
+            //boolean mainline = false;
             Point2D ep1 = pt, ep2 = pt;
 
             if (getConnect1() != null) {
-                mainline = getConnect1().isMainline();
+                //mainline = getConnect1().isMainline();
                 ep1 = getConnect1().getCentreSeg();
             }
             if (getType() == ANCHOR) {
                 if (getConnect2() != null) {
-                    mainline |= getConnect2().isMainline();
+                    //mainline |= getConnect2().isMainline();
                     ep2 = getConnect2().getCentreSeg();
                 }
             }
@@ -1702,30 +1702,28 @@ public class PositionablePoint extends LayoutTrack {
         // this should never be null... but just in case...
         if (ts1 != null) {
             blk1 = ts1.getBlockName();
-            if (blk1 != null) {
-                TrackNameSet = null;    // assume not found (pessimist!)
-                TrackNameSets = blockNamesToTrackNameSetsMap.get(blk1);
-                if (TrackNameSets != null) { // (#1)
-                    for (Set<String> checkTrackNameSet : TrackNameSets) {
-                        if (checkTrackNameSet.contains(getName())) { // (#2)
-                            TrackNameSet = checkTrackNameSet;
-                            break;
-                        }
+            TrackNameSet = null;    // assume not found (pessimist!)
+            TrackNameSets = blockNamesToTrackNameSetsMap.get(blk1);
+            if (TrackNameSets != null) { // (#1)
+                for (Set<String> checkTrackNameSet : TrackNameSets) {
+                    if (checkTrackNameSet.contains(getName())) { // (#2)
+                        TrackNameSet = checkTrackNameSet;
+                        break;
                     }
-                } else {    // (#3)
-                    log.debug("*New block ('{}') trackNameSets", blk1);
-                    TrackNameSets = new ArrayList<>();
-                    blockNamesToTrackNameSetsMap.put(blk1, TrackNameSets);
                 }
-                if (TrackNameSet == null) {
-                    TrackNameSet = new LinkedHashSet<>();
-                    log.debug("*    Add track '{}' to trackNameSet for block '{}'", getName(), blk1);
-                    TrackNameSet.add(getName());
-                    TrackNameSets.add(TrackNameSet);
-                }
-                if (connect1 != null) { // (#4)
-                    connect1.collectContiguousTracksNamesInBlockNamed(blk1, TrackNameSet);
-                }
+            } else {    // (#3)
+                log.debug("*New block ('{}') trackNameSets", blk1);
+                TrackNameSets = new ArrayList<>();
+                blockNamesToTrackNameSetsMap.put(blk1, TrackNameSets);
+            }
+            if (TrackNameSet == null) {
+                TrackNameSet = new LinkedHashSet<>();
+                log.debug("*    Add track '{}' to trackNameSet for block '{}'", getName(), blk1);
+                TrackNameSet.add(getName());
+                TrackNameSets.add(TrackNameSet);
+            }
+            if (connect1 != null) { // (#4)
+                connect1.collectContiguousTracksNamesInBlockNamed(blk1, TrackNameSet);
             }
         }
 
@@ -1735,30 +1733,29 @@ public class PositionablePoint extends LayoutTrack {
             // this should never be null... but just in case...
             if (ts2 != null) {
                 String blk2 = ts2.getBlockName();
-                if (blk2 != null) {
-                    TrackNameSet = null;    // assume not found (pessimist!)
-                    TrackNameSets = blockNamesToTrackNameSetsMap.get(blk2);
-                    if (TrackNameSets != null) { // (#1)
-                        for (Set<String> checkTrackNameSet : TrackNameSets) {
-                            if (checkTrackNameSet.contains(getName())) { // (#2)
-                                TrackNameSet = checkTrackNameSet;
-                                break;
-                            }
+
+                TrackNameSet = null;    // assume not found (pessimist!)
+                TrackNameSets = blockNamesToTrackNameSetsMap.get(blk2);
+                if (TrackNameSets != null) { // (#1)
+                    for (Set<String> checkTrackNameSet : TrackNameSets) {
+                        if (checkTrackNameSet.contains(getName())) { // (#2)
+                            TrackNameSet = checkTrackNameSet;
+                            break;
                         }
-                    } else {    // (#3)
-                        log.debug("*New block ('{}') trackNameSets", blk2);
-                        TrackNameSets = new ArrayList<>();
-                        blockNamesToTrackNameSetsMap.put(blk2, TrackNameSets);
                     }
-                    if (TrackNameSet == null) {
-                        TrackNameSet = new LinkedHashSet<>();
-                        log.debug("*    Add track '{}' to TrackNameSet for block '{}'", getName(), blk2);
-                        TrackNameSets.add(TrackNameSet);
-                        TrackNameSet.add(getName());
-                    }
-                    if (connect2 != null) { // (#4)
-                        connect2.collectContiguousTracksNamesInBlockNamed(blk2, TrackNameSet);
-                    }
+                } else {    // (#3)
+                    log.debug("*New block ('{}') trackNameSets", blk2);
+                    TrackNameSets = new ArrayList<>();
+                    blockNamesToTrackNameSetsMap.put(blk2, TrackNameSets);
+                }
+                if (TrackNameSet == null) {
+                    TrackNameSet = new LinkedHashSet<>();
+                    log.debug("*    Add track '{}' to TrackNameSet for block '{}'", getName(), blk2);
+                    TrackNameSets.add(TrackNameSet);
+                    TrackNameSet.add(getName());
+                }
+                if (connect2 != null) { // (#4)
+                    connect2.collectContiguousTracksNamesInBlockNamed(blk2, TrackNameSet);
                 }
             }
         }
