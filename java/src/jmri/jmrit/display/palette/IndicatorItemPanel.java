@@ -21,21 +21,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ItemPanel for for Indicating track blocks
+ * ItemPanel for for Indicating track blocks.
  */
 public class IndicatorItemPanel extends FamilyItemPanel {
 
     private DetectionPanel _detectPanel;
 
     /**
-     * Constructor for plain icons and backgrounds
+     * Constructor for plain icons and backgrounds.
      */
     public IndicatorItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
         super(parentFrame, type, family, editor);
     }
 
     /**
-     * Init for creation insert panels for detection and train id
+     * Init for creation of insert panels for detection and train id.
      */
     @Override
     public void init() {
@@ -51,8 +51,8 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     /**
-     * Init for update of existing track block _bottom3Panel has "Update Panel"
-     * button put into _bottom1Panel
+     * Init for update of existing track block.
+     * _bottom3Panel has "Update Panel" button put onto _bottom1Panel.
      */
     @Override
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
@@ -62,7 +62,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     /**
-     * Init for conversion of plain track to indicator track
+     * Init for conversion of plain track to indicator track.
      */
     @Override
     public void init(ActionListener doneAction) {
@@ -180,4 +180,5 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     private final static Logger log = LoggerFactory.getLogger(IndicatorItemPanel.class);
+
 }

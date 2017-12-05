@@ -12,6 +12,14 @@ import jmri.util.MathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/*
+ * This is an intermediate component used to put the Layout Editor
+ * into the component layers hierarchy so that objects can be drawn
+ * in front of or behind layout editor objects.
+ *
+ * @author George Warner Copyright (C) 2017
+*/
+
 class LayoutEditorComponent extends JComponent {
 
     private final LayoutEditor layoutEditor;

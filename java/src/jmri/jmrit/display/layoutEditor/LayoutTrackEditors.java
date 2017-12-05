@@ -1095,10 +1095,10 @@ public class LayoutTrackEditors {
         Point2D D = MathUtil.subtract(layoutSlip.getCoordsD(), cenP);
 
         Point2D ctrP = new Point2D.Double(20.0, 20.0);
-        A = MathUtil.add(MathUtil.multiply(MathUtil.normalize(A), 18.0), ctrP);
-        B = MathUtil.add(MathUtil.multiply(MathUtil.normalize(B), 18.0), ctrP);
-        C = MathUtil.add(MathUtil.multiply(MathUtil.normalize(C), 18.0), ctrP);
-        D = MathUtil.add(MathUtil.multiply(MathUtil.normalize(D), 18.0), ctrP);
+        A = MathUtil.add(MathUtil.normalize(A, 18.0), ctrP);
+        B = MathUtil.add(MathUtil.normalize(B, 18.0), ctrP);
+        C = MathUtil.add(MathUtil.normalize(C, 18.0), ctrP);
+        D = MathUtil.add(MathUtil.normalize(D, 18.0), ctrP);
 
         g2.setColor(Color.black);
         g2.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));

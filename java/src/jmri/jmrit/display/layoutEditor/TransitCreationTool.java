@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Kevin Dickerson Copyright (C) 2011
+ * @author George Warner Copyright (C) 2017
  */
 public class TransitCreationTool {
 

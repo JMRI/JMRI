@@ -22,6 +22,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A collection of tools to check various things on the layout editor panel.
+ *
+ * @author George Warner Copyright (C) 2017
  */
 public class LayoutEditorChecks {
 
@@ -328,6 +330,7 @@ public class LayoutEditorChecks {
         //if (layoutTrack.getName().equals("TO1")
         //        || layoutTrack.getName().equals("TO2")
         //        || layoutTrack.getName().equals("TO3")) {
+
         //    log.debug("*Stop here!");
         //}
             layoutTrack.checkForNonContiguousBlocks(blockNamesToTrackNameSetMaps);

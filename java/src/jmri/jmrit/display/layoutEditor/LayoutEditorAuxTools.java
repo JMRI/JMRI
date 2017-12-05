@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * directly from LayoutEditor or LayoutEditor specific modules.
  * <P>
  * @author Dave Duchamp Copyright (c) 2008
+ * @author George Warner Copyright (C) 2017
  */
 public class LayoutEditorAuxTools {
 
@@ -207,7 +208,7 @@ public class LayoutEditorAuxTools {
         }
 
         // Check to see if this connectivity is already in the list
-        // This occurs for the first layout editor panel when there 
+        // This occurs for the first layout editor panel when there
         // are multiple panels connected by edge connectors.
         if (cList.contains(c)) {
             log.debug("checkConnectivity: Duplicate connection: '{}'", c);

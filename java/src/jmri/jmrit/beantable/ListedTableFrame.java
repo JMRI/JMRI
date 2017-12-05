@@ -261,7 +261,7 @@ public class ListedTableFrame extends BeanTableFrame {
             item.getAAClass().setMenuBar(this);
             this.addHelpMenu(item.getAAClass().helpTarget(), true);
         } catch (Exception ex) {
-            log.error("Error when trying to set menu bar for {}\n{}", item.getClassAsString(), ex);
+            log.error("Error when trying to set menu bar for {}", item.getClassAsString(), ex);
         }
         this.revalidate();
     }

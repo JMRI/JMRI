@@ -74,6 +74,7 @@ import org.slf4j.LoggerFactory;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  *
  * @author Dave Duchamp Copyright (c) 2007
+ * @author George Warner Copyright (C) 2017
  */
 public class LayoutEditorTools {
 

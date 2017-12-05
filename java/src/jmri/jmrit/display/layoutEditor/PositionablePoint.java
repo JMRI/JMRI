@@ -70,6 +70,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author Bob Jacobsen Copyright (2) 2014
+ * @author George Warner Copyright (C) 2017
  */
 public class PositionablePoint extends LayoutTrack {
 
@@ -702,8 +703,8 @@ public class PositionablePoint extends LayoutTrack {
                 result = false;
             }
         } else {
-                log.error("Already connected to {}", newTrack.getName());
-                result = false;
+            log.error("Already connected to {}", newTrack.getName());
+            result = false;
         }
         return result;
     }   // replaceTrackConnection
@@ -1325,7 +1326,7 @@ public class PositionablePoint extends LayoutTrack {
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        Rectangle2D r = layoutEditor.trackControlRectAt(hitPoint);
         Point2D p, minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
@@ -1413,13 +1414,26 @@ public class PositionablePoint extends LayoutTrack {
         return result;
     }
 
+    public boolean isMainline() {
+        boolean result = false; // assume failure (pessimist!)
+        if (getConnect1() != null) {
+            result = getConnect1().isMainline();
+        }
+        if (getType() == ANCHOR) {
+            if (getConnect2() != null) {
+                result |= getConnect2().isMainline();
+            }
+        }
+        return result;
+    }
+
     /**
      * draw this PositionablePoint
      *
      * @param g2 the graphics port to draw to
      */
     @Override
-    protected void draw(Graphics2D g2) {
+    protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
         if (getType() != ANCHOR) {
             Point2D pt = getCoordsCenter();
             boolean mainline = false;
@@ -1436,19 +1450,18 @@ public class PositionablePoint extends LayoutTrack {
                 }
             }
 
-            double trackWidth = Math.min(layoutEditor.setTrackStrokeWidth(g2, mainline), 3.0);
+            double trackWidth = 2.0;
+            double tieWidth = trackWidth * 2.0;
             Stroke drawingStroke = new BasicStroke((float) trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
-            //Stroke drawingStroke1 = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
-            trackWidth *= 2.0;
+            g2.setColor(defaultTrackColor);
 
             if (!ep1.equals(ep2)) {
-                setColorForTrackBlock(g2, getConnect1().getLayoutBlock());
                 double angleRAD = (Math.PI / 2.0) - MathUtil.computeAngleRAD(ep1, ep2);
                 Point2D p1, p2, p3, p4;
                 if (getType() == END_BUMPER) {
                     // draw a cross tie
-                    p1 = new Point2D.Double(0.0, -trackWidth);
-                    p2 = new Point2D.Double(0.0, +trackWidth);
+                    p1 = new Point2D.Double(0.0, -tieWidth);
+                    p2 = new Point2D.Double(0.0, +tieWidth);
 
                     p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
                     p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
@@ -1456,10 +1469,10 @@ public class PositionablePoint extends LayoutTrack {
                     g2.draw(new Line2D.Double(p1, p2));
                 } else if (getType() == EDGE_CONNECTOR) {
                     // draw an X
-                    p1 = new Point2D.Double(-trackWidth, -trackWidth);
-                    p2 = new Point2D.Double(-trackWidth, +trackWidth);
-                    p3 = new Point2D.Double(+trackWidth, +trackWidth);
-                    p4 = new Point2D.Double(+trackWidth, -trackWidth);
+                    p1 = new Point2D.Double(-trackWidth - tieWidth, -tieWidth);
+                    p2 = new Point2D.Double(-trackWidth - tieWidth, +tieWidth);
+                    p3 = new Point2D.Double(-trackWidth + tieWidth, +tieWidth);
+                    p4 = new Point2D.Double(-trackWidth + tieWidth, -tieWidth);
 
                     p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
                     p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
@@ -1471,11 +1484,16 @@ public class PositionablePoint extends LayoutTrack {
                     g2.draw(new Line2D.Double(p2, p4));
                 }
             }
-            // this is to force setTrackStrokeWidth's mainline local to toggle
-            // so next time it's called it will "do the right thing"...
-            layoutEditor.setTrackStrokeWidth(g2, !mainline);
         }   // if (getType() != ANCHOR)
     }   // draw
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+        //nothing to do here... move along...
+    }
 
     /**
      * {@inheritDoc}
@@ -1515,7 +1533,7 @@ public class PositionablePoint extends LayoutTrack {
                 g2.setColor(Color.green);
             }
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsCenter()));
+        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsCenter()));
     }   // drawEditControls
 
     @Override
@@ -1790,7 +1808,7 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
-   /**
+    /**
      * {@inheritDoc}
      */
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
