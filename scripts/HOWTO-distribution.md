@@ -60,7 +60,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 
 - Update this note by (details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update):
 ```
-  ./scripts/update-HOWTO.sh 4.9.7 4.9.8 4.9.8
+  ./scripts/update-HOWTO.sh 4.9.7 4.9.8 4.9.9
 ```
 (and then manually update that line above to be last version release, this version being made today, next version to be made later; i.e. when starting to do *.4, the arguments are *.3 *.4 *.5)
 
@@ -177,7 +177,7 @@ git push github
             change numbers throughout
             move new warnings to old
             remove old-version change notes
-        git add jmri4.9.7.shtml
+        git add jmri4.9.8.shtml
         git commit -m"start new 4.9.8 release note" jmri4.9.8.shtml
         git push github
         cd (local JMRI copy)
