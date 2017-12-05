@@ -13,7 +13,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
@@ -71,7 +70,6 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -88,8 +86,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -100,7 +96,6 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.plaf.basic.BasicComboPopup;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.ConfigureManager;
@@ -142,14 +137,14 @@ import jmri.jmrit.display.SignalHeadIcon;
 import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.panelEditor.PanelEditor;
-import jmri.jmrit.signalling.AddEntryExitPairAction;
+import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.util.ColorUtil;
 import jmri.util.FileChooserFilter;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import jmri.util.SystemType;
-import jmri.util.swing.JmriBeanComboBox;
+import jmri.util.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -173,6 +168,7 @@ import org.slf4j.LoggerFactory;
  * as some of the control design.
  *
  * @author Dave Duchamp Copyright: (c) 2004-2007
+ * @author George Warner Copyright: (c) 2017
  */
 @SuppressWarnings("serial")
 @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
@@ -2087,53 +2083,19 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      *                       blank
      */
     public static void setupComboBox(@Nonnull JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable, boolean inFirstBlank) {
+        log.debug("LE setupComboBox called");
+
         inComboBox.setEnabled(inEnable);
         inComboBox.setEditable(true);
         inComboBox.setValidateMode(inValidateMode);
         inComboBox.setText("");
-        log.debug("LE setupComboBox called");
 
-        setupComboBoxMaxRows(inComboBox);
+        // set the max number of rows that will fit onscreen
+        JComboBoxUtil.setupComboBoxMaxRows(inComboBox);
 
         inComboBox.setFirstItemBlank(inFirstBlank);
         inComboBox.setSelectedIndex(-1);
     } //setupComboBox
-
-    /**
-     * set the maximum number of rows based on screen size
-     *
-     * @param inComboBox the combo box
-     */
-    public static void setupComboBoxMaxRows(@Nonnull JmriBeanComboBox inComboBox) {
-        // find the max height of all popup items
-        BasicComboPopup popup = (BasicComboPopup) inComboBox.getAccessibleContext().getAccessibleChild(0);
-        JList list = popup.getList();
-        ListModel lm = list.getModel();
-        ListCellRenderer renderer = list.getCellRenderer();
-        int maxItemHeight = 12; // pick some absolute minimum here
-        for (int i = 0; i < lm.getSize(); ++i) {
-            Object value = lm.getElementAt(i);
-            Component c = renderer.getListCellRendererComponent(list, value, i, false, false);
-            maxItemHeight = Math.max(maxItemHeight, c.getPreferredSize().height);
-        }
-
-        int itemsPerScreen = inComboBox.getMaximumRowCount();
-        // calculate the number of items that will fit on the screen
-        if (!GraphicsEnvironment.isHeadless()) {
-            // note: this line returns the maximum available size, accounting all
-            // taskbars etc. no matter where they are aligned:
-            Rectangle maxWindowBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
-            itemsPerScreen = (int) maxWindowBounds.getHeight() / maxItemHeight;
-        }
-
-        // calculate an even division of the number of items (min 8)
-        // that will fit on the screen
-        int c = Math.max(8, inComboBox.getItemCount());
-        while (c > itemsPerScreen) {
-            c /= 2; // keeps this a even division of the number of items
-        };
-        inComboBox.setMaximumRowCount(c);
-    }
 
     /**
      * Grabs a subset of the possible KeyEvent constants and puts them into a
@@ -2653,7 +2615,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem turntableItem = new JMenuItem(Bundle.getMessage("AddTurntable"));
         optionsAddMenu.add(turntableItem);
         turntableItem.addActionListener((ActionEvent event) -> {
-            addTurntable(windowCenter());
+            Point2D pt = windowCenter();
+            if (selectionActive) {
+                pt = MathUtil.midPoint(getSelectionRect());
+            }
+            addTurntable(pt);
             //note: panel resized in addTurntable
             setDirty();
             redrawPanel();
@@ -2664,6 +2630,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         optionsAddMenu.add(reporterItem);
         reporterItem.addActionListener((ActionEvent event) -> {
             Point2D pt = windowCenter();
+            if (selectionActive) {
+                pt = MathUtil.midPoint(getSelectionRect());
+            }
             enterReporter((int) pt.getX(), (int) pt.getY());
             //note: panel resized in enterReporter
             setDirty();
@@ -2723,6 +2692,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //
         JMenu trackMenu = new JMenu(Bundle.getMessage("TrackMenuTitle"));
         optionMenu.add(trackMenu);
+
+        // set track drawing options menu item
+        JMenuItem jmi = new JMenuItem(Bundle.getMessage("SetTrackDrawingOptions"));
+        trackMenu.add(jmi);
+        jmi.setToolTipText(Bundle.getMessage("SetTrackDrawingOptionsToolTip"));
+        jmi.addActionListener((ActionEvent event) -> {
+            LayoutTrackDrawingOptionsDialog ltdod
+                    = new LayoutTrackDrawingOptionsDialog(
+                            this, true, getLayoutTrackDrawingOptions());
+            ltdod.setVisible(true);
+        });
 
         //set track width menu item
         JMenuItem widthItem = new JMenuItem(Bundle.getMessage("SetTrackWidth") + "...");
@@ -2865,6 +2845,23 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         return optionMenu;
     } //setupOptionMenu
+
+    /*============================================*\
+    |* LayoutTrackDrawingOptions accessor methods *|
+    \*============================================*/
+    private LayoutTrackDrawingOptions layoutTrackDrawingOptions = null;
+
+    public LayoutTrackDrawingOptions getLayoutTrackDrawingOptions() {
+        if (layoutTrackDrawingOptions == null) {
+            layoutTrackDrawingOptions = new LayoutTrackDrawingOptions(getLayoutName());
+        }
+        return layoutTrackDrawingOptions;
+    }
+
+    public void setLayoutTrackDrawingOptions(LayoutTrackDrawingOptions ltdo) {
+        layoutTrackDrawingOptions = ltdo;
+        redrawPanel();
+    }
 
     private JCheckBoxMenuItem skipTurnoutCheckBoxMenuItem = null;
     private AddEntryExitPairAction addEntryExitPairAction = null;
@@ -4925,7 +4922,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void addTurntable(@Nonnull Point2D pt) {
         //get unique name
-        String name = finder.uniqueName("TUR", numLayoutTurntables++);
+        String name = finder.uniqueName("TUR", ++numLayoutTurntables);
         LayoutTurntable lt = new LayoutTurntable(name, pt, this);
 
         layoutTrackList.add(lt);
@@ -5209,7 +5206,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //    }
     //    return result;
     //}
-
     // this is a method to iterate over a list of lists of items
     // calling the predicate tester.test on each one
     // and return the first one that matches
@@ -5228,7 +5224,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //    }
     //    return result;
     //}
-
     private boolean checkControls(boolean useRectangles) {
         Optional<LayoutTrack> opt = layoutTrackList.stream().filter(o -> {
             LayoutTrack layoutTrack = (LayoutTrack) o;
@@ -5312,7 +5307,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         // the points below and test if this location is in any of those
         // rectangles just create a hit rectangle for the location and
         // see if any of the points below are in it instead...
-        Rectangle2D r = trackControlCircleRectAt(loc);
+        Rectangle2D r = trackControlRectAt(loc);
 
         //check Track Segments, if any
         for (TrackSegment ts : getTrackSegments()) {
@@ -5729,8 +5724,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 }
             } else if (LayoutTrack.isPopupHitType(foundPointType)) {
                 ((LayoutTrack) foundObject).showPopup(event);
+            } else if ((foundPointType >= LayoutTrack.TURNOUT_A)
+                    && (foundPointType <= LayoutTrack.TURNOUT_D)) {
+                // don't curently have edit popup for these
             } else {
-                log.warn("Unknown foundPointType:" + foundPointType);
+                log.info("Unknown foundPointType:" + foundPointType);
             }
         } else {
             do {
@@ -5883,7 +5881,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         popup.show((Component) p, p.getWidth() / 2 + (int) ((getZoom() - 1.0) * p.getX()),
                 p.getHeight() / 2 + (int) ((getZoom() - 1.0) * p.getY()));
 
-        /*popup.show((Component)p, event.getX(), event.getY());*/
+        /*popup.show((Component)pt, event.getX(), event.getY());*/
     } //showPopUp()
 
     private long whenReleased = 0; //used to identify event that was popup trigger
@@ -6907,7 +6905,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     protected PositionablePoint addAnchor(@Nonnull Point2D p) {
         //get unique name
-        String name = finder.uniqueName("A", numAnchors++);
+        String name = finder.uniqueName("A", ++numAnchors);
 
         //create object
         PositionablePoint o = new PositionablePoint(name,
@@ -6925,7 +6923,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void addEndBumper() {
         //get unique name
-        String name = finder.uniqueName("EB", numEndBumpers++);
+        String name = finder.uniqueName("EB", ++numEndBumpers);
 
         //create object
         PositionablePoint o = new PositionablePoint(name,
@@ -6941,7 +6939,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void addEdgeConnector() {
         //get unique name
-        String name = finder.uniqueName("EC", numEdgeConnectors++);
+        String name = finder.uniqueName("EC", ++numEdgeConnectors);
 
         //create object
         PositionablePoint o = new PositionablePoint(name,
@@ -6957,7 +6955,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void addTrackSegment() {
         //get unique name
-        String name = finder.uniqueName("T", numTrackSegments++);
+        String name = finder.uniqueName("T", ++numTrackSegments);
 
         //create object
         newTrack = new TrackSegment(name, (LayoutTrack) beginObject, beginPointType,
@@ -6999,7 +6997,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void addLevelXing() {
         //get unique name
-        String name = finder.uniqueName("X", numLevelXings++);
+        String name = finder.uniqueName("X", ++numLevelXings);
 
         //create object
         LevelXing o = new LevelXing(name, currentPoint, this);
@@ -7051,7 +7049,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         //get unique name
-        String name = finder.uniqueName("SL", numLayoutSlips++);
+        String name = finder.uniqueName("SL", ++numLayoutSlips);
 
         //create object
         LayoutSlip o = new LayoutSlip(name, currentPoint, rot, this, type);
@@ -7130,7 +7128,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         //get unique name
-        String name = finder.uniqueName("TO", numLayoutTurnouts++);
+        String name = finder.uniqueName("TO", ++numLayoutTurnouts);
 
         //create object
         LayoutTurnout o = new LayoutTurnout(name, type, currentPoint, rot, xScale, yScale, this);
@@ -8619,6 +8617,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public LocoIcon addLocoIcon(@Nonnull String name) {
         LocoIcon l = new LocoIcon(this);
         Point2D pt = windowCenter();
+        if (selectionActive) {
+            pt = MathUtil.midPoint(getSelectionRect());
+        }
         l.setLocation((int) pt.getX(), (int) pt.getY());
         putLocoIcon(l, name);
         l.setPositionable(true);
@@ -8942,6 +8943,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     public double getYScale() {
         return yScale;
+    }
+
+    public Color getDefaultBackgroundColor() {
+        return defaultBackgroundColor;
     }
 
     public String getDefaultTrackColor() {
@@ -9329,32 +9334,27 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (inComboBox != null) {
             block = (Block) inComboBox.getNamedBean();
         }
-        result = highlightBlock(block);
-        return result;
+        return highlightBlock(block);
     } //highlightBlockInComboBox
 
     /**
      * highlight the specified block
+     *
      * @param inBlock the block
      * @return true if block was highlighted
      */
     public boolean highlightBlock(@Nullable Block inBlock) {
         boolean result = false; //assume failure (pessimist!)
 
+        blockIDComboBox.setSelectedBean(inBlock);
+
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
-
-        Manager m = blockIDComboBox.getManager();
-        List<NamedBean> l = m.getNamedBeanList();
-
+        List<NamedBean> l = blockIDComboBox.getManager().getNamedBeanList();
         for (NamedBean nb : l) {
             Block b = (Block) nb;
             LayoutBlock lb = lbm.getLayoutBlock(b);
-
             if (lb != null) {
                 boolean enable = ((inBlock != null) && b.equals(inBlock));
-                if (enable) {
-                    blockIDComboBox.setSelectedBean(nb);
-                }
                 lb.setUseExtraColor(enable);
                 result |= enable;
             }
@@ -9364,6 +9364,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     /**
      * highlight the specified layout block
+     *
      * @param inLayoutBlock the layout block
      * @return true if layout block was highlighted
      */
@@ -9498,20 +9499,29 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //reset the panel changed bit
         resetDirty();
-    } //setConnections
+    }
 
     //these are convenience methods to return rectangles
-    //to do point-in-rect (hit) testing
+    //to use when (hit point-in-rect testing
+    //
     //compute the control point rect at inPoint
-    public Rectangle2D trackControlPointRectAt(@Nonnull Point2D inPoint) {
+    public Rectangle2D trackEditControlRectAt(@Nonnull Point2D inPoint) {
         return new Rectangle2D.Double(inPoint.getX() - SIZE,
                 inPoint.getY() - SIZE, SIZE2, SIZE2);
-    } //controlPointRectAt
+    }
 
-    //compute the turnout circle rect at inPoint
-    public Rectangle2D trackControlCircleRectAt(@Nonnull Point2D inPoint) {
+    //compute the turnout circle control rect at inPoint
+    public Rectangle2D trackControlRectAt(@Nonnull Point2D inPoint) {
         return new Rectangle2D.Double(inPoint.getX() - circleRadius,
                 inPoint.getY() - circleRadius, circleDiameter, circleDiameter);
+    }
+
+    //these are convenience methods to return circles used to draw onscreen
+    //
+    //compute the control point rect at inPoint
+    public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
+        return new Ellipse2D.Double(inPoint.getX() - SIZE,
+                inPoint.getY() - SIZE, SIZE2, SIZE2);
     }
 
     //compute the turnout circle at inPoint (used for drawing)
@@ -9542,20 +9552,21 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             g2.setRenderingHints(antialiasing);
         }
 
+        // things that only get drawn in edit mode
         if (isEditable()) {
             if (getDrawGrid()) {
                 drawPanelGrid(g2);
             }
-            drawHiddenLayoutTracks(g2);
+            drawLayoutTracksHidden(g2);
         }
+        drawLayoutTracksBallast(g2);
+        drawLayoutTracksTies(g2);
+        drawLayoutTracksRails2(g2);
+        drawLayoutTracksBlockLines(g2);
+        drawLayoutTracksRails1(g2);
 
-        List<TrackSegment> trackSegments = getTrackSegments();
-        drawTrackSegments(g2, trackSegments, true, false);     //dashed, non-mainline
-        drawTrackSegments(g2, trackSegments, true, true);      //dashed, mainline
-        drawTrackSegments(g2, trackSegments, false, false);    //non-dashed, non-mainline
-        drawTrackSegments(g2, trackSegments, false, true);     //non-dashed, mainline
-
-        drawLayoutTracks(g2);
+        drawPositionablePoints(g2, false);
+        drawPositionablePoints(g2, true);
 
         // things that only get drawn in edit mode
         if (isEditable()) {
@@ -9578,68 +9589,183 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }   // draw
 
-    private boolean main = true;
-    private float trackWidth = sideTrackWidth;
-
-    //had to make this protected so the LayoutTrack classes could access it
-    //also returned the current value of trackWidth for the callers to use
-    protected float setTrackStrokeWidth(Graphics2D g2, boolean needMain) {
-        log.debug("setTrackStrokeWidth(g2, {}), main: {}", needMain, main);
-        if (main != needMain) {
-            main = needMain;
-
-            //change track stroke width
-            trackWidth = main ? mainlineTrackWidth : sideTrackWidth;
-            g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-        }
-        return trackWidth;
-    } //setTrackStrokeWidth
-
-    protected float getTrackStrokeWidth() {
-        return trackWidth;
+    private void drawLayoutTracksHidden(Graphics2D g2) {
+        //setup for drawing hidden sideline rails
+        g2.setStroke(new BasicStroke(1.0f));
+        g2.setColor(getLayoutTrackDrawingOptions().getSideRailColor());
+        boolean main = false, block = false, hidden = true, dashed = false;
+        draw1(g2, main, block, hidden, dashed);
+        draw1(g2, main, block, hidden, dashed = true);
+        //setup for drawing mainline rails
+        g2.setStroke(new BasicStroke(2.0f));
+        g2.setColor(getLayoutTrackDrawingOptions().getMainRailColor());
+        draw1(g2, main, block, hidden, dashed = false);
+        draw1(g2, main, block, hidden, dashed = true);
     }
 
-    private void drawHiddenLayoutTracks(Graphics2D g2) {
-        g2.setColor(defaultTrackColor);
-        setTrackStrokeWidth(g2, false);
-        for (LayoutTrack tr : layoutTrackList) {
-            // TrackSegments drawn seperately
-            if (!(tr instanceof TrackSegment)) {
-                if (tr.isHidden()) {
-                    tr.draw(g2);
+    private void drawLayoutTracksBallast(Graphics2D g2) {
+        //setup for drawing sideline ballast
+        int ballastWidth = getLayoutTrackDrawingOptions().getSideBallastWidth();
+        if (ballastWidth > 0) {
+            g2.setStroke(new BasicStroke(ballastWidth,
+                    BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            g2.setColor(getLayoutTrackDrawingOptions().getSideBallastColor());
+            draw1(g2, false);
+        }
+
+        //setup for drawing mainline ballast
+        ballastWidth = getLayoutTrackDrawingOptions().getMainBallastWidth();
+        if (ballastWidth > 0) {
+            g2.setStroke(new BasicStroke(ballastWidth,
+                    BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            g2.setColor(getLayoutTrackDrawingOptions().getMainBallastColor());
+            draw1(g2, true);
+        }
+    }
+
+    private void drawLayoutTracksTies(Graphics2D g2) {
+        //setup for drawing sideline ties
+        int tieLength = getLayoutTrackDrawingOptions().getSideTieLength();
+        if (tieLength > 0) {
+            int tieWidth = getLayoutTrackDrawingOptions().getSideTieWidth();
+            int tieGap = getLayoutTrackDrawingOptions().getSideTieGap();
+            g2.setStroke(new BasicStroke(tieLength,
+                    BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
+                    new float[]{tieWidth, tieGap}, 0));
+            g2.setColor(getLayoutTrackDrawingOptions().getSideTieColor());
+            draw1(g2, false);
+        }
+
+        //setup for drawing mainline ties
+        tieLength = getLayoutTrackDrawingOptions().getMainTieLength();
+        if (tieLength > 0) {
+            int tieWidth = getLayoutTrackDrawingOptions().getMainTieWidth();
+            int tieGap = getLayoutTrackDrawingOptions().getMainTieGap();
+            g2.setStroke(new BasicStroke(tieLength,
+                    BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
+                    new float[]{tieWidth, tieGap}, 0));
+            g2.setColor(getLayoutTrackDrawingOptions().getMainTieColor());
+            draw1(g2, true);
+        }
+    }
+
+    private void drawLayoutTracksRails1(Graphics2D g2) {
+        if ((getLayoutTrackDrawingOptions().getSideRailCount() & 1) == 1) {
+            //setup for drawing sideline rails
+            g2.setStroke(new BasicStroke(
+                    getLayoutTrackDrawingOptions().getSideRailWidth(),
+                    BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            g2.setColor(getLayoutTrackDrawingOptions().getSideRailColor());
+            draw1(g2, false, false, false, false);
+            draw1(g2, false, false, false, true);
+        }
+        if ((getLayoutTrackDrawingOptions().getMainRailCount() & 1) == 1) {
+            //setup for drawing mainline rails
+            g2.setStroke(new BasicStroke(
+                    getLayoutTrackDrawingOptions().getMainRailWidth(),
+                    BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            g2.setColor(getLayoutTrackDrawingOptions().getMainRailColor());
+            draw1(g2, true, false, false, false);
+            draw1(g2, true, false, false, true);
+        }
+    }
+
+    private void drawLayoutTracksRails2(Graphics2D g2) {
+        if (getLayoutTrackDrawingOptions().getSideRailCount() > 1) {
+            //setup for drawing sideline rails
+            int railWidth = getLayoutTrackDrawingOptions().getSideRailWidth();
+            float railDisplacement = ((railWidth * 2.F)
+                    + getLayoutTrackDrawingOptions().getSideRailGap()) / 2.F;
+            g2.setStroke(new BasicStroke(railWidth,
+                    BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+            g2.setColor(getLayoutTrackDrawingOptions().getSideRailColor());
+            draw2(g2, false, railDisplacement);
+        }
+
+        if (getLayoutTrackDrawingOptions().getMainRailCount() > 1) {
+            //setup for drawing mainline rails
+            int railWidth = getLayoutTrackDrawingOptions().getMainRailWidth();
+            float railDisplacement = ((railWidth * 2.F)
+                    + getLayoutTrackDrawingOptions().getMainRailGap()) / 2.F;
+            g2.setStroke(new BasicStroke(railWidth,
+                    BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+            g2.setColor(getLayoutTrackDrawingOptions().getMainRailColor());
+            draw2(g2, true, railDisplacement);
+        }
+    }
+
+    private void drawLayoutTracksBlockLines(Graphics2D g2) {
+        //setup for drawing sideline ties
+        g2.setStroke(new BasicStroke(
+                getLayoutTrackDrawingOptions().getSideBlockLineWidth(),
+                BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        //note: color is set in layout track's draw1 when isBlock is true
+        draw1(g2, false, true, false, false);
+        //setup for drawing mainline ties
+        g2.setStroke(new BasicStroke(
+                getLayoutTrackDrawingOptions().getMainBlockLineWidth(),
+                BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        //note: color is set in layout track's draw1 when isBlock is true
+        draw1(g2, true, true, false, false);
+    }
+
+    // isDashed defaults to false
+    private void draw1(Graphics2D g2,
+            boolean isMain,
+            boolean isBlock,
+            boolean isHidden) {
+        draw1(g2, isMain, isBlock, isHidden, false);
+    }
+
+    // isHidden defaults to false
+    private void draw1(Graphics2D g2,
+            boolean isMain,
+            boolean isBlock) {
+        draw1(g2, isMain, isBlock, false);
+    }
+
+    // isBlock defaults to false
+    private void draw1(Graphics2D g2, boolean isMain) {
+        draw1(g2, isMain, false);
+    }
+
+    private void draw1(Graphics2D g2,
+            boolean isMain,
+            boolean isBlock,
+            boolean isHidden,
+            boolean isDashed) {
+        for (LayoutTrack layoutTrack : layoutTrackList) {
+            if (!(layoutTrack instanceof PositionablePoint)) {
+                if ((isHidden == layoutTrack.isHidden())
+                        && (!isDashed || ((layoutTrack instanceof TrackSegment)
+                        && (((TrackSegment) layoutTrack).isDashed())))) {
+                    layoutTrack.draw1(g2, isMain, isBlock);
                 }
             }
         }
-    } //drawHiddenLayoutTracks
+    }
 
-    private void drawLayoutTracks(Graphics2D g2) {
-        for (LayoutTrack tr : layoutTrackList) {
-            // TrackSegments drawn seperately
-            if (!(tr instanceof TrackSegment)) {
-                if (!tr.isHidden()) {
-                    tr.draw(g2);
-                }
+    private void drawPositionablePoints(Graphics2D g2, boolean isMain) {
+        for (LayoutTrack layoutTrack : layoutTrackList) {
+            if (layoutTrack instanceof PositionablePoint) {
+                layoutTrack.draw1(g2, isMain, false);
             }
         }
-    } //drawLayoutTracks
+    }
 
-    private void drawTrackSegments(Graphics2D g2,
-            List<TrackSegment> trackSegments,
-            boolean dashed,
-            boolean mainline) {
-        setTrackStrokeWidth(g2, mainline);
-        for (TrackSegment ts : trackSegments) {
-            if ((ts.isDashed() == dashed) && (ts.isMainline() == mainline)) {
-                ts.draw(g2);
+    private void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+        for (LayoutTrack layoutTrack : layoutTrackList) {
+            if (!layoutTrack.isHidden()) {
+                layoutTrack.draw2(g2, isMain, railDisplacement);
             }
         }
-    } //drawTrackSegments
+    }
 
     private void drawTrackSegmentInProgress(Graphics2D g2) {
         //check for segment in progress
         if (isEditable() && (beginObject != null) && trackButton.isSelected()) {
             g2.setColor(defaultTrackColor);
-            setTrackStrokeWidth(g2, false);
+            g2.setStroke(new BasicStroke(sideTrackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
             g2.draw(new Line2D.Double(beginLocation, currentLocation));
 
             // highlight unconnected endpoints of all tracks
@@ -9663,7 +9789,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private void drawLayoutTrackEditControls(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+
         for (LayoutTrack tr : layoutTrackList) {
+//            if (tr instanceof TrackSegment) {
+//                int showHide = _layoutTrackSelection.contains(tr)
+//                        ? TrackSegment.SHOWCON : TrackSegment.HIDECON;
+//                ((TrackSegment) tr).hideConstructionLines(showHide);
+//            }
             tr.drawEditControls(g2);
         }
     }
@@ -9686,7 +9818,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 }
             }
         }
-    }   // drawTurnoutControls
+    }
 
     private Rectangle2D getSelectionRect() {
         double selX = Math.min(selectionX, selectionX + selectionWidth);

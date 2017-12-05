@@ -6,7 +6,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    UsbViewActionTest.class
+    UsbViewActionTest.class,
+    BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.libusb package

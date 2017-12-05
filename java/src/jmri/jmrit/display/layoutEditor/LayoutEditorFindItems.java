@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A collection of tools to find various object on the layout editor panel.
+ *
+ * @author Dave Duchamp Copyright (c) 2004-2007
+ * @author George Warner Copyright (C) 2017
  */
 public class LayoutEditorFindItems {
 

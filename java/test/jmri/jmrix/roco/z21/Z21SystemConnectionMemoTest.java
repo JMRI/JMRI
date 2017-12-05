@@ -18,7 +18,6 @@ public class Z21SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
     @Ignore("Not Ready Yet")
     public void testConfigureManagers(){
         Z21SystemConnectionMemo a = (Z21SystemConnectionMemo)scm;
-        a.setTrafficController(new Z21InterfaceScaffold());
         a.configureManagers();
         Assert.assertNotNull(a);
     }
@@ -51,12 +50,26 @@ public class Z21SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
        Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
+    @Test
+    public void testProvidesMultiMeter(){
+       Assert.assertTrue("Provides MultiMeter",scm.provides(jmri.MultiMeter.class));
+    }
+
+    @Test
+    public void testGetMultiMeter(){
+       Assert.assertNotNull("Get MultiMeter",scm.get(jmri.MultiMeter.class));
+    }
+
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        scm = new Z21SystemConnectionMemo();
+        Z21InterfaceScaffold tc = new Z21InterfaceScaffold();
+        Z21SystemConnectionMemo memo = new Z21SystemConnectionMemo();
+        memo.setTrafficController(tc);
+        memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
+        scm = memo;
     }
 
     @Override

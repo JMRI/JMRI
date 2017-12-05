@@ -93,6 +93,7 @@ import org.slf4j.MDC;
  * configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
+ * @author George Warner Copyright (C) 2017
  */
 public class LayoutBlock extends AbstractNamedBean implements PropertyChangeListener {
 

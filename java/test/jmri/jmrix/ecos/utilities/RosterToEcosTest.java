@@ -1,5 +1,6 @@
 package jmri.jmrix.ecos.utilities;
 
+import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -7,17 +8,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * RosterToEcosTest.java
+ * Tests for the RosterToEcos class.
  *
- * Description: tests for the RosterToEcos class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class RosterToEcosTest {
 
     @Test
-    public void testCtor(){
-      Assert.assertNotNull("RosterToEcos constructor",new RosterToEcos());
+    public void testCtor() {
+        Assert.assertNotNull("RosterToEcos constructor", new RosterToEcos(new EcosSystemConnectionMemo()));
     }
 
     // The minimal setup for log4J
@@ -32,4 +31,3 @@ public class RosterToEcosTest {
     }
 
 }
-

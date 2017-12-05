@@ -1,7 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
 import static java.lang.Float.POSITIVE_INFINITY;
+import static java.lang.Math.PI;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -66,6 +68,7 @@ import org.slf4j.LoggerFactory;
  * placed here by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
+ * @author George Warner Copyright (C) 2017
  */
 public class LevelXing extends LayoutTrack {
 
@@ -847,6 +850,10 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
+    public boolean isMainline() {
+        return (isMainlineAC() || isMainlineBD());
+    }
+
     /**
      * Modify coordinates methods
      */
@@ -900,7 +907,7 @@ public class LevelXing extends LayoutTrack {
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        Rectangle2D r = layoutEditor.trackControlRectAt(hitPoint);
         Point2D p, minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
@@ -935,7 +942,7 @@ public class LevelXing extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = LEVEL_XING_A;
+                result = LEVEL_XING_B;
             }
         }
 
@@ -946,7 +953,7 @@ public class LevelXing extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = LEVEL_XING_A;
+                result = LEVEL_XING_C;
             }
         }
 
@@ -957,7 +964,7 @@ public class LevelXing extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = LEVEL_XING_A;
+                result = LEVEL_XING_D;
             }
         }
         if ((useRectangles && !r.contains(minPoint))
@@ -1376,32 +1383,103 @@ public class LevelXing extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
-    protected void draw(Graphics2D g2) {
-        if (isMainlineBD() && (!isMainlineAC())) {
-            drawXingAC(g2);
-            drawXingBD(g2);
-        } else {
-            drawXingBD(g2);
-            drawXingAC(g2);
+    protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
+        if (isMain == isMainlineAC()) {
+            if (isBlock) {
+                setColorForTrackBlock(g2, getLayoutBlockAC());
+            }
+            g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
         }
-    }   // drawHidden(Graphics2D g2)
-
-    private void drawXingAC(Graphics2D g2) {
-        // set color for an AC block
-        setColorForTrackBlock(g2, getLayoutBlockAC());
-        // set track width for AC block
-        layoutEditor.setTrackStrokeWidth(g2, isMainlineAC());
-        // drawHidden AC segment
-        g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
+        if (isMain == isMainlineBD()) {
+            if (isBlock) {
+                setColorForTrackBlock(g2, getLayoutBlockBD());
+            }
+            g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
+        }
     }
 
-    private void drawXingBD(Graphics2D g2) {
-        // set color - check for an BD block
-        setColorForTrackBlock(g2, getLayoutBlockBD());
-        // set track width for BD block
-        layoutEditor.setTrackStrokeWidth(g2, isMainlineBD());
-        // drawHidden BD segment
-        g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+        g2.setStroke(new BasicStroke(1.F));
+
+        Point2D pA = getCoordsA();
+        Point2D pB = getCoordsB();
+        Point2D pC = getCoordsC();
+        Point2D pD = getCoordsD();
+        Point2D pM = getCoordsCenter();
+
+        Point2D vAC = MathUtil.normalize(MathUtil.subtract(pC, pA), railDisplacement);
+        double dirAC_DEG = MathUtil.computeAngleDEG(pA, pC);
+        Point2D vACo = MathUtil.orthogonal(vAC);
+        Point2D pAL = MathUtil.subtract(pA, vACo);
+        Point2D pAR = MathUtil.add(pA, vACo);
+        Point2D pCL = MathUtil.subtract(pC, vACo);
+        Point2D pCR = MathUtil.add(pC, vACo);
+
+        Point2D vBD = MathUtil.normalize(MathUtil.subtract(pD, pB), railDisplacement);
+        double dirBD_DEG = MathUtil.computeAngleDEG(pB, pD);
+        Point2D vBDo = MathUtil.orthogonal(vBD);
+        Point2D pBL = MathUtil.subtract(pB, vBDo);
+        Point2D pBR = MathUtil.add(pB, vBDo);
+        Point2D pDL = MathUtil.subtract(pD, vBDo);
+        Point2D pDR = MathUtil.add(pD, vBDo);
+
+        double deltaDEG = MathUtil.absDiffAngleDEG(dirAC_DEG, dirBD_DEG);
+        double deltaRAD = Math.toRadians(deltaDEG);
+
+        double hypotK = railDisplacement / Math.cos((PI - deltaRAD) / 2.0);
+        double hypotV = railDisplacement / Math.cos(deltaRAD / 2.0);
+
+        log.debug("dir AC: {}, BD: {}, diff: {}", dirAC_DEG, dirBD_DEG, deltaDEG);
+
+        Point2D vDisK = MathUtil.normalize(MathUtil.add(vAC, vBD), hypotK);
+        Point2D vDisV = MathUtil.normalize(MathUtil.orthogonal(vDisK), hypotV);
+        Point2D pKL = MathUtil.subtract(pM, vDisK);
+        Point2D pKR = MathUtil.add(pM, vDisK);
+        Point2D pVL = MathUtil.subtract(pM, vDisV);
+        Point2D pVR = MathUtil.add(pM, vDisV);
+
+        if (isMain == isMainlineAC()) {
+            // this is the *2.0 vector (rail gap) for the AC diamond parts
+            Point2D vAC2 = MathUtil.normalize(vAC, 2.0);
+            // KL toward C, VR toward A, VL toward C and KR toward A
+            Point2D pKLtC = MathUtil.add(pKL, vAC2);
+            Point2D pVRtA = MathUtil.subtract(pVR, vAC2);
+            Point2D pVLtC = MathUtil.add(pVL, vAC2);
+            Point2D pKRtA = MathUtil.subtract(pKR, vAC2);
+
+            // draw right AC rail: AR====KL == VR====CR
+            g2.draw(new Line2D.Double(pAR, pKL));
+            g2.draw(new Line2D.Double(pKLtC, pVRtA));
+            g2.draw(new Line2D.Double(pVR, pCR));
+
+            // draw left AC rail: AL====VL == KR====CL
+            g2.draw(new Line2D.Double(pAL, pVL));
+            g2.draw(new Line2D.Double(pVLtC, pKRtA));
+            g2.draw(new Line2D.Double(pKR, pCL));
+        }
+        if (isMain == isMainlineBD()) {
+            // this is the *2.0 vector (rail gap) for the BD diamond parts
+            Point2D vBD2 = MathUtil.normalize(vBD, 2.0);
+            // VR toward D, KR toward B, KL toward D and VL toward B
+            Point2D pVRtD = MathUtil.add(pVR, vBD2);
+            Point2D pKRtB = MathUtil.subtract(pKR, vBD2);
+            Point2D pKLtD = MathUtil.add(pKL, vBD2);
+            Point2D pVLtB = MathUtil.subtract(pVL, vBD2);
+
+            // draw right BD rail: BR====VR == KR====DR
+            g2.draw(new Line2D.Double(pBR, pVR));
+            g2.draw(new Line2D.Double(pVRtD, pKRtB));
+            g2.draw(new Line2D.Double(pKR, pDR));
+
+            // draw left BD rail: BL====KL == VL====DL
+            g2.draw(new Line2D.Double(pBL, pKL));
+            g2.draw(new Line2D.Double(pKLtD, pVLtB));
+            g2.draw(new Line2D.Double(pVL, pDL));
+        }
     }
 
     /**
@@ -1428,35 +1506,35 @@ public class LevelXing extends LayoutTrack {
 
     protected void drawEditControls(Graphics2D g2) {
         g2.setColor(defaultTrackColor);
-        g2.draw(layoutEditor.trackControlCircleAt(getCoordsCenter()));
+        //TODO:uncomment this line g2.draw(layoutEditor.trackEditControlCircleAt(getCoordsCenter()));
 
         if (getConnectA() == null) {
             g2.setColor(Color.magenta);
         } else {
             g2.setColor(Color.blue);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsA()));
+        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsA()));
 
         if (getConnectB() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsB()));
+        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsB()));
 
         if (getConnectC() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsC()));
+        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsC()));
 
         if (getConnectD() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsD()));
+        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsD()));
     }
 
     protected void drawTurnoutControls(Graphics2D g2) {
@@ -1633,4 +1711,5 @@ public class LevelXing extends LayoutTrack {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LevelXing.class);
+
 }

@@ -16,9 +16,11 @@
   <version author="Michael Mosher" version="2" lastUpdated="20130712"/>
   <version author="Simon Ginsburg" version="3" lastUpdated="20150706"/>
   <version author="Michael Mosher" version="4" lastUpdated="20170209"/>
+  <version author="Alain Le Marchand" version="5" lastUpdated="20171126"/>
   <!-- V2 added new models & CV140-157 -->
   <!-- V3 added new models -->
   <!-- V4 added EU821 model -->
+  <!-- V5 added TCS K7D4 model -->
   <decoder>
     <family name="Jan 2012" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012">
       <model model="A4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="4">
@@ -269,73 +271,77 @@
         <output name="BEMF"/>
         <output name="Brake"/>
       </model>
-      <model model="K0D8-A" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="25">
-        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
-        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
-        <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
-        <output name="5" label="Brown" connection="solder" maxcurrent="60 mA"/>
-        <output name="6" label="Pink" connection="solder" maxcurrent="60 mA"/>
-        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA"/>
-        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA"/>
+      <model model="K0D8-A" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale Alco PA1, P42, E9A, E8/9A (ref.1332)"
+             lowVersionID="86" highVersionID="88" productID="25">
+        <output name="1" label="White" connection="LED" maxcurrent="80 mA"/>
+        <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="80 mA"/>
+        <output name="4" label="Violet" connection="solder" maxcurrent="80 mA"/>
+        <output name="5" label="Brown" connection="solder" maxcurrent="80 mA"/>
+        <output name="6" label="Pink" connection="solder" maxcurrent="80 mA"/>
+        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA"/>
+        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA"/>
         <output name="Dim"/>
         <output name="Ditch"/>
         <output name="Motor"/>
         <output name="BEMF"/>
         <output name="Brake"/>
-        <size length="2.53" width="0.542" height="0.155" units="inches"/>
+        <size length="2.53" width="0.542" height="0.068" units="inches"/>
       </model>
-      <model model="K0D8-B" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="26">
-        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
-        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
-        <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
-        <output name="5" label="Brown" connection="solder" maxcurrent="60 mA"/>
-        <output name="6" label="Pink" connection="solder" maxcurrent="60 mA"/>
-        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA"/>
-        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA"/>
+      <model model="K0D8-B" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale F3A and F7A (ref.1333)"
+             lowVersionID="86" highVersionID="88" productID="26">
+        <output name="1" label="White" connection="LED" maxcurrent="80 mA"/>
+        <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="80 mA"/>
+        <output name="4" label="Violet" connection="solder" maxcurrent="80 mA"/>
+        <output name="5" label="Brown" connection="solder" maxcurrent="80 mA"/>
+        <output name="6" label="Pink" connection="solder" maxcurrent="80 mA"/>
+        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA"/>
+        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA"/>
         <output name="Dim"/>
         <output name="Ditch"/>
         <output name="Motor"/>
         <output name="BEMF"/>
         <output name="Brake"/>
-        <size length="2.53" width="0.542" height="0.155" units="inches"/>
+        <size length="2.138" width="0.542" height="0.0687" units="inches"/>
       </model>
-      <model model="K0D8-C" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="27">
-        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
-        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
-        <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
-        <output name="5" label="Brown" connection="solder" maxcurrent="60 mA"/>
-        <output name="6" label="Pink" connection="solder" maxcurrent="60 mA"/>
-        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA"/>
-        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA"/>
+      <model model="K0D8-C" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale EMD F40PH (ref.1338)"
+            lowVersionID="86" highVersionID="88" productID="27">
+        <output name="1" label="White" connection="LED" maxcurrent="80 mA"/>
+        <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="80 mA"/>
+        <output name="4" label="Violet" connection="solder" maxcurrent="80 mA"/>
+        <output name="5" label="Brown" connection="solder" maxcurrent="80 mA"/>
+        <output name="6" label="Pink" connection="solder" maxcurrent="80 mA"/>
+        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA"/>
+        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA"/>
         <output name="Dim"/>
         <output name="Ditch"/>
         <output name="Motor"/>
         <output name="BEMF"/>
         <output name="Brake"/>
-        <size length="2.53" width="0.542" height="0.155" units="inches"/>
+        <size length="2.138" width="0.542" height="0.068" units="inches"/>
       </model>
-      <model model="K0D8-D" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="28">
-        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
-        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
-        <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
-        <output name="5" label="Brown" connection="solder" maxcurrent="60 mA"/>
-        <output name="6" label="Pink" connection="solder" maxcurrent="60 mA"/>
-        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA"/>
-        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA"/>
+      <model model="K0D8-D" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale B-Units: PB1, PA-1, F3B, F7B, and E9B (ref.1339)"
+             lowVersionID="86" highVersionID="88" productID="28">
+        <output name="1" label="White" connection="LED" maxcurrent="80 mA"/>
+        <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="80 mA"/>
+        <output name="4" label="Violet" connection="solder" maxcurrent="80 mA"/>
+        <output name="5" label="Brown" connection="solder" maxcurrent="80 mA"/>
+        <output name="6" label="Pink" connection="solder" maxcurrent="80 mA"/>
+        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA"/>
+        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA"/>
         <output name="Dim"/>
         <output name="Ditch"/>
         <output name="Motor"/>
         <output name="BEMF"/>
         <output name="Brake"/>
-        <size length="2.53" width="0.542" height="0.155" units="inches"/>
+        <size length="2.138" width="0.542" height="0.068" units="inches"/>
       </model>
       <model model="K0D8-E" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="56">
-        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
-        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
+        <output name="1" label="White" connection="LED" maxcurrent="60 mA"/>
+        <output name="2" label="Yellow" connection="LED" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
         <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
         <output name="5" label="Brown" connection="solder" maxcurrent="60 mA"/>
@@ -349,98 +355,117 @@
         <output name="Brake"/>
         <size length="2.53" width="0.542" height="0.155" units="inches"/>
       </model>
-      <model model="K1D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="29">
-        <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
-        <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
-        <output name="4" label="Purple" connection="solder" maxcurrent="50 mA"/>
+      <model model="K1D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale EMD SD40, EMD SD70MAC, EMD SD70/75M, GE C44-9W, GE AC4400W, Athearn F45 and many other locomotives (ref.1293)"
+            lowVersionID="86" highVersionID="88" productID="29">
+        <output name="1" label="White" connection="other" maxcurrent="80 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="80 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="80 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="80 mA"/>
         <output name="Dim"/>
         <output name="Ditch"/>
         <output name="Motor"/>
         <output name="BEMF"/>
         <output name="Brake"/>
-        <size length="2.7" width="0.4" height="0.0" units="inches"/>
+        <size length="2.7" width="0.433" height="0.056" units="inches"/>
       </model>
-      <model model="K1D4-NC" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="No Clips version of K1D4" lowVersionID="86" highVersionID="88" productID="30">
-        <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
-        <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
-        <output name="4" label="Purple" connection="solder" maxcurrent="50 mA"/>
+      <model model="K1D4-NC" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="&lt;html&gt;Drop in decoder for Kato N-Scale EMD SD70ACe, EMD SD70M, EMD SD40-2, and GG1. (ref.1318)&lt;br&gt; No Clips version of K1D4&lt;br&gt;"
+         lowVersionID="86" highVersionID="88" productID="30">
+        <output name="1" label="White" connection="other" maxcurrent="80 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="80 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="80 mA"/>
+        <output name="4" label="Violet" connection="solder" maxcurrent="80 mA"/>
         <output name="Dim"/>
         <output name="Ditch"/>
         <output name="Motor"/>
         <output name="BEMF"/>
         <output name="Brake"/>
-        <size length="2.7" width="0.4" height="0.0" units="inches"/>
+        <size length="2.7" width="0.433" height="0.056" units="inches"/>
       </model>
-      <model model="K2D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="31">
-        <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
-        <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
-        <output name="4" label="Purple" connection="solder" maxcurrent="50 mA"/>
+      <model model="K2D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for N-Scale Kato RS2, RSC2, SD80/90MAC, EMD 90/43MAC, Walthers RS2 and GP18 and many other locomotives (ref.1294)"
+            lowVersionID="86" highVersionID="88" productID="31">
+        <output name="1" label="White" connection="LED" maxcurrent="80 mA"/>
+        <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="80 mA"/>
+        <output name="4" label="Violet" connection="solder" maxcurrent="80 mA"/>
         <output name="Dim"/>
         <output name="Ditch"/>
         <output name="Motor"/>
         <output name="BEMF"/>
         <output name="Brake"/>
-        <size length="2.7" width="0.4" height="0.0" units="inches"/>
+        <size length="2.63" width="0.4" height="0.06" units="inches"/>
       </model>
-      <model model="K3D3" numOuts="3" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="32">
-        <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
-        <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
+      <model model="K3D3" numOuts="3" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale NW2 (ref.1295)"
+            lowVersionID="86" highVersionID="88" productID="32">
+        <output name="1" label="White" connection="LED" maxcurrent="80 mA"/>
+        <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="80 mA"/>
         <output name="Dim"/>
         <output name="Ditch"/>
         <output name="Motor"/>
         <output name="BEMF"/>
         <output name="Brake"/>
-        <size length="2.860" width="0.680" height="0.145" units="inches"/>
+        <size length="1.26" width="0.43" height="0.06" units="inches"/>
       </model>
-      <model model="K4D6" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="46">
-        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
-        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
-        <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
-        <output name="5" label="Brown" connection="solder" maxcurrent="60 mA"/>
-        <output name="6" label="Pink" connection="solder" maxcurrent="60 mA"/>
-        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA"/>
-        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA"/>
+      <model model="K4D6" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-scale MP36PH Metra (ref.1414)"
+         lowVersionID="86" highVersionID="88" productID="46">
+        <output name="1" label="White" connection="LED" maxcurrent="80 mA"/>
+        <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="80 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="80 mA"/>
+        <output name="5" label="Brown" connection="solder" maxcurrent="80 mA"/>
+        <output name="6" label="Pink" connection="solder" maxcurrent="80 mA"/>
+        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA"/>
+        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA"/>
         <output name="Dim"/>
         <output name="Ditch"/>
         <output name="Motor"/>
         <output name="BEMF"/>
         <output name="Brake"/>
-        <size length="2.53" width="0.542" height="0.155" units="inches"/>
+        <size length="2.344" width="0.49" height="0.097" units="inches"/>
       </model>
-      <model model="K5D7" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="59">
-        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
-        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
-        <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
-        <output name="5" label="Brown" connection="solder" maxcurrent="60 mA"/>
-        <output name="6" label="Pink" connection="solder" maxcurrent="60 mA"/>
-        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA"/>
-        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA"/>
+      <model model="K5D7" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-scale F40PH (ref.1489)"
+         lowVersionID="86" highVersionID="88" productID="59">
+        <output name="1" label="White" connection="LED" maxcurrent="80 mA"/>
+        <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="80 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="80 mA"/>
+        <output name="5" label="Brown" connection="solder" maxcurrent="80 mA"/>
+        <output name="6" label="Pink" connection="solder" maxcurrent="80 mA"/>
+        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA"/>
+        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA"/>
         <output name="Dim"/>
         <output name="Ditch"/>
         <output name="Motor"/>
         <output name="BEMF"/>
         <output name="Brake"/>
-        <size length="2.53" width="0.542" height="0.155" units="inches"/>
+        <size length="2.71" width="0.545" height="0.072" units="inches"/>
       </model>
-        <model model="K6D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato the FEF-3"
-            lowVersionID="86" highVersionID="88" productID="63">
-            <output name="1" label="White" connection="other" maxcurrent="80 mA"/>
-            <output name="2" label="Yellow" connection="other" maxcurrent="80 mA"/>
-            <output name="3" label="Green" connection="solder" maxcurrent="80 mA"/>
-            <output name="4" label="Purple" connection="solder" maxcurrent="80 mA"/>
-            <output name="Dim"/>
-            <output name="Ditch"/>
-            <output name="Motor"/>
-            <output name="BEMF"/>
-            <output name="Brake"/>
-            <size length="2.53" width="0.413" height="0.0725" units="inches"/>
-        </model>
+      <model model="K6D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-scale FEF-3 (ref.1556)"
+         lowVersionID="86" highVersionID="88" productID="63">
+        <output name="1" label="White" connection="LED" maxcurrent="80 mA"/>
+        <output name="2" label="Yellow" connection="solder" maxcurrent="80 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="80 mA"/>
+        <output name="4" label="Violet" connection="solder" maxcurrent="80 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="2.35" width="0.413" height="0.072" units="inches"/>
+      </model>
+      <model model="K7D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale ACS-64 (ref.1673)"
+         lowVersionID="86" highVersionID="88" productID="64">
+        <output name="1" label="White" connection="LED" maxcurrent="80 mA"/>
+        <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="80 mA"/>
+        <output name="4" label="Violet" connection="solder" maxcurrent="80 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="2.35" width="0.413" height="0.072" units="inches"/>
+      </model>
       <model model="KAM4" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" lowVersionID="86" highVersionID="88" productID="55">
         <output name="1" label="White" connection="other" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="100 mA"/>

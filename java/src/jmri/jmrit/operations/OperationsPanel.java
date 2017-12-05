@@ -1,6 +1,6 @@
 package jmri.jmrit.operations;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.GridBagConstraints;
@@ -255,7 +255,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
             TableRowSorter<? extends TableModel> sorter = new TableRowSorter<>(table.getModel());
             table.setRowSorter(sorter);
             // only sort on columns that are String or Integer
-            for (int i =0; i < table.getColumnCount(); i++) {                
+            for (int i = 0; i < table.getColumnCount(); i++) {
                 if (table.getColumnClass(i) == String.class || table.getColumnClass(i) == Integer.class) {
                     continue; // allow sorting
                 }
@@ -267,7 +267,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         // give each cell a bit of space between the vertical lines and text
-        table.setIntercellSpacing(new Dimension(3,1));
+        table.setIntercellSpacing(new Dimension(3, 1));
         // table must have a name
         table.setName(getWindowFrameRef() + ":table"); // NOI18N
         Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
@@ -367,7 +367,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
 
     @Override
     public void ancestorRemoved(AncestorEvent event) {
-//  log.debug("Ancestor Removed"); 
+//  log.debug("Ancestor Removed");
         // do nothing
     }
 
@@ -381,10 +381,10 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         }
     }
 
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Checks for instance")
     protected String getWindowFrameRef() {
-        if (this.getTopLevelAncestor() instanceof JmriJFrame) {
-            return ((JmriJFrame) this.getTopLevelAncestor()).getWindowFrameRef();
+        Container c = this.getTopLevelAncestor();
+        if (c instanceof JmriJFrame) {
+            return ((JmriJFrame) c).getWindowFrameRef();
         }
         return null;
     }

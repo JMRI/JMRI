@@ -42,6 +42,7 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor panels.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007-2008
+ * @author George Warner Copyright (C) 2017
  */
 public class LayoutConnectivity {
 

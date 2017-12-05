@@ -20,26 +20,16 @@ import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreePath;
 import jmri.jmrix.jinput.TreeModel;
 import jmri.jmrix.jinput.UsbNode;
+import net.java.games.input.Component;
+import net.java.games.input.Controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Create a JPanel containing a tree of JInput sources.
  *
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- *
  * @author Bob Jacobsen Copyright 2008
-  */
+ */
 public class TreePanel extends JPanel {
 
     public TreePanel() {
@@ -178,24 +168,19 @@ public class TreePanel extends JPanel {
         // starting listening for changes
         TreeModel.instance().addPropertyChangeListener(
                 new PropertyChangeListener() {
-                    @Override
-                    public void propertyChange(PropertyChangeEvent e) {
-                        if (currentNode == null) {
-                            return;
-                        }
-                        if (e.getOldValue() != currentNode) {
-                            return;
-                        }
-                        // right place, update
-                        float value = ((Float) e.getNewValue()).floatValue();
-                        if (currentNode.getComponent().isAnalog()) {
-                            componentValue.setText("" + value);
-                        } else {
-                            componentValue.setText((value > 0.0) ? "Yes" : "No");
-                        }
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                if ((currentNode != null) && (e.getOldValue() == currentNode)) {
+                    // right place, update
+                    float value = ((Float) e.getNewValue()).floatValue();
+                    if (currentNode.getComponent().isAnalog()) {
+                        componentValue.setText("" + value);
+                    } else {
+                        componentValue.setText((value > 0.0) ? "Yes" : "No");
                     }
                 }
-        );
+            }
+        });
     }
 
     void checkSensorBox() {
@@ -232,27 +217,31 @@ public class TreePanel extends JPanel {
     UsbNode currentNode = null;
 
     void update() {
-        if (currentNode.getController() != null) {
-            controllerName.setText(currentNode.getController().getName());
-            controllerType.setText(currentNode.getController().getType().toString());
+        Controller controller = currentNode.getController();
+        if (controller != null) {
+            controllerName.setText(controller.getName());
+            controllerType.setText(controller.getType().toString());
         } else {
             controllerName.setText("");
             controllerType.setText("");
         }
-        if (currentNode.getComponent() != null) {
-            componentName.setText(currentNode.getComponent().getName());
-            componentId.setText(currentNode.getComponent().getIdentifier().toString());
-            if (currentNode.getComponent().isAnalog()) {
+        Component component = currentNode.getComponent();
+        if (component != null) {
+            componentName.setText(component.getName());
+            componentId.setText(component.getIdentifier().toString());
+            if (component.isAnalog()) {
                 componentAnalog.setText("Yes");
                 componentValue.setText("" + currentNode.getValue());
-                componentRelative.setText(currentNode.getComponent().isRelative() ? "Yes" : "No");
+                componentRelative.setText(component.isRelative() ? "Yes" : "No");
             } else {
                 componentAnalog.setText("No");
                 componentRelative.setText("");
                 componentValue.setText((currentNode.getValue() > 0.0) ? "Yes" : "No");
             }
-            if ((currentNode.getAttachedSensor() != null) && (!currentNode.getAttachedSensor().equals(""))) {
-                sensorName.setText(currentNode.getAttachedSensor());
+
+            String attachedSensor = currentNode.getAttachedSensor();
+            if ((attachedSensor != null) && !attachedSensor.isEmpty()) {
+                sensorName.setText(attachedSensor);
                 sensorName.setEditable(false);
                 sensorBox.setSelected(true);
             } else {
@@ -260,8 +249,10 @@ public class TreePanel extends JPanel {
                 sensorName.setEditable(true);
                 sensorBox.setSelected(false);
             }
-            if ((currentNode.getAttachedMemory() != null) && (!currentNode.getAttachedMemory().equals(""))) {
-                memoryName.setText(currentNode.getAttachedMemory());
+
+            String attachedMemory = currentNode.getAttachedMemory();
+            if ((attachedMemory != null) && (!attachedMemory.equals(""))) {
+                memoryName.setText(attachedMemory);
                 memoryName.setEditable(false);
                 memoryBox.setSelected(true);
             } else {

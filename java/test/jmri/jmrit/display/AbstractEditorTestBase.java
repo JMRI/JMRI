@@ -1,15 +1,15 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+import javax.swing.UIManager;
 import jmri.util.JUnitUtil;
+import jmri.util.SystemType;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import jmri.jmrit.display.EditorFrameOperator;
-import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
@@ -26,8 +26,8 @@ abstract public class AbstractEditorTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
-        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuFile"));
-        Assert.assertNotNull("File Menu Exists",jmo);
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuFile"));
+        Assert.assertNotNull("File Menu Exists", jmo);
     }
 
     @Test
@@ -44,9 +44,9 @@ abstract public class AbstractEditorTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
-        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuWindow"));
-        Assert.assertNotNull("Window Menu Exists",jmo);
-        Assert.assertEquals("Menu Item Count",0,jmo.getItemCount());
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuWindow"));
+        Assert.assertNotNull("Window Menu Exists", jmo);
+        Assert.assertEquals("Menu Item Count", 0, jmo.getItemCount());
     }
 
     @Test
@@ -54,9 +54,15 @@ abstract public class AbstractEditorTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
-        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuHelp"));
-        Assert.assertNotNull("Help Menu Exists",jmo);
-        Assert.assertEquals("Menu Item Count",10,jmo.getItemCount());
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuHelp"));
+        Assert.assertNotNull("Help Menu Exists", jmo);
+        if (SystemType.isMacOSX() && UIManager.getLookAndFeel().isNativeLookAndFeel()) {
+            // macOS w/ native L&F help menu does not include "About" menu item
+            // or the preceding separator
+            Assert.assertEquals("Menu Item Count", 8, jmo.getItemCount());
+        } else {
+            Assert.assertEquals("Menu Item Count", 10, jmo.getItemCount());
+        }
     }
 
     @Test
@@ -65,7 +71,9 @@ abstract public class AbstractEditorTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         java.awt.Dimension d0 = e.getSize();
         e.setSize(100, 100);
-        JUnitUtil.waitFor( () -> { return d0 != e.getSize(); } );
+        JUnitUtil.waitFor(() -> {
+            return d0 != e.getSize();
+        });
         java.awt.Dimension d = e.getSize();
         // the java.awt.Dimension stores the values as floating point
         // numbers, but setSize expects integer parameters.

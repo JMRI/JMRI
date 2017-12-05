@@ -70,6 +70,10 @@ public abstract class LayoutTrack {
 
     // package-private
     static Color defaultTrackColor = Color.black;
+    //TODO: Add accessor methods
+    //TODO: Should these be 1)Global, 2)Per-layout, 3)Per-Block or 4)Per-Track?
+    static Color defaultBallastColor = Color.gray;
+    static Color defaultTieColor = new Color(122, 74, 50);
 
     /**
      * constructor method
@@ -114,15 +118,27 @@ public abstract class LayoutTrack {
         defaultTrackColor = color;
     }
 
-    protected Color setColorForTrackBlock(Graphics2D g2, @Nullable LayoutBlock lb, boolean forceBlockTrackColor) {
-        Color result = defaultTrackColor;
-        if (lb != null) {
+    protected Color getColorForTrackBlock(
+            @Nullable LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
+        Color result = ColorUtil.CLEAR;  // transparent
+        if (layoutBlock != null) {
             if (forceBlockTrackColor) {
-                result = lb.getBlockTrackColor();
+                result = layoutBlock.getBlockTrackColor();
             } else {
-                result = lb.getBlockColor();
+                result = layoutBlock.getBlockColor();
             }
         }
+        return result;
+    }
+
+    // optional prameter forceTrack = false
+    protected Color getColorForTrackBlock(@Nullable LayoutBlock lb) {
+        return getColorForTrackBlock(lb, false);
+    }
+
+    protected Color setColorForTrackBlock(Graphics2D g2,
+            @Nullable LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
+        Color result = getColorForTrackBlock(layoutBlock, forceBlockTrackColor);
         g2.setColor(result);
         return result;
     }
@@ -132,12 +148,37 @@ public abstract class LayoutTrack {
         return setColorForTrackBlock(g2, lb, false);
     }
 
+    public abstract boolean isMainline();
+
     /**
-     * one draw routine to rule them all...
+     * draw one line (Ballast, ties, center or 3rd rail, block lines)
+     *
+     * @param g2      the graphics context
+     * @param isMain  true if drawing mainlines
+     * @param isBlock true if drawing block lines
+     */
+    protected abstract void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
+
+    /**
+     * draw two lines (rails)
+     *
+     * @param g2      the graphics context
+     * @param isMain  true if drawing mainlines
+     * @param railDisplacement the offset from center to draw the lines
+     */
+    protected abstract void draw2(Graphics2D g2, boolean isMain, float railDisplacement);
+
+    /**
+     * draw hidden track
      *
      * @param g2 the graphics context
      */
-    protected abstract void draw(Graphics2D g2);
+    //protected abstract void drawHidden(Graphics2D g2);
+    //note: placeholder until I get this implemented in all sub-classes
+    //TODO: replace with abstract declaration (above)
+    protected void drawHidden(Graphics2D g2) {
+        //nothing to do here... move along...
+    }
 
     /**
      * highlight unconnected connections
@@ -539,19 +580,17 @@ public abstract class LayoutTrack {
     /**
      * check this track and its neighbors for non-contiguous blocks
      * <p>
-     * For each (non-null) blocks of this track do:
-     * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
-     * #2) If this track is not in one of the TrackNameSets for this block
-     * #3) add a new set (with this block/track) to
-     *     blockNamesToTrackNameSetMap and
-     * #4) check all the connections in this
-     *     block (by calling the 2nd method below)
+     * For each (non-null) blocks of this track do: #1) If it's got an entry in
+     * the blockNamesToTrackNameSetMap then #2) If this track is not in one of
+     * the TrackNameSets for this block #3) add a new set (with this
+     * block/track) to blockNamesToTrackNameSetMap and #4) check all the
+     * connections in this block (by calling the 2nd method below)
      * <p>
-     *     Basically, we're maintaining contiguous track sets for each block found
-     *     (in blockNamesToTrackNameSetMap)
+     * Basically, we're maintaining contiguous track sets for each block found
+     * (in blockNamesToTrackNameSetMap)
      *
-     * @param blockNamesToTrackNameSetMaps hashmap of key:block names to
-     *        lists of track name sets for those blocks
+     * @param blockNamesToTrackNameSetMaps hashmap of key:block names to lists
+     *                                     of track name sets for those blocks
      * <p>
      * note: used by LayoutEditorChecks.setupCheckNonContiguousBlocksMenu()
      */
@@ -561,7 +600,7 @@ public abstract class LayoutTrack {
     /**
      * recursive routine to check for all contiguous tracks in this blockName
      *
-     * @param blockName  the block that we're checking for
+     * @param blockName    the block that we're checking for
      * @param TrackNameSet the set of track names in this block
      */
     public abstract void collectContiguousTracksNamesInBlockNamed(
@@ -570,10 +609,11 @@ public abstract class LayoutTrack {
 
     /**
      * Assign all the layout blocks in this track
-     * @param layoutBlock to this layout block
-     * (used by the Tools menu's "Assign block to selection" item)
+     *
+     * @param layoutBlock to this layout block (used by the Tools menu's "Assign
+     *                    block to selection" item)
      */
     public abstract void setAllLayoutBlocks(LayoutBlock layoutBlock);
-    
+
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class);
 }
