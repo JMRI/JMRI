@@ -109,7 +109,7 @@ public class JsonClientSystemConnectionMemo extends SystemConnectionMemo {
         if (T.equals(jmri.LightManager.class)) {
             return (T) getLightManager();
         }
-        return null; // nothing, by default
+        return super.get(T); 
     }
 
     @Override
@@ -118,9 +118,10 @@ public class JsonClientSystemConnectionMemo extends SystemConnectionMemo {
             return false;
         } else if (c.equals(LightManager.class)) {
             return true;
-        } else {
+        } else if (c.equals(PowerManager.class)) {
             return c.equals(PowerManager.class);
         }
+        return super.provides(c);
     }
 
     /**

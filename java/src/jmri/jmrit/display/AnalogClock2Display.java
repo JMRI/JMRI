@@ -191,7 +191,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         JMenuItem colorMenuItem = new JMenuItem(Bundle.getMessage("Color"));
         colorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                                 Bundle.getMessage("DefaultTextColor"),
+                                 Bundle.getMessage("DefaultTextColor", ""),
                                  color);
             if (desiredColor!=null && !color.equals(desiredColor)) {
                setColor(desiredColor);

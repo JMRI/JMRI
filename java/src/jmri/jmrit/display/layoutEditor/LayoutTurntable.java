@@ -895,7 +895,7 @@ public class LayoutTurntable extends LayoutTrack {
                     }
                 }
             } else {    // (#3)
-                log.info("•New block ('{}') trackNameSets", theBlockName);
+                log.info("-New block ('{}') trackNameSets", theBlockName);
                 TrackNameSets = new ArrayList<>();
                 blockNamesToTrackNameSetsMap.put(theBlockName, TrackNameSets);
             }
@@ -904,7 +904,7 @@ public class LayoutTurntable extends LayoutTrack {
                 TrackNameSets.add(TrackNameSet);
             }
             if (TrackNameSet.add(getName())) {
-                log.info("•    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
+                log.info("-    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
             }
             theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
         }
@@ -928,7 +928,7 @@ public class LayoutTurntable extends LayoutTrack {
                     if ((blk != null) && (blk.equals(blockName))) { // (#1)
                         // if we are added to the TrackNameSet
                         if (TrackNameSet.add(getName())) {
-                            log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                            log.info("-    Add track '{}'for block '{}'", getName(), blockName);
                         }
                         // it's time to play... flood your neighbours!
                         ts.collectContiguousTracksNamesInBlockNamed(blockName,
@@ -947,6 +947,6 @@ public class LayoutTurntable extends LayoutTrack {
         // nothing to see here, move along...
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class
-    );
+    private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class);
+
 }

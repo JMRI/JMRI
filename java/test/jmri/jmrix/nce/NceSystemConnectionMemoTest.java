@@ -1,20 +1,22 @@
 package jmri.jmrix.nce;
 
 import jmri.GlobalProgrammerManager;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * JUnit tests for the NceSystemConnectionMemo class
  *
  * @author	Bob Jacobsen
  */
-public class NceSystemConnectionMemoTest extends TestCase {
+public class NceSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
     NceSystemConnectionMemo memo;
-
+ 
+    @Test
     public void testDefaultAccess() {
         // this is checking the "as default ctor built" options, which might not be valid
         Assert.assertTrue("provides global programmerManager", memo.provides(GlobalProgrammerManager.class));
@@ -22,6 +24,7 @@ public class NceSystemConnectionMemoTest extends TestCase {
         Assert.assertNotNull("global Programmer exists", ((GlobalProgrammerManager)memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
     }
 
+    @Test
     public void test_USB_SYSTEM_POWERCAB_PROGTRACK() {
         memo.setNceUsbSystem(NceTrafficController.USB_SYSTEM_POWERCAB);
         memo.setNceCmdGroups(NceTrafficController.CMDS_PROGTRACK);
@@ -31,6 +34,7 @@ public class NceSystemConnectionMemoTest extends TestCase {
         Assert.assertNotNull("global Programmer exists", ((GlobalProgrammerManager)memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
     }
 
+    @Test
     public void test_USB_SYSTEM_SB3_NO_PROGTRACK() {
         memo.setNceUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
         memo.setNceCmdGroups(0);
@@ -41,36 +45,19 @@ public class NceSystemConnectionMemoTest extends TestCase {
     }
 
 
-    // from here down is testing infrastructure
-    public NceSystemConnectionMemoTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {NceSystemConnectionMemoTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(NceSystemConnectionMemoTest.class);
-        return suite;
-    }
-
     // The minimal setup is for log4J
     @Override
+    @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
-        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.setUp();
         
-        memo = new NceSystemConnectionMemo();
+        scm = memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(new NceTrafficController());
     }
 
     @Override
     public void tearDown() {        
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceSystemConnectionMemoTest.class);

@@ -164,8 +164,6 @@ public class SimulatorAdapter extends NcePortController implements
 
         this.getSystemConnectionMemo().configureManagers();
 
-        jmri.jmrix.nce.ActiveFlag.setActive();
-
         // start the simulator
         sourceThread = new Thread(this);
         sourceThread.setName("Nce Simulator");

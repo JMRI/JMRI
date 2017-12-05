@@ -25,7 +25,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "Intellibox-II/IB-Com (USB)";
+        return "Intellibox-II (USB)";
     } // NOI18N
 
     @Override
@@ -34,4 +34,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
             adapter = new UhlenbrockAdapter();
         }
     }
+
 }

@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>jmri: Icon Editor Help</title>
-  <meta name="Author" content="Pete Cressman">
+  <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Panel Editor">
   <!-- Style -->
   <meta http-equiv="content-type" content=
@@ -27,7 +27,7 @@
     <div id="mainContent">
       <h1>The Icon Editors</h1>
 
-      <h2>Contents of the Icon Editors</h2><img src="AddPanel.png"
+      <h2>Contents of the Icon Editors</h2><img src="images/AddPanel.png"
       align="right">
 
       <p>Five of the Icon Editors: (Right Hand Turnout, Left Hand
@@ -75,7 +75,7 @@
       Panel.</p>
 
       <h2>Pressing the Change Icon Button</h2><img src=
-      "AddPanel2.png" align="right">
+      "images/AddPanel2.png" align="right">
 
       <p>Pressing this button will add a pane labeled
       <b>Catalog</b> to the window. It will show one or more
@@ -94,10 +94,11 @@
       indicates the icon is displayed at full size. If a large
       image file had been found, the scale might be 0.25:1 to
       indicate that the display is 1/4 the actual size of the image
-      that could be transferred to the Panel. Below the icons are
-      radio buttons that allow you to adjust the background to the
-      icons. This may help in determining what parts of the icon
-      are opaque and what parts are transparent.</p>
+      that could be transferred to the Panel. Below the icons is a
+      "View On:" combo box that allows you to choose the background to
+      the icons. This may help in determining what parts of the icon
+      are opaque and what parts are transparent. Initially, the current
+      Panel background color is used.</p>
 
       <p>The Catalog pane will always display at least one tree
       titled "Program Directory". This is the resource directory
@@ -263,7 +264,8 @@
             later.</li>
           </ul>
         </li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

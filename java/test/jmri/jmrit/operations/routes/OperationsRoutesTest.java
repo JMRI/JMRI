@@ -96,10 +96,10 @@ public class OperationsRoutesTest extends OperationsTestCase {
         Assert.assertEquals("RouteLocation Constant NORTH", 4, RouteLocation.NORTH);
         Assert.assertEquals("RouteLocation Constant SOUTH", 8, RouteLocation.SOUTH);
 
-        Assert.assertEquals("RouteLocation Constant EAST_DIR", "East", RouteLocation.EAST_DIR);
-        Assert.assertEquals("RouteLocation Constant WEST_DIR", "West", RouteLocation.WEST_DIR);
-        Assert.assertEquals("RouteLocation Constant NORTH_DIR", "North", RouteLocation.NORTH_DIR);
-        Assert.assertEquals("RouteLocation Constant SOUTH_DIR", "South", RouteLocation.SOUTH_DIR);
+        Assert.assertEquals("RouteLocation Constant EAST_DIR", Bundle.getMessage("East"), RouteLocation.EAST_DIR);
+        Assert.assertEquals("RouteLocation Constant WEST_DIR", Bundle.getMessage("West"), RouteLocation.WEST_DIR);
+        Assert.assertEquals("RouteLocation Constant NORTH_DIR", Bundle.getMessage("North"), RouteLocation.NORTH_DIR);
+        Assert.assertEquals("RouteLocation Constant SOUTH_DIR", Bundle.getMessage("South"), RouteLocation.SOUTH_DIR);
 
         Assert.assertEquals("RouteLocation Constant DROP_CHANGED_PROPERTY", "dropChange",
                 RouteLocation.DROP_CHANGED_PROPERTY);

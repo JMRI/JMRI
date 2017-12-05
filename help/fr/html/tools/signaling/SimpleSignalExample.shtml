@@ -1,12 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Herv&#233; Blorec 2016/09/17 -->
+<!-- Updated by Herv&#233; Blorec 2016/09/17 -->
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Simple Signal Logic Example</title><!-- Style -->
+  <title>JMRI: Simple Signal Logic Example</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -22,7 +23,6 @@
 
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
-
 
 <!-- Page Body -->
 
@@ -122,7 +122,9 @@ canton sur le c&#244;t&#233; droit (Canton 1), les messages sont les suivants:
 Les trois messages de commutation fixent les signaux  5B, D et 4C au Rouge, Rouge et Jaune, respectivement.
 <li>
 Pour apprendre comment les signaux sont configur&#233;s en SSL, ouvrez l'&#233;l&#233;ment
-"Logique Signal Simple" dans le menu Outils..<a href="../../../images/SE8cExampleLogic.png"><img src="../../../images/SE8cExampleLogic.png" align="right" width="290" height="270" hspace="0" vspace="0" alt="Simple Signal Logic Window"></a>
+"Logique Signal Simple" dans le menu Outils..<a href="../../../images/SslExample.png"><img
+        src="../../../images/SslExample.png" align="right" width="469" height="287" hspace="0" vspace="0"
+        alt="Simple Signal Logic Window"></a>
 Dans le volet qui s'ouvre, entrez un Nom de Signal ( Feu ), par exemple "Section 5A" en haut du
 champ de texte et frapp&#233; Retour. Vous devriez obtenir quelque chose
 comme l'image vers la droite (cliquez pour l'agrandir en taille r&#233;elle).
@@ -193,7 +195,9 @@ signalez aussi au programme l'existence de ces adresses aiguillage. (Utilisateur
 
 <a name="definesignals"/>
 <li> Renseignez PanelPro &#224; propos de l'adressage de vos signaux.
-<<a href="../../../package/jmri/jmrit/beantable/SignalHeads.png"><img src="../../../package/jmri/jmrit/beantable/SignalHeads.png" align="right" width="369" height="123" hspace="0" vspace="0" alt="Signal Head Table Figure"></a>
+<<a href="../../../package/jmri/jmrit/beantable/images/SigHeadTable.png"><img
+        src="../../../package/jmri/jmrit/beantable/images/SigHeadTable.png" align="right" width="312" height="119"
+        hspace="0" vspace="0" alt="Signal Head Table Figure"></a>
   <ul>
   <li>Dans le menu Outils, ouvrez l'outil "Tableau Feu de Signalisation".
   <li>Cliquez sur le bouton
@@ -238,7 +242,9 @@ signalez aussi au programme l'existence de ces adresses aiguillage. (Utilisateur
 <li>Configurer votre logique de signalisation en utilisant l'Outil "Logique Signal Simple".<br>
 Ouvrez l'outil "Logique Signal Simple" depuis le menu "Outils". Vous obtiendrez un volet 
 		avec un nombre de champs:
-		<a href="../../../images/SE8cExampleLogic.png"><img src="../../../images/SE8cExampleLogic.png" align=right width="290" height="270" hspace="2" vspace="0" alt="Simple Signal Logic Window"></a>
+		<a href="../../../images/SslExample.png"><img src="../../../images/SslExample.png" align=right
+                                                          width="469" height="287" hspace="2" vspace="0"
+                                                      alt="Simple Signal Logic Window"></a>
 		<ul>
 		<li>Dans la case du haut, entrez le nom du Feu de Signalisation que vous souhaitez configurer.
 		<li>Les boutons radio ci-dessous qui s&#233;lectionnent une des quatre utilisations possibles

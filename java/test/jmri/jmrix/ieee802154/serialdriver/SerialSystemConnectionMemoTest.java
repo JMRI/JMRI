@@ -1,10 +1,10 @@
 package jmri.jmrix.ieee802154.serialdriver;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * SerialSystemConnectionMemoTest.java
@@ -14,38 +14,25 @@ import org.junit.Assert;
  *
  * @author	Paul Bender
  */
-public class SerialSystemConnectionMemoTest extends TestCase {
+public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-    public void testCtor() {
-        SerialSystemConnectionMemo m = new SerialSystemConnectionMemo();
-        Assert.assertNotNull("exists", m);
-    }
-
-    // from here down is testing infrastructure
-    public SerialSystemConnectionMemoTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SerialSystemConnectionMemoTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialSystemConnectionMemoTest.class);
-        return suite;
+    @Override
+    @Test
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        scm = new SerialSystemConnectionMemo();
     }
 
     @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

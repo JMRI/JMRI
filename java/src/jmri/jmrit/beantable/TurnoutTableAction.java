@@ -58,7 +58,6 @@ import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
-import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
@@ -700,26 +699,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
             @Override
             public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
-                JTable table = this.makeJTable(model);
-                table.setName(name);
-                table.setRowSorter(sorter);
-                table.getTableHeader().setReorderingAllowed(true);
-                table.setColumnModel(new XTableColumnModel());
-                table.createDefaultColumnsFromModel();
-
-                addMouseListenerToHeader(table);
-                return table;
-            }
-
-            @Override
-            public JTable makeJTable(TableSorter sorter) {
-                JTable table = this.makeJTable((TableModel) sorter);
-                table.getTableHeader().setReorderingAllowed(true);
-                table.setColumnModel(new XTableColumnModel());
-                table.createDefaultColumnsFromModel();
-
-                addMouseListenerToHeader(table);
-                return table;
+                return this.configureJTable(name, this.makeJTable(model), sorter);
             }
 
             private JTable makeJTable(TableModel model) {
@@ -1940,11 +1920,11 @@ public class TurnoutTableAction extends AbstractTableAction {
                 return true;
             } else {
                 boolean validFormat = false;
-                    // try {
-                    validFormat = (InstanceManager.getDefault(TurnoutManager.class).validSystemNameFormat(prefix + "T" + value) == Manager.NameValidity.VALID);
-                    // } catch (jmri.JmriException e) {
-                    // use it for the status bar?
-                    // }
+                // try {
+                validFormat = (InstanceManager.getDefault(TurnoutManager.class).validSystemNameFormat(prefix + "T" + value) == Manager.NameValidity.VALID);
+                // } catch (jmri.JmriException e) {
+                // use it for the status bar?
+                // }
                 if (validFormat) {
                     addButton.setEnabled(true); // directly update Create button
                     return true;

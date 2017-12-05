@@ -30,6 +30,7 @@ public class PackageTest extends TestCase {
 
         suite.addTest(SwingShutDownTaskDemo.suite());  // Normally a user-invoked demo, but in this case also a test
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SwingShutDownTaskTest.class));
 
         return suite;
     }
