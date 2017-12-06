@@ -11,6 +11,7 @@ import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -1428,64 +1429,12 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * draw this PositionablePoint
-     *
-     * @param g2 the graphics port to draw to
+     * {@inheritDoc}
      */
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
-        if (getType() != ANCHOR) {
-            Point2D pt = getCoordsCenter();
-            boolean mainline = false;
-            Point2D ep1 = pt, ep2 = pt;
-
-            if (getConnect1() != null) {
-                mainline = getConnect1().isMainline();
-                ep1 = getConnect1().getCentreSeg();
-            }
-            if (getType() == ANCHOR) {
-                if (getConnect2() != null) {
-                    mainline |= getConnect2().isMainline();
-                    ep2 = getConnect2().getCentreSeg();
-                }
-            }
-
-            double trackWidth = 2.0;
-            double tieWidth = trackWidth * 2.0;
-            Stroke drawingStroke = new BasicStroke((float) trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
-            g2.setColor(defaultTrackColor);
-
-            if (!ep1.equals(ep2)) {
-                double angleRAD = (Math.PI / 2.0) - MathUtil.computeAngleRAD(ep1, ep2);
-                Point2D p1, p2, p3, p4;
-                if (getType() == END_BUMPER) {
-                    // draw a cross tie
-                    p1 = new Point2D.Double(0.0, -tieWidth);
-                    p2 = new Point2D.Double(0.0, +tieWidth);
-
-                    p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
-                    p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
-                    g2.setStroke(drawingStroke);
-                    g2.draw(new Line2D.Double(p1, p2));
-                } else if (getType() == EDGE_CONNECTOR) {
-                    // draw an X
-                    p1 = new Point2D.Double(-trackWidth - tieWidth, -tieWidth);
-                    p2 = new Point2D.Double(-trackWidth - tieWidth, +tieWidth);
-                    p3 = new Point2D.Double(-trackWidth + tieWidth, +tieWidth);
-                    p4 = new Point2D.Double(-trackWidth + tieWidth, -tieWidth);
-
-                    p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
-                    p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
-                    p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), pt);
-                    p4 = MathUtil.add(MathUtil.rotateRAD(p4, angleRAD), pt);
-
-                    g2.setStroke(drawingStroke);
-                    g2.draw(new Line2D.Double(p1, p3));
-                    g2.draw(new Line2D.Double(p2, p4));
-                }
-            }
-        }   // if (getType() != ANCHOR)
-    }   // draw
+        //nothing to do here... move along...
+    }   // draw1
 
     /**
      * {@inheritDoc}
@@ -1536,11 +1485,158 @@ public class PositionablePoint extends LayoutTrack {
         g2.draw(layoutEditor.trackEditControlRectAt(getCoordsCenter()));
     }   // drawEditControls
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {
         // PositionablePoints don't have turnout controls...
         // nothing to see here... move along...
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawDecorations(Graphics2D g2) {
+        if (decorations != null) {
+            String arrowValue = decorations.get("arrow");
+            String bumperValue = decorations.get("bumper");
+            if ((arrowValue != null) || (bumperValue != null)) {
+                Point2D pt = getCoordsCenter();
+                boolean mainline = false;
+                Point2D ep1 = pt, ep2 = pt;
+
+                if (getConnect1() != null) {
+                    mainline = getConnect1().isMainline();
+                    ep1 = getConnect1().getCentreSeg();
+                }
+                if (getType() == ANCHOR) {
+                    if (getConnect2() != null) {
+                        mainline |= getConnect2().isMainline();
+                        ep2 = getConnect2().getCentreSeg();
+                    }
+                }
+                if (!ep1.equals(ep2)) {
+                    Point2D p1, p2, p3, p1P, p2P, p3P;
+                    double angleRAD = (Math.PI / 2.0) - MathUtil.computeAngleRAD(ep1, ep2);
+                    g2.setColor(defaultTrackColor);
+
+                    if (arrowValue != null) {
+                        // <decoration name="arrow" value="double;both;width=1;length=12;gap=1" />
+                        boolean hasIn = false, hasOut = false;
+                        int width = 1, length = 3, gap = 1, count = 1;
+                        String[] values = arrowValue.split(";");
+                        for (int i = 0; i < values.length; i++) {
+                            if (values[i].equals("single")) {
+                                count = 1;
+                            } else if (values[i].equals("double")) {
+                                count = 2;
+                            } else if (values[i].equals("triple")) {
+                                count = 3;
+                            } else if (values[i].equals("both")) {
+                                hasIn = true;
+                                hasOut = true;
+                            } else if (values[i].equals("in")) {
+                                hasIn = true;
+                            } else if (values[i].equals("out")) {
+                                hasOut = true;
+                            } else if (values[i].startsWith("count=")) {
+                                String valueString = values[i].substring(values[i].lastIndexOf("=") + 1);
+                                count = Integer.parseInt(valueString);
+                            } else if (values[i].startsWith("width=")) {
+                                String valueString = values[i].substring(values[i].lastIndexOf("=") + 1);
+                                width = Integer.parseInt(valueString);
+                            } else if (values[i].startsWith("length=")) {
+                                String valueString = values[i].substring(values[i].lastIndexOf("=") + 1);
+                                length = Integer.parseInt(valueString);
+                            } else if (values[i].startsWith("gap=")) {
+                                String valueString = values[i].substring(values[i].lastIndexOf("=") + 1);
+                                gap = Integer.parseInt(valueString);
+                            }
+                        }
+                        hasIn |= !hasOut;   // if hasOut is false make sure hasIn true
+
+                        int halfLength = length / 2;
+
+                        Stroke drawingStroke = new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
+                        // draw the in arrows
+                        if (hasIn) {
+                            p1 = new Point2D.Double(-width - halfLength, -halfLength);
+                            p2 = new Point2D.Double(-width , 0.0);
+                            p3 = new Point2D.Double(-width - halfLength, +halfLength);
+                            for (int idx = 0; idx < count; idx++) {
+                                p1P = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
+                                p2P = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
+                                p3P = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), pt);
+
+                                g2.setStroke(drawingStroke);
+                                GeneralPath path = new GeneralPath();
+                                path.moveTo(p1P.getX(), p1P.getY());
+                                path.lineTo(p2P.getX(), p2P.getY());
+                                path.lineTo(p3P.getX(), p3P.getY());
+                                g2.draw(path);
+
+                                Point2D delta = new Point2D.Double(gap + width, 0.0);
+                                p1 = MathUtil.subtract(p1, delta);
+                                p2 = MathUtil.subtract(p2, delta);
+                                p3 = MathUtil.subtract(p3, delta);
+                            }
+                        }
+                        if (hasOut) {
+                            width -= hasIn ? gap : 0;
+                            p1 = new Point2D.Double(-width + halfLength, -halfLength);
+                            p2 = new Point2D.Double(-width, 0.0);
+                            p3 = new Point2D.Double(-width + halfLength, +halfLength);
+                            for (int idx = 0; idx < count; idx++) {
+                                p1P = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
+                                p2P = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
+                                p3P = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), pt);
+
+                                g2.setStroke(drawingStroke);
+                                GeneralPath path = new GeneralPath();
+                                path.moveTo(p1P.getX(), p1P.getY());
+                                path.lineTo(p2P.getX(), p2P.getY());
+                                path.lineTo(p3P.getX(), p3P.getY());
+                                g2.draw(path);
+
+                                Point2D delta = new Point2D.Double(gap + width, 0.0);
+                                p1 = MathUtil.subtract(p1, delta);
+                                p2 = MathUtil.subtract(p2, delta);
+                                p3 = MathUtil.subtract(p3, delta);
+                            }
+                        }
+                    }
+
+                    if (bumperValue != null) {
+                        // <decoration name="bumper" value="double;width=2;length=6" />
+                        boolean hasDouble = false;
+                        int width = 4;
+                        String[] values = bumperValue.split(";");
+                        for (int i = 0; i < values.length; i++) {
+                            if (values[i].equals("double")) {
+                                hasDouble = true;
+                            } else if (values[i].startsWith("width=")) {
+                                String widthString = values[i].substring(
+                                        values[i].lastIndexOf("=") + 1);
+                                width = Integer.parseInt(widthString);
+                            }
+                        }
+                        Stroke drawingStroke = new BasicStroke((float) width,
+                                BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
+                        // draw a cross tie
+                        p1 = new Point2D.Double(0.0, -width / 2);
+                        p2 = new Point2D.Double(0.0, +width / 2);
+
+                        p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
+                        p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
+                        g2.setStroke(drawingStroke);
+                        g2.draw(new Line2D.Double(p1, p2));
+                    }
+                }   // if (!ep1.equals(ep2))
+            }   // if ((arrowValue != null) || (bumperValue != null))
+        }   // if (decorations != null)
+    }   // drawDecorations
 
     /*
      * {@inheritDoc}
@@ -1816,6 +1912,6 @@ public class PositionablePoint extends LayoutTrack {
         // nothing to see here, move along...
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
-
+    private final static Logger log
+            = LoggerFactory.getLogger(PositionablePoint.class);
 }

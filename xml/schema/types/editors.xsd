@@ -277,6 +277,21 @@
         </xs:appinfo>
       </xs:annotation>
 
+      <xs:sequence>
+        <xs:element name="decorations" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="decoration" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
+                  <xs:attribute name="value" type="xs:string"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="ident" type="beanNameType" use="required">
         <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
@@ -295,7 +310,6 @@
       <xs:attribute name="eastboundsensor" type="xs:string"></xs:attribute>
       <xs:attribute name="westboundsensor" type="xs:string"></xs:attribute>
     </xs:complexType>
-
 
     <xs:complexType name="ShapeColorType">
       <xs:annotation>
@@ -1323,7 +1337,7 @@
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
       <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
-      
+
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="train" type="xs:string"></xs:attribute>
       <xs:attribute name="trainName" type="xs:string"></xs:attribute>
@@ -1408,6 +1422,18 @@
                   <xs:attribute name="index" type="xs:integer" use="required"></xs:attribute>
                   <xs:attribute name="x" type="xs:float" use="required"></xs:attribute>
                   <xs:attribute name="y" type="xs:float" use="required"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="decorations" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="decoration" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
+                  <xs:attribute name="value" type="xs:string"></xs:attribute>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>

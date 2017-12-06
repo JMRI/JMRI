@@ -9576,6 +9576,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         drawPositionablePoints(g2, false);
         drawPositionablePoints(g2, true);
 
+        drawDecorations(g2);
+
         // things that only get drawn in edit mode
         if (isEditable()) {
             drawLayoutTrackEditControls(g2);
@@ -9825,6 +9827,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     lt.drawTurnoutControls(g2);
                 }
             }
+        }
+    }
+
+    private void drawDecorations(Graphics2D g2) {
+        for (LayoutTrack tr : layoutTrackList) {
+            tr.drawDecorations(g2);
         }
     }
 

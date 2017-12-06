@@ -1,6 +1,9 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.PanelMenu;
@@ -73,9 +76,27 @@ public class PositionablePointXml extends AbstractXmlAdapter {
             element.setAttribute("linkpointid", p.getLinkedPointId());
         }
 
+        // store decorations
+        Map<String, String> decorations = p.getDecorations();
+        if ((decorations != null) && (decorations.size() > 0)) {
+            Element decorationsElement = new Element("decorations");
+            for (Map.Entry<String, String> entry : decorations.entrySet()) {
+                String name = entry.getKey();
+                Element decorationElement = new Element("decoration");
+                decorationElement.setAttribute("name", name);
+                String value = entry.getValue();
+                if (!value.isEmpty()) {
+                    decorationElement.setAttribute("value", value);
+                }
+                decorationsElement.addContent(decorationElement);
+            }
+            element.addContent(decorationsElement);
+        }
+
         element.setAttribute("class", getClass().getName());
+
         return element;
-    }
+    }   // store
 
     @Override
     public boolean load(Element shared, Element perNode) {
@@ -157,6 +178,26 @@ public class PositionablePointXml extends AbstractXmlAdapter {
                         break;
                     }
                 }
+            }
+        }
+
+        // load decorations
+        Element decorationsElement = element.getChild("decorations");
+        if (decorationsElement != null) {
+            List<Element> decorationElementList = decorationsElement.getChildren("decoration");
+            if (decorationElementList != null) {
+                Map<String, String> decorations = new HashMap<>();
+                for (Element decorationElement : decorationElementList) {
+                    try {
+                        String eName = decorationElement.getAttribute("name").getValue();
+                        a = decorationElement.getAttribute("value");
+                        String eValue = (a != null) ? a.getValue() : "";
+                        decorations.put(eName, eValue);
+                    } catch (NullPointerException e) {  // considered normal if the attribute is not present
+                        continue;
+                    }
+                }
+                l.setDecorations(decorations);
             }
         }
 
