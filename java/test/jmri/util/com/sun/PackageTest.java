@@ -6,7 +6,6 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    TableSorterTest.class,
     TransferActionListenerTest.class
 })
 /**

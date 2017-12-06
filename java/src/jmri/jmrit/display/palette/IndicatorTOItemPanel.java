@@ -8,6 +8,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,12 +27,12 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * JPanels for the various item types that come from tool Tables - e.g. Sensors,
- * Turnouts, etc.
+ * JPanel for IndicatorTurnout items.
  */
 public class IndicatorTOItemPanel extends TableItemPanel {
 
@@ -41,7 +42,6 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     private DetectionPanel _detectPanel;
     private JPanel _tablePanel;
     protected HashMap<String, HashMap<String, NamedIcon>> _iconGroupsMap;
-//    private HashMap<String, HashMap<String, NamedIcon>> _updateGroupsMap;
 
     public IndicatorTOItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel<jmri.Turnout> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
@@ -50,7 +50,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     /**
      * Init for creation _bottom1Panel and _bottom2Panel alternate visibility in
      * bottomPanel depending on whether icon families exist. They are made first
-     * because they are referenced in initIconFamiliesPanel()
+     * because they are referenced in initIconFamiliesPanel().
      */
     @Override
     public void init() {
@@ -65,7 +65,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     /**
-     * Init for conversion of plain track to indicator track
+     * Init for conversion of plain track to indicator track.
      */
     @Override
     public void init(ActionListener doneAction) {
@@ -75,14 +75,15 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     /**
-     * Init for update of existing indicator turnout _bottom3Panel has "Update
-     * Panel" button put into _bottom1Panel
+     * Init for update of existing indicator turnout.
+     * _bottom3Panel has "Update Panel" button put onto _bottom1Panel.
+     *
      * @param doneAction doneAction
      * @param iconMaps iconMaps
      */
     public void initUpdate(ActionListener doneAction, HashMap<String, HashMap<String, NamedIcon>> iconMaps) {
         _iconGroupsMap = iconMaps;
-        checkCurrentMaps(iconMaps);   // is map in families?, does user want to add it? etc
+        checkCurrentMaps(iconMaps); // is map in families?, does user want to add it? etc.
         super.init(doneAction, null);
         _bottom1Panel.remove(_editIconsButton);
         _detectPanel = new DetectionPanel(this);
@@ -93,7 +94,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
 
     /**
      * iconMap is existing map of the icon. Check whether map is one of the
-     * families. if so, return. if not, does user want to add it to families? if
+     * families. If so, return. If not, does user want to add it to families? If
      * so, add. If not, save for return when updated.
      */
     private void checkCurrentMaps(HashMap<String, HashMap<String, NamedIcon>> iconMaps) {
@@ -104,9 +105,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         while (it.hasNext()) {
             Entry<String, HashMap<String, HashMap<String, NamedIcon>>> entry = it.next();
             family = entry.getKey();
-            if (log.isDebugEnabled()) {
-                log.debug("FamilyKey= " + family);
-            }
+            log.debug("FamilyKey = {}", family);
             Iterator<Entry<String, HashMap<String, NamedIcon>>> iter = entry.getValue().entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<String, HashMap<String, NamedIcon>> ent = iter.next();
@@ -151,7 +150,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     /*
-     * Get a handle in order to change visibility
+     * Get a handle in order to change visibility.
      */
     @Override
     protected JPanel initTablePanel(PickListModel model, Editor editor) {
@@ -171,9 +170,12 @@ public class IndicatorTOItemPanel extends TableItemPanel {
      */
     @Override
     protected void initIconFamiliesPanel() {
-        _iconFamilyPanel = new JPanel();
-        _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
-
+        if (_iconFamilyPanel == null) { // keep existing panels
+            _iconFamilyPanel = new ImagePanel();
+            _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
+        } else {
+            _iconFamilyPanel.removeAll(); // TODO use a function in _iconFamilyPanel
+        }
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> families
                 = ItemPalette.getLevel4FamilyMaps(_itemType);
         if (families != null && families.size() > 0) {
@@ -183,26 +185,25 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             if (_iconGroupsMap == null) {
                 _iconGroupsMap = families.get(_family);
             }
-            // make _iconPanel & _dragIconPanel before calls to add icons
+            // make _iconPanel + _dragIconPanel before calls to add icons
             addFamilyPanels(familyPanel);
+
             if (_iconGroupsMap == null) {
                 log.error("_iconGroupsMap is null in initIconFamiliesPanel");
                 _family = null;
             } else {
-                addIcons2Panel(_iconGroupsMap);  // need to have family iconMap identified before calling
+                addIcons2Panel(_iconGroupsMap); // need to have family iconMap identified before calling
                 makeDndIconPanel(_iconGroupsMap.get("ClearTrack"), "TurnoutStateClosed");
             }
         } else {
             familiesMissing();
-            //createNewFamily();
         }
-        if (log.isDebugEnabled()) {
-            log.debug("initIconFamiliesPanel done");
-        }
+        updateBackgrounds(); // create array of backgrounds
+        log.debug("initIconFamiliesPanel done");
     }
 
     private void resetFamiliesPanel() {
-        remove(_iconFamilyPanel);
+        //_iconFamilyPanel.removeAll();
         _tablePanel.setVisible(true);
         initIconFamiliesPanel();
         int n = _iconFamilyPanel.getComponentCount();
@@ -215,7 +216,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     /**
-     * Make matrix of icons - each row has a button to change icons
+     * Make matrix of icons - each row has a button to change icons.
      */
     private void addIcons2Panel(HashMap<String, HashMap<String, NamedIcon>> map) {
         GridBagLayout gridbag = new GridBagLayout();
@@ -239,7 +240,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             String stateName = entry.getKey();
             JPanel panel = new JPanel();
             panel.add(new JLabel(ItemPalette.convertText(stateName)));
-            panel.setBackground(_editor.getTargetPanel().getBackground());
+            panel.setOpaque(false);
             gridbag.setConstraints(panel, c);
             _iconPanel.add(panel);
             c.gridx++;
@@ -252,7 +253,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 NamedIcon icon = new NamedIcon(ent.getValue());    // make copy for possible reduction
                 icon.reduceTo(100, 100, 0.2);
                 panel = new JPanel();
-                panel.setBackground(_editor.getTargetPanel().getBackground());
+                panel.setOpaque(false);
                 panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                         borderName));
                 //if (log.isDebugEnabled()) log.debug("addIcons2Panel: "+borderName+" icon at ("
@@ -272,7 +273,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 c.gridx++;
             }
             panel = new JPanel();
-            panel.setBackground(_editor.getTargetPanel().getBackground());
+            panel.setOpaque(false);
             JButton button = new JButton(Bundle.getMessage("ButtonEditIcons"));
             button.addActionListener(new ActionListener() {
                 String key;
@@ -383,7 +384,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     /**
-     * Action item for delete family
+     * Action item for delete family.
      */
     @Override
     protected void deleteFamilySet() {
@@ -404,7 +405,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     /**
-     * _iconGroupsMap holds edit changes when done is pressed
+     * _iconGroupsMap holds edit changes when done is pressed.
      */
     protected void updateIconGroupsMap(String key, HashMap<String, NamedIcon> iconMap) {
         _iconGroupsMap.put(key, iconMap);
@@ -413,19 +414,22 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     @Override
     protected void setFamily(String family) {
         _family = family;
-        if (log.isDebugEnabled()) {
-            log.debug("setFamily: for type \"" + _itemType + "\", family \"" + family + "\"");
+        log.debug("setFamily: for type \"{}\", family \"{}\"", _itemType, family);
+        if (_iconPanel == null) {
+            _iconPanel = new ImagePanel();
+            _iconPanel.setOpaque(true);
+            _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
+                    Bundle.getMessage("PreviewBorderTitle")));
+            _iconFamilyPanel.add(_iconPanel, 0);
+        } else {
+            _iconPanel.removeAll();
         }
-        _iconFamilyPanel.remove(_iconPanel);
-        _iconPanel = new JPanel();
-        _iconPanel.setBackground(_editor.getTargetPanel().getBackground());
-        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),Bundle.getMessage("PreviewBorderTitle")));
-        _iconFamilyPanel.add(_iconPanel, 0);
-        if (!_supressDragging) {
-            _iconFamilyPanel.remove(_dragIconPanel);
-            makeDragIconPanel(1);
-//            _dragIconPanel = new JPanel();
-//            _iconFamilyPanel.add(_dragIconPanel, 0);
+        if (!_suppressDragging) {
+            if (_dragIconPanel == null) {
+                makeDragIconPanel(1);
+            } else {
+                _dragIconPanel.removeAll();
+            }
         }
         _iconGroupsMap = ItemPalette.getLevel4Family(_itemType, _family);
         addIcons2Panel(_iconGroupsMap);
@@ -436,7 +440,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     @Override
     protected void updateFamiliesPanel() {
         if (log.isDebugEnabled()) {
-            log.debug("updateFamiliesPanel for " + _itemType);
+            log.debug("updateFamiliesPanel for {}", _itemType);
         }
         if (_iconFamilyPanel != null) {
             removeIconFamiliesPanel();
@@ -451,7 +455,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
 
     private void openStatusEditDialog(String key) {
         if (log.isDebugEnabled()) {
-            log.debug("openStatusEditDialog for family \"" + _family + "\" and \"" + key + "\"");
+            log.debug("openStatusEditDialog for family \"{}\" and \"{}\"", _family, key);
         }
         _currentIconMap = _iconGroupsMap.get(key);
         _dialog = new IndicatorTOIconDialog(_itemType, _family, this, key, _currentIconMap);
@@ -572,4 +576,5 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     private final static Logger log = LoggerFactory.getLogger(IndicatorTOItemPanel.class);
+
 }

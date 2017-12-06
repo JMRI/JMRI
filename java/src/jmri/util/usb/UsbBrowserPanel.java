@@ -59,7 +59,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                     if (usbTree != null) {
                         TreePath selection = usbTree.getSelectionPath();
                         ((DefaultTreeModel) usbTree.getModel()).nodeChanged(parentNode);
-                        //Shouldn't have to do this… but .nodeChanged(parent) isn't enough
+                        // .nodeChanged(parent) isn't enough
                         ((DefaultTreeModel) usbTree.getModel()).reload(root);
                         usbTree.setSelectionPath(selection);
                     }

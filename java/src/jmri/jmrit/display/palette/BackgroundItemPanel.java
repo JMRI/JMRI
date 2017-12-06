@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
@@ -16,15 +17,16 @@ import javax.swing.event.ChangeListener;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.DrawSquares;
+import jmri.util.swing.ImagePanel;
 
 /**
- * JPanels for the various item types that come from tool Tables - e.g. Sensors,
- * Turnouts, etc.
+ * JPanels for the Panel Backgrounds.
  */
 public class BackgroundItemPanel extends IconItemPanel {
 
     /**
-     * Constructor for plain icons and backgrounds
+     * Constructor for plain icons and backgrounds.
      */
     public BackgroundItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
         super(parentFrame, type, editor);
@@ -48,7 +50,7 @@ public class BackgroundItemPanel extends IconItemPanel {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         JPanel panel = super.instructions(isBackGround);
         JPanel blurb = (JPanel) panel.getComponent(0);
-        blurb.add(new JLabel(Bundle.getMessage("ToColorBackground", "ButtonBackgroundColor")));
+        blurb.add(new JLabel(Bundle.getMessage("ToColorBackground", Bundle.getMessage("ButtonBackgroundColor"))));
         blurb.add(javax.swing.Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         return panel;
     }
@@ -67,6 +69,11 @@ public class BackgroundItemPanel extends IconItemPanel {
         backgroundButton.setToolTipText(Bundle.getMessage("ToolTipEditColor"));
         bottomPanel.add(backgroundButton);
         return bottomPanel;
+    }
+
+    @Override
+    protected JPanel makeBgButtonPanel(ImagePanel preview1, ImagePanel preview2, BufferedImage[] imgArray) {
+        return null; // no button to set Preview Bg on BackgroundItemPanel
     }
 
     class ColorDialog extends JDialog implements ChangeListener {
@@ -113,6 +120,9 @@ public class BackgroundItemPanel extends IconItemPanel {
                 @Override
                 public void actionPerformed(ActionEvent a) {
                     _editor.setBackgroundColor(_chooser.getColor());
+                    _currentBackground = _chooser.getColor();
+                    _backgrounds[0] = DrawSquares.getImage(500, 150, 15, _currentBackground, _currentBackground);
+                    _iconPanel.setImage(_backgrounds[0]);
                     dialog.dispose();
                 }
 
@@ -149,5 +159,7 @@ public class BackgroundItemPanel extends IconItemPanel {
             _preview.getParent().setBackground(_chooser.getColor());
         }
     }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BackgroundItemPanel.class);
+
 }
