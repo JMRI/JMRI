@@ -143,8 +143,9 @@ public class TrackSegment extends LayoutTrack {
     /*
      * Accessor methods
      */
+    @Nonnull
     public String getBlockName() {
-        return blockName;
+        return (blockName == null) ? "" : blockName;
     }
 
     public int getType1() {
@@ -387,6 +388,37 @@ public class TrackSegment extends LayoutTrack {
     public void setAngle(double x) {
         angle = MathUtil.pin(x, 0.0D, 180.0D);
         changed = true;
+    }
+
+    /**
+     * get the direction from end point 1 to 2
+     * <p>
+     * Note: Goes CW from east (0) to south (PI/2) to west (PI) to north
+     * (PI*3/2), etc.
+     *
+     * @return the direction (in radians)
+     */
+    public double getDirectionRAD() {
+        Point2D ep1 = center, ep2 = center;
+        if (connect1 != null) {
+            ep1 = layoutEditor.getCoords(connect1, getType1());
+        }
+        if (connect2 != null) {
+            ep2 = layoutEditor.getCoords(connect2, getType2());
+        }
+        return (Math.PI / 2.0) - MathUtil.computeAngleRAD(ep1, ep2);
+    }
+
+    /**
+     * get the direction from end point 1 to 2
+     * <p>
+     * Note: Goes CW from east (0) to south (90) to west (180) to north (270),
+     * etc.
+     *
+     * @return the direction (in degrees)
+     */
+    public double getDirectionDEG() {
+        return Math.toDegrees(getDirectionRAD());
     }
 
     /**
@@ -1042,8 +1074,8 @@ public class TrackSegment extends LayoutTrack {
                 setCircle(true);
                 setBezier(false);
                 break;
-            case 2:
-                setArc(true);   // arc
+            case 2: // arc
+                setArc(true);
                 setAngle(90.0D);
                 setCircle(false);
                 setBezier(false);

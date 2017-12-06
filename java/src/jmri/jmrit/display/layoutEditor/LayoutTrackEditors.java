@@ -247,8 +247,7 @@ public class LayoutTrackEditors {
     private void editTrackSegmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editTrackSegmentBlockNameComboBox.getUserName();
-        if ((trackSegment.getBlockName() == null)
-                || !trackSegment.getBlockName().equals(newName)) {
+        if (!trackSegment.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
                 trackSegment.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
@@ -301,8 +300,7 @@ public class LayoutTrackEditors {
         }
         // check if Block changed
         String newName = editTrackSegmentBlockNameComboBox.getUserName();
-        if ((trackSegment.getBlockName() == null)
-                || !trackSegment.getBlockName().equals(newName)) {
+        if (!trackSegment.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
                 trackSegment.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
@@ -647,8 +645,7 @@ public class LayoutTrackEditors {
     private void editLayoutTurnoutEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLayoutTurnoutBlockNameComboBox.getUserName();
-        if ((layoutTurnout.getBlockName() != null)
-                || !layoutTurnout.getBlockName().equals(newName)) {
+        if (!layoutTurnout.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
                 layoutTurnout.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));

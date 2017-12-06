@@ -2090,10 +2090,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         inComboBox.setValidateMode(inValidateMode);
         inComboBox.setText("");
 
+        // This has to be set before calling setupComboBoxMaxRows
+        // (otherwise if inFirstBlank then the  number of rows will be wrong)
+        inComboBox.setFirstItemBlank(inFirstBlank);
+
         // set the max number of rows that will fit onscreen
         JComboBoxUtil.setupComboBoxMaxRows(inComboBox);
 
-        inComboBox.setFirstItemBlank(inFirstBlank);
         inComboBox.setSelectedIndex(-1);
     } //setupComboBox
 
@@ -2849,7 +2852,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /*============================================*\
     |* LayoutTrackDrawingOptions accessor methods *|
     \*============================================*/
-    private LayoutTrackDrawingOptions layoutTrackDrawingOptions = null;
+    private transient LayoutTrackDrawingOptions layoutTrackDrawingOptions = null;
 
     public LayoutTrackDrawingOptions getLayoutTrackDrawingOptions() {
         if (layoutTrackDrawingOptions == null) {
@@ -5707,6 +5710,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             prevSelectedObject = selectedObject;
             selectedObject = null;
         }
+
+        // clear these
+        beginObject = null;
+        foundObject = null;
+
         isDragging = false;
         delayedPopupTrigger = false;
         requestFocusInWindow();
