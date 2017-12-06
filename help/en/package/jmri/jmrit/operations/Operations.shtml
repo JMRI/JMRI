@@ -72,6 +72,8 @@
     <li><a href="#Display">Display and Help</a></li>
 
     <li><a href="#MultipleLayouts">Multiple Layout Support</a></li>
+    
+    <li><a href="#OperationFiles">Operation Files</a></li>
 
     <li><a href="#QuickStartHelp">Quick Start Help</a></li>
 
@@ -398,6 +400,7 @@
     train using the "departure" track, car pulls directly into the train rather than to a specific
     departure track makes the operations run more smoothly. By not specifying the A/D tracks, you're
     letting your crew, and not the program, decide which tracks to use when servicing a train.</p>
+    
    <a name="Display" id="Display"></a>
 
    <h3>Display and Help</h3>
@@ -411,7 +414,10 @@
    configure JMRI to automatically open any of the operation windows on <a
     href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a> by adding a "Perform action".
    Most JMRI windows have as part of the menu bar the "Help" option. Select "Window Help.." to get
-   information about the window you're using. <a name="MultipleLayouts" id="MultipleLayouts"></a>
+   information about the window you're using. 
+   
+   
+   <a name="MultipleLayouts" id="MultipleLayouts"></a>
 
    <h3>Multiple Layout Support</h3>
    You can create and manage multiple layouts using OperationsPro&trade;. From the main menu bar
@@ -419,7 +425,68 @@
     href="../../../apps/TabbedPreferences.shtml#Profiles">Configuration Profile</a> for each layout
    that you want to manage. The database for each layout is unique and not shared with the other
    layouts. You can find each set of operation files under JMRI-&gt; "profile name" -&gt;
-   operations. <a name="demo" id="demo"></a>
+   operations. 
+   
+   <a name="demo" id="demo"></a> <a name="OperationFiles" id="OperationFiles"></a>
+   <h3>Operations Files</h3>
+   OperationsPro&trade; uses up to six XML files to store the operations database. You can find
+   these files by selecting from the main menu bar, Help-&gt;Locations..., a new window should
+   appear showing where your JMRI user files are. The operation files are stored in a directory
+   called "operations" located inside a directory that uses the name of your profile. Once you start
+   entering your data into OperationsPro&trade;, you can find up to six operation files, and six
+   identical backup files. The operation files use the .xml extension, and the backup files have the
+   .bak extension appended to them. These files are created when needed, for example the
+   "OperationsEngineRoster.xml" file is created when you enter your first locomotive into the
+   OperationsPro&trade;. The back up files are created when you make a change to one of the
+   operation files.
+
+   <p>
+   
+   <table>
+    <tr>
+     <td>File Name</td>
+
+     <td>Contains</td>
+    </tr>
+
+    <tr>
+     <td>Operations.xml</td>
+
+     <td>Settings</td>
+    </tr>
+
+    <tr>
+     <td>OperationsCarRoster.xml</td>
+
+     <td>Car database</td>
+    </tr>
+
+    <tr>
+     <td>OperationsEngineRoster.xml</td>
+
+     <td>Locomotive database</td>
+    </tr>
+
+    <tr>
+     <td>OperationsLocationRoster.xml</td>
+
+     <td>Location database</td>
+    </tr>
+
+    <tr>
+     <td>OperationsRouteRoster.xml</td>
+
+     <td>Route database</td>
+    </tr>
+
+    <tr>
+     <td>OperationsTrainRoster.xml</td>
+
+     <td>Train database</td>
+    </tr>
+
+   </table>
+
 
    <h3>Operations Demo Files</h3>
    The operations program provides a set of demo files to help introduce you to the some of the
@@ -733,9 +800,9 @@
 
    <h3>Save</h3>
    <p>When you're finished with the settings window, press the save button to store your
-    settings in a file called "Operations.xml". You can find this file in your JMRI directory in a
-    folder called "operations". OperationsPro&trade; will also create a backup file each time you
-    press the save button.</p>
+    settings in a file named "Operations.xml". You can find this file in JMRI-&gt; "profile name"
+    -&gt; operations. OperationsPro&trade; will also create a backup file each time you press the
+    save button.</p>
 
    <a name="Backup" id="Backup"></a>
    <h3>Backup</h3>
@@ -3047,9 +3114,9 @@
 
    <h3>Save</h3>
    <p>Press "Save" to store the car's attributes after you've made changes. The program will
-    create a file (OperationsCarRoster.xml) in your JMRI directory in a folder called "operations".
-    A backup file with the last settings for all of your cars is also created each time the "Save"
-    button is pressed.</p>
+    create a file named "OperationsCarRoster.xml". You can find this file in JMRI-&gt; "profile
+    name" -&gt; operations. A backup file with the last settings for all of your cars is also
+    created each time the "Save" button is pressed.</p>
 
    <a name="EditCarAttributes" id="EditCarAttributes"></a>
    <h3>Edit Car Attributes</h3>
@@ -3424,8 +3491,8 @@
    to enable this feature.
 
    <h3>Save</h3>
-   <p>Press "Save" to store the locomotive's settings. The program will create a file
-    (OperationsEngineRoster.xml) in your JMRI directory in a folder called "operations". A backup
+   <p>Press "Save" to store the locomotive's settings. The program will create a file named
+    "OperationsEngineRoster.xml". You can find this file in JMRI-&gt; "profile name" -&gt; operations. A backup
     file with the last settings for all of your locomotives is also created each time the "Save"
     button is pressed.</p>
 
@@ -3570,10 +3637,10 @@
     a location.</p>
 
    <h3>Save Route</h3>
-   <p>Press "Save Route" to save your route. The program will create a file
-    (OperationsRouteRoster.xml) in your JMRI directory in a folder called "operations". A backup
-    file with the last settings for all of your routes is also created each time the "Save Route"
-    button is pressed.</p>
+   <p>Press "Save Route" to save your route. The program will create a file named
+    "OperationsRouteRoster.xml". You can find this file in JMRI-&gt; "profile name" -&gt;
+    operations. A backup file with the last settings for all of your routes is also created each
+    time the "Save Route" button is pressed.</p>
 
    <a name="TrainTurnRoute" id="TrainTurnRoute"></a>
    <h3>Train Turn Route</h3>
@@ -3811,12 +3878,12 @@
    moved.
 
    <h3>Save Train</h3>
-   <p>Press "Save Train" to save your train. The program will create a file
-    (OperationsTrainRoster.xml) in your JMRI directory in a folder called "operations". A backup
-    file with the last settings for all of your trains is also created each time the "Save Train"
-    button is pressed.</p>
-    
-    <a name="EditTrainTools" id="EditTrainTools"></a>
+   <p>Press "Save Train" to save your train. The program will create a file named
+    "OperationsTrainRoster.xml". You can find this file in JMRI-&gt; "profile name" -&gt;
+    operations. A backup file with the last settings for all of your trains is also created each
+    time the "Save Train" button is pressed.</p>
+
+   <a name="EditTrainTools" id="EditTrainTools"></a>
    <h3>Edit Train Tools</h3>
    <img src="images/EditTrainTools.png" alt="Operations Edit Train Tools Menu">
 
