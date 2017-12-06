@@ -171,7 +171,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         }
         initIconFamiliesPanel(); // (if null: creates and) adds a new _iconFamilyPanel for the new mast map
         updateBackgrounds(); // create array of backgrounds
-        _bottom1Panel.add(makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds));
+        _bottom1Panel.add(makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds, (ItemPalette) _paletteFrame));
         add(_bottom1Panel);
     }
 

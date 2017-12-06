@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ItemPanel general implementation for placing of CPE items having sets of icons (families).
+ * ItemPanel general implementation for placement of CPE items having sets of icons (families).
  * 
  * @author Pete Cressman Copyright (c) 2010, 2011
  * @author Egbert Broerse 2017
@@ -61,10 +61,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
     /**
      * Constructor types with multiple families and multiple icon families.
      *
-     * @param parentFrame enclosing parentFrame
-     * @param type bean type
-     * @param family icon family
-     * @param editor panel editor
+     * @param parentFrame   enclosing parentFrame
+     * @param type          bean type
+     * @param family        icon family
+     * @param editor        panel editor
      */
     public FamilyItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
         super(parentFrame, type, editor);
@@ -72,8 +72,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
 
     /**
-     * Init for creation.
-     * Also called by enclosing TabbedPanel on change of displayed tab Pane.
+     * Create a FamilyIconPanel.
+     * Also called by the enclosing TabbedPanel on change of displayed tab Pane to activate a different pane.
      */
     @Override
     public void init() {
@@ -85,8 +85,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
             makeBottomPanel(null);
             super.init();
         }
-        // updateBgCombo(); // TODO (see proposed method in ItemPanel class
-        log.debug("tab redisplayed. BgSet = {}", previewBgSet);
     }
 
     /**
@@ -184,7 +182,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             log.debug("null panels for combo");
             return;
         }
-        bgBoxPanel = makeBgButtonPanel(_iconPanel, null, _backgrounds);
+        bgBoxPanel = makeBgButtonPanel(_iconPanel, null, _backgrounds, (ItemPalette) _paletteFrame);
         // to enable returning null for some types, skip Reporter. Don't add here for SignalMast (takes care of its own combo)
         if (bgBoxPanel != null) {
             _bottom1Panel.add(bgBoxPanel);
@@ -497,9 +495,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _dragIconPanel.setVisible(true);
 
         // add a SetBackground combo
-        // TODO add updating of panel upon display via previewBgSet
         if (_bottom1Panel != null && bgBoxPanel == null && !"SignalMast".equals(_itemType)) {
-            bgBoxPanel = makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds);
+            bgBoxPanel = makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds, (ItemPalette) _paletteFrame);
             // to enable returning null for some types, skip Reporter. Don't add here for SignalMast (takes care of its own combo)
             if (bgBoxPanel != null) {
                 _bottom1Panel.add(bgBoxPanel);

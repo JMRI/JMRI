@@ -12,9 +12,13 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
+import jmri.jmrit.display.palette.InitEventListener;
+import jmri.jmrit.display.palette.ItemPalette;
 import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
 import jmri.util.JmriJFrame;
@@ -22,20 +26,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * JPanels for the various item types that come from tool Tables - e.g. Sensors,
+ * JPanels for the various item types that can be added to a Panel - e.g. Sensors,
  * Turnouts, etc.
  * 
  * Devices such as these have sets of icons to display their various states.
- * such sets are called a "family" in the code. These devices then may have sets
+ * Such sets are called a "family" in the code. These devices then may have sets
  * of families to provide the user with a choice of the icon set to use for a
  * particular device.
  * These sets/families are defined in an xml file stored as xml/defaultPanelIcons.xml
- * The subclass FamilyItemPanel.java and its subclasses
- * handles these devices.
+ * including the icon file paths, to be loaded by an iterator.
+ * The subclass FamilyItemPanel.java and its subclasses handles these devices.
  * 
  * Other devices, e.g. backgrounds or memory, may use only one or no icon to
  * display. The subclass IconItemPanel.java and its subclasses handles these
  * devices.
+ *
+ * @author Pete Cressman Copyright (c) 2010
+ * @author Egbert Broerse Copyright 2017
  */
 public abstract class ItemPanel extends JPanel {
 
@@ -48,17 +55,26 @@ public abstract class ItemPanel extends JPanel {
     static Color _grayColor = new Color(235, 235, 235);
     static Color _darkGrayColor = new Color(150, 150, 150);
     protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
+    /**
+     * Active base color for Preview background, read from active Panel where available.
+     */
     protected Color _currentBackground = _grayColor;
-    protected BufferedImage[] _backgrounds; // array of Image backgrounds, shared to save on RAM
-    protected int previewBgSet = 0; // shared setting for preview background color, starts as 0 = use Panel bg
-    //protected JComboBox<String> bgColorBox; // TODO use a shared JComboBox + listeners in ImagePanels to respond to state changes
+    /**
+     * Array of BufferedImage backgrounds loaded as background image in Preview, shared to save on RAM
+     */
+    protected BufferedImage[] _backgrounds;
+    /**
+     * Shared setting for preview pane background color, starts as 0 = use current Panel bg color.
+     */
+    protected int previewBgSet = 0;
+    private InitEventListener listener;
 
     /**
-     * Constructor for all table types.
+     * Constructor for all item types.
      *
-     * @param parentFrame ItemPalette instance
-     * @param type identifier of the ItemPanel type
-     * @param editor Editor that last called for the ItemPalette
+     * @param parentFrame   ItemPalette instance
+     * @param type          identifier of the ItemPanel type
+     * @param editor        Editor that called this ItemPalette
      */
     public ItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
         _paletteFrame = parentFrame;
@@ -68,7 +84,7 @@ public abstract class ItemPanel extends JPanel {
     }
 
     /**
-     * Initializes panel for selecting a new Control Panel item or for updating
+     * Initialize panel for selecting a new Control Panel item or for updating
      * an existing item. Adds table if item is a bean. i.e. customizes for the
      * item type.
      * Called by enclosing TabbedPanel on change of displayed tab Pane.
@@ -76,7 +92,7 @@ public abstract class ItemPanel extends JPanel {
     public void init() {
         _initialized = true;
     }
-    
+
     protected void setEditor(Editor ed) {
         _editor = ed;
     }
@@ -101,8 +117,8 @@ public abstract class ItemPanel extends JPanel {
      * @param imgArray  the image array to choose from
      * @return          JPanel with label and drop down with actions
      */
-    protected JPanel makeBgButtonPanel(@Nonnull ImagePanel preview1, ImagePanel preview2, BufferedImage[] imgArray) {
-        JComboBox<String> bgColorBox = new JComboBox<>();
+    protected JPanel makeBgButtonPanel(@Nonnull ImagePanel preview1, ImagePanel preview2, BufferedImage[] imgArray, ItemPalette parent) {
+        BgComboBox<String> bgColorBox = new BgComboBox<>();
         bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, but too long for combo
         bgColorBox.addItem(Bundle.getMessage("White"));
         bgColorBox.addItem(Bundle.getMessage("LightGray"));
@@ -128,7 +144,7 @@ public abstract class ItemPanel extends JPanel {
                 log.debug("imgArray is empty");
             }
         });
-
+        parent.setInitEventListener(bgColorBox); // register custom init (show) event
         JPanel backgroundPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         backgroundPanel.add(new JLabel(Bundle.getMessage("setBackground")));
         backgroundPanel.add(bgColorBox);
@@ -137,17 +153,7 @@ public abstract class ItemPanel extends JPanel {
     }
 
     /**
-     * TODO: Synchronise View On: ComboBox choice across tabs
-     */
-//    protected void updateBgCombo() {
-//        if (bgColorBox != null) {
-//            bgColorBox.setSelectedIndex(previewBgSet);
-//        }
-//        log.debug("BgCombo updated");
-//    }
-
-    /**
-     * Create array of backgrounds.
+     * Create array of backgrounds for preview pane.
      */
     protected void updateBackgrounds() {
         if (_backgrounds == null) { // reduces load but will not redraw for new size
@@ -174,8 +180,11 @@ public abstract class ItemPanel extends JPanel {
         return _update;
     }
 
-    /**
+    /*
      * ****** Default family icon names *******
+     *
+     * NOTE: Names supplied must be available as properties keys and also match the
+     * element names defined in xml/defaultPanelIcons.xml
      */
     static final String[] TURNOUT = {"TurnoutStateClosed", "TurnoutStateThrown",
         "BeanStateInconsistent", "BeanStateUnknown"};
@@ -247,6 +256,19 @@ public abstract class ItemPanel extends JPanel {
                 // store RedX as default icon if icon not set
                 map.put(names[i], icon);
             }
+        }
+    }
+
+    /**
+     * Class for bgColorCombo.
+     *
+     * @param <T> the type of combobox
+     */
+    public class BgComboBox<T> extends JComboBox<T> implements InitEventListener {
+
+        public void onInitEvent() {
+            log.debug("InitEvent seen by comboBox");
+            setSelectedIndex(previewBgSet); // update bgColorBox when InitEvent happens.
         }
     }
 

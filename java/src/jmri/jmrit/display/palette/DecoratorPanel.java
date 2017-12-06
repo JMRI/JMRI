@@ -456,7 +456,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             }
         }.init(button));
         // add a SetBackground combo
-        p.add(makeBgButtonPanel(_previewPanel, null, _backgrounds));
+        p.add(makeBgButtonPanel(_previewPanel, null, _backgrounds)); // no listener on this variant
 
         panel.add(p);
         return panel;

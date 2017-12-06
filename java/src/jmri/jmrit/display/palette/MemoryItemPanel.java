@@ -51,7 +51,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
             add(initTablePanel(_model, _editor));
             initIconFamiliesPanel();
             add(_iconFamilyPanel);
-            add(makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds));
+            add(makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds, (ItemPalette) _paletteFrame));
             _initialized = true;
         }
     }

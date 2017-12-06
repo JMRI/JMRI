@@ -100,7 +100,7 @@ public class ReporterItemPanel extends TableItemPanel {
         // add a SetBackground combo
         // TODO add indirect updating of panel upon display via previewBgSet
         if (bgBoxPanel == null) {
-            bgBoxPanel = makeBgButtonPanel(_dragIconPanel, null, _backgrounds);
+            bgBoxPanel = makeBgButtonPanel(_dragIconPanel, null, _backgrounds, (ItemPalette) _paletteFrame);
             add(bgBoxPanel);
         }
     }

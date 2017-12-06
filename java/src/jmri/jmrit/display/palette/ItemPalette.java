@@ -30,6 +30,7 @@ import jmri.jmrit.catalog.DirectorySearcher;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.palette.InitEventListener;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
@@ -59,6 +60,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     // for now, special case 4 level maps since IndicatorTO is the only case.
     static HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> _indicatorTOMaps;
     private ItemPanel _currentItemPanel;
+    private InitEventListener listener;
 
     /**
      * Store palette icons in preferences file catalogTrees.xml
@@ -502,6 +504,8 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         if (_currentItemPanel != null) {
             _currentItemPanel.closeDialogs();
         }
+        if (listener != null) listener.onInitEvent();
+        log.debug("tab redisplayed.");
         _currentItemPanel = p;
         pack();
     }
@@ -697,7 +701,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     // Currently only needed for IndicatorTO type
     static protected void removeLevel4IconMap(String type, String family, String key) {
         if (log.isDebugEnabled()) {
-            log.debug("removelvl4IconMap for indicator family \"{}\" in type \"{}\" with key \"{}\"",
+            log.debug("removeLevel4IconMap for indicator family \"{}\" in type \"{}\" with key \"{}\"",
                     family, type, key);
         }
         if (key != null) {
@@ -755,6 +759,15 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         c.fill = java.awt.GridBagConstraints.HORIZONTAL; // text field will expand
         panel.add(field, c);
         return panel;
+    }
+
+    /**
+     * Register display of a different tab.
+     *
+     * @param listener to attach
+     */
+    public void setInitEventListener(InitEventListener listener) {
+        this.listener = listener;
     }
 
     private final static Logger log = LoggerFactory.getLogger(ItemPalette.class);
