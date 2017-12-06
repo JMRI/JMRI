@@ -2,7 +2,9 @@ package jmri.jmrit.display.layoutEditor;
 
 import static java.lang.Float.POSITIVE_INFINITY;
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.defaultTrackColor;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -1624,6 +1626,107 @@ public class TrackSegment extends LayoutTrack {
         // nothing to see here... move along...
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawDecorations(Graphics2D g2) {
+        if (decorations != null) {
+            String bridgeValue = decorations.get("bridge");
+            if (bridgeValue != null) {
+                // <decoration name="bridge" value="left;linewidth=2;halfgap=6" />
+                boolean hasLeft = false, hasRight = false;
+                int linewidth = 1, halfgap = 2;
+                String[] values = bridgeValue.split(";");
+                for (int i = 0; i < values.length; i++) {
+                    if (values[i].equals("left")) {
+                        hasLeft = true;
+                    } else if (values[i].equals("right")) {
+                        hasRight = true;
+                    } else if (values[i].equals("both")) {
+                        hasLeft = true;
+                        hasRight = true;
+                    } else if (values[i].startsWith("linewidth=")) {
+                        String valueString = values[i].substring(values[i].lastIndexOf("=") + 1);
+                        linewidth = Integer.parseInt(valueString);
+                    } else if (values[i].startsWith("halfgap=")) {
+                        String valueString = values[i].substring(values[i].lastIndexOf("=") + 1);
+                        halfgap = Integer.parseInt(valueString);
+                    }
+                }
+                if (!hasLeft && !hasRight) {
+                    hasLeft = true;
+                    hasRight = true;
+                }
+
+                g2.setStroke(new BasicStroke(linewidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
+                g2.setColor(defaultTrackColor);
+
+                if (isArc()) {
+                    calculateTrackSegmentAngle();
+                    Rectangle2D cRectangle2D = new Rectangle2D.Double(
+                            getCX(), getCY(), getCW(), getCH());
+                    double startAdj = getStartAdj(), tmpAngle = getTmpAngle();
+                    if (hasLeft) {
+                        Rectangle2D cLeftRectangle2D = MathUtil.inset(cRectangle2D, -halfgap);
+                        g2.draw(new Arc2D.Double(
+                                cLeftRectangle2D.getX(),
+                                cLeftRectangle2D.getY(),
+                                cLeftRectangle2D.getWidth(),
+                                cLeftRectangle2D.getHeight(),
+                                startAdj, tmpAngle, Arc2D.OPEN));
+                    }
+                    if (hasRight) {
+                        Rectangle2D cLRightRectangle2D = MathUtil.inset(cRectangle2D, +halfgap);
+                        g2.draw(new Arc2D.Double(
+                                cLRightRectangle2D.getX(),
+                                cLRightRectangle2D.getY(),
+                                cLRightRectangle2D.getWidth(),
+                                cLRightRectangle2D.getHeight(),
+                                startAdj, tmpAngle, Arc2D.OPEN));
+                    }
+                    trackRedrawn();
+                } else if (isBezier()) {
+                    Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
+                    Point2D pt2 = layoutEditor.getCoords(getConnect2(), getType2());
+
+                    int cnt = bezierControlPoints.size();
+                    Point2D[] points = new Point2D[cnt + 2];
+                    points[0] = pt1;
+                    for (int idx = 0; idx < cnt; idx++) {
+                        points[idx + 1] = bezierControlPoints.get(idx);
+                    }
+                    points[cnt + 1] = pt2;
+
+                    if (hasLeft) {
+                        MathUtil.drawBezier(g2, points, -halfgap);
+                    }
+                    if (hasRight) {
+                        MathUtil.drawBezier(g2, points, +halfgap);
+                    }
+                } else {
+                    Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
+                    Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
+
+                    Point2D delta = MathUtil.subtract(end2, end1);
+                    Point2D vector = MathUtil.normalize(delta, halfgap);
+                    vector = MathUtil.orthogonal(vector);
+
+                    if (hasLeft) {
+                        Point2D ep1L = MathUtil.add(end1, vector);
+                        Point2D ep2L = MathUtil.add(end2, vector);
+                        g2.draw(new Line2D.Double(ep1L, ep2L));
+                    }
+                    if (hasRight) {
+                        Point2D ep1R = MathUtil.subtract(end1, vector);
+                        Point2D ep2R = MathUtil.subtract(end2, vector);
+                        g2.draw(new Line2D.Double(ep1R, ep2R));
+                    }
+                }   // if isArc() {} else if isBezier() {} else...
+            }   // if (bridgeValue != null)
+        }   // if (decorations != null)
+    }   // drawDecorations
+
     /*
      * {@inheritDoc}
      */
@@ -1877,7 +1980,6 @@ public class TrackSegment extends LayoutTrack {
         setLayoutBlock(layoutBlock);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class
-    );
-
+    private final static Logger log
+            = LoggerFactory.getLogger(TrackSegment.class);
 }
