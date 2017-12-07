@@ -124,12 +124,14 @@ public class LevelXing extends LayoutTrack {
     /**
      * Accessor methods
      */
+    @Nonnull
     public String getBlockNameAC() {
-        return blockNameAC;
+        return ((blockNameAC == null) ? "" : blockNameAC);
     }
 
+    @Nonnull
     public String getBlockNameBD() {
-        return blockNameBD;
+        return ((blockNameBD == null) ? "" : blockNameBD);
     }
 
     public SignalHead getSignalHead(int loc) {

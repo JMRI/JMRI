@@ -2852,7 +2852,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /*============================================*\
     |* LayoutTrackDrawingOptions accessor methods *|
     \*============================================*/
-    private LayoutTrackDrawingOptions layoutTrackDrawingOptions = null;
+    private transient LayoutTrackDrawingOptions layoutTrackDrawingOptions = null;
 
     public LayoutTrackDrawingOptions getLayoutTrackDrawingOptions() {
         if (layoutTrackDrawingOptions == null) {

@@ -1313,7 +1313,7 @@ public class LayoutSlip extends LayoutTurnout {
 
         if (drawMain == mainlineA) {
             g2.draw(new Line2D.Double(pAR, pVL));
-            g2.draw(new Line2D.Double(pVLtD, pKL));
+            g2.draw(new Line2D.Double(pVLtD, pKLtB));
             GeneralPath path = new GeneralPath();
             path.moveTo(pAL.getX(), pAL.getY());
             path.lineTo(pAPL.getX(), pAPL.getY());
@@ -1322,7 +1322,7 @@ public class LayoutSlip extends LayoutTurnout {
         }
         if (drawMain == mainlineB) {
             g2.draw(new Line2D.Double(pBL, pVL));
-            g2.draw(new Line2D.Double(pVLtC, pKR));
+            g2.draw(new Line2D.Double(pVLtC, pKRtA));
             if (getTurnoutType() == DOUBLE_SLIP) {
                 GeneralPath path = new GeneralPath();
                 path.moveTo(pBR.getX(), pBR.getY());
@@ -1335,7 +1335,7 @@ public class LayoutSlip extends LayoutTurnout {
         }
         if (drawMain == mainlineC) {
             g2.draw(new Line2D.Double(pCL, pVR));
-            g2.draw(new Line2D.Double(pVRtB, pKR));
+            g2.draw(new Line2D.Double(pVRtB, pKRtD));
             if (getTurnoutType() == DOUBLE_SLIP) {
                 GeneralPath path = new GeneralPath();
                 path.moveTo(pCR.getX(), pCR.getY());
@@ -1348,7 +1348,7 @@ public class LayoutSlip extends LayoutTurnout {
         }
         if (drawMain == mainlineD) {
             g2.draw(new Line2D.Double(pDR, pVR));
-            g2.draw(new Line2D.Double(pVRtA, pKL));
+            g2.draw(new Line2D.Double(pVRtA, pKLtC));
             GeneralPath path = new GeneralPath();
             path.moveTo(pDL.getX(), pDL.getY());
             path.lineTo(pDPL.getX(), pDPL.getY());

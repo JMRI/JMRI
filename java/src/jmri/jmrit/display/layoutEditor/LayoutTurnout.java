@@ -412,35 +412,39 @@ public class LayoutTurnout extends LayoutTrack {
         return secondTurnoutInverted;
     }
 
+    @Nonnull
     public String getBlockName() {
-        return blockName;
+        return ((blockName == null) ? "" : blockName);
     }
 
+    @Nonnull
     public String getBlockBName() {
         if ((blockBName == null) || (blockBName.isEmpty())) {
             if (getLayoutBlockB() != null) {
                 blockBName = getLayoutBlockB().getId();
             }
         }
-        return blockBName;
+        return ((blockBName == null) ? "" : blockBName);
     }
 
+    @Nonnull
     public String getBlockCName() {
         if ((blockCName == null) || (blockCName.isEmpty())) {
             if (getLayoutBlockC() != null) {
                 blockCName = getLayoutBlockC().getId();
             }
         }
-        return blockCName;
+        return ((blockCName == null) ? "" : blockCName);
     }
 
+    @Nonnull
     public String getBlockDName() {
         if ((blockDName == null) || (blockDName.isEmpty())) {
             if (getLayoutBlockD() != null) {
                 blockDName = getLayoutBlockD().getId();
             }
         }
-        return blockDName;
+        return ((blockDName == null) ? "" : blockDName);
     }
 
     public SignalHead getSignalHead(int loc) {
@@ -2639,13 +2643,7 @@ public class LayoutTurnout extends LayoutTrack {
                             for (Map.Entry<String, LayoutBlock> entry : map.entrySet()) {
                                 String blockName = entry.getKey();
                                 LayoutBlock layoutBlock = entry.getValue();
-                                viewRouting.add(new AbstractAction(getBlockBName()) {
-                                    @Override
-                                    public void actionPerformed(ActionEvent e) {
-                                        AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockName, layoutBlock);
-                                        routeTableAction.actionPerformed(e);
-                                    }
-                                });
+                                viewRouting.add(new AbstractActionImpl(getBlockBName(), blockName, layoutBlock));
                             }
                             popup.add(viewRouting);
                         }
@@ -3913,6 +3911,11 @@ public class LayoutTurnout extends LayoutTrack {
                 log.error("slips should be being drawn by LayoutSlip sub-class");
                 break;
             }
+            default: {
+                // this should never happen... but...
+                log.error("Unknown turnout type: " + type);
+                break;
+            }
         }
     }
 
@@ -4356,13 +4359,13 @@ public class LayoutTurnout extends LayoutTrack {
         // We're only using a map here because it's convient to
         // use it to pair up blocks and connections
         Map<LayoutTrack, String> blocksAndTracksMap = new HashMap<>();
-        if ((getBlockName() != null) && (connectA != null)) {
+        if (connectA != null) {
             blocksAndTracksMap.put(connectA, getBlockName());
         }
-        if ((getBlockBName() != null) && (connectB != null)) {
+        if (connectB != null) {
             blocksAndTracksMap.put(connectB, getBlockBName());
         }
-        if ((getBlockCName() != null) && (connectC != null)) {
+        if (connectC != null) {
             blocksAndTracksMap.put(connectC, getBlockCName());
         }
         if ((getTurnoutType() == DOUBLE_XOVER)
@@ -4370,7 +4373,7 @@ public class LayoutTurnout extends LayoutTrack {
                 || (getTurnoutType() == RH_XOVER)
                 || (getTurnoutType() == SINGLE_SLIP)
                 || (getTurnoutType() == DOUBLE_SLIP)) {
-            if ((getBlockDName() != null) && (connectD != null)) {
+            if (connectD != null) {
                 blocksAndTracksMap.put(connectD, getBlockDName());
             }
         }
@@ -4415,15 +4418,15 @@ public class LayoutTurnout extends LayoutTrack {
 
             // create list of our connects
             List<LayoutTrack> connects = new ArrayList<>();
-            if ((this.blockName != null) && (this.blockName.equals(blockName))
+            if (getBlockName().equals(blockName)
                     && (connectA != null)) {
                 connects.add(connectA);
             }
-            if ((getBlockBName() != null) && (getBlockBName().equals(blockName))
+            if (getBlockBName().equals(blockName)
                     && (connectB != null)) {
                 connects.add(connectB);
             }
-            if ((getBlockCName() != null) && (getBlockCName().equals(blockName))
+            if (getBlockCName().equals(blockName)
                     && (connectC != null)) {
                 connects.add(connectC);
             }
@@ -4432,7 +4435,7 @@ public class LayoutTurnout extends LayoutTrack {
                     || (getTurnoutType() == RH_XOVER)
                     || (getTurnoutType() == SINGLE_SLIP)
                     || (getTurnoutType() == DOUBLE_SLIP)) {
-                if ((getBlockDName() != null) && (getBlockDName().equals(blockName))
+                if (getBlockDName().equals(blockName)
                         && (connectD != null)) {
                     connects.add(connectD);
                 }
@@ -4467,5 +4470,23 @@ public class LayoutTurnout extends LayoutTrack {
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTurnout.class
     );
+
+    private static class AbstractActionImpl extends AbstractAction {
+
+        private final String blockName;
+        private final LayoutBlock layoutBlock;
+
+        public AbstractActionImpl(String name, String blockName, LayoutBlock layoutBlock) {
+            super(name);
+            this.blockName = blockName;
+            this.layoutBlock = layoutBlock;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockName, layoutBlock);
+            routeTableAction.actionPerformed(e);
+        }
+    }
 
 }
