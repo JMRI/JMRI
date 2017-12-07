@@ -21,10 +21,10 @@ import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import jmri.NamedBean;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.ReporterIcon;
 import jmri.jmrit.picker.PickListModel;
-import jmri.util.JmriJFrame;
 import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,7 @@ public class ReporterItemPanel extends TableItemPanel {
 
     ReporterIcon _reporter;
 
-    public ReporterItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel<jmri.Reporter> model, Editor editor) {
+    public ReporterItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.Reporter> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
 
@@ -100,7 +100,7 @@ public class ReporterItemPanel extends TableItemPanel {
         // add a SetBackground combo
         // TODO add indirect updating of panel upon display via previewBgSet
         if (bgBoxPanel == null) {
-            bgBoxPanel = makeBgButtonPanel(_dragIconPanel, null, _backgrounds, (ItemPalette) _paletteFrame);
+            bgBoxPanel = makeBgButtonPanel(_dragIconPanel, null, _backgrounds, _paletteFrame);
             add(bgBoxPanel);
         }
     }

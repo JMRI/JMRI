@@ -603,7 +603,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         repaint();
     }
 
-    public jmri.util.JmriJFrame _paletteFrame;
+    public jmri.jmrit.display.DisplayFrame _paletteFrame; // extended JmriJFrame allowing for Listener and field
 
     //
     // ********** Methods for Item Popups in Control Panel editor *******************
@@ -616,13 +616,18 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected void makePaletteFrame(String title) {
         jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
 
-        _paletteFrame = new jmri.util.JmriJFrame(title, false, false);
+        _paletteFrame = new jmri.jmrit.display.DisplayFrame(title, false, false);
+        if (_paletteFrame == null) {
+            log.warn("null paletteFrame");
+        } else {
+            log.debug("new _paletteFrame created OK");
+        }
         _paletteFrame.setLocationRelativeTo(this);
         _paletteFrame.toFront();
     }
 
     /**
-     * Rotate degrees return true if popup is set
+     * Rotate degrees return true if popup is set.
      */
     @Override
     public boolean setRotateMenu(JPopupMenu popup) {
@@ -633,7 +638,9 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     /**
-     * Scale percentage return true if popup is set
+     * Scale percentage form display.
+     *
+     * @return true if popup is set
      */
     @Override
     public boolean setScaleMenu(JPopupMenu popup) {

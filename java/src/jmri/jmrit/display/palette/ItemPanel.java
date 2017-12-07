@@ -15,13 +15,13 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
 import jmri.jmrit.display.palette.InitEventListener;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
-import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class ItemPanel extends JPanel {
 
-    protected JmriJFrame _paletteFrame;
+    protected DisplayFrame _paletteFrame;
     protected String _itemType;
     protected Editor _editor;
     protected boolean _initialized = false; // has init() been run
@@ -76,8 +76,8 @@ public abstract class ItemPanel extends JPanel {
      * @param type          identifier of the ItemPanel type
      * @param editor        Editor that called this ItemPalette
      */
-    public ItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
-        _paletteFrame = parentFrame;
+    public ItemPanel(DisplayFrame parentFrame, String type, Editor editor) {
+        _paletteFrame = (DisplayFrame) parentFrame;
         _itemType = type;
         _editor = editor;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -117,7 +117,7 @@ public abstract class ItemPanel extends JPanel {
      * @param imgArray  the image array to choose from
      * @return          JPanel with label and drop down with actions
      */
-    protected JPanel makeBgButtonPanel(@Nonnull ImagePanel preview1, ImagePanel preview2, BufferedImage[] imgArray, ItemPalette parent) {
+    protected JPanel makeBgButtonPanel(@Nonnull ImagePanel preview1, ImagePanel preview2, BufferedImage[] imgArray, DisplayFrame parent) {
         BgComboBox<String> bgColorBox = new BgComboBox<>();
         bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, but too long for combo
         bgColorBox.addItem(Bundle.getMessage("White"));
@@ -127,24 +127,28 @@ public abstract class ItemPanel extends JPanel {
         bgColorBox.setSelectedIndex(previewBgSet); // Global field, starts as 0 = panel bg color
         bgColorBox.addActionListener((ActionEvent e) -> {
             if (imgArray != null) {
-                if (previewBgSet != bgColorBox.getSelectedIndex()) {
-                    previewBgSet = bgColorBox.getSelectedIndex(); // store user choice in field
+                //previewBgSet = parent.getPreviewBg();
+                //if (previewBgSet != bgColorBox.getSelectedIndex()) {
+                    previewBgSet = bgColorBox.getSelectedIndex();
+                    parent.setPreviewBg(previewBgSet); // store user choice in field
                     // load background image
-                    log.debug("Palette setImage called {}", previewBgSet);
+                    log.debug("ItemPalette setImage called {}", previewBgSet);
                     preview1.setImage(imgArray[previewBgSet]);
-                    preview1.setOpaque(false); // needed?
+                    //preview1.setOpaque(false); // needed?
                     preview1.revalidate(); // force redraw
                     if (preview2 != null) {
                         preview2.setImage(imgArray[previewBgSet]);
-                        preview2.setOpaque(false); // needed?
+                        //preview2.setOpaque(false); // needed?
                         preview2.revalidate(); // force redraw
                     }
-                }
+                //}
             } else {
                 log.debug("imgArray is empty");
             }
         });
-        parent.setInitEventListener(bgColorBox); // register custom init (show) event
+        if (parent instanceof ItemPalette) { // if Panel is part of a ItemPalette JTabbedFrame
+            parent.setInitEventListener(bgColorBox); // register custom init (show) event
+        }
         JPanel backgroundPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         backgroundPanel.add(new JLabel(Bundle.getMessage("setBackground")));
         backgroundPanel.add(bgColorBox);
@@ -173,7 +177,7 @@ public abstract class ItemPanel extends JPanel {
     }
 
     protected void reset() {
-//        _paletteFrame.repaint();
+    // _paletteFrame.repaint();
     }
 
     protected final boolean isUpdate() {
@@ -266,9 +270,9 @@ public abstract class ItemPanel extends JPanel {
      */
     public class BgComboBox<T> extends JComboBox<T> implements InitEventListener {
 
-        public void onInitEvent() {
-            log.debug("InitEvent seen by comboBox");
-            setSelectedIndex(previewBgSet); // update bgColorBox when InitEvent happens.
+        public void onInitEvent(int choice) {
+            log.debug("InitEvent seen by comboBox, set to {}", choice);
+            setSelectedIndex(choice); // update bgColorBox when InitEvent happens.
         }
     }
 

@@ -15,8 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
-import jmri.util.JmriJFrame;
 import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
 
@@ -28,7 +28,7 @@ public class BackgroundItemPanel extends IconItemPanel {
     /**
      * Constructor for plain icons and backgrounds.
      */
-    public BackgroundItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
+    public BackgroundItemPanel(DisplayFrame parentFrame, String type, Editor editor) {
         super(parentFrame, type, editor);
         _level = Editor.BKG;
     }
@@ -72,7 +72,7 @@ public class BackgroundItemPanel extends IconItemPanel {
     }
 
     @Override
-    protected JPanel makeBgButtonPanel(ImagePanel preview1, ImagePanel preview2, BufferedImage[] imgArray, ItemPanel parent) {
+    protected JPanel makeBgButtonPanel(ImagePanel preview1, ImagePanel preview2, BufferedImage[] imgArray, DisplayFrame parent) {
         return null; // no button to set Preview Bg on BackgroundItemPanel
     }
 

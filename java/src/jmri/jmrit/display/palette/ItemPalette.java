@@ -29,11 +29,11 @@ import jmri.jmrit.catalog.CatalogTreeNode;
 import jmri.jmrit.catalog.DirectorySearcher;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.palette.InitEventListener;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.FileUtil;
-import jmri.util.JmriJFrame;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (c) 2010
  */
-public class ItemPalette extends JmriJFrame implements ChangeListener {
+public class ItemPalette extends DisplayFrame implements ChangeListener {
 
     public static final int STRUT_SIZE = 10;
 
@@ -60,7 +60,6 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     // for now, special case 4 level maps since IndicatorTO is the only case.
     static HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> _indicatorTOMaps;
     private ItemPanel _currentItemPanel;
-    private InitEventListener listener;
 
     /**
      * Store palette icons in preferences file catalogTrees.xml
@@ -407,7 +406,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     }
 
     /**
-     * Add the tabs on the the Control Panel Editor.
+     * Add the tabs on the Control Panel Editor.
      */
     static void buildTabPane(ItemPalette palette, Editor editor) {
         _tabPane = new JTabbedPane();
@@ -456,13 +455,13 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
 
         ItemPanel iconPanel = new IconItemPanel(palette, "Icon", editor);
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Icon"));
-        _tabIndex.put("Icon", iconPanel); // changed from "itemPanel"
+        _tabIndex.put("Icon", iconPanel);
 
         iconPanel = new BackgroundItemPanel(palette, "Background", editor);
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Background"));
         _tabIndex.put("Background", iconPanel);
 
-        iconPanel = new TextItemPanel(palette, "Text", editor);
+        iconPanel = new TextItemPanel((ItemPalette) palette, "Text", editor);
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Text"));
         _tabIndex.put("Text", iconPanel);
 
@@ -504,7 +503,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         if (_currentItemPanel != null) {
             _currentItemPanel.closeDialogs();
         }
-        if (listener != null) listener.onInitEvent();
+        if (listener != null) listener.onInitEvent(super.getPreviewBg());
         log.debug("tab redisplayed.");
         _currentItemPanel = p;
         pack();
@@ -759,15 +758,6 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         c.fill = java.awt.GridBagConstraints.HORIZONTAL; // text field will expand
         panel.add(field, c);
         return panel;
-    }
-
-    /**
-     * Register display of a different tab.
-     *
-     * @param listener to attach
-     */
-    public void setInitEventListener(InitEventListener listener) {
-        this.listener = listener;
     }
 
     private final static Logger log = LoggerFactory.getLogger(ItemPalette.class);

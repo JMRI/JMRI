@@ -25,9 +25,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.util.swing.ImagePanel;
-import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +66,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
      * @param family        icon family
      * @param editor        panel editor
      */
-    public FamilyItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
+    public FamilyItemPanel(DisplayFrame parentFrame, String type, String family, Editor editor) {
         super(parentFrame, type, editor);
         _family = family;
     }
@@ -182,7 +182,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             log.debug("null panels for combo");
             return;
         }
-        bgBoxPanel = makeBgButtonPanel(_iconPanel, null, _backgrounds, (ItemPalette) _paletteFrame);
+        bgBoxPanel = makeBgButtonPanel(_iconPanel, null, _backgrounds, _paletteFrame);
         // to enable returning null for some types, skip Reporter. Don't add here for SignalMast (takes care of its own combo)
         if (bgBoxPanel != null) {
             _bottom1Panel.add(bgBoxPanel);
@@ -496,7 +496,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
         // add a SetBackground combo
         if (_bottom1Panel != null && bgBoxPanel == null && !"SignalMast".equals(_itemType)) {
-            bgBoxPanel = makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds, (ItemPalette) _paletteFrame);
+            bgBoxPanel = makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds, _paletteFrame);
             // to enable returning null for some types, skip Reporter. Don't add here for SignalMast (takes care of its own combo)
             if (bgBoxPanel != null) {
                 _bottom1Panel.add(bgBoxPanel);

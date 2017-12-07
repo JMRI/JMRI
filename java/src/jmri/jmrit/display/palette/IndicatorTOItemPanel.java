@@ -23,10 +23,10 @@ import javax.swing.JPanel;
 import jmri.NamedBean;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.picker.PickListModel;
-import jmri.util.JmriJFrame;
 import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +43,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     private JPanel _tablePanel;
     protected HashMap<String, HashMap<String, NamedIcon>> _iconGroupsMap;
 
-    public IndicatorTOItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel<jmri.Turnout> model, Editor editor) {
+    public IndicatorTOItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.Turnout> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
 
