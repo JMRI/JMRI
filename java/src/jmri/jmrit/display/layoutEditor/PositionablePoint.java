@@ -1452,10 +1452,8 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
-    /**
-     * draw this PositionablePoint's edit controls
-     *
-     * @param g2 the graphics port to draw to
+    /*
+     * {@inheritDoc}
      */
     @Override
     protected void drawEditControls(Graphics2D g2) {
