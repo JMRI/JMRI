@@ -1537,16 +1537,16 @@ public class PositionablePoint extends LayoutTrack {
                                 count = 2;
                             } else if (values[i].equals("triple")) {
                                 count = 3;
-                            } else if (values[i].equals("both")) {
-                                hasIn = true;
-                                hasOut = true;
+                            } else if (values[i].startsWith("count=")) {
+                                String valueString = values[i].substring(values[i].lastIndexOf("=") + 1);
+                                count = Integer.parseInt(valueString);
                             } else if (values[i].equals("in")) {
                                 hasIn = true;
                             } else if (values[i].equals("out")) {
                                 hasOut = true;
-                            } else if (values[i].startsWith("count=")) {
-                                String valueString = values[i].substring(values[i].lastIndexOf("=") + 1);
-                                count = Integer.parseInt(valueString);
+                            } else if (values[i].equals("both")) {
+                                hasIn = true;
+                                hasOut = true;
                             } else if (values[i].startsWith("width=")) {
                                 String valueString = values[i].substring(values[i].lastIndexOf("=") + 1);
                                 width = Integer.parseInt(valueString);
@@ -1560,14 +1560,12 @@ public class PositionablePoint extends LayoutTrack {
                         }
                         hasIn |= !hasOut;   // if hasOut is false make sure hasIn true
 
-                        int halfLength = length / 2;
-
                         Stroke drawingStroke = new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
                         // draw the in arrows
                         if (hasIn) {
-                            p1 = new Point2D.Double(-width - halfLength, -halfLength);
+                            p1 = new Point2D.Double(-width - length, -length);
                             p2 = new Point2D.Double(-width, 0.0);
-                            p3 = new Point2D.Double(-width - halfLength, +halfLength);
+                            p3 = new Point2D.Double(-width - length, +length);
                             for (int idx = 0; idx < count; idx++) {
                                 p1P = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
                                 p2P = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
@@ -1588,9 +1586,9 @@ public class PositionablePoint extends LayoutTrack {
                         }
                         if (hasOut) {
                             width -= hasIn ? gap : 0;
-                            p1 = new Point2D.Double(-width + halfLength, -halfLength);
+                            p1 = new Point2D.Double(-width + length, -length);
                             p2 = new Point2D.Double(-width, 0.0);
-                            p3 = new Point2D.Double(-width + halfLength, +halfLength);
+                            p3 = new Point2D.Double(-width + length, +length);
                             for (int idx = 0; idx < count; idx++) {
                                 p1P = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
                                 p2P = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
@@ -1612,9 +1610,9 @@ public class PositionablePoint extends LayoutTrack {
                     }
 
                     if (bumperValue != null) {
-                        // <decoration name="bumper" value="double;width=2;length=6" />
-                        boolean hasDouble = false;
+                        // <decoration name="bumper" value="double;width=2;length=6;gap=2;flipped" />
                         int count = 1, width = 1, length = 4, gap = 1;
+                        boolean isFlipped = false;
                         String[] values = bumperValue.split(";");
                         for (int i = 0; i < values.length; i++) {
                             if (values[i].equals("single")) {
@@ -1623,6 +1621,8 @@ public class PositionablePoint extends LayoutTrack {
                                 count = 2;
                             } else if (values[i].equals("triple")) {
                                 count = 3;
+                            } else if (values[i].equals("flip")) {
+                                isFlipped = true;
                             } else if (values[i].startsWith("count=")) {
                                 String valueString = values[i].substring(values[i].lastIndexOf("=") + 1);
                                 count = Integer.parseInt(valueString);
@@ -1644,6 +1644,9 @@ public class PositionablePoint extends LayoutTrack {
                         p1 = new Point2D.Double(0.0, -halfLength);
                         p2 = new Point2D.Double(0.0, +halfLength);
 
+                        if (isFlipped) {
+                            angleRAD += Math.PI;
+                        }
                         for (int idx = 0; idx < count; idx++) {
                             p1P = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
                             p2P = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
@@ -1699,22 +1702,6 @@ public class PositionablePoint extends LayoutTrack {
 
                         if (hasIn) {
                             if (hasLeft) {
-                                p3 = new Point2D.Double(0.0, +halfgap);
-                                p4 = new Point2D.Double(+linelength, -linelength + halfgap);
-                                p3P = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), pt);
-                                p4P = MathUtil.add(MathUtil.rotateRAD(p4, angleRAD), pt);
-                                g2.draw(new Line2D.Double(p3P, p3P));
-                            }
-                            if (hasRight) {
-                                p3 = new Point2D.Double(0.0, +halfgap);
-                                p4 = new Point2D.Double(+linelength, -linelength + halfgap);
-                                p3P = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), pt);
-                                p4P = MathUtil.add(MathUtil.rotateRAD(p4, angleRAD), pt);
-                                g2.draw(new Line2D.Double(p3P, p3P));
-                            }
-                        }
-                        if (hasOut) {
-                            if (hasLeft) {
                                 p1 = new Point2D.Double(-linelength, -linelength - halfgap);
                                 p2 = new Point2D.Double(0.0, -halfgap);
                                 p1P = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
@@ -1722,8 +1709,24 @@ public class PositionablePoint extends LayoutTrack {
                                 g2.draw(new Line2D.Double(p1P, p2P));
                             }
                             if (hasRight) {
-                                p1 = new Point2D.Double(-linelength, -linelength - halfgap);
+                                p1 = new Point2D.Double(-linelength, +linelength + halfgap);
+                                p2 = new Point2D.Double(0.0, +halfgap);
+                                p1P = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
+                                p2P = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
+                                g2.draw(new Line2D.Double(p1P, p2P));
+                            }
+                        }
+                        if (hasOut) {
+                            if (hasLeft) {
+                                p1 = new Point2D.Double(+linelength, -linelength - halfgap);
                                 p2 = new Point2D.Double(0.0, -halfgap);
+                                p1P = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
+                                p2P = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
+                                g2.draw(new Line2D.Double(p1P, p2P));
+                            }
+                            if (hasRight) {
+                                p1 = new Point2D.Double(+linelength, +linelength + halfgap);
+                                p2 = new Point2D.Double(0.0, +halfgap);
                                 p1P = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
                                 p2P = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
                                 g2.draw(new Line2D.Double(p1P, p2P));
