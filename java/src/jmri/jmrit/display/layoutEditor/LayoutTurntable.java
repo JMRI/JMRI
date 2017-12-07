@@ -750,7 +750,6 @@ public class LayoutTurntable extends LayoutTrack {
         float trackWidth = 2.F;
         float halfTrackWidth = trackWidth / 2.f;
         double radius = getRadius(), diameter = radius + radius;
-        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
 
         if (isBlock && isMain) {
             // draw turntable circle - default track color, side track width
@@ -794,7 +793,6 @@ public class LayoutTurntable extends LayoutTrack {
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
         float trackWidth = 2.F;
         float halfTrackWidth = trackWidth / 2.f;
-        double radius = getRadius(), diameter = radius + radius;
 
         // draw ray tracks
         for (int j = 0; j < getNumberRays(); j++) {
@@ -947,9 +945,7 @@ public class LayoutTurntable extends LayoutTrack {
             TrackSegment ts = getRayConnectOrdered(k);
             if (ts != null) {
                 String blockName = ts.getBlockName();
-                if (blockName != null) {
-                    blocksAndTracksMap.put(ts, blockName);
-                }
+                blocksAndTracksMap.put(ts, blockName);
             }
         }
 
@@ -999,7 +995,7 @@ public class LayoutTurntable extends LayoutTrack {
                 TrackSegment ts = getRayConnectOrdered(k);
                 if (ts != null) {
                     String blk = ts.getBlockName();
-                    if ((blk != null) && (blk.equals(blockName))) { // (#1)
+                    if (blk.equals(blockName)) { // (#1)
                         // if we are added to the TrackNameSet
                         if (TrackNameSet.add(getName())) {
                             log.debug("*    Add track '{}'for block '{}'", getName(), blockName);

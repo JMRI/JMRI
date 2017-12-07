@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
  *
  * @author George Warner Copyright (C) 2017
  */
-public class LayoutTrackDrawingOptions implements Cloneable {
+public class LayoutTrackDrawingOptions {
 
     private String name;
 
@@ -369,12 +369,12 @@ public class LayoutTrackDrawingOptions implements Cloneable {
                     if (mainBlockLineWidth != ltdo.getMainBlockLineWidth()) {
                         break;
                     }
+                    result = true;
                 } while (false);
-                result = true;
             }
         }
         return result;
-    }
+    }   // equals
 
     /**
      * Hash on the header
