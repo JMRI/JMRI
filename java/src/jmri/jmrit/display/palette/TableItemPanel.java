@@ -5,6 +5,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,15 +29,16 @@ import jmri.jmrit.display.LightIcon;
 import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.TurnoutIcon;
 import jmri.jmrit.picker.PickListModel;
+import jmri.util.swing.ImagePanel;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ItemPanel for the various item types that come from tool Tables - e.g.
- * Sensors, Turnouts, etc.
+ * FamilyItemPanel extension for placing of CPE item types that come from tool Tables
+ * - e.g. Turnouts, Sensors, Lights, Signal Heads, etc.
  * 
-* @author Pete Cressman Copyright (c) 2010, 2011
+ * @author Pete Cressman Copyright (c) 2010, 2011
  */
 public class TableItemPanel extends FamilyItemPanel implements ListSelectionListener {
 
@@ -53,13 +55,13 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
 
     /**
      * Constructor for all table types. When item is a bean, the itemType is the
-     * name key for the item in jmri.NamedBeanBundle.properties
-     * @param parentFrame parentFrame
-     * @param type type
-     * @param family family
-     * @param model model
-     * @param editor editor
-     * 
+     * name key for the item in jmri.NamedBeanBundle.properties.
+     *
+     * @param parentFrame the enclosing parentFrame
+     * @param type        item type
+     * @param family      icon family
+     * @param model       list model
+     * @param editor      associated Panel editor
      */
     public TableItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, editor);
@@ -67,20 +69,20 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     }
 
     /**
-     * Init for creation insert table
+     * Init for creation insert table.
      */
     @Override
     public void init() {
         if (!_initialized) {
             super.init();
-            add(initTablePanel(_model, _editor), 0);      // top of Panel      
+            add(initTablePanel(_model, _editor), 0); // top of Panel
             _buttonPosition = 1;
         }
     }
 
     /**
      * Init for update of existing indicator turnout _bottom3Panel has "Update
-     * Panel" button put into _bottom1Panel
+     * Panel" button put into _bottom1Panel.
      */
     @Override
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
@@ -90,7 +92,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     }
 
     /**
-     * top Panel
+     * Top Panel.
      */
     protected JPanel initTablePanel(PickListModel model, Editor editor) {
         _table = model.makePickTable();
@@ -174,7 +176,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
                 if (bean != null) {
                     int setRow = _model.getIndexOf(bean);
                     if (log.isDebugEnabled()) {
-                        log.debug("addToTable: row= " + setRow + ", bean= " + bean.getDisplayName());
+                        log.debug("addToTable: row = {}, bean = {}", setRow, bean.getDisplayName());
                     }
                     _table.setRowSelectionInterval(setRow, setRow);
                     _scrollPane.getVerticalScrollBar().setValue(setRow * ROW_HEIGHT);
@@ -192,9 +194,10 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     /**
      * Used by Panel Editor to make the final installation of the icon(s) into
      * the user's Panel.
-     * <P>
-     * Note! the selection is cleared. When two successive calls are made, the
+     * <p>
+     * Note: the selection is cleared. When two successive calls are made, the
      * 2nd will always return null, regardless of the 1st return.
+     *
      * @return bean selected in the table
      */
     public NamedBean getTableSelection() {
@@ -204,11 +207,11 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             NamedBean b = _model.getBeanAt(row);
             _table.clearSelection();
             if (log.isDebugEnabled()) {
-                log.debug("getTableSelection: row= " + row + ", bean= " + (b==null?b:b.getDisplayName()));
+                log.debug("getTableSelection: row = {}, bean = {}", row, (b == null ? "null" : b.getDisplayName()));
             }
             return b;
         } else if (log.isDebugEnabled()) {
-            log.debug("getTableSelection: row= " + row);
+            log.debug("getTableSelection: row = {}", row);
         }
         return null;
     }
@@ -216,7 +219,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     public void setSelection(NamedBean bean) {
         int row = _model.getIndexOf(bean);
         row = _table.convertRowIndexToView(row);
-        log.debug("setSelection: NamedBean= " + bean + ", row= " + row);
+        log.debug("setSelection: NamedBean = {}, row = {}", bean, row);
         if (row >= 0) {
             _table.addRowSelectionInterval(row, row);
             _scrollPane.getVerticalScrollBar().setValue(row * ROW_HEIGHT);
@@ -226,7 +229,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     }
 
     /**
-     * ListSelectionListener action
+     * ListSelectionListener action.
      */
     @Override
     public void valueChanged(ListSelectionEvent e) {
@@ -234,9 +237,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             return;
         }
         int row = _table.getSelectedRow();
-        if (log.isDebugEnabled()) {
-            log.debug("Table valueChanged: row= " + row);
-        }
+        log.debug("Table valueChanged: row = {}", row);
         if (row >= 0) {
             _updateButton.setEnabled(true);
             _updateButton.setToolTipText(null);
@@ -253,9 +254,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             return null;
         }
         int row = _table.getSelectedRow();
-        if (log.isDebugEnabled()) {
-            log.debug("getDeviceNamedBean: from table \"" + _itemType + "\" at row " + row);
-        }
+        log.debug("getDeviceNamedBean: from table \"{}\" at row {}", _itemType, row);
         if (row < 0) {
             return null;
         }
@@ -343,4 +342,5 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     }
 
     private final static Logger log = LoggerFactory.getLogger(TableItemPanel.class);
+
 }

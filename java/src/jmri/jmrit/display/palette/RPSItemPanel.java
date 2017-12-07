@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 public class RPSItemPanel extends FamilyItemPanel {
 
     /**
-     * Constructor for plain icons and backgrounds
+     * Constructor for plain icons and backgrounds.
      */
     public RPSItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
         super(parentFrame, type, family, editor);
@@ -38,7 +38,7 @@ public class RPSItemPanel extends FamilyItemPanel {
         super.makeDndIconPanel(iconMap, "active");
     }
 
-    /**
+    /*
      * ****************************************************
      */
     @Override
@@ -86,4 +86,5 @@ public class RPSItemPanel extends FamilyItemPanel {
     }
 
     private final static Logger log = LoggerFactory.getLogger(RPSItemPanel.class);
+
 }

@@ -58,6 +58,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(ComboBoxColorChooserPanelTest.class));
         suite.addTest(new JUnit4TestAdapter(ButtonGroupColorChooserPanelTest.class));
         suite.addTest(new JUnit4TestAdapter(ButtonSwatchColorChooserPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(DrawSquaresTest.class));
+        suite.addTest(new JUnit4TestAdapter(ImagePanelTest.class));
 
         return suite;
     }
