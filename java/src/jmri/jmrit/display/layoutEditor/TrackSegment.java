@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Arc2D;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -1632,41 +1633,235 @@ public class TrackSegment extends LayoutTrack {
     @Override
     protected void drawDecorations(Graphics2D g2) {
         if (decorations != null) {
+            // get end points and calculate start/stop angles (in radians)
+            Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+            Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
+            Point2D p1, p2, p3, p1P, p2P, p3P;
+            double startAngleRAD, stopAngleRAD;
+            if (isArc()) {
+                calculateTrackSegmentAngle();
+                double startAngleDEG = getStartAdj(), extentAngleDEG = getTmpAngle();
+                startAngleRAD = Math.toRadians(startAngleDEG);
+                stopAngleRAD = Math.toRadians(startAngleDEG + extentAngleDEG);
+            } else if (isBezier()) {
+                Point2D cp0 = bezierControlPoints.get(0);
+                Point2D cpN = bezierControlPoints.get(bezierControlPoints.size() - 1);
+                startAngleRAD = (Math.PI / 2.0) - MathUtil.computeAngleRAD(cp0, ep1);
+                stopAngleRAD = (Math.PI / 2.0) - MathUtil.computeAngleRAD(ep2, cpN);
+            } else {
+                Point2D delta = MathUtil.subtract(ep2, ep1);
+                startAngleRAD = (Math.PI / 2.0) - MathUtil.computeAngleRAD(delta);
+                stopAngleRAD = startAngleRAD;
+            }   // if isArc() {} else if isBezier() {} else...
+
+            //
+            // arrow decoration
+            //
+            String arrowValue = decorations.get("arrow");
+            if (arrowValue != null) {
+                if (getName().equals("T14")) {
+                    log.debug("STOP!");
+                }
+                // <decoration name="arrow" value="double;both;width=1;length=12;gap=1" />
+                boolean atStart = true, atStop = true;
+                boolean hasIn = false, hasOut = false;
+                int width = 1, length = 3, gap = 1, count = 1;
+                Color color = defaultTrackColor;
+                String[] values = arrowValue.split(";");
+                for (int i = 0; i < values.length; i++) {
+                    String value = values[i];
+                    if (value.equals("single")) {
+                        count = 1;
+                    } else if (value.equals("double")) {
+                        count = 2;
+                    } else if (value.equals("triple")) {
+                        count = 3;
+                    } else if (value.startsWith("count=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
+                        count = Integer.parseInt(valueString);
+                    } else if (value.equals("start")) {
+                        atStop = false;
+                    } else if (value.equals("stop")) {
+                        atStart = false;
+                    } else if (value.equals("in")) {
+                        hasIn = true;
+                    } else if (value.equals("out")) {
+                        hasOut = true;
+                    } else if (value.equals("both")) {
+                        hasIn = true;
+                        hasOut = true;
+                    } else if (value.startsWith("color=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
+                        color = Color.decode(valueString);
+                    } else if (value.startsWith("width=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
+                        width = Integer.parseInt(valueString);
+                    } else if (value.startsWith("length=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
+                        length = Integer.parseInt(valueString);
+                    } else if (value.startsWith("gap=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
+                        gap = Integer.parseInt(valueString);
+                    }
+                }
+                hasIn |= !hasOut;   // if hasOut is false make hasIn true
+                if (!atStart && !atStop) {   // if both false
+                    atStart = true; // set both true
+                    atStop = true;
+                }
+
+                g2.setStroke(new BasicStroke(width,
+                        BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
+                g2.setColor(color);
+
+                // draw the out arrows
+                if (hasOut) {
+                    if (atStart) {
+                        p1 = new Point2D.Double(0.0, -length);
+                        p2 = new Point2D.Double(-length, 0.0);
+                        p3 = new Point2D.Double(0.0, +length);
+                        Point2D delta = new Point2D.Double(gap + width, 0.0);
+                        for (int idx = 0; idx < count; idx++) {
+                            p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
+                            p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
+                            p3P = MathUtil.add(MathUtil.rotateRAD(p3, startAngleRAD), ep1);
+
+                            GeneralPath path = new GeneralPath();
+                            path.moveTo(p1P.getX(), p1P.getY());
+                            path.lineTo(p2P.getX(), p2P.getY());
+                            path.lineTo(p3P.getX(), p3P.getY());
+                            g2.draw(path);
+
+                            p1 = MathUtil.subtract(p1, delta);
+                            p2 = MathUtil.subtract(p2, delta);
+                            p3 = MathUtil.subtract(p3, delta);
+                        }
+                    }
+                    if (atStop) {
+                        p1 = new Point2D.Double(0.0, -length);
+                        p2 = new Point2D.Double(+length, 0.0);
+                        p3 = new Point2D.Double(0.0, +length);
+                        Point2D delta = new Point2D.Double(gap + width, 0.0);
+                        for (int idx = 0; idx < count; idx++) {
+                            p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
+                            p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
+                            p3P = MathUtil.add(MathUtil.rotateRAD(p3, stopAngleRAD), ep2);
+
+                            GeneralPath path = new GeneralPath();
+                            path.moveTo(p1P.getX(), p1P.getY());
+                            path.lineTo(p2P.getX(), p2P.getY());
+                            path.lineTo(p3P.getX(), p3P.getY());
+                            g2.draw(path);
+
+                            p1 = MathUtil.add(p1, delta);
+                            p2 = MathUtil.add(p2, delta);
+                            p3 = MathUtil.add(p3, delta);
+                        }
+                    }
+                }
+
+                // draw the in arrows
+                if (hasIn) {
+                    double offset = (hasOut ? (length * count) : 0.0);
+                    if (atStart) {
+                        p1 = new Point2D.Double(-offset - length, -length);
+                        p2 = new Point2D.Double(-offset, 0.0);
+                        p3 = new Point2D.Double(-offset - length, +length);
+                        Point2D delta = new Point2D.Double(gap + width, 0.0);
+                        for (int idx = 0; idx < count; idx++) {
+                            p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
+                            p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
+                            p3P = MathUtil.add(MathUtil.rotateRAD(p3, startAngleRAD), ep1);
+
+                            GeneralPath path = new GeneralPath();
+                            path.moveTo(p1P.getX(), p1P.getY());
+                            path.lineTo(p2P.getX(), p2P.getY());
+                            path.lineTo(p3P.getX(), p3P.getY());
+                            g2.draw(path);
+
+                            p1 = MathUtil.subtract(p1, delta);
+                            p2 = MathUtil.subtract(p2, delta);
+                            p3 = MathUtil.subtract(p3, delta);
+                        }
+                    }
+                    if (atStop) {
+                        p1 = new Point2D.Double(offset + length, -length);
+                        p2 = new Point2D.Double(offset, 0.0);
+                        p3 = new Point2D.Double(offset + length, +length);
+                        Point2D delta = new Point2D.Double(gap + width, 0.0);
+                        for (int idx = 0; idx < count; idx++) {
+                            p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
+                            p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
+                            p3P = MathUtil.add(MathUtil.rotateRAD(p3, stopAngleRAD), ep2);
+
+                            GeneralPath path = new GeneralPath();
+                            path.moveTo(p1P.getX(), p1P.getY());
+                            path.lineTo(p2P.getX(), p2P.getY());
+                            path.lineTo(p3P.getX(), p3P.getY());
+                            g2.draw(path);
+
+                            p1 = MathUtil.add(p1, delta);
+                            p2 = MathUtil.add(p2, delta);
+                            p3 = MathUtil.add(p3, delta);
+                        }
+                    }
+                }   // if hasIn
+            }   // arrow decoration
+
+            //
+            //  bridge decoration
+            //
             String bridgeValue = decorations.get("bridge");
             if (bridgeValue != null) {
-                // <decoration name="bridge" value="left;linewidth=2;halfgap=6" />
-                boolean hasLeft = false, hasRight = false;
-                int linewidth = 1, halfgap = 2;
+                // <decoration name="bridge" value="both;linewidth=2;halfgap=8" />
+                // right/left default true; in/out default false
+                boolean hasLeft = true, hasRight = true, hasIn = false, hasOut = false;
+                int linelength = 4, linewidth = 1, halfgap = 2;
+                Color color = defaultTrackColor;
                 String[] values = bridgeValue.split(";");
                 for (int i = 0; i < values.length; i++) {
-                    if (values[i].equals("left")) {
-                        hasLeft = true;
-                    } else if (values[i].equals("right")) {
-                        hasRight = true;
-                    } else if (values[i].equals("both")) {
-                        hasLeft = true;
-                        hasRight = true;
-                    } else if (values[i].startsWith("linewidth=")) {
-                        String valueString = values[i].substring(values[i].lastIndexOf("=") + 1);
+                    String value = values[i];
+                    log.info("value[{}]: \"{}\"", i, value);
+                    if (value.equals("left")) {
+                        hasRight = false;
+                    } else if (value.equals("right")) {
+                        hasLeft = false;
+                    } else if (value.equals("in")) {
+                        hasIn = true;
+                    } else if (value.equals("out")) {
+                        hasOut = true;
+                    } else if (value.equals("both")) {
+                        hasIn = true;
+                        hasOut = true;
+                    } else if (value.startsWith("color=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
+                        color = Color.decode(valueString);
+                    } else if (value.startsWith("linelength=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
+                        linelength = Integer.parseInt(valueString);
+                    } else if (value.startsWith("linewidth=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
                         linewidth = Integer.parseInt(valueString);
-                    } else if (values[i].startsWith("halfgap=")) {
-                        String valueString = values[i].substring(values[i].lastIndexOf("=") + 1);
+                    } else if (value.startsWith("halfgap=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
                         halfgap = Integer.parseInt(valueString);
                     }
                 }
+                // these both can't be false
                 if (!hasLeft && !hasRight) {
                     hasLeft = true;
                     hasRight = true;
                 }
 
-                g2.setStroke(new BasicStroke(linewidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
-                g2.setColor(defaultTrackColor);
+                g2.setStroke(new BasicStroke(linewidth,
+                        BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
+                g2.setColor(color);
 
                 if (isArc()) {
                     calculateTrackSegmentAngle();
                     Rectangle2D cRectangle2D = new Rectangle2D.Double(
                             getCX(), getCY(), getCW(), getCH());
-                    double startAdj = getStartAdj(), tmpAngle = getTmpAngle();
+                    double startAngleDEG = getStartAdj(), extentAngleDEG = getTmpAngle();
                     if (hasLeft) {
                         Rectangle2D cLeftRectangle2D = MathUtil.inset(cRectangle2D, -halfgap);
                         g2.draw(new Arc2D.Double(
@@ -1674,7 +1869,7 @@ public class TrackSegment extends LayoutTrack {
                                 cLeftRectangle2D.getY(),
                                 cLeftRectangle2D.getWidth(),
                                 cLeftRectangle2D.getHeight(),
-                                startAdj, tmpAngle, Arc2D.OPEN));
+                                startAngleDEG, extentAngleDEG, Arc2D.OPEN));
                     }
                     if (hasRight) {
                         Rectangle2D cLRightRectangle2D = MathUtil.inset(cRectangle2D, +halfgap);
@@ -1683,20 +1878,17 @@ public class TrackSegment extends LayoutTrack {
                                 cLRightRectangle2D.getY(),
                                 cLRightRectangle2D.getWidth(),
                                 cLRightRectangle2D.getHeight(),
-                                startAdj, tmpAngle, Arc2D.OPEN));
+                                startAngleDEG, extentAngleDEG, Arc2D.OPEN));
                     }
                     trackRedrawn();
                 } else if (isBezier()) {
-                    Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
-                    Point2D pt2 = layoutEditor.getCoords(getConnect2(), getType2());
-
-                    int cnt = bezierControlPoints.size();
-                    Point2D[] points = new Point2D[cnt + 2];
-                    points[0] = pt1;
-                    for (int idx = 0; idx < cnt; idx++) {
+                    int cnt = bezierControlPoints.size() + 2;
+                    Point2D[] points = new Point2D[cnt];
+                    points[0] = ep1;
+                    for (int idx = 0; idx < cnt - 2; idx++) {
                         points[idx + 1] = bezierControlPoints.get(idx);
                     }
-                    points[cnt + 1] = pt2;
+                    points[cnt - 1] = ep2;
 
                     if (hasLeft) {
                         MathUtil.drawBezier(g2, points, -halfgap);
@@ -1705,25 +1897,143 @@ public class TrackSegment extends LayoutTrack {
                         MathUtil.drawBezier(g2, points, +halfgap);
                     }
                 } else {
-                    Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
-                    Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
-
-                    Point2D delta = MathUtil.subtract(end2, end1);
+                    Point2D delta = MathUtil.subtract(ep2, ep1);
                     Point2D vector = MathUtil.normalize(delta, halfgap);
                     vector = MathUtil.orthogonal(vector);
 
                     if (hasLeft) {
-                        Point2D ep1L = MathUtil.add(end1, vector);
-                        Point2D ep2L = MathUtil.add(end2, vector);
+                        Point2D ep1L = MathUtil.add(ep1, vector);
+                        Point2D ep2L = MathUtil.add(ep2, vector);
                         g2.draw(new Line2D.Double(ep1L, ep2L));
                     }
                     if (hasRight) {
-                        Point2D ep1R = MathUtil.subtract(end1, vector);
-                        Point2D ep2R = MathUtil.subtract(end2, vector);
+                        Point2D ep1R = MathUtil.subtract(ep1, vector);
+                        Point2D ep2R = MathUtil.subtract(ep2, vector);
                         g2.draw(new Line2D.Double(ep1R, ep2R));
                     }
                 }   // if isArc() {} else if isBezier() {} else...
+
+                if (hasIn) {
+                    if (hasRight) {
+                        p1 = new Point2D.Double(-linelength, -linelength - halfgap);
+                        p2 = new Point2D.Double(0.0, -halfgap);
+                        p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
+                        p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
+                        g2.draw(new Line2D.Double(p1P, p2P));
+                    }
+                    if (hasLeft) {
+                        p1 = new Point2D.Double(-linelength, +linelength + halfgap);
+                        p2 = new Point2D.Double(0.0, +halfgap);
+                        p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
+                        p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
+                        g2.draw(new Line2D.Double(p1P, p2P));
+                    }
+                }
+                if (hasOut) {
+                    if (hasRight) {
+                        p1 = new Point2D.Double(+linelength, -linelength - halfgap);
+                        p2 = new Point2D.Double(0.0, -halfgap);
+                        p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
+                        p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
+                        g2.draw(new Line2D.Double(p1P, p2P));
+                    }
+                    if (hasLeft) {
+                        p1 = new Point2D.Double(+linelength, +linelength + halfgap);
+                        p2 = new Point2D.Double(0.0, +halfgap);
+                        p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
+                        p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
+                        g2.draw(new Line2D.Double(p1P, p2P));
+                    }
+                }
             }   // if (bridgeValue != null)
+
+            //
+            //  bumper decoration
+            //
+            String bumperValue = decorations.get("bumper");
+            if (bumperValue != null) {
+                // <decoration name="bumper" value="double;width=2;length=6;gap=2;flipped" />
+                int count = 1, width = 1, length = 4, gap = 1;
+                boolean isFlipped = false, hasIn = false, hasOut = false;
+                Color color = defaultTrackColor;
+                String[] values = bumperValue.split(";");
+                for (int i = 0; i < values.length; i++) {
+                    String value = values[i];
+                    log.info("value[{}]: \"{}\"", i, value);
+                    if (value.equals("single")) {
+                        count = 1;
+                    } else if (value.equals("double")) {
+                        count = 2;
+                    } else if (value.equals("triple")) {
+                        count = 3;
+                    } else if (value.equals("flip")) {
+                        isFlipped = true;
+                    } else if (value.startsWith("count=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
+                        count = Integer.parseInt(valueString);
+                    } else if (value.equals("in")) {
+                        hasIn = true;
+                    } else if (value.equals("out")) {
+                        hasOut = true;
+                    } else if (value.equals("both")) {
+                        hasIn = true;
+                        hasOut = true;
+                    } else if (value.startsWith("color=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
+                        color = Color.decode(valueString);
+                    } else if (value.startsWith("width=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
+                        width = Integer.parseInt(valueString);
+                    } else if (value.startsWith("length=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
+                        length = Integer.parseInt(valueString);
+                    } else if (value.startsWith("gap=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
+                        gap = Integer.parseInt(valueString);
+                    }
+                }
+                hasIn |= !hasOut;   // if hasOut is false make hasIn true
+                g2.setStroke(new BasicStroke((float) width,
+                        BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
+                g2.setColor(color);
+
+                int halfLength = length / 2;
+
+                if (isFlipped) {
+                    startAngleRAD += Math.PI;
+                    stopAngleRAD += Math.PI;
+                }
+
+                // draw cross ties
+                if (hasIn) {
+                    p1 = new Point2D.Double(0.0, -halfLength);
+                    p2 = new Point2D.Double(0.0, +halfLength);
+                    for (int idx = 0; idx < count; idx++) {
+                        p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
+                        p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
+
+                        g2.draw(new Line2D.Double(p1P, p2P));
+
+                        Point2D delta = new Point2D.Double(gap + width, 0.0);
+                        p1 = MathUtil.subtract(p1, delta);
+                        p2 = MathUtil.subtract(p2, delta);
+                    }
+                }
+                if (hasOut) {
+                    p1 = new Point2D.Double(0.0, -halfLength);
+                    p2 = new Point2D.Double(0.0, +halfLength);
+                    for (int idx = 0; idx < count; idx++) {
+                        p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep2);
+                        p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep2);
+
+                        g2.draw(new Line2D.Double(p1P, p2P));
+
+                        Point2D delta = new Point2D.Double(gap + width, 0.0);
+                        p1 = MathUtil.subtract(p1, delta);
+                        p2 = MathUtil.subtract(p2, delta);
+                    }
+                }
+            }
         }   // if (decorations != null)
     }   // drawDecorations
 
