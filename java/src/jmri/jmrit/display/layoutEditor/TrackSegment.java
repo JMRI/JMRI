@@ -1655,7 +1655,7 @@ public class TrackSegment extends LayoutTrack {
             }   // if isArc() {} else if isBezier() {} else...
 
             //
-            // arrow decoration
+            // arrow decorations
             //
             String arrowValue = decorations.get("arrow");
             if (arrowValue != null) {
@@ -1809,7 +1809,7 @@ public class TrackSegment extends LayoutTrack {
             }   // arrow decoration
 
             //
-            //  bridge decoration
+            //  bridge decorations
             //
             String bridgeValue = decorations.get("bridge");
             if (bridgeValue != null) {
@@ -1948,7 +1948,7 @@ public class TrackSegment extends LayoutTrack {
             }   // if (bridgeValue != null)
 
             //
-            //  bumper decoration
+            //  bumper decorations
             //
             String bumperValue = decorations.get("bumper");
             if (bumperValue != null) {
