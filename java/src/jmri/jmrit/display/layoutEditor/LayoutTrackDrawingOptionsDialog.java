@@ -140,7 +140,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         railCountLabel.setPreferredSize(new java.awt.Dimension(256, 16));
         railCountLabel.setSize(new java.awt.Dimension(256, 16));
 
-        mainRailCountSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, 3, 1));
+        mainRailCountSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 3, 1));
         mainRailCountSpinner.setToolTipText(Bundle.getMessage("MainRailCountToolTip"));
         mainRailCountSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         mainRailCountSpinner.setName(""); // NOI18N
@@ -153,7 +153,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             }
         });
 
-        sideRailCountSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, 3, 1));
+        sideRailCountSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 3, 1));
         sideRailCountSpinner.setToolTipText(Bundle.getMessage("SideRailCountToolTip"));
         sideRailCountSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         sideRailCountSpinner.setName(""); // NOI18N
