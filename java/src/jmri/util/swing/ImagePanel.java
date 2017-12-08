@@ -19,7 +19,8 @@ import org.slf4j.LoggerFactory;
  */
 public class ImagePanel extends JPanel {
 
-    private Image back = null;
+    private BufferedImage back = null;
+    private BufferedImage clip = null;
     int imgWidth;
     int imgHeight;
 
@@ -31,7 +32,7 @@ public class ImagePanel extends JPanel {
      * @param img Image to load as background
      */
     public void setImage(Image img) {
-        back = img;
+        back = (BufferedImage) img;
         repaint();
         log.debug("DrawPanel ready");
     }
@@ -44,9 +45,33 @@ public class ImagePanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (back != null) {
-            imgWidth = getWidth();
-            imgHeight = getHeight();
-            g.drawImage(back, 0, 0, imgWidth, imgHeight, this);
+            imgWidth = back.getWidth(this);
+            imgHeight = back.getHeight(this);
+            double frameRatio = (double) getWidth() / (double) getHeight();
+            double imgRatio = imgWidth / imgHeight;
+            log.debug("ratios: fr {} - img {}", frameRatio, imgRatio);
+//            // maintain squares on non square panels, reduce to fit frame
+//            if (frameRatio < imgRatio) {// width limited
+//                imgWidth = getWidth();
+//                imgHeight = (int) (getWidth() / imgRatio);
+//            } else { // height limited
+//                imgWidth = (int) (getHeight() * imgRatio);
+//                imgHeight = getHeight();
+//            }
+
+            // maintain squares on non square panels, enlarge to fill full frame
+            if (frameRatio < imgRatio) { // image more oblong than frame
+                imgWidth = (int) (imgHeight * frameRatio); // clip width
+                // keep full imgHeight
+            } else { // image taller than frame
+                // keep full imgWidth
+                imgHeight = (int) (imgWidth / frameRatio); // clip height
+            }
+            // clip part op back image
+            clip = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
+            clip = back.getSubimage(0, 0, imgWidth, imgHeight);
+
+            g.drawImage(clip, 0, 0, getWidth(), getHeight(), this);
         }
     }
 

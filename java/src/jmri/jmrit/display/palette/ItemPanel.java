@@ -163,14 +163,14 @@ public abstract class ItemPanel extends JPanel {
         if (_backgrounds == null) { // reduces load but will not redraw for new size
             _backgrounds = new BufferedImage[5];
             for (int i = 1; i <= 3; i++) {
-                _backgrounds[i] = DrawSquares.getImage(500, 150, 15, colorChoice[i - 1], colorChoice[i - 1]);
+                _backgrounds[i] = DrawSquares.getImage(500, 400, 10, colorChoice[i - 1], colorChoice[i - 1]);
                 // [i-1] because choice 0 is not in colorChoice[]
             }
-            _backgrounds[4] = DrawSquares.getImage(500, 150, 15, Color.white, _grayColor);
+            _backgrounds[4] = DrawSquares.getImage(500, 400, 10, Color.white, _grayColor);
         }
         // always update background from Panel Editor
         _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
-        _backgrounds[0] = DrawSquares.getImage(500, 150, 15, _currentBackground, _currentBackground);
+        _backgrounds[0] = DrawSquares.getImage(500, 400, 10, _currentBackground, _currentBackground);
     }
 
     protected void closeDialogs() {

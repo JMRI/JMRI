@@ -43,11 +43,15 @@ import org.slf4j.LoggerFactory;
  * Control Panel Editor panels. For background colors to work on a particular editor
  * instance, select the 'Item Palette' item under 'Add Items' menu to configure 
  * ItemPalette for that editor. Otherwise any item can be dragged and
- * dropped to any editor. The icons are displayed on the background
- * of the last editor to call the ItemPalette instance. The user can set it
- * to another color or a white/gray squares pattern using the "View on:" combo.
+ * dropped to any editor.
+ * <p>
+ * The icons are displayed on the background of the last editor to call the
+ * ItemPalette instance. The user can set it to another color or a white/gray
+ * squares pattern using the "View on:" combo.
+ * Combo choice is shared as field on {@link jmri.jmrit.display.DisplayFrame} parent.
  *
  * @author Pete Cressman Copyright (c) 2010
+ * @author Egbert Broerse Copyright (c) 2017
  */
 public class ItemPalette extends DisplayFrame implements ChangeListener {
 
@@ -337,7 +341,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>
             loadDefaultIndicatorTOMap(List<Element> typeList, Editor ed) {
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap
-                = new HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>();     // Map of all families of type, typeName
+                = new HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>(); // Map of all families of type, typeName
         for (int k = 0; k < typeList.size(); k++) {
             String familyName = typeList.get(k).getName();
             List<Element> types = typeList.get(k).getChildren();

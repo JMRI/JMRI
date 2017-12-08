@@ -196,9 +196,9 @@ public class PreviewDialog extends JDialog {
         if (_backgrounds == null) {
             _backgrounds = new BufferedImage[4];
             for (int i = 0; i <= 2; i++) {
-                _backgrounds[i] = DrawSquares.getImage(500, 500, 15, colorChoice[i], colorChoice[i]);
+                _backgrounds[i] = DrawSquares.getImage(500, 400, 10, colorChoice[i], colorChoice[i]);
             }
-            _backgrounds[3] = DrawSquares.getImage(500, 500, 15, Color.white, _grayColor);
+            _backgrounds[3] = DrawSquares.getImage(500, 400, 10, Color.white, _grayColor);
         }
         // create background selection combo box
         JComboBox<String> bgColorBox = new JComboBox<>();
