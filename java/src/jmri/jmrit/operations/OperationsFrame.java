@@ -1,7 +1,7 @@
 //OperationsFrame.java
 package jmri.jmrit.operations;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
@@ -27,7 +27,6 @@ import jmri.util.JmriJFrame;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2012
  */
-@SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "cast is consistent OperationsPanel")
 public class OperationsFrame extends JmriJFrame implements AncestorListener {
 
     public static final String NEW_LINE = "\n"; // NOI18N
@@ -70,31 +69,31 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
     }
 
     protected void addItem(JComponent c, int x, int y) {
-        ((OperationsPanel) this.getContentPane()).addItem(c, x, y);
+        this.getContentPane().addItem(c, x, y);
     }
 
     protected void addItemLeft(JComponent c, int x, int y) {
-        ((OperationsPanel) this.getContentPane()).addItemLeft(c, x, y);
+        this.getContentPane().addItemLeft(c, x, y);
     }
 
     protected void addItemWidth(JComponent c, int width, int x, int y) {
-        ((OperationsPanel) this.getContentPane()).addItemWidth(c, width, x, y);
+        this.getContentPane().addItemWidth(c, width, x, y);
     }
 
     protected void addItem(JPanel p, JComponent c, int x, int y) {
-        ((OperationsPanel) this.getContentPane()).addItem(p, c, x, y);
+        this.getContentPane().addItem(p, c, x, y);
     }
 
     protected void addItemLeft(JPanel p, JComponent c, int x, int y) {
-        ((OperationsPanel) this.getContentPane()).addItemLeft(p, c, x, y);
+        this.getContentPane().addItemLeft(p, c, x, y);
     }
 
     protected void addItemTop(JPanel p, JComponent c, int x, int y) {
-        ((OperationsPanel) this.getContentPane()).addItemTop(p, c, x, y);
+        this.getContentPane().addItemTop(p, c, x, y);
     }
 
     protected void addItemWidth(JPanel p, JComponent c, int width, int x, int y) {
-        ((OperationsPanel) this.getContentPane()).addItemWidth(p, c, width, x, y);
+        this.getContentPane().addItemWidth(p, c, width, x, y);
     }
 
     /**
@@ -104,7 +103,7 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
      * @return the number of checkboxes, minimum is 5 (6 checkboxes)
      */
     protected int getNumberOfCheckboxesPerLine() {
-        return ((OperationsPanel) this.getContentPane()).getNumberOfCheckboxesPerLine(this.getPreferredSize());
+        return this.getContentPane().getNumberOfCheckboxesPerLine(this.getPreferredSize());
     }
 
     protected void addButtonAction(JButton b) {
@@ -112,7 +111,7 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
     }
 
     protected void buttonActionPerformed(ActionEvent ae) {
-        ((OperationsPanel) this.getContentPane()).buttonActionPerformed(ae);
+        this.getContentPane().buttonActionPerformed(ae);
     }
 
     protected void addRadioButtonAction(JRadioButton b) {
@@ -120,7 +119,7 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
     }
 
     protected void radioButtonActionPerformed(ActionEvent ae) {
-        ((OperationsPanel) this.getContentPane()).radioButtonActionPerformed(ae);
+        this.getContentPane().radioButtonActionPerformed(ae);
     }
 
     protected void addCheckBoxAction(JCheckBox b) {
@@ -128,7 +127,7 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
     }
 
     protected void checkBoxActionPerformed(ActionEvent ae) {
-        ((OperationsPanel) this.getContentPane()).checkBoxActionPerformed(ae);
+        this.getContentPane().checkBoxActionPerformed(ae);
     }
 
     protected void addSpinnerChangeListerner(JSpinner s) {
@@ -136,7 +135,7 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
     }
 
     protected void spinnerChangeEvent(ChangeEvent ae) {
-        ((OperationsPanel) this.getContentPane()).spinnerChangeEvent(ae);
+        this.getContentPane().spinnerChangeEvent(ae);
     }
 
     protected void addComboBoxAction(JComboBox<?> b) {
@@ -144,11 +143,11 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
     }
 
     protected void comboBoxActionPerformed(ActionEvent ae) {
-        ((OperationsPanel) this.getContentPane()).comboBoxActionPerformed(ae);
+        this.getContentPane().comboBoxActionPerformed(ae);
     }
 
     protected void selectNextItemComboBox(JComboBox<?> b) {
-        ((OperationsPanel) this.getContentPane()).selectNextItemComboBox(b);
+        this.getContentPane().selectNextItemComboBox(b);
     }
 
     /**
@@ -159,7 +158,7 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
      * @param textArea   the textArea to adjust
      */
     protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea) {
-        ((OperationsPanel) this.getContentPane()).adjustTextAreaColumnWidth(scrollPane, textArea, this.getPreferredSize());
+        this.getContentPane().adjustTextAreaColumnWidth(scrollPane, textArea, this.getPreferredSize());
     }
 
     /**
@@ -170,30 +169,30 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
      * @return true
      */
     public boolean loadTableDetails(JTable table) {
-        return ((OperationsPanel) this.getContentPane()).loadTableDetails(table);
+        return this.getContentPane().loadTableDetails(table);
     }
 
     protected void clearTableSort(JTable table) {
-        ((OperationsPanel) this.getContentPane()).clearTableSort(table);
+        this.getContentPane().clearTableSort(table);
     }
 
     protected synchronized void createShutDownTask() {
-        ((OperationsPanel) this.getContentPane()).createShutDownTask();
+        this.getContentPane().createShutDownTask();
     }
 
     @Override
     public void dispose() {
-        ((OperationsPanel) this.getContentPane()).dispose();
+        this.getContentPane().dispose();
         super.dispose();
     }
 
     @Override
     protected void storeValues() {
-        ((OperationsPanel) this.getContentPane()).storeValues();
+        this.getContentPane().storeValues();
     }
 
     protected String lineWrap(String s) {
-        return ((OperationsPanel) this.getContentPane()).lineWrap(s, this.getPreferredSize());
+        return this.getContentPane().lineWrap(s, this.getPreferredSize());
     }
 
     // Kludge fix for horizontal scrollbar encroaching buttons at bottom of a scrollable window.
@@ -214,17 +213,53 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
 
     @Override
     public void ancestorAdded(AncestorEvent event) {
-        ((OperationsPanel) this.getContentPane()).ancestorAdded(event);
+        this.getContentPane().ancestorAdded(event);
     }
 
     @Override
     public void ancestorRemoved(AncestorEvent event) {
-        ((OperationsPanel) this.getContentPane()).ancestorRemoved(event);
+        this.getContentPane().ancestorRemoved(event);
     }
 
     @Override
     public void ancestorMoved(AncestorEvent event) {
-        ((OperationsPanel) this.getContentPane()).ancestorMoved(event);
+        this.getContentPane().ancestorMoved(event);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation only accepts the content pane if it is an
+     * {@link OperationsPanel}.
+     *
+     * @throws java.lang.IllegalArgumentException if the content pane is not an
+     *                                            OperationsPanel
+     */
+    @Override
+    public void setContentPane(Container contentPane) {
+        if (contentPane instanceof OperationsPanel) {
+            super.setContentPane(contentPane);
+        } else {
+            throw new IllegalArgumentException("OperationsFrames can only use an OperationsPanel as the contentPane");
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation only returns the content pane if it is an
+     * {@link OperationsPanel}.
+     *
+     * @throws java.lang.IllegalArgumentException if the content pane is not an
+     *                                            OperationsPanel
+     */
+    @Override
+    public OperationsPanel getContentPane() {
+        Container c = super.getContentPane();
+        if (c instanceof OperationsPanel) {
+            return (OperationsPanel) c;
+        }
+        throw new IllegalArgumentException("OperationsFrames can only use an OperationsPanel as the contentPane");
     }
 
 //    private final static Logger log = LoggerFactory.getLogger(OperationsFrame.class);

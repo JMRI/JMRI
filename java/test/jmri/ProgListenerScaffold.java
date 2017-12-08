@@ -24,6 +24,7 @@ public class ProgListenerScaffold implements ProgListener {
         rcvdInvoked = 0;
         rcvdValue = -1;
         rcvdStatus = -1;
+        wasOnRightThread = false;
     }
 
     @Override
@@ -31,11 +32,13 @@ public class ProgListenerScaffold implements ProgListener {
         rcvdValue = value;
         rcvdStatus = status;
         rcvdInvoked++;
+        wasOnRightThread = jmri.util.ThreadingUtil.isGUIThread();
     }
 
     private int rcvdValue;
     private int rcvdStatus;
     private int rcvdInvoked;
+    private boolean wasOnRightThread;
 
     public int getRcvdValue() {
         return rcvdValue;
@@ -49,6 +52,9 @@ public class ProgListenerScaffold implements ProgListener {
         return rcvdInvoked;
     }
 
+    public boolean wasRightThread() {
+        return wasOnRightThread;
+    }
 }
 
 

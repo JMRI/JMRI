@@ -13,7 +13,7 @@
 <!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" 
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
                 showEmptyPanes="no">
 
     <version author="Bob Jacobsen" version="1" lastUpdated="20171121" />
@@ -29,25 +29,617 @@
         </programming>
 
         <variables>
-          <variable CV="1" comment="Board address" item="Short Address" default="03" infoOnly="yes">
-            <!-- needed to set the board address value -->            
-            <decVal min="1" max="16" />
-            <label>Primary Address</label>
+          <variable CV="1" comment="Board address" item="Short Address" default="01"
+                    infoOnly="yes" tooltip="The DS64 Board ID, in the range 1-128">
+            <!-- needed to set the board address value -->
+            <decVal min="1" max="128" />
+            <label>Board ID</label>
+          </variable>
+          <variable CV="115.01" comment="Output type" item="Output Type" default="0" infoOnly="no"
+                    tooltip="OpSw01">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Outputs are pulsed (OpSw1=t)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Outputs are static (OpSw1=c)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+          <variable CV="115.02" comment="Pulse or Blink rate - needs expansion to four bits!"
+                    item="Pulse or blink rate1" default="0" infoOnly="no"
+                    tooltip="OpSw02">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Outputs pulse active or blink for 0.1 second (OpSw2=t)</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Outputs pulse active or blink for 0.2 second (OpSw2=c)</choice>
+                  </enumChoice>
+              </enumVal>
           </variable>
 
-          <variable CV="112.3" item="Vstart"
-                      comment="This is Vstart so it shows up on a pane for testing">
-            <enumVal>
-              <enumChoice>
-                <choice>Thrown</choice>
-              </enumChoice>
-              <enumChoice>
-                <choice>Closed</choice>
-              </enumChoice>
-            </enumVal>
+          <variable CV="115.03" comment="Pulse or Blink rate - needs expansion to four bits!"
+                    item="Pulse or blink rate2" default="0" infoOnly="no"
+                    tooltip="OpSw03">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Add 0 seconds to the pulse or blink rate (OpSw3=t)</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Add 0.3 seconds to the pulse or blink rate (OpSw3=c)</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable CV="115.04" comment="Pulse or Blink rate - needs expansion to four bits!"
+                    item="Pulse or blink rate3" default="0" infoOnly="no"
+                    tooltip="OpSw04">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Add 0 seconds to the pulse or blink rate (OpSw4=t)</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Add 0.7 seconds to the pulse or blink rate (OpSw4=c)</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+
+          <variable CV="115.05" comment="Pulse or Blink rate - needs expansion to four bits!"
+                    item="Pulse or blink rate4" default="0" infoOnly="no"
+                    tooltip="OpSw05">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Add 0 seconds to the pulse or blink rate (OpSw5=t)</choice>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Add 1.5 seconds to the pulse or blink rate (OpSw5=c)</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable CV="115.06" item="Output Auto Power-up" default="0" infoOnly="no"
+                    tooltip="OpSw06">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Outputs automatically power-up to the last known state (OpSw6=t)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Each output remain undriven until its turnout command is received (OpSw6=c)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+              </enumVal>
+              <label> </label>
+          </variable>
+          <variable CV="115.08" comment="Start-up Delay" item="Start-Up Delay" default="0" infoOnly="no"
+                    tooltip="OpSw08">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Short delay for interrogation requests (OpSw8=t)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Long delay for interrogation requests (OpSw8=c)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+              </enumVal>
+              <label> </label>
+          </variable>
+
+          <variable CV="115.09" comment="Static Output Shutoff"
+                    item="Static Output Shutoff" default="0" infoOnly="no"
+                    tooltip="OpSw09">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Static Outputs remain powered (OpSw9=t)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Static Outputs are shut off after 16 seconds (OpSw9=c)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+              </enumVal>
+              <label> </label>
+          </variable>
+
+          <variable CV="115.10" comment="Command Source" item="Command Source"
+                    default="0" infoOnly="no"
+                    tooltip="OpSw10">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Throttle and Computer commands are accepted (OpSw10=t)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Computer commands are accepted (OpSw10=c)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+          <variable CV="115.11" comment="Route Command Source"
+                    item="Route Command Source" default="0" infoOnly="no"
+                    tooltip="OpSw11">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Routes are triggered by Switch commands from Computers or Throttles (OpSw11=t)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Routes are triggered by DS64 inputs (OpSw11=c)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable CV="115.12" comment="Sensor actions"
+                    item="Sensor Actions" default="0" infoOnly="no"
+                    tooltip="OpSw12">
+              <enumVal>
+                  <enumChoice>
+                      <choice>S inputs affect output; A inputs send Sensor messages (OpSw12=t)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>A input high forces output "Thrown"; S input high forces output "Closed" (OpSw12 = c)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable CV="115.13" comment="Input Signal effects"
+                    item="Input Signals" default="0" infoOnly="no"
+                    tooltip="OpSw13">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Inputs have no effect (OpSw13=t)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Inputs act as LocoNet Sensors and also control related outputs per OpSw12 (OpSw13=c)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable CV="115.14" comment="Controls From"
+                    item="Controls From" default="0" infoOnly="no"
+                    tooltip="OpSw14">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Accepts commands from LocoNet messages and Track (OpSw14=t)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Accepts commands from Track only (OpSw14=c)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+              </enumVal>
+              <label> </label>
+          </variable>
+
+          <variable CV="115.15" comment="Inputs control outputs"
+                    item="Inputs Control Outputs" default="0" infoOnly="no"
+                    tooltip="OpSw15">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Inputs can control outputs (OpSw15=t)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Inputs have no direct effect on outputs (OpSw15=c)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable CV="115.16" comment="Routes Enable"
+                    item="Routes Enable" default="0" infoOnly="no"
+                    tooltip="OpSw16">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+              <label>Routes are</label>
+          </variable>
+
+          <variable CV="115.17" comment="Crossing Gate on Output 1"
+                    item="Crossing Gate 1" default="0" infoOnly="no"
+                    tooltip="OpSw17">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Output 1 does not provide "crossing-gate" output (OpSw17=t)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Output 1 provides "crossing-gate" output (OpSw17=c)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+              </enumVal>
+              <label> </label>
+          </variable>
+
+          <variable CV="115.18" comment="Crossing Gate on Output 2"
+                    item="Crossing Gate 2" default="0" infoOnly="no"
+                    tooltip="OpSw18">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Output 2 does not provide "crossing-gate" output (OpSw18=t)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Output 2 provides "crossing-gate" output (OpSw18=c)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+              </enumVal>
+              <label> </label>
+          </variable>
+
+          <variable CV="115.19" comment="Crossing Gate on Output 3"
+                    item="Crossing Gate 3" default="0" infoOnly="no"
+                    tooltip="OpSw19">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Output 3 does not provide "crossing-gate" output (OpSw19=t)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Output 3 provides "crossing-gate" output (OpSw19=c)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+              </enumVal>
+              <label> </label>
+          </variable>
+
+          <variable CV="115.20" comment="Crossing Gate on Output 4"
+                    item="Crossing Gate 4" default="0" infoOnly="no"
+                    tooltip="OpSw20">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Output 4 does not provide "crossing-gate" output (OpSw20=t)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Output 4 provides "crossing-gate" output (OpSw20=c)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+              </enumVal>
+              <label> </label>
+          </variable>
+
+          <variable CV="115.21" comment="LocoNet Message Type for Inputs"
+                    item="Input LocoNet Message" default="0" infoOnly="no"
+                    tooltip="OpSw21">
+              <enumVal>
+                  <enumChoice>
+                      <choice>Inputs generate LocoNet "General Sensor" messages (OpSw21=t)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+                  <enumChoice>
+                      <choice>Inputs generate LocoNet "LocoNet Turnout State" messages (OpSw21=c)</choice>
+                      <comment>Thrown is first choice; Closed is second choice</comment>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+          <variable item="Output Pulse or Blink Time"
+                    tooltip="OpSw02, OpSw03, OpSw04, OpSw05">
+            <compositeVal>
+              <compositeChoice choice="0.1 Second">
+                <compositeSetting label="Pulse or blink rate1" value="0"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="0"/>
+                <compositeSetting label="Pulse or blink rate4" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="0.2 Second">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="0"/>
+                <compositeSetting label="Pulse or blink rate4" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="0.4 Second">
+                <compositeSetting label="Pulse or blink rate1" value="0"/>
+                <compositeSetting label="Pulse or blink rate2" value="1"/>
+                <compositeSetting label="Pulse or blink rate3" value="0"/>
+                <compositeSetting label="Pulse or blink rate4" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="0.6 Second">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="1"/>
+                <compositeSetting label="Pulse or blink rate3" value="0"/>
+                <compositeSetting label="Pulse or blink rate4" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="0.8 Second">
+                <compositeSetting label="Pulse or blink rate1" value="0"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="1"/>
+                <compositeSetting label="Pulse or blink rate4" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="1.0 Second">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="1"/>
+                <compositeSetting label="Pulse or blink rate4" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="1.2 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="0"/>
+                <compositeSetting label="Pulse or blink rate2" value="1"/>
+                <compositeSetting label="Pulse or blink rate3" value="1"/>
+                <compositeSetting label="Pulse or blink rate4" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="1.4 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="1"/>
+                <compositeSetting label="Pulse or blink rate3" value="1"/>
+                <compositeSetting label="Pulse or blink rate4" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="1.6 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="0"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="0"/>
+                <compositeSetting label="Pulse or blink rate4" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="1.8 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="0"/>
+                <compositeSetting label="Pulse or blink rate4" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="2.0 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="0"/>
+                <compositeSetting label="Pulse or blink rate2" value="1"/>
+                <compositeSetting label="Pulse or blink rate3" value="0"/>
+                <compositeSetting label="Pulse or blink rate4" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="2.2 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="1"/>
+                <compositeSetting label="Pulse or blink rate3" value="0"/>
+                <compositeSetting label="Pulse or blink rate4" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="2.4 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="0"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="1"/>
+                <compositeSetting label="Pulse or blink rate4" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="2.6 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="1"/>
+                <compositeSetting label="Pulse or blink rate4" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="2.8 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="0"/>
+                <compositeSetting label="Pulse or blink rate3" value="1"/>
+                <compositeSetting label="Pulse or blink rate4" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="3.0 Seconds">
+                <compositeSetting label="Pulse or blink rate1" value="1"/>
+                <compositeSetting label="Pulse or blink rate2" value="1"/>
+                <compositeSetting label="Pulse or blink rate3" value="1"/>
+                <compositeSetting label="Pulse or blink rate4" value="1"/>
+              </compositeChoice>
+            </compositeVal>
+            <label>Outputs pulse or blink at </label>
+          </variable>
+
+
+
+          <variable item="Routes trigger"
+                    tooltip="OpSw11, OpSw16">
+            <compositeVal>
+              <compositeChoice choice="are triggered by switch commands on LocoNet">
+                <compositeSetting label="Route Command Source" value="0"/>
+                <compositeSetting label="Routes Enable" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="are triggered by local inputs or LocoNet switch commands">
+                <compositeSetting label="Route Command Source" value="1"/>
+                <compositeSetting label="Routes Enable" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="are disabled">
+                <compositeSetting label="Route Command Source" value="0"/>
+                <compositeSetting label="Routes Enable" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="are disabled (alternate)">
+                <compositeSetting label="Route Command Source" value="1"/>
+                <compositeSetting label="Routes Enable" value="1"/>
+              </compositeChoice>
+            </compositeVal>
+            <label>DS64 Routes</label>
+          </variable>
+
+          <variable item="Local Input Effects"
+                tooltip="OpSw12, OpSw15">
+            <compositeVal>
+              <compositeChoice choice="Sx inputs toggle the corresponding local output">
+                <compositeSetting label="Sensor Actions" value="0"/>
+                <compositeSetting label="Inputs Control Outputs" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="AX and Sx input control corresponding local output">
+                <compositeSetting label="Sensor Actions" value="1"/>
+                <compositeSetting label="Inputs Control Outputs" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Ax and Sx do not control corresponding local output">
+                <compositeSetting label="Sensor Actions" value="0"/>
+                <compositeSetting label="Inputs Control Outputs" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="Ax and Sx have difficult-to-describe effect on local output">
+                <compositeSetting label="Sensor Actions" value="1"/>
+                <compositeSetting label="Inputs Control Outputs" value="1"/>
+              </compositeChoice>
+            </compositeVal>
+            <label>Local Inputs</label>
+          </variable>
+
+          <variable item="Input Messages"
+                    tooltip="OpSw21, OpSw13">
+            <compositeVal>
+              <compositeChoice choice="General Sensor messages are sent only for Ax input changes">
+                <compositeSetting label="Input LocoNet Message" value="0"/>
+                <compositeSetting label="Input Signals" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Switch Feedback messages are sent only for Ax input changes">
+                <compositeSetting label="Input LocoNet Message" value="1"/>
+                <compositeSetting label="Input Signals" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="General Sensor messages are sent for Ax and Sx input changes">
+                <compositeSetting label="Input LocoNet Message" value="0"/>
+                <compositeSetting label="Input Signals" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="Switch Feedback messges are sent for Ax and Sx input changes">
+                <compositeSetting label="Input LocoNet Message" value="1"/>
+                <compositeSetting label="Input Signals" value="1"/>
+              </compositeChoice>
+            </compositeVal>
+            <label> </label>
           </variable>
 
         </variables>
     </decoder>
+  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>OpSws</name>
+    <qualifier>
+          <variableref>Short Address</variableref>
+          <relation>gt</relation>
+          <value>0</value>
 
+    </qualifier>
+    <column>
+        <row>
+            <cvtable/>
+        </row>
+        <row>
+            <label>
+                <text>&lt;html&gt;The "CV" column in the table above shows "OpSw" 
+                    numbers, where the value "115." is pre-pended
+                    &lt;p&gt;to the OpSw Number.  For example, PM4/PM42 OpSw 1 
+                    is represented as "115.01".
+                    &lt;p&gt;&lt;p&gt;The top-most row above reflects the Board 
+                    Address configured on the "Basic" sheet.
+                    &lt;p&gt;&lt;p&gt;OpSw value 0 = "T"hrown.  OpSw value 1 = "C"losed.
+                    &lt;/html&gt;
+                </text>
+            </label>
+        </row>
+    </column>
+  </pane>
+  <pane>
+      <name>Basic</name>
+      <column>
+          <display item="Short Address"/>
+          <label>
+              <text> </text>
+          </label>
+          <label>
+            <text>&lt;html&gt;&lt;p&gt;
+                LocoNet messaging limits the supported Board ID
+                range to addresses between 1 and 128.  This tool cannot access DS64s
+                &lt;p&gt;outside of this range.
+                &lt;p&gt;
+                &lt;p&gt;This roster entry will only access the specified DS64 if the
+                Board ID, on the "Basic" sheet, is correct when the
+                &lt;p&gt;programmer is opened.
+                &lt;p&gt;
+                &lt;p&gt;If the Board ID has been changed since
+                the programmer was opened, the programmer will attempt to access the
+                &lt;p&gt;DS64 address which was specified in the Roster entry
+                when the progammer was opened.
+                &lt;p&gt;
+                &lt;p&gt;After making a change to the Roster entry's Board ID
+                (Active Address) on the "Basic" sheet, save and close the programmer
+                &lt;p&gt;window and re-open the Roster entry to ensure that the
+                the programmer will use the modified Active Address for accesses
+                &lt;p&gt;to the device.
+                &lt;p&gt;Note that BDL16x and PM4x documentation refers 
+                to Board Address, while DS64 and SE8C documentation refers to 
+                &lt;p&gt;Board ID.  These are equivalent concepts.
+            &lt;/html&gt;</text>
+          </label>
+      </column>
+  </pane>
+  <pane>
+    <name>DS64 Basic Settings</name>
+    <column>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Output Controls Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+        <display item="Output Type"/>
+
+        <label><text>   </text></label>
+
+        <display item="Output Pulse or Blink Time"/>
+
+        <label><text>   </text></label>
+
+        <display item="Output Auto Power-up"/>
+        <display item="Start-Up Delay"/>
+        <display item="Static Output Shutoff"/>
+        <label><text>   </text></label>
+
+        <display item="Crossing Gate 1"/>
+        <display item="Crossing Gate 2"/>
+        <display item="Crossing Gate 3"/>
+        <display item="Crossing Gate 4"/>
+        <label><text>   </text></label>
+        <separator/>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Control Source Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+        <display item="Command Source"/>
+        <display item="Controls From"/>
+
+        <label><text>   </text></label>
+
+        <separator/>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Local Routes Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+        <display item="Routes trigger"/>
+
+        <label><text>   </text></label>
+
+        <separator/>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Local Input Signals Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+        <display item="Local Input Effects"/>
+        <display item="Input Messages"/>
+        <label><text>   </text></label>
+
+    </column>
+  </pane>
+  <pane>
+      <name>Notes</name>
+      <column>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
+            &lt;h2&gt;&lt;strong&gt;Notes on DS64 Roster Entries and Programming
+            &lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+        </label>
+        <label><text> </text></label>
+        <label>
+            <text>&lt;html&gt;&lt;/strong&gt;&lt;p&gt;&lt;ul&gt;
+                &lt;li&gt;
+                The DS64 &lt;em&gt;must&lt;/em&gt; be in its normal
+                operating mode in order to respond to this Roster entry's read and
+                write operations.&lt;/li&gt;
+                &lt;li&gt;
+                &lt;p&gt;See the "Basic" sheet for the programmer's limitations with
+                respect to Board ID.&lt;/li&gt;
+                &lt;li&gt;&lt;p&gt;This Roster entry is not currently capable of displaying, changing, or saving the DS64 output addresses.&lt;/p&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;p&gt;This Roster entry is not currently capable of displaying, changing, or saving the DS64 Routes.&lt;/p&gt;&lt;/li&gt;
+            &lt;/ul&gt;&lt;/html&gt;</text>
+        </label>
+      </column>
+  </pane>
+  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>CVs</name>
+    <name xml:lang="it">CV</name>
+    <name xml:lang="de">CV-Tabelle</name>
+    <name xml:lang="ca">Taula-CV</name>
+    <name xml:lang="cs">Tabulka CV</name>
+    <name xml:lang="nl">CV-tabel</name>
+    <qualifier>
+          <variableref>Short Address</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+    </qualifier>
+    <column>
+        <label>
+            <text>This sheet intentionally un-populated.  See the "OpSws" tab.</text>
+        </label>
+    </column>
+  </pane>
 </decoder-config>
