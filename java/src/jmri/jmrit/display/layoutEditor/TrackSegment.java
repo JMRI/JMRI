@@ -1673,8 +1673,8 @@ public class TrackSegment extends LayoutTrack {
             if (isArc()) {
                 calculateTrackSegmentAngle();
                 double startAngleDEG = getStartAdj(), extentAngleDEG = getTmpAngle();
-                startAngleRAD = Math.toRadians(startAngleDEG);
-                stopAngleRAD = Math.toRadians(startAngleDEG + extentAngleDEG);
+                startAngleRAD = (Math.PI / 2.0) - Math.toRadians(startAngleDEG);
+                stopAngleRAD = (Math.PI / 2.0) - Math.toRadians(startAngleDEG + extentAngleDEG);
             } else if (isBezier()) {
                 Point2D cp0 = bezierControlPoints.get(0);
                 Point2D cpN = bezierControlPoints.get(bezierControlPoints.size() - 1);
@@ -1684,7 +1684,7 @@ public class TrackSegment extends LayoutTrack {
                 Point2D delta = MathUtil.subtract(ep2, ep1);
                 startAngleRAD = (Math.PI / 2.0) - MathUtil.computeAngleRAD(delta);
                 stopAngleRAD = startAngleRAD;
-            }   // if isArc() {} else if isBezier() {} else...
+            }
 
             //
             // arrow decorations
@@ -2066,6 +2066,145 @@ public class TrackSegment extends LayoutTrack {
                     }
                 }
             }
+
+            //
+            //  tunnel decorations
+            //
+            String tunnelValue = decorations.get("tunnel");
+            if (tunnelValue != null) {
+                // <decoration name="tunnel" value="both;linewidth=2;halfgap=8" />
+                // right/left default true; in/out default false
+                boolean hasLeft = true, hasRight = true, hasIn = false, hasOut = false;
+                int linelength = 4, linewidth = 1, halfgap = 2;
+                Color color = defaultTrackColor;
+                String[] values = tunnelValue.split(";");
+                for (int i = 0; i < values.length; i++) {
+                    String value = values[i];
+                    log.info("value[{}]: \"{}\"", i, value);
+                    if (value.equals("left")) {
+                        hasRight = false;
+                    } else if (value.equals("right")) {
+                        hasLeft = false;
+                    } else if (value.equals("in")) {
+                        hasIn = true;
+                    } else if (value.equals("out")) {
+                        hasOut = true;
+                    } else if (value.equals("both")) {
+                        hasIn = true;
+                        hasOut = true;
+                    } else if (value.startsWith("color=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
+                        color = Color.decode(valueString);
+                    } else if (value.startsWith("linelength=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
+                        linelength = Integer.parseInt(valueString);
+                    } else if (value.startsWith("linewidth=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
+                        linewidth = Integer.parseInt(valueString);
+                    } else if (value.startsWith("halfgap=")) {
+                        String valueString = value.substring(value.lastIndexOf("=") + 1);
+                        halfgap = Integer.parseInt(valueString);
+                    }
+                }
+                // these both can't be false
+                if (!hasLeft && !hasRight) {
+                    hasLeft = true;
+                    hasRight = true;
+                }
+                g2.setStroke(new BasicStroke(linewidth,
+                        BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
+                        new float[]{6.F, 4.F}, 0));
+                g2.setColor(color);
+
+                if (isArc()) {
+                    calculateTrackSegmentAngle();
+                    Rectangle2D cRectangle2D = new Rectangle2D.Double(
+                            getCX(), getCY(), getCW(), getCH());
+                    double startAngleDEG = getStartAdj(), extentAngleDEG = getTmpAngle();
+                    if (hasLeft) {
+                        Rectangle2D cLeftRectangle2D = MathUtil.inset(cRectangle2D, -halfgap);
+                        g2.draw(new Arc2D.Double(
+                                cLeftRectangle2D.getX(),
+                                cLeftRectangle2D.getY(),
+                                cLeftRectangle2D.getWidth(),
+                                cLeftRectangle2D.getHeight(),
+                                startAngleDEG, extentAngleDEG, Arc2D.OPEN));
+                    }
+                    if (hasRight) {
+                        Rectangle2D cLRightRectangle2D = MathUtil.inset(cRectangle2D, +halfgap);
+                        g2.draw(new Arc2D.Double(
+                                cLRightRectangle2D.getX(),
+                                cLRightRectangle2D.getY(),
+                                cLRightRectangle2D.getWidth(),
+                                cLRightRectangle2D.getHeight(),
+                                startAngleDEG, extentAngleDEG, Arc2D.OPEN));
+                    }
+                    trackRedrawn();
+                } else if (isBezier()) {
+                    int cnt = bezierControlPoints.size() + 2;
+                    Point2D[] points = new Point2D[cnt];
+                    points[0] = ep1;
+                    for (int idx = 0; idx < cnt - 2; idx++) {
+                        points[idx + 1] = bezierControlPoints.get(idx);
+                    }
+                    points[cnt - 1] = ep2;
+
+                    if (hasLeft) {
+                        MathUtil.drawBezier(g2, points, -halfgap);
+                    }
+                    if (hasRight) {
+                        MathUtil.drawBezier(g2, points, +halfgap);
+                    }
+                } else {
+                    Point2D delta = MathUtil.subtract(ep2, ep1);
+                    Point2D vector = MathUtil.normalize(delta, halfgap);
+                    vector = MathUtil.orthogonal(vector);
+
+                    if (hasLeft) {
+                        Point2D ep1L = MathUtil.add(ep1, vector);
+                        Point2D ep2L = MathUtil.add(ep2, vector);
+                        g2.draw(new Line2D.Double(ep1L, ep2L));
+                    }
+                    if (hasRight) {
+                        Point2D ep1R = MathUtil.subtract(ep1, vector);
+                        Point2D ep2R = MathUtil.subtract(ep2, vector);
+                        g2.draw(new Line2D.Double(ep1R, ep2R));
+                    }
+                }   // if isArc() {} else if isBezier() {} else...
+
+                if (hasIn) {
+                    if (hasRight) {
+                        p1 = new Point2D.Double(-linelength, -linelength - halfgap);
+                        p2 = new Point2D.Double(0.0, -halfgap);
+                        p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
+                        p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
+                        g2.draw(new Line2D.Double(p1P, p2P));
+                    }
+                    if (hasLeft) {
+                        p1 = new Point2D.Double(-linelength, +linelength + halfgap);
+                        p2 = new Point2D.Double(0.0, +halfgap);
+                        p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
+                        p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
+                        g2.draw(new Line2D.Double(p1P, p2P));
+                    }
+                }
+                if (hasOut) {
+                    if (hasRight) {
+                        p1 = new Point2D.Double(+linelength, -linelength - halfgap);
+                        p2 = new Point2D.Double(0.0, -halfgap);
+                        p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
+                        p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
+                        g2.draw(new Line2D.Double(p1P, p2P));
+                    }
+                    if (hasLeft) {
+                        p1 = new Point2D.Double(+linelength, +linelength + halfgap);
+                        p2 = new Point2D.Double(0.0, +halfgap);
+                        p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
+                        p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
+                        g2.draw(new Line2D.Double(p1P, p2P));
+                    }
+                }
+            }   // if (tunnelValue != null)
         }   // if (decorations != null)
     }   // drawDecorations
 

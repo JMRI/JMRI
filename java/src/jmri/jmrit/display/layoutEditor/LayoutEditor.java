@@ -9567,6 +9567,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
             drawLayoutTracksHidden(g2);
         }
+        drawTrackSegmentsDashed(g2);
+
         drawLayoutTracksBallast(g2);
         drawLayoutTracksTies(g2);
         drawLayoutTracksRails2(g2);
@@ -9600,17 +9602,57 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }   // draw
 
     private void drawLayoutTracksHidden(Graphics2D g2) {
+        Stroke stroke = new BasicStroke(1.F);
+        Stroke dashedStroke = new BasicStroke(1.F,
+                BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
+                new float[]{6.F, 4.F}, 0);
+
         //setup for drawing hidden sideline rails
-        g2.setStroke(new BasicStroke(1.0f));
         g2.setColor(getLayoutTrackDrawingOptions().getSideRailColor());
+        g2.setStroke(stroke);
         boolean main = false, block = false, hidden = true, dashed = false;
         draw1(g2, main, block, hidden, dashed);
+        g2.setStroke(dashedStroke);
         draw1(g2, main, block, hidden, dashed = true);
-        //setup for drawing mainline rails
-        g2.setStroke(new BasicStroke(2.0f));
+        //setup for drawing hidden mainline rails
+        g2.setStroke(stroke);
         g2.setColor(getLayoutTrackDrawingOptions().getMainRailColor());
-        draw1(g2, main, block, hidden, dashed = false);
+        draw1(g2, main = true, block, hidden, dashed = false);
+        g2.setStroke(dashedStroke);
         draw1(g2, main, block, hidden, dashed = true);
+    }
+
+    private void drawTrackSegmentsDashed(Graphics2D g2) {
+        boolean main = false, block = false, hidden = false, dashed = true;
+        float[] dashArray = new float[]{6.F, 4.F};
+        //setup for drawing dashed sideline rails
+        int railWidth = getLayoutTrackDrawingOptions().getSideRailWidth();
+        float railDisplacement = ((railWidth * 2.F)
+                + getLayoutTrackDrawingOptions().getSideRailGap()) / 2.F;
+        g2.setStroke(new BasicStroke(
+                railWidth,
+                BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND,
+                10.F, dashArray, 10));
+        g2.setColor(getLayoutTrackDrawingOptions().getSideRailColor());
+        if ((getLayoutTrackDrawingOptions().getSideRailCount() & 1) == 1) {
+            draw1(g2, main, block, hidden, dashed);
+        }
+        if (getLayoutTrackDrawingOptions().getSideRailCount() >= 1) {
+            draw2(g2, main, railDisplacement, dashed);
+        }
+        //setup for drawing dashed mainline rails
+        main = true;
+        g2.setStroke(new BasicStroke(
+                getLayoutTrackDrawingOptions().getMainRailWidth(),
+                BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND,
+                10.F, dashArray, 10));
+        g2.setColor(getLayoutTrackDrawingOptions().getMainRailColor());
+        if ((getLayoutTrackDrawingOptions().getMainRailCount() & 1) == 1) {
+            draw1(g2, main, block, hidden, dashed);
+        }
+        if (getLayoutTrackDrawingOptions().getMainRailCount() >= 1) {
+            draw2(g2, main, railDisplacement, dashed);
+        }
     }
 
     private void drawLayoutTracksBallast(Graphics2D g2) {
@@ -9747,8 +9789,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         for (LayoutTrack layoutTrack : layoutTrackList) {
             if (!(layoutTrack instanceof PositionablePoint)) {
                 if ((isHidden == layoutTrack.isHidden())
-                        && (!isDashed || ((layoutTrack instanceof TrackSegment)
-                        && (((TrackSegment) layoutTrack).isDashed())))) {
+                        && (!(layoutTrack instanceof TrackSegment)
+                        || (((TrackSegment) layoutTrack).isDashed() == isDashed))) {
                     layoutTrack.draw1(g2, isMain, isBlock);
                 }
             }
@@ -9764,8 +9806,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     private void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+        draw2(g2, isMain, railDisplacement, false);
+    }
+
+    private void draw2(Graphics2D g2, boolean isMain, float railDisplacement, boolean isDashed) {
         for (LayoutTrack layoutTrack : layoutTrackList) {
-            if (!layoutTrack.isHidden()) {
+            if (!layoutTrack.isHidden()
+                    && (!(layoutTrack instanceof TrackSegment)
+                    || ((TrackSegment) layoutTrack).isDashed() == isDashed)) {
                 layoutTrack.draw2(g2, isMain, railDisplacement);
             }
         }
