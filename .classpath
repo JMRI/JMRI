@@ -124,13 +124,16 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/cucumber-core-1.2.5.jar"/>
-	<classpathentry kind="lib" path="lib/cucumber-java-1.2.5.jar"/>
-	<classpathentry kind="lib" path="lib/cucumber-java8-1.2.5.jar"/>
-	<classpathentry kind="lib" path="lib/cucumber-junit-1.2.5.jar"/>
-	<classpathentry kind="lib" path="lib/cucumber-jvm-deps-1.0.5.jar"/>
-	<classpathentry kind="lib" path="lib/gherkin-2.12.2.jar"/>
-	<classpathentry kind="lib" path="lib/gherkin-jvm-deps-1.0.3.jar"/>
-	<classpathentry kind="lib" path="lib/gherkin3-3.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/cucumber-core-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/cucumber-java-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/cucumber-java8-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/cucumber-junit-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/cucumber-jvm-deps-1.0.6.jar"/>
+	<classpathentry kind="lib" path="lib/cucumber-picocontainer-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/gherkin-4.1.3.jar"/>
+	<classpathentry kind="lib" path="lib/gherkin-jvm-deps-1.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/picocontainer-2.15.jar"/>
+	<classpathentry kind="lib" path="lib/tag-expressions-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/typetools-0.5.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
