@@ -150,7 +150,8 @@ public class DisplayFrame extends JmriJFrame {
     }
 
     /**
-     * Shared setting for preview pane background color, starts as 0 = use current Panel bg color.
+     * Shared setting for preview pane background color combo choice.
+     * Starts as 0 = use current Panel bg color.
      */
     protected int previewBgSet = 0;
 
@@ -163,6 +164,9 @@ public class DisplayFrame extends JmriJFrame {
         return previewBgSet;
     }
 
+    /**
+     * Listens for init()  = display of the frame
+     */
     protected jmri.jmrit.display.palette.InitEventListener listener;
     /**
      * Register display of a different tab. Used on {@link jmri.jmrit.display.palette.ItemPanel}
