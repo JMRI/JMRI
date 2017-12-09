@@ -36,6 +36,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     protected void setInstance() {
-        adapter = SerialAdapter.instance();
+        if(adapter == null ) {
+           adapter = SerialAdapter.instance();
+        }
     }
 }

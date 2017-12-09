@@ -4,6 +4,7 @@ import jmri.jmrix.oaktree.SerialListener;
 import jmri.jmrix.oaktree.SerialMessage;
 import jmri.jmrix.oaktree.SerialReply;
 import jmri.jmrix.oaktree.SerialTrafficController;
+import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 
 /**
  * Frame displaying (and logging) serial command messages
@@ -12,8 +13,11 @@ import jmri.jmrix.oaktree.SerialTrafficController;
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
-    public SerialMonFrame() {
+    private OakTreeSystemConnectionMemo _memo = null;
+
+    public SerialMonFrame(OakTreeSystemConnectionMemo memo) {
         super();
+        _memo=memo;
     }
 
     @Override
@@ -24,12 +28,12 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     @Override
     protected void init() {
         // connect to TrafficController
-        SerialTrafficController.instance().addSerialListener(this);
+        _memo.getTrafficController().addSerialListener(this);
     }
 
     @Override
     public void dispose() {
-        SerialTrafficController.instance().removeSerialListener(this);
+        _memo.getTrafficController().removeSerialListener(this);
         super.dispose();
     }
 

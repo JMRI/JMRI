@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  * Swing action to create and register a AlignTableFrame object.
@@ -17,14 +18,17 @@ import org.slf4j.LoggerFactory;
  */
 public class AlignTableAction extends AbstractAction {
 
+    RpsSystemConnectionMemo memo = null;
+
     static final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.rps.aligntable.AlignTableBundle");
 
-    public AlignTableAction(String s) {
+    public AlignTableAction(String s,RpsSystemConnectionMemo _memo) {
         super(s);
+        memo = _memo;
     }
 
-    public AlignTableAction() {
-        this(rb.getString("WindowTitle"));
+    public AlignTableAction(RpsSystemConnectionMemo _memo) {
+        this(rb.getString("WindowTitle"),_memo);
     }
 
     AlignTableFrame f;
@@ -32,7 +36,7 @@ public class AlignTableAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (f == null) {
-            f = new AlignTableFrame();
+            f = new AlignTableFrame(memo);
             try {
                 f.initComponents();
             } catch (Exception ex) {

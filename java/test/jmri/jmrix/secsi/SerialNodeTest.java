@@ -16,8 +16,10 @@ import org.junit.Assert;
  */
 public class SerialNodeTest extends TestCase {
 
-    //private SerialNode a = new SerialNode(1,SerialNode.DAUGHTER);
-    SerialNode b = new SerialNode();
+    private SerialTrafficControlScaffold tcis = null;
+    private SecsiSystemConnectionMemo memo = null;
+
+    private SerialNode b = null;
 
     public void testConstructor1() {
         Assert.assertEquals("check default ctor type", SerialNode.DAUGHTER, b.getNodeType());
@@ -25,13 +27,13 @@ public class SerialNodeTest extends TestCase {
     }
 
     public void testConstructor2() {
-        SerialNode c = new SerialNode(3, SerialNode.DAUGHTER);
+        SerialNode c = new SerialNode(3, SerialNode.DAUGHTER,tcis);
         Assert.assertEquals("check ctor type", SerialNode.DAUGHTER, c.getNodeType());
         Assert.assertEquals("check ctor address", 3, c.getNodeAddress());
     }
 
     public void testAccessors() {
-        SerialNode n = new SerialNode(2, SerialNode.DAUGHTER);
+        SerialNode n = new SerialNode(2, SerialNode.DAUGHTER,tcis);
         n.setNodeAddress(7);
         Assert.assertEquals("check ctor type", SerialNode.DAUGHTER, n.getNodeType());
         Assert.assertEquals("check address", 7, n.getNodeAddress());
@@ -45,7 +47,7 @@ public class SerialNodeTest extends TestCase {
 
     public void testOutputBits1() {
         // IO48 with several output bits set
-        SerialNode g = new SerialNode(5, SerialNode.DAUGHTER);
+        SerialNode g = new SerialNode(5, SerialNode.DAUGHTER,tcis);
         Assert.assertTrue("must Send", g.mustSend());
         g.resetMustSend();
         Assert.assertTrue("must Send off", !(g.mustSend()));
@@ -74,10 +76,10 @@ public class SerialNodeTest extends TestCase {
     }
 
     public void testMarkChanges() {
-        SerialSensor s1 = new SerialSensor("VS1", "a");
+        SerialSensor s1 = new SerialSensor("VS1", "a",memo);
         Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("VS1"));
-        SerialSensor s2 = new SerialSensor("VS2", "ab");
-        SerialSensor s3 = new SerialSensor("VS3", "abc");
+        SerialSensor s2 = new SerialSensor("VS2", "ab",memo);
+        SerialSensor s3 = new SerialSensor("VS3", "abc",memo);
         b.registerSensor(s1, 0);
         b.registerSensor(s2, 1);
         b.registerSensor(s3, 2);
@@ -112,6 +114,10 @@ public class SerialNodeTest extends TestCase {
     @Override
     protected void setUp() {
         JUnitUtil.setUp();
+        tcis = new SerialTrafficControlScaffold();
+        memo = new SecsiSystemConnectionMemo();
+        memo.setTrafficController(tcis);
+        b = new SerialNode(tcis);
     }
 
     @Override
