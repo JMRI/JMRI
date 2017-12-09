@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  * Frame containing the entire display tool
@@ -17,12 +18,15 @@ import javax.swing.JSeparator;
  */
 public class RpsTrackingFrame extends jmri.util.JmriJFrame {
 
-    public RpsTrackingFrame(String s) {
+    RpsSystemConnectionMemo memo = null;
+
+    public RpsTrackingFrame(String s,RpsSystemConnectionMemo _memo) {
         super(s);
+        memo = _memo;
     }
 
-    public RpsTrackingFrame() {
-        this("RPS Tracking Display");
+    public RpsTrackingFrame(RpsSystemConnectionMemo _memo) {
+        this("RPS Tracking Display",_memo);
     }
 
     @Override
@@ -38,7 +42,7 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        panel = new RpsTrackingPanel();
+        panel = new RpsTrackingPanel(memo);
 
         // add controls; first, clear button
         JPanel controls = new JPanel();

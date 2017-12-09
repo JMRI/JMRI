@@ -6,7 +6,11 @@ import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.Receiver;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 import org.junit.Assume;
+import org.junit.Assert;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -15,6 +19,8 @@ import org.junit.Test;
  * @author Bob Jacobsen Copyright 2008
  */
 public class DebuggerTest {
+
+    private RpsSystemConnectionMemo memo = null;
 
     @Test
     public void testCtor() throws Exception {
@@ -29,7 +35,7 @@ public class DebuggerTest {
         Measurement m = new Measurement(r, -0.5, 0.5, 0.0, 0.133, 3, "source");
 
         // show frame
-        DebuggerFrame f = new DebuggerFrame();
+        DebuggerFrame f = new DebuggerFrame(memo);
         f.initComponents();
         f.setVisible(true);
 
@@ -37,8 +43,21 @@ public class DebuggerTest {
         f.notify(r);
         f.notify(m);
 
+        Assert.assertNotNull("exists",f);
+
         // close
         f.dispose();
+    }
+
+    @Before
+    public void setUp(){
+        jmri.util.JUnitUtil.setUp();
+        memo = new RpsSystemConnectionMemo();
+    }
+
+    @After
+    public void tearDown(){
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

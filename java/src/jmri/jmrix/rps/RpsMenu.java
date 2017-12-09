@@ -10,29 +10,32 @@ import javax.swing.JSeparator;
  */
 public class RpsMenu extends JMenu {
 
-    public RpsMenu(String name) {
-        this();
+    private RpsSystemConnectionMemo _memo = null;
+
+    public RpsMenu(String name, RpsSystemConnectionMemo memo) {
+        this(memo);
         setText(name);
     }
 
-    public RpsMenu() {
+    public RpsMenu(RpsSystemConnectionMemo memo) {
 
         super();
+        _memo = memo;
 
         setText("RPS");  // Product name, not translated.
 
         // tools that work
-        add(new jmri.jmrix.rps.rpsmon.RpsMonAction());
-        add(new jmri.jmrix.rps.aligntable.AlignTableAction());
-        add(new jmri.jmrix.rps.swing.polling.PollTableAction());
-        add(new jmri.jmrix.rps.swing.debugger.DebuggerAction());
-        add(new jmri.jmrix.rps.trackingpanel.RpsTrackingFrameAction());
-        add(new jmri.jmrix.rps.swing.soundset.SoundSetAction());
+        add(new jmri.jmrix.rps.rpsmon.RpsMonAction(_memo));
+        add(new jmri.jmrix.rps.aligntable.AlignTableAction(_memo));
+        add(new jmri.jmrix.rps.swing.polling.PollTableAction(_memo));
+        add(new jmri.jmrix.rps.swing.debugger.DebuggerAction(_memo));
+        add(new jmri.jmrix.rps.trackingpanel.RpsTrackingFrameAction(_memo));
+        add(new jmri.jmrix.rps.swing.soundset.SoundSetAction(_memo));
 
         add(new JSeparator());
 
         // old, obsolete or not updated tools
-        add(new jmri.jmrix.rps.reversealign.AlignmentPanelAction());
+        add(new jmri.jmrix.rps.reversealign.AlignmentPanelAction(_memo));
     }
 
 }
