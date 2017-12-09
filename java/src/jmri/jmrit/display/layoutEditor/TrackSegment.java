@@ -30,6 +30,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import jmri.Path;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
+import jmri.util.ColorUtil;
 import jmri.util.MathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1063,37 +1064,37 @@ public class TrackSegment extends LayoutTrack {
         bridgeEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBridgeEndStart(false);
-            setBridgeEndStop(false);
+            setBridgeHasEntry(false);
+            setBridgeHasExit(false);
         });
-        jcbmi.setSelected(!bridgeEndStart && !bridgeEndStop);
+        jcbmi.setSelected(!bridgeHasEntry && !bridgeHasExit);
 
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationStartMenuItemTitle"));
         bridgeEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationStartMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBridgeEndStart(true);
-            setBridgeEndStop(false);
+            setBridgeHasEntry(true);
+            setBridgeHasExit(false);
         });
-        jcbmi.setSelected(bridgeEndStart && !bridgeEndStop);
+        jcbmi.setSelected(bridgeHasEntry && !bridgeHasExit);
 
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEndMenuItemTitle"));
         bridgeEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationEndMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBridgeEndStart(false);
-            setBridgeEndStop(true);
+            setBridgeHasEntry(false);
+            setBridgeHasExit(true);
         });
-        jcbmi.setSelected(!bridgeEndStart && bridgeEndStop);
+        jcbmi.setSelected(!bridgeHasEntry && bridgeHasExit);
 
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
         bridgeEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBridgeEndStart(true);
-            setBridgeEndStop(true);
+            setBridgeHasEntry(true);
+            setBridgeHasExit(true);
         });
-        jcbmi.setSelected(bridgeEndStart && bridgeEndStop);
+        jcbmi.setSelected(bridgeHasEntry && bridgeHasExit);
 
         jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
         jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
@@ -1120,7 +1121,7 @@ public class TrackSegment extends LayoutTrack {
         });
 
         //
-        // end bumper menus
+        // bumper menus
         //
         JMenu endBumperMenu = new JMenu(Bundle.getMessage("EndBumperMenuTitle"));
         decorationsMenu.setToolTipText(Bundle.getMessage("EndBumperMenuToolTip"));
@@ -1289,37 +1290,37 @@ public class TrackSegment extends LayoutTrack {
         tunnelEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setTunnelEndStart(false);
-            setTunnelEndStop(false);
+            setTunnelHasEntry(false);
+            setTunnelHasExit(false);
         });
-        jcbmi.setSelected(!tunnelEndStart && !tunnelEndStop);
+        jcbmi.setSelected(!tunnelHasEntry && !tunnelHasExit);
 
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationStartMenuItemTitle"));
         tunnelEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationStartMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setTunnelEndStart(true);
-            setTunnelEndStop(false);
+            setTunnelHasEntry(true);
+            setTunnelHasExit(false);
         });
-        jcbmi.setSelected(tunnelEndStart && !tunnelEndStop);
+        jcbmi.setSelected(tunnelHasEntry && !tunnelHasExit);
 
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEndMenuItemTitle"));
         tunnelEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationEndMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setTunnelEndStart(false);
-            setTunnelEndStop(true);
+            setTunnelHasEntry(false);
+            setTunnelHasExit(true);
         });
-        jcbmi.setSelected(!tunnelEndStart && tunnelEndStop);
+        jcbmi.setSelected(!tunnelHasEntry && tunnelHasExit);
 
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
         tunnelEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setTunnelEndStart(true);
-            setTunnelEndStop(true);
+            setTunnelHasEntry(true);
+            setTunnelHasExit(true);
         });
-        jcbmi.setSelected(tunnelEndStart && tunnelEndStop);
+        jcbmi.setSelected(tunnelHasEntry && tunnelHasExit);
 
         jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
         jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
@@ -2204,17 +2205,17 @@ public class TrackSegment extends LayoutTrack {
         // arrow decorations
         //
         if (arrowCount > 0) {
-            g2.setStroke(new BasicStroke(arrowWidth,
+            g2.setStroke(new BasicStroke(arrowLineWidth,
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
             g2.setColor(arrowColor);
 
             // draw the out arrows
             if (arrowDirOut) {
                 if (arrowEndStart) {
-                    p1 = new Point2D.Double(0.0, -arrowLength);
-                    p2 = new Point2D.Double(-arrowLength, 0.0);
-                    p3 = new Point2D.Double(0.0, +arrowLength);
-                    Point2D delta = new Point2D.Double(arrowGap + arrowWidth, 0.0);
+                    p1 = new Point2D.Double(-2.0, -arrowLength);
+                    p2 = new Point2D.Double(-2.0 - arrowLength, 0.0);
+                    p3 = new Point2D.Double(-2.0, +arrowLength);
+                    Point2D delta = new Point2D.Double(arrowGap + arrowLineWidth, 0.0);
                     for (int idx = 0; idx < arrowCount; idx++) {
                         p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
                         p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
@@ -2232,10 +2233,10 @@ public class TrackSegment extends LayoutTrack {
                     }
                 }
                 if (arrowEndStop) {
-                    p1 = new Point2D.Double(0.0, -arrowLength);
-                    p2 = new Point2D.Double(+arrowLength, 0.0);
-                    p3 = new Point2D.Double(0.0, +arrowLength);
-                    Point2D delta = new Point2D.Double(arrowGap + arrowWidth, 0.0);
+                    p1 = new Point2D.Double(+2.0, -arrowLength);
+                    p2 = new Point2D.Double(+2.0 + arrowLength, 0.0);
+                    p3 = new Point2D.Double(+2.0, +arrowLength);
+                    Point2D delta = new Point2D.Double(arrowGap + arrowLineWidth, 0.0);
                     for (int idx = 0; idx < arrowCount; idx++) {
                         p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
                         p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
@@ -2258,10 +2259,10 @@ public class TrackSegment extends LayoutTrack {
             if (arrowDirIn) {
                 double offset = (arrowDirOut ? (arrowLength * arrowCount) : 0.0);
                 if (arrowEndStart) {
-                    p1 = new Point2D.Double(-offset - arrowLength, -arrowLength);
-                    p2 = new Point2D.Double(-offset, 0.0);
-                    p3 = new Point2D.Double(-offset - arrowLength, +arrowLength);
-                    Point2D delta = new Point2D.Double(arrowGap + arrowWidth, 0.0);
+                    p1 = new Point2D.Double(-2.0 - offset - arrowLength, -arrowLength);
+                    p2 = new Point2D.Double(-2.0 - offset, 0.0);
+                    p3 = new Point2D.Double(-2.0 - offset - arrowLength, +arrowLength);
+                    Point2D delta = new Point2D.Double(arrowGap + arrowLineWidth, 0.0);
                     for (int idx = 0; idx < arrowCount; idx++) {
                         p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
                         p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
@@ -2279,10 +2280,10 @@ public class TrackSegment extends LayoutTrack {
                     }
                 }
                 if (arrowEndStop) {
-                    p1 = new Point2D.Double(offset + arrowLength, -arrowLength);
-                    p2 = new Point2D.Double(offset, 0.0);
-                    p3 = new Point2D.Double(offset + arrowLength, +arrowLength);
-                    Point2D delta = new Point2D.Double(arrowGap + arrowWidth, 0.0);
+                    p1 = new Point2D.Double(2.0 + offset + arrowLength, -arrowLength);
+                    p2 = new Point2D.Double(2.0 + offset, 0.0);
+                    p3 = new Point2D.Double(2.0 + offset + arrowLength, +arrowLength);
+                    Point2D delta = new Point2D.Double(arrowGap + arrowLineWidth, 0.0);
                     for (int idx = 0; idx < arrowCount; idx++) {
                         p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
                         p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
@@ -2368,7 +2369,7 @@ public class TrackSegment extends LayoutTrack {
                 }
             }   // if isArc() {} else if isBezier() {} else...
 
-            if (bridgeEndStart) {
+            if (bridgeHasEntry) {
                 if (bridgeSideRight) {
                     p1 = new Point2D.Double(-bridgeWingWallLength, -bridgeWingWallLength - halfWidth);
                     p2 = new Point2D.Double(0.0, -halfWidth);
@@ -2384,7 +2385,7 @@ public class TrackSegment extends LayoutTrack {
                     g2.draw(new Line2D.Double(p1P, p2P));
                 }
             }
-            if (bridgeEndStop) {
+            if (bridgeHasExit) {
                 if (bridgeSideRight) {
                     p1 = new Point2D.Double(+bridgeWingWallLength, -bridgeWingWallLength - halfWidth);
                     p2 = new Point2D.Double(0.0, -halfWidth);
@@ -2406,7 +2407,10 @@ public class TrackSegment extends LayoutTrack {
         //  bumper decorations
         //
         if (bumperCount > 0) {
-            g2.setStroke(new BasicStroke((float) bumperWidth,
+            if (getName().equals("T15")) {
+                log.debug("STOP!");
+            }
+            g2.setStroke(new BasicStroke((float) bumperLineWidth,
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
             g2.setColor(bumperColor);
 
@@ -2420,29 +2424,29 @@ public class TrackSegment extends LayoutTrack {
 
             // draw cross ties
             if (bumperEndStart) {
-                p1 = new Point2D.Double(0.0, -halfLength);
-                p2 = new Point2D.Double(0.0, +halfLength);
+                p1 = new Point2D.Double(bumperGap, -halfLength);
+                p2 = new Point2D.Double(bumperGap, +halfLength);
+                Point2D delta = new Point2D.Double(bumperGap + bumperLineWidth, 0.0);
                 for (int idx = 0; idx < bumperCount; idx++) {
                     p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
                     p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
 
                     g2.draw(new Line2D.Double(p1P, p2P));
 
-                    Point2D delta = new Point2D.Double(bumperGap + bumperWidth, 0.0);
-                    p1 = MathUtil.subtract(p1, delta);
-                    p2 = MathUtil.subtract(p2, delta);
+                    p1 = MathUtil.add(p1, delta);
+                    p2 = MathUtil.add(p2, delta);
                 }
             }
             if (bumperEndStop) {
-                p1 = new Point2D.Double(0.0, -halfLength);
-                p2 = new Point2D.Double(0.0, +halfLength);
+                p1 = new Point2D.Double(-bumperGap, -halfLength);
+                p2 = new Point2D.Double(-bumperGap, +halfLength);
+                Point2D delta = new Point2D.Double(bumperGap + bumperLineWidth, 0.0);
                 for (int idx = 0; idx < bumperCount; idx++) {
-                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep2);
-                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep2);
+                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
+                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
 
                     g2.draw(new Line2D.Double(p1P, p2P));
 
-                    Point2D delta = new Point2D.Double(bumperGap + bumperWidth, 0.0);
                     p1 = MathUtil.subtract(p1, delta);
                     p2 = MathUtil.subtract(p2, delta);
                 }
@@ -2523,7 +2527,7 @@ public class TrackSegment extends LayoutTrack {
             double halfFloorWidth = tunnelFloorWidth / 2.0;
             double halfDiffWidth = halfEntranceWidth - halfFloorWidth;
 
-            if (tunnelEndStart) {
+            if (tunnelHasEntry) {
                 if (tunnelSideLeft) {
                     p1 = new Point2D.Double(0.0, 0.0);
                     p2 = new Point2D.Double(0.0, -halfFloorWidth);
@@ -2577,7 +2581,7 @@ public class TrackSegment extends LayoutTrack {
                     g2.fill(path);
                 }
             }
-            if (tunnelEndStop) {
+            if (tunnelHasExit) {
                 if (tunnelSideLeft) {
                     p1 = new Point2D.Double(0.0, 0.0);
                     p2 = new Point2D.Double(0.0, -halfFloorWidth);
@@ -2638,6 +2642,164 @@ public class TrackSegment extends LayoutTrack {
     |* decoration accessors *|
     \*======================*/
     /**
+     * get decorations
+     *
+     * @return decorations to set
+     */
+    public Map<String, String> getDecorations() {
+        if (decorations == null) {
+            decorations = new HashMap<>();
+        } //if (decorathions != null)
+
+        //
+        // arrow decorations
+        //
+        if (arrowCount > 0) {
+            // <decoration name="arrow" value="double;both;linewidth=1;length=12;gap=1" />
+            List<String> arrowValues = new ArrayList<String>();
+            switch (arrowCount) {
+                case 1: {
+                    arrowValues.add("single");
+                    break;
+                }
+                case 2: {
+                    arrowValues.add("double");
+                    break;
+                }
+                case 3: {
+                    arrowValues.add("triple");
+                    break;
+                }
+                default: {
+                    arrowValues.add("count=" + arrowCount);
+                    break;
+                }
+            }
+
+            if (arrowEndStart) {
+                arrowValues.add("start");
+            } else {
+                arrowEndStop = true;
+                arrowValues.add("stop");
+            }
+
+            if (arrowDirIn && !arrowDirOut) {
+                arrowValues.add("in");
+            } else if (!arrowDirIn && arrowDirOut) {
+                arrowValues.add("out");
+            } else {
+                arrowDirIn = true;
+                arrowDirOut = true;
+                arrowValues.add("both");
+            }
+            arrowValues.add("color=" + ColorUtil.colorToHexString(arrowColor));
+            arrowValues.add("linewidth=" + arrowLineWidth);
+            arrowValues.add("length=" + arrowLength);
+            arrowValues.add("gap=" + arrowGap);
+            decorations.put("arrow", String.join(";", arrowValues));
+        }   // if (arrowCount > 0)
+
+        //
+        //  bridge decorations
+        //
+        if (bridgeSideLeft || bridgeSideRight) {
+            // <decoration name="bridge" value="both;linewidth=2;deckwidth=8" />
+            List<String> bridgeValues = new ArrayList<String>();
+
+            if (bridgeHasEntry && !bridgeHasExit) {
+                bridgeValues.add("entry");
+            } else if (!bridgeHasEntry && bridgeHasExit) {
+                bridgeValues.add("exit");
+            } else if (bridgeHasEntry && bridgeHasExit) {
+                bridgeValues.add("both");
+            }
+            if (bridgeSideLeft && !bridgeSideRight) {
+                bridgeValues.add("left");
+            } else if (!bridgeSideLeft && bridgeSideRight) {
+                bridgeValues.add("right");
+            }
+            bridgeValues.add("color=" + ColorUtil.colorToHexString(bridgeColor));
+            bridgeValues.add("winglength=" + bridgeWingWallLength);
+            bridgeValues.add("linewidth=" + bridgeLineWidth);
+            bridgeValues.add("deckwidth=" + bridgeDeckWidth);
+
+            decorations.put("bridge", String.join(";", bridgeValues));
+        }   // if (bridgeSideLeft || bridgeSideRight)
+
+        //
+        //  bumper decorations
+        //
+        if (bumperCount > 0) {
+            // <decoration name="bumper" value="double;linewidth=2;length=6;gap=2;flipped" />
+            List<String> bumperValues = new ArrayList<String>();
+            switch (bumperCount) {
+                case 1: {
+                    bumperValues.add("single");
+                    break;
+                }
+                case 2: {
+                    bumperValues.add("double");
+                    break;
+                }
+                case 3: {
+                    bumperValues.add("triple");
+                    break;
+                }
+                default: {
+                    bumperValues.add("count=" + bumperCount);
+                    break;
+                }
+            }
+            if (bumperEndStart && !bumperEndStop) {
+                bumperValues.add("start");
+            } else if (!bumperEndStart && bumperEndStop) {
+                bumperValues.add("stop");
+            } else {
+                bumperValues.add("both");
+            }
+
+            if (bumperFlipped) {
+                bumperValues.add("flip");
+            }
+            bumperValues.add("color=" + ColorUtil.colorToHexString(bumperColor));
+            bumperValues.add("length=" + bumperLength);
+            bumperValues.add("linewidth=" + bumperLineWidth);
+            bumperValues.add("gap=" + bumperGap);
+
+            decorations.put("bumper", String.join(";", bumperValues));
+        }   // if (bumperCount > 0)
+
+        //
+        //  tunnel decorations
+        //
+        if (tunnelSideLeft || tunnelSideRight) {
+            // <decoration name="tunnel" value="both;linewidth=2;floorwidth=8" />
+            List<String> tunnelValues = new ArrayList<String>();
+
+            if (tunnelHasEntry && !tunnelHasExit) {
+                tunnelValues.add("entry");
+            } else if (!tunnelHasEntry && tunnelHasExit) {
+                tunnelValues.add("exit");
+            } else {
+                tunnelValues.add("both");
+            }
+
+            if (tunnelSideLeft && !tunnelSideRight) {
+                tunnelValues.add("left");
+            } else if (tunnelSideLeft && !tunnelSideRight) {
+                tunnelValues.add("right");
+            }
+            tunnelValues.add(";color=" + ColorUtil.colorToHexString(tunnelColor));
+            tunnelValues.add(";entrancewidth=" + tunnelEntranceWidth);
+            tunnelValues.add(";linewidth=" + tunnelLineWidth);
+            tunnelValues.add(";floorwidth=" + tunnelFloorWidth);
+
+            decorations.put("tunnel", String.join(";", tunnelValues));
+        }   // if (tunnelSideLeft || tunnelSideRight)
+        return decorations;
+    } // getDecorations
+
+    /**
      * set decorations
      *
      * @param decorations to set
@@ -2645,233 +2807,249 @@ public class TrackSegment extends LayoutTrack {
     public void setDecorations(Map<String, String> decorations) {
         super.setDecorations(decorations);
         if (decorations != null) {
-            //
-            // arrow decorations
-            //
-            String arrowValue = decorations.get("arrow");
-            if (arrowValue != null) {
-                // <decoration name="arrow" value="double;both;width=1;length=12;gap=1" />
-                boolean atStart = true, atStop = true;
-                boolean hasIn = false, hasOut = false;
-                int width = 1, length = 3, gap = 1, count = 1;
-                Color color = defaultTrackColor;
-                String[] values = arrowValue.split(";");
-                for (int i = 0; i < values.length; i++) {
-                    String value = values[i];
-                    if (value.equals("single")) {
-                        count = 1;
-                    } else if (value.equals("double")) {
-                        count = 2;
-                    } else if (value.equals("triple")) {
-                        count = 3;
-                    } else if (value.startsWith("count=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        count = Integer.parseInt(valueString);
-                    } else if (value.equals("start")) {
-                        atStop = false;
-                    } else if (value.equals("stop")) {
-                        atStart = false;
-                    } else if (value.equals("in")) {
-                        hasIn = true;
-                    } else if (value.equals("out")) {
-                        hasOut = true;
-                    } else if (value.equals("both")) {
-                        hasIn = true;
-                        hasOut = true;
-                    } else if (value.startsWith("color=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        color = Color.decode(valueString);
-                    } else if (value.startsWith("width=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        width = Integer.parseInt(valueString);
-                    } else if (value.startsWith("length=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        length = Integer.parseInt(valueString);
-                    } else if (value.startsWith("gap=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        gap = Integer.parseInt(valueString);
+            for (Map.Entry<String, String> entry : decorations.entrySet()) {
+                log.debug("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+                String key = entry.getKey();
+                //
+                // arrow decorations
+                //
+                if (key.equals("arrow")) {
+                    String arrowValue = entry.getValue();
+                    // <decoration name="arrow" value="double;both;linewidth=1;length=12;gap=1" />
+                    boolean atStart = true, atStop = true;
+                    boolean hasIn = false, hasOut = false;
+                    int lineWidth = 1, length = 3, gap = 1, count = 1;
+                    Color color = defaultTrackColor;
+                    String[] values = arrowValue.split(";");
+                    for (int i = 0; i < values.length; i++) {
+                        String value = values[i];
+                        if (value.equals("single")) {
+                            count = 1;
+                        } else if (value.equals("double")) {
+                            count = 2;
+                        } else if (value.equals("triple")) {
+                            count = 3;
+                        } else if (value.startsWith("count=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            count = Integer.parseInt(valueString);
+                        } else if (value.equals("start")) {
+                            atStop = false;
+                        } else if (value.equals("stop")) {
+                            atStart = false;
+                        } else if (value.equals("in")) {
+                            hasIn = true;
+                        } else if (value.equals("out")) {
+                            hasOut = true;
+                        } else if (value.equals("both")) {
+                            hasIn = true;
+                            hasOut = true;
+                        } else if (value.startsWith("color=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            color = Color.decode(valueString);
+                        } else if (value.startsWith("linewidth=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            lineWidth = Integer.parseInt(valueString);
+                        } else if (value.startsWith("length=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            length = Integer.parseInt(valueString);
+                        } else if (value.startsWith("gap=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            gap = Integer.parseInt(valueString);
+                        } else {
+                            log.debug("arrow value ignored: " + value);
+                        }
                     }
-                }
-                hasIn |= !hasOut;   // if hasOut is false make hasIn true
-                if (!atStart && !atStop) {   // if both false
-                    atStart = true; // set both true
-                    atStop = true;
-                }
-                setArrowCount(count);
-                setArrowEndStart(atStart);
-                setArrowEndStop(atStop);
-                setArrowDirIn(hasIn);
-                setArrowDirOut(hasOut);
-                setArrowColor(color);
-                setArrowWidth(width);
-                setArrowLength(length);
-                setArrowGap(gap);
-            }   // if (arrowValue != null)
-
-            //
-            //  bridge decorations
-            //
-            String bridgeValue = decorations.get("bridge");
-            if (bridgeValue != null) {
-                // <decoration name="bridge" value="both;linewidth=2;deckwidth=8" />
-                // right/left default true; in/out default false
-                boolean hasLeft = true, hasRight = true, hasIn = false, hasOut = false;
-                int wingWallLength = 4, lineWidth = 1, deckWidth = 2;
-                Color color = defaultTrackColor;
-                String[] values = bridgeValue.split(";");
-                for (int i = 0; i < values.length; i++) {
-                    String value = values[i];
-                    //log.info("value[{}]: \"{}\"", i, value);
-                    if (value.equals("left")) {
-                        hasRight = false;
-                    } else if (value.equals("right")) {
-                        hasLeft = false;
-                    } else if (value.equals("in")) {
-                        hasIn = true;
-                    } else if (value.equals("out")) {
-                        hasOut = true;
-                    } else if (value.equals("both")) {
-                        hasIn = true;
-                        hasOut = true;
-                    } else if (value.startsWith("color=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        color = Color.decode(valueString);
-                    } else if (value.startsWith("winglength=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        wingWallLength = Integer.parseInt(valueString);
-                    } else if (value.startsWith("linewidth=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        lineWidth = Integer.parseInt(valueString);
-                    } else if (value.startsWith("deckwidth=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        deckWidth = Integer.parseInt(valueString);
+                    hasIn |= !hasOut;   // if hasOut is false make hasIn true
+                    if (!atStart && !atStop) {   // if both false
+                        atStart = true; // set both true
+                        atStop = true;
                     }
-                }
-                // these both can't be false
-                if (!hasLeft && !hasRight) {
-                    hasLeft = true;
-                    hasRight = true;
-                }
-                setBridgeSideRight(hasRight);
-                setBridgeSideLeft(hasLeft);
-                setBridgeEndStart(hasIn);
-                setBridgeEndStop(hasOut);
-                setBridgeColor(color);
-                setBridgeDeckWidth(deckWidth);
-                setBridgeLineWidth(lineWidth);
-                setBridgeWingWallLength(wingWallLength);
-            }   // if (bridgeValue != null)
-
-            //
-            //  bumper decorations
-            //
-            String bumperValue = decorations.get("bumper");
-            if (bumperValue != null) {
-                // <decoration name="bumper" value="double;width=2;length=6;gap=2;flipped" />
-                int count = 1, width = 1, length = 4, gap = 1;
-                boolean isFlipped = false, atStart = true, atStop = true;
-                Color color = defaultTrackColor;
-                String[] values = bumperValue.split(";");
-                for (int i = 0; i < values.length; i++) {
-                    String value = values[i];
-                    //log.info("value[{}]: \"{}\"", i, value);
-                    if (value.equals("single")) {
-                        count = 1;
-                    } else if (value.equals("double")) {
-                        count = 2;
-                    } else if (value.equals("triple")) {
-                        count = 3;
-                    } else if (value.startsWith("count=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        count = Integer.parseInt(valueString);
-                    } else if (value.equals("start")) {
-                        atStop = false;
-                    } else if (value.equals("stop")) {
-                        atStart = false;
-                    } else if (value.equals("both")) {
-                        // this is the default behaviour; parameter ignored
-                    } else if (value.equals("flip")) {
-                        isFlipped = true;
-                    } else if (value.startsWith("color=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        color = Color.decode(valueString);
-                    } else if (value.startsWith("width=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        width = Integer.parseInt(valueString);
-                    } else if (value.startsWith("length=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        length = Integer.parseInt(valueString);
-                    } else if (value.startsWith("gap=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        gap = Integer.parseInt(valueString);
+                    setArrowEndStart(atStart);
+                    setArrowEndStop(atStop);
+                    setArrowDirIn(hasIn);
+                    setArrowDirOut(hasOut);
+                    setArrowColor(color);
+                    setArrowLineWidth(lineWidth);
+                    setArrowLength(length);
+                    setArrowGap(gap);
+                    // set count last so it will fix ends and dir (if necessary)
+                    setArrowCount(count);
+                } // if (key.equals("arrow")) {
+                //
+                //  bridge decorations
+                //
+                else if (key.equals("bridge")) {
+                    String bridgeValue = entry.getValue();
+                    // <decoration name="bridge" value="both;linewidth=2;deckwidth=8" />
+                    // right/left default true; in/out default false
+                    boolean hasLeft = true, hasRight = true, hasEntry = false, hasExit = false;
+                    int wingWallLength = 4, lineWidth = 1, deckWidth = 2;
+                    Color color = defaultTrackColor;
+                    String[] values = bridgeValue.split(";");
+                    for (int i = 0; i < values.length; i++) {
+                        String value = values[i];
+                        //log.info("value[{}]: \"{}\"", i, value);
+                        if (value.equals("left")) {
+                            hasRight = false;
+                        } else if (value.equals("right")) {
+                            hasLeft = false;
+                        } else if (value.equals("entry")) {
+                            hasEntry = true;
+                        } else if (value.equals("exit")) {
+                            hasExit = true;
+                        } else if (value.equals("both")) {
+                            hasEntry = true;
+                            hasExit = true;
+                        } else if (value.startsWith("color=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            color = Color.decode(valueString);
+                        } else if (value.startsWith("winglength=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            wingWallLength = Integer.parseInt(valueString);
+                        } else if (value.startsWith("linewidth=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            lineWidth = Integer.parseInt(valueString);
+                        } else if (value.startsWith("deckwidth=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            deckWidth = Integer.parseInt(valueString);
+                        } else {
+                            log.debug("bridge value ignored: " + value);
+                        }
                     }
-                }
-                atStop |= !atStart;   // if atStart is false make atStop true
-                setBumperCount(count);
-                setBumperEndStart(atStart);
-                setBumperEndStop(atStop);
-                setBumperColor(color);
-                setBumperWidth(width);
-                setBumperLength(length);
-                setBumperGap(gap);
-                setBumperFlipped(isFlipped);
-            }   // if (bumperValue != null)
-
-            //
-            //  tunnel decorations
-            //
-            String tunnelValue = decorations.get("tunnel");
-            if (tunnelValue != null) {
-                // <decoration name="tunnel" value="both;linewidth=2;floorwidth=8" />
-                // right/left default true; in/out default false
-                boolean hasLeft = true, hasRight = true, hasIn = false, hasOut = false;
-                int entranceWidth = 4, lineWidth = 1, floorWidth = 2;
-                Color color = defaultTrackColor;
-                String[] values = tunnelValue.split(";");
-                for (int i = 0; i < values.length; i++) {
-                    String value = values[i];
-                    //log.info("value[{}]: \"{}\"", i, value);
-                    if (value.equals("left")) {
-                        hasRight = false;
-                    } else if (value.equals("right")) {
-                        hasLeft = false;
-                    } else if (value.equals("in")) {
-                        hasIn = true;
-                    } else if (value.equals("out")) {
-                        hasOut = true;
-                    } else if (value.equals("both")) {
-                        hasIn = true;
-                        hasOut = true;
-                    } else if (value.startsWith("color=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        color = Color.decode(valueString);
-                    } else if (value.startsWith("entrancewidth=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        entranceWidth = Integer.parseInt(valueString);
-                    } else if (value.startsWith("linewidth=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        lineWidth = Integer.parseInt(valueString);
-                    } else if (value.startsWith("floorwidth=")) {
-                        String valueString = value.substring(value.lastIndexOf("=") + 1);
-                        floorWidth = Integer.parseInt(valueString);
+                    // these both can't be false
+                    if (!hasLeft && !hasRight) {
+                        hasLeft = true;
+                        hasRight = true;
                     }
+                    setBridgeSideRight(hasRight);
+                    setBridgeSideLeft(hasLeft);
+                    setBridgeHasEntry(hasEntry);
+                    setBridgeHasExit(hasExit);
+                    setBridgeColor(color);
+                    setBridgeDeckWidth(deckWidth);
+                    setBridgeLineWidth(lineWidth);
+                    setBridgeWingWallLength(wingWallLength);
+                } // if (key.equals("bridge")) {
+                //
+                //  bumper decorations
+                //
+                else if (key.equals("bumper")) {
+                    String bumperValue = entry.getValue();
+                    if (getName().equals("T15")) {
+                        log.debug("STOP!");
+                    }
+                    // <decoration name="bumper" value="double;linewidth=2;length=6;gap=2;flipped" />
+                    int count = 1, lineWidth = 1, length = 4, gap = 1;
+                    boolean isFlipped = false, atStart = true, atStop = true;
+                    Color color = defaultTrackColor;
+                    String[] values = bumperValue.split(";");
+                    for (int i = 0; i < values.length; i++) {
+                        String value = values[i];
+                        //log.info("value[{}]: \"{}\"", i, value);
+                        if (value.equals("single")) {
+                            count = 1;
+                        } else if (value.equals("double")) {
+                            count = 2;
+                        } else if (value.equals("triple")) {
+                            count = 3;
+                        } else if (value.startsWith("count=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            count = Integer.parseInt(valueString);
+                        } else if (value.equals("start")) {
+                            atStop = false;
+                        } else if (value.equals("stop")) {
+                            atStart = false;
+                        } else if (value.equals("both")) {
+                            // this is the default behaviour; parameter ignored
+                        } else if (value.equals("flip")) {
+                            isFlipped = true;
+                        } else if (value.startsWith("color=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            color = Color.decode(valueString);
+                        } else if (value.startsWith("linewidth=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            lineWidth = Integer.parseInt(valueString);
+                        } else if (value.startsWith("length=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            length = Integer.parseInt(valueString);
+                        } else if (value.startsWith("gap=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            gap = Integer.parseInt(valueString);
+                        } else {
+                            log.debug("bumper value ignored: " + value);
+                        }
+                    }
+                    atStop |= !atStart;   // if atStart is false make atStop true
+                    setBumperCount(count);
+                    setBumperEndStart(atStart);
+                    setBumperEndStop(atStop);
+                    setBumperColor(color);
+                    setBumperLineWidth(lineWidth);
+                    setBumperLength(length);
+                    setBumperGap(gap);
+                    setBumperFlipped(isFlipped);
+                } // if (key.equals("bumper")) {
+                //
+                //  tunnel decorations
+                //
+                else if (key.equals("tunnel")) {
+                    String tunnelValue = entry.getValue();
+                    // <decoration name="tunnel" value="both;linewidth=2;floorwidth=8" />
+                    // right/left default true; in/out default false
+                    boolean hasLeft = true, hasRight = true, hasIn = false, hasOut = false;
+                    int entranceWidth = 4, lineWidth = 1, floorWidth = 2;
+                    Color color = defaultTrackColor;
+                    String[] values = tunnelValue.split(";");
+                    for (int i = 0; i < values.length; i++) {
+                        String value = values[i];
+                        //log.info("value[{}]: \"{}\"", i, value);
+                        if (value.equals("left")) {
+                            hasRight = false;
+                        } else if (value.equals("right")) {
+                            hasLeft = false;
+                        } else if (value.equals("entry")) {
+                            hasIn = true;
+                        } else if (value.equals("exit")) {
+                            hasOut = true;
+                        } else if (value.equals("both")) {
+                            hasIn = true;
+                            hasOut = true;
+                        } else if (value.startsWith("color=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            color = Color.decode(valueString);
+                        } else if (value.startsWith("entrancewidth=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            entranceWidth = Integer.parseInt(valueString);
+                        } else if (value.startsWith("linewidth=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            lineWidth = Integer.parseInt(valueString);
+                        } else if (value.startsWith("floorwidth=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            floorWidth = Integer.parseInt(valueString);
+                        } else {
+                            log.debug("tunnel value ignored: " + value);
+                        }
+                    }
+                    // these both can't be false
+                    if (!hasLeft && !hasRight) {
+                        hasLeft = true;
+                        hasRight = true;
+                    }
+                    setTunnelSideRight(hasRight);
+                    setTunnelSideLeft(hasLeft);
+                    setTunnelHasEntry(hasIn);
+                    setTunnelHasExit(hasOut);
+                    setTunnelColor(color);
+                    setTunnelEntranceWidth(entranceWidth);
+                    setTunnelLineWidth(lineWidth);
+                    setTunnelFloorWidth(floorWidth);
+                } // if (tunnelValue != null)
+                else {
+                    log.debug("Unknown decoration key: " + key + ", value: " + entry.getValue());
                 }
-                // these both can't be false
-                if (!hasLeft && !hasRight) {
-                    hasLeft = true;
-                    hasRight = true;
-                }
-                setTunnelSideRight(hasRight);
-                setTunnelSideLeft(hasLeft);
-                setTunnelEndStart(hasIn);
-                setTunnelEndStop(hasOut);
-                setTunnelColor(color);
-                setTunnelEntranceWidth(entranceWidth);
-                setTunnelLineWidth(lineWidth);
-                setTunnelFloorWidth(floorWidth);
-            }   // if (tunnelValue != null)
+            }   // for (Map.Entry<String, String> entry : decorations.entrySet())
         } //if (decorathions != null)
-    }
+    }   // setDirections
 
     //
     //  arrow decoration accessors
@@ -2981,18 +3159,18 @@ public class TrackSegment extends LayoutTrack {
     }
     private Color arrowColor = Color.BLACK;
 
-    public int getArrowWidth() {
-        return arrowWidth;
+    public int getArrowLineWidth() {
+        return arrowLineWidth;
     }
 
-    public void setArrowWidth(int newVal) {
-        if (arrowWidth != newVal) {
-            arrowWidth = Math.min(1, newVal);
+    public void setArrowLineWidth(int newVal) {
+        if (arrowLineWidth != newVal) {
+            arrowLineWidth = Math.max(1, newVal);
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
     }
-    private int arrowWidth = 4;
+    private int arrowLineWidth = 4;
 
     public int getArrowLength() {
         return arrowLength;
@@ -3000,7 +3178,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setArrowLength(int newVal) {
         if (arrowLength != newVal) {
-            arrowLength = Math.min(2, newVal);
+            arrowLength = Math.max(2, newVal);
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3013,6 +3191,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setArrowGap(int newVal) {
         if (arrowGap != newVal) {
+            arrowGap = Math.max(1, newVal);
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3048,31 +3227,31 @@ public class TrackSegment extends LayoutTrack {
     }
     private boolean bridgeSideLeft = false;
 
-    public boolean isBridgeEndStart() {
-        return bridgeEndStart;
+    public boolean isBridgeHasEntry() {
+        return bridgeHasEntry;
     }
 
-    public void setBridgeEndStart(boolean newVal) {
-        if (bridgeEndStart != newVal) {
-            bridgeEndStart = newVal;
+    public void setBridgeHasEntry(boolean newVal) {
+        if (bridgeHasEntry != newVal) {
+            bridgeHasEntry = newVal;
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
     }
-    private boolean bridgeEndStart = false;
+    private boolean bridgeHasEntry = false;
 
-    public boolean isBridgeEndStop() {
-        return bridgeEndStop;
+    public boolean isBridgeHasExit() {
+        return bridgeHasExit;
     }
 
-    public void setBridgeEndStop(boolean newVal) {
-        if (bridgeEndStop != newVal) {
-            bridgeEndStop = newVal;
+    public void setBridgeHasExit(boolean newVal) {
+        if (bridgeHasExit != newVal) {
+            bridgeHasExit = newVal;
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
     }
-    private boolean bridgeEndStop = false;
+    private boolean bridgeHasExit = false;
 
     public Color getBridgeColor() {
         return bridgeColor;
@@ -3150,7 +3329,7 @@ public class TrackSegment extends LayoutTrack {
         if (bumperEndStart != newVal) {
             bumperEndStart = newVal;
             if (bumperEndStart || bumperEndStop) {
-                bumperCount = Math.min(1, bumperCount);
+                bumperCount = Math.max(1, bumperCount);
             }
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
@@ -3166,7 +3345,7 @@ public class TrackSegment extends LayoutTrack {
         if (bumperEndStop != newVal) {
             bumperEndStop = newVal;
             if (bumperEndStart || bumperEndStop) {
-                bumperCount = Math.min(1, bumperCount);
+                bumperCount = Math.max(1, bumperCount);
             }
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
@@ -3187,18 +3366,18 @@ public class TrackSegment extends LayoutTrack {
     }
     private Color bumperColor = Color.BLACK;
 
-    public int getBumperWidth() {
-        return bumperWidth;
+    public int getBumperLineWidth() {
+        return bumperLineWidth;
     }
 
-    public void setBumperWidth(int newVal) {
-        if (bumperWidth != newVal) {
-            bumperWidth = newVal;
+    public void setBumperLineWidth(int newVal) {
+        if (bumperLineWidth != newVal) {
+            bumperLineWidth = newVal;
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
     }
-    private int bumperWidth = 2;
+    private int bumperLineWidth = 2;
 
     public int getBumperLength() {
         return bumperLength;
@@ -3268,31 +3447,31 @@ public class TrackSegment extends LayoutTrack {
     }
     private boolean tunnelSideLeft = false;
 
-    public boolean isTunnelEndStart() {
-        return tunnelEndStart;
+    public boolean isTunnelHasEntry() {
+        return tunnelHasEntry;
     }
 
-    public void setTunnelEndStart(boolean newVal) {
-        if (tunnelEndStart != newVal) {
-            tunnelEndStart = newVal;
+    public void setTunnelHasEntry(boolean newVal) {
+        if (tunnelHasEntry != newVal) {
+            tunnelHasEntry = newVal;
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
     }
-    private boolean tunnelEndStart = false;
+    private boolean tunnelHasEntry = false;
 
-    public boolean isTunnelEndStop() {
-        return tunnelEndStop;
+    public boolean isTunnelHasExit() {
+        return tunnelHasExit;
     }
 
-    public void setTunnelEndStop(boolean newVal) {
-        if (tunnelEndStop != newVal) {
-            tunnelEndStop = newVal;
+    public void setTunnelHasExit(boolean newVal) {
+        if (tunnelHasExit != newVal) {
+            tunnelHasExit = newVal;
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
     }
-    private boolean tunnelEndStop = false;
+    private boolean tunnelHasExit = false;
 
     public Color getTunnelColor() {
         return tunnelColor;
@@ -3600,5 +3779,6 @@ public class TrackSegment extends LayoutTrack {
     }
 
     private final static Logger log
-            = LoggerFactory.getLogger(TrackSegment.class);
+            = LoggerFactory.getLogger(TrackSegment.class
+            );
 }
