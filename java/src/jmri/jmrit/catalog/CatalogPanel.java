@@ -419,15 +419,16 @@ public class CatalogPanel extends JPanel implements MouseListener {
         if (_backgrounds == null) {
             _backgrounds = new BufferedImage[4];
             for (int i = 0; i <= 2; i++) {
-                _backgrounds[i] = DrawSquares.getImage(500, 400, 10, colorChoice[i], colorChoice[i]);
+                _backgrounds[i] = DrawSquares.getImage(300, 400, 10, colorChoice[i], colorChoice[i]);
             }
-            _backgrounds[3] = DrawSquares.getImage(500, 400, 10, Color.white, _grayColor);
+            _backgrounds[3] = DrawSquares.getImage(300, 400, 10, Color.white, _grayColor);
         }
         return previewPanel;
     }
 
     /**
      * Create panel element containing a "View on:" drop down list.
+     * Employs a normal JComboBox, no Panel Background option.
      * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
      *
      * @return the JPanel with label and drop down
