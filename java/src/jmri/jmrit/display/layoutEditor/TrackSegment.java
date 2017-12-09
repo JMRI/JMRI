@@ -1069,18 +1069,18 @@ public class TrackSegment extends LayoutTrack {
         });
         jcbmi.setSelected(!bridgeHasEntry && !bridgeHasExit);
 
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationStartMenuItemTitle"));
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEntryMenuItemTitle"));
         bridgeEndMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationStartMenuItemToolTip"));
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationEntryMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             setBridgeHasEntry(true);
             setBridgeHasExit(false);
         });
         jcbmi.setSelected(bridgeHasEntry && !bridgeHasExit);
 
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEndMenuItemTitle"));
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationExitMenuItemTitle"));
         bridgeEndMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationEndMenuItemToolTip"));
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationExitMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             setBridgeHasEntry(false);
             setBridgeHasExit(true);
@@ -1295,18 +1295,18 @@ public class TrackSegment extends LayoutTrack {
         });
         jcbmi.setSelected(!tunnelHasEntry && !tunnelHasExit);
 
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationStartMenuItemTitle"));
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEntryMenuItemTitle"));
         tunnelEndMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationStartMenuItemToolTip"));
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationEntryMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             setTunnelHasEntry(true);
             setTunnelHasExit(false);
         });
         jcbmi.setSelected(tunnelHasEntry && !tunnelHasExit);
 
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEndMenuItemTitle"));
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationExitMenuItemTitle"));
         tunnelEndMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationEndMenuItemToolTip"));
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationExitMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             setTunnelHasEntry(false);
             setTunnelHasExit(true);
