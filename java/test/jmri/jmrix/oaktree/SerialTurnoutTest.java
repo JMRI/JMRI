@@ -13,7 +13,6 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     private SerialTrafficControlScaffold tcis = null;
     private OakTreeSystemConnectionMemo _memo = null;
-    //private SerialNode n = new SerialNode();
 
     @Override
     public int numListeners() {
@@ -38,7 +37,8 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         // prepare an interface
         tcis = new SerialTrafficControlScaffold();
         _memo = new OakTreeSystemConnectionMemo("O", "Oaktree");
-        SerialNode b = new SerialNode(1, SerialNode.IO48);
+        _memo.setTrafficController(tcis);
+        SerialNode b = new SerialNode(1, SerialNode.IO48,_memo);
         t = new SerialTurnout("OT0104", "t4", _memo);
     }
 

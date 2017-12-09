@@ -32,7 +32,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     @Override
     public void loadDetails(JPanel details) {
 
-        b.addActionListener(new NodeConfigAction());
+        jmri.jmrix.grapevine.GrapevineSystemConnectionMemo memo = (jmri.jmrix.grapevine.GrapevineSystemConnectionMemo)adapter.getSystemConnectionMemo();
+
+        b.addActionListener(new NodeConfigAction(memo));
         if (!additionalItems.contains(b)) {
             additionalItems.add(b);
         }
@@ -52,6 +54,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     protected void setInstance() {
-        adapter = SerialDriverAdapter.instance();
+        if(adapter == null) { 
+           adapter = new SerialDriverAdapter();
+        }
     }
 }

@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -37,8 +38,8 @@
       and the <a href="../catalog/ImageIndex.shtml">Image Index
       Editor page</a> for details on their use.</p>
 
-      <h2>Contents of the MultiSensor Icon Editor</h2><img src=
-      "MultiSensorIcon.png" align="right">
+      <h2>Contents of the MultiSensor Icon Editor</h2>
+      <img src="images/MultiSensorIcon.png" align="right">
 
       <p>The icons in the MultiSensor Icon Editor differ only in
       that there are several "active" icons. Each corresponds to a
@@ -56,8 +57,8 @@
 
       <p>When all the active icons are assigned sensors, the <b>Add
       to Panel</b> button will become active and it can be pressed
-      to install the Multisensor into the Panel. 
-      <!--#include virtual="/Footer" --></p>
+      to install the Multisensor into the Panel.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

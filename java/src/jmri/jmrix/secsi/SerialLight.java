@@ -14,13 +14,16 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialLight extends AbstractLight {
 
+    private SecsiSystemConnectionMemo memo = null;
+
     /**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SerialLight(String systemName) {
+    public SerialLight(String systemName,SecsiSystemConnectionMemo _memo) {
         super(systemName);
+        memo = _memo;
         // Initialize the Light
         initializeLight(systemName);
     }
@@ -30,8 +33,9 @@ public class SerialLight extends AbstractLight {
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SerialLight(String systemName, String userName) {
+    public SerialLight(String systemName, String userName,SecsiSystemConnectionMemo _memo) {
         super(systemName, userName);
+        memo = _memo;
         initializeLight(systemName);
     }
 
@@ -60,7 +64,7 @@ public class SerialLight extends AbstractLight {
      */
     @Override
     protected void doNewState(int oldState, int newState) {
-        SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName());
+        SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName(),memo.getTrafficController());
         if (mNode != null) {
             if (newState == ON) {
                 mNode.setOutputBit(mBit, false);

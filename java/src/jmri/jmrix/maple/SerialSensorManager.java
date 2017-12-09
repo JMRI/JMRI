@@ -36,10 +36,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     MapleSystemConnectionMemo _memo = null;
     protected String prefix = "M";
 
-    public SerialSensorManager() {
-
-    }
-
     public SerialSensorManager(MapleSystemConnectionMemo memo) {
         super();
         _memo = memo;
@@ -94,7 +90,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                     javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
         }
         // register this sensor 
-        InputBits.instance().registerSensor(s, bit - 1);
+        _memo.getTrafficController().inputBits().registerSensor(s, bit - 1);
         return s;
     }
 
@@ -140,7 +136,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     public void reply(SerialReply r) {
-        InputBits.instance().markChanges(r);
+        _memo.getTrafficController().inputBits().markChanges(r);
     }
 
     /**
@@ -159,7 +155,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 log.debug("system name is {}", sName);
                 if ((sName.charAt(0) == 'K') && (sName.charAt(1) == 'S')) { // TODO multichar prefix
                     // This is a valid Sensor - make sure it is registered
-                    InputBits.instance().registerSensor(getBySystemName(sName),
+                    _memo.getTrafficController().inputBits().registerSensor(getBySystemName(sName),
                             (SerialAddress.getBitFromSystemName(sName, getSystemPrefix()) - 1));
                 }
             }
@@ -235,15 +231,12 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      *
      * @return The registered SerialSensorManager instance for general use, if
      *         need be creating one.
+     * @deprecated since 4.9.7
      */
+    @Deprecated
     static public SerialSensorManager instance() {
-        if (_instance == null) {
-            _instance = new SerialSensorManager();
-        }
-        return _instance;
+        return null;
     }
-
-    static SerialSensorManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);
 

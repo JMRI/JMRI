@@ -19,12 +19,22 @@ public class SendPacketFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SendPacketFrame t = new SendPacketFrame();
         Assert.assertNotNull("exists",t);
+        t.dispose();
+    }
+
+    @Test
+    public void testInit() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SendPacketFrame t = new SendPacketFrame();
+        t.initComponents();
+        t.dispose();
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initDebugCommandStation();
     }
 
     @After

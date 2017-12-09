@@ -7,6 +7,9 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
+import jmri.jmrix.grapevine.SerialTrafficController;
+import jmri.jmrix.grapevine.SerialTrafficControlScaffold;
 
 /**
  *
@@ -14,17 +17,23 @@ import org.junit.Test;
  */
 public class RenumberFrameTest {
 
+    private GrapevineSystemConnectionMemo memo = null; 
+
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        RenumberFrame t = new RenumberFrame();
+        RenumberFrame t = new RenumberFrame(memo);
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        SerialTrafficController tc = new SerialTrafficControlScaffold();
+        memo = new GrapevineSystemConnectionMemo();
+        memo.setTrafficController(tc);
     }
 
     @After

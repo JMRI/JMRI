@@ -38,8 +38,8 @@ public class SerialNode extends AbstractNode {
      * Assumes a node address of 1, and a node type of 0. If this constructor is
      * used, actual node address must be set using setNodeAddress.
      */
-    public SerialNode() {
-        this(1, 0);
+    public SerialNode(SerialTrafficController tc) {
+        this(1, 0, tc);
     }
 
     /**
@@ -47,12 +47,12 @@ public class SerialNode extends AbstractNode {
      * @param address Address of node on serial bus (0-99)
      * @param type 0 (ignored)
      */
-    public SerialNode(int address, int type) {
+    public SerialNode(int address, int type, SerialTrafficController tc) {
         // set address 
         setNodeAddress(address);
         _address = address;
         // register this node
-        SerialTrafficController.instance().registerNode(this);
+        tc.registerNode(this);
     }
 
     /**
