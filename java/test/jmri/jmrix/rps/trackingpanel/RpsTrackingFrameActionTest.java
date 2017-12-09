@@ -5,6 +5,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  *
@@ -12,9 +13,11 @@ import org.junit.Test;
  */
 public class RpsTrackingFrameActionTest {
 
+    private RpsSystemConnectionMemo memo = null;
+
     @Test
     public void testCTor() {
-        RpsTrackingFrameAction t = new RpsTrackingFrameAction();
+        RpsTrackingFrameAction t = new RpsTrackingFrameAction(memo);
         Assert.assertNotNull("exists",t);
     }
 
@@ -22,6 +25,7 @@ public class RpsTrackingFrameActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new RpsSystemConnectionMemo();
     }
 
     @After

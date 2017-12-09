@@ -18,7 +18,8 @@ import org.junit.runners.Suite;
     jmri.jmrix.rps.swing.soundset.PackageTest.class,
     CsvExportActionTest.class,
     CsvExportMeasurementActionTest.class,
-    LoadStorePanelTest.class
+    LoadStorePanelTest.class,
+    RpsComponentFactoryTest.class
 })
 public class PackageTest {
 }

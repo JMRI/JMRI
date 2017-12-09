@@ -4,7 +4,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import javax.swing.SortOrder;
-import jmri.util.com.sun.TableSorter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -189,10 +188,10 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                         // before 4.3.5 we used "sort" save column sort state
                     } else if (column.getChild("sort") != null) {
                         switch (Integer.parseInt(column.getChild("sort").getText())) {
-                            case TableSorter.ASCENDING:
+                            case 1: // old sort scheme used 1 for ascending
                                 sort = SortOrder.ASCENDING;
                                 break;
-                            case TableSorter.DESCENDING:
+                            case -1: // old sort scheme used -1 for descending
                                 sort = SortOrder.DESCENDING;
                                 break;
                             default:

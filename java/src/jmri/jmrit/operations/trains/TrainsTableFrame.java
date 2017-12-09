@@ -370,34 +370,42 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         }
         if (ae.getSource() == runFileButton) {
             // Processes the CSV Manifest files using an external custom program.
-            if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: " + InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName()
-                        + ", file name: " + InstanceManager.getDefault(TrainCustomManifest.class).getFileName()); // NOI18N
-                JOptionPane.showMessageDialog(this, MessageFormat.format(
-                        Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
-                    InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(), InstanceManager.getDefault(TrainCustomManifest.class).getFileName()}), Bundle
-                        .getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
+            TrainCustomManifest tcm = InstanceManager.getDefault(TrainCustomManifest.class);
+            if (!tcm.excelFileExists()) {
+                log.warn("Manifest creator file not found!, directory name: {}, file name: {}",
+                        tcm.getDirectoryName(), tcm.getFileName());
+                JOptionPane.showMessageDialog(this,
+                        MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
+                                new Object[]{
+                                    tcm.getDirectoryName(),
+                                    tcm.getFileName()
+                                }),
+                        Bundle.getMessage("ManifestCreatorNotFound"),
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
             List<Train> trains = getSortByList();
             for (Train train : trains) {
                 if (train.isBuildEnabled()) {
                     if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
-                        JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-                                .getMessage("NeedToBuildBeforeRunFile"), new Object[]{
-                            train.getName()}),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this,
+                                MessageFormat.format(Bundle.getMessage("NeedToBuildBeforeRunFile"),
+                                        new Object[]{
+                                            train.getName()
+                                        }),
+                                Bundle.getMessage("ErrorTitle"),
+                                JOptionPane.ERROR_MESSAGE);
                     } else if (train.isBuilt()) {
                         // Make sure our csv manifest file exists for this Train.
                         File csvFile = train.createCSVManifestFile();
                         // Add it to our collection to be processed.
-                        InstanceManager.getDefault(TrainCustomManifest.class).addCVSFile(csvFile);
+                        tcm.addCVSFile(csvFile);
                     }
                 }
             }
 
             // Now run the user specified custom Manifest processor program
-            InstanceManager.getDefault(TrainCustomManifest.class).process();
+            tcm.process();
         }
         if (ae.getSource() == switchListsButton) {
             if (tslef != null) {

@@ -2,6 +2,7 @@ package jmri.jmrit.display.palette;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,8 +10,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.util.Hashtable;
 import java.util.Iterator;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -35,9 +38,11 @@ import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.palette.TextItemPanel.DragDecoratorLabel;
+import jmri.util.swing.DrawSquares;
+import jmri.util.swing.ImagePanel;
 
 /**
- * Panel for positionables with text and/or colored margins and borders
+ * Panel for positionables with text and/or colored margins and borders.
  * 
  * @author PeteCressman Copyright (C) 2009, 2015
  */
@@ -92,12 +97,20 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     AJSpinner _heightSpin;
 
     JColorChooser _chooser;
-    JPanel _previewPanel;
+    ImagePanel _previewPanel;
     JPanel _samplePanel;
     private PositionablePopupUtil _util;
     private Hashtable<String, PositionableLabel> _sample = null;
     private int _selectedButton;
     ButtonGroup _buttonGroup = new ButtonGroup();
+
+    protected DrawSquares _squaresPanel; // checkered background
+    static Color _grayColor = new Color(235, 235, 235);
+    static Color _darkGrayColor = new Color(150, 150, 150);
+    private Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
+    protected Color _currentBackground;
+    protected BufferedImage[] _backgrounds; // array of Image backgrounds
+    private int previewBgSet = 0; // setting for preview background color, starts as 0 = use Panel bg
 
     Editor _editor;
     java.awt.Window _dialog;
@@ -106,21 +119,28 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _editor = editor;
         _dialog = dialog;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        Color bkgrnd = _editor.getTargetPanel().getBackground();
-        _chooser = new JColorChooser(bkgrnd);
+        _currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
+        _chooser = new JColorChooser(_currentBackground);
         _sample = new Hashtable<>();
 
-        _previewPanel = new JPanel();
+        _previewPanel = new ImagePanel();
         _previewPanel.setLayout(new BorderLayout());
-        _previewPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),Bundle.getMessage("PreviewBorderTitle")));
-        _previewPanel.add(Box.createVerticalStrut(STRUT), BorderLayout.NORTH);
-        _previewPanel.add(Box.createVerticalStrut(STRUT), BorderLayout.SOUTH);
-        _previewPanel.setBackground(bkgrnd);
-         
+        _previewPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
+                Bundle.getMessage("PreviewBorderTitle")));
+        _previewPanel.add(Box.createVerticalStrut(STRUT), BorderLayout.PAGE_START);
+        _previewPanel.add(Box.createVerticalStrut(STRUT), BorderLayout.PAGE_END);
+
+        // create array of backgrounds, _currentBackground already set and used
+        _backgrounds = new BufferedImage[5];
+        _backgrounds[0] = DrawSquares.getImage(500, 150, 15, _currentBackground, _currentBackground);
+        for (int i = 1; i <= 3; i++) {
+            _backgrounds[i] = DrawSquares.getImage(500, 150, 15, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
+        }
+        _backgrounds[4] = DrawSquares.getImage(500, 150, 15, Color.white, _grayColor);
+
         _samplePanel = new JPanel();
-//      _samplePanel.setLayout(new BoxLayout(_samplePanel, BoxLayout.X_AXIS));
         _samplePanel.add(Box.createHorizontalStrut(STRUT));
-        _samplePanel.setBackground(bkgrnd);
+        _samplePanel.setOpaque(false);
     }
 
     static class AJComboBox extends JComboBox<String> {
@@ -168,7 +188,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         return panel;
     }
 
-    /* Called by Palettte's TextItemPanel i.e. make a new panel item to drag */
+    /* Called by Palette's TextItemPanel i.e. make a new panel item to drag */
     protected void initDecoratorPanel(DragDecoratorLabel sample) {
         sample.setDisplayLevel(Editor.LABELS);
         sample.setBackground(_editor.getTargetPanel().getBackground());
@@ -181,14 +201,14 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _chooser.getSelectionModel().addChangeListener(this);
         _chooser.setPreviewPanel(new JPanel());
         this.add(_chooser);
-        _previewPanel.add(_samplePanel, java.awt.BorderLayout.CENTER);
+        _previewPanel.add(_samplePanel, BorderLayout.CENTER);
         this.add(_previewPanel);
         updateSamples();
     }
 
     /* Called by Editor's TextAttrDialog - i.e. update a panel item from menu */
     public void initDecoratorPanel(Positionable pos) {
-        Positionable item = pos.deepClone();  // copy of PositionableLabel being edited
+        Positionable item = pos.deepClone(); // copy of PositionableLabel being edited
         _util = item.getPopupUtility();
 
         if (pos instanceof SensorIcon && !((SensorIcon)pos).isIcon()) {
@@ -265,7 +285,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _chooser.getSelectionModel().addChangeListener(this);
         _chooser.setPreviewPanel(new JPanel());
         this.add(_chooser);
-        _previewPanel.add(_samplePanel, java.awt.BorderLayout.CENTER);
+        _previewPanel.add(_samplePanel, BorderLayout.CENTER);
         this.add(_previewPanel);
         updateSamples();
     }
@@ -435,8 +455,10 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 return this;
             }
         }.init(button));
-        panel.add(p);
+        // add a SetBackground combo
+        p.add(makeBgButtonPanel(_previewPanel, null, _backgrounds));
 
+        panel.add(p);
         return panel;
     }
 
@@ -464,8 +486,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         return button;
     }
 
-    private void updateSamples() {
-        if (_previewPanel==null) {
+    protected void updateSamples() {
+        if (_previewPanel == null) {
             return;            
         }
         
@@ -514,6 +536,50 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         if (_dialog!=null) {
             _dialog.pack();            
         }
+    }
+
+    /**
+     * Create panel element containing [Set background:] drop down list.
+     * Special version for Decorator, no access to shared variable previewBgSet.
+     * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
+     * @see ItemPanel
+     *
+     * @param preview1 ImagePanel containing icon set
+     * @param preview2 not used, matches method in ItemPanel
+     * @param imgArray array of colored background images
+     * @return a JPanel with label and drop down
+     */
+    private JPanel makeBgButtonPanel(@Nonnull ImagePanel preview1, ImagePanel preview2, BufferedImage[] imgArray) {
+        JComboBox<String> bgColorBox = new JComboBox<>();
+        bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, too long for combo
+        bgColorBox.addItem(Bundle.getMessage("White"));
+        bgColorBox.addItem(Bundle.getMessage("LightGray"));
+        bgColorBox.addItem(Bundle.getMessage("DarkGray"));
+        bgColorBox.addItem(Bundle.getMessage("Checkers"));
+        bgColorBox.setSelectedIndex(previewBgSet); // starts as 0 = panel bg color, cannot read shared choice
+        bgColorBox.addActionListener((ActionEvent e) -> {
+            if (imgArray != null) {
+                if (previewBgSet != bgColorBox.getSelectedIndex()) {
+                    previewBgSet = bgColorBox.getSelectedIndex(); // store user choice
+                    // load background image
+                    log.debug("Palette Decorator setImage called {}", previewBgSet);
+                    preview1.setImage(imgArray[previewBgSet]);
+                }
+                // preview.setOpaque(false); // needed?
+                preview1.revalidate();        // force redraw
+            } else {
+                log.debug("imgArray is empty");
+            }
+        });
+        JPanel backgroundPanel = new JPanel();
+        backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
+        JPanel pp = new JPanel();
+        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
+        pp.add(new JLabel(Bundle.getMessage("setBackground")));
+        pp.add(bgColorBox);
+        backgroundPanel.add(pp);
+        backgroundPanel.setMaximumSize(backgroundPanel.getPreferredSize());
+        return backgroundPanel;
     }
 
     @Override
@@ -648,7 +714,6 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 log.warn("Unexpected _selectedButton {}  in changeColor", _selectedButton);
                 break;
         }
-        
     }
 
     @Override
@@ -709,4 +774,5 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
 
     // initialize logging
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DecoratorPanel.class);
+
 }

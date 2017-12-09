@@ -4,11 +4,16 @@ import java.awt.Color;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionListener;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,6 +25,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.ReporterIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,19 +56,36 @@ public class ReporterItemPanel extends TableItemPanel {
         return panel;
     }
 
+    /**
+     * ReporterItemPanel displays no _iconFamilyPanel.
+     */
     @Override
     protected void initIconFamiliesPanel() {
-        _iconFamilyPanel = new JPanel();
-        _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
-        if (!_update) {
-            _iconFamilyPanel.add(instructions());
+        boolean initialize = false;
+        if (_iconFamilyPanel == null) {
+            log.debug("new _iconFamilyPanel created");
+            initialize = true;
+            _iconFamilyPanel = new JPanel();
+            _iconFamilyPanel.setOpaque(true);
+            _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
+            if (!_update) {
+                _iconFamilyPanel.add(instructions());
+            }
         }
-        _iconPanel = new JPanel();
-        _iconPanel.setBackground(_editor.getTargetPanel().getBackground());
-        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),Bundle.getMessage("PreviewBorderTitle")));
-//        _iconFamilyPanel.add(_iconPanel);
         makeDragIconPanel(1);
         makeDndIconPanel(null, null);
+        if (_iconPanel == null) { // keep an existing panel
+            _iconPanel = new ImagePanel(); // never shown, so don't bother to configure, but element must exist
+            //_iconPanel.setOpaque(false);
+            //_iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
+            //        Bundle.getMessage("PreviewBorderTitle")));
+            //_iconFamilyPanel.add(_iconPanel); // On Reporter, no icon family to choose
+        }
+        if (_backgrounds != null) {
+            _dragIconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
+        } else {
+            log.debug("ReporterItemPanel - no value for previewBgSet");
+        }
     }
 
     @Override
@@ -70,8 +93,16 @@ public class ReporterItemPanel extends TableItemPanel {
         if (doneAction != null) {
             addUpdateButtonToBottom(doneAction);
         }
+        updateBackgrounds(); // create array of backgrounds
+
         initIconFamiliesPanel();
         add(_iconFamilyPanel);
+        // add a SetBackground combo
+        // TODO add indirect updating of panel upon display via previewBgSet
+        if (bgBoxPanel == null) {
+            bgBoxPanel = makeBgButtonPanel(_dragIconPanel, null, _backgrounds);
+            add(bgBoxPanel);
+        }
     }
     
     @Override
@@ -81,16 +112,16 @@ public class ReporterItemPanel extends TableItemPanel {
         }
         _reporter = new ReporterIcon(_editor);
         JPanel panel = new JPanel();
-        panel.setBackground(_editor.getTargetPanel().getBackground());
+        panel.setOpaque(false);
         JPanel comp;
         try {
             comp = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
-            comp.setBackground(_editor.getTargetPanel().getBackground());
-            comp.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         } catch (java.lang.ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
             comp = new JPanel();
         }
+        comp.setOpaque(false);
+        comp.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         panel.add(comp);
         panel.revalidate();
         int width = Math.max(100, panel.getPreferredSize().width);
@@ -106,7 +137,7 @@ public class ReporterItemPanel extends TableItemPanel {
     }
 
     /**
-     * ListSelectionListener action from table
+     * ListSelectionListener action from table.
      */
     @Override
     public void valueChanged(ListSelectionEvent e) {
@@ -114,9 +145,7 @@ public class ReporterItemPanel extends TableItemPanel {
             return;
         }
         int row = _table.getSelectedRow();
-        if (log.isDebugEnabled()) {
-            log.debug("Table valueChanged: row= " + row);
-        }
+        log.debug("Table valueChanged: row = {}", row);
         if (row >= 0) {
             if (_updateButton != null) {
                 _updateButton.setEnabled(true);
@@ -144,9 +173,10 @@ public class ReporterItemPanel extends TableItemPanel {
         _family = null;
         super.setEditor(ed);
         if (_initialized) {
-            remove(_iconFamilyPanel);
+            _dragIconPanel.removeAll();
+            _iconPanel.removeAll();
             initIconFamiliesPanel();
-            add(_iconFamilyPanel, 1);
+            //add(_iconFamilyPanel, 1);
             validate();
         }
     }
@@ -171,7 +201,6 @@ public class ReporterItemPanel extends TableItemPanel {
             }
             return true;
         }
-
 
         @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
@@ -200,4 +229,5 @@ public class ReporterItemPanel extends TableItemPanel {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ReporterItemPanel.class);
+
 }

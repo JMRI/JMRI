@@ -14,13 +14,15 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
-    public SerialTurnoutManager() {
+    private SecsiSystemConnectionMemo memo = null;
 
+    public SerialTurnoutManager(SecsiSystemConnectionMemo _memo) {
+        memo = _memo;
     }
 
     @Override
     public String getSystemPrefix() {
-        return "V";
+        return memo.getSystemPrefix();
     }
 
     @Override
@@ -43,10 +45,10 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             return null;
         }
         // create the turnout
-        t = new SerialTurnout(sName, userName);
+        t = new SerialTurnout(sName, userName,memo);
 
         // does system name correspond to configured hardware
-        if (!SerialAddress.validSystemNameConfig(sName, 'T')) {
+        if (!SerialAddress.validSystemNameConfig(sName, 'T', memo.getTrafficController())) {
             // system name does not correspond to configured hardware
             log.warn("Turnout '" + sName + "' refers to an undefined Serial Node.");
         }
@@ -62,13 +64,10 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return (SerialAddress.validSystemNameFormat(systemName, 'T'));
     }
 
+    @Deprecated
     static public SerialTurnoutManager instance() {
-        if (_instance == null) {
-            _instance = new SerialTurnoutManager();
-        }
-        return _instance;
+        return null;
     }
-    static SerialTurnoutManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 
