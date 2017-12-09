@@ -27,19 +27,21 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
 
     /**
      * set the usb port adapter
+     *
      * @param usbPortAdapter the usb port adapter to set
      */
     protected void setAdapter(UsbPortAdapter usbPortAdapter) {
-        log.debug("* setAdapter({})", usbPortAdapter);
+        log.debug("setAdapter({})", usbPortAdapter);
         adapter = usbPortAdapter;
     }
 
     /**
      * get the usb port adapter
+     *
      * @return the usb port adapter
      */
     protected UsbPortAdapter getAdapter() {
-        log.debug("* getAdapter({})");
+        log.debug("getAdapter({})");
         return adapter;
     }
 
@@ -48,17 +50,14 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
      *
      * @param object to get the instance of
      */
-    protected void getInstance(Object object) {
-        log.error("getInstance not over-ridden");
-        getInstance(); // over-ridden during migration
-    }
+    protected abstract void getInstance(Object object);
 
     /**
      * {@inheritDoc}
      */
     @Override
     public Element store(Object object) {
-        log.debug("* store({})", object);
+        log.debug("store({})", object);
         getInstance(object);
         Element e = new Element("connection");
 
@@ -77,6 +76,9 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
         } else {
             e.setAttribute("port", Bundle.getMessage("noneSelected"));
         }
+        if (adapter.getSerialNumber() != null) {
+            e.setAttribute("serialNumber", adapter.getSerialNumber());
+        }
 
         e.setAttribute("class", this.getClass().getName());
 
@@ -90,24 +92,30 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
      */
     @Override
     protected void extendElement(Element e) {
-        log.debug("* extendElement({})", e);
+        log.debug("extendElement({})", e);
     }
 
     /**
      * load from xml elements
-     * @param shared element
+     *
+     * @param shared  element
      * @param perNode element
      * @return boolean true if successful
      */
     @Override
     public boolean load(Element shared, Element perNode) {
-        log.debug("* load({}, {})", shared, perNode);
+        log.debug("load({}, {})", shared, perNode);
         boolean result = true;  // assume success (optimist!)
 
         getInstance();
         // configure port name
-        String portName = perNode.getAttribute("port").getValue();
+        String portName = perNode.getAttributeValue("port");
+        String serialNumber = perNode.getAttributeValue("serialNumber");
+        if (serialNumber != null && serialNumber.isEmpty()) {
+            serialNumber = null;
+        }
         adapter.setPort(portName);
+        adapter.setSerialNumber(serialNumber);
 
         loadCommon(shared, perNode, adapter);
 
@@ -120,7 +128,7 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
             return result;
         }
 
-        String status = adapter.openPort(portName, "JMRI app");
+        String status = adapter.openPort(portName, serialNumber);
         if (status != null) {
             // indicates an error, return it
             handleException(status, "opening connection", null, null, null);
