@@ -117,6 +117,7 @@ public abstract class LayoutTrack {
 
     /**
      * get decorations
+     *
      * @return the decorations
      */
     public Map<String, String> getDecorations() {
@@ -125,6 +126,7 @@ public abstract class LayoutTrack {
 
     /**
      * set decorations
+     *
      * @param decorations to set
      */
     public void setDecorations(Map<String, String> decorations) {
@@ -180,8 +182,8 @@ public abstract class LayoutTrack {
     /**
      * draw two lines (rails)
      *
-     * @param g2      the graphics context
-     * @param isMain  true if drawing mainlines
+     * @param g2               the graphics context
+     * @param isMain           true if drawing mainlines
      * @param railDisplacement the offset from center to draw the lines
      */
     protected abstract void draw2(Graphics2D g2, boolean isMain, float railDisplacement);
