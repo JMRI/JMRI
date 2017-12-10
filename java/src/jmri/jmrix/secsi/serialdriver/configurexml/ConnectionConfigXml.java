@@ -2,7 +2,7 @@ package jmri.jmrix.secsi.serialdriver.configurexml;
 
 import java.util.List;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
-import jmri.jmrix.secsi.SecsiSystemConnectionMemo;;
+import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 import jmri.jmrix.secsi.SerialNode;
 import jmri.jmrix.secsi.SerialTrafficController;
 import jmri.jmrix.secsi.serialdriver.ConnectionConfig;
