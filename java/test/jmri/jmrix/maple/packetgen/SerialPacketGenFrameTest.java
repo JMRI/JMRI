@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 
 /**
  * Test simple functioning of SerialPacketGenFrame
@@ -18,7 +19,7 @@ public class SerialPacketGenFrameTest {
     @Test
     public void testMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialPacketGenFrame action = new SerialPacketGenFrame(); 
+        SerialPacketGenFrame action = new SerialPacketGenFrame(new MapleSystemConnectionMemo()); 
         Assert.assertNotNull("exists", action);
     }
 

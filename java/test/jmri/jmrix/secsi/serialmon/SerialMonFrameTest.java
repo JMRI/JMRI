@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 
 /**
  * Test simple functioning of SerialMonFrame
@@ -15,16 +16,19 @@ import org.junit.Test;
  */
 public class SerialMonFrameTest {
 
+    private SecsiSystemConnectionMemo memo = null;
+
     @Test
     public void testMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialMonFrame action = new SerialMonFrame();
+        SerialMonFrame action = new SerialMonFrame(memo);
         Assert.assertNotNull("exists", action);
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new SecsiSystemConnectionMemo();
     }
 
     @After

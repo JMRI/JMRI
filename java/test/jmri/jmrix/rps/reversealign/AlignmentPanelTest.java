@@ -12,6 +12,7 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  * JUnit tests for the rps.AlignmentPanel class.
@@ -20,13 +21,15 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  */
 public class AlignmentPanelTest {
 
+    private RpsSystemConnectionMemo memo = null;
+
     @Test
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("RPS Alignment");
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
 
-        AlignmentPanel panel = new AlignmentPanel();
+        AlignmentPanel panel = new AlignmentPanel(memo);
         panel.initComponents();
         f.getContentPane().add(panel);
         f.pack();
@@ -39,7 +42,7 @@ public class AlignmentPanelTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-
+        memo = new RpsSystemConnectionMemo();
         InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
     }
 

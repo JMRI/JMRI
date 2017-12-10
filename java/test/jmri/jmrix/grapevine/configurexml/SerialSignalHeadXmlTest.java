@@ -5,6 +5,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
+import jmri.jmrix.grapevine.SerialTrafficController;
+import jmri.jmrix.grapevine.SerialTrafficControlScaffold;
 
 /**
  * SerialSignalHeadXmlTest.java
@@ -15,6 +18,8 @@ import org.junit.Test;
  */
 public class SerialSignalHeadXmlTest {
 
+    private GrapevineSystemConnectionMemo memo = null;
+
     @Test
     public void testCtor(){
       Assert.assertNotNull("SerialSignalHeadXml constructor",new SerialSignalHeadXml());
@@ -24,6 +29,10 @@ public class SerialSignalHeadXmlTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        SerialTrafficController tc = new SerialTrafficControlScaffold();
+        memo = new GrapevineSystemConnectionMemo();
+        memo.setTrafficController(tc);
+        jmri.InstanceManager.store(memo,GrapevineSystemConnectionMemo.class);
     }
 
     @After

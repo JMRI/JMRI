@@ -2048,6 +2048,8 @@
 
 <mapID target="package.jmri.jmrit.withrottle.UserInterface" url="package/jmri/jmrit/withrottle/UserInterface.shtml"/>
 
+<mapID target="html.hardware.loconet.Addressing_boards" url="html/hardware/loconet/Addressing.shtml#boards"/>
+
 <mapID target="package.jmri.jmrix.secsi.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/secsi/nodeconfig/NodeConfigFrame.shtml"/>
 
 <mapID target="manual.DecoderPro3.Comp_Analog" url="manual/DecoderPro3/Comp_Analog.shtml"/>
@@ -3218,6 +3220,8 @@
 
 <mapID target="html.hardware.loconet.Digitrax" url="html/hardware/loconet/Digitrax.shtml"/>
 
+<mapID target="html.doc.Technical.I8N_classkeysreport" url="html/doc/Technical/I8N.shtml#classkeysreport"/>
+
 <mapID target="html.hardware.loconet.Digitrax_alternatives" url="html/hardware/loconet/Digitrax.shtml#alternatives"/>
 
 <mapID target="html.apps.DecoderPro.LocoFile" url="html/apps/DecoderPro/LocoFile.shtml"/>
@@ -3777,6 +3781,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Trains_BuildOptions_Top" url="manual/JMRI_OPS_UsersGuide/Ops_Trains_BuildOptions.shtml#Top"/>
 
 <mapID target="html.hardware.loconet.StandaloneLocoNet_pseudoground" url="html/hardware/loconet/StandaloneLocoNet.shtml#pseudoground"/>
+
+<mapID target="html.doc.Technical.I8N_bundlekeysreport" url="html/doc/Technical/I8N.shtml#bundlekeysreport"/>
 
 <mapID target="manual.DecoderPro3.Main_OakTreeSystems" url="manual/DecoderPro3/Main_OakTreeSystems.shtml"/>
 

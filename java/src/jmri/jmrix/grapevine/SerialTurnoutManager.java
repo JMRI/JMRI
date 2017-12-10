@@ -15,13 +15,15 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
-    public SerialTurnoutManager() {
+    GrapevineSystemConnectionMemo memo = null;
 
+    public SerialTurnoutManager(GrapevineSystemConnectionMemo _memo) {
+       memo = _memo;
     }
 
     @Override
     public String getSystemPrefix() {
-        return "G";
+        return memo.getSystemPrefix();
     }
 
     @Override
@@ -44,23 +46,20 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             return null;
         }
         // create the turnout
-        t = new SerialTurnout(sName, userName);
+        t = new SerialTurnout(sName, userName,memo);
 
         // does system name correspond to configured hardware
-        if (!SerialAddress.validSystemNameConfig(sName, 'T')) {
+        if (!SerialAddress.validSystemNameConfig(sName, 'T',memo.getTrafficController())) {
             // system name does not correspond to configured hardware
             log.warn("Turnout '" + sName + "' refers to an undefined Serial Node.");
         }
         return t;
     }
 
+    @Deprecated
     static public SerialTurnoutManager instance() {
-        if (_instance == null) {
-            _instance = new SerialTurnoutManager();
-        }
-        return _instance;
+        return null;
     }
-    static SerialTurnoutManager _instance = null;
 
     @Override
     public boolean allowMultipleAdditions(String systemName) {

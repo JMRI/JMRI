@@ -226,7 +226,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             configNodes[i] = null;
         }
         // get all configured nodes
-        SerialNode node = (SerialNode) SerialTrafficController.instance().getNode(0);
+        SerialNode node = (SerialNode) _memo.getTrafficController().getNode(0);
         int index = 1;
         while (node != null) {
             configNodes[numConfigNodes] = node;
@@ -240,7 +240,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             }
             numConfigNodes++;
             // go to next node
-            node = (SerialNode) SerialTrafficController.instance().getNode(index);
+            node = (SerialNode) _memo.getTrafficController().getNode(index);
             index++;
         }
     }
