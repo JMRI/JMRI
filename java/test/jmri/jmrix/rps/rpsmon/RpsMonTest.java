@@ -9,6 +9,7 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  * Tests for the jmri.jmrix.rps.rpsmon package.
@@ -17,11 +18,13 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  */
 public class RpsMonTest {
 
+    private RpsSystemConnectionMemo memo = null;
+
     // show the window
     @Test
     public void testDisplay() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        new RpsMonAction().actionPerformed(null);
+        new RpsMonAction(memo).actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame("RPS Monitor", true, true);
         Assert.assertNotNull("found frame", f);
         f.dispose();
@@ -30,6 +33,7 @@ public class RpsMonTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        memo = new RpsSystemConnectionMemo();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }

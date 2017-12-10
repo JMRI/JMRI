@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  * Swing action to create and register a DisplayFrame object
@@ -12,18 +13,21 @@ import org.slf4j.LoggerFactory;
  */
 public class DebuggerAction extends AbstractAction {
 
-    public DebuggerAction(String s) {
+    RpsSystemConnectionMemo memo = null;
+
+    public DebuggerAction(String s,RpsSystemConnectionMemo _memo) {
         super(s);
+        memo = _memo;
     }
 
-    public DebuggerAction() {
-        this("RPS Debugger Window");
+    public DebuggerAction(RpsSystemConnectionMemo _memo) {
+        this("RPS Debugger Window",_memo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         log.debug("starting frame creation");
-        DebuggerFrame f = new DebuggerFrame();
+        DebuggerFrame f = new DebuggerFrame(memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

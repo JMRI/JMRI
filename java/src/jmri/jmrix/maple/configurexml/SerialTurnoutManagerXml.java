@@ -31,8 +31,6 @@ public class SerialTurnoutManagerXml extends jmri.managers.configurexml.Abstract
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        // create the master object
-        SerialTurnoutManager.instance();
         // load individual turnouts
         return loadTurnouts(shared, perNode);
     }

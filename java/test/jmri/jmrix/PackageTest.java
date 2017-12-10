@@ -30,7 +30,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMRTrafficControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMRNodeTrafficControllerTest.class));
 
-        suite.addTest(jmri.jmrix.ActiveSystemFlagTest.suite());
         suite.addTest(jmri.jmrix.AbstractProgrammerTest.suite());
         suite.addTest(jmri.jmrix.AbstractMRReplyTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractThrottleTest.class));
