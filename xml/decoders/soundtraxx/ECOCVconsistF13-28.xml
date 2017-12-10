@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2017 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!--                                                                        -->
+<!-- version 1 - initial file, from ECOCV.xml v2.2 (Alain Le Marchand)      -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <variable CV="245" mask="XXXXXXXV" item="Consist Address Active For F13" default="0" minFn="13">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label xml:lang="it">Indirizzo Consist Attivo per F13</label>
+        <label xml:lang="fr">Adresse d'Unité Multiple active pour F13</label>
+        <label xml:lang="de">Verbundadresse aktiv für F13</label>
+        <label>Consist Address Active For F13</label>
+    </variable>
+    <variable CV="245" mask="XXXXXXVX" item="Consist Address Active For F14" default="0" minFn="14">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label xml:lang="it">Indirizzo Consist Attivo per F14</label>
+        <label xml:lang="fr">Adresse d'Unité Multiple active pour F14</label>
+        <label xml:lang="de">Verbundadresse aktiv für F14</label>
+        <label>Consist Address Active For F14</label>
+    </variable>
+    <variable CV="245" mask="XXXXXVXX" item="Consist Address Active For F15" default="0" minFn="15">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label xml:lang="it">Indirizzo Consist Attivo per F15</label>
+        <label xml:lang="fr">Adresse d'Unité Multiple active pour F15</label>
+        <label xml:lang="de">Verbundadresse aktiv für F15</label>
+        <label>Consist Address Active For F15</label>
+    </variable>
+    <variable CV="245" mask="XXXXVXXX" item="Consist Address Active For F16" default="0" minFn="16">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label xml:lang="it">Indirizzo Consist Attivo per F16</label>
+        <label xml:lang="fr">Adresse d'Unité Multiple active pour F16</label>
+        <label xml:lang="de">Verbundadresse aktiv für F16</label>
+        <label>Consist Address Active For F16</label>
+    </variable>
+    <variable CV="245" mask="XXXVXXXX" item="Consist Address Active For F17" default="0" minFn="17">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label xml:lang="it">Indirizzo Consist Attivo per F17</label>
+        <label xml:lang="fr">Adresse d'Unité Multiple active pour F17</label>
+        <label xml:lang="de">Verbundadresse aktiv für F17</label>
+        <label>Consist Address Active For F17</label>
+    </variable>
+    <variable CV="245" mask="XXVXXXXX" item="Consist Address Active For F18" default="0" minFn="18">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label xml:lang="it">Indirizzo Consist Attivo per F18</label>
+        <label xml:lang="fr">Adresse d'Unité Multiple active pour F18</label>
+        <label xml:lang="de">Verbundadresse aktiv für F18</label>
+        <label>Consist Address Active For F18</label>
+    </variable>
+    <variable CV="245" mask="XVXXXXXX" item="Consist Address Active For F19" default="0" minFn="19">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label xml:lang="it">Indirizzo Consist Attivo per F19</label>
+        <label xml:lang="fr">Adresse d'Unité Multiple active pour F19</label>
+        <label xml:lang="de">Verbundadresse aktiv für F19</label>
+        <label>Consist Address Active For F19</label>
+    </variable>
+    <variable CV="245" mask="VXXXXXXX" item="Consist Address Active For F20" default="0" minFn="20">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label xml:lang="it">Indirizzo Consist Attivo per F20</label>
+        <label xml:lang="fr">Adresse d'Unité Multiple active pour F20</label>
+        <label xml:lang="de">Verbundadresse aktiv für F20</label>
+        <label>Consist Address Active For F20</label>
+    </variable>
+    <variable CV="246" mask="XXXXXXXV" item="Consist Address Active For F21" default="0" minFn="21">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label xml:lang="it">Indirizzo Consist Attivo per F21</label>
+        <label xml:lang="fr">Adresse d'Unité Multiple active pour F21</label>
+        <label xml:lang="de">Verbundadresse aktiv für F21</label>
+        <label>Consist Address Active For F21</label>
+    </variable>
+    <variable CV="246" mask="XXXXXXVX" item="Consist Address Active For F22" default="0" minFn="22">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label xml:lang="it">Indirizzo Consist Attivo per F22</label>
+        <label xml:lang="fr">Adresse d'Unité Multiple active pour F22</label>
+        <label xml:lang="de">Verbundadresse aktiv für F22</label>
+        <label>Consist Address Active For F22</label>
+    </variable>
+    <variable CV="246" mask="XXXXXVXX" item="Consist Address Active For F23" default="0" minFn="23">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label xml:lang="it">Indirizzo Consist Attivo per F23</label>
+        <label xml:lang="fr">Adresse d'Unité Multiple active pour F23</label>
+        <label xml:lang="de">Verbundadresse aktiv für F23</label>
+        <label>Consist Address Active For F23</label>
+    </variable>
+    <variable CV="246" mask="XXXXVXXX" item="Consist Address Active For F24" default="0" minFn="24">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label xml:lang="it">Indirizzo Consist Attivo per F24</label>
+        <label xml:lang="fr">Adresse d'Unité Multiple active pour F24</label>
+        <label xml:lang="de">Verbundadresse aktiv für F24</label>
+        <label>Consist Address Active For F24</label>
+    </variable>
+    <variable CV="246" mask="XXXVXXXX" item="Consist Address Active For F25" default="0" minFn="25">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label xml:lang="it">Indirizzo Consist Attivo per F25</label>
+        <label xml:lang="fr">Adresse d'Unité Multiple active pour F25</label>
+        <label xml:lang="de">Verbundadresse aktiv für F25</label>
+        <label>Consist Address Active For F25</label>
+    </variable>
+    <variable CV="246" mask="XXVXXXXX" item="Consist Address Active For F26" default="0" minFn="26">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label xml:lang="it">Indirizzo Consist Attivo per F26</label>
+        <label xml:lang="fr">Adresse d'Unité Multiple active pour F26</label>
+        <label xml:lang="de">Verbundadresse aktiv für F26</label>
+        <label>Consist Address Active For F26</label>
+    </variable>
+    <variable CV="246" mask="XVXXXXXX" item="Consist Address Active For F27" default="0" minFn="27">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label xml:lang="it">Indirizzo Consist Attivo per F27</label>
+        <label xml:lang="fr">Adresse d'Unité Multiple active pour F27</label>
+        <label xml:lang="de">Verbundadresse aktiv für F27</label>
+        <label>Consist Address Active For F27</label>
+    </variable>
+    <variable CV="246" mask="VXXXXXXX" item="Consist Address Active For F28" default="0" minFn="28">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label xml:lang="it">Indirizzo Consist Attivo per F28</label>
+        <label xml:lang="fr">Adresse d'Unité Multiple active pour F28</label>
+        <label xml:lang="de">Verbundadresse aktiv für F28</label>
+        <label>Consist Address Active For F28</label>
+    </variable>
+</variables>
