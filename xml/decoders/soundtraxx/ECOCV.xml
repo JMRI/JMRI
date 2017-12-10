@@ -26,7 +26,9 @@
 <!-- version 2.2 - CV57 & 58 bit 6 & 7 set to 1 (Michael Mosher)            -->
 <!-- version 2.3 - Move CV 241-242 (analog mdoe F13-28) and CV 245-246
                    (consist F13-28) to separate files, for use by OEM
-                   SoundCar files (Alain Le Marchand)                       -->
+                   SoundCar files.
+                   Tooltip for CV 218 fixed based on latest Econami manual
+                   (Alain Le Marchand)                                      -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
@@ -438,7 +440,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Auto-Stop Enable</label>
     </variable>
-    <variable CV="218" mask="VVVVVVVV" item="Analog Vstart" default="7" tooltip="&lt;html&gt;Determines the starting voltage level applied to the motor in analog mode;&lt;br&gt; The motor start voltage is calculated as a fraction of the available supply voltage.&lt;br&gt; Econami:  Starting Voltage = Supply Voltage × CV 218 ÷ 255 &lt;br&gt; Tsunami2: Starting Voltage = (CV 218 ÷ 10) + 6V &lt;br&gt; &lt;/html&gt;">
+    <variable CV="218" mask="VVVVVVVV" item="Analog Vstart" default="7" tooltip="&lt;html&gt;Determines the starting voltage level applied to the motor in analog mode;&lt;br&gt; The motor start voltage is calculated as a fraction of the available supply voltage.&lt;br&gt; Starting Voltage = (CV 218 ÷ 10) + 6V &lt;br&gt; &lt;/html&gt;">
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
     </variable>
