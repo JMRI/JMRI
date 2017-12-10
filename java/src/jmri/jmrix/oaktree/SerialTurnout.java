@@ -74,7 +74,7 @@ public class SerialTurnout extends AbstractTurnout {
     int tBit;          // bit number of turnout control in Serial node
 
     protected void sendMessage(boolean closed) {
-        SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName, _memo.getSystemPrefix());
+        SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName, _memo.getSystemPrefix(),_memo.getTrafficController());
         if (tNode == null) {
             // node does not exist, ignore call
             return;

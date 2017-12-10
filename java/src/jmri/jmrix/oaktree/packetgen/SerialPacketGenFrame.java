@@ -9,6 +9,7 @@ import javax.swing.JSeparator;
 import jmri.jmrix.oaktree.SerialMessage;
 import jmri.jmrix.oaktree.SerialReply;
 import jmri.jmrix.oaktree.SerialTrafficController;
+import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import jmri.util.StringUtil;
 
 /**
@@ -26,8 +27,11 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     javax.swing.JButton pollButton = new javax.swing.JButton("Send poll");
     javax.swing.JTextField uaAddrField = new javax.swing.JTextField(5);
 
-    public SerialPacketGenFrame() {
+    private OakTreeSystemConnectionMemo _memo = null;
+
+    public SerialPacketGenFrame(OakTreeSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     /** 
@@ -92,11 +96,11 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
 
     public void pollButtonActionPerformed(java.awt.event.ActionEvent e) {
         SerialMessage msg = SerialMessage.getPoll(Integer.valueOf(uaAddrField.getText()).intValue());
-        SerialTrafficController.instance().sendSerialMessage(msg, this);
+        _memo.getTrafficController().sendSerialMessage(msg, this);
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        SerialTrafficController.instance().sendSerialMessage(createPacket(packetTextField.getText()), this);
+        _memo.getTrafficController().sendSerialMessage(createPacket(packetTextField.getText()), this);
     }
 
     SerialMessage createPacket(String s) {
