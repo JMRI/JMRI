@@ -2327,35 +2327,15 @@
         <echo message="new release branch ${branch-name} created"/>
     </target>
 
-    <!-- CI Test runners -->
-    <target name="travis-ci" description="Parallel execution of CI tasks on Travis CI">
-        <parallel threadCount="1"> <!-- allow up to four tasks at once -->
-            <antcall target="checknonascii" />
-            <sequential>
-                <antcall target="compile-generated-source" />
-                <antcall target="javadoc" />
-                <antcall target="ci-test-travis" />
-            </sequential>
-        </parallel>
-    </target>
-
-    <target name="travis-ci-coverage" description="Parallel execution of CI tasks on Travis CI">
-        <parallel threadCount="1"> <!-- allow up to four tasks at once -->
-            <antcall target="checknonascii" />
-            <sequential>
-                <antcall target="compile-generated-source" />
-                <antcall target="javadoc" />
-                <antcall target="ci-test-travis-coveragecheck" />
-            </sequential>
-        </parallel>
-    </target>
-
-
-    <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
-        <parallel threadCount="1"> <!-- allow up to four tasks at once -->
+    <target name="appveyor" description="Execute CI tasks on Appveyor">
+        <!-- <parallel threadCount="1"> < ! - - allow up to four tasks at once -->
+        <sequential>
+            <antcall target="warnings" />
+            <antcall target="tests-warnings" />
             <antcall target="checkPropertiesFiles" />
             <antcall target="ci-test-appveyor-coveragecheck" />
-        </parallel>
+            <!-- </parallel> -->
+        </sequential>
     </target>
 
 	<!-- - - - - - - - - - - - - - - - - -
