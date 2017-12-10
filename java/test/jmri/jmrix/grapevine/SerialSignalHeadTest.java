@@ -12,9 +12,12 @@ import org.junit.Test;
  */
 public class SerialSignalHeadTest {
 
+    private GrapevineSystemConnectionMemo memo = null; 
+    private SerialTrafficControlScaffold tcis = null;
+
     @Test
     public void testCTor() {
-        SerialSignalHead t = new SerialSignalHead("GH25");
+        SerialSignalHead t = new SerialSignalHead("GH25",memo);
         Assert.assertNotNull("exists",t);
     }
 
@@ -22,6 +25,10 @@ public class SerialSignalHeadTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        tcis = new SerialTrafficControlScaffold();
+        tcis.registerNode(new SerialNode(1, SerialNode.NODE2002V6));
+        memo = new GrapevineSystemConnectionMemo();
+        memo.setTrafficController(tcis);
     }
 
     @After

@@ -1362,7 +1362,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     return;
                 }
                 if (checkBeforeCreating(inputsysname)) {
-                    s = new jmri.jmrix.grapevine.SerialSignalHead(inputsysname, userNameTextField.getText());
+                    s = new jmri.jmrix.grapevine.SerialSignalHead(inputsysname, userNameTextField.getText(), jmri.InstanceManager.getDefault(jmri.jmrix.grapevine.GrapevineSystemConnectionMemo.class));
                     InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
                 }
             } else if (quadOutput.equals(typeBox.getSelectedItem())) {

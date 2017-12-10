@@ -93,22 +93,22 @@ public class SerialAddressTest extends TestCase {
     }
 
     public void testGetNodeFromSystemName() {
-        SerialNode d = new SerialNode(14, SerialNode.IO48);
-        SerialNode c = new SerialNode(17, SerialNode.IO24);
-        SerialNode b = new SerialNode(127, SerialNode.IO24);
-        Assert.assertEquals("node of OL14007", d, SerialAddress.getNodeFromSystemName("OL14007", "O"));
-        Assert.assertEquals("node of OL14B7", d, SerialAddress.getNodeFromSystemName("OL14B7", "O"));
-        Assert.assertEquals("node of OL127007", b, SerialAddress.getNodeFromSystemName("OL127007", "O"));
-        Assert.assertEquals("node of OL127B7", b, SerialAddress.getNodeFromSystemName("OL127B7", "O"));
-        Assert.assertEquals("node of OL17007", c, SerialAddress.getNodeFromSystemName("OL17007", "O"));
-        Assert.assertEquals("node of OL17B7", c, SerialAddress.getNodeFromSystemName("OL17B7", "O"));
-        Assert.assertEquals("node of OL11007", null, SerialAddress.getNodeFromSystemName("OL11007", "O"));
-        Assert.assertEquals("node of OL11B7", null, SerialAddress.getNodeFromSystemName("OL11B7", "O"));
+        SerialNode d = new SerialNode(14, SerialNode.IO48,memo);
+        SerialNode c = new SerialNode(17, SerialNode.IO24,memo);
+        SerialNode b = new SerialNode(127, SerialNode.IO24,memo);
+        Assert.assertEquals("node of OL14007", d, SerialAddress.getNodeFromSystemName("OL14007", "O",memo.getTrafficController()));
+        Assert.assertEquals("node of OL14B7", d, SerialAddress.getNodeFromSystemName("OL14B7", "O",memo.getTrafficController()));
+        Assert.assertEquals("node of OL127007", b, SerialAddress.getNodeFromSystemName("OL127007", "O",memo.getTrafficController()));
+        Assert.assertEquals("node of OL127B7", b, SerialAddress.getNodeFromSystemName("OL127B7", "O",memo.getTrafficController()));
+        Assert.assertEquals("node of OL17007", c, SerialAddress.getNodeFromSystemName("OL17007", "O",memo.getTrafficController()));
+        Assert.assertEquals("node of OL17B7", c, SerialAddress.getNodeFromSystemName("OL17B7", "O",memo.getTrafficController()));
+        Assert.assertEquals("node of OL11007", null, SerialAddress.getNodeFromSystemName("OL11007", "O",memo.getTrafficController()));
+        Assert.assertEquals("node of OL11B7", null, SerialAddress.getNodeFromSystemName("OL11B7", "O",memo.getTrafficController()));
     }
 
     public void testValidSystemNameConfig() {
-        SerialNode d = new SerialNode(4, SerialNode.IO24);
-        SerialNode c = new SerialNode(10, SerialNode.IO48);
+        SerialNode d = new SerialNode(4, SerialNode.IO24,memo);
+        SerialNode c = new SerialNode(10, SerialNode.IO48,memo);
         Assert.assertNotNull("exists", d);
         Assert.assertNotNull("exists", c);
         Assert.assertTrue("valid config OL4007", SerialAddress.validSystemNameConfig("OL4007", 'L', memo));
@@ -208,6 +208,7 @@ public class SerialAddressTest extends TestCase {
     @Override
     protected void setUp() {
         memo = new OakTreeSystemConnectionMemo();
+        memo.setTrafficController(new SerialTrafficControlScaffold());
         JUnitUtil.setUp();
     }
 

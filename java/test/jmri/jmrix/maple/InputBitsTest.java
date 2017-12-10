@@ -15,14 +15,14 @@ import org.junit.Assert;
 public class InputBitsTest extends TestCase {
 
     public void testConstructor1() {
-        Assert.assertNotNull("check instance", InputBits.instance());
+        Assert.assertNotNull("check instance", ibit);
     }
 
     public void testAccessors() {
-        InputBits.setNumInputBits(72);
-        InputBits.setTimeoutTime(1500);
-        Assert.assertEquals("check numInputBits", 72, InputBits.getNumInputBits());
-        Assert.assertEquals("check timeoutTime", 1500, InputBits.getTimeoutTime());
+        ibit.setNumInputBits(72);
+        ibit.setTimeoutTime(1500);
+        Assert.assertEquals("check numInputBits", 72, ibit.getNumInputBits());
+        Assert.assertEquals("check timeoutTime", 1500, ibit.getTimeoutTime());
     }
 
     public void testMarkChangesInitial() {
@@ -187,10 +187,9 @@ public class InputBitsTest extends TestCase {
     @Override
     protected void setUp() {
         // The minimal setup for log4J
-        apps.tests.Log4JFixture.setUp();
-        // force init
-        InputBits.mInstance = null;
-        ibit = InputBits.instance();
+        JUnitUtil.setUp();
+        SerialTrafficControlScaffold tc = new SerialTrafficControlScaffold();
+        ibit = new InputBits(tc);
     }
 
     @Override
