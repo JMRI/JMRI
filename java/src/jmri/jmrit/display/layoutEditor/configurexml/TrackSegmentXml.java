@@ -192,7 +192,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             }
             try {
                 if (element.getAttribute("hideConLines").getBooleanValue()) {
-                    l.hideConstructionLines(TrackSegment.HIDECON);
+                    l.setShowConstructionLines(TrackSegment.HIDECON);
                 }
             } catch (DataConversionException e) {
                 log.warn("unable to convert track segment hideConLines attribute");

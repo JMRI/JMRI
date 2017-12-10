@@ -1143,10 +1143,10 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * Removes this object from display and persistance
+     * Removes this object from display and persistence
      */
     private void remove() {
-        // remove from persistance by flagging inactive
+        // remove from persistence by flagging inactive
         active = false;
     }
 

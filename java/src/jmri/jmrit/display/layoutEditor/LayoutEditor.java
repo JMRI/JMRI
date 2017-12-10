@@ -2777,7 +2777,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
 
             for (TrackSegment ts : getTrackSegments()) {
-                ts.hideConstructionLines(show);
+                ts.setShowConstructionLines(show);
             }
             redrawPanel();
         });

@@ -2,7 +2,6 @@ package jmri.jmrit.display.layoutEditor;
 
 import static java.lang.Float.POSITIVE_INFINITY;
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.defaultTrackColor;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -24,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JColorChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -32,6 +32,7 @@ import jmri.Path;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.ColorUtil;
 import jmri.util.MathUtil;
+import jmri.util.QuickPromptUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -902,7 +903,12 @@ public class TrackSegment extends LayoutTrack {
         jmi = arrowsCountMenu.add(new JMenuItem(Bundle.getMessage("DecorationCountMenuItemTitle")));
         jmi.setToolTipText(Bundle.getMessage("DecorationCountMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
+            //prompt for count
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("DecorationCountMenuItemTitle"),
+                    Bundle.getMessage("DecorationCountMenuItemTitle"),
+                    arrowCount);
+            setArrowCount(newValue);
         });
 
         JMenu arrowsEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
@@ -931,8 +937,8 @@ public class TrackSegment extends LayoutTrack {
         arrowsEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationEndMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setArrowEndStart(false);
             setArrowEndStop(true);
+            setArrowEndStart(false);
         });
         jcbmi.setSelected(!arrowEndStart && arrowEndStop);
 
@@ -971,8 +977,8 @@ public class TrackSegment extends LayoutTrack {
         arrowsDirMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionOutMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setArrowDirIn(false);
             setArrowDirOut(true);
+            setArrowDirIn(false);
         });
         jcbmi.setSelected(!arrowDirIn && arrowDirOut);
 
@@ -988,25 +994,45 @@ public class TrackSegment extends LayoutTrack {
         jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
         jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
+            Color newColor = JColorChooser.showDialog(null, "Choose a color", arrowColor);
+            if ((newColor != null) && !newColor.equals(arrowColor)) {
+                setArrowColor(newColor);
+            }
         });
+        jmi.setForeground(arrowColor);
+        jmi.setBackground(ColorUtil.contrast(arrowColor));
 
-        jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("DecorationWidthMenuItemTitle")));
-        jmi.setToolTipText(Bundle.getMessage("DecorationWidthMenuItemToolTip"));
+        jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("DecorationLineWidthMenuItemTitle")));
+        jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
+            //prompt for arrow line width
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                    arrowLineWidth);
+            setArrowLineWidth(newValue);
         });
 
         jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("DecorationLengthMenuItemTitle")));
         jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
+            //prompt for arrow length
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("DecorationLengthMenuItemTitle"),
+                    Bundle.getMessage("DecorationLengthMenuItemTitle"),
+                    arrowLength);
+            setArrowLength(newValue);
         });
 
         jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("DecorationGapMenuItemTitle")));
         jmi.setToolTipText(Bundle.getMessage("DecorationGapMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
+            //prompt for arrow gap
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("DecorationGapMenuItemTitle"),
+                    Bundle.getMessage("DecorationGapMenuItemTitle"),
+                    arrowGap);
+            setArrowGap(newValue);
         });
 
         //
@@ -1042,8 +1068,8 @@ public class TrackSegment extends LayoutTrack {
         bridgeSideMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationSideRightMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBridgeSideLeft(false);
             setBridgeSideRight(true);
+            setBridgeSideLeft(false);
         });
         jcbmi.setSelected(!bridgeSideLeft && bridgeSideRight);
 
@@ -1082,8 +1108,8 @@ public class TrackSegment extends LayoutTrack {
         bridgeEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationExitMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBridgeHasEntry(false);
             setBridgeHasExit(true);
+            setBridgeHasEntry(false);
         });
         jcbmi.setSelected(!bridgeHasEntry && bridgeHasExit);
 
@@ -1099,77 +1125,53 @@ public class TrackSegment extends LayoutTrack {
         jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
         jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
+            Color newColor = JColorChooser.showDialog(null, "Choose a color", bridgeColor);
+            if ((newColor != null) && !newColor.equals(bridgeColor)) {
+                setBridgeColor(newColor);
+            }
+        });
+        jmi.setForeground(bridgeColor);
+        jmi.setBackground(ColorUtil.contrast(bridgeColor));
+
+        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("DecorationLineWidthMenuItemTitle")));
+        jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            //prompt for bridge line width
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                    bridgeLineWidth);
+            setBridgeLineWidth(newValue);
         });
 
-        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("DecorationWidthMenuItemTitle")));
-        jmi.setToolTipText(Bundle.getMessage("DecorationWidthMenuItemToolTip"));
+        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("BridgeApproachWidthMenuItemTitle")));
+        jmi.setToolTipText(Bundle.getMessage("BridgeApproachWidthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
+            //prompt for bridge approach width
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("BridgeApproachWidthMenuItemTitle"),
+                    Bundle.getMessage("BridgeApproachWidthMenuItemTitle"),
+                    bridgeApproachWidth);
+            setBridgeApproachWidth(newValue);
         });
 
-        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("DecorationLengthMenuItemTitle")));
-        jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
+        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("BridgeDeckWidthMenuItemTitle")));
+        jmi.setToolTipText(Bundle.getMessage("BridgeDeckWidthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
-        });
-
-        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("DecorationGapMenuItemTitle")));
-        jmi.setToolTipText(Bundle.getMessage("DecorationGapMenuItemToolTip"));
-        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
+            //prompt for bridge deck width
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("BridgeDeckWidthMenuItemTitle"),
+                    Bundle.getMessage("BridgeDeckWidthMenuItemTitle"),
+                    bridgeDeckWidth);
+            setBridgeDeckWidth(newValue);
         });
 
         //
-        // bumper menus
+        // end bumper menus
         //
         JMenu endBumperMenu = new JMenu(Bundle.getMessage("EndBumperMenuTitle"));
         decorationsMenu.setToolTipText(Bundle.getMessage("EndBumperMenuToolTip"));
         decorationsMenu.add(endBumperMenu);
-
-        JMenu endBumperCountMenu = new JMenu(Bundle.getMessage("DecorationCountMenuTitle"));
-        endBumperCountMenu.setToolTipText(Bundle.getMessage("DecorationCountMenuToolTip"));
-        endBumperMenu.add(endBumperCountMenu);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
-        endBumperCountMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBumperCount(0);
-        });
-        jcbmi.setSelected(bumperCount == 0);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSingleMenuItemTitle"));
-        endBumperCountMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationSingleMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBumperCount(1);
-        });
-        jcbmi.setSelected(bumperCount == 1);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationDoubleMenuItemTitle"));
-        endBumperCountMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationDoubleMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBumperCount(2);
-        });
-        jcbmi.setSelected(bumperCount == 2);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationTripleMenuItemTitle"));
-        endBumperCountMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationTripleMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBumperCount(3);
-        });
-        jcbmi.setSelected(bumperCount == 3);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationCountMenuItemTitle"));
-        endBumperCountMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationCountMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
-        });
-        jcbmi.setSelected(bumperCount > 3);
 
         JMenu endBumperEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
         endBumperEndMenu.setToolTipText(Bundle.getMessage("DecorationEndMenuToolTip"));
@@ -1197,42 +1199,42 @@ public class TrackSegment extends LayoutTrack {
         endBumperEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationEndMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBumperEndStart(false);
             setBumperEndStop(true);
+            setBumperEndStart(false);
         });
         jcbmi.setSelected(!bumperEndStart && bumperEndStop);
-
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
-        endBumperEndMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setBumperEndStart(true);
-            setBumperEndStop(true);
-        });
-        jcbmi.setSelected(bumperEndStart && bumperEndStop);
 
         jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
         jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
+            Color newColor = JColorChooser.showDialog(null, "Choose a color", bumperColor);
+            if ((newColor != null) && !newColor.equals(bumperColor)) {
+                setBumperColor(newColor);
+            }
         });
+        jmi.setForeground(bumperColor);
+        jmi.setBackground(ColorUtil.contrast(bumperColor));
 
-        jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("DecorationWidthMenuItemTitle")));
-        jmi.setToolTipText(Bundle.getMessage("DecorationWidthMenuItemToolTip"));
+        jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("DecorationLineWidthMenuItemTitle")));
+        jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
+            //prompt for width
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                    bumperLineWidth);
+            setBumperLineWidth(newValue);
         });
 
         jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("DecorationLengthMenuItemTitle")));
         jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
-        });
-
-        jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("DecorationGapMenuItemTitle")));
-        jmi.setToolTipText(Bundle.getMessage("DecorationGapMenuItemToolTip"));
-        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
+            //prompt for length
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("DecorationLengthMenuItemTitle"),
+                    Bundle.getMessage("DecorationLengthMenuItemTitle"),
+                    bumperLength);
+            setBumperLength(newValue);
         });
 
         //
@@ -1250,10 +1252,10 @@ public class TrackSegment extends LayoutTrack {
         tunnelSideMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setTunnelSideLeft(true);
+            setTunnelSideLeft(false);
             setTunnelSideRight(false);
         });
-        jcbmi.setSelected(!tunnelSideLeft && !bridgeSideRight);
+        jcbmi.setSelected(!tunnelSideLeft && !tunnelSideRight);
 
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideLeftMenuItemTitle"));
         tunnelSideMenu.add(jcbmi);
@@ -1262,16 +1264,16 @@ public class TrackSegment extends LayoutTrack {
             setTunnelSideLeft(true);
             setTunnelSideRight(false);
         });
-        jcbmi.setSelected(tunnelSideLeft && !bridgeSideRight);
+        jcbmi.setSelected(tunnelSideLeft && !tunnelSideRight);
 
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideRightMenuItemTitle"));
         tunnelSideMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationSideRightMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setTunnelSideLeft(false);
             setTunnelSideRight(true);
+            setTunnelSideLeft(false);
         });
-        jcbmi.setSelected(!tunnelSideLeft && bridgeSideRight);
+        jcbmi.setSelected(!tunnelSideLeft && tunnelSideRight);
 
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
         tunnelSideMenu.add(jcbmi);
@@ -1280,7 +1282,7 @@ public class TrackSegment extends LayoutTrack {
             setTunnelSideLeft(true);
             setTunnelSideRight(true);
         });
-        jcbmi.setSelected(tunnelSideLeft && bridgeSideRight);
+        jcbmi.setSelected(tunnelSideLeft && tunnelSideRight);
 
         JMenu tunnelEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
         tunnelEndMenu.setToolTipText(Bundle.getMessage("DecorationEndMenuToolTip"));
@@ -1308,8 +1310,8 @@ public class TrackSegment extends LayoutTrack {
         tunnelEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationExitMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setTunnelHasEntry(false);
             setTunnelHasExit(true);
+            setTunnelHasEntry(false);
         });
         jcbmi.setSelected(!tunnelHasEntry && tunnelHasExit);
 
@@ -1325,25 +1327,45 @@ public class TrackSegment extends LayoutTrack {
         jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
         jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
+            Color newColor = JColorChooser.showDialog(null, "Choose a color", tunnelColor);
+            if ((newColor != null) && !newColor.equals(tunnelColor)) {
+                setTunnelColor(newColor);
+            }
+        });
+        jmi.setForeground(tunnelColor);
+        jmi.setBackground(ColorUtil.contrast(tunnelColor));
+
+        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("TunnelFloorWidthMenuItemTitle")));
+        jmi.setToolTipText(Bundle.getMessage("TunnelFloorWidthMenuItemToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            //prompt for tunnel floor width
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("TunnelFloorWidthMenuItemTitle"),
+                    Bundle.getMessage("TunnelFloorWidthMenuItemTitle"),
+                    tunnelFloorWidth);
+            setTunnelFloorWidth(newValue);
         });
 
-        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("DecorationWidthMenuItemTitle")));
-        jmi.setToolTipText(Bundle.getMessage("DecorationWidthMenuItemToolTip"));
+        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("DecorationLineWidthMenuItemTitle")));
+        jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
+            //prompt for tunnel line width
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                    tunnelLineWidth);
+            setTunnelLineWidth(newValue);
         });
 
-        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("DecorationLengthMenuItemTitle")));
-        jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
+        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("TunnelEntranceWidthMenuItemTitle")));
+        jmi.setToolTipText(Bundle.getMessage("TunnelEntranceWidthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
-        });
-
-        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("DecorationGapMenuItemTitle")));
-        jmi.setToolTipText(Bundle.getMessage("DecorationGapMenuItemToolTip"));
-        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //TODO: add actions here
+            //prompt for tunnel entrance width
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("TunnelEntranceWidthMenuItemTitle"),
+                    Bundle.getMessage("TunnelEntranceWidthMenuItemTitle"),
+                    tunnelEntranceWidth);
+            setTunnelEntranceWidth(newValue);
         });
 
         popupMenu.add(decorationsMenu);
@@ -1410,14 +1432,14 @@ public class TrackSegment extends LayoutTrack {
                 popupMenu.add(new AbstractAction(Bundle.getMessage("ShowConstruct")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        hideConstructionLines(SHOWCON);
+                        setShowConstructionLines(SHOWCON);
                     }
                 });
             } else {
                 popupMenu.add(new AbstractAction(Bundle.getMessage("HideConstruct")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        hideConstructionLines(HIDECON);
+                        setShowConstructionLines(HIDECON);
                     }
                 });
             }
@@ -1635,10 +1657,10 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Remove this object from display and persistance.
+     * Remove this object from display and persistence.
      */
     void remove() {
-        // remove from persistance by flagging inactive
+        // remove from persistence by flagging inactive
         active = false;
     }
 
@@ -1658,16 +1680,16 @@ public class TrackSegment extends LayoutTrack {
 
     public int showConstructionLine = SHOWCON;
 
-    //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowConstructionLinesLE()"
-    protected boolean showConstructionLinesLE() {
-        if ((showConstructionLine & HIDECON) == HIDECON || (showConstructionLine & HIDECONALL) == HIDECONALL) {
+    public boolean isShowConstructionLines() {
+        if ((showConstructionLine & HIDECON) == HIDECON
+                || (showConstructionLine & HIDECONALL) == HIDECONALL) {
             return false;
         }
         return true;
     }
 
     //Methods used by Layout Editor
-    public void hideConstructionLines(int hide) {
+    public void setShowConstructionLines(int hide) {
         if (hide == HIDECONALL) {
             showConstructionLine |= HIDECONALL;
         } else if (hide == SHOWCON) {
@@ -2130,7 +2152,7 @@ public class TrackSegment extends LayoutTrack {
 
     protected void drawEditControls(Graphics2D g2) {
         g2.setColor(Color.black);
-        if (showConstructionLinesLE()) {
+        if (isShowConstructionLines()) {
             Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
             Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
             if (isCircle()) {
@@ -2371,14 +2393,14 @@ public class TrackSegment extends LayoutTrack {
 
             if (bridgeHasEntry) {
                 if (bridgeSideRight) {
-                    p1 = new Point2D.Double(-bridgeWingWallLength, -bridgeWingWallLength - halfWidth);
+                    p1 = new Point2D.Double(-bridgeApproachWidth, -bridgeApproachWidth - halfWidth);
                     p2 = new Point2D.Double(0.0, -halfWidth);
                     p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
                     p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
                     g2.draw(new Line2D.Double(p1P, p2P));
                 }
                 if (bridgeSideLeft) {
-                    p1 = new Point2D.Double(-bridgeWingWallLength, +bridgeWingWallLength + halfWidth);
+                    p1 = new Point2D.Double(-bridgeApproachWidth, +bridgeApproachWidth + halfWidth);
                     p2 = new Point2D.Double(0.0, +halfWidth);
                     p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
                     p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
@@ -2387,14 +2409,14 @@ public class TrackSegment extends LayoutTrack {
             }
             if (bridgeHasExit) {
                 if (bridgeSideRight) {
-                    p1 = new Point2D.Double(+bridgeWingWallLength, -bridgeWingWallLength - halfWidth);
+                    p1 = new Point2D.Double(+bridgeApproachWidth, -bridgeApproachWidth - halfWidth);
                     p2 = new Point2D.Double(0.0, -halfWidth);
                     p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
                     p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
                     g2.draw(new Line2D.Double(p1P, p2P));
                 }
                 if (bridgeSideLeft) {
-                    p1 = new Point2D.Double(+bridgeWingWallLength, +bridgeWingWallLength + halfWidth);
+                    p1 = new Point2D.Double(+bridgeApproachWidth, +bridgeApproachWidth + halfWidth);
                     p2 = new Point2D.Double(0.0, +halfWidth);
                     p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
                     p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
@@ -2404,9 +2426,9 @@ public class TrackSegment extends LayoutTrack {
         }   // if (bridgeValue != null)
 
         //
-        //  bumper decorations
+        //  end bumper decorations
         //
-        if (bumperCount > 0) {
+        if (bumperEndStart || bumperEndStop) {
             if (getName().equals("T15")) {
                 log.debug("STOP!");
             }
@@ -2424,39 +2446,25 @@ public class TrackSegment extends LayoutTrack {
 
             // draw cross ties
             if (bumperEndStart) {
-                p1 = new Point2D.Double(bumperGap, -halfLength);
-                p2 = new Point2D.Double(bumperGap, +halfLength);
-                Point2D delta = new Point2D.Double(bumperGap + bumperLineWidth, 0.0);
-                for (int idx = 0; idx < bumperCount; idx++) {
-                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
-                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
-
-                    g2.draw(new Line2D.Double(p1P, p2P));
-
-                    p1 = MathUtil.add(p1, delta);
-                    p2 = MathUtil.add(p2, delta);
-                }
+                p1 = new Point2D.Double(halfLength, -halfLength);
+                p2 = new Point2D.Double(halfLength, +halfLength);
+                p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
+                p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
+                g2.draw(new Line2D.Double(p1P, p2P));
             }
             if (bumperEndStop) {
-                p1 = new Point2D.Double(-bumperGap, -halfLength);
-                p2 = new Point2D.Double(-bumperGap, +halfLength);
-                Point2D delta = new Point2D.Double(bumperGap + bumperLineWidth, 0.0);
-                for (int idx = 0; idx < bumperCount; idx++) {
-                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
-                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
-
-                    g2.draw(new Line2D.Double(p1P, p2P));
-
-                    p1 = MathUtil.subtract(p1, delta);
-                    p2 = MathUtil.subtract(p2, delta);
-                }
+                p1 = new Point2D.Double(-halfLength, -halfLength);
+                p2 = new Point2D.Double(-halfLength, +halfLength);
+                p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
+                p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
+                g2.draw(new Line2D.Double(p1P, p2P));
             }
-        }   // if (bumperCount > 0)
+        }   // if (bumperEndStart || bumperEndStop)
 
         //
         //  tunnel decorations
         //
-        if (tunnelSideLeft || tunnelSideRight) {
+        if (tunnelSideRight || tunnelSideLeft) {
             float halfWidth = tunnelFloorWidth / 2.F;
             g2.setStroke(new BasicStroke(tunnelLineWidth,
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
@@ -2468,7 +2476,7 @@ public class TrackSegment extends LayoutTrack {
                 Rectangle2D cRectangle2D = new Rectangle2D.Double(
                         getCX(), getCY(), getCW(), getCH());
                 double startAngleDEG = getStartAdj(), extentAngleDEG = getTmpAngle();
-                if (tunnelSideLeft) {
+                if (tunnelSideRight) {
                     Rectangle2D cLeftRectangle2D = MathUtil.inset(cRectangle2D, -halfWidth);
                     g2.draw(new Arc2D.Double(
                             cLeftRectangle2D.getX(),
@@ -2477,7 +2485,7 @@ public class TrackSegment extends LayoutTrack {
                             cLeftRectangle2D.getHeight(),
                             startAngleDEG, extentAngleDEG, Arc2D.OPEN));
                 }
-                if (tunnelSideRight) {
+                if (tunnelSideLeft) {
                     Rectangle2D cLRightRectangle2D = MathUtil.inset(cRectangle2D, +halfWidth);
                     g2.draw(new Arc2D.Double(
                             cLRightRectangle2D.getX(),
@@ -2496,10 +2504,10 @@ public class TrackSegment extends LayoutTrack {
                 }
                 points[cnt - 1] = ep2;
 
-                if (tunnelSideLeft) {
+                if (tunnelSideRight) {
                     MathUtil.drawBezier(g2, points, -halfWidth);
                 }
-                if (tunnelSideRight) {
+                if (tunnelSideLeft) {
                     MathUtil.drawBezier(g2, points, +halfWidth);
                 }
             } else {
@@ -2507,12 +2515,12 @@ public class TrackSegment extends LayoutTrack {
                 Point2D vector = MathUtil.normalize(delta, halfWidth);
                 vector = MathUtil.orthogonal(vector);
 
-                if (tunnelSideLeft) {
+                if (tunnelSideRight) {
                     Point2D ep1L = MathUtil.add(ep1, vector);
                     Point2D ep2L = MathUtil.add(ep2, vector);
                     g2.draw(new Line2D.Double(ep1L, ep2L));
                 }
-                if (tunnelSideRight) {
+                if (tunnelSideLeft) {
                     Point2D ep1R = MathUtil.subtract(ep1, vector);
                     Point2D ep2R = MathUtil.subtract(ep2, vector);
                     g2.draw(new Line2D.Double(ep1R, ep2R));
@@ -2719,7 +2727,7 @@ public class TrackSegment extends LayoutTrack {
                 bridgeValues.add("right");
             }
             bridgeValues.add("color=" + ColorUtil.colorToHexString(bridgeColor));
-            bridgeValues.add("winglength=" + bridgeWingWallLength);
+            bridgeValues.add("approachwidth=" + bridgeApproachWidth);
             bridgeValues.add("linewidth=" + bridgeLineWidth);
             bridgeValues.add("deckwidth=" + bridgeDeckWidth);
 
@@ -2727,35 +2735,15 @@ public class TrackSegment extends LayoutTrack {
         }   // if (bridgeSideLeft || bridgeSideRight)
 
         //
-        //  bumper decorations
+        //  end bumper decorations
         //
-        if (bumperCount > 0) {
+        if (bumperEndStart || bumperEndStop) {
             // <decoration name="bumper" value="double;linewidth=2;length=6;gap=2;flipped" />
             List<String> bumperValues = new ArrayList<String>();
-            switch (bumperCount) {
-                case 1: {
-                    bumperValues.add("single");
-                    break;
-                }
-                case 2: {
-                    bumperValues.add("double");
-                    break;
-                }
-                case 3: {
-                    bumperValues.add("triple");
-                    break;
-                }
-                default: {
-                    bumperValues.add("count=" + bumperCount);
-                    break;
-                }
-            }
-            if (bumperEndStart && !bumperEndStop) {
+            if (bumperEndStart) {
                 bumperValues.add("start");
-            } else if (!bumperEndStart && bumperEndStop) {
+            } else if (bumperEndStop) {
                 bumperValues.add("stop");
-            } else {
-                bumperValues.add("both");
             }
 
             if (bumperFlipped) {
@@ -2764,7 +2752,6 @@ public class TrackSegment extends LayoutTrack {
             bumperValues.add("color=" + ColorUtil.colorToHexString(bumperColor));
             bumperValues.add("length=" + bumperLength);
             bumperValues.add("linewidth=" + bumperLineWidth);
-            bumperValues.add("gap=" + bumperGap);
 
             decorations.put("bumper", String.join(";", bumperValues));
         }   // if (bumperCount > 0)
@@ -2780,7 +2767,7 @@ public class TrackSegment extends LayoutTrack {
                 tunnelValues.add("entry");
             } else if (!tunnelHasEntry && tunnelHasExit) {
                 tunnelValues.add("exit");
-            } else {
+            } else if (tunnelHasEntry && tunnelHasExit) {
                 tunnelValues.add("both");
             }
 
@@ -2789,10 +2776,10 @@ public class TrackSegment extends LayoutTrack {
             } else if (tunnelSideLeft && !tunnelSideRight) {
                 tunnelValues.add("right");
             }
-            tunnelValues.add(";color=" + ColorUtil.colorToHexString(tunnelColor));
-            tunnelValues.add(";entrancewidth=" + tunnelEntranceWidth);
-            tunnelValues.add(";linewidth=" + tunnelLineWidth);
-            tunnelValues.add(";floorwidth=" + tunnelFloorWidth);
+            tunnelValues.add("color=" + ColorUtil.colorToHexString(tunnelColor));
+            tunnelValues.add("entrancewidth=" + tunnelEntranceWidth);
+            tunnelValues.add("linewidth=" + tunnelLineWidth);
+            tunnelValues.add("floorwidth=" + tunnelFloorWidth);
 
             decorations.put("tunnel", String.join(";", tunnelValues));
         }   // if (tunnelSideLeft || tunnelSideRight)
@@ -2883,7 +2870,7 @@ public class TrackSegment extends LayoutTrack {
                     // <decoration name="bridge" value="both;linewidth=2;deckwidth=8" />
                     // right/left default true; in/out default false
                     boolean hasLeft = true, hasRight = true, hasEntry = false, hasExit = false;
-                    int wingWallLength = 4, lineWidth = 1, deckWidth = 2;
+                    int approachWidth = 4, lineWidth = 1, deckWidth = 2;
                     Color color = defaultTrackColor;
                     String[] values = bridgeValue.split(";");
                     for (int i = 0; i < values.length; i++) {
@@ -2903,9 +2890,9 @@ public class TrackSegment extends LayoutTrack {
                         } else if (value.startsWith("color=")) {
                             String valueString = value.substring(value.lastIndexOf("=") + 1);
                             color = Color.decode(valueString);
-                        } else if (value.startsWith("winglength=")) {
+                        } else if (value.startsWith("approachwidth=")) {
                             String valueString = value.substring(value.lastIndexOf("=") + 1);
-                            wingWallLength = Integer.parseInt(valueString);
+                            approachWidth = Integer.parseInt(valueString);
                         } else if (value.startsWith("linewidth=")) {
                             String valueString = value.substring(value.lastIndexOf("=") + 1);
                             lineWidth = Integer.parseInt(valueString);
@@ -2928,7 +2915,7 @@ public class TrackSegment extends LayoutTrack {
                     setBridgeColor(color);
                     setBridgeDeckWidth(deckWidth);
                     setBridgeLineWidth(lineWidth);
-                    setBridgeWingWallLength(wingWallLength);
+                    setBridgeApproachWidth(approachWidth);
                 } // if (key.equals("bridge")) {
                 //
                 //  bumper decorations
@@ -2980,13 +2967,11 @@ public class TrackSegment extends LayoutTrack {
                         }
                     }
                     atStop |= !atStart;   // if atStart is false make atStop true
-                    setBumperCount(count);
                     setBumperEndStart(atStart);
                     setBumperEndStop(atStop);
                     setBumperColor(color);
                     setBumperLineWidth(lineWidth);
                     setBumperLength(length);
-                    setBumperGap(gap);
                     setBumperFlipped(isFlipped);
                 } // if (key.equals("bumper")) {
                 //
@@ -3053,7 +3038,7 @@ public class TrackSegment extends LayoutTrack {
 
     //
     //  arrow decoration accessors
-    //    
+    //
     public int getArrowCount() {
         return arrowCount;
     }
@@ -3066,7 +3051,7 @@ public class TrackSegment extends LayoutTrack {
                     arrowEndStop = true;
                 }
                 if (!arrowDirIn && !arrowDirOut) {
-                    arrowDirIn = true;
+                    arrowDirOut = true;
                 }
             }
             arrowCount = newVal;
@@ -3200,7 +3185,7 @@ public class TrackSegment extends LayoutTrack {
 
     //
     //  bridge decoration accessors
-    //    
+    //
     public boolean isBridgeSideRight() {
         return bridgeSideRight;
     }
@@ -3292,35 +3277,22 @@ public class TrackSegment extends LayoutTrack {
     }
     private int bridgeLineWidth = 1;
 
-    public int getBridgeWingWallLength() {
-        return bridgeWingWallLength;
+    public int getBridgeApproachWidth() {
+        return bridgeApproachWidth;
     }
 
-    public void setBridgeWingWallLength(int newVal) {
-        if (bridgeWingWallLength != newVal) {
-            bridgeWingWallLength = newVal;
+    public void setBridgeApproachWidth(int newVal) {
+        if (bridgeApproachWidth != newVal) {
+            bridgeApproachWidth = newVal;
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
     }
-    private int bridgeWingWallLength = 4;
+    private int bridgeApproachWidth = 4;
 
     //
     //  bumper decoration accessors
-    //    
-    public int getBumperCount() {
-        return bumperCount;
-    }
-
-    public void setBumperCount(int newVal) {
-        if (bumperCount != newVal) {
-            bumperCount = newVal;
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private int bumperCount = 0;
-
+    //
     public boolean isBumperEndStart() {
         return bumperEndStart;
     }
@@ -3328,9 +3300,6 @@ public class TrackSegment extends LayoutTrack {
     public void setBumperEndStart(boolean newVal) {
         if (bumperEndStart != newVal) {
             bumperEndStart = newVal;
-            if (bumperEndStart || bumperEndStop) {
-                bumperCount = Math.max(1, bumperCount);
-            }
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3344,9 +3313,6 @@ public class TrackSegment extends LayoutTrack {
     public void setBumperEndStop(boolean newVal) {
         if (bumperEndStop != newVal) {
             bumperEndStop = newVal;
-            if (bumperEndStart || bumperEndStop) {
-                bumperCount = Math.max(1, bumperCount);
-            }
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3392,19 +3358,6 @@ public class TrackSegment extends LayoutTrack {
     }
     private int bumperLength = 6;
 
-    public int getBumperGap() {
-        return bumperGap;
-    }
-
-    public void setBumperGap(int newVal) {
-        if (bumperGap != newVal) {
-            bumperGap = newVal;
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private int bumperGap = 1;
-
     public boolean isBumperFlipped() {
         return bumperFlipped;
     }
@@ -3420,7 +3373,7 @@ public class TrackSegment extends LayoutTrack {
 
     //
     //  tunnel decoration accessors
-    //    
+    //
     public boolean isTunnelSideRight() {
         return tunnelSideRight;
     }

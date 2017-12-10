@@ -1274,12 +1274,12 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /**
-     * Removes this object from display and persistance
+     * Removes this object from display and persistence
      */
     void remove() {
         //if an occupancy sensor has been activated, deactivate it
         deactivateBlock();
-        //remove from persistance by flagging inactive
+        //remove from persistence by flagging inactive
         active = false;
     }
 
