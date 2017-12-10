@@ -37,9 +37,10 @@ import org.slf4j.LoggerFactory;
  * including the icon file paths, to be loaded by an iterator.
  * The subclass FamilyItemPanel.java and its subclasses handles these devices.
  * 
- * Other devices, e.g. backgrounds or memory, may use only one or no icon to
+ * Other devices, e.g. Backgrounds or Memory, may use only one or no icon to
  * display. The subclass IconItemPanel.java and its subclasses handles these
  * devices.
+ * @see jmri.jmrit.display.DisplayFrame for class diagram for the palette package.
  *
  * @author Pete Cressman Copyright (c) 2010
  * @author Egbert Broerse Copyright 2017
@@ -64,7 +65,7 @@ public abstract class ItemPanel extends JPanel {
      */
     protected BufferedImage[] _backgrounds;
     /**
-     * Shared setting for preview pane background color, starts as 0 = use current Panel bg color.
+     * Shared setting for preview pane background color combo choice. Starts as 0 = use current Panel bg color.
      */
     protected int previewBgSet = 0;
     private InitEventListener listener;

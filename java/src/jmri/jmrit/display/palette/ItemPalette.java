@@ -39,16 +39,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Container for adding items to Control Panels. Loads and stores icons used in
- * Control Panel Editor panels. For background colors to work on a particular editor
- * instance, select the 'Item Palette' item under 'Add Items' menu to configure 
+ * Container for adding items to Control Panels. Starting point for palette package.
+ * <p>
+ * Loads and stores icons used in Control Panel Editor panels.
+ * For background colors to work on a particular editor instance, select the
+ * 'Item Palette' item under 'Add Items' menu and configure the 'Backgrounds' tab
  * ItemPalette for that editor. Otherwise any item can be dragged and
  * dropped to any editor.
  * <p>
  * The icons are displayed on the background of the last editor to call the
- * ItemPalette instance. The user can set it to another color or a white/gray
- * squares pattern using the "View on:" combo.
- * Combo choice is shared as field on {@link jmri.jmrit.display.DisplayFrame} parent.
+ * ItemPalette instance. In session the user can set it to another color or a white/gray
+ * squares pattern using the "View on:" combo. This choice is shared across tabs
+ * as a field on the {@link jmri.jmrit.display.DisplayFrame} parent frame.
  *
  * @author Pete Cressman Copyright (c) 2010
  * @author Egbert Broerse Copyright (c) 2017
