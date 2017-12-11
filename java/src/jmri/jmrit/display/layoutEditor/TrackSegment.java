@@ -22,6 +22,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
 import javax.swing.JMenu;
@@ -864,52 +865,62 @@ public class TrackSegment extends LayoutTrack {
         decorationsMenu.setToolTipText(Bundle.getMessage("ArrowsMenuToolTip"));
         decorationsMenu.add(arrowsMenu);
 
-        JMenu arrowsCountMenu = new JMenu(Bundle.getMessage("DecorationCountMenuItemTitle"));
-        arrowsCountMenu.setToolTipText(Bundle.getMessage("DecorationCountMenuItemToolTip"));
+        JMenu arrowsCountMenu = new JMenu(Bundle.getMessage("DecorationStyleMenuTitle"));
+        arrowsCountMenu.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
         arrowsMenu.add(arrowsCountMenu);
 
         JCheckBoxMenuItem jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
         arrowsCountMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setArrowCount(0);
+            setArrowStyle(0);
         });
-        jcbmi.setSelected(arrowCount == 0);
+        jcbmi.setSelected(arrowStyle == 0);
 
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSingleMenuItemTitle"));
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle1.png"));
+        jcbmi = new JCheckBoxMenuItem(imageIcon);
         arrowsCountMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationSingleMenuItemToolTip"));
+        jmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setArrowCount(1);
+            setArrowStyle(1);
         });
-        jcbmi.setSelected(arrowCount == 1);
+        jcbmi.setSelected(arrowStyle == 1);
 
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationDoubleMenuItemTitle"));
+        imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle2.png"));
+        jcbmi = new JCheckBoxMenuItem(imageIcon);
         arrowsCountMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationDoubleMenuItemToolTip"));
+        jmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setArrowCount(2);
+            setArrowStyle(2);
         });
-        jcbmi.setSelected(arrowCount == 2);
+        jcbmi.setSelected(arrowStyle == 2);
 
-        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationTripleMenuItemTitle"));
+        imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle3.png"));
+        jcbmi = new JCheckBoxMenuItem(imageIcon);
         arrowsCountMenu.add(jcbmi);
-        jcbmi.setToolTipText(Bundle.getMessage("DecorationTripleMenuItemToolTip"));
+        jmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
         jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            setArrowCount(3);
+            setArrowStyle(3);
         });
-        jcbmi.setSelected(arrowCount == 3);
+        jcbmi.setSelected(arrowStyle == 3);
 
-        jmi = arrowsCountMenu.add(new JMenuItem(Bundle.getMessage("DecorationCountMenuItemTitle")));
-        jmi.setToolTipText(Bundle.getMessage("DecorationCountMenuItemToolTip"));
+        imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle4.png"));
+        jcbmi = new JCheckBoxMenuItem(imageIcon);
+        arrowsCountMenu.add(jcbmi);
+        jmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            //prompt for count
-            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
-                    Bundle.getMessage("DecorationCountMenuItemTitle"),
-                    Bundle.getMessage("DecorationCountMenuItemTitle"),
-                    arrowCount);
-            setArrowCount(newValue);
+            setArrowStyle(4);
         });
+        jcbmi.setSelected(arrowStyle == 4);
+
+        imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle5.png"));
+        jcbmi = new JCheckBoxMenuItem(imageIcon);
+        arrowsCountMenu.add(jcbmi);
+        jmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setArrowStyle(5);
+        });
+        jcbmi.setSelected(arrowStyle == 5);
 
         JMenu arrowsEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
         arrowsEndMenu.setToolTipText(Bundle.getMessage("DecorationEndMenuToolTip"));
@@ -1002,7 +1013,8 @@ public class TrackSegment extends LayoutTrack {
         jmi.setForeground(arrowColor);
         jmi.setBackground(ColorUtil.contrast(arrowColor));
 
-        jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("DecorationLineWidthMenuItemTitle")));
+        jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + arrowLineWidth));
         jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             //prompt for arrow line width
@@ -1013,7 +1025,8 @@ public class TrackSegment extends LayoutTrack {
             setArrowLineWidth(newValue);
         });
 
-        jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("DecorationLengthMenuItemTitle")));
+        jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("DecorationLengthMenuItemTitle")) + arrowLength));
         jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             //prompt for arrow length
@@ -1024,7 +1037,8 @@ public class TrackSegment extends LayoutTrack {
             setArrowLength(newValue);
         });
 
-        jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("DecorationGapMenuItemTitle")));
+        jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("DecorationGapMenuItemTitle")) + arrowGap));
         jmi.setToolTipText(Bundle.getMessage("DecorationGapMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             //prompt for arrow gap
@@ -1133,7 +1147,8 @@ public class TrackSegment extends LayoutTrack {
         jmi.setForeground(bridgeColor);
         jmi.setBackground(ColorUtil.contrast(bridgeColor));
 
-        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("DecorationLineWidthMenuItemTitle")));
+        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + bridgeLineWidth));
         jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             //prompt for bridge line width
@@ -1144,7 +1159,8 @@ public class TrackSegment extends LayoutTrack {
             setBridgeLineWidth(newValue);
         });
 
-        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("BridgeApproachWidthMenuItemTitle")));
+        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("BridgeApproachWidthMenuItemTitle")) + bridgeApproachWidth));
         jmi.setToolTipText(Bundle.getMessage("BridgeApproachWidthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             //prompt for bridge approach width
@@ -1155,7 +1171,8 @@ public class TrackSegment extends LayoutTrack {
             setBridgeApproachWidth(newValue);
         });
 
-        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("BridgeDeckWidthMenuItemTitle")));
+        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("BridgeDeckWidthMenuItemTitle")) + bridgeDeckWidth));
         jmi.setToolTipText(Bundle.getMessage("BridgeDeckWidthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             //prompt for bridge deck width
@@ -1215,7 +1232,8 @@ public class TrackSegment extends LayoutTrack {
         jmi.setForeground(bumperColor);
         jmi.setBackground(ColorUtil.contrast(bumperColor));
 
-        jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("DecorationLineWidthMenuItemTitle")));
+        jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + bumperLineWidth));
         jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             //prompt for width
@@ -1226,7 +1244,8 @@ public class TrackSegment extends LayoutTrack {
             setBumperLineWidth(newValue);
         });
 
-        jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("DecorationLengthMenuItemTitle")));
+        jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("DecorationLengthMenuItemTitle")) + bumperLength));
         jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             //prompt for length
@@ -1335,7 +1354,8 @@ public class TrackSegment extends LayoutTrack {
         jmi.setForeground(tunnelColor);
         jmi.setBackground(ColorUtil.contrast(tunnelColor));
 
-        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("TunnelFloorWidthMenuItemTitle")));
+        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("TunnelFloorWidthMenuItemTitle")) + tunnelFloorWidth));
         jmi.setToolTipText(Bundle.getMessage("TunnelFloorWidthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             //prompt for tunnel floor width
@@ -1346,7 +1366,8 @@ public class TrackSegment extends LayoutTrack {
             setTunnelFloorWidth(newValue);
         });
 
-        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("DecorationLineWidthMenuItemTitle")));
+        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + tunnelLineWidth));
         jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             //prompt for tunnel line width
@@ -1357,7 +1378,8 @@ public class TrackSegment extends LayoutTrack {
             setTunnelLineWidth(newValue);
         });
 
-        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("TunnelEntranceWidthMenuItemTitle")));
+        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("TunnelEntranceWidthMenuItemTitle")) + tunnelEntranceWidth));
         jmi.setToolTipText(Bundle.getMessage("TunnelEntranceWidthMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             //prompt for tunnel entrance width
@@ -2226,103 +2248,30 @@ public class TrackSegment extends LayoutTrack {
         //
         // arrow decorations
         //
-        if (arrowCount > 0) {
+        if (arrowStyle > 0) {
             g2.setStroke(new BasicStroke(arrowLineWidth,
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
             g2.setColor(arrowColor);
 
             // draw the out arrows
-            if (arrowDirOut) {
-                if (arrowEndStart) {
-                    p1 = new Point2D.Double(-2.0, -arrowLength);
-                    p2 = new Point2D.Double(-2.0 - arrowLength, 0.0);
-                    p3 = new Point2D.Double(-2.0, +arrowLength);
-                    Point2D delta = new Point2D.Double(arrowGap + arrowLineWidth, 0.0);
-                    for (int idx = 0; idx < arrowCount; idx++) {
-                        p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
-                        p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
-                        p3P = MathUtil.add(MathUtil.rotateRAD(p3, startAngleRAD), ep1);
-
-                        GeneralPath path = new GeneralPath();
-                        path.moveTo(p1P.getX(), p1P.getY());
-                        path.lineTo(p2P.getX(), p2P.getY());
-                        path.lineTo(p3P.getX(), p3P.getY());
-                        g2.draw(path);
-
-                        p1 = MathUtil.subtract(p1, delta);
-                        p2 = MathUtil.subtract(p2, delta);
-                        p3 = MathUtil.subtract(p3, delta);
-                    }
+            if (arrowEndStart) {
+                int offset = 1 + arrowGap;
+                if (arrowDirOut) {
+                    offset = drawArrow(g2, ep1, startAngleRAD, true, offset) + arrowGap;
                 }
-                if (arrowEndStop) {
-                    p1 = new Point2D.Double(+2.0, -arrowLength);
-                    p2 = new Point2D.Double(+2.0 + arrowLength, 0.0);
-                    p3 = new Point2D.Double(+2.0, +arrowLength);
-                    Point2D delta = new Point2D.Double(arrowGap + arrowLineWidth, 0.0);
-                    for (int idx = 0; idx < arrowCount; idx++) {
-                        p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
-                        p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
-                        p3P = MathUtil.add(MathUtil.rotateRAD(p3, stopAngleRAD), ep2);
-
-                        GeneralPath path = new GeneralPath();
-                        path.moveTo(p1P.getX(), p1P.getY());
-                        path.lineTo(p2P.getX(), p2P.getY());
-                        path.lineTo(p3P.getX(), p3P.getY());
-                        g2.draw(path);
-
-                        p1 = MathUtil.add(p1, delta);
-                        p2 = MathUtil.add(p2, delta);
-                        p3 = MathUtil.add(p3, delta);
-                    }
+                if (arrowDirIn) {
+                    offset = drawArrow(g2, ep1, startAngleRAD, false, offset) + arrowGap;
                 }
             }
-
-            // draw the in arrows
-            if (arrowDirIn) {
-                double offset = (arrowDirOut ? (arrowLength * arrowCount) : 0.0);
-                if (arrowEndStart) {
-                    p1 = new Point2D.Double(-2.0 - offset - arrowLength, -arrowLength);
-                    p2 = new Point2D.Double(-2.0 - offset, 0.0);
-                    p3 = new Point2D.Double(-2.0 - offset - arrowLength, +arrowLength);
-                    Point2D delta = new Point2D.Double(arrowGap + arrowLineWidth, 0.0);
-                    for (int idx = 0; idx < arrowCount; idx++) {
-                        p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
-                        p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
-                        p3P = MathUtil.add(MathUtil.rotateRAD(p3, startAngleRAD), ep1);
-
-                        GeneralPath path = new GeneralPath();
-                        path.moveTo(p1P.getX(), p1P.getY());
-                        path.lineTo(p2P.getX(), p2P.getY());
-                        path.lineTo(p3P.getX(), p3P.getY());
-                        g2.draw(path);
-
-                        p1 = MathUtil.subtract(p1, delta);
-                        p2 = MathUtil.subtract(p2, delta);
-                        p3 = MathUtil.subtract(p3, delta);
-                    }
+            if (arrowEndStop) {
+                int offset = 1 + arrowGap;
+                if (arrowDirOut) {
+                    offset = drawArrow(g2, ep2, stopAngleRAD, true, offset) + arrowGap;
                 }
-                if (arrowEndStop) {
-                    p1 = new Point2D.Double(2.0 + offset + arrowLength, -arrowLength);
-                    p2 = new Point2D.Double(2.0 + offset, 0.0);
-                    p3 = new Point2D.Double(2.0 + offset + arrowLength, +arrowLength);
-                    Point2D delta = new Point2D.Double(arrowGap + arrowLineWidth, 0.0);
-                    for (int idx = 0; idx < arrowCount; idx++) {
-                        p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
-                        p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
-                        p3P = MathUtil.add(MathUtil.rotateRAD(p3, stopAngleRAD), ep2);
-
-                        GeneralPath path = new GeneralPath();
-                        path.moveTo(p1P.getX(), p1P.getY());
-                        path.lineTo(p2P.getX(), p2P.getY());
-                        path.lineTo(p3P.getX(), p3P.getY());
-                        g2.draw(path);
-
-                        p1 = MathUtil.add(p1, delta);
-                        p2 = MathUtil.add(p2, delta);
-                        p3 = MathUtil.add(p3, delta);
-                    }
+                if (arrowDirIn) {
+                    offset = drawArrow(g2, ep2, stopAngleRAD, false, offset) + arrowGap;
                 }
-            }   // if arrowDirIn
+            }
         }   // arrow decoration
 
         //
@@ -2646,6 +2595,124 @@ public class TrackSegment extends LayoutTrack {
         }   // if (tunnelValue != null)
     }   // drawDecorations
 
+    private int drawArrow(
+            Graphics2D g2,
+            Point2D ep,
+            double angleRAD,
+            boolean dirOut,
+            int offset) {
+        Point2D p1, p2, p3, p4, p5, p6;
+        switch (arrowStyle) {
+            default:
+                arrowStyle = 0;
+            case 0: {
+                break;
+            }
+            case 1: {
+                if (dirOut) {
+                    p1 = new Point2D.Double(offset, -arrowLength);
+                    p2 = new Point2D.Double(offset + arrowLength, 0.0);
+                    p3 = new Point2D.Double(offset, +arrowLength);
+                } else {
+                    p1 = new Point2D.Double(offset + arrowLength, -arrowLength);
+                    p2 = new Point2D.Double(offset, 0.0);
+                    p3 = new Point2D.Double(offset + arrowLength, +arrowLength);
+                }
+                p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), ep);
+                p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), ep);
+                p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), ep);
+
+                g2.draw(new Line2D.Double(p1, p2));
+                g2.draw(new Line2D.Double(p2, p3));
+                offset += arrowLength;
+                break;
+            }
+            case 2: {
+                if (dirOut) {
+                    p1 = new Point2D.Double(offset, -arrowLength);
+                    p2 = new Point2D.Double(offset + arrowLength, 0.0);
+                    p3 = new Point2D.Double(offset, +arrowLength);
+                    p4 = new Point2D.Double(offset + arrowGap, -arrowLength);
+                    p5 = new Point2D.Double(offset + arrowLength + arrowGap + arrowLength, 0.0);
+                    p6 = new Point2D.Double(offset + arrowGap, +arrowLength);
+                } else {
+                    p1 = new Point2D.Double(offset + arrowLength, -arrowLength);
+                    p2 = new Point2D.Double(offset, 0.0);
+                    p3 = new Point2D.Double(offset + arrowLength, +arrowLength);
+                    p4 = new Point2D.Double(offset + arrowLength + arrowGap, -arrowLength);
+                    p5 = new Point2D.Double(offset + arrowGap + arrowLength, 0.0);
+                    p6 = new Point2D.Double(offset + arrowLength + arrowGap, +arrowLength);
+                }
+                p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), ep);
+                p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), ep);
+                p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), ep);
+                p4 = MathUtil.add(MathUtil.rotateRAD(p4, angleRAD), ep);
+                p5 = MathUtil.add(MathUtil.rotateRAD(p5, angleRAD), ep);
+                p6 = MathUtil.add(MathUtil.rotateRAD(p6, angleRAD), ep);
+
+                g2.draw(new Line2D.Double(p1, p2));
+                g2.draw(new Line2D.Double(p2, p3));
+                g2.draw(new Line2D.Double(p4, p5));
+                g2.draw(new Line2D.Double(p5, p6));
+                offset += (2 * arrowLength) + arrowGap;
+                break;
+            }
+            case 3: {
+                if (dirOut) {
+                    p1 = new Point2D.Double(offset, -arrowLength);
+                    p2 = new Point2D.Double(offset + arrowLength, 0.0);
+                    p3 = new Point2D.Double(offset, +arrowLength);
+                } else {
+                    p1 = new Point2D.Double(offset + arrowLength, -arrowLength);
+                    p2 = new Point2D.Double(offset, 0.0);
+                    p3 = new Point2D.Double(offset + arrowLength, +arrowLength);
+                }
+                p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), ep);
+                p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), ep);
+                p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), ep);
+
+                if (arrowLineWidth > 1) {
+                    GeneralPath path = new GeneralPath();
+                    path.moveTo(p1.getX(), p1.getY());
+                    path.lineTo(p2.getX(), p2.getY());
+                    path.lineTo(p3.getX(), p3.getY());
+                    path.closePath();
+                    g2.fill(path);
+                } else {
+                    g2.draw(new Line2D.Double(p1, p2));
+                    g2.draw(new Line2D.Double(p2, p3));
+                    g2.draw(new Line2D.Double(p3, p1));
+                }
+                offset += arrowLength;
+                break;
+            }
+            case 4: {
+                if (dirOut) {
+                    p1 = new Point2D.Double(offset, 0.0);
+                    p2 = new Point2D.Double(offset + (2 * arrowLength), -arrowLength);
+                    p3 = new Point2D.Double(offset + (3 * arrowLength), 0.0);
+                    p4 = new Point2D.Double(offset + (2 * arrowLength), +arrowLength);
+                } else {
+                    p1 = new Point2D.Double(offset + (2 * arrowLength), 0.0);
+                    p2 = new Point2D.Double(offset, -arrowLength);
+                    p3 = new Point2D.Double(offset + arrowLength, 0.0);
+                    p4 = new Point2D.Double(offset, +arrowLength);
+                }
+                p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), ep);
+                p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), ep);
+                p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), ep);
+                p4 = MathUtil.add(MathUtil.rotateRAD(p4, angleRAD), ep);
+
+                g2.draw(new Line2D.Double(p1, p3));
+                g2.draw(new Line2D.Double(p2, p3));
+                g2.draw(new Line2D.Double(p3, p4));
+                offset += 3 * arrowLength;
+                break;
+            }
+        }
+        return offset;
+    }
+
     /*======================*\
     |* decoration accessors *|
     \*======================*/
@@ -2662,27 +2729,11 @@ public class TrackSegment extends LayoutTrack {
         //
         // arrow decorations
         //
-        if (arrowCount > 0) {
+        if (arrowStyle > 0) {
             // <decoration name="arrow" value="double;both;linewidth=1;length=12;gap=1" />
             List<String> arrowValues = new ArrayList<String>();
-            switch (arrowCount) {
-                case 1: {
-                    arrowValues.add("single");
-                    break;
-                }
-                case 2: {
-                    arrowValues.add("double");
-                    break;
-                }
-                case 3: {
-                    arrowValues.add("triple");
-                    break;
-                }
-                default: {
-                    arrowValues.add("count=" + arrowCount);
-                    break;
-                }
-            }
+
+            arrowValues.add("style=" + arrowStyle);
 
             if (arrowEndStart) {
                 arrowValues.add("start");
@@ -2816,7 +2867,7 @@ public class TrackSegment extends LayoutTrack {
                             count = 2;
                         } else if (value.equals("triple")) {
                             count = 3;
-                        } else if (value.startsWith("count=")) {
+                        } else if (value.startsWith("style=")) {
                             String valueString = value.substring(value.lastIndexOf("=") + 1);
                             count = Integer.parseInt(valueString);
                         } else if (value.equals("start")) {
@@ -2860,7 +2911,7 @@ public class TrackSegment extends LayoutTrack {
                     setArrowLength(length);
                     setArrowGap(gap);
                     // set count last so it will fix ends and dir (if necessary)
-                    setArrowCount(count);
+                    setArrowStyle(count);
                 } // if (key.equals("arrow")) {
                 //
                 //  bridge decorations
@@ -2933,16 +2984,7 @@ public class TrackSegment extends LayoutTrack {
                     for (int i = 0; i < values.length; i++) {
                         String value = values[i];
                         //log.info("value[{}]: \"{}\"", i, value);
-                        if (value.equals("single")) {
-                            count = 1;
-                        } else if (value.equals("double")) {
-                            count = 2;
-                        } else if (value.equals("triple")) {
-                            count = 3;
-                        } else if (value.startsWith("count=")) {
-                            String valueString = value.substring(value.lastIndexOf("=") + 1);
-                            count = Integer.parseInt(valueString);
-                        } else if (value.equals("start")) {
+                        if (value.equals("start")) {
                             atStop = false;
                         } else if (value.equals("stop")) {
                             atStart = false;
@@ -3039,12 +3081,12 @@ public class TrackSegment extends LayoutTrack {
     //
     //  arrow decoration accessors
     //
-    public int getArrowCount() {
-        return arrowCount;
+    public int getArrowStyle() {
+        return arrowStyle;
     }
 
-    public void setArrowCount(int newVal) {
-        if (arrowCount != newVal) {
+    public void setArrowStyle(int newVal) {
+        if (arrowStyle != newVal) {
             if (newVal > 0) {
                 if (!arrowEndStart && !arrowEndStop) {
                     arrowEndStart = true;
@@ -3054,12 +3096,12 @@ public class TrackSegment extends LayoutTrack {
                     arrowDirOut = true;
                 }
             }
-            arrowCount = newVal;
+            arrowStyle = newVal;
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
     }
-    private int arrowCount = 0;
+    private int arrowStyle = 0;
 
     public boolean isArrowEndStart() {
         return arrowEndStart;
@@ -3067,12 +3109,11 @@ public class TrackSegment extends LayoutTrack {
 
     public void setArrowEndStart(boolean newVal) {
         if (arrowEndStart != newVal) {
-            if (newVal && (arrowCount < 1)) {
-                arrowCount = 1;
-            }
             arrowEndStart = newVal;
             if (!arrowEndStart && !arrowEndStop) {
-                arrowCount = 0;
+                arrowStyle = 0;
+            } else if (arrowStyle == 0) {
+                arrowStyle = 1;
             }
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
@@ -3086,12 +3127,11 @@ public class TrackSegment extends LayoutTrack {
 
     public void setArrowEndStop(boolean newVal) {
         if (arrowEndStop != newVal) {
-            if (newVal && (arrowCount < 1)) {
-                arrowCount = 1;
-            }
             arrowEndStop = newVal;
             if (!arrowEndStart && !arrowEndStop) {
-                arrowCount = 0;
+                arrowStyle = 0;
+            } else if (arrowStyle == 0) {
+                arrowStyle = 1;
             }
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
@@ -3107,7 +3147,9 @@ public class TrackSegment extends LayoutTrack {
         if (arrowDirIn != newVal) {
             arrowDirIn = newVal;
             if (!arrowDirIn && !arrowDirOut) {
-                arrowCount = 0;
+                arrowStyle = 0;
+            } else if (arrowStyle == 0) {
+                arrowStyle = 1;
             }
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
@@ -3123,7 +3165,9 @@ public class TrackSegment extends LayoutTrack {
         if (arrowDirOut != newVal) {
             arrowDirOut = newVal;
             if (!arrowDirIn && !arrowDirOut) {
-                arrowCount = 0;
+                arrowStyle = 0;
+            } else if (arrowStyle == 0) {
+                arrowStyle = 1;
             }
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
