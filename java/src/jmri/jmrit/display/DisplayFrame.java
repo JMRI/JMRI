@@ -8,8 +8,7 @@ import org.slf4j.LoggerFactory;
  * Extended JmriJFrame that allows to add an InitEventListener for display of
  * a tabbed frame in the CPE Add Item {@link jmri.jmrit.display.palette.ItemPalette} pane.
  * <p>
- * <a href="doc-files/DisplayFrame-ClassDiagram.png"><img src="doc-files/DisplayFrame-ClassDiagram.png"
- * alt="UML Class diagram" height="50%" width="50%"></a>
+ * <a href="doc-files/DisplayFrame-ClassDiagram.png"><img src="doc-files/DisplayFrame-ClassDiagram.png" alt="UML Class diagram" height="50%" width="50%"></a>
  *
  * @author Egbert Broerse Copyright (c) 2017
  */

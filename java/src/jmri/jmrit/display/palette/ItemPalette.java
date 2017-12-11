@@ -52,8 +52,7 @@ import org.slf4j.LoggerFactory;
  * squares pattern using the "View on:" combo. This choice is shared across tabs
  * as a field on the {@link jmri.jmrit.display.DisplayFrame} parent frame.
  * <p>
- * <a href="doc-files/ItemPalette-ClassDiagram.png"><img src="doc-files/ItemPalette-ClassDiagram.png"
- * alt="UML Class diagram" height="50%" width="50%"></a>
+ * <a href="doc-files/ItemPalette-ClassDiagram.png"><img src="doc-files/ItemPalette-ClassDiagram.png" alt="UML Class diagram" height="50%" width="50%"></a>
  *
  * @author Pete Cressman Copyright (c) 2010
  * @author Egbert Broerse Copyright (c) 2017
@@ -64,9 +63,9 @@ import org.slf4j.LoggerFactory;
 abstract class JPanel
 package "jmri.util.swing.ImagePanel" {
    class ImagePanel {
--BufferedImage image
-+SetImage()
-+Repaint()
+-BufferedImage back
++setImage()
++paintComponent()
 }
 }
 package "jmri.util.swing.DrawSquares" {
