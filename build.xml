@@ -267,7 +267,7 @@
         <pathelement location="${libdir}/typetools-0.5.0.jar"/>
         <!-- Selenium and it's dependencies -->
         <pathelement location="${libdir}/selenium-server-standalone-3.6.0.jar"/>
-        <pathelement location="${libdir}/webdrivermanager-2.0.0.jar"/>
+        <pathelement location="${libdir}/webdrivermanager-2.0.1.jar"/>
     </path>
 
     <!-- path to run regular executables -->
