@@ -51,10 +51,95 @@ import org.slf4j.LoggerFactory;
  * ItemPalette instance. In session the user can set it to another color or a white/gray
  * squares pattern using the "View on:" combo. This choice is shared across tabs
  * as a field on the {@link jmri.jmrit.display.DisplayFrame} parent frame.
+ * <p>
+ * <a href="doc-files/ItemPalette-ClassDiagram.png"><img src="doc-files/ItemPalette-ClassDiagram.png"
+ * alt="UML Class diagram" height="50%" width="50%"></a>
  *
  * @author Pete Cressman Copyright (c) 2010
  * @author Egbert Broerse Copyright (c) 2017
  */
+/*
+@startuml jmri/jmrit/display/palette/doc-files/ItemPalette-ClassDiagram.png
+
+abstract class JPanel
+package "jmri.util.swing.ImagePanel" {
+   class ImagePanel {
+-BufferedImage image
++SetImage()
++Repaint()
+}
+}
+package "jmri.util.swing.DrawSquares" {
+   class "DrawSquares" {
++DrawSquares()
+}
+}
+abstract class ItemPanel {
+-String type
+#int previewBgSet
+#BufferedImage[] _backgrounds
+#MakeBgCombo()
+}
+JPanel --|> ItemPanel
+abstract class FamilyItemPanel
+class TableItemPanel
+class IndicatorItemPanel
+IndicatorItemPanel : type = "Indicator"
+object viewOnCombo
+viewOnCombo : -int choice
+viewOnCombo : +EventListener InitListener
+object preview
+preview : -image = 1
+preview : +EventListener comboListener
+object TurnoutItemPanel
+TurnoutItemPanel : type = "Turnout"
+TableItemPanel -- TurnoutItemPanel
+object SensorItemPanel
+SensorItemPanel : type = "Sensor"
+TableItemPanel -- SensorItemPanel
+class SignalMastItemPanel
+SignalMastItemPanel : type = "SignalMast"
+TableItemPanel --|> SignalMastItemPanel
+class MultiSensorItemPanel
+MultiSensorItemPanel : type = "MultiSensor"
+TableItemPanel --|> MultiSensorItemPanel
+class IconItemPanel
+class BackgroundItemPanel
+BackgroundItemPanel : type = "Background"
+IconItemPanel --|> BackgroundItemPanel
+class ClockItemPanel
+ClockItemPanel : type = "Clock"
+IconItemPanel --|> ClockItemPanel
+class DecoratorPanel
+DecoratorPanel : #int previewBgSet
+DecoratorPanel : #BufferedImage[] _backgrounds
+JPanel --|> DecoratorPanel
+abstract class DragJComponent
+JPanel --|> DragJComponent
+class TextItemPanel
+TextItemPanel : type = "Text"
+
+ItemPanel --|> FamilyItemPanel
+FamilyItemPanel --|> TableItemPanel
+FamilyItemPanel --|> IndicatorItemPanel
+DecoratorPanel *-- viewOnCombo
+FamilyItemPanel *-- viewOnCombo : if != SignalMast
+FamilyItemPanel *-- preview
+IconItemPanel *-- viewOnCombo : if != Background
+SignalMastItemPanel *-- viewOnCombo
+viewOnCombo ..> preview: setImage[n]
+viewOnCombo -- DrawSquares
+ItemPanel --|> IconItemPanel
+ItemPanel --|> TextItemPanel
+DecoratorPanel -- TextItemPanel
+ImagePanel -- preview
+DragJComponent --|> ReporterItemPanel
+ReporterItemPanel *-- preview
+' MemoryItemPanel not shown
+
+@enduml
+*/
+
 public class ItemPalette extends DisplayFrame implements ChangeListener {
 
     public static final int STRUT_SIZE = 10;

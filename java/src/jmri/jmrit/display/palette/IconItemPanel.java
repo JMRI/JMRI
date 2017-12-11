@@ -44,6 +44,7 @@ import org.slf4j.LoggerFactory;
 /**
  * ItemPanel for plain Icons and Backgrounds.
  * Does NOT use IconDialog class to add, replace or delete icons.
+ * @see ItemPanel palette class diagram
  */
 public class IconItemPanel extends ItemPanel implements MouseListener {
 

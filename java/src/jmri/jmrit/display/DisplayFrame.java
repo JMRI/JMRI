@@ -6,106 +6,62 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extended JmriJFrame that allows to add an InitEventListener for display of
- * a tabbed frame in the CPE Add Item {@link jmri.jmrit.display.palette.ItemPalette}
- * <a href="doc-files/DisplayFrame-ClassDiagram.png"><img src="doc-files/DisplayFrame-ClassDiagram.png" alt="UML Class diagram"
- * height="50%" width="50%"></a>
+ * a tabbed frame in the CPE Add Item {@link jmri.jmrit.display.palette.ItemPalette} pane.
+ * <p>
+ * <a href="doc-files/DisplayFrame-ClassDiagram.png"><img src="doc-files/DisplayFrame-ClassDiagram.png"
+ * alt="UML Class diagram" height="50%" width="50%"></a>
  *
  * @author Egbert Broerse Copyright (c) 2017
  */
-
 /*
 @startuml jmri/jmrit/display/doc-files/DisplayFrame-ClassDiagram.png
-package "java.swingJFrame" {
-class JFrame
-}
-        package "jmri.util.JmriJFrame" {
-class JmriJFrame
-}
-        JFrame --|> JmriJFrame
-        package "java.swing.JPanel" {
-class JPanel
-}
-        package "jmri.util.swing.ImagePanel" {
-class ImagePanel {
--BufferedImage image
-+SetImage()
-+Repaint()
-}
-}
-        JPanel --|> ImagePanel
-        package "jmri.util.swing.DrawSquares" {
-class "DrawSquares" {
-        +DrawSquares()
-        }
-        }
-        package "jmri.jmrit.display" #BBBBBB {
-class DisplayFrame  #88dddd {
-        #SetInitListener()
-        }
-        JmriJFrame --|> DisplayFrame
 
-        object IconEditor
-        DisplayFrame *-- IconEditor
-
-        package "jmri.jmrit.display.palette" #DDDDDD {
-
-        object AddItemTabbedPane
-        AddItemTabbedPane : Tab[1] = TurnoutTab
-        AddItemTabbedPane : Tab[n] = IndicatorTab
-        DisplayFrame *-- AddItemTabbedPane
-abstract class ItemPanel {
--String type
-#int previewBgSet
-#BufferedImage[] _backgrounds
-#MakeBgCombo()
+class jmri.util.JmriJFrame
+class jmri.util.swing.ImagePanel {
+-BufferedImage back
++setImage()
++paintComponent()
 }
-JPanel --|> ItemPanel
-        ItemPanel -- DrawSquares
-class FamilyItemPanel
-ItemPanel --|> FamilyItemPanel
-class TableItemPanel
-FamilyItemPanel --|> TableItemPanel
-        object TurnoutItemPanel
-        TurnoutItemPanel : type = "Turnout"
-        TableItemPanel -- TurnoutItemPanel
-        AddItemTabbedPane --> TurnoutItemPanel : show
-class SignalMastItemPanel
+class jmri.jmrit.DisplayFrame  #88dddd {
+-previewBgSet
+#SetInitListener()
+#setPreviewBg(i)
+#getPreviewBg()
+}
+class jmri.jmrit.display.IconEditor
+
+object AddItem_TabbedPane
+AddItem_TabbedPane : Tab[1] = TurnoutTab
+AddItem_TabbedPane : Tab[n] = IndicatorTab
+object TurnoutItemPanel
+TurnoutItemPanel : type = "Turnout"
+object SignalMastItemPanel
 SignalMastItemPanel : type = "SignalMast"
-        TableItemPanel --|> SignalMastItemPanel
-class IconItemPanel
-IconItemPanel : type = "Icon"
-        ItemPanel --|> IconItemPanel
-class BackgroundItemPanel
-BackgroundItemPanel : type = "Background"
-        IconItemPanel --|> BackgroundItemPanel
-class DecoratorPanel
-DecoratorPanel : #int previewBgSet
-        DecoratorPanel : #BufferedImage[] _backgrounds
-        JPanel --|> DecoratorPanel
-class TextItemPanel
-TextItemPanel : type = "Text"
-        ItemPanel --|> TextItemPanel
-        DecoratorPanel -- TextItemPanel
-        object preview
-        preview : -image = 1
-        preview : +EventListener comboListener
-        ImagePanel -- preview
-        object viewOnCombo
-        viewOnCombo : -int choice
-        viewOnCombo : +EventListener InitListener
-        DecoratorPanel *-- viewOnCombo
-        FamilyItemPanel *-- viewOnCombo : if != SignalMast
-        FamilyItemPanel *-- preview
-        IconItemPanel *-- viewOnCombo : if != Background
-        SignalMastItemPanel *-- viewOnCombo
-        AddItemTabbedPane ..> viewOnCombo: TabShown
-        viewOnCombo ..> preview: setImage[n]
-        IconEditor --> viewOnCombo
-        }
-        }
+object xItemPanel
+xItemPanel : type = "x"
+object viewOnCombo
+viewOnCombo : -int choice
+viewOnCombo : +EventListener InitListener
+object preview
+preview : -image = 1
+preview : +EventListener comboListener
+
+AddItem_TabbedPane --> TurnoutItemPanel : show()
+AddItem_TabbedPane --> SignalMastItemPanel : show()
+AddItem_TabbedPane --> xItemPanel : show()
+jmri.util.JmriJFrame --|> jmri.jmrit.DisplayFrame
+jmri.jmrit.DisplayFrame *-- jmri.jmrit.display.IconEditor
+SignalMastItemPanel *-- viewOnCombo
+TurnoutItemPanel *-- viewOnCombo
+xItemPanel *-- viewOnCombo
+AddItem_TabbedPane ..> viewOnCombo: TabShown(i)
+viewOnCombo ..> preview: SetImage[n]
+jmri.jmrit.display.IconEditor *-- viewOnCombo
+jmri.jmrit.DisplayFrame *-- AddItem_TabbedPane
+jmri.util.swing.ImagePanel -- preview
+
 @enduml
 */
-
 public class DisplayFrame extends JmriJFrame {
 
     /**

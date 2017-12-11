@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * ItemPanel general implementation for placement of CPE items having sets of icons (families).
+ * @see ItemPanel palette class diagram
  * 
  * @author Pete Cressman Copyright (c) 2010, 2011
  * @author Egbert Broerse 2017

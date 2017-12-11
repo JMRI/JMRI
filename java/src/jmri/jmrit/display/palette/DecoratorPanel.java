@@ -43,6 +43,7 @@ import jmri.util.swing.ImagePanel;
 
 /**
  * Panel for positionables with text and/or colored margins and borders.
+ * @see ItemPanel palette class diagram
  * 
  * @author PeteCressman Copyright (C) 2009, 2015
  */

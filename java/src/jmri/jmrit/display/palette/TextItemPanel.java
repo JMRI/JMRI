@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * ItemPanel for text labels.
+ * @see ItemPanel palette class diagram
  */
 public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
 
