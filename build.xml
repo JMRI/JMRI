@@ -254,16 +254,17 @@
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
         <pathelement location="${libdir}/org-openide-util-lookup-RELEASE82.jar"/>
         <!-- cucumber and it's dependencies -->
-        <pathelement location="${libdir}/cucumber-core-1.2.5.jar"/>
-        <pathelement location="${libdir}/cucumber-java-1.2.5.jar"/>
-        <pathelement location="${libdir}/cucumber-java8-1.2.5.jar"/>
-        <pathelement location="${libdir}/cucumber-junit-1.2.5.jar"/>
-        <pathelement location="${libdir}/cucumber-jvm-deps-1.0.5.jar"/>
-        <pathelement location="${libdir}/cucumber-picocontainer-1.2.5.jar"/>
-        <pathelement location="${libdir}/gherkin-2.12.2.jar"/>
-        <pathelement location="${libdir}/gherkin3-3.0.0.jar"/>
-        <pathelement location="${libdir}/gherkin-jvm-deps-1.0.3.jar"/>
+        <pathelement location="${libdir}/cucumber-core-2.0.1.jar"/>
+        <pathelement location="${libdir}/cucumber-java-2.0.1.jar"/>
+        <pathelement location="${libdir}/cucumber-java8-2.0.1.jar"/>
+        <pathelement location="${libdir}/cucumber-junit-2.0.1.jar"/>
+        <pathelement location="${libdir}/cucumber-jvm-deps-1.0.6.jar"/>
+        <pathelement location="${libdir}/cucumber-picocontainer-2.0.1.jar"/>
+        <pathelement location="${libdir}/gherkin-4.1.3.jar"/>
+        <pathelement location="${libdir}/gherkin-jvm-deps-1.0.4.jar"/>
         <pathelement location="${libdir}/picocontainer-2.15.jar"/>
+        <pathelement location="${libdir}/tag-expressions-1.0.1.jar"/>
+        <pathelement location="${libdir}/typetools-0.5.0.jar"/>
         <!-- Selenium and it's dependencies -->
         <pathelement location="${libdir}/selenium-server-standalone-3.6.0.jar"/>
     </path>
