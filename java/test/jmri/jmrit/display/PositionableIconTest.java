@@ -17,6 +17,7 @@ public class PositionableIconTest extends PositionableTestBase {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("PositionableIcon Constructor",p);
     }
 
@@ -24,8 +25,10 @@ public class PositionableIconTest extends PositionableTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        Editor e = new EditorScaffold();
-        p = new PositionableIcon(e);
+        if(!GraphicsEnvironment.isHeadless()){
+           Editor e = new EditorScaffold();
+           p = new PositionableIcon(e);
+        }
     }
 
     @After

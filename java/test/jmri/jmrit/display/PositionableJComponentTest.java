@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -15,12 +16,14 @@ public class PositionableJComponentTest extends PositionableTestBase {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists",p);
     }
 
     @Override
     @Test
     public void testGetAndSetViewCoordinates() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Defalt View Coordinates", p.getViewCoordinates());
         p.setViewCoordinates(true);
         Assert.assertTrue("View Coordinates after set true", p.getViewCoordinates());
@@ -32,8 +35,10 @@ public class PositionableJComponentTest extends PositionableTestBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        Editor e = new EditorScaffold();
-        p = new PositionableJComponent(e);
+        if(!GraphicsEnvironment.isHeadless()){
+           Editor e = new EditorScaffold();
+           p = new PositionableJComponent(e);
+        }
     }
 
     @After

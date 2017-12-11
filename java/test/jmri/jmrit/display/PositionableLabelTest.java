@@ -546,8 +546,10 @@ public class PositionableLabelTest extends PositionableTestBase {
         JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initDefaultUserMessagePreferences();
-        Editor e = new EditorScaffold();
-        p = to = new PositionableLabel("one", e);
+        if(!GraphicsEnvironment.isHeadless()) {
+           Editor e = new EditorScaffold();
+           p = to = new PositionableLabel("one", e);
+        }
     }
 
     @After

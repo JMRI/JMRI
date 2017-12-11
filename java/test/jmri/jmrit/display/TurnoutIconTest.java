@@ -47,6 +47,7 @@ public class TurnoutIconTest extends PositionableIconTest {
     @Override
     @Test
     public void testClone() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor es = new EditorScaffold();
         TurnoutIcon to = new TurnoutIcon(es);
         jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
@@ -138,9 +139,9 @@ public class TurnoutIconTest extends PositionableIconTest {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test TurnoutIcon Panel");
+            Editor e = new EditorScaffold();
+            p = new TurnoutIcon(e);
         }
-        Editor e = new EditorScaffold();
-        p = new TurnoutIcon(e);
     }
 
     @After

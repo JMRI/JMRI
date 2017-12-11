@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -21,6 +22,7 @@ abstract public class PositionableTestBase{
 
     @Test
     public void testGetAndSetPositionable() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Defalt Positionable", p.isPositionable());
         p.setPositionable(false);
         Assert.assertFalse("Positionable after set false", p.isPositionable());
@@ -30,6 +32,7 @@ abstract public class PositionableTestBase{
 
     @Test
     public void testGetAndSetEditable() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Defalt Editable", p.isEditable());
         p.setEditable(false);
         Assert.assertFalse("Editable after set false", p.isEditable());
@@ -39,6 +42,7 @@ abstract public class PositionableTestBase{
 
     @Test
     public void testGetAndSetShowToolTip() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Defalt ShowToolTip", p.showToolTip());
         p.setShowToolTip(false);
         Assert.assertFalse("showToolTip after set false", p.showToolTip());
@@ -48,6 +52,7 @@ abstract public class PositionableTestBase{
 
     @Test
     public void testGetAndSetToolTip() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNull("default tool tip", p.getToolTip());
         p.setToolTip(new ToolTip("hello",0,0));
         Assert.assertNotNull("tool tip after set", p.getToolTip());
@@ -55,6 +60,7 @@ abstract public class PositionableTestBase{
 
     @Test
     public void testGetAndSetViewCoordinates() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Defalt View Coordinates", p.getViewCoordinates());
         p.setViewCoordinates(false);
         Assert.assertFalse("View Coordinates after set false", p.getViewCoordinates());
@@ -64,6 +70,7 @@ abstract public class PositionableTestBase{
 
     @Test
     public void testGetAndSetControlling() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Defalt ShowToolTip", p.isControlling());
         p.setControlling(false);
         Assert.assertFalse("Controlling after set false", p.isControlling());
@@ -73,6 +80,7 @@ abstract public class PositionableTestBase{
 
     @Test
     public void testGetAndSetHidden() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Defalt Hidden", p.isHidden());
         p.setHidden(true);
         Assert.assertTrue("Hidden after set true", p.isHidden());
@@ -82,19 +90,22 @@ abstract public class PositionableTestBase{
 
     @Test
     public void testGetAndSetDisplayLevel(){
-       p.setDisplayLevel(2);
-       Assert.assertEquals("Display Level",2,p.getDisplayLevel());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        p.setDisplayLevel(2);
+        Assert.assertEquals("Display Level",2,p.getDisplayLevel());
     }
 
     @Test
     public void testGetAndSetEditor(){
-       Editor es = new EditorScaffold();
-       p.setEditor(es);
-       Assert.assertEquals("Editor",es,p.getEditor());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Editor es = new EditorScaffold();
+        p.setEditor(es);
+        Assert.assertEquals("Editor",es,p.getEditor());
     }
 
     @Test
     public void testClone() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Positionable p2 = p.deepClone();
 
         // this next line is consistently failing (on all object types).  

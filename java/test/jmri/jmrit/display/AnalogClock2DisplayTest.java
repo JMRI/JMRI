@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -16,6 +17,7 @@ public class AnalogClock2DisplayTest extends PositionableJComponentTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("AnalogClock2Display Constructor",p);
     }
 
@@ -23,8 +25,10 @@ public class AnalogClock2DisplayTest extends PositionableJComponentTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        Editor ef = new EditorScaffold();
-        p = new AnalogClock2Display(ef);
+        if(!GraphicsEnvironment.isHeadless()){
+           Editor ef = new EditorScaffold();
+           p = new AnalogClock2Display(ef);
+        }
     }
 
     @After
