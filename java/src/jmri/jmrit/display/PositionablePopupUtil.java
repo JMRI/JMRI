@@ -342,6 +342,10 @@ public class PositionablePopupUtil {
         if (!_hasBackground) {
             // make sure the alpha value is set to 0
             jmri.util.ColorUtil.setAlpha(c,0);
+            // PositionablePropertiesUtil needs to be re-written to handle 
+            // a non-null transparent background.  When that happens, we can
+            // return the background color instead of null.
+            return null;
         }
         return c;
     }
