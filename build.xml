@@ -2330,24 +2330,4 @@
     <target name="appveyor" description="Execute CI tasks on Appveyor" depends="warnings, tests-warnings, checkPropertiesFiles, ci-test-appveyor-coveragecheck">
     </target>
 
-	<!-- - - - - - - - - - - - - - - - - -
-          target: lockMetaFiles
-         - - - - - - - - - - - - - - - - - -->
-    <target name="lockMetaFiles" description="Lock META-INT files">
-    	<echo>locking META-INT files</echo>
-    	<chmod perm="ugo+rx">
-    		<fileset dir="${target/classes/META-INF}"/>
-    	</chmod>
-    </target>
-
-	<!-- - - - - - - - - - - - - - - - - -
-          target: unlockMetaFiles
-         - - - - - - - - - - - - - - - - - -->
-    <target name="unlockMetaFiles" description="Unlock META-INT files">
-    	<echo>unlocking META-INT files</echo>
-    	<chmod perm="ugo+rx+w">
-    		<fileset dir="${target/classes/META-INF}"/>
-    	</chmod>
-    </target>
-
 </project>
