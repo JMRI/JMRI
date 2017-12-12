@@ -308,15 +308,15 @@ public class PositionablePopupUtil {
 
     public void setBackgroundColor(Color color) {
         if (color == null || color.getAlpha() == 0) {
-            _hasBackground = false;
+            setHasBackground(false);
             _textComponent.setBackground(color); // retain the passed color
                                                  // which may not be null
         } else {
-            _hasBackground = true;
+            setHasBackground(true);
             _textComponent.setBackground(color);
             _parent.setBackground(color);
         }
-        if (_hasBackground) {
+        if (hasBackground()) {
             setMargin(margin);  //This rebuilds margin and sets it colour.
         }
         _parent.updateSize();
