@@ -2327,15 +2327,7 @@
         <echo message="new release branch ${branch-name} created"/>
     </target>
 
-    <target name="appveyor" description="Execute CI tasks on Appveyor">
-        <!-- <parallel threadCount="1"> < ! - - allow up to four tasks at once -->
-        <sequential>
-            <antcall target="warnings" />
-            <antcall target="tests-warnings" />
-            <antcall target="checkPropertiesFiles" />
-            <antcall target="ci-test-appveyor-coveragecheck" />
-            <!-- </parallel> -->
-        </sequential>
+    <target name="appveyor" description="Execute CI tasks on Appveyor" depends="warnings, tests-warnings, checkPropertiesFiles, ci-test-appveyor-coveragecheck">
     </target>
 
 	<!-- - - - - - - - - - - - - - - - - -
