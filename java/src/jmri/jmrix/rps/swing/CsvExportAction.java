@@ -12,6 +12,7 @@ import javax.swing.JMenuItem;
 import jmri.jmrix.rps.Distributor;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.ReadingListener;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,12 +24,15 @@ import org.slf4j.LoggerFactory;
  */
 public class CsvExportAction extends AbstractAction implements ReadingListener {
 
-    public CsvExportAction(String actionName) {
+    RpsSystemConnectionMemo memo = null;
+
+    public CsvExportAction(String actionName,RpsSystemConnectionMemo _memo) {
         super(actionName);
+        memo = _memo;
     }
 
-    public CsvExportAction() {
-        this("Start CSV Export Reading...");
+    public CsvExportAction(RpsSystemConnectionMemo _memo) {
+        this("Start CSV Export Reading...",_memo);
     }
 
     JFrame mParent;

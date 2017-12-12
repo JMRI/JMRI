@@ -6,11 +6,11 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-import jmri.InstanceManager;
 import jmri.ConsistManager;
+import jmri.InstanceManager;
+import jmri.beans.Bean;
 import jmri.implementation.DccConsistManager;
 import jmri.implementation.NmraConsistManager;
-import jmri.beans.Bean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,6 +70,7 @@ abstract public class SystemConnectionMemo extends Bean {
 
     /**
      * Provide access to the system prefix string.
+     * <p>
      * This was previously called the "System letter".
      *
      * @return System prefix
@@ -109,6 +110,7 @@ abstract public class SystemConnectionMemo extends Bean {
 
     /**
      * Provide access to the system user name string.
+     * <p>
      * This was previously fixed at configuration time.
      *
      * @return User name
@@ -152,23 +154,23 @@ abstract public class SystemConnectionMemo extends Bean {
      */
     @OverridingMethodsMustInvokeSuper
     public boolean provides(Class<?> c) {
-        if(c.equals(jmri.ConsistManager.class)){
-           if(consistManager!=null){
-             return true; // we have a consist manager already
-           } else if(provides(jmri.CommandStation.class)){
-             return true; // we can construct an NMRAConsistManager
-           } else if(provides(jmri.AddressedProgrammerManager.class)){
-             return true; // we can construct a DccConsistManager
-           } else {
-             return false;
-           }
+        if (c.equals(jmri.ConsistManager.class)) {
+            if (consistManager != null) {
+                return true; // we have a consist manager already
+            } else if (provides(jmri.CommandStation.class)) {
+                return true; // we can construct an NMRAConsistManager
+            } else if (provides(jmri.AddressedProgrammerManager.class)) {
+                return true; // we can construct a DccConsistManager
+            } else {
+                return false;
+            }
         } else {
-           return false; // nothing, by default
+            return false; // nothing, by default
         }
     }
 
     /**
-     * Does this connection provide a manager of this type?
+     * get a manager of this type
      *
      * @param <T> Type of manager to get
      * @param T   Type of manager to get
@@ -176,10 +178,10 @@ abstract public class SystemConnectionMemo extends Bean {
      */
     @OverridingMethodsMustInvokeSuper
     public <T> T get(Class<?> T) {
-        if(T.equals(jmri.ConsistManager.class)){
-           return (T) getConsistManager();
+        if (T.equals(jmri.ConsistManager.class)) {
+            return (T) getConsistManager();
         } else {
-           return null; // nothing, by default
+            return null; // nothing, by default
         }
     }
 
@@ -261,20 +263,20 @@ abstract public class SystemConnectionMemo extends Bean {
      * NOTE: Consist manager defaults to NULL
      */
     public ConsistManager getConsistManager() {
-        if(consistManager == null) {
-           // a consist manager doesn't exist, so we can create it.
-           if(provides(jmri.CommandStation.class)){
-              setConsistManager(new NmraConsistManager(get(jmri.CommandStation.class)));
-           } else if(provides(jmri.AddressedProgrammerManager.class)){
-              setConsistManager(new DccConsistManager(get(jmri.AddressedProgrammerManager.class)));
-           }
+        if (consistManager == null) {
+            // a consist manager doesn't exist, so we can create it.
+            if (provides(jmri.CommandStation.class)) {
+                setConsistManager(new NmraConsistManager(get(jmri.CommandStation.class)));
+            } else if (provides(jmri.AddressedProgrammerManager.class)) {
+                setConsistManager(new DccConsistManager(get(jmri.AddressedProgrammerManager.class)));
+            }
         }
         return consistManager;
     }
 
     public void setConsistManager(ConsistManager c) {
         consistManager = c;
-        jmri.InstanceManager.store(consistManager,ConsistManager.class);
+        jmri.InstanceManager.store(consistManager, ConsistManager.class);
     }
 
     private ConsistManager consistManager = null;

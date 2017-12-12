@@ -69,7 +69,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(GetClassPathTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(GetJavaPropertyTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(HelpUtilTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(JTableUtilTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(JTextPaneAppenderTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(JmriInsetsTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(JmriJFrameTest.class));

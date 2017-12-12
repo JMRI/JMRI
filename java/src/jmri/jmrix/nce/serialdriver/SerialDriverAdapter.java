@@ -122,9 +122,6 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
-
-        jmri.jmrix.nce.ActiveFlag.setActive();
-
     }
 
     // base class methods for the NcePortController interface

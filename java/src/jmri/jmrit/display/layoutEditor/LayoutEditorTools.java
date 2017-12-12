@@ -63,7 +63,7 @@ import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
-import jmri.util.swing.JmriBeanComboBox;
+import jmri.util.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12126,7 +12126,7 @@ public class LayoutEditorTools {
         BeanDetails(@Nonnull String beanType, @Nonnull Manager manager) {
             beanCombo = new JmriBeanComboBox(manager);
             beanCombo.setFirstItemBlank(true);
-            LayoutEditor.setupComboBoxMaxRows(beanCombo);
+            JComboBoxUtil.setupComboBoxMaxRows(beanCombo);
 
             // I18N translate from type (Sensor) to BeanNameSensor
             // to use NamedBeanBundle property
@@ -13468,7 +13468,7 @@ public class LayoutEditorTools {
         String turnoutName = turn.getDisplayName();
         String farTurnoutName = farTurn.getDisplayName();
 
-        String logixName = "SYS_LAYOUTSLIP:" + slip.ident;
+        String logixName = "IX_LAYOUTSLIP:" + slip.ident;
         String sensorName = "IS:" + logixName + "C" + number;
         try {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
@@ -13543,19 +13543,19 @@ public class LayoutEditorTools {
     private void addNearSensorToSlipLogic(String name) {
         if ((name != null) && !name.isEmpty()) {
             // return if a sensor by this name is already present
-            if (logic.getSensor1().equals(name)) {
+            if (logic.getSensor1() != null && logic.getSensor1().equals(name)) {
                 return;
             }
-            if (logic.getSensor2().equals(name)) {
+            if (logic.getSensor2() != null && logic.getSensor2().equals(name)) {
                 return;
             }
-            if (logic.getSensor3().equals(name)) {
+            if (logic.getSensor3() != null && logic.getSensor3().equals(name)) {
                 return;
             }
-            if (logic.getSensor4().equals(name)) {
+            if (logic.getSensor4() != null && logic.getSensor4().equals(name)) {
                 return;
             }
-            if (logic.getSensor5().equals(name)) {
+            if (logic.getSensor5() != null && logic.getSensor5().equals(name)) {
                 return;
             }
             // add in the first available slot

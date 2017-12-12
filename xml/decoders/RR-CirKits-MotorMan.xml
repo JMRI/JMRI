@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2006, 2007, 2008, 2015, 2016 All rights reserved -->
+<!-- Copyright (C) JMRI 2006, 2007, 2008, 2015, 2016, 2017 All rights reserved -->
 <!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -13,16 +13,18 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-  <version author="dick@rr-cirkits.com" version="1.3" lastUpdated="20161209"/>
+  <version author="dick@rr-cirkits.com" version="1.4" lastUpdated="20171205"/>
   <!-- Version 0.01  Working version modified from TowerMan -->
   <!-- Version 1.0   Removed Stepper code references -->
   <!-- Version 1.1   Fixed bugs and added flasher option -->
   <!-- Version 1.2   Fixed boot code errors to prevent shorting output drivers during firmware upgrade, added Inv option to outputs, and added trigger options in logic -->
-  <!-- Version 1.3   Fixed initialize error to prevent lock up of the LocoNet -->
+  <!-- Version 1.3   Fixed initialize error to prevent random lock up of the LocoNet -->
+  <!-- Version 1.4   Added code for MotorMan-II -->
 
   <decoder>
     <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The MotorMan is programmed in OPs mode">
-      <model model="MotorMan" comment="8 Line Output Driver" lowVersionID="10"/>
+      <model model="MotorMan" comment="8 Line Output Driver"/>
+      <model model="MotorMan-II" comment="8 Line Output Driver"/>
     </family>
     <programming direct="no" paged="yes" register="no" ops="yes"/>
     <variables>
@@ -43,7 +45,7 @@
         <label xml:lang="de">Hersteller ID: </label>
         <label>Manufacturer ID: </label>
       </variable>
-      <variable label="Hardware ID" CV="9" readOnly="yes" item="Hardware ID" default="0" comment="MotorMan ID=25">
+      <variable label="Hardware ID" CV="9" readOnly="yes" item="Hardware ID" default="0" comment="MotorMan ID=25, MotorMan-II ID=28">
         <decVal/>
       </variable>
 		<variable label="Extended Address" CV="17" default="9999" item="Long Address" comment="5 digit address (Range 00001-16383)">
@@ -99,6 +101,17 @@
       </variable>
       <variable label="Flash Write MSB" CV="114" readOnly="yes" mask="VVXXXXXX" item="Flash Write MSB">
         <splitVal highCV="115" upperMask="VVVVVVVV"/>
+      </variable>
+      <variable label="Total Output Current" CV="117" mask="VVVVVVVV" default="100">
+        <enumVal>
+          <enumChoice choice="100 mA" value="10"/>
+          <enumChoice choice="200 mA" value="20"/>
+          <enumChoice choice="300 mA" value="30"/>
+          <enumChoice choice="500 mA" value="50"/>
+          <enumChoice choice="1 Amp" value="100"/>
+          <enumChoice choice="2 Amp" value="200"/>
+          <enumChoice choice="2.5 Amp" value="250"/>
+        </enumVal>
       </variable>
 
       <!-- I/O Table entries -->
@@ -7960,15 +7973,22 @@
             <compositeSetting label="PA1 Output-Input" value="1"/> <!-- Direction -->
             <compositeSetting label="PA1 Paired" value="0"/> <!-- Normal, Alt, Paired -->
             <compositeSetting label="PA1 Mode" value="2"/> <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PA1 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PA1 Transition" value="3"/> <!-- None, Positive, Negative, Both -->
           </compositeChoice>
-          <compositeChoice choice="SPST Alt Button">
+          <compositeChoice choice="Alt Button Sensor">
+            <compositeSetting label="PA1 Output-Input" value="1"/>
+            <compositeSetting label="PA1 Paired" value="1"/>
+            <compositeSetting label="PA1 Mode" value="2"/>
+            <compositeSetting label="PA1 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Alt Button Switch">
             <compositeSetting label="PA1 Output-Input" value="1"/>
             <compositeSetting label="PA1 Paired" value="1"/>
             <compositeSetting label="PA1 Mode" value="0"/>
             <compositeSetting label="PA1 Transition" value="2"/>
           </compositeChoice>
-          <compositeChoice choice="Paired Button Inputs">
+          <compositeChoice choice="Paired Button Sensor">
             <compositeSetting label="PA1 Output-Input" value="1"/>
             <compositeSetting label="PA2 Output-Input" value="1"/>
             <compositeSetting label="PA1 Paired" value="2"/>
@@ -7976,14 +7996,32 @@
             <compositeSetting label="PA1 Mode" value="2"/>
             <compositeSetting label="PA2 Mode" value="2"/>
             <compositeSetting label="PA1 Input Direction" value="0"/> <!-- Normal, Inverted -->
-            <compositeSetting label="PA2 Input Direction" value="0"/>
+            <compositeSetting label="PA2 Input Direction" value="1"/>
+            <compositeSetting label="PA1 Transition" value="2"/>
+            <compositeSetting label="PA2 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Paired Button Switch">
+            <compositeSetting label="PA1 Output-Input" value="1"/>
+            <compositeSetting label="PA2 Output-Input" value="1"/>
+            <compositeSetting label="PA1 Paired" value="2"/>
+            <compositeSetting label="PA2 Paired" value="2"/>
+            <compositeSetting label="PA1 Mode" value="0"/>
+            <compositeSetting label="PA2 Mode" value="0"/>
+            <compositeSetting label="PA1 Input Direction" value="0"/>
+            <compositeSetting label="PA2 Input Direction" value="1"/>
             <compositeSetting label="PA1 Transition" value="2"/>
             <compositeSetting label="PA2 Transition" value="2"/>
           </compositeChoice>
           <compositeChoice choice="Driver">
             <compositeSetting label="PA1 Output-Input" value="0"/>
             <compositeSetting label="PA1 Paired" value="0"/>
+            <compositeSetting label="PA2 Paired" value="0"/>
             <compositeSetting label="PA1 Mode" value="0"/>
+            <compositeSetting label="PA2 Mode" value="0"/>
+            <compositeSetting label="PA1 Output Direction" value="0"/>
+            <compositeSetting label="PA2 Output Direction" value="0"/>
+            <compositeSetting label="PA1 Timing" value="0"/>
+            <compositeSetting label="PA2 Timing" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PA1 Output-Input" value="0"/>
@@ -8044,15 +8082,22 @@
             <compositeSetting label="PA2 Output-Input" value="1"/>
             <compositeSetting label="PA2 Paired" value="0"/>
             <compositeSetting label="PA2 Mode" value="2"/>
+            <compositeSetting label="PA2 Input Direction" value="0"/>
             <compositeSetting label="PA2 Transition" value="3"/>
           </compositeChoice>
-          <compositeChoice choice="SPST Alt Button">
+          <compositeChoice choice="Alt Button Sensor">
+            <compositeSetting label="PA2 Output-Input" value="1"/>
+            <compositeSetting label="PA2 Paired" value="1"/>
+            <compositeSetting label="PA2 Mode" value="2"/>
+            <compositeSetting label="PA2 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Alt Button Switch">
             <compositeSetting label="PA2 Output-Input" value="1"/>
             <compositeSetting label="PA2 Paired" value="1"/>
             <compositeSetting label="PA2 Mode" value="0"/>
             <compositeSetting label="PA2 Transition" value="2"/>
           </compositeChoice>
-          <compositeChoice choice="Paired Button Inputs">
+          <compositeChoice choice="Paired Button Sensor">
             <compositeSetting label="PA1 Output-Input" value="1"/>
             <compositeSetting label="PA2 Output-Input" value="1"/>
             <compositeSetting label="PA1 Paired" value="2"/>
@@ -8060,14 +8105,32 @@
             <compositeSetting label="PA1 Mode" value="2"/>
             <compositeSetting label="PA2 Mode" value="2"/>
             <compositeSetting label="PA1 Input Direction" value="0"/>
-            <compositeSetting label="PA2 Input Direction" value="0"/>
+            <compositeSetting label="PA2 Input Direction" value="1"/>
+            <compositeSetting label="PA1 Transition" value="2"/>
+            <compositeSetting label="PA2 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Paired Button Switch">
+            <compositeSetting label="PA1 Output-Input" value="1"/>
+            <compositeSetting label="PA2 Output-Input" value="1"/>
+            <compositeSetting label="PA1 Paired" value="2"/>
+            <compositeSetting label="PA2 Paired" value="2"/>
+            <compositeSetting label="PA1 Mode" value="0"/>
+            <compositeSetting label="PA2 Mode" value="0"/>
+            <compositeSetting label="PA1 Input Direction" value="0"/>
+            <compositeSetting label="PA2 Input Direction" value="1"/>
             <compositeSetting label="PA1 Transition" value="2"/>
             <compositeSetting label="PA2 Transition" value="2"/>
           </compositeChoice>
           <compositeChoice choice="Driver">
             <compositeSetting label="PA2 Output-Input" value="0"/>
+            <compositeSetting label="PA1 Paired" value="0"/>
             <compositeSetting label="PA2 Paired" value="0"/>
+            <compositeSetting label="PA1 Mode" value="0"/>
             <compositeSetting label="PA2 Mode" value="0"/>
+            <compositeSetting label="PA1 Output Direction" value="0"/>
+            <compositeSetting label="PA2 Output Direction" value="0"/>
+            <compositeSetting label="PA1 Timing" value="0"/>
+            <compositeSetting label="PA2 Timing" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PA1 Output-Input" value="0"/>
@@ -8128,15 +8191,22 @@
             <compositeSetting label="PA3 Output-Input" value="1"/> <!-- Direction -->
             <compositeSetting label="PA3 Paired" value="0"/> <!-- Normal, Alt, Paired -->
             <compositeSetting label="PA3 Mode" value="2"/> <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PA3 Input Direction" value="0"/>
             <compositeSetting label="PA3 Transition" value="3"/> <!-- None, Positive, Negative, Both -->
           </compositeChoice>
-          <compositeChoice choice="SPST Alt Button">
+          <compositeChoice choice="Alt Button Sensor">
+            <compositeSetting label="PA3 Output-Input" value="1"/>
+            <compositeSetting label="PA3 Paired" value="1"/>
+            <compositeSetting label="PA3 Mode" value="2"/>
+            <compositeSetting label="PA3 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Alt Button Switch">
             <compositeSetting label="PA3 Output-Input" value="1"/>
             <compositeSetting label="PA3 Paired" value="1"/>
             <compositeSetting label="PA3 Mode" value="0"/>
             <compositeSetting label="PA3 Transition" value="2"/>
           </compositeChoice>
-          <compositeChoice choice="Paired Button Inputs">
+          <compositeChoice choice="Paired Button Sensor">
             <compositeSetting label="PA3 Output-Input" value="1"/>
             <compositeSetting label="PA4 Output-Input" value="1"/>
             <compositeSetting label="PA3 Paired" value="2"/>
@@ -8144,14 +8214,32 @@
             <compositeSetting label="PA3 Mode" value="2"/>
             <compositeSetting label="PA4 Mode" value="2"/>
             <compositeSetting label="PA3 Input Direction" value="0"/> <!-- Normal, Inverted -->
-            <compositeSetting label="PA4 Input Direction" value="0"/>
+            <compositeSetting label="PA4 Input Direction" value="1"/>
+            <compositeSetting label="PA3 Transition" value="2"/>
+            <compositeSetting label="PA4 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Paired Button Switch">
+            <compositeSetting label="PA3 Output-Input" value="1"/>
+            <compositeSetting label="PA4 Output-Input" value="1"/>
+            <compositeSetting label="PA3 Paired" value="2"/>
+            <compositeSetting label="PA4 Paired" value="2"/>
+            <compositeSetting label="PA3 Mode" value="0"/>
+            <compositeSetting label="PA4 Mode" value="0"/>
+            <compositeSetting label="PA3 Input Direction" value="0"/>
+            <compositeSetting label="PA4 Input Direction" value="1"/>
             <compositeSetting label="PA3 Transition" value="2"/>
             <compositeSetting label="PA4 Transition" value="2"/>
           </compositeChoice>
           <compositeChoice choice="Driver">
             <compositeSetting label="PA3 Output-Input" value="0"/>
             <compositeSetting label="PA3 Paired" value="0"/>
+            <compositeSetting label="PA4 Paired" value="0"/>
             <compositeSetting label="PA3 Mode" value="0"/>
+            <compositeSetting label="PA4 Mode" value="0"/>
+            <compositeSetting label="PA3 Output Direction" value="0"/>
+            <compositeSetting label="PA4 Output Direction" value="0"/>
+            <compositeSetting label="PA3 Timing" value="0"/>
+            <compositeSetting label="PA4 Timing" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PA3 Output-Input" value="0"/>
@@ -8212,15 +8300,22 @@
             <compositeSetting label="PA4 Output-Input" value="1"/>
             <compositeSetting label="PA4 Paired" value="0"/>
             <compositeSetting label="PA4 Mode" value="2"/>
+            <compositeSetting label="PA4 Input Direction" value="0"/>
             <compositeSetting label="PA4 Transition" value="3"/>
           </compositeChoice>
-          <compositeChoice choice="SPST Alt Button">
+          <compositeChoice choice="Alt Button Sensor">
+            <compositeSetting label="PA4 Output-Input" value="1"/>
+            <compositeSetting label="PA4 Paired" value="1"/>
+            <compositeSetting label="PA4 Mode" value="2"/>
+            <compositeSetting label="PA4 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Alt Button Switch">
             <compositeSetting label="PA4 Output-Input" value="1"/>
             <compositeSetting label="PA4 Paired" value="1"/>
             <compositeSetting label="PA4 Mode" value="0"/>
             <compositeSetting label="PA4 Transition" value="2"/>
           </compositeChoice>
-          <compositeChoice choice="Paired Button Inputs">
+          <compositeChoice choice="Paired Button Sensor">
             <compositeSetting label="PA3 Output-Input" value="1"/>
             <compositeSetting label="PA4 Output-Input" value="1"/>
             <compositeSetting label="PA3 Paired" value="2"/>
@@ -8228,14 +8323,32 @@
             <compositeSetting label="PA3 Mode" value="2"/>
             <compositeSetting label="PA4 Mode" value="2"/>
             <compositeSetting label="PA3 Input Direction" value="0"/>
-            <compositeSetting label="PA4 Input Direction" value="0"/>
+            <compositeSetting label="PA4 Input Direction" value="1"/>
+            <compositeSetting label="PA3 Transition" value="2"/>
+            <compositeSetting label="PA4 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Paired Button Switch">
+            <compositeSetting label="PA3 Output-Input" value="1"/>
+            <compositeSetting label="PA4 Output-Input" value="1"/>
+            <compositeSetting label="PA3 Paired" value="2"/>
+            <compositeSetting label="PA4 Paired" value="2"/>
+            <compositeSetting label="PA3 Mode" value="0"/>
+            <compositeSetting label="PA4 Mode" value="0"/>
+            <compositeSetting label="PA3 Input Direction" value="0"/>
+            <compositeSetting label="PA4 Input Direction" value="1"/>
             <compositeSetting label="PA3 Transition" value="2"/>
             <compositeSetting label="PA4 Transition" value="2"/>
           </compositeChoice>
           <compositeChoice choice="Driver">
             <compositeSetting label="PA4 Output-Input" value="0"/>
+            <compositeSetting label="PA3 Paired" value="0"/>
             <compositeSetting label="PA4 Paired" value="0"/>
+            <compositeSetting label="PA3 Mode" value="0"/>
             <compositeSetting label="PA4 Mode" value="0"/>
+            <compositeSetting label="PA3 Output Direction" value="0"/>
+            <compositeSetting label="PA4 Output Direction" value="0"/>
+            <compositeSetting label="PA3 Timing" value="0"/>
+            <compositeSetting label="PA4 Timing" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PA3 Output-Input" value="0"/>
@@ -8296,15 +8409,22 @@
             <compositeSetting label="PA5 Output-Input" value="1"/> <!-- Direction -->
             <compositeSetting label="PA5 Paired" value="0"/> <!-- Normal, Alt, Paired -->
             <compositeSetting label="PA5 Mode" value="2"/> <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PA5 Input Direction" value="0"/>
             <compositeSetting label="PA5 Transition" value="3"/> <!-- None, Positive, Negative, Both -->
           </compositeChoice>
-          <compositeChoice choice="SPST Alt Button">
+          <compositeChoice choice="Alt Button Sensor">
+            <compositeSetting label="PA5 Output-Input" value="1"/>
+            <compositeSetting label="PA5 Paired" value="1"/>
+            <compositeSetting label="PA5 Mode" value="2"/>
+            <compositeSetting label="PA5 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Alt Button Switch">
             <compositeSetting label="PA5 Output-Input" value="1"/>
             <compositeSetting label="PA5 Paired" value="1"/>
             <compositeSetting label="PA5 Mode" value="0"/>
             <compositeSetting label="PA5 Transition" value="2"/>
           </compositeChoice>
-          <compositeChoice choice="Paired Button Inputs">
+          <compositeChoice choice="Paired Button Sensor">
             <compositeSetting label="PA5 Output-Input" value="1"/>
             <compositeSetting label="PA6 Output-Input" value="1"/>
             <compositeSetting label="PA5 Paired" value="2"/>
@@ -8312,14 +8432,32 @@
             <compositeSetting label="PA5 Mode" value="2"/>
             <compositeSetting label="PA6 Mode" value="2"/>
             <compositeSetting label="PA5 Input Direction" value="0"/> <!-- Normal, Inverted -->
-            <compositeSetting label="PA6 Input Direction" value="0"/>
+            <compositeSetting label="PA6 Input Direction" value="1"/>
+            <compositeSetting label="PA5 Transition" value="2"/>
+            <compositeSetting label="PA6 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Paired Button Switch">
+            <compositeSetting label="PA5 Output-Input" value="1"/>
+            <compositeSetting label="PA6 Output-Input" value="1"/>
+            <compositeSetting label="PA5 Paired" value="2"/>
+            <compositeSetting label="PA6 Paired" value="2"/>
+            <compositeSetting label="PA5 Mode" value="0"/>
+            <compositeSetting label="PA6 Mode" value="0"/>
+            <compositeSetting label="PA5 Input Direction" value="0"/>
+            <compositeSetting label="PA6 Input Direction" value="1"/>
             <compositeSetting label="PA5 Transition" value="2"/>
             <compositeSetting label="PA6 Transition" value="2"/>
           </compositeChoice>
           <compositeChoice choice="Driver">
             <compositeSetting label="PA5 Output-Input" value="0"/>
             <compositeSetting label="PA5 Paired" value="0"/>
+            <compositeSetting label="PA6 Paired" value="0"/>
             <compositeSetting label="PA5 Mode" value="0"/>
+            <compositeSetting label="PA6 Mode" value="0"/>
+            <compositeSetting label="PA5 Output Direction" value="0"/>
+            <compositeSetting label="PA6 Output Direction" value="0"/>
+            <compositeSetting label="PA5 Timing" value="0"/>
+            <compositeSetting label="PA6 Timing" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PA5 Output-Input" value="0"/>
@@ -8380,15 +8518,22 @@
             <compositeSetting label="PA6 Output-Input" value="1"/>
             <compositeSetting label="PA6 Paired" value="0"/>
             <compositeSetting label="PA6 Mode" value="2"/>
+            <compositeSetting label="PA6 Input Direction" value="0"/>
             <compositeSetting label="PA6 Transition" value="3"/>
           </compositeChoice>
-          <compositeChoice choice="SPST Alt Button">
+          <compositeChoice choice="Alt Button Sensor">
+            <compositeSetting label="PA6 Output-Input" value="1"/>
+            <compositeSetting label="PA6 Paired" value="1"/>
+            <compositeSetting label="PA6 Mode" value="2"/>
+            <compositeSetting label="PA6 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Alt Button Switch">
             <compositeSetting label="PA6 Output-Input" value="1"/>
             <compositeSetting label="PA6 Paired" value="1"/>
             <compositeSetting label="PA6 Mode" value="0"/>
             <compositeSetting label="PA6 Transition" value="2"/>
           </compositeChoice>
-          <compositeChoice choice="Paired Button Inputs">
+          <compositeChoice choice="Paired Button Sensor">
             <compositeSetting label="PA5 Output-Input" value="1"/>
             <compositeSetting label="PA6 Output-Input" value="1"/>
             <compositeSetting label="PA5 Paired" value="2"/>
@@ -8396,14 +8541,32 @@
             <compositeSetting label="PA5 Mode" value="2"/>
             <compositeSetting label="PA6 Mode" value="2"/>
             <compositeSetting label="PA5 Input Direction" value="0"/>
-            <compositeSetting label="PA6 Input Direction" value="0"/>
+            <compositeSetting label="PA6 Input Direction" value="1"/>
+            <compositeSetting label="PA5 Transition" value="2"/>
+            <compositeSetting label="PA6 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Paired Button Switch">
+            <compositeSetting label="PA5 Output-Input" value="1"/>
+            <compositeSetting label="PA6 Output-Input" value="1"/>
+            <compositeSetting label="PA5 Paired" value="2"/>
+            <compositeSetting label="PA6 Paired" value="2"/>
+            <compositeSetting label="PA5 Mode" value="0"/>
+            <compositeSetting label="PA6 Mode" value="0"/>
+            <compositeSetting label="PA5 Input Direction" value="0"/>
+            <compositeSetting label="PA6 Input Direction" value="1"/>
             <compositeSetting label="PA5 Transition" value="2"/>
             <compositeSetting label="PA6 Transition" value="2"/>
           </compositeChoice>
           <compositeChoice choice="Driver">
             <compositeSetting label="PA6 Output-Input" value="0"/>
+            <compositeSetting label="PA5 Paired" value="0"/>
             <compositeSetting label="PA6 Paired" value="0"/>
+            <compositeSetting label="PA5 Mode" value="0"/>
             <compositeSetting label="PA6 Mode" value="0"/>
+            <compositeSetting label="PA5 Output Direction" value="0"/>
+            <compositeSetting label="PA6 Output Direction" value="0"/>
+            <compositeSetting label="PA5 Timing" value="0"/>
+            <compositeSetting label="PA6 Timing" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PA5 Output-Input" value="0"/>
@@ -8464,15 +8627,22 @@
             <compositeSetting label="PA7 Output-Input" value="1"/> <!-- Direction -->
             <compositeSetting label="PA7 Paired" value="0"/> <!-- Normal, Alt, Paired -->
             <compositeSetting label="PA7 Mode" value="2"/> <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PA7 Input Direction" value="0"/>
             <compositeSetting label="PA7 Transition" value="3"/> <!-- None, Positive, Negative, Both -->
           </compositeChoice>
-          <compositeChoice choice="SPST Alt Button">
+          <compositeChoice choice="Alt Button Sensor">
+            <compositeSetting label="PA7 Output-Input" value="1"/>
+            <compositeSetting label="PA7 Paired" value="1"/>
+            <compositeSetting label="PA7 Mode" value="2"/>
+            <compositeSetting label="PA7 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Alt Button Switch">
             <compositeSetting label="PA7 Output-Input" value="1"/>
             <compositeSetting label="PA7 Paired" value="1"/>
             <compositeSetting label="PA7 Mode" value="0"/>
             <compositeSetting label="PA7 Transition" value="2"/>
           </compositeChoice>
-          <compositeChoice choice="Paired Button Inputs">
+          <compositeChoice choice="Paired Button Sensor">
             <compositeSetting label="PA7 Output-Input" value="1"/>
             <compositeSetting label="PA8 Output-Input" value="1"/>
             <compositeSetting label="PA7 Paired" value="2"/>
@@ -8480,14 +8650,32 @@
             <compositeSetting label="PA7 Mode" value="2"/>
             <compositeSetting label="PA8 Mode" value="2"/>
             <compositeSetting label="PA7 Input Direction" value="0"/> <!-- Normal, Inverted -->
-            <compositeSetting label="PA8 Input Direction" value="0"/>
+            <compositeSetting label="PA8 Input Direction" value="1"/>
+            <compositeSetting label="PA7 Transition" value="2"/>
+            <compositeSetting label="PA8 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Paired Button Switch">
+            <compositeSetting label="PA7 Output-Input" value="1"/>
+            <compositeSetting label="PA8 Output-Input" value="1"/>
+            <compositeSetting label="PA7 Paired" value="2"/>
+            <compositeSetting label="PA8 Paired" value="2"/>
+            <compositeSetting label="PA7 Mode" value="0"/>
+            <compositeSetting label="PA8 Mode" value="0"/>
+            <compositeSetting label="PA7 Input Direction" value="0"/>
+            <compositeSetting label="PA8 Input Direction" value="1"/>
             <compositeSetting label="PA7 Transition" value="2"/>
             <compositeSetting label="PA8 Transition" value="2"/>
           </compositeChoice>
           <compositeChoice choice="Driver">
             <compositeSetting label="PA7 Output-Input" value="0"/>
             <compositeSetting label="PA7 Paired" value="0"/>
+            <compositeSetting label="PA8 Paired" value="0"/>
             <compositeSetting label="PA7 Mode" value="0"/>
+            <compositeSetting label="PA8 Mode" value="0"/>
+            <compositeSetting label="PA7 Output Direction" value="0"/>
+            <compositeSetting label="PA8 Output Direction" value="0"/>
+            <compositeSetting label="PA7 Timing" value="0"/>
+            <compositeSetting label="PA8 Timing" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PA7 Output-Input" value="0"/>
@@ -8548,15 +8736,22 @@
             <compositeSetting label="PA8 Output-Input" value="1"/>
             <compositeSetting label="PA8 Paired" value="0"/>
             <compositeSetting label="PA8 Mode" value="2"/>
+            <compositeSetting label="PA8 Input Direction" value="0"/>
             <compositeSetting label="PA8 Transition" value="3"/>
           </compositeChoice>
-          <compositeChoice choice="SPST Alt Button">
+          <compositeChoice choice="Alt Button Sensor">
+            <compositeSetting label="PA8 Output-Input" value="1"/>
+            <compositeSetting label="PA8 Paired" value="1"/>
+            <compositeSetting label="PA8 Mode" value="2"/>
+            <compositeSetting label="PA8 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Alt Button Switch">
             <compositeSetting label="PA8 Output-Input" value="1"/>
             <compositeSetting label="PA8 Paired" value="1"/>
             <compositeSetting label="PA8 Mode" value="0"/>
             <compositeSetting label="PA8 Transition" value="2"/>
           </compositeChoice>
-          <compositeChoice choice="Paired Button Inputs">
+          <compositeChoice choice="Paired Button Sensor">
             <compositeSetting label="PA7 Output-Input" value="1"/>
             <compositeSetting label="PA8 Output-Input" value="1"/>
             <compositeSetting label="PA7 Paired" value="2"/>
@@ -8564,14 +8759,32 @@
             <compositeSetting label="PA7 Mode" value="2"/>
             <compositeSetting label="PA8 Mode" value="2"/>
             <compositeSetting label="PA7 Input Direction" value="0"/>
-            <compositeSetting label="PA8 Input Direction" value="0"/>
+            <compositeSetting label="PA8 Input Direction" value="1"/>
+            <compositeSetting label="PA7 Transition" value="2"/>
+            <compositeSetting label="PA8 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Paired Button Switch">
+            <compositeSetting label="PA7 Output-Input" value="1"/>
+            <compositeSetting label="PA8 Output-Input" value="1"/>
+            <compositeSetting label="PA7 Paired" value="2"/>
+            <compositeSetting label="PA8 Paired" value="2"/>
+            <compositeSetting label="PA7 Mode" value="0"/>
+            <compositeSetting label="PA8 Mode" value="0"/>
+            <compositeSetting label="PA7 Input Direction" value="0"/>
+            <compositeSetting label="PA8 Input Direction" value="1"/>
             <compositeSetting label="PA7 Transition" value="2"/>
             <compositeSetting label="PA8 Transition" value="2"/>
           </compositeChoice>
           <compositeChoice choice="Driver">
             <compositeSetting label="PA8 Output-Input" value="0"/>
+            <compositeSetting label="PA7 Paired" value="0"/>
             <compositeSetting label="PA8 Paired" value="0"/>
+            <compositeSetting label="PA7 Mode" value="0"/>
             <compositeSetting label="PA8 Mode" value="0"/>
+            <compositeSetting label="PA7 Output Direction" value="0"/>
+            <compositeSetting label="PA8 Output Direction" value="0"/>
+            <compositeSetting label="PA7 Timing" value="0"/>
+            <compositeSetting label="PA8 Timing" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PA7 Output-Input" value="0"/>
@@ -8625,6 +8838,7 @@
             <compositeSetting label="PB1 Output-Input" value="0"/>
             <compositeSetting label="PB1 Paired" value="0"/>
             <compositeSetting label="PB1 Mode" value="0"/>
+            <compositeSetting label="PB1 Output Direction" value="0"/>
             <compositeSetting label="PB1 Type" value="0"/>
             <compositeSetting label="PB1 Timing" value="0"/>
           </compositeChoice>
@@ -8662,6 +8876,7 @@
             <compositeSetting label="PB2 Output-Input" value="0"/>
             <compositeSetting label="PB2 Paired" value="0"/>
             <compositeSetting label="PB2 Mode" value="0"/>
+            <compositeSetting label="PB2 Output Direction" value="0"/>
             <compositeSetting label="PB2 Type" value="0"/>
             <compositeSetting label="PB2 Timing" value="0"/>
           </compositeChoice>
@@ -8699,6 +8914,7 @@
             <compositeSetting label="PB3 Output-Input" value="0"/>
             <compositeSetting label="PB3 Paired" value="0"/>
             <compositeSetting label="PB3 Mode" value="0"/>
+            <compositeSetting label="PB3 Output Direction" value="0"/>
             <compositeSetting label="PB3 Type" value="0"/>
             <compositeSetting label="PB3 Timing" value="0"/>
           </compositeChoice>
@@ -8736,6 +8952,7 @@
             <compositeSetting label="PB4 Output-Input" value="0"/>
             <compositeSetting label="PB4 Paired" value="0"/>
             <compositeSetting label="PB4 Mode" value="0"/>
+            <compositeSetting label="PB4 Output Direction" value="0"/>
             <compositeSetting label="PB4 Type" value="0"/>
             <compositeSetting label="PB4 Timing" value="0"/>
           </compositeChoice>
@@ -8773,6 +8990,7 @@
             <compositeSetting label="PB5 Output-Input" value="0"/>
             <compositeSetting label="PB5 Paired" value="0"/>
             <compositeSetting label="PB5 Mode" value="0"/>
+            <compositeSetting label="PB5 Output Direction" value="0"/>
             <compositeSetting label="PB5 Type" value="0"/>
             <compositeSetting label="PB5 Timing" value="0"/>
           </compositeChoice>
@@ -8810,6 +9028,7 @@
             <compositeSetting label="PB6 Output-Input" value="0"/>
             <compositeSetting label="PB6 Paired" value="0"/>
             <compositeSetting label="PB6 Mode" value="0"/>
+            <compositeSetting label="PB6 Output Direction" value="0"/>
             <compositeSetting label="PB6 Type" value="0"/>
             <compositeSetting label="PB6 Timing" value="0"/>
           </compositeChoice>
@@ -8847,6 +9066,7 @@
             <compositeSetting label="PB7 Output-Input" value="0"/>
             <compositeSetting label="PB7 Paired" value="0"/>
             <compositeSetting label="PB7 Mode" value="0"/>
+            <compositeSetting label="PB7 Output Direction" value="0"/>
             <compositeSetting label="PB7 Type" value="0"/>
             <compositeSetting label="PB7 Timing" value="0"/>
           </compositeChoice>
@@ -8884,6 +9104,7 @@
             <compositeSetting label="PB8 Output-Input" value="0"/>
             <compositeSetting label="PB8 Paired" value="0"/>
             <compositeSetting label="PB8 Mode" value="0"/>
+            <compositeSetting label="PB8 Output Direction" value="0"/>
             <compositeSetting label="PB8 Type" value="0"/>
             <compositeSetting label="PB8 Timing" value="0"/>
           </compositeChoice>
@@ -8963,37 +9184,80 @@
             <compositeSetting label="PA1 Output-Input" value="1"/>
             <compositeSetting label="PA1 Paired" value="0"/>
             <compositeSetting label="PA1 Mode" value="2"/>
+            <compositeSetting label="PA1 Input Direction" value="0"/>
             <compositeSetting label="PA1 Transition" value="3"/>
             <compositeSetting label="PA2 Output-Input" value="1"/>
             <compositeSetting label="PA2 Paired" value="0"/>
             <compositeSetting label="PA2 Mode" value="2"/>
+            <compositeSetting label="PA2 Input Direction" value="0"/>
             <compositeSetting label="PA2 Transition" value="3"/>
             <compositeSetting label="PA3 Output-Input" value="1"/>
             <compositeSetting label="PA3 Paired" value="0"/>
             <compositeSetting label="PA3 Mode" value="2"/>
+            <compositeSetting label="PA3 Input Direction" value="0"/>
             <compositeSetting label="PA3 Transition" value="3"/>
             <compositeSetting label="PA4 Output-Input" value="1"/>
             <compositeSetting label="PA4 Paired" value="0"/>
             <compositeSetting label="PA4 Mode" value="2"/>
+            <compositeSetting label="PA4 Input Direction" value="0"/>
             <compositeSetting label="PA4 Transition" value="3"/>
             <compositeSetting label="PA5 Output-Input" value="1"/>
             <compositeSetting label="PA5 Paired" value="0"/>
             <compositeSetting label="PA5 Mode" value="2"/>
+            <compositeSetting label="PA5 Input Direction" value="0"/>
             <compositeSetting label="PA5 Transition" value="3"/>
             <compositeSetting label="PA6 Output-Input" value="1"/>
             <compositeSetting label="PA6 Paired" value="0"/>
             <compositeSetting label="PA6 Mode" value="2"/>
+            <compositeSetting label="PA6 Input Direction" value="0"/>
             <compositeSetting label="PA6 Transition" value="3"/>
             <compositeSetting label="PA7 Output-Input" value="1"/>
             <compositeSetting label="PA7 Paired" value="0"/>
             <compositeSetting label="PA7 Mode" value="2"/>
+            <compositeSetting label="PA7 Input Direction" value="0"/>
             <compositeSetting label="PA7 Transition" value="3"/>
             <compositeSetting label="PA8 Output-Input" value="1"/>
             <compositeSetting label="PA8 Paired" value="0"/>
             <compositeSetting label="PA8 Mode" value="2"/>
+            <compositeSetting label="PA8 Input Direction" value="0"/>
             <compositeSetting label="PA8 Transition" value="3"/>
           </compositeChoice>
-          <compositeChoice choice="SPST Alt Button">
+
+          <compositeChoice choice="Alt Button Sensor">
+            <compositeSetting label="PA1 Output-Input" value="1"/>
+            <compositeSetting label="PA1 Paired" value="1"/>
+            <compositeSetting label="PA1 Mode" value="2"/>
+            <compositeSetting label="PA1 Transition" value="2"/>
+            <compositeSetting label="PA2 Output-Input" value="1"/>
+            <compositeSetting label="PA2 Paired" value="1"/>
+            <compositeSetting label="PA2 Mode" value="2"/>
+            <compositeSetting label="PA2 Transition" value="2"/>
+            <compositeSetting label="PA3 Output-Input" value="1"/>
+            <compositeSetting label="PA3 Paired" value="1"/>
+            <compositeSetting label="PA3 Mode" value="2"/>
+            <compositeSetting label="PA3 Transition" value="2"/>
+            <compositeSetting label="PA4 Output-Input" value="1"/>
+            <compositeSetting label="PA4 Paired" value="1"/>
+            <compositeSetting label="PA4 Mode" value="2"/>
+            <compositeSetting label="PA4 Transition" value="2"/>
+            <compositeSetting label="PA5 Output-Input" value="1"/>
+            <compositeSetting label="PA5 Paired" value="1"/>
+            <compositeSetting label="PA5 Mode" value="2"/>
+            <compositeSetting label="PA5 Transition" value="2"/>
+            <compositeSetting label="PA6 Output-Input" value="1"/>
+            <compositeSetting label="PA6 Paired" value="1"/>
+            <compositeSetting label="PA6 Mode" value="2"/>
+            <compositeSetting label="PA6 Transition" value="2"/>
+            <compositeSetting label="PA7 Output-Input" value="1"/>
+            <compositeSetting label="PA7 Paired" value="1"/>
+            <compositeSetting label="PA7 Mode" value="2"/>
+            <compositeSetting label="PA7 Transition" value="2"/>
+            <compositeSetting label="PA8 Output-Input" value="1"/>
+            <compositeSetting label="PA8 Paired" value="1"/>
+            <compositeSetting label="PA8 Mode" value="2"/>
+            <compositeSetting label="PA8 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Alt Button Switch">
             <compositeSetting label="PA1 Output-Input" value="1"/>
             <compositeSetting label="PA1 Paired" value="1"/>
             <compositeSetting label="PA1 Mode" value="0"/>
@@ -9027,7 +9291,8 @@
             <compositeSetting label="PA8 Mode" value="0"/>
             <compositeSetting label="PA8 Transition" value="2"/>
           </compositeChoice>
-          <compositeChoice choice="Paired Button Inputs">
+
+          <compositeChoice choice="Paired Button Sensor">
             <compositeSetting label="PA1 Output-Input" value="1"/>
             <compositeSetting label="PA2 Output-Input" value="1"/>
             <compositeSetting label="PA1 Paired" value="2"/>
@@ -9035,7 +9300,7 @@
             <compositeSetting label="PA1 Mode" value="2"/>
             <compositeSetting label="PA2 Mode" value="2"/>
             <compositeSetting label="PA1 Input Direction" value="0"/>
-            <compositeSetting label="PA2 Input Direction" value="0"/>
+            <compositeSetting label="PA2 Input Direction" value="1"/>
             <compositeSetting label="PA1 Transition" value="2"/>
             <compositeSetting label="PA2 Transition" value="2"/>
             <compositeSetting label="PA3 Output-Input" value="1"/>
@@ -9045,7 +9310,7 @@
             <compositeSetting label="PA3 Mode" value="2"/>
             <compositeSetting label="PA4 Mode" value="2"/>
             <compositeSetting label="PA3 Input Direction" value="0"/>
-            <compositeSetting label="PA4 Input Direction" value="0"/>
+            <compositeSetting label="PA4 Input Direction" value="1"/>
             <compositeSetting label="PA3 Transition" value="2"/>
             <compositeSetting label="PA4 Transition" value="2"/>
             <compositeSetting label="PA5 Output-Input" value="1"/>
@@ -9055,7 +9320,7 @@
             <compositeSetting label="PA5 Mode" value="2"/>
             <compositeSetting label="PA6 Mode" value="2"/>
             <compositeSetting label="PA5 Input Direction" value="0"/>
-            <compositeSetting label="PA6 Input Direction" value="0"/>
+            <compositeSetting label="PA6 Input Direction" value="1"/>
             <compositeSetting label="PA5 Transition" value="2"/>
             <compositeSetting label="PA6 Transition" value="2"/>
             <compositeSetting label="PA7 Output-Input" value="1"/>
@@ -9065,7 +9330,49 @@
             <compositeSetting label="PA7 Mode" value="2"/>
             <compositeSetting label="PA8 Mode" value="2"/>
             <compositeSetting label="PA7 Input Direction" value="0"/>
-            <compositeSetting label="PA8 Input Direction" value="0"/>
+            <compositeSetting label="PA8 Input Direction" value="1"/>
+            <compositeSetting label="PA7 Transition" value="2"/>
+            <compositeSetting label="PA8 Transition" value="2"/>
+          </compositeChoice>
+          <compositeChoice choice="Paired Button Switch">
+            <compositeSetting label="PA1 Output-Input" value="1"/>
+            <compositeSetting label="PA2 Output-Input" value="1"/>
+            <compositeSetting label="PA1 Paired" value="2"/>
+            <compositeSetting label="PA2 Paired" value="2"/>
+            <compositeSetting label="PA1 Mode" value="0"/>
+            <compositeSetting label="PA2 Mode" value="0"/>
+            <compositeSetting label="PA1 Input Direction" value="0"/>
+            <compositeSetting label="PA2 Input Direction" value="1"/>
+            <compositeSetting label="PA1 Transition" value="2"/>
+            <compositeSetting label="PA2 Transition" value="2"/>
+            <compositeSetting label="PA3 Output-Input" value="1"/>
+            <compositeSetting label="PA4 Output-Input" value="1"/>
+            <compositeSetting label="PA3 Paired" value="2"/>
+            <compositeSetting label="PA4 Paired" value="2"/>
+            <compositeSetting label="PA3 Mode" value="0"/>
+            <compositeSetting label="PA4 Mode" value="0"/>
+            <compositeSetting label="PA3 Input Direction" value="0"/>
+            <compositeSetting label="PA4 Input Direction" value="1"/>
+            <compositeSetting label="PA3 Transition" value="2"/>
+            <compositeSetting label="PA4 Transition" value="2"/>
+            <compositeSetting label="PA5 Output-Input" value="1"/>
+            <compositeSetting label="PA6 Output-Input" value="1"/>
+            <compositeSetting label="PA5 Paired" value="2"/>
+            <compositeSetting label="PA6 Paired" value="2"/>
+            <compositeSetting label="PA5 Mode" value="0"/>
+            <compositeSetting label="PA6 Mode" value="0"/>
+            <compositeSetting label="PA5 Input Direction" value="0"/>
+            <compositeSetting label="PA6 Input Direction" value="1"/>
+            <compositeSetting label="PA5 Transition" value="2"/>
+            <compositeSetting label="PA6 Transition" value="2"/>
+            <compositeSetting label="PA7 Output-Input" value="1"/>
+            <compositeSetting label="PA8 Output-Input" value="1"/>
+            <compositeSetting label="PA7 Paired" value="2"/>
+            <compositeSetting label="PA8 Paired" value="2"/>
+            <compositeSetting label="PA7 Mode" value="0"/>
+            <compositeSetting label="PA8 Mode" value="0"/>
+            <compositeSetting label="PA7 Input Direction" value="0"/>
+            <compositeSetting label="PA8 Input Direction" value="1"/>
             <compositeSetting label="PA7 Transition" value="2"/>
             <compositeSetting label="PA8 Transition" value="2"/>
           </compositeChoice>
@@ -9073,27 +9380,51 @@
             <compositeSetting label="PA1 Output-Input" value="0"/>
             <compositeSetting label="PA1 Paired" value="0"/>
             <compositeSetting label="PA1 Mode" value="0"/>
+            <compositeSetting label="PA1 Output Direction" value="0"/>
+            <compositeSetting label="PA1 Type" value="0"/>
+            <compositeSetting label="PA1 Timing" value="0"/>
             <compositeSetting label="PA2 Output-Input" value="0"/>
             <compositeSetting label="PA2 Paired" value="0"/>
             <compositeSetting label="PA2 Mode" value="0"/>
+            <compositeSetting label="PA2 Output Direction" value="0"/>
+            <compositeSetting label="PA2 Type" value="0"/>
+            <compositeSetting label="PA2 Timing" value="0"/>
             <compositeSetting label="PA3 Output-Input" value="0"/>
             <compositeSetting label="PA3 Paired" value="0"/>
             <compositeSetting label="PA3 Mode" value="0"/>
+            <compositeSetting label="PA3 Output Direction" value="0"/>
+            <compositeSetting label="PA3 Type" value="0"/>
+            <compositeSetting label="PA3 Timing" value="0"/>
             <compositeSetting label="PA4 Output-Input" value="0"/>
             <compositeSetting label="PA4 Paired" value="0"/>
             <compositeSetting label="PA4 Mode" value="0"/>
+            <compositeSetting label="PA4 Output Direction" value="0"/>
+            <compositeSetting label="PA4 Type" value="0"/>
+            <compositeSetting label="PA4 Timing" value="0"/>
             <compositeSetting label="PA5 Output-Input" value="0"/>
             <compositeSetting label="PA5 Paired" value="0"/>
             <compositeSetting label="PA5 Mode" value="0"/>
+            <compositeSetting label="PA5 Output Direction" value="0"/>
+            <compositeSetting label="PA5 Type" value="0"/>
+            <compositeSetting label="PA5 Timing" value="0"/>
             <compositeSetting label="PA6 Output-Input" value="0"/>
             <compositeSetting label="PA6 Paired" value="0"/>
             <compositeSetting label="PA6 Mode" value="0"/>
+            <compositeSetting label="PA6 Output Direction" value="0"/>
+            <compositeSetting label="PA6 Type" value="0"/>
+            <compositeSetting label="PA6 Timing" value="0"/>
             <compositeSetting label="PA7 Output-Input" value="0"/>
             <compositeSetting label="PA7 Paired" value="0"/>
             <compositeSetting label="PA7 Mode" value="0"/>
+            <compositeSetting label="PA7 Output Direction" value="0"/>
+            <compositeSetting label="PA7 Type" value="0"/>
+            <compositeSetting label="PA7 Timing" value="0"/>
             <compositeSetting label="PA8 Output-Input" value="0"/>
             <compositeSetting label="PA8 Paired" value="0"/>
             <compositeSetting label="PA8 Mode" value="0"/>
+            <compositeSetting label="PA8 Output Direction" value="0"/>
+            <compositeSetting label="PA8 Type" value="0"/>
+            <compositeSetting label="PA8 Timing" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PA1 Output-Input" value="0"/>
@@ -9256,41 +9587,49 @@
             <compositeSetting label="PB1 Output-Input" value="0"/>
             <compositeSetting label="PB1 Paired" value="0"/>
             <compositeSetting label="PB1 Mode" value="0"/>
+            <compositeSetting label="PB1 Output Direction" value="0"/>
             <compositeSetting label="PB1 Type" value="0"/>
             <compositeSetting label="PB1 Timing" value="0"/>
             <compositeSetting label="PB2 Output-Input" value="0"/>
             <compositeSetting label="PB2 Paired" value="0"/>
             <compositeSetting label="PB2 Mode" value="0"/>
+            <compositeSetting label="PB2 Output Direction" value="0"/>
             <compositeSetting label="PB2 Type" value="0"/>
             <compositeSetting label="PB2 Timing" value="0"/>
             <compositeSetting label="PB3 Output-Input" value="0"/>
             <compositeSetting label="PB3 Paired" value="0"/>
             <compositeSetting label="PB3 Mode" value="0"/>
+            <compositeSetting label="PB3 Output Direction" value="0"/>
             <compositeSetting label="PB3 Type" value="0"/>
             <compositeSetting label="PB3 Timing" value="0"/>
             <compositeSetting label="PB4 Output-Input" value="0"/>
             <compositeSetting label="PB4 Paired" value="0"/>
             <compositeSetting label="PB4 Mode" value="0"/>
+            <compositeSetting label="PB4 Output Direction" value="0"/>
             <compositeSetting label="PB4 Type" value="0"/>
             <compositeSetting label="PB4 Timing" value="0"/>
             <compositeSetting label="PB5 Output-Input" value="0"/>
             <compositeSetting label="PB5 Paired" value="0"/>
             <compositeSetting label="PB5 Mode" value="0"/>
+            <compositeSetting label="PB5 Output Direction" value="0"/>
             <compositeSetting label="PB5 Type" value="0"/>
             <compositeSetting label="PB5 Timing" value="0"/>
             <compositeSetting label="PB6 Output-Input" value="0"/>
             <compositeSetting label="PB6 Paired" value="0"/>
             <compositeSetting label="PB6 Mode" value="0"/>
+            <compositeSetting label="PB6 Output Direction" value="0"/>
             <compositeSetting label="PB6 Type" value="0"/>
             <compositeSetting label="PB6 Timing" value="0"/>
             <compositeSetting label="PB7 Output-Input" value="0"/>
             <compositeSetting label="PB7 Paired" value="0"/>
             <compositeSetting label="PB7 Mode" value="0"/>
+            <compositeSetting label="PB7 Output Direction" value="0"/>
             <compositeSetting label="PB7 Type" value="0"/>
             <compositeSetting label="PB7 Timing" value="0"/>
             <compositeSetting label="PB8 Output-Input" value="0"/>
             <compositeSetting label="PB8 Paired" value="0"/>
             <compositeSetting label="PB8 Mode" value="0"/>
+            <compositeSetting label="PB8 Output Direction" value="0"/>
             <compositeSetting label="PB8 Type" value="0"/>
             <compositeSetting label="PB8 Timing" value="0"/>
           </compositeChoice>
@@ -9408,14 +9747,39 @@
       <row>
         <column>
       	<label label=" "/>
-      	<label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;JMRI 3.7.2 or later is required to use this definition.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+         <group>      	
            <qualifier>
-           <variableref>Hardware ID</variableref>
-           <relation>ne</relation>
-           <value>25</value></qualifier>
+             <variableref>Hardware ID</variableref>
+             <relation>ne</relation>
+             <value>25</value>
+           </qualifier>
+           <qualifier>
+             <variableref>Hardware ID</variableref>
+             <relation>ne</relation>
+             <value>28</value>
+           </qualifier>
+       	  <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;JMRI 4.8 or later is required to use this definition.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+           </label>
+           <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Warning! Bad Hardware ID! (25 or 28 required) Read full sheet to update.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+           </label>
+           <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Warning! This unit may not be a MotorMan!&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+           </label>
+      	  <label label=" "/>
+         </group>
+      	<label label="&lt;html&gt;&lt;h1&gt;MotorMan&lt;/h1&gt;&lt;/html&gt;">
+            <qualifier>
+              <variableref>Hardware ID</variableref>
+              <relation>eq</relation>
+              <value>25</value>
+            </qualifier>
          </label>
-      	<label label=" "/>
-      	<label label="&lt;html&gt;&lt;h1&gt;MotorMan&lt;/h1&gt;&lt;/html&gt;"/>
+      	<label label="&lt;html&gt;&lt;h1&gt;MotorMan-II&lt;/h1&gt;&lt;/html&gt;">
+            <qualifier>
+              <variableref>Hardware ID</variableref>
+              <relation>eq</relation>
+              <value>28</value>
+            </qualifier>
+         </label>
       	<label label=" "/>
         </column>
       </row>
@@ -9488,69 +9852,68 @@
       <row>
         <column>
           <label label=" "/>
-          <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Warning! Bad Hardware ID! (25 required) Read full sheet to update.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
-             <qualifier>
-              <variableref>Hardware ID</variableref>
-              <relation>ne</relation>
-              <value>25</value>
-            </qualifier>
-          </label>
-          <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Warning! This unit may not be a MotorMan!&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+          <group>
             <qualifier>
               <variableref>Hardware ID</variableref>
-              <relation>ne</relation>
+              <relation>eq</relation>
               <value>25</value>
             </qualifier>
-          </label>
-          <label label="&lt;html&gt;&lt;span style=&quot;color: blue;&quot;&gt;&lt;strong&gt;See yellow backgrounds? First do a 'Read full sheet' to validate these values. &lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
             <qualifier>
               <variableref>Firmware Version</variableref>
               <relation>lt</relation>
-              <value>17</value>
+              <value>18</value>
             </qualifier>
-          </label>
-          <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Note: This unit has a firmware upgrade available that includes important bug fixes and feature upgrades. &lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+            <label label="&lt;html&gt;&lt;span style=&quot;color: blue;&quot;&gt;&lt;strong&gt;Seeing yellow backgrounds? First do a 'Read full sheet' to validate these values. &lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+            </label>
+            <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Note: This unit has a firmware upgrade available that includes important bug fixes and feature upgrades. &lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+            </label>
+            <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;This upgrade will reset the node to its defaults! Be sure that your roster entries are current for restoration.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+            </label>
+            <label label=" ">
+            </label>
+            <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Warning! Be SURE to REMOVE power from the X3 connector before installing the 3-4 shunt to prevent board damage!&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+            </label>
+            <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Due to internal changes, check for proper message and logic operation following this upgrade.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+            </label>
+          </group>          
+          <group>
+            <qualifier>
+              <variableref>Hardware ID</variableref>
+              <relation>eq</relation>
+              <value>28</value>
+            </qualifier>
+            <label label=" ">
+            </label>
+            <column>
+              <display label="Total Output Current Limit" item="Total Output Current" tooltip="Sets Total Output Current Limit."/>
+              <label label="    (Automatic 5A limit during Dual Coil pulses)"/>
+            </column>
+          </group>          
+          <group>
+            <qualifier>
+              <variableref>Hardware ID</variableref>
+              <relation>eq</relation>
+              <value>28</value>
+            </qualifier>
             <qualifier>
               <variableref>Firmware Version</variableref>
               <relation>lt</relation>
-              <value>17</value>
+              <value>11</value>
             </qualifier>
-          </label>
-          <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;This upgrade will reset the node to its defaults! Be sure that your roster entries are current for restoration.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
-            <qualifier>
-              <variableref>Firmware Version</variableref>
-              <relation>lt</relation>
-              <value>17</value>
-            </qualifier>
-          </label>
-          <label label=" ">
-            <qualifier>
-              <variableref>Firmware Version</variableref>
-              <relation>lt</relation>
-              <value>17</value>
-            </qualifier>
-          </label>
-          <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Warning! Be SURE to REMOVE power from the X3 connector before installing the 3-4 shunt to prevent board damage!&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
-            <qualifier>
-              <variableref>Firmware Version</variableref>
-              <relation>lt</relation>
-              <value>17</value>
-            </qualifier>
-          </label>
-          <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Due to internal changes, check for proper message and logic operation following this upgrade.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
-            <qualifier>
-              <variableref>Firmware Version</variableref>
-              <relation>lt</relation>
-              <value>17</value>
-            </qualifier>
-          </label>
-          </column>
+              <label label=" ">
+              </label>
+              <label label="&lt;html&gt;&lt;span style=&quot;color: blue;&quot;&gt;&lt;strong&gt;Seeing yellow backgrounds? First do a 'Read full sheet' to validate these values. &lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+              </label>
+              <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Note: This unit has a firmware upgrade available that includes important bug fixes and feature upgrades. &lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+              </label>
+          </group>          
+        </column>
       </row>
       <row>
         <column>
           <label label=" "/>
-          <label label="Use DecoderPro Version 4.6 or later."/>
-          <label label="Decoder File Version: 1.2"/>
+          <label label="Use DecoderPro Version 4.10 or later."/>
+          <label label="Decoder File Version: 1.4"/>
         </column>
       </row>
     </column>

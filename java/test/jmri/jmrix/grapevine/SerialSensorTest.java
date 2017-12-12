@@ -12,9 +12,11 @@ import org.junit.Test;
  */
 public class SerialSensorTest {
 
+    private GrapevineSystemConnectionMemo memo = null; 
+
     @Test
     public void testCTor() {
-        SerialSensor t = new SerialSensor("GS1");
+        SerialSensor t = new SerialSensor("GS1",memo);
         Assert.assertNotNull("exists",t);
     }
 
@@ -22,6 +24,9 @@ public class SerialSensorTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        SerialTrafficController tc = new SerialTrafficControlScaffold();
+        memo = new GrapevineSystemConnectionMemo();
+        memo.setTrafficController(tc);
     }
 
     @After

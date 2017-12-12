@@ -6,22 +6,19 @@ import jmri.Programmer;
 import jmri.managers.DefaultProgrammerManager;
 
 /**
- * Extend DefaultProgrammerManager to provide ops mode programmers for MRC
- * systems
+ * Extend DefaultProgrammerManager to provide ops mode programmers for Zimo
+ * systems.
  *
  * @see jmri.managers.DefaultProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Ken Cameron Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Ken Cameron Copyright (C) 2014
  * @author Kevin Dickerson Copyright (C) 2014
  *
  */
 public class Mx1ProgrammerManager extends DefaultProgrammerManager {
 
-    Mx1TrafficController tc;
-
     public Mx1ProgrammerManager(Programmer serviceModeProgrammer, Mx1SystemConnectionMemo memo) {
         super(serviceModeProgrammer, memo);
-        this.tc = memo.getMx1TrafficController();
     }
 
     /**
@@ -41,7 +38,6 @@ public class Mx1ProgrammerManager extends DefaultProgrammerManager {
 
     @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        //return new MrcOpsModeProgrammer(tc, pAddress, pLongAddress);
         return null;
     }
 

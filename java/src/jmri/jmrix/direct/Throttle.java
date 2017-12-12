@@ -19,11 +19,14 @@ import org.slf4j.LoggerFactory;
  */
 public class Throttle extends AbstractThrottle {
 
+    private jmri.CommandStation tcl = null;
+
     /**
      * Constructor.
      */
-    public Throttle(int address) {
+    public Throttle(int address,jmri.CommandStation tc) {
         super(null);
+        tcl = tc;
 
         // cache settings.
         this.speedSetting = 0;
@@ -55,7 +58,7 @@ public class Throttle extends AbstractThrottle {
         byte[] result = jmri.NmraPacket.function0Through4Packet(address, (address >= 100),
                 getF0(), getF1(), getF2(), getF3(), getF4());
 
-        TrafficController.instance().sendPacket(result, 1);
+        tcl.sendPacket(result, 1);
     }
 
     /**
@@ -67,7 +70,7 @@ public class Throttle extends AbstractThrottle {
         byte[] result = jmri.NmraPacket.function5Through8Packet(address, (address >= 100),
                 getF5(), getF6(), getF7(), getF8());
 
-        TrafficController.instance().sendPacket(result, 1);
+        tcl.sendPacket(result, 1);
     }
 
     /**
@@ -79,7 +82,7 @@ public class Throttle extends AbstractThrottle {
         byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address >= 100),
                 getF9(), getF10(), getF11(), getF12());
 
-        TrafficController.instance().sendPacket(result, 1);
+        tcl.sendPacket(result, 1);
     }
 
     /**
@@ -121,7 +124,7 @@ public class Throttle extends AbstractThrottle {
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
         }
         record(speed);
-        // TrafficController.instance().sendMessage(m, null);
+        // tcl.sendMessage(m, null);
     }
 
     @Override

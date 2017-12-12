@@ -8,7 +8,8 @@ import org.junit.runners.Suite;
    jmri.jmrix.rfid.swing.serialmon.PackageTest.class,
    RfidMenuTest.class,
    RfidComponentFactoryTest.class,
-   RfidNamedPaneActionTest.class
+   RfidNamedPaneActionTest.class,
+   RfidPanelTest.class
 })
 /**
  * Tests for the jmri.jmrix.rfid.swing package

@@ -11,6 +11,7 @@ import jmri.jmrix.rps.Model;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.Receiver;
 import jmri.jmrix.rps.Region;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import org.junit.After;
@@ -26,6 +27,8 @@ import org.junit.Test;
  */
 public class RpsTrackingPanelTest {
 
+    RpsSystemConnectionMemo memo = null;
+
     @Test
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -40,7 +43,7 @@ public class RpsTrackingPanelTest {
 
         JmriJFrame f = new JmriJFrame("Test Tracking Panel");
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
-        RpsTrackingPanel p = new RpsTrackingPanel();
+        RpsTrackingPanel p = new RpsTrackingPanel(memo);
         p.setSize(400, 400);
         p.setOrigin(0, 0);
         p.setCoordMax(30., 30.);
@@ -103,7 +106,7 @@ public class RpsTrackingPanelTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-
+        memo = new RpsSystemConnectionMemo();
         InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
     }
 

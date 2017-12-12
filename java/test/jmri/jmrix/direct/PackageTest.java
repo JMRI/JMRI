@@ -35,6 +35,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(ThrottleManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ThrottleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(MessageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.direct.swing.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DirectSystemConnectionMemoTest.class));
         return suite;
     }
 

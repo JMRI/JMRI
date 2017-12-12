@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
    jmri.jmrix.easydcc.networkdriver.configurexml.PackageTest.class,
-   NetworkDriverAdapterTest.class
+   NetworkDriverAdapterTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.easydcc.networkdriver package.

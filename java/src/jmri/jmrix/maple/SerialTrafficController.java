@@ -42,11 +42,11 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         mWaitBeforePoll = 5;  // default = 25
 
         // initialize input and output utility classes
-        mInputBits = InputBits.instance();
+        mInputBits = new InputBits(this);
         if (mInputBits == null) {
             log.error("Error in initializing InputBits utility class");
         }
-        mOutputBits = OutputBits.instance();
+        mOutputBits = new OutputBits(this);
         if (mOutputBits == null) {
             log.error("Error in initializing OutputBits utility class");
         }
@@ -56,6 +56,14 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     private InputBits mInputBits = null;
     private OutputBits mOutputBits = null;
 
+    public InputBits inputBits(){
+      return mInputBits;
+    }
+
+    public OutputBits outputBits(){
+      return mOutputBits;
+    }
+ 
     // The methods to implement the SerialInterface
 
     @Override
@@ -247,24 +255,16 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * @return The registered SerialTrafficController instance for general use,
      *         if need be creating one.
      */
+    @Deprecated
     static public SerialTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new SerialTrafficController object");
-            }
-            self = new SerialTrafficController();
-        }
-        return self;
+        return null;
     }
-
-    static volatile protected SerialTrafficController self = null;
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
     @Override
     @Deprecated
     protected void setInstance() {
-        self = this;
     }
 
     @Override

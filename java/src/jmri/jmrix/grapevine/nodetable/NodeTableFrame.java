@@ -3,6 +3,7 @@ package jmri.jmrix.grapevine.nodetable;
 import java.awt.Container;
 import javax.swing.BoxLayout;
 import jmri.jmrix.grapevine.SerialTrafficController;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 
 /**
  * Frame for user configuration of serial nodes
@@ -12,11 +13,14 @@ import jmri.jmrix.grapevine.SerialTrafficController;
  */
 public class NodeTableFrame extends jmri.util.JmriJFrame {
 
+    private GrapevineSystemConnectionMemo memo = null;
+
     /**
      * Constructor method
      */
-    public NodeTableFrame() {
+    public NodeTableFrame(GrapevineSystemConnectionMemo _memo) {
         super();
+        memo = _memo;
     }
 
     NodeTablePane p;
@@ -32,7 +36,7 @@ public class NodeTableFrame extends jmri.util.JmriJFrame {
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
         // add table
-        p = new NodeTablePane();
+        p = new NodeTablePane(memo);
         p.initComponents();
         contentPane.add(p);
 
@@ -40,14 +44,14 @@ public class NodeTableFrame extends jmri.util.JmriJFrame {
         addHelpMenu("package.jmri.jmrix.grapevine.nodetable.NodeTableFrame", true);
 
         // register
-        SerialTrafficController.instance().addSerialListener(p);
+        memo.getTrafficController().addSerialListener(p);
         // pack for display
         pack();
     }
 
     @Override
     public void dispose() {
-        SerialTrafficController.instance().removeSerialListener(p);
+        memo.getTrafficController().removeSerialListener(p);
         super.dispose();
     }
 

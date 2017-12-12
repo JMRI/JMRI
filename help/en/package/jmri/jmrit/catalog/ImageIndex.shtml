@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -20,7 +19,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -53,8 +53,8 @@
       have installed after using the <b>Open File System
       Directory</b> menu item in one of the Icon Editor windows and
       pressed the <b>Add to Catalog</b> button there. (The "Add to
-      Catalog" button does not appear in this window.) Below the
-      trees is a "Preview" pane that displays the images found in
+      Catalog" button does not appear in this window.) Next to each
+      tree is a "Preview" pane that displays the images found in
       any node that you have selected from one of the above trees.
       "Nodes" are the folder icons that appear when you click on
       the handle to the left of a folder icon. Clicking on a node
@@ -64,14 +64,14 @@
       <p>The "Preview" pane has a label that states how many image
       files are referenced in the node. Beneath each image (icon)
       is a label that states the "scale" at which the image is
-      displayed. Below the icons are radio buttons that provide
-      three background for the icons. This may help you determine
-      what parts of the icon are opaque and what parts are
-      transparent.</p>
+      displayed. Below the icons are "View on:" combo boxes
+      that allow you to choose a  background for the icons.
+      This may help you determine what parts of the icon are
+      opaque and what parts are transparent.</p>
 
       <p>The right side is the <b>Image Index</b> you may edit. It
-      is similar to the left pane in that the top panel is the tree
-      of the Index you are creating. Likewise, the bottom panel
+      is similar to the left pane in that the left half shows the tree
+      of the Index you are creating. Likewise, the right half
       displays the images found in any node of the tree that you
       select. Initially, there will be just one node labeled "Image
       Index". You are able to add additional nodes to this node by
@@ -79,28 +79,36 @@
 
       <h2>The Menus</h2>
 
-      <p>The <b>Find Icons</b> menu has two items:</p>
+      <p>The <b>File</b> menu shown with the Create/Edit Image Index
+      pane contains three items:</p>
 
       <ul>
-        <li><b>Store ImageIndex</b>. This stores a permanent record
+        <li><b>Store Image Index</b>. This stores a permanent record
         of the Image Index that will be restored the next time the
         Panel Editor is opened. The Image Index will be included in
-        the Catalog trees used by the Icon Editors.</li>
+        the Catalog trees used by the Icon Editors.
+        </li>
 
         <li>
           <b>Open a File System Directory</b>. This opens a file
-          chooser dialog where you may open any directory that that
+          chooser dialog where you may open any directory that
           has image files. To open the directory, select any image
-          file contained in it and a window will attempt to display
-          all the image files found in the directory.
+          file contained in it and a pane will attempt to display
+          all the image files found in that directory.
+          See <a href="../display/IconAdder.shtml">Icon
+          Editors</a> for more details on this menu item.
 
-          <p>See <a href="../display/IconAdder.shtml">Icon
-          Editors</a> for more details on this menu item.</p>
-
-          <p>The icons displayed in the "preview" panel of any
+          <br>The icons displayed in the "preview" panel of any
           directory window opened from this menu item can be added
           to the Image Index. How to do this is described
-          below.</p>
+          below.
+        </li>
+
+        <li>
+        <b>Search File System for Icons</b>. Opens a file chooser
+        dialog to start a search for image files. A panel filled with
+        all found image files is shown as the search finishes.<br>
+        Drag one of the found icons to your Catalog.
         </li>
       </ul>
 
@@ -154,11 +162,12 @@
         Index node.</li>
 
         <li style="list-style: none">
-          <p>Note: <i>the "preview" panel will only show these
+          <p>Note: <i>the "preview" pane will only show these
           changes after leaving the node and then returning to the
           node.</i></p>
         </li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

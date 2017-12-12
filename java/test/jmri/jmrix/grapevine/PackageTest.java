@@ -39,7 +39,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SerialTurnoutTest2.class));
         suite.addTest(new JUnit4TestAdapter(SerialTurnoutTest3.class));
         suite.addTest(new JUnit4TestAdapter(SerialTurnoutManagerTest.class));
-        suite.addTest(SerialLightTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SerialLightTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialLightManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialSensorManagerTest.class));
         suite.addTest(SerialNodeTest.suite());
@@ -60,6 +60,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SerialSensorTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialSignalHeadTest.class));
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.swing.PackageTest.class));
         return suite;
     }
 

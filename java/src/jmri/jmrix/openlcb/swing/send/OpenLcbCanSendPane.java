@@ -50,7 +50,7 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2012
- * 
+ *
  */
 public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
@@ -639,16 +639,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     public void dispose() {
         mRunButton.setSelected(false);
         super.dispose();
-    }
-
-    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-
-        public Default() {
-            super("Send CAN Frames and OpenLCB Messages",
-                    new jmri.util.swing.sdi.JmriJFrameInterface(),
-                    OpenLcbCanSendPane.class.getName(),
-                    jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
-        }
     }
 
     // private data

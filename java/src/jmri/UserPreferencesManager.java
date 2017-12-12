@@ -5,7 +5,6 @@ import java.awt.Point;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import javax.swing.SortOrder;
 
 /**
@@ -45,7 +44,7 @@ public interface UserPreferencesManager {
      * allow that checkBox to be set to a true state when it is next
      * initialized. This can also be used anywhere else that a simple yes/no,
      * true/false type preference needs to be stored.
-     *
+     * <p>
      * It should not be used for remembering if a user wants to suppress a
      * message as there is no means in the GUI for the user to reset the flag.
      * setPreferenceState() should be used in this instance The name is
@@ -660,7 +659,8 @@ public interface UserPreferencesManager {
 
     /**
      * Stores the details of a tables column, so that it can be saved and
-     * re-applied when jmri is re-started
+     * re-applied when jmri is re-started. Retained for reading JMRI 4.4 and
+     * earlier user interface preferences.
      *
      * @param table  The reference for the table
      * @param column The column name
@@ -675,95 +675,6 @@ public interface UserPreferencesManager {
     @Deprecated
     public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden);
 
-    /**
-     * Get the stored position of the column for a given table
-     *
-     * @param table  The reference for the table
-     * @param column The column name
-     * @return -1 if not found
-     * @deprecated since 4.5.4 without direct replacement. Use the
-     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
-     * interface state.
-     */
-    @Deprecated
-    public int getTableColumnOrder(String table, String column);
-
-    /**
-     * Get the stored column width for a given table
-     *
-     * @param table  The reference for the table
-     * @param column The column name
-     * @return -1 if not found
-     * @deprecated since 4.5.4 without direct replacement. Use the
-     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
-     * interface state.
-     */
-    @Deprecated
-    public int getTableColumnWidth(String table, String column);
-
-    /**
-     * Get the stored column sort order for a given table
-     *
-     * @param table  The reference for the table
-     * @param column The column name
-     * @return {@link javax.swing.SortOrder#UNSORTED} if not found
-     * @deprecated since 4.5.4 without direct replacement. Use the
-     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
-     * interface state.
-     */
-    @Deprecated
-    public SortOrder getTableColumnSort(String table, String column);
-
-    /**
-     * Get the stored column hidden state for a given table
-     *
-     * @param table  The reference for the table
-     * @param column The column name
-     * @return 0 if not found
-     * @deprecated since 4.5.4 without direct replacement. Use the
-     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
-     * interface state.
-     */
-    @Deprecated
-    public boolean getTableColumnHidden(String table, String column);
-
-    /**
-     * Get a name for a column at index i
-     *
-     * @param table The reference for the table
-     * @param i     The column index
-     * @return null if not found, otherwise the column name
-     * @deprecated since 4.5.4 without direct replacement. Use the
-     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
-     * interface state.
-     */
-    @Deprecated
-    public String getTableColumnAtNum(String table, int i);
-
-    /**
-     * Get a list of all the table preferences stored
-     *
-     * @return a List of all the tables, if no tables exist then an empty list
-     *         is returned
-     * @deprecated since 4.5.4 without direct replacement. Use the
-     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
-     * interface state.
-     */
-    @Deprecated
-    public List<String> getTablesList();
-
-    /**
-     * Get a list of all the column settings for a specific table
-     *
-     * @param table table to retrieve column settings for
-     * @return a List of all the columns in a table, if the table is not valid
-     *         an empty list is returned
-     * @deprecated since 4.5.4 without direct replacement. Use the
-     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
-     * interface state.
-     */
-    @Deprecated
-    public List<String> getTablesColumnList(String table);
     /*
      Example informational message dialog box.
 
