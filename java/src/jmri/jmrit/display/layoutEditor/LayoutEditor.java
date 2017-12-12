@@ -9321,15 +9321,18 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".highlightSelectedBlock", highlightSelectedBlockFlag);
             });
 
-            if (highlightSelectedBlockFlag) {
-                //use the "Extra" color to highlight the selected block
-                if (!highlightBlockInComboBox(blockIDComboBox)) {
-                    highlightBlockInComboBox(blockContentsComboBox);
+            // thread this so it won't break the AppVeyor checks
+            new Thread(() -> {
+                if (highlightSelectedBlockFlag) {
+                    //use the "Extra" color to highlight the selected block
+                    if (!highlightBlockInComboBox(blockIDComboBox)) {
+                        highlightBlockInComboBox(blockContentsComboBox);
+                    }
+                } else {
+                    //undo using the "Extra" color to highlight the selected block
+                    highlightBlock(null);
                 }
-            } else {
-                //undo using the "Extra" color to highlight the selected block
-                highlightBlock(null);
-            }
+            }).start();
         }
     } //setHighlightSelectedBlock
 

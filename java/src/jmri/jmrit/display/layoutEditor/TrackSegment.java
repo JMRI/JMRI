@@ -2810,8 +2810,8 @@ public class TrackSegment extends LayoutTrack {
                 bridgeValues.add("right");
             }
             bridgeValues.add("color=" + ColorUtil.colorToHexString(bridgeColor));
-            bridgeValues.add("approachwidth=" + bridgeApproachWidth);
             bridgeValues.add("linewidth=" + bridgeLineWidth);
+            bridgeValues.add("approachwidth=" + bridgeApproachWidth);
             bridgeValues.add("deckwidth=" + bridgeDeckWidth);
 
             decorations.put("bridge", String.join(";", bridgeValues));
@@ -2860,8 +2860,8 @@ public class TrackSegment extends LayoutTrack {
                 tunnelValues.add("right");
             }
             tunnelValues.add("color=" + ColorUtil.colorToHexString(tunnelColor));
-            tunnelValues.add("entrancewidth=" + tunnelEntranceWidth);
             tunnelValues.add("linewidth=" + tunnelLineWidth);
+            tunnelValues.add("entrancewidth=" + tunnelEntranceWidth);
             tunnelValues.add("floorwidth=" + tunnelFloorWidth);
 
             decorations.put("tunnel", String.join(";", tunnelValues));
