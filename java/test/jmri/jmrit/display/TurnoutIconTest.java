@@ -157,6 +157,7 @@ public class TurnoutIconTest extends PositionableIconTest {
             JFrameOperator tf = new JFrameOperator(panel.getTargetFrame());
             tf.requestClose();
         }
+        panel = null;
         JUnitUtil.tearDown();
     }
 }
