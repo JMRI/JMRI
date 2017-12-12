@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 
 /**
  * Swing action to create and register a SerialMonFrame object
@@ -12,18 +13,21 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialMonAction extends AbstractAction {
 
-    public SerialMonAction(String s) {
+    private SecsiSystemConnectionMemo memo = null;
+
+    public SerialMonAction(String s,SecsiSystemConnectionMemo _memo) {
         super(s);
+        memo = _memo;
     }
 
-    public SerialMonAction() {
-        this("SECSI Monitor");
+    public SerialMonAction(SecsiSystemConnectionMemo _memo) {
+        this("SECSI Monitor",_memo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // create a SerialMonFrame
-        SerialMonFrame f = new SerialMonFrame();
+        SerialMonFrame f = new SerialMonFrame(memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

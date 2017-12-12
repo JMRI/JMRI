@@ -12,13 +12,7 @@ public abstract class PortController extends jmri.jmrix.AbstractSerialPortContro
     // objects to TrafficController classes, who in turn will deal in messages.
 
     protected PortController() {
-        super(new SystemConnectionMemo("N", "Others") {
-
-            @Override
-            protected ResourceBundle getActionModelResourceBundle() {
-                return null;
-            }
-        });
+        super(new DirectSystemConnectionMemo());
         this.manufacturerName = jmri.jmrix.OtherConnectionTypeList.OTHER;
     }
 

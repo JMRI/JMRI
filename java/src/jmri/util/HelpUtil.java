@@ -7,6 +7,7 @@ import java.util.EventObject;
 import java.util.Locale;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
+import javax.help.HelpSetException;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
@@ -37,11 +38,14 @@ public class HelpUtil {
      * @param ref     context-sensitive help reference
      * @param direct  true if this call should complete the help menu by adding
      *                the general help
-     * @return new Help menu, in case user wants to add more items
+     * @return new Help menu, in case user wants to add more items or null if
+     *         unable to create the help menu
      */
     static public JMenu helpMenu(JMenuBar menuBar, String ref, boolean direct) {
         JMenu helpMenu = makeHelpMenu(ref, direct);
-        menuBar.add(helpMenu);
+        if (helpMenu != null) {
+            menuBar.add(helpMenu);
+        }
         return helpMenu;
     }
 
@@ -53,7 +57,7 @@ public class HelpUtil {
         JMenu helpMenu = new JMenu(Bundle.getMessage("HELP"));
         JMenuItem item = makeHelpMenuItem(ref);
         if (item == null) {
-            log.error("Can't make help menu item for " + ref);
+            log.error("Can't make help menu item for {}", ref);
             return null;
         }
         helpMenu.add(item);
@@ -153,26 +157,26 @@ public class HelpUtil {
                 if (hsURL != null) {
                     log.debug("JavaHelp using {}", helpsetName);
                 } else {
-                    log.warn("JavaHelp: File " + helpsetName + " not found, dropping to default");
+                    log.warn("JavaHelp: File {} not found, dropping to default", helpsetName);
                     language = "en";
                     helpsetName = "help/" + language + "/JmriHelp_" + language + ".hs";
                     hsURL = FileUtil.findURL(helpsetName);
                 }
                 try {
                     globalHelpSet = new HelpSet(null, hsURL);
-                } catch (java.lang.NoClassDefFoundError ee) {
+                } catch (NoClassDefFoundError ee) {
                     log.debug("classpath={}", System.getProperty("java.class.path", "<unknown>"));
                     log.debug("classversion={}", System.getProperty("java.class.version", "<unknown>"));
                     log.error("Help classes not found, help system omitted");
                     return false;
-                } catch (Exception e2) {
-                    log.error("HelpSet " + helpsetName + " not found, help system omitted");
+                } catch (HelpSetException e2) {
+                    log.error("HelpSet {} not found, help system omitted", helpsetName);
                     return false;
                 }
                 globalHelpBroker = globalHelpSet.createHelpBroker();
 
-            } catch (java.lang.NoSuchMethodError e2) {
-                log.error("Is jh.jar available? Error starting help system: " + e2);
+            } catch (NoSuchMethodError e2) {
+                log.error("Is jh.jar available? Error starting help system", e2);
             }
             failed = false;
         }
