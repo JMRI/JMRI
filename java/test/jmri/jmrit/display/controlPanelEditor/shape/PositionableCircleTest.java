@@ -13,19 +13,22 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class PositionableCircleTest {
+public class PositionableCircleTest extends PositionableShapeTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PositionableCircle t = new PositionableCircle(new EditorScaffold());
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",p);
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        if(!GraphicsEnvironment.isHeadless()){
+           p = new PositionableCircle(new EditorScaffold());
+        }
     }
 
     @After
