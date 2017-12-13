@@ -20,14 +20,9 @@ public class SerialLightManager extends AbstractLightManager {
     OakTreeSystemConnectionMemo _memo = null;
     protected String prefix = "O";
 
-    public SerialLightManager() {
-        prefix = getSystemPrefix();
-
-    }
-
     public SerialLightManager(OakTreeSystemConnectionMemo memo) {
         _memo = memo;
-        prefix = memo.getSystemPrefix();
+        prefix = getSystemPrefix();
     }
 
     /**
@@ -35,7 +30,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String getSystemPrefix() {
-        return prefix;
+        return _memo.getSystemPrefix();
 
     }
 
@@ -110,12 +105,8 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Deprecated
     static public SerialLightManager instance() {
-        if (_instance == null) {
-            _instance = new SerialLightManager();
-        }
-        return _instance;
+        return null;
     }
-    static SerialLightManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class);
 

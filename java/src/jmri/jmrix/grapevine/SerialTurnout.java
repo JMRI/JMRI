@@ -17,13 +17,16 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTurnout extends AbstractTurnout {
 
+    GrapevineSystemConnectionMemo memo = null;
+
     /**
      * Create a Turnout object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialTurnoutManager
      */
-    public SerialTurnout(String systemName, String userName) {
+    public SerialTurnout(String systemName, String userName,GrapevineSystemConnectionMemo _memo) {
         super(systemName, userName);
+        memo = _memo;
         // Save system Name
         tSystemName = systemName;
         // Extract the Bit from the name
@@ -83,7 +86,7 @@ public class SerialTurnout extends AbstractTurnout {
     int bank;           // bank number, 0-3
 
     protected void sendMessage(boolean closed) {
-        SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName);
+        SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName,memo.getTrafficController());
         if (tNode == null) {
             // node does not exist, ignore call
             log.error("Can't find node for " + tSystemName + ", command ignored");

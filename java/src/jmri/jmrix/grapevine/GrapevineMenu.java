@@ -10,23 +10,26 @@ import javax.swing.JMenu;
  */
 public class GrapevineMenu extends JMenu {
 
-    public GrapevineMenu(String name) {
-        this();
+    private GrapevineSystemConnectionMemo memo = null;
+
+    public GrapevineMenu(String name,GrapevineSystemConnectionMemo _memo) {
+        this(_memo);
         setText(name);
     }
 
-    public GrapevineMenu() {
+    public GrapevineMenu(GrapevineSystemConnectionMemo _memo) {
 
         super();
+        memo = _memo;
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.grapevine.GrapevineBundle");
 
         setText(rb.getString("MenuSystem"));
 
-        add(new jmri.jmrix.grapevine.serialmon.SerialMonAction(rb.getString("MenuItemCommandMonitor")));
-        add(new jmri.jmrix.grapevine.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand")));
-        add(new jmri.jmrix.grapevine.nodeconfig.NodeConfigAction(rb.getString("MenuItemConfigNodes")));
-        add(new jmri.jmrix.grapevine.nodetable.NodeTableAction(rb.getString("MenuItemNodeTable")));
+        add(new jmri.jmrix.grapevine.serialmon.SerialMonAction(rb.getString("MenuItemCommandMonitor"),memo));
+        add(new jmri.jmrix.grapevine.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand"),memo));
+        add(new jmri.jmrix.grapevine.nodeconfig.NodeConfigAction(rb.getString("MenuItemConfigNodes"),memo));
+        add(new jmri.jmrix.grapevine.nodetable.NodeTableAction(rb.getString("MenuItemNodeTable"),memo));
 
     }
 

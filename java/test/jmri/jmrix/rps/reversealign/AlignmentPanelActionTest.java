@@ -5,6 +5,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  *
@@ -12,9 +13,11 @@ import org.junit.Test;
  */
 public class AlignmentPanelActionTest {
 
+    private RpsSystemConnectionMemo memo = null; 
+
     @Test
     public void testCTor() {
-        AlignmentPanelAction t = new AlignmentPanelAction();
+        AlignmentPanelAction t = new AlignmentPanelAction(memo);
         Assert.assertNotNull("exists",t);
     }
 
@@ -22,6 +25,7 @@ public class AlignmentPanelActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new RpsSystemConnectionMemo();
     }
 
     @After

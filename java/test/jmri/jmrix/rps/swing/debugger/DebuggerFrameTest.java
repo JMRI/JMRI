@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  *
@@ -14,10 +15,12 @@ import org.junit.Test;
  */
 public class DebuggerFrameTest {
 
+    private RpsSystemConnectionMemo memo = null;
+
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        DebuggerFrame t = new DebuggerFrame();
+        DebuggerFrame t = new DebuggerFrame(memo);
         Assert.assertNotNull("exists",t);
     }
 
@@ -25,6 +28,7 @@ public class DebuggerFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new RpsSystemConnectionMemo();
     }
 
     @After

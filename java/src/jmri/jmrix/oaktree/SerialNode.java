@@ -66,13 +66,15 @@ public class SerialNode extends AbstractNode {
     protected int[] sensorLastSetting = new int[MAXSENSORS + 1];
     protected int[] sensorTempSetting = new int[MAXSENSORS + 1];
 
+    OakTreeSystemConnectionMemo _memo = null;
+
     /**
      * Assumes a node address of 0, and a node type of 0 (IO24) If this
      * constructor is used, actual node address must be set using
      * setNodeAddress, and actual node type using 'setNodeType'
      */
-    public SerialNode() {
-        this(0, IO24);
+    public SerialNode(OakTreeSystemConnectionMemo memo) {
+        this(0, IO24,memo);
     }
 
     /**
@@ -80,7 +82,8 @@ public class SerialNode extends AbstractNode {
      * address - Address of node on serial bus (0-255) type - a type constant
      * from the class
      */
-    public SerialNode(int address, int type) {
+    public SerialNode(int address, int type,OakTreeSystemConnectionMemo memo) {
+        _memo = memo;
         // set address and type and check validity
         setNodeAddress(address);
         setNodeType(type);
@@ -100,7 +103,7 @@ public class SerialNode extends AbstractNode {
         setMustSend();
         hasActiveSensors = false;
         // register this node
-        SerialTrafficController.instance().registerNode(this);
+        _memo.getTrafficController().registerNode(this);
     }
 
     /**

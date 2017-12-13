@@ -25,6 +25,8 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialNode extends AbstractNode {
 
+    private SerialTrafficController tc = null;
+
     /**
      * Maximum number of sensors a node can carry.
      * <P>
@@ -69,8 +71,8 @@ public class SerialNode extends AbstractNode {
      * constructor is used, actual node address must be set using
      * setNodeAddress, and actual node type using 'setNodeType'
      */
-    public SerialNode() {
-        this(0, DAUGHTER);
+    public SerialNode(SerialTrafficController _tc) {
+        this(0, DAUGHTER, _tc);
     }
 
     /**
@@ -78,8 +80,9 @@ public class SerialNode extends AbstractNode {
      * address - Address of node on serial bus (0-255) type - a type constant
      * from the class
      */
-    public SerialNode(int address, int type) {
+    public SerialNode(int address, int type, SerialTrafficController _tc) {
         // set address and type and check validity
+        tc = _tc;
         setNodeAddress(address);
         setNodeType(type);
         // set default values for other instance variables
@@ -98,7 +101,7 @@ public class SerialNode extends AbstractNode {
         setMustSend();
         hasActiveSensors = false;
         // register this node
-        SerialTrafficController.instance().registerNode(this);
+        tc.registerNode(this);
     }
 
     /**
