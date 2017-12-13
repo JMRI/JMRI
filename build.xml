@@ -2325,7 +2325,6 @@
         <echo message="new release branch ${branch-name} created"/>
     </target>
 
-    <target name="appveyor" description="Execute CI tasks on Appveyor" depends="warnings, tests-warnings, checkPropertiesFiles, ci-test-appveyor-coveragecheck">
-    </target>
+    <target name="appveyor" description="CI tasks on Appveyor" depends="checkPropertiesFiles, ci-test-appveyor-coveragecheck"/>
 
 </project>
