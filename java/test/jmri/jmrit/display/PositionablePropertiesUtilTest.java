@@ -43,7 +43,9 @@ public class PositionablePropertiesUtilTest {
         t.display();
         t.fontApply(); // fontApply is package protected in PositionablePropertiesUtil.
         // we haven't made any changes, so the properties should be the same as before.
-        Assert.assertEquals("No Change Background Color",bc,label.getBackground());
+        Assert.assertEquals("No Change Background Color Red",bc.getRed(),label.getBackground().getRed());
+        Assert.assertEquals("No Change Background Color Blue",bc.getBlue(),label.getBackground().getBlue());
+        Assert.assertEquals("No Change Background Color Green",bc.getGreen(),label.getBackground().getGreen());
         Assert.assertEquals("No Change opaque",opaque,label.isOpaque());
         Assert.assertEquals("No Change Foreground Color",fc,label.getForeground());
         Assert.assertEquals("No Change Font",f,label.getFont());
