@@ -44,7 +44,7 @@ import org.netbeans.jemmy.ComponentChooser;
  *
  * @author Bob Jacobsen Copyright 2015
  */
-public class PositionableLabelTest {
+public class PositionableLabelTest extends PositionableTestBase {
 
     PositionableLabel to = null;
     PanelEditor panel;
@@ -546,6 +546,10 @@ public class PositionableLabelTest {
         JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initDefaultUserMessagePreferences();
+        if(!GraphicsEnvironment.isHeadless()) {
+           Editor e = new EditorScaffold();
+           p = to = new PositionableLabel("one", e);
+        }
     }
 
     @After

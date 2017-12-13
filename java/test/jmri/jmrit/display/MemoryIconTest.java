@@ -31,9 +31,10 @@ import org.netbeans.jemmy.ComponentChooser;
  *
  * @author	Bob Jacobsen Copyright 2007, 2015
  */
-public class MemoryIconTest {
+public class MemoryIconTest extends PositionableTestBase {
 
-    jmri.jmrit.display.panelEditor.PanelEditor panel = null;
+    private jmri.jmrit.display.panelEditor.PanelEditor panel = null;
+    private MemoryIcon to = null;
 
     @Test
     public void testShowContent() {
@@ -51,8 +52,6 @@ public class MemoryIconTest {
 
         jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue("Data Data");
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-
-        to.setMemory("IM1");
 
         jf.pack();
         jf.setVisible(true);
@@ -80,7 +79,6 @@ public class MemoryIconTest {
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
         jf.getContentPane().setBackground(Color.white);
 
-        MemoryIcon to = new MemoryIcon("MemoryTest2", panel);
         jf.getContentPane().add(to);
         to.getPopupUtility().setBackgroundColor(Color.white);
 
@@ -114,7 +112,6 @@ public class MemoryIconTest {
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
         jf.getContentPane().setBackground(Color.white);
 
-        MemoryIcon to = new MemoryIcon("MemoryTest3", panel);
         jf.getContentPane().add(to);
         to.getPopupUtility().setBackgroundColor(Color.white);
 
@@ -179,17 +176,20 @@ public class MemoryIconTest {
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemoryIcon Panel");
+            p = to = new MemoryIcon("MemoryTest1", panel);
+            to.setMemory("IM1");
         }
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         // now close panel window
         if (panel != null) {
             java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();

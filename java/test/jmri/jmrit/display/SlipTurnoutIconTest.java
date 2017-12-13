@@ -13,19 +13,21 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class SlipTurnoutIconTest {
+public class SlipTurnoutIconTest extends PositionableTestBase {
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Editor ef = new EditorScaffold();
-        SlipTurnoutIcon iti = new SlipTurnoutIcon(ef);
-        Assert.assertNotNull("SlipTurnoutIcon Constructor", iti);
+        Assert.assertNotNull("SlipTurnoutIcon Constructor", p);
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+           Editor ef = new EditorScaffold();
+           p = new SlipTurnoutIcon(ef);
+        }
     }
 
     @After

@@ -11,43 +11,29 @@ import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 import org.junit.After;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
  * Test the ReporterIcon.
- * <P>
- * There is no default (or internal) implementation, so test via the specific
- * LocoNet implementation
  * <p>
  * Description:
  *
  * @author Bob Jacobsen Copyright 2007
  */
-public class ReporterIconTest {
+public class ReporterIconTest extends PositionableTestBase {
 
-    PanelEditor panel;
+    private PanelEditor panel;
+    private ReporterIcon to = null;
 
     @Test
     public void testShowSysName() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        ReporterIcon to = new ReporterIcon(panel);
         jf.getContentPane().add(to);
-
-        // reset the LocoNet instances, so this behaves independent of
-        // any layout connection
-        LocoNetInterfaceScaffold tc = new LocoNetInterfaceScaffold();
-
-        // create objects to test
-        InstanceManager.setReporterManager(new LnReporterManager(tc, "L"));
-        InstanceManager.getDefault(ReporterManager.class).provideReporter("LR1");
-        to.setReporter("LR1");
-        InstanceManager.getDefault(ReporterManager.class).provideReporter("LR1").setReport("data");
 
         jf.pack();
         jf.setVisible(true);
@@ -62,18 +48,8 @@ public class ReporterIconTest {
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        ReporterIcon to = new ReporterIcon(panel);
         jf.getContentPane().add(to);
 
-        // reset the LocoNet instances, so this behaves independent of
-        // any layout connection
-        LocoNetInterfaceScaffold tc = new LocoNetInterfaceScaffold();
-
-        // create objects to test
-        InstanceManager.setReporterManager(new LnReporterManager(tc, "L"));
-        InstanceManager.getDefault(ReporterManager.class).provideReporter("1");
-        to.setReporter("1");
-        InstanceManager.getDefault(ReporterManager.class).provideReporter("1").setReport("data");
 
         jf.pack();
         jf.setVisible(true);
@@ -84,8 +60,15 @@ public class ReporterIconTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initReporterManager();
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new PanelEditor("Test ReporterIcon Panel");
+            p = to = new ReporterIcon(panel);
+
+            // create objects to test
+            InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1");
+            to.setReporter("IR1");
+            InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1").setReport("data");
         }
     }
 
@@ -102,7 +85,7 @@ public class ReporterIconTest {
                 JUnitUtil.dispose(panel);
             });
         }
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);
