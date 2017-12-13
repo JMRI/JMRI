@@ -13,19 +13,21 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class PositionableRoundRectTest {
+public class PositionableRoundRectTest extends PositionableRectangleTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PositionableRoundRect t = new PositionableRoundRect(new EditorScaffold());
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",p);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        if(!GraphicsEnvironment.isHeadless()){
+           p = new PositionableRoundRect(new EditorScaffold());
+        }
     }
 
     @After
