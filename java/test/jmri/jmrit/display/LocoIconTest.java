@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -35,13 +36,20 @@ public class LocoIconTest extends PositionableTestBase {
     @Override
     @Test
     public void testGetAndSetShowToolTip() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Defalt ShowToolTip", p.showToolTip());
         // LocoIcon's ignore setting ShowToolTip to true
         p.setShowToolTip(true);
         Assert.assertFalse("showToolTip after set true", p.showToolTip());
         p.setShowToolTip(false);
         Assert.assertFalse("showToolTip after set false", p.showToolTip());
+    }
+
+    @Override
+    @Test
+    @Ignore("not supported for LocoIcon")
+    public void testDoViemMenu(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertTrue("Do View Menu",p.doViemMenu());
     }
 
     @Before

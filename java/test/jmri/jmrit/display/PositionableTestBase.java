@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -113,6 +114,55 @@ abstract public class PositionableTestBase{
         //Assert.assertFalse("clone object (not content) equality", p.equals(p));
 
         Assert.assertTrue("class type equality", p.getClass().equals(p.getClass()));
+    }
+
+    @Test
+    @Ignore("needs further setup for most instances")
+    public void testMaxWidth() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotEquals("Max Width",0,p.maxWidth());
+    }
+
+    @Test
+    @Ignore("needs further setup for most instances")
+    public void testMaxHeight() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotEquals("Max Height",0,p.maxHeight());
+    }
+
+    @Test
+    @Ignore("needs further setup for most instances")
+    public void testGetAndSetScale(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        p.setScale(5.0D);
+        Assert.assertEquals("Scale",5.0D,p.getScale(),0.0);
+    }
+    
+    @Test
+    @Ignore("needs further setup for most instances")
+    public void testGetAndSetRotationDegrees(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        p.rotate(50);
+        Assert.assertEquals("Degrees",50,p.getDegrees());
+    }
+
+    @Test
+    @Ignore("needs further setup for most instances")
+    public void testGetTextComponent(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("text component",p.getTextComponent());
+    }
+
+    @Test
+    public void testStoreItem(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertTrue("Store Item",p.storeItem());
+    }
+
+    @Test
+    public void testDoViemMenu(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertTrue("Do View Menu",p.doViemMenu());
     }
 
 }

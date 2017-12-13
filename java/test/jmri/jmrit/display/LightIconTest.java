@@ -13,19 +13,21 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class LightIconTest {
+public class LightIconTest extends PositionableTestBase {
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Editor ef = new EditorScaffold();
-        LightIcon iti = new LightIcon(ef);
-        Assert.assertNotNull("LightIcon Constructor",iti);
+        Assert.assertNotNull("LightIcon Constructor",p);
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        if( !GraphicsEnvironment.isHeadless()) {
+           Editor ef = new EditorScaffold();
+           p = new LightIcon(ef);
+        }
     }
 
     @After
