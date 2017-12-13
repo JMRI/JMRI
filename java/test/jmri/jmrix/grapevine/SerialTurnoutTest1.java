@@ -11,6 +11,7 @@ import org.junit.Before;
   */
 public class SerialTurnoutTest1 extends AbstractTurnoutTestBase {
 
+    private GrapevineSystemConnectionMemo memo = null; 
     private SerialTrafficControlScaffold tcis = null;
 
     @Before
@@ -19,8 +20,10 @@ public class SerialTurnoutTest1 extends AbstractTurnoutTestBase {
         // prepare an interface
         tcis = new SerialTrafficControlScaffold();
         tcis.registerNode(new SerialNode(1, SerialNode.NODE2002V6));
+        memo = new GrapevineSystemConnectionMemo();
+        memo.setTrafficController(tcis);
 
-        t = new SerialTurnout("GT1304", "t4");
+        t = new SerialTurnout("GT1304", "t4",memo);
     }
 
     @Override

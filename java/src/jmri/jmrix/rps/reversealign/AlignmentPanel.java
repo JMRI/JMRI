@@ -22,6 +22,7 @@ import jmri.jmrix.rps.PositionFile;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.ReadingListener;
 import jmri.jmrix.rps.trackingpanel.RpsTrackingPanel;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,8 +39,11 @@ import org.slf4j.LoggerFactory;
 public class AlignmentPanel extends javax.swing.JPanel
         implements ReadingListener, Constants {
 
-    public AlignmentPanel() {
+    RpsSystemConnectionMemo memo = null;
+
+    public AlignmentPanel(RpsSystemConnectionMemo _memo) {
         super();
+        memo = _memo;
         Distributor.instance().addReadingListener(this);
         nf = java.text.NumberFormat.getInstance();
         nf.setMinimumFractionDigits(1);

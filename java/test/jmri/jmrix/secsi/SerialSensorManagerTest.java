@@ -14,6 +14,9 @@ import org.junit.Test;
  */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
+    private SerialTrafficControlScaffold tcis = null;
+    private SecsiSystemConnectionMemo memo = null;
+
     private SerialNode n0 = null;
     private SerialNode n1 = null;
     private SerialNode n2 = null;
@@ -58,20 +61,16 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        // replace the SerialTrafficController to get clean reset
-        SerialTrafficController t = new SerialTrafficController() {
-            SerialTrafficController test() {
-                setInstance();
-                return this;
-            }
-        }.test();
+        tcis = new SerialTrafficControlScaffold();
+        memo = new SecsiSystemConnectionMemo();
+        memo.setTrafficController(tcis);
 
         // construct nodes
-        n0 = new SerialNode(0, SerialNode.DAUGHTER);
-        n1 = new SerialNode(1, SerialNode.DAUGHTER);
-        n2 = new SerialNode(2, SerialNode.CABDRIVER);
+        n0 = new SerialNode(0, SerialNode.DAUGHTER,tcis);
+        n1 = new SerialNode(1, SerialNode.DAUGHTER,tcis);
+        n2 = new SerialNode(2, SerialNode.CABDRIVER,tcis);
 
-        l = new SerialSensorManager();
+        l = new SerialSensorManager(memo);
     }
 
     @After

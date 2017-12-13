@@ -18,21 +18,19 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
+    private GrapevineSystemConnectionMemo memo = null; 
+
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
 
-        // replace the SerialTrafficController
-        SerialTrafficController t = new SerialTrafficController() {
-            SerialTrafficController test() {
-                setInstance();
-                return this;
-            }
-        }.test();
+        SerialTrafficController t = new SerialTrafficControlScaffold();
+        memo = new GrapevineSystemConnectionMemo();
+        memo.setTrafficController(t);
         t.registerNode(new SerialNode(1, SerialNode.NODE2002V6));
         // create and register the manager object
-        l = new SerialTurnoutManager();
+        l = new SerialTurnoutManager(memo);
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
