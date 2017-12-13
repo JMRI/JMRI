@@ -709,7 +709,6 @@
                 <compilerarg value="@${basedir}/java/ecj.warning.options"/>
                 <classpath refid="@{javac.classpath}"/>
             </javac>
-            <echo message="Done building @{javac.target} with ecj."/>
         </sequential>
     </macrodef>
 
