@@ -255,16 +255,6 @@
     station, either "2004 or earlier" or "2006 or later". See
     <a href="#eeprom">below</a> for more information on this.</li>
 
-    <li>The series of radio buttons labeled "GUI style" allows you
-    to select how the program will look. "Metal" is the native Java
-    look available on all types. Other choices will vary with your
-    computer type. "CDE/Motif", "Windows", and "Mac OS X" look
-    native on Linux, Windows, and Mac OS X respectively.</li>
-
-    <li>In the bottom selection box, you can pick the default
-    programmer format. You can override this each time you open the
-    programmer, so this is here just for convenience.</li>
-
     <li>Click "Save". You'll be asked if it's OK for the program to
     quit, click "Yes".</li>
 
@@ -319,16 +309,6 @@
     <li>Select the version of EPROM present in your command
     station, either "2004 or earlier" or "2006 or later". See
     <a href="#eeprom">above</a> for more information on this.</li>
-
-    <li>The series of radio buttons labeled "GUI style" allows you
-    to select how the program will look. "Metal" is the native Java
-    look available on all types. Other choices will vary with your
-    computer type. "CDE/Motif", "Windows", and "Mac OS X" look
-    native on Linux, Windows, and Mac OS X respectively.</li>
-
-    <li>In the bottom selection box, you can pick the default
-    programmer format. You can override this each time you open the
-    programmer, so this is here just for convenience.</li>
 
     <li>Click "Save". You'll be asked if it's OK for the program to
     quit, click "Yes".</li>

@@ -191,26 +191,14 @@ https://github.com/JMRI/JMRI/pulls?q=is%3Apr+is%3Aclosed+merged%3A%3E2016-08-13+
 ````
 where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
 
-- Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.) (Also, you should _not_ have any modified and added (e.g. green) files showing in `git status`, which might interfere)
+- Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.) (Also, you should _not_ have any modified and added (e.g. green) files showing in `git status`, which might interfere) (There's a summary of the steps involved in this at the bottom)
 
 ```
         git checkout master
         ant make-test-release-branch
 ```
- 
-  This will have done (more or less) the following actions (assumes 'github' is a remote pointing at https://github.com/JMRI/JMRI.git ):
 
-```    
-        git checkout master
-        git pull
-        (commit a version number increment to master)
-        git checkout -b {branch}
-        git push github {branch}
-        git checkout master    
-        git pull
-```
-
-- Put the following comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note:
+- Put the following comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note: (NOT FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE)
 
 ```
 The release-4.9.7 branch has been created. 
@@ -221,6 +209,23 @@ Maintainers, please set the 4.9.8 milestone on pulls from now on, as that will b
 
 Jenkins will be creating files shortly at the [CI server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.9.7/)
 ````
+
+FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE:
+```
+The release-4.9.7 branch has been created. 
+
+From now on, please document your changes in the [jmri4.11.1.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.11.1.shtml) release note file.
+
+Maintainers, please set the 4.11.1 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
+
+Jenkins will be creating files shortly at the [CI server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.9.7/)
+
+If you're developing any additional (post-4.9.7) changes that you want in the JMRI 4.10 production release, please start from this branch, i.e. do
+```
+git checkout -b release-4.9.7
+```
+to start your work.
+```
 
 ================================================================================
 ## Build Files with Jenkins
@@ -349,7 +354,7 @@ This step uploads the Linux, Mac OS X and Windows files to the SourceForge file 
 
 This puts the right tag on the branch, then removes the branch.  
 
-Note on file names:  Our filenames are generated with proper [semantic versioning](http://semver.org) in which the `.R202c9ee` indicates build meta-data, specifically the hash for the tag point.  But the GitHub binary-file release system changes the '+' to a '.', so our scripts below do that too.  A request for support was filed with GitHub on this in early June 2017.
+Note on file names:  Our filenames are generated with proper [semantic versioning](http://semver.org) in which the `+R202c9ee` indicates build meta-data, specifically the hash for the tag point.  But the GitHub binary-file release system changes the '+' to a '.', so our scripts below do that too.  A request for support was filed with GitHub on this in early June 2017.
 
 Note: Unlike releasing files to SourceForge, once a GitHub Release is created it is *not* possible to change it to refer to different contents. *Once this step is done, you need to move on to the next release number.*
 
@@ -373,15 +378,16 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
 ```
    - Description content (the testrelease script above proposed this!):
 ```    
+
 [Release notes](http://jmri.org/releasenotes/jmri4.9.7.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.9.7.Re5a0179.dmg](https://github.com/JMRI/JMRI/releases/download/v4.9.7/JMRI.4.9.7.Re5a0179.dmg) | 9e7e4fcd9cfe6a5cadf50c2b1bdf6f1e838d524ff4ce5fd90191e254fd584525
-[JMRI.4.9.7.Re5a0179.exe](https://github.com/JMRI/JMRI/releases/download/v4.9.7/JMRI.4.9.7.Re5a0179.exe) | fd7a4b12d119761e44d2441e2a715ddbd9b6cf857d0418d5470303bd9aefd2e6
-[JMRI.4.9.7.Re5a0179.tgz](https://github.com/JMRI/JMRI/releases/download/v4.9.7/JMRI.4.9.7.Re5a0179.tgz) | 9e22b0dd001c8c541ad6899058d3e25140ddd3dac229098eece1899ff064dbfc
+[JMRI.4.9.7.R72446d4.dmg](https://github.com/JMRI/JMRI/releases/download/v4.9.7/JMRI.4.9.7.R72446d4.dmg) | 7852de77d6bf44c8a677d3229ebaa38115258a0afc518667e3e7f8d6a89a2ce3
+[JMRI.4.9.7.R72446d4.exe](https://github.com/JMRI/JMRI/releases/download/v4.9.7/JMRI.4.9.7.R72446d4.exe) | 8a2b32d6c1da0664502b2d4660c93c5853fc9b988a29bfd0255586c56fe91499
+[JMRI.4.9.7.R72446d4.tgz](https://github.com/JMRI/JMRI/releases/download/v4.9.7/JMRI.4.9.7.R72446d4.tgz) | 46bf97d949c43e6d7c95d61c741efb12698158658b5ccebd3cffb892e3803c19
 
 ```
 
@@ -545,6 +551,7 @@ The download links, along with lots of other information which we hope you'll re
 
 
 ====================================================================================
+====================================================================================
 ## Local-build Alternative
 
 If you can't use Jenkins for the actual build, you can create the files locally:
@@ -591,6 +598,7 @@ If you're building locally:
  
     (The user has to have put the htdocs link in their SF.net account)
 
+================================================================================
 ================================================================================
 ## Notes for those attempting this on MS Windows platform:
 
@@ -643,3 +651,25 @@ This will allow you to navigate straight from the Cygwin home to the JMRIDev dir
 Also, it will be necessary to work in a Cygwin-specific SVN repository as one checked-out under MS Windows will have CRLF line-endings whereas one checked-out within Cygwin (and using the Cygwin svn tools) will have LF line-endings.
 
 Some of the operations that are performed will still generate files with CRLF line-ends (even within the Cygwin environment) - for these, run the changed files through 'dos2unix'. To get a list of changed files, use 'svn st' at top of repo.
+
+================================================================================
+================================================================================
+
+`ant make-test-release-branch` does (more or less) the following actions (assumes 'github' is a remote pointing at https://github.com/JMRI/JMRI.git ):
+
+```    
+        git checkout master
+        git pull
+        (commit a version number increment to master)
+        git checkout -b {branch}
+        git push github {branch}
+        git checkout master    
+        git pull
+```
+
+
+
+================================================================================
+================================================================================
+
+

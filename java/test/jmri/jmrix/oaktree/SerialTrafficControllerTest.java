@@ -21,13 +21,15 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTrafficControllerTest {
 
+    private OakTreeSystemConnectionMemo memo = null;
+
     @Test
     public void testSerialNodeEnumeration() {
         SerialTrafficController c = (SerialTrafficController)tc;
-        SerialNode b = new SerialNode(1, SerialNode.IO48);
-        SerialNode f = new SerialNode(3, SerialNode.IO24);
-        SerialNode d = new SerialNode(2, SerialNode.IO24);
-        SerialNode e = new SerialNode(6, SerialNode.IO48);
+        SerialNode b = new SerialNode(1, SerialNode.IO48,memo);
+        SerialNode f = new SerialNode(3, SerialNode.IO24,memo);
+        SerialNode d = new SerialNode(2, SerialNode.IO24,memo);
+        SerialNode e = new SerialNode(6, SerialNode.IO48,memo);
         Assert.assertEquals("1st Node", b, c.getNode(0));
         Assert.assertEquals("2nd Node", f, c.getNode(1));
         Assert.assertEquals("3rd Node", d, c.getNode(2));
@@ -53,8 +55,8 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @Test
     public void testSerialOutput() {
         SerialTrafficController c = (SerialTrafficController)tc;
-        SerialNode a = new SerialNode();
-        SerialNode g = new SerialNode(5, SerialNode.IO24);
+        SerialNode a = new SerialNode(memo);
+        SerialNode g = new SerialNode(5, SerialNode.IO24,memo);
         Assert.assertNotNull("exists", a);
         Assert.assertTrue("must Send", g.mustSend());
         g.resetMustSend();
@@ -175,6 +177,8 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     public void setUp() {
         JUnitUtil.setUp();
         tc = new SerialTrafficController();
+        memo = new OakTreeSystemConnectionMemo();
+        memo.setTrafficController((SerialTrafficController)tc);
     }
 
     @Override

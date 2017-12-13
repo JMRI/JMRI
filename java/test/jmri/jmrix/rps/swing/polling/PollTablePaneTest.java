@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  *
@@ -14,10 +15,12 @@ import org.junit.Test;
  */
 public class PollTablePaneTest {
 
+    private RpsSystemConnectionMemo memo = null;
+
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PollTableFrame f = new PollTableFrame();
+        PollTableFrame f = new PollTableFrame(memo);
         PollTablePane t = new PollTablePane(f);
         Assert.assertNotNull("exists",t);
     }
@@ -26,6 +29,7 @@ public class PollTablePaneTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new RpsSystemConnectionMemo();
     }
 
     @After

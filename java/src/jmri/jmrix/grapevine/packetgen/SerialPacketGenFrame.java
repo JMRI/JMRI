@@ -9,6 +9,7 @@ import javax.swing.JSeparator;
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialReply;
 import jmri.jmrix.grapevine.SerialTrafficController;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.util.StringUtil;
 
 /**
@@ -17,6 +18,8 @@ import jmri.util.StringUtil;
  * @author Bob Jacobsen Copyright (C) 2002, 2003, 2006, 2007, 2008
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.grapevine.SerialListener {
+
+    private GrapevineSystemConnectionMemo memo = null;
 
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
@@ -28,8 +31,9 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     javax.swing.JButton pollButton = new javax.swing.JButton("Query Node");
     javax.swing.JTextField uaAddrField = new javax.swing.JTextField(5);
 
-    public SerialPacketGenFrame() {
+    public SerialPacketGenFrame(GrapevineSystemConnectionMemo _memo) {
         super();
+        memo = _memo;
     }
 
     /**
@@ -108,11 +112,11 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
 
     public void pollButtonActionPerformed(java.awt.event.ActionEvent e) {
         SerialMessage msg = SerialMessage.getPoll(Integer.valueOf(uaAddrField.getText()).intValue());
-        SerialTrafficController.instance().sendSerialMessage(msg, this);
+        memo.getTrafficController().sendSerialMessage(msg, this);
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        SerialTrafficController.instance().sendSerialMessage(createPacket(packetTextField.getText()), this);
+        memo.getTrafficController().sendSerialMessage(createPacket(packetTextField.getText()), this);
     }
 
     public void parityButtonActionPerformed(java.awt.event.ActionEvent e) {

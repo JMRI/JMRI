@@ -2,6 +2,7 @@ package jmri.jmrix.rps.swing.polling;
 
 import javax.swing.JDialog;
 import jmri.util.JmriJFrame;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  * Frame for control of RPS polling
@@ -10,10 +11,13 @@ import jmri.util.JmriJFrame;
  */
 public class PollTableFrame extends JmriJFrame {
 
+    RpsSystemConnectionMemo memo = null;
+
     PollTablePane pane;
 
-    public PollTableFrame() {
+    public PollTableFrame(RpsSystemConnectionMemo _memo) {
         super(Bundle.getMessage("TitlePolling"));
+        memo = _memo;
     }
 
     @Override

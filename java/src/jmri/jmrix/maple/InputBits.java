@@ -26,7 +26,9 @@ import org.slf4j.LoggerFactory;
  */
 public class InputBits {
 
-    private InputBits() {
+    private SerialTrafficController tc = null;
+
+    public InputBits(SerialTrafficController _tc) {
         // clear the Sensor arrays
         for (int i = 0; i < MAXSENSORS + 1; i++) {
             sensorArray[i] = null;
@@ -34,6 +36,7 @@ public class InputBits {
             sensorTempSetting[i] = Sensor.UNKNOWN;
             sensorORedSetting[i] = false;
         }
+        tc = _tc;
     }
 
     // class constants
@@ -98,7 +101,7 @@ public class InputBits {
      * @param l Reply to a poll operation
      */
     public void markChanges(SerialReply l) {
-        int begAddress = SerialTrafficController.instance().getSavedPollAddress();
+        int begAddress = tc.getSavedPollAddress();
         int count = l.getNumDataElements() - 8;
         for (int i = 0; i < count; i++) {
             if (sensorArray[i + begAddress - 1] == null) {
@@ -185,14 +188,10 @@ public class InputBits {
         }
     }
 
+    @Deprecated
     public static InputBits instance() {
-        if (mInstance == null) {
-            mInstance = new InputBits();
-        }
-        return mInstance;
+        return null;
     }
-
-    static InputBits mInstance = null;  // package access for tests
 
     private final static Logger log = LoggerFactory.getLogger(InputBits.class);
 
