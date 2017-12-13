@@ -40,7 +40,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/annotations.jar"/>
-	<classpathentry kind="lib" path="lib/commons-lang3-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang3-3.7.jar"/>
 	<classpathentry kind="lib" path="lib/ecj.jar"/>
 	<classpathentry kind="lib" path="lib/gluegen-rt.jar"/>
 	<classpathentry kind="lib" path="lib/jakarta-regexp-1.5.jar"/>
@@ -76,7 +76,7 @@
 	<classpathentry kind="lib" path="lib/jackson-databind-2.8.5.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-annotations-2.8.5.jar"/>
 	<classpathentry kind="lib" path="lib/i18nchecker.jar"/>
-	<classpathentry kind="lib" path="lib/commons-io-1.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.6.jar"/>
 	<classpathentry kind="lib" path="lib/bluecove-2.1.1-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/bluecove-bluez-2.1.1-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/bluecove-gpl-2.1.1-SNAPSHOT.jar"/>
@@ -135,5 +135,6 @@
 	<classpathentry kind="lib" path="lib/picocontainer-2.15.jar"/>
 	<classpathentry kind="lib" path="lib/tag-expressions-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/typetools-0.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/webdrivermanager-2.0.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
