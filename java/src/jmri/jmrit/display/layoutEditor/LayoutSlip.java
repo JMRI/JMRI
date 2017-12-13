@@ -1042,7 +1042,7 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     /**
-     * Removes this object from display and persistance
+     * Removes this object from display and persistence
      */
     @Override
     void remove() {

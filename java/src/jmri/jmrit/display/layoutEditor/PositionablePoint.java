@@ -1143,10 +1143,10 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * Removes this object from display and persistance
+     * Removes this object from display and persistence
      */
     private void remove() {
-        // remove from persistance by flagging inactive
+        // remove from persistence by flagging inactive
         active = false;
     }
 
@@ -1426,63 +1426,11 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * draw this PositionablePoint
-     *
-     * @param g2 the graphics port to draw to
+     * {@inheritDoc}
      */
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
-        if (getType() != ANCHOR) {
-            Point2D pt = getCoordsCenter();
-            //boolean mainline = false;
-            Point2D ep1 = pt, ep2 = pt;
-
-            if (getConnect1() != null) {
-                //mainline = getConnect1().isMainline();
-                ep1 = getConnect1().getCentreSeg();
-            }
-            if (getType() == ANCHOR) {
-                if (getConnect2() != null) {
-                    //mainline |= getConnect2().isMainline();
-                    ep2 = getConnect2().getCentreSeg();
-                }
-            }
-
-            double trackWidth = 2.0;
-            double tieWidth = trackWidth * 2.0;
-            Stroke drawingStroke = new BasicStroke((float) trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
-            g2.setColor(defaultTrackColor);
-
-            if (!ep1.equals(ep2)) {
-                double angleRAD = (Math.PI / 2.0) - MathUtil.computeAngleRAD(ep1, ep2);
-                Point2D p1, p2, p3, p4;
-                if (getType() == END_BUMPER) {
-                    // draw a cross tie
-                    p1 = new Point2D.Double(0.0, -tieWidth);
-                    p2 = new Point2D.Double(0.0, +tieWidth);
-
-                    p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
-                    p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
-                    g2.setStroke(drawingStroke);
-                    g2.draw(new Line2D.Double(p1, p2));
-                } else if (getType() == EDGE_CONNECTOR) {
-                    // draw an X
-                    p1 = new Point2D.Double(-trackWidth - tieWidth, -tieWidth);
-                    p2 = new Point2D.Double(-trackWidth - tieWidth, +tieWidth);
-                    p3 = new Point2D.Double(-trackWidth + tieWidth, +tieWidth);
-                    p4 = new Point2D.Double(-trackWidth + tieWidth, -tieWidth);
-
-                    p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
-                    p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
-                    p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), pt);
-                    p4 = MathUtil.add(MathUtil.rotateRAD(p4, angleRAD), pt);
-
-                    g2.setStroke(drawingStroke);
-                    g2.draw(new Line2D.Double(p1, p3));
-                    g2.draw(new Line2D.Double(p2, p4));
-                }
-            }
-        }   // if (getType() != ANCHOR)
+        //nothing to do here... move along...
     }   // draw1
 
     /**
@@ -1532,6 +1480,9 @@ public class PositionablePoint extends LayoutTrack {
         g2.draw(layoutEditor.trackEditControlRectAt(getCoordsCenter()));
     }   // drawEditControls
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {
         // PositionablePoints don't have turnout controls...
@@ -1676,7 +1627,8 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     public void checkForNonContiguousBlocks(
-            @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetsMap) {
+            @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetsMap
+    ) {
         /*
          * For each (non-null) blocks of this track do:
          * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
@@ -1809,6 +1761,6 @@ public class PositionablePoint extends LayoutTrack {
         // nothing to see here, move along...
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
-
+    private final static Logger log
+            = LoggerFactory.getLogger(PositionablePoint.class);
 }

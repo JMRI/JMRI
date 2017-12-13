@@ -223,6 +223,21 @@ public class ColorUtil {
     }
 
     /**
+     * return the color (Black/White) that most contrasts with the specified color
+     *
+     * @param color the source color
+     * @return the contrasting color
+     */
+    public static Color contrast(@Nonnull Color color) {
+        int red = color.getRed();
+        int green = color.getGreen();
+        int blue = color.getBlue();
+        int average = (red + green + blue) / 3;
+
+        return (average >= 128) ? Color.BLACK : Color.WHITE;
+    }
+
+    /**
      * calculate the linear interpolation between two colors
      *
      * @param colorA the first color
