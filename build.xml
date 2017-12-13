@@ -724,7 +724,6 @@
         <ecj-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path"/>
     </target>
 
-
     <!-- end of program build targets -->
 
     <!-- ============================================================================= -->
