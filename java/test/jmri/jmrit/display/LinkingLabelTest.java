@@ -21,15 +21,14 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  *
  * @author	Bob Jacobsen
  */
-public class LinkingLabelTest {
+public class LinkingLabelTest extends PositionableTestBase {
 
-    LinkingLabel to = null;
-    jmri.jmrit.display.panelEditor.PanelEditor panel;
+    private LinkingLabel to = null;
+    private Editor panel;
 
     @Test
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        panel = new jmri.jmrit.display.panelEditor.PanelEditor("LinkingLabel Test Panel");
 
         JFrame jf = new jmri.util.JmriJFrame("LinkingLabel Target Panel");
         JPanel p = new JPanel();
@@ -39,7 +38,6 @@ public class LinkingLabelTest {
         jf.pack();
         jf.setVisible(true);
 
-        to = new LinkingLabel("JMRI Link", panel, "http://jmri.org");
         to.setBounds(0, 0, 80, 80);
         panel.putItem(to);
         to.setDisplayLevel(jmri.jmrit.display.Editor.LABELS);
@@ -70,6 +68,10 @@ public class LinkingLabelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+           panel = new jmri.jmrit.display.panelEditor.PanelEditor("LinkingLabel Test Panel");
+           p = to = new LinkingLabel("JMRI Link", panel, "http://jmri.org");
+        }
     }
 
     @After
