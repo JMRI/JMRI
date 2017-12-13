@@ -23,7 +23,7 @@ if [[ "${HEADLESS}" == "true" ]] ; then
         -Dsurefire.runOrder=${RUN_ORDER} \
         -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
         -Djava.awt.headless=${HEADLESS} \
-        -Dcucumber.options="--tags ~@Ignore --tags ~@firefox"
+        -Dcucumber.options="--tags 'not @Ignore' --tags 'not @firefox'"
 else
     # run full GUI test suite and fail on coverage issues
     mvn javadoc:javadoc verify -U -P travis-coverage --batch-mode \
@@ -31,5 +31,5 @@ else
         -Dsurefire.runOrder=${RUN_ORDER} \
         -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
         -Djava.awt.headless=${HEADLESS} \
-        -Dcucumber.options="--tags ~@Ignore"
+        -Dcucumber.options="--tags 'not @Ignore'"
 fi
