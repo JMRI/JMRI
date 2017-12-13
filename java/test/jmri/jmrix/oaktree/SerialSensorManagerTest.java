@@ -13,6 +13,7 @@ import org.junit.Test;
  */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
+    private OakTreeSystemConnectionMemo memo = null;
     private SerialNode n0 = null;
     private SerialNode n1 = null;
     private SerialNode n2 = null;
@@ -64,12 +65,14 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
                 return this;
             }
         }.test();
+        memo = new OakTreeSystemConnectionMemo("O", "Oak Tree");
+        memo.setTrafficController(t);
         Assert.assertNotNull("exists", t);
 
         // construct nodes
-        n0 = new SerialNode(0, SerialNode.IO48);
-        n1 = new SerialNode(1, SerialNode.IO48);
-        n2 = new SerialNode(2, SerialNode.IO24);
+        n0 = new SerialNode(0, SerialNode.IO48,memo);
+        n1 = new SerialNode(1, SerialNode.IO48,memo);
+        n2 = new SerialNode(2, SerialNode.IO24,memo);
 
         l = new SerialSensorManager();
     }

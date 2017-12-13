@@ -8,6 +8,7 @@ import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.Receiver;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -22,6 +23,8 @@ import org.junit.Test;
  */
 public class RpsTrackingFrameTest {
 
+    private RpsSystemConnectionMemo memo = null;
+
     @Test
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -34,7 +37,7 @@ public class RpsTrackingFrameTest {
         Engine.instance().setReceiver(1, new Receiver(new Point3d(12., 12., 0.)));
         Engine.instance().setReceiver(2, new Receiver(new Point3d(12., 12., 0.)));
 
-        RpsTrackingFrame f = new RpsTrackingFrame("Test RPS Tracking");
+        RpsTrackingFrame f = new RpsTrackingFrame("Test RPS Tracking",memo);
         f.initComponents();
         f.setVisible(true);
 
@@ -63,7 +66,7 @@ public class RpsTrackingFrameTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-
+        memo = new RpsSystemConnectionMemo();
         InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
     }
 

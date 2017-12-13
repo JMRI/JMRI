@@ -307,9 +307,10 @@ public class PositionablePopupUtil {
     }
 
     public void setBackgroundColor(Color color) {
-        if (color == null) {
+        if (color == null || color.getAlpha() == 0) {
             _hasBackground = false;
-            _textComponent.setBackground(null);
+            _textComponent.setBackground(color); // retain the passed color
+                                                 // which may not be null
         } else {
             _hasBackground = true;
             _textComponent.setBackground(color);
@@ -337,10 +338,12 @@ public class PositionablePopupUtil {
     }
 
     public Color getBackground() {
+        Color c = _textComponent.getBackground();
         if (!_hasBackground) {
-            return null;
+            // make sure the alpha value is set to 0
+            jmri.util.ColorUtil.setAlpha(c,0);
         }
-        return _textComponent.getBackground();
+        return c;
     }
 
     protected JMenu makeFontMenu() {

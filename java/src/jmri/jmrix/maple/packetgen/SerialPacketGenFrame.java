@@ -10,6 +10,7 @@ import jmri.jmrix.maple.InputBits;
 import jmri.jmrix.maple.SerialMessage;
 import jmri.jmrix.maple.SerialReply;
 import jmri.jmrix.maple.SerialTrafficController;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.util.StringUtil;
 
 /**
@@ -19,6 +20,8 @@ import jmri.util.StringUtil;
   */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.maple.SerialListener {
 
+    private MapleSystemConnectionMemo memo = null;
+
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -27,8 +30,9 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     javax.swing.JButton pollButton = new javax.swing.JButton("Send poll");
     javax.swing.JTextField uaAddrField = new javax.swing.JTextField(5);
 
-    public SerialPacketGenFrame() {
+    public SerialPacketGenFrame(MapleSystemConnectionMemo _memo) {
         super();
+        memo = _memo;
     }
 
     /** 
@@ -97,11 +101,11 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
             endAddr = 99;
         }
         SerialMessage msg = SerialMessage.getPoll(Integer.valueOf(uaAddrField.getText()).intValue(), 1, endAddr);
-        SerialTrafficController.instance().sendSerialMessage(msg, this);
+        memo.getTrafficController().sendSerialMessage(msg, this);
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        SerialTrafficController.instance().sendSerialMessage(createPacket(packetTextField.getText()), this);
+        memo.getTrafficController().sendSerialMessage(createPacket(packetTextField.getText()), this);
     }
 
     SerialMessage createPacket(String s) {

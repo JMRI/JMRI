@@ -167,10 +167,12 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      * @return system name of the driven signal head
      */
     public String getDrivenSignal() {
+        if (driveSignal == null) return null;
         return driveSignal.getName();
     }
 
     public NamedBeanHandle<SignalHead> getDrivenSignalNamedBean() {
+        if (driveSignal == null) return null;
         return driveSignal;
     }
 
