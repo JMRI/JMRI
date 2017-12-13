@@ -269,7 +269,7 @@ public class PositionablePopupUtil {
     public void setBorder(boolean set) {
         _showBorder = set;
         if (set) {
-            if (borderColor != null && _showBorder) {
+            if (borderColor != null ) {
                 outlineBorder = new LineBorder(borderColor, borderSize);
                 _parent.setBorder(new CompoundBorder(outlineBorder, borderMargin));
             }
@@ -341,7 +341,7 @@ public class PositionablePopupUtil {
         Color c = _textComponent.getBackground();
         if (!_hasBackground) {
             // make sure the alpha value is set to 0
-            jmri.util.ColorUtil.setAlpha(c,0);
+            c = jmri.util.ColorUtil.setAlpha(c,0);
         }
         return c;
     }
@@ -592,15 +592,13 @@ public class PositionablePopupUtil {
         ButtonGroup justButtonGroup = new ButtonGroup();
         JRadioButtonMenuItem r;
         switch (just) {
-            case LEFT:
-                r = new JRadioButtonMenuItem(Bundle.getMessage("left"));
-                break;
             case RIGHT:
                 r = new JRadioButtonMenuItem(Bundle.getMessage("right"));
                 break;
             case CENTRE:
                 r = new JRadioButtonMenuItem(Bundle.getMessage("center"));
                 break;
+            case LEFT:
             default:
                 r = new JRadioButtonMenuItem(Bundle.getMessage("left"));
         }
@@ -641,8 +639,6 @@ public class PositionablePopupUtil {
                     ((JTextField) _textComponent).setHorizontalAlignment(JTextField.RIGHT);
                     break;
                 case CENTRE:
-                    ((JTextField) _textComponent).setHorizontalAlignment(JTextField.CENTER);
-                    break;
                 default:
                     ((JTextField) _textComponent).setHorizontalAlignment(JTextField.CENTER);
             }
