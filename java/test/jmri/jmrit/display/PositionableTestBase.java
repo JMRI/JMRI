@@ -131,9 +131,9 @@ abstract public class PositionableTestBase{
     }
 
     @Test
-    @Ignore("needs further setup for most instances")
     public void testGetAndSetScale(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertEquals("Default Scale",1.0D,p.getScale(),0.0);
         p.setScale(5.0D);
         Assert.assertEquals("Scale",5.0D,p.getScale(),0.0);
     }
