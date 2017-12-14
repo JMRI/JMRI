@@ -9,6 +9,7 @@
 
 newfont = "OCR A Std"
 panelname = "Waccamaw Coast Line"
+
 import jmri
 import javax.swing
 import java.awt
