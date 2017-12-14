@@ -190,15 +190,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     @Override
     public void configure() {
         // connect to the traffic controller
-        SerialTrafficController.instance().connectPort(this);
-
-        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.maple.SerialTurnoutManager.instance());
-        jmri.InstanceManager.setLightManager(jmri.jmrix.maple.SerialLightManager.instance());
-
-        SerialSensorManager s;
-        jmri.InstanceManager.setSensorManager(s = jmri.jmrix.maple.SerialSensorManager.instance());
-        SerialTrafficController.instance().setSensorManager(s);
-        jmri.jmrix.maple.ActiveFlag.setActive();
+        ((MapleSystemConnectionMemo) getSystemConnectionMemo()).getTrafficController().connectPort(this);
+        ((MapleSystemConnectionMemo) getSystemConnectionMemo()).configureManagers();
     }
 
     // base class methods for the SerialPortController interface

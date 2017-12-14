@@ -7,6 +7,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -114,6 +115,25 @@ public abstract class LayoutTrack {
         center = p;
     }
 
+    /**
+     * get decorations
+     *
+     * @return the decorations
+     */
+    public Map<String, String> getDecorations() {
+        return decorations;
+    }
+
+    /**
+     * set decorations
+     *
+     * @param decorations to set
+     */
+    public void setDecorations(Map<String, String> decorations) {
+        this.decorations = decorations;
+    }
+    protected Map<String, String> decorations = null;
+
     public static void setDefaultTrackColor(@Nullable Color color) {
         defaultTrackColor = color;
     }
@@ -200,6 +220,18 @@ public abstract class LayoutTrack {
      * @param g2 the graphics context
      */
     protected abstract void drawTurnoutControls(Graphics2D g2);
+
+    /**
+     * draw track decorations
+     *
+     * @param g2 the graphics context
+     */
+    //protected abstract void drawDecorations(Graphics2D g2);
+    //note: placeholder until I get this implemented in all sub-classes
+    //TODO: replace with abstract declaration (above)
+    protected void drawDecorations(Graphics2D g2) {
+        //nothing to do here... move along...
+    }
 
     /**
      * Get the hidden state of the track element.

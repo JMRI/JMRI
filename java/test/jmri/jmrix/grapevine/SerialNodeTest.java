@@ -17,6 +17,8 @@ import org.junit.Assert;
 @SuppressWarnings("null")
 public class SerialNodeTest extends TestCase {
 
+    private GrapevineSystemConnectionMemo memo = null; 
+
     public void testConstructor1() {
         SerialNode b = new SerialNode();
         Assert.assertEquals("check default ctor type", SerialNode.NODE2002V6, b.getNodeType());
@@ -914,8 +916,10 @@ public class SerialNodeTest extends TestCase {
 
         // replace the traffic manager
         SerialTrafficControlScaffold tcis = new SerialTrafficControlScaffold();
+        memo = new GrapevineSystemConnectionMemo();
+        memo.setTrafficController(tcis);
         // install a grapevine sensor manager
-        jmri.InstanceManager.setSensorManager(new jmri.jmrix.grapevine.SerialSensorManager());
+        jmri.InstanceManager.setSensorManager(new jmri.jmrix.grapevine.SerialSensorManager(memo));
         Assert.assertNotNull("exists", tcis);
     }
 

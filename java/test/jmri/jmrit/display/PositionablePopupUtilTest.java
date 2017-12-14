@@ -26,6 +26,34 @@ public class PositionablePopupUtilTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testHasBackground() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Editor ef = new EditorScaffold();
+        PositionableIcon iti = new PositionableIcon(ef);
+        javax.swing.JPanel jp = new javax.swing.JPanel();
+        PositionablePopupUtil t = new PositionablePopupUtil(iti,jp);
+        t.setHasBackground(true);
+        Assert.assertTrue("hasBackground",t.hasBackground());
+        t.setHasBackground(false);
+        Assert.assertFalse("hasBackground",t.hasBackground());
+    }
+
+    @Test
+    public void testSetBackgroundColor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Editor ef = new EditorScaffold();
+        PositionableIcon iti = new PositionableIcon(ef);
+        javax.swing.JPanel jp = new javax.swing.JPanel();
+        PositionablePopupUtil t = new PositionablePopupUtil(iti,jp);
+        t.setBackgroundColor(new java.awt.Color(0,0,0,255));
+        Assert.assertEquals("color set",java.awt.Color.black, t.getBackground());
+        Assert.assertTrue("hasBackground",t.hasBackground());
+        t.setBackgroundColor(new java.awt.Color(255,255,255,0));
+        Assert.assertEquals("color set",new java.awt.Color(255,255,255,0), t.getBackground());
+        Assert.assertFalse("hasBackground",t.hasBackground());
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

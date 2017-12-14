@@ -13,19 +13,22 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class IndicatorTrackIconTest {
+public class IndicatorTrackIconTest extends PositionableIconTest {
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Editor ef = new EditorScaffold();
-        IndicatorTrackIcon iti = new IndicatorTrackIcon(ef);
-        Assert.assertNotNull("IndicatorTrackIcon Constructor",iti);
+        Assert.assertNotNull("IndicatorTrackIcon Constructor",p);
     }
 
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+           Editor ef = new EditorScaffold();
+           p = new IndicatorTrackIcon(ef);
+        }
     }
 
     @After

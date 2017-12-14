@@ -23,7 +23,10 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialAddress {
 
-    public SerialAddress() {
+    OakTreeSystemConnectionMemo _memo = null;
+
+    public SerialAddress(OakTreeSystemConnectionMemo memo) {
+       _memo = memo;
     }
 
     /**
@@ -31,7 +34,7 @@ public class SerialAddress {
      *
      * @return 'NULL' if illegal systemName format or if the node is not found
      */
-    public static SerialNode getNodeFromSystemName(String systemName, String prefix) {
+    public static SerialNode getNodeFromSystemName(String systemName, String prefix,SerialTrafficController tc) {
         if (prefix.length() < 1) {
             return null;
         }
@@ -82,7 +85,7 @@ public class SerialAddress {
                 }
             }
         }
-        return ((SerialNode) SerialTrafficController.instance().getNodeFromAddress(ua));
+        return ((SerialNode) tc.getNodeFromAddress(ua));
     }
 
     /**
@@ -219,7 +222,7 @@ public class SerialAddress {
             log.warn("invalid system name {}; bad format", systemName);
             return false;
         }
-        SerialNode node = getNodeFromSystemName(systemName, memo.getSystemPrefix());
+        SerialNode node = getNodeFromSystemName(systemName, memo.getSystemPrefix(),memo.getTrafficController());
         if (node == null) {
             log.warn("invalid system name {}; no such node", systemName);
             // The node indicated by this system address is not present
