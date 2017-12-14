@@ -54,40 +54,6 @@
             </properties>
             <build>
                 <plugins>
-                    <!-- use surefire for all test
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.8</version>
-                        <executions>
-                            <execution>
-                                <id>test</id>
-                                <phase>test</phase>
-                                <configuration>
-                                    <target>
-                                        <property name="jvm.args">${ant.jvm.args}</property>
-                                        <ant antfile="${basedir}/build.xml">
-                                            <target name="travis-ci-coverage"/>
-                                        </ant>
-                                    </target>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    -->
-                    <!-- use surefire (maven default test harness) only for line endings
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${surefire.version}</version>
-                        <configuration>
-                            <test>jmri.util.FileLineEndingsTest</test>
-                        </configuration>
-                    </plugin>
-                    -->
                     <plugin>
                         <groupId>org.eluder.coveralls</groupId>
                         <artifactId>coveralls-maven-plugin</artifactId>
@@ -721,9 +687,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-	        <groupId>io.github.bonigarcia</groupId>
-	        <artifactId>webdrivermanager</artifactId>
-	        <version>2.0.1</version>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>2.0.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
