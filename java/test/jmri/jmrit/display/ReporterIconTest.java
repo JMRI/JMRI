@@ -5,6 +5,7 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import jmri.InstanceManager;
 import jmri.ReporterManager;
+import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrix.loconet.LnReporterManager;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
@@ -69,6 +70,8 @@ public class ReporterIconTest extends PositionableTestBase {
             InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1");
             to.setReporter("IR1");
             InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1").setReport("data");
+            NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+            to.setIcon(icon);
         }
     }
 

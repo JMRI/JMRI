@@ -549,6 +549,8 @@ public class PositionableLabelTest extends PositionableTestBase {
         if(!GraphicsEnvironment.isHeadless()) {
            Editor e = new EditorScaffold();
            p = to = new PositionableLabel("one", e);
+           NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+           to.setIcon(icon);
         }
     }
 

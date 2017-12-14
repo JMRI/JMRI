@@ -140,7 +140,10 @@ public class TurnoutIconTest extends PositionableIconTest {
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test TurnoutIcon Panel");
             Editor e = new EditorScaffold();
-            p = new TurnoutIcon(e);
+           TurnoutIcon to = new TurnoutIcon(e);
+           jmri.Turnout t = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+           to.setTurnout(new jmri.NamedBeanHandle<>("IT1", t));
+           p = to;
         }
     }
 
