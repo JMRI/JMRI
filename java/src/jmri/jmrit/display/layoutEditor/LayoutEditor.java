@@ -8956,18 +8956,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return gridSize2nd;
     } //getGridSize
 
-    /**
-     * @deprecated since 4.11.0 use {@link #layoutTrackDrawingOptions.getMainRailWidth()} instead.
-     */
-    @Deprecated
     public int getMainlineTrackWidth() {
         return (int) mainlineTrackWidth;
     } //getMainlineTrackWidth
 
-    /**
-     * @deprecated since 4.11.0 use {@link #layoutTrackDrawingOptions.getSideRailWidth()} instead.
-     */
-    @Deprecated
     public int getSideTrackWidth() {
         return (int) sidelineTrackWidth;
     } //getSideTrackWidth
@@ -9131,18 +9123,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return result;
     }
 
-    /**
-     * @deprecated since 4.11.0 use {@link #layoutTrackDrawingOptions.setMainRailWidth(w)} instead.
-     */
-    @Deprecated
     public void setMainlineTrackWidth(int w) {
         mainlineTrackWidth = w;
     }
 
-    /**
-     * @deprecated since 4.11.0 use {@link #layoutTrackDrawingOptions.setSideRailWidth(w)} instead.
-     */
-    @Deprecated
     public void setSideTrackWidth(int w) {
         sidelineTrackWidth = w;
     }
