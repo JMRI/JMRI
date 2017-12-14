@@ -4,6 +4,10 @@
 # To use this, change the "panelname" and "newfont" values 
 # to match your layout
 #
+# This changes all the contents.  If you want to change just
+# specific items, see ReporterFontControl.py for an example
+# of navigating within a panel to a specific type or item
+#
 # Author: Bob Jacobsen, copyright 2017
 # Part of the JMRI distribution
 
