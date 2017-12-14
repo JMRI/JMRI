@@ -298,6 +298,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                             nbMan.updateBeanFromSystemToUser(nBean);
                         } catch (JmriException ex) {
                             //We should never get an exception here as we already check that the username is not valid
+                            log.error("Impossible exception setting user name", ex);
                         }
                     }
                 }
@@ -679,6 +680,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                         nbMan.updateBeanFromSystemToUser(nBean);
                     } catch (JmriException ex) {
                         //We should never get an exception here as we already check that the username is not valid
+                        log.error("Impossible exception renaming Bean", ex);
                     }
                 }
 
@@ -747,6 +749,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                         nbMan.updateBeanFromSystemToUser(newNameBean);
                     } catch (JmriException ex) {
                         //We should never get an exception here as we already check that the username is not valid
+                        log.error("Impossible exception moving Bean", ex);
                     }
                 }
             }
@@ -940,6 +943,17 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             return null;
         }
 
+        /**
+         * Minimal implementation to catch and log errors
+         */
+        @Override
+        protected void done() {
+            try {
+                get();  // called to get errors
+            } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
+                log.error("Exception while deleting bean", e);
+            }
+        }
     }
 
     class PopupListener extends MouseAdapter {

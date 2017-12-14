@@ -36,9 +36,9 @@
     <!--    # JVM arguments to pass to the JVM running the JMRI application              -->
     <!--    jvm.args=                                                                    -->
     <!--    # paths to append to the classpath                                           -->
-    <!--    cp.append=                                                                    -->
-    <!--    # paths to prepend to the classpath                                           -->
-    <!--    cp.prepend=                                                                    -->
+    <!--    cp.append=                                                                   -->
+    <!--    # paths to prepend to the classpath                                          -->
+    <!--    cp.prepend=                                                                  -->
     <!--    # The directory where Findbugs is installed                                  -->
     <!--    findbugs.home=                                                               -->
     <!--    # You can specify a DecoderPro/PanelPro config file at runtime               -->
@@ -689,44 +689,40 @@
     <!-- By default, we set them explicitly, so that new ones will show up -->
     <!-- See http://help.eclipse.org/galileo/index.jsp?topic=/org.eclipse.jdt.doc.isv/guide/jdt_api_compile.htm -->
     <!--                                        -->
-    <target name="-ecj-compile-internal"> <!-- internal target for compiling Java source from a specified directory using ECJ -->
-        <!-- Compile the java code from ${source} into ${target} -->
-        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
-        <mkdir dir="${java.target.directory}"/>
-        <javac srcdir="${java.source.directory}"
-               destdir="${java.target.directory}"
-               source="${source_version}"
-               target="${jre_version}"
-               includeantruntime="false"
-               debug="yes" >
-            <compilerclasspath>
-                <pathelement path="${libdir}/ecj.jar"/>
-            </compilerclasspath>
-            <compilerarg value="@${basedir}/java/ecj.warning.options"/>
-            <classpath refid="${java.class.path}"/>
-        </javac>
-    </target>
+    <macrodef name="ecj-compile">
+        <attribute name="javac.source"/>
+        <attribute name="javac.target" default="${target}"/>
+        <attribute name="javac.deprecation" default="${deprecation}"/>
+        <attribute name="javac.classpath" default="compile.class.path"/>
+        <sequential>
+            <mkdir dir="@{javac.target}"/> <!-- ensure destdir exists -->
+            <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+            <javac srcdir="@{javac.source}"
+                   destdir="@{javac.target}"
+                   source="${source_version}"
+                   target="${jre_version}"
+                   includeantruntime="false"
+                   debug="yes">
+                <compilerclasspath>
+                    <pathelement path="${libdir}/ecj.jar"/>
+                </compilerclasspath>
+                <compilerarg value="@${basedir}/java/ecj.warning.options"/>
+                <classpath refid="@{javac.classpath}"/>
+            </javac>
+        </sequential>
+    </macrodef>
 
     <target name="warnings"
             description="compile source with warning generation on, omitting tests; requires Ant 1.8 and ecj.jar"
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
-        <antcall target="-ecj-compile-internal">
-          <param name="java.source.directory" value="${source}"/>
-          <param name="java.target.directory" value="${target}"/>
-          <param name="java.class.path" value="compile.class.path"/>
-        </antcall>
+        <ecj-compile javac.source="${source}"/>
     </target>
 
     <target name="tests-warnings"
             description="compile test sources with warning generation on; requires Ant 1.8 and ecj.jar"
             depends="check-ant-requirements, clean, init, copyfiles, warnings">
-        <antcall target="-ecj-compile-internal">
-          <param name="java.source.directory" value="${test}"/>
-          <param name="java.target.directory" value="${testtarget}"/>
-          <param name="java.class.path" value="test.class.path"/>
-        </antcall>
+        <ecj-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path"/>
     </target>
-
 
     <!-- end of program build targets -->
 
@@ -871,7 +867,7 @@
         </java>
     </target>
 
-	<!-- see comment just above -->
+    <!-- see comment just above -->
     <target name="-debug-jmri-application"
             if="debugger"
             depends="runtime-library-selection">
@@ -2329,55 +2325,6 @@
         <echo message="new release branch ${branch-name} created"/>
     </target>
 
-    <!-- CI Test runners -->
-    <target name="travis-ci" description="Parallel execution of CI tasks on Travis CI">
-        <parallel threadCount="1"> <!-- allow up to four tasks at once -->
-            <antcall target="checknonascii" />
-            <sequential>
-                <antcall target="compile-generated-source" />
-                <antcall target="javadoc" />
-                <antcall target="ci-test-travis" />
-            </sequential>
-        </parallel>
-    </target>
-
-    <target name="travis-ci-coverage" description="Parallel execution of CI tasks on Travis CI">
-        <parallel threadCount="1"> <!-- allow up to four tasks at once -->
-            <antcall target="checknonascii" />
-            <sequential>
-                <antcall target="compile-generated-source" />
-                <antcall target="javadoc" />
-                <antcall target="ci-test-travis-coveragecheck" />
-            </sequential>
-        </parallel>
-    </target>
-
-
-    <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
-        <parallel threadCount="1"> <!-- allow up to four tasks at once -->
-            <antcall target="checkPropertiesFiles" />
-            <antcall target="ci-test-appveyor-coveragecheck" />
-        </parallel>
-    </target>
-
-	<!-- - - - - - - - - - - - - - - - - -
-          target: lockMetaFiles
-         - - - - - - - - - - - - - - - - - -->
-    <target name="lockMetaFiles" description="Lock META-INT files">
-    	<echo>locking META-INT files</echo>
-    	<chmod perm="ugo+rx">
-    		<fileset dir="${target/classes/META-INF}"/>
-    	</chmod>
-    </target>
-
-	<!-- - - - - - - - - - - - - - - - - -
-          target: unlockMetaFiles
-         - - - - - - - - - - - - - - - - - -->
-    <target name="unlockMetaFiles" description="Unlock META-INT files">
-    	<echo>unlocking META-INT files</echo>
-    	<chmod perm="ugo+rx+w">
-    		<fileset dir="${target/classes/META-INF}"/>
-    	</chmod>
-    </target>
+    <target name="appveyor" description="CI tasks on Appveyor" depends="checkPropertiesFiles, ci-test-appveyor-coveragecheck"/>
 
 </project>
