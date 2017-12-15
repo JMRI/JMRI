@@ -1,7 +1,9 @@
 package jmri.jmrix.srcp;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.Vector;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -36,9 +38,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
             jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(this);
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("attempted to register shutdown task, but shutdown manager is null");
-            }
+            log.debug("attempted to register shutdown task, but shutdown manager is null");
         }
     }
 
@@ -79,9 +79,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
      */
     @Override
     public void receiveLoop() {
-        if (log.isDebugEnabled()) {
-            log.debug("SRCP receiveLoop starts");
-        }
+        log.debug("SRCP receiveLoop starts");
         SRCPClientParser parser = new SRCPClientParser(istream);
         while (true) {
             try {
@@ -98,23 +96,19 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                 Runnable r = new SRCPRcvNotifier(e, mLastSender, this);
                 try {
                     javax.swing.SwingUtilities.invokeAndWait(r);
-                } catch (Exception ex) {
-                    log.error("Unexpected exception in invokeAndWait:" + ex);
-                    ex.printStackTrace();
+                } catch (InterruptedException | InvocationTargetException ex) {
+                    log.error("Unexpected exception in invokeAndWait:{}", ex, ex);
                 }
-                if (log.isDebugEnabled()) {
-                    log.debug("dispatch thread invoked");
-                }
+                log.debug("dispatch thread invoked");
 
-                log.debug("Mode " + mode + " child contains "
-                        + ((SimpleNode) e.jjtGetChild(1)).jjtGetValue());
+                log.debug("Mode {} child contains {}", mode, ((SimpleNode) e.jjtGetChild(1)).jjtGetValue());
                 //if (mode==HANDSHAKEMODE && ((String)((SimpleNode)e.jjtGetChild(1)).jjtGetValue()).contains("GO")) mode=RUNMODE;
 
                 SRCPClientVisitor v = new SRCPClientVisitor();
                 e.jjtAccept(v, _memo);
 
-                // we need to re-write the switch below so that it uses the 
-                // SimpleNode values instead of the reply message.            
+                // we need to re-write the switch below so that it uses the
+                // SimpleNode values instead of the reply message.
                 //SRCPReply msg = new SRCPReply((SimpleNode)e.jjtGetChild(1));
                 switch (mCurrentState) {
                     case WAITMSGREPLYSTATE: {
@@ -132,7 +126,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                         mCurrentMode = PROGRAMINGMODE;
                         replyInDispatch = false;
 
-                        // check to see if we need to delay to allow decoders 
+                        // check to see if we need to delay to allow decoders
                         // to become responsive
                         int warmUpDelay = enterProgModeDelayTime();
                         if (warmUpDelay != 0) {
@@ -165,11 +159,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                     default: {
                         replyInDispatch = false;
                         if (allowUnexpectedReply == true) {
-                            if (log.isDebugEnabled()) {
-                                log.debug("Allowed unexpected reply received in state: "
-                                        + mCurrentState + " was "
-                                        + e.toString());
-                            }
+                            log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, e);
 
                             synchronized (xmtRunnable) {
                                 // The transmit thread sometimes gets stuck
@@ -179,8 +169,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                                 xmtRunnable.notify();
                             }
                         } else {
-                            log.error("reply complete in unexpected state: "
-                                    + mCurrentState + " was " + e.toString());
+                            log.error("reply complete in unexpected state: {} was {}", mCurrentState, e);
                         }
                     }
                 }
@@ -254,14 +243,13 @@ public class SRCPTrafficController extends AbstractMRTrafficController
      *
      * @return The registered SRCPTrafficController instance for general use, if
      *         need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
+     * multi-system support structure
      */
     @Deprecated
     static public SRCPTrafficController instance() {
         if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new SRCP TrafficController object");
-            }
+            log.debug("creating a new SRCP TrafficController object");
             self = new SRCPTrafficController();
         }
         return self;
@@ -304,25 +292,17 @@ public class SRCPTrafficController extends AbstractMRTrafficController
     @SuppressWarnings("unchecked")
     protected void notifyReply(SimpleNode r, AbstractMRListener dest) {
         // make a copy of the listener vector to synchronized (not needed for transmit?)
-        Vector<AbstractMRListener> v;
-        synchronized (this) {
-            v = (Vector<AbstractMRListener>) cmdListeners.clone();
-        }
+        List<AbstractMRListener> v = new ArrayList<>(cmdListeners);
         // forward to all listeners
-        int cnt = v.size();
-        for (int i = 0; i < cnt; i++) {
-            AbstractMRListener client = v.elementAt(i);
-            if (log.isDebugEnabled()) {
-                log.debug("notify client: " + client);
-            }
+        for (AbstractMRListener client : v) {
+            log.debug("notify client: {}", client);
             try {
                 //skip dest for now, we'll send the message to there last.
                 if (dest != client) {
                     forwardReply(client, r);
                 }
             } catch (Exception ex) {
-                log.warn("notify: During reply dispatch to " + client + "\nException " + ex);
-                ex.printStackTrace();
+                log.warn("notify: During reply dispatch to {}\nException {}", client, ex, ex);
             }
             // forward to the last listener who send a message
             // this is done _second_ so monitoring can have already stored the reply
@@ -337,11 +317,11 @@ public class SRCPTrafficController extends AbstractMRTrafficController
     /**
      * Ask if shut down is allowed.
      * <p>
-     * The shut down manager must call this method first on all the tasks
-     * before starting to execute the method execute() on the tasks.
+     * The shut down manager must call this method first on all the tasks before
+     * starting to execute the method execute() on the tasks.
      * <p>
-     * If this method returns false on any task, the shut down process must
-     * be aborted.
+     * If this method returns false on any task, the shut down process must be
+     * aborted.
      *
      * @return true if it is OK to shut down, false to abort shut down.
      */
@@ -413,6 +393,3 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 
     private final static Logger log = LoggerFactory.getLogger(SRCPTrafficController.class);
 }
-
-
-
