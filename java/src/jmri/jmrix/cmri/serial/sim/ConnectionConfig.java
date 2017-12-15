@@ -3,6 +3,8 @@ package jmri.jmrix.cmri.serial.sim;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import jmri.jmrix.AbstractSimulatorConnectionConfig;
+import jmri.jmrix.SerialPortAdapter;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
 
@@ -13,13 +15,13 @@ import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
  * @author Chuck Catania Copyright (C) 2017
  */
-public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
+public class ConnectionConfig extends AbstractSimulatorConnectionConfig<SerialPortAdapter> {
 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
      */
-    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
+    public ConnectionConfig(SerialPortAdapter p) {
         super(p);
     }
 
@@ -62,8 +64,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     protected void setInstance() {
         if(adapter == null ) {
            adapter = new SimDriverAdapter();
-           adapter.configure(); // make sure the traffic controller 
-                                // loads so that node details can be 
+           adapter.configure(); // make sure the traffic controller
+                                // loads so that node details can be
                                 // saved.
         }
     }
