@@ -45,14 +45,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         rosterAttribute = p.getRosterAttribute();
         prefix = adaptermemo.getSystemPrefix();
         loadEcosData();
-        try {
-            if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
-                new jmri.jmrit.beantable.ListedTableFrame();
-            }
-            jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class).addTable("jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableTabAction", "ECoS Loco Database", false);
-        } catch (HeadlessException he) {
-            // silently ignore inability to display dialog
-        }
     }
 
     String prefix;

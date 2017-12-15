@@ -56,7 +56,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
     }
 
     public EcosLocoTableAction() {
-        this(Bundle.getMessage("EcosLocoTableTitle"));
+        this(Bundle.getMessage("EcosLocoTableTitle", "ECoS"));
     }
 
     public EcosLocoTableAction(String s, EcosSystemConnectionMemo memo) {
@@ -608,17 +608,6 @@ public class EcosLocoTableAction extends AbstractTableAction {
         }
     }
 
-    public void addToPanel(EcosLocoTableTabAction f) {
-        f.addToBottomBox(showMonitorLoco, adaptermemo.getUserName());
-        showMonitorLoco.setToolTipText("Show extra columns for configuring turnout feedback?");
-        showMonitorLoco.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                showMonitorChanged();
-            }
-        });
-    }
-
     void addToRoster(int row, int col) {
         if (getByEcosObject(ecosObjectIdList.get(row)).getRosterId() == null) {
             EcosLocoToRoster addLoco = new EcosLocoToRoster(adaptermemo);
@@ -632,9 +621,9 @@ public class EcosLocoTableAction extends AbstractTableAction {
     @Override
     protected void setTitle() {
         if (adaptermemo != null) {
-            f.setTitle(Bundle.getMessage("XLocoTableTitle", adaptermemo.getUserName()));
+            f.setTitle(Bundle.getMessage("EcosLocoTableTitle", adaptermemo.getUserName()));
         }
-        f.setTitle(Bundle.getMessage("EcosLocoTableTitle"));
+        f.setTitle(Bundle.getMessage("EcosLocoTableTitle", "ECoS"));
     }
 
     @Override
