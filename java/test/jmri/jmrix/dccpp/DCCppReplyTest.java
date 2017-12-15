@@ -74,6 +74,41 @@ public class DCCppReplyTest {
         
     }
 
+    // Test named power districts
+    @Test
+    public void testNamedPowerDistrictReply() {
+        DCCppReply l = DCCppReply.parseDCCppReply("p 0 MAIN");
+        Assert.assertTrue(l.isNamedPowerReply());
+        Assert.assertEquals('p', l.getOpCodeChar());
+        Assert.assertEquals("MAIN", l.getPowerDistrictName());
+        Assert.assertEquals("OFF", l.getPowerDistrictStatus());
+
+        l = DCCppReply.parseDCCppReply("p 1 MAIN");
+        Assert.assertTrue(l.isNamedPowerReply());
+        Assert.assertEquals('p', l.getOpCodeChar());
+        Assert.assertEquals("MAIN", l.getPowerDistrictName());
+        Assert.assertEquals("ON", l.getPowerDistrictStatus());
+
+        l = DCCppReply.parseDCCppReply("p 2 MAIN");
+        Assert.assertTrue(l.isNamedPowerReply());
+        Assert.assertEquals('p', l.getOpCodeChar());
+        Assert.assertEquals("MAIN", l.getPowerDistrictName());
+        Assert.assertEquals("OVERLOAD", l.getPowerDistrictStatus());
+    }
+
+    // Test named power districts
+    @Test
+    public void testNamedCurrentReply() {
+        DCCppReply l = DCCppReply.parseDCCppReply("a MAIN 0");
+        Assert.assertTrue(l.isNamedCurrentReply());
+        Assert.assertEquals('a', l.getOpCodeChar());
+        Assert.assertEquals("0", l.getCurrentString());
+
+        l = DCCppReply.parseDCCppReply("a MAIN 100");
+        Assert.assertTrue(l.isNamedCurrentReply());
+        Assert.assertEquals('a', l.getOpCodeChar());
+        Assert.assertEquals("100", l.getCurrentString());
+    }
     // The minimal setup for log4J
     @Before
     public void setUp() {

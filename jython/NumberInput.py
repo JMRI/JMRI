@@ -1,7 +1,8 @@
 # Fill a memory with a two-digit number, using 10 sensors
-# as digit inputs
+# as digit inputs. Use this to e.g. put a keypad on 
+# a panel.
 #
-# Author: Bob Jacobsen, copyright 2008
+# Author: Bob Jacobsen, copyright 2008, 2017
 # Part of the JMRI distribution
 #
 
