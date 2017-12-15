@@ -1,6 +1,8 @@
 package jmri.jmrix.mrc.simulator;
 
 import javax.swing.JPanel;
+import jmri.jmrix.AbstractSimulatorConnectionConfig;
+import jmri.jmrix.SerialPortAdapter;
 
 /**
  * Definition of objects to handle configuring a layout connection via an MRC
@@ -9,7 +11,7 @@ import javax.swing.JPanel;
  * @author Bob Jacobsen Copyright (C) 2001, 2003 Copies from NCE
  * @author kcameron Copyright (C) 2014
  */
-public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
+public class ConnectionConfig extends AbstractSimulatorConnectionConfig<SerialPortAdapter> {
 
     public final static String NAME = "Simulator";//IN18N
 
@@ -18,7 +20,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
      * deferred.
      * @param p serial port adapter
      */
-    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
+    public ConnectionConfig(SerialPortAdapter p) {
         super(p);
     }
 

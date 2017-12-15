@@ -1,5 +1,8 @@
 package jmri.jmrix.tmcc.simulator;
 
+import jmri.jmrix.AbstractSimulatorConnectionConfig;
+import jmri.jmrix.SerialPortAdapter;
+
 /**
  * Handle configuring an TMCC layout connection via a SimulatorAdapter
  * adapter.
@@ -14,13 +17,13 @@ package jmri.jmrix.tmcc.simulator;
  *
  * Based on jmri.jmrix.lenz.xnetsimulator.ConnectionConfig, copied from DCCpp, EasyDCC
  */
-public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
+public class ConnectionConfig extends AbstractSimulatorConnectionConfig<SerialPortAdapter> {
 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
      */
-    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
+    public ConnectionConfig(SerialPortAdapter p) {
         super(p);
     }
 

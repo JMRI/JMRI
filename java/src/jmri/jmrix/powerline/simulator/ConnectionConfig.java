@@ -1,6 +1,8 @@
 package jmri.jmrix.powerline.simulator;
 
 import javax.swing.JPanel;
+import jmri.jmrix.AbstractSimulatorConnectionConfig;
+import jmri.jmrix.SerialPortAdapter;
 
 /**
  * Definition of objects to handle configuring a layout connection via a
@@ -8,7 +10,7 @@ import javax.swing.JPanel;
  *
  * @author Ken Cameron Copyright (C) 2011 based on NceSimulator by Bob Jacobson
   */
-public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
+public class ConnectionConfig extends AbstractSimulatorConnectionConfig<SerialPortAdapter> {
 
     public final static String NAME = "Simulator";
 
@@ -17,7 +19,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
      * deferred.
      * @param p port adapter for simulator
      */
-    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
+    public ConnectionConfig(SerialPortAdapter p) {
         super(p);
     }
 
