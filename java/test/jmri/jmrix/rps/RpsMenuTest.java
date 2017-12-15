@@ -14,7 +14,8 @@ public class RpsMenuTest {
 
     @Test
     public void testCTor() {
-        RpsMenu t = new RpsMenu();
+        RpsSystemConnectionMemo memo = new RpsSystemConnectionMemo();
+        RpsMenu t = new RpsMenu(memo);
         Assert.assertNotNull("exists",t);
     }
 

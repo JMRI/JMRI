@@ -22,10 +22,10 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
 
     public void testSerialNodeEnumeration() {
         SerialTrafficController c = (SerialTrafficController)tc;
-        SerialNode b = new SerialNode(1, SerialNode.DAUGHTER);
-        SerialNode f = new SerialNode(3, SerialNode.CABDRIVER);
-        SerialNode d = new SerialNode(2, SerialNode.CABDRIVER);
-        SerialNode e = new SerialNode(6, SerialNode.DAUGHTER);
+        SerialNode b = new SerialNode(1, SerialNode.DAUGHTER,c);
+        SerialNode f = new SerialNode(3, SerialNode.CABDRIVER,c);
+        SerialNode d = new SerialNode(2, SerialNode.CABDRIVER,c);
+        SerialNode e = new SerialNode(6, SerialNode.DAUGHTER,c);
         Assert.assertEquals("1st Node", b, c.getNode(0));
         Assert.assertEquals("2nd Node", f, c.getNode(1));
         Assert.assertEquals("3rd Node", d, c.getNode(2));
@@ -50,9 +50,9 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
 
     public void testSerialOutput() {
         SerialTrafficController c = (SerialTrafficController)tc;
-        SerialNode a = new SerialNode();
+        SerialNode a = new SerialNode(c);
         Assert.assertNotNull("exists", a);
-        SerialNode g = new SerialNode(5, SerialNode.DAUGHTER);
+        SerialNode g = new SerialNode(5, SerialNode.DAUGHTER,c);
         Assert.assertTrue("must Send", g.mustSend());
         g.resetMustSend();
         Assert.assertTrue("must Send off", !(g.mustSend()));

@@ -5,6 +5,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  *
@@ -12,9 +13,11 @@ import org.junit.Test;
  */
 public class RpsTrackingControlPaneTest {
 
+    RpsSystemConnectionMemo memo = null;
+
     @Test
     public void testCTor() {
-        RpsTrackingPanel p = new RpsTrackingPanel();
+        RpsTrackingPanel p = new RpsTrackingPanel(memo);
         RpsTrackingControlPane t = new RpsTrackingControlPane(p);
         Assert.assertNotNull("exists",t);
     }
@@ -23,6 +26,7 @@ public class RpsTrackingControlPaneTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new RpsSystemConnectionMemo();
     }
 
     @After

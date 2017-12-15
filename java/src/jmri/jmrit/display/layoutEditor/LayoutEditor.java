@@ -498,7 +498,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient int panelHeight = 0;
 
     private transient float mainlineTrackWidth = 4.0F;
-    private transient float sideTrackWidth = 2.0F;
+    private transient float sidelineTrackWidth = 2.0F;
 
     private transient Color defaultTrackColor = Color.black;
     private transient Color defaultOccupiedTrackColor = Color.red;
@@ -2857,12 +2857,24 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public LayoutTrackDrawingOptions getLayoutTrackDrawingOptions() {
         if (layoutTrackDrawingOptions == null) {
             layoutTrackDrawingOptions = new LayoutTrackDrawingOptions(getLayoutName());
+            //Integrate-LayoutEditor-drawing-options-with-previous-drawing-options
+            layoutTrackDrawingOptions.setMainBlockLineWidth((int) mainlineTrackWidth);
+            layoutTrackDrawingOptions.setSideBlockLineWidth((int) sidelineTrackWidth);
+            layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
+            layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
+            layoutTrackDrawingOptions.setMainRailColor(defaultTrackColor);
+            layoutTrackDrawingOptions.setSideRailColor(defaultTrackColor);
         }
         return layoutTrackDrawingOptions;
     }
 
     public void setLayoutTrackDrawingOptions(LayoutTrackDrawingOptions ltdo) {
         layoutTrackDrawingOptions = ltdo;
+
+        //Integrate-LayoutEditor-drawing-options-with-previous-drawing-options
+        mainlineTrackWidth = layoutTrackDrawingOptions.getMainRailWidth();
+        sidelineTrackWidth = layoutTrackDrawingOptions.getSideRailWidth();
+        defaultTrackColor = layoutTrackDrawingOptions.getMainRailColor();
         redrawPanel();
     }
 
@@ -3877,8 +3889,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         //Set up for Entry of Track Widths
-        mainlineTrackWidthField.setText(Integer.toString(getMainlineTrackWidth()));
-        sideTrackWidthField.setText(Integer.toString(getSideTrackWidth()));
+        mainlineTrackWidthField.setText(Integer.toString((int) mainlineTrackWidth));
+        sideTrackWidthField.setText(Integer.toString((int) sidelineTrackWidth));
         enterTrackWidthFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent event) {
@@ -3916,8 +3928,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return;
         }
 
-        if (!MathUtil.equals(sideTrackWidth, wid)) {
-            sideTrackWidth = wid;
+        if (!MathUtil.equals(sidelineTrackWidth, wid)) {
+            sidelineTrackWidth = wid;
             trackWidthChange = true;
         }
 
@@ -3954,6 +3966,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             enterTrackWidthFrame = null;
 
             if (trackWidthChange) {
+                //Integrate-LayoutEditor-drawing-options-with-previous-drawing-options
+                if (layoutTrackDrawingOptions != null) {
+                    layoutTrackDrawingOptions.setMainBlockLineWidth((int) mainlineTrackWidth);
+                    layoutTrackDrawingOptions.setSideBlockLineWidth((int) sidelineTrackWidth);
+                    layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
+                    layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
+                }
                 redrawPanel();
                 setDirty();
             }
@@ -8942,7 +8961,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     } //getMainlineTrackWidth
 
     public int getSideTrackWidth() {
-        return (int) sideTrackWidth;
+        return (int) sidelineTrackWidth;
     } //getSideTrackWidth
 
     public double getXScale() {
@@ -9109,7 +9128,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     public void setSideTrackWidth(int w) {
-        sideTrackWidth = w;
+        sidelineTrackWidth = w;
     }
 
     /**
@@ -9773,7 +9792,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //check for segment in progress
         if (isEditable() && (beginObject != null) && trackButton.isSelected()) {
             g2.setColor(defaultTrackColor);
-            g2.setStroke(new BasicStroke(sideTrackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+            g2.setStroke(new BasicStroke(sidelineTrackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
             g2.draw(new Line2D.Double(beginLocation, currentLocation));
 
             // highlight unconnected endpoints of all tracks

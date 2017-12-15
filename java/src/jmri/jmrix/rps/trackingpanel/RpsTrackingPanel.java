@@ -22,6 +22,7 @@ import jmri.jmrix.rps.MeasurementListener;
 import jmri.jmrix.rps.Model;
 import jmri.jmrix.rps.Receiver;
 import jmri.jmrix.rps.Region;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,8 +38,11 @@ import org.slf4j.LoggerFactory;
 public class RpsTrackingPanel extends javax.swing.JPanel
         implements MeasurementListener {
 
-    public RpsTrackingPanel() {
+    RpsSystemConnectionMemo memo = null;
+
+    public RpsTrackingPanel(RpsSystemConnectionMemo _memo) {
         super();
+        memo = _memo;
         Distributor.instance().addMeasurementListener(this);
         setToolTipText("<no item>");  // activates ToolTip, sets default
     }
