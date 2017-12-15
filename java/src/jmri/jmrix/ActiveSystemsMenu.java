@@ -45,29 +45,6 @@ public class ActiveSystemsMenu extends JMenu {
             }
         }
 
-        if (jmri.jmrix.grapevine.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.grapevine.GrapevineMenu"));
-        }
-
-        if (jmri.jmrix.oaktree.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.oaktree.OakTreeMenu"));
-        }
-
-        if (jmri.jmrix.rps.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.rps.RpsMenu"));
-        }
-
-        if (jmri.jmrix.secsi.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.secsi.SecsiMenu"));
-        }
-
-        if (jmri.jmrix.direct.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
-        }
-
-        if (jmri.jmrix.maple.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.maple.MapleMenu"));
-        }
     }
 
     /**
@@ -87,27 +64,6 @@ public class ActiveSystemsMenu extends JMenu {
             }
         }
 
-        if (jmri.jmrix.grapevine.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.grapevine.GrapevineMenu"));
-        }
-        if (jmri.jmrix.oaktree.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.oaktree.OakTreeMenu"));
-        }
-        if (jmri.jmrix.rps.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.rps.RpsMenu"));
-        }
-        if (jmri.jmrix.secsi.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.secsi.SecsiMenu"));
-        }
-
-        m.add(new javax.swing.JSeparator());
-
-        if (jmri.jmrix.direct.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
-        }
-        if (jmri.jmrix.maple.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.maple.MapleMenu"));
-        }
     }
 
     static JMenu getMenu(String className) {

@@ -33,8 +33,6 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        // create the master object
-        SerialLightManager.instance();
         // load individual lights
         return loadLights(shared);
     }
