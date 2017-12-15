@@ -18,7 +18,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  *
  * @author	Bob Jacobsen
  */
-public class TurnoutIconTest {
+public class TurnoutIconTest extends PositionableIconTest {
 
     jmri.jmrit.display.panelEditor.PanelEditor panel = null;
 
@@ -44,13 +44,12 @@ public class TurnoutIconTest {
         jfo.requestClose();
     }
 
+    @Override
     @Test
     public void testClone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JFrame jf = new JFrame("Turnout Icon Test");
-        jf.getContentPane().setLayout(new java.awt.FlowLayout());
-
-        TurnoutIcon to = new TurnoutIcon(panel);
+        Editor es = new EditorScaffold();
+        TurnoutIcon to = new TurnoutIcon(es);
         jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         to.setTurnout(new jmri.NamedBeanHandle<>("IT1", turnout));
 
@@ -59,11 +58,8 @@ public class TurnoutIconTest {
         Assert.assertFalse("clone object (not content) equality", to2.equals(to));
 
         Assert.assertTrue("class type equality", to2.getClass().equals(to.getClass()));
-        // close the frame.
-        JFrameOperator jfo = new JFrameOperator(jf);
-        jfo.requestClose();
-
     }
+
 
     @Test
     public void testShow() {
@@ -138,10 +134,13 @@ public class TurnoutIconTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test TurnoutIcon Panel");
+            Editor e = new EditorScaffold();
+            p = new TurnoutIcon(e);
         }
     }
 
@@ -158,6 +157,7 @@ public class TurnoutIconTest {
             JFrameOperator tf = new JFrameOperator(panel.getTargetFrame());
             tf.requestClose();
         }
+        panel = null;
         JUnitUtil.tearDown();
     }
 }

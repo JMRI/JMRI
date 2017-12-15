@@ -138,7 +138,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
         
      }
 
-     public void testBoardRead() throws ProgrammerException {
+     public void testBoardRead0() throws ProgrammerException {
         LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
         
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBDOPSWMODE);
@@ -150,7 +150,41 @@ public class LnOpsModeProgrammerTest extends TestCase {
         
         Assert.assertEquals("sent byte 0", 0xD0, lnis.outbound.get(0).getElement(0) & 0xFF);
         Assert.assertEquals("sent byte 1", 0x62, lnis.outbound.get(0).getElement(1) & 0xFF);
-        Assert.assertEquals("sent byte 2", 0x04, lnis.outbound.get(0).getElement(2) & 0xFF);
+        Assert.assertEquals("sent byte 2", 0x03, lnis.outbound.get(0).getElement(2) & 0xFF);
+        Assert.assertEquals("sent byte 3", 113, lnis.outbound.get(0).getElement(3) & 0xFF);
+        Assert.assertEquals("sent byte 4", 0x0A, lnis.outbound.get(0).getElement(4) & 0xFF);
+
+        int testVal = 0;
+        
+        // check echo of sent message has no effect
+        LocoNetMessage m = lnis.outbound.get(0);
+        lnopsmodeprogrammer.message(m);
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+      
+        // Known-good message in reply
+        m = new LocoNetMessage(new int[]{0xB4, 0x50, 0x40, 0x00});
+        lnopsmodeprogrammer.message(m);
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+        Assert.assertEquals("Reply value matches", testVal, pl.getRcvdValue());
+        
+     }
+
+     public void testBoardRead1() throws ProgrammerException {
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        
+        lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBDOPSWMODE);
+        lnopsmodeprogrammer.readCV("113.6",pl);
+        
+        // should have written and not returned
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        
+        Assert.assertEquals("sent byte 0", 0xD0, lnis.outbound.get(0).getElement(0) & 0xFF);
+        Assert.assertEquals("sent byte 1", 0x62, lnis.outbound.get(0).getElement(1) & 0xFF);
+        Assert.assertEquals("sent byte 2", 0x03, lnis.outbound.get(0).getElement(2) & 0xFF);
         Assert.assertEquals("sent byte 3", 113, lnis.outbound.get(0).getElement(3) & 0xFF);
         Assert.assertEquals("sent byte 4", 0x0A, lnis.outbound.get(0).getElement(4) & 0xFF);
 
@@ -172,6 +206,76 @@ public class LnOpsModeProgrammerTest extends TestCase {
         
      }
 
+     public void testBoardReadTimeout() throws ProgrammerException {
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        
+        lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBDOPSWMODE);
+        lnopsmodeprogrammer.readCV("113.6",pl);
+        
+        // should have written and not returned
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+      
+        // No reply message, wait for timeout
+        jmri.util.JUnitUtil.waitFor(()->{return pl.getRcvdInvoked() == 1;},"programming reply not received");
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("Reply status Not OK", jmri.ProgListener.FailedTimeout, pl.getRcvdStatus());
+        Assert.assertTrue("Correct thread", pl.wasRightThread());
+     }
+
+
+     public void testBoardWrite() throws ProgrammerException {
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        
+        int testVal = 1;
+
+        lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBDOPSWMODE);
+        lnopsmodeprogrammer.writeCV("113.6", testVal, pl);
+        
+        // should have written
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        
+        Assert.assertEquals("sent byte 0", 0xD0, lnis.outbound.get(0).getElement(0) & 0xFF);
+        Assert.assertEquals("sent byte 1", 0x72, lnis.outbound.get(0).getElement(1) & 0xFF);
+        Assert.assertEquals("sent byte 2", 0x03, lnis.outbound.get(0).getElement(2) & 0xFF);
+        Assert.assertEquals("sent byte 3", 113, lnis.outbound.get(0).getElement(3) & 0xFF);
+        Assert.assertEquals("sent byte 4", 0x0B, lnis.outbound.get(0).getElement(4) & 0xFF);
+        
+        // check echo of sent message has no effect
+        LocoNetMessage m = lnis.outbound.get(0);
+        lnopsmodeprogrammer.message(m);
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+      
+        // Known-good message in reply
+        m = new LocoNetMessage(new int[]{0xB4, 0x50, 0x60, 0x00});
+        lnopsmodeprogrammer.message(m);
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+        Assert.assertEquals("Reply value matches", testVal, pl.getRcvdValue());
+        
+     }
+
+     public void testBoardWriteTimeout() throws ProgrammerException {
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        
+        int testVal = 1;
+
+        lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBDOPSWMODE);
+        lnopsmodeprogrammer.writeCV("113.6", testVal, pl);
+        
+        // should have written
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+      
+        // No reply message, wait for timeout
+        jmri.util.JUnitUtil.waitFor(()->{return pl.getRcvdInvoked() == 1;},"programming reply not received");
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("Reply status Not OK", jmri.ProgListener.FailedTimeout, pl.getRcvdStatus());
+        Assert.assertTrue("Correct thread", pl.wasRightThread());
+     }
 
      public void testSv1ARead() throws ProgrammerException {
         LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);

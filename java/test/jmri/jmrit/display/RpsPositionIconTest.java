@@ -21,9 +21,10 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  *
  * @author	Bob Jacobsen Copyright 2008
  */
-public class RpsPositionIconTest {
+public class RpsPositionIconTest extends PositionableTestBase {
 
-    jmri.jmrit.display.panelEditor.PanelEditor panel = null;
+    private Editor panel = null;
+    private RpsPositionIcon rpsIcon = null;
 
     @Test
     public void testShow() {
@@ -31,7 +32,6 @@ public class RpsPositionIconTest {
         JmriJFrame jf = new JmriJFrame("RpsPositionIcon Test");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        RpsPositionIcon rpsIcon = new RpsPositionIcon(panel);
         jf.getContentPane().add(rpsIcon);
 
         // test buttons
@@ -94,6 +94,7 @@ public class RpsPositionIconTest {
         JUnitUtil.initDefaultUserMessagePreferences();
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel");
+            p = rpsIcon = new RpsPositionIcon(panel);
         }
     }
 

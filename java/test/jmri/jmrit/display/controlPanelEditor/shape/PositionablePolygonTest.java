@@ -14,20 +14,23 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class PositionablePolygonTest {
+public class PositionablePolygonTest extends PositionableShapeTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Editor e = new EditorScaffold();
-        PositionablePolygon t = new PositionablePolygon(e,new java.awt.Polygon());
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",p);
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        if(!GraphicsEnvironment.isHeadless()){
+           Editor e = new EditorScaffold();
+           p = new PositionablePolygon(e,new java.awt.Polygon());
+        }
     }
 
     @After

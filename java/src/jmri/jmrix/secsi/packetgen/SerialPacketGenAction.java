@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 
 /**
  * Swing action to create and register a SerialPacketGenFrame object
@@ -12,17 +13,20 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialPacketGenAction extends AbstractAction {
 
-    public SerialPacketGenAction(String s) {
+    private SecsiSystemConnectionMemo memo = null;
+
+    public SerialPacketGenAction(String s,SecsiSystemConnectionMemo _memo) {
         super(s);
+        memo = _memo;
     }
 
-    public SerialPacketGenAction() {
-        this("Send SECSI message");
+    public SerialPacketGenAction(SecsiSystemConnectionMemo _memo) {
+        this("Send SECSI message",_memo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        SerialPacketGenFrame f = new SerialPacketGenFrame();
+        SerialPacketGenFrame f = new SerialPacketGenFrame(memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

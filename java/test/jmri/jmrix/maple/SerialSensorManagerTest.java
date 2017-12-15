@@ -37,7 +37,6 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         Sensor s11 = l.provideSensor("11");
         Assert.assertNotNull("found s11", s11);
         Assert.assertTrue("right name s11", s11.getSystemName().equals("KS11"));
-        //InputBits ibit = new InputBits();
         InputBits.setNumInputBits(1000);
         Sensor s248 = l.provideSensor("KS248");
         Assert.assertNotNull("found s248", s248);
@@ -54,12 +53,9 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         JUnitUtil.setUp();
         // replace SerialSensorManager to make sure nodes start
         // at the beginning
-        new SerialTrafficController() {
-            void reset() {
-                self = null;
-            }
-        }.reset();
+        SerialTrafficController tc = new SerialTrafficControlScaffold();
         memo = new MapleSystemConnectionMemo("K", "Maple");
+        memo.setTrafficController(tc);
         // create and register the turnout manager object
         l = new SerialSensorManager(memo);
 //        jmri.InstanceManager.setSensorManager(l);

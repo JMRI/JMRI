@@ -185,6 +185,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * @return The registered SerialTrafficController instance for general use,
      *         if need be creating one.
      */
+    @Deprecated
     static public SerialTrafficController instance() {
         if (self == null) {
             if (log.isDebugEnabled()) {

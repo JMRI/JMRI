@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.9.7ish+jake+20171125T2350Z+R6d9e2cfa22 on Sat Nov 25 15:51:02 PST 2017-->
-  <decoderIndex version="868">
+  <!--Written by JMRI version 4.9.7ish+jake+20171205T1330Z+R9f0d748f65 on Tue Dec 05 05:30:40 PST 2017-->
+  <decoderIndex version="872">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -2375,7 +2375,9 @@
           <output name="4" label="Violet" />
         </model>
       </family>
-      <family name="BDL168" mfg="Digitrax" file="Digitrax_BDL168.xml">
+      <family name="BDL16x" mfg="Digitrax" file="Digitrax_BDL168.xml">
+        <model model="BDL16" />
+        <model model="BDL162" />
         <model model="BDL168" />
       </family>
       <family name="Basic FX" mfg="Digitrax" lowVersionID="91" highVersionID="111" file="Digitrax_Basic.xml">
@@ -2438,8 +2440,9 @@
           <size length="1.074" width="0.672" height="0.259" units="inches" />
         </model>
       </family>
-      <family name="PM4" mfg="Digitrax" file="Digitrax_PM4.xml">
+      <family name="PM4x" mfg="Digitrax" file="Digitrax_PM4.xml">
         <model model="PM4" />
+        <model model="PM42" />
       </family>
       <family name="SE8c" mfg="Digitrax" file="Digitrax_SE8c.xml">
         <model model="SE8c" />
@@ -18863,7 +18866,10 @@
         </functionlabels>
       </family>
       <family name="Tsunami SoundCar" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Tsunami SoundCar decoders" file="SoundTraxx_Tsu_SoundCar.xml">
-        <model model="Tsunami SoundCar" numOuts="4" numFns="14" connector="9pin" productID="SoundCar" comment="Tsunami SoundCar Digital Sound Decoder">
+        <!--  Model with name "Tsunami SoundCar" kept for compatibility with previous versions.
+            Will not appear as such in the decoder list, because of having the same name as its family
+            However selecting family name in the tree and then opening programmer will lead to this defintion.-->
+        <model model="Tsunami SoundCar" numOuts="4" numFns="14" connector="9pin" productID="SoundCar101" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; Early SW version 1.01 (2014-2016) without livestock support&lt;br&gt;">
           <versionCV lowVersionID="69" highVersionID="69" />
           <output name="Airhorn" label="Whistle">
             <label xml:lang="it">Fischio</label>
@@ -18871,33 +18877,105 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Res." />
+          <output name="Reserved 1" />
           <output name="Short" label="Horn">
             <label xml:lang="it">Tromba</label>
           </output>
           <output name="Generator" />
-          <output name="Res." />
+          <output name="Reserved 2" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Uncoupling" />
           <output name="Brakes" />
           <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Headlight</functionlabel>
+            <functionlabel num="1" lockable="true">Bell</functionlabel>
+            <functionlabel num="2" lockable="false">Airhorn/Whistle</functionlabel>
+            <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+            <!-- <functionlabel num="4" lockable="true"></functionlabel> -->
+            <functionlabel num="5" lockable="true">FX5 Output</functionlabel>
+            <functionlabel num="6" lockable="true">FX6 Output</functionlabel>
+            <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+            <functionlabel num="8" lockable="true">Mute</functionlabel>
+            <functionlabel num="9" lockable="true">Generator</functionlabel>
+            <functionlabel num="10" lockable="false">Uncoupling</functionlabel>
+            <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
+            <functionlabel num="12" lockable="false">Coupler Clank</functionlabel>
+          </functionlabels>
         </model>
-        <functionlabels>
-          <functionlabel num="0" lockable="true">Headlight</functionlabel>
-          <functionlabel num="1" lockable="true">Bell</functionlabel>
-          <functionlabel num="2" lockable="false">Airhorn/Whistle</functionlabel>
-          <functionlabel num="3" lockable="false">Short Horn</functionlabel>
-          <functionlabel num="4" lockable="true">Unassigned</functionlabel>
-          <functionlabel num="5" lockable="true">FX5 Output</functionlabel>
-          <functionlabel num="6" lockable="true">FX6 Output</functionlabel>
-          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
-          <functionlabel num="8" lockable="true">Mute</functionlabel>
-          <functionlabel num="9" lockable="true">Generator</functionlabel>
-          <functionlabel num="10" lockable="false">Uncoupling</functionlabel>
-          <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
-          <functionlabel num="12" lockable="false">Coupler Clank</functionlabel>
-        </functionlabels>
+        <!-- Model with name "Tsunami SoundCar 1.01" is exactly the same as model with name "Tsunami SoundCar".
+            Added to allow a separate and visible listing in the decoder tree. -->
+        <model model="Tsunami SoundCar 1.01" numOuts="4" numFns="14" connector="9pin" productID="SoundCar101" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; Early SW version 1.01 (2014-2016) without livestock support&lt;br&gt;">
+          <versionCV lowVersionID="69" highVersionID="69" />
+          <output name="Airhorn" label="Whistle">
+            <label xml:lang="it">Fischio</label>
+          </output>
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Reserved 1" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Generator" />
+          <output name="Reserved 2" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Uncoupling" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Headlight</functionlabel>
+            <functionlabel num="1" lockable="true">Bell</functionlabel>
+            <functionlabel num="2" lockable="false">Airhorn/Whistle</functionlabel>
+            <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+            <!-- <functionlabel num="4" lockable="true"></functionlabel> -->
+            <functionlabel num="5" lockable="true">FX5 Output</functionlabel>
+            <functionlabel num="6" lockable="true">FX6 Output</functionlabel>
+            <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+            <functionlabel num="8" lockable="true">Mute</functionlabel>
+            <functionlabel num="9" lockable="true">Generator</functionlabel>
+            <functionlabel num="10" lockable="false">Uncoupling</functionlabel>
+            <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
+            <functionlabel num="12" lockable="false">Coupler Clank</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Tsunami SoundCar 1.03" numOuts="4" numFns="14" connector="9pin" productID="SoundCar103" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; SW version 1.03 (2017) with livestock support&lt;br&gt;and additional airhorns and bells&lt;br&gt;">
+          <versionCV lowVersionID="69" highVersionID="69" />
+          <output name="Airhorn" label="Whistle">
+            <label xml:lang="it">Fischio</label>
+          </output>
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Spook" label="Livestock" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Generator" />
+          <output name="Reserved 2" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Uncoupling" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Headlight</functionlabel>
+            <functionlabel num="1" lockable="true">Bell</functionlabel>
+            <functionlabel num="2" lockable="false">Airhorn/Whistle</functionlabel>
+            <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+            <functionlabel num="4" lockable="true">Spook the Livestock</functionlabel>
+            <functionlabel num="5" lockable="true">FX5 Output</functionlabel>
+            <functionlabel num="6" lockable="true">FX6 Output</functionlabel>
+            <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+            <functionlabel num="8" lockable="true">Mute</functionlabel>
+            <functionlabel num="9" lockable="true">Generator</functionlabel>
+            <functionlabel num="10" lockable="false">Uncoupling</functionlabel>
+            <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
+            <functionlabel num="12" lockable="false">Coupler Clank</functionlabel>
+          </functionlabels>
+        </model>
       </family>
       <family name="Tsunami Steam" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Tsunami steam decoders" file="SoundTraxx_Tsu_Steam.xml">
         <model model="TSU-750 Light Steam" numOuts="2" numFns="14" connector="other" productID="826001" comment="Model 826001">
@@ -21941,73 +22019,73 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="K0D8-A" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="25">
-          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
-          <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
-          <output name="6" label="Pink" connection="solder" maxcurrent="60 mA" />
-          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA" />
-          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA" />
+        <model model="K0D8-A" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale Alco PA1, P42, E9A, E8/9A (ref.1332)" lowVersionID="86" highVersionID="88" productID="25">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Violet" connection="solder" maxcurrent="80 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="80 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="80 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA" />
           <output name="Dim" />
           <output name="Ditch" />
           <output name="Motor" />
           <output name="BEMF" />
           <output name="Brake" />
-          <size length="2.53" width="0.542" height="0.155" units="inches" />
+          <size length="2.53" width="0.542" height="0.068" units="inches" />
         </model>
-        <model model="K0D8-B" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="26">
-          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
-          <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
-          <output name="6" label="Pink" connection="solder" maxcurrent="60 mA" />
-          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA" />
-          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA" />
+        <model model="K0D8-B" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale F3A and F7A (ref.1333)" lowVersionID="86" highVersionID="88" productID="26">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Violet" connection="solder" maxcurrent="80 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="80 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="80 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA" />
           <output name="Dim" />
           <output name="Ditch" />
           <output name="Motor" />
           <output name="BEMF" />
           <output name="Brake" />
-          <size length="2.53" width="0.542" height="0.155" units="inches" />
+          <size length="2.138" width="0.542" height="0.0687" units="inches" />
         </model>
-        <model model="K0D8-C" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="27">
-          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
-          <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
-          <output name="6" label="Pink" connection="solder" maxcurrent="60 mA" />
-          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA" />
-          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA" />
+        <model model="K0D8-C" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale EMD F40PH (ref.1338)" lowVersionID="86" highVersionID="88" productID="27">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Violet" connection="solder" maxcurrent="80 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="80 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="80 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA" />
           <output name="Dim" />
           <output name="Ditch" />
           <output name="Motor" />
           <output name="BEMF" />
           <output name="Brake" />
-          <size length="2.53" width="0.542" height="0.155" units="inches" />
+          <size length="2.138" width="0.542" height="0.068" units="inches" />
         </model>
-        <model model="K0D8-D" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="28">
-          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
-          <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
-          <output name="6" label="Pink" connection="solder" maxcurrent="60 mA" />
-          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA" />
-          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA" />
+        <model model="K0D8-D" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale B-Units: PB1, PA-1, F3B, F7B, and E9B (ref.1339)" lowVersionID="86" highVersionID="88" productID="28">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Violet" connection="solder" maxcurrent="80 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="80 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="80 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA" />
           <output name="Dim" />
           <output name="Ditch" />
           <output name="Motor" />
           <output name="BEMF" />
           <output name="Brake" />
-          <size length="2.53" width="0.542" height="0.155" units="inches" />
+          <size length="2.138" width="0.542" height="0.068" units="inches" />
         </model>
         <model model="K0D8-E" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="56">
-          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
+          <output name="1" label="White" connection="LED" maxcurrent="60 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="60 mA" />
           <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
           <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
           <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
@@ -22021,86 +22099,7 @@
           <output name="Brake" />
           <size length="2.53" width="0.542" height="0.155" units="inches" />
         </model>
-        <model model="K1D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="29">
-          <output name="1" label="White" connection="other" maxcurrent="50 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="50 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="50 mA" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="BEMF" />
-          <output name="Brake" />
-          <size length="2.7" width="0.4" height="0.0" units="inches" />
-        </model>
-        <model model="K1D4-NC" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="No Clips version of K1D4" lowVersionID="86" highVersionID="88" productID="30">
-          <output name="1" label="White" connection="other" maxcurrent="50 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="50 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="50 mA" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="BEMF" />
-          <output name="Brake" />
-          <size length="2.7" width="0.4" height="0.0" units="inches" />
-        </model>
-        <model model="K2D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="31">
-          <output name="1" label="White" connection="other" maxcurrent="50 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="50 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="50 mA" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="BEMF" />
-          <output name="Brake" />
-          <size length="2.7" width="0.4" height="0.0" units="inches" />
-        </model>
-        <model model="K3D3" numOuts="3" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="32">
-          <output name="1" label="White" connection="other" maxcurrent="50 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="50 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="BEMF" />
-          <output name="Brake" />
-          <size length="2.860" width="0.680" height="0.145" units="inches" />
-        </model>
-        <model model="K4D6" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="46">
-          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
-          <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
-          <output name="6" label="Pink" connection="solder" maxcurrent="60 mA" />
-          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA" />
-          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="BEMF" />
-          <output name="Brake" />
-          <size length="2.53" width="0.542" height="0.155" units="inches" />
-        </model>
-        <model model="K5D7" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="59">
-          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
-          <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
-          <output name="6" label="Pink" connection="solder" maxcurrent="60 mA" />
-          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA" />
-          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="BEMF" />
-          <output name="Brake" />
-          <size length="2.53" width="0.542" height="0.155" units="inches" />
-        </model>
-        <model model="K6D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato the FEF-3" lowVersionID="86" highVersionID="88" productID="63">
+        <model model="K1D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale EMD SD40, EMD SD70MAC, EMD SD70/75M, GE C44-9W, GE AC4400W, Athearn F45 and many other locomotives (ref.1293)" lowVersionID="86" highVersionID="88" productID="29">
           <output name="1" label="White" connection="other" maxcurrent="80 mA" />
           <output name="2" label="Yellow" connection="other" maxcurrent="80 mA" />
           <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
@@ -22110,7 +22109,98 @@
           <output name="Motor" />
           <output name="BEMF" />
           <output name="Brake" />
-          <size length="2.53" width="0.413" height="0.0725" units="inches" />
+          <size length="2.7" width="0.433" height="0.056" units="inches" />
+        </model>
+        <model model="K1D4-NC" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="&lt;html&gt;Drop in decoder for Kato N-Scale EMD SD70ACe, EMD SD70M, EMD SD40-2, and GG1. (ref.1318)&lt;br&gt; No Clips version of K1D4&lt;br&gt;" lowVersionID="86" highVersionID="88" productID="30">
+          <output name="1" label="White" connection="other" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Violet" connection="solder" maxcurrent="80 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="2.7" width="0.433" height="0.056" units="inches" />
+        </model>
+        <model model="K2D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for N-Scale Kato RS2, RSC2, SD80/90MAC, EMD 90/43MAC, Walthers RS2 and GP18 and many other locomotives (ref.1294)" lowVersionID="86" highVersionID="88" productID="31">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Violet" connection="solder" maxcurrent="80 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="2.63" width="0.4" height="0.06" units="inches" />
+        </model>
+        <model model="K3D3" numOuts="3" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale NW2 (ref.1295)" lowVersionID="86" highVersionID="88" productID="32">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="1.26" width="0.43" height="0.06" units="inches" />
+        </model>
+        <model model="K4D6" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-scale MP36PH Metra (ref.1414)" lowVersionID="86" highVersionID="88" productID="46">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="80 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="80 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="80 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="2.344" width="0.49" height="0.097" units="inches" />
+        </model>
+        <model model="K5D7" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-scale F40PH (ref.1489)" lowVersionID="86" highVersionID="88" productID="59">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="80 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="80 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="80 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="2.71" width="0.545" height="0.072" units="inches" />
+        </model>
+        <model model="K6D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-scale FEF-3 (ref.1556)" lowVersionID="86" highVersionID="88" productID="63">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Violet" connection="solder" maxcurrent="80 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="2.35" width="0.413" height="0.072" units="inches" />
+        </model>
+        <model model="K7D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale ACS-64 (ref.1673)" lowVersionID="86" highVersionID="88" productID="64">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Violet" connection="solder" maxcurrent="80 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="2.35" width="0.413" height="0.072" units="inches" />
         </model>
         <model model="KAM4" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" lowVersionID="86" highVersionID="88" productID="55">
           <output name="1" label="White" connection="other" maxcurrent="100 mA" />

@@ -298,7 +298,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
         }
     }
 
-    // Cancel -Quit
+    // Cancel - Quit
     class CActionListener implements ActionListener {
 
         @Override

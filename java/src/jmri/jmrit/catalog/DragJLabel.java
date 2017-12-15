@@ -17,22 +17,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Gives a JLabel the capability to Drag and Drop
- * <BR>
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
+ * Gives a JLabel the capability to Drag and Drop.
  *
  * @author Pete Cressman Copyright 2009, 2016
- *
  */
 public class DragJLabel extends JLabel implements DragGestureListener, DragSourceListener, Transferable {
 
@@ -62,7 +49,8 @@ public class DragJLabel extends JLabel implements DragGestureListener, DragSourc
 
     /**
      * Source can override to prohibit dragging if data is incomplete
-     * when dragGestureRecognized() is called
+     * when dragGestureRecognized() is called.
+     *
      * @return Source's choice to allow drag
      */
     protected boolean okToDrag() {
@@ -74,9 +62,7 @@ public class DragJLabel extends JLabel implements DragGestureListener, DragSourc
      */
     @Override
     public void dragGestureRecognized(DragGestureEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("DragJLabel.dragGestureRecognized ");
-        }
+        log.debug("DragJLabel.dragGestureRecognized ");
         if (okToDrag()) {
             e.startDrag(DragSource.DefaultCopyDrop, this, this);            
         }
@@ -87,29 +73,27 @@ public class DragJLabel extends JLabel implements DragGestureListener, DragSourc
      */
     @Override
     public void dragDropEnd(DragSourceDropEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("DragJLabel.dragDropEnd ");
-        }
+        log.debug("DragJLabel.dragDropEnd ");
     }
 
     @Override
     public void dragEnter(DragSourceDragEvent e) {
-        //if (log.isDebugEnabled()) log.debug("DragJLabel.DragSourceDragEvent ");
+        // log.debug("DragJLabel.DragSourceDragEvent ");
     }
 
     @Override
     public void dragExit(DragSourceEvent e) {
-        //if (log.isDebugEnabled()) log.debug("DragJLabel.dragExit ");
+        // log.debug("DragJLabel.dragExit ");
     }
 
     @Override
     public void dragOver(DragSourceDragEvent e) {
-        //if (log.isDebugEnabled()) log.debug("DragJLabel.dragOver ");
+        // log.debug("DragJLabel.dragOver ");
     }
 
     @Override
     public void dropActionChanged(DragSourceDragEvent e) {
-        //if (log.isDebugEnabled()) log.debug("DragJLabel.dropActionChanged ");
+        // log.debug("DragJLabel.dropActionChanged ");
     }
 
     /**
@@ -117,13 +101,13 @@ public class DragJLabel extends JLabel implements DragGestureListener, DragSourc
      */
     @Override
     public DataFlavor[] getTransferDataFlavors() {
-        //if (log.isDebugEnabled()) log.debug("DragJLabel.getTransferDataFlavors ");
+        // log.debug("DragJLabel.getTransferDataFlavors ");
         return new DataFlavor[]{_dataFlavor, DataFlavor.stringFlavor};
     }
 
     @Override
     public boolean isDataFlavorSupported(DataFlavor flavor) {
-        //if (log.isDebugEnabled()) log.debug("DragJLabel.isDataFlavorSupported ");
+        // log.debug("DragJLabel.isDataFlavorSupported ");
         if (DataFlavor.stringFlavor.equals(flavor)) {
             return true;
         }
@@ -132,9 +116,7 @@ public class DragJLabel extends JLabel implements DragGestureListener, DragSourc
 
     @Override
     public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("DragJLabel.getTransferData ");
-        }
+        log.debug("DragJLabel.getTransferData ");
         if (_dataFlavor.equals(flavor)) {
             return getIcon();
         }
@@ -146,4 +128,5 @@ public class DragJLabel extends JLabel implements DragGestureListener, DragSourc
     }
 
     private final static Logger log = LoggerFactory.getLogger(DragJLabel.class);
+
 }

@@ -9,7 +9,6 @@ import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
 import jmri.swing.RowSorterUtil;
 import jmri.util.SystemNameComparator;
-import jmri.util.com.sun.TableSorter;
 
 /**
  * Provide a JPanel to display a table of NamedBeans.
@@ -80,20 +79,6 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
      * Hook to allow sub-types to install more items in GUI.
      */
     void extras() {
-    }
-
-    /**
-     * Hook to allow sub-typing of JTable created.
-     *
-     * @param sorter the sorter model
-     * @return JTable created
-     * @deprecated since 4.5.4; use
-     * {@link jmri.jmrit.beantable.BeanTableDataModel#makeJTable(java.lang.String, javax.swing.table.TableModel, javax.swing.RowSorter)}
-     * instead.
-     */
-    @Deprecated
-    protected JTable makeJTable(TableSorter sorter) {
-        return new JTable(sorter);
     }
 
     protected Box getBottomBox() {

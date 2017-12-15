@@ -11,6 +11,7 @@ import org.junit.Before;
   */
 public class SerialLightTest extends AbstractLightTestBase {
 
+    private GrapevineSystemConnectionMemo memo = null; 
     private SerialTrafficControlScaffold tcis = null;
 
     @Override
@@ -19,8 +20,10 @@ public class SerialLightTest extends AbstractLightTestBase {
         // prepare an interface
         tcis = new SerialTrafficControlScaffold();
         tcis.registerNode(new SerialNode(1, SerialNode.NODE2002V6));
+        memo = new GrapevineSystemConnectionMemo();
+        memo.setTrafficController(tcis);
 
-        t = new SerialLight("GL1104", "t4");
+        t = new SerialLight("GL1104", "t4",memo);
     }
 
     @Override

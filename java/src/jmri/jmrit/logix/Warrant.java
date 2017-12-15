@@ -1996,6 +1996,18 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
             return Boolean.valueOf(true);
         }
+
+        /**
+         * Minimal implementation to catch and log errors
+         */
+        @Override
+        protected void done() {
+            try {
+                get();  // called to get errors
+            } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
+                log.error("Exception in CommandDelay", e);
+            }
+        }
     }
 
     private String getSpeedTypeForBlock(int idxBlockOrder) {

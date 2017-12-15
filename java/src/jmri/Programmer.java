@@ -53,7 +53,10 @@ public interface Programmer {
      * Handles the legacy DCC case of a single-number address space.
      * <P>
      * Note that this returns before the write is complete; you have to provide
-     * a ProgListener to hear about completion. The exceptions will only be
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
+     * <p>
+     * Exceptions will only be
      * thrown at the start, not during the actual programming sequence. A
      * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
@@ -76,7 +79,10 @@ public interface Programmer {
      * defines the acceptable formats.
      * <P>
      * Note that this returns before the write is complete; you have to provide
-     * a ProgListener to hear about completion. The exceptions will only be
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
+     * <p>
+     * Exceptions will only be
      * thrown at the start, not during the actual programming sequence. A
      * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
@@ -94,10 +100,13 @@ public interface Programmer {
      * <P>
      * Handles the legacy DCC case of a single-number address space.
      * <P>
-     * Note that this returns before the read is complete; you have to provide a
-     * ProgListener to hear about completion. The exceptions will only be thrown
-     * at the start, not during the actual programming sequence. A typical
-     * exception would be due to an invalid mode (though that should be
+     * Note that this returns before the write is complete; you have to provide
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
+     * <p>
+     * Exceptions will only be
+     * thrown at the start, not during the actual programming sequence. A
+     * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
      *
      * @param CV the CV to read
@@ -116,10 +125,13 @@ public interface Programmer {
      * Handles a general address space through a String address. Each programmer
      * defines the acceptable formats.
      * <P>
-     * Note that this returns before the read is complete; you have to provide a
-     * ProgListener to hear about completion. The exceptions will only be thrown
-     * at the start, not during the actual programming sequence. A typical
-     * exception would be due to an invalid mode (though that should be
+     * Note that this returns before the write is complete; you have to provide
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
+     * <p>
+     * Exceptions will only be
+     * thrown at the start, not during the actual programming sequence. A
+     * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
      *
      * @param CV the CV to read
@@ -134,9 +146,12 @@ public interface Programmer {
      * <P>
      * Handles the legacy DCC case of a single-number address space.
      * <P>
-     * Note that this returns before the confirm is complete; you have to
-     * provide a ProgListener to hear about completion. The exceptions will only
-     * be thrown at the start, not during the actual programming sequence. A
+     * Note that this returns before the write is complete; you have to provide
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
+     * <p>
+     * Exceptions will only be
+     * thrown at the start, not during the actual programming sequence. A
      * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
      *
@@ -157,9 +172,12 @@ public interface Programmer {
      * Handles a general address space through a String address. Each programmer
      * defines the acceptable formats.
      * <P>
-     * Note that this returns before the confirm is complete; you have to
-     * provide a ProgListener to hear about completion. The exceptions will only
-     * be thrown at the start, not during the actual programming sequence. A
+     * Note that this returns before the write is complete; you have to provide
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
+     * <p>
+     * Exceptions will only be
+     * thrown at the start, not during the actual programming sequence. A
      * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
      *

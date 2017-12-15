@@ -60,6 +60,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SerialSensorTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialSignalHeadTest.class));
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.swing.PackageTest.class));
         return suite;
     }
 

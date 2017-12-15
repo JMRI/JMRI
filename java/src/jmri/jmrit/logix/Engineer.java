@@ -1130,6 +1130,18 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             rampDone(stop, _endSpeedType);
             return Boolean.valueOf(true); // if SwingWorker
         }
+
+        /**
+         * Minimal implementation to catch and log errors
+         */
+        @Override
+        protected void done() {
+            try {
+                get();  // called to get errors
+            } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
+                log.error("Exception win ThrottleRamp", e);
+            }
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(Engineer.class);

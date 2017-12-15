@@ -12,7 +12,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JTable;
 import javax.swing.RowSorter;
@@ -26,6 +25,7 @@ import javax.swing.event.TableColumnModelEvent;
 import javax.swing.event.TableColumnModelListener;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
@@ -61,15 +61,20 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
     private final static Logger log = LoggerFactory.getLogger(JmriJTablePersistenceManager.class);
 
     /**
-     * {@inheritDoc} Persisting a table that is already persisted may cause the
-     * persistence state to be updated, but will not cause additional listeners
-     * to be added to the table.
+     * {@inheritDoc}
+     * <p>
+     * Persisting a table that is already persisted may cause the persistence
+     * state to be updated, but will not cause additional listeners to be added
+     * to the table.
      */
     @Override
-    public void persist(@Nonnull JTable table) throws IllegalArgumentException, NullPointerException {
+    public void persist(@Nonnull JTable table, boolean resetState) throws IllegalArgumentException, NullPointerException {
         Objects.requireNonNull(table.getName(), "Table name must be nonnull");
         if (this.listeners.containsKey(table.getName()) && !this.listeners.get(table.getName()).getTable().equals(table)) {
             throw new IllegalArgumentException("Table name must be unique");
+        }
+        if (resetState) {
+            this.resetState(table);
         }
         if (!this.listeners.containsKey(table.getName())) {
             JTableListener listener = new JTableListener(table, this);
@@ -78,7 +83,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                 table.addPropertyChangeListener(this);
                 table.addPropertyChangeListener(listener);
                 table.getColumnModel().addColumnModelListener(listener);
-                RowSorter sorter = table.getRowSorter();
+                RowSorter<? extends TableModel> sorter = table.getRowSorter();
                 if (sorter != null) {
                     sorter.addRowSorterListener(listener);
                 }
@@ -104,7 +109,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         table.removePropertyChangeListener(this);
         table.removePropertyChangeListener(listener);
         table.getColumnModel().removeColumnModelListener(listener);
-        RowSorter sorter = table.getRowSorter();
+        RowSorter<? extends TableModel> sorter = table.getRowSorter();
         if (sorter != null) {
             sorter.removeRowSorterListener(listener);
         }
@@ -127,7 +132,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         Objects.requireNonNull(table.getName(), "table name must be nonnull");
         TableColumnModel model = table.getColumnModel();
         Objects.requireNonNull(model, "table " + table.getName() + " has a null columnModel");
-        RowSorter sorter = table.getRowSorter();
+        RowSorter<? extends TableModel> sorter = table.getRowSorter();
         boolean isXModel = model instanceof XTableColumnModel;
         Enumeration<TableColumn> e = model.getColumns();
         while (e.hasMoreElements()) {
@@ -163,7 +168,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         this.stopPersisting(table);
         TableColumnModel model = table.getColumnModel();
         Objects.requireNonNull(model, "table " + table.getName() + " has a null columnModel");
-        RowSorter sorter = table.getRowSorter();
+        RowSorter<? extends TableModel> sorter = table.getRowSorter();
         boolean isXModel = model instanceof XTableColumnModel;
         Enumeration<TableColumn> e;
         if (isXModel) {
@@ -242,8 +247,20 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
      *
      * @return true if needs to be saved
      */
-    protected boolean getDirty() {
+    protected boolean isDirty() {
         return this.dirty;
+    }
+
+    /**
+     * Get dirty (needs to be saved) state. Protected so that subclasses can
+     * manipulate this state.
+     *
+     * @return true if needs to be saved
+     * @deprecated since 4.9.7; use {@link #isDirty()} instead
+     */
+    @Deprecated
+    protected boolean getDirty() {
+        return this.isDirty();
     }
 
     @Override
@@ -316,7 +333,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
             });
         } catch (NullPointerException ex) {
             log.info("Table preferences not found.\nThis is expected on the first time the \"{}\" profile is used on this computer.",
-                    ProfileManager.getDefault().getActiveProfile().getName());
+                    ProfileManager.getDefault().getActiveProfileName());
         }
         this.setInitialized(profile, true);
     }
@@ -381,24 +398,6 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
      * instance (a {@link jmri.managers.JmriUserPreferencesManager}) so it does
      * not need to maintain separate knowledge of table column state.
      *
-     * @param table  the requested table name
-     * @param column the requested column name
-     * @return the preferences for the column or null if none have been set
-     *
-     * @throws NullPointerException if either name is null
-     * @deprecated since 4.5.2
-     */
-    @Deprecated
-    @CheckForNull
-    public TableColumnPreferences getTableColumnPreferences(@Nonnull String table, @Nonnull String column) {
-        return this.getPersistedState(table, column);
-    }
-
-    /**
-     * Transition support for the standard {@link jmri.UserPreferencesManager}
-     * instance (a {@link jmri.managers.JmriUserPreferencesManager}) so it does
-     * not need to maintain separate knowledge of table column state.
-     *
      * @param table  the table name
      * @param column the column name
      * @param order  order of the column
@@ -417,47 +416,6 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
             this.sortKeys.put(table, keys);
         }
         this.setPersistedState(table, column, order, width, sort, hidden);
-    }
-
-    /**
-     * Transition support for the standard {@link jmri.UserPreferencesManager}
-     * instance (a {@link jmri.managers.JmriUserPreferencesManager}) so it does
-     * not need to maintain separate knowledge of table column state.
-     *
-     * @param table name of the table
-     * @return a map of TableColumnPreferences indexed by column name
-     * @throws NullPointerException if table name is null
-     * @deprecated since 4.5.2
-     */
-    @Deprecated
-    @Nonnull
-    public Map<String, TableColumnPreferences> getTableColumnPreferences(@Nonnull String table) {
-        Objects.requireNonNull(table, "table name cannot be null");
-        Map<String, TableColumnPreferences> map = this.columns.get(table);
-        if (map != null) {
-            return map;
-        }
-        return new HashMap<>();
-    }
-
-    /**
-     * Transition support for {@link jmri.UserPreferencesManager} instances so
-     * they do not need to maintain separate knowledge of table column state.
-     *
-     * @param table  the requested table name
-     * @param column the requested column name
-     * @throws NullPointerException if either name is null
-     * @return the preferences for the column or null if none have been set
-     */
-    @CheckForNull
-    protected TableColumnPreferences getPersistedState(@Nonnull String table, @Nonnull String column) {
-        Objects.requireNonNull(table, "table name must be nonnull");
-        Objects.requireNonNull(column, "column name must be nonnull");
-        HashMap<String, TableColumnPreferences> map = this.columns.get(table);
-        if (map != null) {
-            return map.get(column);
-        }
-        return null;
     }
 
     /**
@@ -536,8 +494,8 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
 
     protected final static class JTableListener implements PropertyChangeListener, RowSorterListener, TableColumnModelListener {
 
-        private final JTable table;
-        private final JmriJTablePersistenceManager manager;
+        protected final JTable table;
+        protected final JmriJTablePersistenceManager manager;
         private Timer delay = null;
 
         public JTableListener(JTable table, JmriJTablePersistenceManager manager) {
@@ -646,7 +604,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                 @Override
                 public void run() {
                     JTableListener.this.manager.cacheState(JTableListener.this.table);
-                    if (!JTableListener.this.manager.paused && JTableListener.this.manager.dirty) {
+                    if (!JTableListener.this.manager.isPaused() && JTableListener.this.manager.isDirty()) {
                         JTableListener.this.manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
                     }
                 }

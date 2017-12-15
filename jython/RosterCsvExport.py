@@ -15,7 +15,7 @@ import jmri
 import jmri.jmrit.roster
 import com.csvreader
 from javax.swing import JFileChooser, JOptionPane
-from jmri.jmrit.symbolicprog import CvTableModel, IndexedCvTableModel
+from jmri.jmrit.symbolicprog import CvTableModel
 import java
 
 # Define some default values
@@ -116,13 +116,11 @@ def writeDetails(csvFile):
         # Finally, we deal with reading in the CV values and
         # outputing those we're interested in
 
-        # First we need to create and populate both CV and
-        # indexed CV tables - remember to call the readFile
-        # method before trying to populate the CV tables
+        # First we need to create and populate the CV tables - remember 
+        # to call the readFile method before trying to populate the CV tables
         cvTable = CvTableModel(None, None)
-        icvTable = IndexedCvTableModel(None, None)
         entry.readFile()
-        entry.loadCvModel(None, cvTable, icvTable)  # just load CVs, not variables
+        entry.loadCvModel(None, cvTable)  # no variables, just load CVs
 
         # Now we can grab the CV values we're interested in
         # Bear in mind that these need to be converted from
