@@ -50,7 +50,7 @@ public class MonitorFrameDemo {
     public void testFireViaAction() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        new MonitorPane.Default().actionPerformed(null);
+        new MonitorAction().actionPerformed(null);
 
         jmri.jmrix.can.CanMessage msg
                 = new jmri.jmrix.can.CanMessage(

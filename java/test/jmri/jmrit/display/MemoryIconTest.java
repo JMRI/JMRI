@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
-import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -15,12 +14,10 @@ import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.ComponentChooser;
 
@@ -31,9 +28,9 @@ import org.netbeans.jemmy.ComponentChooser;
  *
  * @author	Bob Jacobsen Copyright 2007, 2015
  */
-public class MemoryIconTest {
+public class MemoryIconTest extends PositionableTestBase {
 
-    jmri.jmrit.display.panelEditor.PanelEditor panel = null;
+    private MemoryIcon to = null;
 
     @Test
     public void testShowContent() {
@@ -43,7 +40,7 @@ public class MemoryIconTest {
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
         jf.getContentPane().setBackground(Color.white);
 
-        MemoryIcon to = new MemoryIcon("MemoryTest1", panel);
+        MemoryIcon to = new MemoryIcon("MemoryTest1", editor);
         jf.getContentPane().add(to);
         to.getPopupUtility().setBackgroundColor(Color.white);
 
@@ -51,8 +48,6 @@ public class MemoryIconTest {
 
         jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue("Data Data");
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-
-        to.setMemory("IM1");
 
         jf.pack();
         jf.setVisible(true);
@@ -80,7 +75,6 @@ public class MemoryIconTest {
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
         jf.getContentPane().setBackground(Color.white);
 
-        MemoryIcon to = new MemoryIcon("MemoryTest2", panel);
         jf.getContentPane().add(to);
         to.getPopupUtility().setBackgroundColor(Color.white);
 
@@ -114,7 +108,6 @@ public class MemoryIconTest {
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
         jf.getContentPane().setBackground(Color.white);
 
-        MemoryIcon to = new MemoryIcon("MemoryTest3", panel);
         jf.getContentPane().add(to);
         to.getPopupUtility().setBackgroundColor(Color.white);
 
@@ -179,28 +172,16 @@ public class MemoryIconTest {
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         if (!GraphicsEnvironment.isHeadless()) {
-            panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemoryIcon Panel");
+            editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemoryIcon Panel");
+            p = to = new MemoryIcon("MemoryTest1", editor );
+            to.setMemory("IM1");
         }
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        // now close panel window
-        if (panel != null) {
-            java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
-            for (WindowListener listener : listeners) {
-                panel.getTargetFrame().removeWindowListener(listener);
-            }
-            JFrameOperator jfo = new JFrameOperator(panel.getTargetFrame());
-            jfo.requestClose();
-        }
-        JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
-        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);

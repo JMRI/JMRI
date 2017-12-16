@@ -167,11 +167,12 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      */
     @Override
     public void notifyThrottleFound(DccThrottle t) {
-        log.info("Asked for " + currentAddress.getNumber() + " got " + t.getLocoAddress());
+        log.debug("Asked for " + currentAddress.getNumber() + " got " + t.getLocoAddress());
         if (consistAddress != null
                 && ((DccLocoAddress) t.getLocoAddress()).getNumber() == consistAddress.getNumber()) {
             // notify the listeners that a throttle was found
             // for the consist address.
+            log.debug("notifying that this is a consist");
             notifyConsistThrottleFound(t);
             return;
         }
@@ -217,7 +218,6 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
                 && (InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).isAddressedModePossible())) {
             progButton.setEnabled(true);
         }
-
         // send notification of new address
         for (int i = 0; i < listeners.size(); i++) {
             AddressListener l = listeners.get(i);
@@ -237,8 +237,9 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
     @Override
     public void notifyStealThrottleRequired(LocoAddress address){
-        int choice = javax.swing.JOptionPane.showConfirmDialog(this, Bundle.getMessage("StealQuestionText",address.toString()), Bundle.getMessage("StealRequestTitle"), javax.swing.JOptionPane.YES_NO_OPTION);
-        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, choice == javax.swing.JOptionPane.YES_OPTION);
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, 
+                InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isSilentSteal() || 
+                ( javax.swing.JOptionPane.YES_OPTION == javax.swing.JOptionPane.showConfirmDialog(this, Bundle.getMessage("StealQuestionText",address.toString()), Bundle.getMessage("StealRequestTitle"), javax.swing.JOptionPane.YES_NO_OPTION)));
     }
 
     /**
@@ -477,7 +478,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             }
             l.notifyAddressChosen(currentAddress);
         }
-
+        log.debug("Requesting new slot for address "+currentAddress);
         boolean requestOK
                 = InstanceManager.throttleManagerInstance().requestThrottle(getCurrentAddress(), rosterEntry, this);
         if (!requestOK) {
@@ -612,13 +613,19 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         List<Element> elementList = e.getChildren("locoaddress");
         if ((elementList.size() > 0) && (getThrottle() == null)) {
             log.debug("found " + elementList.size() + " locoaddress");
-            addrSelector.setAddress((DccLocoAddress) (new jmri.configurexml.LocoAddressXml())
-                    .getAddress(elementList.get(0)));
+            currentAddress = (DccLocoAddress) (new jmri.configurexml.LocoAddressXml())
+                    .getAddress(elementList.get(0));
+            log.debug("Loaded address "+currentAddress+" from xml");
+            addrSelector.setAddress(currentAddress);
             consistAddress = null;
             // if there are two locoaddress, the second is the consist address
             if (elementList.size() > 1) {
-                consistAddress = ((DccLocoAddress) (new jmri.configurexml.LocoAddressXml())
+                DccLocoAddress tmpAdd = ((DccLocoAddress) (new jmri.configurexml.LocoAddressXml())
                         .getAddress(elementList.get(1)));
+                if (tmpAdd !=null && ! currentAddress.equals(tmpAdd)) {                    
+                    log.debug("and consist with "+tmpAdd);
+                    consistAddress = tmpAdd;
+                }
             }
             changeOfAddress();
         }

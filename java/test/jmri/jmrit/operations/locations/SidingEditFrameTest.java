@@ -112,7 +112,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.editScheduleButton);
 
         // confirm schedule add frame creation
-        JmriJFrame sef = JmriJFrame.getFrame("Add Schedule for Spur \"3rd siding track\"");
+        JmriJFrame sef = JmriJFrame.getFrame(Bundle.getMessage("TitleScheduleAdd","3rd siding track"));
         Assert.assertNotNull(sef);
 
         // kill all frames
@@ -154,7 +154,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.editScheduleButton);
 
         // confirm schedule add frame creation
-        JmriJFrame sef = JmriJFrame.getFrame("Add Schedule for Spur \"3rd siding track\"");
+        JmriJFrame sef = JmriJFrame.getFrame(Bundle.getMessage("TitleScheduleAdd","3rd siding track"));
         Assert.assertNotNull(sef);
 
         // kill all frames

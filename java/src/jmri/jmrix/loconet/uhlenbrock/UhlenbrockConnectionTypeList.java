@@ -4,8 +4,8 @@ import jmri.jmrix.ConnectionTypeList;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Returns a list of valid Uhlenbrock Connection Types
- * <P>
+ * Returns a list of valid Uhlenbrock Connection Types.
+ *
  * @author Bob Jacobsen Copyright (C) 2010, 2014
  * @author Kevin Dickerson Copyright (C) 2010
  *
@@ -28,4 +28,5 @@ public class UhlenbrockConnectionTypeList implements jmri.jmrix.ConnectionTypeLi
     public String[] getManufacturers() {
         return new String[]{UHLEN};
     }
+
 }

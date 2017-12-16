@@ -665,6 +665,19 @@ public final class MathUtil {
      * @return the value pinned between the min and max values
      */
     @CheckReturnValue
+    public static int pin(int inValue, int inMin, int inMax) {
+        return Math.min(Math.max(inValue, inMin), inMax);
+    }
+
+    /**
+     * pin a value between min and max
+     *
+     * @param inValue the value
+     * @param inMin   the min
+     * @param inMax   the max
+     * @return the value pinned between the min and max values
+     */
+    @CheckReturnValue
     public static double pin(double inValue, double inMin, double inMax) {
         return Math.min(Math.max(inValue, inMin), inMax);
     }

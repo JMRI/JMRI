@@ -800,7 +800,7 @@ public class DefaultLogix extends AbstractNamedBean
                     tb.removeMinuteChangeListener(listener);
                     return;
                 case LISTENER_TYPE_ENTRYEXIT:
-                    NamedBean ex = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getBySystemName(listener.getDevName());
+                    NamedBean ex = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getBySystemName(listener.getDevName());
                     if (ex == null) {
                         msg = "entryexit";  // NOI18N
                         break;

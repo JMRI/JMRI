@@ -325,6 +325,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
 
     @Override
     public void setScale(double s) {
+        _scale = s;
         Iterator<Entry<Integer, NamedIcon>> it = _iconStateMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<Integer, NamedIcon> entry = it.next();

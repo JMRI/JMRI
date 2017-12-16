@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <enumChoice>
+        <choice>0 - Red</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>1 - Yellow</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>2 - Green</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>3 - Flashing Red</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>4 - Flashing Yellow</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>5 - Flashing Green</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>6 - Red + Yellow</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>7 - Flashing Red + Yellow</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>8 - Red + Flashing Yellow</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>9 - Red + Green</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>10 - Flashing Red + Green</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>11 - Red + Flashing Green</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>12 - Yellow + Green</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>13 - Flashing Yellow + Green</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>14 - Yellow + Flashing Green</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>15 - All On</choice>
+    </enumChoice>
+</enumVal>

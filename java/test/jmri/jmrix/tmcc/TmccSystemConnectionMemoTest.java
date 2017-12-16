@@ -11,29 +11,31 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class TmccSystemConnectionMemoTest {
-     
-    TmccSystemConnectionMemo memo = null;
+public class TmccSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
+    @Override
     @Test
-    public void testCtor(){
-       Assert.assertNotNull("exists", memo);
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
+    @Override
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       memo = new TmccSystemConnectionMemo();
+       TmccSystemConnectionMemo memo = new TmccSystemConnectionMemo();
        SerialTrafficController tc = new SerialTrafficController(memo) {
           @Override
           public void sendSerialMessage(SerialMessage m, SerialListener reply) {
           }
        };
+       scm = memo;
     }
 
+    @Override
     @After
     public void tearDown(){
-        memo = null;
+        scm = null;
         JUnitUtil.tearDown();
     }
 

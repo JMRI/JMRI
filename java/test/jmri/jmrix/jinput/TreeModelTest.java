@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Rule;
+import org.junit.rules.Timeout;
 
 /**
  * Test simple functioning of TreeModel
@@ -14,6 +16,9 @@ import org.junit.Test;
  * @author	Paul Bender Copyright (C) 2016
  */
 public class TreeModelTest {
+
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
 
     @Test
     public void testInstance() throws InterruptedException {

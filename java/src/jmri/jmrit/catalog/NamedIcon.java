@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen Copyright 2002, 2008
- * @author Pete Cressman Copyright: Copyright (c) 2009, 2010
+ * @author Pete Cressman Copyright (c) 2009, 2010
  */
 public class NamedIcon extends ImageIcon {
 
@@ -62,7 +62,7 @@ public class NamedIcon extends ImageIcon {
      * Create a named icon that includes an image to be loaded from a URL.
      * <p>
      * The default access form is "file:", so a bare pathname to an icon file
-     * will also work for the URL argument
+     * will also work for the URL argument.
      *
      * @param pUrl  URL of image file to load
      * @param pName Human-readable name for the icon
@@ -71,11 +71,11 @@ public class NamedIcon extends ImageIcon {
         super(FileUtil.findURL(pUrl));
         URL u = FileUtil.findURL(pUrl);
         if (u == null) {
-            log.warn("Could not load image from " + pUrl + " (file does not exist)");
+            log.warn("Could not load image from {} (file does not exist)", pUrl);
         }
         mDefaultImage = getImage();
         if (mDefaultImage == null) {
-            log.warn("Could not load image from " + pUrl + " (image is null)");
+            log.warn("Could not load image from {} (image is null)", pUrl);
         }
         mName = pName;
         mURL = FileUtil.getPortableFilename(pUrl);
@@ -224,10 +224,7 @@ public class NamedIcon extends ImageIcon {
      * @return new Image object containing the rotated input image
      */
     public Image createRotatedImage(Image pImage, Component pComponent, int pRotation) {
-        if (log.isDebugEnabled()) {
-            log.debug("createRotatedImage: pRotation= " + pRotation
-                    + ", mRotation= " + mRotation);
-        }
+        log.debug("createRotatedImage: pRotation= {}, mRotation= {}", pRotation, mRotation);
         if (pRotation == 0) {
             return pImage;
         }
@@ -323,8 +320,8 @@ public class NamedIcon extends ImageIcon {
     public void transformImage(int w, int h, AffineTransform t, Component comp) {
         if (w <= 0 || h <= 0) {
             if (log.isDebugEnabled()) {
-                log.debug("transformImage bad coords "
-                        + ((jmri.jmrit.display.Positionable) comp).getNameString());
+                log.debug("transformImage bad coords {}",
+                        ((jmri.jmrit.display.Positionable) comp).getNameString());
             }
             return;
         }
@@ -481,4 +478,5 @@ public class NamedIcon extends ImageIcon {
     }
 
     private final static Logger log = LoggerFactory.getLogger(NamedIcon.class);
+
 }

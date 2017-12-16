@@ -252,8 +252,6 @@ public class WarrantTest {
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initShutDownManager();

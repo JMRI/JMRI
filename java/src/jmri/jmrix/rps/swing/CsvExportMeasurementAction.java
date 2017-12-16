@@ -13,6 +13,7 @@ import jmri.jmrix.rps.Distributor;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.MeasurementListener;
 import jmri.jmrix.rps.Reading;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,12 +25,15 @@ import org.slf4j.LoggerFactory;
  */
 public class CsvExportMeasurementAction extends AbstractAction implements MeasurementListener {
 
-    public CsvExportMeasurementAction(String actionName) {
+    RpsSystemConnectionMemo memo = null;
+
+    public CsvExportMeasurementAction(String actionName,RpsSystemConnectionMemo _memo) {
         super(actionName);
+        memo = _memo;
     }
 
-    public CsvExportMeasurementAction() {
-        this("Start CSV Export Measurement...");
+    public CsvExportMeasurementAction(RpsSystemConnectionMemo _memo) {
+        this("Start CSV Export Measurement...",_memo);
     }
 
     JFrame mParent;

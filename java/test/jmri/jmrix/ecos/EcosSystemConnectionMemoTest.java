@@ -11,20 +11,21 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class EcosSystemConnectionMemoTest  {
+public class EcosSystemConnectionMemoTest  extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-    EcosSystemConnectionMemo memo = null;
+    private EcosSystemConnectionMemo memo = null;
 
+    @Override
     @Test
-    public void testCtor() {
-        Assert.assertNotNull("exists", memo);
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo();
+        scm = memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo();
 
         jmri.InstanceManager.store(memo, jmri.jmrix.ecos.EcosSystemConnectionMemo.class);
     }

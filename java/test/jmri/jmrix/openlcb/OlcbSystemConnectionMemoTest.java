@@ -14,19 +14,24 @@ import org.junit.Test;
  * @author	Bob Jacobsen
  * @author      Paul Bender Copyright (C) 2016	
  */
-public class OlcbSystemConnectionMemoTest {
+public class OlcbSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
+    @Override
     @Test
-    public void testCtor() {
-        Assert.assertNotNull(new OlcbSystemConnectionMemo());
+    public void testProvidesConsistManager(){
+       ((OlcbSystemConnectionMemo)scm).configureManagers();
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        scm = OlcbTestInterface.createForLegacyTests();
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

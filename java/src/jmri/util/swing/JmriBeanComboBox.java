@@ -461,6 +461,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         String comboBoxText = cbe.getItem().toString();
 
         if (isEditable() && !comboBoxText.isEmpty()) {
+            setOpaque(true);
             if (null != getNamedBean()) {
                 c.setBackground(new Color(0xBDECB6));   //pastel green
             } else if (_validateMode) {
@@ -469,6 +470,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 c.setBackground(new Color(0xFDFD96));   //pastel yellow
             }
         } else {
+            setOpaque(false);
             c.setBackground(new Color(0xFFFFFF));   //white (pastel grey?)
         }
     }   //validateText

@@ -57,7 +57,12 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             if (mgr == null) return false;
             return mgr.isAddressedModePossible();
         }
-        return manager.provides(type);
+        boolean result = manager.provides(type);
+        if(result) {
+           return result;
+        } else {
+           return super.provides(type);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -66,7 +71,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (manager != null && !getDisabled()) {
             return (T) manager.get(T);
         }
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     public void setProtocol(String protocol) {

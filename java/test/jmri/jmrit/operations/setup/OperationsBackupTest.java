@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
@@ -49,25 +48,25 @@ import org.junit.Assert;
  */
 public class OperationsBackupTest extends TestCase {
 
-    private File operationsRoot;
+    private final File operationsRoot;
 
     public File getOperationsRoot() {
         return operationsRoot;
     }
 
-    private File defaultBackupRoot;
+    private final File defaultBackupRoot;
 
     public File getDefaultBackupRoot() {
         return defaultBackupRoot;
     }
 
-    private File autoBackupRoot;
+    private final File autoBackupRoot;
 
     public File getAutoBackupRoot() {
         return autoBackupRoot;
     }
 
-    private String[] regularBackupSetFileNames;
+    private final String[] regularBackupSetFileNames;
 
     // public String[] getRegularBackupSetFileNames() {
     // return regularBackupSetFileNames;
@@ -152,9 +151,6 @@ public class OperationsBackupTest extends TestCase {
 
         FileUtil.createDirectory("temp" + File.separator + OperationsSetupXml.getOperationsDirectoryName());
 
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
         // Delete any existing auto or default backup sets
         if (autoBackupRoot.exists()) {
             for (File f : autoBackupRoot.listFiles()) {
@@ -183,8 +179,6 @@ public class OperationsBackupTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() {
-        // restore locale
-        Locale.setDefault(Locale.getDefault());
         apps.tests.Log4JFixture.tearDown();
         deleteTestFiles();
     }

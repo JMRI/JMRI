@@ -467,8 +467,8 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                             if (remember.isSelected()) {
                                 p.setAddLocoToEcos(0x02);
                             }
-                            RosterToEcos rosterToEcos = new RosterToEcos();
-                            rosterToEcos.createEcosLoco(_re, adaptermemo);
+                            RosterToEcos rosterToEcos = new RosterToEcos(adaptermemo);
+                            rosterToEcos.createEcosLoco(_re);
                             _re = null;
                             dialog.dispose();
                         }
@@ -482,8 +482,8 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                     dialog.setVisible(true);
                 }
                 if (p.getAddLocoToEcos() == 0x02) {
-                    RosterToEcos rosterToEcos = new RosterToEcos();
-                    rosterToEcos.createEcosLoco(_re, adaptermemo);
+                    RosterToEcos rosterToEcos = new RosterToEcos(adaptermemo);
+                    rosterToEcos.createEcosLoco(_re);
                     _re = null;
                 }
             }
