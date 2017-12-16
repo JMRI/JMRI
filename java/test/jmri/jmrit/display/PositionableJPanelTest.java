@@ -45,8 +45,10 @@ public class PositionableJPanelTest extends PositionableTestBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        editor = new EditorScaffold();
-        p = new PositionableJPanel(editor);
+        if(!GraphicsEnvironment.isHeadless()){
+           editor = new EditorScaffold();
+           p = new PositionableJPanel(editor);
+        }
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PositionableJPanelTest.class);
