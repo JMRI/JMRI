@@ -24,7 +24,7 @@ import java
 # The script does show a pop-up 'Save As' dialog allowing this to be
 # changed when executed
 outFile = jmri.jmrit.roster.Roster.getDefault().getRosterLocation()+"roster.csv"
-print outFile
+print "Default output file:", outFile
 
 # Determine if to output the header or not
 # Set to 'True' if required; 'False' if not
@@ -190,7 +190,11 @@ def writeDetails(csvFile):
 # Default behaviour is for this to be in the user preferences directory
 fc = JFileChooser()
 fc.setSelectedFile(java.io.File(outFile))
-ret = fc.showSaveDialog(None)
+if (java.awt.GraphicsEnvironment.isHeadless()) :
+    ret = JFileChooser.APPROVE_OPTION
+else :
+    ret = fc.showSaveDialog(None)
+
 if ret == JFileChooser.APPROVE_OPTION:
     # We've got a valid filename
     outFile = fc.getSelectedFile().toString()
@@ -208,7 +212,9 @@ if ret == JFileChooser.APPROVE_OPTION:
     csvFile.flush()
     csvFile.close()
     print "Export complete"
-    JOptionPane.showMessageDialog(None,"Roster export completed","Roster export",JOptionPane.INFORMATION_MESSAGE)
+    if (not java.awt.GraphicsEnvironment.isHeadless()) :
+        JOptionPane.showMessageDialog(None,"Roster export completed","Roster export",JOptionPane.INFORMATION_MESSAGE)
 else:
     print "No export"
-    JOptionPane.showMessageDialog(None,"Roster not exported","Roster export",JOptionPane.INFORMATION_MESSAGE)
+    if (not java.awt.GraphicsEnvironment.isHeadless()) :
+        JOptionPane.showMessageDialog(None,"Roster not exported","Roster export",JOptionPane.INFORMATION_MESSAGE)

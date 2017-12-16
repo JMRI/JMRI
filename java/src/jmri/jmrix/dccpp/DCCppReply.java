@@ -1,6 +1,5 @@
 package jmri.jmrix.dccpp;
 
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -45,7 +44,6 @@ import org.slf4j.LoggerFactory;
 
 public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
-    private ArrayList<Integer> valueList = new ArrayList<Integer>();
     protected String myRegex;
     protected StringBuilder myReply;
 
@@ -61,7 +59,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public DCCppReply(DCCppReply reply) {
         super(reply);
         setBinary(false);
-        valueList = new ArrayList<Integer>(reply.valueList);
         myRegex = reply.myRegex;
         myReply = reply.myReply;
     }
@@ -70,11 +67,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public DCCppReply(String reply) {
         super();
         setBinary(false);
-        valueList = new ArrayList<Integer>();
-        //char charList[] = reply.toCharArray();
-        //for(int i=0;i<charList.length;i++){
-        //    valueList.add((int)charList[i]);
-        //}
         myRegex = "";
         myReply = new StringBuilder(reply);
         _nDataChars = toString().length();
@@ -163,8 +155,14 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 text += "\tBuild: " + getStatusBuildDateString();
                 break;
             case DCCppConstants.POWER_REPLY:
-                text = "Power Status: ";
-                text += ((char) (getElement(1) & 0x00FF) == '1' ? "ON" : "OFF");
+                if(isNamedPowerReply()) {
+                    text = "Power Status: \n";
+                    text += "\tName:" + getPowerDistrictName();
+                    text += "\tStatus:" + getPowerDistrictStatus();
+                } else {
+                    text = "Power Status: ";
+                    text += ((char) (getElement(1) & 0x00FF) == '1' ? "ON" : "OFF");
+                }
                 break;
             case DCCppConstants.CURRENT_REPLY:
                 text = "Current: " + getCurrentString() + " / 1024";
@@ -209,7 +207,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         DCCppReply r = DCCppReply.parseDCCppReply(s);
         log.debug("in parseReply() string: {}", s);
         if (r != null) {
-            this.valueList = r.valueList;
             this.myRegex = r.myRegex;
             this.myReply = r.myReply;
             this._nDataChars = r._nDataChars;
@@ -235,7 +232,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         DCCppReply r = new DCCppReply(s);
         switch(s.charAt(0)) {
             case DCCppConstants.STATUS_REPLY:
-                if (s.matches(DCCppConstants.STATUS_REPLY_REGEX)) {
+                if (s.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)) {
+                    log.debug("Status Reply: {}", r.toString());
+                    r.myRegex = DCCppConstants.STATUS_REPLY_ESP32_REGEX;
+                } else if (s.matches(DCCppConstants.STATUS_REPLY_REGEX)) {
                     log.debug("Status Reply: {}", r.toString());
                     r.myRegex = DCCppConstants.STATUS_REPLY_REGEX;
                 } 
@@ -278,11 +278,15 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             case DCCppConstants.POWER_REPLY:
                 if (s.matches(DCCppConstants.TRACK_POWER_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.TRACK_POWER_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.TRACK_POWER_REPLY_NAMED_REGEX)) {
+                    r.myRegex = DCCppConstants.TRACK_POWER_REPLY_NAMED_REGEX;
                 }
                 return(r);
             case DCCppConstants.CURRENT_REPLY:
                 if (s.matches(DCCppConstants.CURRENT_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.CURRENT_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.CURRENT_REPLY_NAMED_REGEX)) {
+                    r.myRegex = DCCppConstants.CURRENT_REPLY_NAMED_REGEX;
                 }
                 return(r);
             case DCCppConstants.WRITE_EEPROM_REPLY:
@@ -724,8 +728,35 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         return(Integer.parseInt(this.getReadValueString()));
     }
 
+    public String getPowerDistrictName() {
+        if (this.isNamedPowerReply()) {
+            return(this.getValueString(2));
+        } else {
+            log.error("NamedPowerReply Parser called on non-NamedPowerReply message type {} message {}", this.getOpCodeChar(), this.toString());
+            return("");
+        }
+    }
+
+    public String getPowerDistrictStatus() {
+        if (this.isNamedPowerReply()) {
+           if(this.getValueString(1).equals(DCCppConstants.POWER_OFF)) {
+               return("OFF");
+           } else if(this.getValueString(1).equals(DCCppConstants.POWER_ON)) {
+               return("ON");
+           } else {
+               return("OVERLOAD");
+           }
+        } else {
+            log.error("NamedPowerReply Parser called on non-NamedPowerReply message type {} message {}", this.getOpCodeChar(), this.toString());
+            return("");
+        }
+    }
+
     public String getCurrentString() {
         if (this.isCurrentReply()) {
+            if(this.isNamedCurrentReply()) {
+                return(this.getValueString(2));
+            }
             return(this.getValueString(1));
         } else {
             log.error("CurrentReply Parser called on non-CurrentReply message type {} message {}", this.getOpCodeChar(), this.toString());
@@ -1000,7 +1031,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isProgramReply() { return (this.matches(DCCppConstants.PROGRAM_REPLY_REGEX)); }
     public boolean isProgramBitReply() { return (this.matches(DCCppConstants.PROGRAM_BIT_REPLY_REGEX)); }
     public boolean isPowerReply() { return (this.getOpCodeChar() == DCCppConstants.POWER_REPLY); }
+    public boolean isNamedPowerReply() { return(this.matches(DCCppConstants.TRACK_POWER_REPLY_NAMED_REGEX)); }
     public boolean isCurrentReply() { return (this.getOpCodeChar() == DCCppConstants.CURRENT_REPLY); }
+    public boolean isNamedCurrentReply() { return(this.matches(DCCppConstants.CURRENT_REPLY_NAMED_REGEX)); }
     public boolean isMemoryReply() { return (this.getOpCodeChar() == DCCppConstants.MEMORY_REPLY); }
     public boolean isVersionReply() { return (this.getOpCodeChar() == DCCppConstants.STATUS_REPLY); }
 //    public boolean isListPacketRegsReply() { return (this.getOpCodeChar() == DCCppConstants.LISTPACKET_REPLY); }
@@ -1012,6 +1045,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isMADCFailReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_FAIL_REPLY); }
     public boolean isMADCSuccessReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_SUCCESS_REPLY); }
     public boolean isStatusReply() { return(this.getOpCodeChar() == DCCppConstants.STATUS_REPLY); }
+    public boolean isESPStatusReply() { return(this.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)); }
     public boolean isFreeMemoryReply() { return(this.matches(DCCppConstants.FREE_MEMORY_REPLY_REGEX)); }
     public boolean isOutputListReply() { return(this.matches(DCCppConstants.OUTPUT_LIST_REPLY_REGEX)); }
     public boolean isOutputCmdReply() { return(this.matches(DCCppConstants.OUTPUT_REPLY_REGEX)); }
@@ -1025,7 +1059,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             (this.matches(DCCppConstants.LIST_SENSORS_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.PROGRAM_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.TRACK_POWER_REPLY_REGEX)) ||
+            (this.matches(DCCppConstants.TRACK_POWER_REPLY_NAMED_REGEX)) ||
             (this.matches(DCCppConstants.CURRENT_REPLY_REGEX)) ||
+            (this.matches(DCCppConstants.CURRENT_REPLY_NAMED_REGEX)) ||
             (this.matches(DCCppConstants.SENSOR_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.BROKEN_SENSOR_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.SENSOR_DEF_REPLY_REGEX)) ||
@@ -1035,6 +1071,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             (this.matches(DCCppConstants.MADC_FAIL_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.MADC_SUCCESS_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.STATUS_REPLY_REGEX)) ||
+            (this.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)) ||
             (this.isVersionReply())
         ) {
             return(true);
