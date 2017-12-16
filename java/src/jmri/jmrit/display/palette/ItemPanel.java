@@ -55,27 +55,23 @@ public abstract class ItemPanel extends JPanel {
     JTextField _linkName = new JTextField(30);
     static Color _grayColor = new Color(235, 235, 235);
     static Color _darkGrayColor = new Color(150, 150, 150);
-    protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
+    protected Color[] colorChoice = new Color[]{Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
     /**
      * Active base color for Preview background, read from active Panel where available.
      */
     protected Color _currentBackground = _grayColor;
     /**
-     * Array of BufferedImage backgrounds loaded as background image in Preview, shared to save on RAM
+     * Array of BufferedImage backgrounds loaded as background image in Preview (not shared across tabs)
      */
     protected BufferedImage[] _backgrounds;
-    /**
-     * Shared setting for preview pane background color combo choice. Starts as 0 = use current Panel bg color.
-     */
-    protected int previewBgSet = 0;
     private InitEventListener listener;
 
     /**
      * Constructor for all item types.
      *
-     * @param parentFrame   ItemPalette instance
-     * @param type          identifier of the ItemPanel type
-     * @param editor        Editor that called this ItemPalette
+     * @param parentFrame ItemPalette instance
+     * @param type        identifier of the ItemPanel type
+     * @param editor      Editor that called this ItemPalette
      */
     public ItemPanel(DisplayFrame parentFrame, String type, Editor editor) {
         _paletteFrame = (DisplayFrame) parentFrame;
@@ -110,13 +106,13 @@ public abstract class ItemPanel extends JPanel {
 
     /**
      * Create panel element containing [Set background:] drop down list.
+     *
      * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
      * @see DecoratorPanel
-     *
-     * @param preview1  preview pane1 to set background image on
-     * @param preview2  (optional) second preview pane1 to set background image on
-     * @param imgArray  the image array to choose from
-     * @return          JPanel with label and drop down with actions
+     * @param preview1 preview pane1 to set background image on
+     * @param preview2 (optional) second preview pane1 to set background image on
+     * @param imgArray the image array to choose from
+     * @return JPanel with label and drop down with actions
      */
     protected JPanel makeBgButtonPanel(@Nonnull ImagePanel preview1, ImagePanel preview2, BufferedImage[] imgArray, DisplayFrame parent) {
         BgComboBox<String> bgColorBox = new BgComboBox<>();
@@ -125,29 +121,24 @@ public abstract class ItemPanel extends JPanel {
         bgColorBox.addItem(Bundle.getMessage("LightGray"));
         bgColorBox.addItem(Bundle.getMessage("DarkGray"));
         bgColorBox.addItem(Bundle.getMessage("Checkers"));
-        bgColorBox.setSelectedIndex(previewBgSet); // Global field, starts as 0 = panel bg color
+        bgColorBox.setSelectedIndex(parent.getPreviewBg()); // Global field, starts as 0 = panel bg color
         bgColorBox.addActionListener((ActionEvent e) -> {
             if (imgArray != null) {
-                //previewBgSet = parent.getPreviewBg();
-                //if (previewBgSet != bgColorBox.getSelectedIndex()) {
-                    previewBgSet = bgColorBox.getSelectedIndex();
-                    parent.setPreviewBg(previewBgSet); // store user choice in field
-                    // load background image
-                    log.debug("ItemPalette setImage called {}", previewBgSet);
-                    preview1.setImage(imgArray[previewBgSet]);
-                    //preview1.setOpaque(false); // needed?
-                    preview1.revalidate(); // force redraw
-                    if (preview2 != null) {
-                        preview2.setImage(imgArray[previewBgSet]);
-                        //preview2.setOpaque(false); // needed?
-                        preview2.revalidate(); // force redraw
-                    }
-                //}
+                int previewBgSet = bgColorBox.getSelectedIndex();
+                parent.setPreviewBg(previewBgSet); // store user choice in field on parent
+                // load background image
+                log.debug("ItemPalette setImage called {}", previewBgSet);
+                preview1.setImage(imgArray[previewBgSet]);
+                preview1.revalidate(); // force redraw
+                if (preview2 != null) {
+                    preview2.setImage(imgArray[previewBgSet]);
+                    preview2.revalidate(); // force redraw
+                }
             } else {
                 log.debug("imgArray is empty");
             }
         });
-        if (parent instanceof ItemPalette) { // if Panel is part of a ItemPalette JTabbedFrame
+        if (parent instanceof ItemPalette) { // if Panel is part of an ItemPalette JTabbedFrame
             parent.setInitEventListener(bgColorBox); // register custom init (show) event
         }
         JPanel backgroundPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -178,7 +169,7 @@ public abstract class ItemPanel extends JPanel {
     }
 
     protected void reset() {
-    // _paletteFrame.repaint();
+        // _paletteFrame.repaint();
     }
 
     protected final boolean isUpdate() {
@@ -192,26 +183,26 @@ public abstract class ItemPanel extends JPanel {
      * element names defined in xml/defaultPanelIcons.xml
      */
     static final String[] TURNOUT = {"TurnoutStateClosed", "TurnoutStateThrown",
-        "BeanStateInconsistent", "BeanStateUnknown"};
+            "BeanStateInconsistent", "BeanStateUnknown"};
     static final String[] SENSOR = {"SensorStateActive", "SensorStateInactive",
-        "BeanStateInconsistent", "BeanStateUnknown"};
+            "BeanStateInconsistent", "BeanStateUnknown"};
     static final String[] SIGNALHEAD = {"SignalHeadStateRed", "SignalHeadStateYellow",
-        "SignalHeadStateGreen", "SignalHeadStateDark",
-        "SignalHeadStateHeld", "SignalHeadStateLunar",
-        "SignalHeadStateFlashingRed", "SignalHeadStateFlashingYellow",
-        "SignalHeadStateFlashingGreen", "SignalHeadStateFlashingLunar"};
+            "SignalHeadStateGreen", "SignalHeadStateDark",
+            "SignalHeadStateHeld", "SignalHeadStateLunar",
+            "SignalHeadStateFlashingRed", "SignalHeadStateFlashingYellow",
+            "SignalHeadStateFlashingGreen", "SignalHeadStateFlashingLunar"};
     static final String[] LIGHT = {"StateOff", "StateOn",
-        "BeanStateInconsistent", "BeanStateUnknown"};
+            "BeanStateInconsistent", "BeanStateUnknown"};
     static final String[] MULTISENSOR = {"SensorStateInactive", "BeanStateInconsistent",
-        "BeanStateUnknown", "first", "second", "third"};
+            "BeanStateUnknown", "first", "second", "third"};
     // SIGNALMAST family is empty for now
     static final String[] RPSREPORTER = {"active", "error"};
     static final String[] ICON = {"Icon"};
     static final String[] BACKGROUND = {"Background"};
     static final String[] INDICATOR_TRACK = {"ClearTrack", "OccupiedTrack", "AllocatedTrack",
-        "PositionTrack", "DontUseTrack", "ErrorTrack"};
+            "PositionTrack", "DontUseTrack", "ErrorTrack"};
     static final String[] PORTAL = {PortalIcon.HIDDEN, PortalIcon.VISIBLE, PortalIcon.PATH,
-        PortalIcon.TO_ARROW, PortalIcon.FROM_ARROW};
+            PortalIcon.TO_ARROW, PortalIcon.FROM_ARROW};
 
     static private String[] getNames(String type) {
         if (type.equals("Turnout")) {
@@ -241,6 +232,7 @@ public abstract class ItemPanel extends JPanel {
             return null;
         }
     }
+
     static String redX = "resources/icons/misc/X-red.gif";
 
     static protected HashMap<String, NamedIcon> makeNewIconMap(String type) {
@@ -264,6 +256,10 @@ public abstract class ItemPanel extends JPanel {
         }
     }
 
+    protected DisplayFrame getParentFrame() {
+        return _paletteFrame;
+    }
+
     /**
      * Class for bgColorCombo.
      *
@@ -271,9 +267,16 @@ public abstract class ItemPanel extends JPanel {
      */
     public class BgComboBox<T> extends JComboBox<T> implements InitEventListener {
 
-        public void onInitEvent(int choice) {
-            log.debug("InitEvent seen by comboBox, set to {}", choice);
-            setSelectedIndex(choice); // update bgColorBox when InitEvent happens.
+        /**
+         * Store value from parent when changed on another tab.
+         *
+         * @param choice index of colorBox, to be applied to preview backgrounds
+         */
+        public void onInitEvent(int choice, int selectedPane) {
+            setVisible(false);
+            log.debug("InitEvent seen by tab#{} comboBox, was {}, set to {}", selectedPane, this.getSelectedIndex(), choice);
+            setSelectedIndex(choice); // update bgColorBox when tab shows (doesn't always work)
+            setVisible(true); // force redraw of updated selection
         }
     }
 

@@ -588,13 +588,13 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         JTabbedPane tp = (JTabbedPane) e.getSource();
         JScrollPane sp = (JScrollPane) tp.getSelectedComponent();
         ItemPanel p = (ItemPanel) sp.getViewport().getView();
-        p.init();
+        p.init(); // (re)initialize tab pane
         log.debug("different tab displayed");
         if (_currentItemPanel != null) {
             _currentItemPanel.closeDialogs();
         }
-        if (listener != null) listener.onInitEvent(super.getPreviewBg());
-        log.debug("tab redisplayed.");
+        if (listener != null) listener.onInitEvent(super.getPreviewBg(), _tabPane.getSelectedIndex()); // signal tab
+        log.debug("tab redisplayed, previewBgSet updated to {}", super.getPreviewBg());
         _currentItemPanel = p;
         pack();
     }

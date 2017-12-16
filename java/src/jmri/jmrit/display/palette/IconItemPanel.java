@@ -152,7 +152,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         } else { // clear existing to keep connection to combo
             _iconPanel.removeAll();
         }
-        _iconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
+        _iconPanel.setImage(_backgrounds[_paletteFrame.getPreviewBg()]); // pick up shared setting
 
         JPanel iPanel = new JPanel();
         iPanel.setOpaque(false);

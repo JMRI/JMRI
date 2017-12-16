@@ -121,8 +121,8 @@ public class BackgroundItemPanel extends IconItemPanel {
                 public void actionPerformed(ActionEvent a) {
                     _editor.setBackgroundColor(_chooser.getColor());
                     _currentBackground = _chooser.getColor();
-                    _backgrounds[0] = DrawSquares.getImage(500, 400, 10, _currentBackground, _currentBackground);
-                    _iconPanel.setImage(_backgrounds[0]);
+                    _backgrounds[0] = DrawSquares.getImage(500, 400, 10, _currentBackground, _currentBackground); // replace panel color preview image in array
+                    _iconPanel.setImage(_backgrounds[0]); // show new value in preview pane
                     dialog.dispose();
                 }
 

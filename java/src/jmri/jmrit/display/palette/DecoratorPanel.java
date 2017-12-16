@@ -557,7 +557,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         bgColorBox.addItem(Bundle.getMessage("LightGray"));
         bgColorBox.addItem(Bundle.getMessage("DarkGray"));
         bgColorBox.addItem(Bundle.getMessage("Checkers"));
-        bgColorBox.setSelectedIndex(previewBgSet); // starts as 0 = panel bg color, cannot read shared choice
+        bgColorBox.setSelectedIndex(previewBgSet); // starts as 0 = panel bg color, DecoratorPanel cannot read shared ItemPanel choice
         bgColorBox.addActionListener((ActionEvent e) -> {
             if (imgArray != null) {
                 if (previewBgSet != bgColorBox.getSelectedIndex()) {

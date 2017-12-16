@@ -55,7 +55,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected HashMap<String, NamedIcon> _currentIconMap;
     IconDialog _dialog;
     ButtonGroup _familyButtonGroup;
-    protected JPanel bgBoxPanel; // panel with a combo box to set a contrasting background behind the icon preview
+    protected JPanel bgBoxPanel; // panel with a combo box to manually pick a contrasting background behind the icon preview
 
     static boolean _suppressNamePrompts = false;
 
@@ -244,10 +244,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
             return;
         } else { // no match with Palette families
             if (ItemPalette.getIconMap(_itemType, _family) != null) {
-            //                JOptionPane.showMessageDialog(_paletteFrame,
-            //                        Bundle.getMessage("DuplicateFamilyName", _family, _itemType),
-            //                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-                // make sure name does not duplicate a known name
+            // JOptionPane.showMessageDialog(_paletteFrame,
+            //      Bundle.getMessage("DuplicateFamilyName", _family, _itemType),
+            //      Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            // make sure name does not duplicate a known name
                 _family = null;
             }
         }
@@ -477,14 +477,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (_dragIconPanel == null) {
             _dragIconPanel = new ImagePanel();
             _dragIconPanel.setOpaque(true); // to show background color/squares
-            if (_backgrounds != null) {
-                _dragIconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
-                if (_iconPanel != null) {
-                    _iconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
-                }
-            } else {
-                log.debug("FamilyItemPanel - no value for previewBgSet");
-            }
             _dragIconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                     Bundle.getMessage("PreviewBorderTitle")));
             _dragIconPanel.setLayout(new FlowLayout());
@@ -492,6 +484,16 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _iconFamilyPanel.add(_dragIconPanel, position); // place icons over background
         } else {
             _dragIconPanel.removeAll();
+        }
+        if (_backgrounds != null) {
+            int previewBgSet = _paletteFrame.getPreviewBg();
+            log.debug("set backgrounds to {}", previewBgSet);
+            _dragIconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
+            if (_iconPanel != null) {
+                _iconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
+            }
+        } else {
+            log.debug("FamilyItemPanel - no value for previewBgSet");
         }
         _dragIconPanel.setVisible(true);
 

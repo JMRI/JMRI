@@ -98,7 +98,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
                     Bundle.getMessage("PreviewBorderTitle")));
         }
         if (_backgrounds != null) {
-            _iconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
+            _iconPanel.setImage(_backgrounds[_paletteFrame.getPreviewBg()]); // pick up shared setting
         } else {
             log.debug("SignalMastItemPanel - no value for previewBgSet");
         }
