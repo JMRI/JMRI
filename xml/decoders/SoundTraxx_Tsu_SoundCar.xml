@@ -16,6 +16,7 @@
   <version author="Alain Le Marchand" version="1" lastUpdated="20140706"/>
   <version author="Marc Fournier" version="2" lastUpdated="20171014"/>
   <version author="Marc Fournier/Alain Le Marchand" version="3" lastUpdated="20171126"/>
+  <version author="Alain Le Marchand" version="3.1" lastUpdated="20171210"/>
   <!-- This file contains the Tsunami definitions for ALL of the internal combustion engine locomotives	-->
   <!-- version 1	Created from "Soundtraxx_Tsu_Diesel.xml" version 14.					-->
   <!--				Based on Soundtraxx SoundCar Manuals version 0, software 1.01			-->
@@ -27,13 +28,14 @@
   <!-- 	version 2	Added Livestock related CV's 144,203,266 to definition -->
   <!--				Based on Soundtraxx SoundCar Technical Reference software 1.03, Rev.D		-->
   <!--  version 3	Combined Old (1.01) and New (1.03) Soundcar software levels into one definition -->
+  <!--  version 3.1	Label update for function map + tooltips for CV105-106 (version number) -->
   <!-- Decoder Model information follows -->
 <decoder>
     <family name="Tsunami SoundCar" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Tsunami SoundCar decoders">
       <!--  Model with name "Tsunami SoundCar" kept for compatibility with previous versions.
             Will not appear as such in the decoder list, because of having the same name as its family
             However selecting family name in the tree and then opening programmer will lead to this defintion.-->
-      <model model="Tsunami SoundCar" numOuts="4" numFns="14" connector="9pin" productID="SoundCar101" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; Early SW version 1.01 (2014-2016) without livestock support&lt;br&gt;">
+      <model model="Tsunami SoundCar" numOuts="4" numFns="14" connector="9pin" productID="SoundCar101" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; Early SW version 1.01 (2014-2016) without livestock support.&lt;br&gt;Check CV105 firmware version.&lt;br&gt;">
         <versionCV lowVersionID="69" highVersionID="69"/>
         <output name="Airhorn" label="Whistle">
            <label xml:lang="it">Fischio</label>
@@ -71,7 +73,7 @@
 
       <!-- Model with name "Tsunami SoundCar 1.01" is exactly the same as model with name "Tsunami SoundCar".
             Added to allow a separate and visible listing in the decoder tree. -->
-      <model model="Tsunami SoundCar 1.01" numOuts="4" numFns="14" connector="9pin" productID="SoundCar101" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; Early SW version 1.01 (2014-2016) without livestock support&lt;br&gt;">
+      <model model="Tsunami SoundCar 1.01" numOuts="4" numFns="14" connector="9pin" productID="SoundCar101" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; Early SW version 1.01 (2014-2016) without livestock support.&lt;br&gt;Check CV105 firmware version.&lt;br&gt;">
         <versionCV lowVersionID="69" highVersionID="69"/>
         <output name="Airhorn" label="Whistle">
            <label xml:lang="it">Fischio</label>
@@ -107,7 +109,7 @@
         </functionlabels>
       </model>
 
-      <model model="Tsunami SoundCar 1.03" numOuts="4" numFns="14" connector="9pin" productID="SoundCar103" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; SW version 1.03 (2017) with livestock support&lt;br&gt;and additional airhorns and bells&lt;br&gt;">
+      <model model="Tsunami SoundCar 1.03" numOuts="4" numFns="14" connector="9pin" productID="SoundCar103" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; SW version 1.03 (2017) with livestock support&lt;br&gt;and additional airhorns and bells.&lt;br&gt;Check CV105 firmware version.&lt;br&gt;">
         <versionCV lowVersionID="69" highVersionID="69"/>
         <output name="Airhorn" label="Whistle">
            <label xml:lang="it">Fischio</label>
@@ -167,14 +169,14 @@
         <label xml:lang="fr">Décélération (1-255)</label>
         <label xml:lang="de">Bremszeit (1-255)</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="69" tooltip="This is the decoder software version identifier">
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="69" tooltip="&lt;html&gt;This is the decoder product family identifier.&lt;br&gt;69 = SoundCar&lt;/html&gt;">
         <decVal/>
         <label>Manufacturer Version ID</label>
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer" default="141">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="141" tooltip="141 = SoundTraxx">
         <decVal/>
         <label>Manufacturer ID</label>
         <label xml:lang="it">ID Costruttore: </label>
@@ -684,9 +686,9 @@
                 <label xml:lang="it">F5 controlla Tromba (breve)</label>
             </variable>
             <variable item="F5 controls output 9" CV="39" mask="XXVXXXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>F5 controls output Generator</label>
-		<label xml:lang="it">F5 controlla Uscita Generatore</label>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output Generator</label>
+                <label xml:lang="it">F5 controlla Uscita Generatore</label>
             </variable>
 			<!-- Not used in this decoder
             <variable item="F5 controls output 10" CV="39" mask="XVXXXXXX" default="0">
@@ -724,9 +726,9 @@
                 <label xml:lang="it">F6 controlla Tromba (breve)</label>
             </variable>
             <variable item="F6 controls output 9" CV="40" mask="XXVXXXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>F6 controls output Generator</label>
-		<label xml:lang="it">F6 controlla Uscita Generatore</label>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output Generator</label>
+                <label xml:lang="it">F6 controlla Uscita Generatore</label>
             </variable>
 			<!-- Not used in this decoder
             <variable item="F6 controls output 10" CV="40" mask="XVXXXXXX" default="0">
@@ -749,9 +751,9 @@
                 <label xml:lang="it">F7 controlla Tromba (breve)</label>
             </variable>
             <variable item="F7 controls output 9" CV="41" mask="XXXXXVXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>F7 controls output Generator</label>
-		<label xml:lang="it">F7 controlla Uscita Generatore</label>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F7 controls output Generator</label>
+                <label xml:lang="it">F7 controlla Uscita Generatore</label>
             </variable>
 			<!-- Not used in this decoder
             <variable item="F7 controls output 10" CV="41" mask="XXXXVXXX" default="0">
@@ -771,8 +773,8 @@
             </variable>
             <variable item="F7 controls output 13" CV="41" mask="XVXXXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-                <label>F7 controls output Comp(-)</label>
-                <label xml:lang="it">F7 controlla Uscita Comp(-)</label>
+                <label>F7 controls output Uncoupling</label>
+                <label xml:lang="it">F7 controlla uscita Sgancio</label>
             </variable>
             <variable item="F7 controls output 14" CV="41" mask="VXXXXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -789,9 +791,9 @@
                 <label xml:lang="it">F8 controlla romba (breve)</label>
             </variable>
             <variable item="F8 controls output 9" CV="42" mask="XXXXXVXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>F8 controls output Generator</label>
-		<label xml:lang="it">F8 controlla Uscita Generatore</label>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F8 controls output Generator</label>
+                <label xml:lang="it">F8 controlla Uscita Generatore</label>
             </variable>
 			<!-- Not used in this decoder
             <variable item="F8 controls output 10" CV="42" mask="XXXXVXXX" default="0">
@@ -831,9 +833,9 @@
                 <label xml:lang="it">F9 controlla Tromba (breve)</label>
             </variable>
             <variable item="F9 controls output 9" CV="43" mask="XXXXXVXX" default="1" minFn="9">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>F9 controls output Generator</label>
-		<label xml:lang="it">F9 controlla uscita Generatore</label>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output Generator</label>
+                <label xml:lang="it">F9 controlla uscita Generatore</label>
             </variable>
 			<!-- Not used in this decoder
             <variable item="F9 controls output 10" CV="43" mask="XXXXVXXX" default="1" minFn="9">
@@ -867,9 +869,9 @@
                 <label xml:lang="it">F10 controlla Tromba (breve)</label>
             </variable>
             <variable item="F10 controls output 9" CV="44" mask="XXXXXXVX" default="0" minFn="10">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>F10 controls output Generator</label>
-		<label xml:lang="it">F10 controlla Uscita Generatore</label>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output Generator</label>
+                <label xml:lang="it">F10 controlla Uscita Generatore</label>
             </variable>
 			<!-- Not used in this decoder
             <variable item="F10 controls output 10" CV="44" mask="XXXXXVXX" default="0" minFn="10">
@@ -908,9 +910,9 @@
                 <label xml:lang="it">F11 controlla Tromba (breve)</label>
             </variable>
             <variable item="F11 controls output 9" CV="45" mask="XXXXXXVX" default="0" minFn="11">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>F11 controls output Generator</label>
-		<label xml:lang="it">F11 controlla Uscita Generatore</label>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F11 controls output Generator</label>
+                <label xml:lang="it">F11 controlla Uscita Generatore</label>
             </variable>
 			<!-- Not used in this decoder
             <variable item="F11 controls output 10" CV="45" mask="XXXXXVXX" default="0" minFn="11">
@@ -949,9 +951,9 @@
                 <label xml:lang="it">F11 controlla Tromba (breve)</label>
             </variable>
             <variable item="F12 controls output 9" CV="46" mask="XXXXXXVX" default="0" minFn="12">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>F12 controls output Generator</label>
-		<label xml:lang="it">F12 controlla Uscita Generatore</label>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F12 controls output Generator</label>
+                <label xml:lang="it">F12 controlla Uscita Generatore</label>
             </variable>
 			<!-- Not used in this decoder
             <variable item="F12 controls output 10" CV="46" mask="XXXXXVXX" default="0" minFn="12">
@@ -1018,9 +1020,9 @@
                 <label xml:lang="it">F9 controlla Tromba (breve)</label>
             </variable>
             <variable item="F9 controls output 9(alt)" CV="39" mask="XXVXXXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>F9 controls output 9(alt)</label>
-		<label xml:lang="it">F9 controlla Uscita 9(alt)</label>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output Generator</label>
+                <label xml:lang="it">F9 controlla Uscita Generatore</label>
             </variable>
 			<!-- Not used in this decoder
             <variable item="F9 controls output 10(alt)" CV="39" mask="XVXXXXXX" default="0">
@@ -1058,9 +1060,9 @@
                 <label xml:lang="it">F10 controlla Tromba (breve)</label>
             </variable>
             <variable item="F10 controls output 9(alt)" CV="40" mask="XXVXXXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>F10 controls output 9(alt)</label>
-		<label xml:lang="it">F10 controlla Uscita 9 (alt)</label>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output Generator</label>
+                <label xml:lang="it">F10 controlla Uscita Generatore</label>
             </variable>
 			<!-- Not used in this decoder
             <variable item="F10 controls output 10(alt)" CV="40" mask="XVXXXXXX" default="0">
@@ -1083,9 +1085,9 @@
                 <label xml:lang="it">F11 controlla tromba (breve)</label>
             </variable>
             <variable item="F11 controls output 9(alt)" CV="41" mask="XXXXXVXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>F11 controls output 9(alt)</label>
-		<label xml:lang="it">F11 controlla Uscita 9 (alt)</label>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F11 controls output Generator</label>
+                <label xml:lang="it">F11 controlla Uscita Generatore</label>
             </variable>
 			<!-- Not used in this decoder
             <variable item="F11 controls output 10(alt)" CV="41" mask="XXXXVXXX" default="0">
@@ -1123,9 +1125,9 @@
                 <label xml:lang="it">F12 controlla Tromba (breve)</label>
             </variable>
             <variable item="F12 controls output 9(alt)" CV="42" mask="XXXXXVXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>F12 controls output 9(alt)</label>
-		<label xml:lang="it">F12 controlla Uscita 9 (alt)</label>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F12 controls output Generator</label>
+                <label xml:lang="it">F12 controlla Uscita Generatore</label>
             </variable>
 			<!-- Not used in this decoder
             <variable item="F12 controls output 10(alt)" CV="42" mask="XXXXVXXX" default="0">
@@ -1165,9 +1167,9 @@
                 <label xml:lang="it">F5 controlla Tromba (breve)</label>
             </variable>
             <variable item="F5 controls output 9(alt)" CV="43" mask="XXXXXVXX" default="1" minFn="9">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>F5 controls output 9(alt)</label>
-		<label xml:lang="it">F5 controlla Uscita 9 (alt)</label>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output Generator</label>
+                <label xml:lang="it">F5 controlla Uscita Generatore</label>
             </variable>
 			<!-- Not used in this decoder
             <variable item="F5 controls output 10(alt)" CV="43" mask="XXXXVXXX" default="1" minFn="9">
@@ -1201,9 +1203,9 @@
                 <label xml:lang="it">F6 controlla tromba (breve)</label>
             </variable>
             <variable item="F6 controls output 9(alt)" CV="44" mask="XXXXXXVX" default="0" minFn="10">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>F6 controls output 9(alt)</label>
-		<label xml:lang="it">F6 controlla Uscita 9 (alt)</label>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output Generator</label>
+                <label xml:lang="it">F6 controlla Uscita Generatore</label>
             </variable>
 			<!-- Not used in this decoder
             <variable item="F6 controls output 10(alt)" CV="44" mask="XXXXXVXX" default="0" minFn="10">
@@ -1242,9 +1244,9 @@
                 <label xml:lang="it">F7 controlla Tromba (breve)</label>
             </variable>
             <variable item="F7 controls output 9(alt)" CV="45" mask="XXXXXXVX" default="0" minFn="11">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>F7 controls output 9(alt)</label>
-		<label xml:lang="it">F7 controlla Uscita 9 (alt)</label>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F7 controls output Generator</label>
+                <label xml:lang="it">F7 controlla Uscita Generatore</label>
             </variable>
 			<!-- Not used in this decoder
             <variable item="F7 controls output 10(alt)" CV="45" mask="XXXXXVXX" default="0" minFn="11">
@@ -1283,9 +1285,9 @@
                 <label xml:lang="it">F8 controlla Tromba (breve)</label>
             </variable>
             <variable item="F8 controls output 9(alt)" CV="46" mask="XXXXXXVX" default="0" minFn="12">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>F8 controls output 9(alt)</label>
-		<label xml:lang="it">F8 controlla Uscita 9 (alt)</label>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F8 controls output Generator</label>
+                <label xml:lang="it">F8 controlla Uscita Generatore</label>
             </variable>
 			<!-- Not used in this decoder
             <variable item="F8 controls output 10(alt)" CV="46" mask="XXXXXVXX" default="0" minFn="12">
@@ -1621,7 +1623,7 @@
         <label>Reverse Trim (0-255)</label>
       </variable>
 	  -->
-      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUuserId.xml"/>
 	  <!-- Sound Configuration starts here -->
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 1" default="0" tooltip="Generator Control">
         <enumVal>

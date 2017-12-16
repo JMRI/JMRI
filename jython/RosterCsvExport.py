@@ -15,7 +15,7 @@ import jmri
 import jmri.jmrit.roster
 import com.csvreader
 from javax.swing import JFileChooser, JOptionPane
-from jmri.jmrit.symbolicprog import CvTableModel, IndexedCvTableModel
+from jmri.jmrit.symbolicprog import CvTableModel
 import java
 
 # Define some default values
@@ -24,7 +24,7 @@ import java
 # The script does show a pop-up 'Save As' dialog allowing this to be
 # changed when executed
 outFile = jmri.jmrit.roster.Roster.getDefault().getRosterLocation()+"roster.csv"
-print outFile
+print "Default output file:", outFile
 
 # Determine if to output the header or not
 # Set to 'True' if required; 'False' if not
@@ -116,13 +116,11 @@ def writeDetails(csvFile):
         # Finally, we deal with reading in the CV values and
         # outputing those we're interested in
 
-        # First we need to create and populate both CV and
-        # indexed CV tables - remember to call the readFile
-        # method before trying to populate the CV tables
+        # First we need to create and populate the CV tables - remember 
+        # to call the readFile method before trying to populate the CV tables
         cvTable = CvTableModel(None, None)
-        icvTable = IndexedCvTableModel(None, None)
         entry.readFile()
-        entry.loadCvModel(None, cvTable, icvTable)  # just load CVs, not variables
+        entry.loadCvModel(None, cvTable)  # no variables, just load CVs
 
         # Now we can grab the CV values we're interested in
         # Bear in mind that these need to be converted from
@@ -192,7 +190,11 @@ def writeDetails(csvFile):
 # Default behaviour is for this to be in the user preferences directory
 fc = JFileChooser()
 fc.setSelectedFile(java.io.File(outFile))
-ret = fc.showSaveDialog(None)
+if (java.awt.GraphicsEnvironment.isHeadless()) :
+    ret = JFileChooser.APPROVE_OPTION
+else :
+    ret = fc.showSaveDialog(None)
+
 if ret == JFileChooser.APPROVE_OPTION:
     # We've got a valid filename
     outFile = fc.getSelectedFile().toString()
@@ -210,7 +212,9 @@ if ret == JFileChooser.APPROVE_OPTION:
     csvFile.flush()
     csvFile.close()
     print "Export complete"
-    JOptionPane.showMessageDialog(None,"Roster export completed","Roster export",JOptionPane.INFORMATION_MESSAGE)
+    if (not java.awt.GraphicsEnvironment.isHeadless()) :
+        JOptionPane.showMessageDialog(None,"Roster export completed","Roster export",JOptionPane.INFORMATION_MESSAGE)
 else:
     print "No export"
-    JOptionPane.showMessageDialog(None,"Roster not exported","Roster export",JOptionPane.INFORMATION_MESSAGE)
+    if (not java.awt.GraphicsEnvironment.isHeadless()) :
+        JOptionPane.showMessageDialog(None,"Roster not exported","Roster export",JOptionPane.INFORMATION_MESSAGE)
