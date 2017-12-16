@@ -43,15 +43,9 @@ public class PositionableJComponentTest extends PositionableTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
-           Editor e = new EditorScaffold();
-           p = new PositionableJComponent(e);
+           editor = new EditorScaffold();
+           p = new PositionableJComponent(editor);
         }
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
-        p = null;
     }
 
 }

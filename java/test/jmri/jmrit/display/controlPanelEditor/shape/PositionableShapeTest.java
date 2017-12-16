@@ -40,7 +40,8 @@ public class PositionableShapeTest extends PositionableJComponentTest {
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
-           p = new PositionableShape(new EditorScaffold()) {
+           editor = new EditorScaffold();
+           p = new PositionableShape(editor) {
                @Override
                protected Shape makeShape() {
                    // bogus body, not used in tests
@@ -54,11 +55,6 @@ public class PositionableShapeTest extends PositionableJComponentTest {
                }
            };
        }
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PositionableShapeTest.class);

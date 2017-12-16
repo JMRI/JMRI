@@ -36,12 +36,9 @@ public class PortalIconTest extends PositionableIconTest {
     public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-           ControlPanelEditor frame = new ControlPanelEditor("Portal Icon Test Panel");
-           p = new PortalIcon(frame);
+           editor = new ControlPanelEditor("Portal Icon Test Panel");
+           p = new PortalIcon(editor);
         }
     }
-
-    @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
 
 }

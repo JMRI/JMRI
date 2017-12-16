@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import java.awt.event.WindowListener;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -16,10 +17,29 @@ import org.junit.Test;
  */
 abstract public class PositionableTestBase{
 
+    protected Editor editor = null;   // derived classes should set editor in setup;
     protected Positionable p = null;  //derived classes should set p in setUp
 
     @Before
     abstract public void setUp();
+
+    @After
+    public void tearDown() {
+        // now close panel window, if it exists
+        if (editor != null) {
+            java.awt.event.WindowListener[] listeners = editor.getTargetFrame().getWindowListeners();
+            for (WindowListener listener : listeners) {
+                editor.getTargetFrame().removeWindowListener(listener);
+            }
+            EditorFrameOperator jfo = new EditorFrameOperator(editor);
+            jfo.requestClose();
+        }
+        JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
+        editor = null;
+        p = null;
+        JUnitUtil.tearDown();
+    }
+
 
     @Test
     public void testGetAndSetPositionable() {
@@ -62,7 +82,7 @@ abstract public class PositionableTestBase{
     @Test
     public void testGetAndSetViewCoordinates() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertTrue("Defalt View Coordinates", p.getViewCoordinates());
+        Assert.assertTrue("Default View Coordinates", p.getViewCoordinates());
         p.setViewCoordinates(false);
         Assert.assertFalse("View Coordinates after set false", p.getViewCoordinates());
         p.setViewCoordinates(true);
@@ -158,7 +178,7 @@ abstract public class PositionableTestBase{
     @Test
     public void testDoViemMenu(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertTrue("Do View Menu",p.doViemMenu());
+        Assert.assertTrue("Do Viem Menu",p.doViemMenu());
     }
 
 }

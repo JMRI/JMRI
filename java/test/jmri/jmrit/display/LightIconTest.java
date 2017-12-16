@@ -25,13 +25,9 @@ public class LightIconTest extends PositionableTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         if( !GraphicsEnvironment.isHeadless()) {
-           Editor ef = new EditorScaffold();
-           p = new LightIcon(ef);
+           editor = new EditorScaffold();
+           p = new LightIcon(editor);
         }
     }
-
-    @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
-
 
 }

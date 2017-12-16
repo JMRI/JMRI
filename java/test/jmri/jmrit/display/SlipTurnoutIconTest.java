@@ -25,14 +25,9 @@ public class SlipTurnoutIconTest extends PositionableTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-           Editor ef = new EditorScaffold();
-           p = new SlipTurnoutIcon(ef);
+           editor = new EditorScaffold();
+           p = new SlipTurnoutIcon(editor);
         }
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
 }

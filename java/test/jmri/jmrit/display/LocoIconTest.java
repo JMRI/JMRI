@@ -57,17 +57,13 @@ public class LocoIconTest extends PositionableTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-           Editor ef = new EditorScaffold();
-           LocoIcon li = new LocoIcon(ef);
+           editor = new EditorScaffold();
+           LocoIcon li = new LocoIcon(editor);
            // for rotate to work, must set font.
            li.setFont(new Font("Serif", Font.BOLD, 10));
            li.setText("1234");
            p = li;
         }
     }
-
-    @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
-
 
 }
