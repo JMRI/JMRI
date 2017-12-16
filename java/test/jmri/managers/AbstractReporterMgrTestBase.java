@@ -125,6 +125,13 @@ public abstract class AbstractReporterMgrTestBase {
     }
 
     @Test
+    public void testReporterProvideByNumber() {
+        // Create
+        Reporter t = l.provideReporter("1");
+        Assert.assertNotNull("provide by number", t);
+    }
+
+    @Test
     public void testDefaultSystemName() {
         // create
         Reporter t = l.provideReporter("" + getNameToTest1());

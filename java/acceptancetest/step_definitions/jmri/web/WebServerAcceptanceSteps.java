@@ -5,11 +5,13 @@ import cucumber.api.PendingException;
 import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -32,6 +34,12 @@ public class WebServerAcceptanceSteps implements En {
    
    public WebServerAcceptanceSteps(jmri.InstanceManager instance) {
 
+      Before(chrometags,()->{
+            WebDriverManager.getInstance(ChromeDriver.class).setup();
+      });
+      Before(firefoxtags,()->{
+            WebDriverManager.getInstance(FirefoxDriver.class).setup();
+      });
       Given("^I am using firefox$", () -> {
          if(GraphicsEnvironment.isHeadless()) {
             FirefoxBinary firefoxBinary = new FirefoxBinary();
