@@ -12,7 +12,8 @@ import org.slf4j.LoggerFactory;
     jmri.jmrix.dccpp.swing.packetgen.PackageTest.class,
     ConfigBaseStationActionTest.class,
     ConfigBaseStationFrameTest.class,
-    DCCppComponentFactoryTest.class
+    DCCppComponentFactoryTest.class,
+    DCCppMenuTest.class
 })
 
 /**

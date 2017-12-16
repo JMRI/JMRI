@@ -15,13 +15,20 @@ import org.junit.Test;
  */
 public class DCCppMenuTest {
 
+    private DCCppInterfaceScaffold tc = null;
+    private DCCppSystemConnectionMemo memo = null;
+
     @Test
     public void testCTor() {
         // infrastructure objects
-        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
-
-        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
         DCCppMenu t = new DCCppMenu(memo);
+        Assert.assertNotNull("exists",t);
+    }
+
+    @Test
+    public void test2ParamCTor() {
+        // infrastructure objects
+        DCCppMenu t = new DCCppMenu("DCc++ test",memo);
         Assert.assertNotNull("exists",t);
     }
 
@@ -29,6 +36,8 @@ public class DCCppMenuTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
+        memo = new DCCppSystemConnectionMemo(tc);
     }
 
     @After
