@@ -72,6 +72,12 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     public void testUpperLower(){
     }
 
+    @Override
+    @Test
+    @Ignore("Not supported by this manager at this time")
+    public void testReporterProvideByNumber() {
+    }
+
     // The minimal setup for log4J
     @Before
     @Override

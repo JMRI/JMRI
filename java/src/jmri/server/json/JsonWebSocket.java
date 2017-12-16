@@ -83,7 +83,11 @@ public class JsonWebSocket {
         try {
             this.handler.onMessage(string);
         } catch (IOException e) {
-            log.error("Error on WebSocket message:\n{}", e.getMessage());
+            if(!e.getMessage().equals("Will not send message on non-open session")) {
+               // This exception did not occured because the connection is 
+               // either closing or already closed, so log it.
+               log.error("Error on WebSocket message:\n{}", e.getMessage());
+            }
             this.connection.getSession().close();
             InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
         }
