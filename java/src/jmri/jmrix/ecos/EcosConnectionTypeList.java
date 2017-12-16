@@ -8,7 +8,7 @@ import org.openide.util.lookup.ServiceProvider;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
-  *
+ *
  */
 @ServiceProvider(service = ConnectionTypeList.class)
 public class EcosConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
@@ -18,7 +18,8 @@ public class EcosConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
-            "jmri.jmrix.ecos.networkdriver.ConnectionConfig",};
+            "jmri.jmrix.ecos.networkdriver.ConnectionConfig",
+            "jmri.jmrix.ecos.simulator.EcosSimulatorConnectionConfig"};
     }
 
     @Override
