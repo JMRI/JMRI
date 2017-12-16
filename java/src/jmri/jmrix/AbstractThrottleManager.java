@@ -119,7 +119,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * This allows more than one ThrottleLister to request a throttle at a time, 
      * the entries in this Hashmap are only valid during the throttle setup process.
      */
-    private HashMap<DccLocoAddress, ArrayList<WaitingThrottle>> throttleListeners = new HashMap<DccLocoAddress, ArrayList<WaitingThrottle>>(5);
+    private HashMap<LocoAddress, ArrayList<WaitingThrottle>> throttleListeners = new HashMap<LocoAddress, ArrayList<WaitingThrottle>>(5);
 
     static class WaitingThrottle {
 
@@ -211,7 +211,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
         // put the list in if not present
         if (!throttleListeners.containsKey(la)) {
-            throttleListeners.put((DccLocoAddress) la, new ArrayList<WaitingThrottle>());
+            throttleListeners.put(la, new ArrayList<WaitingThrottle>());
         }
         // get the corresponding list to check length
         ArrayList<WaitingThrottle> a = throttleListeners.get(la);
