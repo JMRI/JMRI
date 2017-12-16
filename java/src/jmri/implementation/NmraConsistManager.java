@@ -29,11 +29,14 @@ public class NmraConsistManager extends DccConsistManager {
 
     @Override
     public Consist addConsist(LocoAddress address) {
+        if (! (address instanceof DccLocoAddress)) {
+            throw new IllegalArgumentException("address is not a DccLocoAddress object");
+        }
         if (consistTable.containsKey(address)) {
             return (consistTable.get(address));
         }
         NmraConsist consist;
-        consist = new NmraConsist(address,commandStation);
+        consist = new NmraConsist((DccLocoAddress) address, commandStation);
         consistTable.put(address, consist);
         return (consist);
     }
