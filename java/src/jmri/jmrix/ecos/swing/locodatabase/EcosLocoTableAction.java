@@ -43,7 +43,7 @@ import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EcosLocoTableAction extends AbstractTableAction {
+public final class EcosLocoTableAction extends AbstractTableAction {
 
     /**
      * Create an action with a specific title.

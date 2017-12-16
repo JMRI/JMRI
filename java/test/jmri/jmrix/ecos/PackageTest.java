@@ -14,6 +14,7 @@ import org.junit.runners.Suite;
     jmri.jmrix.ecos.swing.PackageTest.class,
     jmri.jmrix.ecos.networkdriver.PackageTest.class,
     jmri.jmrix.ecos.configurexml.PackageTest.class,
+    jmri.jmrix.ecos.simulator.PackageTest.class,
     EcosPreferencesTest.class,
     EcosSystemConnectionMemoTest.class,
     jmri.jmrix.ecos.utilities.PackageTest.class,
