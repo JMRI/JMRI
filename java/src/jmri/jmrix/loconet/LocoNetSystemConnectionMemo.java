@@ -45,6 +45,9 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;
+    private LnTrafficController lt;
+    private SlotManager sm;
+    private LnMessageManager lnm = null;
 
     /**
      * Provides access to the SlotManager for this particular connection.
@@ -57,7 +60,6 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         }
         return sm;
     }
-    private SlotManager sm;
 
     /**
      * Provides access to the TrafficController for this particular connection.
@@ -67,7 +69,6 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     public LnTrafficController getLnTrafficController() {
         return lt;
     }
-    private LnTrafficController lt;
 
     public void setLnTrafficController(LnTrafficController lt) {
         this.lt = lt;
@@ -80,7 +81,6 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         }
         return lnm;
     }
-    private LnMessageManager lnm = null;
 
     protected DefaultProgrammerManager programmerManager;
 
@@ -131,6 +131,9 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
@@ -170,9 +173,12 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (type.equals(jmri.CommandStation.class)) {
             return true;
         }
-        return false; // nothing, by default
+        return super.provides(type);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<?> T) {
@@ -213,7 +219,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (T.equals(jmri.CommandStation.class)) {
             return (T) getSlotManager();
         }
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     protected LocoNetThrottledTransmitter tm;
@@ -255,8 +261,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         InstanceManager.setReporterManager(
                 getReporterManager());
 
-        InstanceManager.setConsistManager(
-                getConsistManager());
+        setConsistManager(new jmri.jmrix.loconet.LocoNetConsistManager(this));
 
         InstanceManager.addClockControl(
                 getClockControl());
@@ -358,18 +363,6 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         return lightManager;
     }
 
-    private LocoNetConsistManager consistManager;
-
-    public LocoNetConsistManager getConsistManager() {
-        if (getDisabled()) {
-            return null;
-        }
-        if (consistManager == null) {
-            consistManager = new jmri.jmrix.loconet.LocoNetConsistManager(this);
-        }
-        return consistManager;
-    }
-
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.loconet.LocoNetActionListBundle");
@@ -405,9 +398,6 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
                 InstanceManager.deregister(((jmri.jmrix.debugthrottle.DebugThrottleManager) throttleManager), jmri.jmrix.debugthrottle.DebugThrottleManager.class);
             }
         }
-        if (consistManager != null) {
-            InstanceManager.deregister(consistManager, jmri.jmrix.loconet.LocoNetConsistManager.class);
-        }
         if (clockControl != null) {
             InstanceManager.deregister(clockControl, jmri.jmrix.loconet.LnClockControl.class);
         }
@@ -415,4 +405,5 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
 
     private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemo.class);
+
 }

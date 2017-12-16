@@ -83,7 +83,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
     @Override
     public boolean provides(Class<?> type) {
@@ -93,11 +93,14 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (type.equals(jmri.ReporterManager.class)){
            return true;
         }
+        if (type.equals(jmri.MultiMeter.class)){
+           return true;
+        }
         if (_xnettunnel!=null) {
             // delegate to the XPressNet tunnel.
             return _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);
         }
-        return false; // nothing, by default
+        return super.provides(type); // nothing, by default
     }
 
     /**
@@ -111,6 +114,9 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         if(T.equals(jmri.ReporterManager.class)){
             return (T) getReporterManager();
+        }
+        if(T.equals(jmri.MultiMeter.class)){
+            return (T) getMultiMeter();
         }
         if (_xnettunnel!=null) {
             // delegate to the XPressNet tunnel.
@@ -146,6 +152,9 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
            setReporterManager(new Z21ReporterManager(this));
            jmri.InstanceManager.store(getReporterManager(),jmri.ReporterManager.class);
         }
+
+        // setup the MultiMeter
+        getMultiMeter();
 
    }
 
@@ -184,6 +193,23 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     private RocoZ21CommandStation z21CommandStation = null;
+
+    /**
+     * Provide access to the Roco Z21 MultiMeter for this particular
+     * connection.
+     * <p>
+     * NOTE: MultiMeter defaults to NULL
+     */
+    public jmri.MultiMeter getMultiMeter() {
+        if(meter == null){
+           meter = new Z21MultiMeter(this);
+           jmri.InstanceManager.store(meter,jmri.MultiMeter.class);
+        }
+        return meter;
+    }
+
+    private Z21MultiMeter meter = null;
+
 
     void shutdownTunnel(){
         if (_xnettunnel!=null) {

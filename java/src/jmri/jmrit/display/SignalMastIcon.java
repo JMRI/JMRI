@@ -50,7 +50,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
 
     protected Positionable finishClone(SignalMastIcon pos) {
-        pos.setSignalMast(getNamedSignalMast().getName());
+        pos.setSignalMast(getNamedSignalMast());
         pos._iconMap = cloneMap(_iconMap, pos);
         pos.setClickMode(getClickMode());
         pos.setLitMode(getLitMode());

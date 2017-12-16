@@ -11,16 +11,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from Maple serial messages.
- * <P>
+ * <p>
  * The "SerialInterface" side sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a SerialPortController is via a pair of *Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
- * This handles the state transistions, based on the necessary state in each
+ * <p>
+ * This handles the state transitions, based on the necessary state in each
  * message.
- * <P>
+ * <p>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2008
@@ -42,22 +42,30 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         mWaitBeforePoll = 5;  // default = 25
 
         // initialize input and output utility classes
-        mInputBits = InputBits.instance();
+        mInputBits = new InputBits(this);
         if (mInputBits == null) {
             log.error("Error in initializing InputBits utility class");
         }
-        mOutputBits = OutputBits.instance();
+        mOutputBits = new OutputBits(this);
         if (mOutputBits == null) {
             log.error("Error in initializing OutputBits utility class");
         }
-
     }
 
     // InputBits and OutputBits
     private InputBits mInputBits = null;
     private OutputBits mOutputBits = null;
 
+    public InputBits inputBits(){
+      return mInputBits;
+    }
+
+    public OutputBits outputBits(){
+      return mOutputBits;
+    }
+ 
     // The methods to implement the SerialInterface
+
     @Override
     public synchronized void addSerialListener(SerialListener l) {
         this.addListener(l);
@@ -69,7 +77,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Public method to set up for initialization of a Serial node
+     * Public method to set up for initialization of a Serial node.
      */
     public void initializeSerialNode(SerialNode node) {
         // dummy routine - Maple System devices do not require initialization
@@ -116,8 +124,8 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     // With the Maple Systems Protocol, output packets are limited to 99 bits.  If there are more than 
-    //    99 bits configured, multiple output packets must be sent.  The following cycle through that
-    //   process.
+    // 99 bits configured, multiple output packets must be sent.  The following cycle through that
+    // process.
     private boolean mNeedSend = true;
     private int mStartBitNumber = 1;
     // Similarly the poll command can only poll 99 input bits at a time, so more packets may be needed.
@@ -132,8 +140,8 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     private int mCurrentNodeIndexInPoll = -1;
 
     /**
-     * Handles output and polling for Maple Serial Nodes from within the running
-     * thread
+     * Handle output and polling for Maple Serial Nodes from within the running
+     * thread.
      */
     @Override
     protected synchronized AbstractMRMessage pollMessage() {
@@ -242,29 +250,21 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * static function returning the SerialTrafficController instance to use.
+     * Static function returning the SerialTrafficController instance to use.
      *
      * @return The registered SerialTrafficController instance for general use,
      *         if need be creating one.
      */
+    @Deprecated
     static public SerialTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new SerialTrafficController object");
-            }
-            self = new SerialTrafficController();
-        }
-        return self;
+        return null;
     }
-
-    static volatile protected SerialTrafficController self = null;
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
     @Override
     @Deprecated
     protected void setInstance() {
-        self = this;
     }
 
     @Override
@@ -346,7 +346,8 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     /**
      * Add header to the outgoing byte stream.
      *
-     * @param msg The output byte stream
+     * @param msg the output byte stream
+     * @param m the message to add the header to
      * @return next location in the stream to fill
      */
     @Override
@@ -366,9 +367,9 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     /**
      * Determine how much many bytes the entire message will take, including
-     * space for header and trailer
+     * space for header and trailer.
      *
-     * @param m The message to be sent
+     * @param m the message to be sent
      * @return Number of bytes
      */
     @Override

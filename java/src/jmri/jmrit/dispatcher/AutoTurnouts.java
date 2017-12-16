@@ -184,30 +184,17 @@ public class AutoTurnouts {
             // next Block is outside of the Section
             nextBlock = exitPt.getFromBlock();
         } else {
-            if (!at.isAllocationReversed()) {
-                if (direction == Section.FORWARD) {
-                    nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
-                    nextBlockSeqNum = curBlockSeqNum + 1;
-                } else if (direction == Section.REVERSE) {
-                    nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
-                    nextBlockSeqNum = curBlockSeqNum - 1;
-                }
-                if ((nextBlock == null) && (curBlock != at.getEndBlock())) {
-                    log.error("Error in block sequence numbers fwd when setting/checking turnouts");
-                    return false;
-                }
-            } else {
-                if (direction == Section.REVERSE) {
-                    nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
-                    nextBlockSeqNum = curBlockSeqNum + 1;
-                } else if (direction == Section.FORWARD) {
-                    nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
-                    nextBlockSeqNum = curBlockSeqNum - 1;
-                }
-                if ((nextBlock == null) && (curBlock != at.getStartBlock())) {
-                    log.error("Error in block sequence numbers rev when setting/checking turnouts");
-                    return false;
-                }
+            // next Block is inside the Section
+            if (direction == Section.FORWARD) {
+                nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
+                nextBlockSeqNum = curBlockSeqNum + 1;
+            } else if (direction == Section.REVERSE) {
+                nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
+                nextBlockSeqNum = curBlockSeqNum - 1;
+            }
+            if ((nextBlock == null) && (curBlock != at.getEndBlock())) {
+                log.error("Error in block sequence numbers when setting/checking turnouts");
+                return false;
             }
         }
 

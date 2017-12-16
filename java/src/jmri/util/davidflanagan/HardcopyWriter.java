@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.JWindow;
+import javax.swing.border.EmptyBorder;
 import jmri.util.JmriJFrame;
 
 /**
@@ -85,7 +86,6 @@ public class HardcopyWriter extends Writer {
     protected JButton previousButton;
     protected JButton closeButton;
     protected JLabel pageCount = new JLabel();
-    protected JLabel totalPages = new JLabel();
 
     // save state between invocations of write()
     private boolean last_char_was_return = false;
@@ -216,11 +216,9 @@ public class HardcopyWriter extends Writer {
             pagenum++;
             displayPage();
         });
-        previewToolBar.add(new JLabel("  " + Bundle.getMessage("HeaderPageNum")));
+        pageCount = new JLabel(Bundle.getMessage("HeaderPageNum", pagenum, pageImages.size()));
+        pageCount.setBorder(new EmptyBorder(0, 10, 0, 10));
         previewToolBar.add(pageCount);
-        previewToolBar.add(new JLabel(" / ")); // values don't stick to use {0} etc. variable fields
-        previewToolBar.add(totalPages);
-
         closeButton = new JButton(Bundle.getMessage("ButtonClose"));
         previewToolBar.add(closeButton);
         closeButton.addActionListener((ActionEvent actionEvent) -> {
@@ -262,8 +260,7 @@ public class HardcopyWriter extends Writer {
         // put the label in the panel (already has a scroll pane)
         previewPanel.add(previewLabel);
         // set the page count info
-        pageCount.setText("" + pagenum);
-        totalPages.setText(pageImages.size() + "     ");
+        pageCount.setText(Bundle.getMessage("HeaderPageNum", pagenum, pageImages.size()));
         // repaint the frame but don't use pack() as we don't want resizing
         previewFrame.invalidate();
         previewFrame.revalidate();
@@ -274,8 +271,8 @@ public class HardcopyWriter extends Writer {
      * Send text to Writer output.
      *
      * @param buffer block of text characters
-     * @param index position to start printing
-     * @param len length (number of characters) of output
+     * @param index  position to start printing
+     * @param len    length (number of characters) of output
      */
     @Override
     public void write(char[] buffer, int index, int len) {
@@ -349,8 +346,7 @@ public class HardcopyWriter extends Writer {
     /**
      * Write a given String with the desired color.
      * <p>
-     * Reset the text color back to the default after
-     * the string is written.
+     * Reset the text color back to the default after the string is written.
      *
      * @param c the color desired for this String
      * @param s the String
@@ -372,8 +368,8 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Handle close event of pane.
-     * Modified to clean up the added preview capability.
+     * Handle close event of pane. Modified to clean up the added preview
+     * capability.
      *
      * @author David Flanagan, modified by Dennis Miller
      */

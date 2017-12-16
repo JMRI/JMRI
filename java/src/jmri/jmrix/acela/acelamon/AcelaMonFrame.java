@@ -22,7 +22,7 @@ public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaL
 
     @Override
     protected String title() {
-        return Bundle.getMessage("AcelaMonitorTitle");
+        return Bundle.getMessage("MonitorXTitle", "Acela");
     }
 
     @Override
@@ -35,7 +35,7 @@ public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaL
      * Define system-specific help item
      */
     protected void setHelp() {
-        addHelpMenu("package.jmri.jmrix.acela.acelamon.AcelaMonFrame", true);  // NOI18N
+        addHelpMenu("package.jmri.jmrix.acela.acelamon.AcelaMonFrame", true); // NOI18N
     }
 
     @Override

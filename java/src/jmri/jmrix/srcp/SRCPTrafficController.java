@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * carry sequences of characters for transmission. Note that this processing is
  * handled in an independent thread.
  * <P>
- * This handles the state transistions, based on the necessary state in each
+ * This handles the state transitions, based on the necessary state in each
  * message.
  *
  * @author Bob Jacobsen Copyright (C) 2001
@@ -332,6 +332,22 @@ public class SRCPTrafficController extends AbstractMRTrafficController
             }
 
         }
+    }
+
+    /**
+     * Ask if shut down is allowed.
+     * <p>
+     * The shut down manager must call this method first on all the tasks
+     * before starting to execute the method execute() on the tasks.
+     * <p>
+     * If this method returns false on any task, the shut down process must
+     * be aborted.
+     *
+     * @return true if it is OK to shut down, false to abort shut down.
+     */
+    @Override
+    public boolean isShutdownAllowed() {
+        return true;
     }
 
     /**

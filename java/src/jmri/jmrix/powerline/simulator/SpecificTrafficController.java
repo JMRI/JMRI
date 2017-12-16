@@ -16,11 +16,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from messages. The "SerialInterface" side
  * sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a SerialPortController is via a pair of *Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
+ * <p>
  * This maintains a list of nodes, but doesn't currently do anything with it.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008, 2009
@@ -38,15 +38,12 @@ public class SpecificTrafficController extends SerialTrafficController {
         // use poll delay just to spread out startup
         setAllowUnexpectedReply(true);
         mWaitBeforePoll = 1000;  // can take a long time to send
-
     }
 
-    SerialSystemConnectionMemo memo = null;
-
     /**
-     * Send a sequence of X10 messages
+     * Send a sequence of X10 messages.
      * <p>
-     * Makes them into the local messages and then queues in order
+     * Makes them into the local messages and then queues in order.
      */
     @Override
     synchronized public void sendX10Sequence(X10Sequence s, SerialListener l) {
@@ -82,9 +79,9 @@ public class SpecificTrafficController extends SerialTrafficController {
     }
 
     /**
-     * Send a sequence of Insteon messages
+     * Send a sequence of Insteon messages.
      * <p>
-     * Makes them into the local messages and then queues in order
+     * Makes them into the local messages and then queues in order.
      */
     @Override
     synchronized public void sendInsteonSequence(InsteonSequence s, SerialListener l) {
@@ -196,7 +193,7 @@ public class SpecificTrafficController extends SerialTrafficController {
     }
 
     /**
-     * read a stream and pick packets out of it. knows the size of the packets
+     * Read a stream and pick packets out of it. Knows the size of the packets
      * from the contents.
      */
     @Override
@@ -275,5 +272,7 @@ public class SpecificTrafficController extends SerialTrafficController {
             }
         }
     }
+
     private final static Logger log = LoggerFactory.getLogger(SpecificTrafficController.class);
+
 }

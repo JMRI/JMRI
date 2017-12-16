@@ -6,11 +6,9 @@ import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -701,8 +699,8 @@ public class PositionablePoint extends LayoutTrack {
                 result = false;
             }
         } else {
-                log.error("Already connected to {}", newTrack.getName());
-                result = false;
+            log.error("Already connected to {}", newTrack.getName());
+            result = false;
         }
         return result;
     }   // replaceTrackConnection
@@ -751,7 +749,6 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     private JPopupMenu popup = null;
-    private LayoutEditorTools tools = null;
 
     /**
      * {@inheritDoc}
@@ -765,10 +762,8 @@ public class PositionablePoint extends LayoutTrack {
             popup = new JPopupMenu();
         }
 
-        tools = layoutEditor.getLETools();
-
         boolean blockBoundary = false;
-        boolean endBumper = false;
+        boolean addSensorsAndSignalMasksMenuItemsFlag = false;
         JMenuItem jmi = null;
         switch (getType()) {
             case ANCHOR:
@@ -808,7 +803,7 @@ public class PositionablePoint extends LayoutTrack {
                     jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockID")) + blockEnd.getDisplayName());
                     jmi.setEnabled(false);
                 }
-                endBumper = true;
+                addSensorsAndSignalMasksMenuItemsFlag = true;
                 break;
             case EDGE_CONNECTOR:
                 jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("EdgeConnector")) + getName());
@@ -843,7 +838,6 @@ public class PositionablePoint extends LayoutTrack {
                     jmi.setEnabled(false);
                     blockBoundary = true;
                 }
-                blockBoundary = true;
                 break;
             default:
                 break;
@@ -1015,10 +1009,9 @@ public class PositionablePoint extends LayoutTrack {
 
         jmi.setSelected(getType() == ANCHOR);
 
-        // you can't set it to an anchor if it has a 2nd connection
+        // you can't change it to an anchor if it has a 2nd connection
         // TODO: add error dialog if you try?
-        if ((getType()
-                == EDGE_CONNECTOR) && (getConnect2() != null)) {
+        if ((getType() == EDGE_CONNECTOR) && (getConnect2() != null)) {
             jmi.setEnabled(false);
         }
 
@@ -1046,6 +1039,16 @@ public class PositionablePoint extends LayoutTrack {
 
         popup.add(lineType);
 
+        if (!blockBoundary && getType() == EDGE_CONNECTOR) {
+            popup.add(new JSeparator(JSeparator.HORIZONTAL));
+            popup.add(new AbstractAction(Bundle.getMessage("EdgeEditLink")) {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setLink();
+                }
+            });
+        }
+
         if (blockBoundary) {
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             if (getType() == EDGE_CONNECTOR) {
@@ -1058,24 +1061,9 @@ public class PositionablePoint extends LayoutTrack {
                 popup.add(new AbstractAction(Bundle.getMessage("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // bring up signals at level crossing tool dialog
-                        tools.setSignalAtEdgeConnector(PositionablePoint.this,
+                        // bring up signals at edge connector tool dialog
+                        layoutEditor.getLETools().setSignalsAtBlockBoundaryFromMenu(PositionablePoint.this,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
-                    }
-                });
-                popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-                        // bring up signal masts at block boundary tool dialog
-                        tools.setSignalMastsAtBlockBoundaryFromMenu(PositionablePoint.this);
-                    }
-                });
-                popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-                        // bring up sensors at block boundary tool dialog
-                        tools.setSensorsAtBlockBoundaryFromMenu(PositionablePoint.this,
-                                layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
                     }
                 });
             } else {
@@ -1083,42 +1071,35 @@ public class PositionablePoint extends LayoutTrack {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // bring up signals at level crossing tool dialog
-                        tools.setSignalsAtBlockBoundaryFromMenu(PositionablePoint.this,
+                        layoutEditor.getLETools().setSignalsAtBlockBoundaryFromMenu(PositionablePoint.this,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                     }
                 };
 
                 JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
-                if (tools.addBlockBoundarySignalHeadInfoToMenu(PositionablePoint.this, jm)) {
+                if (layoutEditor.getLETools().addBlockBoundarySignalHeadInfoToMenu(PositionablePoint.this, jm)) {
                     jm.add(ssaa);
                     popup.add(jm);
                 } else {
                     popup.add(ssaa);
                 }
-
-                popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-                        // bring up signals at block boundary tool dialog
-                        tools.setSignalMastsAtBlockBoundaryFromMenu(PositionablePoint.this);
-                    }
-                });
             }
+            addSensorsAndSignalMasksMenuItemsFlag = true;
         }
-        if (endBumper) {
-            popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    // bring up signals at block boundary tool dialog
-                    tools.setSensorsAtBlockBoundaryFromMenu(PositionablePoint.this,
-                            layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
-                }
-            });
+        if (addSensorsAndSignalMasksMenuItemsFlag) {
             popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     // bring up signals at block boundary tool dialog
-                    tools.setSignalMastsAtBlockBoundaryFromMenu(PositionablePoint.this);
+                    layoutEditor.getLETools().setSignalMastsAtBlockBoundaryFromMenu(PositionablePoint.this);
+                }
+            });
+            popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    // bring up signals at block boundary tool dialog
+                    layoutEditor.getLETools().setSensorsAtBlockBoundaryFromMenu(PositionablePoint.this,
+                            layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
                 }
             });
         }
@@ -1414,68 +1395,12 @@ public class PositionablePoint extends LayoutTrack {
         return result;
     }
 
-    /**
-     * draw this PositionablePoint
-     *
-     * @param g2 the graphics port to draw to
+    /*
+     * {@inheritDoc}
      */
     @Override
     protected void draw(Graphics2D g2) {
-        if (getType() != ANCHOR) {
-            Point2D pt = getCoordsCenter();
-            boolean mainline = false;
-            Point2D ep1 = pt, ep2 = pt;
-
-            if (getConnect1() != null) {
-                mainline = getConnect1().isMainline();
-                ep1 = getConnect1().getCentreSeg();
-            }
-            if (getType() == ANCHOR) {
-                if (getConnect2() != null) {
-                    mainline |= getConnect2().isMainline();
-                    ep2 = getConnect2().getCentreSeg();
-                }
-            }
-
-            double trackWidth = Math.min(layoutEditor.setTrackStrokeWidth(g2, mainline), 3.0);
-            Stroke drawingStroke = new BasicStroke((float) trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
-            //Stroke drawingStroke1 = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
-            trackWidth *= 2.0;
-
-            if (!ep1.equals(ep2)) {
-                setColorForTrackBlock(g2, getConnect1().getLayoutBlock());
-                double angleRAD = (Math.PI / 2.0) - MathUtil.computeAngleRAD(ep1, ep2);
-                Point2D p1, p2, p3, p4;
-                if (getType() == END_BUMPER) {
-                    // draw a cross tie
-                    p1 = new Point2D.Double(0.0, -trackWidth);
-                    p2 = new Point2D.Double(0.0, +trackWidth);
-
-                    p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
-                    p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
-                    g2.setStroke(drawingStroke);
-                    g2.draw(new Line2D.Double(p1, p2));
-                } else if (getType() == EDGE_CONNECTOR) {
-                    // draw an X
-                    p1 = new Point2D.Double(-trackWidth, -trackWidth);
-                    p2 = new Point2D.Double(-trackWidth, +trackWidth);
-                    p3 = new Point2D.Double(+trackWidth, +trackWidth);
-                    p4 = new Point2D.Double(+trackWidth, -trackWidth);
-
-                    p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
-                    p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
-                    p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), pt);
-                    p4 = MathUtil.add(MathUtil.rotateRAD(p4, angleRAD), pt);
-
-                    g2.setStroke(drawingStroke);
-                    g2.draw(new Line2D.Double(p1, p3));
-                    g2.draw(new Line2D.Double(p2, p4));
-                }
-            }
-            // this is to force setTrackStrokeWidth's mainline local to toggle
-            // so next time it's called it will "do the right thing"...
-            layoutEditor.setTrackStrokeWidth(g2, !mainline);
-        }   // if (getType() != ANCHOR)
+        // nothing to see here... move along...
     }   // draw
 
     /**
@@ -1489,10 +1414,8 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
-    /**
-     * draw this PositionablePoint's edit controls
-     *
-     * @param g2 the graphics port to draw to
+    /*
+     * {@inheritDoc}
      */
     @Override
     protected void drawEditControls(Graphics2D g2) {
@@ -1653,7 +1576,7 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     public boolean checkForUnAssignedBlocks() {
-        // Positionable Points don't have blocks so…
+        // Positionable Points don't have blocks so...
         // nothing to see here... move along...
         return true;
     }
@@ -1696,13 +1619,13 @@ public class PositionablePoint extends LayoutTrack {
                         }
                     }
                 } else {    // (#3)
-                    log.info("•New block ('{}') trackNameSets", blk1);
+                    log.info("-New block ('{}') trackNameSets", blk1);
                     TrackNameSets = new ArrayList<>();
                     blockNamesToTrackNameSetsMap.put(blk1, TrackNameSets);
                 }
                 if (TrackNameSet == null) {
                     TrackNameSet = new LinkedHashSet<>();
-                    log.info("•    Add track '{}' to trackNameSet for block '{}'", getName(), blk1);
+                    log.info("-    Add track '{}' to trackNameSet for block '{}'", getName(), blk1);
                     TrackNameSet.add(getName());
                     TrackNameSets.add(TrackNameSet);
                 }
@@ -1729,13 +1652,13 @@ public class PositionablePoint extends LayoutTrack {
                             }
                         }
                     } else {    // (#3)
-                        log.info("•New block ('{}') trackNameSets", blk2);
+                        log.info("-New block ('{}') trackNameSets", blk2);
                         TrackNameSets = new ArrayList<>();
                         blockNamesToTrackNameSetsMap.put(blk2, TrackNameSets);
                     }
                     if (TrackNameSet == null) {
                         TrackNameSet = new LinkedHashSet<>();
-                        log.info("•    Add track '{}' to TrackNameSet for block '{}'", getName(), blk2);
+                        log.info("-    Add track '{}' to TrackNameSet for block '{}'", getName(), blk2);
                         TrackNameSets.add(TrackNameSet);
                         TrackNameSet.add(getName());
                     }
@@ -1761,7 +1684,7 @@ public class PositionablePoint extends LayoutTrack {
                 if (blk1.equals(blockName)) {
                     // if we are added to the TrackNameSet
                     if (TrackNameSet.add(getName())) {
-                        log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                        log.info("-    Add track '{}'for block '{}'", getName(), blockName);
                     }
                     // this should never be null... but just in case...
                     if (connect1 != null) {
@@ -1778,7 +1701,7 @@ public class PositionablePoint extends LayoutTrack {
                     if (blk2.equals(blockName)) {
                         // if we are added to the TrackNameSet
                         if (TrackNameSet.add(getName())) {
-                            log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                            log.info("-    Add track '{}'for block '{}'", getName(), blockName);
                         }
                         // this should never be null... but just in case...
                         if (connect2 != null) {
@@ -1791,12 +1714,14 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
-   /**
+    /**
      * {@inheritDoc}
      */
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
         // positionable points don't have blocks...
         // nothing to see here, move along...
     }
+
     private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
+
 }

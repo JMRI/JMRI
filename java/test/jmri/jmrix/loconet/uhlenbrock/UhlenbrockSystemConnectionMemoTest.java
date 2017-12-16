@@ -10,20 +10,17 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class UhlenbrockSystemConnectionMemoTest {
-
-    @Test
-    public void testCTor() {
-        UhlenbrockSystemConnectionMemo t = new UhlenbrockSystemConnectionMemo();
-        Assert.assertNotNull("exists",t);
-    }
+public class UhlenbrockSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        scm = new UhlenbrockSystemConnectionMemo();
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

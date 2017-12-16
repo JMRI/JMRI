@@ -62,7 +62,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
     }
 
     // Internal class, used to keep track of IP and port number
-    //  of each interface found on the LAN
+    // of each interface found on the LAN
     private static class HostAddress {
 
         private String ipNumber;
@@ -82,7 +82,6 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
         }
         a[0] = Bundle.getMessage("Manual");
         return a;
-
     }
 
     public Vector<String> getInterfaceNames() {

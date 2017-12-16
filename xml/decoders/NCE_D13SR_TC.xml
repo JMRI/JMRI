@@ -13,6 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="13" lastUpdated="20171103"/>
+  <version author="Marc N Fournier" version="12" lastUpdated="20171031"/>
   <version author="Alain Le Marchand" version="11" lastUpdated="20140628"/>
   <version author="Michael Mosher" version="10" lastUpdated="20120425"/>
   <version author="Michael Mosher" version="9" lastUpdated="20080331"/>
@@ -34,12 +36,32 @@
   <!-- Version 8 - added D408SR V3.6 which has different function mapping then V3.5 -->
   <!-- Version 9 - added Factory Direct Trains Trackmobile -->
   <!-- Version 10 - added BLI Hi-Rail pickup and track inspection sedan -->
-  <!-- Version 10 - added N12K0a and N12K0b plus a few comments/tooltips -->  
-  <decoder>
-    <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="36" comment="These are the version 3.5 decoders released after September 2003, 3.6 released July 2007">
+  <!-- Version 11 - added N12K0a and N12K0b plus a few comments/tooltips -->  
+  <!-- Version 12 - added D13NHJ and D13NHP , high Ver ID 38 (2014) -->  
+  <!-- Version 13 - add new models -->
+    <decoder>
+    <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="38" comment="These are the version 3.5 decoders released after September 2003, 3.6 released July 2007">
       <model model="D12IP" numOuts="2" numFns="5" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
         <output name="1" label="White" connection="plug" maxcurrent="40 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA"/>
+      </model>
+      <model model="D13J" numOuts="4" numFns="8" maxMotorCurrent="0.75A (peak=1.2A)" formFactor="HO">
+        <output name="1" label="White" connection="wire" maxcurrent="40 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA"/>
+        <output name="3" label="Green" connection="wire" maxcurrent="40 mA"/>
+        <output name="4" label="Violet" connection="wire" maxcurrent="40 mA"/>
+        <size length="1.03" width="0.63" height="0.185" units="inches"/>
+      </model>
+      <model model="D13NHJ" numOuts="4" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+        <output name="1" label="White" connection="wire" maxcurrent="40 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA"/>
+        <output name="3" label="Green" connection="wire" maxcurrent="40 mA"/>
+      </model>
+      <model model="D13NHP" numOuts="4" numFns="8" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+        <output name="1" label="White" connection="plug" maxcurrent="40 mA"/>
+        <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA"/>
+        <output name="3" label="Green" connection="wire" maxcurrent="40 mA"/>
+        <output name="4" label="Violet" connection="wire" maxcurrent="40 mA"/>
       </model>
       <model model="D13SR" numOuts="4" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
         <output name="1" label="White" connection="wire" maxcurrent="40 mA"/>
@@ -60,6 +82,20 @@
         <output name="3" label="Green" connection="wire" maxcurrent="40 mA"/>
         <output name="4" label="Violet" connection="wire" maxcurrent="40 mA"/>
         <size length="1.65" width="0.63" height="0.12" units="inches"/>
+      </model>
+      <model model="D13W" numOuts="4" numFns="8" maxMotorCurrent="0.75A (peak=1.2A)" formFactor="HO">
+        <output name="1" label="White" connection="wire" maxcurrent="40 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA"/>
+        <output name="3" label="Green" connection="wire" maxcurrent="40 mA"/>
+        <output name="4" label="Violet" connection="wire" maxcurrent="40 mA"/>
+        <size length="1.03" width="0.63" height="0.185" units="inches"/>
+      </model>
+      <model model="D13WP" numOuts="4" numFns="8" connector="NMRAmedium" maxMotorCurrent="0.75A (peak=1.2A)" formFactor="HO">
+        <output name="1" label="White" connection="wire" maxcurrent="40 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA"/>
+        <output name="3" label="Green" connection="wire" maxcurrent="40 mA"/>
+        <output name="4" label="Violet" connection="wire" maxcurrent="40 mA"/>
+        <size length="1.06" width="0.63" height="0.185" units="inches"/>
       </model>
       <model model="D14SR" numOuts="6" numFns="8" connector="NMRAmedium" maxMotorCurrent="1A (peak=1.5A)" formFactor="HO">
         <output name="1" label="White" connection="plug" maxcurrent="40 mA"/>
@@ -96,6 +132,14 @@
         <output name="5" label="Pad" connection="solder" maxcurrent="40 mA"/>
         <output name="6" label="Pad" connection="solder" maxcurrent="40 mA"/>
         <size length="1.08" width="0.63" height="0.275" units="inches"/>
+      </model>
+      <model model="D16MTC" numOuts="6" numFns="8" connector="21MTC" formFactor="HO">
+        <output name="1" label="Pin"/>
+        <output name="2" label="Pin"/>
+        <output name="3" label="Pin"/>
+        <output name="4" label="Pin"/>
+        <output name="5" label="Pin"/>
+        <output name="6" label="Pin"/>
       </model>
       <model model="D18SR" numOuts="8" numFns="14" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
         <output name="1" label="White" connection="plug" maxcurrent="40 mA"/>
@@ -196,6 +240,13 @@
         <output name="6" label="Pad 6" connection="wire"/>
         <size length="2.406" width="0.937" height="0.375" units="inches"/>
       </model>
+      <model model="N12-NEM" numOuts="4" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="N">
+        <output name="1" label="Pin 5" connection="wire"/>
+        <output name="2" label="Pin 6" connection="wire"/>
+        <output name="3" label="Pad 3" connection="wire"/>
+        <output name="4" label="Pad 4" connection="wire"/>
+        <size length="19.41" width="8.77" height="2.65" units="mm"/>
+      </model>
       <model model="N12SR" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
         <output name="1" label="White" connection="wire" maxcurrent="40 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA"/>
@@ -256,10 +307,30 @@
         <output name="2" label="LED 2" connection="solder"/>
         <size length="2.65" width="0.37" height="0.12" units="inches"/>        
       </model>            
+      <model model="N14K1" numOuts="4" numFns="8" formFactor="N" connector="DropIn" comment="for Ath F45,FP45,kato ES44,AC4400,C30-7,SD40-2,SD40,SD45,SD70MAC">
+        <output name="1" label="LED 1" connection="solder"/>
+        <output name="2" label="LED 2" connection="solder"/>
+        <output name="3" label="Pad 3" connection="solder"/>
+        <output name="4" label="Pad 4" connection="solder"/>
+      </model>            
+      <model model="N14K2" numOuts="4" numFns="8" formFactor="N" connector="DropIn" comment="for Kato RS2,RSC2,SD80MAC,SD90MAC, LL RS2, Wal GP18,RS2">
+        <output name="1" label="LED 1" connection="solder"/>
+        <output name="2" label="LED 2" connection="solder"/>
+        <output name="3" label="Pad 3" connection="solder"/>
+        <output name="4" label="Pad 4" connection="solder"/>
+      </model>            
       <model model="NAVO" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Atlas N-Scale VO-1000">
         <output name="1" label="LED 1" connection="solder"/>
         <output name="2" label="LED 2" connection="solder"/>
       </model>
+      <model model="NH15-44" numOuts="6" numFns="8" formFactor="N" connector="DropIn" comment="for Atlas H15-44,H16-44">
+        <output name="1" label="LED 1" connection="solder"/>
+        <output name="2" label="LED 2" connection="solder"/>
+        <output name="3" label="Pad 3" connection="solder"/>
+        <output name="4" label="Pad 4" connection="solder"/>
+        <output name="5" label="Pad 5" connection="solder"/>
+        <output name="6" label="Pad 6" connection="solder"/>
+      </model>            
       <model model="NIMF3" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Intermountain N-Scale F3">
         <output name="1" label="Pad 1" connection="solder"/>
         <output name="2" label="Pad 2" connection="solder"/>
@@ -273,6 +344,10 @@
         <output name="2" label="Pad 2" connection="solder"/>
       </model>
       <model model="NMP" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Atlas N-Scale MP15DC">
+        <output name="1" label="LED 1" connection="solder"/>
+        <output name="2" label="LED 2" connection="solder"/>
+      </model>
+      <model model="NMP15" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn">
         <output name="1" label="LED 1" connection="solder"/>
         <output name="2" label="LED 2" connection="solder"/>
       </model>

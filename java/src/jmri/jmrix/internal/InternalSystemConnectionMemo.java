@@ -43,6 +43,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         configured = true;
     }
 
+    private InternalConsistManager consistManager;
     private InternalLightManager lightManager;
     private InternalSensorManager sensorManager;
     private InternalReporterManager reporterManager;
@@ -50,6 +51,17 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     private jmri.jmrix.debugthrottle.DebugThrottleManager throttleManager;
     private jmri.managers.DefaultPowerManager powerManager;
     private jmri.progdebugger.DebugProgrammerManager programManager;
+    
+
+    public InternalConsistManager getConsistManager() {
+        if (consistManager == null) {
+            log.debug("Create InternalConsistManager by request");
+            consistManager = new InternalConsistManager();
+            // special due to ProxyManager support
+            InstanceManager.store(consistManager,jmri.ConsistManager.class);
+        }
+        return consistManager;
+    }
 
     public InternalLightManager getLightManager() {
         if (lightManager == null) {
@@ -154,7 +166,10 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (type.equals(jmri.TurnoutManager.class)) {
             return true;
         }
-        return false; // nothing, by default
+        if (type.equals(jmri.ConsistManager.class)) {
+            return true;
+        }
+        return super.provides(type);
     }
 
     @SuppressWarnings("unchecked")
@@ -191,7 +206,10 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (T.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
         }
-        return null; // nothing, by default
+        if (T.equals(jmri.ConsistManager.class)) {
+            return (T) getConsistManager();
+        }
+        return super.get(T);
     }
 
     @Override

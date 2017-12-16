@@ -257,7 +257,10 @@ To push the current branch and set the remote as upstream, use
     
     <a name="pull" id="pull"></a>
 
-      <h3>Submit a Pull Request</h3>The last step is to make your
+      <h3>Submit a Pull Request</h3>
+      
+      Once your changes are complete and ready to go, 
+      the last step is to make your
       changes, already visible in your GitHub repository, known to
       the JMRI maintainers so that one of them can pull it into the
       main JMRI repository. To do that, you create and submit a
@@ -294,28 +297,35 @@ To push the current branch and set the remote as upstream, use
         Sometimes, a maintainer will put a label on your PR
         to indicate its status. Some of the more interesting ones are:
           <ul>
-            <li>"WIP" - this is a "blue flag" indicating Work In Progress - 
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/WIP">WIP</a>" - this is a "blue flag" indicating Work In Progress - 
                 something is needed before this can be merged in. Place it on
                 a PR so that maintainers don't have to read the entire thread before doing the merge.
-            <li>"After Next Test Release" and "After Next Production Release" - placed
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/After%20Next%20Test%20Release">After Next Test Release</a>" 
+                and "<a href="https://github.com/JMRI/JMRI/labels/After%20Next%20Production%20Release">After Next Production Release</a>" - placed
                 when a PR should be merged later for some reason
-            <li>"Add To Next Release" - needs to be merged before the next release is built
-            <li>"dev/test/publish infrastucture" - there's a lot of automation around building
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/Add%20to%20Next%20Release">Add To Next Release</a>" - needs to be merged before the next release is built
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/dev%2Ftest%2Fpublish%20infrastructure">dev/test/publish infrastucture</a>"
+                - there's a lot of automation around building
                 and publishing JMRI.  This change is to that infrastructure, not the 
                 released JMRI code itself.
-            <li>"Cleanup" - a change that improves the code, but doesn't really affect JMRI users directly
-            <li>"Support Request" - A request for help figuring something out, typically found in the Issues section.
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/Contribution">Contribution</a>" - On an Issue, it indicates that the Issue contains a contributed 
+                file that some maintainer should 
+                <a href="GitFAQ.shtml#SFnetPatches">merge via a PR</a>.
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/Cleanup">Cleanup</a>" - a change that improves the code, but doesn't really affect JMRI users directly
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/Support%20Request">Support Request</a>" - A request for help figuring something out, typically found in the Issues section.
                                 Typically these items are closed if resolved, 
                                 or become "Enhancement" or "Bug" items.
-            <li>"Enhancement" - request that somebody make JMRI better in some way.
-            <li>"Bug" - a problem that's bitten at least one person.
-            <li>"Duplicate", "Invalid", "Won't Fix" - items that have (typically) been closed
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/Enhancement">Enhancement</a>" - request that somebody make JMRI better in some way.
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/Bug">Bug</a>" - a problem that's bitten at least one person.
+            <li>"<a href="https://github.com/JMRI/JMRI/labels/Duplicate">Duplicate</a>", 
+                "<a href="https://github.com/JMRI/JMRI/labels/Invalid">Invalid</a>", 
+                "<a href="https://github.com/JMRI/JMRI/labels/Won%27t%20Fix">Won't Fix</a>" - items that have (typically) been closed
                                 without action.  Issues and PRs never go away, but these
                                 labels mark them as not intended for further consideration.
           </ul>
         If you have any questions about the use of those on your PR, 
         you can add a comment to the PR and somebody will get back to you.
-        <li>If there are any problems, you can make additional edits, 
+        <li>If there are any problems found in the CI process, you can make additional edits, 
         commit those files to the <u>same</u> branch, and push them 
         to your repository.  That'll get them included in an updated 
         version of your PR automatically, rerun the tests, etc.

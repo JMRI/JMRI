@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement a Turnout via Ecos communications.
- * <P>
+ * Implement a Turnout via ECoS communications.
+ * <p>
  * This object doesn't listen to the Ecos communications. This is because it
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
@@ -43,9 +43,9 @@ public class EcosTurnout extends AbstractTurnout
         this.prefix = prefix;
         tc = etc;
         tm = etm;
-        /*All messages from the Ecos regarding turnout status updates, 
-         are initally handled by the turnout manager, this then forwards the message
-         on to the correct Turnout*/
+        /* All messages from the ECoS regarding turnout status updates
+         are initally handled by the TurnoutManager, this then forwards the message
+         on to the correct Turnout */
         
         // update feedback modes
         _validFeedbackTypes |= MONITORING | EXACT | INDIRECT;
@@ -295,9 +295,10 @@ public class EcosTurnout extends AbstractTurnout
 
     }
 
-    // to listen for status changes from Ecos system
+    // Listen for status changes from ECoS system.
     int newstate = UNKNOWN;
     int newstateext = UNKNOWN;
+
     @Override
     public void reply(EcosReply m) {
 
@@ -376,7 +377,7 @@ public class EcosTurnout extends AbstractTurnout
                         }
                     }
                     if (m.getReplyType().equals("set")) {
-                       // wait to set the state until ECOS tells us to (by an event with the contents "switching[0]")
+                       // wait to set the state until ECoS tells us to (by an event with the contents "switching[0]")
                     } else {
                         if (masterObjectNumber) {
                             newKnownState(newstate);

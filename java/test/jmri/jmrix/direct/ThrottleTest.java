@@ -361,9 +361,10 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new ThrottleManager());
         JUnitUtil.initDebugCommandStation();
-        instance = new Throttle(5);
+        jmri.CommandStation cs = jmri.InstanceManager.getDefault(jmri.CommandStation.class);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new ThrottleManager(cs));
+        instance = new Throttle(5,cs);
     }
 
     @After

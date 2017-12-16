@@ -486,7 +486,10 @@
           <code>"abc-2015-09-14"</code>,
           <code>"abc-next-cool-thing"</code>, and
           <code>"abc-patch-NNNN"</code> are all fine. That way, we
-          know it's you, and you can sort out the rest.</p>
+          know it's you, and you can sort out the rest.
+          Keep the name short &amp; simple enough to easily type (because people
+          will sometimes have to), and limit it to letters, numbers and 
+          use the "-" instead of spaces; that'll make it easier to work with.</p>
 
           <ul>
             <li>Using git:
@@ -611,11 +614,15 @@
             repository.
 
 <pre style="font-family: monospace;">
-                git pull https://github.com/arnie/JMRI.git arnie-great-tool
+                git remote add https://github.com/arnie/JMRI.git arnie
+
+                git fetch arnie arnie-great-tool
                 git checkout arnie-great-tool
 </pre>
-              where the 1st part of the "pull" is the
-              URL for Arnie's repository.
+              where the 1st part of the "remote add" is the
+              URL for Arnie's repository, and you just have to 
+              do that command once to define "arnie" as an alias
+              you can use in "git fetch".
             </li>
 
             <li>Now Bill can work with that code, and even change
@@ -626,6 +633,9 @@
                 git commit -m"Fixed a bug in sternerstat handling"
                 git push
 </pre>
+              which commits the changes and pushes them up
+              into Bill's repository on Github.
+              <p>
               Then Arnie can merge those changes into
               his own copy with:
 
@@ -923,16 +933,14 @@
         to get back to where you started.    
         </dd>
 
-        <dt id="SFnetPatches">Handling a SF.net Patch</dt>
+        <dt id="SFnetPatches">Handling a GitHub contributed file or SF.net Patch</dt>
 
         <dd>
-          Eventually, we'll move from using the <a href=
+          Sometimes people contribute files via the <a href=
           "https://sourceforge.net/p/jmri/patches/">SF.net issue
-          tracker</a> to <a href=
+          tracker</a> or a <a href=
           "https://guides.github.com/features/issues/">GitHub
-          issues</a> to handle code that people want to contribute.
-          In the meantime, here's a suggested way to handle a
-          SF.net patch.
+          Issue</a>. This discussion talks about how to handle those.
 
           <ol>
             <li>In your local repository, create a branch to hold

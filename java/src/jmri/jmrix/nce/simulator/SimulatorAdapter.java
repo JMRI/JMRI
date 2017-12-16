@@ -105,7 +105,7 @@ public class SimulatorAdapter extends NcePortController implements
 
     // streams to share with user class
     private DataOutputStream pout = null; // this is provided to classes who want to write to us
-    private DataInputStream pin = null; // this is provided to class who want data from us
+    private DataInputStream pin = null; // this is provided to classes who want data from us
 
     // internal ends of the pipes
     private DataOutputStream outpipe = null; // feed pin
@@ -140,7 +140,7 @@ public class SimulatorAdapter extends NcePortController implements
     }
 
     /**
-     * set up all of the other objects to simulate operation with an NCE command
+     * Set up all of the other objects to simulate operation with an NCE command
      * station.
      */
     @Override
@@ -164,8 +164,6 @@ public class SimulatorAdapter extends NcePortController implements
 
         this.getSystemConnectionMemo().configureManagers();
 
-        jmri.jmrix.nce.ActiveFlag.setActive();
-
         // start the simulator
         sourceThread = new Thread(this);
         sourceThread.setName("Nce Simulator");
@@ -173,7 +171,7 @@ public class SimulatorAdapter extends NcePortController implements
         sourceThread.start();
     }
 
-    // base class methods for the NcePortController interface
+    // Base class methods for the NcePortController interface.
     @Override
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {
@@ -211,8 +209,8 @@ public class SimulatorAdapter extends NcePortController implements
 
     @Override
     public void run() { // start a new thread
-        // this thread has one task.  It repeatedly reads from the input pipe
-        // and writes an appropriate response to the output pipe.  This is the heart
+        // This thread has one task.  It repeatedly reads from the input pipe
+        // and writes an appropriate response to the output pipe. This is the heart
         // of the NCE command station simulation.
         // report status?
         if (log.isInfoEnabled()) {
@@ -274,8 +272,10 @@ public class SimulatorAdapter extends NcePortController implements
         return msg;
     }
 
-    // generateReply is the heart of the simulation.  It translates an 
-    // incoming NceMessage into an outgoing NceReply.
+    /**
+     * This is the heart of the simulation. It translates an
+     * incoming NceMessage into an outgoing NceReply.
+     */
     private NceReply generateReply(NceMessage m) {
         NceReply reply = new NceReply(this.getSystemConnectionMemo().getNceTrafficController());
         int command = m.getElement(0);
@@ -349,6 +349,11 @@ public class SimulatorAdapter extends NcePortController implements
         return reply;
     }
 
+    /**
+     * Write reply to output.
+     *
+     * @param r reply on message
+     */
     private void writeReply(NceReply r) {
         if (r == null) {
             return;
@@ -450,6 +455,12 @@ public class SimulatorAdapter extends NcePortController implements
         return reply;
     }
 
+    /**
+     * Extract item address from a message.
+     *
+     * @param m received message
+     * @return address from the message
+     */
     private int getNceAddress(NceMessage m) {
         int addr = m.getElement(1);
         addr = addr * 256;

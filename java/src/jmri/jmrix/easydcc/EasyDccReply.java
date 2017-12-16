@@ -34,9 +34,11 @@ public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * Extracts Read-CV returned value from a message. Returns -1 if message
-     * can't be parsed. Expects a message of the formnat "CVnnnvv" where vv is
+     * Extracts Read-CV returned value from a message.
+     * Expects a message of the format "CVnnnvv" where vv is
      * the hexadecimal value or "Vnvv" where vv is the hexadecimal value.
+     *
+     * @return -1 if message can't be parsed
      */
     @Override
     public int value() {
@@ -48,7 +50,7 @@ public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
             // integer value of 3rd, 4th digits in hex
             index = 2;  // 2nd position is index 2
         } else {
-            log.warn("Did not find recognizable format: " + this.toString());
+            log.warn("Did not find recognizable format: {}", this.toString());
         }
         String s1 = "" + (char) getElement(index);
         String s2 = "" + (char) getElement(index + 1);
@@ -67,6 +69,3 @@ public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
     private final static Logger log = LoggerFactory.getLogger(EasyDccReply.class);
 
 }
-
-
-

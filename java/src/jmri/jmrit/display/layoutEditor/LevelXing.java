@@ -979,7 +979,6 @@ public class LevelXing extends LayoutTrack {
     }
 
     JPopupMenu popup = null;
-    LayoutEditorTools tools = null;
 
     /**
      * {@inheritDoc}
@@ -992,7 +991,6 @@ public class LevelXing extends LayoutTrack {
         } else {
             popup = new JPopupMenu();
         }
-        tools = layoutEditor.getLETools();
         if (layoutEditor.isEditable()) {
             JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LevelCrossing")) + getName());
             jmi.setEnabled(false);
@@ -1107,14 +1105,16 @@ public class LevelXing extends LayoutTrack {
                 AbstractAction ssaa = new AbstractAction(Bundle.getMessage("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        tools = layoutEditor.getLETools();
                         // bring up signals at level crossing tool dialog
-                        tools.setSignalsAtLevelXingFromMenu(LevelXing.this,
-                                layoutEditor.signalIconEditor, layoutEditor.signalFrame);
+                        layoutEditor.getLETools().
+                                setSignalsAtLevelXingFromMenu(LevelXing.this,
+                                        layoutEditor.signalIconEditor,
+                                        layoutEditor.signalFrame);
                     }
                 };
                 JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
-                if (tools.addLevelXingSignalHeadInfoToMenu(LevelXing.this, jm)) {
+                if (layoutEditor.getLETools().
+                        addLevelXingSignalHeadInfoToMenu(LevelXing.this, jm)) {
                     jm.add(ssaa);
                     popup.add(jm);
                 } else {
@@ -1172,15 +1172,19 @@ public class LevelXing extends LayoutTrack {
                 popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        tools = layoutEditor.getLETools();
-                        tools.setSignalMastsAtLevelXingFromMenu(LevelXing.this, boundaryBetween, layoutEditor.signalFrame);
+                        layoutEditor.getLETools().
+                                setSignalMastsAtLevelXingFromMenu(
+                                        LevelXing.this, boundaryBetween,
+                                        layoutEditor.signalFrame);
                     }
                 });
                 popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        tools = layoutEditor.getLETools();
-                        tools.setSensorsAtLevelXingFromMenu(LevelXing.this, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
+                        layoutEditor.getLETools().setSensorsAtLevelXingFromMenu(
+                                LevelXing.this, boundaryBetween,
+                                layoutEditor.sensorIconEditor,
+                                layoutEditor.sensorFrame);
                     }
                 });
             }
@@ -1534,7 +1538,7 @@ public class LevelXing extends LayoutTrack {
                     }
                 }
             } else {    // (#3)
-                log.info("•New block ('{}') trackNameSets", theBlockName);
+                log.info("-New block ('{}') trackNameSets", theBlockName);
                 TrackNameSets = new ArrayList<>();
                 blockNamesToTrackNameSetsMap.put(theBlockName, TrackNameSets);
             }
@@ -1543,7 +1547,7 @@ public class LevelXing extends LayoutTrack {
                 TrackNameSets.add(TrackNameSet);
             }
             if (TrackNameSet.add(getName())) {
-                log.info("•    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
+                log.info("-    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
             }
             theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
         }
@@ -1562,7 +1566,7 @@ public class LevelXing extends LayoutTrack {
             if ((blockNameAC != null) && (blockNameAC.equals(blockName))) {
                 // if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
-                    log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                    log.info("-    Add track '{}'for block '{}'", getName(), blockName);
                 }
                 // it's time to play... flood your neighbours!
                 if (connectA != null) {
@@ -1576,7 +1580,7 @@ public class LevelXing extends LayoutTrack {
             if ((blockNameBD != null) && (blockNameBD.equals(blockName))) {
                 // if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
-                    log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                    log.info("-    Add track '{}'for block '{}'", getName(), blockName);
                 }
                 // it's time to play... flood your neighbours!
                 if (connectB != null) {
@@ -1598,4 +1602,5 @@ public class LevelXing extends LayoutTrack {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LevelXing.class);
+
 }

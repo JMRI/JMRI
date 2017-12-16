@@ -10,12 +10,14 @@ import javax.swing.JMenu;
  */
 public class OakTreeMenu extends JMenu {
 
-    public OakTreeMenu(String name) {
-        this();
+    private OakTreeSystemConnectionMemo _memo = null;
+
+    public OakTreeMenu(String name,OakTreeSystemConnectionMemo memo) {
+        this(memo);
         setText(name);
     }
 
-    public OakTreeMenu() {
+    public OakTreeMenu(OakTreeSystemConnectionMemo memo) {
 
         super();
 
@@ -23,8 +25,8 @@ public class OakTreeMenu extends JMenu {
 
         setText(rb.getString("MenuOakTree"));
 
-        add(new jmri.jmrix.oaktree.serialmon.SerialMonAction(rb.getString("MenuItemCommandMonitor")));
-        add(new jmri.jmrix.oaktree.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand")));
+        add(new jmri.jmrix.oaktree.serialmon.SerialMonAction(rb.getString("MenuItemCommandMonitor"),_memo));
+        add(new jmri.jmrix.oaktree.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand"),_memo));
 
     }
 

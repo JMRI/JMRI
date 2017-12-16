@@ -2,12 +2,13 @@ package jmri.jmrix.tmcc;
 
 import jmri.util.StringUtil;
 
-
 /**
- * Contains the data payload of a TMCC serial reply packet. Note that _only_ the
- * payload.
+ * Contains the data payload of a TMCC serial reply packet.
+ * <p>
+ * Note that <i>only</i> the payload, not the header or trailer, nor the padding
+ * DLE characters are included. These are added during transmission.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 

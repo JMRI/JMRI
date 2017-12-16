@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a XpaPacketGenFrame object
+ * Swing action to create and register an XpaPacketGenFrame object
  *
  * @author	Paul Bender Copyright (C) 2004
  */
@@ -30,5 +30,7 @@ public class XpaPacketGenAction extends AbstractAction {
         }
         f.setVisible(true);
     }
+
     private final static Logger log = LoggerFactory.getLogger(XpaPacketGenAction.class);
+
 }

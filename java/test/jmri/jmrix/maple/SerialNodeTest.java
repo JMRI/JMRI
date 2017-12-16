@@ -15,24 +15,25 @@ import org.junit.Assert;
  */
 public class SerialNodeTest extends TestCase {
 
-    private SerialNode b = new SerialNode();
+    private SerialNode b = null;
+    private SerialTrafficController tc = null;
 
     public void testConstructor1() {
         Assert.assertEquals("check default ctor address", 1, b.getNodeAddress());
     }
 
     public void testConstructor2() {
-        SerialNode c = new SerialNode(3, 0);
+        SerialNode c = new SerialNode(3, 0,tc);
         Assert.assertEquals("check ctor address", 3, c.getNodeAddress());
     }
 
     public void testConstructor3() {
-        SerialNode d = new SerialNode(4, 0);
+        SerialNode d = new SerialNode(4, 0,tc);
         Assert.assertEquals("check ctor address", 4, d.getNodeAddress());
     }
 
     public void testAccessors() {
-        SerialNode n = new SerialNode(2, 0);
+        SerialNode n = new SerialNode(2, 0,tc);
         n.setNodeAddress(7);
         Assert.assertEquals("check address", 7, n.getNodeAddress());
     }
@@ -64,6 +65,8 @@ public class SerialNodeTest extends TestCase {
     @Override
     protected void setUp() {
         JUnitUtil.setUp();
+        tc = new SerialTrafficControlScaffold();
+        b = new SerialNode(tc);
     }
 
     @Override

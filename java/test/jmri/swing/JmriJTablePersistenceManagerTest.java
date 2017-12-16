@@ -1,6 +1,5 @@
 package jmri.swing;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import apps.tests.Log4JFixture;
@@ -236,14 +235,14 @@ public class JmriJTablePersistenceManagerTest {
         String name = "test name";
         JTable table = testTable(name);
         JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
-        Assert.assertFalse(instance.getDirty());
+        Assert.assertFalse(instance.isDirty());
         instance.cacheState(table);
-        Assert.assertTrue(instance.getDirty());
+        Assert.assertTrue(instance.isDirty());
         Assert.assertNotNull(instance.getColumnsMap(name));
         instance.setDirty(false);
         instance.clearState(table);
         Assert.assertNull(instance.getColumnsMap(name));
-        Assert.assertTrue(instance.getDirty());
+        Assert.assertTrue(instance.isDirty());
     }
 
     /**
@@ -341,23 +340,6 @@ public class JmriJTablePersistenceManagerTest {
     }
 
     /**
-     * Test of getPersistedState method, of class JmriJTablePersistenceManager.
-     */
-    @Test
-    @Ignore
-    public void testGetPersistedState() {
-        System.out.println("getPersistedState");
-        String table = "";
-        String column = "";
-        JmriJTablePersistenceManager instance = new JmriJTablePersistenceManager();
-        JmriJTablePersistenceManager.TableColumnPreferences expResult = null;
-        JmriJTablePersistenceManager.TableColumnPreferences result = instance.getPersistedState(table, column);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of setPersistedState method, of class JmriJTablePersistenceManager.
      */
     @Test
@@ -416,8 +398,8 @@ public class JmriJTablePersistenceManagerTest {
     private final static class JmriJTablePersistenceManagerSpy extends JmriJTablePersistenceManager {
 
         @Override
-        public boolean getDirty() {
-            return super.getDirty();
+        public boolean isDirty() {
+            return super.isDirty();
         }
 
         @Override

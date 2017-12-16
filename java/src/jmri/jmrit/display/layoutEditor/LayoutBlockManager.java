@@ -221,7 +221,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @Nullable
     public LayoutBlock getBlockWithSensorAssigned(@Nullable Sensor s) {
         LayoutBlock result = null;
-        
+
         java.util.Iterator<String> iter = getSystemNameList().iterator();
         while (iter.hasNext()) {
             String sName = iter.next();
@@ -653,7 +653,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                             return lt.getSignalHead(LayoutTurnout.POINTA2);
                         }
                     } else if (state == Turnout.CLOSED) {
-                        LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(), panel);
+                        LayoutTurnout tLinked = panel.getFinder().findLayoutTurnoutByTurnoutName(lt.getLinkedTurnoutName());
                         state = tLinked.getTurnout().getKnownState();
 
                         if (state == Turnout.CLOSED) {
@@ -839,7 +839,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
 
                 //There are two signals here get linked turnout and decide which to return from linked turnout state
-                LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(), panel);
+                LayoutTurnout tLinked = panel.getFinder().findLayoutTurnoutByTurnoutName(lt.getLinkedTurnoutName());
                 int state = tLinked.getTurnout().getKnownState();
 
                 if (state == Turnout.CLOSED) {
@@ -872,7 +872,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                     }
                 } else {
                     //signal is at the linked turnout - the throat of the 3-way turnout
-                    LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(), panel);
+                    LayoutTurnout tLinked = panel.getFinder().findLayoutTurnoutByTurnoutName(lt.getLinkedTurnoutName());
 
                     if (lt.getContinuingSense() == Turnout.CLOSED) {
                         return tLinked.getSignalHead(LayoutTurnout.POINTA);
@@ -1029,7 +1029,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
 
                 //There are two signals here get linked turnout and decide which to return from linked turnout state
-                LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(), panel);
+                LayoutTurnout tLinked = panel.getFinder().findLayoutTurnoutByTurnoutName(lt.getLinkedTurnoutName());
                 int state = tLinked.getTurnout().getKnownState();
 
                 if (state == Turnout.CLOSED) {
@@ -1070,7 +1070,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                     }
                 } else {
                     //signal is at the linked turnout - the throat of the 3-way turnout
-                    LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(), panel);
+                    LayoutTurnout tLinked = panel.getFinder().findLayoutTurnoutByTurnoutName(lt.getLinkedTurnoutName());
 
                     if (lt.getContinuingSense() == Turnout.CLOSED) {
                         if (tLinked.getSignalHead(LayoutTurnout.POINTA3) == null) {
@@ -1304,20 +1304,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }	//switch
         return null;
     }	//getFacingSignalHead
-
-    private LayoutTurnout getLayoutTurnoutFromTurnoutName(String turnoutName, LayoutEditor panel) {
-        Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
-
-        if (t == null) {
-            return null;
-        }
-        for (LayoutTurnout lt : panel.getLayoutTurnouts()) {
-            if (lt.getTurnout() == t) {
-                return lt;
-            }
-        }
-        return null;
-    }	//getLayoutTurnoutFromTurnoutName
 
     /**
      * Method to return the named bean of either a Sensor or signalmast facing
@@ -1672,7 +1658,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
         if (cType == LayoutTrack.TRACK) {
             //block boundary is at an Anchor Point
-//            LayoutEditorTools tools = panel.getLETools(); //TODO: Dead-code strip this
             PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr, (TrackSegment) connected);
 
             boolean block1IsWestEnd = LayoutEditorTools.isAtWestEndOfAnchor(tr, p);
@@ -1956,8 +1941,35 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         return getProtectingBlocksByBean(nb, panel);
     }	//getProtectingBlocksByNamedBean
 
+    /**
+     * If the panel variable is null, search all LE panels.
+     * This was added to support multi panel entry/exit.
+     * @param bean The sensor, mast or head to be located.
+     * @param panel The panel to search.  If null, search all LE panels.
+     * @return a list of protected layout blocks.
+     */
     @Nonnull
     private List<LayoutBlock> getProtectingBlocksByBean(
+            @Nullable NamedBean bean,
+            @Nullable LayoutEditor panel) {
+        if (panel == null) {
+            List<LayoutEditor> panels = jmri.jmrit.display.PanelMenu.instance().
+                    getLayoutEditorPanelList();
+            List<LayoutBlock> protectingBlocks = new ArrayList<>();
+            for (LayoutEditor p : panels) {
+                protectingBlocks = getProtectingBlocksByBeanByPanel(bean, p);
+                if (!protectingBlocks.isEmpty()) {
+                    break;
+                }
+            }
+            return protectingBlocks;
+        } else {
+            return getProtectingBlocksByBeanByPanel(bean, panel);
+        }
+    }
+
+    @Nonnull
+    private List<LayoutBlock> getProtectingBlocksByBeanByPanel(
             @Nullable NamedBean bean,
             @Nullable LayoutEditor panel) {
         List<LayoutBlock> protectingBlocks = new ArrayList<>();
@@ -2197,9 +2209,37 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         return getFacingBlockByBean(signalMast, panel);
     }
 
+    /**
+     * If the panel variable is null, search all LE panels.
+     * This was added to support multi panel entry/exit.
+     * @param bean The sensor, mast or head to be located.
+     * @param panel The panel to search.  Search all LE panels if null.
+     * @return the facing layout block.
+     */
     @CheckReturnValue
     @Nullable
     private LayoutBlock getFacingBlockByBean(
+            @Nonnull NamedBean bean,
+            LayoutEditor panel) {
+        if (panel == null) {
+            List<LayoutEditor> panels = jmri.jmrit.display.PanelMenu.instance().
+                    getLayoutEditorPanelList();
+            LayoutBlock returnBlock = null;
+            for (LayoutEditor p : panels) {
+                returnBlock = getFacingBlockByBeanByPanel(bean, p);
+                if (returnBlock != null) {
+                    break;
+                }
+            }
+            return returnBlock;
+        } else {
+            return getFacingBlockByBeanByPanel(bean, panel);
+        }
+    }
+
+    @CheckReturnValue
+    @Nullable
+    private LayoutBlock getFacingBlockByBeanByPanel(
             @Nonnull NamedBean bean,
             @Nonnull LayoutEditor panel) {
         PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundBean(bean);

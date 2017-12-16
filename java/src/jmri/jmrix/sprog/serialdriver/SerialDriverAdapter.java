@@ -20,10 +20,10 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
- * <P>
+ * <p>
  * This connects an Sprog command station via a serial com port. Also used for
  * the USB SPROG, which appears to the computer as a serial port.
- * <P>
+ * <p>
  * The current implementation only handles the 9,600 baud rate, and does not use
  * any other options at configuration time.
  *
@@ -35,7 +35,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
 
     public SerialDriverAdapter() {
         super(new SprogSystemConnectionMemo(SprogMode.SERVICE));
-        //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
+        // Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
         this.baudRate = 9600;
         this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogProgrammerTitle"));
         // create the traffic controller
@@ -152,7 +152,6 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
             log.error("Unexpected exception while setting COM port handshake mode trace follows: " + ex);
             ex.printStackTrace();
         }
-
     }
 
     // base class methods for the SprogPortController interface
@@ -208,12 +207,6 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         this.getSystemConnectionMemo().configureCommandStation();
         this.getSystemConnectionMemo().configureManagers();
 
-        if (this.getSystemConnectionMemo().getSprogMode() == SprogMode.OPS) {
-            jmri.jmrix.sprog.ActiveFlagCS.setActive();
-        } else {
-            jmri.jmrix.sprog.ActiveFlag.setActive();            
-        }
-        
         if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals(Bundle.getMessage("PowerStateOn"))) {
             try {
                 this.getSystemConnectionMemo().getPowerManager().setPower(jmri.PowerManager.ON);

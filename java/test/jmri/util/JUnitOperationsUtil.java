@@ -1,6 +1,7 @@
 package jmri.util;
 
 import java.io.File;
+import java.util.ResourceBundle; // for access operations keys directly.
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -103,6 +104,8 @@ public class JUnitOperationsUtil {
      * Populate the Operations Managers with a common set of data for tests.
      */
     public static void initOperationsData() {
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.JmritOperationsBundle");
+
 
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
@@ -114,7 +117,7 @@ public class JUnitOperationsUtil {
 
         // register the car and engine types used
         ct.addName("Boxcar");
-        ct.addName("Caboose");
+        ct.addName(rb.getString("Caboose"));
         ct.addName("Flat");
         et.addName("Diesel");
 
@@ -155,7 +158,7 @@ public class JUnitOperationsUtil {
 
         // Set up two cabooses and six box cars
         Car c1 = new Car("CP", "C10099");
-        c1.setTypeName("Caboose");
+        c1.setTypeName(rb.getString("Caboose"));
         c1.setLength("32");
         c1.setMoves(23);
         c1.setOwner("AT");
@@ -164,7 +167,7 @@ public class JUnitOperationsUtil {
         cmanager.register(c1);
 
         Car c2 = new Car("CP", "C20099");
-        c2.setTypeName("Caboose");
+        c2.setTypeName(rb.getString("Caboose"));
         c2.setLength("32");
         c2.setMoves(54);
         c2.setOwner("DAB");
@@ -302,6 +305,7 @@ public class JUnitOperationsUtil {
 
         // Place Cabooses on Staging tracks
         c1.setLocation(l1, l1s1);
+        c2.setLocation(l1, l1s1);
 
         // Define the route.
         Route route1 = new Route("1", "Southbound Main Route");

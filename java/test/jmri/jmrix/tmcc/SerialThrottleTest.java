@@ -14,7 +14,7 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",instance);
+        Assert.assertNotNull("exists", instance);
     }
 
     /**
@@ -253,9 +253,11 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        SerialTrafficController tcis = new SerialTrafficControlScaffold();
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new SerialThrottleManager());
-        instance = new SerialThrottle(new jmri.DccLocoAddress(1024,true));
+        // infrastructure objects
+        SerialTrafficController tcis = new SerialTrafficControlScaffold(null);
+        TmccSystemConnectionMemo memo = new TmccSystemConnectionMemo(tcis);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, new SerialThrottleManager(memo));
+        instance = new SerialThrottle(memo, new jmri.DccLocoAddress(1024, true));
     }
 
     @After

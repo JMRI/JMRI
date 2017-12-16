@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>Basic</name>
+    <name xml:lang="ca">Bàsic</name>
+    <name xml:lang="it">Basic</name>
+    <name xml:lang="de">Basis</name>
+    <name xml:lang="cs">Základní</name>
+    <name xml:lang="nl">Basis</name>
+    <column>
+        <label>
+            <text>&lt;html&gt;
+                &lt;h2&gt;NCE Light-It/Illuminator Decoders Important Information&lt;/h2&gt;&lt;
+                &lt;ul&gt;
+                    &lt;li&gt;Programming Track Mode cannot be used with these decoders.
+                        &lt;ul&gt;
+                            &lt;li&gt;Programming On Main must be used.&lt;/li&gt;
+                            &lt;li&gt;Readback of CV values is not possible.&lt;/li&gt;
+                        &lt;/ul&gt;
+                    &lt;/li&gt;
+                    &lt;li&gt;Before programming:
+                        &lt;ul&gt;
+                            &lt;li&gt;
+                                It is necessary to uncheck Preferences -> Roster -> Programmer ->
+                                &lt;br&gt;&quot;Allow caching&#8230;&quot; and
+                                &quot;&#8230;confirm CV writes&#8230;&quot;.
+                            &lt;/li&gt;
+                            &lt;li&gt;Set the decoder to the correct mode and address as per the NCE documentation.&lt;/li&gt;
+                            &lt;li&gt;Configure this pane to have the matching mode and address.&lt;/li&gt;
+                            &lt;li&gt;&lt;strong&gt;Save&lt;/strong&gt; and &lt;strong&gt;Close&lt;/strong&gt; the roster entry.&lt;/li&gt;
+                            &lt;li&gt;Reopen the roster entry in Programming On Main.&lt;/li&gt;
+                        &lt;/ul&gt;
+                    &lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/html&gt;</text>
+        </label>
+        <group include="Light-It - Accessory mode,Illuminator - Accessory mode">
+            <label>
+                <text>&lt;html&gt;
+                    &lt;ul&gt;
+                        &lt;li&gt;
+                        Some DCC systems cannot use Accessory Programming On Main via JMRI.
+                            &lt;br&gt;&lt;br&gt;
+                            A workaround procedure is available. See &#8230;
+                        &lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/html&gt;</text>
+            </label>
+        </group>
+        <group include="Light-It - Signal mode,Illuminator - Signal mode">
+            <label>
+                <text>&lt;html&gt;
+                    &lt;ul&gt;
+                        &lt;li&gt;
+                        Some DCC systems cannot use Signal Programming On Main via JMRI.
+                            &lt;br&gt;(Unfortunately this includes the NCE Power Cab &amp; SB3/5 systems.)
+                            &lt;br&gt;&lt;br&gt;
+                            A workaround procedure is available. See &#8230;
+                        &lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/html&gt;</text>
+            </label>
+        </group>
+        <group>
+            <qualifier>
+                <variableref>Address Format</variableref>
+                <relation>exists</relation>
+                <value>1</value>
+            </qualifier>
+            <label>
+                <text> </text>
+            </label>
+            <dccaddress/>
+        </group>
+        <label>
+            <text> </text>
+        </label>
+        <group>
+    <column>
+        <display item="Short Address" tooltip="Sets the primary (short) address">
+            <tooltip xml:lang="it">Indirizzo Corto</tooltip>
+            <tooltip xml:lang="ca">Establir adreça primària (curta)</tooltip>
+            <tooltip xml:lang="de">Definiert die Kurze Adresse</tooltip>
+            <tooltip xml:lang="cs">Nastavit primární (krátkou) adresu</tooltip>
+            <tooltip xml:lang="nl">Bepaalt het Korte Adres</tooltip>
+        </display>
+        <display item="Long Address" tooltip="Sets the extended (long) address">
+            <tooltip xml:lang="it">Imposta l'indirizzo esteso</tooltip>
+            <tooltip xml:lang="ca">Establir adreça llarga</tooltip>
+            <tooltip xml:lang="de">Definiert die Lange Adresse</tooltip>
+            <tooltip xml:lang="cs">Nastavit rozšířenou (dlouhou) adresu</tooltip>
+            <tooltip xml:lang="nl">Bepaalt het Lang Adres</tooltip>
+        </display>
+        <display item="Address Format" tooltip="Determines whether loco will use short or long address">
+            <tooltip xml:lang="it">Determina se la Loco usa l'indirizzo corto o quello esteso</tooltip>
+            <tooltip xml:lang="ca">Estableix si es fa servir adreça curta o llarga</tooltip>
+            <tooltip xml:lang="de">Lok benutzt lange oder kurze Adresse</tooltip>
+            <tooltip xml:lang="cs">Určuje zdali bude lokomotiva používat krátkou nebo dlouhou adresu</tooltip>
+            <tooltip xml:lang="nl">Bepaalt of Loc het lange of het korte adres gebruikt</tooltip>
+        </display>
+    </column>
+        </group>
+    </column>
+</pane>

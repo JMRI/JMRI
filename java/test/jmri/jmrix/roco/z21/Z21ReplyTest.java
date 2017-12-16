@@ -140,20 +140,20 @@ public class Z21ReplyTest {
     public void railComAddress(){
         byte msg[]={(byte)0x1E,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x20,(byte)0x21,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
         Z21Reply m = new Z21Reply(msg,30);
-        Assert.assertTrue("RailCom Address",(new jmri.DccLocoAddress(1,false)).equals(m.getRailComLocoAddress(0)));
-        Assert.assertTrue("RailCom Address 2",(new jmri.DccLocoAddress(8225,true)).equals(m.getRailComLocoAddress(1)));
+        Assert.assertTrue("RailCom Address",(new jmri.DccLocoAddress(256,true)).equals(m.getRailComLocoAddress(0)));
+        Assert.assertTrue("RailCom Address 2",(new jmri.DccLocoAddress(8480,true)).equals(m.getRailComLocoAddress(1)));
     }
 
     @Test
     public void railComRcvCount(){
-        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
+        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
         Z21Reply m = new Z21Reply(msg,17);
         Assert.assertEquals("RailCom Rcv Count",1,m.getRailComRcvCount(0));
     }
 
     @Test
     public void railComErrCount(){
-        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
+        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x06,(byte)0x07,(byte)0x08};
         Z21Reply m = new Z21Reply(msg,17);
         Assert.assertEquals("RailCom Err Count",5,m.getRailComErrCount(0));
     }
@@ -178,6 +178,72 @@ public class Z21ReplyTest {
         Z21Reply m = new Z21Reply(msg,17);
         Assert.assertEquals("RailCom Temp",8,m.getRailComTemp(0));
     }
+
+    //Test System Data related methods.
+    @Test
+    public void systemDataChangedReply(){
+        byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
+        Z21Reply m = new Z21Reply(msg,20);
+        Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
+        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
+        m = new Z21Reply(msg1,7);
+        Assert.assertFalse("Not System Data Changed Reply",m.isSystemDataChangedReply());
+    }
+
+    @Test
+    public void mainCurrentFromSystemDataChangedReply(){
+        byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
+        Z21Reply m = new Z21Reply(msg,20);
+        Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
+        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
+        Assert.assertEquals("Main Current",256,m.getSystemDataMainCurrent());
+    }
+
+    @Test
+    public void progCurrentFromSystemDataChangedReply(){
+        byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
+        Z21Reply m = new Z21Reply(msg,20);
+        Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
+        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
+        Assert.assertEquals("Programming Track Current",0,m.getSystemDataProgCurrent());
+    }
+
+    @Test
+    public void filteredMainCurrentFromSystemDataChangedReply(){
+        byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
+        Z21Reply m = new Z21Reply(msg,20);
+        Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
+        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
+        Assert.assertEquals("Filtered Main Current",256,m.getSystemDataFilteredMainCurrent());
+    }
+
+    @Test
+    public void temperatureFromSystemDataChangedReply(){
+        byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
+        Z21Reply m = new Z21Reply(msg,20);
+        Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
+        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
+        Assert.assertEquals("Temperature",0,m.getSystemDataTemperature());
+    }
+
+    @Test
+    public void supplyVoltageFromSystemDataChangedReply(){
+        byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
+        Z21Reply m = new Z21Reply(msg,20);
+        Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
+        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
+        Assert.assertEquals("Supply Voltage",1280,m.getSystemDataSupplyVoltage());
+    }
+
+    @Test
+    public void vccVoltageFromSystemDataChangedReply(){
+        byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
+        Z21Reply m = new Z21Reply(msg,20);
+        Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
+        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
+        Assert.assertEquals("Main Current",1798,m.getSystemDataVCCVoltage());
+    }
+
 
     // The minimal setup for log4J
     @Before

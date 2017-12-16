@@ -10,33 +10,39 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts Stream-based I/O to/from TMCC serial messages.
- * <P>
+ * Convert Stream-based I/O to/from TMCC serial messages.
+ * <p>
  * The "SerialInterface" side sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a SerialPortController is via a pair of *Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
- * This handles the state transistions, based on the necessary state in each
+ * <p>
+ * This handles the state transitions, based on the necessary state in each
  * message.
- * <P>
+ * <p>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2003, 2006
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
-    public SerialTrafficController() {
+    /**
+     * Ctor
+     *
+     * @param adaptermemo the associated SystemConnectionMemo
+     */
+    public SerialTrafficController(TmccSystemConnectionMemo adaptermemo) {
         super();
-
+        mMemo = adaptermemo;
         // entirely poll driven, so reduce interval
-        mWaitBeforePoll = 25;  // default = 25
-
+        mWaitBeforePoll = 25; // default = 25
+        log.debug("creating a new TMCCTrafficController object");
     }
 
     // The methods to implement the SerialInterface
+
     @Override
     public synchronized void addSerialListener(SerialListener l) {
         this.addListener(l);
@@ -56,6 +62,56 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     @Override
     protected AbstractMRMessage enterNormalMode() {
         return null;
+    }
+
+    /**
+     * Reference to the system connection memo.
+     */
+    TmccSystemConnectionMemo mMemo = null;
+
+    /**
+     * Get access to the system connection memo associated with this traffic
+     * controller.
+     *
+     * @return associated systemConnectionMemo object
+     */
+    public TmccSystemConnectionMemo getSystemConnectionMemo() {
+        return mMemo;
+    }
+
+    /**
+     * Set the system connection memo associated with this traffic controller.
+     *
+     * @param m associated systemConnectionMemo object
+     */
+    public void setSystemConnectionMemo(TmccSystemConnectionMemo m) {
+        mMemo = m;
+    }
+
+    /**
+     * Static function returning the SerialTrafficController instance to use.
+     *
+     * @return The registered SerialTrafficController instance for general use,
+     *         if need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used
+     */
+    @Deprecated
+    static public SerialTrafficController instance() {
+        log.warn("deprecated instance() call for TMCCTrafficController");
+        return null;
+    }
+
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used
+     */
+    @Deprecated
+    static volatile protected SerialTrafficController self = null;
+
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "temporary until mult-system; only set at startup")
+    @Override
+    protected void setInstance() {
+        self = this;
     }
 
     /**
@@ -95,39 +151,6 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
         sendMessage(m, reply);
-    }
-
-    /**
-     * static function returning the SerialTrafficController instance to use.
-     *
-     * @return The registered SerialTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
-     * multi-system support structure
-     */
-    @Deprecated
-    static public SerialTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new SerialTrafficController object");
-            }
-            self = new SerialTrafficController();
-        }
-        return self;
-    }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
-     * multi-system support structure
-     */
-    @Deprecated
-    static volatile protected SerialTrafficController self = null;
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
-    @Override
-    protected void setInstance() {
-        self = this;
     }
 
     @Override
@@ -273,4 +296,5 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
+
 }

@@ -13,19 +13,22 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright(C) 2016
  */
-public class ConcentratorSystemConnectionMemoTest {
+public class ConcentratorSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
+    @Override
     @Test
-    public void testCtor() {
-        ConcentratorSystemConnectionMemo memo=new ConcentratorSystemConnectionMemo();
-        Assert.assertNotNull("exists", memo);
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        scm =new ConcentratorSystemConnectionMemo();
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

@@ -29,10 +29,13 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     /**
      * Standard error handling for port-busy case.
-     * @param p the exception being handled, if additional information from it is desired
+     *
+     * @param p        the exception being handled, if additional information
+     *                 from it is desired
      * @param portName name of the port being accessed
-     * @param log where to log a status message
-     * @return Localized message, in case separate presentation to user is desired
+     * @param log      where to log a status message
+     * @return Localized message, in case separate presentation to user is
+     *         desired
      */
     @Override
     public String handlePortBusy(PortInUseException p, String portName, Logger log) {
@@ -67,7 +70,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     @Override
     public void setPort(String port) {
-        log.debug("Setting port to "+port);
+        log.debug("Setting port to " + port);
         mPort = port;
     }
     protected String mPort = null;
@@ -95,34 +98,40 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Set the control leads and flow control.
-     * This handles any necessary ordering.
+     * Set the control leads and flow control. This handles any necessary
+     * ordering.
+     *
      * @param serialPort Port to be updated
-     * @param flow flow control mode from (@link purejavacomm.SerialPort} 
-     * @param rts Set RTS active if true
-     * @param dtr set DTR active if true
+     * @param flow       flow control mode from (@link purejavacomm.SerialPort}
+     * @param rts        Set RTS active if true
+     * @param dtr        set DTR active if true
      */
     protected void configureLeadsAndFlowControl(SerialPort serialPort, int flow, boolean rts, boolean dtr) {
         serialPort.setRTS(rts);
         serialPort.setDTR(dtr);
         try {
-            if (flow!=purejavacomm.SerialPort.FLOWCONTROL_NONE) serialPort.setFlowControlMode(flow);
+            if (flow != purejavacomm.SerialPort.FLOWCONTROL_NONE) {
+                serialPort.setFlowControlMode(flow);
+            }
         } catch (purejavacomm.UnsupportedCommOperationException e) {
             log.warn("Could not set flow control, ignoring");
         }
-        if (flow!=purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT) serialPort.setRTS(rts);  // not connected in some serial ports and adapters
-        serialPort.setDTR(dtr); 
+        if (flow != purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT) {
+            serialPort.setRTS(rts);  // not connected in some serial ports and adapters
+        }
+        serialPort.setDTR(dtr);
     }
 
-    /** 
+    /**
      * Sets the flow control, while also setting RTS and DTR to active.
+     *
      * @param serialPort Port to be updated
-     * @param flow flow control mode from (@link purejavacomm.SerialPort} 
+     * @param flow       flow control mode from (@link purejavacomm.SerialPort}
      */
     protected void configureLeadsAndFlowControl(SerialPort serialPort, int flow) {
         configureLeadsAndFlowControl(serialPort, flow, true, true);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -146,7 +155,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /**
      * Get an array of valid baud rates as integers. This allows subclasses to
      * change the arrays of speeds.
-     *
+     * <p>
      * This method need not be reimplemented unless the subclass is using
      * currentBaudNumber, which requires it.
      */
@@ -158,7 +167,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     /**
      * Convert a baud rate String to a int number,e.g. "9,600" to 9600.
-     *
+     * <p>
      * Uses the validBaudNumber and validBaudRates methods to do this.
      *
      * @param currentBaudRate a rate from validBaudRates
@@ -209,7 +218,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers 
+            // filter out line printers
             if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
             {
                 portNameVector.addElement(id.getName());
@@ -245,14 +254,14 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     /*Each serial port adapter should handle this and it should be abstract.
      However this is in place until all the other code has been refactored */
-
     protected void closeConnection() {
-        System.out.println("crap Called");
+        log.warn("abstract closeConnection() called; should be overriden");
     }
 
-    /*Each port adapter shoudl handle this and it should be abstract.
+    /*Each port adapter should handle this and it should be abstract.
      However this is in place until all the other code has been refactored */
     protected void resetupConnection() {
+        log.warn("abstract resetupConnection() called; should be overriden");
     }
 
     /**
@@ -310,7 +319,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                         if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
                         {
                             if (id.getName().equals(mPort)) {
-                                log.info(mPort + " port has reappeared as being valid trying to reconnect");
+                                log.info(mPort + " port has reappeared as being valid, trying to reconnect");
                                 openPort(mPort, "jmri");
                             }
                         }
@@ -340,5 +349,4 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSerialPortController.class);
-
 }

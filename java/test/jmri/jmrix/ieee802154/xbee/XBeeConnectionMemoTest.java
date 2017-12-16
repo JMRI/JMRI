@@ -14,18 +14,19 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class XBeeConnectionMemoTest {
+public class XBeeConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
+    @Override
     @Test
-    public void testCtor() {
-        XBeeConnectionMemo m = new XBeeConnectionMemo();
-        Assert.assertNotNull("exists", m);
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        scm = new XBeeConnectionMemo();
     }
 
     @After

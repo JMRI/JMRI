@@ -27,7 +27,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.rollingstock.cars.PackageTest"); // no tests in class itself
         suite.addTest(CarsTest.suite());
         suite.addTest(CarColorsTest.suite());
-        suite.addTest(CarTypesTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarTypesTest.class));
         suite.addTest(CarLengthsTest.suite());
         suite.addTest(CarOwnersTest.suite());
         suite.addTest(CarRoadsTest.suite());

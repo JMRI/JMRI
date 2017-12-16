@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.9.6ish+heap+20171008T0138Z+Rc65e3b3 on Sun Oct 08 12:38:51 AEDT 2017-->
-  <decoderIndex version="844">
+  <!--Written by JMRI version 4.9.7ish+jake+20171205T1330Z+R9f0d748f65 on Tue Dec 05 05:30:40 PST 2017-->
+  <decoderIndex version="872">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -2375,6 +2375,11 @@
           <output name="4" label="Violet" />
         </model>
       </family>
+      <family name="BDL16x" mfg="Digitrax" file="Digitrax_BDL168.xml">
+        <model model="BDL16" />
+        <model model="BDL162" />
+        <model model="BDL168" />
+      </family>
       <family name="Basic FX" mfg="Digitrax" lowVersionID="91" highVersionID="111" file="Digitrax_Basic.xml">
         <model model="DH083" numOuts="5" numFns="3" />
         <model model="DH83FX" numOuts="5" numFns="3" />
@@ -2396,6 +2401,9 @@
       <family name="Basic CS" mfg="Digitrax" lowVersionID="225" highVersionID="239" file="Digitrax_CS.xml">
         <model model="DZ121" numOuts="2" numFns="0" />
         <model model="DN122K2" numOuts="2" numFns="0" />
+      </family>
+      <family name="DS64" mfg="Digitrax" file="Digitrax_DS64.xml">
+        <model model="DS64" />
       </family>
       <family name="Economy Series 3 with FX3, silent" mfg="Digitrax" lowVersionID="35" highVersionID="36" file="Digitrax_Economy.xml">
         <model model="DH123" numOuts="2" numFns="5" connector="9pin" lowVersionID="35" highVersionID="36">
@@ -2431,6 +2439,13 @@
           <output name="2" label="Yellow" connection="plug" />
           <size length="1.074" width="0.672" height="0.259" units="inches" />
         </model>
+      </family>
+      <family name="PM4x" mfg="Digitrax" file="Digitrax_PM4.xml">
+        <model model="PM4" />
+        <model model="PM42" />
+      </family>
+      <family name="SE8c" mfg="Digitrax" file="Digitrax_SE8c.xml">
+        <model model="SE8c" />
       </family>
       <family name="Basic STD" mfg="Digitrax" lowVersionID="33" highVersionID="46" file="Digitrax_STD.xml">
         <model model="DH121" numOuts="2" numFns="2" />
@@ -4965,6 +4980,16 @@
           <size length="25.5" width="15.5" height="4.5" units="mm" />
         </model>
       </family>
+      <family name="ESU LokPilot 1.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="21" file="ESU_LokPilot1.0.xml">
+        <model model="LokPilot V1.0" numOuts="4" numFns="6" nmraWarrant="yes">
+          <output name="1" label="Front Lights" />
+          <output name="2" label="Back Lights" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Shunting" />
+          <output name="6" label="Acc/Dec off" />
+        </model>
+      </family>
       <family name="ESU LokPilot 2.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255" file="ESU_LokPilot2.0.xml">
         <model model="LokPilot 2.0" maxInputVolts="25 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.45 A" numOuts="4" numFns="14" formFactor="HO" connector="NMRAmedium">
           <output name="1" label="Front light" maxcurrent="180 mA" connection="wire" />
@@ -5235,7 +5260,17 @@
         </model>
       </family>
       <family name="ESU LokPilot Silent BEMF decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="21" file="ESU_LokPilotDCC.xml">
-        <model model="ESU_LokPilotDCC" numOuts="6" numFns="8" nmraWarrant="yes">
+        <model show="no" model="ESU_LokPilotDCC" replacementModel="LokPilotDCC V1.0" replacementFamily="ESU LokPilot 1.0" numOuts="6" numFns="8" nmraWarrant="yes">
+          <output name="1" label="Front Lights" />
+          <output name="2" label="Back Lights" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Shunting" />
+          <output name="6" label="Acc/Dec off" />
+        </model>
+      </family>
+      <family name="ESU LokPilot 1.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="21" file="ESU_LokPilotDCC_1.0.xml">
+        <model model="LokPilotDCC V1.0" numOuts="6" numFns="8" nmraWarrant="yes">
           <output name="1" label="Front Lights" />
           <output name="2" label="Back Lights" />
           <output name="3" label="Aux1" />
@@ -7267,10 +7302,14 @@
           </output>
         </model>
       </family>
-      <family name="Locomotive Decoders" mfg="LaisDCC" comment="LaisDCC decoder range" lowVersionID="02" highVersionID="03" file="LaisDcc.xml">
-        <model model="860012" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860012" formFactor="N" connector="Wires" comment="N scale, wires NEM651">
-          <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA" />
+      <family name="LaisDcc" mfg="LaisDcc" comment="LaisDcc decoder range" lowVersionID="02" highVersionID="03" file="LaisDcc.xml">
+        <model model="860019" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860019" formFactor="HO" connector="21MTC" comment="HO-scale, with 21MTC harness">
+          <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Purple|Pin 14" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Pink|Pin 13" connection="plug" maxcurrent="100 mA" />
+          <output name="6" label="Brown|Pin 4" connection="plug" maxcurrent="100 mA" />
           <output name="7" label="Rule 17|Dimming" />
           <!-- virtual "output" -->
           <output name="8" label="Ditch|Blink" />
@@ -7279,11 +7318,15 @@
           <!-- virtual "output" -->
           <output name="10" label="BEMF|Control" />
           <!-- virtual "output" -->
-          <size length="14.5" width="8.2" height="3" units="mm" />
+          <size length="17" width="16" height="3.5" units="mm" />
         </model>
-        <model model="860013" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860013" formFactor="N" connector="NEM651" comment="N scale, 6-pin direct NEM651 plug">
-          <output name="1" label="White|Pin 5" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Pin 6" connection="plug" maxcurrent="100 mA" />
+        <model model="860015" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860015" formFactor="HO" connector="Next18" comment="HO-scale, with Next18 harness">
+          <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow|Pin 17" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Purple|Pin 12" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Pink|Pin 4" connection="plug" maxcurrent="100 mA" />
+          <output name="6" label="Brown|Pin 13" connection="plug" maxcurrent="100 mA" />
           <output name="7" label="Rule 17|Dimming" />
           <!-- virtual "output" -->
           <output name="8" label="Ditch|Blink" />
@@ -7292,13 +7335,15 @@
           <!-- virtual "output" -->
           <output name="10" label="BEMF|Control" />
           <!-- virtual "output" -->
-          <size length="14.5" width="8.2" height="3" units="mm" />
+          <size length="15" width="9.5" height="2.9" units="mm" />
         </model>
-        <model model="860014" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860014" formFactor="HO" connector="Wires" comment="HO-scale, 9 Wires">
-          <output name="1" label="White|Wire" connection="wire" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Wire" connection="wire" maxcurrent="100 mA" />
-          <output name="3" label="Green|Wire" connection="wire" maxcurrent="100 mA" />
-          <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA" />
+        <model model="860016" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860016" formFactor="HO" connector="PluX22" comment="HO-scale, with PluX22 harness">
+          <output name="1" label="White|Pin 7" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow|Pin 13" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green|Pin 16" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Purple|Pin 18" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Pink|Pin 2" connection="plug" maxcurrent="100 mA" />
+          <output name="6" label="Brown|Pin 19" connection="plug" maxcurrent="100 mA" />
           <output name="7" label="Rule 17|Dimming" />
           <!-- virtual "output" -->
           <output name="8" label="Ditch|Blink" />
@@ -7307,9 +7352,9 @@
           <!-- virtual "output" -->
           <output name="10" label="BEMF|Control" />
           <!-- virtual "output" -->
-          <size length="15" width="7" height="2.7" units="mm" />
+          <size length="16" width="17.5" height="3" units="mm" />
         </model>
-        <model model="860018" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860018" formFactor="HO" connector="NEM652" comment="HO-scale, direct NEM652 + wire for F2">
+        <model model="860020" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860020" formFactor="HO" connector="NEM652" comment="HO-scale, direct NEM652">
           <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA" />
           <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA" />
           <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" />
@@ -7324,11 +7369,9 @@
           <!-- virtual "output" -->
           <size length="14.2" width="12.5" height="3.5" units="mm" />
         </model>
-        <model model="860019" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860019" formFactor="HO" connector="21MTC" comment="HO-scale, with 21MTC harness">
-          <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA" />
-          <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA" />
-          <output name="4" label="Purple|Pin 14" connection="plug" maxcurrent="100 mA" />
+        <model model="860013" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860013" formFactor="N" connector="NEM651" comment="Nano 6-pin direct NEM651">
+          <output name="1" label="White|Pin 5" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow|Pin 6" connection="plug" maxcurrent="100 mA" />
           <output name="7" label="Rule 17|Dimming" />
           <!-- virtual "output" -->
           <output name="8" label="Ditch|Blink" />
@@ -7337,9 +7380,22 @@
           <!-- virtual "output" -->
           <output name="10" label="BEMF|Control" />
           <!-- virtual "output" -->
-          <size length="17" width="16" height="3.5" units="mm" />
+          <size length="14.5" width="8.2" height="3" units="mm" />
         </model>
-        <model model="860020" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860020" formFactor="HO" connector="NEM652" comment="HO-scale, direct NEM652 + wire for F2">
+        <model model="860012" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860012" formFactor="N" connector="NEM651" comment="NEM651 Wire">
+          <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA" />
+          <output name="7" label="Rule 17|Dimming" />
+          <!-- virtual "output" -->
+          <output name="8" label="Ditch|Blink" />
+          <!-- virtual "output" -->
+          <output name="9" label="Motor|Control" />
+          <!-- virtual "output" -->
+          <output name="10" label="BEMF|Control" />
+          <!-- virtual "output" -->
+          <size length="14.5" width="8.2" height="3" units="mm" />
+        </model>
+        <model model="860021" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860021" formFactor="HO" connector="Wires/NEM652" comment="Wire and NEM652">
           <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA" />
           <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA" />
           <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" />
@@ -7352,12 +7408,12 @@
           <!-- virtual "output" -->
           <output name="10" label="BEMF|Control" />
           <!-- virtual "output" -->
-          <size length="15.5" width="15" height="2" units="mm" />
+          <size length="15" width="7" height="2.7" units="mm" />
         </model>
-        <model model="860021" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860021" formFactor="HO" connector="Wires/NEM652" comment="HO-scale, Wires and NEM652">
-          <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA" />
-          <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" />
+        <model model="860014" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860014" formFactor="HO" connector="Wires" comment="9 Wire">
+          <output name="1" label="White|Wire" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow|Wire" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green|Wire" connection="wire" maxcurrent="100 mA" />
           <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA" />
           <output name="7" label="Rule 17|Dimming" />
           <!-- virtual "output" -->
@@ -7653,22 +7709,46 @@
       </family>
       <family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="82" lowVersionID="65" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" file="Lenz_Silver.xml">
         <model model="Silver" numOuts="4" numFns="12" nmraWarrant="yes" nmraWarrantStart="200604" lowVersionID="65" highVersionID="75" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
-          <output name="1" label="A - White" />
-          <output name="2" label="B - Yellow" />
-          <output name="3" label="C - Green" />
-          <output name="4" label="D - Violet" />
+          <output name="1" label="A - White">
+            <label xml:lang="de">A - Weiß</label>
+          </output>
+          <output name="2" label="B - Yellow">
+            <label xml:lang="de">B - Gelb</label>
+          </output>
+          <output name="3" label="C - Green">
+            <label xml:lang="de">C - Grün</label>
+          </output>
+          <output name="4" label="D - Violet">
+            <label xml:lang="de">D - Violett</label>
+          </output>
         </model>
         <model model="Silver Direct" numOuts="4" numFns="12" lowVersionID="78" highVersionID="78" maxMotorCurrent="1.1A (peak=1.8A)" formFactor="HO">
-          <output name="1" label="A - White" />
-          <output name="2" label="B - Yellow" />
-          <output name="3" label="C - Green" />
-          <output name="4" label="D - Violet" />
+          <output name="1" label="A - White">
+            <label xml:lang="de">A - Weiß</label>
+          </output>
+          <output name="2" label="B - Yellow">
+            <label xml:lang="de">B - Gelb</label>
+          </output>
+          <output name="3" label="C - Green">
+            <label xml:lang="de">C - Grün</label>
+          </output>
+          <output name="4" label="D - Violet">
+            <label xml:lang="de">D - Violett</label>
+          </output>
         </model>
         <model model="Silver 21 Pin" numOuts="4" numFns="12" lowVersionID="82" highVersionID="82" maxMotorCurrent="1.1A (peak=1.8A)" formFactor="HO">
-          <output name="1" label="A - White" />
-          <output name="2" label="B - Yellow" />
-          <output name="3" label="C - Green" />
-          <output name="4" label="D - Violet" />
+          <output name="1" label="A - White">
+            <label xml:lang="de">A - Weiß</label>
+          </output>
+          <output name="2" label="B - Yellow">
+            <label xml:lang="de">B - Gelb</label>
+          </output>
+          <output name="3" label="C - Green">
+            <label xml:lang="de">C - Grün</label>
+          </output>
+          <output name="4" label="D - Violet">
+            <label xml:lang="de">D - Violett</label>
+          </output>
         </model>
       </family>
       <family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="0" lowVersionID="0" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" file="Lenz_Silver_Mini.xml">
@@ -10120,10 +10200,28 @@
         <model model="N12K1a" numOuts="7" numFns="12" />
         <model model="N12K2" numOuts="7" numFns="12" />
       </family>
-      <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="36" comment="These are the version 3.5 decoders released after September 2003, 3.6 released July 2007" file="NCE_D13SR_TC.xml">
+      <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="38" comment="These are the version 3.5 decoders released after September 2003, 3.6 released July 2007" file="NCE_D13SR_TC.xml">
         <model model="D12IP" numOuts="2" numFns="5" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
           <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA" />
+        </model>
+        <model model="D13J" numOuts="4" numFns="8" maxMotorCurrent="0.75A (peak=1.2A)" formFactor="HO">
+          <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
+          <output name="4" label="Violet" connection="wire" maxcurrent="40 mA" />
+          <size length="1.03" width="0.63" height="0.185" units="inches" />
+        </model>
+        <model model="D13NHJ" numOuts="4" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+          <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
+        </model>
+        <model model="D13NHP" numOuts="4" numFns="8" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+          <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
+          <output name="4" label="Violet" connection="wire" maxcurrent="40 mA" />
         </model>
         <model model="D13SR" numOuts="4" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
           <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
@@ -10144,6 +10242,20 @@
           <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
           <output name="4" label="Violet" connection="wire" maxcurrent="40 mA" />
           <size length="1.65" width="0.63" height="0.12" units="inches" />
+        </model>
+        <model model="D13W" numOuts="4" numFns="8" maxMotorCurrent="0.75A (peak=1.2A)" formFactor="HO">
+          <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
+          <output name="4" label="Violet" connection="wire" maxcurrent="40 mA" />
+          <size length="1.03" width="0.63" height="0.185" units="inches" />
+        </model>
+        <model model="D13WP" numOuts="4" numFns="8" connector="NMRAmedium" maxMotorCurrent="0.75A (peak=1.2A)" formFactor="HO">
+          <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
+          <output name="4" label="Violet" connection="wire" maxcurrent="40 mA" />
+          <size length="1.06" width="0.63" height="0.185" units="inches" />
         </model>
         <model model="D14SR" numOuts="6" numFns="8" connector="NMRAmedium" maxMotorCurrent="1A (peak=1.5A)" formFactor="HO">
           <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
@@ -10180,6 +10292,14 @@
           <output name="5" label="Pad" connection="solder" maxcurrent="40 mA" />
           <output name="6" label="Pad" connection="solder" maxcurrent="40 mA" />
           <size length="1.08" width="0.63" height="0.275" units="inches" />
+        </model>
+        <model model="D16MTC" numOuts="6" numFns="8" connector="21MTC" formFactor="HO">
+          <output name="1" label="Pin" />
+          <output name="2" label="Pin" />
+          <output name="3" label="Pin" />
+          <output name="4" label="Pin" />
+          <output name="5" label="Pin" />
+          <output name="6" label="Pin" />
         </model>
         <model model="D18SR" numOuts="8" numFns="14" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
           <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
@@ -10280,6 +10400,13 @@
           <output name="6" label="Pad 6" connection="wire" />
           <size length="2.406" width="0.937" height="0.375" units="inches" />
         </model>
+        <model model="N12-NEM" numOuts="4" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="N">
+          <output name="1" label="Pin 5" connection="wire" />
+          <output name="2" label="Pin 6" connection="wire" />
+          <output name="3" label="Pad 3" connection="wire" />
+          <output name="4" label="Pad 4" connection="wire" />
+          <size length="19.41" width="8.77" height="2.65" units="mm" />
+        </model>
         <model model="N12SR" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
           <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
@@ -10340,9 +10467,29 @@
           <output name="2" label="LED 2" connection="solder" />
           <size length="2.65" width="0.37" height="0.12" units="inches" />
         </model>
+        <model model="N14K1" numOuts="4" numFns="8" formFactor="N" connector="DropIn" comment="for Ath F45,FP45,kato ES44,AC4400,C30-7,SD40-2,SD40,SD45,SD70MAC">
+          <output name="1" label="LED 1" connection="solder" />
+          <output name="2" label="LED 2" connection="solder" />
+          <output name="3" label="Pad 3" connection="solder" />
+          <output name="4" label="Pad 4" connection="solder" />
+        </model>
+        <model model="N14K2" numOuts="4" numFns="8" formFactor="N" connector="DropIn" comment="for Kato RS2,RSC2,SD80MAC,SD90MAC, LL RS2, Wal GP18,RS2">
+          <output name="1" label="LED 1" connection="solder" />
+          <output name="2" label="LED 2" connection="solder" />
+          <output name="3" label="Pad 3" connection="solder" />
+          <output name="4" label="Pad 4" connection="solder" />
+        </model>
         <model model="NAVO" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Atlas N-Scale VO-1000">
           <output name="1" label="LED 1" connection="solder" />
           <output name="2" label="LED 2" connection="solder" />
+        </model>
+        <model model="NH15-44" numOuts="6" numFns="8" formFactor="N" connector="DropIn" comment="for Atlas H15-44,H16-44">
+          <output name="1" label="LED 1" connection="solder" />
+          <output name="2" label="LED 2" connection="solder" />
+          <output name="3" label="Pad 3" connection="solder" />
+          <output name="4" label="Pad 4" connection="solder" />
+          <output name="5" label="Pad 5" connection="solder" />
+          <output name="6" label="Pad 6" connection="solder" />
         </model>
         <model model="NIMF3" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Intermountain N-Scale F3">
           <output name="1" label="Pad 1" connection="solder" />
@@ -10357,6 +10504,10 @@
           <output name="2" label="Pad 2" connection="solder" />
         </model>
         <model model="NMP" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Atlas N-Scale MP15DC">
+          <output name="1" label="LED 1" connection="solder" />
+          <output name="2" label="LED 2" connection="solder" />
+        </model>
+        <model model="NMP15" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn">
           <output name="1" label="LED 1" connection="solder" />
           <output name="2" label="LED 2" connection="solder" />
         </model>
@@ -10390,6 +10541,66 @@
           <output name="8" label="Pad 8" connection="solder" maxcurrent="500 mA" />
           <output name="9" label="Pad 9" connection="solder" maxcurrent="500 mA" />
           <size length="2.3" width="1.2" height="0.375" units="inches" />
+        </model>
+      </family>
+      <family name="Signal and Lighting" mfg="North Coast Engineering" file="NCE_Light-It_accessory.xml">
+        <model model="Light-It - Accessory mode" connector="Wires">
+          <output name="1" label="White/Green" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <size length="18" width="15" height="5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
+        <model model="Illuminator - Accessory mode" connector="Wires">
+          <output name="1" label="White/Green" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <size length="18" width="15" height="5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Signal and Lighting" mfg="North Coast Engineering" file="NCE_Light-It_mobile.xml">
+        <model model="Light-It - Mobile mode" connector="Wires">
+          <output name="1" label="White/Green" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <size length="18" width="15" height="5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
+        <model model="Illuminator - Mobile mode" connector="Wires">
+          <output name="1" label="White/Green" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <size length="18" width="15" height="5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Signal and Lighting" mfg="North Coast Engineering" file="NCE_Light-It_signal.xml">
+        <model model="Light-It - Signal mode" connector="Wires">
+          <output name="1" label="White/Green" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <size length="18" width="15" height="5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
+        <model model="Illuminator - Signal mode" connector="Wires">
+          <output name="1" label="White/Green" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <size length="18" width="15" height="5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
         </model>
       </family>
       <family name="NYB Dual Mode Decoder" mfg="New York Byano Limited" type="locomotive" file="NYB_dualmode.xml">
@@ -13696,6 +13907,19 @@
           <output name="5" label="Brakes| " />
         </model>
       </family>
+      <family name="MC Walthers OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_MC_Walthers.xml">
+        <model model="Plymouth ML8" numOuts="2" numFns="14" connector="other" comment="with built in Current Keeper">
+          <versionCV lowVersionID="66" />
+          <output name="3" label="Xing|Logic" />
+          <output name="4" label="FX5|Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="5" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="6" label="Dimmer| " />
+        </model>
+      </family>
       <family name="OEM Bachmann E-Z Command decoders" mfg="SoundTraxx (Throttle-Up)" lowVersionID="1" file="SoundTraxx_OEM_Bachmann_v3.xml">
         <model model="2 function decoder (36-558)" numOuts="2" numFns="14" maxMotorCurrent=".5A" formFactor="HO, N" connector="NMRAmedium">
           <output name="1" label="White" />
@@ -13779,6 +14003,87 @@
           <output name="Dim" />
           <output name="Mute" />
         </model>
+      </family>
+      <family name="Sound Value Diesel Walthers Mainline OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Walthers Mainline Sound Value diesel decoders" file="SoundTraxx_SndVal_Diesel_Walthers_Mainline.xml">
+        <model model="8-40B" numOuts="3" numFns="14" connector="other" productID="8-40B">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="FX6|Rule 17" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="Reserved" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Reserved" />
+          <output name="Reserved" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Beacon</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="GP15" numOuts="3" numFns="14" connector="other" productID="GP15">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="FX6|Rule 17" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="Reserved" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Reserved" />
+          <output name="Reserved" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Beacon</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="SD60" numOuts="3" numFns="14" connector="other" productID="SD60">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="FX6|Rule 17" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="Reserved" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Reserved" />
+          <output name="Reserved" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Beacon</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="SD70ACe" numOuts="3" numFns="14" connector="other" productID="SD70ACe">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="FX6|Rule 17" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="Reserved" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Reserved" />
+          <output name="Reserved" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">FX5</functionlabel>
+          </functionlabels>
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+        </functionlabels>
       </family>
       <family name="Tsunami2 Diesel" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Diesel decoders" file="SoundTraxx_Tsu2_Diesel.xml">
         <model model="TSU-1100 EMD Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="276" comment="Model 885001">
@@ -18561,7 +18866,10 @@
         </functionlabels>
       </family>
       <family name="Tsunami SoundCar" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Tsunami SoundCar decoders" file="SoundTraxx_Tsu_SoundCar.xml">
-        <model model="Tsunami SoundCar" numOuts="4" numFns="14" connector="9pin" productID="SoundCar" comment="Tsunami SoundCar Digital Sound Decoder">
+        <!--  Model with name "Tsunami SoundCar" kept for compatibility with previous versions.
+            Will not appear as such in the decoder list, because of having the same name as its family
+            However selecting family name in the tree and then opening programmer will lead to this defintion.-->
+        <model model="Tsunami SoundCar" numOuts="4" numFns="14" connector="9pin" productID="SoundCar101" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; Early SW version 1.01 (2014-2016) without livestock support&lt;br&gt;">
           <versionCV lowVersionID="69" highVersionID="69" />
           <output name="Airhorn" label="Whistle">
             <label xml:lang="it">Fischio</label>
@@ -18569,33 +18877,105 @@
           <output name="Bell" />
           <output name="3" label="  FX5  " />
           <output name="4" label="  FX6  " />
-          <output name="Res." />
+          <output name="Reserved 1" />
           <output name="Short" label="Horn">
             <label xml:lang="it">Tromba</label>
           </output>
           <output name="Generator" />
-          <output name="Res." />
+          <output name="Reserved 2" />
           <output name="Dimming" />
           <output name="Mute" />
           <output name="Uncoupling" />
           <output name="Brakes" />
           <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Headlight</functionlabel>
+            <functionlabel num="1" lockable="true">Bell</functionlabel>
+            <functionlabel num="2" lockable="false">Airhorn/Whistle</functionlabel>
+            <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+            <!-- <functionlabel num="4" lockable="true"></functionlabel> -->
+            <functionlabel num="5" lockable="true">FX5 Output</functionlabel>
+            <functionlabel num="6" lockable="true">FX6 Output</functionlabel>
+            <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+            <functionlabel num="8" lockable="true">Mute</functionlabel>
+            <functionlabel num="9" lockable="true">Generator</functionlabel>
+            <functionlabel num="10" lockable="false">Uncoupling</functionlabel>
+            <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
+            <functionlabel num="12" lockable="false">Coupler Clank</functionlabel>
+          </functionlabels>
         </model>
-        <functionlabels>
-          <functionlabel num="0" lockable="true">Headlight</functionlabel>
-          <functionlabel num="1" lockable="true">Bell</functionlabel>
-          <functionlabel num="2" lockable="false">Airhorn/Whistle</functionlabel>
-          <functionlabel num="3" lockable="false">Short Horn</functionlabel>
-          <functionlabel num="4" lockable="true">Unassigned</functionlabel>
-          <functionlabel num="5" lockable="true">FX5 Output</functionlabel>
-          <functionlabel num="6" lockable="true">FX6 Output</functionlabel>
-          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
-          <functionlabel num="8" lockable="true">Mute</functionlabel>
-          <functionlabel num="9" lockable="true">Generator</functionlabel>
-          <functionlabel num="10" lockable="false">Uncoupling</functionlabel>
-          <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
-          <functionlabel num="12" lockable="false">Coupler Clank</functionlabel>
-        </functionlabels>
+        <!-- Model with name "Tsunami SoundCar 1.01" is exactly the same as model with name "Tsunami SoundCar".
+            Added to allow a separate and visible listing in the decoder tree. -->
+        <model model="Tsunami SoundCar 1.01" numOuts="4" numFns="14" connector="9pin" productID="SoundCar101" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; Early SW version 1.01 (2014-2016) without livestock support&lt;br&gt;">
+          <versionCV lowVersionID="69" highVersionID="69" />
+          <output name="Airhorn" label="Whistle">
+            <label xml:lang="it">Fischio</label>
+          </output>
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Reserved 1" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Generator" />
+          <output name="Reserved 2" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Uncoupling" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Headlight</functionlabel>
+            <functionlabel num="1" lockable="true">Bell</functionlabel>
+            <functionlabel num="2" lockable="false">Airhorn/Whistle</functionlabel>
+            <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+            <!-- <functionlabel num="4" lockable="true"></functionlabel> -->
+            <functionlabel num="5" lockable="true">FX5 Output</functionlabel>
+            <functionlabel num="6" lockable="true">FX6 Output</functionlabel>
+            <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+            <functionlabel num="8" lockable="true">Mute</functionlabel>
+            <functionlabel num="9" lockable="true">Generator</functionlabel>
+            <functionlabel num="10" lockable="false">Uncoupling</functionlabel>
+            <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
+            <functionlabel num="12" lockable="false">Coupler Clank</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Tsunami SoundCar 1.03" numOuts="4" numFns="14" connector="9pin" productID="SoundCar103" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; SW version 1.03 (2017) with livestock support&lt;br&gt;and additional airhorns and bells&lt;br&gt;">
+          <versionCV lowVersionID="69" highVersionID="69" />
+          <output name="Airhorn" label="Whistle">
+            <label xml:lang="it">Fischio</label>
+          </output>
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Spook" label="Livestock" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Generator" />
+          <output name="Reserved 2" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Uncoupling" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Headlight</functionlabel>
+            <functionlabel num="1" lockable="true">Bell</functionlabel>
+            <functionlabel num="2" lockable="false">Airhorn/Whistle</functionlabel>
+            <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+            <functionlabel num="4" lockable="true">Spook the Livestock</functionlabel>
+            <functionlabel num="5" lockable="true">FX5 Output</functionlabel>
+            <functionlabel num="6" lockable="true">FX6 Output</functionlabel>
+            <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+            <functionlabel num="8" lockable="true">Mute</functionlabel>
+            <functionlabel num="9" lockable="true">Generator</functionlabel>
+            <functionlabel num="10" lockable="false">Uncoupling</functionlabel>
+            <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
+            <functionlabel num="12" lockable="false">Coupler Clank</functionlabel>
+          </functionlabels>
+        </model>
       </family>
       <family name="Tsunami Steam" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Tsunami steam decoders" file="SoundTraxx_Tsu_Steam.xml">
         <model model="TSU-750 Light Steam" numOuts="2" numFns="14" connector="other" productID="826001" comment="Model 826001">
@@ -20367,22 +20747,10 @@
         <model show="no" model="A1X" numOuts="4" numFns="2" lowVersionID="32" replacementModel="A1X" replacementFamily="Jan 2000" />
       </family>
       <family name="TCS DP2X decoder" mfg="Train Control Systems" file="TCS_DP2X.xml">
-        <model show="no" model="DP2X" numOuts="2" numFns="2" lowVersionID="1" highVersionID="40" replacementModel="DP2X" replacementFamily="Jan 2000">
+        <model show="no" model="DP2X" numOuts="2" numFns="2" replacementFamily="query:Jan 2000|June 2007|Jan 2012">
           <output name="4" label="Purple" />
         </model>
-        <model show="no" model="DP2X" numOuts="2" numFns="2" lowVersionID="41" highVersionID="50" replacementModel="DP2X" replacementFamily="June 2007">
-          <output name="4" label="Purple" />
-        </model>
-        <model show="no" model="DP2X" numOuts="2" numFns="2" lowVersionID="86" highVersionID="88" replacementModel="DP2X" replacementFamily="Jan 2012">
-          <output name="4" label="Purple" />
-        </model>
-        <model show="no" model="DP2X-UK" numOuts="2" numFns="2" lowVersionID="1" highVersionID="40" replacementModel="DP2X-UK" replacementFamily="Jan 2000">
-          <output name="4" label="Purple" />
-        </model>
-        <model show="no" model="DP2X-UK" numOuts="2" numFns="2" lowVersionID="41" highVersionID="50" replacementModel="DP2X-UK" replacementFamily="June 2007">
-          <output name="4" label="Purple" />
-        </model>
-        <model show="no" model="DP2X-UK" numOuts="2" numFns="2" lowVersionID="86" highVersionID="88" replacementModel="DP2X-UK" replacementFamily="Jan 2012">
+        <model show="no" model="DP2X-UK" numOuts="2" numFns="2" replacementModel="DP2X-UK" replacementFamily="query:Jan 2000|June 2007|Jan 2012">
           <output name="4" label="Purple" />
         </model>
       </family>
@@ -21651,73 +22019,73 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="K0D8-A" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="25">
-          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
-          <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
-          <output name="6" label="Pink" connection="solder" maxcurrent="60 mA" />
-          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA" />
-          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA" />
+        <model model="K0D8-A" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale Alco PA1, P42, E9A, E8/9A (ref.1332)" lowVersionID="86" highVersionID="88" productID="25">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Violet" connection="solder" maxcurrent="80 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="80 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="80 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA" />
           <output name="Dim" />
           <output name="Ditch" />
           <output name="Motor" />
           <output name="BEMF" />
           <output name="Brake" />
-          <size length="2.53" width="0.542" height="0.155" units="inches" />
+          <size length="2.53" width="0.542" height="0.068" units="inches" />
         </model>
-        <model model="K0D8-B" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="26">
-          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
-          <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
-          <output name="6" label="Pink" connection="solder" maxcurrent="60 mA" />
-          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA" />
-          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA" />
+        <model model="K0D8-B" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale F3A and F7A (ref.1333)" lowVersionID="86" highVersionID="88" productID="26">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Violet" connection="solder" maxcurrent="80 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="80 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="80 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA" />
           <output name="Dim" />
           <output name="Ditch" />
           <output name="Motor" />
           <output name="BEMF" />
           <output name="Brake" />
-          <size length="2.53" width="0.542" height="0.155" units="inches" />
+          <size length="2.138" width="0.542" height="0.0687" units="inches" />
         </model>
-        <model model="K0D8-C" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="27">
-          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
-          <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
-          <output name="6" label="Pink" connection="solder" maxcurrent="60 mA" />
-          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA" />
-          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA" />
+        <model model="K0D8-C" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale EMD F40PH (ref.1338)" lowVersionID="86" highVersionID="88" productID="27">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Violet" connection="solder" maxcurrent="80 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="80 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="80 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA" />
           <output name="Dim" />
           <output name="Ditch" />
           <output name="Motor" />
           <output name="BEMF" />
           <output name="Brake" />
-          <size length="2.53" width="0.542" height="0.155" units="inches" />
+          <size length="2.138" width="0.542" height="0.068" units="inches" />
         </model>
-        <model model="K0D8-D" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="28">
-          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
-          <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
-          <output name="6" label="Pink" connection="solder" maxcurrent="60 mA" />
-          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA" />
-          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA" />
+        <model model="K0D8-D" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale B-Units: PB1, PA-1, F3B, F7B, and E9B (ref.1339)" lowVersionID="86" highVersionID="88" productID="28">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Violet" connection="solder" maxcurrent="80 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="80 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="80 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA" />
           <output name="Dim" />
           <output name="Ditch" />
           <output name="Motor" />
           <output name="BEMF" />
           <output name="Brake" />
-          <size length="2.53" width="0.542" height="0.155" units="inches" />
+          <size length="2.138" width="0.542" height="0.068" units="inches" />
         </model>
         <model model="K0D8-E" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="56">
-          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
+          <output name="1" label="White" connection="LED" maxcurrent="60 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="60 mA" />
           <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
           <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
           <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
@@ -21731,86 +22099,7 @@
           <output name="Brake" />
           <size length="2.53" width="0.542" height="0.155" units="inches" />
         </model>
-        <model model="K1D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="29">
-          <output name="1" label="White" connection="other" maxcurrent="50 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="50 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="50 mA" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="BEMF" />
-          <output name="Brake" />
-          <size length="2.7" width="0.4" height="0.0" units="inches" />
-        </model>
-        <model model="K1D4-NC" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="No Clips version of K1D4" lowVersionID="86" highVersionID="88" productID="30">
-          <output name="1" label="White" connection="other" maxcurrent="50 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="50 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="50 mA" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="BEMF" />
-          <output name="Brake" />
-          <size length="2.7" width="0.4" height="0.0" units="inches" />
-        </model>
-        <model model="K2D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="31">
-          <output name="1" label="White" connection="other" maxcurrent="50 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="50 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="50 mA" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="BEMF" />
-          <output name="Brake" />
-          <size length="2.7" width="0.4" height="0.0" units="inches" />
-        </model>
-        <model model="K3D3" numOuts="3" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="32">
-          <output name="1" label="White" connection="other" maxcurrent="50 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="50 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="BEMF" />
-          <output name="Brake" />
-          <size length="2.860" width="0.680" height="0.145" units="inches" />
-        </model>
-        <model model="K4D6" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="46">
-          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
-          <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
-          <output name="6" label="Pink" connection="solder" maxcurrent="60 mA" />
-          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA" />
-          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="BEMF" />
-          <output name="Brake" />
-          <size length="2.53" width="0.542" height="0.155" units="inches" />
-        </model>
-        <model model="K5D7" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="59">
-          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
-          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
-          <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
-          <output name="6" label="Pink" connection="solder" maxcurrent="60 mA" />
-          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA" />
-          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA" />
-          <output name="Dim" />
-          <output name="Ditch" />
-          <output name="Motor" />
-          <output name="BEMF" />
-          <output name="Brake" />
-          <size length="2.53" width="0.542" height="0.155" units="inches" />
-        </model>
-        <model model="K6D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato the FEF-3" lowVersionID="86" highVersionID="88" productID="63">
+        <model model="K1D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale EMD SD40, EMD SD70MAC, EMD SD70/75M, GE C44-9W, GE AC4400W, Athearn F45 and many other locomotives (ref.1293)" lowVersionID="86" highVersionID="88" productID="29">
           <output name="1" label="White" connection="other" maxcurrent="80 mA" />
           <output name="2" label="Yellow" connection="other" maxcurrent="80 mA" />
           <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
@@ -21820,7 +22109,98 @@
           <output name="Motor" />
           <output name="BEMF" />
           <output name="Brake" />
-          <size length="2.53" width="0.413" height="0.0725" units="inches" />
+          <size length="2.7" width="0.433" height="0.056" units="inches" />
+        </model>
+        <model model="K1D4-NC" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="&lt;html&gt;Drop in decoder for Kato N-Scale EMD SD70ACe, EMD SD70M, EMD SD40-2, and GG1. (ref.1318)&lt;br&gt; No Clips version of K1D4&lt;br&gt;" lowVersionID="86" highVersionID="88" productID="30">
+          <output name="1" label="White" connection="other" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Violet" connection="solder" maxcurrent="80 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="2.7" width="0.433" height="0.056" units="inches" />
+        </model>
+        <model model="K2D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for N-Scale Kato RS2, RSC2, SD80/90MAC, EMD 90/43MAC, Walthers RS2 and GP18 and many other locomotives (ref.1294)" lowVersionID="86" highVersionID="88" productID="31">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Violet" connection="solder" maxcurrent="80 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="2.63" width="0.4" height="0.06" units="inches" />
+        </model>
+        <model model="K3D3" numOuts="3" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale NW2 (ref.1295)" lowVersionID="86" highVersionID="88" productID="32">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="1.26" width="0.43" height="0.06" units="inches" />
+        </model>
+        <model model="K4D6" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-scale MP36PH Metra (ref.1414)" lowVersionID="86" highVersionID="88" productID="46">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="80 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="80 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="80 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="2.344" width="0.49" height="0.097" units="inches" />
+        </model>
+        <model model="K5D7" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-scale F40PH (ref.1489)" lowVersionID="86" highVersionID="88" productID="59">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="80 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="80 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="80 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="80 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="80 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="2.71" width="0.545" height="0.072" units="inches" />
+        </model>
+        <model model="K6D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-scale FEF-3 (ref.1556)" lowVersionID="86" highVersionID="88" productID="63">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Violet" connection="solder" maxcurrent="80 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="2.35" width="0.413" height="0.072" units="inches" />
+        </model>
+        <model model="K7D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="Drop in decoder for Kato N-Scale ACS-64 (ref.1673)" lowVersionID="86" highVersionID="88" productID="64">
+          <output name="1" label="White" connection="LED" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="LED" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Violet" connection="solder" maxcurrent="80 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="2.35" width="0.413" height="0.072" units="inches" />
         </model>
         <model model="KAM4" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" lowVersionID="86" highVersionID="88" productID="55">
           <output name="1" label="White" connection="other" maxcurrent="100 mA" />
@@ -23970,7 +24350,7 @@
           <output name="BEMF" />
         </model>
       </family>
-      <family name="TCS Mx series decoders" mfg="Train Control Systems" file="TCS_zMx.xml">
+      <family name="TCS Mx series decoders old" mfg="Train Control Systems" file="TCS_zMx.xml">
         <model show="no" model="M1" numOuts="2" numFns="2" lowVersionID="24" highVersionID="24" replacementModel="M1" replacementFamily="Jan 2000">
           <size length="0.500" width="0.375" height="0.125" units="inches" />
         </model>

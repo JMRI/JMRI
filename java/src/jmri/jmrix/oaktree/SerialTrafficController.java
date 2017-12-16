@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
  * <P>
- * This handles the state transistions, based on the necessary state in each
+ * This handles the state transitions, based on the necessary state in each
  * message.
  * <P>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
@@ -186,14 +186,10 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      *
      * @return The registered SerialTrafficController instance for general use,
      *         if need be creating one.
+     * @deprecated since 4.9.7
      */
+    @Deprecated
     static public SerialTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new SerialTrafficController object");
-            }
-            self = new SerialTrafficController();
-        }
         return self;
     }
 

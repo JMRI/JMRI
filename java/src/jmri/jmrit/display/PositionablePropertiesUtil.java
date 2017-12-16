@@ -1,25 +1,18 @@
 package jmri.jmrit.display;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
@@ -32,16 +25,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.colorchooser.AbstractColorChooserPanel;
 import jmri.util.swing.ButtonSwatchColorChooserPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,12 +68,6 @@ public class PositionablePropertiesUtil {
         //exampleHolder.add(example);
         JPanel tmp = new JPanel();
 
-        JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancel.addActionListener((ActionEvent e) -> {
-            undoChanges();
-            mFrame.dispose();
-        });
-
         tmp.setLayout(new BoxLayout(tmp, BoxLayout.Y_AXIS));
         tmp.add(propertiesPanel);
         tmp.add(detailpanel);
@@ -90,14 +76,22 @@ public class PositionablePropertiesUtil {
         editText();
         borderPanel();
         sizePosition();
+
         JPanel _buttonArea = new JPanel();
+
+        JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
         _buttonArea.add(cancel);
+        cancel.addActionListener((ActionEvent e) -> {
+            undoChanges();
+            mFrame.dispose();
+        });
 
         JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));
         _buttonArea.add(applyButton);
         applyButton.addActionListener((ActionEvent e) -> {
             fontApply();
         });
+
         JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));
         _buttonArea.add(okButton);
         okButton.addActionListener((ActionEvent e) -> {
@@ -105,6 +99,7 @@ public class PositionablePropertiesUtil {
             mFrame.dispose();
         });
         tmp.add(_buttonArea);
+
         exampleHolder.setBackground(_parent.getParent().getBackground());
         mFrame = new JFrame(_parent.getNameString());
         mFrame.add(tmp);
@@ -115,8 +110,6 @@ public class PositionablePropertiesUtil {
 
     JComponent _textPanel;
 
-    private JColorChooser fontColorChooser = null;
-    private JColorChooser backgroundColorChooser = null;
     JTextField fontSizeField;
 
     String[] _justification = {Bundle.getMessage("left"), Bundle.getMessage("right"), Bundle.getMessage("center")};
@@ -130,24 +123,6 @@ public class PositionablePropertiesUtil {
         _textPanel.setLayout(new BoxLayout(_textPanel, BoxLayout.Y_AXIS));
         JPanel fontColorPanel = new JPanel();
         fontColorPanel.add(new JLabel(Bundle.getMessage("FontColor") + ": "));
-
-        JPanel backgroundColorPanel = new JPanel();
-        backgroundColorPanel.add(new JLabel(Bundle.getMessage("FontBackgroundColor") + ": "));
-        Color defaultLabelBackground = backgroundColorPanel.getBackground();
-        backgroundColorChooser = new JColorChooser(defaultLabelBackground);
-        backgroundColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-        AbstractColorChooserPanel backgroundColorPanels[] = { new ButtonSwatchColorChooserPanel()};
-        backgroundColorChooser.setChooserPanels(backgroundColorPanels);
-
-        backgroundColorChooser.getSelectionModel().addChangeListener(previewChangeListener);
-        backgroundColorPanel.add(backgroundColorChooser);
-
-        fontColorChooser = new JColorChooser(defaultForeground);
-        fontColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-        AbstractColorChooserPanel fontColorPanels[] = { new ButtonSwatchColorChooserPanel()};
-        fontColorChooser.setChooserPanels(fontColorPanels);
-        fontColorChooser.getSelectionModel().addChangeListener(previewChangeListener);
-        fontColorPanel.add(fontColorChooser);
 
         JPanel fontSizePanel = new JPanel();
         fontSizePanel.setLayout(new BoxLayout(fontSizePanel, BoxLayout.Y_AXIS));
@@ -171,12 +146,6 @@ public class PositionablePropertiesUtil {
         Style.add(italic);
         FontPanel.add(Style);
         _textPanel.add(FontPanel);
-
-        JPanel ColorPanel = new JPanel();
-        ColorPanel.setLayout(new BoxLayout(ColorPanel, BoxLayout.Y_AXIS));
-        //ColorPanel.add(fontColorPanel);
-        //ColorPanel.add(backgroundColorPanel);
-        _textPanel.add(ColorPanel);
 
         JPanel justificationPanel = new JPanel();
         _justificationCombo = new JComboBox<>(_justification);
@@ -456,8 +425,8 @@ public class PositionablePropertiesUtil {
         } else {
             pop.setFontStyle(0, Font.ITALIC);
         }
-        Color desiredColor;
 
+        Color desiredColor;
         if (_parent instanceof SensorIcon) {
             SensorIcon si = (SensorIcon) _parent;
             if (si.isIcon()) {
@@ -669,7 +638,7 @@ public class PositionablePropertiesUtil {
             SensorIcon si = (SensorIcon) _parent;
             if (si.isIcon()) {
                 // just 1 label Example
-                txtList.add(new TextDetails(Bundle.getMessage("TextExampleLabel"), pop.getText(), pop.getForeground(), _parent.getBackground()));
+                txtList.add(new TextDetails(Bundle.getMessage("TextExampleLabel"), pop.getText(), pop.getForeground(), pop.getBackground()));
             } else {
                 // 4 different labels (and bordered boxes to set decoration of) labels
                 txtList.add(new TextDetails(Bundle.getMessage("SensorStateActive"), si.getActiveText(), si.getTextActive(), si.getBackgroundActive()));
@@ -679,7 +648,7 @@ public class PositionablePropertiesUtil {
             }
         } else {
             // just 1 label Example
-            txtList.add(new TextDetails(Bundle.getMessage("TextExampleLabel"), pop.getText(), pop.getForeground(), _parent.getBackground()));
+            txtList.add(new TextDetails(Bundle.getMessage("TextExampleLabel"), pop.getText(), pop.getForeground(), pop.getBackground()));
         }
 
         fixedWidth = pop.getFixedWidth();

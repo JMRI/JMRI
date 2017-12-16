@@ -1,7 +1,6 @@
 //OperationsTestCase.java
 package jmri.jmrit.operations;
 
-import java.util.Locale;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;

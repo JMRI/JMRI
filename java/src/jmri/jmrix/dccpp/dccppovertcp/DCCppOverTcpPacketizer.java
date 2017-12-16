@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
 // However, at minimum, this would break backward compatibility for the interface,
 // so there is that to consider.  Probably best to do this sooner than later,
 // to minimize that impact.
-// 
+//
 public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 
     static final String OLD_RECEIVE_PREFIX = "RECEIVE ";
@@ -59,7 +59,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
     static final String NEW_SERVER_VERSION_STRING = "VERSION DCC++ Server ";
 
     boolean useOldPrefix = false;
-    
+
     protected BufferedReader istreamReader = null;
 
     /**
@@ -142,7 +142,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
     public void sendDCCppMessage(DCCppMessage m, DCCppListener reply) {
         // update statistics
         //transmittedMsgCount++;
-        
+
         log.debug("queue DCCpp packet: " + m.toString());
         // in an atomic operation, queue the request and wake the xmit thread
         try {
@@ -154,7 +154,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
             log.warn("passing to xmit: unexpected exception: " + e);
         }
     }
-    
+
     /**
      * Invoked at startup to start the threads needed here.
      */
@@ -164,7 +164,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                   + " max available = " + Thread.MAX_PRIORITY
                   + " default = " + Thread.NORM_PRIORITY
                   + " min available = " + Thread.MIN_PRIORITY);
-        
+
         // make sure that the xmt priority is no lower than the current priority
         int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
         // start the XmtHandler in a thread of its own
@@ -176,7 +176,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
         xmtThread.start();
-        
+
         // start the RcvHandler in a thread of its own
         if (rcvHandler == null) {
             rcvHandler = new RcvHandler(this);
@@ -185,36 +185,36 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
         rcvThread.setDaemon(true);
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();
-        
+
     }
-    
+
     /**
      * Captive class to handle incoming characters. This is a permanent loop,
      * looking for input messages in character form on the stream connected to
      * the LnPortnetworkController via <code>connectPort</code>.
      */
     class RcvHandler implements Runnable {
-        
+
         /**
          * Remember the DCCppPacketizer object
          */
-        DCCppOverTcpPacketizer trafficController;
-        
+        //DCCppOverTcpPacketizer trafficController;
+
         public RcvHandler(DCCppOverTcpPacketizer lt) {
-            trafficController = lt;
+            //trafficController = lt;
         }
-        
+
         // readline is deprecated, but there are no problems
         // with multi-byte characters here.
         @SuppressWarnings({"deprecation", "null"})
         @Override
         public void run() {
-            
+
             String rxLine;
             while (true) {   // loop permanently, program close will exit
                 try {
                     // start by looking for a complete line
-                    
+
                     if (istreamReader == null) {
                         log.error("istreamReader not initialized!");
                         return;
@@ -224,15 +224,15 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                         log.warn("run: input stream returned null, exiting loop");
                         return;
                     }
-                    
+
                     log.debug("Received: {}", rxLine);
-                    
+
                     // Legacy support. If this message is the old JMRI version
                     // handshake, flag us as in "old mode"
                     if (rxLine.startsWith(OLD_SERVER_VERSION_STRING)) {
                         useOldPrefix = true;
                     }
-                    
+
                     // Legacy support. If the old receive prefix is present
                     // remove it.
                     if (rxLine.startsWith(OLD_RECEIVE_PREFIX)) {
@@ -264,7 +264,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                                                                                  rxLine.lastIndexOf(">")));
                     //DCCppReply msg = new DCCppReply(rxLine.substring(rxLine.indexOf("<") + 1,
                     //                                rxLine.lastIndexOf(">")));
-                    
+
                     if (!msg.isValidReplyFormat()) {
                         log.warn("Invalid Reply Format: {}", msg.toString());
                         continue;
@@ -273,13 +273,13 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     if (log.isDebugEnabled()) {
                         log.debug("queue reply for notification");
                     }
-                    
+
                     final DCCppReply thisMsg = msg;
                     //final DCCppPacketizer thisTC = trafficController;
                     // return a notification via the queue to ensure end
                     Runnable r = new Runnable() {
                             DCCppReply msgForLater = thisMsg;
-                            
+
                             @Override
                             public void run() {
                                 notifyReply(msgForLater, null);
@@ -307,15 +307,15 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
             } // end of permanent loop
         }
     }
-    
+
     /**
      * Captive class to handle transmission
      */
     class XmtHandler implements Runnable {
-        
+
         @Override
         public void run() {
-            
+
             while (true) {   // loop permanently
                 // any input?
                 try {
@@ -325,7 +325,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     synchronized (this) {
                         msg = xmtList.removeFirst();
                     }
-                    
+
                     // input - now send
                     try {
                         if (ostream != null) {
@@ -354,14 +354,14 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                 } catch (NoSuchElementException e) {
                     // message queue was empty, wait for input
                     log.debug("start wait");
-                    
+
                     new jmri.util.WaitHandler(this);  // handle synchronization, spurious wake, interruption
-                    
+
                     log.debug("end wait");
                 }
             }
         }
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(DCCppOverTcpPacketizer.class);
 }

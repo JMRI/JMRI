@@ -18,13 +18,12 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Implements SerialPortAdapter for direct serial drive
- * <P>
+ * Implements SerialPortAdapter for direct serial drive.
+ * <p>
  * Normally controlled by the SerialDriverFrame class.
- * <P>
+ * <p>
  * The current implementation only handles the 19,200 baud rate, and does not
  * use any other options at configuration time.
- *
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004
  */
@@ -126,22 +125,18 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     }
 
     /**
-     * set up all of the other objects to operate with direct drive on this port
+     * Set up all of the other objects to operate with direct drive on this port.
      */
     @Override
     public void configure() {
+        TrafficController tc = new TrafficController();
+        ((jmri.jmrix.direct.DirectSystemConnectionMemo)getSystemConnectionMemo()).setTrafficController(tc);
         // connect to the traffic controller
-        TrafficController.instance().connectPort(this);
-
-        // initialize any managers this protocol provides
-        jmri.InstanceManager.setCommandStation(TrafficController.instance());
-
-        // mention as available
-        jmri.jmrix.direct.ActiveFlag.setActive();
-
+        tc.connectPort(this);
     }
 
     // base class methods for the PortController interface
+
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -165,7 +160,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 19,200 bps
+     * Get an array of valid baud rates. This is currently only 19,200 bps.
      */
     @Override
     public String[] validBaudRates() {

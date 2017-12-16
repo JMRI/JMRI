@@ -25,7 +25,7 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**
-     * Tells which managers are provides by class
+     * Tells which managers this class provides.
      */
     @Override
     public boolean provides(Class<?> type) {
@@ -45,7 +45,7 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         if (type.equals(jmri.TurnoutManager.class)) {
             return true;
         }
-        return false; // nothing, by default
+        return super.provides(type);
     }
 
     @SuppressWarnings("unchecked")
@@ -70,7 +70,7 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         if (T.equals(OlcbInterface.class)) {
             return (T) getInterface();
         }
-        return null; // nothing, by default
+        return super.get(T); 
     }
 
     /**
