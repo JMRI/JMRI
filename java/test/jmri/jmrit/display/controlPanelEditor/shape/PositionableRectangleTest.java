@@ -27,13 +27,9 @@ public class PositionableRectangleTest extends PositionableShapeTest {
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
-           p = new PositionableRectangle(new EditorScaffold());
+           editor = new EditorScaffold();
+           p = new PositionableRectangle(editor);
         }
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PositionableRectangleTest.class);

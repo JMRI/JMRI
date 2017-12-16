@@ -28,14 +28,9 @@ public class PositionablePolygonTest extends PositionableShapeTest {
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
-           Editor e = new EditorScaffold();
-           p = new PositionablePolygon(e,new java.awt.Polygon());
+           editor = new EditorScaffold();
+           p = new PositionablePolygon(editor,new java.awt.Polygon());
         }
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PositionablePolygonTest.class);

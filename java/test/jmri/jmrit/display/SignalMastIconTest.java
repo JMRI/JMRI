@@ -1,7 +1,6 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import jmri.InstanceManager;
@@ -24,7 +23,6 @@ import org.junit.Test;
  */
 public class SignalMastIconTest extends PositionableIconTest {
 
-    PanelEditor panel = null;
     SignalMast s = null;
     SignalMastIcon to = null;
 
@@ -56,7 +54,7 @@ public class SignalMastIconTest extends PositionableIconTest {
         JFrame jf = new JFrame("SignalMastIcon Icon Test");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        SignalMastIcon to = new SignalMastIcon(panel);
+        SignalMastIcon to = new SignalMastIcon(editor);
         to.setShowAutoText(false);
 
         jf.getContentPane().add(new JLabel("Should be yellow/red: "));
@@ -85,9 +83,9 @@ public class SignalMastIconTest extends PositionableIconTest {
     public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            panel = new PanelEditor("Test SignalMastIcon Panel");
-            p = new SignalMastIcon(panel);
-            to = new SignalMastIcon(panel);
+            editor = new PanelEditor("Test SignalMastIcon Panel");
+            p = new SignalMastIcon(editor);
+            to = new SignalMastIcon(editor);
             to.setShowAutoText(true);
 
             // reset instance manager & create test heads
@@ -118,21 +116,6 @@ public class SignalMastIconTest extends PositionableIconTest {
 
             to.setSignalMast(new jmri.NamedBeanHandle<>(s.getSystemName(), s));
         }
-    }
-
-    @After
-    @Override
-    public void tearDown() {
-        // now close panel window
-        if (panel != null) {
-            WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
-            for (WindowListener listener : listeners) {
-                panel.getTargetFrame().removeWindowListener(listener);
-            }
-            panel.getTargetFrame().dispose();
-            JUnitUtil.dispose(panel);
-        }
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SignalMastIconTest.class);

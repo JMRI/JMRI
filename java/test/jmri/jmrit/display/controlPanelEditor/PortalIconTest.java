@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -23,16 +24,21 @@ public class PortalIconTest extends PositionableIconTest {
     }
 
     @Override
+    @Test
+    @Ignore("not supported for PortalIcon")
+    public void testDoViemMenu(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertTrue("Do View Menu",p.doViemMenu());
+    }
+
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-           ControlPanelEditor frame = new ControlPanelEditor("Portal Icon Test Panel");
-           p = new PortalIcon(frame);
+           editor = new ControlPanelEditor("Portal Icon Test Panel");
+           p = new PortalIcon(editor);
         }
     }
-
-    @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
 
 }

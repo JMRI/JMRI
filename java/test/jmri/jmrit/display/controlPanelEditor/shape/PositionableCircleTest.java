@@ -27,13 +27,9 @@ public class PositionableCircleTest extends PositionableShapeTest {
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
-           p = new PositionableCircle(new EditorScaffold());
+           editor = new EditorScaffold();
+           p = new PositionableCircle(editor);
         }
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PositionableCircleTest.class);

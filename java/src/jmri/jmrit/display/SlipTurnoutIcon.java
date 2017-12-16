@@ -635,6 +635,10 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                         break;
                 }
                 break;
+            case DOUBLESLIP:
+                   // DOUBLESLIP is an allowed type, so it shouldn't
+                   // cause a warning, even if we don't need special handling.
+                break;
             default:
                 log.warn("Unhandled turnout type: {}", getTurnoutType());
                 break;

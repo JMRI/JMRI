@@ -1,11 +1,13 @@
 package jmri.jmrit.display;
 
+import java.awt.event.WindowListener;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -15,10 +17,29 @@ import org.junit.Test;
  */
 abstract public class PositionableTestBase{
 
+    protected Editor editor = null;   // derived classes should set editor in setup;
     protected Positionable p = null;  //derived classes should set p in setUp
 
     @Before
     abstract public void setUp();
+
+    @After
+    public void tearDown() {
+        // now close panel window, if it exists
+        if (editor != null) {
+            java.awt.event.WindowListener[] listeners = editor.getTargetFrame().getWindowListeners();
+            for (WindowListener listener : listeners) {
+                editor.getTargetFrame().removeWindowListener(listener);
+            }
+            EditorFrameOperator jfo = new EditorFrameOperator(editor);
+            jfo.requestClose();
+        }
+        JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
+        editor = null;
+        p = null;
+        JUnitUtil.tearDown();
+    }
+
 
     @Test
     public void testGetAndSetPositionable() {
@@ -61,7 +82,7 @@ abstract public class PositionableTestBase{
     @Test
     public void testGetAndSetViewCoordinates() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertTrue("Defalt View Coordinates", p.getViewCoordinates());
+        Assert.assertTrue("Default View Coordinates", p.getViewCoordinates());
         p.setViewCoordinates(false);
         Assert.assertFalse("View Coordinates after set false", p.getViewCoordinates());
         p.setViewCoordinates(true);
@@ -113,6 +134,51 @@ abstract public class PositionableTestBase{
         //Assert.assertFalse("clone object (not content) equality", p.equals(p));
 
         Assert.assertTrue("class type equality", p.getClass().equals(p.getClass()));
+    }
+
+    @Test
+    public void testMaxWidth() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertTrue("Max Width",0<=p.maxWidth());
+    }
+
+    @Test
+    public void testMaxHeight() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertTrue("Max Height",0<=p.maxHeight());
+    }
+
+    @Test
+    public void testGetAndSetScale(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertEquals("Default Scale",1.0D,p.getScale(),0.0);
+        p.setScale(5.0D);
+        Assert.assertEquals("Scale",5.0D,p.getScale(),0.0);
+    }
+    
+    @Test
+    public void testGetAndSetRotationDegrees(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        p.rotate(50);
+        Assert.assertEquals("Degrees",50,p.getDegrees());
+    }
+
+    @Test
+    public void testGetTextComponent(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("text component",p.getTextComponent());
+    }
+
+    @Test
+    public void testStoreItem(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertTrue("Store Item",p.storeItem());
+    }
+
+    @Test
+    public void testDoViemMenu(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertTrue("Do Viem Menu",p.doViemMenu());
     }
 
 }

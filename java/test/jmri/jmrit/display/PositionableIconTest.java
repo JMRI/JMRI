@@ -26,16 +26,9 @@ public class PositionableIconTest extends PositionableTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
-           Editor e = new EditorScaffold();
-           p = new PositionableIcon(e);
+           editor = new EditorScaffold();
+           p = new PositionableIcon(editor);
         }
     }
-
-    @After
-    public void tearDown() {        
-        JUnitUtil.tearDown();
-        p = null;
-    }
-
 
 }

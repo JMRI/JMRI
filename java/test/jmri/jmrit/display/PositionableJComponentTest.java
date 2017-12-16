@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -31,20 +32,20 @@ public class PositionableJComponentTest extends PositionableTestBase {
         Assert.assertFalse("View Coordinates after set false", p.getViewCoordinates());
     }
 
+    @Test
+    @Override
+    @Ignore("PositionableJComponent does not support rotate")
+    public void testGetAndSetRotationDegrees(){
+    }
+
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
-           Editor e = new EditorScaffold();
-           p = new PositionableJComponent(e);
+           editor = new EditorScaffold();
+           p = new PositionableJComponent(editor);
         }
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
-        p = null;
     }
 
 }
