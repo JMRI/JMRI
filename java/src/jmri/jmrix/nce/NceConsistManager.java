@@ -60,6 +60,9 @@ public class NceConsistManager extends AbstractConsistManager {
      */
     @Override
     public Consist addConsist(LocoAddress locoAddress) {
+        if (! (locoAddress instanceof DccLocoAddress)) {
+            throw new IllegalArgumentException("locoAddress is not a DccLocoAddress object");
+        }
         if (consistTable.containsKey(locoAddress)) // no duplicates allowed.
         {
             return consistTable.get(locoAddress);

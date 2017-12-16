@@ -46,6 +46,9 @@ public class WiFiConsistManager extends AbstractConsistManager {
 
     @Override
     public Consist addConsist(LocoAddress address) {
+        if (! (address instanceof DccLocoAddress)) { 
+            throw new IllegalArgumentException("address is not a DccLocoAddress object");
+        }
         WiFiConsist consist;
         consist = new WiFiConsist((DccLocoAddress) address);
         consistTable.put(address, consist);
