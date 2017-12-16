@@ -2,6 +2,7 @@ package jmri.jmrit.withrottle;
 
 import java.util.ArrayList;
 import jmri.Consist;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.implementation.AbstractConsistManager;
 import org.slf4j.Logger;
@@ -44,9 +45,9 @@ public class WiFiConsistManager extends AbstractConsistManager {
     }
 
     @Override
-    public Consist addConsist(DccLocoAddress address) {
+    public Consist addConsist(LocoAddress address) {
         WiFiConsist consist;
-        consist = new WiFiConsist(address);
+        consist = new WiFiConsist((DccLocoAddress) address);
         consistTable.put(address, consist);
         return consist;
     }

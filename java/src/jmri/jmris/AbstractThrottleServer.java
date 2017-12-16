@@ -153,7 +153,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
     }
 
     @Override
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+    public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         try {
             sendErrorStatus();
         } catch (java.io.IOException ioe) {
@@ -162,7 +162,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
     }
 
     @Override
-    public void notifyStealThrottleRequired(DccLocoAddress address) {
+    public void notifyStealThrottleRequired(LocoAddress address) {
         // this is an automatically stealing impelementation.
         InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }

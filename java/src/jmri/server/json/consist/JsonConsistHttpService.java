@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import jmri.Consist;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.consisttool.ConsistFile;
@@ -157,8 +158,8 @@ public class JsonConsistHttpService extends JsonHttpService {
             throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
         }
         ArrayNode root = mapper.createArrayNode();
-        for (DccLocoAddress address : this.manager.getConsistList()) {
-            root.add(getConsist(locale, address));
+        for (LocoAddress address : this.manager.getConsistList()) {
+            root.add(getConsist(locale, (DccLocoAddress) address));
         }
         return root;
     }

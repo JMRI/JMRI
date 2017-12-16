@@ -8,6 +8,7 @@
 package jmri.jmrix.nce;
 
 import jmri.Consist;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.implementation.AbstractConsistManager;
 import jmri.jmrix.ConnectionStatus;
@@ -58,13 +59,13 @@ public class NceConsistManager extends AbstractConsistManager {
      * Add a new NceConsist with the given address to consistTable/consistList
      */
     @Override
-    public Consist addConsist(DccLocoAddress locoAddress) {
+    public Consist addConsist(LocoAddress locoAddress) {
         if (consistTable.containsKey(locoAddress)) // no duplicates allowed.
         {
             return consistTable.get(locoAddress);
         }
         log.debug("Add consist, address " + locoAddress);
-        NceConsist consist = new NceConsist(locoAddress, memo);
+        NceConsist consist = new NceConsist((DccLocoAddress) locoAddress, memo);
         consistTable.put(locoAddress, consist);
         return consist;
     }
@@ -76,7 +77,7 @@ public class NceConsistManager extends AbstractConsistManager {
     }
 
     @Override
-    public Consist getConsist(DccLocoAddress locoAddress) {
+    public Consist getConsist(LocoAddress locoAddress) {
         log.debug("Requesting NCE consist " + locoAddress);
         NceConsist consist = (NceConsist) super.getConsist(locoAddress);
         // Checking the CS memory each time a consist is requested creates lots of NCE messages!
@@ -86,7 +87,7 @@ public class NceConsistManager extends AbstractConsistManager {
 
     // remove the old Consist
     @Override
-    public void delConsist(DccLocoAddress locoAddress) {
+    public void delConsist(LocoAddress locoAddress) {
         NceConsist consist = (NceConsist) getConsist(locoAddress);
         // kill this consist
         consist.dispose();
