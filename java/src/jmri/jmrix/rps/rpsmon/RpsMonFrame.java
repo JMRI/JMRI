@@ -5,6 +5,7 @@ import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.MeasurementListener;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.ReadingListener;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  * Frame displaying (and logging) RPS messages
@@ -14,8 +15,11 @@ import jmri.jmrix.rps.ReadingListener;
 public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame
         implements ReadingListener, MeasurementListener {
 
-    public RpsMonFrame() {
+    RpsSystemConnectionMemo memo = null;
+
+    public RpsMonFrame(RpsSystemConnectionMemo _memo) {
         super();
+        memo = _memo;
         Distributor.instance().addReadingListener(this);
         Distributor.instance().addMeasurementListener(this);
     }

@@ -21,7 +21,9 @@ public class ThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTe
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tm = new ThrottleManager();
+        JUnitUtil.initDebugCommandStation();
+        jmri.CommandStation cs = jmri.InstanceManager.getDefault(jmri.CommandStation.class);
+        tm = new ThrottleManager(cs);
     }
 
     @After

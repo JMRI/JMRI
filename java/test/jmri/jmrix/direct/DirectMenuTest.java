@@ -14,8 +14,17 @@ public class DirectMenuTest {
 
     @Test
     public void testCTor() {
-        DirectMenu t = new DirectMenu();
+        DirectSystemConnectionMemo memo = new DirectSystemConnectionMemo();
+        DirectMenu t = new DirectMenu(memo);
         Assert.assertNotNull("exists",t);
+    }
+
+    @Test
+    public void testStringCTor() {
+        DirectSystemConnectionMemo memo = new DirectSystemConnectionMemo();
+        DirectMenu t = new DirectMenu("test",memo);
+        Assert.assertNotNull("exists",t);
+        Assert.assertEquals("menu text","test",t.getText());
     }
 
     // The minimal setup for log4J

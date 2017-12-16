@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2017 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 -  new pane file for SoundTraxx SoundCar with Flex-Map function mapping
+      Created from ECOPaneFnMap.xml version 2.1
+      No Auxiliary map registers, as direction of travel is not known in a SoundCar -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Function Map</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>&lt;html&gt;
+            &lt;h1&gt;SoundCar Flex-Map Extended Function Map&lt;/h1&gt;
+            &lt;br/&gt;
+            &lt;br/&gt;
+            &lt;h2&gt;&lt;em&gt;
+              Any check marks on the Legacy Function Map pane will override these settings!
+            &lt;/em&gt;&lt;/h2&gt;
+          &lt;/html&gt;</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>Use this sheet to determine which functions will control which outputs</text>
+          <text xml:lang="de">Hier einstellen, welche Funktion welchen Ausgang steuert</text>
+          <text xml:lang="it">Usa questo foglio per programmare quale Funzione contolla quale uscita</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <row>
+		<grid ipadx="10" ipady="2">
+			<!-- default padding for all grid items -->
+			<griditem gridx="0" gridy="0" weightx="1" anchor="LINE_END">
+				<label>
+					<text>Extended   </text>
+				</label>
+			</griditem>
+			<griditem gridx="0" gridy="1" anchor="LINE_END">
+				<label>
+					<text>Function   </text>
+				</label>
+			</griditem>
+			<griditem gridx="0" gridy="2" anchor="LINE_END">
+				<label>
+					<text>Mapping   </text>
+				</label>
+			</griditem>
+			<griditem gridx="0" gridy="3" anchor="LINE_END">
+				<display item="Extended Function Map Headlight"/>
+			</griditem>
+			<griditem gridx="0" gridy="4" anchor="LINE_END">
+				<display item="Extended Function Map Backup Light"/>
+			</griditem>
+			<griditem gridx="0" gridy="5" anchor="LINE_END">
+				<display item="Extended Function Map FX3 Effect"/>
+			</griditem>
+			<griditem gridx="0" gridy="6" anchor="LINE_END">
+				<display item="Extended Function Map FX4 Effect"/>
+			</griditem>
+			<griditem gridx="0" gridy="7" anchor="LINE_END">
+				<display item="Extended Function Map FX5 Effect"/>
+			</griditem>
+			<griditem gridx="0" gridy="8" anchor="LINE_END">
+				<display item="Extended Function Map FX6 Effect"/>
+			</griditem>
+			<griditem gridx="0" gridy="9" gridwidth="REMAINDER" anchor="LINE_END">
+				<label>
+				  <text> </text>
+				</label>
+			</griditem>
+			<griditem gridx="0" gridy="10" anchor="LINE_END">
+				<display item="Extended Function Map Dimmer"/>
+			</griditem>
+			<griditem gridx="0" gridy="11" anchor="LINE_END">
+				<display item="Extended Function Map Mute"/>
+			</griditem>
+			<griditem gridx="0" gridy="12" anchor="LINE_END">
+				<display item="Extended Function Map Brake"/>
+				<display item="Extended Function Map Independent/Train Brake"/>
+			</griditem>
+			<griditem gridx="0" gridy="13" anchor="LINE_END">
+				<display item="Extended Function Map Half Speed"/>
+			</griditem>
+			<griditem gridx="0" gridy="14" anchor="LINE_END">
+				<display item="Extended Function Map Momentum Override"/>
+			</griditem>
+			<griditem gridx="0" gridy="15" anchor="LINE_END">
+				<display item="Extended Function Map Grade Crossing Signal"/>
+			</griditem>
+			<griditem gridx="0" gridy="16" anchor="LINE_END">
+				<display item="Extended Function Map Forward Signal"/>
+			</griditem>
+			<griditem gridx="0" gridy="17" anchor="LINE_END">
+				<display item="Extended Function Map Reverse Signal"/>
+			</griditem>
+			<griditem gridx="0" gridy="18" anchor="LINE_END">
+				<display item="Extended Function Map Stop Signal"/>
+			</griditem>
+			<griditem gridx="0" gridy="19" anchor="LINE_END">
+				<display item="Extended Function Map Brake Select"/>
+			</griditem>
+			<griditem gridx="0" gridy="20" anchor="LINE_END">
+				<display item="Extended Function Map Alternate Mixer"/>
+			</griditem>
+			<griditem gridx="0" gridy="21" anchor="LINE_END">
+				<display item="Extended Function Map RPM+"/>
+				<display item="Extended Function Map Cutoff+"/>
+				<display item="Extended Function Map Drift Mode On"/>
+				<display item="Extended Function Map Forward Trolley Bell"/>
+			</griditem>
+			<griditem gridx="0" gridy="22" anchor="LINE_END">
+				<display item="Extended Function Map RPM-"/>
+				<display item="Extended Function Map Cutoff-"/>
+				<display item="Extended Function Map Drift Mode Off"/>
+				<display item="Extended Function Map Reverse Trolley Bell"/>
+			</griditem>
+			<griditem gridx="0" gridy="23" anchor="LINE_END">
+				<display item="Extended Function Map Wheel Slip"/>
+				<display item="Extended Function Map Two Shorts Signal"/>
+			</griditem>
+			<griditem gridx="0" gridy="24" anchor="LINE_END">
+				<display item="Extended Function Map One Long Signal"/>
+			</griditem>
+			<griditem gridx="0" gridy="25" gridwidth="REMAINDER" anchor="LINE_END">
+				<label>
+				  <text> </text>
+				</label>
+			</griditem>
+			<griditem gridx="0" gridy="26" anchor="LINE_END">
+				<display item="Extended Function Map Airhorn"/>
+				<display item="Extended Function Map Whistle"/>
+			</griditem>
+			<griditem gridx="0" gridy="27" anchor="LINE_END">
+				<display item="Extended Function Map Bell"/>
+			</griditem>
+			<griditem gridx="0" gridy="28" anchor="LINE_END">
+				<display item="Extended Function Map Dynamic Brake"/>
+				<display item="Extended Function Map Dynamo"/>
+				<display item="Extended Function Map Pneumatic Doors"/>
+			</griditem>
+			<griditem gridx="0" gridy="29" anchor="LINE_END">
+				<display item="Extended Function Map Short Airhorn"/>
+				<display item="Extended Function Map Short Whistle"/>
+			</griditem>
+			<griditem gridx="0" gridy="30" anchor="LINE_END">
+				<display item="Extended Function Map Cylinder Cocks"/>
+				<display item="Extended Function Map Straight-to-Eight"/>
+				<display item="Extended Function Map Pantograph"/>
+			</griditem>
+			<griditem gridx="0" gridy="31" anchor="LINE_END">
+				<display item="Extended Function Map General Service"/>
+				<display item="Extended Function Map Water Stop"/>
+			</griditem>
+			<griditem gridx="0" gridy="32" anchor="LINE_END">
+				<display item="Extended Function Map HEP Mode"/>
+				<display item="Extended Function Map Stop Request Bell"/>
+			</griditem>
+			<griditem gridx="0" gridy="33" anchor="LINE_END">
+				<display item="Extended Function Map Cab Chatter"/>
+			</griditem>
+			<griditem gridx="0" gridy="34" anchor="LINE_END">
+				<display item="Extended Function Map Coupler"/>
+			</griditem>
+			<griditem gridx="0" gridy="35" anchor="LINE_END">
+				<display item="Extended Function Map Coupler Release"/>
+			</griditem>
+			<griditem gridx="0" gridy="36" anchor="LINE_END">
+				<display item="Extended Function Map Handbrake"/>
+				<display item="Extended Function Map Wheel Chains"/>
+			</griditem>
+			<griditem gridx="0" gridy="37" anchor="LINE_END">
+				<display item="Extended Function Map Sander Valve"/>
+			</griditem>
+			<griditem gridx="0" gridy="38" anchor="LINE_END">
+				<display item="Extended Function Map Coach Doors"/>
+			</griditem>      
+			<griditem gridx="0" gridy="39" anchor="LINE_END">
+				<display item="Extended Function Map All Aboard/Coach Doors"/>
+			</griditem>
+			<griditem gridx="0" gridy="40" anchor="LINE_END">
+				<display item="Extended Function Map Steam Generator"/>
+				<display item="Extended Function Map Blowdown"/>
+			</griditem>
+			<griditem gridx="0" gridy="41" anchor="LINE_END">
+				<display item="Extended Function Map Fuel Loading"/>
+			</griditem>
+			<griditem gridx="0" gridy="42" anchor="LINE_END">
+				<display item="Extended Function Map Ash Dump"/>
+			</griditem>
+			<griditem gridx="0" gridy="43" anchor="LINE_END">
+				<display item="Extended Function Map Injector"/>
+				<display item="Extended Function Map Trolley Bell"/>
+			</griditem>
+			<griditem gridx="0" gridy="44" anchor="LINE_END">
+				<display item="Extended Function Map Johnson Bar"/>
+				<display item="Extended Function Map Johnson Bar/Power Reverser"/>
+			</griditem>
+			<griditem gridx="0" gridy="45" anchor="LINE_END">
+				<display item="Extended Function Map E-Brake App."/>
+			</griditem>
+		</grid>
+    </row>
+    <row>
+        <column>
+          <label>
+            <text>&lt;html&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;h2&gt;&lt;em&gt;
+                Any check marks on the Legacy Function Map pane will override these settings!
+              &lt;/em&gt;&lt;/h2&gt;
+            &lt;/html&gt;</text>
+          </label>
+        </column>
+    </row>
+   </column>
+</pane>

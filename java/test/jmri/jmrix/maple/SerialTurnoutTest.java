@@ -15,7 +15,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     private SerialTrafficControlScaffold tcis = null;
     private MapleSystemConnectionMemo _memo = null;
-    private SerialNode n = new SerialNode();
+    private SerialNode n = null; 
 
     @Test
     public void testNode() {
@@ -55,7 +55,8 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         // prepare an interface
         tcis = new SerialTrafficControlScaffold();
         _memo = new MapleSystemConnectionMemo("K", "Maple");
-        n = new SerialNode(1, 0);
+        _memo.setTrafficController(tcis);
+        n = new SerialNode(1, 0,tcis);
         t = new SerialTurnout("KT4", "t4", _memo);
     }
 
