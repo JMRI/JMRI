@@ -37,6 +37,7 @@ public class LocoIconTest extends PositionableTestBase {
     @Override
     @Test
     public void testGetAndSetShowToolTip() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Defalt ShowToolTip", p.showToolTip());
         // LocoIcon's ignore setting ShowToolTip to true
         p.setShowToolTip(true);
