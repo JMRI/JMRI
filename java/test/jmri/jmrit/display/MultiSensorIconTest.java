@@ -25,13 +25,9 @@ public class MultiSensorIconTest extends PositionableTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-           Editor ef = new EditorScaffold();
-           p = new MultiSensorIcon(ef);
+           editor = new EditorScaffold();
+           p = new MultiSensorIcon(editor);
         }
     }
-
-    @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
-
 
 }

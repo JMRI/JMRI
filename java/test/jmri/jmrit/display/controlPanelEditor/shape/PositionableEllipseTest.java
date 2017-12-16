@@ -27,13 +27,9 @@ public class PositionableEllipseTest extends PositionableRectangleTest {
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
-           p = new PositionableEllipse(new EditorScaffold());
+           editor = new EditorScaffold();
+           p = new PositionableEllipse(editor);
         }
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PositionableEllipseTest.class);

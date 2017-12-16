@@ -26,13 +26,9 @@ public class PositionableRoundRectTest extends PositionableRectangleTest {
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
-           p = new PositionableRoundRect(new EditorScaffold());
+           editor = new EditorScaffold();
+           p = new PositionableRoundRect(editor);
         }
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PositionableRoundRectTest.class);

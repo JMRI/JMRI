@@ -34,8 +34,4 @@ public class SensorIconTest extends PositionableIconTest {
         }
     }
 
-    @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
-
-
 }

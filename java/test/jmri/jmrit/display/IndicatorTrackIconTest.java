@@ -26,13 +26,9 @@ public class IndicatorTrackIconTest extends PositionableIconTest {
     public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-           Editor ef = new EditorScaffold();
-           p = new IndicatorTrackIcon(ef);
+           editor = new EditorScaffold();
+           p = new IndicatorTrackIcon(editor);
         }
     }
-
-    @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
-
 
 }

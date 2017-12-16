@@ -1,11 +1,13 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.Font;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -44,17 +46,25 @@ public class LocoIconTest extends PositionableTestBase {
         Assert.assertFalse("showToolTip after set false", p.showToolTip());
     }
 
+    @Override
+    @Test
+    @Ignore("not supported for LocoIcon")
+    public void testDoViemMenu(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertTrue("Do View Menu",p.doViemMenu());
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-           Editor ef = new EditorScaffold();
-           p = new LocoIcon(ef);
+           editor = new EditorScaffold();
+           LocoIcon li = new LocoIcon(editor);
+           // for rotate to work, must set font.
+           li.setFont(new Font("Serif", Font.BOLD, 10));
+           li.setText("1234");
+           p = li;
         }
     }
-
-    @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
-
 
 }
