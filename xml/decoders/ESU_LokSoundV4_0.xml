@@ -58,6 +58,8 @@
     <version author="Ronald Kuhn" version="18" lastUpdated="20170722"/>
     <!-- ver19 concealed obsolete legacy definitions and removed obsolete functionlabels & soundlabels -->
     <version author="Dave Heap" version="19" lastUpdated="20170819"/>
+    <!-- ver20 added German translation for functionlabels-->
+    <version author="Ronald Kuhn" version="20" lastUpdated="20171217"/>
     <decoder>
         <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554493,33554503,33554538">
@@ -105,7 +107,7 @@
                   <text xml:lang="de">Licht</text>
                 </functionlabel>
                 <functionlabel num="1" lockable="true">
-                  <text>Sound</text>
+                  <text>Bell</text>
                   <text xml:lang="de">Sound</text>
                 </functionlabel>
                 <functionlabel num="2" lockable="false">
