@@ -1341,6 +1341,54 @@ public class LnOpsModeProgrammerTest extends TestCase {
 
      }
 
+     public void testCommandStationWriteOutOfBounds1() throws ProgrammerException {
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+
+        // set command station opsw mode
+        lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETCSOPSWMODE);
+
+        // attempt an out-of-range command station opsw access
+        lnopsmodeprogrammer.writeCV("1.0", 1, pl);
+
+        // should not have sent another message
+        Assert.assertEquals("no new message sent", 0, lnis.outbound.size());
+        Assert.assertEquals("should get a programming reply", 1, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status Not Implemented", 8, pl.getRcvdStatus());
+
+        // attempt an out-of-range command station opsw access
+        lnopsmodeprogrammer.writeCV("1.-1", 0, pl);
+
+        // should not have sent another message
+        Assert.assertEquals("no new message sent", 0, lnis.outbound.size());
+        Assert.assertEquals("should get a programming reply", 2, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status Not Implemented", 8, pl.getRcvdStatus());
+
+        // attempt an out-of-range command station opsw access
+        lnopsmodeprogrammer.writeCV("1", 1, pl);
+
+        // should not have sent another message
+        Assert.assertEquals("no new message sent", 0, lnis.outbound.size());
+        Assert.assertEquals("should get a programming reply", 3, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status Not Implemented", 8, pl.getRcvdStatus());
+
+        // attempt an out-of-range command station opsw access
+        lnopsmodeprogrammer.writeCV("1.1", -1, pl);
+
+        // should not have sent another message
+        Assert.assertEquals("no new message sent", 0, lnis.outbound.size());
+        Assert.assertEquals("should get a programming reply", 4, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status Not Implemented", 8, pl.getRcvdStatus());
+
+        // attempt an out-of-range command station opsw access
+        lnopsmodeprogrammer.writeCV("1.1", 2, pl);
+
+        // should not have sent another message
+        Assert.assertEquals("no new message sent", 0, lnis.outbound.size());
+        Assert.assertEquals("should get a programming reply", 5, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status Not Implemented", 8, pl.getRcvdStatus());
+
+     }
+
 
     // from here down is testing infrastructure
     public LnOpsModeProgrammerTest(String s) {
