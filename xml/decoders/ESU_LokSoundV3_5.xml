@@ -568,7 +568,7 @@
          <text xml:lang="de">Licht</text>
         </functionlabel>
         <functionlabel num="1" lockable="true">
-         <text>Sound</text>
+         <text>Bell</text>
          <text xml:lang="de">Sound</text>
         </functionlabel>
         <functionlabel num="2" lockable="false">
@@ -818,7 +818,7 @@
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
-            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
@@ -886,7 +886,7 @@
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
-            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
@@ -954,7 +954,7 @@
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
-            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
@@ -1022,7 +1022,7 @@
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
-            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
@@ -1090,7 +1090,7 @@
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
-            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
@@ -1158,7 +1158,7 @@
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
-            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
@@ -1226,7 +1226,7 @@
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
-            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
@@ -1294,7 +1294,7 @@
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
-            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
