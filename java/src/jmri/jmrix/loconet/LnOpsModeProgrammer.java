@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -30,7 +31,15 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     ProgListener p;
     boolean doingWrite;
     boolean boardOpSwWriteVal;
-    javax.swing.Timer bdOpSwAccessTimer = null;
+    private javax.swing.Timer bdOpSwAccessTimer = null;
+    private javax.swing.Timer csOpSwAccessTimer = null;
+    private javax.swing.Timer csOpSwValidTimer = null;
+    private boolean csOpSwsAreValid = false;
+    private cmdStnOpSwStateType cmdStnOpSwState;
+    private int cmdStnOpSwNum;
+    private boolean cmdStnOpSwVal;
+    private LocoNetMessage lastCmdStationOpSwMessage;
+
 
     public LnOpsModeProgrammer(SlotManager pSlotMgr,
             LocoNetSystemConnectionMemo memo,
@@ -39,7 +48,8 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         this.memo = memo;
         mAddress = pAddress;
         mLongAddr = pLongAddr;
-
+        cmdStnOpSwState = cmdStnOpSwStateType.IDLE;
+        lastCmdStationOpSwMessage = null;
         // register to listen
         memo.getLnTrafficController().addLocoNetListener(~0, this);
     }
@@ -63,7 +73,36 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
         this.p = null;
         // Check mode
-        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+        LocoNetMessage m;
+        if (getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) {
+            if (csOpSwAccessTimer == null) {
+                initializeCsOpSwAccessTimer();
+                initializeCsOpSwValidTimer();
+            }
+
+            // Command Station OpSws are handled via slot 0x7f.
+            this.p = p;
+            doingWrite = true;
+            log.debug("write Command Station OpSw{} as {}", CV, (val>0)?"c":"t");
+            String[] parts = CV.split("\\.");
+            int typeWord = 0;
+            if ((typeWord = Integer.parseInt(parts[0])) == 1) {
+                if (!updateCmdStnOpSw(Integer.parseInt(parts[1]),
+                        (val>0)?true:false)) {
+                    ProgListener temp = p;
+                    p = null;
+                    if (temp != null) {
+                        temp.programmingOpReply(0, ProgListener.ProgrammerBusy);
+                    }
+                }
+            } else {
+                ProgListener temp = p;
+                p = null;
+                if (temp != null) {
+                    temp.programmingOpReply(0,ProgListener.NotImplemented);
+                }
+            }
+        } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             /**
              * CV format is e.g. "113.12" where the first part defines the
              * typeword for the specific board type and the second is the specific bit number
@@ -87,7 +126,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             int state = Integer.parseInt(parts[parts.length>1 ? 1 : 0]);
 
             // make message
-            LocoNetMessage m = new LocoNetMessage(6);
+            m = new LocoNetMessage(6);
             m.setOpCode(LnConstants.OPC_MULTI_SENSE);
             int element = 0x72;
             if ((mAddress & 0x80) != 0) {
@@ -116,7 +155,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             // make message
             int locoIOAddress = mAddress;
             int locoIOSubAddress = ((mAddress+256)/256)&0x7F;
-            LocoNetMessage m = jmri.jmrix.loconet.locoio.LocoIO.writeCV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV), val);
+            m = jmri.jmrix.loconet.locoio.LocoIO.writeCV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV), val);
             // force version 1 tag
             m.setElement(4, 0x01);
 
@@ -127,7 +166,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             // SV2 mode
             log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
             // make message
-            LocoNetMessage m = new LocoNetMessage(16);
+            m = new LocoNetMessage(16);
             loadSV2MessageFormat(m, mAddress, decodeCvNum(CV), val);
             m.setElement(3, 0x01); // 1 byte write
             log.debug("  Message {}", m);
@@ -142,7 +181,38 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     public void readCV(String CV, ProgListener p) throws ProgrammerException {
         this.p = null;
         // Check mode
-        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+        String[] parts;
+        LocoNetMessage m;
+        if (getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) {
+            if (csOpSwAccessTimer == null) {
+                initializeCsOpSwAccessTimer();
+                initializeCsOpSwValidTimer();
+            }
+
+            // Command Station OpSws are handled via slot 0x7f.
+            this.p = p;
+            doingWrite = false;
+            log.debug("read Command Station OpSw{}", CV);
+            parts = CV.split("\\.");
+            ProgListener temp = p;
+            if (parts.length != 2) {
+                p = null;
+                if (temp != null) {
+                    temp.programmingOpReply(0,ProgListener.NotImplemented);
+                }
+            }
+            log.trace("splitting CV: {} becomes {} and {}", CV, parts[0], parts[1]);
+            int typeWord;
+            if ((typeWord = Integer.parseInt(parts[0])) == 1) {
+                log.trace("Valid typeWord = 1; attempting to read OpSw{}.", Integer.parseInt(parts[1]));
+                log.trace("starting from state {}", cmdStnOpSwState);
+                readCmdStationOpSw(Integer.parseInt(parts[1]));
+            } else {
+                p = null;
+                log.trace("readCV: bad variable number intial value: {} ",typeWord);
+                temp.programmingOpReply(0,ProgListener.NotImplemented);
+            }
+        } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             /**
              * CV format is e.g. "113.12" where the first part defines the
              * typeword for the specific board type and the second is the specific bit number
@@ -161,12 +231,12 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             doingWrite = false;
             // Board programming mode
             log.debug("read CV \"{}\" addr:{}", CV, mAddress);
-            String[] parts = CV.split("\\.");
+            parts = CV.split("\\.");
             int typeWord = Integer.parseInt(parts[0]);
             int state = Integer.parseInt(parts[parts.length>1 ? 1 : 0]);
 
             // make message
-            LocoNetMessage m = new LocoNetMessage(6);
+            m = new LocoNetMessage(6);
             m.setOpCode(LnConstants.OPC_MULTI_SENSE);
             int element = 0x62;
             if ((mAddress & 0x80) != 0) {
@@ -192,7 +262,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             // make message
             int locoIOAddress = mAddress&0xFF;
             int locoIOSubAddress = ((mAddress+256)/256)&0x7F;
-            LocoNetMessage m = jmri.jmrix.loconet.locoio.LocoIO.readCV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV));
+            m = jmri.jmrix.loconet.locoio.LocoIO.readCV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV));
             // force version 1 tag
             m.setElement(4, 0x01);
 
@@ -203,7 +273,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             // SV2 mode
             log.debug("read CV \"{}\" addr:{}", CV, mAddress, mAddress);
             // make message
-            LocoNetMessage m = new LocoNetMessage(16);
+            m = new LocoNetMessage(16);
             loadSV2MessageFormat(m, mAddress, decodeCvNum(CV), 0);
             m.setElement(3, 0x02); // 1 byte read
             log.debug("  Message {}", m);
@@ -225,12 +295,13 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         this.p = null;
         // Check mode
-        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+        if ((getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) ||
+                (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE))) {
             readCV(CV, p);
         }
         else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             // SV2 mode
-            log.error("confirm CV \"{}\" addr:{} in SV2 mode not implemented", CV, mAddress);
+            log.warn("confirm CV \"{}\" addr:{} in SV2 mode not implemented", CV, mAddress);
             p.programmingOpReply(0, ProgListener.UnknownError);
         } else {
             // DCC ops mode
@@ -241,8 +312,59 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     @Override
     public void message(LocoNetMessage m) {
 
-        log.debug("reply {}",m);
-        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+        log.debug("LocoNet message received: {}",m);
+        if (getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) {
+            boolean val;
+            if ((m.getOpCode() == LnConstants.OPC_SL_RD_DATA) &&
+                    (m.getElement(1) == 0x0E) &&
+                    (m.getElement(2) == 0x7f)) {
+                log.debug("got slot 127 read data");
+                if (cmdStnOpSwState == cmdStnOpSwStateType.QUERY) {
+                    log.debug("got slot 127 read data in response to OpSw query");
+                    csOpSwAccessTimer.stop();
+                    cmdStnOpSwState = cmdStnOpSwStateType.HAS_STATE;
+                    lastCmdStationOpSwMessage = m;  // save a copy of the LocoNet message
+                    csOpSwsAreValid = true;
+                    csOpSwValidTimer.start();   // start the "valid data" timer
+                    if (doingWrite == true) {
+                        log.debug("now can finish the write by updating the correct bit...");
+                        finishTheWrite();
+                    } else {
+                        val = extractCmdStnOpSw(m, cmdStnOpSwNum);
+                        log.debug("now can return the extracted OpSw{} read data ({}) to the programmer", cmdStnOpSwNum, val);
+                        ProgListener temp = p;
+                        p = null;
+                        if (temp != null) {
+                            log.debug("Returning data");
+                            temp.programmingOpReply(val?1:0, ProgListener.OK);
+                        } else {
+                            log.debug("no programmer to return the data to.");
+                        }
+                    }
+                } else if (cmdStnOpSwState == cmdStnOpSwStateType.QUERY_BEFORE_WRITE) {
+                    log.debug("hve received OpSw query before a write; now can process the data modification");
+                    csOpSwAccessTimer.stop();
+                    LocoNetMessage m2 = updateOpSwVal(m, cmdStnOpSwNum,
+                            cmdStnOpSwVal);
+                    cmdStnOpSwState = cmdStnOpSwStateType.WRITE;
+                    memo.getLnTrafficController().sendLocoNetMessage(m2);
+                    csOpSwAccessTimer.start();
+                }
+            } else if ((m.getOpCode() == LnConstants.OPC_LONG_ACK) &&
+                    (m.getElement(1) == 0x6f) &&
+                    (m.getElement(2) == 0x7f) &&
+                    (cmdStnOpSwState == cmdStnOpSwStateType.WRITE)) {
+                csOpSwAccessTimer.stop();
+                cmdStnOpSwState = cmdStnOpSwStateType.HAS_STATE;
+                val = extractCmdStnOpSw(lastCmdStationOpSwMessage, cmdStnOpSwNum);
+                ProgListener temp = p;
+                p = null;
+                if (temp != null) {
+                    temp.programmingOpReply(val?1:0, ProgListener.OK);
+                }
+            }
+        }
+        else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
 
             // are we reading? If not, ignore
             if (p == null) {
@@ -267,7 +389,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
                 ProgListener temp = p;
                 p = null;
-                temp.programmingOpReply(val, code);
+                if (temp != null) {
+                    temp.programmingOpReply(val, code);
+                }
 
                 return;
             }
@@ -285,7 +409,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
             ProgListener temp = p;
             p = null;
-            temp.programmingOpReply(val, code);
+            if (temp != null) {
+                temp.programmingOpReply(val, code);
+            }
 
 
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
@@ -324,7 +450,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
                 }
                 ProgListener temp = p;
                 p = null;
-                temp.programmingOpReply(val, code);
+                if (temp != null) {
+                    temp.programmingOpReply(val, code);
+                }
             }
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             // see if reply to LNSV 1 or LNSV2 request
@@ -435,6 +563,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         ret.add(LnProgrammerManager.LOCONETSV1MODE);
         ret.add(LnProgrammerManager.LOCONETSV2MODE);
         ret.add(LnProgrammerManager.LOCONETBDOPSWMODE);
+        ret.add(LnProgrammerManager.LOCONETCSOPSWMODE);
         return ret;
     }
 
@@ -527,13 +656,153 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
     void initiializeBdOpsAccessTimer() {
         if (bdOpSwAccessTimer == null) {
-            bdOpSwAccessTimer = new javax.swing.Timer(1000, (java.awt.event.ActionEvent e) -> {
+            bdOpSwAccessTimer = new javax.swing.Timer(1000, (ActionEvent e) -> {
                 ProgListener temp = p;
                 p = null;
                 temp.programmingOpReply(0, ProgListener.FailedTimeout);
             });
         bdOpSwAccessTimer.setInitialDelay(1000);
         bdOpSwAccessTimer.setRepeats(false);
+        }
+    }
+
+
+    public void readCmdStationOpSw(int cv) {
+        log.debug("readCmdStationOpSw: state is {}, have valid is ",cmdStnOpSwState, csOpSwsAreValid?"true":"false");
+        if ((cmdStnOpSwState == cmdStnOpSwStateType.HAS_STATE) &&
+                (csOpSwsAreValid == true)) {
+            // can re-use previous state - it has not "expired" due to time since read.
+            log.debug("readCmdStationOpSw: returning state from previously-stored state for OpSw{}", cv);
+            returnCmdStationOpSwVal(cv);
+            return;
+        } else if ((cmdStnOpSwState == cmdStnOpSwStateType.IDLE) ||
+                (cmdStnOpSwState == cmdStnOpSwStateType.HAS_STATE)) {
+            // do not have valid data or old data has "expired" due to time since read.
+            log.debug("readCmdStationOpSw: attempting to read some CVs");
+            updateCmdStnOpSw(cv,false);
+            return;
+        } else {
+            log.debug("readCmdStationOpSw: aborting - cmdStnOpSwState is odd: {}", cmdStnOpSwState);
+            ProgListener temp = p;
+            p = null;
+            temp.programmingOpReply(0, ProgListener.ProgrammerBusy);
+        }
+    }
+
+    public void returnCmdStationOpSwVal(int cmdStnOpSwNum) {
+        boolean returnVal = extractCmdStnOpSw(lastCmdStationOpSwMessage, cmdStnOpSwNum);
+        log.debug("returnCmdStationOpSwVal: Returning OpSw{} value of {}", cmdStnOpSwNum, returnVal);
+        p.programmingOpReply(returnVal?1:0, ProgListener.OK);
+    }
+
+    public boolean updateCmdStnOpSw(int opSwNum, boolean val) {
+        if (cmdStnOpSwState == cmdStnOpSwStateType.HAS_STATE) {
+            if (!doingWrite) {
+                log.debug("updateCmdStnOpSw: should already have OpSw values from previous read.");
+                return false;
+            } else {
+                cmdStnOpSwVal = val;
+                cmdStnOpSwNum = opSwNum;
+                finishTheWrite();
+                return true;
+            }
+        }
+        if (cmdStnOpSwState != cmdStnOpSwStateType.IDLE)  {
+            log.debug("updateCmdStnOpSw: cannot query OpSw values from state {}", cmdStnOpSwState);
+            return false;
+        }
+        log.debug("updateCmdStnOpSw: attempting to query the OpSws when state = ");
+        cmdStnOpSwState = cmdStnOpSwStateType.QUERY;
+        cmdStnOpSwNum = opSwNum;
+        cmdStnOpSwVal = val;
+        int[] contents = {LnConstants.OPC_RQ_SL_DATA, 0x7F, 0x0, 0x0};
+        memo.getLnTrafficController().sendLocoNetMessage(new LocoNetMessage(contents));
+        csOpSwAccessTimer.start();
+
+        return true;
+    }
+
+    public boolean extractCmdStnOpSw(LocoNetMessage m, int cmdStnOpSwNum) {
+        if (m.getNumDataElements()<14) {
+            csOpSwAccessTimer.stop();
+            csOpSwValidTimer.stop();
+            ProgListener temp = p;
+            p = null;
+            if (temp != null) {
+                temp.programmingOpReply(0, ProgListener.UnknownError);
+            }
+            cmdStnOpSwState = cmdStnOpSwStateType.IDLE;
+        }
+        int messageByte = 0;
+        messageByte = 2 + ((cmdStnOpSwNum+7) >> 3);
+        if (cmdStnOpSwNum > 32) {
+            messageByte ++;
+        }
+        int val = m.getElement(messageByte);
+        val = (val >> ((cmdStnOpSwNum - 1) & 0x7)) & 0x1;
+        return (val == 1);
+    }
+
+    public LocoNetMessage updateOpSwVal(LocoNetMessage m, int cmdStnOpSwNum, boolean cmdStnOpSwVal) {
+        int messageByte = 0;
+        log.debug("updateOpSwVal: OpSw{} = {}", cmdStnOpSwNum, cmdStnOpSwVal);
+        messageByte = 2 + ((cmdStnOpSwNum+7) >> 3);
+        if (cmdStnOpSwNum > 32) {
+            messageByte ++;
+        }
+        int val = m.getElement(messageByte);
+        log.debug("updateOpSwVal: working with messageByte {}, value is {}", messageByte, val);
+        val &= ~(1 << ((cmdStnOpSwNum - 1) & 0x7));
+        if (cmdStnOpSwVal == true) {
+            val |= 1 << ((cmdStnOpSwNum - 1) & 0x7);
+        }
+        LocoNetMessage m2 = m;
+        log.debug("updateOpSwVal: new value for messageByte{} is {}", messageByte, val);
+        m2.setElement(messageByte, val);
+        return m2;
+    }
+
+    private void finishTheWrite() {
+        cmdStnOpSwState = cmdStnOpSwStateType.WRITE;
+        LocoNetMessage m2 = updateOpSwVal(lastCmdStationOpSwMessage,
+                cmdStnOpSwNum,
+                cmdStnOpSwVal);
+        log.debug("gonna send message {}", m2.toString());
+        m2.setOpCode(LnConstants.OPC_WR_SL_DATA);
+        memo.getLnTrafficController().sendLocoNetMessage(m2);
+        lastCmdStationOpSwMessage = m2;
+        csOpSwAccessTimer.start();
+    }
+
+    private enum cmdStnOpSwStateType {
+        IDLE,
+        QUERY,
+        QUERY_BEFORE_WRITE,
+        WRITE,
+        HAS_STATE}
+
+    void initializeCsOpSwAccessTimer() {
+        if (csOpSwAccessTimer == null) {
+            csOpSwAccessTimer = new javax.swing.Timer(500, (ActionEvent e) -> {
+                log.debug("csOpSwAccessTimer timed out!");
+                ProgListener temp = p;
+                p = null;
+                if (temp != null) {
+                    temp.programmingOpReply(0, ProgListener.FailedTimeout);
+                }
+            });
+        csOpSwAccessTimer.setRepeats(false);
+        }
+    }
+
+    void initializeCsOpSwValidTimer() {
+        if (csOpSwValidTimer == null) {
+            csOpSwValidTimer = new javax.swing.Timer(10000, (ActionEvent e) -> {
+                log.debug("csOpSwValidTimer timed out; invalidating held data!");
+                csOpSwsAreValid = false;
+                cmdStnOpSwState = cmdStnOpSwStateType.IDLE;
+                });
+       csOpSwValidTimer.setRepeats(false);
         }
     }
 
