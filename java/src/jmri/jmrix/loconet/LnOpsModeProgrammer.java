@@ -70,8 +70,8 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
 
     @Override
-    public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        this.p = null;
+    public void writeCV(String CV, int val, ProgListener pL) throws ProgrammerException {
+        p = null;
         // Check mode
         LocoNetMessage m;
         if (getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) {
@@ -79,17 +79,26 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
                 initializeCsOpSwAccessTimer();
                 initializeCsOpSwValidTimer();
             }
+            if ((val <0) || (val > 1)) {
+                if (pL != null) {
+                    pL.programmingOpReply(0,ProgListener.NotImplemented);
+                }
+                return;
+            }
 
             // Command Station OpSws are handled via slot 0x7f.
-            this.p = p;
+            p = pL;
             doingWrite = true;
             log.debug("write Command Station OpSw{} as {}", CV, (val>0)?"c":"t");
             String[] parts = CV.split("\\.");
             int typeWord = 0;
-            if ((typeWord = Integer.parseInt(parts[0])) == 1) {
+            if (((typeWord = Integer.parseInt(parts[0])) == 1) && 
+                    (parts.length == 2)){
                 int opSwNum = Integer.parseInt(parts[1]);
+                log.debug("CS OpSw number {}", opSwNum);
                 if ((opSwNum < 1) || (opSwNum > 64)) {
-                    ProgListener temp = null;
+                    log.debug("bad opsw number: {}", opSwNum);
+                    ProgListener temp = p;
                     p = null;
                     if (temp != null) {
                         temp.programmingOpReply(0,ProgListener.NotImplemented);
@@ -98,14 +107,14 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
                 }
                 if (!updateCmdStnOpSw(opSwNum,
                         (val>0)?true:false)) {
-                    ProgListener temp = p;
+                    ProgListener temp =p;
                     p = null;
                     if (temp != null) {
                         temp.programmingOpReply(0, ProgListener.ProgrammerBusy);
                     }
                 }
             } else {
-                ProgListener temp = p;
+                ProgListener temp = pL;
                 p = null;
                 if (temp != null) {
                     temp.programmingOpReply(0,ProgListener.NotImplemented);
@@ -126,7 +135,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             if (bdOpSwAccessTimer == null) {
                 initiializeBdOpsAccessTimer();
             }
-            this.p = p;
+            p = pL;
             doingWrite = true;
             // Board programming mode
             log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
@@ -156,7 +165,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
             bdOpSwAccessTimer.start();
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
-            this.p = p;
+            p = pL;
             doingWrite = true;
             // SV1 mode
             log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
@@ -171,7 +180,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
-            this.p = p;
+            p = pL;
             // SV2 mode
             log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
             // make message
@@ -182,12 +191,12 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             memo.getLnTrafficController().sendLocoNetMessage(m);
         } else {
             // DCC ops mode
-            writeCV(Integer.parseInt(CV), val, p);
+            writeCV(Integer.parseInt(CV), val, pL);
         }
     }
 
     @Override
-    public void readCV(String CV, ProgListener p) throws ProgrammerException {
+    public void readCV(String CV, ProgListener pL) throws ProgrammerException {
         this.p = null;
         // Check mode
         String[] parts;
@@ -199,11 +208,11 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             }
 
             // Command Station OpSws are handled via slot 0x7f.
-            this.p = p;
+            p = pL;
             doingWrite = false;
             log.debug("read Command Station OpSw{}", CV);
             parts = CV.split("\\.");
-            ProgListener temp = p;
+            ProgListener temp = pL;
             if (parts.length != 2) {
                 p = null;
                 if (temp != null) {
@@ -247,7 +256,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             if (bdOpSwAccessTimer == null) {
                 initiializeBdOpsAccessTimer();
             }
-            this.p = p;
+            p = pL;
             doingWrite = false;
             // Board programming mode
             log.debug("read CV \"{}\" addr:{}", CV, mAddress);
@@ -274,7 +283,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             bdOpSwAccessTimer.start();
 
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
-            this.p = p;
+            p = pL;
             doingWrite = false;
             // SV1 mode
             log.debug("read CV \"{}\" addr:{}", CV, mAddress);
@@ -289,7 +298,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
-            this.p = p;
+            p = pL;
             // SV2 mode
             log.debug("read CV \"{}\" addr:{}", CV, mAddress, mAddress);
             // make message
@@ -300,7 +309,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             memo.getLnTrafficController().sendLocoNetMessage(m);
         } else {
             // DCC ops mode
-            readCV(Integer.parseInt(CV), p);
+            readCV(Integer.parseInt(CV), pL);
         }
     }
 
@@ -312,20 +321,20 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
 
     @Override
-    public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        this.p = null;
+    public void confirmCV(String CV, int val, ProgListener pL) throws ProgrammerException {
+        p = null;
         // Check mode
         if ((getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) ||
                 (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE))) {
-            readCV(CV, p);
+            readCV(CV, pL);
         }
         else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             // SV2 mode
             log.warn("confirm CV \"{}\" addr:{} in SV2 mode not implemented", CV, mAddress);
-            p.programmingOpReply(0, ProgListener.UnknownError);
+            pL.programmingOpReply(0, ProgListener.UnknownError);
         } else {
             // DCC ops mode
-            mSlotMgr.confirmCVOpsMode(CV, val, p, mAddress, mLongAddr);
+            mSlotMgr.confirmCVOpsMode(CV, val, pL, mAddress, mLongAddr);
         }
     }
 
