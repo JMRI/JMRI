@@ -87,7 +87,16 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             String[] parts = CV.split("\\.");
             int typeWord = 0;
             if ((typeWord = Integer.parseInt(parts[0])) == 1) {
-                if (!updateCmdStnOpSw(Integer.parseInt(parts[1]),
+                int opSwNum = Integer.parseInt(parts[1]);
+                if ((opSwNum < 1) || (opSwNum > 64)) {
+                    ProgListener temp = null;
+                    p = null;
+                    if (temp != null) {
+                        temp.programmingOpReply(0,ProgListener.NotImplemented);
+                    }
+                    return;
+                }
+                if (!updateCmdStnOpSw(opSwNum,
                         (val>0)?true:false)) {
                     ProgListener temp = p;
                     p = null;
@@ -200,17 +209,28 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
                 if (temp != null) {
                     temp.programmingOpReply(0,ProgListener.NotImplemented);
                 }
+                return;
             }
             log.trace("splitting CV: {} becomes {} and {}", CV, parts[0], parts[1]);
             int typeWord;
             if ((typeWord = Integer.parseInt(parts[0])) == 1) {
+                int opSwNum = Integer.parseInt(parts[1]);
+                if ((opSwNum < 1) || (opSwNum > 64)) {
+                    p = null;
+                    if (temp != null) {
+                        temp.programmingOpReply(0,ProgListener.NotImplemented);
+                    }
+                    return;
+                }
                 log.trace("Valid typeWord = 1; attempting to read OpSw{}.", Integer.parseInt(parts[1]));
                 log.trace("starting from state {}", cmdStnOpSwState);
-                readCmdStationOpSw(Integer.parseInt(parts[1]));
+                readCmdStationOpSw(opSwNum);
+                return;
             } else {
                 p = null;
                 log.trace("readCV: bad variable number intial value: {} ",typeWord);
                 temp.programmingOpReply(0,ProgListener.NotImplemented);
+                return;
             }
         } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             /**
