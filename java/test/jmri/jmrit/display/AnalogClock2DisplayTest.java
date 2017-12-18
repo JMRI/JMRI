@@ -13,19 +13,22 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class AnalogClock2DisplayTest {
+public class AnalogClock2DisplayTest extends PositionableJComponentTest {
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Editor ef = new EditorScaffold();
-        AnalogClock2Display frame = new AnalogClock2Display(ef);
-        Assert.assertNotNull("AnalogClock2Display Constructor",frame);
+        Assert.assertNotNull("AnalogClock2Display Constructor",p);
     }
 
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        if(!GraphicsEnvironment.isHeadless()){
+           Editor ef = new EditorScaffold();
+           p = new AnalogClock2Display(ef);
+        }
     }
 
     @After

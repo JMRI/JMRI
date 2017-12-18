@@ -3,6 +3,8 @@ package jmri.jmrix.rfid.merg.concentrator;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * ConcentratorReporterManagerTest.java
@@ -28,6 +30,12 @@ public class ConcentratorReporterManagerTest extends jmri.managers.AbstractRepor
     @Override
     protected String getNameToTest2() {
         return "C";
+    }
+
+    @Override
+    @Test
+    @Ignore("Not supported by this manager at this time")
+    public void testReporterProvideByNumber() {
     }
 
     ConcentratorTrafficController tc = null;
