@@ -20,6 +20,7 @@ import org.junit.Test;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.rules.Timeout;
+import jmri.util.junit.rules.RetryRule;
 import org.junit.runner.Description;
 import org.netbeans.jemmy.operators.JComponentOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -46,6 +47,9 @@ public class IconEditorWindowTest {
 
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     Editor _editor = null;
     JComponent _panel;
