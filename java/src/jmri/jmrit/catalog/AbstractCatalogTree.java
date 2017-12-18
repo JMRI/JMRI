@@ -13,10 +13,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * TreeModel used by CatalogPanel to create a tree of resources.
- * <P>
  *
  * @author Pete Cressman Copyright 2009
- *
  */
 public abstract class AbstractCatalogTree extends DefaultTreeModel implements CatalogTree {
 
