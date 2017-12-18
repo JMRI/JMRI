@@ -41,6 +41,8 @@
   <version author="Ronald Kuhn" version="12" lastUpdated="20170910"/>
   <!-- ver13 correctly deal with replacement model names -->
   <version author="Dave Heap" version="13" lastUpdated="20171008"/>
+  <!-- ver14 add new functionlabel with translation -->
+  <version author="Ronald Kuhn" version="14" lastUpdated="20171215"/>
   <decoder>
     <family name="ESU LokSound V3.5 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="81">
       <model model="LokSound V3.5" numOuts="6" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="16777229,16777234,16777239,16777248">
@@ -561,22 +563,70 @@
         </protocols>
       </model>
       <functionlabels>
-        <functionlabel num="0" lockable="true">Light</functionlabel>
-        <functionlabel num="1" lockable="true">Bell</functionlabel>
-        <functionlabel num="2" lockable="false">Horn</functionlabel>
-        <functionlabel num="3" lockable="false">Coupler</functionlabel>
-        <functionlabel num="4" lockable="true">Blower</functionlabel>
-        <functionlabel num="5" lockable="false">Rev Up</functionlabel>
-        <functionlabel num="6" lockable="false">Rev Dn</functionlabel>
-        <functionlabel num="7" lockable="true">Mars</functionlabel>
-        <functionlabel num="8" lockable="true">Mute</functionlabel>
-        <functionlabel num="9" lockable="true">Squeal</functionlabel>
-        <functionlabel num="10" lockable="false">CPC</functionlabel>
-        <functionlabel num="11" lockable="true">Shunt</functionlabel>
-        <functionlabel num="12" lockable="false">Set Brk</functionlabel>
-        <functionlabel num="13" lockable="false">Rel Brk</functionlabel>
-        <functionlabel num="14" lockable="false">Slack</functionlabel>
-        <functionlabel num="15" lockable="false">Smash</functionlabel>
+        <functionlabel num="0" lockable="true">
+         <text>Light</text>
+         <text xml:lang="de">Licht</text>
+        </functionlabel>
+        <functionlabel num="1" lockable="true">
+         <text>Bell</text>
+         <text xml:lang="de">Sound</text>
+        </functionlabel>
+        <functionlabel num="2" lockable="false">
+         <text>Horn</text>
+         <text xml:lang="de">Pfeife</text>
+        </functionlabel>
+        <functionlabel num="3" lockable="false">
+         <text>Coupler</text>
+         <text xml:lang="de">Kuppeln</text>
+        </functionlabel>
+        <functionlabel num="4" lockable="false">
+         <text>Blower</text>
+         <text xml:lang="de">Bläser</text>
+        </functionlabel>
+        <functionlabel num="5" lockable="false">
+         <text>Rev Up</text>
+         <text xml:lang="de">Rev Up</text>
+        </functionlabel>
+        <functionlabel num="6" lockable="false">
+         <text>Rev Dn</text>
+         <text xml:lang="de">Rev Dn</text>
+        </functionlabel>
+        <functionlabel num="7" lockable="true">
+         <text>Mars</text>
+         <text xml:lang="de">Mars</text>
+        </functionlabel>
+        <functionlabel num="8" lockable="true">
+         <text>Mute</text>
+         <text xml:lang="de">Stumm</text>
+        </functionlabel>
+        <functionlabel num="9" lockable="true">
+         <text>Squeal</text>
+         <text xml:lang="de">Kurvenquietschen</text>
+        </functionlabel>
+        <functionlabel num="10" lockable="false">
+         <text>CPC</text>
+         <text xml:lang="de">Kurzpfiff</text>
+        </functionlabel>
+        <functionlabel num="11" lockable="false">
+         <text>Shunt</text>
+         <text xml:lang="de">Rangieren</text>
+        </functionlabel>
+        <functionlabel num="12" lockable="false">
+         <text>Set Brk</text>
+         <text xml:lang="de">Bremse anlegen</text>
+        </functionlabel>
+        <functionlabel num="13" lockable="false">
+         <text>Rel Brk</text>
+         <text xml:lang="de">Bremse lösen</text>
+        </functionlabel>
+        <functionlabel num="14" lockable="false">
+         <text>Slack</text>
+         <text xml:lang="de">Slack</text>
+        </functionlabel>
+        <functionlabel num="15" lockable="false">
+         <text>Smash</text>
+         <text xml:lang="de">Smash</text>
+        </functionlabel>
       </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -768,7 +818,7 @@
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
-            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
@@ -836,7 +886,7 @@
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
-            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
@@ -904,7 +954,7 @@
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
-            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
@@ -972,7 +1022,7 @@
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
-            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
@@ -1040,7 +1090,7 @@
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
-            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
@@ -1108,7 +1158,7 @@
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
-            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
@@ -1176,7 +1226,7 @@
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
-            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
@@ -1244,7 +1294,7 @@
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
-            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
