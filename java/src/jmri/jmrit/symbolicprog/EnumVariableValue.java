@@ -314,7 +314,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             // this only makes sense if there are exactly two options
             ComboCheckBox b = new ComboCheckBox(_value, this);
             comboCBs.add(b);
-            if (getReadOnly()) {
+            if (getReadOnly() || getInfoOnly()) {
                 b.setEnabled(false);
             }
             updateRepresentation(b);
@@ -322,7 +322,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         } else if (format.equals("radiobuttons")) {
             ComboRadioButtons b = new ComboRadioButtons(_value, this);
             comboRBs.add(b);
-            if (getReadOnly()) {
+            if (getReadOnly() || getInfoOnly()) {
                 b.setEnabled(false);
             }
             updateRepresentation(b);
@@ -330,7 +330,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         } else if (format.equals("onradiobutton")) {
             ComboRadioButtons b = new ComboOnRadioButton(_value, this);
             comboRBs.add(b);
-            if (getReadOnly()) {
+            if (getReadOnly() || getInfoOnly()) {
                 b.setEnabled(false);
             }
             updateRepresentation(b);
@@ -338,7 +338,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         } else if (format.equals("offradiobutton")) {
             ComboRadioButtons b = new ComboOffRadioButton(_value, this);
             comboRBs.add(b);
-            if (getReadOnly()) {
+            if (getReadOnly() || getInfoOnly()) {
                 b.setEnabled(false);
             }
             updateRepresentation(b);
@@ -380,7 +380,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             // ensure selection is in visible portion of JScrollPane
             dTree.scrollPathToVisible(path);
 
-            if (getReadOnly()) {
+            if (getReadOnly() || getInfoOnly()) {
                 log.error("read only variables cannot use tree format: {}", item());
             }
             updateRepresentation(dScroll);
@@ -389,7 +389,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             // return a new JComboBox representing the same model
             VarComboBox b = new VarComboBox(_value.getModel(), this);
             comboVars.add(b);
-            if (getReadOnly()) {
+            if (getReadOnly() || getInfoOnly()) {
                 b.setEnabled(false);
             }
             updateRepresentation(b);
@@ -458,7 +458,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     @Override
     public void writeAll() {
         setToWrite(false);
-        if (getReadOnly()) {
+        if (getReadOnly() || getInfoOnly()) {
             log.error("unexpected write operation when readOnly is set");
         }
         setBusy(true);  // will be reset when value changes
