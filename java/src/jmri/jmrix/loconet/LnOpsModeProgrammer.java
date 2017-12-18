@@ -781,6 +781,14 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         }
         int val = m.getElement(messageByte);
         log.debug("updateOpSwVal: working with messageByte {}, value is {}", messageByte, val);
+        if (((cmdStnOpSwNum -1) & 0x07) == 7) {
+            log.warn("Cannot program OpSw{} account LocoNet encoding limitations.",cmdStnOpSwNum);
+            ProgListener temp = p;
+            p = null;
+            if (temp != null) {
+                temp.programmingOpReply(0, ProgListener.UnknownError);
+            }
+        }
         val &= ~(1 << ((cmdStnOpSwNum - 1) & 0x7));
         if (cmdStnOpSwVal == true) {
             val |= 1 << ((cmdStnOpSwNum - 1) & 0x7);
