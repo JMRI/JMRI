@@ -865,9 +865,19 @@ public final class InstanceManager {
      *         needed
      */
     @Nonnull
-    public static synchronized InstanceManager getDefault() {
+    public static InstanceManager getDefault() {
+        // If we have a default instance manager already, there is no
+        // need to synchronize the if statement.
         if (defaultInstanceManager == null) {
-            defaultInstanceManager = new InstanceManager();
+            synchronized(InstanceManager.class) {
+                // We might already have got a new default instance manager
+                // while we waited on the synchronize lock, so we need to
+                // do an additional check that we still don't have a default
+                // instance manager.
+                if (defaultInstanceManager == null) {
+                    defaultInstanceManager = new InstanceManager();
+                }
+            }
         }
         return defaultInstanceManager;
     }
