@@ -506,9 +506,6 @@ public class LayoutEditorAuxTools {
                     prevConnection = curConnection;
                     curConnection = ((LevelXing) curConnection).getConnectB();
                     typeCurConnection = LayoutTrack.TRACK;
-                } else if (typeCurConnection == LayoutTrack.SLIP_D) {
-                    LayoutSlip lsz = (LayoutSlip) curConnection;
-                    curConnection = null;
                 }
             } else {
                 // block boundary is internal to a crossover turnout
@@ -835,6 +832,6 @@ public class LayoutEditorAuxTools {
     }   // addBeanSettings
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorAuxTools.class);
-
+    private final static Logger log
+            = LoggerFactory.getLogger(LayoutEditorAuxTools.class);
 }

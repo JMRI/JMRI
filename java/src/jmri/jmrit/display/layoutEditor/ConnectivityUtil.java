@@ -2781,10 +2781,10 @@ public class ConnectivityUtil {
             result = ((NamedBean) obj).getDisplayName();
         } else {
             try {
-                result = ((LayoutTrack) obj).getName();
+                result = obj.getName();
             } catch (Exception ex2) {
                 try {
-                    result = ((LayoutTrack) obj).getId();
+                    result = obj.getId();
                 } catch (Exception ex3) {
                         result = "<" + obj + ">";
                     }

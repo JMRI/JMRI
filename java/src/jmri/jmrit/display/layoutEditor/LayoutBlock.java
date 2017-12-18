@@ -16,7 +16,6 @@ import java.util.Set;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
@@ -46,8 +45,8 @@ import jmri.jmrit.beantable.beanedit.BlockEditAction;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
-import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.ButtonSwatchColorChooserPanel;
+import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -867,7 +866,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     //variables for Edit Layout Block pane
     private JmriJFrame editLayoutBlockFrame = null;
-    private Component callingPane;
     private final JTextField sensorNameField = new JTextField(16);
     private final JTextField sensorDebounceInactiveField = new JTextField(5);
     private final JTextField sensorDebounceActiveField = new JTextField(5);
@@ -889,16 +887,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     private JColorChooser trackColorChooser = null;
     private JColorChooser occupiedColorChooser = null;
     private JColorChooser extraColorChooser = null;
-    private final JComboBox<String> blockSpeedBox = new JComboBox<>();
-
-    private final JLabel blockUseLabel = new JLabel(Bundle.getMessage("UseCount"));
-
-    private JButton blockEditDone;
-    private JButton blockEditCancel;
-
-    private boolean editOpen = false;
-
-    private final JComboBox<String> attachedBlocks = new JComboBox<>();
 
     protected void editLayoutBlock(Component callingPane) {
         LayoutBlockEditAction beanEdit = new LayoutBlockEditAction();
@@ -1052,7 +1040,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             }
         }
         //complete
-        editOpen = false;
         editLayoutBlockFrame.setVisible(false);
         editLayoutBlockFrame.dispose();
         editLayoutBlockFrame = null;
@@ -1063,7 +1050,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     void blockEditCancelPressed(ActionEvent a) {
-        editOpen = false;
         editLayoutBlockFrame.setVisible(false);
         editLayoutBlockFrame.dispose();
         editLayoutBlockFrame = null;

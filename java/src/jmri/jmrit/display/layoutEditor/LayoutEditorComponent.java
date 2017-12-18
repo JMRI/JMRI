@@ -9,8 +9,6 @@ import java.awt.geom.Rectangle2D;
 import javax.annotation.Nonnull;
 import javax.swing.JComponent;
 import jmri.util.MathUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /*
  * This is an intermediate component used to put the Layout Editor
@@ -113,8 +111,8 @@ class LayoutEditorComponent extends JComponent {
     }
 
     //initialize logging
-    private transient final static Logger log = LoggerFactory.getLogger(
-            LayoutEditorComponent.class
-    );
+    //private transient final static Logger log = LoggerFactory.getLogger(
+    //        LayoutEditorComponent.class
+    //);
 
 }

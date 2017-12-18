@@ -1258,8 +1258,7 @@ public class PositionablePoint extends LayoutTrack {
         }
         int ourDir = getConnect1Dir();
         linkPointsBox.setEnabled(true);
-        LayoutEditor le = (LayoutEditor) editorCombo.getItemAt(
-                editorCombo.getSelectedIndex()).item();
+        LayoutEditor le = editorCombo.getItemAt(editorCombo.getSelectedIndex()).item();
         for (PositionablePoint p : le.getPositionablePoints()) {
             if (p.getType() == EDGE_CONNECTOR) {
                 if (p.getLinkedPoint() == this) {
@@ -1485,7 +1484,7 @@ public class PositionablePoint extends LayoutTrack {
                 }
             }
         }   // if (getType() != ANCHOR)
-    }   // draw
+    }   // draw1
 
     /**
      * {@inheritDoc}
@@ -1506,10 +1505,8 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
-    /**
-     * draw this PositionablePoint's edit controls
-     *
-     * @param g2 the graphics port to draw to
+    /*
+     * {@inheritDoc}
      */
     @Override
     protected void drawEditControls(Graphics2D g2) {
@@ -1702,7 +1699,6 @@ public class PositionablePoint extends LayoutTrack {
         // this should never be null... but just in case...
         if (ts1 != null) {
             blk1 = ts1.getBlockName();
-            TrackNameSet = null;    // assume not found (pessimist!)
             TrackNameSets = blockNamesToTrackNameSetsMap.get(blk1);
             if (TrackNameSets != null) { // (#1)
                 for (Set<String> checkTrackNameSet : TrackNameSets) {

@@ -1635,7 +1635,7 @@ public class LayoutTurnout extends LayoutTrack {
                 || (getTurnoutType() == DOUBLE_SLIP)) {
             blockBName = name;
         } else {
-            log.error("Attempt to set block B name, but not a crossover or slip");
+            log.error("Attempt to set block B name ('{}') on Layout Turnout {}, but not a crossover or slip", name, getName());
         }
     }
 
@@ -1647,7 +1647,7 @@ public class LayoutTurnout extends LayoutTrack {
                 || (getTurnoutType() == DOUBLE_SLIP)) {
             blockCName = name;
         } else {
-            log.error("Attempt to set block C name, but not a crossover or slip");
+            log.error("Attempt to set block C name ('{}') on Layout Turnout {}, but not a crossover or slip", name, getName());
         }
     }
 
@@ -1659,7 +1659,7 @@ public class LayoutTurnout extends LayoutTrack {
                 || (getTurnoutType() == DOUBLE_SLIP)) {
             blockDName = name;
         } else {
-            log.error("Attempt to set block D name, but not a crossover or slip");
+            log.error("Attempt to set block D name ('{}') on Layout Turnout {}, but not a crossover or slip", name, getName());
         }
     }
 

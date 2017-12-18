@@ -2667,7 +2667,7 @@ public class LayoutEditorTools {
                     xovers.add(layoutTurnout);
                 }
             }
-            JComboBox<LayoutTurnout> jcb = new JComboBox(xovers.toArray());
+            JComboBox<LayoutTurnout> jcb = new JComboBox<>((LayoutTurnout[]) xovers.toArray());
             jcb.setEditable(true);
             JOptionPane.showMessageDialog(layoutEditor, jcb,
                     Bundle.getMessage("MakeLabel",
@@ -5797,7 +5797,7 @@ public class LayoutEditorTools {
         String sensorName = "IS" + namer;
         String logixName = "IX" + namer;
         try {
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+            InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         } catch (IllegalArgumentException ex) {
             log.error("Trouble creating sensor " + sensorName + " while setting up Logix.");
             return "";
@@ -7592,7 +7592,7 @@ public class LayoutEditorTools {
                 index = i;
             }
         }
-        if (index != (-1) && h != null) {
+        if ((h != null) && (index != -1)) {
             layoutEditor.sensorList.remove(index);
             h.remove();
             h.dispose();
@@ -13472,7 +13472,7 @@ public class LayoutEditorTools {
         String logixName = "IX_LAYOUTSLIP:" + slip.ident;
         String sensorName = "IS:" + logixName + "C" + number;
         try {
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+            InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         } catch (IllegalArgumentException ex) {
             log.error("Trouble creating sensor " + sensorName + " while setting up Logix.");
             return "";
