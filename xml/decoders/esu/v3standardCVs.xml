@@ -177,8 +177,8 @@
       </variable>
       <variable CV="57" default="0" item="Sound Group 1 Control">
         <decVal max="127"/>
-        <label>Time between 2 chuffs @ speed step 1 (Range 0 - 127)</label>
-        <label xml:lang="fr">délais d'accélaration entre deux crans (0 - 127)</label>
+        <label>Time between 2 chuffs @ speed step 1 (Range 0-127)</label>
+        <label xml:lang="fr">délais d'accélaration entre deux crans (0-127)</label>
         <label xml:lang="de">Abstand zweier Dampfstöße bei Fahrstufe 1</label>
       </variable>
       <variable CV="58" default="0" item="Sound Group 1 Option 1">
@@ -189,39 +189,39 @@
       </variable>
       <variable CV="59" default="32" item="Sound Group 1 Option 2">
         <decVal max="64"/>
-        <label>Slow speed sound factor (Range 0- 64)</label>
-        <label xml:lang="fr">Son en vitesse lente (0- 64)</label>
+        <label>Slow speed sound factor (Range 0-64)</label>
+        <label xml:lang="fr">Son en vitesse lente (0-64)</label>
         <label xml:lang="de">Fahrgeräusch minimal</label>
       </variable>
       <variable CV="60" default="55" item="Sound Group 1 Option 3">
         <decVal max="64"/>
-        <label>High speed sound factor (Range 0 - 64)</label>
-        <label xml:lang="fr">Son en vitesse rapide (Range 0 - 64)</label>
+        <label>High speed sound factor (Range 0-64)</label>
+        <label xml:lang="fr">Son en vitesse rapide (Range 0-64)</label>
         <label xml:lang="de">Fahrgeräusch maximal</label>
       </variable>
       <variable CV="61" default="30" item="Sound Group 2 Option 1" comment="Range 0-64">
         <decVal/>
-        <label>Random Sound - Shortest Interval (Range 0 - 64</label>
-        <label xml:lang="fr">Son aléatoire - Interval court (0 - 64</label>
-        <label xml:lang="de">Zufallsound - Minimaler Abstand</label>
+        <label>Random Sound -Shortest Interval (Range 0-64</label>
+        <label xml:lang="fr">Son aléatoire -Interval court (0-64</label>
+        <label xml:lang="de">Zufallsound -Minimaler Abstand</label>
         <comment>Range 0-64</comment>
         <comment xml:lang="fr">Valeur 0-64</comment>
         <tooltip xml:lang="de">die Einheit sind 0.25 sec</tooltip>
       </variable>
       <variable CV="62" default="50" item="Sound Group 2 Option 2" comment="Range 0-64">
         <decVal/>
-        <label>Random Sound - Longest Interva (Range 0 - 64)</label>
-        <label xml:lang="fr">Son aléatoire - Interval long (Range 0 - 64)</label>
-        <label xml:lang="de">Zufallsound - Maximaler Abstand</label>
+        <label>Random Sound -Longest Interva (Range 0-64)</label>
+        <label xml:lang="fr">Son aléatoire -Interval long (Range 0-64)</label>
+        <label xml:lang="de">Zufallsound -Maximaler Abstand</label>
         <comment>Range 0-64</comment>
         <comment xml:lang="fr">Valeur 0-64</comment>
         <tooltip xml:lang="de">die Einheit sind 0.25 sec</tooltip>
       </variable>
       <variable CV="64" default="7" item="Sound Group 2 Option 3" comment="Range 0-64">
         <decVal/>
-        <label>Braking Sound threshold (Range 0 - 64)</label>
-        <label xml:lang="fr">Son début de freinange(0 - 64)</label>
-        <label xml:lang="de">Bremsgeräusch - Einschaltschwelle</label>
+        <label>Braking Sound threshold (Range 0-64)</label>
+        <label xml:lang="fr">Son début de freinange(0-64)</label>
+        <label xml:lang="de">Bremsgeräusch -Einschaltschwelle</label>
         <comment>Range 0-64</comment>
         <comment xml:lang="fr">Valeur 0-64</comment>
       </variable>
