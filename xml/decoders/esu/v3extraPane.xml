@@ -60,8 +60,8 @@
       <text> </text>
     </label>
     <label>
-      <text>                                                  Range 4 - 64 </text>
-      <text xml:lang="it">                                                  Valori  4 - 64</text>
+      <text>                                                  Range 4 - 64</text>
+      <text xml:lang="it">                                                  Valori 4 - 64</text>
       <text xml:lang="fr">                                                  Valeure 4 - 64</text>
       <text xml:lang="de">                                                  Werte 4 - 64</text>
     </label>
@@ -71,8 +71,8 @@
       <text> </text>
     </label>
     <label>
-      <text>                                                  Range 0 - 127 </text>
-      <text xml:lang="it">                                                  Valori  0- 127</text>
+      <text>                                                  Range 0 - 127</text>
+      <text xml:lang="it">                                                  Valori 0 - 127</text>
       <text xml:lang="fr">                                                  Valeure 0 - 127</text>
       <text xml:lang="de">                                                  Werte 0 - 127</text>
     </label>
