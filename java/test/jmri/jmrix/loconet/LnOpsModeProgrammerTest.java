@@ -490,7 +490,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
 
         // should not have sent another message
         Assert.assertEquals("no new message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("should get a programming reply", 8, pl.getRcvdInvoked());
+        Assert.assertEquals("should get a programming error reply ", 8, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
         Assert.assertEquals("Reply value matches", 0, pl.getRcvdValue());
 
@@ -1389,6 +1389,220 @@ public class LnOpsModeProgrammerTest extends TestCase {
 
      }
 
+     public void testCmdStnOpSwWrite() throws ProgrammerException {
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+
+        lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETCSOPSWMODE);
+        lnopsmodeprogrammer.writeCV("1.5", 1, pl);
+
+        // should have written
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+
+        Assert.assertEquals("sent byte 0", 0xbb, lnis.outbound.get(0).getElement(0) & 0xFF);
+        Assert.assertEquals("sent byte 1", 0x7f, lnis.outbound.get(0).getElement(1) & 0xFF);
+        Assert.assertEquals("sent byte 2", 0x00, lnis.outbound.get(0).getElement(2) & 0xFF);
+
+        // check echo of sent message has no effect
+        LocoNetMessage m = lnis.outbound.get(0);
+        lnopsmodeprogrammer.message(m); // propagate the message from
+
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        Assert.assertEquals("received no messages", 0, lnis.getReceivedMsgCount());
+
+        // Known-good message in reply
+        m = new LocoNetMessage(new int[]{0xE7, 0x0e, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0x69});
+
+        lnis.sendTestMessage(m);
+        Assert.assertEquals("sent byte 0", 0xeF, lnis.outbound.get(1).getElement(0) & 0xFF);
+        Assert.assertEquals("sent byte 1", 0x0e, lnis.outbound.get(1).getElement(1) & 0xFF);
+        Assert.assertEquals("sent byte 2", 0x7f, lnis.outbound.get(1).getElement(2) & 0xFF);
+        Assert.assertEquals("sent byte 3", 0x10, lnis.outbound.get(1).getElement(3) & 0xFF);
+        Assert.assertEquals("sent byte 4", 0x00, lnis.outbound.get(1).getElement(4) & 0xFF);
+        Assert.assertEquals("sent byte 5", 0x00, lnis.outbound.get(1).getElement(5) & 0xFF);
+        Assert.assertEquals("sent byte 6", 0x00, lnis.outbound.get(1).getElement(6) & 0xFF);
+        Assert.assertEquals("sent byte 7", 0x00, lnis.outbound.get(1).getElement(7) & 0xFF);
+        Assert.assertEquals("sent byte 8", 0x00, lnis.outbound.get(1).getElement(8) & 0xFF);
+        Assert.assertEquals("sent byte 9", 0x00, lnis.outbound.get(1).getElement(9) & 0xFF);
+        Assert.assertEquals("sent byte 10", 0x00, lnis.outbound.get(1).getElement(10) & 0xFF);
+        Assert.assertEquals("sent byte 11", 0x00, lnis.outbound.get(1).getElement(11) & 0xFF);
+        Assert.assertEquals("sent byte 12", 0x00, lnis.outbound.get(1).getElement(12) & 0xFF);
+
+        // No reply message, wait for timeout
+        jmri.util.JUnitUtil.waitFor(()->{return lnis.outbound.size() == 2;},"programming reply not received");
+        lnopsmodeprogrammer.message(m); // propagate reply to to ops mode programmer
+
+        Assert.assertEquals("two message sent", 2, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        Assert.assertEquals("received one messages", 1, lnis.getReceivedMsgCount());
+
+        m = new LocoNetMessage(new int[]{0xb4, 0x6f, 0x7f, 0x00});
+        lnis.sendTestMessage(m);
+
+        Assert.assertEquals("two messages sent", 2, lnis.outbound.size());
+        Assert.assertEquals("one programming reply", 1, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+
+        // try another write
+        lnopsmodeprogrammer.writeCV("1.5", 0, pl);
+
+        // should have written
+        Assert.assertEquals("three messages sent", 3, lnis.outbound.size());
+        Assert.assertEquals("one previous programming reply", 1, pl.getRcvdInvoked());
+
+        Assert.assertEquals("sent byte 0",  0xeF, lnis.outbound.get(1).getElement( 0) & 0xFF);
+        Assert.assertEquals("sent byte 1",  0x0e, lnis.outbound.get(1).getElement( 1) & 0xFF);
+        Assert.assertEquals("sent byte 2",  0x7f, lnis.outbound.get(1).getElement( 2) & 0xFF);
+        Assert.assertEquals("sent byte 3",  0x00, lnis.outbound.get(1).getElement( 3) & 0xFF);
+        Assert.assertEquals("sent byte 4",  0x00, lnis.outbound.get(1).getElement( 4) & 0xFF);
+        Assert.assertEquals("sent byte 5",  0x00, lnis.outbound.get(1).getElement( 5) & 0xFF);
+        Assert.assertEquals("sent byte 6",  0x00, lnis.outbound.get(1).getElement( 6) & 0xFF);
+        Assert.assertEquals("sent byte 7",  0x00, lnis.outbound.get(1).getElement( 7) & 0xFF);
+        Assert.assertEquals("sent byte 8",  0x00, lnis.outbound.get(1).getElement( 8) & 0xFF);
+        Assert.assertEquals("sent byte 9",  0x00, lnis.outbound.get(1).getElement( 9) & 0xFF);
+        Assert.assertEquals("sent byte 10", 0x00, lnis.outbound.get(1).getElement(10) & 0xFF);
+        Assert.assertEquals("sent byte 11", 0x00, lnis.outbound.get(1).getElement(11) & 0xFF);
+        Assert.assertEquals("sent byte 12", 0x00, lnis.outbound.get(1).getElement(12) & 0xFF);
+
+        // check echo of sent message has no effect
+        m = lnis.outbound.get(2);
+        lnopsmodeprogrammer.message(m); // propagate the message from
+
+        Assert.assertEquals("three messages sent", 3, lnis.outbound.size());
+        Assert.assertEquals("one previous programming reply", 1, pl.getRcvdInvoked());
+        Assert.assertEquals("received a messages", 2, lnis.getReceivedMsgCount());
+
+        // Known-good message in reply
+        m = new LocoNetMessage(new int[]{0xb4, 0x6f, 0x7f, 0x00});
+        lnis.sendTestMessage(m);
+
+        Assert.assertEquals("another message sent", 3, lnis.outbound.size());
+        Assert.assertEquals("two programming reply", 2, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+
+        // try another write (same as last one)
+        lnopsmodeprogrammer.writeCV("1.5", 0, pl);
+
+        // should have written
+        Assert.assertEquals("four messages sent", 4, lnis.outbound.size());
+        Assert.assertEquals("two previous programming replies", 2, pl.getRcvdInvoked());
+
+        Assert.assertEquals("sent byte 0",  0xeF, lnis.outbound.get(3).getElement( 0) & 0xFF);
+        Assert.assertEquals("sent byte 1",  0x0e, lnis.outbound.get(3).getElement( 1) & 0xFF);
+        Assert.assertEquals("sent byte 2",  0x7f, lnis.outbound.get(3).getElement( 2) & 0xFF);
+        Assert.assertEquals("sent byte 3",  0x00, lnis.outbound.get(3).getElement( 3) & 0xFF);
+        Assert.assertEquals("sent byte 4",  0x00, lnis.outbound.get(3).getElement( 4) & 0xFF);
+        Assert.assertEquals("sent byte 5",  0x00, lnis.outbound.get(3).getElement( 5) & 0xFF);
+        Assert.assertEquals("sent byte 6",  0x00, lnis.outbound.get(3).getElement( 6) & 0xFF);
+        Assert.assertEquals("sent byte 7",  0x00, lnis.outbound.get(3).getElement( 7) & 0xFF);
+        Assert.assertEquals("sent byte 8",  0x00, lnis.outbound.get(3).getElement( 8) & 0xFF);
+        Assert.assertEquals("sent byte 9",  0x00, lnis.outbound.get(3).getElement( 9) & 0xFF);
+        Assert.assertEquals("sent byte 10", 0x00, lnis.outbound.get(3).getElement(10) & 0xFF);
+        Assert.assertEquals("sent byte 11", 0x00, lnis.outbound.get(3).getElement(11) & 0xFF);
+        Assert.assertEquals("sent byte 12", 0x00, lnis.outbound.get(3).getElement(12) & 0xFF);
+
+        // check echo of sent message has no effect
+        m = lnis.outbound.get(3);
+        lnopsmodeprogrammer.message(m); // propagate the message from
+
+        Assert.assertEquals("four messages sent", 4, lnis.outbound.size());
+        Assert.assertEquals("one previous programming reply", 2, pl.getRcvdInvoked());
+        Assert.assertEquals("received a messages", 3, lnis.getReceivedMsgCount());
+
+        // Known-good message in reply
+        m = new LocoNetMessage(new int[]{0xb4, 0x6f, 0x7f, 0x00});
+        lnis.sendTestMessage(m);
+
+        Assert.assertEquals("another message sent", 4, lnis.outbound.size());
+        Assert.assertEquals("three programming replies", 3, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+
+
+
+        // try another write
+        lnopsmodeprogrammer.writeCV("1.1", 1, pl);
+
+        // should have written
+        Assert.assertEquals("four messages sent", 5, lnis.outbound.size());
+        Assert.assertEquals("three previous programming replies", 3, pl.getRcvdInvoked());
+
+        Assert.assertEquals("sent byte 0",  0xeF, lnis.outbound.get(4).getElement( 0) & 0xFF);
+        Assert.assertEquals("sent byte 1",  0x0e, lnis.outbound.get(4).getElement( 1) & 0xFF);
+        Assert.assertEquals("sent byte 2",  0x7f, lnis.outbound.get(4).getElement( 2) & 0xFF);
+        Assert.assertEquals("sent byte 3",  0x01, lnis.outbound.get(4).getElement( 3) & 0xFF);
+        Assert.assertEquals("sent byte 4",  0x00, lnis.outbound.get(4).getElement( 4) & 0xFF);
+        Assert.assertEquals("sent byte 5",  0x00, lnis.outbound.get(4).getElement( 5) & 0xFF);
+        Assert.assertEquals("sent byte 6",  0x00, lnis.outbound.get(4).getElement( 6) & 0xFF);
+        Assert.assertEquals("sent byte 7",  0x00, lnis.outbound.get(4).getElement( 7) & 0xFF);
+        Assert.assertEquals("sent byte 8",  0x00, lnis.outbound.get(4).getElement( 8) & 0xFF);
+        Assert.assertEquals("sent byte 9",  0x00, lnis.outbound.get(4).getElement( 9) & 0xFF);
+        Assert.assertEquals("sent byte 10", 0x00, lnis.outbound.get(4).getElement(10) & 0xFF);
+        Assert.assertEquals("sent byte 11", 0x00, lnis.outbound.get(4).getElement(11) & 0xFF);
+        Assert.assertEquals("sent byte 12", 0x00, lnis.outbound.get(4).getElement(12) & 0xFF);
+
+        // check echo of sent message has no effect
+        m = lnis.outbound.get(3);
+        lnopsmodeprogrammer.message(m); // propagate the message from
+
+        Assert.assertEquals("four messages sent", 5, lnis.outbound.size());
+        Assert.assertEquals("three previous programming replies", 3, pl.getRcvdInvoked());
+        Assert.assertEquals("received a messages", 4, lnis.getReceivedMsgCount());
+
+        // Known-good message in reply
+        m = new LocoNetMessage(new int[]{0xb4, 0x6f, 0x7f, 0x00});
+        lnis.sendTestMessage(m);
+
+        Assert.assertEquals("another message sent", 5, lnis.outbound.size());
+        Assert.assertEquals("four programming replies", 4, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+
+        // try another write
+        lnopsmodeprogrammer.writeCV("1.63", 1, pl);
+
+        // should have written
+        Assert.assertEquals("four messages sent", 6, lnis.outbound.size());
+        Assert.assertEquals("four previous programming replies", 4, pl.getRcvdInvoked());
+
+        Assert.assertEquals("sent byte 0",  0xeF, lnis.outbound.get(5).getElement( 0) & 0xFF);
+        Assert.assertEquals("sent byte 1",  0x0e, lnis.outbound.get(5).getElement( 1) & 0xFF);
+        Assert.assertEquals("sent byte 2",  0x7f, lnis.outbound.get(5).getElement( 2) & 0xFF);
+        Assert.assertEquals("sent byte 3",  0x01, lnis.outbound.get(5).getElement( 3) & 0xFF);
+        Assert.assertEquals("sent byte 4",  0x00, lnis.outbound.get(5).getElement( 4) & 0xFF);
+        Assert.assertEquals("sent byte 5",  0x00, lnis.outbound.get(5).getElement( 5) & 0xFF);
+        Assert.assertEquals("sent byte 6",  0x00, lnis.outbound.get(5).getElement( 6) & 0xFF);
+        Assert.assertEquals("sent byte 7",  0x00, lnis.outbound.get(5).getElement( 7) & 0xFF);
+        Assert.assertEquals("sent byte 8",  0x00, lnis.outbound.get(5).getElement( 8) & 0xFF);
+        Assert.assertEquals("sent byte 9",  0x00, lnis.outbound.get(5).getElement( 9) & 0xFF);
+        Assert.assertEquals("sent byte 10", 0x00, lnis.outbound.get(5).getElement(10) & 0xFF);
+        Assert.assertEquals("sent byte 11", 0x40, lnis.outbound.get(5).getElement(11) & 0xFF);
+        Assert.assertEquals("sent byte 12", 0x00, lnis.outbound.get(5).getElement(12) & 0xFF);
+
+        // check echo of sent message has no effect
+        m = lnis.outbound.get(5);
+        lnopsmodeprogrammer.message(m); // propagate the message from
+
+        Assert.assertEquals("six messages sent", 6, lnis.outbound.size());
+        Assert.assertEquals("four previous programming replies", 4, pl.getRcvdInvoked());
+        Assert.assertEquals("received a messages", 5, lnis.getReceivedMsgCount());
+
+        // Known-good message in reply
+        m = new LocoNetMessage(new int[]{0xb4, 0x6f, 0x7f, 0x00});
+        lnis.sendTestMessage(m);
+
+        Assert.assertEquals("another message sent", 6, lnis.outbound.size());
+        Assert.assertEquals("five programming replies", 5, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+
+        // try another write
+        lnopsmodeprogrammer.writeCV("1.56", 1, pl);
+
+        // should have written
+        Assert.assertEquals("another message sent", 7, lnis.outbound.size());
+        Assert.assertEquals("six programming replies", 6, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status bad", 1, pl.getRcvdStatus());
+     }
 
     // from here down is testing infrastructure
     public LnOpsModeProgrammerTest(String s) {
