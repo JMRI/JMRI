@@ -203,7 +203,7 @@
               <qualifier>
                 <variableref>OpSw 14</variableref>
                 <relation>eq</relation>
-                <value>1</value>
+                <value>0</value>
               </qualifier>
             <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
             <label>"Purge" forces loco speed to 0</label>
