@@ -12,7 +12,7 @@ import org.junit.runners.Suite;
     BundleTest.class
 })
 /**
- * Tests for the jmri.jmrix.easydcc.simulator package.
+ * Tests for the jmri.jmrix.ecos.simulator package.
  *
  * @author Paul Bender Copyright (C) 2016
  */
