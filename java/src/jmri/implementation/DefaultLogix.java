@@ -779,11 +779,12 @@ public class DefaultLogix extends AbstractNamedBean
                     break;
                 }
                 nb = namedBeanHandle.getBean();
-                nb.addPropertyChangeListener(listener, namedBeanHandle.getName(), "Logix " + getDisplayName());  // NOI18N
+                nb.addPropertyChangeListener(listener, namedBeanHandle.getName(),
+                        "Logix " + getDisplayName());  // NOI18N
                 return;
         }
-        log.error("Bad name for " + msg + " \"" + listener.getDevName()  // NOI18N
-                + "\" when setting up Logix listener");  // NOI18N
+        log.error("Bad name for {} '{}' when setting up Logix listener [ {} ]", // NOI18N
+                msg, listener.getDevName(), this.getSystemName());
     }
 
     /**
@@ -800,7 +801,8 @@ public class DefaultLogix extends AbstractNamedBean
                     tb.removeMinuteChangeListener(listener);
                     return;
                 case LISTENER_TYPE_ENTRYEXIT:
-                    NamedBean ex = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getBySystemName(listener.getDevName());
+                    NamedBean ex = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class)
+                            .getNamedBean(listener.getDevName());
                     if (ex == null) {
                         msg = "entryexit";  // NOI18N
                         break;
