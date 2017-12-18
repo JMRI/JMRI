@@ -13,24 +13,23 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class PositionableEllipseTest {
+public class PositionableEllipseTest extends PositionableRectangleTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PositionableEllipse t = new PositionableEllipse(new EditorScaffold());
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",p);
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
+        if(!GraphicsEnvironment.isHeadless()){
+           editor = new EditorScaffold();
+           p = new PositionableEllipse(editor);
+        }
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PositionableEllipseTest.class);

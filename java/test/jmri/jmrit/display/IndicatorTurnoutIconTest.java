@@ -16,9 +16,7 @@ import org.junit.Test;
  *
  * @author Bob Jacobsen
  */
-public class IndicatorTurnoutIconTest {
-
-    PanelEditor panel = null;
+public class IndicatorTurnoutIconTest extends PositionableIconTest {
 
     @Test
     public void testEquals() {
@@ -26,11 +24,11 @@ public class IndicatorTurnoutIconTest {
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        IndicatorTurnoutIcon to = new IndicatorTurnoutIcon(panel);
+        IndicatorTurnoutIcon to = new IndicatorTurnoutIcon(editor);
         jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         to.setTurnout(new jmri.NamedBeanHandle<>("IT1", turnout));
 
-        IndicatorTurnoutIcon to2 = new IndicatorTurnoutIcon(panel);
+        IndicatorTurnoutIcon to2 = new IndicatorTurnoutIcon(editor);
         turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         to2.setTurnout(new jmri.NamedBeanHandle<>("IT1", turnout));
 
@@ -47,9 +45,7 @@ public class IndicatorTurnoutIconTest {
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        IndicatorTurnoutIcon to = new IndicatorTurnoutIcon(panel);
-        jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
-        to.setTurnout(new jmri.NamedBeanHandle<>("IT1", turnout));
+        IndicatorTurnoutIcon to = (IndicatorTurnoutIcon)p; 
 
         IndicatorTurnoutIcon to2 = (IndicatorTurnoutIcon) to.deepClone();
 
@@ -62,24 +58,16 @@ public class IndicatorTurnoutIconTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        if (!GraphicsEnvironment.isHeadless()) {
-            panel = new PanelEditor("Test IndicatorTurnoutIcon Panel");
+        JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+            editor = new PanelEditor("Test IndicatorTurnoutIcon Panel");
+            IndicatorTurnoutIcon to = new IndicatorTurnoutIcon(editor);
+            jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+            to.setTurnout(new jmri.NamedBeanHandle<>("IT1", turnout));
+            p = to;
         }
     }
 
-    @After
-    public void tearDown() {
-        // now close panel window
-        if (panel != null) {
-            java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
-            for (WindowListener listener : listeners) {
-                panel.getTargetFrame().removeWindowListener(listener);
-            }
-            panel.getTargetFrame().dispose();
-            JUnitUtil.dispose(panel);
-        }
-        apps.tests.Log4JFixture.tearDown();
-    }
 
     // private final static Logger log = LoggerFactory.getLogger(IndicatorTurnoutIconTest.class);
 }
