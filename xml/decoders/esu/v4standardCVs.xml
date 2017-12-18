@@ -228,6 +228,7 @@
     </variable>
     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
     <variable CV="29" mask="XXXXVXXX" default="1" exclude="LokPilot Fx V4.0" item="ESU V4 Advanced RailCom Option 1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>RailCom® Enable</label>
