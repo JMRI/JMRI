@@ -56,7 +56,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
         // register the car and engine types used
         ct.addName("Boxcar");
-        ct.addName("Caboose");
+        ct.addName(Bundle.getMessage("Caboose"));
         ct.addName("Flat");
 
         // create 6 locations and tracks
@@ -2627,7 +2627,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
         // register the car and engine types used
         ct.addName("Boxcar");
-        ct.addName("Caboose");
+        ct.addName(Bundle.getMessage("Caboose"));
         ct.addName("Flat");
 
         // create 6 locations and tracks

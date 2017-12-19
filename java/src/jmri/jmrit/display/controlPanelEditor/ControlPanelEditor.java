@@ -96,7 +96,7 @@ import org.slf4j.LoggerFactory;
  * The "contents" List keeps track of all the objects added to the target frame
  * for later manipulation. Extends the behavior it shares with PanelPro DnD
  * implemented at JDK 1.2 for backward compatibility
- * <P>
+ *
  * @author Pete Cressman Copyright: Copyright (c) 2009, 2010, 2011
  *
  */
@@ -202,15 +202,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 editor = ed;
                 return this;
             }
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (_itemPalette == null) {
-                    _itemPalette = new ItemPalette(Bundle.getMessage("MenuItemItemPalette"), editor);
-                }
+                _itemPalette = ItemPalette.getDefault(Bundle.getMessage("MenuItemItemPalette"), editor);
                 _itemPalette.setVisible(true);
             }
         }.init(this));
+        
         if (SystemType.isMacOSX()) {
             mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.META_MASK));
         } else {
@@ -412,21 +410,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
         _fileMenu.add(editItem);
-        editItem.addActionListener(new ActionListener() {
-            ControlPanelEditor panelEd;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        editItem.addActionListener((ActionEvent event) -> {
                 ImageIndexEditor ii = InstanceManager.getDefault(ImageIndexEditor.class);
                 ii.pack();
                 ii.setVisible(true);
-            }
-
-            ActionListener init(ControlPanelEditor pe) {
-                panelEd = pe;
-                return this;
-            }
-        }.init(this));
+        });
 
         editItem = new JMenuItem(Bundle.getMessage("PEView"));
         _fileMenu.add(editItem);
@@ -973,13 +961,23 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     public void setTitle() {
         String name = getName();
         if (name == null || name.length() == 0) {
-            name = "Control Panel";
+            name = Bundle.getMessage("untitled");
         }
-        if (isEditable()) {
+        String ending = " " + Bundle.getMessage("LabelEditor");
+        String defaultName = Bundle.getMessage("ControlPanelEditor");
+        defaultName = defaultName.substring(0, defaultName.length() - ending.length());
+        if (name.endsWith(ending)) {
+            name = name.substring(0, name.length() - ending.length());
+        }
+        if (name.equals(defaultName)) {
+            name = Bundle.getMessage("untitled") + " (" + name + ")";
+        }
+       if (isEditable()) {
             super.setTitle(name + " " + Bundle.getMessage("LabelEditor"));
         } else {
             super.setTitle(name);
         }
+        setName(name);
     }
 
     // all content loaded from file.
@@ -1184,13 +1182,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         repaint();
     }
 
-    /**
-     * Handle mouse events.
-     *
-     * @param event the moust event to handle
-     */
+    ///////////////// Handle mouse events ////////////////
+
+    private long _mouseDownTime = 0;
     @Override
     public void mousePressed(MouseEvent event) {
+        _mouseDownTime = System.currentTimeMillis();
         setToolTip(null); // ends tooltip if displayed
         log.debug("mousePressed at ({},{}) _dragging={}", event.getX(), event.getY(), _dragging);
         //  " _selectionGroup= "+(_selectionGroup==null?"null":_selectionGroup.size()));
@@ -1231,6 +1228,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     @Override
     public void mouseReleased(MouseEvent event) {
+        _mouseDownTime = 0;
         setToolTip(null); // ends tooltip if displayed
         if (log.isDebugEnabled()) { // avoid string concatination if not debug
             log.debug("mouseReleased at ({},{}) dragging={}, pastePending={}, selectRect is{} null",
@@ -1254,9 +1252,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 pasteItems();
             }
             if (isEditable()) {
-                if (_shapeDrawer.doMouseReleased(selection, event)) {
-                    _selectRect = null;
-                }
+                _shapeDrawer.doMouseReleased(selection, event, this);
+                
                 if (!_circuitBuilder.doMouseReleased(selection, _dragging)) {
                     if (selection != null) {
                         if (!_dragging) {
@@ -1312,7 +1309,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         log.debug("mouseClicked at ({},{})", event.getX(), event.getY());
 
         Positionable selection = getCurrentSelection(event);
-        if (_shapeDrawer.doMouseClicked(event)) {
+        if (_shapeDrawer.doMouseClicked(event, this)) {
             return;
         }
 
@@ -1341,6 +1338,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     public void mouseDragged(MouseEvent event) {
         //if (_debug) log.debug("mouseDragged at ("+event.getX()+","+event.getY()+")");
         setToolTip(null); // ends tooltip if displayed
+
+        long time = System.currentTimeMillis();
+        if (time - _mouseDownTime < 50) {
+            return;     // don't drag until sure mouse down was not just a select click
+        }
 
         if (_circuitBuilder.doMouseDragged(_currentSelection, event)) {
             return;
@@ -1444,11 +1446,14 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     @Override
     protected void paintTargetPanel(Graphics g) {
         // needed to create PositionablePolygon
-        _shapeDrawer.paint(g);
-        if (_secondSelectionGroup != null) {
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setColor(new Color(150, 150, 255));
-            g2d.setStroke(new java.awt.BasicStroke(2.0f));
+        _shapeDrawer.paint(g);  // adds to rubber band line
+        if (_secondSelectionGroup != null) {    // CircuitBuilder highlights
+            if (g instanceof Graphics2D) {
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setStroke(new java.awt.BasicStroke(2.0f));
+                
+            }
+            g.setColor(new Color(150, 150, 255));
             for (Positionable p : _secondSelectionGroup) {
                 if (!(p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape)) {
                     g.drawRect(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());
@@ -1929,5 +1934,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ControlPanelEditor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ControlPanelEditor.class);
+
 }

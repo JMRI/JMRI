@@ -131,6 +131,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
 
     public enum Shutdown {NO_MERGE, PROMPT, MERGE_ALL}
     private Shutdown _shutdown = Shutdown.PROMPT;     // choice for handling session RosterSpeedProfiles
+    private float _mf = 0.8f;    // momentum factor (guess) for speed change
 
     /**
      * Get the default instance.
@@ -418,7 +419,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateFlashingLunar")));
             rampPrefs.addContent(step);
             prefs.addContent(rampPrefs);
-        } catch (Exception ex) {
+        } catch (RuntimeException ex) {
             log.warn("Exception in storing warrant xml.", ex);
             return false;
         }
@@ -665,7 +666,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     public float getThrottleIncrement() {
         return _throttleIncr;
     }
-
+    
     /**
      * Set the throttle increment.
      *

@@ -896,7 +896,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         }
 
         @Override
-        public Void doInBackground() throws Exception {
+        public Void doInBackground() {
             StringBuilder message = new StringBuilder();
             try {
                 getManager().deleteBean(t, "CanDelete");  // NOI18N
@@ -1066,5 +1066,5 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class);
 }

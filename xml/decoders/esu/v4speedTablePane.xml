@@ -16,6 +16,11 @@
                   <label xml:lang="de">Um diese Geschwindigkeitskennlinie zu benutzen, diesen Knopf markieren</label>
                 </display>
                 <label>
+                    <qualifier>
+                        <variableref>Speed Table Definition</variableref>
+                        <relation>exists</relation>
+                        <value>1</value>
+                    </qualifier>
                   <text>            To turn off, use Basic Speed Control pane</text>
                   <text xml:lang="de">Zum Ausschalten, die Lasche Einfache Geschwindigkeitseinstellung benutzen</text>
                   <text xml:lang="it">            per disabilitare, Usa il pannello di controllo Basic</text>

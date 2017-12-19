@@ -58,6 +58,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -211,8 +212,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     void makeEditLogixWindow() {
         _editLogixFrame = new JmriJFrame(Bundle.getMessage("TitleEditLogix"));  // NOI18N
-//         _editLogixFrame.addHelpMenu(
-//                 "package.jmri.jmrit.conditional.TreeView", true);               // NOI18N  TODO
+        _editLogixFrame.addHelpMenu(
+                "package.jmri.jmrit.conditional.ConditionalTreeEditor", true);  // NOI18N
         Container contentPane = _editLogixFrame.getContentPane();
         contentPane.setLayout(new BorderLayout());
 
@@ -486,7 +487,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _detailFooter.setVisible(false);
                 break;
 
-            // ------------ Conditional Edit Grids ------------ 
+            // ------------ Conditional Edit Grids ------------
             case "Conditional":  // NOI18N
                 makeConditionalGrid(c);
                 break;
@@ -670,8 +671,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 // add to Logix at the end of the calculate order
                 _curLogix.addConditional(cName, -1);
-                _actionList = new ArrayList<ConditionalAction>();
-                _variableList = new ArrayList<ConditionalVariable>();
+                _actionList = new ArrayList<>();
+                _variableList = new ArrayList<>();
                 _curConditional.setAction(_actionList);
                 _curConditional.setStateVariables(_variableList);
                 _showReminder = true;
@@ -868,7 +869,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Apply the updates to the current node
      */
     void updatePressed() {
-        _curLogix.deActivateLogix();
         switch (_curNodeType) {
             case "Conditional":     // NOI18N
                 userNameChanged(_editConditionalUserName.getText().trim());
@@ -894,7 +894,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 log.warn("Invalid update button press");  // NOI18N
         }
         setEditMode(false);
-        _curLogix.activateLogix();
         _cdlTree.setSelectionPath(_curTreePath);
         _cdlTree.grabFocus();
     }
@@ -1523,6 +1522,12 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Clean up, notify the parent Logix that edit session is done
      */
     void donePressed() {
+        closeSinglePanelPickList();
+        if (_pickTables != null) {
+            _pickTables.dispose();
+            _pickTables = null;
+        }
+
         _editLogixFrame.setVisible(false);
         _editLogixFrame.dispose();
         _editLogixFrame = null;
@@ -1614,7 +1619,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Actions Level 3 contains the detail Variable and Action entries
      */
     void createConditionalContent() {
-        String nodeText;
         int _numConditionals = _curLogix.getNumConditionals();
         for (int i = 0; i < _numConditionals; i++) {
             String csName = _curLogix.getConditionalByNumberOrder(i);
@@ -1938,8 +1942,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             }
         }
         if (active) {
+            _curLogix.deActivateLogix();
             setPickWindow("Activate", 0);  // NOI18N
         } else {
+            _curLogix.activateLogix();
             setPickWindow("Deactivate", 0);  // NOI18N
         }
     }
@@ -2023,8 +2029,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         for (int i = 0; i <= Conditional.ITEM_TYPE_LAST_STATE_VAR; i++) {
             _variableTypeBox.addItem(ConditionalVariable.getItemTypeString(i));
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_variableTypeBox);
         _variableTypeBox.addItemListener(new ItemListener() {
-            ;
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -2468,7 +2474,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             _comboNameBox.removeFocusListener(detailFocusEvent);
         }
         setPickWindow("Variable", itemType);  // NOI18N
-        
+
         _variableOperBox.setSelectedItem(_curVariable.getOpernString());
         _variableNegated.setSelected(_curVariable.isNegated());
         _variableTriggerActions.setSelected(_curVariable.doTriggerActions());
@@ -2714,6 +2720,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             }
         }
         _selectLogixBox.setSelectedItem(itemKey);
+        JComboBoxUtil.setupComboBoxMaxRows(_selectLogixBox);
         loadSelectConditionalBox(lgxName);
     }
 
@@ -2764,6 +2771,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             }
         }
         _selectConditionalBox.setSelectedItem(itemKey);
+        JComboBoxUtil.setupComboBoxMaxRows(_selectConditionalBox);
     }
 
     /**
@@ -2920,10 +2928,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 if (c == null) {
                     return false;
                 }
-                if (c.getUserName() != null && !c.getUserName().isEmpty()) {
-                    _curVariable.setGuiName(c.getUserName());
-                } else {
+                String uName = c.getUserName();
+                if (uName == null || uName.isEmpty()) {
                     _curVariable.setGuiName(c.getSystemName());
+                } else {
+                    _curVariable.setGuiName(uName);
                 }
                 break;
             case Conditional.ITEM_TYPE_LIGHT:
@@ -3189,6 +3198,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         for (int i = 0; i <= Conditional.ITEM_TYPE_LAST_ACTION; i++) {
             _actionItemTypeBox.addItem(DefaultConditionalAction.getItemTypeString(i));
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_actionItemTypeBox);
         _actionItemTypeBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -4678,5 +4688,5 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         return ConditionalTreeEdit.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConditionalTreeEdit.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConditionalTreeEdit.class);
 }

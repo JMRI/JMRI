@@ -2,11 +2,11 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
+import jmri.util.JUnitOperationsUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -16,10 +16,11 @@ import org.junit.Test;
 public class TrainByCarTypeFrameTest {
 
     @Test
-    @Ignore("ignore constructor tests for Frames until test dependencies resovled")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        jmri.jmrit.operations.trains.Train train = jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager.class).getTrainById("1");
         TrainByCarTypeFrame t = new TrainByCarTypeFrame();
+        t.initComponents(train);
         Assert.assertNotNull("exists",t);
     }
 
@@ -27,6 +28,8 @@ public class TrainByCarTypeFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitOperationsUtil.resetOperationsManager();
+        JUnitOperationsUtil.initOperationsData();
     }
 
     @After
@@ -34,6 +37,6 @@ public class TrainByCarTypeFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainByCarTypeFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainByCarTypeFrameTest.class);
 
 }

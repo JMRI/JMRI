@@ -236,7 +236,9 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
                 if (!panel.loadOK()) {
                     result = false;
                 }
-            } catch (Exception e) {
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                    | jmri.configurexml.JmriConfigureXmlException
+                    | RuntimeException e) {
                 log.error("Exception while loading " + item.getName() + ":" + e);
                 result = false;
                 e.printStackTrace();
@@ -271,6 +273,6 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         return jmri.Manager.PANELFILES;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SwitchboardEditorXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SwitchboardEditorXml.class);
 
 }

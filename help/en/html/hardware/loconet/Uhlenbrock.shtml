@@ -30,40 +30,44 @@
       <h1>Hardware Support: Uhlenbrock Intellibox</h1>
 
       <p>JMRI can communicate with an Uhlenbrock Intellibox via the
-      Intellibox built-in serial port, the Intellibox-II USB port
-      and the LocoNet&reg; protocol. This page provides details on
-      the possibilities.</p><a name="hardware" id="hardware"></a>
+      Intellibox built-in serial port, the Intellibox II/Basic USB port
+      and the LocoNet&trade; protocol.<br>
+      This page provides details on the possibilities.</p>
 
+      <a name="hardware" id="hardware"></a>
       <h2>Supported Hardware</h2>
 
       <h3>Command Station</h3>
 
       <ul>
-        <li>Intellibox-I</li>
+        <li>Intellibox</li>
+        <li>Intellibox IR</li>
 
-        <li>Intellibox-II</li>
-
+        <li>Intellibox Basic</li>
+        <li>Intellibox II</li>
         <li>IB-Com</li>
 
         <li>Fleischmann Twin Center (software version 1.1 or
         later)</li>
-      </ul><a name="limitations" id="limitations"></a>
+      </ul>
 
+      <a name="limitations" id="limitations"></a>
       <h2>Limitations</h2>
 
       <ul>
         <li>Full support of Intellibox-II has been added to JMRI in
         version 3.11.1 and up. It is not available in previous
         versions 3.10 and below.</li>
-      </ul><a name="connecting" id="connecting"></a>
+      </ul>
 
+      <a name="connecting" id="connecting"></a>
       <h2>Connecting</h2>
 
       <h3 id="serial">Direct serial connection</h3><a href=
       "images/UhlenbrockConfig-I.png"><img src=
       "images/UhlenbrockConfig-I.png" align="right" width="180"
       height="115"></a> This section is applicable to the
-      "Intellibox-I", which includes
+      "Intellibox-I" group, which includes
 
       <ul>
         <li>Intellibox ref. 65000</li>
@@ -149,9 +153,9 @@
       LocoNet, using any of available <a href=
       "Digitrax.shtml">LocoNet connection methods</a>.</p>
 
-      <p>Intellibox command stations are divided into two types,
-      called "Intellibox-I":</p>
+      <p>Intellibox command stations are divided into two groups:</p>
 
+      <p>"Intellibox-I (Serial)":</p>
       <ul>
         <li>Intellibox ref. 65000</li>
 
@@ -159,7 +163,9 @@
 
         <li>Fleischmann Twin Center (software version 1.1 or
         later)</li>
-      </ul>and "Intellibox-II":
+      </ul>
+
+      <p>"Intellibox-II (USB)":</p>
 
       <ul>
         <li>Intellibox II ref. 65100</li>
@@ -172,17 +178,30 @@
       <p>Start the JMRI program and configure it to:</p>
 
       <ul>
-        <li>Select "Digitrax" as the System Manufacturer for your
-        connection</li>
+        <li>Select "Uhlenbrock" as the System Manufacturer for your
+        connection.</li>
 
         <li>Select the appropriate System Connection for your
-        hardware.</li>
+        hardware, either Intellibox-I or -II.</li>
 
-        <li>Select either the "Intellibox-I" or "Intellibox-II" as
-        the Command Station Type.</li>
-      </ul>Save and restart. <a name="tools" id="tools"></a>
+        <li>Select the serial port used for this connection.</li>
 
-      <h2>JMRI Uhlenbrock Tools</h2>N/A
+        <li>The single corresponding Command Station (group) choice will be selected
+        automatically.</li>
+
+        <li>If diseried, adjust the system prefix and connection user name.<br>
+        Note that an existing panel contains a certain prefix and changing this
+        option here will lead to an error upon loading such a panel.</li>
+
+      </ul>
+      <p>Save and restart.</p>
+
+      <a name="tools" id="tools"></a>
+      <h2>JMRI Uhlenbrock Tools</h2>
+
+      <p>The Intellibox Command Stations can't be configured over their
+      LocoNet connection. Please use the keyboard and consult the manual.</p>
+
       <hr class="hide">
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

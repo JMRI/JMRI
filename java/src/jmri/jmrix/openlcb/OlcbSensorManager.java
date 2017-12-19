@@ -33,7 +33,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         super.dispose();
     }
 
-    //Implemented ready for new system connection memo
+    // Implemented ready for new system connection memo
     public OlcbSensorManager(CanSystemConnectionMemo memo) {
         this.memo = memo;
         prefix = memo.getSystemPrefix();
@@ -118,7 +118,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     public void updateAll() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbSensorManager.class);
 
 }
 

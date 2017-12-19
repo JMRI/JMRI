@@ -14,7 +14,14 @@ import org.junit.runners.Suite;
         PaneNewProgActionTest.class,
         PaneOpsProgActionTest.class,
         PaneProgActionTest.class,
-        BundleTest.class
+        BundleTest.class,
+        ProgCheckActionTest.class,
+        WatchingLabelTest.class,
+        PaneOpsProgFrameTest.class,
+        PaneServiceProgFrameTest.class,
+        PaneSetTest.class,
+        JComponentQualifierTest.class,
+        PaneQualifierTest.class,
 })
 
 /**

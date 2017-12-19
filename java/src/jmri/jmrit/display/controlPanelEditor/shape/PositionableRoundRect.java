@@ -9,7 +9,7 @@ import jmri.jmrit.display.Positionable;
 
 /**
  * PositionableRoundRect adds corner radii to PositionableShapes.
- * <P>
+ *
  * @author Pete cresman Copyright (c) 2012
  */
 public class PositionableRoundRect extends PositionableRectangle {
@@ -18,7 +18,6 @@ public class PositionableRoundRect extends PositionableRectangle {
 
     public PositionableRoundRect(Editor editor) {
         super(editor);
-        makeShape();
     }
 
     public PositionableRoundRect(Editor editor, Shape shape) {
@@ -27,30 +26,27 @@ public class PositionableRoundRect extends PositionableRectangle {
 
     public void setCornerRadius(int r) {
         _radius = r;
+        invalidateShape();
     }
 
     public int getCornerRadius() {
         return _radius;
     }
 
-    /**
-     * this class must be overridden by its subclasses and executed only after
-     * its parameters have been set
-     */
     @Override
-    public void makeShape() {
-        setShape(new RoundRectangle2D.Double(0, 0, _width, _height, _radius, _radius));
+    protected Shape makeShape() {
+        return new RoundRectangle2D.Double(0, 0, _width, _height, _radius, _radius);
     }
 
     @Override
     public Positionable deepClone() {
         PositionableRoundRect pos = new PositionableRoundRect(_editor);
+        pos._radius = _radius;
         return finishClone(pos);
     }
 
     @Override
     protected Positionable finishClone(PositionableShape pos) {
-        ((PositionableRoundRect)pos)._radius = _radius;
         return super.finishClone(pos);
     }
 
@@ -60,12 +56,16 @@ public class PositionableRoundRect extends PositionableRectangle {
         popup.add(new javax.swing.AbstractAction(txt) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (_editFrame == null) {
-                    _editFrame = new DrawRoundRect("editShape", "roundRect", null);
-                    setEditParams();
-                }
-             }
+                makeEditFrame();
+            }
         });
         return true;
+    }
+    
+    private void makeEditFrame() {
+        if (_editFrame == null) {
+            _editFrame = new DrawRoundRect("editShape", "roundRect", this);
+            setEditParams();
+        }
     }
 }

@@ -7,25 +7,27 @@ import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
+import jmri.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to a TAMS connection.
  * <P>
- * Based on Glen Oberhauser's original LnThrottle implementation and work by Kevin Dickerson
+ * Based on Glen Oberhauser's original LnThrottle implementation and work by
+ * Kevin Dickerson
  *
- * @author	Jan Boen
- * 
+ * @author Jan Boen
+ *
  */
 public class TamsThrottle extends AbstractThrottle implements TamsListener {
 
     //Create a local TamsMessage Queue which we will use in combination with TamsReplies
-    private Queue<TamsMessage> tmq = new LinkedList<TamsMessage>();
+    private final Queue<TamsMessage> tmq = new LinkedList<>();
 
     //This dummy message is used in case we expect a reply from polling
     static private TamsMessage myDummy() {
-        //log.info("*** myDummy ***");
+        log.trace("*** myDummy ***");
         TamsMessage m = new TamsMessage(2);
         m.setElement(0, TamsConstants.POLLMSG & TamsConstants.MASKFF);
         m.setElement(1, TamsConstants.XEVTLOK & TamsConstants.MASKFF);
@@ -35,13 +37,6 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         return m;
     }
 
-    //A local TamsMessage is held at all time
-    //When no TamsMessage is being generated via the UI this dummy is used which means the TamsReply is a result of polling
-    TamsMessage tm = myDummy();
-    
-    /**
-     * Constructor.
-     */
     public TamsThrottle(TamsSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
         super.speedStepMode = SpeedStepMode128;
@@ -67,7 +62,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         this.isForward = true;
 
         //get the status if known of the current loco
-        tm = new TamsMessage("xL " + address.getNumber());
+        TamsMessage tm = new TamsMessage("xL " + address.getNumber());
         tm.setTimeout(10000);
         tm.setBinary(false);
         tm.setReplyType('L');
@@ -88,7 +83,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         tc.sendTamsMessage(tm, this);
         tmq.add(tm);
         //tc.addPollMessage(tm, this);
-        
+
         //Add binary polling message
         tm = TamsMessage.getXEvtLok();
         tc.sendTamsMessage(tm, this);
@@ -96,7 +91,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         tc.addPollMessage(tm, this);
 
     }
-    
+
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4. To
      * send function group 1 we have to also send speed, direction etc.
@@ -147,7 +142,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         sb.append(",");
         sb.append((f8 ? "1" : "0"));
 
-        tm = new TamsMessage(sb.toString());
+        TamsMessage tm = new TamsMessage(sb.toString());
         tm.setBinary(false);
         tm.setReplyType('T');
         tc.sendTamsMessage(tm, this);
@@ -168,7 +163,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         sb.append(",");
         sb.append((f12 ? "1" : "0"));
 
-        tm = new TamsMessage(sb.toString());
+        TamsMessage tm = new TamsMessage(sb.toString());
         tm.setBinary(false);
         tm.setReplyType('L');
         tc.sendTamsMessage(tm, this);
@@ -211,7 +206,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         sb.append(",");
         sb.append(",");
 
-        tm = new TamsMessage(sb.toString());
+        TamsMessage tm = new TamsMessage(sb.toString());
         tm.setBinary(false);
         tm.setReplyType('L');
         tc.sendTamsMessage(tm, this);
@@ -232,7 +227,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         }
     }
 
-    private DccLocoAddress address;
+    private final DccLocoAddress address;
 
     TamsTrafficController tc;
 
@@ -244,7 +239,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
     @Override
     protected void throttleDispose() {
         active = false;
-        tm = TamsMessage.getXEvtLok();
+        TamsMessage tm = TamsMessage.getXEvtLok();
         tc.removePollMessage(tm, this);
     }
 
@@ -254,7 +249,10 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
     }
 
     /**
-     * Convert a Tams speed integer to a float speed value
+     * Convert a Tams speed integer to a float speed value.
+     *
+     * @param lSpeed Tams speed
+     * @return speed as -1 or number between 0 and 1, inclusive
      */
     protected float floatSpeed(int lSpeed) {
         if (lSpeed == 0) {
@@ -270,14 +268,9 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
 
     @Override
     public void reply(TamsReply tr) {
-        //log.info("*** Loco reply ***");
-        if(tmq.isEmpty()){
-            tm = myDummy();
-        } else
-        {
-            tm = tmq.poll();
-        }
-        if (tm.isBinary()){//Binary reply
+        log.trace("*** Loco reply ***");
+        TamsMessage tm = tmq.isEmpty() ? myDummy() : tmq.poll();
+        if (tm.isBinary()) {//Binary reply
             //The binary logic as created by Jan
             //Complete Loco status is given by:
             //    element(0) = Speed: 0..127, 0 = Stop, 1 = not used, 2 = min. Speed, 127 = max. Speed
@@ -298,119 +291,121 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
             int msb = tr.getElement(3) & 0x3F;
             int lsb = tr.getElement(2) & 0xFF;
             int receivedAddress = msb * 256 + lsb;
-            //log.info("reply for loco = " + receivedAddress);
-            //log.info("reply = " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(4) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(3) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(2) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(1) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(0) & 0xFF, ""));
-            if (receivedAddress == address.getNumber()){//If correct address then decode the content
-                //log.info("Is my address");
+            if (log.isTraceEnabled()) { // avoid overhead of StringUtil calls
+                log.trace("reply for loco = {}", receivedAddress);
+                log.trace("reply = {} {} {} {} {}", StringUtil.appendTwoHexFromInt(tr.getElement(4) & 0xFF, ""), StringUtil.appendTwoHexFromInt(tr.getElement(3) & 0xFF, ""), StringUtil.appendTwoHexFromInt(tr.getElement(2) & 0xFF, ""), StringUtil.appendTwoHexFromInt(tr.getElement(1) & 0xFF, ""), StringUtil.appendTwoHexFromInt(tr.getElement(0) & 0xFF, ""));
+            }
+            if (receivedAddress == address.getNumber()) {//If correct address then decode the content
+                log.trace("Is my address");
                 try {
                     StringBuilder sb = new StringBuilder();
-                    Float newSpeed = Float.valueOf(floatSpeed(tr.getElement(0)));
+                    Float newSpeed = floatSpeed(tr.getElement(0));
                     super.setSpeedSetting(newSpeed);
-                    //log.info("f0 = " + (tr.getElement(3) & 0x40 ));
-                    if ((((tr.getElement(3) & 0x40 ) == 64)) && !this.f0) {
+                    log.trace("f0 = {}", tr.getElement(3) & 0x40);
+                    if ((((tr.getElement(3) & 0x40) == 64)) && !this.f0) {
                         notifyPropertyChangeListener(Throttle.F0, this.f0, true);
                         sb.append("f0 ");
                         this.f0 = true;
                     }
-                    if (((tr.getElement(3) & 0x40 ) == 0) && this.f0) {
+                    if (((tr.getElement(3) & 0x40) == 0) && this.f0) {
                         notifyPropertyChangeListener(Throttle.F0, this.f0, false);
                         sb.append("0f ");
                         this.f0 = false;
                     }
-                    if (((tr.getElement(3) & 0x80 ) == 0)&& isForward) {
+                    if (((tr.getElement(3) & 0x80) == 0) && isForward) {
                         notifyPropertyChangeListener("IsForward", isForward, false);
                         isForward = false;
                     }
-                    if (((tr.getElement(3) & 0x80 ) == 128)&& !isForward) {
+                    if (((tr.getElement(3) & 0x80) == 128) && !isForward) {
                         notifyPropertyChangeListener("IsForward", isForward, true);
                         isForward = true;
                     }
-                    if (((tr.getElement(1) & 0x01 ) == 1) && !this.f1) {
+                    if (((tr.getElement(1) & 0x01) == 1) && !this.f1) {
                         notifyPropertyChangeListener(Throttle.F1, this.f1, true);
                         sb.append("f1 ");
                         this.f1 = true;
                     }
-                    if (((tr.getElement(1) & 0x01 ) == 0) && this.f1) {
+                    if (((tr.getElement(1) & 0x01) == 0) && this.f1) {
                         notifyPropertyChangeListener(Throttle.F1, this.f1, false);
                         sb.append("1f ");
                         this.f1 = false;
                     }
-                    if (((tr.getElement(1) & 0x02 ) == 2) && !this.f2) {
+                    if (((tr.getElement(1) & 0x02) == 2) && !this.f2) {
                         notifyPropertyChangeListener(Throttle.F2, this.f2, true);
                         sb.append("f2 ");
                         this.f2 = true;
                     }
-                    if (((tr.getElement(1) & 0x02 ) == 0) && this.f2) {
+                    if (((tr.getElement(1) & 0x02) == 0) && this.f2) {
                         notifyPropertyChangeListener(Throttle.F2, this.f2, false);
                         sb.append("2f ");
                         this.f2 = false;
                     }
-                    if (((tr.getElement(1) & 0x04 ) == 4) && !this.f3){
+                    if (((tr.getElement(1) & 0x04) == 4) && !this.f3) {
                         notifyPropertyChangeListener(Throttle.F3, this.f3, true);
                         sb.append("f3 ");
                         this.f3 = true;
                     }
-                    if (((tr.getElement(1) & 0x04 ) == 0) && this.f3) {
+                    if (((tr.getElement(1) & 0x04) == 0) && this.f3) {
                         notifyPropertyChangeListener(Throttle.F3, this.f3, false);
                         sb.append("3f ");
                         this.f3 = false;
                     }
-                    if (((tr.getElement(1) & 0x08 ) == 8) && !this.f4) {
+                    if (((tr.getElement(1) & 0x08) == 8) && !this.f4) {
                         notifyPropertyChangeListener(Throttle.F4, this.f4, true);
                         sb.append("f4 ");
                         this.f4 = true;
                     }
-                    if (((tr.getElement(1) & 0x08 ) == 0) && this.f4) {
+                    if (((tr.getElement(1) & 0x08) == 0) && this.f4) {
                         notifyPropertyChangeListener(Throttle.F4, this.f4, false);
                         sb.append("4f ");
                         this.f4 = false;
                     }
-                    if (((tr.getElement(1) & 0x10 ) == 16) && !this.f5) {
+                    if (((tr.getElement(1) & 0x10) == 16) && !this.f5) {
                         notifyPropertyChangeListener(Throttle.F5, this.f5, true);
                         sb.append("f5 ");
                         this.f5 = true;
                     }
-                    if (((tr.getElement(1) & 0x10 ) == 0) && this.f5) {
+                    if (((tr.getElement(1) & 0x10) == 0) && this.f5) {
                         notifyPropertyChangeListener(Throttle.F5, this.f5, false);
                         sb.append("5f ");
                         this.f5 = false;
                     }
-                    if (((tr.getElement(1) & 0x20 ) == 32) && !this.f6) {
+                    if (((tr.getElement(1) & 0x20) == 32) && !this.f6) {
                         notifyPropertyChangeListener(Throttle.F6, this.f6, true);
                         sb.append("f6 ");
                         this.f6 = true;
                     }
-                    if (((tr.getElement(1) & 0x20 ) == 0) && this.f6) {
+                    if (((tr.getElement(1) & 0x20) == 0) && this.f6) {
                         notifyPropertyChangeListener(Throttle.F6, this.f6, false);
                         sb.append("6f ");
                         this.f6 = false;
                     }
-                    if (((tr.getElement(1) & 0x40 ) == 64) && !this.f7) {
+                    if (((tr.getElement(1) & 0x40) == 64) && !this.f7) {
                         notifyPropertyChangeListener(Throttle.F7, this.f7, true);
                         sb.append("f7 ");
                         this.f7 = true;
                     }
-                    if (((tr.getElement(1) & 0x40 ) == 0) && this.f7) {
+                    if (((tr.getElement(1) & 0x40) == 0) && this.f7) {
                         notifyPropertyChangeListener(Throttle.F7, this.f7, false);
                         sb.append("7f ");
                         this.f7 = false;
                     }
-                    if (((tr.getElement(1) & 0x80 ) == 128) && !this.f8) {
+                    if (((tr.getElement(1) & 0x80) == 128) && !this.f8) {
                         notifyPropertyChangeListener(Throttle.F8, this.f8, true);
                         sb.append("f8");
                         this.f8 = true;
                     }
-                    if (((tr.getElement(1) & 0x80 ) == 0) && this.f8) {
+                    if (((tr.getElement(1) & 0x80) == 0) && this.f8) {
                         notifyPropertyChangeListener(Throttle.F8, this.f8, false);
                         sb.append("8f");
                         this.f8 = false;
                     }
-                    //log.info(sb.toString());
-                } catch (Exception ex) {
-                    log.error("Error handling reply from MC " + ex);
+                    log.trace(sb.toString());
+                } catch (RuntimeException ex) {
+                    log.error("Error handling reply from MC", ex);
                 }
             }
-            
+
         } else {//ASCII reply
             //The original logic as provided by Kevin
             if (tr.match("WARNING") >= 0) {
@@ -418,9 +413,9 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
             }
             if (tr.match("L " + address.getNumber()) >= 0) {
                 try {
-                    //log.info("ASCII address = " + address.getNumber());
+                    log.trace("ASCII address = {}", address.getNumber());
                     String[] lines = tr.toString().split(" ");
-                    Float newSpeed = Float.valueOf(floatSpeed(Integer.parseInt(lines[2])));
+                    Float newSpeed = floatSpeed(Integer.parseInt(lines[2]));
                     super.setSpeedSetting(newSpeed);
                     if (lines[3].equals("1") && !this.f0) {
                         notifyPropertyChangeListener(Throttle.F0, this.f0, true);
@@ -464,8 +459,8 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
                         notifyPropertyChangeListener(Throttle.F4, this.f4, false);
                         this.f4 = false;
                     }
-                } catch (Exception ex) {
-                    log.error("Error phrasing reply from MC " + ex);
+                } catch (NumberFormatException ex) {
+                    log.error("Error phrasing reply from MC", ex);
                 }
             } else if (tr.match("FX " + address.getNumber()) >= 0) {
                 String[] lines = tr.toString().split(" ");
@@ -512,8 +507,8 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
                         notifyPropertyChangeListener(Throttle.F14, this.f14, false);
                         this.f14 = false;
                     }
-                } catch (Exception ex) {
-                    log.error("Error phrasing reply from MC " + ex);
+                } catch (RuntimeException ex) {
+                    log.error("Error phrasing reply from MC", ex);
                 }
             } else if (tr.match("F " + address.getNumber()) >= 0) {
                 String[] lines = tr.toString().split(" ");
@@ -575,16 +570,16 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
                         notifyPropertyChangeListener(Throttle.F8, this.f8, false);
                         this.f8 = false;
                     }
-                } catch (Exception ex) {
-                    log.error("Error phrasing reply from MC " + ex);
+                } catch (RuntimeException ex) {
+                    log.error("Error phrasing reply from MC", ex);
                 }
             } else if (tr.toString().equals("ERROR: no data.")) {
                 log.debug("Loco has no data");
-            }            
+            }
         }
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(TamsThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsThrottle.class);
 
 }

@@ -10,30 +10,25 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DCCppMultiMeterTest {
+public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterTestBase{
 
-    @Test
-    public void testCTor() {
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
         // infrastructure objects
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
 
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
-
-        DCCppMultiMeter t = new DCCppMultiMeter(memo);
-        Assert.assertNotNull("exists",t);
-    }
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
+        mm = new DCCppMultiMeter(memo);
     }
 
     @After
     public void tearDown() {
+        mm.dispose();
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeterTest.class);
 
 }

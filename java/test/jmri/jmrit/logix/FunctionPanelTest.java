@@ -39,6 +39,6 @@ public class FunctionPanelTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FunctionPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(FunctionPanelTest.class);
 
 }

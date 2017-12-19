@@ -1,9 +1,10 @@
 package jmri.jmrix.rfid;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * RfidSystemConnectionMemoTest.java
@@ -12,41 +13,26 @@ import org.junit.Assert;
  *
  * @author	Paul Bender
  */
-public class RfidSystemConnectionMemoTest extends TestCase {
+public class RfidSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-    public void testCtor() {
-        RfidSystemConnectionMemo memo=new RfidSystemConnectionMemo();
-        Assert.assertNotNull("exists", memo);
-    }
-
-    // from here down is testing infrastructure
-    public RfidSystemConnectionMemoTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", RfidSystemConnectionMemoTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(RfidSystemConnectionMemoTest.class);
-        return suite;
+    @Override
+    @Test
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        super.setUp();
+    @Before
+    public void setUp(){
+        JUnitUtil.setUp();
+        scm=new RfidSystemConnectionMemo();
     }
 
     @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown(){
+        JUnitUtil.tearDown();
     }
 
 }

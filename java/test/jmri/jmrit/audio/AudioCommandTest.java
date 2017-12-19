@@ -22,6 +22,9 @@ public class AudioCommandTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.AudioManager am = new DefaultAudioManager();
+        jmri.InstanceManager.setDefault(jmri.AudioManager.class,am);
+        am.init();
     }
 
     @After
@@ -29,6 +32,6 @@ public class AudioCommandTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AudioCommandTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AudioCommandTest.class);
 
 }

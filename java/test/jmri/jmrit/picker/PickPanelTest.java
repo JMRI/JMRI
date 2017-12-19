@@ -44,6 +44,6 @@ public class PickPanelTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PickPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PickPanelTest.class);
 
 }

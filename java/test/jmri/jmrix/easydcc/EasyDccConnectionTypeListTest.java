@@ -15,7 +15,7 @@ public class EasyDccConnectionTypeListTest {
     @Test
     public void testCTor() {
         EasyDccConnectionTypeList t = new EasyDccConnectionTypeList();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
@@ -29,6 +29,6 @@ public class EasyDccConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EasyDccConnectionTypeListTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EasyDccConnectionTypeListTest.class);
 
 }

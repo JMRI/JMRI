@@ -12,6 +12,7 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutTrack;
 import jmri.server.json.JSON;
 import jmri.util.ColorUtil;
 import org.jdom2.Document;
@@ -62,9 +63,9 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
             panel.setAttribute("turnoutcirclesize", Integer.toString(editor.getTurnoutCircleSize()));
             panel.setAttribute("turnoutdrawunselectedleg", (editor.getTurnoutDrawUnselectedLeg()) ? "yes" : "no");
             if (editor.getBackgroundColor() == null) {
-                panel.setAttribute("backgroundcolor", ColorUtil.colorToString(Color.lightGray));
+                panel.setAttribute("backgroundcolor", ColorUtil.colorToColorName(Color.lightGray));
             } else {
-                panel.setAttribute("backgroundcolor", ColorUtil.colorToString(editor.getBackgroundColor()));
+                panel.setAttribute("backgroundcolor", ColorUtil.colorToColorName(editor.getBackgroundColor()));
             }
             panel.setAttribute("defaulttrackcolor", editor.getDefaultTrackColor());
             panel.setAttribute("defaultoccupiedtrackcolor", editor.getDefaultOccupiedTrackColor());
@@ -74,7 +75,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
 
             // include positionable elements
             List<Positionable> contents = editor.getContents();
-            log.debug("N positionable elements: {}", contents.size());
+            log.debug("Number of positionable elements: {}", contents.size());
             for (Positionable sub : contents) {
                 if (sub != null) {
                     try {
@@ -101,28 +102,11 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                 }
             }
 
-            // include PositionablePoints
-            int num = editor.pointList.size();
-            log.debug("N positionablepoint elements: {}", num);
-            if (num > 0) {
-                for (int i = 0; i < num; i++) {
-                    Object sub = editor.pointList.get(i);
-                    try {
-                        Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                        if (e != null) {
-                            panel.addContent(e);
-                        }
-                    } catch (Exception e) {
-                        log.error("Error storing panel positionalpoint element: " + e);
-                    }
-                }
-            }
-
             // include LayoutBlocks
             LayoutBlockManager tm = InstanceManager.getDefault(LayoutBlockManager.class);
             java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
             SensorManager sm = InstanceManager.sensorManagerInstance();
-            num = 0;
+            int num = 0;
             while (iter.hasNext()) {
                 String sname = iter.next();
                 if (sname == null) {
@@ -142,18 +126,18 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                         if (s != null) {
                             elem.setAttribute("occupancysensor", s.getSystemName()); //send systemname
                         }
-                    //if layoutblock has no occupancy sensor, use one from block, if it is populated
-                    } else { 
-                        Sensor s = b.getBlock().getSensor(); 
+                        //if layoutblock has no occupancy sensor, use one from block, if it is populated
+                    } else {
+                        Sensor s = b.getBlock().getSensor();
                         if (s != null) {
                             elem.setAttribute("occupancysensor", s.getSystemName()); //send systemname
                         }
                     }
 
                     elem.setAttribute("occupiedsense", Integer.toString(b.getOccupiedSense()));
-                    elem.setAttribute("trackcolor", ColorUtil.colorToString(b.getBlockTrackColor()));
-                    elem.setAttribute("occupiedcolor", ColorUtil.colorToString(b.getBlockOccupiedColor()));
-                    elem.setAttribute("extracolor", ColorUtil.colorToString(b.getBlockExtraColor()));
+                    elem.setAttribute("trackcolor", ColorUtil.colorToColorName(b.getBlockTrackColor()));
+                    elem.setAttribute("occupiedcolor", ColorUtil.colorToColorName(b.getBlockOccupiedColor()));
+                    elem.setAttribute("extracolor", ColorUtil.colorToColorName(b.getBlockExtraColor()));
                     if (!b.getMemoryName().isEmpty()) {
                         elem.setAttribute("memory", b.getMemoryName());
                     }
@@ -165,89 +149,21 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                     num++;
                 }
             }
-            log.debug("N layoutblock elements: {}", num);
+            log.debug("Number of layoutblock elements: {}", num);
 
-            // include LevelXings
-            num = editor.xingList.size();
-            log.debug("N levelxing elements: {}", num);
-            if (num > 0) {
-                for (int i = 0; i < num; i++) {
-                    Object sub = editor.xingList.get(i);
-                    try {
-                        Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                        if (e != null) {
-                            panel.addContent(e);
-                        }
-                    } catch (Exception e) {
-                        log.error("Error storing panel levelxing element: " + e);
+            // include LayoutTracks
+            List<LayoutTrack> layoutTracks = editor.getLayoutTracks();
+            for (Object sub : layoutTracks) {
+                try {
+                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                    if (e != null) {
+                        panel.addContent(e);
                     }
+                } catch (Exception e) {
+                    log.error("Error storing panel LayoutTrack element: " + e);
                 }
             }
-            // include LayoutTurnouts
-            num = editor.turnoutList.size();
-            log.debug("N layoutturnout elements: {}", num);
-            if (num > 0) {
-                for (int i = 0; i < num; i++) {
-                    Object sub = editor.turnoutList.get(i);
-                    try {
-                        Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                        if (e != null) {
-                            panel.addContent(e);
-                        }
-                    } catch (Exception e) {
-                        log.error("Error storing panel layoutturnout element: " + e);
-                    }
-                }
-            }
-
-            // include TrackSegments
-            num = editor.trackList.size();
-            log.debug("N tracksegment elements: {}", num);
-            if (num > 0) {
-                for (int i = 0; i < num; i++) {
-                    Object sub = editor.trackList.get(i);
-                    try {
-                        Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                        if (e != null) {
-                            panel.addContent(e);
-                        }
-                    } catch (Exception e) {
-                        log.error("Error storing panel tracksegment element: " + e);
-                    }
-                }
-            }
-            // include LayoutSlips
-            num = editor.slipList.size();
-            log.debug("N layoutSlip elements: {}", num);
-            if (num > 0) {
-                for (int i = 0; i < num; i++) {
-                    Object sub = editor.slipList.get(i);
-                    try {
-                        Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                        if (e != null) {
-                            panel.addContent(e);
-                        }
-                    } catch (Exception e) {
-                        log.error("Error storing panel layoutSlip element: " + e);
-                    }
-                }
-            }
-            // include LayoutTurntables
-            num = editor.turntableList.size();
-            log.debug("N turntable elements: {}", num);
-            if (num > 0) {
-                for (int i = 0; i < num; i++) {
-                    Object sub = editor.turntableList.get(i);
-                    try {
-                        Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                        if (e != null) {
-                            panel.addContent(e);
-                        }
-                    } catch (Exception e) {
-                        log.error("Error storing panel turntable element: " + e);
-                    }
-                }
-            }
+            log.debug("Number of layoutblock elements: {}", layoutTracks.size());
 
             //write out formatted document
             Document doc = new Document(panel);

@@ -11,7 +11,7 @@ import jmri.InstanceManager;
  * <ul>
  * <li>One of these must be automatically, transparently available - this is done by
  *      inheriting from jmri.InstanceManagerAutoDefault
- * <li>It must be possible to have more than one of these, so you can have 
+ * <li>It must be possible to have more than one of these, so you can have
  *      multiple internal systems defined - each one keeps internal references
  *      to its objects
  * <li>It must make sure that its objects are available individually through the instance manager.
@@ -29,10 +29,10 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     }
 
     boolean configured = false;
-    
+
     /**
      * Configure the common managers for Internal connections. This puts the
-     * common manager config in one place. 
+     * common manager config in one place.
      * <p> Note: The Proxy system can cause some managers to be created early.
      * We don't call configureManagers in that case, as it causes an infinite loop.
      */
@@ -43,6 +43,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         configured = true;
     }
 
+    private InternalConsistManager consistManager;
     private InternalLightManager lightManager;
     private InternalSensorManager sensorManager;
     private InternalReporterManager reporterManager;
@@ -50,6 +51,17 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     private jmri.jmrix.debugthrottle.DebugThrottleManager throttleManager;
     private jmri.managers.DefaultPowerManager powerManager;
     private jmri.progdebugger.DebugProgrammerManager programManager;
+    
+
+    public InternalConsistManager getConsistManager() {
+        if (consistManager == null) {
+            log.debug("Create InternalConsistManager by request");
+            consistManager = new InternalConsistManager();
+            // special due to ProxyManager support
+            InstanceManager.store(consistManager,jmri.ConsistManager.class);
+        }
+        return consistManager;
+    }
 
     public InternalLightManager getLightManager() {
         if (lightManager == null) {
@@ -129,9 +141,6 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
 
         if (!configured) configureManagers();
 
-        if (type.equals(jmri.ProgrammerManager.class)) {
-            return true;
-        }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
             return getProgrammerManager().isGlobalProgrammerAvailable();
         }
@@ -157,7 +166,10 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (type.equals(jmri.TurnoutManager.class)) {
             return true;
         }
-        return false; // nothing, by default
+        if (type.equals(jmri.ConsistManager.class)) {
+            return true;
+        }
+        return super.provides(type);
     }
 
     @SuppressWarnings("unchecked")
@@ -169,9 +181,6 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
 
         if (!configured) configureManagers();
 
-        if (T.equals(jmri.ProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();
         }
@@ -197,7 +206,10 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (T.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
         }
-        return null; // nothing, by default
+        if (T.equals(jmri.ConsistManager.class)) {
+            return (T) getConsistManager();
+        }
+        return super.get(T);
     }
 
     @Override
@@ -219,6 +231,6 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         super.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalSystemConnectionMemo.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalSystemConnectionMemo.class);
 
 }

@@ -40,6 +40,6 @@ public class Pr1ImportActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Pr1ImportActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Pr1ImportActionTest.class);
 
 }

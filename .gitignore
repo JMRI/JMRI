@@ -53,3 +53,4 @@ RemoteSystemsTempFiles
 [Tt]humbs.db
 *.DS_Store
 /jmri-fb.html
+cucumber-results.xml

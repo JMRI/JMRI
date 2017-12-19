@@ -1,14 +1,13 @@
 package jmri.jmrit.logix;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -20,7 +19,7 @@ public class SpeedUtilTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Warrant warrant = new Warrant("IW0", "AllTestWarrant");
-        SpeedUtil t = new SpeedUtil(warrant);
+        SpeedUtil t = new SpeedUtil(null);
         Assert.assertNotNull("exists",t);
     }
 
@@ -37,6 +36,6 @@ public class SpeedUtilTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpeedUtilTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SpeedUtilTest.class);
 
 }

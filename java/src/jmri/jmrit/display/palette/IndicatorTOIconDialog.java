@@ -100,7 +100,7 @@ public class IndicatorTOIconDialog extends IconDialog {
         } else {
             JOptionPane.showMessageDialog(_parent._paletteFrame,
                     Bundle.getMessage("AllStatus"),
-                    Bundle.getMessage("infoTitle"), JOptionPane.INFORMATION_MESSAGE);
+                    Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -155,5 +155,5 @@ public class IndicatorTOIconDialog extends IconDialog {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTOIconDialog.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTOIconDialog.class);
 }

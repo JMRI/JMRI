@@ -1,6 +1,7 @@
 package jmri.jmrix.nce;
 
 import jmri.Light;
+import jmri.Manager;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,8 +103,8 @@ public class NceLightManager extends AbstractLightManager {
      * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return (getBitFromSystemName(systemName) != 0);
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**
@@ -127,6 +128,6 @@ public class NceLightManager extends AbstractLightManager {
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceLightManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceLightManager.class);
 
 }

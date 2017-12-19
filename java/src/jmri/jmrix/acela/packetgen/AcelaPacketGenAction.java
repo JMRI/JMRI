@@ -24,7 +24,7 @@ public class AcelaPacketGenAction extends AbstractAction {
     }
 
     public AcelaPacketGenAction() {
-        this(Bundle.getMessage("AcelaSendCommandTitle"),jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
+        this(Bundle.getMessage("AcelaSendCommandTitle"), jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
     }
 
     @Override
@@ -38,6 +38,6 @@ public class AcelaPacketGenAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaPacketGenAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaPacketGenAction.class);
 
 }

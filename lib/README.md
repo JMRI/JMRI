@@ -26,6 +26,17 @@ development and release operations:
 - pom.xml - used by Maven (see notes below)
 - nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
 
+On macOS, most of these changes can be affected with:
+```
+find . -type f -exec gsed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
+```
+(you may need to install gsed using [Homebrew](http://brew.sh))
+
+On Linux, these same changes can be affected with:
+```
+find . -type f -exec sed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
+```
+
 Note that Windows installers don't necessarily remove existing library versions.
 (See [JMRI Issue #359](https://github.com/JMRI/JMRI/issues/359) for discussion
 on this)  Until that's changed, if you remove a library from here that really
@@ -66,13 +77,12 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 ##### log4j.jar
 - version 1.2.15
 
-##### slf4j-api-1.7.13.jar, slf4j-log4j12-1.7.13.jar, jul-to-slf4j-1.7.13.jar
+##### slf4j-api-1.7.25.jar, slf4j-log4j12-1.7.25.jar, jul-to-slf4j-1.7.25.jar
 - slf4j logging interface to log4j
 - from http://www.slf4j.org
-- updated JMRI 4.1.4 from version 1.7.6, added jul-to-slf4j
 
 ##### openlcb.jar
-- 0.7.14 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.14/openlcb-0.7.14.jar or the maven central repository.
+- 0.7.15 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.15/openlcb-0.7.15.jar or the maven central repository.
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -89,7 +99,7 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - (JMRI file)
 
 ##### xercesImpl.jar
-- version Xerces-J 2.9.1
+- version Xerces-J 2.11.0
 - from http://www.apache.org/dist/xerces/j/
 
 ##### jdom.jar

@@ -8,7 +8,6 @@ import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -102,7 +101,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("number of cars", "5", ctf.numCars.getText());
 
         // default is sort by number
-        List<RollingStock> cars = ctf.carsTableModel.getSelectedCarList();
+        List<Car> cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by number list", c1.getId(), cars.get(0).getId());
         Assert.assertEquals("2nd car in sort by number list", c4.getId(), cars.get(1).getId());
         Assert.assertEquals("3rd car in sort by number list", c3.getId(), cars.get(2).getId());
@@ -245,7 +244,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         // try to add it to a car.
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 3");
         c1.setRfid("RFID 3");
-        c1.setTypeName("Caboose");
+        c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setWeight("1.4");
         c1.setWeightTons("Tons of Weight");
         c1.setCaboose(true);
@@ -309,6 +308,13 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
     @Before
     public void setUp() throws Exception {
         super.setUp();
+        // add type names
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
+        ct.addName("Gondola");
+        ct.addName("Boxcar");
+        ct.addName(Bundle.getMessage("Caboose"));
+        ct.addName("Tank Food");
+        ct.addName("Coilcar");
     }
 
     @Override

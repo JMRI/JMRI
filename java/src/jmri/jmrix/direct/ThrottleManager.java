@@ -25,10 +25,7 @@ public class ThrottleManager extends AbstractThrottleManager {
      */
     public ThrottleManager() {
         super();
-        if (mInstance != null) {
-            log.warn("Creating too many objects");
-        }
-        mInstance = this;
+        jmri.InstanceManager.setDefault(jmri.jmrix.direct.ThrottleManager.class,this);
     }
 
     /**
@@ -42,7 +39,7 @@ public class ThrottleManager extends AbstractThrottleManager {
      */
     @Deprecated
     static public ThrottleManager instance() {
-        return mInstance;
+        return jmri.InstanceManager.getDefault(jmri.jmrix.direct.ThrottleManager.class);
     }
 
     Throttle currentThrottle = null;
@@ -90,6 +87,6 @@ public class ThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottleManager.class);
 
 }

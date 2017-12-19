@@ -37,6 +37,7 @@ import jmri.SignalMast;
 import jmri.SignalMastManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
@@ -44,9 +45,8 @@ import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.picker.PickFrame;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickSinglePanel;
-import jmri.jmrit.signalling.EntryExitPairs;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.JmriBeanComboBox;
+import jmri.util.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -286,6 +286,7 @@ public class ConditionalEditBase {
                 return null;             // Skip any other items.
         }
         nameBox.setFirstItemBlank(true);
+        JComboBoxUtil.setupComboBoxMaxRows(nameBox);
         return nameBox;
     }
 
@@ -583,7 +584,7 @@ public class ConditionalEditBase {
      *                conditional references
      * @param treeSet A tree set to be built from the varList data
      */
-    void loadReferenceNames(ArrayList<ConditionalVariable> varList, TreeSet treeSet) {
+    void loadReferenceNames(ArrayList<ConditionalVariable> varList, TreeSet<String> treeSet) {
         treeSet.clear();
         for (ConditionalVariable var : varList) {
             if (var.getType() == Conditional.TYPE_CONDITIONAL_TRUE || var.getType() == Conditional.TYPE_CONDITIONAL_FALSE) {
@@ -1227,7 +1228,7 @@ public class ConditionalEditBase {
         NamedBean nb = null;
         if (name != null) {
             if (name.length() > 0) {
-                nb = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getNamedBean(name);
+                nb = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(name);
                 if (nb != null) {
                     return nb.getSystemName();
                 }
@@ -1385,5 +1386,5 @@ public class ConditionalEditBase {
         return ConditionalEditBase.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConditionalEditBase.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConditionalEditBase.class);
 }

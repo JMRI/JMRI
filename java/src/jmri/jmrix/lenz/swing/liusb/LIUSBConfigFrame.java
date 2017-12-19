@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * Frame displaying the LIUSB configuration utility.
  * <p>
  * This is a configuration utility for the LIUSB. It allows the user to set the
- * XPressNet Address and the port speed used to communicate with the LIUSB.
+ * XpressNet Address and the port speed used to communicate with the LIUSB.
  *
  * @author Paul Bender Copyright (C) 2009-2010
   */
@@ -192,6 +192,6 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LIUSBConfigFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBConfigFrame.class);
 
 }

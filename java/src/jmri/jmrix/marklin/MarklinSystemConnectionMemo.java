@@ -12,7 +12,6 @@ import jmri.InstanceManager;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2012
- * 
  */
 public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -105,7 +104,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     //public MarklinReporterManager getReporterManager() { return reporterManager; }
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
     @Override
     public boolean provides(Class<?> type) {
@@ -183,7 +182,5 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         super.dispose();
     }
+
 }
-
-
-

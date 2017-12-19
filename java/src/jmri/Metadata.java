@@ -25,7 +25,7 @@ import jmri.profile.ProfileManager;
  *
  * @author Randall Wood Copyright (C) 2011
  */
-public class Metadata {
+public interface Metadata {
 
     public static final String JMRIVERSION = "JMRIVERSION"; // NOI18N
     public static final String JMRIVERCANON = "JMRIVERCANON"; // NOI18N
@@ -59,7 +59,7 @@ public class Metadata {
         } else if (name.equalsIgnoreCase(JVMVENDOR)) {
             return System.getProperty("java.vendor", "<unknown>"); // NOI18N
         } else if (name.equalsIgnoreCase(ACTIVEPROFILE)) {
-            return ProfileManager.getDefault().getActiveProfile().getName();
+            return ProfileManager.getDefault().getActiveProfileName();
         } else if (name.equalsIgnoreCase(COPYRIGHT)) {
             return jmri.Version.getCopyright();
         }

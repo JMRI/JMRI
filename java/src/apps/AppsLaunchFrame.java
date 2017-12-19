@@ -186,9 +186,6 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
 
     /**
      * Show only active systems in the menu bar.
-     * <p>
-     * Alternately, you might want to use
-     * <code>menuBar.add(new jmri.jmrix.SystemsMenu());</code>
      *
      * @param menuBar the menu to attach systems menus to
      * @param wi      ignored, but available for overriding methods to use if
@@ -276,5 +273,5 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
     // GUI members
     private JMenuBar menuBar;
 
-    private final static Logger log = LoggerFactory.getLogger(AppsLaunchFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AppsLaunchFrame.class);
 }

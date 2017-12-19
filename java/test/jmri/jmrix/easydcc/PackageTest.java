@@ -44,21 +44,23 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(EasyDccConsistTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccConsistManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.serialdriver.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.simulator.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.networkdriver.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.configurexml.PackageTest.class));
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.easydccmon.EasyDccMonFrameTest.class));
-        suite.addTest(jmri.jmrix.easydcc.easydccmon.EasyDccMonActionTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.easydccmon.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.packetgen.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccNetworkPortControllerTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccSystemConnectionMemoTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccPortControllerTest.class));
-        suite.addTest(new JUnit4TestAdapter(EasyDCCMenuTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccMenuTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccConnectionTypeListTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccCommandStationTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccOpsModeProgrammerTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccProgrammerManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccThrottleManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccThrottleTest.class));
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.swing.PackageTest.class));
 
         return suite;
     }

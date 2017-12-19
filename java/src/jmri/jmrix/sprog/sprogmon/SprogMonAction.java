@@ -15,7 +15,7 @@ public class SprogMonAction extends AbstractAction {
 
     private SprogSystemConnectionMemo _memo = null;
 
-    public SprogMonAction(String s,SprogSystemConnectionMemo memo) {
+    public SprogMonAction(String s, SprogSystemConnectionMemo memo) {
         super(s);
         _memo = memo;
     }
@@ -32,9 +32,6 @@ public class SprogMonAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogMonAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogMonAction.class);
 
 }
-
-
-

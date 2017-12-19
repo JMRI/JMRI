@@ -29,6 +29,6 @@ public class EcosConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EcosConnectionTypeListTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EcosConnectionTypeListTest.class);
 
 }

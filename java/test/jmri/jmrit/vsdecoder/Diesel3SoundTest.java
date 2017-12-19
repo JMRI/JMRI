@@ -31,6 +31,6 @@ public class Diesel3SoundTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Diesel3SoundTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Diesel3SoundTest.class);
 
 }

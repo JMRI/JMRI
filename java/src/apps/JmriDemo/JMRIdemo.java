@@ -59,7 +59,7 @@ public class JMRIdemo extends Apps {
      * @param frame   ignored; available for overriding methods to use
      */
     protected void systemsMenu(JMenuBar menuBar, JFrame frame) {
-        menuBar.add(new jmri.jmrix.SystemsMenu());
+        menuBar.add(new jmri.jmrix.ActiveSystemsMenu());
     }
 
     // Main entry point
@@ -79,5 +79,5 @@ public class JMRIdemo extends Apps {
         splash(false);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JMRIdemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIdemo.class);
 }

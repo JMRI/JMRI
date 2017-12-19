@@ -40,7 +40,7 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
     }
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
     @Override
     public boolean provides(Class<?> type) {
@@ -173,7 +173,7 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeConnectionMemo.class);
 
 }
 

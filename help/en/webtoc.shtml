@@ -360,24 +360,6 @@
 
      
 <li>
-<a href="manual/DecoderPro/Basic_BasicPane.shtml#Read Data">Reading Data </a>
-<ul></ul>
-</li>
-
-     
-<li>
-<a href="manual/DecoderPro/Basic_BasicPane.shtml#Write Data">Writing to Decoder </a>
-<ul></ul>
-</li>
-
-     
-<li>
-<a href="manual/DecoderPro/Basic_BasicPane.shtml#Save Data">Saving to a File </a>
-<ul></ul>
-</li>
-
-     
-<li>
 <a href="manual/DecoderPro3/Basic_BasicPane.shtml#DoMore">What Next? </a>
 <ul></ul>
 </li>
@@ -928,7 +910,19 @@
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/ConditionalAddEdit.shtml">Add/Edit Conditional </a>
+<a href="package/jmri/jmrit/conditional/ConditionalListEditor.shtml">Add/Edit Conditionals using the List Editor </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/conditional/ConditionalTreeEditor.shtml">Add/Edit Conditionals using the Tree Editor </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/conditional/StateVariableActionList.shtml">Conditional State Variable and Action List </a>
 <ul></ul>
 </li>
 

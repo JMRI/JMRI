@@ -55,8 +55,8 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     EcosTrafficController tc;
     EcosSystemConnectionMemo adaptermemo;
 
-    //The hash table simply holds the object number against the EcosTurnout ref.
-    private Hashtable<Integer, EcosTurnout> _tecos = new Hashtable<Integer, EcosTurnout>();   // stores known Ecos Object ids to DCC
+    // The hash table simply holds the object number against the EcosTurnout ref.
+    private Hashtable<Integer, EcosTurnout> _tecos = new Hashtable<Integer, EcosTurnout>(); // stores known Ecos Object ids to DCC
 
     String prefix;
 
@@ -71,7 +71,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         try {
             addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
         } catch (java.lang.NumberFormatException e) {
-            log.error("failed to convert systemName " + systemName + " to a turnout address");
+            log.error("failed to convert systemName '{}' to a turnout address", systemName);
             return null;
         }
         Turnout t = new EcosTurnout(addr, getSystemPrefix(), tc, this);
@@ -88,14 +88,14 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     // to listen for status changes from Ecos system
     @Override
     public void reply(EcosReply m) {
-        log.debug("reply "+m);
+        log.debug("reply " + m);
         // is this a list of turnouts?
         EcosTurnout et;
 
         if (m.getResultCode() == 0) {
             int ecosObjectId = m.getEcosObjectId();
             if ((ecosObjectId != 11) && ((ecosObjectId < 20000) || (ecosObjectId > 30000))) {
-                log.debug("message receieved that is not within the valid turnout object range");
+                log.debug("message received that is not within the valid turnout object range");
                 return;
             }
             List<String> headerDetails = m.getReplyHeaderDetails();
@@ -640,7 +640,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
             arr[i] = "" + en.nextElement();
             i++;
         }
-        jmri.util.StringUtil.sort(arr);
+        java.util.Arrays.sort(arr);
         for (i = 0; i < arr.length; i++) {
             out.add(arr[i]);
         }
@@ -679,6 +679,6 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosTurnoutManager.class);
 
 }

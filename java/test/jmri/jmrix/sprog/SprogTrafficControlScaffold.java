@@ -1,7 +1,5 @@
 /**
- * SprogInterfaceScaffold.java
- *
- * Description:	Stands in for the SprogTrafficController class
+ * Stands in for the SprogTrafficController class
  *
  * @author	Bob Jacobsen
  */
@@ -71,6 +69,6 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
         return cmdListeners.size();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogTrafficControlScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogTrafficControlScaffold.class);
 
 }

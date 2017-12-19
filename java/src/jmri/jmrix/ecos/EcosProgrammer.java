@@ -21,7 +21,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         tc = etc;
     }
 
-    EcosTrafficController tc; 
+    EcosTrafficController tc;
     
     /**
      * @return list of programming modes implemented for ECoS
@@ -29,7 +29,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.DIRECTBYTEMODE);
         return ret;
     }
 
@@ -231,6 +231,6 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosProgrammer.class);
 
 }

@@ -1031,9 +1031,6 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                 p = null;
             } else {
                 p = FileUtil.getAbsoluteFilename(p);
-                if (p == null) {
-                    throw new IllegalArgumentException(Bundle.getMessage("IllegalRosterLocation", f)); // NOI18N
-                }
                 if (!p.endsWith(File.separator)) {
                     p = p + File.separator;
                 }
@@ -1360,7 +1357,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         }
         // The resulting array is now sorted on file-name to make it easier
         // for humans to read
-        jmri.util.StringUtil.sort(sbox);
+        java.util.Arrays.sort(sbox);
 
         if (log.isDebugEnabled()) {
             log.debug("filename list:");

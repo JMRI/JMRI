@@ -104,7 +104,7 @@ public class SignallingGuiTools {
         Object[] options = {Bundle.getMessage("RemoveButton"),  // NOI18N
             Bundle.getMessage("LeaveButton")};  // NOI18N
         int n = JOptionPane.showOptionDialog(frame,
-                java.text.MessageFormat.format(Bundle.getMessage("RemoveAlreadyLogic"),  // NOI18N
+                java.text.MessageFormat.format(Bundle.getMessage("RemoveAlreadyAssignedLogic"),  // NOI18N
                         new Object[]{mast.getDisplayName()}),
                 Bundle.getMessage("RemoveLogicTitle"),  // NOI18N
                 JOptionPane.YES_NO_CANCEL_OPTION,

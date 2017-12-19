@@ -29,6 +29,6 @@ public class TableSorterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TableSorterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TableSorterTest.class);
 
 }

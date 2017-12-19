@@ -32,23 +32,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Create a Dialog to display the images in a file system directory.
- * <BR>
+ * <p>
  * PreviewDialog is not modal to allow dragNdrop of icons from it to catalog panels and
  * functioning of the catalog panels without dismissing this dialog
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
  *
  * @author Pete Cressman Copyright 2009
- *
  */
 public class PreviewDialog extends JDialog {
 
@@ -108,7 +96,7 @@ public class PreviewDialog extends JDialog {
             int choice = JOptionPane.showOptionDialog(null,
                     Bundle.getMessage("OutOfMemory", _cnt), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                    new String[]{Bundle.getMessage("Quit"), Bundle.getMessage("ShowContents")}, 1);
+                    new String[]{Bundle.getMessage("ButtonStop"), Bundle.getMessage("ShowContents")}, 1);
             if (choice==0) {
                 return;
             }
@@ -124,7 +112,7 @@ public class PreviewDialog extends JDialog {
             } else {
                 log.error("More ActionListener missing");
             }
-            msg.setText(Bundle.getMessage("moreMsg"));
+            msg.setText(Bundle.getMessage("moreMsg", Bundle.getMessage("ButtonDisplayMore")));
         }
 
         boolean hasButtons = needsMore;
@@ -179,9 +167,9 @@ public class PreviewDialog extends JDialog {
         _preview = new JPanel();
         JScrollPane js = new JScrollPane(_preview);
         previewPanel.add(js);
-        JRadioButton whiteButton = new JRadioButton(Bundle.getMessage("white"), false);
-        JRadioButton grayButton = new JRadioButton(Bundle.getMessage("lightGray"), true);
-        JRadioButton darkButton = new JRadioButton(Bundle.getMessage("darkGray"), false);
+        JRadioButton whiteButton = new JRadioButton(Bundle.getMessage("White"), false);
+        JRadioButton grayButton = new JRadioButton(Bundle.getMessage("LightGray"), true);
+        JRadioButton darkButton = new JRadioButton(Bundle.getMessage("DarkGray"), false);
         whiteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -444,5 +432,6 @@ public class PreviewDialog extends JDialog {
         log.debug("PreviewDialog disposed.");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PreviewDialog.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PreviewDialog.class);
+
 }

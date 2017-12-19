@@ -12,10 +12,14 @@ import org.junit.Test;
  */
 public class SerialLightManagerTest {
 
+    private MapleSystemConnectionMemo memo = null;
+
     @Test
     public void testCTor() {
-        SerialLightManager t = new SerialLightManager();
-        Assert.assertNotNull("exists",t);
+        memo = new MapleSystemConnectionMemo("K", "Maple");
+        SerialLightManager lm = new SerialLightManager(memo);
+        // create and register the light manager object
+        Assert.assertNotNull("Maple Light Manager creation", lm);
     }
 
     // The minimal setup for log4J
@@ -29,6 +33,6 @@ public class SerialLightManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialLightManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SerialLightManagerTest.class);
 
 }

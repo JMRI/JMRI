@@ -72,6 +72,6 @@ public class ZTC611XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutM
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC611XNetTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ZTC611XNetTurnoutManagerTest.class);
 
 }

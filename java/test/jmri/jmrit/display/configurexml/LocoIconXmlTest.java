@@ -29,6 +29,6 @@ public class LocoIconXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocoIconXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocoIconXmlTest.class);
 
 }

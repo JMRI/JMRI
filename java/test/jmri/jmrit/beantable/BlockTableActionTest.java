@@ -87,7 +87,6 @@ public class BlockTableActionTest extends AbstractTableActionBase {
 
         // clean up
         JUnitUtil.dispose(af);
-        b2 = null;
         _bTable.dispose();
         _b1Table.dispose();
         JUnitUtil.dispose(f);
@@ -112,6 +111,6 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BlockTableActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BlockTableActionTest.class);
 
 }

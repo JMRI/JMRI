@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -108,7 +109,7 @@ public class JsonUtilHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doPost(String type, String name,
-             JsonNode data, Locale locale) throws JsonException {
+            JsonNode data, Locale locale) throws JsonException {
         return this.doGet(type, name, locale);
     }
 
@@ -129,7 +130,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         data.put(JSON.HEARTBEAT, Math.round(heartbeat * 0.9f));
         data.put(JSON.RAILROAD, WebServerPreferences.getDefault().getRailroadName());
         data.put(JSON.NODE, NodeIdentity.identity());
-        data.put(JSON.ACTIVE_PROFILE, ProfileManager.getDefault().getActiveProfile().getName());
+        data.put(JSON.ACTIVE_PROFILE, ProfileManager.getDefault().getActiveProfileName());
         return root;
     }
 
@@ -242,28 +243,31 @@ public class JsonUtilHttpService extends JsonHttpService {
 
     public ObjectNode getPanel(Locale locale, Editor editor, String format) {
         if (editor.getAllowInFrameServlet()) {
-            String title = ((JmriJFrame) editor.getTargetPanel().getTopLevelAncestor()).getTitle();
-            if (!title.isEmpty() && !Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames()).contains(title)) {
-                String type = PANEL;
-                String name = "Panel";
-                if (editor instanceof ControlPanelEditor) {
-                    type = CONTROL_PANEL;
-                    name = "ControlPanel";
-                } else if (editor instanceof LayoutEditor) {
-                    type = LAYOUT_PANEL;
-                    name = "Layout";
-                } else if (editor instanceof SwitchboardEditor) {
-                    type = SWITCHBOARD_PANEL;
-                    name = "Switchboard";
+            Container container = editor.getTargetPanel().getTopLevelAncestor();
+            if (container instanceof JmriJFrame) {
+                String title = ((JmriJFrame) container).getTitle();
+                if (!title.isEmpty() && !Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames()).contains(title)) {
+                    String type = PANEL;
+                    String name = "Panel";
+                    if (editor instanceof ControlPanelEditor) {
+                        type = CONTROL_PANEL;
+                        name = "ControlPanel";
+                    } else if (editor instanceof LayoutEditor) {
+                        type = LAYOUT_PANEL;
+                        name = "Layout";
+                    } else if (editor instanceof SwitchboardEditor) {
+                        type = SWITCHBOARD_PANEL;
+                        name = "Switchboard";
+                    }
+                    ObjectNode root = this.mapper.createObjectNode();
+                    root.put(TYPE, PANEL);
+                    ObjectNode data = root.putObject(DATA);
+                    data.put(NAME, name + "/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
+                    data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
+                    data.put(USERNAME, title);
+                    data.put(TYPE, type);
+                    return root;
                 }
-                ObjectNode root = this.mapper.createObjectNode();
-                root.put(TYPE, PANEL);
-                ObjectNode data = root.putObject(DATA);
-                data.put(NAME, name + "/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
-                data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
-                data.put(USERNAME, title);
-                data.put(TYPE, type);
-                return root;
             }
         }
         return null;
@@ -369,7 +373,7 @@ public class JsonUtilHttpService extends JsonHttpService {
 
         for (Profile p : ProfileManager.getDefault().getProfiles()) {
             boolean isActiveProfile = (p == ProfileManager.getDefault().getActiveProfile());
-            boolean isAutoStart = (isActiveProfile && ProfileManager.getDefault().isAutoStartActiveProfile()); // only true for activeprofile 
+            boolean isAutoStart = (isActiveProfile && ProfileManager.getDefault().isAutoStartActiveProfile()); // only true for activeprofile
             ObjectNode connection = mapper.createObjectNode().put(JSON.TYPE, JSON.CONFIG_PROFILE);
             ObjectNode data = connection.putObject(JSON.DATA);
             data.put(JSON.NAME, p.getName());
@@ -385,7 +389,7 @@ public class JsonUtilHttpService extends JsonHttpService {
     /**
      * Gets the {@link jmri.DccLocoAddress} for a String in the form
      * {@code number(type)} or {@code number}.
-     *
+     * <p>
      * Type may be {@code L} for long or {@code S} for short. If the type is not
      * specified, type is assumed to be short.
      *

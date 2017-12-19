@@ -36,6 +36,6 @@ public class ExportRosterItemActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ExportRosterItemActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ExportRosterItemActionTest.class);
 
 }

@@ -9,7 +9,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Hashtable;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -19,7 +18,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for common implementation of the Simulator
- * ConnectionConfig Currently uses the serial adapter, but this will change to
+ * ConnectionConfig.
+ * <p>
+ * Currently uses the serial adapter, but this will change to
  * the simulator adapter in due course.
  *
  * @author Kevin Dickerson Copyright (C) 2001, 2003
@@ -27,7 +28,7 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractSimulatorConnectionConfig extends AbstractConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process Currently uses the
+     * Ctor for an object being created during load process. Currently uses the
      * serialportadapter, but this will change to a simulator port adapter in
      * due course.
      */
@@ -137,26 +138,24 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     protected String[] baudList;
     protected jmri.jmrix.SerialPortAdapter adapter = null;
 
-    protected String systemPrefix;
-    protected String connectionName;
-
     /**
      * Load the adapter with an appropriate object
-     * <i>unless</I> its already been set.
+     * <i>unless</I> it's already been set.
      */
     @Override
     abstract protected void setInstance();
 
     /**
-     * Returns the port the simulator is connected to which is "none";
+     * {@inheritDoc}
+     * <p>
+     * This implementation always returns the localized value for "none".
+     *
+     * @return the localized value for "none"
      */
     @Override
     public String getInfo() {
-        return rb.getString("none");
+        return Bundle.getMessage("none");
     }
-
-    static java.util.ResourceBundle rb
-            = java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
 
     @Override
     public void loadDetails(final JPanel details) {
@@ -164,7 +163,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         setInstance();
         if (!init) {
             String[] optionsAvailable = adapter.getOptions();
-            options = new Hashtable<String, Option>();
+            options.clear();
             for (String i : optionsAvailable) {
                 JComboBox<String> opt = new JComboBox<String>(adapter.getOptionChoices(i));
                 opt.setSelectedItem(adapter.getOptionState(i));
@@ -289,5 +288,6 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractSimulatorConnectionConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractSimulatorConnectionConfig.class);
+
 }

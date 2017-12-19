@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * EasyDcc implementation of the CommandStation interface.
+ * EasyDCC implementation of the CommandStation interface.
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
@@ -52,7 +52,7 @@ public class EasyDccCommandStation implements CommandStation {
             }
         }
 
-        EasyDccTrafficController.instance().sendEasyDccMessage(m, null);
+        memo.getTrafficController().sendEasyDccMessage(m, null);
 
     }
 
@@ -74,6 +74,6 @@ public class EasyDccCommandStation implements CommandStation {
         return memo.getSystemPrefix();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccCommandStation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccCommandStation.class);
 
 }

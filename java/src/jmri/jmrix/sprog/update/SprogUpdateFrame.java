@@ -91,6 +91,9 @@ abstract public class SprogUpdateFrame
         tc.setSprogState(SprogState.NORMAL);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         tc = null;
@@ -98,14 +101,11 @@ abstract public class SprogUpdateFrame
         super.dispose();
     }
 
-    /**
-     * Set up the GUI.
-     * <p>
-     * This is expected to be subclassed, so it doesn't set up the help menu
-     * here
+    /** 
+     * {@inheritDoc}
      */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         // the following code sets the frame's initial state
         programButton.setText(Bundle.getMessage("ButtonProgram"));
         programButton.setVisible(true);
@@ -403,5 +403,5 @@ abstract public class SprogUpdateFrame
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SprogUpdateFrame.class.getName());
+            .getLogger(SprogUpdateFrame.class);
 }

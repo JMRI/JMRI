@@ -15,7 +15,7 @@ public class SerialConnectionTypeListTest {
     @Test
     public void testCTor() {
         SerialConnectionTypeList t = new SerialConnectionTypeList();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
@@ -29,6 +29,6 @@ public class SerialConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialConnectionTypeListTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SerialConnectionTypeListTest.class);
 
 }

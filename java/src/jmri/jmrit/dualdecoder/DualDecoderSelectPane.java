@@ -136,14 +136,14 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
     }
 
     void writeCV15(int value) {
-        writeCV(15, value);
+        writeCV("15", value);
     }
 
     void writeCV16(int value) {
-        writeCV(16, value);
+        writeCV("16", value);
     }
 
-    void writeCV(int cv, int value) {
+    void writeCV(String cv, int value) {
         Programmer p = modePane.getProgrammer();
         if (p == null) {
             state = IDLE;
@@ -168,7 +168,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
             try {
                 status.setText(Bundle.getMessage("StateReading"));
                 state = READCV16;
-                p.readCV(16, this);
+                p.readCV("16", this);
             } catch (jmri.ProgrammerException ex) {
                 state = IDLE;
                 status.setText("" + ex);
@@ -309,6 +309,6 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DualDecoderSelectPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DualDecoderSelectPane.class);
 
 }

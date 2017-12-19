@@ -145,6 +145,6 @@ public class SeeedStudioRfidProtocol extends RfidProtocol {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SeeedStudioRfidProtocol.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SeeedStudioRfidProtocol.class);
 
 }

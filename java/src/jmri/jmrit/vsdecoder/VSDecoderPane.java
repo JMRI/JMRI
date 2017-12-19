@@ -123,7 +123,7 @@ public class VSDecoderPane extends JmriPanel {
      */
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.vsdecoder.VSDecoderPane";
+        return "package.jmri.jmrit.vsdecoder.VSDecoderPane";
     }
 
     /**
@@ -484,5 +484,5 @@ public class VSDecoderPane extends JmriPanel {
         log.debug("VSDecoderPane windowClosing() called...");
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDecoderPane.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDecoderPane.class);
 }

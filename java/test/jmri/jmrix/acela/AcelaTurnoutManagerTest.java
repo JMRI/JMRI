@@ -29,7 +29,7 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
     public void testConstructor() {
         // create and register the manager object
         AcelaTurnoutManager atm = new AcelaTurnoutManager(new AcelaSystemConnectionMemo(tcis) );
-        Assert.assertNotNull("Acela Turnout Manager creation",atm);
+        Assert.assertNotNull("Acela Turnout Manager creation", atm);
     }
 
     @Test
@@ -110,6 +110,6 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManagerTest.class);
 
 }

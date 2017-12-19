@@ -131,7 +131,7 @@ public class MakePacket {
     /* Node definition for first depth, prune largest tree. */
 
     /**
-     * function to set the Preamble Length - Default is 15 NRMA '1's Every NMRA
+     * Function to set the Preamble Length - Default is 15 NRMA '1's Every NMRA
      * packet decoded starts with a preamble Service mode requires longer
      * preambles Thus this public function allowing user to define the lenght of
      * desired preamble
@@ -198,8 +198,7 @@ public class MakePacket {
         return (bitStreamToSerialBytes(bitStream));
     }
 
-    /* BitStreamToSerialBytes
-     *
+    /**
      * Generate the serial bytes from the bit stream.
      * <P>
      * Basically this is a depth first, prune largest tree search, always going down the subtree
@@ -208,7 +207,6 @@ public class MakePacket {
      * subtrees for and try going down the subtree that uses the second most bits.
      * Keep going until we finish converting the packet or run out of things to try.
      * <P>
-     *
      * This is not guaranteed to find the shortest serial stream for a given
      * packet, but it is guaranteed to find a stream if one exists. Also, it
      * usually does come up with the shortest packet.
@@ -266,15 +264,15 @@ public class MakePacket {
         return (serialStream);
     }
 
-    /* ReadNextChild
-     *
-     * This routine find the next largest (ie longest lenght) child
+    /**
+     * Routine to find the next largest (ie longest lenght) child
      * at this Node.
-     * ThisNode - (INPUT/OUTPUT) determine if there is another child
-     *                if so update Node with ie the Bit
-     *                pattern and its associated lenght.
      *
-     * Return false if one doesnt exist otherwise returns true.
+     * @param thisNode - (INPUT/OUTPUT) determine if there is another child
+     *                 if so update Node with ie the Bit
+     *                 pattern and its associated lenght
+     *
+     * @return false if one doesn't exist otherwise returns true
      */
     static boolean readNextChild(Node thisNode) {
 
@@ -329,18 +327,17 @@ public class MakePacket {
         return (true);
     }
 
-    /* ReadFirstChild
+    /**
+     * Routine to find the first largest (ie longest length) child
+     * at this Node.
      *
-     * This routine find the first largest (ie longest length) child
-     * at this Node          
+     * @param bs        - (INPUT) Bit stream array
+     * @param offset    - Offset in to buffer
+     * @param validBits - (INPUT) number of valid bits in the bit stream.
+     * @param thisNode  - (OUTPUT) where to put largest child found ie the Bit
+     *                  pattern and its associated lenght.
      *
-     * BS  - (INPUT) Bit stream array
-     * offset       - Offset in to buffer
-     * validBits - (INPUT) number of valid bits in the bit stream.
-     * ThisNode - (OUTPUT) where to put largest child found ie the Bit
-     *                pattern and its associated lenght.
-     *
-     * Return false if one doesnt exist otherwise returns true.
+     * @return false if one doesn't exist otherwise returns true.
      */
     @SuppressWarnings("fallthrough")
     static boolean readFirstChild(int bs[], int offset, int validBits,
@@ -453,4 +450,5 @@ public class MakePacket {
             return (true);
         }
     }
+
 }

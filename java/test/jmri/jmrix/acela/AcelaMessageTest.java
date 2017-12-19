@@ -29,6 +29,6 @@ public class AcelaMessageTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AcelaMessageTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AcelaMessageTest.class);
 
 }

@@ -1,5 +1,6 @@
 package jmri.jmrit.operations;
 
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,7 +15,7 @@ public class OperationsManagerTest {
 
     @Test
     public void testGetInstance() {
-        OperationsManager t = OperationsManager.getInstance();
+        OperationsManager t = InstanceManager.getDefault(OperationsManager.class);
         Assert.assertNotNull("exists",t);
     }
 
@@ -28,6 +29,6 @@ public class OperationsManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OperationsManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(OperationsManagerTest.class);
 
 }

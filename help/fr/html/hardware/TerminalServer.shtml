@@ -1,101 +1,81 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
-<!-- Updated  by Blorec Herv&#233;  2013-09-09-->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated  by Blorec Herv&#233;  2017-01-01-->
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+ <title>JMRI Hardware Setup Support - Terminal Server Connection</title>
 
-  <title>JMRI: Terminal Server Connection</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="David D Zuhn" name="Author">
-  <meta content="John Plocher" name="Author">
-  <meta name="keywords" content=
-  "EasyDCC Lantronics terminal server java model railroad JMRI install">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+    <meta content="David D Zuhn" name="Author">
+    <meta content="John Plocher" name="Author">
+    <meta name="keywords" content="EasyDCC Lantronix terminal server java model railroad JMRI install">
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h2>Guide Installation JMRI: Connexion Serveur
-      Terminal</h2>Un serveur Terminal est une bo&icirc;te qui
-      connecte un ou plusieurs ports s&eacute;rie &agrave; un
-      r&eacute;seau afin qu'ils puissent &ecirc;tre accessibles
-      &agrave; partir d'un ordinateur distant. JMRI
-      s'ex&eacute;cutant sur un ordinateur avec une connexion
-      r&eacute;seau peut se connecter &agrave; une centrale de
-      commande ou EasyDCC NCE par l'une de celle-ci. Cela vous
-      permet vous de mettre l'ordinateur et la centrale commande
-      aussi &eacute;loign&eacute; que vous le souhaitez.
+<div id="mainContent">
 
-      <p>Pour faire ce travail, vous devez configurer &agrave; la
-      fois JMRI et le serveur terminal, et de faire les connexions
-      appropri&eacute;es.</p>
+      <H1>Guide Installation JMRI: Connexion Serveur Terminal</H1>
 
-      <p>Cette utilisation a &eacute;t&eacute; initialement
-      cr&eacute;&eacute;e par Zuhn David, qui a une <a href=
-      "http://stpaulterminal.org/software/jmri/lantronix.html">page
-      web</a> d&eacute;crivant en d&eacute;tail comment il l'a mis
-      en place pour EasyDCC. Ce qui suit est juste un aper&ccedil;u
-      de la pr&eacute;sente. Le processus des NCE est
-      similaire.</p>
+Un <strong>Serveur Terminal</strong> est une bo&#238;te qui connecte un ou plusieurs ports s&#233;rie
+ &#224; un r&#233;seau afin qu'ils puissent &#234;tre accessibles &#224; partir d'un ordinateur distant.
+JMRI s'ex&#233;cutant sur un ordinateur avec une connexion r&#233;seau peut
+se connecter &#224; une centrale EasyDCC ou NCE ou des n&#339;uds C/MRI par l'une de celle-ci. Cela vous permet
+de mettre l'ordinateur et la centrale aussi &#233;loign&#233; que vous le souhaitez.
 
-      <ul>
-        <li>Pour configurer JMRI:
+<a name="hardware"></a><h2>Mat&#233;riel prit en charge</h2>
 
-          <ul>
-            <li>S&eacute;lectionnez "Pr&eacute;f&eacute;rences
-            "dans le menu "&eacute;dition"</li>
+<p>Cette utilisation a &#233;t&#233; initialement cr&#233;&#233;e par Zuhn David, qui
+a une <A href="http://stpaulterminal.org/software/jmri/lantronix.html"> page web </a>
+d&#233;crivant en d&#233;tail comment il l'a mis en place pour EasyDCC.
+Pour NCE et C/MRI le processus est similaire.
 
-            <li>S&eacute;lectionnez l'option protocole "EasyDCC sur
-            le serveur terminal "</li>
+<a name="connecting"></a><h2>Connexion</h2>
+<P>
+Pour faire ce travail,
+vous devez configurer &#224; la fois JMRI et le Serveur Terminal, et de faire
+les connexions appropri&#233;es.
 
-            <li>Entrez l'adresse IP et le num&eacute;ro de port de
-            connexion correspondant au port s&eacute;rie sur le
-            serveur terminal</li>
+<h3>R&#233;glages</h3>
+<ul>	
+	<LI>
+	Pour configurer JMRI:
+	<ul>
+	<LI> S&#233;lectionnez "Pr&#233;f&#233;rences "dans le menu "&#233;dition"
+	<LI> S&#233;lectionnez "EasyDCC" comme System Manufacturer
+	<LI> S&#233;lectionnez "EasyDCC over terminal server"comme System Connection
+	<li> "Entrez l'adresse IP et le num&#233;ro du Port TCP/UDP 
+	     correspondant au port s&#233;rie sur le serveur terminal
+	<LI> Cliquez sur enregistrer, puis quittez le programme
+	</UL>
+	<LI>
+	Configurer le Serveur Terminal  pour se connecter &#224; la centrale:
+	 9600 bauds, sans parit&#233;, 8 bits.
+<h3>C&#226;blage</h3>
+<ul>
+	<LI>
+	Connectez un c&#226;ble s&#233;rie du Serveur Terminal &#224; la centrale.
+	Selon le type de Serveur Terminal, cela pourrait exiger que vous fassiez des
+	fils sur mesure pour obtenir les bonnes connexions. Notez que vous voulez que le fil
+	"&#233;mette des donn&#233;es"  &#224; une extr&#233;mit&#233; pour se connecter &#224; la "r&#233;ception de donn&#233;es" sur 
+	l'autre.
+	Faites de m&#234;me pour les deux directions, et il comprend &#233;galement un fil de terre.
+	<LI>
+	Faire les connexions de r&#233;seau n&#233;cessaires.
+</ul>
+<p>  	D&#233;marrez JMRI. Si tout est OK, l'application va d&#233;marrer et vous montrer
+	qu'il est correctement connect&#233;</UL>
 
-            <li>Cliquez sur enregistrer, puis quittez le
-            programme</li>
-          </ul>
-        </li>
-
-        <li>Configurer le serveur Terminal pour se connecter
-        &agrave; la station de commande: 9600 bauds, sans
-        parit&eacute;, 8 bits.</li>
-
-        <li>Connectez un c&acirc;ble s&eacute;rie &agrave; partir
-        du serveur terminal &agrave; la centrale de commande. Selon
-        le type de serveur terminal, cela pourrait exiger que vous
-        fassiez les fils sur mesure pour obtenir les bonnes
-        connexions. Notez que vous voulez que le fil "&eacute;mette
-        des donn&eacute;es" &agrave; une extr&eacute;mit&eacute;
-        pour se connecter &agrave; la "r&eacute;ception de
-        donn&eacute;es" sur l'autre. Faites de m&ecirc;me pour les
-        deux directions, et il comprend &eacute;galement un fil de
-        terre.</li>
-
-        <li>Faire les connexions de r&eacute;seau
-        n&eacute;cessaires.</li>
-
-        <li>D&eacute;marrez le programme en place. Si tout est OK,
-        JMRI va d&eacute;marrer et vous montrer qu'il est
-        correctement connect&eacute;</li>
-      </ul><!--#include virtual="/Footer" -->
-    </div>
-  </div>
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

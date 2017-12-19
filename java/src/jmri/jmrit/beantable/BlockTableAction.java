@@ -1065,16 +1065,10 @@ public class BlockTableAction extends AbstractTableAction {
         } // end of for loop creating range of Blocks
 
         // provide feedback to user
-        if (errorMessage == null) {
-            statusBar.setText(statusMessage);
-            statusBar.setForeground(Color.gray);
-        } else {
-            statusBar.setText(errorMessage);
-            // statusBar.setForeground(Color.red); // handled when errorMassage is set to differentiate in urgency
-        }
+        statusBar.setText(statusMessage);
+        statusBar.setForeground(Color.gray);
 
         pref.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
-        // InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(sName, user);
     }
 
     void handleCreateException(String sysName) {
@@ -1121,6 +1115,6 @@ public class BlockTableAction extends AbstractTableAction {
         return BlockTableAction.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockTableAction.class);
 
 }

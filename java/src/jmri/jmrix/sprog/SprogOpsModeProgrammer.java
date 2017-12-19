@@ -23,10 +23,9 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
 
     int mAddress;
     boolean mLongAddr;
-
     private SprogSystemConnectionMemo _memo = null;
 
-    public SprogOpsModeProgrammer(int pAddress, boolean pLongAddr,SprogSystemConnectionMemo memo) {
+    public SprogOpsModeProgrammer(int pAddress, boolean pLongAddr, SprogSystemConnectionMemo memo) {
         super(memo);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
@@ -77,7 +76,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 
@@ -122,6 +121,6 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SprogOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogOpsModeProgrammer.class);
 
 }

@@ -1,3 +1,90 @@
+// Util: definition of breakpoint sizes for tablet and desktop modes
+(function ($) {
+  'use strict';
+  if (patternfly !== undefined) {
+    $.pfBreakpoints = patternfly.pfBreakpoints;
+  }
+}(jQuery));
+// PatternFly pf-list
+(function ($) {
+  'use strict';
+
+  $.fn.pfList = function () {
+    function init (list) {
+      // Ensure the state of the expansion elements is consistent
+      list.find('[data-list=expansion], .list-pf-item, .list-pf-expansion').each(function (index, element) {
+        var $expansion = $(element),
+          $collapse = $expansion.find('.collapse').first(),
+          expanded = $collapse.hasClass('in');
+        updateChevron($expansion, expanded);
+        if ($expansion.hasClass('list-pf-item')) {
+          updateActive($expansion, expanded);
+        }
+      });
+      list.find('.list-pf-container').each(function (index, element) {
+        var $element = $(element);
+        // The toggle element is the element with the data-list=toggle attribute
+        // or the entire .list-pf-container as a fallback
+        var $toggles = $element.find('[data-list=toggle]');
+        $toggles.length || ($toggles = $element);
+        $toggles.on('keydown', function (event) {
+          if (event.keyCode === 13 || event.keyCode === 32) {
+            toggleCollapse(this);
+            event.stopPropagation();
+            event.preventDefault();
+          }
+        });
+        $toggles.on('click', function (event) {
+          toggleCollapse(this);
+          event.stopPropagation();
+          event.preventDefault();
+        });
+      });
+    }
+
+    function toggleCollapse (toggle) {
+      var $toggle, $expansion, $collapse, expanded, $listItem;
+      $toggle = $(toggle);
+      // Find the parent expansion of the toggle
+      $expansion = $toggle.parentsUntil('.list-pf', '[data-list=expansion]').first();
+      $expansion.length || ($expansion = $toggle.closest('.list-pf-item, .list-pf-expansion'));
+
+      // toggle the "in" class of its  first .collapse child
+      $collapse = $expansion.find('.collapse').first();
+      $collapse.toggleClass('in');
+
+      // update the state of the expansion element
+      updateChevron($expansion, $collapse.hasClass('in'));
+      $listItem = $expansion.closest('.list-pf-item');
+      updateActive($listItem, $listItem.find('.collapse').first().hasClass('in'));
+    }
+
+    function updateActive ($listItem, expanded) {
+      // Find the closest .list-pf-item of the expansion, and set its "active" class
+      if (expanded) {
+        $listItem.addClass('active');
+      } else {
+        $listItem.removeClass('active');
+      }
+    }
+
+    function updateChevron ($expansion, expanded) {
+      var $chevron = $expansion.find('.list-pf-chevron .fa').first();
+      if (expanded) {
+        $chevron.removeClass('fa-angle-right');
+        $chevron.addClass('fa-angle-down');
+      } else {
+        $chevron.addClass('fa-angle-right');
+        $chevron.removeClass('fa-angle-down');
+      }
+    }
+
+    init(this);
+
+    return this;
+  };
+}(jQuery));
+
 // Util: PatternFly Sidebar
 // Set height of sidebar-pf to height of document minus height of navbar-pf if not mobile
 (function ($) {
@@ -67,7 +154,6 @@
     return this;
   };
 }(jQuery));
-
 
 // Util: DataTables Settings
 (function ($) {
@@ -171,9 +257,9 @@
             }
 
             iNewStart = oSettings._iDisplayLength * (this.value - 1);
-            if (iNewStart >= oSettings.fnRecordsDisplay() || iNewStart < 0) {
+            if (iNewStart >= oSettings.fnRecordsDisplay()) {
               /* Display overrun */
-              oSettings._iDisplayStart = (Math.ceil(oSettings.fnRecordsDisplay() /
+              oSettings._iDisplayStart = (Math.ceil((oSettings.fnRecordsDisplay() - 1) /
                 oSettings._iDisplayLength) - 1) * oSettings._iDisplayLength;
               fnDraw(oSettings);
               return;
@@ -216,14 +302,6 @@
         }
       }
     });
-  }
-}(jQuery));
-
-// Util: definition of breakpoint sizes for tablet and desktop modes
-(function ($) {
-  'use strict';
-  if (patternfly !== undefined) {
-    $.pfBreakpoints = patternfly.pfBreakpoints;
   }
 }(jQuery));
 
@@ -597,7 +675,7 @@
 (function ($) {
   'use strict';
 
-  $.fn.setupVerticalNavigation = function (handleItemSelections) {
+  $.fn.setupVerticalNavigation = function (handleItemSelections, ignoreDrawer) {
 
     var navElement = $('.nav-pf-vertical'),
       bodyContentElement = $('.container-pf-nav-pf-vertical'),
@@ -634,8 +712,34 @@
       hideSecondaryMenu = function () {
         navElement.removeClass('secondary-visible-pf');
         bodyContentElement.removeClass('secondary-visible-pf');
+
+        if (navElement.find('.secondary-nav-item-pf.is-hover').length <= 1) {
+          navElement.removeClass('hover-secondary-nav-pf');
+        }
+
         navElement.find('.mobile-nav-item-pf').each(function (index, item) {
           $(item).removeClass('mobile-nav-item-pf');
+        });
+
+        navElement.find('.is-hover').each(function (index, item) {
+          $(item).removeClass('is-hover');
+        });
+      },
+
+      hideTertiaryMenu = function () {
+        navElement.removeClass('tertiary-visible-pf');
+        bodyContentElement.removeClass('tertiary-visible-pf');
+
+        if (navElement.find('.tertiary-nav-item-pf.is-hover').length <= 1) {
+          navElement.removeClass('hover-tertiary-nav-pf');
+        }
+
+        navElement.find('.mobile-nav-item-pf').each(function (index, item) {
+          $(item).removeClass('mobile-nav-item-pf');
+        });
+
+        navElement.find('.is-hover').each(function (index, item) {
+          $(item).removeClass('is-hover');
         });
       },
 
@@ -825,6 +929,8 @@
 
       bindMenuBehavior = function () {
         toggleNavBarButton.on('click', function (e) {
+          var $drawer;
+
           enableTransitions();
 
           if (inMobileState()) {
@@ -835,6 +941,15 @@
               // Always start at the primary menu
               updateMobileMenu();
               navElement.addClass('show-mobile-nav');
+
+              // If the notification drawer is shown, hide it
+              if (!ignoreDrawer) {
+                $drawer = $('.drawer-pf');
+                if ($drawer.length) {
+                  $('.drawer-pf-trigger').removeClass('open');
+                  $drawer.addClass('hide');
+                }
+              }
             }
           } else if (navElement.hasClass('collapsed')) {
             window.localStorage.setItem('patternfly-navigation-primary', 'expanded');
@@ -901,7 +1016,7 @@
                 updateSecondaryMenuDisplayAfterSelection();
                 if (handleSelection) {
                   setActiveItem($item);
-                  // Don't process the click on the item
+                  hideSecondaryMenu();
                   event.stopImmediatePropagation();
                 }
               } else if (inMobileState()) {
@@ -925,7 +1040,8 @@
               updateSecondaryMenuDisplayAfterSelection();
               if (handleSelection) {
                 setActiveItem($item);
-                // Don't process the click on the item
+                hideTertiaryMenu();
+                hideSecondaryMenu();
                 event.stopImmediatePropagation();
               }
             };
@@ -1013,7 +1129,8 @@
           if ($this[0].navHoverTimeout !== undefined) {
             clearTimeout($this[0].navHoverTimeout);
             $this[0].navHoverTimeout = undefined;
-          } else if ($this[0].navUnHoverTimeout === undefined) {
+          } else if ($this[0].navUnHoverTimeout === undefined &&
+              navElement.find('.secondary-nav-item-pf.is-hover').length > 0) {
             $this[0].navUnHoverTimeout = setTimeout(function () {
               if (navElement.find('.secondary-nav-item-pf.is-hover').length <= 1) {
                 navElement.removeClass('hover-secondary-nav-pf');
@@ -1115,6 +1232,7 @@
         bodyContentElement.removeClass('hide-nav-pf');
         forceResize(250);
       },
+
       self = {
         hideMenu: function () {
           handleResize = false;
@@ -1140,85 +1258,5 @@
       init(handleItemSelections);
     }
     return $.fn.setupVerticalNavigation.self;
-  };
-}(jQuery));
-
-// PatternFly pf-list
-(function ($) {
-  'use strict';
-
-  $.fn.pfList = function () {
-    function init (list) {
-      // Ensure the state of the expansion elements is consistent
-      list.find('[data-list=expansion], .list-pf-item, .list-pf-expansion').each(function (index, element) {
-        var $expansion = $(element),
-          $collapse = $expansion.find('.collapse').first(),
-          expanded = $collapse.hasClass('in');
-        updateChevron($expansion, expanded);
-        if ($expansion.hasClass('list-pf-item')) {
-          updateActive($expansion, expanded);
-        }
-      });
-      list.find('.list-pf-container').each(function (index, element) {
-        var $element = $(element);
-        // The toggle element is the element with the data-list=toggle attribute
-        // or the entire .list-pf-container as a fallback
-        var $toggles = $element.find('[data-list=toggle]');
-        $toggles.length || ($toggles = $element);
-        $toggles.on('keydown', function (event) {
-          if (event.keyCode === 13 || event.keyCode === 32) {
-            toggleCollapse(this);
-            event.stopPropagation();
-            event.preventDefault();
-          }
-        });
-        $toggles.on('click', function (event) {
-          toggleCollapse(this);
-          event.stopPropagation();
-          event.preventDefault();
-        });
-      });
-    }
-
-    function toggleCollapse (toggle) {
-      var $toggle, $expansion, $collapse, expanded, $listItem;
-      $toggle = $(toggle);
-      // Find the parent expansion of the toggle
-      $expansion = $toggle.parentsUntil('.list-pf', '[data-list=expansion]').first();
-      $expansion.length || ($expansion = $toggle.closest('.list-pf-item, .list-pf-expansion'));
-
-      // toggle the "in" class of its  first .collapse child
-      $collapse = $expansion.find('.collapse').first();
-      $collapse.toggleClass('in');
-
-      // update the state of the expansion element
-      updateChevron($expansion, $collapse.hasClass('in'));
-      $listItem = $expansion.closest('.list-pf-item');
-      updateActive($listItem, $listItem.find('.collapse').first().hasClass('in'));
-    }
-
-    function updateActive ($listItem, expanded) {
-      // Find the closest .list-pf-item of the expansion, and set its "active" class
-      if (expanded) {
-        $listItem.addClass('active');
-      } else {
-        $listItem.removeClass('active');
-      }
-    }
-
-    function updateChevron ($expansion, expanded) {
-      var $chevron = $expansion.find('.list-pf-chevron .fa').first();
-      if (expanded) {
-        $chevron.removeClass('fa-angle-right');
-        $chevron.addClass('fa-angle-down');
-      } else {
-        $chevron.addClass('fa-angle-right');
-        $chevron.removeClass('fa-angle-down');
-      }
-    }
-
-    init(this);
-
-    return this;
   };
 }(jQuery));

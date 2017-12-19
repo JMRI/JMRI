@@ -1,8 +1,11 @@
 package jmri.jmrit.withrottle;
 
 import java.beans.PropertyChangeEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import jmri.DccLocoAddress;
 import jmri.DccThrottle;
+import jmri.InstanceManager;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +14,6 @@ import org.slf4j.LoggerFactory;
  * @author Brett Hoffman Copyright (C) 2011
  */
 public class MultiThrottleController extends ThrottleController {
-
-    String locoKey;
 
     public MultiThrottleController(char id, String key, ThrottleControllerListener tcl, ControllerInterface ci) {
         super(id, tcl, ci);
@@ -48,7 +49,6 @@ public class MultiThrottleController extends ThrottleController {
             log.debug("property change: " + eventName);
         }
         if (eventName.startsWith("F")) {
-
             if (eventName.contains("Momentary")) {
                 return;
             }
@@ -62,9 +62,9 @@ public class MultiThrottleController extends ThrottleController {
                 }
                 message.append(eventName.substring(1));
             } catch (ClassCastException cce) {
-                log.debug("Invalid event value. " + cce);
+                log.debug("Invalid event value. {}", cce.getMessage());
             } catch (IndexOutOfBoundsException oob) {
-                log.debug("Invalid event name. " + oob);
+                log.debug("Invalid event name. {}", oob.getMessage());
             }
 
             for (ControllerInterface listener : controllerListeners) {
@@ -74,9 +74,11 @@ public class MultiThrottleController extends ThrottleController {
         if (eventName.matches("SpeedSteps")) {
             sendSpeedStepMode(throttle);
         }
-
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void sendFunctionLabels(RosterEntry re) {
 
@@ -94,7 +96,6 @@ public class MultiThrottleController extends ThrottleController {
                 listener.sendPacketToDevice(functionString.toString());
             }
         }
-
     }
 
     /**
@@ -122,19 +123,14 @@ public class MultiThrottleController extends ThrottleController {
                     listener.sendPacketToDevice(message.toString());
                 }
             }
-
-        } catch (NoSuchMethodException ea) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ea) {
             log.warn(ea.getLocalizedMessage(), ea);
-            return;
-        } catch (IllegalAccessException eb) {
-            log.warn(eb.getLocalizedMessage(), eb);
-            return;
-        } catch (java.lang.reflect.InvocationTargetException ec) {
-            log.warn(ec.getLocalizedMessage(), ec);
-            return;
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void sendCurrentSpeed(DccThrottle t) {
         StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
@@ -145,6 +141,9 @@ public class MultiThrottleController extends ThrottleController {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void sendCurrentDirection(DccThrottle t) {
         StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
@@ -155,6 +154,9 @@ public class MultiThrottleController extends ThrottleController {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void sendSpeedStepMode(DccThrottle t) {
         StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
@@ -165,6 +167,9 @@ public class MultiThrottleController extends ThrottleController {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void sendAllMomentaryStates(DccThrottle t) {
         log.debug("Sending momentary state of all functions");
@@ -184,21 +189,14 @@ public class MultiThrottleController extends ThrottleController {
                     listener.sendPacketToDevice(message.toString());
                 }
             }
-
-        } catch (NoSuchMethodException ea) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ea) {
             log.warn(ea.getLocalizedMessage(), ea);
-            return;
-        } catch (IllegalAccessException eb) {
-            log.warn(eb.getLocalizedMessage(), eb);
-            return;
-        } catch (java.lang.reflect.InvocationTargetException ec) {
-            log.warn(ec.getLocalizedMessage(), ec);
-            return;
         }
     }
 
     /**
-     * + indicates the address was acquired, - indicates released
+     * {@inheritDoc} A + indicates the address was acquired, - indicates
+     * released
      */
     @Override
     public void sendAddress() {
@@ -211,6 +209,34 @@ public class MultiThrottleController extends ThrottleController {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MultiThrottleController.class.getName());
+    public void sendStealAddress() {
+        StringBuilder message = new StringBuilder(buildPacketWithChar('S'));
+        message.append(locoKey);
+        for (ControllerInterface listener : controllerListeners) {
+            listener.sendPacketToDevice(message.toString());
+        }
+    }
+
+    /**
+     * Send a steal required message to the connected device prior to disposing
+     * of this MTC
+     *
+     * @param address of DCC locomotive involved in the steal
+     */
+    @Override
+    public void notifyStealThrottleRequired(DccLocoAddress address) {
+        sendStealAddress();
+        notifyFailedThrottleRequest(address, "Steal Required");
+    }
+
+    public void requestStealAddress(String action) {
+        log.debug("requestStealAddress: {}", action);
+        int addr = Integer.parseInt(action.substring(1));
+        boolean isLong;
+        isLong = (action.charAt(0) == 'L');
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(addr, isLong, this, true);
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(MultiThrottleController.class);
 
 }

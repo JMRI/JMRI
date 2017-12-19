@@ -40,6 +40,6 @@ public class JsonClientHandlerTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonClientHandlerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonClientHandlerTest.class);
 
 }

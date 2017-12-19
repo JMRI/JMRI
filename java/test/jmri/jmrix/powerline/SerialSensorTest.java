@@ -36,6 +36,6 @@ public class SerialSensorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialSensorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SerialSensorTest.class);
 
 }

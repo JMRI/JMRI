@@ -266,5 +266,5 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
         return Bundle.getMessage("BeanName");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class);
 }

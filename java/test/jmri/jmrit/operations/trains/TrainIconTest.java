@@ -66,6 +66,6 @@ public class TrainIconTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainIconTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainIconTest.class);
 
 }

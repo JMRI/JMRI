@@ -8,23 +8,26 @@ import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.Reading;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import org.netbeans.jemmy.operators.JComponentOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Tests for the RpsIcon class.
  *
  * @author	Bob Jacobsen Copyright 2008
  */
-public class RpsPositionIconTest extends jmri.util.SwingTestCase {
+public class RpsPositionIconTest {
 
     jmri.jmrit.display.panelEditor.PanelEditor panel = null;
 
+    @Test
     public void testShow() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame jf = new JmriJFrame("RpsPositionIcon Test");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
@@ -84,26 +87,9 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
         id = newID;
     }
 
-    // from here down is testing infrastructure
-    public RpsPositionIconTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", RpsPositionIconTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(RpsPositionIconTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -111,19 +97,25 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
         }
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         // now close panel window
         if (panel != null) {
             java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
             for (WindowListener listener : listeners) {
                 panel.getTargetFrame().removeWindowListener(listener);
             }
-            junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
-            JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
+
+            // close the panel target frame.
+            EditorFrameOperator to = new EditorFrameOperator(panel.getTargetFrame());
+            // this panel isn't behaving like others that create a 
+            // panelEditor. It does not create dialogs when it closes, so call 
+            // requestClose without handling the dialogs as in 
+            // to.closeFrameWithConfirmations()
+            to.requestClose();
         }
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RpsPositionIconTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RpsPositionIconTest.class);
 }

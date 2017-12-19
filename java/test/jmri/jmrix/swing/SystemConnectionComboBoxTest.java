@@ -21,19 +21,22 @@ public class SystemConnectionComboBoxTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SystemConnectionComboBox t = new SystemConnectionComboBox();
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SystemConnectionComboBoxTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SystemConnectionComboBoxTest.class);
 
 }

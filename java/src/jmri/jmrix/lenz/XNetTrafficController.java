@@ -62,6 +62,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     }
 
     // Abstract methods for the XNetInterface
+
     /**
      * Forward a preformatted XNetMessage to the actual interface.
      *
@@ -352,6 +353,6 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         return _FeedbackCache;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetTrafficController.class);
 
 }

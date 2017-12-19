@@ -10,25 +10,25 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SE8PanelTest {
+public class SE8PanelTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testCTor() {
-        SE8Panel t = new SE8Panel();
-        Assert.assertNotNull("exists",t);
-    }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new SE8Panel();
+        helpTarget = "package.jmri.jmrix.loconet.se8.SE8Frame";
+        title = Bundle.getMessage("MenuItemSE8cProgrammer");
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SE8PanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SE8PanelTest.class);
 
 }

@@ -5,9 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * XNetInterfaceScaffold.java
- *
- * Description:	Test scaffold implementation of XNetInterface
+ * Test scaffold implementation of XNetInterface
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2006
   *
@@ -26,7 +24,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     }
 
     /**
-     * record XNet messages sent, provide access for making sure they are OK
+     * Record XNet messages sent, provide access for making sure they are OK.
      */
     public Vector<XNetMessage> outbound = new Vector<XNetMessage>();  // public OK here, so long as this is a test class
 
@@ -49,8 +47,9 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     }
 
     // test control member functions
+
     /**
-     * forward a message to the listeners, e.g. test receipt
+     * Forward a message to the listeners, e.g. test receipt.
      */
     public void sendTestMessage(XNetReply m) {
         // forward a test message to XNetListeners
@@ -62,21 +61,21 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     }
 
     /*
-     * Check number of listeners, used for testing dispose()
+     * Check number of listeners, used for testing dispose().
      */
     public int numListeners() {
         return cmdListeners.size();
     }
 
     /**
-     * Avoid error message, normal in parent
+     * Avoid error message, normal in parent.
      */
     @Override
     protected void connectionWarn() {
     }
 
     /**
-     * Avoid error message, normal in parent
+     * Avoid error message, normal in parent.
      */
     @Override
     protected void portWarn(Exception e) {
@@ -100,9 +99,6 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetInterfaceScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetInterfaceScaffold.class);
 
 }
-
-
-

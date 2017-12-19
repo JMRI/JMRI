@@ -54,7 +54,7 @@ abstract public class ConfigurationManager {
     abstract public void configureManagers();
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
     abstract public boolean provides(Class<?> type);
 
@@ -65,6 +65,6 @@ abstract public class ConfigurationManager {
 
     abstract protected ResourceBundle getActionModelResourceBundle();
 
-    private final static Logger log = LoggerFactory.getLogger(ConfigurationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConfigurationManager.class);
 
 }

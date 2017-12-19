@@ -39,6 +39,6 @@ public class JsonConnectionTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonConnectionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonConnectionTest.class);
 
 }

@@ -2,7 +2,6 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import java.util.List;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -18,7 +17,7 @@ public class ExportCarsTest {
     @Test
     public void testCTor() {
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList = manager.getByIdList();
+        List<Car> carList = manager.getByIdList();
         ExportCars t = new ExportCars(carList);
         Assert.assertNotNull("exists", t);
     }
@@ -34,5 +33,5 @@ public class ExportCarsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ExportCarsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ExportCarsTest.class);
 }

@@ -9,7 +9,7 @@
   <title>JMRI: Building with IntelliJ IDEA</title>
   <meta name="author" content="Egbert Broerse">
   <meta name="keywords" content=
-  "JMRI technical code IntelliJ IDEA 15 2016 IDE">
+  "JMRI technical code IntelliJ IDEA 2017.2 IDE">
   <!--#include virtual="/Style" -->
 </head><!--#include virtual="/Header" -->
 
@@ -35,6 +35,10 @@
         <li><a href="#ijprojectwin">The Project Window</a></li>
 
         <li><a href="#push">Push changes</a></li>
+
+        <li><a href="#debug">Debugging (Set-up)</a></li>
+
+        <li><a href="#tricks">Tricks</a></li>
 
         <li><a href="#more">More</a></li>
       </ul>
@@ -97,14 +101,14 @@
         "images/IntelliJ/IjVMOptions.png" width="240" height="114"
         alt="IntelliJ Edit vmoptions"></a></li>
 
-        <li>IntelliJ 2016 is now ready to use for development with
+        <li>IntelliJ 2016 and up are now ready to use for development with
         JMRI. The vmoptions file is store in
         <code>&tilde;/Users/Preferences/IdeaIC2016.1/</code><br>
         But in version 15, IntelliJ on OS X did not correctly name
         this vmoptions file ( <a href=
         "https://youtrack.jetbrains.com/issue/IDEA-150830#tab=Linked%20Issues">
         read more</a>).<br>
-        To correct this, close IntelliJ 15 and in the Finder go to
+        To correct this, close IntelliJ 15 and in Finder go to
         the <code>&tilde;/Library/Preferences/IdeaIC15/</code>
         folder.<br>
         Rename the newly created file <code>idea64.vmoptions</code>
@@ -325,8 +329,7 @@
         yet set:<br>
         <a href=
         "images/IntelliJ/IjAntBuildFilePropertiesPane.png"><img src="images/IntelliJ/IjAntBuildFilePropertiesPane.png"
-        width="318" height="175" alt=
-        "IntelliJ Ant Settings"></a><br>
+        width="318" height="175" alt="IntelliJ Ant Settings"></a><br>
         Click "OK" and save your JMRI Project (Cmd-S/Ctrl-S).</li>
 
         <li>Select the &lt;Default target&gt; file in the Ant Build
@@ -365,10 +368,10 @@
 
       <p>The Message Center Console will list all steps of the
       build process, after which a Java icon will open with the
-      application running with all your new (saved) edits.</p>
+      application running including all your new edits.</p>
       <!-- to do: write instructions for configurations? -->
-      <a name="push" id="push"></a>
 
+      <a name="push" id="push"></a>
       <h2>Pushing changes to your GitHub branch</h2>
 
       <p>The standard practice for getting your changes included in
@@ -451,7 +454,7 @@
         after the Commit (so others can access it and study it for
         inclusion into JMRI).<br>
         <a href="images/IntelliJ/IjCommitPush.png"><img src=
-        "images/IntelliJ/IjCommitPush.png" width="362" height="197"
+        "images/IntelliJ/IjCommitPush.png" width="181" height="98"
         alt="IntelliJ Commit and Push"></a></li>
 
         <li>In the Push Commits pane, review your description and
@@ -462,6 +465,12 @@
         <a href="images/IntelliJ/IjGitPushOptions.png"><img src=
         "images/IntelliJ/IjGitPushOptions.png" width="300" height=
         "279" alt="IntelliJ Push options"></a></li>
+
+        <li>If this went fine, a confirmation will appear at bottom
+        left over the Version Control tab:<br>
+        <a href="images/IntelliJ/IjVCSmenu.png"><img src=
+        "images/IntelliJ/IjVCSmenu.png" width="210" height=
+        "69" alt="IntelliJ Push OK balloon"></a></li>
       </ul>
 
       <p>Before you can Push your changes to GitHub for the first
@@ -469,6 +478,60 @@
       your own GitHub repository</a> (which you have already done
       <a href="#install">in step 1</a>).</p>
 
+      <a name="debug" id="debug"></a>
+      <h2>Debugging</h2>
+      <p>We've documented the following steps to help you get started. (Note that step 4. as yet is not complete.
+      When you know what to enter as the Main Class Path, please report on JMRI Users)</p>
+      <ol>
+        <li>In IntelliJ, start by opening Preferences > Build, Execution, Deployment
+        and check "Generate debugging info":<br>
+        <img src="images/IntelliJ/IjDebugPrefs.png" width="655" height="436"></li>
+        <li>Then, doubleclick "jar-resources" in the Build tab to have IntelliJ build afresh .jar Java archive to use
+        for our debugging.</li>
+        <li>When that has run, choose "Debug..." from the Run menu.<br>
+        <img src="images/IntelliJ/IjDebug1Menu.png" width="377" height="145"><br>
+        On the small "Debug" pane that appears, click "Edit Configurations..."<br>
+        Alternatively, on the top right, click on the downward triangle "Select Run/Debug Configuration" button
+        and select the "Edit Configurations..." option from there:<br>
+        <img src="images/IntelliJ/IjDebug1Button.png" width="216" height="71"></li>
+        <li>On the top left of the new pane that appears, click the + sign (Add New Configuration).<br>
+        <img src="images/IntelliJ/IjDebug2Plus.png" width="134" height="91"><br>
+        Or simply type Command + N.<br>
+        Select "JAR Application" in the list.</li>
+        <li>This opens the "Run/Debug Configurations" pane:<br>
+        <img src="images/IntelliJ/IjDebug3ConfigPane.png" width="734" height="611"><br>
+          <ul>
+          <li>As the Name of this Configuration, enter "JMRI DP debug".</li>
+          <li>Make sure "Build" is visible in the "Before launch:" table, select "Run Ant target"  and choose
+          "jar-resources" from the build.xml list</li>
+          <li>Check "Activate tool window" near the bottom of the pane.</li>
+          <li>Enter <b>"jmri.jar"</b> as the "Path to JAR" or use the "..." button to navigate to the freshly built
+          jmri.jar in your Project.</li>
+          <li>Make sure the prefilled "Working directory:" is showing your local path to JMRI (see example).<br>
+          Set "Default" as the "JRE:" choice.</li>
+          <li>Select "JMRI" using the "Search sources using module's classpath:" drop down.</li>
+          <li>Click "OK" to complete the configuration set-up.</li>
+          </ul>
+        <li>To run your first debug session, start by opening a .java file and setting a Breakpoint on a line in your
+        code by clicking in the left margin of the central edit pane:<br>
+        <img src="images/IntelliJ/IjDebug5Breakpoint.png" width="302" height="184"></li>
+        <li>We're now ready to start a Debug session by clicking the Bug button at the top right, making sure our
+        "JMRI debug" configuration is selected in the drop down to the left of it:<br>
+        <img src="images/IntelliJ/IjDebug4StartDebug.png" width="272" height="79">
+        </li>
+        <li>After a short while, at the bottom of the main IntelliJ IDE interface, the Debug pane appears, stopping
+        just before your Breakpoint (or some previous error):<br>
+        <img src="images/IntelliJ/IjDebug6DebugInterface.png" width="782" height="398"></li>
+        <li>Inspect the current values of the active variables, and click the Step Into button to execute 1 line of
+        code:<br>
+        <img src="images/IntelliJ/IjDebug7StepInto.png" width="118" height="49"></li>
+      </ol>
+      <p>A further explanation of this pane and debugging in general can be found in the
+      <a href="https://www.jetbrains.com/help/idea/debugging.html">IntelliJ Help</a>.<br>
+      If your code has not been compiled before debugging, the source and class files might be out of sync, so be
+      sure to build first. You could add that to your Debug Configuration too.</p>
+
+      <a name="tricks" id="tricks"></a>
       <h3>Tricks</h3>
 
       <h4>Edit .properties files</h4>
@@ -479,22 +542,32 @@
       for merging into JMRI.<br>
       The - not trivial - instructions to set this via
       <code>vmoptions</code> are <a href="#install">at the top of
-      this page</a>.</p>
+        this page</a>.</p>
 
       <p>To easily edit Resource Bundle .properties files,
       containing translations in different languages, right-click
       on one of these (closed) folders in the Project file list and
       select "Jump to Source":<br>
-      <a href="images/IntelliJ/IjResourceJump.png"><img src=
-      "images/IntelliJ/IjResourceJump.png" width="267" height="139"
-      alt="IntelliJ Bundle edit menu"></a></p>
+      <a href="images/IntelliJ/IjResourceJump.png">
+      <img src="images/IntelliJ/IjResourceJump.png" width="267" height="139" alt="IntelliJ Bundle edit menu"></a></p>
 
       <p>This will open a window with a list of coded keywords on
       the left and a text box for every translation to the
       right:<br>
-      <a href="images/IntelliJ/IjEditProperties.png"><img src=
-      "images/IntelliJ/IjEditProperties.png" width="480" height=
-      "260" alt="IntelliJ Bundle edit window"></a></p>
+      <a href="images/IntelliJ/IjEditProperties.png">
+      <img src="images/IntelliJ/IjEditProperties.png" width="480" height="260" alt="IntelliJ Bundle edit window"></a></p>
+
+      <h4>Error: Can't start Git</h4>
+      <p>On macOS, when you run into this error, usually when starting IntelliJ for the
+      first time after a system update:<br>
+      <a href="images/IntelliJ/IjXcodeGitProblem1.png">
+        <img src="images/IntelliJ/IjXcodeGitProblem1.png" width="373" height="110" alt="IntelliJ Git error"></a><br>
+      quit the program and start the Apple Xcode application.<br>
+      By this you be asked to agree with the licence agreement, and that will reenable
+      the Git installation to be used inside IntelliJ too.<br>
+      <a href="images/IntelliJ/IjXcode1.png">
+        <img src="images/IntelliJ/IjXcode1.png" width="223" height="111" alt="IntelliJ Git error"></a>
+      </p>
 
       <h4>Reset HEAD</h4>
 
@@ -505,31 +578,28 @@
       lower left of the Project window to view a "Track Plan" of
       the history of your Branch, all the way back to the different
       parts that made JMRI:<br>
-      <a href="images/IntelliJ/IjVersionControlPane.png"><img src=
-      "images/IntelliJ/IjVersionControlPane.png" width="634"
-      height="161" alt="IntelliJ VCS tab"></a></p>
+      <a href="images/IntelliJ/IjVersionControlPane.png">
+      <img src="images/IntelliJ/IjVersionControlPane.png" width="634" height="161" alt="IntelliJ VCS tab"></a></p>
 
       <p>Click on any line to view the changes that were Committed
       at that point in time (listed to the right).<br>
       To reset your repo (HEAD) back to a certain point, right
       click on the corresponding line and select "Reset Current
       Branch to Here...".<br>
-      <a href="images/IntelliJ/IjResetBranchTo.png"><img src=
-      "images/IntelliJ/IjResetBranchTo.png" width="172" height=
-      "197" alt="IntelliJ History reset"></a><br>
+      <a href="images/IntelliJ/IjResetBranchTo.png">
+      <img src="images/IntelliJ/IjResetBranchTo.png" width="172" height="197" alt="IntelliJ History reset"></a><br>
       Confirm the way you want to save or discard your Commits
       after that point in the dialog:<br>
-      <a href="images/IntelliJ/IjResetBranchDialog.png"><img src=
-      "images/IntelliJ/IjResetBranchDialog.png" width="234" height=
-      "149" alt="IntelliJ Reset HEAD dialog"></a></p>
+      <a href="images/IntelliJ/IjResetBranchDialog.png">
+      <img src="images/IntelliJ/IjResetBranchDialog.png" width="234" height="149"
+      alt="IntelliJ Reset HEAD dialog"></a></p>
 
       <h4>Master password</h4>
 
       <p>To securely store your GitHub login, you might
       periodically be asked to unlock it:<br>
-      <a href="images/IntelliJ/IjMasterPasswd.png"><img src=
-      "images/IntelliJ/IjMasterPasswd.png" width="232" height="110"
-      alt="IntelliJ Git Master Pwd dialog"></a></p>
+      <a href="images/IntelliJ/IjMasterPasswd.png">
+      <img src="images/IntelliJ/IjMasterPasswd.png" width="232" height="110" alt="IntelliJ Git Master Pwd dialog"></a></p>
 
       <h3>Make a Pull Request</h3>
 
@@ -541,33 +611,30 @@
       <p>To make a PR from within IntelliJ IDEA, select "Create
       Pull Request" from the "VCS" -&gt; Git menu (that's the last
       item, supported by the Git plug in).<br>
-      <a href="images/IntelliJ/IjGitPRCreate.png"><img src=
-      "images/IntelliJ/IjGitPRCreate.png" width="265" height="120"
-      alt="IntelliJ Git Create PR"></a></p>
+      <a href="images/IntelliJ/IjGitPRCreate.png">
+        <img src="images/IntelliJ/IjGitPRCreate.png" width="265" height="120" alt="IntelliJ Git Create PR"></a></p>
 
       <p>To Make a PR from GitHub web - outside IntelliJ - start by
       signing on to the <a href="http://github.com">GitHub web
-      site</a>, selecting your repository &amp; branch and clicking
+        site</a>, selecting your repository &amp; branch and clicking
       the <a href="gitdeveloper.shtml#pull">Pull Request
-      button</a>. For more info, see the <a href=
-      "gitdeveloper.shtml#pull">Git Developer Help</a> page.</p>
+        button</a>. For more info, see the <a href="gitdeveloper.shtml#pull">Git Developer Help</a> page.</p>
 
       <a name="test" id="test"></a><h3>Testing with IntelliJ</h3>
       <p>When you create or edit a <a href="JUnit.shtml">test</a>
-        (located in your Project at JMRI.java.test etc.) you can
-        test it either as part of the <code>alltest</code> Ant Build
-        (double click its name in the IntelliJ Ant Build right hand
-        column to run) or run it on its own using <code>test-single</code>.<br>
-        In the latter case, enter the name of your test in the Ant Build
-        Properties by either clicking the Properties button at the top or
-        right-clicking on any line in the Ant Build column,
-        choosing "Properties". Open the "Properties" tab, click the
-        + (Add) sign at lower left and enter "test.includes"
-        in the Name column and the path to your test under Value,
-        starting with <code>jmri.</code> as shown:<br>
-        <a href="images/IntelliJ/IjAntProps.png"><img src =
-        "images/IntelliJ/IjAntProps.png" width="318" height="174"
-        alt="IntelliJ Ant Property"></a>
+      (located in your Project at JMRI.java.test etc.) you can
+      test it either as part of the <code>alltest</code> Ant Build
+      (double click its name in the IntelliJ Ant Build right hand
+      column to run) or run it on its own using <code>test-single</code>.<br>
+      In the latter case, enter the name of your test in the Ant Build
+      Properties by either clicking the Properties button at the top or
+      right-clicking on any line in the Ant Build column,
+      choosing "Properties". Open the "Properties" tab, click the
+      + (Add) sign at lower left and enter "test.includes"
+      in the Name column and the path to your test under Value,
+      starting with <code>jmri.</code> as shown:<br>
+      <a href="images/IntelliJ/IjAntProps.png"><img src="images/IntelliJ/IjAntProps.png" width="318" height="174"
+      alt="IntelliJ Ant Property"></a>
       </p>
 
       <!-- to do suppress errors
@@ -579,16 +646,16 @@
         shown below by going to Window -&gt; Preferences and selecting
         "Java -&gt; Compiler -&gt; Errors/Warnings".
         -->
-      <a name="more" id="more"></a>
 
+      <a name="more" id="more"></a>
       <h2>More Help</h2>
 
       <p>See the IntelliJ IDEA <a href=
       "https://www.jetbrains.com/idea/help/reference.html">web
       reference</a> and other <a href=
       "https://www.jetbrains.com/idea/help/using-online-resources.html">
-      resources</a> for more information on using this IDE. 
-      <!--#include virtual="/Footer" --></p>
+      resources</a> for more information on using this IDE.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

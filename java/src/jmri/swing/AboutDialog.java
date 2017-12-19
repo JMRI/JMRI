@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood Copyright (C) 2012
  */
-public class AboutDialog extends JDialog {
+public final class AboutDialog extends JDialog {
 
     // this should probably be changed to a JmriAbstractAction that opens a JOptionPane with the contents and an OK button instead.
     public AboutDialog(JFrame frame, boolean modal) {
@@ -104,5 +104,5 @@ public class AboutDialog extends JDialog {
         p.add(c);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AboutDialog.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AboutDialog.class);
 }

@@ -33,6 +33,6 @@ public class JsonBlockHttpServiceTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonBlockHttpServiceTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonBlockHttpServiceTest.class);
 
 }

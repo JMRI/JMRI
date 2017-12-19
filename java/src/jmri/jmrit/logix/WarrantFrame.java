@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -64,7 +65,7 @@ public class WarrantFrame extends WarrantRoute {
     private JTable _commandTable;
     private JScrollPane _throttlePane;
 
-    private ArrayList<ThrottleSetting> _throttleCommands = new ArrayList<ThrottleSetting>();
+    private ArrayList<ThrottleSetting> _throttleCommands = new ArrayList<>();
     private long _startTime;
     private float _speed;
     private long _TTP = 0;
@@ -105,7 +106,7 @@ public class WarrantFrame extends WarrantRoute {
         // temp unregistered version until editing is saved.
         _warrant = new Warrant(_saveWarrant.getSystemName(), _saveWarrant.getUserName());
         setup(_saveWarrant);
-        WarrantTableAction.newWarrantFrame(this);
+        WarrantTableAction.setWarrantFrame(this);
         init();
         if (routeIsValid() != null) {
             findRoute();
@@ -137,7 +138,7 @@ public class WarrantFrame extends WarrantRoute {
         _via.setOrder(warrant.getViaOrder());
         _avoid.setOrder(warrant.getAvoidOrder());
         List<BlockOrder> list = warrant.getBlockOrders();
-        ArrayList<BlockOrder> orders = new ArrayList<BlockOrder>(list.size());
+        ArrayList<BlockOrder> orders = new ArrayList<>(list.size());
         for (int i = 0; i < list.size(); i++) {
             orders.add(new BlockOrder(list.get(i)));
         }
@@ -286,7 +287,7 @@ public class WarrantFrame extends WarrantRoute {
         topRight.add(panel);
         topRight.add(Box.createHorizontalStrut(STRUT_SIZE));
 
-        PickListModel pickListModel = PickListModel.oBlockPickModelInstance();
+        PickListModel<OBlock> pickListModel = PickListModel.oBlockPickModelInstance();
         topRight.add(new JScrollPane(pickListModel.makePickTable()));
         Dimension dim = topRight.getPreferredSize();
         topRight.setMinimumSize(dim);
@@ -358,6 +359,7 @@ public class WarrantFrame extends WarrantRoute {
         tab2.add(panel);
         
         _isSCWarrant.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setPanelEnabled(scParamPanel,true);
                 setPanelEnabled(learnPanel,false);
@@ -376,6 +378,7 @@ public class WarrantFrame extends WarrantRoute {
         }
 
         _isWarrant.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setPanelEnabled(scParamPanel,false);
                 setPanelEnabled(learnPanel,true);
@@ -471,7 +474,7 @@ public class WarrantFrame extends WarrantRoute {
     
     private void addSpeeds() {
         setAddress();
-        RosterSpeedProfile speedProfile =  _speedUtil.getValidSpeedProfile(this);         
+        RosterSpeedProfile speedProfile =  _speedUtil.getMergeProfile();         
         boolean isForward = true;
         for (ThrottleSetting ts :_throttleCommands) {
             if ("FORWARD".equalsIgnoreCase(ts.getCommand())) {
@@ -672,6 +675,7 @@ public class WarrantFrame extends WarrantRoute {
             setPanelEnabled(buttonPanel,false);
         }
         _isSCWarrant.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 showRoute.setSelected(true);
                 showCommands(false);
@@ -679,6 +683,7 @@ public class WarrantFrame extends WarrantRoute {
             }
         });
         _isWarrant.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setPanelEnabled(buttonPanel,true);
             }
@@ -871,7 +876,7 @@ public class WarrantFrame extends WarrantRoute {
     }
 
     private void clearCommands() {
-        _throttleCommands = new ArrayList<ThrottleSetting>();
+        _throttleCommands = new ArrayList<>();
         _commandModel.fireTableDataChanged();
         _searchStatus.setText("");
     }
@@ -930,7 +935,7 @@ public class WarrantFrame extends WarrantRoute {
                     JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
                 return;
             }
-            _throttleCommands = new ArrayList<ThrottleSetting>();
+            _throttleCommands = new ArrayList<>();
             _commandModel.fireTableDataChanged();
         }
 
@@ -964,7 +969,7 @@ public class WarrantFrame extends WarrantRoute {
         _startTime = System.currentTimeMillis();
         _speed = 0.0f;
         
-        _warrant.getSpeedUtil().getValidSpeedProfile(this);
+//        _warrant.getSpeedUtil().getValidSpeedProfile(this);
         _warrant.addPropertyChangeListener(this);
 
         msg = _warrant.setRunMode(Warrant.MODE_LEARN, _speedUtil.getDccAddress(), _learnThrottle,
@@ -1000,11 +1005,11 @@ public class WarrantFrame extends WarrantRoute {
             setStatusText(msg, Color.black);
             return;
         }
-        if (_warrant.commandsHaveTrackSpeeds()) {
+/*        if (_warrant.commandsHaveTrackSpeeds()) {
             _warrant.getSpeedUtil().getValidSpeedProfile(this);            
         } else {
             setStatusText(Bundle.getMessage("NoTrackSpeeds", _warrant.getDisplayName()), Color.red);
-        }
+        }*/
         _warrant.addPropertyChangeListener(this);
         if (_saveWarrant!=null) {
             _saveWarrant.addPropertyChangeListener(WarrantTableFrame.getDefault().getModel());            
@@ -1257,7 +1262,7 @@ public class WarrantFrame extends WarrantRoute {
     }
     
     protected void setSpeedCommand(float speed, boolean isForward) {
-        if (_warrant.getSpeedUtil().profileHasSpeedInfo(isForward)) {
+        if (_warrant.getSpeedUtil().profileHasSpeedInfo()) {
             _speed = _warrant.getSpeedUtil().getTrackSpeed(speed, isForward);  // mm/ms            
         } else {
             _speed = 0.0f;
@@ -1337,7 +1342,6 @@ public class WarrantFrame extends WarrantRoute {
             ((SCWarrant)_warrant).setForward(_runForward.isSelected());
             ((SCWarrant)_warrant).setTimeToPlatform((long)_TTPtextField.getValue());
         }
-        _warrant.setSpeedUtil(_speedUtil);
         _warrant.setTrainName(getTrainName());
         _warrant.setRunBlind(_runETOnlyBox.isSelected());
         _warrant.setShareRoute(_shareRouteBox.isSelected());
@@ -1348,6 +1352,8 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setAvoidOrder(getAvoidBlockOrder());
         _warrant.setBlockOrders(getOrders());
         _warrant.setThrottleCommands(_throttleCommands);
+        _speedUtil.setOrders(getOrders());
+        _warrant.setSpeedUtil(_speedUtil);  // transfer SpeedUtil to warrant
 
         if (log.isDebugEnabled()) log.debug("warrant {} saved _train {} name= {}",
                 _warrant.getDisplayName(), _speedUtil.getRosterId(), getTrainName());
@@ -1371,7 +1377,7 @@ public class WarrantFrame extends WarrantRoute {
         } catch (Exception ex) {
             log.error("error making CreateWarrantFrame {}", ex);
         }
-        dispose();
+        WarrantTableAction.closeWarrantFrame(this);
     }
 
     private void close() {
@@ -1393,6 +1399,7 @@ public class WarrantFrame extends WarrantRoute {
         public static final int SPEED_COLUMN = 5;
         public static final int NUMCOLS = 6;
         java.text.DecimalFormat threeDigit = new java.text.DecimalFormat("0.000");
+        NumberFormat formatter = NumberFormat.getNumberInstance(); 
 
         public ThrottleTableModel() {
             super();
@@ -1464,6 +1471,7 @@ public class WarrantFrame extends WarrantRoute {
             return new JTextField(12).getPreferredSize().width;
         }
 
+        // TODO Internationalize command names
         @Override
         public Object getValueAt(int row, int col) {
             // some error checking
@@ -1487,6 +1495,18 @@ public class WarrantFrame extends WarrantRoute {
                 case VALUE_COLUMN:
                     if ("Mark".equalsIgnoreCase(ts.getValue())) {
                         return Bundle.getMessage("Mark");
+                    } else {
+                        if (ts.getValue() != null ) {
+                            String cmd = ts.getCommand().toUpperCase();
+                            if ("SPEED".equals(cmd)) {
+                                try {
+                                    float speed = Float.parseFloat(ts.getValue());                                
+                                    return formatter.format(speed);                               
+                                } catch (NumberFormatException npe) {
+                                    log.error("Null value in ThrottleSetting: "+ ts.toString());
+                                }
+                            }
+                        }
                     }
                     return ts.getValue();
                 case BLOCK_COLUMN:
@@ -1500,6 +1520,7 @@ public class WarrantFrame extends WarrantRoute {
             return "";
         }
 
+        // TODO Internationalize command names
         @Override
         public void setValueAt(Object value, int row, int col) {
             ThrottleSetting ts = _throttleCommands.get(row);
@@ -1571,7 +1592,6 @@ public class WarrantFrame extends WarrantRoute {
                     break;
                 case VALUE_COLUMN:
                     if (value == null || ((String) value).length() == 0) {
-//                        msg = Bundle.getMessage("nullValue", Bundle.getMessage("ValueCol"));
                         break;
                     }
                     boolean resetBlockColumn = true;
@@ -1582,12 +1602,14 @@ public class WarrantFrame extends WarrantRoute {
                     cmd = ts.getCommand().toUpperCase();
                     if ("SPEED".equals(cmd)) {
                         try {
-                            float speed = Float.parseFloat((String) value);
+                            float speed = formatter.parse((String) value).floatValue();
                             if (0.0f <= speed && speed <= 1.0f) {
-                                ts.setValue((String) value);
+                                ts.setValue(Float.toString(speed));
                                 break;
                             }
-                            msg = Bundle.getMessage("throttlesetting", value);
+                            msg = Bundle.getMessage("badValue", value, ts.getCommand());
+                        } catch (java.text.ParseException pe) {
+                            msg = Bundle.getMessage("invalidNumber");
                         } catch (NumberFormatException nfe) {
                             msg = Bundle.getMessage("invalidNumber");
                         }
@@ -1721,5 +1743,5 @@ public class WarrantFrame extends WarrantRoute {
         }
 
     }
-    private final static Logger log = LoggerFactory.getLogger(WarrantFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantFrame.class);
 }

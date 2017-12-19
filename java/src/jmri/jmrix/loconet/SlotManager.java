@@ -1,5 +1,8 @@
 package jmri.jmrix.loconet;
 
+import static jmri.jmrix.loconet.LnConstants.STAT1_SL_ACTIVE;
+import static jmri.jmrix.loconet.LnConstants.STAT1_SL_BUSY;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -17,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Controls a collection of slots, acting as the counter-part of a LocoNet
  * command station.
- * <P>
+ * <p>
  * A SlotListener can register to hear changes. By registering here, the
  * SlotListener is saying that it wants to be notified of a change in any slot.
  * Alternately, the SlotListener can register with some specific slot, done via
@@ -30,18 +33,18 @@ import org.slf4j.LoggerFactory;
  * read from the command station, the first message directly setting F9 through
  * F28 will not have a place to store information. Instead, it will trigger a
  * slot read, so the following messages will be properly handled.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
+ * <p>
  * This Programmer implementation is single-user only. It's not clear whether
  * the command stations can have multiple programming requests outstanding (e.g.
  * service mode and ops mode, or two ops mode) at the same time, but this code
  * definitely can't.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
@@ -94,7 +97,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     @Override
     public void sendPacket(byte[] packet, int repeats) {
-        if (packet == null) throw new IllegalArgumentException("Packet must be non-null");
         if (repeats > 7) {
             log.error("Too many repeats!"); // NOI18N
         }
@@ -186,7 +188,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param i Specific slot, counted starting from zero.
      * @param l The SlotListener to notify of the answer.
      */
-    public void slotFromLocoAddress(int i, SlotListener l) {
+    public void slotFromLocoAddress (int i, SlotListener l) {
         // store connection between this address and listener for later
         mLocoAddrHash.put(Integer.valueOf(i), l);
 
@@ -587,11 +589,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     protected void respondToAddrRequest(LocoNetMessage m, int i) {
+        // is called any time a LocoNet message is received.  Note that we do _NOT_ know why a given message happens!
+        
         // if this is OPC_SL_RD_DATA
-        if (m.getOpCode() == 0xE7) {
+        if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
             // yes, see if request exists
-            // note that slot has already been told, so
-            // slot i has the address of this request
+            // note that the appropriate _slots[] entry has already been updated
+            // to reflect the content of the LocoNet message, so _slots[i]
+            // has the locomotive address of this request 
             int addr = _slots[i].locoAddr();
             log.debug("LOCO_ADR resp is slot {} for addr {}", i, addr); // NOI18N
             SlotListener l = mLocoAddrHash.get(Integer.valueOf(addr));
@@ -677,10 +682,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.PAGEMODE);
-        ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
-        ret.add(DefaultProgrammerManager.REGISTERMODE);
-        ret.add(DefaultProgrammerManager.ADDRESSMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
+        ret.add(ProgrammingMode.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.REGISTERMODE);
+        ret.add(ProgrammingMode.ADDRESSMODE);
         return ret;
     }
 
@@ -744,6 +749,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public LnCommandStationType getCommandStationType() {
         return commandStationType;
     }
+
     protected LnCommandStationType commandStationType = null;
 
     /**
@@ -795,12 +801,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mServiceMode = true;
         // parse the programming command
         int pcmd = 0x43;       // LPE imples 0x40, but 0x43 is observed
-        if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) {
+        if (getMode().equals(ProgrammingMode.PAGEMODE)) {
             pcmd = pcmd | 0x20;
-        } else if (getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+        } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             pcmd = pcmd | 0x28;
-        } else if (getMode().equals(DefaultProgrammerManager.REGISTERMODE)
-                || getMode().equals(DefaultProgrammerManager.ADDRESSMODE)) {
+        } else if (getMode().equals(ProgrammingMode.REGISTERMODE)
+                || getMode().equals(ProgrammingMode.ADDRESSMODE)) {
             pcmd = pcmd | 0x10;
         } else {
             throw new jmri.ProgrammerException("mode not supported"); // NOI18N
@@ -842,12 +848,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mServiceMode = true;
         // parse the programming command
         int pcmd = 0x03;       // LPE imples 0x00, but 0x03 is observed
-        if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) {
+        if (getMode().equals(ProgrammingMode.PAGEMODE)) {
             pcmd = pcmd | 0x20;
-        } else if (getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+        } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             pcmd = pcmd | 0x28;
-        } else if (getMode().equals(DefaultProgrammerManager.REGISTERMODE)
-                || getMode().equals(DefaultProgrammerManager.ADDRESSMODE)) {
+        } else if (getMode().equals(ProgrammingMode.REGISTERMODE)
+                || getMode().equals(ProgrammingMode.ADDRESSMODE)) {
             pcmd = pcmd | 0x10;
         } else {
             throw new jmri.ProgrammerException("mode not supported"); // NOI18N
@@ -901,12 +907,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mServiceMode = true;
         // parse the programming command
         int pcmd = 0x03;       // LPE imples 0x00, but 0x03 is observed
-        if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) {
+        if (getMode().equals(ProgrammingMode.PAGEMODE)) {
             pcmd = pcmd | 0x20;
-        } else if (getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+        } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             pcmd = pcmd | 0x28;
-        } else if (getMode().equals(DefaultProgrammerManager.REGISTERMODE)
-                || getMode().equals(DefaultProgrammerManager.ADDRESSMODE)) {
+        } else if (getMode().equals(ProgrammingMode.REGISTERMODE)
+                || getMode().equals(ProgrammingMode.ADDRESSMODE)) {
             pcmd = pcmd | 0x10;
         } else {
             throw new jmri.ProgrammerException("mode not supported"); // NOI18N
@@ -1175,5 +1181,5 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SlotManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SlotManager.class);
 }

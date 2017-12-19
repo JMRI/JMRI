@@ -1,6 +1,5 @@
 package jmri.jmrix.direct;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.Nonnull;
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
@@ -25,13 +24,10 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
     }
 
     // copy one
-    @SuppressWarnings("null")
     public Message(@Nonnull Message m) {
         _nDataChars = m._nDataChars;
         _dataChars = new int[_nDataChars];
-        for (int i = 0; i < _nDataChars; i++) {
-            _dataChars[i] = m._dataChars[i];
-        }
+        System.arraycopy(m._dataChars, 0, _dataChars, 0, _nDataChars);
     }
 
     @Override
@@ -65,16 +61,13 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
         _dataChars[n] = v & 0x7F;
     }
 
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     @Override
     public String toString() {
-        String s = "";
+        StringBuilder s = new StringBuilder("");
         for (int i = 0; i < _nDataChars; i++) {
-            s += (char) _dataChars[i];
+            s.append((char) _dataChars[i]);
         }
-        return s;
+        return s.toString();
     }
 
     // diagnose format
@@ -88,28 +81,28 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
 
     // static methods to return a formatted message
     static public Message getEnableMain() {
-        log.error("getEnableMain doesnt have a reasonable implementation yet");
+        log.error("getEnableMain doesn't have a reasonable implementation yet");
         return null;
     }
 
     static public Message getKillMain() {
-        log.error("getKillMain doesnt have a reasonable implementation yet");
+        log.error("getKillMain doesn't have a reasonable implementation yet");
         return null;
     }
 
     static public Message getProgMode() {
-        log.error("getProgMode doesnt have a reasonable implementation yet");
+        log.error("getProgMode doesn't have a reasonable implementation yet");
         return null;
     }
 
     static public Message getExitProgMode() {
-        log.error("getExitProgMode doesnt have a reasonable implementation yet");
+        log.error("getExitProgMode doesn't have a reasonable implementation yet");
         return null;
     }
 
     static public Message getReadCV(int cv, ProgrammingMode mode) {
         Message m = new Message(5);
-        if (mode.equals(DefaultProgrammerManager.PAGEMODE)) {
+        if (mode.equals(ProgrammingMode.PAGEMODE)) {
             m.setOpCode('V');
         } else { // Bit direct mode
             m.setOpCode('C');
@@ -121,7 +114,7 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
 
     static public Message getWriteCV(int cv, int val, ProgrammingMode mode) {
         Message m = new Message(9);
-        if (mode.equals(DefaultProgrammerManager.PAGEMODE)) {
+        if (mode.equals(ProgrammingMode.PAGEMODE)) {
             m.setOpCode('V');
         } else { // Bit direct mode
             m.setOpCode('C');
@@ -140,10 +133,6 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
     static public Message getWriteRegister(int reg, int val) { //Sx xx
         return null;
     }
-
-    // contents (private)
-    private int _nDataChars = 0;
-    private int _dataChars[] = null;
 
     private static String addSpace(Message m, int offset) {
         String s = " ";
@@ -176,6 +165,6 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
         return s;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Message.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Message.class);
 
 }

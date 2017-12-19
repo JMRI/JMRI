@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base for classes representing a XNet communications port.
+ * Abstract base for classes representing an XNet communications port.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Paul Bender Copyright (C) 2004,2010,2011
@@ -94,6 +94,6 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
         this.getSystemConnectionMemo().getXNetTrafficController().connectPort(this);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetNetworkPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetNetworkPortController.class);
 
 }

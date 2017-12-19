@@ -45,6 +45,6 @@ public class PrintOptionFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PrintOptionFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PrintOptionFrameTest.class);
 
 }

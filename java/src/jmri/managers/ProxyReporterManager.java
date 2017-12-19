@@ -16,7 +16,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     }
 
     @Override
-    protected AbstractManager makeInternalManager() {
+    protected AbstractManager<Reporter> makeInternalManager() {
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getReporterManager();
     }
 
@@ -32,7 +32,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
      */
     @Override
     public Reporter getReporter(String name) {
-        return (Reporter) super.getNamedBean(name);
+        return super.getNamedBean(name);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
 
     @Override
     public Reporter provideReporter(String sName) throws IllegalArgumentException {
-        return (Reporter) super.provideNamedBean(sName);
+        return super.provideNamedBean(sName);
     }
 
     /**
@@ -53,7 +53,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
      */
     @Override
     public Reporter getBySystemName(String sName) {
-        return (Reporter) super.getBeanBySystemName(sName);
+        return super.getBeanBySystemName(sName);
     }
 
     /**
@@ -64,7 +64,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
      */
     @Override
     public Reporter getByUserName(String userName) {
-        return (Reporter) super.getBeanByUserName(userName);
+        return super.getBeanByUserName(userName);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
      */
     @Override
     public Reporter newReporter(String systemName, String userName) {
-        return (Reporter) newNamedBean(systemName, userName);
+        return newNamedBean(systemName, userName);
     }
 
     @Override
@@ -125,15 +125,15 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
      * Validate system name format. Locate a system specfic ReporterManager based on a system name.
      *
      * @return if a manager is found, return its determination of validity of
-     * system name format. Return false if no manager exists.
+     * system name format. Return INVALID if no manager exists.
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((ReporterManager) getMgr(i)).validSystemNameFormat(systemName);
         }
-        return false;
+        return NameValidity.INVALID;
     }
 
     @Override

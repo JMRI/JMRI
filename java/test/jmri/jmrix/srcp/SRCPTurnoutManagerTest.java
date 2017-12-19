@@ -36,12 +36,6 @@ public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        SRCPTrafficController et = new SRCPTrafficController() {
-            @Override
-            public void sendSRCPMessage(SRCPMessage m, SRCPListener l) {
-                // we aren't actually sending anything to a layout.
-            }
-        };
         SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(new SRCPTrafficController() {
             @Override
             public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {

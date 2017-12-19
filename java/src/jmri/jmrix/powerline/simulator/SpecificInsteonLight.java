@@ -174,7 +174,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpecificInsteonLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificInsteonLight.class);
 }
 
 

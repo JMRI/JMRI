@@ -11,19 +11,19 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class NceMacroGenPanelTest {
+public class NceMacroGenPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testCtor() {
-        NceMacroGenPanel action = new NceMacroGenPanel();
-        Assert.assertNotNull("exists", action);
-    }
 
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new NceMacroGenPanel();
+        helpTarget="package.jmri.jmrix.nce.macro.NceMacroEditFrame";
+        title="NCE_: " + Bundle.getMessage("TitleNceMacroGen");
     }
 
+    @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

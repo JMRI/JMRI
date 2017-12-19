@@ -17,5 +17,5 @@ public class CvTableModelTest {
         Assert.assertNotNull(new CvTableModel(new JLabel(), null));
     }
 
-    // static Logger log = LoggerFactory.getLogger(CvTableModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CvTableModelTest.class);
 }

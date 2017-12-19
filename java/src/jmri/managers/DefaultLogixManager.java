@@ -37,7 +37,7 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         jmri.InstanceManager.getDefault(jmri.ConditionalManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).addVetoableChangeListener(this);
-        InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).addVetoableChangeListener(this);
+        InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).addVetoableChangeListener(this);
     }
 
     @Override
@@ -185,12 +185,12 @@ public class DefaultLogixManager extends AbstractManager<Logix>
 
     @Override
     public Logix getBySystemName(String name) {
-        return (Logix) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public Logix getByUserName(String key) {
-        return (Logix) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     /**
@@ -217,5 +217,5 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         return Bundle.getMessage("BeanNameLogix");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class);
 }

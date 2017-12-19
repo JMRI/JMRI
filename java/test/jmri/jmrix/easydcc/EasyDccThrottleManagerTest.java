@@ -10,21 +10,21 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class EasyDccThrottleManagerTest {
+public class EasyDccThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     @Test
     public void testCTor() {
         // infrastructure objects
-        EasyDccTrafficControlScaffold tc = new EasyDccTrafficControlScaffold();
-        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo(tc);
-        EasyDccThrottleManager t = new EasyDccThrottleManager(memo);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",tm);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        EasyDccTrafficControlScaffold tc = new EasyDccTrafficControlScaffold(null);
+        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo(tc);
+        tm = new EasyDccThrottleManager(memo);
     }
 
     @After
@@ -32,6 +32,6 @@ public class EasyDccThrottleManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EasyDccThrottleManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EasyDccThrottleManagerTest.class);
 
 }

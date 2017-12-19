@@ -20,7 +20,7 @@ import purejavacomm.SerialPort;
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
  * <P>
- * This handles the state transistions, based on the necessary state in each
+ * This handles the state transitions, based on the necessary state in each
  * message.
  *
  * @author Bob Jacobsen Copyright (C) 2001
@@ -224,7 +224,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                 // no stream connected
                 connectionWarn();
             }
-        } catch (Exception e) {
+        } catch (java.io.IOException | RuntimeException e) {
             // TODO Currently there's no port recovery if an exception occurs
             // must restart JMRI to clear xmtException.
             xmtException = true;
@@ -612,5 +612,5 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         log.debug("TIMEOUT in transmitWait, mCurrentState:" + mCurrentState + " " + state + " port dsr " + port.isDSR() + " wait time " + waitTime);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcTrafficController.class);
 }

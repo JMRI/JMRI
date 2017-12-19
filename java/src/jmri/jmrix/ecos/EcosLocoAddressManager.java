@@ -181,7 +181,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
             arr[i] = en.nextElement();
             i++;
         }
-        jmri.util.StringUtil.sort(arr);
+        java.util.Arrays.sort(arr);
         for (i = 0; i < arr.length; i++) {
             out.add(arr[i]);
         }
@@ -884,6 +884,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         return Bundle.getMessage("EcosLocoAddresses");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosLocoAddressManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosLocoAddressManager.class);
 
 }

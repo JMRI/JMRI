@@ -149,7 +149,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     /**
-     * Public method to register an Acela node
+     * Public method to register an Acela node.
      */
     public void registerAcelaNode(AcelaNode node) {
         synchronized (this) {
@@ -185,7 +185,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     /**
-     * Public method to set up for initialization of an Acela node
+     * Public method to set up for initialization of an Acela node.
      */
     public void initializeAcelaNode(AcelaNode node) {
         synchronized (this) {
@@ -195,9 +195,11 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     /**
-     * Public method to identify a AcelaNode from its bit address Note:
-     * nodeAddress is numbered from 0. Returns '-1' if an AcelaNode with the
-     * specified address was not found
+     * Public method to identify a AcelaNode from its bit address.
+     * <p>
+     * Note: nodeAddress is numbered from 0
+     *
+     * @return '-1' if an AcelaNode with the specified address was not found
      */
     public int lookupAcelaNodeAddress(int bitAddress, boolean isSensor) {
         for (int i = 0; i < getNumNodes(); i++) {
@@ -258,8 +260,8 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     /**
-     * Handles initialization, output and polling for Acela Nodes from within
-     * the running thread
+     * Handle initialization, output and polling for Acela Nodes from within
+     * the running thread.
      */
     @Override
     protected synchronized AbstractMRMessage pollMessage() {
@@ -327,7 +329,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                     byte tempbaddr = (byte) (tempiaddr);
                     m.setElement(2, tempbaddr);
                     m.setElement(3, node.sensorConfigArray[s]);
-                    log.debug("send Aclea Config Sensor message: " + m);
+                    log.debug("send Acela Config Sensor message: " + m);
                     incrementAcelaSensorInitCount();
                     m.setTimeout(100);  // wait for init to finish (milliseconds)
                     mCurrentMode = NORMALMODE;
@@ -398,7 +400,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     /**
-     * static function returning the AcelaTrafficController instance to use.
+     * Static function returning the AcelaTrafficController instance to use.
      *
      * @return The registered AcelaTrafficController instance for general use,
      *         if need be creating one.
@@ -490,6 +492,6 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaTrafficController.class);
 
 }

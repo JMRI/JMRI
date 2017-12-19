@@ -1,24 +1,21 @@
 package jmri.jmrit.symbolicprog;
 
+import javax.swing.JLabel;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.swing.JLabel;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ResetTableModelTest {
 
     @Test
     public void testCTor() {
         JLabel jl = new JLabel("test table model");
-        ResetTableModel t = new ResetTableModel(jl,jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer());
+        ResetTableModel t = new ResetTableModel(jl,jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer());
         Assert.assertNotNull("exists",t);
     }
 
@@ -36,6 +33,6 @@ public class ResetTableModelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ResetTableModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ResetTableModelTest.class);
 
 }

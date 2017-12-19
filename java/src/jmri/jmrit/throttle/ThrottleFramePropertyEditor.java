@@ -44,6 +44,15 @@ public class ThrottleFramePropertyEditor extends JDialog {
         Bundle.getMessage("SelectTitleTypeROSTERID")
     };
 
+    /*
+     * Constructor
+     */
+    public ThrottleFramePropertyEditor(ThrottleWindow w){
+        setThrottleFrame(w);
+        setLocation(w.getLocationOnScreen());
+        setLocationRelativeTo(w);
+    }
+
     /**
      * Create, initialize, and place the GUI objects.
      */
@@ -140,7 +149,7 @@ public class ThrottleFramePropertyEditor extends JDialog {
     /**
      * Set the ThrottleFrame used here. Does some initialization of the Frame.
      */
-    public void setThrottleFrame(ThrottleWindow f) {
+    private void setThrottleFrame(ThrottleWindow f) {
         this.frame = f;
         initGUI();
         pack();

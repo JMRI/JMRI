@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
 import javax.swing.AbstractAction;
 import jmri.util.zeroconf.ZeroConfService;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -33,8 +34,10 @@ public class LnMessageServerAction extends AbstractAction {
             // disable action, as already run
             setEnabled(false);
         } catch (RemoteException ex) {
-            LoggerFactory.getLogger(LnMessageServerAction.class.getName()).warn("LnMessageServerAction Exception: " + ex); // NOI18N
+            log.warn("LnMessageServerAction Exception: {}", ex.getMessage()); // NOI18N
         }
     }
+
+    private final static Logger log = LoggerFactory.getLogger(LnMessageServerAction.class);
 
 }

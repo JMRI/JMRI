@@ -3,7 +3,7 @@ package jmri.jmrix.tams.simulator;
 import javax.swing.JPanel;
 
 /**
- * Definition of objects to handle configuring a layout connection via an MRC
+ * Definition of objects to handle configuring a layout connection via a Tams
  * SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003 Copies from NCE

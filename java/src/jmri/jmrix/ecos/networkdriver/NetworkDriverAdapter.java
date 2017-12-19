@@ -1,17 +1,14 @@
 package jmri.jmrix.ecos.networkdriver;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.io.IOException;
 import jmri.jmrix.ecos.EcosPortController;
 import jmri.jmrix.ecos.EcosTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/*import java.io.*;
- import java.net.*;
- import java.util.Vector;*/
 /**
  * Implements SerialPortAdapter for the ECOS system network connection.
- * <P>
+ * <p>
  * This connects an ECOS command station via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
@@ -26,8 +23,8 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
     }
 
     /**
-     * set up all of the other objects to operate with an ECOS command station
-     * connected to this port
+     * Set up all of the other objects to operate with an ECOS command station
+     * connected to this port.
      */
     @Override
     public void configure() {
@@ -44,12 +41,11 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
         return opened;
     }
 
-    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
-            justification = "We are closing the connection and not worried if it throws an exception as this stage")
     protected void closeConnection() {
         try {
             socketConn.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
+            log.trace("Unable to close socket", e);
         }
         opened = false;
     }
@@ -65,6 +61,6 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }

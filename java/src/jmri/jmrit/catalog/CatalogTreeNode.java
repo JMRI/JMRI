@@ -8,11 +8,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Node of a CatalogTree.
- *
+ * <p>
  * Name for the node Path is info needed for leafs.
  *
  * @author Pete Cressman Copyright 2009
- *
  */
 public class CatalogTreeNode extends DefaultMutableTreeNode {
 
@@ -126,5 +125,5 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
         _leafs = leafs;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CatalogTreeNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CatalogTreeNode.class);
 }

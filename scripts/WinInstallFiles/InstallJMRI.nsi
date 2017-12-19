@@ -50,6 +50,12 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.13
+; - Remove outmoded SLF4J libraries
+; -------------------------------------------------------------------------
+; - Version 0.1.22.12
+; - Remove outmoded Jetty and WebSocket libraries
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.11
 ; - Remove outmoded lib\ch.ntb.usb.jar
 ; -------------------------------------------------------------------------
@@ -479,6 +485,24 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- Delete old vecmath.jar files as of JMRI 4.5.1
     Delete "$OUTDIR\lib\vecmath.jar"
 
+    ; -- Delete old logging libraries
+    Delete "$OUTDIR\lib\slf4j-api-1.7.13.jar"
+    Delete "$OUTDIR\lib\slf4j-log4j12-1.7.13.jar"
+    Delete "$OUTDIR\lib\jul-to-slf4j-1.7.13.jar"
+
+    ; -- Delete jetty and websocket libraries irrespective of version
+    Delete "$OUTDIR\lib\jetty-http-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\jetty-io-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\jetty-security-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\jetty-server-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\jetty-servlet-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\jetty-util-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\websocket-api-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\websocket-client-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\websocket-common-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\websocket-server-9.3.9.v20160517.jar"
+    Delete "$OUTDIR\lib\websocket-servlet-9.3.9.v20160517.jar"
+
     ; -- Delete older outmoded jetty .jar and outmoded servlet files, as of
     ;    JMRI 3.11.3 (added for version 0.1.21.5 of Windows installer)
     Delete "$OUTDIR\lib\jetty-continuation-8.1.0.v20120127.jar"
@@ -577,7 +601,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\xml\decoders\zimo\CV739-CV744twoSwitchIP.xml"
     Delete "$OUTDIR\xml\decoders\zimo\CV739-CV768.xml"
 
-    ; -- Delete old .jar & support files in lib/ directory
+    ; -- Delete old .jar & support files in lib\ directory
     Delete "$OUTDIR\lib\activation.jar"
     Delete "$OUTDIR\lib\crimson.jar"
     Delete "$OUTDIR\lib\comm.jar"

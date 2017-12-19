@@ -30,6 +30,6 @@ public class FileChooserFilterTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FileChooserFilterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(FileChooserFilterTest.class);
 
 }

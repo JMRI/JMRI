@@ -216,8 +216,8 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                     textTrainRouteCommentPane.setVisible(!route.getComment().equals(Route.NONE) && Setup.isPrintRouteCommentsEnabled());
                     textTrainRouteCommentPane.setText(route.getComment());
                     // Does this train have a unique railroad name?
-                    if (!_train.getRailroadName().equals(Train.NONE)) {
-                        textRailRoadName.setText(_train.getRailroadName());
+                    if (!_train.getTrainRailroadName().equals(Train.NONE)) {
+                        textRailRoadName.setText(_train.getTrainRailroadName());
                     } else {
                         textRailRoadName.setText(Setup.getRailroadName());
                     }
@@ -328,6 +328,9 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                 checkBoxes.remove("s" + car.getId());
                 checkBoxes.remove("m" + car.getId());
                 log.debug("Car ({}) removed from list", car.toString());
+                if (car.isUtility()) {
+                    clearAndUpdate(); // need to recalculate number of utility cars
+                }
             }
             update();
         }
@@ -336,5 +339,5 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(YardmasterPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(YardmasterPanel.class);
 }

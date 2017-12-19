@@ -29,6 +29,6 @@ public class SensorEditActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SensorEditActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SensorEditActionTest.class);
 
 }

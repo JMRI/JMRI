@@ -23,7 +23,7 @@ public class TextItemPanelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EditorScaffold es = new EditorScaffold();
         jmri.util.ThreadingUtil.runOnGUI(() -> {
-            ip = new ItemPalette("Test ItemPalette", null);
+            ip = ItemPalette.getDefault("Test ItemPalette",  new EditorScaffold());
             ip.pack();
         });
         TextItemPanel t = new TextItemPanel(ip, "test", es);
@@ -43,5 +43,5 @@ public class TextItemPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TextItemPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TextItemPanelTest.class);
 }

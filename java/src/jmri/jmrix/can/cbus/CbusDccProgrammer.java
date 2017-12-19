@@ -32,10 +32,10 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.PAGEMODE);
-        ret.add(DefaultProgrammerManager.DIRECTBITMODE);
-        ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
-        ret.add(DefaultProgrammerManager.REGISTERMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
+        ret.add(ProgrammingMode.DIRECTBITMODE);
+        ret.add(ProgrammingMode.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.REGISTERMODE);
         return ret;
     }
 
@@ -210,6 +210,6 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammer.class);
 
 }

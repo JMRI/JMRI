@@ -153,11 +153,11 @@ public class SectionManager extends AbstractManager<Section> implements Property
 
     public Section getBySystemName(String name) {
         String key = name.toUpperCase();
-        return (Section) _tsys.get(key);
+        return _tsys.get(key);
     }
 
     public Section getByUserName(String key) {
-        return (Section) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     /**
@@ -273,19 +273,10 @@ public class SectionManager extends AbstractManager<Section> implements Property
         }
     }
 
-    /**
-     * @deprecated since 4.9.1; use
-     * {@link InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static private SectionManager instance() {
-        return InstanceManager.getDefault(SectionManager.class);
-    }
-
     @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameSection");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SectionManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SectionManager.class);
 }

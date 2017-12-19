@@ -6,7 +6,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -16,11 +15,11 @@ import org.junit.Test;
 public class TrainsTableFrameTest {
 
     @Test
-    @Ignore("ignore constructor tests for Frames until test dependencies resovled")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainsTableFrame t = new TrainsTableFrame();
         Assert.assertNotNull("exists",t);
+        JUnitUtil.dispose(t);
     }
 
     // The minimal setup for log4J
@@ -34,6 +33,6 @@ public class TrainsTableFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainsTableFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainsTableFrameTest.class);
 
 }

@@ -1,6 +1,6 @@
 package jmri.progdebugger;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import jmri.AddressedProgrammer;
 import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  * It uses the DefaultProgrammerManager to handle the service mode operations.
  *
- * @see jmri.ProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2002
-  */
+ * @see jmri.managers.DefaultProgrammerManager
+ * @author Bob Jacobsen Copyright (C) 2002
+ */
 public class DebugProgrammerManager extends DefaultProgrammerManager {
 
     public DebugProgrammerManager() {
@@ -29,7 +29,7 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
      * Save the mapping from addresses to Programmer objects. Short addresses
      * are saved as negative numbers.
      */
-    Hashtable<Integer, ProgDebugger> opsProgrammers = new Hashtable<Integer, ProgDebugger>();
+    HashMap<Integer, ProgDebugger> opsProgrammers = new HashMap<>();
 
     @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
@@ -38,20 +38,14 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
             address = -address;
         }
         // look for an existing entry by getting something from hash table
-        ProgDebugger saw = opsProgrammers.get(Integer.valueOf(address));
+        ProgDebugger saw = opsProgrammers.get(address);
         if (saw != null) {
-            if (log.isDebugEnabled()) {
-                log.debug("return existing ops-mode programmer "
-                        + pAddress + " " + pLongAddress);
-            }
+            log.debug("return existing ops-mode programmer {} {}", pAddress, pLongAddress);
             return saw;
         }
         // if not, save a new one & return it
-        opsProgrammers.put(Integer.valueOf(address), saw = new ProgDebugger(pLongAddress, pAddress));
-        if (log.isDebugEnabled()) {
-            log.debug("return new ops-mode programmer "
-                    + pAddress + " " + pLongAddress);
-        }
+        opsProgrammers.put(address, saw = new ProgDebugger(pLongAddress, pAddress));
+        log.debug("return new ops-mode programmer {} {}", pAddress, pLongAddress);
         return saw;
     }
 
@@ -70,5 +64,5 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DebugProgrammerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DebugProgrammerManager.class);
 }

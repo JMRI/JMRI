@@ -23,6 +23,7 @@
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
     <div id="mBody">
 <!--#include virtual="Sidebar" -->
@@ -133,7 +134,7 @@ There are several .properties files that are used for internal control,
 and should not be translated. These are marked by a comment at the top
 of the file. An example is the <code>apps/AppsStructureBundle.properties</code> file.
 
-<a name="commonkeys"><p>
+<a name="commonkeys"></a><p>
 You are advised to start a new language translation by completing the highest level bundles, starting with the
 <em>NamedBeanBundle</em> in the src/jmri directory end working your way down the folder hierarchy, of course following your personal
 interest in certain modules. By following this order, you will see your initial work all the way down inside the user interface for tools such as
@@ -171,7 +172,6 @@ share it with us <a href="index.shtml#contributing">contributing via GitHub</a>.
 By using a GitHub Pull Request, it's easy for us to merge your new and/or changed
 files into the code repository. If anything goes wrong, please don't hesitate to 
 ask for help with this.
-</ul>
 
 <h4>Non-Roman characters</h4>
 <p>Languages that involve non-roman letters require some
@@ -190,7 +190,7 @@ by converting special characters to the right sequences, but you must run your f
 Special characters are somewhat machine-specific, so to make they're properly handled, they have to be converted to
 ISO 8859-1 sequences on your computer before submission.
 
-<a name="xml"><h3>Translating XML files</h3>
+<a name="xml"></a><h3>Translating XML files</h3>
 XML files can also be internationalized.  There are examples in the 
 decoder definition directories.  Look for elements with an xml:lang
 attribute. Basically, you create additional elements with that attribute to 
@@ -214,7 +214,7 @@ edit in new XML elements, make sure the structure is correct, etc.
 For more information, see the <a href="http://jmri.org:/xml/XSLT/I18N">xml/XSLT/I18N file</a>
 or ask on the jmri-developers list.
 
-<a id="help"><h3>Translating Help files</h3>
+<a id="help"></a><h3>Translating Help files</h3>
 (This has only been done once, so these instructions may not be complete)
 <p>
 The English help files are found in the help/en directory.
@@ -231,8 +231,7 @@ any <code>.xml</code> and <code>.jhm</code> files or the <code>web*.shtml</code>
 are automatically produced.
 </ul>
 
-<a name="dev"><h2>Internationalization for Developers</h2>
-<p>
+<a name="dev"></a><h2>Internationalization for Developers</h2>
 For internationalization to work, you have to do a few things in the code 
 you write. Some web references on how to do this:
 <ul>
@@ -260,7 +259,7 @@ Cross-package references, e.g. between <code>jmri.jmrit</code> and <code>jmri.jm
 and existing ones are being removed.
 <p>
 Access is via a Bundle class local to each package.  A typical one is
-<code><href="http://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html">jmri.jmrit.Bundle</a></code>.
+<code><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html">jmri.jmrit.Bundle</a></code>.
 It provides two key methods you use to access (translated) resource
 strings:<br>
 <code>
@@ -407,9 +406,8 @@ For output:
 without using these formatting tools. That way, the files can be moved
 from one user to another without worrying about whether they are using the same Locale.</strong>
 
-<a name="testing">
+<a name="testing"></a>
 <h3>Testing</h3>
-<p>
 You should check that you've properly internationalized 
 your code.  We provide a tool for doing this which creates
 an automatically translated version of your properties files,
@@ -428,6 +426,88 @@ using the new .properties files.
 </ul>
 <p>If all is well, all the message text will have been translated to UPPER CASE.
 Anything you wrote that remains in lower case has not been completely internationalized.
+
+<a name="bundlekeysreport"></a>
+<h3>Bundle Keys Report</h3>
+<p><strong>BundleKeysReport.py</strong>, located in the <strong>scripts</strong> (not jython) directory,
+is used to analyse the bundle keys within a property file.  The primary function is
+to identify unused keys.  The script is run using <strong><em>PanelPro Panels >>
+Run Script...</em></strong>  The output from the script is written to the Script
+Output window.  The run time will vary based on the number of keys to be checked
+along with the position in the source hierarchy.  It will range from several to many
+seconds.</p>
+
+<p>Once a property file, normally the default/English file, is selected, all of the
+classes within the package are scanned for each key in the file.  if there are
+more packages below the initial one, their classes are also scanned.  This
+covers the bundle hierarchy.  <strong>Note:</strong>  It is possible to get false
+positive matches when a class is using a matching key but the class is using a
+private property file.</p>
+
+<p>After the unused key list is built, the entire source tree is scanned for external
+references to the selected property file.  If the class containing the reference uses
+any of the unused keys, those keys are removed from the unused key list.  The jython
+directory is also scanned for external references.</p>
+
+<p>After the scanning is done, a dialog box prompts to save the unused key list.  If
+desired, the list will be written with the selected location and name.
+The default location will be the User Files Location.</p>
+
+<p>The final dialog box asks if the property files should be updated.  If Yes is 
+selected, all of the property files in the bundle set are backed up.  Each file is
+then scanned for the unused keys.  When one is found, the line is updated with
+<strong>#NotUsed</strong> as a comment.  If testing reveals that the key is
+actually required, the comment can be removed.  <strong>Note:</strong>  <em>If
+the source tree is managed by Git, the backups will be included in the current
+branch.  Either move the backups or don't select them when doing a commit</em>.
+
+<a name="classkeysreport"></a>
+<h3>Class Keys Report</h3>
+<p><strong>ClassKeysReport.py</strong>, located in the <strong>scripts</strong> (not jython) directory,
+is used to identify the bundle keys used by a class. The script is run using
+<strong><em>PanelPro Panels >> Run Script...</em></strong>  The output from the
+script is written to the Script Output window.</p>
+
+<p>When the script is started, a file selection dialog is displayed.  Select either
+a Java class file or a Java package directory.  If a directory is selected, all
+of the *.java files within the directory will be processed.  The Bundle.java file
+is excluded.</p>
+
+<p>For each file, the script scans for <strong>Bundle.getMessage(</strong> and 
+<strong>getString(</strong>.  The first <strong><em>word</em></strong> after the
+parenthesis is returned as the bundle key.  A word is defined as the characters
+a-z, A-Z, 0-9 and underscore.  If the first word is a Locale reference, the
+second word is returned.</p>
+
+<p>Here is a typical output line:</p>
+<pre style="font-family: monospace;">
+   783, Search Type = Local, Key Type = Variable, Key = 'titleId', 	Text = addLogixFrame = new JmriJFrame(rbx.getString(titleId));
+</pre>
+Field List
+<ul>
+    <li>The source code line number</li>
+    <li>Search Type
+        <ul>
+            <li>Local: getString, such as rbx.getString()</li>
+            <li>Bundle: getMessage()</li>
+        </ul>
+    </li>
+    <li>Key Type
+        <ul>
+            <li>String: A <strong>word</strong> wrapped in double quotes</li>
+            <li>Variable: A plain <strong>word</strong></li>
+        </ul>
+    </li>
+    <li>The key</li>
+    <li>The source code line</li>
+</ul>
+<p>Only the variable key types are displayed in the script output window.<br>
+<strong>Note</strong>: A key that contains non-word characters will be truncated
+and assigned the Variable key type.
+</p>
+
+<p>When the script is done scanning, it provides an option to export the <strong>entire</strong>
+key list to a CSV file.</p>
 
 <!--#include virtual="/Footer" -->
 

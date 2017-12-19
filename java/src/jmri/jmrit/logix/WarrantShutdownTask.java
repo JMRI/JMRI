@@ -74,6 +74,22 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
         if (_mergeProfiles == null || _mergeProfiles.isEmpty()) {
             return false;
         }
+        HashMap<String, RosterSpeedProfile> sessionProfiles = manager.getSessionProfiles();
+        if (sessionProfiles == null || sessionProfiles.isEmpty()) {
+            return false;
+        }
+        boolean allEmpty = true;
+        Iterator<RosterSpeedProfile> it = sessionProfiles.values().iterator();
+        while(it.hasNext()) {
+            RosterSpeedProfile profile = it.next();
+            if (profile.hasForwardSpeeds() || profile.hasReverseSpeeds()) {
+                allEmpty = false;
+                break;
+            }
+        }
+        if (allEmpty) {
+            return false;
+        }
         _anomalies = new HashMap<>();
         _mergeCandidates = new HashMap<>();
         Iterator<java.util.Map.Entry<String, RosterSpeedProfile>> iter = _mergeProfiles.entrySet().iterator();
@@ -83,7 +99,7 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
             if (anomaly.size() > 0) {
                 _anomalies.put(entry.getKey(), anomaly);
             }
-            _mergeCandidates.put(entry.getKey(), true);
+            _mergeCandidates.put(entry.getKey(), Boolean.valueOf(true));
         }
         return true;
     }
@@ -118,6 +134,6 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
         Roster.getDefault().writeRoster();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantShutdownTask.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantShutdownTask.class);
 
 }

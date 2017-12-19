@@ -152,7 +152,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
             BlockBossLogic bb = null;
             try {
                 bb = BlockBossLogic.getStoppedObject(block.getAttributeValue("signal"));
-            } catch (java.lang.Exception e) {
+            } catch (Exception e) {
                 log.error("An error occurred trying to find the signal for the signal elements for " + block.getAttributeValue("signal"));
                 result = false;
             }
@@ -381,6 +381,6 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
         return jmri.Manager.BLOCKBOSS;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockBossLogicXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockBossLogicXml.class);
 
 }

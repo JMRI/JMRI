@@ -29,6 +29,6 @@ public class MaskCompareEditorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MaskCompareEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MaskCompareEditorTest.class);
 
 }

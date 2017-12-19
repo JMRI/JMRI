@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="http:../../XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>CTC-MB</name>
+  <date>1943</date>
+  <reference>Non-Prototype USS H-2 Signal Masts".</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2015</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+     <author>
+        <personname><firstname>Chuck</firstname><surname>Catania</surname></personname>
+        <email>info@modelrailroadcontrolsystems.com</email>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2017=10-11</date>
+        <authorinitials>CFC</authorinitials>
+        <revremark>>SP Syle Searchlight Signals for CTC Model Boards</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspects>
+    <aspect>
+      <name>Clear</name>
+      <indication>Proceed</indication>
+      <comment>CTC Model Board Signal Masts</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Approach</name>
+      <indication>Proceed preparing to stop at next signal</indication>
+      <comment>CTC Model Board Signal Masts</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Advanced Approach</name>
+      <indication>Reduce speed preparing to diverge at next signal</indication>
+      <comment>CTC Model Board Signal Masts</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+	
+    <aspect>
+      <name>Stop</name>
+      <indication>Stop</indication>
+      <comment>CTC Model Board Signal Masts</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Clear</name>
+      <indication>Proceed through diverging route</indication>
+      <comment>CTC Model Board Signal Masts</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+   </aspect>
+
+    <aspect>
+      <name>Diverging Approach</name>
+      <indication>Proceed through diverging route preparing to stop at next signal</indication>
+      <comment>CTC Model Board Signal Masts</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+   <aspect>
+      <name>Branch Clear</name>
+      <indication>Proceed through branch route</indication>
+      <comment>CTC Model Board Signal Masts</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+   <aspect>
+      <name>Branch Approach</name>
+      <indication>Proceed through branch route preparing to stop at next signal</indication>
+      <comment>CTC Model Board Signal Masts</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+   <aspect>
+      <name>Branch Diverging</name>
+      <indication>Proceed through branch route at restricted speed</indication>
+      <comment>CTC Model Board Signal Masts</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+ </aspects>
+  
+  <appearancefiles>
+    <appearancefile href="appearance-SL-1-head.xml"/>
+    <appearancefile href="appearance-SL-2-head.xml"/>
+    <appearancefile href="appearance-SL-3-head.xml"/>
+    <appearancefile href="appearance-DW-1-head.xml"/>
+    <appearancefile href="appearance-DW-2-head.xml"/>
+ </appearancefiles>
+
+</aspecttable>
+  

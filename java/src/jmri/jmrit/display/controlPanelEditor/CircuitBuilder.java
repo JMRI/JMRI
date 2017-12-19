@@ -27,7 +27,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
@@ -909,10 +908,10 @@ public class CircuitBuilder {
                 }
             }
         }
-        List<NamedBean> list = portalMgr.getNamedBeanList();
-        Iterator<NamedBean> iter = list.iterator();
+        List<Portal> list = portalMgr.getNamedBeanList();
+        Iterator<Portal> iter = list.iterator();
         while (iter.hasNext()) {
-            Portal portal = (Portal) iter.next();
+            Portal portal =  iter.next();
             String name = portal.getName();
             PortalIcon pi = _portalIconMap.get(name);
             if (pi != null) {
@@ -1041,7 +1040,7 @@ public class CircuitBuilder {
     }
 
     /*
-     * *************** Overriden methods of Editor *******************
+     * *************** Overridden methods of Editor *******************
      *
      * public void paintTargetPanel(Graphics g) { Graphics2D g2d =
      * (Graphics2D)g; if (_circuitIcons!=null){ java.awt.Stroke stroke =
@@ -1713,5 +1712,5 @@ public class CircuitBuilder {
         return panel;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CircuitBuilder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CircuitBuilder.class);
 }

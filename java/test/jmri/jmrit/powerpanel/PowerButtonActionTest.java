@@ -30,6 +30,6 @@ public class PowerButtonActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PowerButtonActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PowerButtonActionTest.class);
 
 }

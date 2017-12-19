@@ -28,7 +28,7 @@ public class JsonOperationsSocketService extends JsonSocketService {
     private Locale locale;
     private final JsonOperationsHttpService service;
     private final HashMap<String, TrainListener> trainListeners = new HashMap<>();
-    private final TrainsListener trainsListener = new TrainsListener();    
+    private final TrainsListener trainsListener = new TrainsListener();
     private final static Logger log = LoggerFactory.getLogger(JsonOperationsSocketService.class);
 
     public JsonOperationsSocketService(JsonConnection connection) {
@@ -47,10 +47,12 @@ public class JsonOperationsSocketService extends JsonSocketService {
                     this.trainListeners.put(id, new TrainListener(id));
                     TrainManager.instance().getTrainById(id).addPropertyChangeListener(this.trainListeners.get(id));
                 }
-                //$FALL-THROUGH$
+                break;
             default:
-                this.connection.sendMessage(this.service.doPost(type, id, data, locale));
+                // other types get no special handling
+                break;
         }
+        this.connection.sendMessage(this.service.doPost(type, id, data, locale));
     }
 
     @Override
@@ -115,7 +117,7 @@ public class JsonOperationsSocketService extends JsonSocketService {
                 try {
                     connection.sendMessage(service.doGetList(TRAINS, locale));
                     //child added or removed, reset listeners
-                    if (evt.getPropertyName().equals("length")) { // NOI18N 
+                    if (evt.getPropertyName().equals("length")) { // NOI18N
                         addListenersToChildren();
                     }
                 } catch (JsonException ex) {

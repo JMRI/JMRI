@@ -1,7 +1,9 @@
 package jmri.server.web.spi;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import javax.annotation.Nonnull;
 
@@ -69,4 +71,15 @@ public interface WebManifest {
      */
     @Nonnull
     public List<URL> getAngularSources();
+
+    /**
+     * Get the paths for JSON translation dictionaries to pre-load. If
+     * translation dictionaries exist, but not for the requested Locale,
+     * fallback onto the requested language, and, if that is also not available,
+     * to the English language with no country specified.
+     *
+     * @param locale the requested locale for the translations
+     * @return a list of translation sources
+     */
+    public Set<URI> getPreloadedTranslations(Locale locale);
 }

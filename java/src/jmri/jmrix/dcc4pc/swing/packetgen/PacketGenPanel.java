@@ -32,8 +32,11 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // the following code sets the frame's initial state
         {
@@ -65,11 +68,17 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.dcc4pc.swing.packetgen.PacketGenFrame";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         return "Send DCC4PC command";
@@ -107,19 +116,28 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void handleTimeout(Dcc4PcMessage m) {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void message(Dcc4PcMessage m) {
     }  // ignore replies
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reply(Dcc4PcReply r) {
     } // ignore replies
     
-    private final static Logger log = LoggerFactory.getLogger(PacketGenPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PacketGenPanel.class);
     /**
      * Nested class to create one of these using old-style defaults
      */

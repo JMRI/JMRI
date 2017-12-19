@@ -7,7 +7,6 @@ import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.Programmer;
-import jmri.ProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,18 +40,14 @@ public class ProgModePane extends ProgModeSelector {
     public ProgModePane(int direction) {
 
         if (log.isDebugEnabled()) {
-            log.debug("ProgrammerManager:");
-            for (Object p : InstanceManager.getList(ProgrammerManager.class)) {
-                log.debug("   " + ((ProgrammerManager) p).toString());
-            }
-            log.debug("Addressed:");
-            for (Object p : InstanceManager.getList(AddressedProgrammerManager.class)) {
-                log.debug("   " + ((AddressedProgrammerManager) p).toString());
-            }
-            log.debug("Global:");
-            for (Object p : InstanceManager.getList(GlobalProgrammerManager.class)) {
-                log.debug("   " + ((GlobalProgrammerManager) p).toString());
-            }
+            log.debug("AddressedProgrammerManager:");
+            InstanceManager.getList(AddressedProgrammerManager.class).forEach((p) -> {
+                log.debug("   " + p.toString());
+            });
+            log.debug("GlobalProgrammerManager:");
+            InstanceManager.getList(GlobalProgrammerManager.class).forEach((p) -> {
+                log.debug("   " + p.toString());
+            });
         }
 
         // general GUI config
@@ -123,6 +118,6 @@ public class ProgModePane extends ProgModeSelector {
         mOpsPane = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgModePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgModePane.class);
 
 }

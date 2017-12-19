@@ -35,6 +35,6 @@ public class SpeedProfilePanelTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpeedProfilePanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SpeedProfilePanelTest.class);
 
 }

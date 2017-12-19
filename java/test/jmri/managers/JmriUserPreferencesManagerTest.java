@@ -698,10 +698,15 @@ public class JmriUserPreferencesManagerTest {
         m.setSaveAllowed(false);
         Assert.assertNull(m.getPropertyKeys(strClass));
         m.setProperty(strClass, "test1", log);
-        m.setProperty(strClass, "test2", null);
+        m.setProperty(strClass, "test2", new Object());
         Assert.assertEquals(2, m.getPropertyKeys(strClass).size());
         Assert.assertTrue(m.getPropertyKeys(strClass).contains("test1"));
         Assert.assertTrue(m.getPropertyKeys(strClass).contains("test2"));
+        Assert.assertFalse(m.getPropertyKeys(strClass).contains("test3"));
+        m.setProperty(strClass, "test2", null);
+        Assert.assertEquals(1, m.getPropertyKeys(strClass).size());
+        Assert.assertTrue(m.getPropertyKeys(strClass).contains("test1"));
+        Assert.assertFalse(m.getPropertyKeys(strClass).contains("test2"));
         Assert.assertFalse(m.getPropertyKeys(strClass).contains("test3"));
     }
 

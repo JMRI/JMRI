@@ -126,24 +126,24 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 lastTimerTask = new TimerTask() {
                         public void run () { newKnownState(s); }
                     };
-                timer.schedule(lastTimerTask, DELAYED_FEEDBACK_INTERVAL );          
+                timer.schedule(lastTimerTask, DELAYED_FEEDBACK_INTERVAL );
             }
         } else {
             myOperator.start();
         }
     }
 
-    /** 
+    /**
      * Define duration of delay for DELAYED feedback mode.
      * <p>
      * Defined as "public non-final"
      * so it can be changed in e.g. the jython/SetDefaultDelayedTurnoutDelay script
      */
     public static int DELAYED_FEEDBACK_INTERVAL = 4000;
-    
+
     static Timer timer = null;
     TimerTask lastTimerTask = null;
-    
+
     @Override
     public int getCommandedState() {
         return _commandedState;
@@ -454,7 +454,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * This implementation by itself doesn't provide locking support.
-     * Override this in subclasses that do. 
+     * Override this in subclasses that do.
      *
      * @return One of 0 for none
      */
@@ -462,7 +462,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * This implementation by itself doesn't provide locking support.
-     * Override this in subclasses that do. 
+     * Override this in subclasses that do.
      *
      * @return false for not supported
      */
@@ -647,15 +647,18 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     public void provideFirstFeedbackNamedSensor(NamedBeanHandle<Sensor> s) {
-        if (getFirstSensor() != null) {
-            getFirstSensor().removePropertyChangeListener(this);
+        // remove existing if any
+        Sensor temp = getFirstSensor();
+        if (temp != null) {
+            temp.removePropertyChangeListener(this);
         }
 
         _firstNamedSensor = s;
 
         // if need be, set listener
-        if (getFirstSensor() != null) {
-            getFirstSensor().addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
+        temp = getFirstSensor();  // might have changed
+        if (temp != null) {
+            temp.addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
         }
 
     }
@@ -689,16 +692,18 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     public void provideSecondFeedbackNamedSensor(NamedBeanHandle<Sensor> s) {
-        // if need be, clean listener
-        if (getSecondSensor() != null) {
-            getSecondSensor().removePropertyChangeListener(this);
+        // remove existing if any
+        Sensor temp = getSecondSensor();
+        if (temp != null) {
+            temp.removePropertyChangeListener(this);
         }
 
         _secondNamedSensor = s;
 
         // if need be, set listener
-        if (getSecondSensor() != null) {
-            getSecondSensor().addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
+        temp = getSecondSensor();  // might have changed
+        if (temp != null) {
+            temp.addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
         }
     }
 
@@ -828,12 +833,15 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     @Override
     public void dispose() {
-        if (getFirstSensor() != null) {
-            getFirstSensor().removePropertyChangeListener(this);
+        Sensor temp;
+        temp = getFirstSensor();
+        if (temp != null) {
+            temp.removePropertyChangeListener(this);
         }
         _firstNamedSensor = null;
-        if (getSecondSensor() != null) {
-            getSecondSensor().removePropertyChangeListener(this);
+        temp = getSecondSensor();
+        if (temp != null) {
+            temp.removePropertyChangeListener(this);
         }
         _secondNamedSensor = null;
         super.dispose();
@@ -979,11 +987,9 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
                 throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseSensorTurnoutVeto", getDisplayName()), e); //IN18N
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) {
-            log.warn("No clean DoDelete worked for {}", getSystemName()); //NOI18N
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractTurnout.class);
 
 }

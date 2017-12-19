@@ -28,14 +28,14 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPReplyTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPMessageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPTrafficControllerTest.class));
-        suite.addTest(new TestSuite(SRCPSystemConnectionMemoTest.class));
-        suite.addTest(new TestSuite(SRCPBusConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPSystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPBusConnectionMemoTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPTurnoutManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPTurnoutTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPSensorManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPSensorTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPThrottleManagerTest.class));
-        suite.addTest(new TestSuite(SRCPThrottleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPThrottleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPPowerManagerTest.class));
         suite.addTest(new TestSuite(SRCPProgrammerTest.class));
         suite.addTest(new TestSuite(SRCPProgrammerManagerTest.class));

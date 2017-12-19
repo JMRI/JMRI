@@ -39,8 +39,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ItemPanel for for plain icons and backgrounds Does NOT use IconDialog class
- * to add, replace or delete icons.
+ * ItemPanel for for plain icons and backgrounds.
+ * Does NOT use IconDialog class to add, replace or delete icons.
  */
 public class IconItemPanel extends ItemPanel implements MouseListener {
 
@@ -55,6 +55,9 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
 
     /**
      * Constructor for plain icons and backgrounds
+     * @param type type
+     * @param parentFrame parentFrame
+     * @param editor editor
      */
     public IconItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
         super(parentFrame, type, editor);
@@ -97,7 +100,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         blurb.add(new JLabel(Bundle.getMessage("ToDeleteIcon", Bundle.getMessage("deleteIcon"))));
         if (!isBackGround) {
             blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-            blurb.add(new JLabel(Bundle.getMessage("ToLinkToURL", "Icon")));
+            blurb.add(new JLabel(Bundle.getMessage("ToLinkToURL", Bundle.getMessage("Icon"))));
             blurb.add(new JLabel(Bundle.getMessage("enterPanel")));
             blurb.add(new JLabel(Bundle.getMessage("enterURL")));
         }
@@ -108,8 +111,8 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     }
 
     /**
-     * Plain icons have only one family, usually named "set" Override for plain
-     * icon {@literal &} background and put all icons here
+     * Plain icons have only one family, usually named "set".
+     * Override for plain icon {@literal &} background and put all icons here.
      */
     protected void initIconFamiliesPanel() {
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
@@ -135,17 +138,24 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
      * @param iconMap set of icons to add to panel
      */
     protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
+        Color bkgrdColor = _editor.getTargetPanel().getBackground();
         _iconPanel = new JPanel();
+        _iconPanel.setBackground(bkgrdColor);
+        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1), Bundle.getMessage("PreviewBorderTitle")));
+        JPanel iPanel = new JPanel();
+        iPanel.setBackground(bkgrdColor);
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
             NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
             JPanel panel = new JPanel();
+            panel.setBackground(bkgrdColor);
             String borderName = ItemPalette.convertText(entry.getKey());
             panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                     borderName));
             try {
                 JLabel label = new IconDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR), _level);
+                label.setBackground(bkgrdColor);
                 label.setName(borderName);
                 label.setToolTipText(icon.getName());
                 panel.add(label);
@@ -161,14 +171,24 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             } catch (java.lang.ClassNotFoundException cnfe) {
                 cnfe.printStackTrace();
             }
-            _iconPanel.add(panel);
+            iPanel.add(panel);
         }
+        _iconPanel.add(iPanel);
         add(_iconPanel, 1);
         _iconPanel.addMouseListener(this);
     }
 
+    @Override
+    protected void setEditor(Editor ed) {
+        super.setEditor(ed);
+        if (_initialized) {
+            removeIconFamiliesPanel();
+            addIconsToPanel(_iconMap);
+        }
+    }
+
     /*
-     *  for plain icons and backgrounds, families panel is the icon panel of the one family
+     *  For plain icons and backgrounds, families panel is the icon panel of just one family.
      */
     protected void removeIconFamiliesPanel() {
         if (_iconPanel != null) {
@@ -241,13 +261,12 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     }
 
     /**
-     * Action item for initButtonPanel
+     * Action item for initButtonPanel.
      */
     protected void addNewIcon() {
         if (log.isDebugEnabled()) {
             log.debug("addNewIcon Action: iconMap.size()= " + _iconMap.size());
         }
-//        String name = Bundle.getMessage("RedX");
         String name = JOptionPane.showInputDialog(this,
                 Bundle.getMessage("NoIconName"), null);
         if (name == null || name.trim().length() == 0) {
@@ -275,7 +294,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     }
 
     /**
-     * Action item for initButtonPanel
+     * Action item for initButtonPanel.
      */
     protected void deleteIcon() {
         if (_selectedIcon == null) {
@@ -497,5 +516,6 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IconItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IconItemPanel.class);
+
 }

@@ -35,5 +35,5 @@ public class MultiIconEditorTest {
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
-    private final static Logger log = LoggerFactory.getLogger(MultiIconEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MultiIconEditorTest.class);
 }

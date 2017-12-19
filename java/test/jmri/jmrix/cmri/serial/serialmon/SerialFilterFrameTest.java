@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+
 
 /**
  *
@@ -19,7 +21,7 @@ public class SerialFilterFrameTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialFilterFrame t = new SerialFilterFrame();
+        SerialFilterFrame t = new SerialFilterFrame(new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists",t);
     }
 
@@ -34,6 +36,6 @@ public class SerialFilterFrameTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialFilterFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SerialFilterFrameTest.class);
 
 }

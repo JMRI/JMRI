@@ -193,13 +193,13 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
     @CheckForNull
     public Block getBySystemName(@Nonnull String name) {
         String key = name.toUpperCase();
-        return (Block) _tsys.get(key);
+        return _tsys.get(key);
     }
 
     @CheckReturnValue
     @CheckForNull
     public Block getByUserName(@Nonnull String key) {
-        return (Block) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @CheckReturnValue
@@ -218,7 +218,7 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
     /**
      * @return the default BlockManager instance
      * @deprecated since 4.9.1; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     * {@link InstanceManager#getDefault(Class)} instead
      */
     @Deprecated
     @CheckForNull
@@ -282,7 +282,7 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
             Block b = getBySystemName(sysName);
             Object o = b.getValue();
             if (o != null) {
-                if (o instanceof jmri.jmrit.roster.RosterEntry && o == re) {
+                if (o instanceof RosterEntry && o == re) {
                     blockList.add(b);
                 } else if (o.toString().equals(re.getId()) || o.toString().equals(re.getDccAddress())) {
                     blockList.add(b);
@@ -293,5 +293,5 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
         return blockList;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockManager.class);
 }

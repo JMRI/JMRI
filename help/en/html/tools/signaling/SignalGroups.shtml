@@ -63,7 +63,7 @@
 
       <h4><a name="junction" id="junction">Junction
       Indicators</a></h4><img src=
-      "../../../package/jmri/jmrit/beantable/SignalGroup1.png"
+      "../../../package/jmri/jmrit/beantable/images/SignalGroup1.png"
       align="right" width="30" height="90" hspace="0" vspace="0"
       alt="Junction Indicator figure">
 
@@ -98,7 +98,8 @@
 
       <h4><a name="speed" id="speed">Speed
       Indicators</a></h4><a href=
-      "https://mysite.du.edu/~jcalvert/railway/belgian.htm"><img src="../../../package/jmri/jmrit/beantable/speedindicbelg40.gif"
+      "https://mysite.du.edu/~jcalvert/railway/belgian.htm"><img
+            src="../../../package/jmri/jmrit/beantable/images/speedindicbelg40.gif"
       align="right" width="60" height="119" hspace="0" vspace="0"
       alt="Speed Indicator figure by J. Calvert"></a>
 
@@ -108,7 +109,8 @@
       to 40 km/h.</p><a name="table" id="table"></a>
 
       <h3>The Signal Group Table</h3><a href=
-      "../../../package/jmri/jmrit/beantable/SignalGroupTable.png"><img src="../../../package/jmri/jmrit/beantable/SignalGroupTable.png"
+      "../../../package/jmri/jmrit/beantable/images/SignalGroupTable.png"><img
+            src="../../../package/jmri/jmrit/beantable/images/SignalGroupTable.png"
       align="right" width="386" height="168" hspace="0" vspace="0"
       alt="Signal Group Table figure"></a>
 

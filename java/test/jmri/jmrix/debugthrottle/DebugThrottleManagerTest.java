@@ -10,18 +10,18 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DebugThrottleManagerTest {
+public class DebugThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     @Test
     public void testCTor() {
-        DebugThrottleManager t = new DebugThrottleManager();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",tm);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        tm = new DebugThrottleManager();
     }
 
     @After
@@ -29,6 +29,6 @@ public class DebugThrottleManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DebugThrottleManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DebugThrottleManagerTest.class);
 
 }

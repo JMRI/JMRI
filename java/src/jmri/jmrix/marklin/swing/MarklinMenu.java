@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Create a "Systems" menu containing the Jmri Marklin-specific tools.
  *
  * @author Kevin Dickerson
  */
@@ -14,14 +15,11 @@ public class MarklinMenu extends JMenu {
     public MarklinMenu(MarklinSystemConnectionMemo memo) {
         super();
 
-        String title;
         if (memo != null) {
-            title = memo.getUserName();
+            setText(memo.getUserName());
         } else {
-            title = Bundle.getMessage("MenuMarklin");
+            setText(Bundle.getMessage("MenuMarklin"));
         }
-
-        setText(title);
 
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
 
@@ -58,5 +56,6 @@ public class MarklinMenu extends JMenu {
         String load;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinMenu.class);
+
 }

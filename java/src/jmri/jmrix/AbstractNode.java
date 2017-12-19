@@ -18,7 +18,7 @@ public abstract class AbstractNode {
     public AbstractNode() {
     }
 
-    public int nodeAddress = 0;  // Node address, range varies by subclass
+    public int nodeAddress = 0; // Node address, range varies by subclass
 
     /**
      * Public method to return the node address.
@@ -37,7 +37,7 @@ public abstract class AbstractNode {
         if (checkNodeAddress(address)) {
             nodeAddress = address;
         } else {
-            log.error("illegal node address: " + Integer.toString(address));
+            log.error("illegal node address: {}", Integer.toString(address));
             nodeAddress = 0;
             throw new IllegalArgumentException("Attempt to set address to invalid value: " + address);
         }
@@ -103,7 +103,8 @@ public abstract class AbstractNode {
         needSend = true;
     }
 
-    boolean needSend = true;          // 'true' if something has changed that requires data to be sent
+    boolean needSend = true; // 'true' if something has changed that requires data to be sent
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractNode.class);
+
 }

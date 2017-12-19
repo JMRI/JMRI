@@ -714,6 +714,8 @@ public class SignalTableModel extends AbstractTableModel {
         return String.class;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                                justification="better to keep cases in column order rather than to combine")
     static public int getPreferredWidth(int col) {
         switch (col) {
             case NAME_COLUMN:
@@ -746,5 +748,5 @@ public class SignalTableModel extends AbstractTableModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalTableModel.class);
 }

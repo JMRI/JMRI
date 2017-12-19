@@ -10,25 +10,22 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class PR2SystemConnectionMemoTest {
-
-    @Test
-    public void testCTor() {
-        PR2SystemConnectionMemo t = new PR2SystemConnectionMemo();
-        Assert.assertNotNull("exists",t);
-    }
+public class PR2SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        scm = new PR2SystemConnectionMemo();
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PR2SystemConnectionMemoTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PR2SystemConnectionMemoTest.class);
 
 }

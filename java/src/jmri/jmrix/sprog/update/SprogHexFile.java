@@ -418,6 +418,6 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SprogHexFile.class.getName());
+            .getLogger(SprogHexFile.class);
 
 }

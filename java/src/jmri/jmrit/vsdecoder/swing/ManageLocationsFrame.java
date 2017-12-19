@@ -295,29 +295,6 @@ public class ManageLocationsFrame extends JmriJFrame {
 
     }
 
-    /**
-     * Add a standard help menu, including window specific help item.
-     *
-     * @param ref    JHelp reference for the desired window-specific help page
-     * @param direct true if the help menu goes directly to the help system,
-     *               e.g. there are no items in the help menu
-     *
-     * WARNING: BORROWED FROM JmriJFrame.
-     */
-    @Override
-    public void addHelpMenu(String ref, boolean direct) {
-        // only works if no menu present?
-        JMenuBar bar = getJMenuBar();
-        if (bar == null) {
-            bar = new JMenuBar();
-        }
-        // add Window menu
-        bar.add(new WindowMenu(this)); // * GT 28-AUG-2008 Added window menu
-        // add Help menu
-        jmri.util.HelpUtil.helpMenu(bar, ref, direct);
-        setJMenuBar(bar);
-    }
-
     private void saveButtonPressed(ActionEvent e) {
         int value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMLFSaveDialogConfirmMessage"),
                 Bundle.getMessage("FieldMLFSaveDialogTitle"),
@@ -374,7 +351,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ManageLocationsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ManageLocationsFrame.class);
 
     /**
      * Private class to serve as TableModel for Reporters and Ops Locations

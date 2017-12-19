@@ -17,12 +17,12 @@ public class Log4JUtilTest extends TestCase {
     public void testLog4JWarnMessage() {
         log.warn("WARN message");
         jmri.util.JUnitAppender.assertWarnMessage("WARN message");
-        
+
         log.debug("DEBUG message"); // should be suppressed see tests.lcf
 
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
     }
-    
+
     public void testSendJavaUtilLogInfoMessage() {
         // test that java.util.logging is getting to Log4J
         java.util.logging.Logger logger =
@@ -34,7 +34,7 @@ public class Log4JUtilTest extends TestCase {
 
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
     }
-    
+
     // from here down is testing infrastructure
     public Log4JUtilTest(String s) {
         super(s);
@@ -65,6 +65,6 @@ public class Log4JUtilTest extends TestCase {
         super.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Log4JUtilTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Log4JUtilTest.class);
 
 }

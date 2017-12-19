@@ -39,7 +39,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(LogixActionTest.class));
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.logix.configurexml.PackageTest.class));
-        suite.addTest(NXFrameTest.suite()); //formerly NXWarrantTest        
+        suite.addTest(new JUnit4TestAdapter(NXFrameTest.class)); //formerly NXWarrantTest        
         suite.addTest(LearnWarrantTest.suite());
         suite.addTest(new JUnit4TestAdapter(PortalManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(ThrottleSettingTest.class));
@@ -62,6 +62,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(FunctionPanelTest.class));
         suite.addTest(new JUnit4TestAdapter(WarrantShutdownTaskTest.class));
         suite.addTest(new JUnit4TestAdapter(SpeedProfilePanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(RouteFinderTest.class));
+        suite.addTest(new JUnit4TestAdapter(MergePromptTest.class));
         return suite;
     }
 

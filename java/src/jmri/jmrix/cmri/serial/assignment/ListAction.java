@@ -15,13 +15,13 @@ public class ListAction extends AbstractAction {
 
     private CMRISystemConnectionMemo _memo = null;
 
-    public ListAction(String s,CMRISystemConnectionMemo memo) {
+    public ListAction(String s, CMRISystemConnectionMemo memo) {
         super(s);
         _memo = memo;
     }
 
     public ListAction(CMRISystemConnectionMemo memo) {
-        this(Bundle.getMessage("MenuItemAssignments"),memo);
+        this(Bundle.getMessage("MenuItemAssignments"), memo);
     }
 
     @Override
@@ -35,5 +35,5 @@ public class ListAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ListAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ListAction.class);
 }

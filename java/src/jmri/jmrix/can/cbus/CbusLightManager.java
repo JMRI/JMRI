@@ -54,7 +54,7 @@ public class CbusLightManager extends AbstractLightManager {
             }
         } catch (NumberFormatException ex) {
             log.debug("Unable to convert " + addr + " into Cbus format +nn");
-        };
+        }
         Light l = new CbusLight(getSystemPrefix(), addr, memo.getTrafficController());
         l.setUserName(userName);
         return l;
@@ -78,7 +78,7 @@ public class CbusLightManager extends AbstractLightManager {
             unsigned = Integer.valueOf(curAddress).intValue(); // accept unsigned integer, will add "+" next
         } catch (NumberFormatException ex) {
             // already warned
-        };
+        }
         if (unsigned > 0) {
             curAddress = "+" + curAddress;
         }
@@ -96,17 +96,24 @@ public class CbusLightManager extends AbstractLightManager {
     }
 
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
         try {
             validateSystemNameFormat(addr);
         } catch (IllegalArgumentException e){
             log.debug("Warning: " + e.getMessage());
-            return false;
+            return NameValidity.INVALID;
         }
-        return true;
+        return NameValidity.VALID;
     }
 
+    /**
+     * Work out the details for Cbus hardware address validation
+     * Logging of handled cases no higher than WARN.
+     *
+     * @param address the hardware address to check
+     * @throws IllegalArgumentException when delimiter is not found
+     */
     void validateSystemNameFormat(String address) throws IllegalArgumentException {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
@@ -120,7 +127,7 @@ public class CbusLightManager extends AbstractLightManager {
                     unsigned = Integer.valueOf(address).intValue(); // on unsigned integer, will add "+" upon creation
                 } catch (NumberFormatException ex) {
                     log.debug("Unable to convert " + address + " into Cbus format +nn");
-                };
+                }
                 if (address.startsWith("+") || address.startsWith("-") || unsigned > 0) {
                     break;
                 }
@@ -153,6 +160,6 @@ public class CbusLightManager extends AbstractLightManager {
         return entryToolTip;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CbusLightManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(CbusLightManager.class);
 
 }

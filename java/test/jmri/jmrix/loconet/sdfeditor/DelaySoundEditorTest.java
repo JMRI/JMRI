@@ -29,6 +29,6 @@ public class DelaySoundEditorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DelaySoundEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DelaySoundEditorTest.class);
 
 }

@@ -33,6 +33,6 @@ public class JsonUtilTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonUtilTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonUtilTest.class);
 
 }

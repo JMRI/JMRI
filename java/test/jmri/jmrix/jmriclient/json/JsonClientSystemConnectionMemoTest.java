@@ -10,18 +10,19 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class JsonClientSystemConnectionMemoTest {
+public class JsonClientSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
+    @Override
     @Test
-    public void testCTor() {
-        JsonClientSystemConnectionMemo t = new JsonClientSystemConnectionMemo();
-        Assert.assertNotNull("exists",t);
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        scm = new JsonClientSystemConnectionMemo();
     }
 
     @After
@@ -29,6 +30,6 @@ public class JsonClientSystemConnectionMemoTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonClientSystemConnectionMemoTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonClientSystemConnectionMemoTest.class);
 
 }

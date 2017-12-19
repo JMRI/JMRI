@@ -44,6 +44,6 @@ public class ConfigBaseStationFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ConfigBaseStationFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ConfigBaseStationFrameTest.class);
 
 }

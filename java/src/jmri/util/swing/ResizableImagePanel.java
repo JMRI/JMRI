@@ -224,8 +224,9 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
             setSize(d);
             p1.setPreferredSize(d);
             p1.setSize(d);
-            if ((getTopLevelAncestor() != null) && (getTopLevelAncestor() instanceof Window)) {
-                ((Window) getTopLevelAncestor()).pack(); // yes, lucky hack, possibly dirty
+            Container c = getTopLevelAncestor();
+            if (c != null && c instanceof Window) {
+                ((Window) c).pack();
             }
         }
     }
@@ -289,5 +290,5 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ResizableImagePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ResizableImagePanel.class);
 }

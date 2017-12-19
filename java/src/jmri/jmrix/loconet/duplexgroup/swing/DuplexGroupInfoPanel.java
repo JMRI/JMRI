@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
 import jmri.util.swing.ValidatedTextField;
 
@@ -66,13 +66,13 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         // uses swing operations
         JLabel swingTempLabel;
 
         try {
             minWindowWidth = Integer.parseInt(rb.getString("MinimumWidthForWindow"), 10);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             minWindowWidth = DEFAULT_WINDOW_WIDTH;
         }
 
@@ -103,7 +103,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         int numLinesForStatus = 2;
         try {
             numLinesForStatus = Integer.parseInt(rb.getString("FixedLinesForStatus"));
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             numLinesForStatus = 2;
         }
 
@@ -328,7 +328,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
             writeGroupName.setLength(LnDplxGrpInfoImplConstants.DPLX_NAME_LEN); // trim to required length
             try {
                 duplexGroupImplementation.setDuplexGroupName(writeGroupName.toString());
-            } catch (Exception e) {
+            } catch (LocoNetException e) {
                 // illegal Duplex Group Name
                 updateStatusLineMessage("ErrorBadGroupName", COLOR_STATUS_ERROR);
                 swingNameValueField.requestFocusInWindow();
@@ -336,7 +336,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
             }
             try {
                 duplexGroupImplementation.setDuplexGroupChannel(Integer.parseInt(swingChannelValueField.getText(), 10));
-            } catch (Exception e) {
+            } catch (LocoNetException e) {
                 // illegal Duplex Group Channel
                 updateStatusLineMessage("ErrorBadGroupChannel", COLOR_STATUS_ERROR);
                 swingChannelValueField.requestFocusInWindow();
@@ -344,7 +344,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
             }
             try {
                 duplexGroupImplementation.setDuplexGroupPassword(swingPasswordValueField.getText());
-            } catch (Exception e) {
+            } catch (LocoNetException e) {
                 // illegal Duplex Group Password
                 updateStatusLineMessage("ErrorBadGroupPassword", COLOR_STATUS_ERROR);
                 swingPasswordValueField.requestFocusInWindow();
@@ -352,7 +352,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
             }
             try {
                 duplexGroupImplementation.setDuplexGroupId(swingIdValueField.getText());
-            } catch (Exception e) {
+            } catch (LocoNetException e) {
                 // illegal Duplex Group Id
                 updateStatusLineMessage("ErrorBadGroupId", COLOR_STATUS_ERROR);
                 swingIdValueField.requestFocusInWindow();
@@ -406,7 +406,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
             formatter.setFormats(messageFormats);
             String ur92CountString = formatter.format(messageArguments);
             swingNumUr92Label.setText(ur92CountString);
-        } catch (java.lang.Exception e) {
+        } catch (RuntimeException e) {
             String s = "Found " + numUr92 + " UR92(s)";
             swingNumUr92Label.setText(s);
             // eat the exception and show a simple, gramatically ambiguous message
@@ -647,5 +647,5 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         }
     }
 
-    //    private final static Logger log = LoggerFactory.getLogger(DuplexGroupInfoPanel.class.getName());
+    //    private final static Logger log = LoggerFactory.getLogger(DuplexGroupInfoPanel.class);
 }

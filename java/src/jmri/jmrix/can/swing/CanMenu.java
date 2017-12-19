@@ -14,14 +14,11 @@ public class CanMenu extends JMenu {
     public CanMenu(CanSystemConnectionMemo memo) {
         super();
 
-        String title;
         if (memo != null) {
-            title = memo.getUserName();
+            setText(memo.getUserName());
         } else {
-            title = Bundle.getMessage("MenuItemCAN");
+            setText(Bundle.getMessage("MenuItemCAN"));
         }
-
-        setText(title);
 
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
 
@@ -32,7 +29,6 @@ public class CanMenu extends JMenu {
                 add(new CanNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo));
             }
         }
-
     }
 
     Item[] panelItems = new Item[]{
@@ -49,4 +45,5 @@ public class CanMenu extends JMenu {
         String name;
         String load;
     }
+
 }

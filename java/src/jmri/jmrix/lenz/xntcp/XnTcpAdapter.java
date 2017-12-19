@@ -62,7 +62,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
     }
 
     // Internal class, used to keep track of IP and port number
-    //  of each interface found on the LAN
+    // of each interface found on the LAN
     private static class HostAddress {
 
         private String ipNumber;
@@ -82,7 +82,6 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
         }
         a[0] = Bundle.getMessage("Manual");
         return a;
-
     }
 
     public Vector<String> getInterfaceNames() {
@@ -92,7 +91,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
     }
 
     @Override
-    public void connect() throws Exception {
+    public void connect() throws java.io.IOException {
         // Connect to the choosen XpressNet/TCP interface
         int ind;
         // Retrieve XnTcp interface name from Option1
@@ -382,6 +381,6 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XnTcpAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XnTcpAdapter.class);
 
 }

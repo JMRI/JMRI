@@ -50,8 +50,8 @@ public class PaneProgAction extends AbstractAction {
         statusLabel = new JLabel(SymbolicProgBundle.getMessage("StateIdle"));
 
         // disable ourself if programming is not possible
-        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null
-                || !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.GlobalProgrammerManager.class) == null
+                || !jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).isGlobalProgrammerAvailable()) {
             setEnabled(false);
             // This needs to return, so we don't start the xmlThread
             return;
@@ -132,6 +132,6 @@ public class PaneProgAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneProgAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PaneProgAction.class);
 
 }

@@ -10,25 +10,25 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ClockMonPanelTest {
+public class ClockMonPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testCTor() {
-        ClockMonPanel t = new ClockMonPanel();
-        Assert.assertNotNull("exists",t);
-    }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new ClockMonPanel();
+        helpTarget="package.jmri.jmrix.nce.clockmon.ClockMonFrame";
+        title="NCE_: " + Bundle.getMessage("TitleNceClockMonitor");
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ClockMonPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ClockMonPanelTest.class);
 
 }

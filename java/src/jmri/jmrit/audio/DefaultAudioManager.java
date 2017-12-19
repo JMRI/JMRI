@@ -36,7 +36,9 @@ public class DefaultAudioManager extends AbstractAudioManager {
     private static int countBuffers = 0;
 
     /**
-     * Reference to the currently active AudioFactory
+     * Reference to the currently active AudioFactory. 
+     * Because of underlying (external to Java) implementation details,
+     * JMRI only ever has one AudioFactory, so we make this static.
      */
     private static AudioFactory activeAudioFactory = null;
 
@@ -183,26 +185,22 @@ public class DefaultAudioManager extends AbstractAudioManager {
             justification = "Synchronized method to ensure correct counter manipulation")
     public synchronized void deregister(Audio s) {
         super.deregister(s);
-        if (s instanceof Audio) {
-            // Decrement the relevant Audio object counter
-            switch (((Audio) s).getSubType()) {
-                case (Audio.BUFFER): {
-                    countBuffers--;
-                    break;
-                }
-                case (Audio.SOURCE): {
-                    countSources--;
-                    break;
-                }
-                case (Audio.LISTENER): {
-                    countListeners--;
-                    break;
-                }
-                default:
-                    throw new IllegalArgumentException();
+        // Decrement the relevant Audio object counter
+        switch (s.getSubType()) {
+            case (Audio.BUFFER): {
+                countBuffers--;
+                break;
             }
-        } else {
-            throw new IllegalArgumentException(s.getSystemName() + " is not an Audio object");
+            case (Audio.SOURCE): {
+                countSources--;
+                break;
+            }
+            case (Audio.LISTENER): {
+                countListeners--;
+                break;
+            }
+            default:
+                throw new IllegalArgumentException();
         }
     }
 
@@ -234,6 +232,6 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
     private volatile static DefaultAudioManager _instance;
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class);
 
 }

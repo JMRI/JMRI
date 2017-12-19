@@ -29,6 +29,6 @@ public class UsbBrowserActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UsbBrowserActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(UsbBrowserActionTest.class);
 
 }

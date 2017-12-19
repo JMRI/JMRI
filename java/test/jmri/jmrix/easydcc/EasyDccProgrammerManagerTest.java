@@ -15,11 +15,11 @@ public class EasyDccProgrammerManagerTest {
     @Test
     public void testCTor() {
         // infrastructure objects
-        EasyDccTrafficControlScaffold tc = new EasyDccTrafficControlScaffold();
+        EasyDccTrafficControlScaffold tc = new EasyDccTrafficControlScaffold(null);
         EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo(tc);
 
-        EasyDccProgrammer p = new EasyDccProgrammer();
-        EasyDccProgrammerManager t = new EasyDccProgrammerManager(p,memo);
+        EasyDccProgrammer p = new EasyDccProgrammer(memo);
+        EasyDccProgrammerManager t = new EasyDccProgrammerManager(p, memo);
         Assert.assertNotNull("exists",t);
     }
 
@@ -34,6 +34,6 @@ public class EasyDccProgrammerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammerManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammerManagerTest.class);
 
 }

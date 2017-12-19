@@ -3,7 +3,7 @@ package jmri.jmrix.roco.z21;
 import java.util.ResourceBundle;
 import jmri.CommandStation;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
+import jmri.jmrix.lenz.XNetProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +35,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /*
-     * Override the init function for any subtype specific 
+     * Override the init function for any subtype specific
      * registration into init.  init is called by the generic contstructor.
      */
     protected void init() {
@@ -71,19 +71,19 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private Z21ReporterManager _rm = null;
 
-    public ProgrammerManager getProgrammerManager() {
+    public XNetProgrammerManager getProgrammerManager() {
         if (_xnettunnel!=null) {
             // delegate to the XPressNet tunnel.
-            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();        
+            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();
         }
         return null;
     }
 
-    public void setProgrammerManager(ProgrammerManager p) {
+    public void setProgrammerManager(XNetProgrammerManager p) {
     }
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
     @Override
     public boolean provides(Class<?> type) {
@@ -93,11 +93,14 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (type.equals(jmri.ReporterManager.class)){
            return true;
         }
+        if (type.equals(jmri.MultiMeter.class)){
+           return true;
+        }
         if (_xnettunnel!=null) {
             // delegate to the XPressNet tunnel.
-            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);        
+            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);
         }
-        return false; // nothing, by default
+        return super.provides(type); // nothing, by default
     }
 
     /**
@@ -112,9 +115,12 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if(T.equals(jmri.ReporterManager.class)){
             return (T) getReporterManager();
         }
+        if(T.equals(jmri.MultiMeter.class)){
+            return (T) getMultiMeter();
+        }
         if (_xnettunnel!=null) {
             // delegate to the XPressNet tunnel.
-            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().get(T);        
+            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().get(T);
         }
         return null; // nothing, by default
     }
@@ -146,7 +152,10 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
            setReporterManager(new Z21ReporterManager(this));
            jmri.InstanceManager.store(getReporterManager(),jmri.ReporterManager.class);
         }
- 
+
+        // setup the MultiMeter
+        getMultiMeter();
+
    }
 
     @Override
@@ -185,6 +194,23 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private RocoZ21CommandStation z21CommandStation = null;
 
+    /**
+     * Provide access to the Roco Z21 MultiMeter for this particular
+     * connection.
+     * <p>
+     * NOTE: MultiMeter defaults to NULL
+     */
+    public jmri.MultiMeter getMultiMeter() {
+        if(meter == null){
+           meter = new Z21MultiMeter(this);
+           jmri.InstanceManager.store(meter,jmri.MultiMeter.class);
+        }
+        return meter;
+    }
+
+    private Z21MultiMeter meter = null;
+
+
     void shutdownTunnel(){
         if (_xnettunnel!=null) {
             _xnettunnel.dispose();
@@ -199,6 +225,6 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21SystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Z21SystemConnectionMemo.class);
 
 }

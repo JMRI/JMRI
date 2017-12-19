@@ -10,25 +10,25 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CmdStnConfigPaneTest {
+public class CmdStnConfigPaneTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testCTor() {
-        CmdStnConfigPane t = new CmdStnConfigPane();
-        Assert.assertNotNull("exists",t);
-    }
-
+    
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new CmdStnConfigPane();
+        helpTarget = "package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame";
+        title = Bundle.getMessage("MenuItemCmdStnConfig");
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CmdStnConfigPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CmdStnConfigPaneTest.class);
 
 }

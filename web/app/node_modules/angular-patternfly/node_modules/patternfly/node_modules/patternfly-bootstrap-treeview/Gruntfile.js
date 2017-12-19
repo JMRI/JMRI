@@ -42,7 +42,10 @@ module.exports = function(grunt) {
           { expand: true, cwd: 'src/css', src: '*', dest: 'public/css/' },
           { expand: true, cwd: 'src/js', src: '*', dest: 'public/js/' },
           { expand: true, cwd: 'node_modules/bootstrap/dist/', src: '**/*', dest: 'public/libs/bootstrap/' },
-          { expand: true, cwd: 'node_modules/jquery/dist/', src: '*', dest: 'public/libs/jquery' }
+          { expand: true, cwd: 'node_modules/jquery/dist/', src: '*', dest: 'public/libs/jquery' },
+          // setup unminified
+          { expand: true, cwd: 'src/css', src: '*', dest: 'dist/' },
+          { expand: true, cwd: 'src/js', src: '*', dest: 'dist/' }
         ]
       }
     }

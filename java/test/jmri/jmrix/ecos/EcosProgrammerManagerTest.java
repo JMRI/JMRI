@@ -16,7 +16,7 @@ public class EcosProgrammerManagerTest {
     public void testCTor() {
         EcosTrafficController tc = new EcosInterfaceScaffold();
         EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo(tc);
-        EcosProgrammerManager t = new EcosProgrammerManager(new EcosProgrammer(tc),memo);
+        EcosProgrammerManager t = new EcosProgrammerManager(new EcosProgrammer(tc), memo);
         Assert.assertNotNull("exists",t);
     }
 
@@ -31,6 +31,6 @@ public class EcosProgrammerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EcosProgrammerManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EcosProgrammerManagerTest.class);
 
 }

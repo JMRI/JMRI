@@ -54,6 +54,7 @@ import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.*;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -204,7 +205,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (_editLogixFrame == null) {
             _editLogixFrame = new JmriJFrame(Bundle.getMessage("TitleEditLogix"), false, false);  // NOI18N
             _editLogixFrame.addHelpMenu(
-                    "package.jmri.jmrit.beantable.LogixAddEdit", true);  // NOI18N
+                    "package.jmri.jmrit.conditional.ConditionalListEditor", true);  // NOI18N
             _editLogixFrame.setLocation(100, 30);
             Container contentPane = _editLogixFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -567,8 +568,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _numConditionals++;
         _showReminder = true;
         // clear action items
-        _actionList = new ArrayList<ConditionalAction>();
-        _variableList = new ArrayList<ConditionalVariable>();
+        _actionList = new ArrayList<>();
+        _variableList = new ArrayList<>();
         _oldTargetNames.clear();
         makeEditConditionalWindow();
     }
@@ -671,7 +672,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (_editConditionalFrame == null) {
             _editConditionalFrame = new JmriJFrame(Bundle.getMessage("TitleEditConditional"), false, false);  // NOI18N
             _editConditionalFrame.addHelpMenu(
-                    "package.jmri.jmrit.beantable.ConditionalAddEdit", true);  // NOI18N
+                    "package.jmri.jmrit.conditional.ConditionalListEditor", true);  // NOI18N
             Container contentPane = _editConditionalFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
             JPanel panel1 = new JPanel();
@@ -1688,6 +1689,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         for (int i = 0; i <= Conditional.ITEM_TYPE_LAST_STATE_VAR; i++) {
             _variableTypeBox.addItem(ConditionalVariable.getItemTypeString(i));
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_variableTypeBox);
         panel1.add(makeEditPanel(_variableTypeBox, "LabelVariableType", "VariableTypeHint"));  // NOI18N
         panel1.add(Box.createHorizontalStrut(STRUT));
 
@@ -2325,6 +2327,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             }
         }
         _selectLogixBox.setSelectedItem(itemKey);
+        JComboBoxUtil.setupComboBoxMaxRows(_selectLogixBox);
         loadSelectConditionalBox(lgxName);
     }
 
@@ -2375,6 +2378,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             }
         }
         _selectConditionalBox.setSelectedItem(itemKey);
+        JComboBoxUtil.setupComboBoxMaxRows(_selectConditionalBox);
     }
 
     // ------------ Variable update processes ------------
@@ -2463,10 +2467,11 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 if (c == null) {
                     return false;
                 }
-                if (c.getUserName() != null && !c.getUserName().isEmpty()) {
-                    _curVariable.setGuiName(c.getUserName());
-                } else {
+                String uName = c.getUserName();
+                if (uName == null || uName.isEmpty()) {
                     _curVariable.setGuiName(c.getSystemName());
+                } else {
+                    _curVariable.setGuiName(uName);
                 }
                 break;
             case Conditional.ITEM_TYPE_LIGHT:
@@ -2692,6 +2697,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         for (int i = 0; i <= Conditional.ITEM_TYPE_LAST_ACTION; i++) {
             _actionItemTypeBox.addItem(DefaultConditionalAction.getItemTypeString(i));
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_actionItemTypeBox);
         panel1.add(makeEditPanel(_actionItemTypeBox, "LabelActionItem", "ActionItemHint"));  // NOI18N
         panel1.add(Box.createHorizontalStrut(STRUT));
 
@@ -4145,6 +4151,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
             }
         }
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                                justification="better to keep cases in column order rather than to combine")
         public int getPreferredWidth(int col) {
             switch (col) {
                 case SNAME_COLUMN:
@@ -4631,5 +4639,5 @@ public class ConditionalListEdit extends ConditionalEditBase {
         return ConditionalListEdit.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConditionalListEdit.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConditionalListEdit.class);
 }

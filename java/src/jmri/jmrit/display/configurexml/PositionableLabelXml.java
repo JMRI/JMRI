@@ -424,11 +424,11 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
     }
 
     public void loadCommonAttributes(Positionable l, int defaultLevel, Element element) {
-        Attribute a = element.getAttribute("forcecontroloff");
-        if ((a != null) && a.getValue().equals("true")) {
-            l.setControlling(false);
-        } else {
-            l.setControlling(true);
+        try {
+            l.setControlling(!element.getAttribute("forcecontroloff").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert positionable label forcecontroloff attribute");
+        } catch (Exception e) {
         }
 
         // find coordinates
@@ -448,37 +448,43 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             level = element.getAttribute("level").getIntValue();
         } catch (org.jdom2.DataConversionException e) {
             log.warn("Could not parse level attribute!");
-        } catch (NullPointerException e) {  // considered normal if the attribute not present
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
         }
         l.setDisplayLevel(level);
 
-        a = element.getAttribute("hidden");
-        if ((a != null) && a.getValue().equals("yes")) {
-            l.setHidden(true);
-            l.setVisible(false);
+        try {
+            boolean value = element.getAttribute("hidden").getBooleanValue();
+            l.setHidden(value);
+            l.setVisible(!value);
+        } catch (DataConversionException e) {
+            log.warn("unable to convert positionable label hidden attribute");
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
         }
-        a = element.getAttribute("positionable");
-        if ((a != null) && a.getValue().equals("true")) {
-            l.setPositionable(true);
-        } else {
-            l.setPositionable(false);
+        try {
+            l.setPositionable(element.getAttribute("positionable").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert positionable label positionable attribute");
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
+        }
+        try {
+            l.setShowToolTip(element.getAttribute("showtooltip").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert positionable label showtooltip attribute");
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
+        }
+        try {
+            l.setEditable(element.getAttribute("editable").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert positionable label editable attribute");
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
         }
 
-        a = element.getAttribute("showtooltip");
-        if ((a != null) && a.getValue().equals("true")) {
-            l.setShowToolTip(true);
-        } else {
-            l.setShowToolTip(false);
-        }
-
-        a = element.getAttribute("editable");
-        if ((a != null) && a.getValue().equals("true")) {
-            l.setEditable(true);
-        } else {
-            l.setEditable(false);
-        }
-
-        a = element.getAttribute("degrees");
+        Attribute a = element.getAttribute("degrees");
         if (a != null && l instanceof PositionableLabel) {
             try {
                 int deg = a.getIntValue();
@@ -561,5 +567,5 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         return icon;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableLabelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableLabelXml.class);
 }
