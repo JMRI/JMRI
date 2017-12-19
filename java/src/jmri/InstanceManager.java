@@ -811,10 +811,7 @@ public final class InstanceManager {
             }
         }
         if (canDispose) {
-            System.out.println("Daniel: Object is going to be disposed");
             disposable.dispose();
-        } else {
-            System.out.println("Daniel: Object is NOT going to be disposed");
         }
     }
 
