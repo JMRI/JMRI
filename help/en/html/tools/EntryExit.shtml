@@ -83,7 +83,7 @@
     the next time the panel is opened.  When there is no route set then the
     SignalMast will be placed in a held state.</p>
 
-    <p><strong>Full Interlocking</strong> &mdashh; This covers the same things
+    <p><strong>Full Interlocking</strong> &mdash; This covers the same things
     as the other two items above. In addition, it will also "reserve" or
     "lock out" each block in the route so that no other conflicting route can
     be set. If block occupancy detection is being used the route will
@@ -118,7 +118,7 @@
 
     <h3>Placing Sensors</h3>
 
-    Sensors, along with Signal Heads and Signal Masts, can be added at
+    <p>Sensors, along with Signal Heads and Signal Masts, can be added at
     <strong>Block Boundaries</strong>.  Block boundaries can occur at
     <strong>Anchor Points</strong>, <strong>Turnouts</strong>,
     <strong>Level Crossings</strong> and <strong>End Bumpers</strong>.
@@ -224,7 +224,7 @@
     height="135" width="380" alt="Re-select Dialog">
     </div>
 
-    <p>Options:
+    <p>Options:</p>
     <ul>
       <li>Cancel &mdash; Cancel the route.  The block reservations will be 
       released and the track components will be set to the normal color.</li>
@@ -237,7 +237,7 @@
       multiple segment routes, one segment at a time will be added to the list.</li>
       <li>Exit &mdash; Do nothing, close the window.</li>
     </ul>
-    Pending route list:</p>
+    <p>Pending route list:</p>
 
     <div style="margin-left: 1em">
     <img src="images/EntryExitStackList.png"
