@@ -16,9 +16,9 @@ import javax.swing.JPanel;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.AnalogClock2Display;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.util.swing.ImagePanel;
-import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,10 +27,9 @@ import org.slf4j.LoggerFactory;
  */
 public class ClockItemPanel extends IconItemPanel {
 
-    public ClockItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
+    public ClockItemPanel(DisplayFrame parentFrame, String type, Editor editor) {
         super(parentFrame, type, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
-
     }
 
     protected JPanel instructions() {
@@ -79,7 +78,7 @@ public class ClockItemPanel extends IconItemPanel {
 
     @Override
     public void initButtonPanel() {
-        add(makeBgButtonPanel(_iconPanel, null, _backgrounds));
+        add(makeBgButtonPanel(_iconPanel, null, _backgrounds, _paletteFrame));
     }
 
     public class ClockDragJLabel extends DragJLabel {

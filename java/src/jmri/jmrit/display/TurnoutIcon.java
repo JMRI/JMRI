@@ -14,6 +14,7 @@ import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.TableItemPanel;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.picker.PickListModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -383,7 +384,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
 
     protected void editItem() {
         makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameTurnout")));
-        _itemPanel = new TableItemPanel(_paletteFrame, "Turnout", _iconFamily,
+        _itemPanel = new TableItemPanel((DisplayFrame) _paletteFrame, "Turnout", _iconFamily,
                 PickListModel.turnoutPickModelInstance(), _editor); // NOI18N
         ActionListener updateAction = new ActionListener() {
             @Override

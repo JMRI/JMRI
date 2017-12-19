@@ -14,9 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTrackIcon;
-import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +30,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     /**
      * Constructor for plain icons and backgrounds.
      */
-    public IndicatorItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
+    public IndicatorItemPanel(DisplayFrame parentFrame, String type, String family, Editor editor) {
         super(parentFrame, type, family, editor);
     }
 

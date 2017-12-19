@@ -24,13 +24,13 @@ import javax.swing.event.ListSelectionListener;
 import jmri.NamedBean;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LightIcon;
 import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.TurnoutIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.ImagePanel;
-import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +63,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
      * @param model       list model
      * @param editor      associated Panel editor
      */
-    public TableItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
+    public TableItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, editor);
         _model = model;
     }
