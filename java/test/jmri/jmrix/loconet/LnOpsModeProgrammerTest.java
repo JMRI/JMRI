@@ -1273,7 +1273,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
         // should not have sent another message
         Assert.assertEquals("no new message sent", 1, lnis.outbound.size());
         Assert.assertEquals("should get a programming reply", 65, pl.getRcvdInvoked());
-        Assert.assertEquals("Reply status Not Implemented", 8, pl.getRcvdStatus());
+        Assert.assertEquals("Reply status Not Implemented", 1, pl.getRcvdStatus());
 
      }
 
