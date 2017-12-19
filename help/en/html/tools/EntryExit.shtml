@@ -52,10 +52,10 @@
     already occupied and there is a valid alternative path, then
     this will be taken.</p>
 
-    <p>The two sensors are refered to as a <strong>NX Pair</strong>.  It is also
+    <p>The two sensors are referred to as a <strong>NX Pair</strong>.  It is also
     possible to define a NX pair where the destination sensor is on another
     panel. This requires that the panels are linked using <strong>Edge
-    Connnectors</strong>.</p>
+    Connectors</strong>.</p>
 
     <h3>Entry/Exit Types</h3>
     <p>There are three different types of Entry/Exit pairs that can be
@@ -233,7 +233,7 @@
       block in the route will be left occupied.   This can be useful for
       simulating train movements or for layouts that don't have block detection.</li>
       <li>Stack &mdash; Add this route to a pending list of routes.  When the
-      first route completes, the next route in the list will be activiated.  For 
+      first route completes, the next route in the list will be activated.  For 
       multiple segment routes, one segment at a time will be added to the list.</li>
       <li>Exit &mdash; Do nothing, close the window.</li>
     </ul>

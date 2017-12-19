@@ -74,9 +74,9 @@
     <h3>Columns</h3>
     <ul>
     <li><strong>Entry</strong> &mdash; The sensor name for the entry point. If the
-    block boumdary has a signal mast, it will be listed in parenthesis.</li>
+    block boundary has a signal mast, it will be listed in parenthesis.</li>
     <li><strong>Exit</strong> &mdash; The sensor name for the exit point. If the
-    block boumdary has a signal mast, it will be listed in parenthesis.</li>
+    block boundary has a signal mast, it will be listed in parenthesis.</li>
     <li><strong>Active</strong> &mdash; Yes when there is a active route.</li>
     <li><strong>Clear</strong> &mdash; If the entry is active, cancel the route
     segment.</li>
@@ -90,7 +90,7 @@
     </ul>
 
     <h2>Options</h2>
-    <p><strong>Route Reselection</strong> &mdash; Determines what should occur when the
+    <p><strong>Route Re-selection</strong> &mdash; Determines what should occur when the
     NX route is reselected by the user.</p>
 
     <ul>
