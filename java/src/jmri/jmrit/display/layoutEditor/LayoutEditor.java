@@ -1132,7 +1132,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 //log.debug("{} prefsProp toolBarFontSize is {}", windowFrameRef, prefsProp);
                 //if (prefsProp != null) {
                 //float toolBarFontSize = Float.parseFloat(prefsProp.toString());
-                    //setupToolBarFontSizes(toolBarFontSize);
+                //setupToolBarFontSizes(toolBarFontSize);
                 //}
                 updateAllComboBoxesDropDownListDisplayOrderFromPrefs();
 
@@ -3087,45 +3087,45 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
                 //now try to get a preference specific to this combobox
                 JmriBeanComboBox jbcb = null;
-                if (jbcb instanceof JmriBeanComboBox) {
+                if (inComponent instanceof JmriBeanComboBox) {
                     jbcb = (JmriBeanComboBox) inComponent;
                 } else if (inComponent instanceof JTextField) {
                     jbcb = (JmriBeanComboBox) SwingUtilities.getUnwrappedParent(inComponent);
                 }
                 if (jbcb != null) {
-                if (jbcb instanceof JmriBeanComboBox) {
-                    String ttt = jbcb.getToolTipText();
-                    if (ttt != null) {
-                        //change the name of the preference based on the tool tip text
-                        ddldoPrefName = String.format("%s.%s", ddldoPrefName, ttt);
-                        //try to get the preference
-                        ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
-                        if (ddldoProp != null) { //if we found it...
-                            ddldoPref = ddldoProp.toString(); //get it's (string value
-                        } else { //otherwise...
-                            //save it in the users preferences
-                            prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
+                    if (jbcb instanceof JmriBeanComboBox) {
+                        String ttt = jbcb.getToolTipText();
+                        if (ttt != null) {
+                            //change the name of the preference based on the tool tip text
+                            ddldoPrefName = String.format("%s.%s", ddldoPrefName, ttt);
+                            //try to get the preference
+                            ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
+                            if (ddldoProp != null) { //if we found it...
+                                ddldoPref = ddldoProp.toString(); //get it's (string value
+                            } else { //otherwise...
+                                //save it in the users preferences
+                                prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
+                            }
                         }
                     }
-                }
 
-                //now set the combo box display order
-                if (ddldoPref.equals("DISPLAYNAME")) {
-                    jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-                } else if (ddldoPref.equals("USERNAME")) {
-                    jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.USERNAME);
-                } else if (ddldoPref.equals("SYSTEMNAME")) {
-                    jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.SYSTEMNAME);
-                } else if (ddldoPref.equals("USERNAMESYSTEMNAME")) {
-                    jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.USERNAMESYSTEMNAME);
-                } else if (ddldoPref.equals("SYSTEMNAMEUSERNAME")) {
-                    jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.SYSTEMNAMEUSERNAME);
-                } else {
-                    //must be a bogus value... lets re-set everything to DISPLAYNAME
-                    ddldoPref = "DISPLAYNAME";
-                    prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
-                    jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-                }
+                    //now set the combo box display order
+                    if (ddldoPref.equals("DISPLAYNAME")) {
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    } else if (ddldoPref.equals("USERNAME")) {
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.USERNAME);
+                    } else if (ddldoPref.equals("SYSTEMNAME")) {
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.SYSTEMNAME);
+                    } else if (ddldoPref.equals("USERNAMESYSTEMNAME")) {
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.USERNAMESYSTEMNAME);
+                    } else if (ddldoPref.equals("SYSTEMNAMEUSERNAME")) {
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.SYSTEMNAMEUSERNAME);
+                    } else {
+                        //must be a bogus value... lets re-set everything to DISPLAYNAME
+                        ddldoPref = "DISPLAYNAME";
+                        prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    }
                 }
             });
         } else if (inComponent instanceof Container) {
@@ -3607,12 +3607,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         listOfListsOfComponents.add(signalMastList);
         // combine their bounds
         for (List c : listOfListsOfComponents) {
-            List<Component> listOfComponents = (List<Component>) c;
-            for (Component o : listOfComponents) {
-                if (result.isEmpty()) {
-                    result = o.getBounds();
-                } else {
-                    result = result.createUnion(o.getBounds());
+            if (c instanceof List<Component>) {
+                List<Component> listOfComponents = (List<Component>) c;
+                for (Component o : listOfComponents) {
+                    if (result.isEmpty()) {
+                        result = o.getBounds();
+                    } else {
+                        result = result.createUnion(o.getBounds());
+                    }
                 }
             }
         }

@@ -11,7 +11,6 @@ import javax.annotation.Nullable;
 import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
@@ -2380,7 +2379,7 @@ public class ConnectivityUtil {
         LayoutTrack curObj = ob;
 
         if (log.isDebugEnabled()) {
-            log.info("trackSegmentLeadsTo({}, {}): entry", curTS.getId(), objectToNameOrIDString(curObj));
+            log.info("trackSegmentLeadsTo({}, {}): entry", curTS.getId(), curObj.getName());
         }
 
         // post process track segment and conObj lists
@@ -2411,7 +2410,7 @@ public class ConnectivityUtil {
                 } else {
                     log.error("Connectivity error when following track {} in Block {}", curTS.getId(), currLayoutBlock.getUserName());
                     log.error("{} not connected to {} (connects: {} & {})",
-                            objectToNameOrIDString(curObj),
+                            curObj.getName(),
                             curTS.getId(),
                             curTS.getConnect1Name(),
                             curTS.getConnect2Name());
@@ -2421,9 +2420,9 @@ public class ConnectivityUtil {
                 if (log.isDebugEnabled()) {
                     log.info("In block {}, going from {} thru {} to {} (conType: {}), nextLayoutBlock: {}",
                             currLayoutBlock.getUserName(),
-                            objectToNameOrIDString(conObj),
+                            conObj.getName(),
                             curTS.getId(),
-                            objectToNameOrIDString(curObj),
+                            curObj.getName(),
                             connectionTypeToString(conType),
                             nextLayoutBlock.getId());
                 }
@@ -2698,8 +2697,8 @@ public class ConnectivityUtil {
                                     } else {
                                         log.debug("{} not connected to {} (connections: {} & {})",
                                                 currLayoutBlock.getUserName(), ls.getName(),
-                                                objectToNameOrIDString(ls.getConnectA()),
-                                                objectToNameOrIDString(ls.getConnectB()));
+                                                ls.getConnectA().getName(),
+                                                ls.getConnectB().getName());
                                     }
                                 }
                                 break;
@@ -2771,25 +2770,6 @@ public class ConnectivityUtil {
         } else if (conType >= LayoutTrack.TURNTABLE_RAY_OFFSET){
             result = "TURNTABLE_RAY #" + (conType - LayoutTrack.TURNTABLE_RAY_OFFSET);
         }
-        return result;
-    }
-
-    @Nonnull
-    private String objectToNameOrIDString(@Nonnull LayoutTrack obj) {
-        String result;
-        if (obj instanceof NamedBean) {
-            result = ((NamedBean) obj).getDisplayName();
-        } else {
-            try {
-                result = obj.getName();
-            } catch (Exception ex2) {
-                try {
-                    result = obj.getId();
-                } catch (Exception ex3) {
-                        result = "<" + obj + ">";
-                    }
-                }
-            }
         return result;
     }
 
