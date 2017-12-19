@@ -3607,14 +3607,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         listOfListsOfComponents.add(signalMastList);
         // combine their bounds
         for (List c : listOfListsOfComponents) {
-            if (c instanceof List<Component>) {
-                List<Component> listOfComponents = (List<Component>) c;
-                for (Component o : listOfComponents) {
-                    if (result.isEmpty()) {
-                        result = o.getBounds();
-                    } else {
-                        result = result.createUnion(o.getBounds());
-                    }
+            List<Component> listOfComponents = (List<Component>) c;
+            for (Component o : listOfComponents) {
+                if (result.isEmpty()) {
+                    result = o.getBounds();
+                } else {
+                    result = result.createUnion(o.getBounds());
                 }
             }
         }
