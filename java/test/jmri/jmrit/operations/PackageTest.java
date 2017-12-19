@@ -32,5 +32,5 @@ import org.junit.runners.Suite;
  *
  * @author	Bob Coleman
  */
-public class PackageTest extends TestCase {
+public class PackageTest {
 }
