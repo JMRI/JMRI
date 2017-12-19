@@ -16,5 +16,5 @@ import org.junit.runners.Suite;
  *
  * @author	Bob Jacobsen Copyright 2014
  */
-public class PackageTest extends TestCase {
+public class PackageTest {
 }
