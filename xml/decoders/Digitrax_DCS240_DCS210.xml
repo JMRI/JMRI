@@ -356,7 +356,7 @@
             </variable>
             <variable CV="1.038" item="OpSw 038" default="0" include="DCS210" exclude="DCS240">
                 <enumVal>
-                    <enumChoice choice="Clears all internal memory states" />
+                    <enumChoice choice="Clears all internal memory states *" />
                     <enumChoice choice="Activates 'Slot zero' feature" />
                 </enumVal>
                 <label>DCS210 Loco Reset Button</label>
@@ -409,7 +409,7 @@
                 <label>Number of available slots is</label>
                 <tooltip>OpSw 44a</tooltip>
             </variable>
-            <variable CV="1.044" item="OpSw 044" default="0" exclude="DCS240" readOnly="yes">
+            <variable CV="1.044" item="OpSw 044" default="1" exclude="DCS240" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-reservedNormalStar.xml"/>
                 <label>OpSw 44</label>
                 <tooltip>OpSw 44</tooltip>
