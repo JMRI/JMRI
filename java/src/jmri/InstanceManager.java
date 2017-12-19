@@ -811,6 +811,7 @@ public final class InstanceManager {
             }
         }
         if (canDispose) {
+            if (1==1) throw new RuntimeException("Daniel: Object is going to be disposed");
             disposable.dispose();
         }
     }
