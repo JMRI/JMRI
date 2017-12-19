@@ -1083,7 +1083,7 @@
                 &lt;li&gt;The Command Station should be in "Run" mode when
                 programming Command Station OpSw settings using this Roster entry.&lt;p&gt;
                 (There is some evidence that this tool can modify OpSw settings
-                when the Command Station is set for "OpSw" mode, but be &lt;p&gt;
+                when the Command Station switch is set for "OpSw" mode, but be &lt;p&gt;
                 careful if using this mode.)&lt;/li&gt;
                 &lt;p&gt;
                 &lt;li&gt;The documentation for DCS100 and DCS200 OpSw settings
