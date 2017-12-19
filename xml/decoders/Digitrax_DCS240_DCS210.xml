@@ -403,7 +403,7 @@
             </variable>
             <variable CV="1.044" item="OpSw 044" default="0" exclude="DCS210">
                 <enumVal>
-                    <enumChoice choice="400"/>
+                    <enumChoice choice="400 *"/>
                     <enumChoice choice="120"/>
                 </enumVal>
                 <label>Number of available slots is</label>
