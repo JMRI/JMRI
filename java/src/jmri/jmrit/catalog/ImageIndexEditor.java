@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
  * A JFrame for creating and editing an Image Index.
  *
  * @author Pete Cressman Copyright 2009
- *
  */
 public final class ImageIndexEditor extends JmriJFrame {
 
@@ -44,17 +43,24 @@ public final class ImageIndexEditor extends JmriJFrame {
     public static final String IconDataFlavorMime = DataFlavor.javaJVMLocalObjectMimeType
             + ";class=jmri.jmrit.catalog.NamedIcon";
 
+    /**
+     * Ctor
+     */
     private ImageIndexEditor() {
         super();
     }
 
+    /**
+     * Ctor for a named ImageIndexEditor.
+     *
+     * @param name title to display on the editor frame
+     */
     private ImageIndexEditor(String name) {
         super(name);
     }
 
     /**
-     *
-     * @return the managed instance
+     * @return the managed ImageIndexEditor instance
      * @deprecated since 4.9.2; use
      * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
@@ -197,7 +203,7 @@ public final class ImageIndexEditor extends JmriJFrame {
     }
 
     private JPanel makeCatalogPanel() {
-        _catalog = new CatalogPanel("defaultCatalog", "selectNode");
+        _catalog = new CatalogPanel("defaultCatalog", "selectNode"); // make sure both these properties keys exist
         _catalog.init(false);
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         List<String> sysNames = manager.getSystemNameList();
@@ -216,7 +222,7 @@ public final class ImageIndexEditor extends JmriJFrame {
     }
 
     private JPanel makeIndexPanel() {
-        _index = new CatalogPanel("ImageIndex", "selectIndexNode");
+        _index = new CatalogPanel("ImageIndex", "selectIndexNode"); // make sure both these properties keys exist
         _index.init(true);
 
         boolean found = false;

@@ -2,6 +2,7 @@ package jmri.implementation;
 
 import jmri.Consist;
 import jmri.ConsistManager;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.AddressedProgrammerManager;
 
@@ -28,12 +29,15 @@ public class DccConsistManager extends AbstractConsistManager {
     }
 
     @Override
-    public Consist addConsist(DccLocoAddress address) {
+    public Consist addConsist(LocoAddress address) {
+        if (! (address instanceof DccLocoAddress)) {
+            throw new IllegalArgumentException("address is not a DccLocoAddress object");
+        }
         if (consistTable.containsKey(address)) {
             return consistTable.get(address);
         }
         DccConsist consist;
-        consist = new DccConsist(address,opsProgManager);
+        consist = new DccConsist((DccLocoAddress) address,opsProgManager);
         consistTable.put(address, consist);
         return consist;
     }

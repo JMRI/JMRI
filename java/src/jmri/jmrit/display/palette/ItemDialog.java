@@ -14,9 +14,9 @@ import jmri.util.JmriJFrame;
  */
 public class ItemDialog extends JmriJFrame {
 
-    //    protected ItemPanel _parent;
+    // protected ItemPanel _parent;
     protected String _type;
-//    protected String    _family;
+    // protected String    _family;
 
     public ItemDialog(String type, String title) {
         super(title, true, true);

@@ -43,6 +43,7 @@ import jmri.util.swing.ImagePanel;
 
 /**
  * Panel for positionables with text and/or colored margins and borders.
+ * @see ItemPanel palette class diagram
  * 
  * @author PeteCressman Copyright (C) 2009, 2015
  */
@@ -132,11 +133,11 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
 
         // create array of backgrounds, _currentBackground already set and used
         _backgrounds = new BufferedImage[5];
-        _backgrounds[0] = DrawSquares.getImage(500, 150, 15, _currentBackground, _currentBackground);
+        _backgrounds[0] = DrawSquares.getImage(500, 400, 10, _currentBackground, _currentBackground);
         for (int i = 1; i <= 3; i++) {
-            _backgrounds[i] = DrawSquares.getImage(500, 150, 15, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
+            _backgrounds[i] = DrawSquares.getImage(500, 400, 10, colorChoice[i - 1], colorChoice[i - 1]); // choice 0 is not in colorChoice[]
         }
-        _backgrounds[4] = DrawSquares.getImage(500, 150, 15, Color.white, _grayColor);
+        _backgrounds[4] = DrawSquares.getImage(500, 400, 10, Color.white, _grayColor);
 
         _samplePanel = new JPanel();
         _samplePanel.add(Box.createHorizontalStrut(STRUT));
@@ -456,7 +457,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             }
         }.init(button));
         // add a SetBackground combo
-        p.add(makeBgButtonPanel(_previewPanel, null, _backgrounds));
+        p.add(makeBgButtonPanel(_previewPanel, null, _backgrounds)); // no listener on this variant
 
         panel.add(p);
         return panel;
@@ -556,7 +557,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         bgColorBox.addItem(Bundle.getMessage("LightGray"));
         bgColorBox.addItem(Bundle.getMessage("DarkGray"));
         bgColorBox.addItem(Bundle.getMessage("Checkers"));
-        bgColorBox.setSelectedIndex(previewBgSet); // starts as 0 = panel bg color, cannot read shared choice
+        bgColorBox.setSelectedIndex(previewBgSet); // starts as 0 = panel bg color, DecoratorPanel cannot read shared ItemPanel choice
         bgColorBox.addActionListener((ActionEvent e) -> {
             if (imgArray != null) {
                 if (previewBgSet != bgColorBox.getSelectedIndex()) {

@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import jmri.ConsistListListener;
 import jmri.ConsistListener;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.JmriException;
 import jmri.jmrit.consisttool.ConsistFile;
@@ -73,17 +74,17 @@ public class JsonConsistSocketService extends JsonSocketService {
     private class JsonConsistListener implements ConsistListener {
 
         @Override
-        public void consistReply(DccLocoAddress locoaddress, int status) {
+        public void consistReply(LocoAddress locoaddress, int status) {
             try {
                 try {
-                    connection.sendMessage(service.getConsist(locale, locoaddress));
+                    connection.sendMessage(service.getConsist(locale, (DccLocoAddress) locoaddress));
                 } catch (JsonException ex) {
                     connection.sendMessage(ex.getJsonMessage());
                 }
             } catch (IOException ex) {
                 // this IO execption caused by broken comms with client
                 service.manager.getConsist(locoaddress).removeConsistListener(this);
-                consists.remove(locoaddress);
+                consists.remove((DccLocoAddress) locoaddress);
             }
             try {
                 (new ConsistFile()).writeFile(service.manager.getConsistList());
