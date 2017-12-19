@@ -20,7 +20,8 @@
 
     <decoder>
 
-        <family name="DCS240" mfg="Digitrax">
+        <family name="DCS210 and DCS240" mfg="Digitrax">
+            <model model="DCS210"/>
             <model model="DCS240"/>
         </family>
 
@@ -53,12 +54,20 @@
                 <tooltip>OpSw 01</tooltip>
             </variable>
 
-            <variable CV="1.002" item="OpSw 002" default="0">
+            <variable CV="1.002" item="OpSw 002" default="0" include="DCS240" exclude="DCS210">
                 <enumVal>
                     <enumChoice choice="Command Station *"/>
                     <enumChoice choice="Booster (not recommended)"/>
                 </enumVal>
                 <label>DCS240 acts as a</label>
+                <tooltip>OpSw 02</tooltip>
+            </variable>
+            <variable CV="1.002" item="OpSw 002" default="0" include="DCS210" exclude="DCS240">
+                <enumVal>
+                    <enumChoice choice="Command Station *"/>
+                    <enumChoice choice="Booster (not recommended)"/>
+                </enumVal>
+                <label>DCS210 acts as a</label>
                 <tooltip>OpSw 02</tooltip>
             </variable>
             <variable CV="1.003" item="OpSw 003" default="0">
@@ -155,12 +164,20 @@
                 <label>Automatic advanced decoder assisted [FX] consists are</label>
                 <tooltip>OpSw 17</tooltip>
             </variable>
-            <variable CV="1.018" item="OpSw 018" default="0">
+            <variable CV="1.018" item="OpSw 018" default="0" include="DCS240" exclude="DCS210">
                 <enumVal>
                     <enumChoice choice="'Normal' *"/>
                     <enumChoice choice="'Extended'"/>
                 </enumVal>
                 <label>DCS240 booster short circuit shutdown time is</label>
+                <tooltip>OpSw 18</tooltip>
+            </variable>
+            <variable CV="1.018" item="OpSw 018" default="0" include="DCS210" exclude="DCS240">
+                <enumVal>
+                    <enumChoice choice="'Normal' *"/>
+                    <enumChoice choice="'Extended'"/>
+                </enumVal>
+                <label>DCS210 booster short circuit shutdown time is</label>
                 <tooltip>OpSw 18</tooltip>
             </variable>
             <variable CV="1.019" item="OpSw 019" readOnly="yes" default="0">
@@ -313,7 +330,7 @@
             </variable>
             <variable CV="1.035" item="OpSw 035" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
-                <label>DCS240 'Loco Reset' button is</label>
+                <label>'Loco Reset' button is</label>
                 <tooltip>OpSw 35</tooltip>
             </variable>
             <variable CV="1.036" item="OpSw 036" default="0">
@@ -332,9 +349,17 @@
                 <label>OpSw 37</label>
                 <tooltip>OpSw 37</tooltip>
             </variable>
-            <variable CV="1.038" item="OpSw 038" readOnly="yes" default="0">
+            <variable CV="1.038" item="OpSw 038" readOnly="yes" default="0" include="DCS240" exclude="DCS210">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw 38</label>
+                <tooltip>OpSw 38</tooltip>
+            </variable>
+            <variable CV="1.038" item="OpSw 038" default="0" include="DCS210" exclude="DCS240">
+                <enumVal>
+                    <enumChoice choice="Clears all internal memory states" />
+                    <enumChoice choice="Activates 'Slot zero' feature" />
+                </enumVal>
+                <label>DCS210 Loco Reset Button</label>
                 <tooltip>OpSw 38</tooltip>
             </variable>
             <variable CV="1.039" item="OpSw 039" default="0">
@@ -345,13 +370,21 @@
                 <label>OpSw 39</label>
                 <tooltip>OpSw 39</tooltip>
             </variable>
-            <variable CV="1.040" item="OpSw 040" infoOnly="yes" readOnly="yes" default="0">
+            <variable CV="1.040" item="OpSw 040" infoOnly="yes" readOnly="yes" default="0" include="DCS240" exclude="DCS210">
                 <enumVal>
                     <enumChoice choice="Normal operating state *"/>
                     <enumChoice choice="Resets DCS240 to factory default"/>
                 </enumVal>
                 <label>OpSw 40</label>
                 <tooltip>A Factory Reset operation can be performed using a throttle when the DCS240 is in "OpSw" mode.  JMRI cannot perform this "programmatically".</tooltip>
+            </variable>
+            <variable CV="1.040" item="OpSw 040" infoOnly="yes" readOnly="yes" default="0" include="DCS210" exclude="DCS240">
+                <enumVal>
+                    <enumChoice choice="Normal operating state *"/>
+                    <enumChoice choice="Resets DCS210 to factory default"/>
+                </enumVal>
+                <label>OpSw 40</label>
+                <tooltip>A Factory Reset operation can be performed using a throttle when the DCS210 is in "OpSw" mode.  JMRI cannot perform this "programmatically".</tooltip>
             </variable>
             <variable CV="1.041" item="OpSw 041" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
@@ -368,12 +401,17 @@
                 <label>LocoNet update of command staiton's track status is</label>
                 <tooltip>OpSw 43</tooltip>
             </variable>
-            <variable CV="1.044" item="OpSw 044" default="0">
+            <variable CV="1.044" item="OpSw 044" default="0" exclude="DCS210">
                 <enumVal>
                     <enumChoice choice="400"/>
                     <enumChoice choice="120"/>
                 </enumVal>
                 <label>Number of available slots is</label>
+                <tooltip>OpSw 44a</tooltip>
+            </variable>
+            <variable CV="1.044" item="OpSw 044" default="0" exclude="DCS240" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-reservedNormalStar.xml"/>
+                <label>OpSw 44</label>
                 <tooltip>OpSw 44</tooltip>
             </variable>
             <variable CV="1.045" item="OpSw 045" default="0">
@@ -754,7 +792,16 @@
             </label>
 
             <display item="OpSw 017"/>
-            <display item="OpSw 044"/>
+            <group include="DCS240" exclude="DCS210">
+                <column>
+                    <display item="OpSw 044"/>
+                </column>
+            </group>
+            <group include="DCS210" exclude="DCS240">
+                <column>
+                <display item="OpSw 038"/>
+                </column>
+            </group>
 
             <separator/>
 
@@ -883,6 +930,31 @@
                     clearing the Command Station slot table via
                     OpSw 36 or OpSw39 mechanisms.&lt;/html&gt;</text>
             </label>
+            <label>
+                <text> </text>
+            </label>
+            <separator/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="OpSw 040"/>
+            <group exclude="DCS210">
+                <row>
+                        <label>
+                            <text>JMRI cannot programmatically modify DCS240 OpSw40.  Use a throttle with the DCS240 in "OpSw" mode.</text>
+                        </label>
+                </row>
+            </group>
+            <group exclude="DCS240">
+                <row>
+                        <label>
+                            <text>JMRI cannot programmatically modify DCS210 OpSw40.  Use a throttle with the DCS210 in "OpSw" mode.</text>
+                        </label>
+                </row>
+            </group>
+            <label>
+                <text> </text>
+            </label>
         </column>
     </pane>
     <pane>
@@ -905,7 +977,16 @@
             <display item="OpSw 024"/>
             <display item="OpSw 029"/>
             <display item="OpSw 030"/>
-            <display item="OpSw 038"/>
+            <group include="DCS240" exclude="DCS210">
+                <column>
+                <display item="OpSw 038"/>
+                </column>
+            </group>
+            <group include="DCS210" exclude="DCS240">
+                <column>
+                <display item="OpSw 044"/>
+                </column>
+            </group>
             <display item="OpSw 046"/>
                 </column>
                 <column>
@@ -956,7 +1037,7 @@
             <display item="OpSw 094"/>
             <display item="OpSw 095"/>
             <display item="OpSw 097"/>
-                    
+
                 </column>
                 <column>
             <display item="OpSw 098"/>
@@ -972,7 +1053,7 @@
             <display item="OpSw 109"/>
             <display item="OpSw 110"/>
             <display item="OpSw 111"/>
-                    
+
                 </column>
             </row>
 
@@ -1010,17 +1091,6 @@
             <label>
                 <text> </text>
             </label>
-            <separator/>
-            <label>
-                <text> </text>
-            </label>
-            <display item="OpSw 040"/>
-            <label>
-                <text>JMRI cannot programmatically modify DCS240 OpSw40.  Use a throttle with the DCS240 in "OpSw" mode.</text>
-            </label>
-            <label>
-                <text> </text>
-            </label>
             <label>
                 <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
                 &lt;strong&gt;* - Indicates the "Factory Default" setting
@@ -1032,52 +1102,102 @@
     <pane>
         <name>Notes</name>
         <column>
-            <label>
-                <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
-            &lt;h2&gt;&lt;strong&gt;Notes on DCS240 OpSw Settings
-            &lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
-            </label>
-            <label>
-                <text>&lt;html&gt;&lt;/strong&gt;&lt;ul&gt;
-                &lt;li&gt;The Command Station should be in "Run" mode when programming 
-                    Command Station OpSw &lt;p&gt;
-                    settings using this Roster entry.&lt;p&gt;
-                    (There is some evidence that this tool can modify OpSw settings
-                    when the Command Station &lt;p&gt;
-                    DCS240 switch is set for "OpSw" mode, but be careful to check
-                    for the desired result if &lt;p&gt;
-                    using this roster entry when the DCS240 is set for "OpSw" mode.)&lt;/li&gt;
-                &lt;p&gt;
-                &lt;li&gt;The documentation for DCS240 OpSw "factory default" 
-                    settings are not consistent with at&lt;p&gt;
-                    least one DCS240 device.  This decoder definition shows the 
-                    "factory default" settings &lt;p&gt;
-                    from an actual DCS240.&lt;/li&gt;
-                &lt;p&gt;
-                &lt;li&gt;When manipulating OpSws 36, 37,  and/or 39, for the
-                    purpose of clearing internal &lt;p&gt;
-                    storage of slots, routes, etc., it may be necessary to power-cycle 
-                    the command station &lt;p&gt;
-                    or to switch the command station to "Sleep" mode, momentarily,
-                    before returning to&lt;p&gt;
-                    "Run" mode, after writing the the OpSw to the "C"losed state.
+            <group exclude="DCS210">
+                <label>
+                    <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
+                &lt;h2&gt;&lt;strong&gt;Notes on DCS240 OpSw Settings
+                &lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+                </label>
+                <label>
+                    <text>&lt;html&gt;&lt;/strong&gt;&lt;ul&gt;
+                    &lt;li&gt;The Command Station should be in "Run" mode when programming
+                        Command Station OpSw &lt;p&gt;
+                        settings using this Roster entry.&lt;p&gt;
+                        (There is some evidence that this tool can modify OpSw settings
+                        when the Command Station &lt;p&gt;
+                        DCS240 switch is set for "OpSw" mode, but be careful to check
+                        for the desired result if &lt;p&gt;
+                        using this roster entry when the DCS240 is set for "OpSw" mode.)&lt;/li&gt;
                     &lt;p&gt;
-                    The command station may fail to act upon the request if one 
-                    of these operations is not done.&lt;p&gt;
-                &lt;li&gt;Note that JMRI's LocoNet Slot Monitor does not recognize 
-                    the Command Station OpSw&lt;p&gt;
-                    operations which can clear the slots.&lt;p&gt;
-                    It is best to shut down JMRI and re-start after clearing the 
-                    Command Station slot table&lt;p&gt;
-                    using OpSw mechanisms.&lt;/li&gt;
-                    &lt;p;&gt;
-                    &lt;li&gt;The 'Global System Loco "Speed-step Mode" Default 
-                    for New Loco Acquisition' item on the &lt;p&gt;
-                    "Basic OpSw Settings" 'Sheet' will not be "colorized"
-                    to reflect the state of OpSw21,&lt;p&gt;
-                    OpSw22 and OpSw23, due to limitations of JMRI's mechanisms.&lt;/li&gt;
-            &lt;/ul&gt;&lt;/html&gt;</text>
-            </label>
+                    &lt;li&gt;The documentation for DCS240 OpSw "factory default"
+                        settings are not consistent with at&lt;p&gt;
+                        least one DCS240 device.  This decoder definition shows the
+                        "factory default" settings &lt;p&gt;
+                        from an actual DCS240.&lt;/li&gt;
+                    &lt;p&gt;
+                    &lt;li&gt;When manipulating OpSws 36, 37,  and/or 39, for the
+                        purpose of clearing internal &lt;p&gt;
+                        storage of slots, routes, etc., it may be necessary to power-cycle
+                        the command station &lt;p&gt;
+                        or to switch the command station to "Sleep" mode, momentarily,
+                        before returning to&lt;p&gt;
+                        "Run" mode, after writing the the OpSw to the "C"losed state.
+                        &lt;p&gt;
+                        The command station may fail to act upon the request if one
+                        of these operations is not done.&lt;p&gt;
+                    &lt;li&gt;Note that JMRI's LocoNet Slot Monitor does not recognize
+                        the Command Station OpSw&lt;p&gt;
+                        operations which can clear the slots.&lt;p&gt;
+                        It is best to shut down JMRI and re-start after clearing the
+                        Command Station slot table&lt;p&gt;
+                        using OpSw mechanisms.&lt;/li&gt;
+                        &lt;p;&gt;
+                        &lt;li&gt;The 'Global System Loco "Speed-step Mode" Default
+                        for New Loco Acquisition' item on the &lt;p&gt;
+                        "Basic OpSw Settings" 'Sheet' will not be "colorized"
+                        to reflect the state of OpSw21,&lt;p&gt;
+                        OpSw22 and OpSw23, due to limitations of JMRI's mechanisms.&lt;/li&gt;
+                &lt;/ul&gt;&lt;/html&gt;</text>
+                </label>
+            </group>
+            <group exclude="DCS240">
+                <label>
+                    <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
+                &lt;h2&gt;&lt;strong&gt;Notes on DCS210 OpSw Settings
+                &lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+                </label>
+                <label>
+                    <text>&lt;html&gt;&lt;/strong&gt;&lt;ul&gt;
+                    &lt;li&gt;The Command Station should be in "Run" mode when programming
+                        Command Station OpSw &lt;p&gt;
+                        settings using this Roster entry.&lt;p&gt;
+                        (There is some evidence that this tool can modify OpSw settings
+                        when the Command Station &lt;p&gt;
+                        DCS210 switch is set for "OpSw" mode, but be careful to check
+                        for the desired result if &lt;p&gt;
+                        using this roster entry when the DCS210 is set for "OpSw" mode.)&lt;/li&gt;
+                    &lt;p&gt;
+                    &lt;li&gt;The documentation for DCS210 OpSw "factory default"
+                        settings are not consistent with at&lt;p&gt;
+                        least one DCS210 device.  This decoder definition shows the
+                        "factory default" settings &lt;p&gt;
+                        from an actual DCS210.&lt;/li&gt;
+                    &lt;p&gt;
+                    &lt;li&gt;When manipulating OpSws 36, 37,  and/or 39, for the
+                        purpose of clearing internal &lt;p&gt;
+                        storage of slots, routes, etc., it may be necessary to power-cycle
+                        the command station &lt;p&gt;
+                        or to switch the command station to "Sleep" mode, momentarily,
+                        before returning to&lt;p&gt;
+                        "Run" mode, after writing the the OpSw to the "C"losed state.
+                        &lt;p&gt;
+                        The command station may fail to act upon the request if one
+                        of these operations is not done.&lt;p&gt;
+                    &lt;li&gt;Note that JMRI's LocoNet Slot Monitor does not recognize
+                        the Command Station OpSw&lt;p&gt;
+                        operations which can clear the slots.&lt;p&gt;
+                        It is best to shut down JMRI and re-start after clearing the
+                        Command Station slot table&lt;p&gt;
+                        using OpSw mechanisms.&lt;/li&gt;
+                        &lt;p;&gt;
+                        &lt;li&gt;The 'Global System Loco "Speed-step Mode" Default
+                        for New Loco Acquisition' item on the &lt;p&gt;
+                        "Basic OpSw Settings" 'Sheet' will not be "colorized"
+                        to reflect the state of OpSw21,&lt;p&gt;
+                        OpSw22 and OpSw23, due to limitations of JMRI's mechanisms.&lt;/li&gt;
+                &lt;/ul&gt;&lt;/html&gt;</text>
+                </label>
+            </group>
         </column>
     </pane>
     <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
