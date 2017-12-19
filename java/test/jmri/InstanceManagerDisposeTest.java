@@ -1,17 +1,22 @@
 package jmri;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+// import junit.framework.Test;
+// import junit.framework.TestCase;
+// import junit.framework.TestSuite;
+//import org.junit.Assert;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Test InstanceManager
  */
-public class InstanceManagerDisposeTest extends TestCase implements InstanceManagerAutoDefault {
+public class InstanceManagerDisposeTest {
 
     // Test that an object that is added to the InstanceManager and then
     // removed is also disposed.
@@ -25,6 +30,7 @@ public class InstanceManagerDisposeTest extends TestCase implements InstanceMana
         }
     }
     
+    @Test
     public void testClear() {
         
         DisposableClass disposable = new DisposableClass();
@@ -36,31 +42,14 @@ public class InstanceManagerDisposeTest extends TestCase implements InstanceMana
     }
 
     // from here down is testing infrastructure
-    public InstanceManagerDisposeTest(String s) {
-        super(s);
-    }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {InstanceManagerDisposeTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(InstanceManagerDisposeTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
