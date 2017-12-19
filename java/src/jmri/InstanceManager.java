@@ -811,7 +811,10 @@ public final class InstanceManager {
             }
         }
         if (canDispose) {
+            System.out.println("Daniel: Object is going to be disposed");
             disposable.dispose();
+        } else {
+            System.out.println("Daniel: Object is NOT going to be disposed");
         }
     }
 
@@ -848,12 +851,19 @@ public final class InstanceManager {
     public void clear(@Nonnull Class<?> type) {
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             log.trace("Clearing managers of {}", type.getName());
+            
+            List<Disposable> list = new ArrayList<>();
             getInstances(type).stream().filter((o) -> (o instanceof Disposable)).forEachOrdered((o) -> {
-                dispose((Disposable) o);
+                list.add((Disposable) o);
             });
+            
             // Should this be sending notifications of removed instances to listeners?
             setInitializationState(type, InitializationState.NOTSET); // initialization will have to be redone
             managerLists.put(type, new ArrayList<>());
+            
+            for (Disposable d : list) {
+                dispose(d);
+            }
         });
     }
 
