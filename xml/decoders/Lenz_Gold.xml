@@ -73,11 +73,13 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Signal stop activated with external contact</label>
         <label xml:lang="de">Halt am Signal durch externen Kontakt aktiviert</label>
+        <label xml:lang="ca">Para al senyal amb contacte extern</label>
       </variable>
       <variable CV="51" mask="VXXXXXXX" item="Push-pull operation activated with external contact" minOut="8" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Push-pull operation activated with external contact</label>
         <label xml:lang="de">Pendelzugbetrieb durch externen Kontakt aktiviert</label>
+        <label xml:lang="ca">Operació Push-Pull activa amb contacte extern</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/lenz/lightingOptions1_cv55_56.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/fn_ctrl_57_59.xml"/>
@@ -91,6 +93,7 @@
     <resets>
       <factReset label="Reset All CVs" CV="8" default="33">
         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+        <label xml:lang="ca">Reset de totes les CV a valors ede fàbrica</label>
       </factReset>
     </resets>
   </decoder>
