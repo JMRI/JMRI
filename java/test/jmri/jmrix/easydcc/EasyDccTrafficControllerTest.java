@@ -10,6 +10,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Rule;
+import jmri.util.junit.rules.RetryRule;
 
 /**
  * JUnit tests for the EasyDccTrafficController class
@@ -17,6 +19,9 @@ import org.junit.Test;
  * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2015
  */
 public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     @Test
     public void testSendThenRcvReply() throws Exception {
