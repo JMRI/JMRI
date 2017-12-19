@@ -132,6 +132,7 @@
                 <decVal/>
                 <label>Sound Configuration Number</label>
                 <label xml:lang="de">Gewählte Soundkonfiguration</label>
+                <label xml:lang="ca">Número configurqació de so</label>
             </variable>
             <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
         </variables>
