@@ -16,7 +16,7 @@
                 xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
                 showEmptyPanes="no">
 
-    <version author="Bob Milhaupt" version="1" lastUpdated="20171218" />
+    <version author="Bob Milhaupt" version="1" lastUpdated="20171219" />
 
     <decoder>
 
