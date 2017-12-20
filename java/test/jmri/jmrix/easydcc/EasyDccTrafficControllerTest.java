@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.Rule;
 import jmri.util.junit.rules.RetryRule;
+import org.junit.rules.Timeout;
 
 /**
  * JUnit tests for the EasyDccTrafficController class
@@ -19,6 +20,9 @@ import jmri.util.junit.rules.RetryRule;
  * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2015
  */
 public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
+
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(90); // 90 second timeout for methods in this test class.
 
     @Rule
     public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
