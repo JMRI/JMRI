@@ -5,6 +5,7 @@ import java.beans.PropertyChangeSupport;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.ServiceLoader;
@@ -844,8 +845,13 @@ public final class InstanceManager {
      */
     public void clearAll() {
         log.debug("Clearing InstanceManager");
-        managerLists.keySet().forEach((type) -> {
+        new HashSet<>(managerLists.keySet()).forEach((type) -> {
             clear(type);
+        });
+        managerLists.keySet().forEach((type) -> {
+            if (!managerLists.get(type).isEmpty()) {
+                log.warn("list of {} was not cleared", type, new Exception());
+            }
         });
         if (traceFileActive) {
             traceFileWriter.println(""); // marks new InstanceManager
