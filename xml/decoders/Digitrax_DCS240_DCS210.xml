@@ -788,7 +788,7 @@
             </group>
             <group include="DCS210" exclude="DCS240">
                 <column>
-                <display item="OpSw 038"/>
+                    <display item="OpSw 038"/>
                 </column>
             </group>
 
@@ -867,7 +867,9 @@
             <display item="OpSw 033"/>
             <display item="OpSw 034"/>
 
-            <label><text> </text></label>
+            <label>
+                <text> </text>
+            </label>
             <separator/>
 
             <label>
@@ -929,16 +931,16 @@
             <display item="OpSw 040"/>
             <group exclude="DCS210">
                 <row>
-                        <label>
-                            <text>JMRI cannot programmatically modify DCS240 OpSw40.  Use a throttle with the DCS240 in "OpSw" mode.</text>
-                        </label>
+                    <label>
+                        <text>JMRI cannot programmatically modify DCS240 OpSw40.  Use a throttle with the DCS240 in "OpSw" mode.</text>
+                    </label>
                 </row>
             </group>
             <group exclude="DCS240">
                 <row>
-                        <label>
-                            <text>JMRI cannot programmatically modify DCS210 OpSw40.  Use a throttle with the DCS210 in "OpSw" mode.</text>
-                        </label>
+                    <label>
+                        <text>JMRI cannot programmatically modify DCS210 OpSw40.  Use a throttle with the DCS210 in "OpSw" mode.</text>
+                    </label>
                 </row>
             </group>
             <label>
@@ -954,94 +956,94 @@
             </label>
             <row>
                 <column>
-            <display item="OpSw 001"/>
-            <display item="OpSw 004"/>
-            <display item="OpSw 005"/>
-            <display item="OpSw 007"/>
-            <display item="OpSw 009"/>
-            <display item="OpSw 010"/>
-            <display item="OpSw 011"/>
-            <display item="OpSw 012"/>
-            <display item="OpSw 019"/>
-            <display item="OpSw 024"/>
-            <display item="OpSw 029"/>
-            <display item="OpSw 030"/>
-            <group include="DCS240" exclude="DCS210">
-                <column>
-                <display item="OpSw 038"/>
-                </column>
-            </group>
-            <group include="DCS210" exclude="DCS240">
-                <column>
-                <display item="OpSw 044"/>
-                </column>
-            </group>
-            <display item="OpSw 046"/>
-                </column>
-                <column>
-            <display item="OpSw 049"/>
-            <display item="OpSw 050"/>
-            <display item="OpSw 051"/>
-            <display item="OpSw 052"/>
-            <display item="OpSw 053"/>
-            <display item="OpSw 054"/>
-            <display item="OpSw 055"/>
-            <display item="OpSw 057"/>
-            <display item="OpSw 058"/>
-            <display item="OpSw 059"/>
-            <display item="OpSw 060"/>
-            <display item="OpSw 061"/>
-            <display item="OpSw 062"/>
-            <display item="OpSw 063"/>
+                    <display item="OpSw 001"/>
+                    <display item="OpSw 004"/>
+                    <display item="OpSw 005"/>
+                    <display item="OpSw 007"/>
+                    <display item="OpSw 009"/>
+                    <display item="OpSw 010"/>
+                    <display item="OpSw 011"/>
+                    <display item="OpSw 012"/>
+                    <display item="OpSw 019"/>
+                    <display item="OpSw 024"/>
+                    <display item="OpSw 029"/>
+                    <display item="OpSw 030"/>
+                    <group include="DCS240" exclude="DCS210">
+                        <column>
+                            <display item="OpSw 038"/>
+                        </column>
+                    </group>
+                    <group include="DCS210" exclude="DCS240">
+                        <column>
+                            <display item="OpSw 044"/>
+                        </column>
+                    </group>
+                    <display item="OpSw 046"/>
                 </column>
                 <column>
-            <display item="OpSw 065"/>
-            <display item="OpSw 066"/>
-            <display item="OpSw 067"/>
-            <display item="OpSw 068"/>
-            <display item="OpSw 069"/>
-            <display item="OpSw 070"/>
-            <display item="OpSw 071"/>
-            <display item="OpSw 073"/>
-            <display item="OpSw 074"/>
-            <display item="OpSw 076"/>
-            <display item="OpSw 077"/>
-            <display item="OpSw 078"/>
-            <display item="OpSw 079"/>
-            <display item="OpSw 081"/>
+                    <display item="OpSw 049"/>
+                    <display item="OpSw 050"/>
+                    <display item="OpSw 051"/>
+                    <display item="OpSw 052"/>
+                    <display item="OpSw 053"/>
+                    <display item="OpSw 054"/>
+                    <display item="OpSw 055"/>
+                    <display item="OpSw 057"/>
+                    <display item="OpSw 058"/>
+                    <display item="OpSw 059"/>
+                    <display item="OpSw 060"/>
+                    <display item="OpSw 061"/>
+                    <display item="OpSw 062"/>
+                    <display item="OpSw 063"/>
+                </column>
+                <column>
+                    <display item="OpSw 065"/>
+                    <display item="OpSw 066"/>
+                    <display item="OpSw 067"/>
+                    <display item="OpSw 068"/>
+                    <display item="OpSw 069"/>
+                    <display item="OpSw 070"/>
+                    <display item="OpSw 071"/>
+                    <display item="OpSw 073"/>
+                    <display item="OpSw 074"/>
+                    <display item="OpSw 076"/>
+                    <display item="OpSw 077"/>
+                    <display item="OpSw 078"/>
+                    <display item="OpSw 079"/>
+                    <display item="OpSw 081"/>
 
                 </column>
                 <column>
-            <display item="OpSw 082"/>
-            <display item="OpSw 083"/>
-            <display item="OpSw 084"/>
-            <display item="OpSw 085"/>
-            <display item="OpSw 086"/>
-            <display item="OpSw 087"/>
-            <display item="OpSw 089"/>
-            <display item="OpSw 090"/>
-            <display item="OpSw 091"/>
-            <display item="OpSw 092"/>
-            <display item="OpSw 093"/>
-            <display item="OpSw 094"/>
-            <display item="OpSw 095"/>
-            <display item="OpSw 097"/>
+                    <display item="OpSw 082"/>
+                    <display item="OpSw 083"/>
+                    <display item="OpSw 084"/>
+                    <display item="OpSw 085"/>
+                    <display item="OpSw 086"/>
+                    <display item="OpSw 087"/>
+                    <display item="OpSw 089"/>
+                    <display item="OpSw 090"/>
+                    <display item="OpSw 091"/>
+                    <display item="OpSw 092"/>
+                    <display item="OpSw 093"/>
+                    <display item="OpSw 094"/>
+                    <display item="OpSw 095"/>
+                    <display item="OpSw 097"/>
 
                 </column>
                 <column>
-            <display item="OpSw 098"/>
-            <display item="OpSw 099"/>
-            <display item="OpSw 100"/>
-            <display item="OpSw 101"/>
-            <display item="OpSw 102"/>
-            <display item="OpSw 103"/>
-            <display item="OpSw 105"/>
-            <display item="OpSw 106"/>
-            <display item="OpSw 107"/>
-            <display item="OpSw 108"/>
-            <display item="OpSw 109"/>
-            <display item="OpSw 110"/>
-            <display item="OpSw 111"/>
+                    <display item="OpSw 098"/>
+                    <display item="OpSw 099"/>
+                    <display item="OpSw 100"/>
+                    <display item="OpSw 101"/>
+                    <display item="OpSw 102"/>
+                    <display item="OpSw 103"/>
+                    <display item="OpSw 105"/>
+                    <display item="OpSw 106"/>
+                    <display item="OpSw 107"/>
+                    <display item="OpSw 108"/>
+                    <display item="OpSw 109"/>
+                    <display item="OpSw 110"/>
+                    <display item="OpSw 111"/>
 
                 </column>
             </row>
@@ -1054,27 +1056,27 @@
             </label>
             <row>
                 <column>
-            <display item="OpSw 008"/>
-            <display item="OpSw 016"/>
-            <display item="OpSw 024"/>
+                    <display item="OpSw 008"/>
+                    <display item="OpSw 016"/>
+                    <display item="OpSw 024"/>
                 </column>
                 <column>
-            <display item="OpSw 032"/>
-            <display item="OpSw 048"/>
-            <display item="OpSw 056"/>
+                    <display item="OpSw 032"/>
+                    <display item="OpSw 048"/>
+                    <display item="OpSw 056"/>
                 </column>
                 <column>
-            <display item="OpSw 064"/>
-            <display item="OpSw 072"/>
-            <display item="OpSw 080"/>
+                    <display item="OpSw 064"/>
+                    <display item="OpSw 072"/>
+                    <display item="OpSw 080"/>
                 </column>
                 <column>
-            <display item="OpSw 088"/>
-            <display item="OpSw 096"/>
+                    <display item="OpSw 088"/>
+                    <display item="OpSw 096"/>
                 </column>
                 <column>
-            <display item="OpSw 104"/>
-            <display item="OpSw 112"/>
+                    <display item="OpSw 104"/>
+                    <display item="OpSw 112"/>
                 </column>
             </row>
             <label>
