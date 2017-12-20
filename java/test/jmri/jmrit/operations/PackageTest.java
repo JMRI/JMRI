@@ -16,7 +16,7 @@ import org.junit.runners.Suite;
         XmlLoadTest.class, // no tests in class itself
         BundleTest.class, 
         CommonConductorYardmasterPanelTest.class, 
-        jmri.jmrit.operations.locations.PackageTest.class, // fixed references to Swing, 10/10/2012
+//        jmri.jmrit.operations.locations.PackageTest.class, // fixed references to Swing, 10/10/2012
         OperationsFrameTest.class,
         OperationsMenuTest.class,
         OperationsPanelTest.class,
