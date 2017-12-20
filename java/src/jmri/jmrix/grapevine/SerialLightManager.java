@@ -17,8 +17,10 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialLightManager extends AbstractLightManager {
 
-    public SerialLightManager() {
+    GrapevineSystemConnectionMemo memo = null;
 
+    public SerialLightManager(GrapevineSystemConnectionMemo _memo) {
+        memo = _memo;
     }
 
     /**
@@ -26,7 +28,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String getSystemPrefix() {
-        return "G";
+        return memo.getSystemPrefix();
     }
 
     /**
@@ -44,8 +46,8 @@ public class SerialLightManager extends AbstractLightManager {
         Light lgt = null;
         // Validate the systemName
         if (SerialAddress.validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
-            lgt = new SerialLight(systemName, userName);
-            if (!SerialAddress.validSystemNameConfig(systemName, 'L')) {
+            lgt = new SerialLight(systemName, userName,memo);
+            if (!SerialAddress.validSystemNameConfig(systemName, 'L',memo.getTrafficController())) {
                 log.warn("Light system Name does not refer to configured hardware: "
                         + systemName);
             }
@@ -74,7 +76,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        return (SerialAddress.validSystemNameConfig(systemName, 'L'));
+        return (SerialAddress.validSystemNameConfig(systemName, 'L',memo.getTrafficController()));
     }
 
     /**
@@ -114,12 +116,8 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Deprecated
     static public SerialLightManager instance() {
-        if (_instance == null) {
-            _instance = new SerialLightManager();
-        }
-        return _instance;
+        return null;
     }
-    static SerialLightManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class);
 

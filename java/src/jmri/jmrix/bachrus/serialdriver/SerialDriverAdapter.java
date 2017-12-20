@@ -137,9 +137,6 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
         this.getSystemConnectionMemo().getTrafficController().connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
-
-        jmri.jmrix.bachrus.ActiveFlag.setActive();
-
     }
 
     // base class methods for the SprogPortController interface

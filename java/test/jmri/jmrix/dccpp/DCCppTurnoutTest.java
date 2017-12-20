@@ -159,7 +159,7 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         //Assert.assertEquals(t.getState(), Turnout.THROWN);
         DCCppMessage m = dnis.outbound.elementAt(0);
         Assert.assertTrue(m.isOutputCmdMessage());
-        Assert.assertEquals(1, m.getOutputStateInt());
+        Assert.assertEquals(0, m.getOutputStateInt());
         DCCppReply r = DCCppReply.parseDCCppReply("Y 42 0");
         ((DCCppTurnout) t).message(r);
         Assert.assertEquals(Turnout.THROWN, t.getState());
@@ -168,7 +168,7 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         //Assert.assertEquals(t.getState(), Turnout.CLOSED);
         m = dnis.outbound.elementAt(1);
         Assert.assertTrue(m.isOutputCmdMessage());
-        Assert.assertEquals(0, m.getOutputStateInt());
+        Assert.assertEquals(1, m.getOutputStateInt());
         r = DCCppReply.parseDCCppReply("Y 42 1");
         ((DCCppTurnout) t).message(r);
         Assert.assertEquals(Turnout.CLOSED, t.getState());
@@ -180,7 +180,7 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         //Assert.assertEquals(t.getState(), Turnout.THROWN);
         m = dnis.outbound.elementAt(2);
         Assert.assertTrue(m.isOutputCmdMessage());
-        Assert.assertEquals(0, m.getOutputStateInt());
+        Assert.assertEquals(1, m.getOutputStateInt());
         r = DCCppReply.parseDCCppReply("Y 42 1");
         ((DCCppTurnout) t).message(r);
         Assert.assertEquals(Turnout.THROWN, t.getState());
@@ -189,7 +189,7 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         //Assert.assertEquals(t.getState(), Turnout.CLOSED);
         m = dnis.outbound.elementAt(3);
         Assert.assertTrue(m.isOutputCmdMessage());
-        Assert.assertEquals(1, m.getOutputStateInt());
+        Assert.assertEquals(0, m.getOutputStateInt());
         r = DCCppReply.parseDCCppReply("Y 42 0");
         ((DCCppTurnout) t).message(r);
         Assert.assertEquals(Turnout.CLOSED, t.getState());

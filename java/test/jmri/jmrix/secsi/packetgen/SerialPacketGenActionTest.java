@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 
 /**
  * Test simple functioning of SerialPacketGenAction
@@ -15,23 +16,26 @@ import org.junit.Test;
  */
 public class SerialPacketGenActionTest {
 
+    private SecsiSystemConnectionMemo memo = null;
+
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialPacketGenAction action = new SerialPacketGenAction("secsi test Action");
+        SerialPacketGenAction action = new SerialPacketGenAction("secsi test Action",memo);
         Assert.assertNotNull("exists", action);
     }
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialPacketGenAction action = new SerialPacketGenAction(); 
+        SerialPacketGenAction action = new SerialPacketGenAction(memo); 
         Assert.assertNotNull("exists", action);
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new SecsiSystemConnectionMemo();
     }
 
     @After

@@ -608,6 +608,31 @@
       use both, you should skip version 1 by providing just the
       LOCONETSV2MODE option.</p>
 
+      <a name="boards" id="boards"></a>
+      <h2>Addressing Op Switches in Digitrax boards</h2>
+      <p>(The following was first fully available in <a href=
+      "http://jmri.org/releasenotes/jmri4.9.7.shtml">JMRI
+      4.9.7</a>. Versions before that may not be complete).</p>
+
+        <p>Digitrax boards like the PM4, BDL168, SE8c and 
+        DS64 use a special protocol to program their Op Switches.
+        If you specify a programming mode of LOCONETBDOPSWMODE,
+        DecoderPro will use that protocol.</p>
+        
+        <p>CVs are specified with the format "113.3", 
+        where the part after the period is the specific
+        Op Switch number, and the part before is 
+        board-specific:<p>
+        <UL>
+            <LI>0x70 - 112 - PM4
+            <LI>0x71 - 113 - BDL16
+            <LI>0x72 - 114 - SE8
+            <LI>0x73 - 115 - DS64
+        </UL>
+        
+
+    <hr>
+
       <p>LocoNet&reg; is a registered trademark of <a href=
       "http://www.digitrax.com">Digitrax, Inc.</a></p>
     </div><!--#include virtual="/Footer" -->

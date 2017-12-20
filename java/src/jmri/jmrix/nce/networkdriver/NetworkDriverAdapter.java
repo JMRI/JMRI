@@ -46,8 +46,6 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
-
-        jmri.jmrix.nce.ActiveFlag.setActive();
     }
 
 }

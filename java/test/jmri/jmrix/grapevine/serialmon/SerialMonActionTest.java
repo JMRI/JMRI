@@ -5,6 +5,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
+import jmri.jmrix.grapevine.SerialTrafficController;
+import jmri.jmrix.grapevine.SerialTrafficControlScaffold;
 
 /**
  *
@@ -12,9 +15,11 @@ import org.junit.Test;
  */
 public class SerialMonActionTest {
 
+    private GrapevineSystemConnectionMemo memo = null; 
+
     @Test
     public void testCTor() {
-        SerialMonAction t = new SerialMonAction();
+        SerialMonAction t = new SerialMonAction(memo);
         Assert.assertNotNull("exists",t);
     }
 
@@ -22,6 +27,9 @@ public class SerialMonActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        SerialTrafficController tc = new SerialTrafficControlScaffold();
+        memo = new GrapevineSystemConnectionMemo();
+        memo.setTrafficController(tc);
     }
 
     @After

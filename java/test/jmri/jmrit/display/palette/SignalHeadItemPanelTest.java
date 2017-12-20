@@ -1,11 +1,11 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -24,10 +24,11 @@ public class SignalHeadItemPanelTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel tableModel = PickListModel.signalHeadPickModelInstance(); // N11N
-        JmriJFrame jf = new JmriJFrame("SignalHead Item Panel Test");
+        DisplayFrame df = new DisplayFrame("SignalHead Item Panel Test");
         Editor editor = new EditorScaffold();
-        SignalHeadItemPanel t = new SignalHeadItemPanel(jf,"IH01","",tableModel,editor);
+        SignalHeadItemPanel t = new SignalHeadItemPanel(df,"IH01","",tableModel,editor);
         Assert.assertNotNull("exists",t);
+        JUnitUtil.dispose(df);
     }
 
     // The minimal setup for log4J

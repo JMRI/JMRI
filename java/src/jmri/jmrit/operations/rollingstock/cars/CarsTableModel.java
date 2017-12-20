@@ -386,7 +386,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     // Cars frame table column widths, starts with Select column and ends with Edit
-    private int[] tableColumnWidths =
+    private final int[] tableColumnWidths =
             {60, 60, 60, 65, 35, 75, 75, 75, 65, 190, 190, 140, 190, 190, 190, 65, 50, 50, 50, 50, 100,
                     50, 100, 100, 65, 70};
 
@@ -469,7 +469,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case FINAL_DESTINATION_COLUMN:
                 return Bundle.getMessage("FinalDestination");
             case RWE_COLUMN:
-                return Bundle.getMessage("ReturnWhenEmpty");
+                return Bundle.getMessage("RWELocation");
             case RWE_LOAD_COLUMN:
                 return Bundle.getMessage("RWELoad");
             case TRAIN_COLUMN:

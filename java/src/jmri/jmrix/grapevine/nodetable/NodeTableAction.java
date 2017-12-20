@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 
 /**
  * Swing action to create and register a NodeTableFrame object
@@ -12,17 +13,20 @@ import org.slf4j.LoggerFactory;
  */
 public class NodeTableAction extends AbstractAction {
 
-    public NodeTableAction(String s) {
+    private GrapevineSystemConnectionMemo memo = null;
+
+    public NodeTableAction(String s,GrapevineSystemConnectionMemo _memo) {
         super(s);
+        memo = _memo;
     }
 
-    public NodeTableAction() {
-        this(Bundle.getMessage("WindowTitle"));
+    public NodeTableAction(GrapevineSystemConnectionMemo _memo) {
+        this(Bundle.getMessage("WindowTitle"),_memo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        NodeTableFrame f = new NodeTableFrame();
+        NodeTableFrame f = new NodeTableFrame(memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

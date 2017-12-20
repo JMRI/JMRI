@@ -6,8 +6,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.netbeans.jemmy.operators.JDialogOperator;
 
 /**
  *
@@ -16,12 +16,21 @@ import org.junit.Test;
 public class ExceptionDisplayFrameTest {
 
     @Test
-    @Ignore("Constructor causes modal dialog to launch that is not associated with a JFrame, so it can't be easilly dismissed with a Jemmy operator.")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ExceptionContext ec = new ExceptionContext(new Exception("Test"),"Test","Test");
-        ExceptionDisplayFrame t = new ExceptionDisplayFrame(ec);
-        Assert.assertNotNull("exists",t);
+        new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(ec.getTitle());
+            jdo.close();
+        }).start();
+        ExceptionDisplayFrame dialog = new ExceptionDisplayFrame(ec);
+        Assert.assertNotNull("exists",dialog);
+        JUnitUtil.waitFor(() -> {
+            return !dialog.isVisible();
+        }, "Exception Frame did not close");
+        dialog.dispose();
+        JUnitUtil.dispose(dialog);
     }
 
     // The minimal setup for log4J

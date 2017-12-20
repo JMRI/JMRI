@@ -14,30 +14,25 @@ import org.junit.Test;
  *
  * @author	Paul Bender
  */
-public class EliteXNetSystemConnectionMemoTest {
+public class EliteXNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
     @Test
     public void testCtor() {
-        // infrastructure objects
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-
-        EliteXNetSystemConnectionMemo t = new EliteXNetSystemConnectionMemo(tc);
+        EliteXNetSystemConnectionMemo t = (EliteXNetSystemConnectionMemo) scm;
         Assert.assertNotNull(t);
         Assert.assertNotNull(t.getXNetTrafficController());
         // While we are constructing the memo, we should also set the 
         // SystemMemo parameter in the traffic controller.
-        Assert.assertNotNull(tc.getSystemConnectionMemo());
+        Assert.assertNotNull(t.getXNetTrafficController().getSystemConnectionMemo());
     }
 
     @Test
     public void testXNetTrafficControllerSetCtor() {
-        // infrastructure objects
+        EliteXNetSystemConnectionMemo t = (EliteXNetSystemConnectionMemo)scm;
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-
-        EliteXNetSystemConnectionMemo t = new EliteXNetSystemConnectionMemo();
         Assert.assertNotNull(t);
         // the default constructor does not set the traffic controller
-        Assert.assertNull(t.getXNetTrafficController());
+        Assert.assertNotEquals(tc,t.getXNetTrafficController());
         // so we need to do this ourselves.
         t.setXNetTrafficController(tc);
         Assert.assertNotNull(t.getXNetTrafficController());
@@ -46,24 +41,27 @@ public class EliteXNetSystemConnectionMemoTest {
         Assert.assertNotNull(tc.getSystemConnectionMemo());
     }
 
+    @Override
     @Test
-    public void testProivdesConsistManager() {
-        // infrastructure objects
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-
-        EliteXNetSystemConnectionMemo t = new EliteXNetSystemConnectionMemo();
-        t.setXNetTrafficController(tc);
-        t.setCommandStation(tc.getCommandStation());
+    public void testProvidesConsistManager() {
+        EliteXNetSystemConnectionMemo t = (EliteXNetSystemConnectionMemo) scm;
+        t.setCommandStation(t.getXNetTrafficController().getCommandStation());
         Assert.assertFalse(t.provides(jmri.ConsistManager.class));
     }
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        // infrastructure objects
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
+
+        scm = new EliteXNetSystemConnectionMemo(tc);
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

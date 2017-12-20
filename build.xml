@@ -36,9 +36,9 @@
     <!--    # JVM arguments to pass to the JVM running the JMRI application              -->
     <!--    jvm.args=                                                                    -->
     <!--    # paths to append to the classpath                                           -->
-    <!--    cp.append=                                                                    -->
-    <!--    # paths to prepend to the classpath                                           -->
-    <!--    cp.prepend=                                                                    -->
+    <!--    cp.append=                                                                   -->
+    <!--    # paths to prepend to the classpath                                          -->
+    <!--    cp.prepend=                                                                  -->
     <!--    # The directory where Findbugs is installed                                  -->
     <!--    findbugs.home=                                                               -->
     <!--    # You can specify a DecoderPro/PanelPro config file at runtime               -->
@@ -181,7 +181,7 @@
         <pathelement location="${libdir}/xAPlib.jar"/>
         <pathelement location="${libdir}/jna-4.4.0.jar"/>
         <pathelement location="${libdir}/jna-platform-4.4.0.jar"/>
-        <pathelement location="${libdir}/commons-lang3-3.2.1.jar"/>
+        <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
         <pathelement location="${libdir}/jakarta-regexp-1.5.jar"/>
         <pathelement location="${libdir}/jackson-core-2.8.5.jar"/>
         <pathelement location="${libdir}/jackson-annotations-2.8.5.jar"/>
@@ -205,7 +205,7 @@
         <pathelement location="${libdir}/pi4j-device.jar"/>
         <pathelement location="${libdir}/pi4j-gpio-extension.jar"/>
         <pathelement location="${libdir}/pi4j-service.jar"/>
-        <pathelement location="${libdir}/commons-io-1.3.1.jar"/>
+        <pathelement location="${libdir}/commons-io-2.6.jar"/>
         <pathelement location="${libdir}/bluecove-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/bluecove-bluez-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/bluecove-gpl-2.1.1-SNAPSHOT.jar"/>
@@ -254,18 +254,20 @@
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
         <pathelement location="${libdir}/org-openide-util-lookup-RELEASE82.jar"/>
         <!-- cucumber and it's dependencies -->
-        <pathelement location="${libdir}/cucumber-core-1.2.5.jar"/>
-        <pathelement location="${libdir}/cucumber-java-1.2.5.jar"/>
-        <pathelement location="${libdir}/cucumber-java8-1.2.5.jar"/>
-        <pathelement location="${libdir}/cucumber-junit-1.2.5.jar"/>
-        <pathelement location="${libdir}/cucumber-jvm-deps-1.0.5.jar"/>
-        <pathelement location="${libdir}/cucumber-picocontainer-1.2.5.jar"/>
-        <pathelement location="${libdir}/gherkin-2.12.2.jar"/>
-        <pathelement location="${libdir}/gherkin3-3.0.0.jar"/>
-        <pathelement location="${libdir}/gherkin-jvm-deps-1.0.3.jar"/>
+        <pathelement location="${libdir}/cucumber-core-2.0.1.jar"/>
+        <pathelement location="${libdir}/cucumber-java-2.0.1.jar"/>
+        <pathelement location="${libdir}/cucumber-java8-2.0.1.jar"/>
+        <pathelement location="${libdir}/cucumber-junit-2.0.1.jar"/>
+        <pathelement location="${libdir}/cucumber-jvm-deps-1.0.6.jar"/>
+        <pathelement location="${libdir}/cucumber-picocontainer-2.0.1.jar"/>
+        <pathelement location="${libdir}/gherkin-4.1.3.jar"/>
+        <pathelement location="${libdir}/gherkin-jvm-deps-1.0.4.jar"/>
         <pathelement location="${libdir}/picocontainer-2.15.jar"/>
+        <pathelement location="${libdir}/tag-expressions-1.0.1.jar"/>
+        <pathelement location="${libdir}/typetools-0.5.0.jar"/>
         <!-- Selenium and it's dependencies -->
         <pathelement location="${libdir}/selenium-server-standalone-3.6.0.jar"/>
+        <pathelement location="${libdir}/webdrivermanager-2.0.1.jar"/>
     </path>
 
     <!-- path to run regular executables -->
@@ -458,7 +460,7 @@
             <fileset dir="${resourcedir}" includes="*.gif"/>
         </copy>
         <copy todir="${target}">
-            <fileset dir="${source}" includes="**/*.properties,**/*.js"/>
+            <fileset dir="${source}" includes="**/*.properties,**/*.js,**/*.png"/>
             <fileset dir="${source}" includes="META-INF/**"/>
         </copy>
     </target>
@@ -687,44 +689,40 @@
     <!-- By default, we set them explicitly, so that new ones will show up -->
     <!-- See http://help.eclipse.org/galileo/index.jsp?topic=/org.eclipse.jdt.doc.isv/guide/jdt_api_compile.htm -->
     <!--                                        -->
-    <target name="-ecj-compile-internal"> <!-- internal target for compiling Java source from a specified directory using ECJ -->
-        <!-- Compile the java code from ${source} into ${target} -->
-        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
-        <mkdir dir="${java.target.directory}"/>
-        <javac srcdir="${java.source.directory}"
-               destdir="${java.target.directory}"
-               source="${source_version}"
-               target="${jre_version}"
-               includeantruntime="false"
-               debug="yes" >
-            <compilerclasspath>
-                <pathelement path="${libdir}/ecj.jar"/>
-            </compilerclasspath>
-            <compilerarg value="@${basedir}/java/ecj.warning.options"/>
-            <classpath refid="${java.class.path}"/>
-        </javac>
-    </target>
+    <macrodef name="ecj-compile">
+        <attribute name="javac.source"/>
+        <attribute name="javac.target" default="${target}"/>
+        <attribute name="javac.deprecation" default="${deprecation}"/>
+        <attribute name="javac.classpath" default="compile.class.path"/>
+        <sequential>
+            <mkdir dir="@{javac.target}"/> <!-- ensure destdir exists -->
+            <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+            <javac srcdir="@{javac.source}"
+                   destdir="@{javac.target}"
+                   source="${source_version}"
+                   target="${jre_version}"
+                   includeantruntime="false"
+                   debug="yes">
+                <compilerclasspath>
+                    <pathelement path="${libdir}/ecj.jar"/>
+                </compilerclasspath>
+                <compilerarg value="@${basedir}/java/ecj.warning.options"/>
+                <classpath refid="@{javac.classpath}"/>
+            </javac>
+        </sequential>
+    </macrodef>
 
     <target name="warnings"
             description="compile source with warning generation on, omitting tests; requires Ant 1.8 and ecj.jar"
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
-        <antcall target="-ecj-compile-internal">
-          <param name="java.source.directory" value="${source}"/>
-          <param name="java.target.directory" value="${target}"/>
-          <param name="java.class.path" value="compile.class.path"/>
-        </antcall>
+        <ecj-compile javac.source="${source}"/>
     </target>
 
     <target name="tests-warnings"
             description="compile test sources with warning generation on; requires Ant 1.8 and ecj.jar"
             depends="check-ant-requirements, clean, init, copyfiles, warnings">
-        <antcall target="-ecj-compile-internal">
-          <param name="java.source.directory" value="${test}"/>
-          <param name="java.target.directory" value="${testtarget}"/>
-          <param name="java.class.path" value="test.class.path"/>
-        </antcall>
+        <ecj-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path"/>
     </target>
-
 
     <!-- end of program build targets -->
 
@@ -869,7 +867,7 @@
         </java>
     </target>
 
-	<!-- see comment just above -->
+    <!-- see comment just above -->
     <target name="-debug-jmri-application"
             if="debugger"
             depends="runtime-library-selection">
@@ -1351,7 +1349,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
-            <sysproperty key="cucumber.options" value="--tags ~@Ignore"/>
+            <sysproperty key="cucumber.options" value="--tags 'not @Ignore'"/>
 
             <classpath refid="test.class.path"/>
 
@@ -2327,55 +2325,6 @@
         <echo message="new release branch ${branch-name} created"/>
     </target>
 
-    <!-- CI Test runners -->
-    <target name="travis-ci" description="Parallel execution of CI tasks on Travis CI">
-        <parallel threadCount="1"> <!-- allow up to four tasks at once -->
-            <antcall target="checknonascii" />
-            <sequential>
-                <antcall target="compile-generated-source" />
-                <antcall target="javadoc" />
-                <antcall target="ci-test-travis" />
-            </sequential>
-        </parallel>
-    </target>
-
-    <target name="travis-ci-coverage" description="Parallel execution of CI tasks on Travis CI">
-        <parallel threadCount="1"> <!-- allow up to four tasks at once -->
-            <antcall target="checknonascii" />
-            <sequential>
-                <antcall target="compile-generated-source" />
-                <antcall target="javadoc" />
-                <antcall target="ci-test-travis-coveragecheck" />
-            </sequential>
-        </parallel>
-    </target>
-
-
-    <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
-        <parallel threadCount="1"> <!-- allow up to four tasks at once -->
-            <antcall target="checkPropertiesFiles" />
-            <antcall target="ci-test-appveyor-coveragecheck" />
-        </parallel>
-    </target>
-
-	<!-- - - - - - - - - - - - - - - - - -
-          target: lockMetaFiles
-         - - - - - - - - - - - - - - - - - -->
-    <target name="lockMetaFiles" description="Lock META-INT files">
-    	<echo>locking META-INT files</echo>
-    	<chmod perm="ugo+rx">
-    		<fileset dir="${target/classes/META-INF}"/>
-    	</chmod>
-    </target>
-
-	<!-- - - - - - - - - - - - - - - - - -
-          target: unlockMetaFiles
-         - - - - - - - - - - - - - - - - - -->
-    <target name="unlockMetaFiles" description="Unlock META-INT files">
-    	<echo>unlocking META-INT files</echo>
-    	<chmod perm="ugo+rx+w">
-    		<fileset dir="${target/classes/META-INF}"/>
-    	</chmod>
-    </target>
+    <target name="appveyor" description="CI tasks on Appveyor" depends="checkPropertiesFiles, ci-test-appveyor-coveragecheck"/>
 
 </project>
