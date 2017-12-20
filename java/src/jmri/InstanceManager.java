@@ -12,6 +12,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.implementation.DccConsistManager;
 import jmri.implementation.NmraConsistManager;
+import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,8 +77,6 @@ public final class InstanceManager {
     private final HashMap<Class<?>, InstanceInitializer> initializers = new HashMap<>();
     private final HashMap<Class<?>, StateHolder> initState = new HashMap<>();
 
-    /* properties */
-
     /**
      *
      * @deprecated since 4.5.4 use
@@ -137,25 +136,42 @@ public final class InstanceManager {
      * with {@link #store}. If item was previously registered, this will remove
      * item and fire an indexed property change event for the property matching
      * the output of {@link #getListPropertyName(java.lang.Class)} for type.
+     * <p>
+     * This is the static access to
+     * {@link #remove(java.lang.Object, java.lang.Class)}.
      *
      * @param <T>  The type of the class
      * @param item The object of type T to be deregistered
      * @param type The class Object for the item's type
      */
     static public <T> void deregister(@Nonnull T item, @Nonnull Class<T> type) {
+        getDefault().remove(item, type);
+    }
+
+    /**
+     * Remove an object of a particular type that had earlier been registered
+     * with {@link #store}. If item was previously registered, this will remove
+     * item and fire an indexed property change event for the property matching
+     * the output of {@link #getListPropertyName(java.lang.Class)} for type.
+     *
+     * @param <T>  The type of the class
+     * @param item The object of type T to be deregistered
+     * @param type The class Object for the item's type
+     */
+    public <T> void remove(@Nonnull T item, @Nonnull Class<T> type) {
         log.debug("Remove item type {}", type.getName());
         List<T> l = getList(type);
         int index = l.indexOf(item);
         if (index != -1) { // -1 means items was not in list, and therefor, not registered
             l.remove(item);
             if (item instanceof Disposable) {
-                getDefault().dispose((Disposable) item);
+                dispose((Disposable) item);
             }
-            getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
+            pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
         }
         // if removing last, will have to initialize laster
         if (l.isEmpty()) {
-            getDefault().setInitializationState(type, InitializationState.NOTSET);
+            setInitializationState(type, InitializationState.NOTSET);
         }
     }
 
@@ -465,7 +481,6 @@ public final class InstanceManager {
      *          These are so extensively used that we're leaving for later
      *                      Please don't create any more of these
      * ****************************************************************************/
-
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
      *
@@ -799,6 +814,10 @@ public final class InstanceManager {
     /**
      * Call {@link jmri.Disposable#dispose()} on the passed in Object if and
      * only if the passed in Object is not held in any lists.
+     * <p>
+     * Realistically, JMRI can't ensure that all objects and combination of
+     * objects held by the InstanceManager are threadsafe. Therefor dispose() is
+     * called on the Event Dispatch Thread to reduce risk.
      *
      * @param disposable the Object to dispose of
      */
@@ -811,23 +830,19 @@ public final class InstanceManager {
             }
         }
         if (canDispose) {
-            disposable.dispose();
+            ThreadingUtil.runOnGUI(() -> {
+                disposable.dispose();
+            });
         }
     }
 
     /**
      * Clear all managed instances from this InstanceManager.
-     * <p>
-     * Realistically, JMRI can't ensure that all objects and combination of
-     * objects held by the InstanceManager are threadsafe. This call therefore
-     * defers to the GUI thread to become atomic and reduce risk.
      */
     public void clearAll() {
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
-            log.debug("Clearing InstanceManager");
-            managerLists.keySet().forEach((type) -> {
-                clear(type);
-            });
+        log.debug("Clearing InstanceManager");
+        managerLists.keySet().forEach((type) -> {
+            clear(type);
         });
         if (traceFileActive) {
             traceFileWriter.println(""); // marks new InstanceManager
@@ -838,23 +853,17 @@ public final class InstanceManager {
     /**
      * Clear all managed instances of a particular type from this
      * InstanceManager.
-     * <p>
-     * Realistically, JMRI can't ensure that all objects and combination of
-     * objects held by the InstanceManager are threadsafe. This call therefore
-     * defers to the GUI thread to become atomic and reduce risk.
      *
      * @param type the type to clear
      */
-    public void clear(@Nonnull Class<?> type) {
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
-            log.trace("Clearing managers of {}", type.getName());
-            getInstances(type).stream().filter((o) -> (o instanceof Disposable)).forEachOrdered((o) -> {
-                dispose((Disposable) o);
-            });
-            // Should this be sending notifications of removed instances to listeners?
-            setInitializationState(type, InitializationState.NOTSET); // initialization will have to be redone
-            managerLists.put(type, new ArrayList<>());
+    public <T> void clear(@Nonnull Class<T> type) {
+        log.trace("Clearing managers of {}", type.getName());
+        List<T> toClear = new ArrayList<>(getInstances(type));
+        toClear.forEach((o) -> {
+            remove(o, type);
         });
+        setInitializationState(type, InitializationState.NOTSET); // initialization will have to be redone
+        managerLists.put(type, new ArrayList<>());
     }
 
     /**
