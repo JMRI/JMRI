@@ -167,11 +167,14 @@ public final class InstanceManager {
             if (item instanceof Disposable) {
                 dispose((Disposable) item);
             }
-            pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
         }
-        // if removing last, will have to initialize laster
+        // if removing last item, re-initialize later
         if (l.isEmpty()) {
             setInitializationState(type, InitializationState.NOTSET);
+        }
+        if (index != -1) { // -1 means items was not in list, and therefor, not registered
+            // fire property change last
+            pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
         }
     }
 
