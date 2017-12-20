@@ -14,6 +14,7 @@ import org.junit.runners.Suite;
         jmri.BlockManagerTest.class,
         jmri.DccLocoAddressTest.class,
         jmri.InstanceManagerTest.class,
+        jmri.InstanceManagerDisposeTest.class,
         jmri.NamedBeanTest.class,
         jmri.LightTest.class,
         NmraPacketTest.class,
