@@ -15,8 +15,6 @@ import jmri.JmriException;
 import jmri.Turnout;
 import jmri.util.ColorUtil;
 import jmri.util.MathUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for all layout track objects (PositionablePoint,
@@ -615,5 +613,5 @@ public abstract class LayoutTrack {
      */
     public abstract void setAllLayoutBlocks(LayoutBlock layoutBlock);
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class);
+    //private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class);
 }

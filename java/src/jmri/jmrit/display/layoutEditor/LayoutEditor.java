@@ -498,7 +498,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient int panelHeight = 0;
 
     private transient float mainlineTrackWidth = 4.0F;
-    private transient float sideTrackWidth = 2.0F;
+    private transient float sidelineTrackWidth = 2.0F;
 
     private transient Color defaultTrackColor = Color.black;
     private transient Color defaultOccupiedTrackColor = Color.red;
@@ -1130,10 +1130,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
                 prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
                 //log.debug("{} prefsProp toolBarFontSize is {}", windowFrameRef, prefsProp);
-                if (prefsProp != null) {
-                    float toolBarFontSize = Float.parseFloat(prefsProp.toString());
-                    //setupToolBarFontSizes(toolBarFontSize);
-                }
+                //if (prefsProp != null) {
+                //float toolBarFontSize = Float.parseFloat(prefsProp.toString());
+                //setupToolBarFontSizes(toolBarFontSize);
+                //}
                 updateAllComboBoxesDropDownListDisplayOrderFromPrefs();
 
                 //this doesn't work as expected (1st one called messes up 2nd?)
@@ -1167,12 +1167,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             // make sure that the layoutEditorComponent is in the _targetPanel components
             List componentList = Arrays.asList(_targetPanel.getComponents());
-            if (!componentList.contains((Component) layoutEditorComponent)) {
+            if (!componentList.contains(layoutEditorComponent)) {
                 try {
-                    Component c = (Component) layoutEditorComponent;
-                    _targetPanel.remove(c);
-                    _targetPanel.add(c, Integer.valueOf(3));
-                    _targetPanel.moveToFront(c);
+                    _targetPanel.remove(layoutEditorComponent);
+                    _targetPanel.add(layoutEditorComponent, Integer.valueOf(3));
+                    _targetPanel.moveToFront(layoutEditorComponent);
                 } catch (Exception e) {
                     log.warn("paintTargetPanelBefore: Exception {}", e);
                 }
@@ -2857,12 +2856,24 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public LayoutTrackDrawingOptions getLayoutTrackDrawingOptions() {
         if (layoutTrackDrawingOptions == null) {
             layoutTrackDrawingOptions = new LayoutTrackDrawingOptions(getLayoutName());
+            //Integrate-LayoutEditor-drawing-options-with-previous-drawing-options
+            layoutTrackDrawingOptions.setMainBlockLineWidth((int) mainlineTrackWidth);
+            layoutTrackDrawingOptions.setSideBlockLineWidth((int) sidelineTrackWidth);
+            layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
+            layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
+            layoutTrackDrawingOptions.setMainRailColor(defaultTrackColor);
+            layoutTrackDrawingOptions.setSideRailColor(defaultTrackColor);
         }
         return layoutTrackDrawingOptions;
     }
 
     public void setLayoutTrackDrawingOptions(LayoutTrackDrawingOptions ltdo) {
         layoutTrackDrawingOptions = ltdo;
+
+        //Integrate-LayoutEditor-drawing-options-with-previous-drawing-options
+        mainlineTrackWidth = layoutTrackDrawingOptions.getMainRailWidth();
+        sidelineTrackWidth = layoutTrackDrawingOptions.getSideRailWidth();
+        defaultTrackColor = layoutTrackDrawingOptions.getMainRailColor();
         redrawPanel();
     }
 
@@ -3075,12 +3086,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 }
 
                 //now try to get a preference specific to this combobox
-                JmriBeanComboBox jbcb = (JmriBeanComboBox) inComponent;
-                if (inComponent instanceof JTextField) {
-                    jbcb = (JmriBeanComboBox) SwingUtilities.getUnwrappedParent(jbcb);
+                JmriBeanComboBox jbcb = null;
+                if (inComponent instanceof JmriBeanComboBox) {
+                    jbcb = (JmriBeanComboBox) inComponent;
+                } else if (inComponent instanceof JTextField) {
+                    jbcb = (JmriBeanComboBox) SwingUtilities.getUnwrappedParent(inComponent);
                 }
-
-                if (jbcb instanceof JmriBeanComboBox) {
+                if (jbcb != null) {
                     String ttt = jbcb.getToolTipText();
                     if (ttt != null) {
                         //change the name of the preference based on the tool tip text
@@ -3094,24 +3106,24 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                             prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
                         }
                     }
-                }
 
-                //now set the combo box display order
-                if (ddldoPref.equals("DISPLAYNAME")) {
-                    jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-                } else if (ddldoPref.equals("USERNAME")) {
-                    jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.USERNAME);
-                } else if (ddldoPref.equals("SYSTEMNAME")) {
-                    jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.SYSTEMNAME);
-                } else if (ddldoPref.equals("USERNAMESYSTEMNAME")) {
-                    jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.USERNAMESYSTEMNAME);
-                } else if (ddldoPref.equals("SYSTEMNAMEUSERNAME")) {
-                    jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.SYSTEMNAMEUSERNAME);
-                } else {
-                    //must be a bogus value... lets re-set everything to DISPLAYNAME
-                    ddldoPref = "DISPLAYNAME";
-                    prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
-                    jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    //now set the combo box display order
+                    if (ddldoPref.equals("DISPLAYNAME")) {
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    } else if (ddldoPref.equals("USERNAME")) {
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.USERNAME);
+                    } else if (ddldoPref.equals("SYSTEMNAME")) {
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.SYSTEMNAME);
+                    } else if (ddldoPref.equals("USERNAMESYSTEMNAME")) {
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.USERNAMESYSTEMNAME);
+                    } else if (ddldoPref.equals("SYSTEMNAMEUSERNAME")) {
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.SYSTEMNAMEUSERNAME);
+                    } else {
+                        //must be a bogus value... lets re-set everything to DISPLAYNAME
+                        ddldoPref = "DISPLAYNAME";
+                        prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    }
                 }
             });
         } else if (inComponent instanceof Container) {
@@ -3592,7 +3604,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         listOfListsOfComponents.add(sensorList);
         listOfListsOfComponents.add(signalMastList);
         // combine their bounds
-        for (List<Component> listOfComponents : listOfListsOfComponents) {
+        for (List c : listOfListsOfComponents) {
+            List<Component> listOfComponents = c;
             for (Component o : listOfComponents) {
                 if (result.isEmpty()) {
                     result = o.getBounds();
@@ -3877,8 +3890,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         //Set up for Entry of Track Widths
-        mainlineTrackWidthField.setText(Integer.toString(getMainlineTrackWidth()));
-        sideTrackWidthField.setText(Integer.toString(getSideTrackWidth()));
+        mainlineTrackWidthField.setText(Integer.toString((int) mainlineTrackWidth));
+        sideTrackWidthField.setText(Integer.toString((int) sidelineTrackWidth));
         enterTrackWidthFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent event) {
@@ -3916,8 +3929,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return;
         }
 
-        if (!MathUtil.equals(sideTrackWidth, wid)) {
-            sideTrackWidth = wid;
+        if (!MathUtil.equals(sidelineTrackWidth, wid)) {
+            sidelineTrackWidth = wid;
             trackWidthChange = true;
         }
 
@@ -3954,6 +3967,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             enterTrackWidthFrame = null;
 
             if (trackWidthChange) {
+                //Integrate-LayoutEditor-drawing-options-with-previous-drawing-options
+                if (layoutTrackDrawingOptions != null) {
+                    layoutTrackDrawingOptions.setMainBlockLineWidth((int) mainlineTrackWidth);
+                    layoutTrackDrawingOptions.setSideBlockLineWidth((int) sidelineTrackWidth);
+                    layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
+                    layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
+                }
                 redrawPanel();
                 setDirty();
             }
@@ -5228,8 +5248,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //    return result;
     //}
     private boolean checkControls(boolean useRectangles) {
-        Optional<LayoutTrack> opt = layoutTrackList.stream().filter(o -> {
-            LayoutTrack layoutTrack = (LayoutTrack) o;
+        Optional<LayoutTrack> opt = layoutTrackList.stream().filter(layoutTrack -> {
             selectedPointType = layoutTrack.findHitPointType(dLoc, useRectangles);
             if (!LayoutTrack.isControlHitType(selectedPointType)) {
                 selectedPointType = LayoutTrack.NONE;
@@ -5281,8 +5300,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         foundObject = null;
         foundPointType = LayoutTrack.NONE;
-        Optional<LayoutTrack> opt = layoutTrackList.stream().filter(o -> {
-            LayoutTrack layoutTrack = (LayoutTrack) o;
+        Optional<LayoutTrack> opt = layoutTrackList.stream().filter(layoutTrack -> {
             if ((layoutTrack != avoid) && (layoutTrack != selectedObject)) {
                 foundPointType = layoutTrack.findHitPointType(loc, false, requireUnconnected);
             }
@@ -5454,14 +5472,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * get the coordinates for the connection type of the specified object
      *
-     * @param o              the object (Layout track subclass)
+     * @param layoutTrack    the object (Layout track subclass)
      * @param connectionType the type of connection
      * @return the coordinates for the connection type of the specified object
      */
-    public static Point2D getCoords(@Nonnull LayoutTrack o, int connectionType) {
+    public static Point2D getCoords(@Nonnull LayoutTrack layoutTrack, int connectionType) {
         Point2D result = MathUtil.zeroPoint2D;
-        if (o != null) {
-            result = ((LayoutTrack) o).getCoordsForConnectionType(connectionType);
+        if (layoutTrack != null) {
+            result = layoutTrack.getCoordsForConnectionType(connectionType);
         } else {
             log.error("Null connection point of type {}", connectionType);
         }
@@ -5731,7 +5749,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     ((LayoutTurntable) foundObject).showRayPopUp(event, foundPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
                 }
             } else if (LayoutTrack.isPopupHitType(foundPointType)) {
-                ((LayoutTrack) foundObject).showPopup(event);
+                foundObject.showPopup(event);
             } else if ((foundPointType >= LayoutTrack.TURNOUT_A)
                     && (foundPointType <= LayoutTrack.TURNOUT_D)) {
                 // don't curently have edit popup for these
@@ -5935,7 +5953,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     case LayoutTrack.SLIP_LEFT:
                     case LayoutTrack.SLIP_RIGHT:
                     case LayoutTrack.TURNTABLE_CENTER: {
-                        amendSelectionGroup((LayoutTrack) foundObject);
+                        amendSelectionGroup(foundObject);
                         break;
                     }
 
@@ -6026,15 +6044,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 case LayoutTrack.SLIP_B:
                 case LayoutTrack.SLIP_C:
                 case LayoutTrack.SLIP_D: {
-                    LayoutTrack lt = (LayoutTrack) foundObject;
                     try {
-                        if (lt.getConnection(foundPointType) == null) {
-                            lt.setConnection(foundPointType, t, LayoutTrack.TRACK);
+                        if (foundObject.getConnection(foundPointType) == null) {
+                            foundObject.setConnection(foundPointType, t, LayoutTrack.TRACK);
 
                             if (t.getConnect1() == p) {
-                                t.setNewConnect1(lt, foundPointType);
+                                t.setNewConnect1(foundObject, foundPointType);
                             } else {
-                                t.setNewConnect2(lt, foundPointType);
+                                t.setNewConnect2(foundObject, foundPointType);
                             }
                             p.removeTrackConnection(t);
 
@@ -6743,10 +6760,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     _lastX = xLoc;
                     _lastY = yLoc;
                 } else {
-                    LayoutTurnout o;
-                    LevelXing x;
-                    LayoutSlip sl;
-
                     switch (selectedPointType) {
                         case LayoutTrack.POS_POINT: {
                             ((PositionablePoint) selectedObject).setCoordsCenter(currentPoint);
@@ -6966,8 +6979,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         String name = finder.uniqueName("T", ++numTrackSegments);
 
         //create object
-        newTrack = new TrackSegment(name, (LayoutTrack) beginObject, beginPointType,
-                (LayoutTrack) foundObject, foundPointType, dashedLine.isSelected(),
+        newTrack = new TrackSegment(name, beginObject, beginPointType,
+                foundObject, foundPointType, dashedLine.isSelected(),
                 mainlineTrack.isSelected(), this);
 
         layoutTrackList.add(newTrack);
@@ -8942,7 +8955,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     } //getMainlineTrackWidth
 
     public int getSideTrackWidth() {
-        return (int) sideTrackWidth;
+        return (int) sidelineTrackWidth;
     } //getSideTrackWidth
 
     public double getXScale() {
@@ -9109,7 +9122,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     public void setSideTrackWidth(int w) {
-        sideTrackWidth = w;
+        sidelineTrackWidth = w;
     }
 
     /**
@@ -9337,7 +9350,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //highlight the block selected by the specified combo Box
     //
     private boolean highlightBlockInComboBox(@Nonnull JmriBeanComboBox inComboBox) {
-        boolean result = false;
         Block block = null;
         if (inComboBox != null) {
             block = (Block) inComboBox.getNamedBean();
@@ -9357,7 +9369,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         blockIDComboBox.setSelectedBean(inBlock);
 
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
-        List<NamedBean> l = blockIDComboBox.getManager().getNamedBeanList();
+        List<NamedBean> l = (List<NamedBean>) blockIDComboBox.getManager().getNamedBeanList();
         for (NamedBean nb : l) {
             Block b = (Block) nb;
             LayoutBlock lb = lbm.getLayoutBlock(b);
@@ -9773,7 +9785,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //check for segment in progress
         if (isEditable() && (beginObject != null) && trackButton.isSelected()) {
             g2.setColor(defaultTrackColor);
-            g2.setStroke(new BasicStroke(sideTrackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+            g2.setStroke(new BasicStroke(sidelineTrackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
             g2.draw(new Line2D.Double(beginLocation, currentLocation));
 
             // highlight unconnected endpoints of all tracks
