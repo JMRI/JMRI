@@ -844,7 +844,6 @@ public class TrackSegment extends LayoutTrack {
             public void actionPerformed(ActionEvent e) {
                 splitTrackSegment();
             }
-        ;
         });
 
         JMenu lineType = new JMenu(Bundle.getMessage("ChangeTo"));
@@ -1843,7 +1842,6 @@ public class TrackSegment extends LayoutTrack {
         List<Set<String>> TrackNameSets = null;
         Set<String> TrackNameSet = null;
         if (blockName != null) {
-            TrackNameSet = null;    // assume not found (pessimist!)
             TrackNameSets = blockNamesToTrackNameSetsMap.get(blockName);
             if (TrackNameSets != null) { // (#1)
                 for (Set<String> checkTrackNameSet : TrackNameSets) {

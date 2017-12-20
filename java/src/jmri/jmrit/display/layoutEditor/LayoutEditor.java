@@ -3093,19 +3093,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     jbcb = (JmriBeanComboBox) SwingUtilities.getUnwrappedParent(inComponent);
                 }
                 if (jbcb != null) {
-                    if (jbcb instanceof JmriBeanComboBox) {
-                        String ttt = jbcb.getToolTipText();
-                        if (ttt != null) {
-                            //change the name of the preference based on the tool tip text
-                            ddldoPrefName = String.format("%s.%s", ddldoPrefName, ttt);
-                            //try to get the preference
-                            ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
-                            if (ddldoProp != null) { //if we found it...
-                                ddldoPref = ddldoProp.toString(); //get it's (string value
-                            } else { //otherwise...
-                                //save it in the users preferences
-                                prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
-                            }
+                    String ttt = jbcb.getToolTipText();
+                    if (ttt != null) {
+                        //change the name of the preference based on the tool tip text
+                        ddldoPrefName = String.format("%s.%s", ddldoPrefName, ttt);
+                        //try to get the preference
+                        ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
+                        if (ddldoProp != null) { //if we found it...
+                            ddldoPref = ddldoProp.toString(); //get it's (string value
+                        } else { //otherwise...
+                            //save it in the users preferences
+                            prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
                         }
                     }
 
@@ -3607,7 +3605,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         listOfListsOfComponents.add(signalMastList);
         // combine their bounds
         for (List c : listOfListsOfComponents) {
-            List<Component> listOfComponents = (List<Component>) c;
+            List<Component> listOfComponents = c;
             for (Component o : listOfComponents) {
                 if (result.isEmpty()) {
                     result = o.getBounds();

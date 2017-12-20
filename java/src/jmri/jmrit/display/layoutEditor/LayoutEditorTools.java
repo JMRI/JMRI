@@ -8100,11 +8100,11 @@ public class LayoutEditorTools {
         int index = -1;
         for (int i = 0; (i < layoutEditor.signalMastList.size()) && (index == -1); i++) {
             h = layoutEditor.signalMastList.get(i);
-            if (h.getSignalMast() == signalMast) {
+            if ((h != null) && (h.getSignalMast() == signalMast)) {
                 index = i;
             }
         }
-        if (index != (-1)) {
+        if ((h != null) && (index != -1)) {
             layoutEditor.signalMastList.remove(index);
             h.remove();
             h.dispose();

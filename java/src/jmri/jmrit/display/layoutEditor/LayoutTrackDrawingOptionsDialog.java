@@ -44,7 +44,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             LayoutTrackDrawingOptions ltdOptions) {
         super(layoutEditor, modal);
 
-        this.layoutEditor = (LayoutEditor) layoutEditor;
+        this.layoutEditor = layoutEditor;
         this.leLTDOptions = ltdOptions;
         this.ltdOptions = new LayoutTrackDrawingOptions(ltdOptions);
 
@@ -62,7 +62,6 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         optionsPanel = new javax.swing.JPanel();
         optionLabel = new javax.swing.JLabel();
         mainlineLabel = new javax.swing.JLabel();
@@ -1054,7 +1053,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
                 presetsComboBox.addItem(ltdOptions.getName());
             }
             presetsComboBox.setSelectedItem(ltdOptions.getName());
-            optionsPanel.setBorder(BorderFactory.createTitledBorder((String) customPresetName));
+            optionsPanel.setBorder(BorderFactory.createTitledBorder(customPresetName));
         }
     }
     // define the presets
@@ -1202,7 +1201,6 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private javax.swing.JButton applyButton;
     private javax.swing.JLabel ballastWidthLabel;
     private javax.swing.JLabel blockLineWidthLabel;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton mainBallastColorButton;
     private javax.swing.JSpinner mainBallastWidthSpinner;
