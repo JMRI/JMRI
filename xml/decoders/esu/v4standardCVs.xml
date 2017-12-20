@@ -227,60 +227,8 @@
         <label xml:lang="de">RailCom® Plus automatische Lokanmeldung aktiv</label>
     </variable>
     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-    <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="0">
-        <enumVal>
-          <enumChoice choice="14 speed step format">
-            <choice xml:lang="it">Formato 14 step</choice>
-            <choice xml:lang="de">14 Fahrstufen Modus</choice>
-            <choice xml:lang="cs">Režim 14 rychlostních kroků</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 speed step format">
-            <choice>28/128 speed step format(recommended)</choice>
-            <choice xml:lang="it">Formato 28 o 128 step (raccomandato)</choice>
-            <choice xml:lang="de">28/128 Fahrstufen Modus (empfohlen)</choice>
-            <choice xml:lang="cs">Režim 28/128 rychlostních kroků</choice>
-          </enumChoice>
-        </enumVal>
-      <label>Speed Steps</label>
-      <label xml:lang="fr">Pas de vitesse</label>
-      <label xml:lang="it">Step Velocità</label>
-      <label xml:lang="de">Fahrstufen</label>
-      <label xml:lang="cs">Rychlostních kroků</label>
-        <tooltip>Sets the Speed Step for motor, also may affect some light settings</tooltip>
-        <tooltip xml:lang="it">Seleziona Step Velocità motore, potrebbe avere effetti sulle luci</tooltip>
-        <tooltip xml:lang="de">Setzt den Fahrstufenmodus und hat Auswirkung auf einige Lichteffekte</tooltip>
-        <tooltip xml:lang="cs">Nastaví režim rychlostních kroků, může mít také vliv na některé efekty světel</tooltip>
-    </variable>
-    <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
-        <enumVal>
-         <enumChoice choice="NMRA Digital only">
-          <choice>NMRA Digital only</choice>
-          <choice xml:lang="it">Solo NMRA Digitale</choice>
-          <choice xml:lang="fr">Digital NMRA seulement</choice>
-          <choice xml:lang="ca">NMRA Digital only (ca)</choice>
-          <choice xml:lang="de">Nur Digital nach NMRA</choice>
-          <choice xml:lang="cs">Pouze digitál NMRA</choice>
-         </enumChoice>
-         <enumChoice choice="DC conversion enabled">
-          <choice>DC conversion enabled</choice>
-          <choice xml:lang="it">Alim.Analogica Abilitata (DCC+Analogico)</choice>
-          <choice xml:lang="fr">Mode analogique activé</choice>
-          <choice xml:lang="ca">DC conversion enabled (ca)</choice>
-          <choice xml:lang="de">Analogbetrieb Aktiviert</choice>
-          <choice xml:lang="cs">Povolena konverze DC</choice>
-         </enumChoice>
-        </enumVal>
-        <label>Power Source Conversion</label>
-        <label xml:lang="it">Conversione Sorgente Alimentazione</label>
-        <label xml:lang="fr">Conversion source d'alimentation</label>
-        <label xml:lang="ca">Power Source Conversion(ca)</label>
-        <label xml:lang="de">Stromquelle Konversion</label>
-        <label xml:lang="cs">Konverze napájení</label>
-        <tooltip>NMRA Digital only: Digital Operation Only - DC conversion enabled: both Digital + Analog, default is Off</tooltip>
-        <tooltip xml:lang="it">'4' bit. Permette alla loco di andare in DC, per default è Off</tooltip>
-        <tooltip xml:lang="de">Nur Digital nach NMRA: Die Lokomotive fährt nur digital. Analogbetrieb Aktiviert: Die Lokomotive fährt sowohl digital als auch analog.</tooltip>
-        <tooltip xml:lang="cs">Pouze digitál NMRA: pouze digitální provoz - Povolena konverze DC: obojí provoz digitální + analogový, výhozí hodnota je vypnuto.</tooltip>
-    </variable>
+    <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
     <variable CV="29" mask="XXXXVXXX" default="1" exclude="LokPilot Fx V4.0" item="ESU V4 Advanced RailCom Option 1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>RailCom® Enable</label>
@@ -303,12 +251,12 @@
     <variable CV="31" default="16" item="Index register H">
         <decVal max="16"/>
         <label>Index register H</label>
-        <tooltip xml:lang="de">Auswahl Speicherseite für CV257-512</tooltip>
+        <tooltip xml:lang="de">Auswahl Speicherseite für CV257-512</tooltip>
     </variable>
     <variable CV="32" default="0" item="Index register L">
         <decVal max="4"/>
         <label>Index register L</label>
-        <tooltip xml:lang="de">Auswahl Speicherseite für CV257-512</tooltip>
+        <tooltip xml:lang="de">Auswahl Speicherseite für CV257-512</tooltip>
     </variable>
     <variable CV="47" mask="XXXXXXXV" default="1" item="ESU V4 Advanced Protocols Option 1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -459,7 +407,7 @@
     <variable CV="112" default="20" tooltip="Unit is 0.05 seconds" item="ESU V4 Function Settings General Slider 1">
         <decVal/>
         <label>Rate for Blinking Effects</label>
-        <label xml:lang="de">Zeitdauer für Blinkeffekte</label>
+        <label xml:lang="de">Zeitdauer für Blinkeffekte</label>
     </variable>
     <variable CV="113" default="50" tooltip="Unit is 0.016384 seconds" item="ESU V4 Advanced Power Pack Slider 1" exclude="LokPilot Fx V4.0">
         <decVal/>
@@ -496,7 +444,7 @@
     <variable CV="124" mask="XXXXVXXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot V4.0 DCC,LokSound Select L" item="ESU V4 Advanced Compatibility Option 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Serial User Standard Interface</label>
-        <label xml:lang="de">Serielles Protokoll für C-Sinus</label>
+        <label xml:lang="de">Serielles Protokoll für C-Sinus</label>
     </variable>
     <variable CV="124" mask="XXXVXXXX" default="1" item="Total PWM Period" exclude="LokPilot Fx V4.0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
@@ -593,13 +541,13 @@
     <variable CV="247" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Function Settings Auto Uncoupling Slider 3" exclude="LokPilot Fx V4.0">
         <decVal/>
         <label>Auto Uncoupling Remove Time</label>
-        <label xml:lang="de">     Entkuppeln - Abrückzeit     </label>
+        <label xml:lang="de">     Entkuppeln - Abrückzeit     </label>
         <tooltip xml:lang="de">die Einheit sind 0.016384 sec</tooltip>
     </variable>
     <variable CV="248" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Function Settings Auto Uncoupling Slider 2" exclude="LokPilot Fx V4.0">
         <decVal/>
         <label>Auto Uncoupling Push Time</label>
-        <label xml:lang="de">    Entkuppeln - Andrückzeit     </label>
+        <label xml:lang="de">    Entkuppeln - Andrückzeit     </label>
         <tooltip xml:lang="de">die Einheit sind 0.016384 sec</tooltip>
     </variable>
     <!-- A nicht beschrieben -->

@@ -7,7 +7,6 @@ import jmri.jmrit.logix.OBlock;
 
 /**
  * Defines track objects that display status color.
- * <P>
  *
  * @author Pete Cressman Copyright (c) 2010
  */

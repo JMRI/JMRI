@@ -4,44 +4,55 @@
     <label>
       <text> </text>
     </label>
-    <display item="Automatic Speed Step Detection">
+    <display item="Automatic Speed Step Detection" format="checkbox">
       </display>
     <label>
       <text> </text>
     </label>
-    <display item="Marklin delta Mode" layout="left">
+    <display item="Marklin delta Mode" layout="left" format="checkbox">
       </display>
-    <display item="Marklin second address" layout="left">
-      </display>
-    <label>
-      <text> </text>
-    </label>
-    <display item="LGB function button mode" layout="left">
+    <display item="Marklin second address" layout="left" format="checkbox">
       </display>
     <label>
       <text> </text>
     </label>
-    <display item="Zimo manual function" layout="left">
+    <display item="LGB function button mode" layout="left" format="checkbox">
+      </display>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Zimo manual function" layout="left" format="checkbox">
       </display>
     <display item="Function Key Toggle Mode" layout="left">
       </display>
     <label>
       <text> </text>
     </label>
-    <display item="Brakemode">
+    <display item="Marklin Brake Mode" format="checkbox">
+      </display>
+    <display item="Zimo Brake Mode" format="checkbox">
+      </display>
+    <display item="Lenz Brake Mode" format="checkbox">
       </display>
     <label>
       <text> </text>
     </label>
-    <display item="Store Direction">
+    <display item="AC Analogue Mode" format="checkbox">
       </display>
-    <display item="Store Function State">
+    <display item="DC Analogue Mode" format="checkbox">
       </display>
-    <display item="Store Current Speed Setting">
+    <label>
+      <text> </text>
+    </label>
+    <display item="Store Direction" format="checkbox">
       </display>
-    <display item="Start Again with Acceleration Ramp">
+    <display item="Store Function State" format="checkbox">
       </display>
-    <display item="Deactivate Load Dependent Sound">
+    <display item="Store Current Speed Setting" format="checkbox">
+      </display>
+    <display item="Start Again with Acceleration Ramp" format="checkbox">
+      </display>
+    <display item="Deactivate Load Dependent Sound" format="checkbox">
       </display>
   </column>
   <column>
@@ -49,8 +60,19 @@
       <text> </text>
     </label>
     <label>
-      <text>                                                  Range 0 - 127 </text>
-      <text xml:lang="it">                                                  Valori  0- 127</text>
+      <text>                                                  Range 4 - 64</text>
+      <text xml:lang="it">                                                  Valori 4 - 64</text>
+      <text xml:lang="fr">                                                  Valeure 4 - 64</text>
+      <text xml:lang="de">                                                  Werte 4 - 64</text>
+    </label>
+    <display item="Blinking Rate">
+      </display>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>                                                  Range 0 - 127</text>
+      <text xml:lang="it">                                                  Valori 0 - 127</text>
       <text xml:lang="fr">                                                  Valeure 0 - 127</text>
       <text xml:lang="de">                                                  Werte 0 - 127</text>
     </label>

@@ -22,13 +22,12 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides the abstract base and store functionality for configuring the
  * CatalogTreeManager.
- * <P>
+ * <p>
  * Typically, a subclass will just implement the load(Element catalogTree)
  * class, relying on implementation here to load the individual CatalogTree
  * objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2009
- *
  */
 public class DefaultCatalogTreeManagerXml extends XmlFile {
 
@@ -37,8 +36,8 @@ public class DefaultCatalogTreeManagerXml extends XmlFile {
     public DefaultCatalogTreeManagerXml() {
     }
 
-    /*
-     *  Writes out tree values to a file in the user's preferences directory
+    /**
+     * Write out tree values to a file in the user's preferences directory.
      */
     public void writeCatalogTrees() throws java.io.IOException {
         if (log.isDebugEnabled()) {
@@ -188,9 +187,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile {
      *  Reads CatalogTree values from a file in the user's preferences directory
      */
     public void readCatalogTrees() {
-        if (log.isDebugEnabled()) {
-            log.debug("entered readCatalogTrees");
-        }
+        log.debug("entered readCatalogTrees");
         //CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         try {
             // check if file exists
