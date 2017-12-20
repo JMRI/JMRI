@@ -156,7 +156,9 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     }
 
     static boolean avoidLoopAutoCreateCycle = true;
+
     public static class AutoCreateCycle implements InstanceManagerAutoDefault {
+
         public AutoCreateCycle() {
             if (avoidLoopAutoCreateCycle) {
                 avoidLoopAutoCreateCycle = false;
@@ -174,13 +176,17 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
 
     public static class OkToDispose implements Disposable {
 
-        public static String message = "dispose called";
+        public static final String MESSAGE = "dispose called";
         private static int times = 0;
+
+        private static void setUp() {
+            times = 0;
+        }
 
         @Override
         public void dispose() {
             times++;
-            log.warn(message + times);
+            log.warn("{} {}", MESSAGE, times);
         }
 
     }
@@ -192,7 +198,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         InstanceManager.store(d1, OkToDispose.class);
         InstanceManager.deregister(d1, OkToDispose.class);
         // dispose should have been called since registered in only one list
-        JUnitAppender.assertWarnMessage(OkToDispose.message + 1);
+        JUnitAppender.assertWarnMessage(OkToDispose.MESSAGE + 1);
         // register d1 in two lists
         InstanceManager.store(d1, OkToDispose.class);
         InstanceManager.store(d1, Disposable.class);
@@ -200,7 +206,26 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         // dispose should not have been called because removed from only one list
         InstanceManager.deregister(d1, Disposable.class);
         // dispose should be called again as removed from all lists
-        JUnitAppender.assertWarnMessage(OkToDispose.message + 2);
+        JUnitAppender.assertWarnMessage(OkToDispose.MESSAGE + 2);
+    }
+
+    public void testDisposeInClear() {
+        OkToDispose d1 = new OkToDispose();
+
+        // register d1 in single list
+        InstanceManager.store(d1, OkToDispose.class);
+        InstanceManager.getDefault().clear(OkToDispose.class);
+        // dispose should have been called since registered in only one list
+        JUnitAppender.assertWarnMessage(OkToDispose.MESSAGE + 1);
+        // register d1 in two lists
+        InstanceManager.store(d1, OkToDispose.class);
+        InstanceManager.store(d1, Disposable.class);
+        InstanceManager.getDefault().clear(OkToDispose.class);
+        // dispose should not have been called because removed from only one list
+        InstanceManager.getDefault().clear(Disposable.class);
+        // dispose should be called again as removed from all lists
+        JUnitAppender.assertWarnMessage(OkToDispose.MESSAGE + 2);
+
     }
 
     /**
@@ -343,6 +368,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     @Override
     protected void setUp() {
         JUnitUtil.setUp();
+        OkToDispose.setUp();
     }
 
     @Override
