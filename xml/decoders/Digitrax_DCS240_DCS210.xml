@@ -31,12 +31,6 @@
 
         <variables>
 
-            <variable CV="1" comment="Board address" item="Short Address" default="1" mask="XXXXXXXV"
-                      infoOnly="yes" tooltip="This value is ignored but must be present within the definition">
-                <decVal min="1" max="2" />
-                <label>Board ID</label>
-            </variable>
-
             <variable CV="1.001" item="OpSw 001" readOnly="yes" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw 01</label>

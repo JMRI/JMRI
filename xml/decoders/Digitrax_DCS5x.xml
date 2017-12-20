@@ -30,12 +30,6 @@
         </programming>
 
         <variables>
-            <variable CV="1" comment="Board address" item="Short Address" default="01"
-                      infoOnly="yes" tooltip="This value is ignored but must be present within the definition">
-                <!-- needed to get into Ops Mode programming! -->
-                <decVal min="1" max="128" />
-                <label>Board ID</label>
-            </variable>
             <variable CV="1.01" item="OpSw 1" default="0">
                 <enumVal>
                     <enumChoice>
