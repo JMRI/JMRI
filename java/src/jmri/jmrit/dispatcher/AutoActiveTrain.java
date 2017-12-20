@@ -319,12 +319,12 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     @Override
-    public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
+    public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
         log.error("Throttle request failed for {} because {}", address, reason);
     }
 
     @Override
-    public void notifyStealThrottleRequired(jmri.DccLocoAddress address) {
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
         // this is an automatically stealing impelementation.
         log.warn("Stealing");
         //InstanceManager.getDefault(ThrottleManager.class).stealThrottleRequest(address, this, true);

@@ -60,6 +60,7 @@ import org.junit.runners.Suite;
         PanelMenuTest.class,
         PositionablePopupUtilTest.class,
         PositionablePropertiesUtilTest.class,
+        DisplayFrameTest.class,
 })
 public class PackageTest {
 }

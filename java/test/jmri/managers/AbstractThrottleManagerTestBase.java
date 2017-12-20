@@ -1,6 +1,6 @@
 package jmri.managers;
 
-import jmri.DccLocoAddress;
+import jmri.LocoAddress;
 import jmri.DccThrottle;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
@@ -41,12 +41,12 @@ public abstract class AbstractThrottleManagerTestBase {
        }
 
        @Override
-       public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){
+       public void notifyFailedThrottleRequest(LocoAddress address, String reason){
              throttleNotFoundResult = true;
        }
 
        @Override
-       public void notifyStealThrottleRequired(DccLocoAddress address){
+       public void notifyStealThrottleRequired(LocoAddress address){
             throttleStealResult = true;
        }
     }

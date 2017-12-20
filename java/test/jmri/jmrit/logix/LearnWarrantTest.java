@@ -11,13 +11,19 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
-import junit.extensions.jfcunit.TestHelper;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.extensions.jfcunit.finder.DialogFinder;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.Rule;
+import jmri.util.junit.rules.RetryRule;
+
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.WindowOperator;
+
 
 /**
  * Tests for the Warrant creation
@@ -26,7 +32,10 @@ import org.junit.Assert;
  *
  * todo - test error conditions
  */
-public class LearnWarrantTest extends jmri.util.SwingTestCase {
+public class LearnWarrantTest {
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     private OBlockManager _OBlockMgr;
 //    PortalManager _portalMgr;
@@ -34,6 +43,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
 //    TurnoutManager _turnoutMgr;
 
     @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
+    @Test
     public void testLearnWarrant() throws Exception {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
@@ -64,8 +74,10 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         frame._destination.blockBox.setText("OB5");
         String[] route = {"OB1", "OB2", "OB3", "OB4", "OB5"};
 
-        pressButton(frame, Bundle.getMessage("Calculate"));
-        flushAWT();
+        JFrameOperator jfo = new JFrameOperator(frame);
+
+        pressButton(jfo, Bundle.getMessage("Calculate"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         JUnitUtil.waitFor(() -> {
             return (frame.getOrders() != null);
         }, "Found orders");
@@ -79,14 +91,14 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         jmri.DccLocoAddress address = frame._speedUtil.getDccAddress();
         Assert.assertEquals("address=99", 99, address.getNumber());
 
-        pressButton(frame, Bundle.getMessage("Start"));
+        pressButton(jfo, Bundle.getMessage("Start"));
         // dismiss warning "starting block not occupied
-        confirmJOptionPane(frame, Bundle.getMessage("WarningTitle"), "OK");
+        confirmJOptionPane(jfo, Bundle.getMessage("WarningTitle"), "OK");
 
         // occupy starting block
         Sensor sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
         sensor.setState(Sensor.ACTIVE);
-        pressButton(frame, Bundle.getMessage("Start"));
+        pressButton(jfo, Bundle.getMessage("Start"));
 
         JUnitUtil.waitFor(() -> {
             return (frame._learnThrottle != null);
@@ -95,7 +107,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
 
         sensor = recordtimes(route, frame._learnThrottle.getThrottle());
 
-        pressButton(frame, Bundle.getMessage("Stop"));
+        pressButton(jfo, Bundle.getMessage("Stop"));
 
         // change address and run
         frame.setTrainInfo("111");
@@ -109,7 +121,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
 
         sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
         sensor.setState(Sensor.ACTIVE);
-        pressButton(frame, Bundle.getMessage("ARun"));
+        pressButton(jfo, Bundle.getMessage("ARun"));
 
         final Warrant warrant = w;
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -131,7 +143,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
 //        Assert.assertEquals("run finished", Bundle.getMessage("NotRunning", w.getDisplayName()), msg);
 //        sensor.setState(Sensor.INACTIVE);
 
-        pressButton(frame, Bundle.getMessage("ButtonSave"));
+        pressButton(jfo, Bundle.getMessage("ButtonSave"));
         w = InstanceManager.getDefault(WarrantManager.class).getWarrant("Learning");
         List<ThrottleSetting> commands = w.getThrottleCommands();
         Assert.assertEquals("12 ThrottleCommands", 12, commands.size());
@@ -144,29 +156,25 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull("Warrant Table save", tableFrame);
 
         // passed test - cleanup.  Do it here so failure leaves traces.
-        TestHelper.disposeWindow(frame, this);
-        TestHelper.disposeWindow(tableFrame, this);
+        jfo.requestClose();
+        JFrameOperator jfo2 = new JFrameOperator(tableFrame);
+        jfo2.requestClose();
         ControlPanelEditor panel = (ControlPanelEditor)jmri.util.JmriJFrame.getFrame("LearnWarrantTest");
         panel.dispose(true);    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
-    private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
-        AbstractButtonFinder buttonFinder = new AbstractButtonFinder(text);
-        javax.swing.AbstractButton button = (javax.swing.AbstractButton) buttonFinder.find(frame, 0);
-        Assert.assertNotNull(text+" Button not found", button);
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
-        flushAWT();
-        return button;
+    private void pressButton(WindowOperator frame, String text) {
+        JButtonOperator jbo = new JButtonOperator(frame,text);
+        jbo.push();
     }
 
-    private void confirmJOptionPane(java.awt.Container frame, String title, String text) {
-        DialogFinder finder = new DialogFinder(title);
-        JUnitUtil.waitFor(() -> {
-            return (java.awt.Container)finder.find() != null;
-        }, "Found dialog + \"title\"");
-        java.awt.Container pane = (java.awt.Container)finder.find();
-        Assert.assertNotNull(title+" JOptionPane not found", pane);
-        pressButton(pane, text);
+    private void confirmJOptionPane(WindowOperator wo, String title, String buttonLabel) {
+        // the previous version of this message verified the text string
+        // in the dialog matched the passed message value.  We need to
+        // determine how to do that using Jemmy.
+        JDialogOperator jdo = new JDialogOperator(wo,title);
+        JButtonOperator jbo = new JButtonOperator(jdo,buttonLabel);
+        jbo.push();
     }
 
     /**
@@ -176,7 +184,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
      * @throws Exception
      */
     private Sensor recordtimes(String[] route, DccThrottle throttle) throws Exception {
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         float speed = 0.1f;
         if (throttle == null) {
             throw new Exception("recordtimes: No Throttle");
@@ -184,17 +192,17 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         throttle.setSpeedSetting(speed);
         Sensor sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
         for (int i=1; i<route.length; i++) {
-            flushAWT();
+            new org.netbeans.jemmy.QueueTool().waitEmpty(100);
             if (i<3) {
                 speed += 0.1f;
             } else {
                 speed -= 0.1f;
             }
             throttle.setSpeedSetting(speed);
-            flushAWT();
+            new org.netbeans.jemmy.QueueTool().waitEmpty(100);
             Sensor sensorNext = _OBlockMgr.getBySystemName(route[i]).getSensor();
             sensorNext.setState(Sensor.ACTIVE);
-            flushAWT();
+            new org.netbeans.jemmy.QueueTool().waitEmpty(100);
             sensor.setState(Sensor.INACTIVE);
             sensor = sensorNext;
         }
@@ -204,41 +212,23 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
     }
 
     private Sensor runtimes(String[] route) throws Exception {
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Sensor sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
         for (int i=1; i<route.length; i++) {
-            flushAWT();
+            new org.netbeans.jemmy.QueueTool().waitEmpty(100);
             Sensor sensorNext = _OBlockMgr.getBySystemName(route[i]).getSensor();
             sensorNext.setState(Sensor.ACTIVE);
-            flushAWT();
+            new org.netbeans.jemmy.QueueTool().waitEmpty(100);
             sensor.setState(Sensor.INACTIVE);
             sensor = sensorNext;
         }
         return sensor;
     }
 
-    // from here down is testing infrastructure
-    public LearnWarrantTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LearnWarrantTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        return new TestSuite(LearnWarrantTest.class);
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        super.setUp();
-        JUnitUtil.resetInstanceManager();
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
@@ -254,8 +244,8 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         JUnitUtil.initShutDownManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
 

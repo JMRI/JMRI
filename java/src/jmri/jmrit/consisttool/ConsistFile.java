@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import jmri.Consist;
 import jmri.ConsistManager;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
@@ -263,7 +264,7 @@ public class ConsistFile extends XmlFile {
      * @param consistList list of consist addresses
      * @throws java.io.IOException if unable to write file
      */
-    public void writeFile(ArrayList<DccLocoAddress> consistList) throws IOException {
+    public void writeFile(ArrayList<LocoAddress> consistList) throws IOException {
         writeFile(consistList, defaultConsistFilename());
     }
 
@@ -274,7 +275,7 @@ public class ConsistFile extends XmlFile {
      * @param fileName    path to file
      * @throws java.io.IOException if unable to write file
      */
-    public void writeFile(ArrayList<DccLocoAddress> consistList, String fileName) throws IOException {
+    public void writeFile(ArrayList<LocoAddress> consistList, String fileName) throws IOException {
         // create root element
         Element root = new Element("consist-roster-config");
         Document doc = newDocument(root, dtdLocation + "consist-roster-config.dtd");

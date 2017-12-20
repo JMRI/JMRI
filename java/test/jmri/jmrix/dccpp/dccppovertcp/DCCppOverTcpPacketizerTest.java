@@ -5,6 +5,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.Rule;
+import jmri.util.junit.rules.RetryRule;
 
 /**
  * <p>
@@ -14,6 +16,9 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2009
  */
 public class DCCppOverTcpPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketizerTest {
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     @Test
     @Override
