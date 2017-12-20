@@ -1,16 +1,18 @@
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.AddressedProgrammer;
 import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.NmraPacket;
 import jmri.ProgListener;
+import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammerFacade;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,26 +39,36 @@ import org.slf4j.LoggerFactory;
 // @ToDo("transform to annotations requires e.g. http://alchemy.grimoire.ca/m2/sites/ca.grimoire/todo-annotations/")
 // @ToDo("get address from underlyng programmer (which might require adding a new subclass structure to Programmer)")
 // @ToDo("finish mode handling; what gets passed through?")
-// @ToDo("write almost certainly needs a delay")
 // @ToDo("read handling needs to be aligned with other ops mode programmers")
 // @ToDo("make sure jmri/jmrit/progsupport/ProgServiceModePane shows the modes, and that DP/DP3 displays them as it configures a decoder")
 public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
-     * Programmer facade for access to Accessory Decoder Ops Mode programming
+     * Programmer facade for access to Accessory Decoder Ops Mode programming.
      *
-     * @param prog     The Ops Mode Programmer we are piggybacking on.
+     * @param prog     The (possibly already decorated) programmer we are
+     *                 piggybacking on.
      * @param addrType A string. "accessory" or "output" causes the address to
      *                 be interpreted as an 11 bit accessory output address.
      *                 "decoder" causes the address to be interpreted as a 9 bit
      *                 accessory decoder address "signal" causes the address to
      *                 be interpreted as an 11 bit signal decoder address.
+     * @param delay    A string representing the desired delay between
+     *                 programming operations, in milliseconds.
+     * @param baseProg The underlying undecorated Ops Mode Programmer we are
+     *                 piggybacking on.
      */
-    public AccessoryOpsModeProgrammerFacade(AddressedProgrammer prog, String addrType) {
+    @SuppressFBWarnings(value = "DM_CONVERT_CASE",
+            justification = "parameter value is never localised")  // NOI18N
+    public AccessoryOpsModeProgrammerFacade(Programmer prog, @Nonnull String addrType, int delay, AddressedProgrammer baseProg) {
         super(prog);
+        log.debug("Constructing AccessoryOpsModeProgrammerFacade");
+        this._usingProgrammer = null;
         this.mode = prog.getMode();
         this.aprog = prog;
-        this._addrType = addrType;
+        this._addrType = (addrType == null) ? "" : addrType.toLowerCase(); // NOI18N
+        this._delay = delay;
+        this._baseProg = baseProg;
     }
 
     // ops accessory mode can't read locally
@@ -64,7 +76,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
 
     @Override
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        List<ProgrammingMode> ret = new ArrayList<>();
         ret.add(ProgrammingMode.OPSACCBYTEMODE);
         ret.add(ProgrammingMode.OPSACCBITMODE);
         ret.add(ProgrammingMode.OPSACCEXTBYTEMODE);
@@ -74,13 +86,15 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
 
     /**
      * Don't pass this mode through, as the underlying doesn't have it (although
-     * we should check)
+     * we should check).
+     *
+     * @param p The desired programming mode
      */
     @Override
     public void setMode(ProgrammingMode p) {
     }
 
-    AddressedProgrammer aprog;
+    Programmer aprog;
 
     @Override
     public boolean getCanRead() {
@@ -103,53 +117,105 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     }
 
     // members for handling the programmer interface
-    int _val;           // remember the value being read/written for confirmative reply
-    String _cv;         // remember the cv number being read/written
-    String _addrType;  // remember the address type: ("decoder" or null) or ("accessory" or "output")
+    int _val;                       // remember the value being read/written for confirmative reply
+    String _cv;                     // remember the cv number being read/written
+    String _addrType;               // remember the address type: ("decoder" or null) or ("accessory" or "output")
+    int _delay;                     // remember the programming delay, in milliseconds
+    AddressedProgrammer _baseProg;   // remember the underlying programmer
 
     // programming interface
     @Override
-    synchronized public void writeCV(String cv, int val, ProgListener p) throws ProgrammerException {
+    public synchronized void writeCV(String cv, int val, ProgListener p) throws ProgrammerException {
+        log.debug("writeCV entry: ProgListener p is {}", p);
         _val = val;
         useProgrammer(p);
         state = ProgState.PROGRAMMING;
         byte[] b;
 
         // Send DCC commands to implement prog.writeCV(cv, val, this);
-        if ((_addrType != null) && (_addrType.equalsIgnoreCase("accessory") || _addrType.equalsIgnoreCase("output"))) {  // interpret address as accessory address
-            log.debug("Sending a basic ops mode accessory CV programming packet to the accessory address");
-            b = NmraPacket.accDecoderPktOpsMode(aprog.getAddressNumber(), Integer.parseInt(cv), val);
-            InstanceManager.getDefault(CommandStation.class).sendPacket(b, 1);
-        } else if ((_addrType != null) && _addrType.equalsIgnoreCase("signal")) {  // interpret address as signal address
-            log.debug("Sending an extended ops mode accessory CV programming packet for signal decoders");
-            b = NmraPacket.accSignalDecoderPktOpsMode(aprog.getAddressNumber(), Integer.parseInt(cv), val);
-            InstanceManager.getDefault(CommandStation.class).sendPacket(b, 1);
-        } else {  // interpet address as decoder address
-            log.debug("Sending a legacy ops mode accessory CV programming packet for compatibility with older decoders");
-            // (Sending both packet types was also observed to benefit timing considerations - spacing effect)
-            b = NmraPacket.accDecPktOpsModeLegacy(aprog.getAddressNumber(), Integer.parseInt(cv), val);
-            InstanceManager.getDefault(CommandStation.class).sendPacket(b, 1);
-
-            log.debug("Sending a basic ops mode accessory CV programming packet to the decoder address");
-            b = NmraPacket.accDecPktOpsMode(aprog.getAddressNumber(), Integer.parseInt(cv), val);
-            InstanceManager.getDefault(CommandStation.class).sendPacket(b, 1);
+        switch (_addrType) {
+            case "accessory":
+            case "output":
+                // interpret address as accessory address
+                log.debug("Send an accDecoderPktOpsMode: address={}, cv={}, value={}",
+                        _baseProg.getAddressNumber(), Integer.parseInt(cv), val);
+                b = NmraPacket.accDecoderPktOpsMode(_baseProg.getAddressNumber(), Integer.parseInt(cv), val);
+                break;
+            case "signal":
+                // interpret address as signal address
+                log.debug("Send an accSignalDecoderPktOpsMode: address={}, cv={}, value={}",
+                        _baseProg.getAddressNumber(), Integer.parseInt(cv), val);
+                b = NmraPacket.accSignalDecoderPktOpsMode(_baseProg.getAddressNumber(), Integer.parseInt(cv), val);
+                break;
+            case "altsignal":
+                // interpret address as signal address using the alternative interpretation of S-9.2.1
+                log.debug("Send an altAccSignalDecoderPktOpsMode: address={}, cv={}, value={}",
+                        _baseProg.getAddressNumber(), Integer.parseInt(cv), val);
+                b = NmraPacket.altAccSignalDecoderPktOpsMode(_baseProg.getAddressNumber(), Integer.parseInt(cv), val);
+                break;
+            case "decoder":
+                // interpet address as decoder address
+                log.debug("Send an accDecPktOpsMode: address={}, cv={}, value={}",
+                        _baseProg.getAddressNumber(), Integer.parseInt(cv), val);
+                b = NmraPacket.accDecPktOpsMode(_baseProg.getAddressNumber(), Integer.parseInt(cv), val);
+                break;
+            case "legacy":
+                // interpet address as decoder address and send legacy packet
+                log.debug("Send an accDecPktOpsModeLegacy: address={}, cv={}, value={}",
+                        _baseProg.getAddressNumber(), Integer.parseInt(cv), val);
+                b = NmraPacket.accDecPktOpsModeLegacy(_baseProg.getAddressNumber(), Integer.parseInt(cv), val);
+                break;
+            default:
+                log.error("Unknown Address Type \"{}\"", _addrType);
+                programmingOpReply(val, ProgListener.UnknownError);
+                return;
         }
-        // and reply done
-        this.programmingOpReply(val, ProgListener.OK);
+        InstanceManager.getDefault(CommandStation.class).sendPacket(b, 1); // send packet
+
+        // set up a delayed completion reply
+        new Thread(new Runnable() {
+            @Override
+            public synchronized void run() {
+                log.debug("delaying {} milliseconds for cv={}, value={}", _delay, Integer.parseInt(cv), val);
+                if (_delay > 0) {
+                    try {
+                        Thread.sleep(_delay);
+                    } catch (InterruptedException ie) {
+                        log.error("Interrupted while sleeping {}", ie);
+                    }
+                }
+                log.debug("            delay elapsed for cv={}, value={}", Integer.parseInt(cv), val);
+                programmingOpReply(val, ProgListener.OK);
+            }
+        }).start();
     }
 
     @Override
-    synchronized public void readCV(String cv, jmri.ProgListener p) throws jmri.ProgrammerException {
+    public synchronized void readCV(String cv, jmri.ProgListener p) throws jmri.ProgrammerException {
         useProgrammer(p);
         state = ProgState.PROGRAMMING;
         prog.readCV(cv, this);
     }
 
-    private jmri.ProgListener _usingProgrammer = null;
+    @Override
+    public synchronized void confirmCV(String cv, int val, ProgListener p) throws ProgrammerException {
+        useProgrammer(p);
+        state = ProgState.PROGRAMMING;
+        prog.confirmCV(cv, val, this);
+    }
 
-    // internal method to remember who's using the programmer
-    protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
+    private transient volatile jmri.ProgListener _usingProgrammer;
+
+    /**
+     * Internal method to remember who's using the programmer.
+     *
+     *
+     * @param p the programmer
+     * @throws ProgrammerException if p is already in use
+     */
+    protected synchronized void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
+        log.debug("useProgrammer entry: _usingProgrammer is {}", _usingProgrammer);
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isInfoEnabled()) {
                 log.info("programmer already in use by " + _usingProgrammer);
@@ -157,8 +223,8 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
             throw new jmri.ProgrammerException("programmer in use");
         } else {
             _usingProgrammer = p;
-            return;
         }
+        log.debug("useProgrammer exit: _usingProgrammer is {}", _usingProgrammer);
     }
 
     enum ProgState {
@@ -170,10 +236,8 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     // get notified of the final result
     // Note this assumes that there's only one phase to the operation
     @Override
-    public void programmingOpReply(int value, int status) {
-        if (log.isDebugEnabled()) {
-            log.debug("notifyProgListenerEnd value " + value + " status " + status);
-        }
+    public synchronized void programmingOpReply(int value, int status) {
+        log.debug("notifyProgListenerEnd value={}, status={}", value, status);
 
         if (status != OK) {
             // pass abort up
@@ -195,6 +259,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
             case PROGRAMMING:
                 // the programmingOpReply handler might send an immediate reply, so
                 // clear the current listener _first_
+                log.debug("going NOTPROGRAMMING after value {}, status={}", value, status);
                 jmri.ProgListener temp = _usingProgrammer;
                 _usingProgrammer = null; // done
                 state = ProgState.NOTPROGRAMMING;

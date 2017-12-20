@@ -11,13 +11,17 @@ import jmri.implementation.AbstractSensor;
  */
 public class SerialSensor extends AbstractSensor {
 
-    public SerialSensor(String systemName) {
+    GrapevineSystemConnectionMemo memo = null;
+
+    public SerialSensor(String systemName,GrapevineSystemConnectionMemo _memo) {
         super(systemName);
+        memo = _memo;
         _knownState = UNKNOWN;
     }
 
-    public SerialSensor(String systemName, String userName) {
+    public SerialSensor(String systemName, String userName,GrapevineSystemConnectionMemo _memo) {
         super(systemName, userName);
+        memo = _memo;
         _knownState = UNKNOWN;
     }
 

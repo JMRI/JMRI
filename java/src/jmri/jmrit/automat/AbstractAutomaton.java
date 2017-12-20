@@ -961,7 +961,7 @@ public class AbstractAutomaton implements Runnable {
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
                 synchronized (self) {
@@ -970,7 +970,7 @@ public class AbstractAutomaton implements Runnable {
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.DccLocoAddress address){
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
                 // this is an automatically stealing impelementation.
                 InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
             }
@@ -1031,7 +1031,7 @@ public class AbstractAutomaton implements Runnable {
             }
 
             @Override
-            public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
                 synchronized (self) {
@@ -1040,7 +1040,7 @@ public class AbstractAutomaton implements Runnable {
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.DccLocoAddress address){
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
                 // this is an automatically stealing impelementation.
                 InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
             }

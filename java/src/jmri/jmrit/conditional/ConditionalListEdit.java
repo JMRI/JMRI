@@ -54,6 +54,7 @@ import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.*;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -1688,6 +1689,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         for (int i = 0; i <= Conditional.ITEM_TYPE_LAST_STATE_VAR; i++) {
             _variableTypeBox.addItem(ConditionalVariable.getItemTypeString(i));
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_variableTypeBox);
         panel1.add(makeEditPanel(_variableTypeBox, "LabelVariableType", "VariableTypeHint"));  // NOI18N
         panel1.add(Box.createHorizontalStrut(STRUT));
 
@@ -2325,6 +2327,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             }
         }
         _selectLogixBox.setSelectedItem(itemKey);
+        JComboBoxUtil.setupComboBoxMaxRows(_selectLogixBox);
         loadSelectConditionalBox(lgxName);
     }
 
@@ -2375,6 +2378,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             }
         }
         _selectConditionalBox.setSelectedItem(itemKey);
+        JComboBoxUtil.setupComboBoxMaxRows(_selectConditionalBox);
     }
 
     // ------------ Variable update processes ------------
@@ -2693,6 +2697,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         for (int i = 0; i <= Conditional.ITEM_TYPE_LAST_ACTION; i++) {
             _actionItemTypeBox.addItem(DefaultConditionalAction.getItemTypeString(i));
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_actionItemTypeBox);
         panel1.add(makeEditPanel(_actionItemTypeBox, "LabelActionItem", "ActionItemHint"));  // NOI18N
         panel1.add(Box.createHorizontalStrut(STRUT));
 

@@ -13,7 +13,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
@@ -73,7 +72,6 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -90,8 +88,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -102,7 +98,6 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.plaf.basic.BasicComboPopup;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.ConfigureManager;
@@ -144,14 +139,14 @@ import jmri.jmrit.display.SignalHeadIcon;
 import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.panelEditor.PanelEditor;
-import jmri.jmrit.signalling.AddEntryExitPairAction;
+import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.util.ColorUtil;
 import jmri.util.FileChooserFilter;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import jmri.util.SystemType;
-import jmri.util.swing.JmriBeanComboBox;
+import jmri.util.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -167,7 +162,7 @@ import org.slf4j.LoggerFactory;
  * numbers.
  * <P>
  * The "contents" List keeps track of all text and icon label objects added to
- * the targetframe for later manipulation. Other Lists keep track of drawn
+ * the target frame for later manipulation. Other Lists keep track of drawn
  * items.
  * <P>
  * Based in part on PanelEditor.java (Bob Jacobsen (c) 2002, 2003). In
@@ -181,14 +176,14 @@ import org.slf4j.LoggerFactory;
 public class LayoutEditor extends PanelEditor implements VetoableChangeListener, MouseWheelListener {
 
     //Operational instance variables - not saved to disk
-    private JmriJFrame floatingEditToolBoxFrame = null;
-    private JScrollPane floatingEditContentScrollPane = null;
-    private JPanel floatEditHelpPanel = null;
-    private JPanel editToolBarPanel = null;
-    private JScrollPane editToolBarScrollPane = null;
-    private JPanel editToolBarContainerPanel = null;
-    private JPanel helpBarPanel = null;
-    private JPanel helpBar = new JPanel();
+    private transient JmriJFrame floatingEditToolBoxFrame = null;
+    private transient JScrollPane floatingEditContentScrollPane = null;
+    private transient JPanel floatEditHelpPanel = null;
+    private transient JPanel editToolBarPanel = null;
+    private transient JScrollPane editToolBarScrollPane = null;
+    private transient JPanel editToolBarContainerPanel = null;
+    private transient JPanel helpBarPanel = null;
+    private transient JPanel helpBar = new JPanel();
 
     private transient Font toolBarFont = null;
 
@@ -313,21 +308,21 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     private transient JPanel locationPanel = new JPanel();
 
     //end of main panel controls
-    private boolean delayedPopupTrigger = false;
+    private transient boolean delayedPopupTrigger = false;
     private transient Point2D currentPoint = new Point2D.Double(100.0, 100.0);
     private transient Point2D dLoc = new Point2D.Double(0.0, 0.0);
 
-    private int toolbarHeight = 100;
-    private int toolbarWidth = 100;
+    private transient int toolbarHeight = 100;
+    private transient int toolbarWidth = 100;
 
-    //private int numTurnouts = 0;
+    //private transient int numTurnouts = 0;
     private transient TrackSegment newTrack = null;
-    private boolean panelChanged = false;
+    private transient boolean panelChanged = false;
 
     //grid size in pixels
-    private int gridSize1st = 10;
+    private transient int gridSize1st = 10;
     // secondary grid
-    private int gridSize2nd = 10;
+    private transient int gridSize2nd = 10;
 
     //size of point boxes
     protected static final double SIZE = 3.0;
@@ -385,76 +380,76 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     //note: these only change when setTurnoutCircleSize is called
     //using these avoids having to call getTurnoutCircleSize() and
     //the multiply (x2) and the int -> double conversion overhead
-    private double circleRadius = SIZE * getTurnoutCircleSize();
-    private double circleDiameter = 2.0 * circleRadius;
+    private transient double circleRadius = SIZE * getTurnoutCircleSize();
+    private transient double circleDiameter = 2.0 * circleRadius;
 
     //selection variables
-    private boolean selectionActive = false;
-    private double selectionX = 0.0;
-    private double selectionY = 0.0;
-    private double selectionWidth = 0.0;
-    private double selectionHeight = 0.0;
+    private transient boolean selectionActive = false;
+    private transient double selectionX = 0.0;
+    private transient double selectionY = 0.0;
+    private transient double selectionWidth = 0.0;
+    private transient double selectionHeight = 0.0;
 
     //Option menu items
-    private JCheckBoxMenuItem editModeCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem editModeCheckBoxMenuItem = null;
 
-    private JRadioButtonMenuItem toolBarSideTopButton = null;
-    private JRadioButtonMenuItem toolBarSideLeftButton = null;
-    private JRadioButtonMenuItem toolBarSideBottomButton = null;
-    private JRadioButtonMenuItem toolBarSideRightButton = null;
-    private JRadioButtonMenuItem toolBarSideFloatButton = null;
+    private transient JRadioButtonMenuItem toolBarSideTopButton = null;
+    private transient JRadioButtonMenuItem toolBarSideLeftButton = null;
+    private transient JRadioButtonMenuItem toolBarSideBottomButton = null;
+    private transient JRadioButtonMenuItem toolBarSideRightButton = null;
+    private transient JRadioButtonMenuItem toolBarSideFloatButton = null;
 
-    private JMenu toolBarFontSizeMenu = new JMenu(Bundle.getMessage("FontSize"));
-    private JCheckBoxMenuItem wideToolBarCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ToolBarWide"));
-    private JMenu dropDownListsDisplayOrderMenu = new JMenu(Bundle.getMessage("DropDownListsDisplayOrder"));
+    private transient JMenu toolBarFontSizeMenu = new JMenu(Bundle.getMessage("FontSize"));
+    private transient JCheckBoxMenuItem wideToolBarCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ToolBarWide"));
+    private transient JMenu dropDownListsDisplayOrderMenu = new JMenu(Bundle.getMessage("DropDownListsDisplayOrder"));
 
-    private JCheckBoxMenuItem positionableCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem controlCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem animationCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem showHelpCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem showGridCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem autoAssignBlocksCheckBoxMenuItem = null;
-    private JMenu scrollMenu = null;
-    private JRadioButtonMenuItem scrollBothMenuItem = null;
-    private JRadioButtonMenuItem scrollNoneMenuItem = null;
-    private JRadioButtonMenuItem scrollHorizontalMenuItem = null;
-    private JRadioButtonMenuItem scrollVerticalMenuItem = null;
-    private JMenu tooltipMenu = null;
-    private JRadioButtonMenuItem tooltipAlwaysMenuItem = null;
-    private JRadioButtonMenuItem tooltipNoneMenuItem = null;
-    private JRadioButtonMenuItem tooltipInEditMenuItem = null;
-    private JRadioButtonMenuItem tooltipNotInEditMenuItem = null;
+    private transient JCheckBoxMenuItem positionableCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem controlCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem animationCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem showHelpCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem showGridCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem autoAssignBlocksCheckBoxMenuItem = null;
+    private transient JMenu scrollMenu = null;
+    private transient JRadioButtonMenuItem scrollBothMenuItem = null;
+    private transient JRadioButtonMenuItem scrollNoneMenuItem = null;
+    private transient JRadioButtonMenuItem scrollHorizontalMenuItem = null;
+    private transient JRadioButtonMenuItem scrollVerticalMenuItem = null;
+    private transient JMenu tooltipMenu = null;
+    private transient JRadioButtonMenuItem tooltipAlwaysMenuItem = null;
+    private transient JRadioButtonMenuItem tooltipNoneMenuItem = null;
+    private transient JRadioButtonMenuItem tooltipInEditMenuItem = null;
+    private transient JRadioButtonMenuItem tooltipNotInEditMenuItem = null;
 
-    private JCheckBoxMenuItem snapToGridOnAddCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem snapToGridOnMoveCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem antialiasingOnCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem turnoutCirclesOnCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem turnoutDrawUnselectedLegCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem hideTrackSegmentConstructionLinesCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem useDirectTurnoutControlCheckBoxMenuItem = null;
-    private ButtonGroup turnoutCircleSizeButtonGroup = null;
+    private transient JCheckBoxMenuItem snapToGridOnAddCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem snapToGridOnMoveCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem antialiasingOnCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem turnoutCirclesOnCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem turnoutDrawUnselectedLegCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem hideTrackSegmentConstructionLinesCheckBoxMenuItem = null;
+    private transient JCheckBoxMenuItem useDirectTurnoutControlCheckBoxMenuItem = null;
+    private transient ButtonGroup turnoutCircleSizeButtonGroup = null;
 
-    private boolean turnoutDrawUnselectedLeg = true;
-    private boolean autoAssignBlocks = false;
+    private transient boolean turnoutDrawUnselectedLeg = true;
+    private transient boolean autoAssignBlocks = false;
 
     //Selected point information
     private transient Point2D startDelta = new Point2D.Double(0.0, 0.0); //starting delta coordinates
     protected transient Object selectedObject = null;       //selected object, null if nothing selected
     protected transient Object prevSelectedObject = null;   //previous selected object, for undo
-    private int selectedPointType = 0;          //hit point type within the selected object
+    private transient int selectedPointType = 0;          //hit point type within the selected object
 
     private transient LayoutTrack foundObject = null; //found object, null if nothing found
 
     private transient Point2D foundLocation = new Point2D.Double(0.0, 0.0); //location of found object
 
-    private int foundPointType = 0; //connection type within the found object
+    private transient int foundPointType = 0; //connection type within the found object
 
     @SuppressWarnings("unused")
-    private boolean foundNeedsConnect = false; //true if found point needs a connection
+    private transient boolean foundNeedsConnect = false; //true if found point needs a connection
     private transient LayoutTrack beginObject = null; //begin track segment connection object, null if
     //none
     private transient Point2D beginLocation = new Point2D.Double(0.0, 0.0); //location of begin object
-    private int beginPointType = LayoutTrack.NONE; //connection type within begin connection object
+    private transient int beginPointType = LayoutTrack.NONE; //connection type within begin connection object
     private transient Point2D currentLocation = new Point2D.Double(0.0, 0.0); //current location
 
     //Lists of items that describe the Layout, and allow it to be drawn
@@ -477,14 +472,14 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     public transient List<SignalMastIcon> signalMastList = new ArrayList<>();            //Signal Mast Icons
 
     // counts used to determine unique internal names
-    private int numAnchors = 0;
-    private int numEndBumpers = 0;
-    private int numEdgeConnectors = 0;
-    private int numTrackSegments = 0;
-    private int numLevelXings = 0;
-    private int numLayoutSlips = 0;
-    private int numLayoutTurnouts = 0;
-    private int numLayoutTurntables = 0;
+    private transient int numAnchors = 0;
+    private transient int numEndBumpers = 0;
+    private transient int numEdgeConnectors = 0;
+    private transient int numTrackSegments = 0;
+    private transient int numLevelXings = 0;
+    private transient int numLayoutSlips = 0;
+    private transient int numLayoutTurnouts = 0;
+    private transient int numLayoutTurntables = 0;
 
     public transient LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
 
@@ -494,17 +489,17 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     //persistent instance variables - saved to disk with Save Panel
-    private int upperLeftX = 0; // Note: These are _WINDOW_ upper left x & y
-    private int upperLeftY = 0; // (not panel)
+    private transient int upperLeftX = 0; // Note: These are _WINDOW_ upper left x & y
+    private transient int upperLeftY = 0; // (not panel)
 
-    private int windowWidth = 0;
-    private int windowHeight = 0;
+    private transient int windowWidth = 0;
+    private transient int windowHeight = 0;
 
-    private int panelWidth = 0;
-    private int panelHeight = 0;
+    private transient int panelWidth = 0;
+    private transient int panelHeight = 0;
 
-    private float mainlineTrackWidth = 4.0F;
-    private float sideTrackWidth = 2.0F;
+    private transient float mainlineTrackWidth = 4.0F;
+    private transient float sideTrackWidth = 2.0F;
 
     private transient Color defaultTrackColor = Color.black;
     private transient Color defaultOccupiedTrackColor = Color.red;
@@ -513,42 +508,42 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     private transient Color defaultTextColor = Color.black;
 
     private transient String layoutName = "";
-    private double xScale = 1.0;
-    private double yScale = 1.0;
-    private boolean animatingLayout = true;
-    private boolean showHelpBar = true;
-    private boolean drawGrid = true;
+    private transient double xScale = 1.0;
+    private transient double yScale = 1.0;
+    private transient boolean animatingLayout = true;
+    private transient boolean showHelpBar = true;
+    private transient boolean drawGrid = true;
 
-    private boolean snapToGridOnAdd = false;
-    private boolean snapToGridOnMove = false;
-    private boolean snapToGridInvert = false;
+    private transient boolean snapToGridOnAdd = false;
+    private transient boolean snapToGridOnMove = false;
+    private transient boolean snapToGridInvert = false;
 
-    private boolean antialiasingOn = false;
-    private boolean highlightSelectedBlockFlag = false;
+    private transient boolean antialiasingOn = false;
+    private transient boolean highlightSelectedBlockFlag = false;
 
-    private boolean turnoutCirclesWithoutEditMode = false;
-    private boolean tooltipsWithoutEditMode = false;
-    private boolean tooltipsInEditMode = true;
+    private transient boolean turnoutCirclesWithoutEditMode = false;
+    private transient boolean tooltipsWithoutEditMode = false;
+    private transient boolean tooltipsInEditMode = true;
 
     //turnout size parameters - saved with panel
-    private double turnoutBX = LayoutTurnout.turnoutBXDefault; //RH, LH, WYE
-    private double turnoutCX = LayoutTurnout.turnoutCXDefault;
-    private double turnoutWid = LayoutTurnout.turnoutWidDefault;
-    private double xOverLong = LayoutTurnout.xOverLongDefault; //DOUBLE_XOVER, RH_XOVER, LH_XOVER
-    private double xOverHWid = LayoutTurnout.xOverHWidDefault;
-    private double xOverShort = LayoutTurnout.xOverShortDefault;
-    private boolean useDirectTurnoutControl = false; //Uses Left click for closing points, Right click for throwing.
+    private transient double turnoutBX = LayoutTurnout.turnoutBXDefault; //RH, LH, WYE
+    private transient double turnoutCX = LayoutTurnout.turnoutCXDefault;
+    private transient double turnoutWid = LayoutTurnout.turnoutWidDefault;
+    private transient double xOverLong = LayoutTurnout.xOverLongDefault; //DOUBLE_XOVER, RH_XOVER, LH_XOVER
+    private transient double xOverHWid = LayoutTurnout.xOverHWidDefault;
+    private transient double xOverShort = LayoutTurnout.xOverShortDefault;
+    private transient boolean useDirectTurnoutControl = false; //Uses Left click for closing points, Right click for throwing.
 
     //saved state of options when panel was loaded or created
-    private boolean savedEditMode = true;
-    private boolean savedPositionable = true;
-    private boolean savedControlLayout = true;
-    private boolean savedAnimatingLayout = true;
-    private boolean savedShowHelpBar = true;
+    private transient boolean savedEditMode = true;
+    private transient boolean savedPositionable = true;
+    private transient boolean savedControlLayout = true;
+    private transient boolean savedAnimatingLayout = true;
+    private transient boolean savedShowHelpBar = true;
 
     //zoom
-    private double minZoom = 0.25;
-    private double maxZoom = 8.0;
+    private transient double minZoom = 0.25;
+    private transient double maxZoom = 8.0;
 
     //Special sub group for color treatment when active
     JPanel blockPropertiesPanel = null;
@@ -557,7 +552,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     protected transient HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
 
     //Antialiasing rendering
-    private static final RenderingHints antialiasing = new RenderingHints(
+    private transient static final RenderingHints antialiasing = new RenderingHints(
             RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -594,8 +589,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
     }
 
-    private ToolBarSide toolBarSide = ToolBarSide.eTOP;
-    private boolean toolBarIsWide = true;
+    private transient ToolBarSide toolBarSide = ToolBarSide.eTOP;
+    private transient boolean toolBarIsWide = true;
 
     public LayoutEditor() {
         this("My Layout");
@@ -2089,40 +2084,20 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
      *                       blank
      */
     public static void setupComboBox(@Nonnull JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable, boolean inFirstBlank) {
+        log.debug("LE setupComboBox called");
+
         inComboBox.setEnabled(inEnable);
         inComboBox.setEditable(true);
         inComboBox.setValidateMode(inValidateMode);
         inComboBox.setText("");
-        log.debug("LE setupComboBox called");
-        // find the max height of all popup items
-        BasicComboPopup popup = (BasicComboPopup) inComboBox.getAccessibleContext().getAccessibleChild(0);
-        JList list = popup.getList();
-        ListModel lm = list.getModel();
-        ListCellRenderer renderer = list.getCellRenderer();
-        int maxItemHeight = 12; // pick some absolute minimum here
-        for (int i = 0; i < lm.getSize(); ++i) {
-            Object value = lm.getElementAt(i);
-            Component c = renderer.getListCellRendererComponent(list, value, i, false, false);
-            maxItemHeight = Math.max(maxItemHeight, c.getPreferredSize().height);
-        }
 
-        int itemsPerScreen = inComboBox.getItemCount();
-        // calculate the number of items that will fit on the screen
-        if (!GraphicsEnvironment.isHeadless()) {
-            // note: this line returns the maximum available size, accounting all
-            // taskbars etc. no matter where they are aligned:
-            Rectangle maxWindowBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
-            itemsPerScreen = (int) maxWindowBounds.getHeight() / maxItemHeight;
-        }
-
-        // calculate an even division of the number of items (min 8)
-        // that will fit on the screen
-        int c = Math.max(8, inComboBox.getItemCount());
-        while (c > itemsPerScreen) {
-            c /= 2; // keeps this a even division of the number of items
-        };
-        inComboBox.setMaximumRowCount(c);
+        // This has to be set before calling setupComboBoxMaxRows
+        // (otherwise if inFirstBlank then the  number of rows will be wrong)
         inComboBox.setFirstItemBlank(inFirstBlank);
+
+        // set the max number of rows that will fit onscreen
+        JComboBoxUtil.setupComboBoxMaxRows(inComboBox);
+
         inComboBox.setSelectedIndex(-1);
     } //setupComboBox
 
@@ -2571,13 +2546,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         });
 
         //
-        // set background color 
+        // set background color
         //
-        JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor"));
+        JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor", "..."));
         optionMenu.add(backgroundColorMenuItem);
         backgroundColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                    Bundle.getMessage("SetBackgroundColor"),
+                    Bundle.getMessage("SetBackgroundColor", ""),
                     defaultBackgroundColor);
             if (desiredColor != null && !defaultBackgroundColor.equals(desiredColor)) {
                 defaultBackgroundColor = desiredColor;
@@ -2590,11 +2565,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         //
         // set default text color
         //
-        JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor"));
+        JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor", "..."));
         optionMenu.add(textColorMenuItem);
         textColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JColorChooser.showDialog(this,
-                    Bundle.getMessage("DefaultTextColor"),
+                    Bundle.getMessage("DefaultTextColor", ""),
                     defaultTextColor);
             if (desiredColor != null && !defaultTextColor.equals(desiredColor)) {
                 setDefaultTextColor(desiredColor);
@@ -2951,7 +2926,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         jmi.setToolTipText(Bundle.getMessage("SignalsAtXoverTurnoutToolTip"));
         toolsMenu.add(jmi);
         jmi.addActionListener((ActionEvent event) -> {
-            //bring up signals at double crossover tool dialog
+            //bring up signals at crossover tool dialog
             getLETools().setSignalsAtXoverTurnout(signalIconEditor, signalFrame);
         });
 
@@ -5700,6 +5675,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             prevSelectedObject = selectedObject;
             selectedObject = null;
         }
+
+        // clear these
+        beginObject = null;
+        foundObject = null;
+
         isDragging = false;
         delayedPopupTrigger = false;
         requestFocusInWindow();
@@ -8732,16 +8712,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         return conTools;
     } //getConnectivityUtil
 
-    //private transient LayoutEditorTools tools = null;
+    private transient LayoutEditorTools tools = null;
+
     public LayoutEditorTools getLETools() {
-        //if (tools == null) {
-        //    tools = new LayoutEditorTools(this);
-        //}
-        //return tools;
-        // note: we're going to always return a new instance here
-        // (the indivual dialogs are responsible for disposing of it
-        // when no longer needed.)
-        return new LayoutEditorTools(this);
+        if (tools == null) {
+            tools = new LayoutEditorTools(this);
+        }
+        return tools;
     } //getLETools
 
     private transient LayoutEditorAuxTools auxTools = null;
@@ -9099,7 +9076,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     /**
-     * @param color value to set the defalut track color to.
+     * @param color value to set the default track color to.
      */
     public void setDefaultTrackColor(@Nonnull Color color) {
         LayoutTrack.setDefaultTrackColor(color);
@@ -9116,7 +9093,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     /**
-     * @param color value to set the defalut occupied track color to.
+     * @param color value to set the default occupied track color to.
      */
     public void setDefaultOccupiedTrackColor(@Nonnull Color color) {
         defaultOccupiedTrackColor = color;
@@ -9132,7 +9109,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     /**
-     * @param color value to set the defalut alternate track color to.
+     * @param color value to set the default alternate track color to.
      */
     public void setDefaultAlternativeTrackColor(@Nonnull Color color) {
         defaultAlternativeTrackColor = color;
@@ -9188,7 +9165,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     /**
-     * @param color value to set the defalut text color to.
+     * @param color value to set the default text color to.
      */
     public void setDefaultTextColor(@Nonnull Color color) {
         defaultTextColor = color;
@@ -9326,6 +9303,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     /**
      * highlight the specified block
+     *
      * @param inBlock the block
      * @return true if block was highlighted
      */
@@ -9355,6 +9333,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     /**
      * highlight the specified layout block
+     *
      * @param inLayoutBlock the layout block
      * @return true if layout block was highlighted
      */
@@ -10302,7 +10281,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     // On Java 9 on Windows 10, there is no more meta key. Note that this
     // method is called both on mouse button events and mouse move events,
     // and therefore "event.getButton() == MouseEvent.BUTTON3" doesn't work.
-    // event.getButton() always return 0 for MouseMoveEvent. 
+    // event.getButton() always return 0 for MouseMoveEvent.
     private boolean isMetaDown(MouseEvent event) {
         if (SystemType.isWindows()) {
             return SwingUtilities.isRightMouseButton(event);

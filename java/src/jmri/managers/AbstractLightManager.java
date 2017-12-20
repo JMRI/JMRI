@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.Manager;
@@ -16,17 +18,25 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractLightManager extends AbstractManager<Light>
         implements LightManager, java.beans.PropertyChangeListener {
 
+    /**
+     * constructor
+     */
     public AbstractLightManager() {
         super();
     }
 
+    /**
+     * get XML order
+     *
+     * @return the XML order
+     */
     @Override
     public int getXMLOrder() {
         return Manager.LIGHTS;
     }
 
     /**
-     * Returns the type letter in the system name for a Light
+     * {@inheritDoc}
      */
     @Override
     public char typeLetter() {
@@ -34,86 +44,63 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     }
 
     /**
-     * Locate via user name, then system name if needed. If that fails, create a
-     * new Light: If the name is a valid system name, it will be used for the
-     * new Light. Otherwise, the makeSystemName method will attempt to turn it
-     * into a valid system name.
-     *
-     * @return Never null unless valid systemName cannot be found
+     * {@inheritDoc}
      */
     @Override
-    public Light provideLight(String name) {
+    @Nonnull
+    public Light provideLight(@Nonnull String name) {
         Light t = getLight(name);
-        if (t != null) {
-            return t;
+        if (t == null) {
+            if (name.startsWith(getSystemPrefix() + typeLetter())) {
+                return newLight(name, null);
+            } else if (name.length() > 0) {
+                return newLight(makeSystemName(name), null);
+            } else {
+                throw new IllegalArgumentException("\"" + name + "\" is invalid");
+            }
         }
-        if (name.startsWith(getSystemPrefix() + typeLetter())) {
-            return newLight(name, null);
-        } else if (name.length() > 0) {
-            return newLight(makeSystemName(name), null);
-        } else {
-            throw new IllegalArgumentException("\""+name+"\" is invalid");
-        }
+        return t;
     }
 
     /**
-     * Locate via user name, then system name if needed. Does not create a new
-     * one if nothing found
-     *
-     * @return null if no match found
+     * {@inheritDoc}
      */
     @Override
-    public Light getLight(String name) {
-        Light t = getByUserName(name);
-        if (t != null) {
-            return t;
+    @CheckForNull
+    public Light getLight(@Nonnull String name) {
+        Light result = getByUserName(name);
+        if (result == null) {
+            result = getBySystemName(name);
         }
-
-        return getBySystemName(name);
+        return result;
     }
 
     /**
-     * Locate a Light by its system name
+     * {@inheritDoc}
      */
     @Override
-    public Light getBySystemName(String name) {
+    @CheckForNull
+    public Light getBySystemName(@Nonnull String name
+    ) {
         return _tsys.get(name);
     }
 
     /**
-     * Locate a Light by its user name
+     * {@inheritDoc}
      */
     @Override
-    public Light getByUserName(String key) {
+    @CheckForNull
+    public Light getByUserName(@Nonnull String key
+    ) {
         return _tuser.get(key);
     }
 
     /**
-     * Return an instance with the specified system and user names. Note that
-     * two calls with the same arguments will get the same instance; there is
-     * only one Light object representing a given physical Light and therefore
-     * only one with a specific system or user name.
-     * <P>
-     * This will always return a valid object reference; a new object will be
-     * created if necessary. In that case:
-     * <UL>
-     * <LI>If a null reference is given for user name, no user name will be
-     * associated with the Light object created; a valid system name must be
-     * provided
-     * <LI>If both names are provided, the system name defines the hardware
-     * access of the desired sensor, and the user address is associated with it.
-     * The system name must be valid.
-     * </UL>
-     * Note that it is possible to make an inconsistent request if both
-     * addresses are provided, but the given values are associated with
-     * different objects. This is a problem, and we don't have a good solution
-     * except to issue warnings. This will mostly happen if you're creating
-     * Lights when you should be looking them up.
-     *
-     * @return requested Light object (never null)
+     * {@inheritDoc}
      */
     @Override
-    public Light newLight(String systemName, String userName) {
+    @Nonnull
+    public Light newLight(@Nonnull String systemName, @CheckForNull String userName) {
         if (log.isDebugEnabled()) {
             log.debug("newLight:"
                     + ((systemName == null) ? "null" : systemName)
@@ -122,7 +109,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         // is system name in correct format?
         if (validSystemNameFormat(systemName) != NameValidity.VALID) {
             log.error("Invalid system name for newLight: {}", systemName);
-            throw new IllegalArgumentException("\""+systemName+"\" is invalid");
+            throw new IllegalArgumentException("\"" + systemName + "\" is invalid");
         }
 
         // return existing if there is one
@@ -162,15 +149,17 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      * Internal method to invoke the factory, after all the logic for returning
      * an existing method has been invoked.
      *
-     * @return new null
+     * @param systemName the system name to use for this light
+     * @param userName   the user name to use for this light
+     * @return the new light
      */
-    abstract protected Light createNewLight(String systemName, String userName);
+    @CheckForNull
+    abstract protected Light createNewLight(
+            @Nonnull String systemName,
+            @Nonnull String userName);
 
     /**
-     * Activate the control mechanism for each Light controlled by this
-     * LightManager. Note that some Lights don't require any activation. The
-     * activateLight method in AbstractLight.java determines what needs to be
-     * done for each Light.
+     * {@inheritDoc}
      */
     @Override
     public void activateAllLights() {
@@ -194,68 +183,59 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     }
 
     /**
-     * Normalize the system name
-     * <P>
-     * If a system implementation has names that could be normalized, the
-     * system-specific Light Manager should override this routine and supply a
-     * normalized system name.
+     * {@inheritDoc}
      */
     @Override
-    public String normalizeSystemName(String systemName) {
+    @Nonnull
+    public String normalizeSystemName(@Nonnull String systemName) {
         return systemName;
     }
 
     /**
-     * Convert the system name to a normalized alternate name
-     * <P>
-     * This routine is to allow testing to ensure that two Lights with alternate
-     * names that refer to the same output bit are not created in systems with multiple name formats.
-     * <P>
-     * If a system implementation has alternate names, the system specific Light
-     * Manager should override this routine and supply the alternate name.
+     * {@inheritDoc}
      */
     @Override
-    public String convertSystemNameToAlternate(String systemName) {
+    @Nonnull
+    public String convertSystemNameToAlternate(@Nonnull String systemName) {
         return "";
     }
 
     /**
-     * Returns 'true' if the System can potentially support variable Lights
-     * Note: LightManagers for Systems that can support variable Lights should
-     * override this method and return 'true'.
+     * {@inheritDoc}
      */
     @Override
-    public boolean supportsVariableLights(String systemName) {
+    public boolean supportsVariableLights(@Nonnull String systemName) {
         return false;
     }
 
     /**
-     * A method that determines if it is possible to add a range of lights in
-     * numerical order eg 11 thru 18, primarily used to show/not show the add
-     * range box in the add Light window.
-     *
-     * @param systemName configured system connection name
-     * @return false as default, unless overridden by implementations as supported
+     * {@inheritDoc}
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
+    /**
+     * get bean type handled
+     *
+     * @return a string for the type of object handled by this manager
+     */
     @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameLight");
     }
 
     /**
-     * Provide a manager-agnostic tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
+    @CheckForNull
     public String getEntryToolTip() {
-        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
-        return entryToolTip;
+        return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractLightManager.class);
+    private final static Logger log
+            = LoggerFactory.getLogger(AbstractLightManager.class);
 
 }

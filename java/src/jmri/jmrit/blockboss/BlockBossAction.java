@@ -20,7 +20,7 @@ public class BlockBossAction extends AbstractAction {
     }
 
     public BlockBossAction() {
-        this(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Simple_Signal_Logic"));
+        this(Bundle.getMessage("Simple_Signal_Logic"));
     }
 
     @Override
@@ -30,4 +30,5 @@ public class BlockBossAction extends AbstractAction {
         JFrame f = new BlockBossFrame();
         f.setVisible(true);
     }
+
 }

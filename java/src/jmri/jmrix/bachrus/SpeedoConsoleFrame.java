@@ -1127,11 +1127,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     }
 
     @Override
-    public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
+    public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
     }
 
     @Override
-    public void notifyStealThrottleRequired(DccLocoAddress address) {
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
         // this is an automatically stealing impelementation.
         InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }

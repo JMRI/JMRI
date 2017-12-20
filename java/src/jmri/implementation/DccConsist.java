@@ -3,6 +3,7 @@ package jmri.implementation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import jmri.AddressedProgrammer;
+import jmri.AddressedProgrammerManager;
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
@@ -41,6 +42,9 @@ public class DccConsist implements Consist, ProgListener {
     // data member to hold the throttle listener objects
     final private ArrayList<ConsistListener> listeners;
 
+
+    private AddressedProgrammerManager opsProgManager = null;
+
     // Initialize a consist for the specific address.
     // In this implementation, we can safely assume the address is a
     // short address, since Advanced Consisting is only possible with
@@ -53,6 +57,13 @@ public class DccConsist implements Consist, ProgListener {
     // Initialize a consist for a specific DccLocoAddress.
     // The Default consist type is an advanced consist
     public DccConsist(DccLocoAddress address) {
+        this(address,jmri.InstanceManager.getDefault(AddressedProgrammerManager.class));
+    }
+
+    // Initialize a consist for a specific DccLocoAddress.
+    // The Default consist type is an advanced consist
+    public DccConsist(DccLocoAddress address,AddressedProgrammerManager apm) {
+        opsProgManager = apm;
         this.listeners = new ArrayList<>();
         consistAddress = address;
         consistDir = new HashMap<>();
@@ -241,7 +252,7 @@ public class DccConsist implements Consist, ProgListener {
      *        the same direction as the consist, or false otherwise.
      */
     protected void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
-        AddressedProgrammer opsProg = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
+        AddressedProgrammer opsProg = opsProgManager 
                 .getAddressedProgrammer(LocoAddress.isLongAddress(),
                         LocoAddress.getNumber());
         if (opsProg == null) {

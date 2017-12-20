@@ -13,27 +13,30 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class MarklinSystemConnectionMemoTest {
+public class MarklinSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
     @Test
-    public void testCtor() {
+    public void testCtorWithoutParameter() {
         MarklinSystemConnectionMemo c = new MarklinSystemConnectionMemo();
         Assert.assertNotNull(c);
     }
 
+    @Override
     @Test
-    public void testCtorWithTCParamter() {
-        MarklinTrafficController tc = new MarklinTrafficController();
-        MarklinSystemConnectionMemo c = new MarklinSystemConnectionMemo(tc);
-        Assert.assertNotNull(c);
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        MarklinTrafficController tc = new MarklinTrafficController();
+        scm = new MarklinSystemConnectionMemo(tc);
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

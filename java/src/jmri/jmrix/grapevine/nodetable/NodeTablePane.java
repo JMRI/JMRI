@@ -18,6 +18,7 @@ import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialReply;
 import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.nodeconfig.NodeConfigFrame;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.swing.RowSorterUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -38,11 +39,14 @@ import jmri.util.table.ButtonRenderer;
  */
 public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grapevine.SerialListener {
 
+    private GrapevineSystemConnectionMemo memo = null;
+
     /**
      * Constructor method
      */
-    public NodeTablePane() {
+    public NodeTablePane(GrapevineSystemConnectionMemo _memo) {
         super();
+        memo = _memo;
     }
 
     NodesModel nodesModel = null;
@@ -117,7 +121,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
      * Open a renumber frame
      */
     void renumber() {
-        RenumberFrame f = new RenumberFrame();
+        RenumberFrame f = new RenumberFrame(memo);
         f.initComponents();
         f.setVisible(true);
     }
@@ -142,7 +146,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 // send message to node
-                SerialTrafficController.instance().sendSerialMessage(SerialMessage.getPoll(node), null);
+                memo.getTrafficController().sendSerialMessage(SerialMessage.getPoll(node), null);
                 // done?
                 node++;
                 if (node >= 128) {
@@ -266,7 +270,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
                     return Integer.valueOf(r + 1);
                 case STATUSCOL:
                     // see if node exists
-                    if (SerialTrafficController.instance().getNodeFromAddress(r + 1) != null) {
+                    if (memo.getTrafficController().getNodeFromAddress(r + 1) != null) {
                         return Bundle.getMessage("StatusConfig");
                     } else {
                         // see if seen in scan
@@ -278,14 +282,14 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
                     }
                 case EDITCOL:
                     // see if node exists
-                    if (SerialTrafficController.instance().getNodeFromAddress(r + 1) != null) {
+                    if (memo.getTrafficController().getNodeFromAddress(r + 1) != null) {
                         return Bundle.getMessage("ButtonEdit");
                     } else {
                         return Bundle.getMessage("ButtonAdd");
                     }
                 case INITCOL:
                     // see if node exists
-                    if (SerialTrafficController.instance().getNodeFromAddress(r + 1) != null) {
+                    if (memo.getTrafficController().getNodeFromAddress(r + 1) != null) {
                         return Bundle.getMessage("ButtonInit");
                     } else {
                         return null;
@@ -300,17 +304,17 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         public void setValueAt(Object type, int r, int c) {
             switch (c) {
                 case EDITCOL:
-                    NodeConfigFrame f = new NodeConfigFrame();
+                    NodeConfigFrame f = new NodeConfigFrame(memo);
                     f.initComponents();
                     f.setNodeAddress(r + 1);
                     f.setVisible(true);
                     return;
                 case INITCOL:
-                    jmri.jmrix.AbstractNode t = SerialTrafficController.instance().getNodeFromAddress(r + 1);
+                    jmri.jmrix.AbstractNode t = memo.getTrafficController().getNodeFromAddress(r + 1);
                     if (t == null) {
                         return;
                     }
-                    SerialTrafficController.instance().sendSerialMessage((SerialMessage) t.createInitPacket(), null);
+                    memo.getTrafficController().sendSerialMessage((SerialMessage) t.createInitPacket(), null);
                     return;
                 default:
                     return;

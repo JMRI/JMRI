@@ -319,12 +319,12 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     @Override
-    public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
+    public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
         log.error("Throttle request failed for {} because {}", address, reason);
     }
 
     @Override
-    public void notifyStealThrottleRequired(jmri.DccLocoAddress address) {
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
         // this is an automatically stealing impelementation.
         log.warn("Stealing");
         //InstanceManager.getDefault(ThrottleManager.class).stealThrottleRequest(address, this, true);
@@ -442,22 +442,24 @@ public class AutoActiveTrain implements ThrottleListener {
                 if (_nextBlock != null) {
                     if ((_currentBlock == _activeTrain.getEndBlock()) && _activeTrain.getReverseAtEnd()
                             && (as.getSequence() == _activeTrain.getEndBlockSectionSequenceNumber())) {
-                        // entered last block of Transit, must stop and reverse
+                        // entered last block of Transit, must stop and reverse - ignore signal changes till train stopped.
+                        removeCurrentSignal();
                         stopInCurrentSection(END_REVERSAL);
                         _activeTrain.setRestart();
                     } else if ((_currentBlock == _activeTrain.getStartBlock())
                             && _activeTrain.getResetWhenDone() && _activeTrain.isTransitReversed()
                             && (as.getSequence() == _activeTrain.getStartBlockSectionSequenceNumber())) {
-                        // entered start block of Transit, must stop and reset for continuing
+                        // entered start block of Transit, must stop and reset for continuing - ignore signal changes till train stopped.
+                        removeCurrentSignal();
                         stopInCurrentSection(BEGINNING_RESET);
                         _activeTrain.setRestart();
                     } else if ((_currentBlock == _activeTrain.getEndBlock())
                             && _activeTrain.getResetWhenDone() && _activeTrain.getDelayedRestart() != ActiveTrain.NODELAY
                             && (as.getSequence() == _activeTrain.getEndBlockSectionSequenceNumber())) {
-                        // entered start block of Transit, must stop and reset for continuing
+                        // entered start block of Transit, must stop and reset for continuing - ignore signal changes till train stopped.
+                        removeCurrentSignal();
                         stopInCurrentSection(BEGINNING_RESET);
                         _activeTrain.setRestart();
-                        removeCurrentSignal();
                     } else {
                         setupNewCurrentSignal(as);
                     }
@@ -753,6 +755,14 @@ public class AutoActiveTrain implements ThrottleListener {
             return;
         }
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
+            // a held signal always stop
+            if ( _controllingSignal != null && _controllingSignal.getAppearance() == SignalHead.HELD ) {
+                // Held - Stop
+                stopInCurrentSection(NO_TASK);
+                _stoppingForStopSignal = true;
+                return;
+            }
+
             if (useSpeedProfile) {
                 // find speed from signal.
                 // find speed from block
@@ -798,8 +808,13 @@ public class AutoActiveTrain implements ThrottleListener {
 
                 log.debug("BlockSpeed[" + blockSpeed + "] SignalSpeed[" + signalSpeed + "]");
                 if (useSpeed < 0.01f) {
-                    if (_conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
+                    // check to to see if its allocated to us!!!
+                    //      check Block occupancy sensor if it is in an allocated block, which must change before signal.
+                    if ( (_currentAllocatedSection.isInActiveBlockList(_conSignalProtectedBlock) ||
+                            ( _nextSection != null &&  isSectionInAllocatedList(_nextSection) && _nextSection.containsBlock(_conSignalProtectedBlock)))
+                            && _conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
                         // Train has just passed this signal - ignore this signal
+                        log.debug("{}:Ignoring red signal [{}]",_activeTrain.getTrainName(),_controllingSignal.getUserName());
                     } else {
                         stopInCurrentSection(NO_TASK);
                         _stoppingForStopSignal = true;
@@ -814,8 +829,14 @@ public class AutoActiveTrain implements ThrottleListener {
                     case SignalHead.FLASHRED:
                         // May get here from signal changing before Block knows it is occupied, so must
                         //      check Block occupancy sensor, which must change before signal.
-                        if (_conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
+                        // check to to see if its allocated to us!!!
+                        //      check Block occupancy sensor if it is in an allocated block, which must change before signal.
+                        if ((_currentAllocatedSection.isInActiveBlockList(_conSignalProtectedBlock) ||
+                                (_nextSection != null && isSectionInAllocatedList(_nextSection) && _nextSection.containsBlock(_conSignalProtectedBlock)))
+                                && _conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
                             // Train has just passed this signal - ignore this signal
+                            log.debug("{}:Ignoring red signal [{}]", _activeTrain.getTrainName(),
+                                    _controllingSignal.getUserName());
                         } else {
                             stopInCurrentSection(NO_TASK);
                             _stoppingForStopSignal = true;
@@ -859,7 +880,9 @@ public class AutoActiveTrain implements ThrottleListener {
             }
             if ((_controllingSignalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER).equals(displayedAspect))
                     || !_controllingSignalMast.getLit() || _controllingSignalMast.getHeld()) {
-                if (_conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
+                if ( (_currentAllocatedSection.isInActiveBlockList(_conSignalProtectedBlock) ||
+                        ( _nextSection != null &&  isSectionInAllocatedList(_nextSection) && _nextSection.containsBlock(_conSignalProtectedBlock)))
+                        && _conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
                     // Train has just passed this signal - ignore this signal
                     log.debug("{}: _conSignalProtectedBlock is the block just past so ignore {}", _activeTrain.getTrainName(), _conSignalProtectedBlock.getDisplayName());
                 } else {
@@ -1210,8 +1233,8 @@ public class AutoActiveTrain implements ThrottleListener {
         // note: _stoppingBlock must be set before invoking this method
         //  verify that _stoppingBlock is actually occupied, if not stop immed
         if (_stoppingBlock.getState() == Block.OCCUPIED) {
-            _stoppingByBlockOccupancy = true;
             setTargetSpeedState(RESTRICTED_SPEED);
+            _stoppingByBlockOccupancy = true;
         } else {
             setStopNow();
         }
@@ -1239,7 +1262,7 @@ public class AutoActiveTrain implements ThrottleListener {
         // the speed comes in as units of warrents (mph, kph, mm/s etc)
             try {
                 float throttleSetting = _activeTrain.getRosterEntry().getSpeedProfile().getThrottleSettingFromSignalMapSpeed(speedState, _forward);
-                log.debug("setTargetSpeedByProfile: throttleSetting[{}] SignalMapSpeedState[{}]",throttleSetting,speedState);
+                log.debug("{}:setTargetSpeedByProfile: SpeedState[{}]",_activeTrain.getTrainName(),throttleSetting,speedState);
                 if (throttleSetting > 0.009) {
                     _autoEngineer.setHalt(false);
                     _autoEngineer.slowToStop(false);
@@ -1267,6 +1290,11 @@ public class AutoActiveTrain implements ThrottleListener {
      * throttle.
      */
     private synchronized void setTargetSpeedValue(float speed) {
+        log.debug("{}:setTargetSpeedValue: Speed[{}]",_activeTrain.getTrainName(),speed);
+        if (useSpeedProfile) {
+            setTargetSpeedByProfile(speed);
+            return;
+        }
         _autoEngineer.slowToStop(false);
         float mls = _controllingSignalMast.getSignalSystem().getMaximumLineSpeed();
         float decSpeed = (speed / mls);
@@ -1275,10 +1303,6 @@ public class AutoActiveTrain implements ThrottleListener {
                 decSpeed = _maxSpeed;
             }
             _targetSpeed = decSpeed * _speedFactor; //adjust for train's Speed Factor
-        } else if (useSpeedProfile && _stopBySpeedProfile) {
-            _targetSpeed = decSpeed;
-            _stoppingUsingSpeedProfile = true;
-            _autoEngineer.slowToStop(true);
         } else {
             _targetSpeed = 0.0f;
             _autoEngineer.setHalt(true);
@@ -1534,7 +1558,6 @@ public class AutoActiveTrain implements ThrottleListener {
         private boolean _halted = false; // true if previously halted
         private boolean _slowToStop = false;
         private float _currentSpeed = 0.0f;
-        private Block _lastBlock = null;
         private float _speedIncrement = 0.0f; //will be recalculated
         private boolean _speedProfileStoppingIsRunning = false; // stop by speed profile is running.
 

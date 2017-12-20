@@ -485,9 +485,10 @@ public class PositionableLabel extends JLabel implements Positionable {
         repaint();
     }
 
-    /**
+    /*
      * ***** Methods to add menu items to popup *******
      */
+
     /**
      * Call to a Positionable that has unique requirements - e.g.
      * RpsPositionIcon, SecurityElementIcon
@@ -504,8 +505,8 @@ public class PositionableLabel extends JLabel implements Positionable {
     public boolean setRotateOrthogonalMenu(JPopupMenu popup) {
 
         if (isIcon() && _displayLevel > Editor.BKG) {
-            popup.add(new AbstractAction(Bundle.getMessage("RotateOrthogonal")
-                    + " (" + (_namedIcon.getRotation() * 90) + "°)") {
+            popup.add(new AbstractAction(Bundle.getMessage("RotateOrthoSign",
+                    (_namedIcon.getRotation() * 90))) { // Bundle property includes degree symbol
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     rotateOrthogonal();
@@ -529,8 +530,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     /**
-     * ********** Methods for Item Popups in Panel editor
-     * ************************
+     * ********** Methods for Item Popups in Panel editor ************************
      */
     JFrame _iconEditorFrame;
     IconAdder _iconEditor;
@@ -603,7 +603,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         repaint();
     }
 
-    public jmri.util.JmriJFrame _paletteFrame;
+    public jmri.jmrit.display.DisplayFrame _paletteFrame; // extended JmriJFrame allowing for Listener and field
 
     //
     // ********** Methods for Item Popups in Control Panel editor *******************
@@ -616,25 +616,31 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected void makePaletteFrame(String title) {
         jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
 
-        _paletteFrame = new jmri.util.JmriJFrame(title, false, false);
+        _paletteFrame = new jmri.jmrit.display.DisplayFrame(title, false, false);
+        if (_paletteFrame == null) {
+            log.warn("null paletteFrame");
+        } else {
+            log.debug("new _paletteFrame created OK");
+        }
         _paletteFrame.setLocationRelativeTo(this);
         _paletteFrame.toFront();
     }
 
     /**
-     * Rotate degrees return true if popup is set
+     * Rotate degrees return true if popup is set.
      */
     @Override
     public boolean setRotateMenu(JPopupMenu popup) {
         if (_displayLevel > Editor.BKG) {
-//             popup.add(CoordinateEdit.getRotateEditAction(this));
-            return _editor.setShowRotationMenu(this, popup);
+             popup.add(CoordinateEdit.getRotateEditAction(this));
         }
         return false;
     }
 
     /**
-     * Scale percentage return true if popup is set
+     * Scale percentage form display.
+     *
+     * @return true if popup is set
      */
     @Override
     public boolean setScaleMenu(JPopupMenu popup) {

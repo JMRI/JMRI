@@ -7,7 +7,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
@@ -185,6 +184,7 @@ public class TrackSegment extends LayoutTrack {
         connect2 = connectTrack;
         type2 = connectionType;
     }
+
 
     /**
      * replace old track connection with new track connection
@@ -431,7 +431,7 @@ public class TrackSegment extends LayoutTrack {
      * This implementation returns null because {@link #getConnect1} and
      * {@link #getConnect2} should be used instead.
      */
-    // only implemented here to supress "does not override abstract method " error in compiler
+    // only implemented here to suppress "does not override abstract method " error in compiler
     public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
         // nothing to see here, move along
         return null;
@@ -443,7 +443,7 @@ public class TrackSegment extends LayoutTrack {
      * This implementation does nothing because {@link #setNewConnect1} and
      * {@link #setNewConnect2} should be used instead.
      */
-    // only implemented here to supress "does not override abstract method " error in compiler
+    // only implemented here to suppress "does not override abstract method " error in compiler
     public void setConnection(int connectionType, @Nullable LayoutTrack o, int type) throws jmri.JmriException {
         // nothing to see here, move along
     }
@@ -724,25 +724,16 @@ public class TrackSegment extends LayoutTrack {
 
         if (blockName.isEmpty()) {
             jmi = popup.add(Bundle.getMessage("NoBlock"));
-            jmi.setEnabled(false);
         } else {
             jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
-            jmi.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    layoutEditor.highlightLayoutBlock(getLayoutBlock());
-                } //actionPerformed
-            });
         }
+        jmi.setEnabled(false);
 
         // if there are any track connections
         if ((connect1 != null) || (connect2 != null)) {
-            popup.add(new JSeparator(JSeparator.HORIZONTAL));
-            jmi = popup.add(new JMenuItem(Bundle.getMessage("Connections"))); // there is no pane opening (which is what ... implies)
-            popup.add(jmi);
-            jmi.setEnabled(false);
+            JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
             if (connect1 != null) {
-                popup.add(new AbstractAction(Bundle.getMessage("MakeLabel", "1") + connect1.getName()) {
+                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "1") + connect1.getName()) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorFindItems lf = layoutEditor.getFinder();
@@ -756,7 +747,7 @@ public class TrackSegment extends LayoutTrack {
                 });
             }
             if (connect2 != null) {
-                popup.add(new AbstractAction(Bundle.getMessage("MakeLabel", "2") + connect2.getName()) {
+                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "2") + connect2.getName()) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorFindItems lf = layoutEditor.getFinder();
@@ -769,6 +760,7 @@ public class TrackSegment extends LayoutTrack {
                     }
                 });
             }
+            popup.add(connectionsMenu);
         }
 
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -809,8 +801,57 @@ public class TrackSegment extends LayoutTrack {
         popup.add(new AbstractAction(Bundle.getMessage("SplitTrackSegment")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                splitTrackSegment();
-            };
+                TrackSegment ts_this = TrackSegment.this;
+                // create a new anchor
+                Point2D p = getCentreSeg();
+                PositionablePoint newAnchor = layoutEditor.addAnchor(p);
+                // link it to me
+                layoutEditor.setLink(newAnchor, POS_POINT, ts_this, TRACK);
+
+                //get unique name for a new track segment
+                String name = layoutEditor.getFinder().uniqueName("T", 0);
+
+                //create it between the new anchor and my connect2(/type2)
+                TrackSegment newTrackSegment = new TrackSegment(name,
+                        newAnchor, POS_POINT,
+                        connect2, type2,
+                        isDashed(), isMainline(), layoutEditor);
+                // add it to known tracks
+                layoutEditor.getLayoutTracks().add(newTrackSegment);
+                layoutEditor.setDirty();
+
+                // copy attributes to new track segment
+                newTrackSegment.setArc(ts_this.isArc());
+                newTrackSegment.setCircle(ts_this.isCircle());
+                //newTrackSegment.setBezier(ts_this.isBezier());
+                newTrackSegment.setFlip(ts_this.isFlip());
+
+                // link my connect2 to the new track segment
+                if (connect2 instanceof PositionablePoint) {
+                    PositionablePoint pp = (PositionablePoint) connect2;
+                    pp.replaceTrackConnection(ts_this, newTrackSegment);
+                } else {
+                    layoutEditor.setLink(connect2, type2, newTrackSegment, TRACK);
+                }
+
+                // link the new anchor to the new track segment
+                layoutEditor.setLink(newAnchor, POS_POINT, newTrackSegment, TRACK);
+
+                // link me to the new newAnchor
+                connect2 = newAnchor;
+                type2 = POS_POINT;
+
+                //check on layout block
+                LayoutBlock b = ts_this.getLayoutBlock();
+
+                if (b != null) {
+                    newTrackSegment.setLayoutBlock(b);
+                    layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+                    newTrackSegment.updateBlockInfo();
+                }
+                layoutEditor.setDirty();
+                layoutEditor.redrawPanel();
+            }
         });
 
         JMenu lineType = new JMenu(Bundle.getMessage("ChangeTo"));
@@ -885,62 +926,6 @@ public class TrackSegment extends LayoutTrack {
         popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         return popup;
     }   // showPopup
-
-    /**
-     * split this TrackSegment
-     */
-    private void splitTrackSegment() {
-        // create a new anchor
-        Point2D p = getCentreSeg();
-        PositionablePoint newAnchor = layoutEditor.addAnchor(p);
-        // link it to me
-        layoutEditor.setLink(newAnchor, POS_POINT, this, TRACK);
-
-        //get unique name for a new track segment
-        String name = layoutEditor.getFinder().uniqueName("T", 0);
-
-        //create it between the new anchor and my connect2(/type2)
-        TrackSegment newTrackSegment = new TrackSegment(name,
-                newAnchor, POS_POINT,
-                connect2, type2,
-                isDashed(), isMainline(), layoutEditor);
-        // add it to known tracks
-        layoutEditor.getLayoutTracks().add(newTrackSegment);
-        layoutEditor.setDirty();
-
-        // copy attributes to new track segment
-        newTrackSegment.setLayoutBlock(this.getLayoutBlock());
-        newTrackSegment.setArc(this.isArc());
-        newTrackSegment.setCircle(this.isCircle());
-        //newTrackSegment.setBezier(this.isBezier());
-        newTrackSegment.setFlip(this.isFlip());
-
-        // link my connect2 to the new track segment
-        if (connect2 instanceof PositionablePoint) {
-            PositionablePoint pp = (PositionablePoint) connect2;
-            pp.replaceTrackConnection(this, newTrackSegment);
-        } else {
-            layoutEditor.setLink(connect2, type2, newTrackSegment, TRACK);
-        }
-
-        // link the new anchor to the new track segment
-        layoutEditor.setLink(newAnchor, POS_POINT, newTrackSegment, TRACK);
-
-        // link me to the new newAnchor
-        connect2 = newAnchor;
-        type2 = POS_POINT;
-
-        //check on layout block
-        LayoutBlock b = this.getLayoutBlock();
-
-        if (b != null) {
-            newTrackSegment.setLayoutBlock(b);
-            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-            newTrackSegment.updateBlockInfo();
-        }
-        layoutEditor.setDirty();
-        layoutEditor.redrawPanel();
-    }
 
     /**
      * Display popup menu for information and editing.
@@ -1853,7 +1838,7 @@ public class TrackSegment extends LayoutTrack {
             if (this.blockName.equals(blockName)) {
                 // if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
-                    log.info("-    Add track '{}' for block '{}'", getName(), blockName);
+                    log.info("-    Add track '{}'for block '{}'", getName(), blockName);
                 }
                 // these should never be null... but just in case...
                 // it's time to play... flood your neighbours!
@@ -1874,6 +1859,6 @@ public class TrackSegment extends LayoutTrack {
         setLayoutBlock(layoutBlock);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class
-    );
+    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class);
+
 }

@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
    jmri.jmrix.dccpp.simulator.configurexml.PackageTest.class,
-   DCCppSimulatorAdapterTest.class
+   DCCppSimulatorAdapterTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.dccpp.simulator package.

@@ -37,7 +37,7 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         jmri.InstanceManager.getDefault(jmri.ConditionalManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).addVetoableChangeListener(this);
-        InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).addVetoableChangeListener(this);
+        InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).addVetoableChangeListener(this);
     }
 
     @Override

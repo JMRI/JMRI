@@ -33,13 +33,9 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      * @param et the associated TrafficController
      */
     public EasyDccSystemConnectionMemo(EasyDccTrafficController et) {
-//        super(st.getController().getSystemConnectionMemo().getSystemPrefix(), SprogConnectionTypeList.SPROG);
-//        if (log.isDebugEnabled()) {
-//            log.debug("SprogSystemConnectionMemo, prefix='{}'", st.getController().getSystemConnectionMemo().getSystemPrefix());
-//        }
         super("E", EasyDccConnectionTypeList.EASYDCC);
         this.et = et;
-        register();
+        register(); // registers general type
         log.debug("EasyDCC SystemConnectionMemo with TC");
         InstanceManager.store(this, EasyDccSystemConnectionMemo.class); // also register as specific type
         // create and register the ComponentFactory for the GUI (menu)
@@ -102,7 +98,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         commandStation = new jmri.jmrix.easydcc.EasyDccCommandStation(this);
 
-        InstanceManager.setCommandStation(commandStation);
+        InstanceManager.store(commandStation,jmri.CommandStation.class);
     }
 
     /**
@@ -135,7 +131,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (type.equals(jmri.CommandStation.class)) {
             return true;
         }
-        return false; // nothing, by default
+        return super.provides(type); // nothing, by default
     }
 
     /**
@@ -169,7 +165,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (T.equals(jmri.CommandStation.class)) {
             return (T) commandStation;
         }
-        return null; // nothing, by default
+        return super.get(T); // nothing, by default
     }
 
     private EasyDccPowerManager powerManager;

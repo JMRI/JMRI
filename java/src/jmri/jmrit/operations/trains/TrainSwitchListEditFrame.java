@@ -45,7 +45,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
     // load managers
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
-    List<JCheckBox> locationCheckBoxes = new ArrayList<JCheckBox>();
+    List<JCheckBox> locationCheckBoxes = new ArrayList<>();
     List<JComboBox<String>> locationComboBoxes = new ArrayList<>();
     JPanel locationPanelCheckBoxes = new JPanel();
 
@@ -259,8 +259,14 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
     // Remove all terminated or reset trains from the switch lists for selected locations
     private void reset() {
+        // Confirm that user really wants to delete all terminated and reset trains from the switch lists
+        if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("DoYouReallyWantDeleteSwitchListData"),
+                 Bundle.getMessage("ResetSwitchLists"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+            return;
+        }
+        
         // this for loop prevents ConcurrentModificationException when printing and status changes
-        for (JCheckBox checkbox : new ArrayList<JCheckBox>(locationCheckBoxes)) {
+        for (JCheckBox checkbox : new ArrayList<>(locationCheckBoxes)) {
             String locationName = checkbox.getName();
             Location location = locationManager.getLocationByName(locationName);
             if (location.isSwitchListEnabled()) {
@@ -314,7 +320,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv, boolean isUpdate) {
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
         // this for loop prevents ConcurrentModificationException when printing and status changes
-        for (JCheckBox checkbox : new ArrayList<JCheckBox>(locationCheckBoxes)) {
+        for (JCheckBox checkbox : new ArrayList<>(locationCheckBoxes)) {
             String locationName = checkbox.getName();
             Location location = locationManager.getLocationByName(locationName);
             if (location.isSwitchListEnabled()) {
@@ -341,7 +347,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     }
 
     private void selectCheckboxes(boolean enable) {
-        for (JCheckBox checkbox : new ArrayList<JCheckBox>(locationCheckBoxes)) {
+        for (JCheckBox checkbox : new ArrayList<>(locationCheckBoxes)) {
             String locationName = checkbox.getName();
             Location location = locationManager.getLocationByName(locationName);
             location.setSwitchListEnabled(enable);
@@ -457,7 +463,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
         TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
         // this for loop prevents ConcurrentModificationException when printing and status changes
-        for (JCheckBox checkbox : new ArrayList<JCheckBox>(locationCheckBoxes)) {
+        for (JCheckBox checkbox : new ArrayList<>(locationCheckBoxes)) {
             String locationName = checkbox.getName();
             Location location = locationManager.getLocationByName(locationName);
             if (location.isSwitchListEnabled() &&
@@ -519,7 +525,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     // The print switch list for a location has changed
     private void changeLocationCheckboxes(PropertyChangeEvent e) {
         Location l = (Location) e.getSource();
-        for (JCheckBox checkbox : new ArrayList<JCheckBox>(locationCheckBoxes)) {
+        for (JCheckBox checkbox : new ArrayList<>(locationCheckBoxes)) {
             if (checkbox.getName().equals(l.getName())) {
                 checkbox.setSelected(l.isSwitchListEnabled());
                 break;

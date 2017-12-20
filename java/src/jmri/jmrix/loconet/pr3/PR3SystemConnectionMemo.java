@@ -53,7 +53,10 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         if (T.equals(jmri.PowerManager.class)) {
             return (T) getPowerManager();
         }
-        return null; // nothing, by default
+        if(T.equals(jmri.ConsistManager.class)){
+           return (T) getConsistManager();
+        }
+        return null;
     }
 
     final static int PR3MODE = 0x00;
@@ -149,6 +152,9 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         if (type.equals(jmri.PowerManager.class)) {
             return true;
         }
+        if(type.equals(jmri.ConsistManager.class)){
+           return(getConsistManager()!=null);
+        } 
         return false;
     }
     //private jmri.jmrix.loconet.pr2.LnPr2PowerManager powerManager;

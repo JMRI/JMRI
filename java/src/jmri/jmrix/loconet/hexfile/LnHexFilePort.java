@@ -230,7 +230,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
      * @return the options
      */
     public String[] validOption3() {
-        return new String[]{"Normal", "Spread", "One Only", "Both"};
+        return new String[]{"Normal", "Spread", "One Only", "Both"}; // TODO I18N
     }
 
     /**

@@ -5,7 +5,7 @@ package jmri.jmrix.easydcc;
  * link.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2004
-  */
+ */
 public interface EasyDccListener extends jmri.jmrix.AbstractMRListener {
 
     public void message(EasyDccMessage m);

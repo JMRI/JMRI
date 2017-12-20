@@ -49,10 +49,7 @@ public class Z21XNetInitializationManager extends XNetInitializationManager {
          Ops Mode Programming */
         systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
         InstanceManager.setCommandStation(systemMemo.getCommandStation());
-        /* the consist manager has to be set up AFTER the programmer, to
-         prevent the default consist manager from being loaded on top of it */
         systemMemo.setConsistManager(new XNetConsistManager(systemMemo));
-        InstanceManager.setConsistManager(systemMemo.getConsistManager());
         systemMemo.setTurnoutManager(new Z21XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
         InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
         systemMemo.setLightManager(new XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));

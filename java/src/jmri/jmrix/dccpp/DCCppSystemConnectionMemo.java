@@ -221,7 +221,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         } else if (type.equals(jmri.MultiMeter.class)) {
             return true;
         } else {
-            return false; // nothing, by default
+            return super.provides(type);
         }
     }
 
@@ -258,7 +258,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (T.equals(jmri.MultiMeter.class)) {
             return (T) getMultiMeter();
         }
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     @Override

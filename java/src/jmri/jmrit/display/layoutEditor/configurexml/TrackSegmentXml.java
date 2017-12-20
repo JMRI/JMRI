@@ -45,24 +45,24 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         element.setAttribute("type1", "" + p.getType1());
         element.setAttribute("connect2name", p.getConnect2Name());
         element.setAttribute("type2", "" + p.getType2());
-        element.setAttribute("dashed", "" + (p.getDashed() ? "yes" : "no"));
+        element.setAttribute("dashed", "" + (p.isDashed() ? "yes" : "no"));
         element.setAttribute("mainline", "" + (p.isMainline() ? "yes" : "no"));
         element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
-        element.setAttribute("arc", "" + (p.getArc() ? "yes" : "no"));
-        if (p.getArc()) {
-            element.setAttribute("flip", "" + (p.getFlip() ? "yes" : "no"));
-            element.setAttribute("circle", "" + (p.getCircle() ? "yes" : "no"));
-            if ((p.getCircle()) && (p.getAngle() != 0.0D)) {
+        if (p.isArc()) {
+            element.setAttribute("arc", "yes");
+            element.setAttribute("flip", "" + (p.isFlip() ? "yes" : "no"));
+            element.setAttribute("circle", "" + (p.isCircle() ? "yes" : "no"));
+            if ((p.isCircle()) && (p.getAngle() != 0.0D)) {
                 element.setAttribute("angle", "" + (p.getAngle()));
                 element.setAttribute("hideConLines", "" + (p.hideConstructionLines() ? "yes" : "no"));
             }
         }
-        if (p.getBezier()) {
+        if (p.isBezier()) {
             element.setAttribute("bezier", "yes");
         }
         element.setAttribute("class", getClass().getName());
 
-        if (p.getBezier()) {
+        if (p.isBezier()) {
             // add control points
             Element elementControlpoints = new Element("controlpoints");
             for (int i = 0; i < p.getNumberOfBezierControlPoints(); i++) {
@@ -147,7 +147,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
-        if (l.getArc()) {
+        if (l.isArc()) {
             try {
                 l.setFlip(element.getAttribute("flip").getBooleanValue());
             } catch (DataConversionException e) {
@@ -160,7 +160,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                 log.warn("unable to convert track segment circle attribute");
             } catch (NullPointerException e) {  // considered normal if the attribute is not present
             }
-            if (l.getCircle()) {
+            if (l.isCircle()) {
                 try {
                     l.setAngle(element.getAttribute("angle").getDoubleValue());
                 } catch (DataConversionException e) {

@@ -15,9 +15,17 @@ import org.junit.Test;
  */
 public class NmraConsistTest extends AbstractConsistTestBase {
 
-    @Test public void testCtor2() {
+    @Test 
+    public void testCtor2() {
         // integer constructor test.
         NmraConsist c = new NmraConsist(12);
+        Assert.assertNotNull(c);
+    }
+
+    @Test 
+    public void testCtor3() {
+        // integer constructor test.
+        NmraConsist c = new NmraConsist(new DccLocoAddress(12, true));
         Assert.assertNotNull(c);
     }
 
@@ -25,8 +33,9 @@ public class NmraConsistTest extends AbstractConsistTestBase {
     @Before
     @Override
     public void setUp() {
-        JUnitUtil.setUp();        jmri.util.JUnitUtil.initDebugCommandStation();
-        c = new NmraConsist(new DccLocoAddress(12, true));
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initDebugCommandStation();
+        c = new NmraConsist(new DccLocoAddress(12, true),jmri.InstanceManager.getDefault(jmri.CommandStation.class));
     }
    
     @After

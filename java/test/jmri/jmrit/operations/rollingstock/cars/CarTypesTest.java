@@ -1,11 +1,15 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.util.Locale;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Tests for the Operations CarTypes class Last manually cross-checked on
@@ -16,14 +20,24 @@ import org.junit.Assert;
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
  */
-public class CarTypesTest extends OperationsTestCase {
+public class CarTypesTest {
 
-    public void testCarTypes() {
+    private Locale defaultLocale;
+
+    @Test
+    public void testDefaultCarTypes() {
+        String carTypes[]=Bundle.getMessage("carTypeNames").split(","); 
         CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
         ct1.getNames();	//Load predefined car types
 
-        Assert.assertTrue("Car Types Predefined Boxcar", ct1.containsName("Boxcar"));
-        Assert.assertTrue("Car Types Predefined Caboose", ct1.containsName("Caboose"));
+        Assert.assertTrue("Predefined Car Type 1", ct1.containsName(carTypes[1]));
+        Assert.assertTrue("Predefined Car Type 2", ct1.containsName(carTypes[2]));
+    }
+    
+    @Test
+    public void testAddAndDeleteCarTypes() {
+        CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
+        ct1.getNames();	//Load predefined car types
 
         ct1.addName("Type New1");
         Assert.assertTrue("Car Types Add New1", ct1.containsName("Type New1"));
@@ -46,31 +60,44 @@ public class CarTypesTest extends OperationsTestCase {
         Assert.assertFalse("Car Types Delete New1", ct1.containsName("Type New1"));
     }
 
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Test
+    @Ignore("locale set is not having the desired effect")
+    public void defaultNameChangetest(){
+        Locale.setDefault(Locale.US); // set the locale to US English 
+                                           // for this test.
+        CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
+        ct1.getNames();	//Load predefined car types
+        // change default names produces an error message if the
+        // number of items in carTypeNames and carTypeCovert don't match
+        // when the local is set to US english, this should not occur.
+        ct1.changeDefaultNames(jmri.jmrit.operations.setup.Setup.AAR);
     }
 
-    public CarTypesTest(String s) {
-        super(s);
+    @Test
+    @Ignore("locale set is not having the desired effect")
+    public void defaultNameChangetestGB(){
+        Locale.setDefault(Locale.UK); // set the locale to UK english 
+                                           // for this test.
+        CarTypes ct1 = InstanceManager.getDefault(CarTypes.class);
+        ct1.getNames();	//Load predefined car types
+        // change default names produces an error message if the
+        // number of items in carTypeNames and carTypeCovert don't match
+        // when the local is set to US english, this should not occur.
+        ct1.changeDefaultNames(jmri.jmrit.operations.setup.Setup.AAR);
+        jmri.util.JUnitAppender.assertErrorMessage("Properties file doesn't have equal length conversion strings, carTypeNames 10, carTypeConvert 33");
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", CarTypesTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
+        JUnitOperationsUtil.resetOperationsManager();
+        defaultLocale = Locale.getDefault(); // save the default locale.
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CarTypesTest.class);
-        return suite;
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        // reset the default locale
+        Locale.setDefault(defaultLocale);
+        JUnitUtil.tearDown();
     }
 }

@@ -770,12 +770,19 @@ public class TransitTableAction extends AbstractTableAction {
                 curSequenceNum--;
                 curSection = sectionList.get(j - 1);
                 curSectionDirection = direction[j - 1];
+                // delete alternate if present
                 int k = j - 2;
                 while ((k >= 0) && alternate[k]) {
                     k--;
                 }
-                prevSection = sectionList.get(k);
-                prevSectionDirection = direction[k];
+                // After this delete we need the new previous section, if there is one.
+                if (k < 0) {
+                    // There is no previous section
+                    prevSection = null;
+                } else {
+                    prevSection = sectionList.get(k);
+                    prevSectionDirection = direction[k];
+                }
             }
             sectionList.remove(j);
             initializeSectionCombos();
