@@ -20,7 +20,7 @@
 
     <decoder>
 
-        <family name="DCS5x" mfg="Digitrax">
+        <family name="Command Stations" mfg="Digitrax">
             <model model="DCS50"/>
             <model model="DCS51"/>
         </family>

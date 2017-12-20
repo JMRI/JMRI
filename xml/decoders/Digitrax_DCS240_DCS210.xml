@@ -20,7 +20,7 @@
 
     <decoder>
 
-        <family name="DCS210 and DCS240" mfg="Digitrax">
+        <family name="Command Stations" mfg="Digitrax">
             <model model="DCS210"/>
             <model model="DCS240"/>
         </family>
@@ -35,17 +35,6 @@
                       infoOnly="yes" tooltip="This value is ignored but must be present within the definition">
                 <decVal min="1" max="2" />
                 <label>Board ID</label>
-            </variable>
-
-            <variable item="Address Format" CV="1" mask="XXXXXXVX" default="0">
-                <enumVal>
-                    <enumChoice choice="Ignored for this roster entry">
-                    </enumChoice>
-                    <enumChoice choice="Ignored for this roster entry">
-                    </enumChoice>
-                </enumVal>
-                <label>Address Format</label>
-                <tooltip>This setting is irrelevant for the purpose of configuring the DCS240</tooltip>
             </variable>
 
             <variable CV="1.001" item="OpSw 001" readOnly="yes" default="0">

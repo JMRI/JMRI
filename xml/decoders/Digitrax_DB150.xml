@@ -20,7 +20,7 @@
 
     <decoder>
 
-        <family name="DB150" mfg="Digitrax">
+        <family name="Command Stations" mfg="Digitrax">
             <model model="DB150"/>
         </family>
 

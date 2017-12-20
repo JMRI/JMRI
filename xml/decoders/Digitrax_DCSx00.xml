@@ -20,7 +20,7 @@
 
     <decoder>
 
-        <family name="DCSx00" mfg="Digitrax">
+        <family name="Command Stations" mfg="Digitrax">
             <model model="DCS100"/>
             <model model="DCS200"/>
         </family>
