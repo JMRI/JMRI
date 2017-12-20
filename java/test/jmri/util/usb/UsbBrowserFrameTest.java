@@ -16,10 +16,17 @@ import org.junit.Test;
 public class UsbBrowserFrameTest {
 
     @Test
-    @Ignore("we probably need to mock the USB library to obtain consistent results.")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        UsbBrowserFrame t = new UsbBrowserFrame();
+        UsbBrowserPanel bp = new UsbBrowserPanel(){
+           @Override
+           protected UsbTreeNode getRootNode() {
+              UsbTreeNode retval = new UsbTreeNode();
+              retval.setUsbDevice(null);
+              return retval;
+           }
+        };
+        UsbBrowserFrame t = new UsbBrowserFrame(bp);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
     }

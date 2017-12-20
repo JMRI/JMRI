@@ -4,7 +4,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -14,9 +13,15 @@ import org.junit.Test;
 public class UsbBrowserPanelTest {
 
     @Test
-    @Ignore("we probably need to mock the USB library to obtain consistent results.")
     public void testCTor() {
-        UsbBrowserPanel t = new UsbBrowserPanel();
+        UsbBrowserPanel t = new UsbBrowserPanel(){
+           @Override
+           protected UsbTreeNode getRootNode() {
+              UsbTreeNode retval = new UsbTreeNode();
+              retval.setUsbDevice(null);
+              return retval;
+           }
+        };
         Assert.assertNotNull("exists",t);
     }
 
