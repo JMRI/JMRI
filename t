@@ -1,10 +1,3 @@
-package jmri;
-
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
     BeanSettingTest.class,
     BundleTest.class,
     NamedBeanHandleManagerTest.class,
@@ -65,12 +58,5 @@ import org.junit.runners.Suite;
     TransitManagerTest.class,
     TurnoutOperationManagerTest.class,
     EntryPointTest.class,
-    RunCucumberTest.class,})
+    RunCucumberTest.class
 
-/**
- * Invoke complete set of tests for the Jmri package
- *
- * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007
- */
-public class PackageTest {
-}
