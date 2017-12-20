@@ -30,7 +30,7 @@
       <text>(coming soon)</text>
       <text xml:lang="it">in arrivo</text>
       <text xml:lang="de">demnächst hier</text>
-      <text xml:lang="ca">Properament/text>
+      <text xml:lang="ca">Properament</text>
     </label>
     <separator/>
     <label>
@@ -46,7 +46,7 @@
       <text>(coming soon)</text>
       <text xml:lang="it">in arrivo</text>
       <text xml:lang="de">demnächst hier</text>
-      <text xml:lang="ca">Properament/text>
+      <text xml:lang="ca">Properament</text>
     </label>
   </column>
 </pane>

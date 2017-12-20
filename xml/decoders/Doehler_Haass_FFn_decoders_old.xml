@@ -111,7 +111,7 @@
 		    <tooltip>Output is ON only when the vehicle is running forwards</tooltip>
 		    <tooltip xml:lang="it">Uscita in On solo se il veicolo è in marcia in avanti</tooltip>
 			<tooltip xml:lang="de">Der Ausgang ist nur an, wenn die Fahrtrichtung vorwärts ist</tooltip>	
-			<tooltip xml:lang="ca">Sortida activa només si el vehicle està en marxa endavant</toltip>		
+                        <tooltip xml:lang="ca">Sortida activa només si el vehicle està en marxa endavant</tooltip>
 	  </variable>
 	  <variable CV="33" mask="XVXXXXXX" item="Function F0F check 3" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>

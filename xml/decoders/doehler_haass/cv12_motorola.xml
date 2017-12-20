@@ -52,21 +52,21 @@
         <choice xml:lang="it">Attivo (solo Ind.principale)</choice>
         <choice xml:lang="fr">Actif (adresse principale)</choice>
         <choice xml:lang="de">Aktiv (ohne Zusatzadresse)</choice>
-        <choice xml:lang="ca">Actiu (adreça principal)</choice></choice>
+        <choice xml:lang="ca">Actiu (adreça principal)</choice>
       </enumChoice>
       <enumChoice choice="Active (with 1 extra address)" value="2">
         <choice>Active (with 1 extra address)</choice>
         <choice xml:lang="it">Attivo (con 1 Ind.extra)</choice>
         <choice xml:lang="fr">Actif (1 adresse supplémentaire)</choice>
         <choice xml:lang="de">Aktiv (mit 1 Zusatzadresse)</choice>
-        <choice xml:lang="ca">Actiu (1 adreça extra)</choice></choice>
+        <choice xml:lang="ca">Actiu (1 adreça extra)</choice>
       </enumChoice>
       <enumChoice choice="Active (with 2 extra addresses)" value="3">
         <choice>Active (with 2 extra addresses)</choice>
         <choice xml:lang="it">Attivo (con 2 Ind.extra)</choice>
         <choice xml:lang="fr">Actif (2 adresses supplémentaires)</choice>
         <choice xml:lang="de">Aktiv (mit 2 Zusatzadressen)</choice>
-        <choice xml:lang="ca">Actiu (2 adreces extres)</choice></choice>
+        <choice xml:lang="ca">Actiu (2 adreces extres)</choice>
       </enumChoice>
     </enumVal>
     <label>Motorola</label>

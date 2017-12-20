@@ -253,7 +253,7 @@
             <text>V3.5 or almost any other brand of decoder. This can be a particular problem</text>
             <text xml:lang="it">V3.5 o altre marche di decoders. Questo potrebbe creare un problema</text>
             <text xml:lang="de">anderen Marke von Decoder zu erzielen. Dies kann ein besonderes Problem sein</text>
-            <text xml:lang="ca"></text>V3.5 o altres marques. Pot ser un problema
+            <text xml:lang="ca">V3.5 o altres marques. Pot ser un problema</text>
         </label>
         <label>
             <text>if have V4/Select and other model decoders in the same consist.</text>
@@ -556,7 +556,7 @@
             <text>posting to either the JMRI or LokSound Yahoo® groups or by logging a bug report on</text>
             <text xml:lang="it">Mettendo un post sul Gruppo di Yahoo® o inserendo un report</text>
             <text xml:lang="de">Senden Sie ein Posting an die JMRI oder LokSound Yahoo® Gruppen oder durch das Melden eines Bug Report auf</text>
-			<text xml:lang="ca">Enviar a JMRI o grup de Yahoo de LokSound o asvisant d'un error</text></text>
+            <text xml:lang="ca">Enviar a JMRI o grup de Yahoo de LokSound o asvisant d'un error</text>
         </label>
         <label>
             <text>the JMRI SourceForge page at http://sourceforge.net/p/jmri/bugs/</text>

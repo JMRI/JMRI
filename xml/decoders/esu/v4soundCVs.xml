@@ -56,7 +56,7 @@
         <label xml:lang="it">Suoni Casuali-Intervallo lungo</label>
         <label xml:lang="de">Zufallsound - Maximaler Abstand</label>
         <tooltip xml:lang="de">die Einheit sind 0.25 sec</tooltip>
-        <label xml:lang="ca">So aleatori/label>
+        <label xml:lang="ca">So aleatori</label>
     </variable>
     <variable CV="63" default="180" item="Sound Volume Master" comment="Range 0-192">
         <decVal max="192"/>

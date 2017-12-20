@@ -252,7 +252,7 @@
         <label xml:lang="it">RailCom® canale 2 (Dati)</label>
         <label xml:lang="cs">RailCom® kanál 2 (data)</label>
         <label xml:lang="de">RailCom® Kanal 2 (Daten)</label>
-        <labelxml:lang="ca">Canal 2 de Railcom (dades)</labelxml:langlabel>
+        <label xml:lang="ca">Canal 2 de Railcom (dades)</label>
     </variable>
     <variable CV="28" mask="VXXXXXXX" exclude="LokPilot Fx V4.0" item="ESU V4 Advanced RailCom Option 2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -339,13 +339,13 @@
         </enumVal>
         <label>Motor PWM Frequency</label>
         <label xml:lang="de">Motor PWM Frequenz</label>
-        <label xml:lang="de">Freqüència PWM Motor</label>
+        <label xml:lang="ca">Freqüència PWM Motor</label>
     </variable>
     <variable CV="49" mask="XXXXXVXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot Micro V4.0" item="ESU V4 Advanced Compatibility Option 2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Marklin® Delta Mode</label>
         <label xml:lang="de">Märklin® Delta Modus</label>
-        <choice xml:lang="ca">Mode Marlin Delta</choice>
+        <label xml:lang="ca">Mode Marlin Delta</label>
     </variable>
     <variable CV="49" mask="VXXXVXXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot Micro V4.0" item="ESU V4 Advanced Protocols Option 11">
         <enumVal>
@@ -592,7 +592,7 @@
     <variable CV="138" default="128" item="ESU V4 Function Settings Smoke Unit Slider 2" exclude="LokPilot Fx V4.0" include="ESU LokSound V4.0,LokSound Select L">
         <decVal/>
         <label>Fan Speed Trim</label>
-        <label xml:lang="de">           Lüftergeschwindigkeit          </label>+
+        <label xml:lang="de">           Lüftergeschwindigkeit          </label>
         <label xml:lang="ca">Ajust de temperatura del ventilador</label>
     </variable>
     <variable CV="139" default="128" item="ESU V4 Function Settings Smoke Unit Slider 3" include="ESU LokSound V4.0,LokSound Select L">
@@ -653,7 +653,7 @@
         <label>Constant Brake Time</label>
         <label xml:lang="de">Konstanter Bremsmodus</label>
         <tooltip xml:lang="de">die Einheit sind 0.25 sec</tooltip>
-        <label xml:lang="ca">TEmps de frenada consant/label>
+        <label xml:lang="ca">TEmps de frenada consant</label>
     </variable>
     <variable CV="254" default="0" item="ESU V4 Advanced Constant Brake Option 2" exclude="LokPilot Fx V4.0">
         <decVal/>
