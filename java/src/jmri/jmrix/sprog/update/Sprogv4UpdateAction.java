@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Andrew crosland Copyright (C) 2004
  */
+@Deprecated
 public class Sprogv4UpdateAction extends SprogUpdateAction {
 
     public Sprogv4UpdateAction(String s,SprogSystemConnectionMemo memo) {

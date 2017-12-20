@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Andrew Crosland Copyright (C) 2004
   */
+@Deprecated
 public class Sprogv4UpdateFrame
         extends SprogUpdateFrame
         implements SprogVersionListener {
