@@ -13,7 +13,7 @@ public class UsbBrowserFrame extends JmriJFrame {
         this(new UsbBrowserPanel());
     }
 
-    public UsbBrowserFrame(JPanel rootPanel) {
+    UsbBrowserFrame(JPanel rootPanel) {
         super(Bundle.getMessage("UsbBrowserFrame.Title"));
         super.getRootPane().setContentPane(rootPanel);
         super.pack();
