@@ -216,8 +216,8 @@
         <label>
             <text>&lt;html&gt;&lt;h2&gt;Acceleration and Deceleration Rate&lt;/h2&gt;&lt;/html&gt;</text>
             <text xml:lang="it">&lt;html&gt;&lt;h2&gt;Tasso Accellerazione e Decellerazione&lt;/h2&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;h2&gt;Beschleunigungs- und Verzögerungsrate&lt;/h2&gt;&lt;/html&gt;</text>
             <text xml:lang="ca">&lt;html&gt;&lt;h2&gt;Taxa d'acceleració i desacceleració&lt;/h2&gt;&lt;/html&gt;</text>
-            <text xml:lang="ca"></text>
         </label>
         <label>
             <text> </text>
@@ -315,6 +315,7 @@
 			<text xml:lang="ca">Aquesta versió del JMRI fa servir una presentació similar al Lokproggramer d'ESU</text>
         </label>
         <label>
+            <text>software. A good guide to the Function Map pane is available at pages 14 and 15</text>
             <text xml:lang="ca">. Hi ha una bona guia a les pàgines 14 i 15</text>
             <text xml:lang="de">Eine gute Anleitung zur Funktionszuordnung finden Sie auf den Seiten 14 und 15</text>
         </label>

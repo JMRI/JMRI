@@ -322,6 +322,7 @@
     <label xml:lang="de">AUX 6 Timer für Ausschalten</label>
     <label xml:lang="ca">Apagat programat de AUX 5</label>
     <tooltip>CV130 (0-250, 1=100ms)</tooltip>
+    <tooltip xml:lang="de">Je 100 ms, 0 = ausgeschaltet</tooltip>
     <tooltip xml:lang="ca">Sí 100 ms, 0 = apagat</tooltip>
   </variable>
   <variable item="Function for dimmed lights" CV="131" default="1" exclude="PD12A_2016.03,PD12A_2016.06,SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">

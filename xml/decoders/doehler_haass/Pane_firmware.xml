@@ -38,6 +38,7 @@
             <text>Finding the firmware version:</text>
             <text xml:lang="fr">Lire la version de firmware (micrologiciel):</text>
             <text xml:lang="de">Firmware Version herausfinden:</text>
+            <text xml:lang="it">Verifica revisione Firmware</text>
             <text xml:lang="ca">Verifica la revisió del Firmware</text>
           </label>
         </row>

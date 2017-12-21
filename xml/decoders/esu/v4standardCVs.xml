@@ -426,6 +426,7 @@
         <variable CV="54" default="50" item="EMF Option 1">
             <decVal/>
             <label>BEMF Parameter 'K'</label>
+            <label xml:lang="de">Lastregelung Param. „K“</label>
             <label xml:lang="ca">Paràmetre K de la BEMF</label>
         </variable>
         <variable CV="55" default="100" item="EMF Option 2">

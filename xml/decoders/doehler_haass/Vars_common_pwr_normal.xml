@@ -62,7 +62,8 @@
     <label>Impulse width</label>
     <label xml:lang="it">Largh.Impulsi</label>
     <label xml:lang="fr">Largeur d'impulsion</label>
-    <label xml:lang="de">Llargària de l'impuls</label>
+    <label xml:lang="de">Impulsbreite</label>
+    <label xml:lang="ca">Llargària de l'impuls</label>
   </variable>
   <variable CV="61" default="63" item="Speed in shunting mode" tooltip="CV61 (0-127)">
     <decVal min="0" max="127"/>
