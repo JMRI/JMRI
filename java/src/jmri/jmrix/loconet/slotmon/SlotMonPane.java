@@ -28,20 +28,20 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
     /**
      * Controls whether not-in-use slots are shown
      */
-    JCheckBox showAllCheckBox = new JCheckBox();
+    protected final JCheckBox showUnusedCheckBox = new JCheckBox();
     /**
      * Controls whether system slots (120-127) are shown
      */
-    JCheckBox showSystemCheckBox = new JCheckBox();
+    protected final JCheckBox showSystemCheckBox = new JCheckBox();
 
-    JButton estopAllButton = new JButton(Bundle.getMessage("ButtonSlotMonEStopAll"));
+    private final JButton estopAllButton = new JButton(Bundle.getMessage("ButtonSlotMonEStopAll"));
 
     //Added by Jeffrey Machacek 2013
-    JButton clearAllButton = new JButton(Bundle.getMessage("ButtonSlotMonClearAll"));
-    SlotMonDataModel slotModel;
-    JTable slotTable;
-    JScrollPane slotScroll;
-    TableRowSorter<SlotMonDataModel> sorter;
+    private final JButton clearAllButton = new JButton(Bundle.getMessage("ButtonSlotMonClearAll"));
+    private SlotMonDataModel slotModel;
+    private JTable slotTable;
+    private JScrollPane slotScroll;
+    private transient TableRowSorter<SlotMonDataModel> sorter;
 
     public SlotMonPane() {
         super();
@@ -58,10 +58,10 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         slotScroll = new JScrollPane(slotTable);
 
         // configure items for GUI
-        showAllCheckBox.setText(Bundle.getMessage("TextSlotMonShowUnused"));
-        showAllCheckBox.setVisible(true);
-        showAllCheckBox.setSelected(false);
-        showAllCheckBox.setToolTipText(Bundle.getMessage("TooltipSlotMonShowUnused"));
+        showUnusedCheckBox.setText(Bundle.getMessage("TextSlotMonShowUnused"));
+        showUnusedCheckBox.setVisible(true);
+        showUnusedCheckBox.setSelected(false);
+        showUnusedCheckBox.setToolTipText(Bundle.getMessage("TooltipSlotMonShowUnused"));
 
         showSystemCheckBox.setText(Bundle.getMessage("TextSlotMonShowSystem"));
         showSystemCheckBox.setVisible(true);
@@ -88,7 +88,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         setColumnToHoldEStopButton(slotTable, SlotMonDataModel.ESTOPCOLUMN);
 
         // add listener object so checkboxes function
-        showAllCheckBox.addActionListener((ActionEvent e) -> {
+        showUnusedCheckBox.addActionListener((ActionEvent e) -> {
             filter();
         });
         showSystemCheckBox.addActionListener((ActionEvent e) -> {
@@ -115,7 +115,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
 
-        pane1.add(showAllCheckBox);
+        pane1.add(showUnusedCheckBox);
         pane1.add(showSystemCheckBox);
         pane1.add(estopAllButton);
         pane1.add(clearAllButton);
@@ -176,16 +176,15 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         RowFilter<SlotMonDataModel, Integer> rf = new RowFilter<SlotMonDataModel, Integer>() {
             @Override
             public boolean include(RowFilter.Entry<? extends SlotMonDataModel, ? extends Integer> entry) {
-                if (entry.getModel().getSlot(entry.getIdentifier()).slotStatus() == LnConstants.LOCO_IN_USE) {
-                    return true;
+                int slotNum = entry.getIdentifier();
+                boolean include = entry.getModel().getSlot(entry.getIdentifier()).slotStatus() == LnConstants.LOCO_IN_USE;
+                if (!include && showUnusedCheckBox.isSelected() && (slotNum > 0 && slotNum < 120)) {
+                    include = true;
                 }
-                if (entry.getModel().slotNum(entry.getIdentifier()) <= 120 && showAllCheckBox.isSelected()) {
-                    return true;
+                if (!include && showSystemCheckBox.isSelected() && (slotNum == 0 || slotNum >= 120)) {
+                    include = true;
                 }
-                if (entry.getModel().slotNum(entry.getIdentifier()) > 120 && showSystemCheckBox.isSelected()) {
-                    return true;
-                }
-                return false;
+                return include;
             }
         };
         sorter.setRowFilter(rf);
