@@ -75,7 +75,7 @@
           <label xml:lang="ca">Llum posterior</label>
         </output>
         <output name="3" label="AUX|1" maxcurrent="300mA">
-          <label xml:lang="de">AUX 1</label>ç
+            <label xml:lang="de">AUX 1</label>
           <label xml:lang="ca">AUX 1</label>
         </output>
         <output name="4" label="AUX|2" maxcurrent="300mA">
@@ -213,7 +213,7 @@
           <label xml:lang="ca">AUX 4</label>
         </output>
         <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
-          <label xml:lang="de">AUX 5/label>
+            <label xml:lang="de">AUX 5</label>
           <label xml:lang="ca">AUX 5</label>
         </output>
         <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">

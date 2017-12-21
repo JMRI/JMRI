@@ -98,7 +98,7 @@
         <label>Medium speed</label>
         <label xml:lang="it">Volts intermedi (0-64)</label>
         <label xml:lang="de">Vmittel (0-64)</label>
-        <label xml:lang="ca">Velocitat Intermitja</label></label>
+        <label xml:lang="ca">Velocitat Intermitja</label>
       </variable>
       <variable CV="7" item="Decoder Version" tooltip="The decoder version number (read only)">
         <decVal/>

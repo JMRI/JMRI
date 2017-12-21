@@ -53,12 +53,12 @@
       <enumChoice choice="One byte (short) address">
         <choice xml:lang="fr">1 octet (adresse courte)</choice>
         <choice xml:lang="de">1 byte (Basisadresse)</choice>
-        <label xml:lang="ca">1 byte (adreça curta=</label>
+        <choice xml:lang="ca">1 byte (adreça curta)</choice>
       </enumChoice>
       <enumChoice choice="Two byte (extended) address">
         <choice xml:lang="fr">2 octets (adresse étendue)</choice>
         <choice xml:lang="de">2 byte (Erweiterte Adresse)</choice>
-        <label xml:lang="ca">2 byte (adreça llarga=</label>
+        <choice xml:lang="ca">2 byte (adreça llarga)</choice>
       </enumChoice>
     </enumVal>
     <label>Address Format of master decoder</label>

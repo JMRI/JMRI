@@ -134,7 +134,7 @@
     <label xml:lang="it">Riduzione velocità in zone frenate</label>
     <label xml:lang="fr">Vitesse réduite (asym.)</label>
     <label xml:lang="de">Langsamfahrt Geschw. bei bremsen</label>
-    <label xml:lang="fr">Velocitat reduïda en zones de frenada</label>
+    <label xml:lang="ca">Velocitat reduïda en zones de frenada</label>
   </variable>
   <variable item="Threshold for asymmetric behavior" CV="134" default="6" tooltip="CV134 (0-15)">
     <decVal min="0" max="15"/>
@@ -142,6 +142,6 @@
     <label xml:lang="it">Soglia per segnale asimmetrico</label>
     <label xml:lang="fr">Limite de signal asymétrique</label>
     <label xml:lang="de">Entscheidungsschwelle für Asymmetrie</label>
-    <label xml:lang="fr">Llindar de senyal assimètric</label>
+    <label xml:lang="ca">Llindar de senyal assimètric</label>
   </variable>
 </variables>

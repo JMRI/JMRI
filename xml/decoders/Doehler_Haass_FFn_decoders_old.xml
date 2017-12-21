@@ -171,14 +171,14 @@
         <label>Output F0R (yellow) function mapping</label>
         <label xml:lang="it">Uscita F0 (giallo) in retro mappa funzioni</label>
         <label xml:lang="de">Ausgang F0R (gelb) Funktionszuordnung</label>
-        <label>Mapejat de funciions F0 Enrere</label>
+        <label xml:lang="ca">Mapejat de funciions F0 Enrere</label>
       </variable>	  
 	  <variable CV="34" mask="XXXVXXXX" item="Function F0R check 1" default="0">
 		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Running only</label>
         <label xml:lang="it">Solo in marcia</label>
         <label xml:lang="de">Fahrtabhängig</label>
-        <label xml:lang="ca">Només amb el vehicle en marxa</label
+        <label xml:lang="ca">Només amb el vehicle en marxa</label>
 		    <tooltip>Output is ON only when the vehicle is running (speed different from 0)</tooltip>
 		    <tooltip xml:lang="it">Uscita in On solo se il veicolo è in marcia (velocità diversa da 0)</tooltip>
 			<tooltip xml:lang="de">Der Ausgang ist nur an, wenn das Fahrzeug fährt (Fahrstufe nicht 0)</tooltip>
@@ -221,7 +221,7 @@
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">
          <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
-         <label xml:lang="it">Reset de les CV a valors de fàbrica</label>
+         <label xml:lang="ca">Reset de les CV a valors de fàbrica</label>
      </factReset>
     </resets>
   </decoder>

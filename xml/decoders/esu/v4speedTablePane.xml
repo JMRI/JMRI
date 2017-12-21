@@ -24,7 +24,7 @@
                   <text>            To turn off, use Basic Speed Control pane</text>
                   <text xml:lang="de">Zum Ausschalten, die Lasche Einfache Geschwindigkeitseinstellung benutzen</text>
                   <text xml:lang="it">            per disabilitare, Usa il pannello di controllo Basic</text>
-                  <label xml:lang="ca">Per anul·lar usa el panell Control Bàsic de Velocitat</label>
+                  <text xml:lang="ca">Per anul·lar usa el panell Control Bàsic de Velocitat</text>
 
                 </label>
               </column>

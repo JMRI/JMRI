@@ -760,7 +760,7 @@
         <decVal min="0" max="15"/>
         <label>Brightness Back up lights</label>
         <label xml:lang="de">Helligkeit Lrück</label>
-        <label xml:lang="de">Brillantor de llums</label>
+        <label xml:lang="ca">Brillantor de llums</label>
         <tooltip>Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)</tooltip>
         <tooltip xml:lang="de">Bereich 0-15, Helligkeit</tooltip>
       </variable>

@@ -46,6 +46,6 @@
     <choice>Flickering light (Firebox)</choice>
     <choice xml:lang="de">Flackerlicht (Feuerbüchse)</choice>
     <choice xml:lang="it">Flickering light (Firebox)</choice>
-     <choice xml:lang="ca">Intermitent (Caixa de focs)</choice></choice>
+    <choice xml:lang="ca">Intermitent (Caixa de focs)</choice>
   </enumChoice>
 </enumVal>

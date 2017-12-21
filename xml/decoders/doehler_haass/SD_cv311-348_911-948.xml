@@ -355,8 +355,7 @@
 		<label xml:lang="fr">Volume bruit démarrage</label>
 		<label xml:lang="de">Lautstärke Schaltgeräusch</label>
 		<label xml:lang="ca">Volum sorolls arrencada</label>
-		<label xml:lang="ca">Volum sorolls arrencada</label>
-	</variable>
+        </variable>
 	<variable label="Volume startup sound" CV="933" default="128" tooltip="CV933: 0=>0%, 255=>200%" item="Sound Setting 4" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume bruit démarrage</label>

@@ -38,7 +38,7 @@
 			<choice>Deactivated</choice>
 			<choice xml:lang="it">Disattivato</choice>
 			<choice xml:lang="fr">Désactivé</choice>
-			<choice xml:lang="de">Deaktiviert</choice>ç
+                        <choice xml:lang="de">Deaktiviert</choice>
 			<choice xml:lang="ca">Desactivat</choice>
 		  </enumChoice>
 		  <enumChoice choice="Active (main address only)" value="1">

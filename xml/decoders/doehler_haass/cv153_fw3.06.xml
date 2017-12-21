@@ -60,8 +60,9 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AUX2</label>
     <tooltip>Activate the function to be activated for AUX2.</tooltip>
-    <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn AUX2 aktiviert werden soll.</tooltip>1
-	<tooltip xml:lang="ca">Activar la funció que activa AUX2.</tooltip>  </variable>
+    <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn AUX2 aktiviert werden soll.</tooltip>
+    <tooltip xml:lang="ca">Activar la funció que activa AUX2.</tooltip>
+  </variable>
   <variable item="Initialmapping - AUX3" CV="153" mask="XXXVXXXX" default="0" exclude="PD12A_2016.03,PD12A_2016.06,DH05C_2016.03,DH05C_2016.06,DH10C_2016.03,DH10C_2016.06">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AUX3</label>

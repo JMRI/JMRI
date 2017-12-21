@@ -234,7 +234,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3 controls output 4</label>
     <label xml:lang="it">F3 controllo uscita 4</label>
-    <label xml:lang="it">F3 controla la sortida 4</label>
+    <label xml:lang="ca">F3 controla la sortida 4</label>
   </variable>
   <variable item="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -853,7 +853,7 @@
     <label xml:lang="it">Accellerazione</label>
     <label xml:lang="fr">Accelération</label>
     <label xml:lang="de">Anfahrverzögerung</label>
-    <label xml:lang="it">Acceleració</label>
+    <label xml:lang="ca">Acceleració</label>
   </variable>
   <variable CV="4" default="5" item="Decel">
     <decVal min="0" max="255"/>
@@ -996,7 +996,7 @@
     <label xml:lang="it">Numero zone frenate</label>
     <label xml:lang="fr">Sections de freinage</label>
     <label xml:lang="de">Bremsabschnitte</label>
-    <label xml:lang="ca"Número de zona de frenada</label>
+    <label xml:lang="ca">Número de zona de frenada</label>
   </variable>
   <variable CV="62" default="0" item="Accel. time in shunting mode" tooltip="CV62 (0-255)">
     <decVal min="0" max="255"/>

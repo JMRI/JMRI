@@ -70,6 +70,6 @@
     <label xml:lang="it">Velocità in Manovra</label>
     <label xml:lang="fr">Vitesse en mode manoeuvre</label>
     <label xml:lang="de">Rangiergang Geschwindigkeit</label>
-    <label xml:lang="de">Velocitat en mode de maniobres</label>
+    <label xml:lang="ca">Velocitat en mode de maniobres</label>
   </variable>
 </variables>
