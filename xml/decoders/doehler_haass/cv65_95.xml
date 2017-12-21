@@ -63,11 +63,14 @@
     <label xml:lang="it">Correzione Velocità in avanti</label>
     <label xml:lang="fr">Correction vitesse avant</label>
     <label xml:lang="de">Vorwärts Trimm</label>
+    <label xml:lang="ca">Correcció velocitat Endavant</label>
     <comment xml:lang="it">Valori 0-255</comment>
     <comment xml:lang="fr">Valeur 0-255</comment>
     <comment xml:lang="de">Wert 0-255</comment>
+    <comment xml:lang="ca">Valor 0-255</comment>
     <tooltip>0 = disconnected, smaller 128 reduction, greater 128 enhancement of the speed</tooltip>
     <tooltip xml:lang="de">0 = ausgeschaltet, kleiner 128 Reduktion, größer 128 Erhöhung der Geschwindigkeit</tooltip>
+    <tooltip xml:lang="va">0 = desconnectat, petita reducció a 128, gran millora de la velocitat a 128</tooltip>
   </variable>
   <variable item="Reverse Trim" CV="95" comment="Range 0-255">
     <decVal/>
@@ -75,10 +78,13 @@
     <label xml:lang="it">Correzione Velocità Indietro</label>
     <label xml:lang="fr">Correction vitesse arrière</label>
     <label xml:lang="de">Rückwärts Trimm</label>
+    <label xml:lang="ca">Correcció velocitat enrede</label>
     <comment xml:lang="it">Valori 0-255</comment>
     <comment xml:lang="fr">Valeur 0-255</comment>
     <comment xml:lang="de">Wert 0-255</comment>
+    <comment xml:lang="ca">Valor 0-255</comment>
     <tooltip>0 = disconnected, smaller 128 reduction, greater 128 enhancement of the speed</tooltip>
     <tooltip xml:lang="de">0 = ausgeschaltet, kleiner 128 Reduktion, größer 128 Erhöhung der Geschwindigkeit</tooltip>
+    <tooltip xml:lang="ca">0 = desconnectat, petita reducció a 128, gran millora de la velocitat a 128</tooltip>
   </variable>
 </variables>
