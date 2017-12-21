@@ -52,10 +52,10 @@
     already occupied and there is a valid alternative path, then
     this will be taken.</p>
 
-    <p>The two sensors are referred to as a <strong>NX Pair</strong>.  It is also
-    possible to define a NX pair where the destination sensor is on another
+    <p>The two sensors are referred to as a <strong>NX Pair</strong>.  <em>It is
+    also possible to define a NX pair where the destination sensor is on another
     panel. This requires that the panels are linked using <strong>Edge
-    Connectors</strong>.</p>
+    Connectors</strong>.</em><span class="since">since 4.11.1</span></p>
 
     <h3>Entry/Exit Types</h3>
     <p>There are three different types of Entry/Exit pairs that can be
@@ -278,7 +278,7 @@
           is Inactive.</li>
         </ul>
       </li>
-      <li>Actions
+      <li>Actions<span class="since">since 4.11.1</span>
         <ul>
           <li>Set NX Pair Enabled &mdash; Enable a NX Pair.  When enabled, it can
           used to create a route.</li>

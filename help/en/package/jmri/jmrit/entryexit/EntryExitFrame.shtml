@@ -56,9 +56,10 @@
     NX content for other panels.  The <strong>Entry Point</strong> list
     contains the sensors for the currently selected panel.  The <strong>Exit
     Point</strong> list contains all of the sensors from all layout editor
-    panels. The Exit Point can be on another panel as long as the panels
-    are linked using edge connectors. The <strong>NX Type</strong> defaults
-    to <strong>Set Turnouts Only</strong>.</p>
+    panels. <em>The Exit Point can be on another panel as long as the panels
+    are linked using edge connectors.</em><span class="since">since 4.11.1</span></p>
+    <p>The <strong>NX Type</strong> defaults to <strong>Set Turnouts
+    Only</strong>.</p>
 
     <h3>Buttons</h3>
     <ul>
