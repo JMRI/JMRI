@@ -58,9 +58,6 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         slotTable.setName(this.getTitle());
         sorter = new TableRowSorter<>(slotModel);
         slotTable.setRowSorter(sorter);
-        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((tpm) -> {
-            tpm.persist(slotTable, true);
-        });
         slotScroll = new JScrollPane(slotTable);
 
         // configure items for GUI
@@ -87,11 +84,18 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         }
         slotTable.sizeColumnsToFit(-1);
 
+        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((tpm) -> {
+            // unable to persist because Default class provides no mechanism to
+            // ensure window is destroyed when closed or that existing window is
+            // reused when hidden and user reopens it from menu
+            // tpm.persist(slotTable, true);
+        });
+
         // install a button renderer & editor in the "DISP" column for freeing a slot
-        setColumnToHoldButton(slotTable, SlotMonDataModel.DISPCOLUMN);
+        setColumnToHoldButton(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.DISPCOLUMN));
 
         // install a button renderer & editor in the "ESTOP" column for stopping a loco
-        setColumnToHoldEStopButton(slotTable, SlotMonDataModel.ESTOPCOLUMN);
+        setColumnToHoldEStopButton(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.ESTOPCOLUMN));
 
         // add listener object so checkboxes function
         showUnusedCheckBox.addActionListener((ActionEvent e) -> {
