@@ -172,7 +172,6 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
     }
 
     private void filter() {
-        // This filter is probably incorrect
         RowFilter<SlotMonDataModel, Integer> rf = new RowFilter<SlotMonDataModel, Integer>() {
             @Override
             public boolean include(RowFilter.Entry<? extends SlotMonDataModel, ? extends Integer> entry) {
