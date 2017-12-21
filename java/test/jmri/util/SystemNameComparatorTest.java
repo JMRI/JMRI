@@ -17,6 +17,32 @@ public class SystemNameComparatorTest {
         Assert.assertNotNull("exists", t);
     }
 
+    @Test
+    public void testNumericComparison() {
+        SystemNameComparator t = new SystemNameComparator();
+        
+        Assert.assertEquals("same IS100", 0, t.compare("IS100", "IS100"));
+
+        Assert.assertEquals("IS100 < IS101", -1, t.compare("IS100", "IS101"));
+        Assert.assertEquals("IS101 > IS100", +1, t.compare("IS101", "IS100"));
+
+        Assert.assertEquals("not same IS001 IS1", -1, t.compare("IS001", "IS1"));        // imperfect, but what it does
+        Assert.assertEquals("not same IS0100 IS100", -1, t.compare("IS0100", "IS100"));  // imperfect, but what it does
+        Assert.assertEquals("not same IS100 IS0100", +1, t.compare("IS100", "IS0100"));  // imperfect, but what it does
+
+    }
+
+    @Test
+    public void testMixedComparison() {
+        SystemNameComparator t = new SystemNameComparator();
+        
+        Assert.assertEquals("same IS100A", 0, t.compare("IS100A", "IS100A"));
+
+        Assert.assertEquals("IS100 < IS100A", -1, t.compare("IS100", "IS100A"));
+        Assert.assertEquals("IS100A > IS100", +1, t.compare("IS100A", "IS100"));
+
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
