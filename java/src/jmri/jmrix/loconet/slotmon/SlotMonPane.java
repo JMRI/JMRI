@@ -11,8 +11,10 @@ import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
+import jmri.InstanceManager;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.swing.JmriJTablePersistenceManager;
 import jmri.util.table.ButtonRenderer;
 
 /**
@@ -53,8 +55,12 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
         slotModel = new SlotMonDataModel(128, 16, memo);
         slotTable = new JTable(slotModel);
+        slotTable.setName(this.getTitle());
         sorter = new TableRowSorter<>(slotModel);
         slotTable.setRowSorter(sorter);
+        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((tpm) -> {
+            tpm.persist(slotTable, true);
+        });
         slotScroll = new JScrollPane(slotTable);
 
         // configure items for GUI
