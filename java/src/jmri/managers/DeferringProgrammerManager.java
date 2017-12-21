@@ -5,10 +5,12 @@ import java.util.Set;
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
+import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.implementation.AbstractInstanceInitializer;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -155,6 +157,7 @@ public class DeferringProgrammerManager implements AddressedProgrammerManager, G
         return InstanceManager.getDefault(AddressedProgrammerManager.class).getDefaultModes();
     }
 
+    @ServiceProvider(service=InstanceInitializer.class)
     public static final class Initializer extends AbstractInstanceInitializer {
 
         @Override
