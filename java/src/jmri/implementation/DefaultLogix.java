@@ -807,7 +807,7 @@ public class DefaultLogix extends AbstractNamedBean
                         msg = "entryexit";  // NOI18N
                         break;
                     }
-                    ex.addPropertyChangeListener(listener);
+                    ex.removePropertyChangeListener(listener);
                     return;
                 default:
                     namedBeanHandle = listener.getNamedBean();
@@ -1012,7 +1012,7 @@ public class DefaultLogix extends AbstractNamedBean
                     for (ConditionalVariable v : c.getCopyOfStateVariables()) {
                         if (nb.equals(v.getBean()) || nb.equals(v.getNamedBeanData())) {
                             java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);  // NOI18N
-                            throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseLogixAction", nb.getBeanType(), getDisplayName()), e);   // NOI18N
+                            throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseLogixVariable", nb.getBeanType(), getDisplayName()), e);   // NOI18N
                         }
                     }
                 }

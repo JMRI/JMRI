@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import java.util.Map.Entry;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -703,6 +705,18 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         }
 
         if (nxpair.containsKey(sourcePoint)) {
+            // See if there are any vetos to the delete request
+            DestinationPoints dp = nxpair.get(sourcePoint).getDestForPoint(destPoint);
+            try {
+                vcs.fireVetoableChange("CanDelete", dp, null);  // NOI18N
+            } catch (PropertyVetoException e) {
+                JOptionPane.showMessageDialog(null,
+                        e.getMessage(),
+                        Bundle.getMessage("DeleteWarningTitle"),  // NOI18N
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             nxpair.get(sourcePoint).removeDestination(destPoint);
             firePropertyChange("length", null, null);  // NOI18N
             if (nxpair.get(sourcePoint).getDestinationPoints().isEmpty()) {
@@ -711,7 +725,6 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         } else if (log.isDebugEnabled()) {
             log.debug("source " + source.getDisplayName() + " is not a valid source so can not delete pair");  // NOI18N
         }
-
     }
 
     public boolean isDestinationValid(Object source, Object dest, LayoutEditor panel) {

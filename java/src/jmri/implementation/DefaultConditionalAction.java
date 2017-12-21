@@ -217,6 +217,14 @@ public class DefaultConditionalAction implements ConditionalAction {
                         log.error("invalid OBlock name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
+                case Conditional.ITEM_TYPE_ENTRYEXIT:
+                    try {
+                        bean = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
+                    } catch (IllegalArgumentException e) {
+                        bean = null;
+                        log.error("invalid NX name= \"" + devName + "\" in conditional action");
+                    }
+                    break;
                 default:
                     if (getType() == Conditional.ACTION_TRIGGER_ROUTE) {
                         try {
