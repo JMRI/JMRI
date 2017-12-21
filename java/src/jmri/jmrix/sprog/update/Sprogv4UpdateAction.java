@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Andrew crosland Copyright (C) 2004
  * 
- * @Deprecated since 4.11.1; supports uncommon Sprog versions that are confused with Sprog II versions.
+ * @deprecated since 4.11.1; supports uncommon Sprog versions that are confused with Sprog II versions.
  */
 @Deprecated
 public class Sprogv4UpdateAction extends SprogUpdateAction {
