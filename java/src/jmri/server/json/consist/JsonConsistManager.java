@@ -7,6 +7,7 @@ import java.util.HashSet;
 import jmri.Consist;
 import jmri.ConsistListListener;
 import jmri.ConsistManager;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.beans.Bean;
@@ -58,7 +59,7 @@ public class JsonConsistManager extends Bean implements ConsistManager {
     }
 
     @Override
-    public Consist getConsist(DccLocoAddress address) {
+    public Consist getConsist(LocoAddress address) {
         if (this.manager != null) {
             return this.manager.getConsist(address);
         }
@@ -66,7 +67,7 @@ public class JsonConsistManager extends Bean implements ConsistManager {
     }
 
     @Override
-    public void delConsist(DccLocoAddress address) {
+    public void delConsist(LocoAddress address) {
         if (this.manager != null) {
             this.manager.delConsist(address);
         }
@@ -89,7 +90,7 @@ public class JsonConsistManager extends Bean implements ConsistManager {
     }
 
     @Override
-    public ArrayList<DccLocoAddress> getConsistList() {
+    public ArrayList<LocoAddress> getConsistList() {
         if (this.manager != null) {
             return this.manager.getConsistList();
         }

@@ -27,10 +27,10 @@ import jmri.SignalAppearanceMap;
 import jmri.SignalMast;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.picker.PickListModel;
-import jmri.util.JmriJFrame;
 import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
 
     SignalMast _mast;
 
-    public SignalMastItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel<jmri.SignalMast> model, Editor editor) {
+    public SignalMastItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.SignalMast> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
 
@@ -98,7 +98,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
                     Bundle.getMessage("PreviewBorderTitle")));
         }
         if (_backgrounds != null) {
-            _iconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
+            _iconPanel.setImage(_backgrounds[_paletteFrame.getPreviewBg()]); // pick up shared setting
         } else {
             log.debug("SignalMastItemPanel - no value for previewBgSet");
         }
@@ -171,7 +171,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         }
         initIconFamiliesPanel(); // (if null: creates and) adds a new _iconFamilyPanel for the new mast map
         updateBackgrounds(); // create array of backgrounds
-        _bottom1Panel.add(makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds));
+        _bottom1Panel.add(makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds, _paletteFrame));
         add(_bottom1Panel);
     }
 

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Common utility to draw colored rectangular Image.
- * Used as background in jmrit.catalog, jmrit.display.LE#AddItems, Palette.
+ * Used as background in jmrit.catalog, jmrit.display.CPE#AddItems, Palette.
  *
  * @author Egbert Broerse copyright (c) 2017
  */

@@ -2,6 +2,7 @@ package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.picker.PickListModel;
@@ -27,12 +28,12 @@ public class IconDialogTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EditorScaffold es = new EditorScaffold();
         PickListModel tableModel = PickListModel.turnoutPickModelInstance(); // N11N
-        JmriJFrame jf = new JmriJFrame("Icon Dialog Test");
+        DisplayFrame df = new DisplayFrame("Icon Dialog Test");
         Editor editor = new EditorScaffold();
-        TableItemPanel tip = new TableItemPanel(jf,"IS01","",tableModel,editor);
+        TableItemPanel tip = new TableItemPanel(df,"IS01","",tableModel,editor);
         IconDialog t = new IconDialog("Icon","Icon",tip,null);
         Assert.assertNotNull("exists",t);
-        JUnitUtil.dispose(jf);
+        JUnitUtil.dispose(df);
     }
 
     // The minimal setup for log4J
