@@ -53,7 +53,7 @@ public class EditorFilePane extends javax.swing.JPanel {
 
         // give system name column a smarter sorter and use it initially
         TableRowSorter<EditorTableDataModel> sorter = new TableRowSorter<>(dataModel);
-        sorter.setComparator(EditorTableDataModel.HEADERCOL, new SystemNameComparator());
+        // uses default Comparator for Integer HEADERCOL
         RowSorterUtil.setSortOrder(sorter, EditorTableDataModel.HEADERCOL, SortOrder.ASCENDING);
 
         // configure items for GUI
