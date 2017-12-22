@@ -46,18 +46,17 @@ public class AlphanumComparatorTest extends TestCase {
         Assert.assertEquals(" 1.10.0 > 1.2.0", 1, ac.compare("1.10.0", "1.2.0"));
         Assert.assertEquals(" 1.2.0 < 1.10.0", -1, ac.compare("1.2.0", "1.10.0"));
         
-        // non-intuitive, but what it does
-        Assert.assertEquals(" 1.1.10 < 1.1.2", 1, ac.compare("1.1.10", "1.1.2"));
+        Assert.assertEquals(" 1.1.10 > 1.1.2", 1, ac.compare("1.1.10", "1.1.2"));
         
     }
 
     public void testHexadecimal() {
         Assert.assertEquals(" A0 < B0", -1, ac.compare("A0", "B0"));
 
-        Assert.assertEquals(" 21.1F > 21.10", 1, ac.compare("21.1F", "21.10"));
         Assert.assertEquals(" 21.A0 < 21.B0", -1, ac.compare("21.A0", "21.B0"));
 
         // non-intuitive, but what it does
+        Assert.assertEquals(" 21.1F < 21.10", -1, ac.compare("21.1F", "21.10"));
         Assert.assertEquals(" 1F < 10", -1, ac.compare("1F", "10"));
     }
 
