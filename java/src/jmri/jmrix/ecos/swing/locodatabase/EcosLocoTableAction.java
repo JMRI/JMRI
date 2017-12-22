@@ -8,7 +8,6 @@ import static jmri.jmrit.beantable.BeanTableDataModel.VALUECOL;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
@@ -47,7 +46,8 @@ import org.slf4j.LoggerFactory;
 public final class EcosLocoTableAction extends AbstractAction {
 
     private EcosLocoDataModel m;
-    private JmriJFrame f = null;
+    // package protected for inner classes
+    JmriJFrame f = null;
 
     /**
      * Create an action with a specific title.
@@ -160,7 +160,9 @@ public final class EcosLocoTableAction extends AbstractAction {
     public void setManager(EcosLocoAddressManager man) {
         locoManager = man;
     }
-    protected String rosterAttribute;
+
+    // package protected for inner classes
+    String rosterAttribute;
 
     public void setAdapterMemo(EcosSystemConnectionMemo memo) {
         adaptermemo = memo;
@@ -239,7 +241,7 @@ public final class EcosLocoTableAction extends AbstractAction {
         return "package.jmri.jmrix.ecos.swing.locodatabase.EcosLocoTable"; // very simple help page
     }
 
-    static class RosterBoxRenderer extends GlobalRosterEntryComboBox implements TableCellRenderer {
+    private final static class RosterBoxRenderer extends GlobalRosterEntryComboBox implements TableCellRenderer {
 
         public RosterBoxRenderer(RosterEntry re) {
             super();
@@ -270,7 +272,7 @@ public final class EcosLocoTableAction extends AbstractAction {
         }
     }
 
-    static class RosterComboBoxEditor extends DefaultCellEditor {
+    private static final class RosterComboBoxEditor extends DefaultCellEditor {
 
         public RosterComboBoxEditor(GlobalRosterEntryComboBox cb) {
             super(cb);
@@ -332,7 +334,7 @@ public final class EcosLocoTableAction extends AbstractAction {
                     return (b != null) ? b.getECOSProtocol() : null;
                 case ADDTOROSTERCOL:  //
                     b = getByEcosObject(ecosObjectIdList.get(row));
-                    if (b.getRosterId() == null || b.getRosterId().equals("")) {
+                    if (b.getRosterId() == null || b.getRosterId().isEmpty()) {
                         return Bundle.getMessage("ButtonAddRoster");
                     } else {
                         return " ";
@@ -368,55 +370,63 @@ public final class EcosLocoTableAction extends AbstractAction {
 
         @Override
         public void setValueAt(Object value, int row, int col) {
-            if (col == COMMENTCOL) {
-                RosterEntry re;
-                String ecosObjectNo = ecosObjectIdList.get(row);
-                if (value == null) {
-                    return;
-                } else if (value instanceof RosterEntry) {
-                    re = (RosterEntry) value;
-                    if ((re.getAttribute(getRosterAttribute()) != null && !re.getAttribute(getRosterAttribute()).equals(""))) {
-                        JOptionPane.showMessageDialog(f,
-                                Bundle.getMessage("EcosEditAssignedDialog", ecosObjectNo));
-                        log.error(ecosObjectNo + " This roster entry already has an ECoS loco assigned to it");
+            switch (col) {
+                case COMMENTCOL:
+                    RosterEntry re;
+                    String ecosObjectNo = ecosObjectIdList.get(row);
+                    if (value == null) {
                         return;
-                    }
-                    String oldRoster = getByEcosObject(ecosObjectNo).getRosterId();
-                    RosterEntry oldre;
-                    if (oldRoster != null) {
-                        oldre = Roster.getDefault().getEntryForId(oldRoster);
-                        if (oldre != null) {
-                            oldre.deleteAttribute(getRosterAttribute());
+                    } else if (value instanceof RosterEntry) {
+                        re = (RosterEntry) value;
+                        if ((re.getAttribute(getRosterAttribute()) != null && !re.getAttribute(getRosterAttribute()).isEmpty())) {
+                            JOptionPane.showMessageDialog(f,
+                                    Bundle.getMessage("EcosEditAssignedDialog", ecosObjectNo));
+                            log.error("{} This roster entry already has an ECoS loco assigned to it", ecosObjectNo);
+                            return;
                         }
-                    }
-                    re.putAttribute(getRosterAttribute(), ecosObjectNo);
-                    getByEcosObject(ecosObjectNo).setRosterId(re.getId());
-                    re.updateFile();
-                } else if (value instanceof String) {
-                    List<RosterEntry> r = Roster.getDefault().getEntriesWithAttributeKeyValue(getRosterAttribute(), ecosObjectNo);
-                    if (r.isEmpty()) {
-                        r.get(0).deleteAttribute(getRosterAttribute());
-                        getByEcosObject(ecosObjectNo).setRosterId(null);
-                        r.get(0).updateFile();
-                    }
+                        String oldRoster = getByEcosObject(ecosObjectNo).getRosterId();
+                        RosterEntry oldre;
+                        if (oldRoster != null) {
+                            oldre = Roster.getDefault().getEntryForId(oldRoster);
+                            if (oldre != null) {
+                                oldre.deleteAttribute(getRosterAttribute());
+                            }
+                        }
+                        re.putAttribute(getRosterAttribute(), ecosObjectNo);
+                        getByEcosObject(ecosObjectNo).setRosterId(re.getId());
+                        re.updateFile();
+                    } else if (value instanceof String) {
+                        List<RosterEntry> r = Roster.getDefault().getEntriesWithAttributeKeyValue(getRosterAttribute(), ecosObjectNo);
+                        if (r.isEmpty()) {
+                            r.get(0).deleteAttribute(getRosterAttribute());
+                            getByEcosObject(ecosObjectNo).setRosterId(null);
+                            r.get(0).updateFile();
+                        }
 
-                }
-                Roster.getDefault().writeRoster();
-            } else if (col == ADDTOROSTERCOL) {
-                addToRoster(row, col);
-            } else if (col == STOP) {
-                stopLoco(row, col);
-            } else if (col == DELETECOL) {
-                // button fired, delete Bean
-                deleteLoco(row, col);
-            } else if (col == USERNAMECOL) {
-                jmri.jmrix.ecos.EcosLocoAddress b = getByEcosObject(ecosObjectIdList.get(row));
-                EcosMessage m = new EcosMessage("request(" + b.getEcosObject() + ", control, force)");
-                adaptermemo.getTrafficController().sendEcosMessage(m, null);
-                m = new EcosMessage("set(" + b.getEcosObject() + ", name[\"" + (String) value + "\"])");
-                adaptermemo.getTrafficController().sendEcosMessage(m, null);
-                m = new EcosMessage("release(" + b.getEcosObject() + ", control)");
-                adaptermemo.getTrafficController().sendEcosMessage(m, null);
+                    }
+                    Roster.getDefault().writeRoster();
+                    break;
+                case ADDTOROSTERCOL:
+                    addToRoster(row, col);
+                    break;
+                case STOP:
+                    stopLoco(row, col);
+                    break;
+                case DELETECOL:
+                    // button fired, delete Bean
+                    deleteLoco(row, col);
+                    break;
+                case USERNAMECOL:
+                    jmri.jmrix.ecos.EcosLocoAddress b = getByEcosObject(ecosObjectIdList.get(row));
+                    EcosMessage m = new EcosMessage("request(" + b.getEcosObject() + ", control, force)");
+                    adaptermemo.getTrafficController().sendEcosMessage(m, null);
+                    m = new EcosMessage("set(" + b.getEcosObject() + ", name[\"" + value + "\"])");
+                    adaptermemo.getTrafficController().sendEcosMessage(m, null);
+                    m = new EcosMessage("release(" + b.getEcosObject() + ", control)");
+                    adaptermemo.getTrafficController().sendEcosMessage(m, null);
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -474,11 +484,7 @@ public final class EcosLocoTableAction extends AbstractAction {
                     return true;
                 case ADDTOROSTERCOL:
                     jmri.jmrix.ecos.EcosLocoAddress b = getByEcosObject(ecosObjectIdList.get(row));
-                    if (b.getRosterId() == null || b.getRosterId().equals("")) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return b.getRosterId() == null || b.getRosterId().isEmpty();
                 case USERNAMECOL:
                 case DELETECOL:
                 case STOP:
@@ -513,10 +519,7 @@ public final class EcosLocoTableAction extends AbstractAction {
          * jmri.jmrix.ecos.EcosLocoAddressManagers and also from the manager
          */
         protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-            if (!showLocoMonitor && (e.getPropertyName().equals("Speed") || e.getPropertyName().equals("Direction"))) {
-                return false;
-            }
-            return true;
+            return !(!showLocoMonitor && (e.getPropertyName().equals("Speed") || e.getPropertyName().equals("Direction")));
         }
 
         private EcosLocoAddressManager getManager() {
@@ -552,20 +555,14 @@ public final class EcosLocoTableAction extends AbstractAction {
             button.add(noButton);
             container.add(button);
 
-            noButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dialog.dispose();
-                }
+            noButton.addActionListener((ActionEvent e) -> {
+                dialog.dispose();
             });
 
-            yesButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    RemoveObjectFromEcos removeObjectFromEcos = new RemoveObjectFromEcos();
-                    removeObjectFromEcos.removeObjectFromEcos(ecosObjectIdList.get(row), adaptermemo.getTrafficController());
-                    dialog.dispose();
-                }
+            yesButton.addActionListener((ActionEvent e) -> {
+                RemoveObjectFromEcos removeObjectFromEcos = new RemoveObjectFromEcos();
+                removeObjectFromEcos.removeObjectFromEcos(ecosObjectIdList.get(row), adaptermemo.getTrafficController());
+                dialog.dispose();
             });
             container.setAlignmentX(Component.CENTER_ALIGNMENT);
             container.setAlignmentY(Component.CENTER_ALIGNMENT);
