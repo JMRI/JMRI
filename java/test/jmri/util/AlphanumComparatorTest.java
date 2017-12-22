@@ -50,6 +50,17 @@ public class AlphanumComparatorTest extends TestCase {
         
     }
 
+    public void testAlphanumCompareTestNeedForDots() {
+        Assert.assertEquals(" 10.1.1 > 2.1.1", 1, ac.compare("10.1.1", "2.1.1"));
+        Assert.assertEquals(" 2.1.1 < 10.1.1", -1, ac.compare("2.1.1", "10.1.1"));
+        
+        Assert.assertEquals(" 1.10.1 > 1.2.1", 1, ac.compare("1.10.1", "1.2.1"));
+        Assert.assertEquals(" 1.2.1 < 1.10.1", -1, ac.compare("1.2.1", "1.10.1"));
+        
+        Assert.assertEquals(" 1.1.10 > 1.1.2", 1, ac.compare("1.1.10", "1.1.2"));
+        Assert.assertEquals(" 1.1.2 < 1.1.10", -1, ac.compare("1.1.2", "1.1.10"));
+   }
+
     public void testHexadecimal() {
         Assert.assertEquals(" A0 < B0", -1, ac.compare("A0", "B0"));
 
@@ -109,7 +120,6 @@ public class AlphanumComparatorTest extends TestCase {
     }
 
     public void testMixedComparison() {     
-        System.out.println("start");   
         Assert.assertEquals("IS100 < IS100A", -1, ac.compare("IS100", "IS100A"));
         Assert.assertEquals("IS100A > IS100", +1, ac.compare("IS100A", "IS100"));
     }
