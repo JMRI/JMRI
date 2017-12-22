@@ -63,6 +63,11 @@ public final class EcosLocoTableAction extends AbstractAction {
         this(Bundle.getMessage("EcosLocoTableTitle", "ECoS"));
     }
 
+    public EcosLocoTableAction(EcosSystemConnectionMemo memo) {
+        this();
+        setAdapterMemo(memo);
+    }
+
     public EcosLocoTableAction(String s, EcosSystemConnectionMemo memo) {
         this(s);
         setAdapterMemo(memo);

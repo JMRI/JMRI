@@ -34,9 +34,9 @@ public class EcosMenu extends JMenu {
             }
         }
 
-        add(new EcosLocoTableAction());
         add(new apps.gui3.TabbedPreferencesAction(Bundle.getMessage("MenuItemECoSPrefs"), "ECoS", title));
         if (memo != null) {
+            add(new EcosLocoTableAction(memo));
             add(new jmri.jmrix.ecos.utilities.AddRosterEntryToEcos(Bundle.getMessage("MenuItemAddLocoToEcos"), memo));
         }
     }
