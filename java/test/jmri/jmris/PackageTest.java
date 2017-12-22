@@ -19,6 +19,8 @@ import org.junit.runners.Suite;
         JmriServerFrameTest.class,
         JmriServerActionTest.class,
         ServerMenuTest.class,
+        AbstractRouteServerTest.class,
+        AbstractSignalMastServerTest.class,
 })
 
 /**
