@@ -13,10 +13,6 @@ import jmri.jmrix.ecos.EcosConnectionTypeList;
  * @author Paul Bender Copyright (C) 2009
  * @author Mark Underwood Copyright (C) 2015
  * @author Randall Wood Copyright 2017
- *
- * @see SimulatorAdapterBased on
- * jmri.jmrix.lenz.xnetsimulator.EcosSimulatorConnectionConfig, copied from
- * DCCpp
  */
 public class EcosSimulatorConnectionConfig extends AbstractSimulatorConnectionConfig<NetworkPortAdapter> {
 

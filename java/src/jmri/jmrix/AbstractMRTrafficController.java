@@ -921,9 +921,8 @@ abstract public class AbstractMRTrafficController {
 
     /**
      * Handle each reply when complete.
-     * <P>
-     * (This is public for testing purposes) Runs in the "Receive" thread.
      * <p>
+     * (This is public for testing purposes) Runs in the "Receive" thread.
      */
     public void handleOneIncomingReply() throws IOException {
         // we sit in this until the message is complete, relying on
