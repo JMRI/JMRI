@@ -196,6 +196,16 @@
                         <label>Run DecoderPro</label>
                         <target>decoderpro</target>
                     </action>
+                    <action>
+                        <script>${ant.script}</script>
+                        <label>Run Remote DecoderPro</label>
+                        <target>decoderpro-remote</target>
+                    </action>
+                    <action>
+                        <script>${ant.script}</script>
+                        <label>Run Remote PanelPro</label>
+                        <target>panelpro-remote</target>
+                    </action>
                 </context-menu>
             </view>
             <subprojects/>
