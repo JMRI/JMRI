@@ -1,51 +1,36 @@
 package jmri.jmrix.jmriclient;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        JMRIClientMessageTest.class,
+        JMRIClientReplyTest.class,
+        JMRIClientTurnoutTest.class,
+        JMRIClientSensorTest.class,
+        JMRIClientReporterTest.class,
+        JMRIClientTurnoutManagerTest.class,
+        JMRIClientSensorManagerTest.class,
+        JMRIClientReporterManagerTest.class,
+        JMRIClientTrafficControllerTest.class,
+        JMRIClientSystemConnectionMemoTest.class,
+        JMRIClientPowerManagerTest.class,
+        BundleTest.class,
+        jmri.jmrix.jmriclient.networkdriver.PackageTest.class,
+        jmri.jmrix.jmriclient.configurexml.PackageTest.class,
+        jmri.jmrix.jmriclient.json.PackageTest.class,
+        jmri.jmrix.jmriclient.swing.PackageTest.class,
+        JMRIClientPortControllerTest.class,
+        JMRIClientConnectionTypeListTest.class,
+        JMRIClientLightManagerTest.class,
+        JMRIClientLightTest.class,
+})
 
 /**
  * Tests for the jmri.jmrix.jmriclient package
  *
  * @author	Bob Jacobsen
  */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.jmriclient.JMRiClientTest");  // no tests in this class itself
-        suite.addTest(new TestSuite(JMRIClientMessageTest.class));
-        suite.addTest(new TestSuite(JMRIClientReplyTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientTurnoutTest.class));
-        suite.addTest(new TestSuite(JMRIClientSensorTest.class));
-        suite.addTest(new TestSuite(JMRIClientReporterTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientTurnoutManagerTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientSensorManagerTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientReporterManagerTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientTrafficControllerTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientSystemConnectionMemoTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientPowerManagerTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jmriclient.networkdriver.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jmriclient.configurexml.PackageTest.class));
-        suite.addTest(jmri.jmrix.jmriclient.json.PackageTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jmriclient.swing.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientPortControllerTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientConnectionTypeListTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientLightManagerTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientLightTest.class));
-        return suite;
-    }
-
+public class PackageTest  {
 }

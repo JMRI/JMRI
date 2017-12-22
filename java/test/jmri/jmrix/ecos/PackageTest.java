@@ -3,11 +3,6 @@ package jmri.jmrix.ecos;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-/**
- * Tests for the jmri.jmrix.ecos package
- *
- * @author	Bob Jacobsen
- */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     BundleTest.class,
@@ -37,5 +32,11 @@ import org.junit.runners.Suite;
     EcosSensorTest.class,
     EcosTurnoutTest.class
 })
+
+/**
+ * Tests for the jmri.jmrix.ecos package
+ *
+ * @author	Bob Jacobsen
+ */
 public class PackageTest {
 }

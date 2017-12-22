@@ -1,6 +1,7 @@
 package jmri.util.usb;
 
 import jmri.util.JmriJFrame;
+import javax.swing.JPanel; 
 
 /**
  *
@@ -9,8 +10,12 @@ import jmri.util.JmriJFrame;
 public class UsbBrowserFrame extends JmriJFrame {
 
     public UsbBrowserFrame() {
+        this(new UsbBrowserPanel());
+    }
+
+    UsbBrowserFrame(JPanel rootPanel) {
         super(Bundle.getMessage("UsbBrowserFrame.Title"));
-        super.getRootPane().setContentPane(new UsbBrowserPanel());
+        super.getRootPane().setContentPane(rootPanel);
         super.pack();
     }
 }

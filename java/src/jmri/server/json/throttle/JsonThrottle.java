@@ -19,6 +19,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import javax.servlet.http.HttpServletResponse;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.Throttle;
@@ -352,7 +353,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     @Override
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+    public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         JsonThrottleManager manager = JsonThrottleManager.getDefault();
         for (JsonThrottleSocketService server : manager.getServers(this).toArray(new JsonThrottleSocketService[manager.getServers(this).size()])) {
             this.sendErrorMessage(new JsonException(512, Bundle.getMessage(server.getConnection().getLocale(), "ErrorThrottleRequestFailed", address, reason)), server);
@@ -361,7 +362,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     @Override
-    public void notifyStealThrottleRequired(DccLocoAddress address) {
+    public void notifyStealThrottleRequired(LocoAddress address) {
         // this is an automatically stealing impelementation.
         jmri.InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }

@@ -1,45 +1,22 @@
 package jmri.jmrix.loconet.soundloader;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        LoaderEngineTest.class,
+        BundleTest.class,
+        EditorPaneTest.class,
+        LoaderPaneTest.class,
+        EditorTableDataModelTest.class,
+        EditorFilePaneTest.class,
+})
 
 /**
  * Tests for the jmri.jmrix.loconet.soundloader package
  *
  * @author	Bob Jacobsen Copyright (C) 2006
  */
-public class PackageTest extends TestCase {
-
-    public void testCreate() {
-        return;
-    }
-
-    public void testRead() {
-        return;
-    }
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PackageTest.class);
-        suite.addTest(LoaderEngineTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(EditorPaneTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(LoaderPaneTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(EditorTableDataModelTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(EditorFilePaneTest.class));
-        return suite;
-    }
-
+public class PackageTest  {
 }

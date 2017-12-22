@@ -6,7 +6,7 @@ import jmri.Consist;
 import jmri.ConsistListListener;
 import jmri.ConsistListener;
 import jmri.ConsistManager;
-import jmri.DccLocoAddress;
+import jmri.LocoAddress;
 
 /**
  * An Abstract Consist Manager on top of which system specific consist managers
@@ -17,11 +17,11 @@ import jmri.DccLocoAddress;
  */
 abstract public class AbstractConsistManager implements ConsistManager {
 
-    protected HashMap<DccLocoAddress, Consist> consistTable = null;
+    protected HashMap<LocoAddress, Consist> consistTable = null;
     private ArrayList<ConsistListListener> changeListeners = null;
 
     public AbstractConsistManager() {
-        consistTable = new HashMap<DccLocoAddress, Consist>();
+        consistTable = new HashMap<LocoAddress, Consist>();
         changeListeners = new ArrayList<ConsistListListener>();
     }
 
@@ -29,7 +29,7 @@ abstract public class AbstractConsistManager implements ConsistManager {
      * Find a Consist with this consist address, and return it.
      */
     @Override
-    public Consist getConsist(DccLocoAddress address) {
+    public Consist getConsist(LocoAddress address) {
         if (consistTable.containsKey(address)) {
             return (consistTable.get(address));
         } else {
@@ -44,11 +44,11 @@ abstract public class AbstractConsistManager implements ConsistManager {
      * @return a consist at address; this will be the existing consist if a
      *         consist is already known to exist at address
      */
-    abstract protected Consist addConsist(DccLocoAddress address);
+    abstract protected Consist addConsist(LocoAddress address);
 
     // remove the old Consist
     @Override
-    public void delConsist(DccLocoAddress address) {
+    public void delConsist(LocoAddress address) {
         consistTable.get(address).dispose();
         consistTable.remove(address);
     }
@@ -70,8 +70,8 @@ abstract public class AbstractConsistManager implements ConsistManager {
      * Return the list of consists we know about.
      */
     @Override
-    public ArrayList<DccLocoAddress> getConsistList() {
-        return new ArrayList<DccLocoAddress>(consistTable.keySet());
+    public ArrayList<LocoAddress> getConsistList() {
+        return new ArrayList<LocoAddress>(consistTable.keySet());
     }
 
     @Override

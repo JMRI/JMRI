@@ -33,10 +33,10 @@ import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LinkingLabel;
 import jmri.jmrit.display.PositionableLabel;
-import jmri.util.JmriJFrame;
 import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +44,7 @@ import org.slf4j.LoggerFactory;
 /**
  * ItemPanel for plain Icons and Backgrounds.
  * Does NOT use IconDialog class to add, replace or delete icons.
+ * @see ItemPanel palette class diagram
  */
 public class IconItemPanel extends ItemPanel implements MouseListener {
 
@@ -63,7 +64,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
      * @param parentFrame parentFrame
      * @param editor editor
      */
-    public IconItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
+    public IconItemPanel(DisplayFrame parentFrame, String type, Editor editor) {
         super(parentFrame, type, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
     }
@@ -151,7 +152,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         } else { // clear existing to keep connection to combo
             _iconPanel.removeAll();
         }
-        _iconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
+        _iconPanel.setImage(_backgrounds[_paletteFrame.getPreviewBg()]); // pick up shared setting
 
         JPanel iPanel = new JPanel();
         iPanel.setOpaque(false);
@@ -261,8 +262,8 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         bottomPanel.add(deleteIconButton);
         deleteIconButton.setEnabled(false);
 
-        if (makeBgButtonPanel(_iconPanel, null, _backgrounds) != null) {
-            bottomPanel.add(makeBgButtonPanel(_iconPanel, null, _backgrounds)); // to enable returning null for Backgrounds
+        if (makeBgButtonPanel(_iconPanel, null, _backgrounds, _paletteFrame) != null) {
+            bottomPanel.add(makeBgButtonPanel(_iconPanel, null, _backgrounds, _paletteFrame)); // to enable returning null for Backgrounds
         }
         add(bottomPanel);
     }
