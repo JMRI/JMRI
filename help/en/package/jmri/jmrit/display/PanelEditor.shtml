@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -27,7 +28,7 @@
     <div id="mainContent">
       <h1>The Panel Editor</h1>
 
-      <p><img src="PanelEditor.png" align="right"><br>
+      <p><img src="images/PanelEditor.png" align="right"><br>
       A Panel is a set of Icons representing various components of
       a layout. Some of the Icons available in JMRI include
       Turnouts, Signals Masts and Sensors. You can include a
@@ -68,7 +69,7 @@
         around after inserting it, but you currently can't edit the
         text later.</li>
 
-        <li style="list-style: none"><img src="PanelEditor2.png"
+        <li style="list-style: none"><img src="images/PanelEditor2.png"
         align="right"></li>
 
         <li>A dropdown menu where you may choose the type of icon
@@ -99,7 +100,8 @@
             <li>Add Fast Clock</li>
 
             <li>Add Icon (unassociated to any JMRI device)</li>
-          </ul>In most cases, selecting one of these items will
+          </ul>
+          <p>In most cases, selecting one of these items will
           open a window from which icons or values can be chosen.
           For the items referring to a JMRI device (e.g. turnout,
           sensor, etc.) a pick list of the available devices is
@@ -109,7 +111,7 @@
           value of item into the panel. The Background item
           provides images for the background of the panel. Further
           details on using these windows are described on the
-          <a href="IconAdder.shtml">Icon Editors page</a>.
+          <a href="IconAdder.shtml">Icon Editors page</a>.</p>
 
           <p>The two choices for icons that do not open windows are
           RPS Reporter and Fast Clock. These items install their
@@ -347,7 +349,7 @@
       LocoNet system, you'd refer to a LocoNet Turnout as LT13; a
       LocoNet Sensor as LS21, etc.</p>
       <p>Back to the <a href="../../../../html/apps/PanelPro/PanelPro.shtml">
-        PanelPro help page</a>.
+        PanelPro help page</a>.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

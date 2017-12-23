@@ -176,19 +176,6 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         }
     }
 
-    /**
-     * Nested class to create one of these using old-style defaults
-     */
-    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-
-        public Default() {
-            super("Openlcb Hub Control",
-                    new jmri.util.swing.sdi.JmriJFrameInterface(),
-                    HubPane.class.getName(),
-                    jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
-        }
-    }
-
     private final static Logger log = LoggerFactory.getLogger(HubPane.class);
 
 }

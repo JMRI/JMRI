@@ -3,6 +3,7 @@ package jmri.jmrix.rps.reversealign;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  * Swing action to create and register a RpsTrackingFrame object
@@ -11,12 +12,15 @@ import javax.swing.BoxLayout;
  */
 public class AlignmentPanelAction extends AbstractAction {
 
-    public AlignmentPanelAction(String s) {
+    RpsSystemConnectionMemo memo = null;
+
+    public AlignmentPanelAction(String s,RpsSystemConnectionMemo _memo) {
         super(s);
+        memo = _memo;
     }
 
-    public AlignmentPanelAction() {
-        this("RPS Alignment Tool");
+    public AlignmentPanelAction(RpsSystemConnectionMemo _memo) {
+        this("RPS Alignment Tool",_memo);
     }
 
     @Override
@@ -27,7 +31,7 @@ public class AlignmentPanelAction extends AbstractAction {
 
         f.addHelpMenu("package.jmri.jmrix.rps.reversealign.AlignmentPanel", true);
 
-        panel = new AlignmentPanel();
+        panel = new AlignmentPanel(memo);
         panel.initComponents();
         f.getContentPane().add(panel);
         f.pack();

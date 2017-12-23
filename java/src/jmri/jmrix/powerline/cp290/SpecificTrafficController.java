@@ -41,8 +41,6 @@ public class SpecificTrafficController extends SerialTrafficController {
 
     }
 
-    SerialSystemConnectionMemo memo = null;
-
     /**
      * Send a sequence of X10 messages
      * <p>

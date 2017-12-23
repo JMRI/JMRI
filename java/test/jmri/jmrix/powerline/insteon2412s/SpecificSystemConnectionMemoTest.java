@@ -12,20 +12,24 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  **/
 
-public class SpecificSystemConnectionMemoTest {
+public class SpecificSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-   @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("SpecificSystemConnectionMemo constructor",new SpecificSystemConnectionMemo());
-   }
+    @Override
+    @Test
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    }
 
+   @Override
    @Before
    public void setUp() {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        scm = new SpecificSystemConnectionMemo();
    }
 
+   @Override
    @After
    public void tearDown(){
         JUnitUtil.tearDown();

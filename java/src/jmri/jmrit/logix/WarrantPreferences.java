@@ -298,7 +298,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             try {
                 speed = Float.valueOf(list.get(i).getText());
             } catch (NumberFormatException nfe) {
-                log.error("Speed names has invalid content for {} = ", name, list.get(i).getText());
+                log.error("Speed names has invalid content for {} = {}", name, list.get(i).getText());
             }
             log.debug("Add {}, {} to AspectSpeed Table", name, speed);
             map.put(name, speed);
@@ -666,7 +666,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     public float getThrottleIncrement() {
         return _throttleIncr;
     }
-    
+
     /**
      * Set the throttle increment.
      *

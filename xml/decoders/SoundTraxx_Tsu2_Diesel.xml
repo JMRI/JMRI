@@ -97,6 +97,12 @@
             <authorinitials>MJM</authorinitials>
             <revremark>Added Poppet Valves select and more PM to Baldwin and other decoders</revremark>
         </revision>
+        <revision>
+            <revnumber>7</revnumber>
+            <date>2017-11-21</date>
+            <authorinitials>MJM</authorinitials>
+            <revremark>Added GEVO G12 Tier 4 to GE Diesels and fix bug in poppet value cv</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
@@ -1339,6 +1345,9 @@
                     <enumChoice>
                         <choice>GE Cummins</choice>
                     </enumChoice>
+                    <enumChoice>
+                        <choice>GEVO G12 Tier 4</choice>
+                    </enumChoice>
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
@@ -1427,7 +1436,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
                 <label>Air Compressor Select</label>
             </variable>
-            <variable CV="123" mask="XXXXXVVV" item="Sound Option 16" default="0" tooltip="Select one of Poppet Valves sound effects, for decoders built after Sept 2017">
+            <variable CV="125" mask="XXXXXVVV" item="Sound Option 16" default="0" tooltip="Select one of Poppet Valves sound effects, for decoders built after Sept 2017">
                 <enumVal>
                     <enumChoice>
                         <choice>Poppet Valves</choice>

@@ -22,18 +22,6 @@ import org.slf4j.LoggerFactory;
 /**
  * A file system directory searcher to locate Image files to include in an Image
  * Catalog.
- * <BR>
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
  *
  * @author Pete Cressman Copyright 2010
  */
@@ -56,9 +44,9 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
 
     /**
      * Open file anywhere in the file system and let the user decide whether to
-     * add it to the Catalog
+     * add it to the Catalog.
      *
-     * @param msg     title
+     * @param msg     Bundle property key (string) for i18n title string
      * @param recurse if directory choice has no images, set chooser to sub
      *                directory so user can continue looking
      * @return chosen directory or null to cancel operation
@@ -94,7 +82,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
                     int choice = JOptionPane.showOptionDialog(null,
                             Bundle.getMessage("NoImagesInDir", dir), Bundle.getMessage("QuestionTitle"),
                             JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                            new String[]{Bundle.getMessage("Quit"), Bundle.getMessage("ButtonKeepLooking")}, 1);
+                            new String[]{Bundle.getMessage("ButtonStop"), Bundle.getMessage("ButtonKeepLooking")}, 1);
                     switch (choice) {
                         case 0:
                             return null;
@@ -176,7 +164,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
      */
     public void openDirectory() {
         clearSearch();
-        File dir = getDirectory("openDirMenu", true);
+        File dir = getDirectory("openDirMenu", true); // NOI18N
         if (dir != null) {
             doPreviewDialog(dir, new MActionListener(dir, true),
                     null, new CActionListener(), 0);
@@ -186,7 +174,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
 
     public void searchFS() {
         clearSearch();
-        File dir = getDirectory("searchFSMenu", false);
+        File dir = getDirectory("searchFSMenu", false); // NOI18N
         showWaitFrame("searchWait", dir);
         if (dir != null) {
             _searcher = new Seacher(dir);
@@ -200,7 +188,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
         }
         closeWaitFrame();
         JOptionPane.showMessageDialog(null, Bundle.getMessage("numFound", count, dir.getAbsolutePath()),
-                Bundle.getMessage("info"), JOptionPane.INFORMATION_MESSAGE);
+                Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
     }
 
     class Seacher extends Thread implements Runnable {
@@ -310,7 +298,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
         }
     }
 
-    // Cancel -Quit
+    // Cancel - Quit
     class CActionListener implements ActionListener {
 
         @Override

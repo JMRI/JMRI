@@ -191,4 +191,5 @@ public class ShapeDrawer {
             ((DrawPolygon) _drawFrame).deleteVertex();
         }
     }
+
 }

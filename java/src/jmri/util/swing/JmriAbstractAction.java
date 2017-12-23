@@ -88,7 +88,7 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
         // we have to make a new panel if we don't have one yet
         // we don't make a new panel if the window interface is
         //      single instance (not multiple instance), 
-        // of if the existing panel is single instance (not multiple instance)
+        // or if the existing panel is single instance (not multiple instance)
         if (cache == null
                 || (wi.multipleInstances() && cache.isMultipleInstances())) {
             try {
@@ -114,7 +114,7 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
     }
     JmriPanel cache = null;
 
-    //A crude method to set a parameter in a given window when loading from the xml file
+    // A crude method to set a parameter in a given window when loading from the xml file
     public void setParameter(String parameter, String value) {
     }
 

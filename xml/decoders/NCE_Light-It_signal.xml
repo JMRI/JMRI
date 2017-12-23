@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2017</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Dave</firstname>
+                <surname>Heap</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2017-11-14</date>
+            <authorinitials>DGH</authorinitials>
+            <revremark>Created</revremark>
+        </revision>
+    </revhistory>
+    <decoder>
+        <family name="Signal and Lighting" mfg="North Coast Engineering">
+            <model model="Light-It - Signal mode" connector="Wires">
+                <output name="1" label="White/Green"/>
+                <output name="2" label="Yellow"/>
+                <output name="3" label="Green"/>
+                <size length="18" width="15" height="5" units="mm"/>
+                <protocols>
+                    <protocol>dcc</protocol>
+                </protocols>
+            </model>
+            <model model="Illuminator - Signal mode" connector="Wires">
+                <output name="1" label="White/Green"/>
+                <output name="2" label="Yellow"/>
+                <output name="3" label="Green"/>
+                <size length="18" width="15" height="5" units="mm"/>
+                <protocols>
+                    <protocol>dcc</protocol>
+                </protocols>
+            </model>
+        </family>
+        <programming direct="no" paged="no" register="no" ops="yes">
+            <capability>
+                <name>Ops Mode Accessory Programming</name>
+                <parameter name="Address Type">signal</parameter>
+                <parameter name="Delay">500</parameter>
+            </capability>
+            <mode>OPSACCEXTBYTEMODE</mode>
+        </programming>
+        <variables>
+        <variable CV="18" item="Long Address" default="3" opsOnly="yes">
+            <splitVal highCV="17" upperMask="XXXXXVVV" min="1" max="2043"/>
+            <label>Signal Address</label>
+        </variable>
+            <xi:include href="http://jmri.org/xml/decoders/nce/lightItCVs.xml"/>
+        </variables>
+        <resets>
+            <mode>OPSACCBYTEMODE</mode>
+            <factReset label="Reset All CVs" CV="128" default="170">
+                <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+            </factReset>
+        </resets>
+    </decoder>
+    <xi:include href="http://jmri.org/xml/decoders/nce/lightItBasicPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/nce/lightItOutputsPane.xml"/>
+</decoder-config>

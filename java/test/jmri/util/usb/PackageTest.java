@@ -10,7 +10,8 @@ import org.junit.runners.Suite;
    UsbBrowserActionTest.class,
    UsbBrowserFrameTest.class,
    UsbBrowserPanelTest.class,
-   UsbBrowserStartupActionFactoryTest.class,
+    UsbBrowserStartupActionFactoryTest.class,
+    UsbUtilTest.class
 })
 /**
  * Tests for the jmri.util.usb package

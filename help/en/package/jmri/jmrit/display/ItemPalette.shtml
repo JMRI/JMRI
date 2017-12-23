@@ -25,7 +25,8 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>The Item Palette</h1><b>The Item Palette</b> is used to
+      <h1>The Item Palette</h1>
+      <b>The Item Palette</b> is used to
       place icons and text onto <b>Control Panel Editor</b> panels.
       The palette is a tabbed window with tabs for each item type.
       The common method all items use to add an item to a panel is
@@ -36,21 +37,28 @@
       row from a table to associate that particular device with the
       icon - and then drag the icon to the panel.
 
-      <h2>Iconic Items</h2>For those items using icons, multiple
+      <h2>Iconic Items</h2>
+      For those items using icons, multiple
       sets of icons are offered by the Item Palette. In each of
       these cases several different icon sets are provided by
       default. Radio buttons are used to select an icon set.For
       example, under the sensor tab you may have sets of large
       jewels, small jewels, each size with several sets with
       different colors for active and inactive - e.g. red-green,
-      yellow-dark, etc.
+      yellow-dark, etc.<br>
+      The individual icons are displayed in the preview on the
+      background of the last editor to open the Item Palette.
+      <span class="since">since 4.9.7</span>
+      Choosing a different background in the "View On:" combo box,
+      may help in determining what parts of the icon are opaque
+      and what parts are transparent.
 
       <p>The <b>Show Icons</b> button displays all the icons in the
       selected set.</p>
 
-      <h3>Editing and Creating New Icon Sets</h3>The <b>Edit
-      Icons</b> button opens a dialog where the icons may be
-      changed by dragging new icons from the icon catalog.
+      <h3>Editing and Creating New Icon Sets</h3>
+      The <b>Edit Icons</b> button opens a dialog where the icons
+      may be changed by dragging new icons from the icon catalog.
 
       <p>Additional icon sets may be added with <b>New Icon Set</b>
       button. After giving a name to the new icon set, the edit
@@ -62,7 +70,7 @@
       icon set.</p>
 
       <p>When the Item Palette is customized with other icon sets,
-      closing the Palette with the close button of in the title bar
+      closing the Palette with the close button in the title bar
       will open a dialog box asking whether you want to save your
       changes. When changes are saved the Item Palette is stored in
       the CatalogTrees.xml file in the preferences directory.</p>
@@ -78,19 +86,23 @@
       press the <b>Create Icon Set</b> button and the dialog is
       closed with the new icon set added to radio button list.</p>
 
-      <h3>Table Items</h3>The items associated with a table have an
-      <b>Add New Table Item</b> button. This button opens a dialog
-      where a new device item can be added to its table. Tabs with
-      tables require a device to be selected (a row in the table)
-      before the an icon can be dragged to a control panel to
-      represent it.
+      <h3>Table Items</h3>
+      The items associated with a table (eg. Turnouts, Sensors,
+      Lights, Signal Heads) have an <b>Add New Table Item</b>
+      button. This button opens a dialog where a new device item
+      can be added to its table. Include the System Connection
+      prefix and item type in the entry, eg. "IL2".
+      <br>Tabs with tables require a device to be selected (a
+      row in the table) before the an icon can be dragged to a
+      control panel to represent it.
 
       <h2>Item Palette Tabs</h2>
 
       <ul>
         <li><b>Turnout</b> Both left and right turnout icon sets
         are contained in this tab. Select a turnout from the table
-        and an icon set, then drag to the panel.</li>
+        and an icon set for either Right, Left, R/L Crossover,
+        then drag to the panel.</li>
 
         <li><b>Sensor</b> Select a sensor from the table and an
         icon set, then drag to the panel.</li>
@@ -116,13 +128,15 @@
         drag the item within the bordered "Drag to Panel" to the
         panel.</li>
 
-        <li><b>Light</b> Select a light (as a CMRI object) from the
-        table and drag to the panel.</li>
+        <li><b>Light</b> Select a light from the table and an icon
+        set for either Crossed symbol, Right or Left and drag to
+        the panel.</li>
 
         <li><b>Multisensor</b> The table displays the Sensor Table
         and the default icon set has three lever positions. For the
-        default case, three rows must be selected from the table to
-        place the multisensor icon in a panel. The table selections
+        default case, three rows must be selected in order from the
+        table to place the multisensor icon in a panel.
+        The table selections
         are labeled "first", "second", etc. and these labels
         correspond to the labels shown when the full icon set is
         displayed. When editing or creating a Multisensor icon set,
@@ -172,8 +186,9 @@
         Indicator Turnouts also.</li>
 
         <li><b>Portal</b>Portal icons are used in CircuitBuilder to
-        define Portals and Paths. They also will display direction
-        arrows along a route when Warrants are allocated.</li>
+        define Portals and Paths. On the Control Panel they also
+        will display direction arrows along a route when Warrants
+        are allocated.</li>
       </ul>
 
       <h2>More About Indicator Track</h2>Indicator track (i.e. both
@@ -273,7 +288,7 @@
       Also the entire status row can be removed by the <b>Delete
       Status</b> button - or restored by the <b>Add Missing
       Status</b> button.</p>
-      <p><!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

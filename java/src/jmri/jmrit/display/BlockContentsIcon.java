@@ -55,7 +55,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
     }
 
     protected Positionable finishClone(BlockContentsIcon pos) {
-        pos.setBlock(namedBlock.getName());
+        pos.setBlock(namedBlock);
         pos.setOriginalLocation(getOriginalX(), getOriginalY());
         if (map != null) {
             java.util.Iterator<String> iterator = map.keySet().iterator();

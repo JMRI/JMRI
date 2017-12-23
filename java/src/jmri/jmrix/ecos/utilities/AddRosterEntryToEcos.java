@@ -56,8 +56,8 @@ public class AddRosterEntryToEcos extends AbstractAction {
         String selEntry = (String) rosterEntry.getSelectedItem();
         RosterEntry re = roster.entryFromTitle(selEntry);
         log.debug("Add " + re.getId() + " to ECoS");
-        RosterToEcos rosterToEcos = new RosterToEcos();
-        rosterToEcos.createEcosLoco(re, adaptermemo);
+        RosterToEcos rosterToEcos = new RosterToEcos(adaptermemo);
+        rosterToEcos.createEcosLoco(re);
     }
 
     void rosterEntryUpdate() {
