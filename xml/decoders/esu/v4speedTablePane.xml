@@ -12,7 +12,7 @@
               <column>
                 <display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control">
                   <label xml:lang="it">Seleziona questo Pulsante per usare la Tabella Velocità per il controllo Velocità</label>
-                  <label xml:lang="ca">Selecciona aquest botÛ per fer servir taula de velocitats</label>
+                  <label xml:lang="ca">Selecciona aquest botó per fer servir taula de velocitats</label>
                   <label xml:lang="de">Um diese Geschwindigkeitskennlinie zu benutzen, diesen Knopf markieren</label>
                 </display>
                 <label>
@@ -24,6 +24,8 @@
                   <text>            To turn off, use Basic Speed Control pane</text>
                   <text xml:lang="de">Zum Ausschalten, die Lasche Einfache Geschwindigkeitseinstellung benutzen</text>
                   <text xml:lang="it">            per disabilitare, Usa il pannello di controllo Basic</text>
+                  <text xml:lang="ca">Per anul·lar usa el panell Control Bàsic de Velocitat</text>
+
                 </label>
               </column>
             </row>
@@ -82,6 +84,13 @@
                    Der Endpunkt kann nicht verändert werden. Gestalten Sie eine gleichmässige Kurve zwischen ihnen.&lt;br/&gt;
                    &lt;br/&gt;
                    &lt;strong&gt;&lt;em&gt;Wenn Loks zu schnell fahren setzen Sie zuerst Vstart &amp; Vhigh bevor Sie Werte in der Tabelle ändern&lt;/em&gt;
+                &lt;/html&gt;</text>
+                <text xml:lang="ca">&lt;html&gt;
+                   &lt;h2&gt;&lt;strong&gt;Nota: El voltatge inicial &amp; Voltatge alt són &lt;em&gt;sempre&lt;/em&gt; actius en aquest decòder.&lt;/h2&gt;
+                   Tots els valors són extrapolats enter VInicial i VAlt.&lt;br/&gt;
+				   Els punts finals no es poden modificar. Manté una corba suau entre ells.&lt;br/&gt;
+                   &lt;br/&gt;
+                   &lt;strong&gt;&lt;em&gt;If speed matching locos, set Vstart &amp; Vhigh before setting any table mid-points.&lt;/em&gt;
                 &lt;/html&gt;</text>
               </label>
             </griditem>

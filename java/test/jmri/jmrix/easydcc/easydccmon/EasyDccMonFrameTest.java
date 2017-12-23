@@ -60,6 +60,7 @@ public class EasyDccMonFrameTest {
     }
 
     @Test
+    @Ignore("Test currently just creates a test scaffold and verifies it exists")
     public void testWrite() {
 
         // infrastructure objects

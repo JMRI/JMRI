@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
 public class Location implements java.beans.PropertyChangeListener {
 
     public static final String NONE = "";
+    public static final int RANGE_DEFAULT = 25;
 
     protected String _id = NONE;
     protected String _name = NONE;
@@ -56,16 +57,18 @@ public class Location implements java.beans.PropertyChangeListener {
     protected Point _trainIconWest = new Point();
     protected Point _trainIconNorth = new Point();
     protected Point _trainIconSouth = new Point();
-    protected Hashtable<String, Track> _trackHashTable = new Hashtable<String, Track>();
+    protected int _trainIconRangeX = RANGE_DEFAULT; // the x & y detection range for the train icon
+    protected int _trainIconRangeY = RANGE_DEFAULT;
+    protected Hashtable<String, Track> _trackHashTable = new Hashtable<>();
     protected PhysicalLocation _physicalLocation = new PhysicalLocation();
-    protected List<String> _listTypes = new ArrayList<String>();
+    protected List<String> _listTypes = new ArrayList<>();
 
     // IdTag reader associated with this location.
     protected Reporter _reader = null;
 
     // Pool
     protected int _idPoolNumber = 0;
-    protected Hashtable<String, Pool> _poolHashTable = new Hashtable<String, Pool>();
+    protected Hashtable<String, Pool> _poolHashTable = new Hashtable<>();
 
     public static final int NORMAL = 1; // types of track allowed at this location
     public static final int STAGING = 2; // staging only
@@ -517,6 +520,38 @@ public class Location implements java.beans.PropertyChangeListener {
     public Point getTrainIconSouth() {
         return _trainIconSouth;
     }
+    
+    /**
+     * Sets the X range for detecting the manual movement of a train icon.
+     * @param x the +/- range for detection
+     */
+    public void setTrainIconRangeX(int x) {
+        int old = _trainIconRangeX;
+        _trainIconRangeX = x;
+        if (old != x) {
+            setDirtyAndFirePropertyChange("trainIconRangeX", Integer.toString(old), Integer.toString(x)); // NOI18N
+        }
+    }
+
+    public int getTrainIconRangeX() {
+        return _trainIconRangeX;
+    }
+
+    /**
+     * Sets the Y range for detecting the manual movement of a train icon.
+     * @param y the +/- range for detection
+     */
+    public void setTrainIconRangeY(int y) {
+        int old = _trainIconRangeY;
+        _trainIconRangeY = y;
+        if (old != y) {
+            setDirtyAndFirePropertyChange("trainIconRangeY", Integer.toString(old), Integer.toString(y)); // NOI18N
+        }
+    }
+
+    public int getTrainIconRangeY() {
+        return _trainIconRangeY;
+    }
 
     /**
      * Adds rolling stock to a specific location.
@@ -762,7 +797,7 @@ public class Location implements java.beans.PropertyChangeListener {
      */
     public List<String> getTrackIdsByIdList() {
         String[] arr = new String[_trackHashTable.size()];
-        List<String> out = new ArrayList<String>();
+        List<String> out = new ArrayList<>();
         Enumeration<String> en = _trackHashTable.keys();
         int i = 0;
         while (en.hasMoreElements()) {
@@ -782,7 +817,7 @@ public class Location implements java.beans.PropertyChangeListener {
      * @return Sorted list of tracks by id for this location.
      */
     public List<Track> getTrackByIdList() {
-        List<Track> out = new ArrayList<Track>();
+        List<Track> out = new ArrayList<>();
         List<String> trackIds = getTrackIdsByIdList();
         for (String id : trackIds) {
             out.add(getTrackById(id));
@@ -796,7 +831,7 @@ public class Location implements java.beans.PropertyChangeListener {
      * @return tracks at this location.
      */
     public List<Track> getTrackList() {
-        List<Track> out = new ArrayList<Track>();
+        List<Track> out = new ArrayList<>();
         Enumeration<Track> en = _trackHashTable.elements();
         while (en.hasMoreElements()) {
             out.add(en.nextElement());
@@ -814,7 +849,7 @@ public class Location implements java.beans.PropertyChangeListener {
      */
     public List<Track> getTrackByNameList(String type) {
 
-        List<Track> out = new ArrayList<Track>();
+        List<Track> out = new ArrayList<>();
 
         for (Track track : getTrackByIdList()) {
             boolean locAdded = false;
@@ -845,7 +880,7 @@ public class Location implements java.beans.PropertyChangeListener {
      */
     public List<Track> getTrackByMovesList(String type) {
 
-        List<Track> moveList = new ArrayList<Track>();
+        List<Track> moveList = new ArrayList<>();
 
         for (Track track : getTrackByIdList()) {
             boolean locAdded = false;
@@ -863,7 +898,7 @@ public class Location implements java.beans.PropertyChangeListener {
         }
         // bias tracks with schedules to the start of the list
         // remove any alternate tracks from the list
-        List<Track> out = new ArrayList<Track>();
+        List<Track> out = new ArrayList<>();
         for (int i = 0; i < moveList.size(); i++) {
             Track track = moveList.get(i);
             if (!track.getScheduleId().equals(NONE)) {
@@ -888,7 +923,7 @@ public class Location implements java.beans.PropertyChangeListener {
      * @return list of tracks at this location ordered by blocking order
      */
     public List<Track> getTracksByBlockingOrderList(String type) {
-        List<Track> orderList = new ArrayList<Track>();
+        List<Track> orderList = new ArrayList<>();
         for (Track track : getTrackByNameList(type)) {
             boolean trackAdded = false;
             for (int j = 0; j < orderList.size(); j++) {
@@ -1087,7 +1122,7 @@ public class Location implements java.beans.PropertyChangeListener {
      * @return A list of Pools
      */
     public List<Pool> getPoolsByNameList() {
-        List<Pool> pools = new ArrayList<Pool>();
+        List<Pool> pools = new ArrayList<>();
         Enumeration<Pool> en = _poolHashTable.elements();
         while (en.hasMoreElements()) {
             pools.add(en.nextElement());
@@ -1313,6 +1348,14 @@ public class Location implements java.beans.PropertyChangeListener {
                     (y = e.getAttribute(Xml.SOUTH_TRAIN_ICON_Y)) != null) {
                 setTrainIconSouth(new Point(Integer.parseInt(x.getValue()), Integer.parseInt(y.getValue())));
             }
+            
+            if ((x = e.getAttribute(Xml.TRAIN_ICON_RANGE_X)) != null){
+                setTrainIconRangeX(Integer.parseInt(x.getValue()));
+            }
+            if ((y = e.getAttribute(Xml.TRAIN_ICON_RANGE_Y)) != null){
+                setTrainIconRangeY(Integer.parseInt(y.getValue()));
+            }
+            
         } catch (NumberFormatException nfe) {
             log.error("Train icon coordinates aren't vaild for location {}", getName());
         }
@@ -1419,6 +1462,12 @@ public class Location implements java.beans.PropertyChangeListener {
         if (!getTrainIconSouth().equals(new Point())) {
             e.setAttribute(Xml.SOUTH_TRAIN_ICON_X, Integer.toString(getTrainIconSouth().x));
             e.setAttribute(Xml.SOUTH_TRAIN_ICON_Y, Integer.toString(getTrainIconSouth().y));
+        }
+        if (getTrainIconRangeX() != RANGE_DEFAULT) {
+            e.setAttribute(Xml.TRAIN_ICON_RANGE_X, Integer.toString(getTrainIconRangeX()));
+        }
+        if (getTrainIconRangeY() != RANGE_DEFAULT) {
+            e.setAttribute(Xml.TRAIN_ICON_RANGE_Y, Integer.toString(getTrainIconRangeY()));
         }
         if (_reader != null) {
             e.setAttribute(Xml.READER, _reader.getDisplayName());

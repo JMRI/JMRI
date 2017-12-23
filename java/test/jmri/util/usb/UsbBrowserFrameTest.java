@@ -1,5 +1,9 @@
 package jmri.util.usb;
 
+import java.io.UnsupportedEncodingException;
+import javax.usb.UsbDevice;
+import javax.usb.UsbDisconnectedException;
+import javax.usb.UsbException;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -7,7 +11,11 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 /**
  *
@@ -15,11 +23,22 @@ import org.junit.Test;
  */
 public class UsbBrowserFrameTest {
 
+    @Rule
+    public MockitoRule rule = MockitoJUnit.rule();
+
     @Test
-    @Ignore("we probably need to mock the USB library to obtain consistent results.")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        UsbBrowserFrame t = new UsbBrowserFrame();
+        UsbDevice mockDevice = Mockito.mock(UsbDevice.class);
+        UsbBrowserPanel bp = new UsbBrowserPanel(){
+           @Override
+           protected UsbTreeNode getRootNode() {
+              UsbTreeNode retval = new UsbTreeNode(mockDevice);
+              retval.setUsbDevice(null);
+              return retval;
+           }
+        };
+        UsbBrowserFrame t = new UsbBrowserFrame(bp);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
     }

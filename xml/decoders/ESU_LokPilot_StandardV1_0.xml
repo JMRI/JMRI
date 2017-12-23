@@ -125,12 +125,14 @@
                     <label xml:lang="it">Volt Partenza</label>
                     <label xml:lang="fr">V démarr.</label>
                     <label xml:lang="de">Anfahrspannung</label>
+                    <label xml:lang="ca">Voltatge arrencada</label>
                 </variable>
                 <variable CV="5" default="64" item="Vhigh" tooltip="Maximum speed of locomotive, range 1-64">
                     <decVal min="1" max="64"/>
                     <label>Maximum Speed</label>
                     <label xml:lang="it">Volt Massimi (0-64):</label>
                     <label xml:lang="de">Höchstgeschwindigkeit</label>
+                    <label xml:lang="ca">Voltatge màxim (0-64)</label>
                 </variable>
                 <variable item="Vmid" CV="6" default="22" comment="Range 1-64">
                     <decVal min="1" max="64"/>
@@ -169,6 +171,7 @@
                 <label xml:lang="it">Accellerazione (0-255)</label>
                 <label xml:lang="fr">Accelération (0-255)</label>
                 <label xml:lang="de">Anfahrverzögerung (0-255)</label>
+                <label xml:lang="ca">Acceleració (0-255)</label>
             </variable>
             <variable CV="4" default="12" item="Decel" tooltip="This value multiplied by 0.25 gives the time from maximum speed to stop, range 0-255">
                 <decVal min="0" max="255"/>
@@ -176,6 +179,7 @@
                 <label xml:lang="it">Decellerazione (0-255)</label>
                 <label xml:lang="fr">Décélération (0-255)</label>
                 <label xml:lang="de">Bremszeit (0-255)</label>
+                <label xml:lang="ca">Desacceleració (0-255)</label>
             </variable>
             <variable CV="7" readOnly="yes" default="000" item="Decoder Version" tooltip="The decoder version number (read only)">
                 <decVal/>
@@ -183,6 +187,7 @@
                 <label xml:lang="it">Versione Decoder: </label>
                 <label xml:lang="fr">Version décodeur: </label>
                 <label xml:lang="de">Decoder Version: </label>
+                <label xml:lang="ca">Versió del descodificadorç: </label>
             </variable>
             <variable CV="8" readOnly="yes" default="151" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
                 <decVal/>
@@ -190,6 +195,7 @@
                 <label xml:lang="it">ID Costruttore: </label>
                 <label xml:lang="fr">ID constructeur: </label>
                 <label xml:lang="de">Hersteller ID: </label>
+                <label xml:lang="ca">ID del Fabricant</label>
             </variable>
             <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
