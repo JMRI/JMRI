@@ -31,13 +31,13 @@
 
         <variables>
 
-            <variable CV="1.001" item="OpSw 001" readOnly="yes" default="0">
+            <variable CV="csOpSw.001" item="OpSw 001" readOnly="yes" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw 01</label>
                 <tooltip>OpSw 01</tooltip>
             </variable>
 
-            <variable CV="1.002" item="OpSw 002" default="0" include="DCS240" exclude="DCS210">
+            <variable CV="csOpSw.002" item="OpSw 002" default="0" include="DCS240" exclude="DCS210">
                 <enumVal>
                     <enumChoice choice="Command Station *"/>
                     <enumChoice choice="Booster (not recommended)"/>
@@ -45,7 +45,7 @@
                 <label>DCS240 acts as a</label>
                 <tooltip>OpSw 02</tooltip>
             </variable>
-            <variable CV="1.002" item="OpSw 002" default="0" include="DCS210" exclude="DCS240">
+            <variable CV="csOpSw.002" item="OpSw 002" default="0" include="DCS210" exclude="DCS240">
                 <enumVal>
                     <enumChoice choice="Command Station *"/>
                     <enumChoice choice="Booster (not recommended)"/>
@@ -53,22 +53,22 @@
                 <label>DCS210 acts as a</label>
                 <tooltip>OpSw 02</tooltip>
             </variable>
-            <variable CV="1.003" item="OpSw 003" default="0">
+            <variable CV="csOpSw.003" item="OpSw 003" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
                 <label>Autoreversing is</label>
                 <tooltip>OpSw 03</tooltip>
             </variable>
-            <variable CV="1.004" item="OpSw 004" readOnly="yes" default="0">
+            <variable CV="csOpSw.004" item="OpSw 004" readOnly="yes" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw 04</label>
                 <tooltip>OpSw 04</tooltip>
             </variable>
-            <variable CV="1.005" item="OpSw 005" readOnly="yes" default="0">
+            <variable CV="csOpSw.005" item="OpSw 005" readOnly="yes" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw 05</label>
                 <tooltip>OpSw 05</tooltip>
             </variable>
-            <variable CV="1.006" item="OpSw 006" default="0">
+            <variable CV="csOpSw.006" item="OpSw 006" default="0">
                 <enumVal>
                     <enumChoice choice="check for decoder before programming *"/>
                     <enumChoice choice="program without checking for a decoder"/>
@@ -76,42 +76,42 @@
                 <label>Programming track will </label>
                 <tooltip>OpSw 06</tooltip>
             </variable>
-            <variable CV="1.007" item="OpSw 007" readOnly="yes" default="0">
+            <variable CV="csOpSw.007" item="OpSw 007" readOnly="yes" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw 07</label>
                 <tooltip>OpSw 07</tooltip>
             </variable>
-            <variable CV="1.008" item="OpSw 008" readOnly="yes" infoOnly="yes" default="0">
+            <variable CV="csOpSw.008" item="OpSw 008" readOnly="yes" infoOnly="yes" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw 08</label>
                 <tooltip>OpSw 08</tooltip>
             </variable>
-            <variable CV="1.009" item="OpSw 009" readOnly="yes" default="1">
+            <variable CV="csOpSw.009" item="OpSw 009" readOnly="yes" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw 09</label>
                 <tooltip>OpSw 09</tooltip>
             </variable>
-            <variable CV="1.010" item="OpSw 010" readOnly="yes" default="1">
+            <variable CV="csOpSw.010" item="OpSw 010" readOnly="yes" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw 10</label>
                 <tooltip>OpSw 10</tooltip>
             </variable>
-            <variable CV="1.011" item="OpSw 011" readOnly="yes" default="0">
+            <variable CV="csOpSw.011" item="OpSw 011" readOnly="yes" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw 11</label>
                 <tooltip>OpSw 11</tooltip>
             </variable>
-            <variable CV="1.012" item="OpSw 012" readOnly="yes" default="0">
+            <variable CV="csOpSw.012" item="OpSw 012" readOnly="yes" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw 12</label>
                 <tooltip>OpSw 12</tooltip>
             </variable>
-            <variable CV="1.014" item="OpSw 014" default="0">
+            <variable CV="csOpSw.014" item="OpSw 014" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>Locomotive Purge is</label>
                 <tooltip>OpSw 14</tooltip>
             </variable>
-            <variable CV="1.013" item="OpSw 013" default="0">
+            <variable CV="csOpSw.013" item="OpSw 013" default="0">
                 <qualifier>
                     <variableref>OpSw 014</variableref>
                     <relation>eq</relation>
@@ -124,7 +124,7 @@
                 <label>Purge time is</label>
                 <tooltip>OpSw 13</tooltip>
             </variable>
-            <variable CV="1.015" item="OpSw 015" default="0">
+            <variable CV="csOpSw.015" item="OpSw 015" default="0">
                 <qualifier>
                     <variableref>OpSw 014</variableref>
                     <relation>eq</relation>
@@ -137,17 +137,17 @@
                 <label>Locomotive Purging will</label>
                 <tooltip>OpSw 15</tooltip>
             </variable>
-            <variable CV="1.016" item="OpSw 016" readOnly="yes" infoOnly="yes" default="0">
+            <variable CV="csOpSw.016" item="OpSw 016" readOnly="yes" infoOnly="yes" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw 16</label>
                 <tooltip>OpSw 16</tooltip>
             </variable>
-            <variable CV="1.017" item="OpSw 017" default="0">
+            <variable CV="csOpSw.017" item="OpSw 017" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>Automatic advanced decoder assisted [FX] consists are</label>
                 <tooltip>OpSw 17</tooltip>
             </variable>
-            <variable CV="1.018" item="OpSw 018" default="0" include="DCS240" exclude="DCS210">
+            <variable CV="csOpSw.018" item="OpSw 018" default="0" include="DCS240" exclude="DCS210">
                 <enumVal>
                     <enumChoice choice="'Normal' *"/>
                     <enumChoice choice="'Extended'"/>
@@ -155,7 +155,7 @@
                 <label>DCS240 booster short circuit shutdown time is</label>
                 <tooltip>OpSw 18</tooltip>
             </variable>
-            <variable CV="1.018" item="OpSw 018" default="0" include="DCS210" exclude="DCS240">
+            <variable CV="csOpSw.018" item="OpSw 018" default="0" include="DCS210" exclude="DCS240">
                 <enumVal>
                     <enumChoice choice="'Normal' *"/>
                     <enumChoice choice="'Extended'"/>
@@ -163,29 +163,29 @@
                 <label>DCS210 booster short circuit shutdown time is</label>
                 <tooltip>OpSw 18</tooltip>
             </variable>
-            <variable CV="1.019" item="OpSw 019" readOnly="yes" default="0">
+            <variable CV="csOpSw.019" item="OpSw 019" readOnly="yes" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw 19</label>
                 <tooltip>OpSw 19</tooltip>
             </variable>
-            <variable CV="1.020" item="OpSw 020" default="0">
+            <variable CV="csOpSw.020" item="OpSw 020" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>Address 00 'Analog stretching' (or conventional locos) is</label>
                 <tooltip>OpSw 20</tooltip>
             </variable>
-            <variable CV="1.021" item="OpSw 021" default="1">
+            <variable CV="csOpSw.021" item="OpSw 021" default="1">
                 <enumVal>
                     <enumChoice choice="t"/>
                     <enumChoice choice="c"/>
                 </enumVal>
             </variable>
-            <variable CV="1.022" item="OpSw 022" default="1">
+            <variable CV="csOpSw.022" item="OpSw 022" default="1">
                 <enumVal>
                     <enumChoice choice="t"/>
                     <enumChoice choice="c"/>
                 </enumVal>
             </variable>
-            <variable CV="1.023" item="OpSw 023" default="0">
+            <variable CV="csOpSw.023" item="OpSw 023" default="0">
                 <enumVal>
                     <enumChoice choice="t"/>
                     <enumChoice choice="c"/>
@@ -239,22 +239,22 @@
                 <tooltip>OpSw21, OpSw22, OpSw23</tooltip>
             </variable>
 
-            <variable CV="1.024" item="OpSw 024" readOnly="yes" infoOnly="yes" default="0">
+            <variable CV="csOpSw.024" item="OpSw 024" readOnly="yes" infoOnly="yes" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw 24</label>
                 <tooltip>OpSw 24</tooltip>
             </variable>
-            <variable CV="1.025" item="OpSw 025" default="0">
+            <variable CV="csOpSw.025" item="OpSw 025" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>Echo of Route control commands to LocoNet is </label>
                 <tooltip>OpSw 25</tooltip>
             </variable>
-            <variable CV="1.026" item="OpSw 026" default="1">
+            <variable CV="csOpSw.026" item="OpSw 026" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledEnabledStar.xml"/>
                 <label>Command Station 'Routes' are </label>
                 <tooltip>OpSw 26</tooltip>
             </variable>
-            <variable CV="1.027" item="OpSw 027" default="0">
+            <variable CV="csOpSw.027" item="OpSw 027" default="0">
                 <enumVal>
                     <enumChoice choice="propagate to the DCC track signal *"/>
                     <enumChoice choice="do not propagate to the DCC track signal (the 'Bushby' bit)"/>
@@ -262,22 +262,22 @@
                 <label>"Normal" Switch commands </label>
                 <tooltip>OpSw 27</tooltip>
             </variable>
-            <variable CV="1.028" item="OpSw 028" default="0">
+            <variable CV="csOpSw.028" item="OpSw 028" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>Interrogation of turnouts and sensors at power on is</label>
                 <tooltip>OpSw 28</tooltip>
             </variable>
-            <variable CV="1.029" item="OpSw 029" readOnly="yes" default="0">
+            <variable CV="csOpSw.029" item="OpSw 029" readOnly="yes" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw 29</label>
                 <tooltip>OpSw 29</tooltip>
             </variable>
-            <variable CV="1.030" item="OpSw 030" readOnly="yes" default="0">
+            <variable CV="csOpSw.030" item="OpSw 030" readOnly="yes" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw 30</label>
                 <tooltip>OpSw 30</tooltip>
             </variable>
-            <variable CV="1.031" item="OpSw 031" default="0">
+            <variable CV="csOpSw.031" item="OpSw 031" default="0">
                 <enumVal>
                     <enumChoice choice="Normal *"/>
                     <enumChoice choice="Fast (JMRI-recommended)"/>
@@ -285,12 +285,12 @@
                 <label>Route/switch message output rate (when not trinary mode) is</label>
                 <tooltip>OpSw 31 - the speed at which turnout commands are propagated to the DCC track signal</tooltip>
             </variable>
-            <variable CV="1.032" item="OpSw 032" readOnly="yes" infoOnly="yes" default="0">
+            <variable CV="csOpSw.032" item="OpSw 032" readOnly="yes" infoOnly="yes" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw 32</label>
                 <tooltip>OpSw 32</tooltip>
             </variable>
-            <variable CV="1.033" item="OpSw 033" default="1">
+            <variable CV="csOpSw.033" item="OpSw 033" default="1">
                 <enumVal>
                     <enumChoice choice="Off, regardless of state at power-down"/>
                     <enumChoice choice="restored to the track power state at last power-down *"/>
@@ -298,7 +298,7 @@
                 <label>At power-up, track power will be</label>
                 <tooltip>OpSw 33</tooltip>
             </variable>
-            <variable CV="1.034" item="OpSw 034" default="0">
+            <variable CV="csOpSw.034" item="OpSw 034" default="0">
                 <qualifier>
                     <variableref>OpSw 033</variableref>
                     <relation>eq</relation>
@@ -311,12 +311,12 @@
                 <label>At power-up, track power state</label>
                 <tooltip>OpSw 34</tooltip>
             </variable>
-            <variable CV="1.035" item="OpSw 035" default="0">
+            <variable CV="csOpSw.035" item="OpSw 035" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>'Loco Reset' button is</label>
                 <tooltip>OpSw 35</tooltip>
             </variable>
-            <variable CV="1.036" item="OpSw 036" default="0">
+            <variable CV="csOpSw.036" item="OpSw 036" default="0">
                 <enumVal>
                     <enumChoice choice="Normal operating state *"/>
                     <enumChoice choice="Clears all mobile decoder info and consists"/>
@@ -324,7 +324,7 @@
                 <label>OpSw 36</label>
                 <tooltip>OpSw 36</tooltip>
             </variable>
-            <variable CV="1.037" item="OpSw 037" default="0">
+            <variable CV="csOpSw.037" item="OpSw 037" default="0">
                 <enumVal>
                     <enumChoice choice="Normal operating state *"/>
                     <enumChoice choice="Clears all routes"/>
@@ -332,12 +332,12 @@
                 <label>OpSw 37</label>
                 <tooltip>OpSw 37</tooltip>
             </variable>
-            <variable CV="1.038" item="OpSw 038" readOnly="yes" default="0" include="DCS240" exclude="DCS210">
+            <variable CV="csOpSw.038" item="OpSw 038" readOnly="yes" default="0" include="DCS240" exclude="DCS210">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw 38</label>
                 <tooltip>OpSw 38</tooltip>
             </variable>
-            <variable CV="1.038" item="OpSw 038" default="0" include="DCS210" exclude="DCS240">
+            <variable CV="csOpSw.038" item="OpSw 038" default="0" include="DCS210" exclude="DCS240">
                 <enumVal>
                     <enumChoice choice="Clears all internal memory states *" />
                     <enumChoice choice="Activates 'Slot zero' feature" />
@@ -345,7 +345,7 @@
                 <label>DCS210 Loco Reset Button</label>
                 <tooltip>OpSw 38</tooltip>
             </variable>
-            <variable CV="1.039" item="OpSw 039" default="0">
+            <variable CV="csOpSw.039" item="OpSw 039" default="0">
                 <enumVal>
                     <enumChoice choice="Normal operating state *"/>
                     <enumChoice choice="Clears all internal memory states, including OpSw 36 and 37."/>
@@ -353,7 +353,7 @@
                 <label>OpSw 39</label>
                 <tooltip>OpSw 39</tooltip>
             </variable>
-            <variable CV="1.040" item="OpSw 040" infoOnly="yes" readOnly="yes" default="0" include="DCS240" exclude="DCS210">
+            <variable CV="csOpSw.040" item="OpSw 040" infoOnly="yes" readOnly="yes" default="0" include="DCS240" exclude="DCS210">
                 <enumVal>
                     <enumChoice choice="Normal operating state *"/>
                     <enumChoice choice="Resets DCS240 to factory default"/>
@@ -361,7 +361,7 @@
                 <label>OpSw 40</label>
                 <tooltip>A Factory Reset operation can be performed using a throttle when the DCS240 is in "OpSw" mode.  JMRI cannot perform this "programmatically".</tooltip>
             </variable>
-            <variable CV="1.040" item="OpSw 040" infoOnly="yes" readOnly="yes" default="0" include="DCS210" exclude="DCS240">
+            <variable CV="csOpSw.040" item="OpSw 040" infoOnly="yes" readOnly="yes" default="0" include="DCS210" exclude="DCS240">
                 <enumVal>
                     <enumChoice choice="Normal operating state *"/>
                     <enumChoice choice="Resets DCS210 to factory default"/>
@@ -369,22 +369,22 @@
                 <label>OpSw 40</label>
                 <tooltip>A Factory Reset operation can be performed using a throttle when the DCS210 is in "OpSw" mode.  JMRI cannot perform this "programmatically".</tooltip>
             </variable>
-            <variable CV="1.041" item="OpSw 041" default="0">
+            <variable CV="csOpSw.041" item="OpSw 041" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
                 <label>Diagnostic 'click' on incoming LocoNet activity and Route activation</label>
                 <tooltip>OpSw 41</tooltip>
             </variable>
-            <variable CV="1.042" item="OpSw 042" default="0">
+            <variable CV="csOpSw.042" item="OpSw 042" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>Two "short beep" indication of loco 'purging' is</label>
                 <tooltip>OpSw 42</tooltip>
             </variable>
-            <variable CV="1.043" item="OpSw 043" default="0">
+            <variable CV="csOpSw.043" item="OpSw 043" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>LocoNet update of command staiton's track status is</label>
                 <tooltip>OpSw 43</tooltip>
             </variable>
-            <variable CV="1.044" item="OpSw 044" default="0" exclude="DCS210">
+            <variable CV="csOpSw.044" item="OpSw 044" default="0" exclude="DCS210">
                 <enumVal>
                     <enumChoice choice="400 *"/>
                     <enumChoice choice="120"/>
@@ -392,22 +392,22 @@
                 <label>Number of available slots is</label>
                 <tooltip>OpSw 44a</tooltip>
             </variable>
-            <variable CV="1.044" item="OpSw 044" default="1" exclude="DCS240" readOnly="yes">
+            <variable CV="csOpSw.044" item="OpSw 044" default="1" exclude="DCS240" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-reservedNormalStar.xml"/>
                 <label>OpSw 44</label>
                 <tooltip>OpSw 44</tooltip>
             </variable>
-            <variable CV="1.045" item="OpSw 045" default="0">
+            <variable CV="csOpSw.045" item="OpSw 045" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>Command station reply to LocoNet switch state requests is</label>
                 <tooltip>OpSw 45</tooltip>
             </variable>
-            <variable CV="1.046" item="OpSw 046" readOnly="yes" default="0">
+            <variable CV="csOpSw.046" item="OpSw 046" readOnly="yes" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw 46</label>
                 <tooltip>OpSw 46</tooltip>
             </variable>
-            <variable CV="1.047" item="OpSw 047" default="0">
+            <variable CV="csOpSw.047" item="OpSw 047" default="0">
                 <enumVal>
                     <enumChoice choice="only as a progrmming track *"/>
                     <enumChoice choice="as a 'braking generator' when not programming"/>
@@ -416,57 +416,57 @@
                 <tooltip>OpSw 47</tooltip>
             </variable>
 
-            <variable CV="1.048" item="OpSw 048" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.048" item="OpSw 048" default="0" readOnly="yes" infoOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw48</label>
             </variable>
-            <variable CV="1.049" item="OpSw 049" default="0" readOnly="yes">
+            <variable CV="csOpSw.049" item="OpSw 049" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw49</label>
             </variable>
 
 
 
-            <variable CV="1.050" item="OpSw 050" default="0" readOnly="yes">
+            <variable CV="csOpSw.050" item="OpSw 050" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw50</label>
             </variable>
-            <variable CV="1.051" item="OpSw 051" default="0" readOnly="yes">
+            <variable CV="csOpSw.051" item="OpSw 051" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw51</label>
             </variable>
-            <variable CV="1.052" item="OpSw 052" default="0" readOnly="yes">
+            <variable CV="csOpSw.052" item="OpSw 052" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw52</label>
             </variable>
-            <variable CV="1.053" item="OpSw 053" default="0" readOnly="yes">
+            <variable CV="csOpSw.053" item="OpSw 053" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw53</label>
             </variable>
-            <variable CV="1.054" item="OpSw 054" default="0" readOnly="yes">
+            <variable CV="csOpSw.054" item="OpSw 054" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw54</label>
             </variable>
 
 
 
-            <variable CV="1.055" item="OpSw 055" default="0" readOnly="yes">
+            <variable CV="csOpSw.055" item="OpSw 055" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw55</label>
             </variable>
-            <variable CV="1.056" item="OpSw 056" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.056" item="OpSw 056" default="0" readOnly="yes" infoOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw56</label>
             </variable>
-            <variable CV="1.057" item="OpSw 057" default="0" readOnly="yes">
+            <variable CV="csOpSw.057" item="OpSw 057" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw57</label>
             </variable>
-            <variable CV="1.058" item="OpSw 058" default="0" readOnly="yes">
+            <variable CV="csOpSw.058" item="OpSw 058" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw58</label>
             </variable>
-            <variable CV="1.059" item="OpSw 059" default="1" readOnly="yes">
+            <variable CV="csOpSw.059" item="OpSw 059" default="1" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw59</label>
             </variable>
@@ -481,67 +481,67 @@
 
 
 
-            <variable CV="1.060" item="OpSw 060" default="1" readOnly="yes">
+            <variable CV="csOpSw.060" item="OpSw 060" default="1" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw60</label>
             </variable>
-            <variable CV="1.061" item="OpSw 061" default="1" readOnly="yes">
+            <variable CV="csOpSw.061" item="OpSw 061" default="1" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw61</label>
             </variable>
-            <variable CV="1.062" item="OpSw 062" default="0" readOnly="yes">
+            <variable CV="csOpSw.062" item="OpSw 062" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw62</label>
             </variable>
-            <variable CV="1.063" item="OpSw 063" default="0" readOnly="yes">
+            <variable CV="csOpSw.063" item="OpSw 063" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw63</label>
             </variable>
-            <variable CV="1.064" item="OpSw 064" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.064" item="OpSw 064" default="0" readOnly="yes" infoOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw64</label>
             </variable>
-            <variable CV="1.065" item="OpSw 065" default="1" readOnly="yes">
+            <variable CV="csOpSw.065" item="OpSw 065" default="1" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw65</label>
             </variable>
-            <variable CV="1.066" item="OpSw 066" default="0" readOnly="yes">
+            <variable CV="csOpSw.066" item="OpSw 066" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw66</label>
             </variable>
-            <variable CV="1.067" item="OpSw 067" default="0" readOnly="yes">
+            <variable CV="csOpSw.067" item="OpSw 067" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw67</label>
             </variable>
-            <variable CV="1.068" item="OpSw 068" default="0" readOnly="yes">
+            <variable CV="csOpSw.068" item="OpSw 068" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw68</label>
             </variable>
-            <variable CV="1.069" item="OpSw 069" default="1" readOnly="yes">
+            <variable CV="csOpSw.069" item="OpSw 069" default="1" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw69</label>
             </variable>
-            <variable CV="1.070" item="OpSw 070" default="0" readOnly="yes">
+            <variable CV="csOpSw.070" item="OpSw 070" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw70</label>
             </variable>
-            <variable CV="1.071" item="OpSw 071" default="0" readOnly="yes">
+            <variable CV="csOpSw.071" item="OpSw 071" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw71</label>
             </variable>
-            <variable CV="1.072" item="OpSw 072" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.072" item="OpSw 072" default="0" readOnly="yes" infoOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw72</label>
             </variable>
-            <variable CV="1.073" item="OpSw 073" default="0" readOnly="yes">
+            <variable CV="csOpSw.073" item="OpSw 073" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw73</label>
             </variable>
-            <variable CV="1.074" item="OpSw 074" default="0" readOnly="yes">
+            <variable CV="csOpSw.074" item="OpSw 074" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw74</label>
             </variable>
-            <variable CV="1.075" item="OpSw 075" default="0">
+            <variable CV="csOpSw.075" item="OpSw 075" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Slower, but more reliable *</choice>
@@ -553,156 +553,156 @@
                 <label>Programming Track Operations are</label>
                 <tooltip>OpSw75 - "Faster" mode is similar to DCS100 and may not be as reliable as "Slower"</tooltip>
             </variable>
-            <variable CV="1.076" item="OpSw 076" default="0" readOnly="yes">
+            <variable CV="csOpSw.076" item="OpSw 076" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw76</label>
             </variable>
-            <variable CV="1.077" item="OpSw 077" default="0" readOnly="yes">
+            <variable CV="csOpSw.077" item="OpSw 077" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw77</label>
             </variable>
-            <variable CV="1.078" item="OpSw 078" default="0" readOnly="yes">
+            <variable CV="csOpSw.078" item="OpSw 078" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw78</label>
             </variable>
-            <variable CV="1.079" item="OpSw 079" default="0" readOnly="yes">
+            <variable CV="csOpSw.079" item="OpSw 079" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw79</label>
             </variable>
 
-            <variable CV="1.080" item="OpSw 080" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.080" item="OpSw 080" default="0" readOnly="yes" infoOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw80</label>
             </variable>
-            <variable CV="1.081" item="OpSw 081" default="0" readOnly="yes">
+            <variable CV="csOpSw.081" item="OpSw 081" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw81</label>
             </variable>
-            <variable CV="1.082" item="OpSw 082" default="1" readOnly="yes">
+            <variable CV="csOpSw.082" item="OpSw 082" default="1" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw82</label>
             </variable>
-            <variable CV="1.083" item="OpSw 083" default="0" readOnly="yes">
+            <variable CV="csOpSw.083" item="OpSw 083" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw83</label>
             </variable>
-            <variable CV="1.084" item="OpSw 084" default="0" readOnly="yes">
+            <variable CV="csOpSw.084" item="OpSw 084" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw84</label>
             </variable>
-            <variable CV="1.085" item="OpSw 085" default="0" readOnly="yes">
+            <variable CV="csOpSw.085" item="OpSw 085" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw85</label>
             </variable>
-            <variable CV="1.086" item="OpSw 086" default="1" readOnly="yes">
+            <variable CV="csOpSw.086" item="OpSw 086" default="1" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw86</label>
             </variable>
-            <variable CV="1.087" item="OpSw 087" default="0" readOnly="yes">
+            <variable CV="csOpSw.087" item="OpSw 087" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw87</label>
             </variable>
-            <variable CV="1.088" item="OpSw 088" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.088" item="OpSw 088" default="0" readOnly="yes" infoOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw88</label>
             </variable>
-            <variable CV="1.089" item="OpSw 089" default="0" readOnly="yes">
+            <variable CV="csOpSw.089" item="OpSw 089" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw89</label>
             </variable>
 
-            <variable CV="1.090" item="OpSw 090" default="0" readOnly="yes">
+            <variable CV="csOpSw.090" item="OpSw 090" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw90</label>
             </variable>
-            <variable CV="1.091" item="OpSw 091" default="0" readOnly="yes">
+            <variable CV="csOpSw.091" item="OpSw 091" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw91</label>
             </variable>
-            <variable CV="1.092" item="OpSw 092" default="0" readOnly="yes">
+            <variable CV="csOpSw.092" item="OpSw 092" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw92</label>
             </variable>
-            <variable CV="1.093" item="OpSw 093" default="0" readOnly="yes">
+            <variable CV="csOpSw.093" item="OpSw 093" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw93</label>
             </variable>
-            <variable CV="1.094" item="OpSw 094" default="0" readOnly="yes">
+            <variable CV="csOpSw.094" item="OpSw 094" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw94</label>
             </variable>
-            <variable CV="1.095" item="OpSw 095" default="0" readOnly="yes">
+            <variable CV="csOpSw.095" item="OpSw 095" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw95</label>
             </variable>
-            <variable CV="1.096" item="OpSw 096" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.096" item="OpSw 096" default="0" readOnly="yes" infoOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw96</label>
             </variable>
-            <variable CV="1.097" item="OpSw 097" default="1" readOnly="yes">
+            <variable CV="csOpSw.097" item="OpSw 097" default="1" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw97</label>
             </variable>
-            <variable CV="1.098" item="OpSw 098" default="1" readOnly="yes">
+            <variable CV="csOpSw.098" item="OpSw 098" default="1" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw98</label>
             </variable>
-            <variable CV="1.099" item="OpSw 099" default="0" readOnly="yes">
+            <variable CV="csOpSw.099" item="OpSw 099" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw99</label>
             </variable>
 
 
-            <variable CV="1.100" item="OpSw 100" default="0" readOnly="yes">
+            <variable CV="csOpSw.100" item="OpSw 100" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw100</label>
             </variable>
-            <variable CV="1.101" item="OpSw 101" default="1" readOnly="yes">
+            <variable CV="csOpSw.101" item="OpSw 101" default="1" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw101</label>
             </variable>
-            <variable CV="1.102" item="OpSw 102" default="1" readOnly="yes">
+            <variable CV="csOpSw.102" item="OpSw 102" default="1" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw102</label>
             </variable>
-            <variable CV="1.103" item="OpSw 103" default="0" readOnly="yes">
+            <variable CV="csOpSw.103" item="OpSw 103" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw103</label>
             </variable>
-            <variable CV="1.104" item="OpSw 104" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.104" item="OpSw 104" default="0" readOnly="yes" infoOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw104</label>
             </variable>
-            <variable CV="1.105" item="OpSw 105" default="0" readOnly="yes">
+            <variable CV="csOpSw.105" item="OpSw 105" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw105</label>
             </variable>
-            <variable CV="1.106" item="OpSw 106" default="0" readOnly="yes">
+            <variable CV="csOpSw.106" item="OpSw 106" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw106</label>
             </variable>
-            <variable CV="1.107" item="OpSw 107" default="0" readOnly="yes">
+            <variable CV="csOpSw.107" item="OpSw 107" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw107</label>
             </variable>
-            <variable CV="1.108" item="OpSw 108" default="0" readOnly="yes">
+            <variable CV="csOpSw.108" item="OpSw 108" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw108</label>
             </variable>
-            <variable CV="1.109" item="OpSw 109" default="0" readOnly="yes">
+            <variable CV="csOpSw.109" item="OpSw 109" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw109</label>
             </variable>
 
-            <variable CV="1.110" item="OpSw 110" default="0" readOnly="yes">
+            <variable CV="csOpSw.110" item="OpSw 110" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw110</label>
             </variable>
-            <variable CV="1.111" item="OpSw 111" default="0" readOnly="yes">
+            <variable CV="csOpSw.111" item="OpSw 111" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw111</label>
             </variable>
-            <variable CV="1.112" item="OpSw 112" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.112" item="OpSw 112" default="0" readOnly="yes" infoOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw112</label>
             </variable>
