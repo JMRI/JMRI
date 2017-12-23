@@ -7,7 +7,9 @@ import java.util.Comparator;
  * that otherwise as Strings.
  *
  * @author	Bob Jacobsen Copyright (C) 2013
+ * @deprecated 4.11.1 in favor of more-general @{link AlphanumComparator}
  */
+@Deprecated
 public class PreferNumericComparator implements Comparator<Object> {
 
     public PreferNumericComparator() {
