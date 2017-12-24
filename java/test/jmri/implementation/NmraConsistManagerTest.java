@@ -12,11 +12,6 @@ import org.junit.Test;
  */
 public class NmraConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
 
-    @Test
-    public void testCtor2(){
-        Assert.assertNotNull("NmraConsistManager Default Constructor",new NmraConsistManager());
-    }
-
     // The minimal setup for log4J
     @Before
     @Override
