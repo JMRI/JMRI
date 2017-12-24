@@ -59,8 +59,6 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         super(title, false, false);
         _shape = ps;
         super.setTitle(Bundle.getMessage(which, Bundle.getMessage(title)));
-        // closingEvent will re-establish listener
-        _shape.removeListener();
 
         _lineWidth = 1;
         _lineColor = Color.black;
@@ -72,6 +70,8 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         if (_shape == null) {
             _contentPanel.add(makeCreatePanel(title));
         } else {
+            // closingEvent will re-establish listener
+            _shape.removeListener();            
             _contentPanel.add(makeEditPanel());
         }
 
