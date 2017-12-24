@@ -19,10 +19,6 @@ public class DccConsistManager extends AbstractConsistManager {
 
     private AddressedProgrammerManager opsProgManager = null;
 
-    public DccConsistManager() {
-        this(jmri.InstanceManager.getDefault(AddressedProgrammerManager.class));
-    }
-
     public DccConsistManager(AddressedProgrammerManager apm) {
         super();
         opsProgManager = apm;
