@@ -30,12 +30,6 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     }
 
     @Override
-    public Object visit(ASTgo node, Object data) {
-        log.debug("Go " + node.jjtGetValue());
-        return node.childrenAccept(this, data);
-    }
-
-    @Override
     public Object visit(ASTgl node, Object data) {
         log.debug("GL " + node.jjtGetValue());
         return node.childrenAccept(this, data);
