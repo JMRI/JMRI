@@ -14,13 +14,9 @@ import jmri.InstanceManager;
  * @author Paul Bender Copyright (C) 2003
  * @author Randall Wood Copyright (C) 2013
  */
-public class NmraConsistManager extends DccConsistManager {
+public class NmraConsistManager extends AbstractConsistManager {
 
     private CommandStation commandStation = null;
-
-    public NmraConsistManager() {
-        this(InstanceManager.getDefault(CommandStation.class));
-    }
 
     public NmraConsistManager(CommandStation cs) {
         super();
@@ -39,5 +35,23 @@ public class NmraConsistManager extends DccConsistManager {
         consist = new NmraConsist((DccLocoAddress) address, commandStation);
         consistTable.put(address, consist);
         return (consist);
+    }
+
+    /**
+     * This implementation does NOT support Command Station consists, so return
+     * false.
+     */
+    @Override
+    public boolean isCommandStationConsistPossible() {
+        return false;
+    }
+
+    /**
+     * Does a CS consist require a separate consist address? This implementation
+     * does not support Command Station consists, so return false
+     */
+    @Override
+    public boolean csConsistNeedsSeperateAddress() {
+        return false;
     }
 }
