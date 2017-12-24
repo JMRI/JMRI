@@ -11,8 +11,6 @@ import java.util.Optional;
 import java.util.ServiceLoader;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.implementation.DccConsistManager;
-import jmri.implementation.NmraConsistManager;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -688,14 +686,6 @@ public final class InstanceManager {
     @Deprecated
     static public void setCommandStation(CommandStation p) {
         store(p, CommandStation.class);
-
-        // since there is a command station available, use
-        // the NMRA consist manager instead of the generic consist
-        // manager.
-        if (getNullableDefault(ConsistManager.class) == null
-                || getDefault(ConsistManager.class).getClass() == DccConsistManager.class) {
-            setConsistManager(new NmraConsistManager());
-        }
     }
 
     /**
@@ -743,14 +733,6 @@ public final class InstanceManager {
     @Deprecated
     static public void setAddressedProgrammerManager(AddressedProgrammerManager p) {
         store(p, AddressedProgrammerManager.class);
-
-        // Now that we have a programmer manager, install the default
-        // Consist manager if Ops mode is possible, and there isn't a
-        // consist manager already.
-        if (getDefault(AddressedProgrammerManager.class).isAddressedModePossible()
-                && getNullableDefault(ConsistManager.class) == null) {
-            setConsistManager(new DccConsistManager());
-        }
     }
 
     // Needs to have proxy manager converted to work
