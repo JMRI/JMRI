@@ -102,7 +102,7 @@
         </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:token">
-      <xs:minLength value="2"/>
+      <xs:minLength value="3"/>
     </xs:restriction>
   </xs:simpleType>
   
