@@ -139,7 +139,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         railCountLabel.setPreferredSize(new java.awt.Dimension(256, 16));
         railCountLabel.setSize(new java.awt.Dimension(256, 16));
 
-        mainRailCountSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, 3, 1));
+        mainRailCountSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 3, 1));
         mainRailCountSpinner.setToolTipText(Bundle.getMessage("MainRailCountToolTip"));
         mainRailCountSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         mainRailCountSpinner.setName(""); // NOI18N
@@ -152,7 +152,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             }
         });
 
-        sideRailCountSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, 3, 1));
+        sideRailCountSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 3, 1));
         sideRailCountSpinner.setToolTipText(Bundle.getMessage("SideRailCountToolTip"));
         sideRailCountSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
         sideRailCountSpinner.setName(""); // NOI18N
@@ -1064,9 +1064,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO.setMainBallastWidth(0);
         tempLTDO.setMainBlockLineWidth(4);
         tempLTDO.setMainRailColor(Color.BLACK);
-        tempLTDO.setMainRailCount(0);
+        tempLTDO.setMainRailCount(1);
         tempLTDO.setMainRailGap(0);
-        tempLTDO.setMainRailWidth(1);
+        tempLTDO.setMainRailWidth(3);
         tempLTDO.setMainTieColor(Color.BLACK);
         tempLTDO.setMainTieGap(0);
         tempLTDO.setMainTieLength(0);
@@ -1075,7 +1075,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO.setSideBallastWidth(0);
         tempLTDO.setSideBlockLineWidth(2);
         tempLTDO.setSideRailColor(Color.BLACK);
-        tempLTDO.setSideRailCount(0);
+        tempLTDO.setSideRailCount(1);
         tempLTDO.setSideRailGap(0);
         tempLTDO.setSideRailWidth(1);
         tempLTDO.setSideTieColor(Color.BLACK);
@@ -1087,20 +1087,20 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO = new LayoutTrackDrawingOptions(draftingPresetName);
         tempLTDO.setMainBallastColor(Color.BLACK);
         tempLTDO.setMainBallastWidth(0);
-        tempLTDO.setMainBlockLineWidth(4);
+        tempLTDO.setMainBlockLineWidth(2);
         tempLTDO.setMainRailColor(Color.DARK_GRAY);
-        tempLTDO.setMainRailCount(0);
+        tempLTDO.setMainRailCount(1);
         tempLTDO.setMainRailGap(0);
-        tempLTDO.setMainRailWidth(1);
+        tempLTDO.setMainRailWidth(2);
         tempLTDO.setMainTieColor(Color.BLACK);
         tempLTDO.setMainTieGap(0);
         tempLTDO.setMainTieLength(0);
         tempLTDO.setMainTieWidth(0);
         tempLTDO.setSideBallastColor(Color.BLACK);
         tempLTDO.setSideBallastWidth(0);
-        tempLTDO.setSideBlockLineWidth(2);
+        tempLTDO.setSideBlockLineWidth(1);
         tempLTDO.setSideRailColor(Color.DARK_GRAY);
-        tempLTDO.setSideRailCount(0);
+        tempLTDO.setSideRailCount(1);
         tempLTDO.setSideRailGap(0);
         tempLTDO.setSideRailWidth(1);
         tempLTDO.setSideTieColor(Color.BLACK);
