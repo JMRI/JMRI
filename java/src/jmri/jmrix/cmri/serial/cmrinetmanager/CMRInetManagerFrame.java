@@ -179,39 +179,39 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
         // --------------------------
         haltPollButton.setVisible(true);
         haltPollButton.setToolTipText(Bundle.getMessage("HaltPollButtonTip") );
-		haltPollButton.addActionListener(new java.awt.event.ActionListener()
+	haltPollButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent e) {
 					haltpollButtonActionPerformed(e);
 				}
 			});
-		panel3.add(haltPollButton);
+	panel3.add(haltPollButton);
 
         // --------------------------
         // Set up Open monitor button
         // --------------------------
         monitorButton.setVisible(true);
         monitorButton.setToolTipText(Bundle.getMessage("MonitorButtonTip") );
-		monitorButton.addActionListener(new java.awt.event.ActionListener()
+	monitorButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent e) {
 					monitorButtonActionPerformed(e);
 				}
 			});
-		panel3.add(monitorButton);
+	panel3.add(monitorButton);
 
         // -----------------------------
         // Set up Network Metrics button
         // -----------------------------
-        netStatsButton.setVisible(true);
+        netStatsButton.setVisible(false);
         netStatsButton.setToolTipText(Bundle.getMessage("NetStatsButtonTip") );
-		netStatsButton.addActionListener(new java.awt.event.ActionListener()
+	netStatsButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent e) {
 					netStatsButtonActionPerformed(e);
 				}
 			});
-		panel3.add(netStatsButton);
+	panel3.add(netStatsButton);
         panel3.add(Box.createRigidArea(new Dimension(30,0)));
 
         // ------------------
@@ -219,13 +219,13 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
         // ------------------
         doneButton.setVisible(true);
         doneButton.setToolTipText(Bundle.getMessage("DoneButtonTip") );
-		doneButton.addActionListener(new java.awt.event.ActionListener()
+	doneButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent e) {
 					doneButtonActionPerformed();
 				}
 			});
-		panel3.add(doneButton);
+	panel3.add(doneButton);
         contentPane13.add(panel3);
 
         addHelpMenu("package.jmri.jmrix.cmri.serial.CMRInetManagerFrame", true);
