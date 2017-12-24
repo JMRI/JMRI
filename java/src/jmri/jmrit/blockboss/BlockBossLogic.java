@@ -1200,7 +1200,8 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      * @param sh signal head object
      * @return never null
      */
-    public static BlockBossLogic getStoppedObject(SignalHead sh) {
+    @Nonnull
+    public static BlockBossLogic getStoppedObject(@Nonnull SignalHead sh) {
         BlockBossLogic b = null;
 
         for (BlockBossLogic bbl : bblList) {
