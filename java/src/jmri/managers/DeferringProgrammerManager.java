@@ -1,12 +1,16 @@
 package jmri.managers;
 
 import java.util.ArrayList;
+import java.util.Set;
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
+import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
+import jmri.implementation.AbstractInstanceInitializer;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -153,5 +157,28 @@ public class DeferringProgrammerManager implements AddressedProgrammerManager, G
         return InstanceManager.getDefault(AddressedProgrammerManager.class).getDefaultModes();
     }
 
+    @ServiceProvider(service=InstanceInitializer.class)
+    public static final class Initializer extends AbstractInstanceInitializer {
+
+        @Override
+        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+            if (type == AddressedProgrammerManager.class) {
+                return new DeferringProgrammerManager();
+            }
+            if (type == GlobalProgrammerManager.class) {
+                return new DeferringProgrammerManager();
+            }
+            return super.getDefault(type);
+        }
+
+        @Override
+        public Set<Class<?>> getInitalizes() {
+            Set<Class<?>> set = super.getInitalizes();
+            set.add(AddressedProgrammerManager.class);
+            set.add(GlobalProgrammerManager.class);
+            return set;
+        }
+
+    }
     private final static Logger log = LoggerFactory.getLogger(DeferringProgrammerManager.class);
 }

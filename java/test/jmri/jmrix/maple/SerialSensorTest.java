@@ -13,9 +13,6 @@ import org.junit.Test;
  */
 public class SerialSensorTest {
 
-//    private SerialTrafficControlScaffold tcis = null;
-    private MapleSystemConnectionMemo _memo = null;
-
     @Test
     public void testCTor() {
         SerialSensor t = new SerialSensor("KS1"); // does not need the _memo
@@ -27,8 +24,7 @@ public class SerialSensorTest {
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
-//        tcis = new SerialTrafficControlScaffold();
-        _memo = new MapleSystemConnectionMemo("K", "Maple");
+        new MapleSystemConnectionMemo("K", "Maple");
     }
 
     @After

@@ -30,9 +30,14 @@ public class ConsistController extends AbstractController implements ProgListene
     public ConsistController() {
         //  writeFile needs to be separate method
         if (InstanceManager.getDefault(WiThrottlePreferences.class).isUseWiFiConsist()) {
-            manager = new WiFiConsistManager();
-            InstanceManager.store(manager, ConsistManager.class);
-            log.debug("Using WiFiConsisting");
+            try {
+               manager = new WiFiConsistManager();
+               InstanceManager.store(manager, ConsistManager.class);
+               log.debug("Using WiFiConsisting");
+            } catch (NullPointerException npe) {
+               log.error("Attempting to use WiFiConsisting, but no Command Station available");
+               manager = null;
+            }
         } else {
             manager = InstanceManager.getNullableDefault(ConsistManager.class);
             log.debug("Using JMRIConsisting");

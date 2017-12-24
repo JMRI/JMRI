@@ -84,10 +84,7 @@ TOKEN :
 
 // Constants and commands used for handshake mode only.
 | < SRCP: <S><R><C><P>>
-| < GO: <G><O>>
 | < VERSION: (["0"-"9"])+"."(["0"-"9"])+"."(["0"-"9"])+>
-| <PROTOCOLLITTERAL: <P><R><O><T><O><C><O><L>>
-| <CONNECTIONMODELITTERAL: <C><O><N><N><E><C><T><I><O><N><M><O><D><E>>
 
 // Client return codes
 | < INFO: <I><N><F><O>>
@@ -313,17 +310,6 @@ SimpleNode devicegroup():{Token t;}
     log.debug("DeviceGroup Production");
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
-  }
-}
-
-
-SimpleNode go():{Token t;}
-{
-  t=<GO>
-  {
-     log.debug("GO Production");
-    jjtThis.jjtSetValue(t.image);
-     return jjtThis;
   }
 }
 

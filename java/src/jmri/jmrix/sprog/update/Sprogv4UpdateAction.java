@@ -10,7 +10,10 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a SprogIIUpdateFrame object
  *
  * @author	Andrew crosland Copyright (C) 2004
+ * 
+ * @deprecated since 4.11.1; supports uncommon Sprog versions that are confused with Sprog II versions.
  */
+@Deprecated
 public class Sprogv4UpdateAction extends SprogUpdateAction {
 
     public Sprogv4UpdateAction(String s,SprogSystemConnectionMemo memo) {
