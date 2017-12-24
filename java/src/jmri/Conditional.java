@@ -185,7 +185,11 @@ public interface Conditional extends NamedBean {
     public static final int ACTION_MANUAL_RUN_WARRANT = 48;
     public static final int ACTION_SET_TRAIN_NAME = 49;
     public static final int ACTION_SET_BLOCK_VALUE = 50;
-    public static final int NUM_ACTION_TYPES = 50;
+    // EntryExit Actions
+    public static final int ACTION_SET_NXPAIR_ENABLED = 51;
+    public static final int ACTION_SET_NXPAIR_DISABLED = 52;
+    public static final int ACTION_SET_NXPAIR_SEGMENT = 53;
+    public static final int NUM_ACTION_TYPES = 53;
 
     /**
      * ***********************************************************************************
@@ -400,7 +404,10 @@ public interface Conditional extends NamedBean {
         ITEM_TYPE_OBLOCK, //  ACTION_SET_BLOCK_IN_SERVICE = 47;
         ITEM_TYPE_WARRANT, // ACTION_MANUAL_RUN_WARRANT 48
         ITEM_TYPE_WARRANT, // ACTION_SET_TRAIN_NAME 49
-        ITEM_TYPE_OBLOCK //ACTION_SET_BLOCK_VALUE
+        ITEM_TYPE_OBLOCK, //ACTION_SET_BLOCK_VALUE 50
+        ITEM_TYPE_ENTRYEXIT, //ACTION_SET_NXPAIR_ENABLED 51
+        ITEM_TYPE_ENTRYEXIT, //ACTION_SET_NXPAIR_DISABLED 52
+        ITEM_TYPE_ENTRYEXIT //ACTION_SET_NXPAIR_SEGMENT 53
 };
 
     // Map Sensor Type comboBox items to Sensor action types
@@ -506,6 +513,15 @@ public interface Conditional extends NamedBean {
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
     // OF STATIC FINAL ELEMENTS??
     public static final int[] ITEM_TO_SCRIPT_ACTION = {ACTION_RUN_SCRIPT, ACTION_JYTHON_COMMAND};
+
+    // Map EntryExit Type comboBox items to EntryExit action types
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure,
+    // just have to accept these exposed
+    // arrays. Someday...
+    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY
+    // OF STATIC FINAL ELEMENTS??
+    public static final int[] ITEM_TO_ENTRYEXIT_ACTION = {ACTION_SET_NXPAIR_ENABLED,
+        ACTION_SET_NXPAIR_DISABLED, ACTION_SET_NXPAIR_SEGMENT};
 
     // Map Misc Type comboBox items to Misc action types
     @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
