@@ -1719,7 +1719,6 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <tooltip>Configure the pulse duration for Output 16 provided pulse is turned on (CV113=7 and CV47=13).</tooltip>
             </variable>
 
-<!-- Added by Cees Baarda -->
 <!-- Function mapping variables-->
             <variable CV="141" mask="VVVVVVVV" item="Set input 1" default="0" writeOnly="no" include="4018">
                 <decVal min="0" max="255"/>
@@ -4414,7 +4413,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         </column>
     </pane>
 
-<!-- Panes added by Cees Baarda NL 2017 for JMRI 4.11-->
+<!-- Function Mapping panes, since JMRI 4.11-->
     <pane include="4018">
         <name>Function map</name>
         <name xml:lang="de">Funktionskarte</name>
@@ -6349,18 +6348,18 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <text>&lt;html&gt;&lt;b&gt; 16 &lt;/b&gt;&lt;/html&gt;</text>
             </label>
         </griditem>
-<!--End Line 34 bitnumbers -->
+<!-- End Line 34 bitnumbers -->
 
             </grid>
         </row>
       </column>
     </pane>
 
-<!--TODO: add Function Mapping Pane for DR4024 -->
+<!-- TODO: add Function Mapping Pane for DR4024 -->
 
-<!--End of Function Mapping Panes -->
+<!-- End of Function Mapping Panes -->
 
-<!--ReadMe pane -->
+<!-- ReadMe pane -->
 <pane include="4018">
     <name>ReadMe</name>
     <name xml:lang="nl">LeesMij</name>
@@ -6395,6 +6394,5 @@ The resistor ensures that there is a resistance on the programming&lt;br/&gt;tra
         </label>
     </column>
 </pane>
-<!-- End Tabs Added by Cees Baarda 2017 -->
 
 </decoder-config>
