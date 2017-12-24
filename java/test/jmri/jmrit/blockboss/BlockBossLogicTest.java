@@ -180,6 +180,18 @@ public class BlockBossLogicTest extends TestCase {
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "missing signal is green, show yellow");  // wait and test
     }
 
+    // check for basic not-fail if no signal name was set
+    public void testSimpleBlockNoSignal() throws jmri.JmriException {
+
+        try { 
+            p = new BlockBossLogic(null);
+        } catch (java.lang.IllegalArgumentException e) {
+            // this is expected
+        }
+        jmri.util.JUnitAppender.assertWarnMessage("Signal Head \"null\" was not found");
+    }
+
+
     // check that user names were preserved
     public void testUserNamesRetained() {
         BlockBossLogic p = new BlockBossLogic("IH1");
