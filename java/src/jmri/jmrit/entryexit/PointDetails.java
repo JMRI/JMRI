@@ -10,6 +10,7 @@ import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -65,6 +66,15 @@ public class PointDetails {
 
     public void setPanel(LayoutEditor panel) {
         this.panel = panel;
+        // find the panel that actually contains this sensor, default to the supplied panel
+        for (LayoutEditor layout : InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList()) {
+            for (SensorIcon si : layout.sensorList) {
+                if (sensor == si.getNamedBean()) {
+                    this.panel = layout;
+                    return;
+                }
+            }
+        }
     }
 
     void setSensor(Sensor sen) {
@@ -583,8 +593,8 @@ public class PointDetails {
         }
 
         Sensor sen = (Sensor) getRefObject();
-        log.debug("looking at Sensor " + sen.getDisplayName());
-        log.debug("Sensor location " + getRefLocation());
+        log.debug("  Looking at sensor '{}' on panel '{}' at '{}'",
+                sen.getDisplayName(), getPanel().getLayoutName(), getRefLocation());
         if (getRefLocation() instanceof PositionablePoint) {
             PositionablePoint p = (PositionablePoint) getRefLocation();
             if (p.getEastBoundSensor() == sen) {
@@ -685,6 +695,7 @@ public class PointDetails {
                 }
             }
         }
+
         if (signal instanceof SignalMast) {
             setSignalMast(((SignalMast) signal));
         } else if (signal instanceof SignalHead) {

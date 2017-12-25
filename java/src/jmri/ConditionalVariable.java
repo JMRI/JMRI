@@ -256,7 +256,7 @@ public class ConditionalVariable {
                     bean = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(_name);
                     break;
                 case Conditional.ITEM_TYPE_ENTRYEXIT:
-                    bean = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getBySystemName(_name);
+                    bean = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(_name);
                     break;
                 default:
                     log.error("Type " + itemType + " not set for " + _name);

@@ -76,6 +76,8 @@
         <li>Ron W. Auld, whose llnmon program formed the basis for
         the LocoNet monitoring <a name="B" id="B"></a></li>
 
+        <li>Cees Baarda, who added the DigiRails DR4018 decoder definition</li>
+        
         <li>Harald Barth, who improved the SRCP implementation</li>
 
         <li>Michal Basta, who contributed the Czech
