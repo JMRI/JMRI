@@ -63,7 +63,7 @@
             <mode>OPSACCEXTBYTEMODE</mode>
         </programming>
         <variables>
-        <variable CV="18" item="Long Address" default="3" writeOnly="yes">
+        <variable CV="18" item="Long Address" default="3" opsOnly="yes">
             <splitVal highCV="17" upperMask="XXXXXVVV" min="1" max="2043"/>
             <label>Signal Address</label>
         </variable>

@@ -1,9 +1,9 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -19,11 +19,11 @@ public class IconItemPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JmriJFrame jf = new JmriJFrame();
+        DisplayFrame df = new DisplayFrame();
         EditorScaffold es = new EditorScaffold();
-        IconItemPanel t = new IconItemPanel(jf,"test",es);
+        IconItemPanel t = new IconItemPanel(df,"test",es);
         Assert.assertNotNull("exists",t);
-        JUnitUtil.dispose(jf);
+        JUnitUtil.dispose(df);
     }
 
     // The minimal setup for log4J

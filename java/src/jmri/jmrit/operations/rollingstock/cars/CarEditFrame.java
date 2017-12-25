@@ -794,12 +794,15 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             if (_car.getKernel() != null) {
                 List<Car> cars = _car.getKernel().getCars();
                 if (cars.size() > 1) {
-                    if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("carInKernel"),
-                            new Object[]{_car.toString()}), MessageFormat.format(Bundle.getMessage("carPartKernel"),
-                            new Object[]{_car.getKernelName()}), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("carInKernelLoad"),
+                            new Object[]{_car.toString(), _car.getLoadName()}),
+                            MessageFormat.format(Bundle.getMessage("carPartKernel"),
+                                    new Object[]{_car.getKernelName()}),
+                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                         // go through the entire list and change the loads for all cars
                         for (Car car : cars) {
-                            if (InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(), _car.getLoadName())) {
+                            if (InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(),
+                                    _car.getLoadName())) {
                                 car.setLoadName(_car.getLoadName());
                             }
                         }
@@ -825,16 +828,20 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
                     .getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
         } else {
             // update location only if it has changed
-            if (_car.getLocation() == null || !_car.getLocation().equals(locationBox.getSelectedItem())
-                    || _car.getTrack() == null || !_car.getTrack().equals(trackLocationBox.getSelectedItem())) {
+            if (_car.getLocation() == null ||
+                    !_car.getLocation().equals(locationBox.getSelectedItem()) ||
+                    _car.getTrack() == null ||
+                    !_car.getTrack().equals(trackLocationBox.getSelectedItem())) {
                 setLocation(_car);
                 // is this car part of a kernel?
                 if (_car.getKernel() != null) {
                     List<Car> cars = _car.getKernel().getCars();
                     if (cars.size() > 1) {
                         if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-                                .getMessage("carInKernel"), new Object[]{_car.toString()}), MessageFormat
-                                .format(Bundle.getMessage("carPartKernel"), new Object[]{_car.getKernelName()}),
+                                .getMessage("carInKernelLocation"),
+                                new Object[]{_car.toString(), _car.getLocationName(), _car.getTrackName()}),
+                                MessageFormat
+                                        .format(Bundle.getMessage("carPartKernel"), new Object[]{_car.getKernelName()}),
                                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                             // go through the entire list and change the location for all cars
                             for (Car car : cars) {
