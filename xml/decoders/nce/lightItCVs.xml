@@ -1,111 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <variables include="Light-It - Mobile mode,Illuminator - Mobile mode">
-        <variable CV="132" item="W/G Function" default="0" writeOnly="yes">
+        <variable CV="132" item="W/G Function" default="0" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumFunction.xml"/>
             <label>White/Green Function</label>
         </variable>
-        <variable CV="133" item="Y Function" default="1" writeOnly="yes">
+        <variable CV="133" item="Y Function" default="1" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumFunction.xml"/>
             <label>Yellow Function</label>
         </variable>
-        <variable CV="134" item="R Function" default="2" writeOnly="yes">
+        <variable CV="134" item="R Function" default="2" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumFunction.xml"/>
             <label>Red Function</label>
         </variable>
     </variables>
     <variables exclude="Light-It - Signal mode,Illuminator - Signal mode">
-        <variable CV="137" item="W/G Effect" default="1" writeOnly="yes">
+        <variable CV="137" item="W/G Effect" default="1" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumLightEffect.xml"/>
             <label>White/Green Effect</label>
         </variable>
-        <variable CV="138" item="Y Effect" default="1" writeOnly="yes">
+        <variable CV="138" item="Y Effect" default="1" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumLightEffect.xml"/>
             <label>Yellow Effect</label>
         </variable>
-        <variable CV="139" item="R Effect" default="1" writeOnly="yes">
+        <variable CV="139" item="R Effect" default="1" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumLightEffect.xml"/>
             <label>Red Effect</label>
         </variable>
     </variables>
-    <variable CV="140" item="W/G Brightness" default="255" writeOnly="yes">
+    <variable CV="140" item="W/G Brightness" default="255" opsOnly="yes">
         <decVal/>
         <label>White/Green Brightness</label>
     </variable>
-    <variable CV="141" item="Y Brightness" default="255" writeOnly="yes">
+    <variable CV="141" item="Y Brightness" default="255" opsOnly="yes">
         <decVal/>
         <label>Yellow Brightness</label>
     </variable>
-    <variable CV="142" item="R Brightness" default="255" writeOnly="yes">
+    <variable CV="142" item="R Brightness" default="255" opsOnly="yes">
         <decVal/>
         <label>Red Brightness</label>
     </variable>
     <variables include="Light-It - Signal mode,mode,Illuminator - Signal mode">
-        <variable CV="145" item="Aspect 0" default="0" writeOnly="yes">
+        <variable CV="145" item="Aspect 0" default="0" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumSignalEffect.xml"/>
             <label>Aspect 0</label>
         </variable>
-        <variable CV="146" item="Aspect 1" default="1" writeOnly="yes">
+        <variable CV="146" item="Aspect 1" default="1" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumSignalEffect.xml"/>
             <label>Aspect 1</label>
         </variable>
-        <variable CV="147" item="Aspect 2" default="2" writeOnly="yes">
+        <variable CV="147" item="Aspect 2" default="2" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumSignalEffect.xml"/>
             <label>Aspect 2</label>
         </variable>
-        <variable CV="148" item="Aspect 3" default="3" writeOnly="yes">
+        <variable CV="148" item="Aspect 3" default="3" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumSignalEffect.xml"/>
             <label>Aspect 3</label>
         </variable>
-        <variable CV="149" item="Aspect 4" default="4" writeOnly="yes">
+        <variable CV="149" item="Aspect 4" default="4" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumSignalEffect.xml"/>
             <label>Aspect 4</label>
         </variable>
-        <variable CV="150" item="Aspect 5" default="5" writeOnly="yes">
+        <variable CV="150" item="Aspect 5" default="5" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumSignalEffect.xml"/>
             <label>Aspect 5</label>
         </variable>
-        <variable CV="151" item="Aspect 6" default="6" writeOnly="yes">
+        <variable CV="151" item="Aspect 6" default="6" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumSignalEffect.xml"/>
             <label>Aspect 6</label>
         </variable>
-        <variable CV="152" item="Aspect 7" default="7" writeOnly="yes">
+        <variable CV="152" item="Aspect 7" default="7" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumSignalEffect.xml"/>
             <label>Aspect 7</label>
         </variable>
-        <variable CV="153" item="Aspect 8" default="8" writeOnly="yes">
+        <variable CV="153" item="Aspect 8" default="8" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumSignalEffect.xml"/>
             <label>Aspect 8</label>
         </variable>
-        <variable CV="154" item="Aspect 9" default="9" writeOnly="yes">
+        <variable CV="154" item="Aspect 9" default="9" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumSignalEffect.xml"/>
             <label>Aspect 9</label>
         </variable>
-        <variable CV="155" item="Aspect 10" default="10" writeOnly="yes">
+        <variable CV="155" item="Aspect 10" default="10" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumSignalEffect.xml"/>
             <label>Aspect 10</label>
         </variable>
-        <variable CV="156" item="Aspect 11" default="11" writeOnly="yes">
+        <variable CV="156" item="Aspect 11" default="11" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumSignalEffect.xml"/>
             <label>Aspect 11</label>
         </variable>
-        <variable CV="157" item="Aspect 12" default="12" writeOnly="yes">
+        <variable CV="157" item="Aspect 12" default="12" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumSignalEffect.xml"/>
             <label>Aspect 12</label>
         </variable>
-        <variable CV="158" item="Aspect 13" default="13" writeOnly="yes">
+        <variable CV="158" item="Aspect 13" default="13" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumSignalEffect.xml"/>
             <label>Aspect 13</label>
         </variable>
-        <variable CV="159" item="Aspect 14" default="14" writeOnly="yes">
+        <variable CV="159" item="Aspect 14" default="14" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumSignalEffect.xml"/>
             <label>Aspect 14</label>
         </variable>
-        <variable CV="160" item="Aspect 15" default="15" writeOnly="yes">
+        <variable CV="160" item="Aspect 15" default="15" opsOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItEnumSignalEffect.xml"/>
             <label>Aspect 15</label>
         </variable>
-        <variable CV="161" item="Aspect 30" default="30" readOnly="yes">
+        <variable CV="161" item="Aspect 30" default="30" infoOnly="yes">
             <enumVal>
                 <enumChoice  value="30">
                     <choice>30 - All Flashing</choice>
@@ -113,7 +113,7 @@
             </enumVal>
             <label>Aspect 30</label>
         </variable>
-        <variable CV="162" item="Aspect 31" default="31" readOnly="yes">
+        <variable CV="162" item="Aspect 31" default="31" infoOnly="yes">
             <enumVal>
                 <enumChoice value="31">
                     <choice>31 - All Off</choice>

@@ -58,7 +58,11 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     }
 
     public int getOpCode() {
-        return _dataChars[0];
+        try {
+            return _dataChars[0];
+        } catch(ArrayIndexOutOfBoundsException e) {
+            return 0;
+        }
     }
 
     public String getOpCodeHex() {

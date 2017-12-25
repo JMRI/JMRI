@@ -64,7 +64,9 @@
       <p>The "Preview" pane has a label that states how many image
       files are referenced in the node. Beneath each image (icon)
       is a label that states the "scale" at which the image is
-      displayed. Below the icons are "View on:" combo boxes
+      displayed.
+      <span class="since">since 4.9.7</span>
+      Below the icons are "View on:" combo boxes
       that allow you to choose a  background for the icons.
       This may help you determine what parts of the icon are
       opaque and what parts are transparent.</p>

@@ -1,7 +1,7 @@
 package jmri.jmrit.consisttool;
 
 import jmri.Consist;
-import jmri.DccLocoAddress;
+import jmri.LocoAddress;
 
 /**
  * Consist Manager used for consist tool tests.
@@ -18,7 +18,7 @@ public class TestConsistManager extends jmri.implementation.AbstractConsistManag
      * Add a new Consist with the given address to the consistTable/consistList
      */
     @Override
-    protected Consist addConsist(DccLocoAddress address){
+    protected Consist addConsist(LocoAddress address){
          // no operation for now.
          return null;
     }

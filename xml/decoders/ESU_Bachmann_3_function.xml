@@ -39,6 +39,7 @@
         <label xml:lang="it">Volt Partenza</label>
         <label xml:lang="fr">V démarr.v</label>
         <label xml:lang="de">Startspannung</label>
+        <label xml:lang="ca">Voltatge Arrencada</label>
       </variable>
       <variable CV="3" default="8" item="Accel" tooltip="This value multiplied by 0.5 gives the time from stop to maximum speed, range 0-63">
         <decVal min="0" max="63"/>
@@ -46,6 +47,7 @@
         <label xml:lang="it">Accellerazione (0-63)</label>
         <label xml:lang="fr">Accelération (0-63)</label>
         <label xml:lang="de">Anfahrverzögerung (0-63)</label>
+        <label xml:lang="ca">Acceleració (o-63)</label>
       </variable>
       <variable CV="4" default="6" item="Decel" tooltip="This value multiplied by 0.5 gives the time from maximum speed to stop, range 0-63">
         <decVal min="0" max="63"/>
@@ -53,12 +55,14 @@
         <label xml:lang="it">Decellerazione (0-63)</label>
         <label xml:lang="fr">Décélération (0-63)</label>
         <label xml:lang="de">Bremszeit (0-63)</label>
+        <label xml:lang="ca">Desacceleració (o-63)</label>
       </variable>
       <variable CV="5" default="42" item="Vhigh" tooltip="Maximum speed of locomotive, range 0-63">
         <decVal min="0" max="63"/>
         <label>Maximum Speed</label>
         <label xml:lang="it">Volt Massimi (0-63):</label>
         <label xml:lang="de">Höchstgeschwindigkeit</label>
+        <label xml:lang="ca">Voltatge Màxim (o-63)</label>
       </variable>
       <variable CV="49" mask="XXXXXXXV" default="1" item="EMF Static Config">
         <enumVal>

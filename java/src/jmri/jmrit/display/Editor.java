@@ -1715,6 +1715,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         "Reporter", "Background", "MultiSensor", "Icon", "Text", "Block Contents"};
 
     /**
+     * Create editor for a given item type.
+     * Paths to default icons are fixed in code. Compare to respective icon package,
+     * eg. {@link #addSensorEditor()} and {@link SensorIcon}
+     *
      * @param name Icon editor's name
      * @return a window
      */
@@ -1750,7 +1754,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             } else if ("BlockLabel".equals(name)) {
                 addBlockContentsEditor();
             } else {
-//                log.error("No such Icon Editor \""+name+"\"");
+                // log.error("No such Icon Editor \"{}\"", name);
                 return null;
             }
             // frame added in the above switch
@@ -1776,7 +1780,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     /**
-     * Add a label to the target
+     * Add a label to the target.
      */
     protected void addTextEditor() {
         String newLabel = JOptionPane.showInputDialog(this, Bundle.getMessage("PromptNewLabel"));
@@ -2049,13 +2053,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected void addLightEditor() {
         IconAdder editor = new IconAdder("Light");
         editor.setIcon(3, "StateOff",
-                "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
+                "resources/icons/smallschematics/lights/cross-on.png");
         editor.setIcon(2, "StateOn",
-                "resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif");
+                "resources/icons/smallschematics/lights/cross-off.png");
         editor.setIcon(0, "BeanStateInconsistent",
-                "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif");
+                "resources/icons/smallschematics/lights/cross-inconsistent.png");
         editor.setIcon(1, "BeanStateUnknown",
-                "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
+                "resources/icons/smallschematics/lights/cross-unknown.png");
 
         JFrameItem frame = makeAddIconFrame("Light", true, true, editor);
         _iconEditorFrame.put("Light", frame);

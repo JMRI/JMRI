@@ -19,9 +19,8 @@ import org.slf4j.LoggerFactory;
  */
 public class ImagePanel extends JPanel {
 
-    private Image back = null;
-    int imgWidth;
-    int imgHeight;
+    private BufferedImage back = null;
+    private BufferedImage clip = null;
 
     /**
      * Set background images for ImagePanel.
@@ -31,22 +30,37 @@ public class ImagePanel extends JPanel {
      * @param img Image to load as background
      */
     public void setImage(Image img) {
-        back = img;
+        back = (BufferedImage) img;
         repaint();
         log.debug("DrawPanel ready");
     }
-
-    //public Dimension getPreferredSize() {
-    //    return new Dimension(imgWidth, imgHeight);
-    //}
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (back != null) {
-            imgWidth = getWidth();
-            imgHeight = getHeight();
-            g.drawImage(back, 0, 0, imgWidth, imgHeight, this);
+            int imgWidth;
+            int imgHeight;
+            imgWidth = back.getWidth(this);
+            imgHeight = back.getHeight(this);
+            double frameRatio = (double) getWidth() / (double) getHeight();
+            double imgRatio = imgWidth / imgHeight;
+            log.debug("ratios: fr {} - img {}", frameRatio, imgRatio);
+
+            // maintain squares on non square panels, enlarge to fill full frame
+            if (frameRatio < imgRatio) { // image more oblong than frame
+                imgWidth = (int) (imgHeight * frameRatio); // clip width
+                // keep full imgHeight
+            } else { // image taller than frame
+                // keep full imgWidth
+                imgHeight = (int) (imgWidth / frameRatio); // clip height
+            }
+            // clip part op back image
+            clip = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
+            clip = back.getSubimage(0, 0, Math.min(imgWidth, back.getWidth(this)),
+                    Math.min(imgHeight, back.getWidth(this))); // catch clip size error on change to different pane
+
+            g.drawImage(clip, 0, 0, getWidth(), getHeight(), this);
         }
     }
 

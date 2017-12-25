@@ -21,6 +21,7 @@
       <text>Locomotive Information</text>
       <text xml:lang="it">Informazioni Locomotiva</text>
       <text xml:lang="de">Lokomotive Information</text>
+      <text xml:lang="ca">Informació de la locomotora</text>
     </label>
     <label>
       <text> </text>
@@ -29,12 +30,14 @@
       <text>(coming soon)</text>
       <text xml:lang="it">in arrivo</text>
       <text xml:lang="de">demnächst hier</text>
+      <text xml:lang="ca">Properament</text>
     </label>
     <separator/>
     <label>
       <text>Project Information</text>
       <text xml:lang="it">Informazioni Progetto</text>
       <text xml:lang="de">Projekt Information</text>
+      <text xml:lang="ca">Informació del projecte</text>
     </label>
     <label>
       <text> </text>
@@ -43,6 +46,7 @@
       <text>(coming soon)</text>
       <text xml:lang="it">in arrivo</text>
       <text xml:lang="de">demnächst hier</text>
+      <text xml:lang="ca">Properament</text>
     </label>
   </column>
 </pane>

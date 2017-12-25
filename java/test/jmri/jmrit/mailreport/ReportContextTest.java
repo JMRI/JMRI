@@ -24,7 +24,7 @@ public class ReportContextTest {
         ReportContext t = new ReportContext();
         Assert.assertNotNull("exists",t);
         
-        String output = t.getReport(false);
+        t.getReport(false);  // check it runs OK
     }
 
     @Test
