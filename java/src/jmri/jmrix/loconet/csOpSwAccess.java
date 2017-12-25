@@ -2,6 +2,7 @@
 package jmri.jmrix.loconet;
 
 import java.awt.event.ActionEvent;
+import javax.annotation.Nonnull;
 import javax.swing.Timer;
 import jmri.ProgListener;
 import org.slf4j.Logger;
@@ -25,7 +26,7 @@ public class csOpSwAccess implements LocoNetListener {
     private ProgListener p;
     private boolean doingWrite;
 
-    public csOpSwAccess(LocoNetSystemConnectionMemo memo, ProgListener p) {
+    public csOpSwAccess(@Nonnull LocoNetSystemConnectionMemo memo, @Nonnull ProgListener p) {
         this.memo = memo;
         this.p = p;
         // listen to the LocoNet
@@ -35,15 +36,12 @@ public class csOpSwAccess implements LocoNetListener {
         csOpSwsAreValid = false;
         cmdStnOpSwState = cmdStnOpSwStateType.IDLE;
     }
-    
-    public void setProgrammerListener(ProgListener p) {
+
+    public void setProgrammerListener(@Nonnull ProgListener p) {
         this.p = p;
     }
 
-
-
-
-    public void readCsOpSw(String opSw, ProgListener pL) throws ProgrammerException {
+    public void readCsOpSw(String opSw, @Nonnull ProgListener pL) throws ProgrammerException {
         log.debug("reading a cs opsw : {}", opSw);
         // Note: Only get here if decoder xml specifies LocoNetCsOpSwMode.
 
@@ -59,18 +57,19 @@ public class csOpSwAccess implements LocoNetListener {
 
         String[] parts;
         parts = opSw.split("\\.");
-        log.trace("splitting CV: {} becomes {} and {}", opSw, parts[0], parts[1]);
         ProgListener temp = pL;
         if ((parts.length == 2) &&
                (parts[0].equals("csOpSw")) &&
                 ((Integer.parseInt(parts[1])) >= 1) &&
                 (Integer.parseInt(parts[1]) <= 112)) {
+            log.trace("splitting CV: {} becomes {} and {}", opSw, parts[0], parts[1]);
             // a valid command station OpSw identifier was found
             log.trace("Valid typeWord = 1; attempting to read OpSw{}.", Integer.parseInt(parts[1]));
             log.trace("starting from state {}", cmdStnOpSwState);
             readCmdStationOpSw(Integer.parseInt(parts[1]));
             return;
         } else {
+            log.warn("Cannot perform Cs OpSw access: parts.length={}, parts[]={}",parts.length, parts);
             p = null;
             if (temp != null) {
                 temp.programmingOpReply(0,ProgListener.NotImplemented);
@@ -79,7 +78,7 @@ public class csOpSwAccess implements LocoNetListener {
         }
     }
 
-    public void writeCsOpSw(String opSw, int val, ProgListener pL) throws ProgrammerException {
+    public void writeCsOpSw(String opSw, int val, @Nonnull ProgListener pL) throws ProgrammerException {
         p = null;
         String[] parts = opSw.split("\\.");
         if (((val != 0) && (val != 1)) ||
@@ -116,26 +115,6 @@ public class csOpSwAccess implements LocoNetListener {
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public void message(LocoNetMessage m) {
         if (cmdStnOpSwState == cmdStnOpSwStateType.IDLE) {
@@ -246,7 +225,6 @@ public class csOpSwAccess implements LocoNetListener {
         }
     }
 
-
     public void readCmdStationOpSw(int cv) {
         log.debug("readCmdStationOpSw: state is {}, have valid is ",cmdStnOpSwState, csOpSwsAreValid?"true":"false");
         if ((cmdStnOpSwState == cmdStnOpSwStateType.HAS_STATE) &&
@@ -268,8 +246,6 @@ public class csOpSwAccess implements LocoNetListener {
             temp.programmingOpReply(0, ProgListener.ProgrammerBusy);
         }
     }
-
-
 
     public void returnCmdStationOpSwVal(int cmdStnOpSwNum) {
         boolean returnVal = extractCmdStnOpSw(lastCmdStationOpSwMessage, cmdStnOpSwNum);
@@ -462,7 +438,6 @@ public class csOpSwAccess implements LocoNetListener {
        csOpSwValidTimer.setRepeats(false);
         }
     }
-
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(csOpSwAccess.class);
