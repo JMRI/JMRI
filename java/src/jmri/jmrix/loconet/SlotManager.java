@@ -801,6 +801,37 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     @Override
+    public void writeCV(String cvNum, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        log.debug("writeCV(string): cvNum={}, value={}", cvNum, val);
+        if (getMode().equals(csOpSwProgrammingMode)) {
+            log.debug("cvOpSw mode write!");
+            //handle Command Station OpSw programming here
+            String[] parts = cvNum.split("\\.");
+            if ((parts[0].equals("csOpSw")) && (parts.length==2)) {
+                if (csOpSwAccessor == null) {
+                    csOpSwAccessor = new csOpSwAccess(adaptermemo, p);
+                } else {
+                    csOpSwAccessor.setProgrammerListener(p);
+                }
+                // perform the CsOpSwMode read access
+                log.debug("going to try the opsw access");
+                csOpSwAccessor.writeCsOpSw(cvNum, val, p);
+                return;
+                
+            } else {
+                log.debug("rejecting the cs opsw access");
+                // unsupported format in "cv" name.  Signal an error.
+                p.programmingOpReply(1, ProgListener.SequenceError);
+                return;
+
+            }
+        } else {
+            writeCV(Integer.parseInt(cvNum), val, p);
+        }
+    }
+
+
+    @Override
     public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         lopsa = 0;
         hopsa = 0;
