@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import java.util.Map.Entry;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -354,8 +356,9 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         if (sourcePoint == null) {
             LayoutBlock facing = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingBlockByNamedBean(source, null);
             List<LayoutBlock> protecting = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectingBlocksByNamedBean(source, null);
-            if ((facing == null) && (protecting == null)) {
-                log.error("Unable to find facing and protecting block");  // NOI18N
+//             log.info("facing = {}, protecting = {}", facing, protecting);
+            if (facing == null && protecting.size() == 0) {
+                log.error("Unable to find facing and protecting blocks");  // NOI18N
                 return null;
             }
             sourcePoint = providePoint(facing, protecting, panel);
@@ -403,9 +406,32 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return total;
     }
 
+    /**
+     * Set the route between the two points represented by the Destination Point name.
+     *
+     * @since 4.11.1
+     * @param nxPair The system or user name of the destination point.
+     */
+    public void setSingleSegmentRoute(String nxPair) {
+        DestinationPoints dp = getNamedBean(nxPair);
+        if (dp != null) {
+            String destUUID = dp.getUniqueId();
+            nxpair.forEach((pd, src) -> {
+                for (String srcUUID : src.getDestinationUniqueId()) {
+                    if (destUUID.equals(srcUUID)) {
+                        log.debug("Found the correct source: src = {}, dest = {}",
+                                 pd.getSensor().getDisplayName(), dp.getDestPoint().getSensor().getDisplayName());
+                        setMultiPointRoute(pd, dp.getDestPoint());
+                        return;
+                    }
+                }
+            });
+        }
+    }
+
     public void setMultiPointRoute(PointDetails requestpd, LayoutEditor panel) {
         for (PointDetails pd : pointDetails) {
-            if (pd != requestpd && pd.getPanel() == panel) {
+            if (pd != requestpd) {
                 if (pd.getNXState() == NXBUTTONSELECTED) {
                     setMultiPointRoute(pd, requestpd);
                     return;
@@ -430,10 +456,20 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
                 if (result) {
                     List<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, cleardown, LayoutBlockConnectivityTools.NONE);
                     if (!blkList.isEmpty()) {
-                        List<jmri.NamedBean> beanList = lbm.getLayoutBlockConnectivityTools().getBeansInPath(blkList, fromPd.getPanel(), jmri.Sensor.class);
+                        if (log.isDebugEnabled()) {
+                            for (LayoutBlock blk : blkList) {
+                                log.debug("blk = {}", blk.getDisplayName());
+                            }
+                        }
+                        List<jmri.NamedBean> beanList = lbm.getLayoutBlockConnectivityTools().getBeansInPath(blkList, null, jmri.Sensor.class);
                         PointDetails fromPoint = fromPd;
                         refCounter++;
                         if (!beanList.isEmpty()) {
+                            if (log.isDebugEnabled()) {
+                                for (NamedBean xnb : beanList) {
+                                    log.debug("xnb = {}", xnb.getDisplayName());
+                                }
+                            }
                             for (int i = 1; i < beanList.size(); i++) {
                                 NamedBean nb = beanList.get(i);
                                 PointDetails cur = getPointDetails(nb, fromPd.getPanel());
@@ -446,7 +482,9 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
                         }
                         Source s = nxpair.get(fromPoint);
                         if (s != null) {
-                            routesToSet.add(new SourceToDest(s, s.getDestForPoint(toPd), false, refCounter));
+                            if (s.getDestForPoint(toPd) != null) {
+                                routesToSet.add(new SourceToDest(s, s.getDestForPoint(toPd), false, refCounter));
+                            }
                         }
                         processRoutesToSet();
                         return;
@@ -499,6 +537,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * Activate each SourceToDest set in routesToSet
      */
     synchronized void processRoutesToSet() {
+        if (log.isDebugEnabled()) {
+            for (SourceToDest sd : routesToSet) {
+                String dpName = (sd.dp == null) ? "- null -" : sd.dp.getDestPoint().getSensor().getDisplayName();
+                log.debug("processRoutesToSet: {} -- {} -- {}", sd.s.getPoint().getSensor().getDisplayName(), dpName, sd.ref);
+            }
+        }
+
         if (routesToSet.isEmpty()) {
             return;
         }
@@ -617,6 +662,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         if (destPoint != null) {
             destPoint.setPanel(panel);
             destPoint.setRefObject(destination);
+            destPoint.getSignal();
             if (!nxpair.containsKey(sourcePoint)) {
                 nxpair.put(sourcePoint, new Source(sourcePoint));
             }
@@ -637,6 +683,10 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return list;
     }
 
+    public void removeNXSensor(Sensor sensor) {
+        log.info("panel maintenance has resulting in the request to remove a sensor: {}", sensor.getDisplayName());
+    }
+
     public void deleteNxPair(NamedBean source, NamedBean destination, LayoutEditor panel) {
         PointDetails sourcePoint = getPointDetails(source, panel);
         if (sourcePoint == null) {
@@ -655,6 +705,18 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         }
 
         if (nxpair.containsKey(sourcePoint)) {
+            // See if there are any vetos to the delete request
+            DestinationPoints dp = nxpair.get(sourcePoint).getDestForPoint(destPoint);
+            try {
+                vcs.fireVetoableChange("CanDelete", dp, null);  // NOI18N
+            } catch (PropertyVetoException e) {
+                JOptionPane.showMessageDialog(null,
+                        e.getMessage(),
+                        Bundle.getMessage("DeleteWarningTitle"),  // NOI18N
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             nxpair.get(sourcePoint).removeDestination(destPoint);
             firePropertyChange("length", null, null);  // NOI18N
             if (nxpair.get(sourcePoint).getDestinationPoints().isEmpty()) {
@@ -663,7 +725,6 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         } else if (log.isDebugEnabled()) {
             log.debug("source " + source.getDisplayName() + " is not a valid source so can not delete pair");  // NOI18N
         }
-
     }
 
     public boolean isDestinationValid(Object source, Object dest, LayoutEditor panel) {
@@ -769,7 +830,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      */
     public PointDetails getPointDetails(Object obj, LayoutEditor panel) {
         for (int i = 0; i < pointDetails.size(); i++) {
-            if ((pointDetails.get(i).getRefObject() == obj) && (pointDetails.get(i).getPanel() == panel)) {
+            if ((pointDetails.get(i).getRefObject() == obj)) {
                 return pointDetails.get(i);
 
             }
@@ -791,7 +852,6 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         for (int i = 0; i < pointDetails.size(); i++) {
             if (pointDetails.get(i).equals(newPoint)) {
                 return pointDetails.get(i);
-
             }
         }
         //Not found so will add
@@ -1009,7 +1069,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
             return;
         }
         Hashtable<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().
-                discoverValidBeanPairs(editor, Sensor.class, LayoutBlockConnectivityTools.SENSORTOSENSOR);
+                discoverValidBeanPairs(null, Sensor.class, LayoutBlockConnectivityTools.SENSORTOSENSOR);
         Enumeration<NamedBean> en = validPaths.keys();
         EntryExitPairs eep = this;
         while (en.hasMoreElements()) {

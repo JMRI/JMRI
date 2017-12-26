@@ -1762,6 +1762,8 @@
 
 <mapID target="html.web.Operations" url="html/web/Operations.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_AddLogo" url="package/jmri/jmrit/operations/Operations.shtml#AddLogo"/>
+
 <mapID target="package.jmri.jmrit.display.LayoutEditor_finish" url="package/jmri/jmrit/display/LayoutEditor.shtml#finish"/>
 
 <mapID target="html.tools.signaling.index_signaling" url="html/tools/signaling/index.shtml#signaling"/>
@@ -3169,6 +3171,8 @@
 <mapID target="html.hardware.loconet.Digitrax_turncmdhandsettings" url="html/hardware/loconet/Digitrax.shtml#turncmdhandsettings"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_TrainsModify_PreviewTop" url="manual/JMRI_OPS_UsersGuide/Ops_TrainsModify.shtml#PreviewTop"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_OperationFiles" url="package/jmri/jmrit/operations/Operations.shtml#OperationFiles"/>
 
 <mapID target="package.jmri.jmrit.beantable.BlockEdit" url="package/jmri/jmrit/beantable/BlockEdit.shtml"/>
 
