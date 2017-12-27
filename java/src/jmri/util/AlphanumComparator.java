@@ -104,6 +104,6 @@ public class AlphanumComparator implements Comparator<String> {
         if (result == 0 && marker1 == length1 && marker2 < length2) return -1;
         if (result == 0 && marker1 < length1 && marker2 == length2) return +1;
         
-        return result;
+        return Integer.signum(result);  // limit to -1, 0, 1
     }
 }

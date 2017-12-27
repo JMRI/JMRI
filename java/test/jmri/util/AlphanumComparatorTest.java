@@ -50,6 +50,10 @@ public class AlphanumComparatorTest extends TestCase {
         
     }
 
+    public void testChunkWithLeadingZeros() {
+        Assert.assertEquals("not same IS001 IS1", 1, ac.compare("IS001", "IS1"));         // imperfect? but what it does
+    }
+    
     public void testAlphanumCompareTestNeedForDots() {
         Assert.assertEquals(" 10.1.1 > 2.1.1", 1, ac.compare("10.1.1", "2.1.1"));
         Assert.assertEquals(" 2.1.1 < 10.1.1", -1, ac.compare("2.1.1", "10.1.1"));
