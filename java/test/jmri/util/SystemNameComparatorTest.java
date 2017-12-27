@@ -26,9 +26,9 @@ public class SystemNameComparatorTest {
         Assert.assertEquals("IS100 < IS101", -1, t.compare("IS100", "IS101"));
         Assert.assertEquals("IS101 > IS100", +1, t.compare("IS101", "IS100"));
 
-        Assert.assertEquals("not same IS001 IS1", 1, t.compare("IS001", "IS1"));         // imperfect, but what it does
-        Assert.assertEquals("not same IS0100 IS100", 1, t.compare("IS0100", "IS100"));  // imperfect, but what it does
-        Assert.assertEquals("not same IS100 IS0100", -1, t.compare("IS100", "IS0100"));  // imperfect, but what it does
+        Assert.assertEquals("not same IS001 IS1", 0, t.compare("IS1", "IS1")); 
+        Assert.assertEquals("not same IS0100 IS100", 0, t.compare("IS100", "IS100"));
+        Assert.assertEquals("not same IS100 IS0100", 0, t.compare("IS100", "IS100"));
     }
 
     @Test

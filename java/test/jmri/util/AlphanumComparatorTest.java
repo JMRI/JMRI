@@ -16,6 +16,30 @@ public class AlphanumComparatorTest extends TestCase {
 
     private static AlphanumComparator ac;
 
+    public void testHandlingLeadingZeros() {
+        Assert.assertEquals("01 == 1", 0, ac.compare("01", "1") );
+        Assert.assertEquals("1 == 01", 0, ac.compare("1", "01") );
+        Assert.assertEquals("001 == 1", 0, ac.compare("001", "1") );
+        Assert.assertEquals("1 == 001", 0, ac.compare("1", "001") );
+        Assert.assertEquals("0001 == 1", 0, ac.compare("0001", "1") );
+        Assert.assertEquals("1 == 0001", 0, ac.compare("1", "0001") );
+
+        Assert.assertEquals("001 == 01", 0, ac.compare("001", "01") );
+        Assert.assertEquals("01 == 001", 0, ac.compare("01", "001") );
+        
+        Assert.assertEquals("00A == 0A", 0, ac.compare("00A", "0A") );
+        Assert.assertEquals("0A == 00A", 0, ac.compare("0A", "00A") );
+
+        Assert.assertEquals("B00A == B0A", 0, ac.compare("B00A", "B0A") );
+        Assert.assertEquals("B0A == B00A", 0, ac.compare("B0A", "B00A") );
+
+        Assert.assertEquals("100 > 10", +1, ac.compare("100", "10") );
+        Assert.assertEquals("10 < 100", -1, ac.compare("10", "100") );
+
+        Assert.assertEquals("00 == 0", 0, ac.compare("00", "0") );
+        Assert.assertEquals("0 == 00", 0, ac.compare("0", "00") );
+    }
+    
     public void testAlphanumCompare1LTA() {
         Assert.assertEquals("1 < A", ac.compare("1", "A") < 0, true);
     }
@@ -50,8 +74,8 @@ public class AlphanumComparatorTest extends TestCase {
         
     }
 
-    public void testChunkWithLeadingZeros() {
-        Assert.assertEquals("not same IS001 IS1", 1, ac.compare("IS001", "IS1"));         // imperfect? but what it does
+    public void testChunkWithLeadingZeros() { // skip leading zero
+        Assert.assertEquals("same IS001 IS1", 0, ac.compare("IS001", "IS1"));
     }
     
     public void testAlphanumCompareTestNeedForDots() {
@@ -107,12 +131,12 @@ public class AlphanumComparatorTest extends TestCase {
         Assert.assertEquals("A10 > A2", ac.compare("A10", "A2") > 0, true);
     }
 
-    public void testAlphanumCompareA10LTA010() {
-        Assert.assertEquals("A10 < A010", ac.compare("A10", "A010") < 0, true);
+    public void testAlphanumCompareA10LTA010() { // skip leading zero
+        Assert.assertEquals("A10 == A010", ac.compare("A10", "A010") == 0, true);
     }
 
-    public void testAlphanumCompareA010GTA10() {
-        Assert.assertEquals("A010 > A10", ac.compare("A010", "A10") > 0, true);
+    public void testAlphanumCompareA010GTA10() { // skip leading zero
+        Assert.assertEquals("A010 == A10", ac.compare("A010", "A10") == 0, true);
     }
 
     public void testAlphanumCompareA10Z2LTA10Z10() {
