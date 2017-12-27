@@ -98,10 +98,8 @@ et de la construction des versions finales.
 <p>
 Notre machine Jenkins primaire est &#224;
 <a href="http://jmri.tagadab.com/jenkins/">http://jmri.tagadab.com/jenkins/</a>, avec
-la machine originale &#224;
-<a href="http://builds.jmri.org/jenkins/">http://builds.jmri.org/jenkins/</a>
-et une machine secondaire &#224; 
-<a href="https://jmri.ci.cloudbees.com">https://jmri.ci.cloudbees.com</a>.
+also known as &#224;
+<a href="http://builds.jmri.org/jenkins/">http://builds.jmri.org/jenkins/</a>.
 <p>
 L'inter&#234;t des r&#233;sultats sp&#233;cifiques Jenkins
 <ul>
