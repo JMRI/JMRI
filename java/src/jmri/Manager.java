@@ -27,6 +27,9 @@ import javax.annotation.Nonnull;
  * add/remove PropertyChangeListener methods are provided. At a minimum,
  * subclasses must notify of changes to the list of available NamedBeans; they
  * may have other properties that will also notify.
+ * <p>
+ * Probably should have been called NamedBeanManager
+ * 
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -284,6 +287,46 @@ public interface Manager<E extends NamedBean> {
     @CheckReturnValue
     public @Nonnull
     String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException;
+
+    /**
+     * Provides length of the system prefix of the given system name. 
+     * <p>
+     * This is a common operation across JMRI, as the system prefix can be
+     * parsed out without knowledge of the type of NamedBean involved.
+     *
+     * @param inputName System name to provide the prefix
+     * @throws NamedBean.BadSystemNameException If the inputName can't be
+     *                                          converted to normalized form
+     * @return The length of the system-prefix part of the system name in standard normalized form
+     */
+    @CheckReturnValue
+    static public
+    int getSystemPrefixLength(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+        if (inputName.isEmpty()) throw new NamedBean.BadSystemNameException();
+        int i = 1;
+        for (i = 1; i < inputName.length(); i++) {
+            if ( !Character.isDigit(inputName.charAt(i)))
+                break;
+        }
+        return i;
+    }
+
+    /**
+     * Provides the system prefix of the given system name. 
+     * <p>
+     * This is a common operation across JMRI, as the system prefix can be
+     * parsed out without knowledge of the type of NamedBean involved.
+     *
+     * @param inputName System name to provide the prefix
+     * @throws NamedBean.BadSystemNameException If the inputName can't be
+     *                                          converted to normalized form
+     * @return The system-prefix part of the system name in standard normalized form
+     */
+    @CheckReturnValue
+    static public @Nonnull
+    String getSystemPrefix(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+        return inputName.substring(0,getSystemPrefixLength(inputName));
+    }
 
     /**
      * Get a manager-specific tool tip for adding an entry to the manager.
