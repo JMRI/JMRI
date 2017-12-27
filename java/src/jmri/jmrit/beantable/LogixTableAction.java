@@ -1856,9 +1856,10 @@ public class LogixTableAction extends AbstractTableAction {
 
             if (actionList.size() > 0) {
                 condText.append("             " + rbx.getString("BrowserTHEN") + "   \n");  // NOI18N
+                boolean triggerType = curConditional.getTriggerOnChange();
                 for (int i = 0; i < actionList.size(); i++) {
                     action = actionList.get(i);
-                    condName = action.description(false);
+                    condName = action.description(triggerType);
                     condText.append("               " + condName + "   \n");
                 }  // for _actionList
             } else {

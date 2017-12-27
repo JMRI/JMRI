@@ -44,6 +44,7 @@
     <label xml:lang="fr">Multiplicateur feedback de vitesse</label>
     <label xml:lang="de">Multiplikation Geschwindichkeitsrückmeldung</label>
     <label xml:lang="it">Moltiplicatore per feedback Velocità</label>
+    <label xml:lang="ca">Multiplicar per a velocitat de feedback</label>
   </variable>
   <variable item="Divider for speed fedback" CV="136" tooltip="CV136 (0-6)">
     <decVal min="0" max="6"/>
@@ -51,5 +52,6 @@
     <label xml:lang="fr">Diviseur feedback de vitesse</label>
     <label xml:lang="de">Division Geschwindichkeitsrückmeldung</label>
     <label xml:lang="it">Divisore per feedback Velocità</label>
+    <label xml:lang="ca">Dividir per a velocitat de feedback</label>
   </variable>
 </variables>

@@ -44,11 +44,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour bruit moteur</label>
 		<label xml:lang="de">Funktionszuordnung Fahrgeräusch</label>
+		<label xml:lang="ca">Funció pel soroll del motor</label>
 	</variable>
 	<variable label="Function for engine sound" CV="911" default="1" tooltip="CV911: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 1 Option 1" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour bruit moteur</label>
 		<label xml:lang="de">Funktionszuordnung Fahrgeräusch</label>
+		<label xml:lang="ca">Funció pel soroll del motor</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -56,11 +58,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour bruits annexes</label>
 		<label xml:lang="de">Funktionszuordnung Nebengeräusch</label>
+		<label xml:lang="ca">Funció dels sorolls anexos</label>
 	</variable>
 	<variable label="Function for background sound" CV="912" default="1" tooltip="CV912: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 1 Option 2" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour bruits annexes</label>
 		<label xml:lang="de">Funktionszuordnung Nebengeräusch</label>
+		<label xml:lang="ca">Funció dels sorolls anexos</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -68,11 +72,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour bruits démarrage</label>
 		<label xml:lang="de">Funktionszuordnung Schaltgeräusch</label>
+		<label xml:lang="ca">Funció dels sorolls a l'arrencar</label>
 	</variable>
 	<variable label="Function for startup sound" CV="913" default="0" tooltip="CV913: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 1 Option 3" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour bruits démarrage</label>
 		<label xml:lang="de">Funktionszuordnung Schaltgeräusch</label>
+		<label xml:lang="ca">Funció dels sorolls a l'arrencar</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -80,11 +86,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour bruits freinage</label>
 		<label xml:lang="de">Funktionszuordnung Bremsgeräusch</label>
+		<label xml:lang="ca">Funció dels sorolls de frens</label>
 	</variable>
 	<variable label="Function for braking sound" CV="914" default="7" tooltip="CV914: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 1 Option 4" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour bruits freinage</label>
 		<label xml:lang="de">Funktionszuordnung Bremsgeräusch</label>
+		<label xml:lang="ca">Funció dels sorolls de frens</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -92,11 +100,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour silencieux</label>
 		<label xml:lang="de">Funktionszuordnung Ausblendeffekt</label>
+		<label xml:lang="ca">Funció de disminució de sorolls</label>
 	</variable>
 	<variable label="Function for sound fader" CV="929" default="8" tooltip="CV929: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 1 Option 5" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour silencieux</label>
 		<label xml:lang="de">Funktionszuordnung Ausblendeffekt</label>
+		<label xml:lang="ca">Funció de disminució de sorolls</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 <!-- Other sounds mapping (Sound panel Group 2) -->
@@ -105,11 +115,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 3</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 3</label>
+		<label xml:lang="ca">Funció de disminució de sorolls</label>
 	</variable>
 	<variable label="Function for sound container 3" CV="915" default="2" tooltip="CV915: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 2 Option 1" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 3</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 3</label>
+		<label xml:lang="ca">Funció del so 3</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -117,11 +129,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 4</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 4</label>
+		<label xml:lang="ca">Funció del so 4</label>
 	</variable>
 	<variable label="Function for sound container 4" CV="916" default="3" tooltip="CV916: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 2 Option 2" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 4</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 4</label>
+		<label xml:lang="ca">Funció del so 4</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -129,11 +143,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 5</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 5</label>
+		<label xml:lang="ca">Funció del so 4</label>
 	</variable>
 	<variable label="Function for sound container 5" CV="917" default="4" tooltip="CV917: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 2 Option 3" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 5</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 5</label>
+		<label xml:lang="ca">Funció del so 4</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -141,11 +157,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 6</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 6</label>
+		<label xml:lang="ca">Funció del so 6</label>
 	</variable>
 	<variable label="Function for sound container 6" CV="918" default="5" tooltip="CV918: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 2 Option 4" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 6</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 6</label>
+		<label xml:lang="ca">Funció del so 6</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -153,11 +171,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 7</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 7</label>
+		<label xml:lang="ca">Funció del so 7</label>
 	</variable>
 	<variable label="Function for sound container 7" CV="919" default="6" tooltip="CV919: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 2 Option 5" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 7</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 7</label>
+		<label xml:lang="ca">Funció del so 7</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -165,11 +185,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 8</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 8</label>
+		<label xml:lang="ca">Funció del so 8</label>
 	</variable>
 	<variable label="Function for sound container 8" CV="920" default="9" tooltip="CV920: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 2 Option 6" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 8</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 8</label>
+		<label xml:lang="ca">Funció del so 8</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -177,11 +199,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 9</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 9</label>
+		<label xml:lang="ca">Funció del so 9</label>
 	</variable>
 	<variable label="Function for sound container 9" CV="921" default="10" tooltip="CV921: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 2 Option 7" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 9</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 9</label>
+		<label xml:lang="ca">Funció del so 9</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -189,11 +213,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 10</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 10</label>
+		<label xml:lang="ca">Funció del so 10</label>
 	</variable>
 	<variable label="Function for sound container 10" CV="922" default="11" tooltip="CV922: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 2 Option 8" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 10</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 10</label>
+		<label xml:lang="ca">Funció del so 10</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -201,11 +227,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 11</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 11</label>
+		<label xml:lang="ca">Funció del so 11</label>
 	</variable>
 	<variable label="Function for sound container 11" CV="923" default="12" tooltip="CV923: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 2 Option 9" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 11</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 11</label>
+		<label xml:lang="ca">Funció del so 11</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -213,11 +241,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 12</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 12</label>
+		<label xml:lang="ca">Funció del so 12</label>
 	</variable>
 	<variable label="Function for sound container 12" CV="924" default="13" tooltip="CV924: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 2 Option 10" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 12</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 12</label>
+		<label xml:lang="ca">Funció del so 12</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -225,11 +255,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 13</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 13</label>
+		<label xml:lang="ca">Funció del so 13</label>
 	</variable>
 	<variable label="Function for sound container 13" CV="925" default="14" tooltip="CV925: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 2 Option 11" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 13</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 13</label>
+		<label xml:lang="ca">Funció del so 13</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -237,11 +269,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 14</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 14</label>
+		<label xml:lang="ca">Funció del so 14</label>
 	</variable>
 	<variable label="Function for sound container 14" CV="926" default="15" tooltip="CV926: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 2 Option 12" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 14</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 14</label>
+		<label xml:lang="ca">Funció del so 14</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -249,11 +283,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 15</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 15</label>
+		<label xml:lang="ca">Funció del so 15</label>
 	</variable>
 	<variable label="Function for sound container 15" CV="927" default="16" tooltip="CV927: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 2 Option 13" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 15</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 15</label>
+		<label xml:lang="ca">Funció del so 15</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -261,11 +297,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 16</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 16</label>
+		<label xml:lang="ca">Funció del so 16</label>
 	</variable>
 	<variable label="Function for sound container 16" CV="928" default="17" tooltip="CV928: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 2 Option 14" exclude="Combo sound decoders">
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Fonction pour son 16</label>
 		<label xml:lang="de">Funktionszuordnung Soundablauf 16</label>
+		<label xml:lang="ca">Funció del so 16</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 <!-- Volume control (Sound settings panel) -->
@@ -274,11 +312,13 @@
 		<decVal/>
 		<label xml:lang="fr">Volume général</label>
 		<label xml:lang="de">Gesamtlautstärke</label>
+		<label xml:lang="ca">Volum General</label>
 	</variable>
 	<variable label="General volume" CV="930" default="64" tooltip="CV930: 0=>0%, 255=>200%" item="Sound Setting 1" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume général</label>
 		<label xml:lang="de">Gesamtlautstärke</label>
+		<label xml:lang="ca">Volum General</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -286,11 +326,13 @@
 		<decVal/>
 		<label xml:lang="fr">Volume bruit moteur</label>
 		<label xml:lang="de">Lautstärke Fahrgeräusch</label>
+		<label xml:lang="ca">Volum del so del motor</label>
 	</variable>
 	<variable label="Volume engine sound" CV="931" default="128" tooltip="CV931: 0=>0%, 255=>200%" item="Sound Setting 2" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume bruit moteur</label>
 		<label xml:lang="de">Lautstärke Fahrgeräusch</label>
+		<label xml:lang="ca">Volum del so del motor</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -298,11 +340,13 @@
 		<decVal/>
 		<label xml:lang="fr">Volume bruits annexes</label>
 		<label xml:lang="de">Lautstärke Nebengeräusch</label>
+		<label xml:lang="ca">Volum sorolls annexos</label>
 	</variable>
 	<variable label="Volume background sounds" CV="932" default="128" tooltip="CV932: 0=>0%, 255=>200%" item="Sound Setting 3" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume bruits annexes</label>
 		<label xml:lang="de">Lautstärke Nebengeräusch</label>
+		<label xml:lang="ca">Volum sorolls annexos</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -310,11 +354,13 @@
 		<decVal/>
 		<label xml:lang="fr">Volume bruit démarrage</label>
 		<label xml:lang="de">Lautstärke Schaltgeräusch</label>
-	</variable>
+		<label xml:lang="ca">Volum sorolls arrencada</label>
+        </variable>
 	<variable label="Volume startup sound" CV="933" default="128" tooltip="CV933: 0=>0%, 255=>200%" item="Sound Setting 4" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume bruit démarrage</label>
 		<label xml:lang="de">Lautstärke Schaltgeräusch</label>
+		<label xml:lang="ca">Volum sorolls arrencada</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -322,11 +368,13 @@
 		<decVal/>
 		<label xml:lang="fr">Volume bruit freinage</label>
 		<label xml:lang="de">Lautstärke Bremsgeräusch</label>
+		<label xml:lang="ca">Volum soroll frenada</label>
 	</variable>
 	<variable label="Volume braking sound" CV="934" default="128" tooltip="CV934: 0=>0%, 255=>200%" item="Sound Setting 5" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume bruit freinage</label>
 		<label xml:lang="de">Lautstärke Bremsgeräusch</label>
+		<label xml:lang="ca">Volum soroll frenada</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -334,23 +382,27 @@
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 3</label>
 		<label xml:lang="de">Lautstärke Soundablauf 3</label>
+		<label xml:lang="ca">Volum del so 3</label>
 	</variable>
 	<variable label="Volume sound container 3" CV="935" default="128" tooltip="CV935: 0=>0%, 255=>200%" item="Sound Setting 11" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 3</label>
 		<label xml:lang="de">Lautstärke Soundablauf 3</label>
+		<label xml:lang="ca">Volum del so 3</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
 	<variable label="Volume sound container 4" CV="336" default="128" tooltip="CV336: 0=>0%, 255=>200%" item="Sound Setting 12" exclude="SUSI sound modules">
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 4</label>
+		<label xml:lang="ca">Volum del so 4</label>
 		<label xml:lang="de">Lautstärke Soundablauf 4</label>
 	</variable>
 	<variable label="Volume sound container 4" CV="936" default="128" tooltip="CV936: 0=>0%, 255=>200%" item="Sound Setting 12" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 4</label>
 		<label xml:lang="de">Lautstärke Soundablauf 4</label>
+		<label xml:lang="ca">Volum del so 4</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -358,11 +410,13 @@
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 5</label>
 		<label xml:lang="de">Lautstärke Soundablauf 5</label>
+		<label xml:lang="ca">Volum del so 5</label>
 	</variable>
 	<variable label="Volume sound container 5" CV="937" default="128" tooltip="CV937: 0=>0%, 255=>200%" item="Sound Setting 13" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 5</label>
 		<label xml:lang="de">Lautstärke Soundablauf 5</label>
+		<label xml:lang="ca">Volum del so 5</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -370,11 +424,13 @@
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 6</label>
 		<label xml:lang="de">Lautstärke Soundablauf 6</label>
+		<label xml:lang="ca">Volum del so 6</label>
 	</variable>
 	<variable label="Volume sound container 6" CV="938" default="128" tooltip="CV938: 0=>0%, 255=>200%" item="Sound Setting 14" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 6</label>
 		<label xml:lang="de">Lautstärke Soundablauf 6</label>
+		<label xml:lang="ca">Volum del so 6</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -382,11 +438,13 @@
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 7</label>
 		<label xml:lang="de">Lautstärke Soundablauf 7</label>
+		<label xml:lang="ca">Volum del so 7</label>
 	</variable>
 	<variable label="Volume sound container 7" CV="939" default="128" tooltip="CV939: 0=>0%, 255=>200%" item="Sound Setting 15" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 7</label>
 		<label xml:lang="de">Lautstärke Soundablauf 7</label>
+		<label xml:lang="ca">Volum del so 7</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -394,11 +452,13 @@
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 8</label>
 		<label xml:lang="de">Lautstärke Soundablauf 8</label>
+		<label xml:lang="ca">Volum del so 8</label>
 	</variable>
 	<variable label="Volume sound container 8" CV="940" default="128" tooltip="CV940: 0=>0%, 255=>200%" item="Sound Setting 16" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 8</label>
 		<label xml:lang="de">Lautstärke Soundablauf 8</label>
+		<label xml:lang="ca">Volum del so 8</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -406,11 +466,13 @@
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 9</label>
 		<label xml:lang="de">Lautstärke Soundablauf 9</label>
+		<label xml:lang="ca">Volum del so 9</label>
 	</variable>
 	<variable label="Volume sound container 9" CV="941" default="128" tooltip="CV941: 0=>0%, 255=>200%" item="Sound Setting 17" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 9</label>
 		<label xml:lang="de">Lautstärke Soundablauf 9</label>
+		<label xml:lang="ca">Volum del so 9</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -418,11 +480,13 @@
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 10</label>
 		<label xml:lang="de">Lautstärke Soundablauf 10</label>
+		<label xml:lang="ca">Volum del so 10</label>
 	</variable>
 	<variable label="Volume sound container 10" CV="942" default="128" tooltip="CV942: 0=>0%, 255=>200%" item="Sound Setting 21" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 10</label>
 		<label xml:lang="de">Lautstärke Soundablauf 10</label>
+		<label xml:lang="ca">Volum del so 10</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -430,11 +494,13 @@
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 11</label>
 		<label xml:lang="de">Lautstärke Soundablauf 11</label>
+		<label xml:lang="ca">Volum del so 11</label>
 	</variable>
 	<variable label="Volume sound container 11" CV="943" default="128" tooltip="CV943: 0=>0%, 255=>200%" item="Sound Setting 22" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 11</label>
 		<label xml:lang="de">Lautstärke Soundablauf 11</label>
+		<label xml:lang="ca">Volum del so 11</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -442,11 +508,13 @@
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 12</label>
 		<label xml:lang="de">Lautstärke Soundablauf 12</label>
+		<label xml:lang="ca">Volum del so 12</label>
 	</variable>
 	<variable label="Volume sound container 12" CV="944" default="128" tooltip="CV944: 0=>0%, 255=>200%" item="Sound Setting 23" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 12</label>
 		<label xml:lang="de">Lautstärke Soundablauf 12</label>
+		<label xml:lang="ca">Volum del so 12</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -454,11 +522,13 @@
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 13</label>
 		<label xml:lang="de">Lautstärke Soundablauf 13</label>
+		<label xml:lang="ca">Volum del so 13</label>
 	</variable>
 	<variable label="Volume sound container 13" CV="945" default="128" tooltip="CV945: 0=>0%, 255=>200%" item="Sound Setting 24" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 13</label>
 		<label xml:lang="de">Lautstärke Soundablauf 13</label>
+		<label xml:lang="ca">Volum del so 13</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -466,11 +536,13 @@
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 14</label>
 		<label xml:lang="de">Lautstärke Soundablauf 14</label>
+		<label xml:lang="ca">Volum del so 14</label>
 	</variable>
 	<variable label="Volume sound container 14" CV="946" default="128" tooltip="CV946: 0=>0%, 255=>200%" item="Sound Setting 25" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 14</label>
 		<label xml:lang="de">Lautstärke Soundablauf 14</label>
+		<label xml:lang="ca">Volum del so 14</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -478,11 +550,13 @@
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 15</label>
 		<label xml:lang="de">Lautstärke Soundablauf 15</label>
+		<label xml:lang="ca">Volum del so 15</label>
 	</variable>
 	<variable label="Volume sound container 15" CV="947" default="128" tooltip="CV947: 0=>0%, 255=>200%" item="Sound Setting 26" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 15</label>
 		<label xml:lang="de">Lautstärke Soundablauf 15</label>
+		<label xml:lang="ca">Volum del so 15</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -490,11 +564,13 @@
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 16</label>
 		<label xml:lang="de">Lautstärke Soundablauf 16</label>
+		<label xml:lang="ca">Volum del so 16</label>
 	</variable>
 	<variable label="Volume sound container 16" CV="948" default="128" tooltip="CV948: 0=>0%, 255=>200%" item="Sound Setting 27" exclude="Combo sound decoders">
 		<decVal/>
 		<label xml:lang="fr">Volume pour son 16</label>
 		<label xml:lang="de">Lautstärke Soundablauf 16</label>
+		<label xml:lang="ca">Volum del so 16</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 </variables>

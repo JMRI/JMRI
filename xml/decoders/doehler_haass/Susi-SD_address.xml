@@ -39,26 +39,31 @@
     <label>Primary Address of master decoder</label>
     <label xml:lang="fr">Adresse décodeur maître</label>
     <label xml:lang="de">Basisadresse des Hauptdecoders</label>
+    <label xml:lang="ca">Adreça primària del decoder mestre</label>
   </variable>
   <variable CV="17" item="Long Address" readOnly="yes">
     <longAddressVal/>
     <label>Extended Address of master decoder</label>
     <label xml:lang="fr">Adresse longue décodeur maître</label>
     <label xml:lang="de">Erweiterte Adresse des Hauptdecoders</label>
+    <label xml:lang="ca">Adreça estesa del decoder mestre</label>
   </variable>
   <variable CV="29" mask="XXVXXXXX" item="Address Format" readOnly="yes">
     <enumVal>
       <enumChoice choice="One byte (short) address">
         <choice xml:lang="fr">1 octet (adresse courte)</choice>
         <choice xml:lang="de">1 byte (Basisadresse)</choice>
+        <choice xml:lang="ca">1 byte (adreça curta)</choice>
       </enumChoice>
       <enumChoice choice="Two byte (extended) address">
         <choice xml:lang="fr">2 octets (adresse étendue)</choice>
         <choice xml:lang="de">2 byte (Erweiterte Adresse)</choice>
+        <choice xml:lang="ca">2 byte (adreça llarga)</choice>
       </enumChoice>
     </enumVal>
     <label>Address Format of master decoder</label>
     <label xml:lang="fr">Format d'Adresse décodeur maître</label>
     <label xml:lang="de">Adresse Format des Hauptdecoders</label>
+    <label xml:lang="ca">Format d'adre´ça del decoder master</label>
   </variable>
 </variables>

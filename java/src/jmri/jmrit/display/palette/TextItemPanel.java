@@ -25,13 +25,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * ItemPanel for text labels.
+ * @see ItemPanel palette class diagram
  */
 public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
 
     DecoratorPanel _decorator;
 
     public TextItemPanel(ItemPalette parentFrame, String type, Editor editor) {
-        super(parentFrame, type, editor);
+        super((ItemPalette) parentFrame, type, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragText"));
     }
 
@@ -162,8 +163,8 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             _decorator.setAttributes(l);
             PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
             l.setPopupUtility(util.clone(l, l.getTextComponent()));
-//            l.setFont(util.getFont().deriveFont(util.getFontStyle()));
-            if (util.hasBackground()) {     //unrotated
+            // l.setFont(util.getFont().deriveFont(util.getFontStyle()));
+            if (util.hasBackground()) { // unrotated
                 l.setOpaque(true);
             }
             l.setLevel(this.getDisplayLevel());

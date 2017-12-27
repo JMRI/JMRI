@@ -13,6 +13,11 @@
         &lt;br&gt;&lt;br&gt;&lt;br&gt;
         &lt;strong&gt;Um leere Reiter zu verbergen, deselektiere Voreinstellungen -> Lokpark -> Programmierer -> Zeige leere Reiter.&lt;/strong&gt;
         &lt;/html&gt;</text>
+        <text xml:lang="ca">&lt;html&gt;
+        &lt;strong&gt;Aquesta pestanya és buida perquè els volums del so estan a la pestanya de sons.&lt;/strong&gt;
+        &lt;br&gt;&lt;br&gt;&lt;br&gt;
+        &lt;strong&gt;Per amagar aquesta pestanya, desactiva Preferències -> Flota -> Programador -> Mostra pestanyes buides.&lt;/strong&gt;
+      &lt;/html&gt;</text>
     </label>
   </column>
 </pane>
