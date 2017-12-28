@@ -30,7 +30,7 @@
         </programming>
 
         <variables>
-            <variable CV="cs.01" item="OpSw 1" default="0">
+            <variable CV="csOpSw.01" item="OpSw 1" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -43,7 +43,7 @@
                 <tooltip>OpSw01</tooltip>
             </variable>
 
-            <variable CV="cs.02" item="OpSw 2" default="0">
+            <variable CV="csOpSw.02" item="OpSw 2" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Command Station *</choice>
@@ -55,14 +55,14 @@
                 <label>Device acts as a</label>
                 <tooltip>OpSw02</tooltip>
             </variable>
-            <variable CV="cs.03" item="OpSw 3" default="0"
+            <variable CV="csOpSw.03" item="OpSw 3" default="0"
                       tooltip="OpSw03">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
                 <label>AutoReversing Mode is</label>
                 <tooltip>OpSw03</tooltip>
             </variable>
 
-            <variable CV="cs.04" item="OpSw 4" default="0">
+            <variable CV="csOpSw.04" item="OpSw 4" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -75,7 +75,7 @@
                 <tooltip>OpSw04</tooltip>
             </variable>
 
-            <variable CV="cs.05" item="OpSw 5" default="1"
+            <variable CV="csOpSw.05" item="OpSw 5" default="1"
                       tooltip="OpSw05">
                 <enumVal>
                     <enumChoice>
@@ -89,7 +89,7 @@
                 <tooltip>OpSw05</tooltip>
             </variable>
 
-            <variable CV="cs.06" item="OpSw 6" default="0">
+            <variable CV="csOpSw.06" item="OpSw 6" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -102,7 +102,7 @@
                 <tooltip>OpSw06</tooltip>
             </variable>
 
-            <variable CV="cs.07" item="OpSw 7" default="0">
+            <variable CV="csOpSw.07" item="OpSw 7" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -115,7 +115,7 @@
                 <tooltip>OpSw07</tooltip>
             </variable>
 
-            <variable CV="cs.08" item="OpSw 8" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.08" item="OpSw 8" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -128,13 +128,13 @@
                 <tooltip>OpSw08</tooltip>
             </variable>
 
-            <variable CV="cs.09" item="OpSw 9" default="0">
+            <variable CV="csOpSw.09" item="OpSw 9" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
                 <label>Basic Motorola Trinary Switch Control mode is </label>
                 <tooltip>OpSw09 (See original command station documentation to determine if this setting is supported)</tooltip>
             </variable>
 
-            <variable CV="cs.10" item="OpSw 10" default="0">
+            <variable CV="csOpSw.10" item="OpSw 10" default="0">
                 <qualifier>
                     <variableref>OpSw 9</variableref>
                     <relation>eq</relation>
@@ -145,7 +145,7 @@
                 <tooltip>OpSw10 (See original command station documentation to determine if this setting is supported)</tooltip>
             </variable>
 
-            <variable CV="cs.11" item="OpSw 11" default="0">
+            <variable CV="csOpSw.11" item="OpSw 11" default="0">
                 <qualifier>
                     <variableref>OpSw 9</variableref>
                     <relation>eq</relation>
@@ -163,13 +163,13 @@
                 <tooltip>OpSw11 (See original command station documentation to determine if this setting is supported)</tooltip>
             </variable>
 
-            <variable CV="cs.12" item="OpSw 12" default="0">
+            <variable CV="csOpSw.12" item="OpSw 12" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
                 <label>Motorola Trinary Locomotive Control for addresses 1 thru 80 is </label>
                 <tooltip>OpSw12 (See original command station documentation to determine if this setting is supported)</tooltip>
             </variable>
 
-            <variable CV="cs.13" item="OpSw 13" default="0">
+            <variable CV="csOpSw.13" item="OpSw 13" default="0">
                 <qualifier>
                     <variableref>OpSw 14</variableref>
                     <relation>eq</relation>
@@ -187,13 +187,13 @@
                 <tooltip>OpSw13</tooltip>
             </variable>
 
-            <variable CV="cs.14" item="OpSw 14" default="0">
+            <variable CV="csOpSw.14" item="OpSw 14" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>Command Station Slot "Purge"</label>
                 <tooltip>OpSw14</tooltip>
             </variable>
 
-            <variable CV="cs.15" item="OpSw 15" default="0">
+            <variable CV="csOpSw.15" item="OpSw 15" default="0">
                 <qualifier>
                     <variableref>OpSw 14</variableref>
                     <relation>eq</relation>
@@ -204,7 +204,7 @@
                 <tooltip>OpSw15</tooltip>
             </variable>
 
-            <variable CV="cs.16" item="OpSw 16" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.16" item="OpSw 16" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -217,13 +217,13 @@
                 <tooltip>OpSw16</tooltip>
             </variable>
 
-            <variable CV="cs.17" item="OpSw 17" default="0">
+            <variable CV="csOpSw.17" item="OpSw 17" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>Automatic Advanced Decoder-Assisted consisting is</label>
                 <tooltip>OpSw17</tooltip>
             </variable>
 
-            <variable CV="cs.18" item="OpSw 18" default="0">
+            <variable CV="csOpSw.18" item="OpSw 18" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>1/8 second *</choice>
@@ -236,7 +236,7 @@
                 <tooltip>OpSw18</tooltip>
             </variable>
 
-            <variable CV="cs.19" item="OpSw 19" default="0">
+            <variable CV="csOpSw.19" item="OpSw 19" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -249,13 +249,13 @@
                 <tooltip>OpSw19</tooltip>
             </variable>
 
-            <variable CV="cs.20" item="OpSw 20" default="0">
+            <variable CV="csOpSw.20" item="OpSw 20" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>Address 00 (Analog stretching) is</label>
                 <tooltip>OpSw20</tooltip>
             </variable>
 
-            <variable CV="cs.21" item="OpSw 21" default="0">
+            <variable CV="csOpSw.21" item="OpSw 21" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -266,7 +266,7 @@
                 </enumVal>
             </variable>
 
-            <variable CV="cs.22" item="OpSw 22" default="0">
+            <variable CV="csOpSw.22" item="OpSw 22" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -277,7 +277,7 @@
                 </enumVal>
             </variable>
 
-            <variable CV="cs.23" item="OpSw 23" default="0">
+            <variable CV="csOpSw.23" item="OpSw 23" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -335,7 +335,7 @@
                 <tooltip>OpSw21, OpSw22, OpSw23</tooltip>
             </variable>
 
-            <variable CV="cs.24" item="OpSw 24" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.24" item="OpSw 24" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -348,19 +348,19 @@
                 <tooltip>OpSw24</tooltip>
             </variable>
 
-            <variable CV="cs.25" item="OpSw 25" default="0">
+            <variable CV="csOpSw.25" item="OpSw 25" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>Aliasing is</label>
                 <tooltip>OpSw25</tooltip>
             </variable>
 
-            <variable CV="cs.26" item="OpSw 26" default="0">
+            <variable CV="csOpSw.26" item="OpSw 26" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
                 <label>Command Station "Routes" are</label>
                 <tooltip>OpSw26</tooltip>
             </variable>
 
-            <variable CV="cs.27" item="OpSw 27" default="0">
+            <variable CV="csOpSw.27" item="OpSw 27" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>are forwarded to the DCC Track Signal *</choice>
@@ -373,13 +373,13 @@
                 <tooltip>OpSw27 - the "Bushby" bit</tooltip>
             </variable>
 
-            <variable CV="cs.28" item="OpSw 28" default="0">
+            <variable CV="csOpSw.28" item="OpSw 28" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>Switch and Sensor Interrogation Messages at Power-Up are</label>
                 <tooltip>OpSw28</tooltip>
             </variable>
 
-            <variable CV="cs.29" item="OpSw 29" default="0">
+            <variable CV="csOpSw.29" item="OpSw 29" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -392,7 +392,7 @@
                 <tooltip>OpSw29</tooltip>
             </variable>
 
-            <variable CV="cs.30" item="OpSw 30" default="0">
+            <variable CV="csOpSw.30" item="OpSw 30" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -405,7 +405,7 @@
                 <tooltip>OpSw30</tooltip>
             </variable>
 
-            <variable CV="cs.31" item="OpSw 31" default="0">
+            <variable CV="csOpSw.31" item="OpSw 31" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>At Normal Rate *</choice>
@@ -418,7 +418,7 @@
                 <tooltip>OpSw31</tooltip>
             </variable>
 
-            <variable CV="cs.32" item="OpSw 32" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.32" item="OpSw 32" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -431,7 +431,7 @@
                 <tooltip>OpSw32</tooltip>
             </variable>
 
-            <variable CV="cs.33" item="OpSw 33" default="0">
+            <variable CV="csOpSw.33" item="OpSw 33" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>will not restore to prior state at power-on *</choice>
@@ -444,7 +444,7 @@
                 <tooltip>OpSw33</tooltip>
             </variable>
 
-            <variable CV="cs.34" item="OpSw 34" default="0">
+            <variable CV="csOpSw.34" item="OpSw 34" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Restores to "Idle" state *</choice>
@@ -457,7 +457,7 @@
                 <tooltip>OpSw34</tooltip>
             </variable>
 
-            <variable CV="cs.35" item="OpSw 35" default="0">
+            <variable CV="csOpSw.35" item="OpSw 35" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -470,7 +470,7 @@
                 <tooltip>OpSw35</tooltip>
             </variable>
 
-            <variable CV="cs.36" item="OpSw 36" default="0">
+            <variable CV="csOpSw.36" item="OpSw 36" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -483,7 +483,7 @@
                 <tooltip>OpSw36 - May require power-cycle or switch from "Run" to "Ops" mode</tooltip>
             </variable>
 
-            <variable CV="cs.37" item="OpSw 37" default="0">
+            <variable CV="csOpSw.37" item="OpSw 37" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -496,7 +496,7 @@
                 <tooltip>OpSw37 - May require power-cycle or switch from "Run" to "Ops" mode</tooltip>
             </variable>
 
-            <variable CV="cs.38" item="OpSw 38" default="0">
+            <variable CV="csOpSw.38" item="OpSw 38" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -509,7 +509,7 @@
                 <tooltip>OpSw38 - May require power-cycle or switch from "Run" to "Ops" mode</tooltip>
             </variable>
 
-            <variable CV="cs.39" item="OpSw 39" default="0">
+            <variable CV="csOpSw.39" item="OpSw 39" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -522,7 +522,7 @@
                 <tooltip>OpSw39 - May require power-cycle or switch from "Run" to "Ops" mode</tooltip>
             </variable>
 
-            <variable CV="cs.40" item="OpSw 40" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.40" item="OpSw 40" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -535,37 +535,37 @@
                 <tooltip>OpSw40</tooltip>
             </variable>
 
-            <variable CV="cs.41" item="OpSw 41" default="0">
+            <variable CV="csOpSw.41" item="OpSw 41" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
                 <label>Click on LocoNet Activity is</label>
                 <tooltip>OpSw41</tooltip>
             </variable>
 
-            <variable CV="cs.42" item="OpSw 42" default="0">
+            <variable CV="csOpSw.42" item="OpSw 42" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>Beep on Loco "Purge" is </label>
                 <tooltip>OpSw42</tooltip>
             </variable>
 
-            <variable CV="cs.43" item="OpSw 43" default="0">
+            <variable CV="csOpSw.43" item="OpSw 43" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>LocoNet Update of Command Station's Track Status is</label>
                 <tooltip>OpSw43</tooltip>
             </variable>
 
-            <variable CV="cs.44" item="OpSw 44" default="0">
+            <variable CV="csOpSw.44" item="OpSw 44" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
                 <label>Expand slot count from 22 to 120</label>
                 <tooltip>OpSw42</tooltip>
             </variable>
 
-            <variable CV="cs.45" item="OpSw 45" default="0">
+            <variable CV="csOpSw.45" item="OpSw 45" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>Command Station Switch State Reply is</label>
                 <tooltip>OpSw45</tooltip>
             </variable>
 
-            <variable CV="cs.46" item="OpSw 46" default="0">
+            <variable CV="csOpSw.46" item="OpSw 46" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -578,7 +578,7 @@
                 <tooltip>OpSw46</tooltip>
             </variable>
 
-            <variable CV="cs.47" item="OpSw 47" default="0">
+            <variable CV="csOpSw.47" item="OpSw 47" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>only used for Programming *</choice>
@@ -591,7 +591,7 @@
                 <tooltip>OpSw47</tooltip>
             </variable>
 
-            <variable CV="cs.48" item="OpSw 48" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.48" item="OpSw 48" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -604,7 +604,7 @@
                 <tooltip>OpSw48</tooltip>
             </variable>
 
-            <variable CV="cs.49" item="OpSw 49" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.49" item="OpSw 49" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -617,7 +617,7 @@
                 <tooltip>OpSw49</tooltip>
             </variable>
 
-            <variable CV="cs.50" item="OpSw 50" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.50" item="OpSw 50" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -630,7 +630,7 @@
                 <tooltip>OpSw50</tooltip>
             </variable>
 
-            <variable CV="cs.51" item="OpSw 51" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.51" item="OpSw 51" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -643,7 +643,7 @@
                 <tooltip>OpSw51</tooltip>
             </variable>
 
-            <variable CV="cs.52" item="OpSw 52" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.52" item="OpSw 52" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -656,7 +656,7 @@
                 <tooltip>OpSw52</tooltip>
             </variable>
 
-            <variable CV="cs.53" item="OpSw 53" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.53" item="OpSw 53" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -669,7 +669,7 @@
                 <tooltip>OpSw53</tooltip>
             </variable>
 
-            <variable CV="cs.54" item="OpSw 54" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.54" item="OpSw 54" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -682,7 +682,7 @@
                 <tooltip>OpSw54</tooltip>
             </variable>
 
-            <variable CV="cs.55" item="OpSw 55" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.55" item="OpSw 55" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -695,7 +695,7 @@
                 <tooltip>OpSw55</tooltip>
             </variable>
 
-            <variable CV="cs.56" item="OpSw 56" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.56" item="OpSw 56" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -708,7 +708,7 @@
                 <tooltip>OpSw56</tooltip>
             </variable>
 
-            <variable CV="cs.57" item="OpSw 57" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.57" item="OpSw 57" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -721,7 +721,7 @@
                 <tooltip>OpSw57</tooltip>
             </variable>
 
-            <variable CV="cs.58" item="OpSw 58" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.58" item="OpSw 58" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -734,7 +734,7 @@
                 <tooltip>OpSw58</tooltip>
             </variable>
 
-            <variable CV="cs.59" item="OpSw 59" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.59" item="OpSw 59" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -747,7 +747,7 @@
                 <tooltip>OpSw59</tooltip>
             </variable>
 
-            <variable CV="cs.60" item="OpSw 60" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.60" item="OpSw 60" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -760,7 +760,7 @@
                 <tooltip>OpSw60</tooltip>
             </variable>
 
-            <variable CV="cs.61" item="OpSw 61" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.61" item="OpSw 61" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -773,7 +773,7 @@
                 <tooltip>OpSw61</tooltip>
             </variable>
 
-            <variable CV="cs.62" item="OpSw 62" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.62" item="OpSw 62" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -786,7 +786,7 @@
                 <tooltip>OpSw62</tooltip>
             </variable>
 
-            <variable CV="cs.63" item="OpSw 63" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.63" item="OpSw 63" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
@@ -799,7 +799,7 @@
                 <tooltip>OpSw63</tooltip>
             </variable>
 
-            <variable CV="cs.64" item="OpSw 64" default="0" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.64" item="OpSw 64" default="0" readOnly="yes" infoOnly="yes">
                 <enumVal>
                     <enumChoice>
                         <choice>Normal *</choice>
