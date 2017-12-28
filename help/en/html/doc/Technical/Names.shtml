@@ -96,10 +96,10 @@
       and "user names" to reference things.
 
       <p>We want users to be able to call things what they want.
-      Names like "p(24,23)*" are not useful. Every named item will
+      Names like "p(24,23)*" are not useful. Every named item can
       therefore have a "user name", which is an entirely free-form
       string. You can put whatever you want in there, so long as
-      it's not a duplicate of the name given to something else. For
+      it's not a duplicate of the user name given to something else. For
       example, you might call a Turnout "West Yard Lead" or
       "Turnout 32" or "Green Wire from Controller" or whatever.</p>
 
@@ -114,25 +114,48 @@
       <h2>System Name Format</h2>
       
       A system name is formed from a
-      short prefix representing the hardware system, followed by a
-      single upper case letter indicating the type, followed by a
-      system- and type-specific suffix string identifying a specific
-      object. The suffix string is meant to be related to the hardware
-      addressing for the specific hardware system, but is otherwise unconstrained.
+      short "system prefix" representing the hardware system, followed by a
+      single upper case "type letter" indicating the type of the object, 
+      followed by a
+      system- and type-specific "suffix string" identifying a specific
+      object. 
+      <ul>
+        <li>The system prefix is a single uppercase or lowercase letter, optionally followed
+            by one or more digits. Special characters are not allowed.
+            This simple form allows us to always fine the system prefix
+            and type letter even if we don't know the full list of 
+            hardware systems involved.
+        <li>The type letter defines the type of model-railroad object, 
+            such as (T)urnout or (S)ensor.
+        <li>The suffix string is meant to be related to the hardware
+            addressing for the specific hardware system, but is otherwise unconstrained.
+            Some are simple numbers, such as a device address. Others
+            are much more complicated strings to carry more complex 
+            information.
+      </ul>
 
       <p>Examples:</p>
 
+      Note: These assume the default values of system prefix letters,
+      but they certainly could have been defined to be something else.
+      
       <ul>
         <li>LT23 - <u>L</u>ocoNet <u>T</u>urnout <u>23</u>.</li>
+        <li>L2T23 - <u>T</u>urnout <u>23</u> on the second <u>L</u>ocoNet connection.</li>
 
-        <li>CS12 - The <u>12</u>th <u>C</u>/MRI <u>S</u>ensor
-        (input line).</li>
-      </ul>Note that there is no assumption of pattern to the
+        <li>CS2012 - A <u>C</u>/MRI <u>S</u>ensor
+            (input line) addressed as 2012, which means the 12th pin on  
+            on the node with address 2.</li>
+      </ul>
+      
+      Note that there is no assumption of pattern to the
       names; they don't have to be assigned monotonically, nor are
-      they restricted to a single system. <a name="hardware" id=
-      "hardware"></a>
-
-      <h3>Hardware Prefix</h3>Originally, the "hardware prefix" was
+      they restricted to a single system. 
+      
+      <a name="hardware" id="hardware"></a>
+      <h3>System Prefix</h3>
+      
+      Originally, the "hardware prefix" was
       a single uppercase letter identifying a single system
       connection: L for LocoNet, N for NCE, etc. The default
       letters for those are listed below. This is still by far the
@@ -142,8 +165,8 @@
       <p>The JMRI code is much more flexible than that, however.
       This allows it to deal with multiple system connections and
       overlaps of letters (such as the multiple possibilities
-      defined for "M" below). You change the letter associated with
-      a system connection in the preferences to any other uppercase
+      defined for "D" or "M" below). You change the letter associated with
+      a system connection in the preferences to any other uppercase or lowercase
       letter. You can call your NCE connection "P" if you want to.
       If you have two of them, you can call one "X" and the other
       "Y". You can also use an upper case letter followed by
@@ -155,7 +178,9 @@
 
       <ul>
         <li>A CTI <a href=
-        "../../hardware/acela/index.shtml">Acela</a></li>
+        "../../hardware/acela/index.shtml">Acela</a>,
+        Bachrus Speedometer
+        </li>
 
         <li>B Direct DCC control</li>
 
@@ -179,7 +204,7 @@
         <li>I Internal, e.g. objects with no associated
         hardware</li>
 
-        <li>J</li>
+        <li>J JMRI network connections</li>
 
         <li>K <a href="../../hardware/maple/index.shtml">Maple
         Systems</a></li>
@@ -192,7 +217,8 @@
         and <a href="../../hardware/can/cbus/index.shtml">MERG
         CBUS</a>. Also used for the <a href=
         "../../hardware/modbus/index.shtml">Modbus</a> master and
-        slave implementation.</li>
+        slave implementation.
+        </li>
 
         <li>N <a href="../../hardware/nce/NCE.shtml">NCE</a> (also
         <a href="../../hardware/nce/Wangrow.shtml">Wangrow</a>
@@ -227,13 +253,21 @@
         combined with NCE)</li>
 
         <li>X <a href=
-        "../../hardware/XPressNet/index.shtml">XpressNet</a></li>
+        "../../hardware/XPressNet/index.shtml">XpressNet</a>
+        used by a number of Lenz, Atlas, Hornby and other connections
+        </li>
 
-        <li>Z <a href="../../hardware/zimo/Zimo.shtml">Zimo
-        MX-1</a></li>
-      </ul><a name="types" id="types"></a>
+        <li>Z <a href="../../hardware/zimo/Zimo.shtml">ZimoMX-1</a>,
+            IEEE802.15.4
+            and Z21 connections
+        </li>
+      </ul>
+      
+      <a name="types" id="types"></a>
 
-      <h3>Device type letters</h3>Note that some of these are
+      <h3>Device type letters</h3>
+      
+      Note that some of these are
       placeholders, and have no underlying implementation. Also,
       there is no guarantee that any given hardware system will
       ever implement all of them.
@@ -300,9 +334,9 @@
         hardware on the layout. For example, if a signal head is
         implemented as three different outputs, LT1, LT2 and LT3, the
         signal head object might be called IH3. 
-        <a name="special" id=
+        
+     <a name="special" id=
                 "special"></a></p>
-
       <p>Each different hardware system
       can specify the "suffix string" that follows the system and type
       letters. Generally, these are small numbers, but their exact
