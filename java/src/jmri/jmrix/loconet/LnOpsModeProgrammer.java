@@ -32,13 +32,6 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     boolean doingWrite;
     boolean boardOpSwWriteVal;
     private javax.swing.Timer bdOpSwAccessTimer = null;
-    private javax.swing.Timer csOpSwAccessTimer = null;
-    private javax.swing.Timer csOpSwValidTimer = null;
-    private boolean csOpSwsAreValid = false;
-    private cmdStnOpSwStateType cmdStnOpSwState;
-    private int cmdStnOpSwNum;
-    private boolean cmdStnOpSwVal;
-    private LocoNetMessage lastCmdStationOpSwMessage;
 
 
     public LnOpsModeProgrammer(SlotManager pSlotMgr,
@@ -48,8 +41,6 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         this.memo = memo;
         mAddress = pAddress;
         mLongAddr = pLongAddr;
-        cmdStnOpSwState = cmdStnOpSwStateType.IDLE;
-        lastCmdStationOpSwMessage = null;
         // register to listen
         memo.getLnTrafficController().addLocoNetListener(~0, this);
     }
@@ -74,53 +65,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         p = null;
         // Check mode
         LocoNetMessage m;
-        if (getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) {
-            if (csOpSwAccessTimer == null) {
-                initializeCsOpSwAccessTimer();
-                initializeCsOpSwValidTimer();
-            }
-            if ((val <0) || (val > 1)) {
-                if (pL != null) {
-                    pL.programmingOpReply(0,ProgListener.NotImplemented);
-                }
-                return;
-            }
-
-            // Command Station OpSws are handled via slot 0x7f.
-            p = pL;
-            doingWrite = true;
-            log.debug("write Command Station OpSw{} as {}", CV, (val>0)?"c":"t");
-            String[] parts = CV.split("\\.");
-            int typeWord = 0;
-            if (((typeWord = Integer.parseInt(parts[0])) == 1) && 
-                    (parts.length == 2)){
-                int opSwNum = Integer.parseInt(parts[1]);
-                log.debug("CS OpSw number {}", opSwNum);
-                if ((opSwNum < 1) || (opSwNum > 112)) { // allows for both standard and extended opsw numbers
-                    log.debug("bad opsw number: {}", opSwNum);
-                    ProgListener temp = p;
-                    p = null;
-                    if (temp != null) {
-                        temp.programmingOpReply(0,ProgListener.NotImplemented);
-                    }
-                    return;
-                }
-                if (!updateCmdStnOpSw(opSwNum,
-                        (val>0)?true:false)) {
-                    ProgListener temp =p;
-                    p = null;
-                    if (temp != null) {
-                        temp.programmingOpReply(0, ProgListener.ProgrammerBusy);
-                    }
-                }
-            } else {
-                ProgListener temp = pL;
-                p = null;
-                if (temp != null) {
-                    temp.programmingOpReply(0,ProgListener.NotImplemented);
-                }
-            }
-        } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             /**
              * CV format is e.g. "113.12" where the first part defines the
              * typeword for the specific board type and the second is the specific bit number
@@ -201,47 +146,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         // Check mode
         String[] parts;
         LocoNetMessage m;
-        if (getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) {
-            if (csOpSwAccessTimer == null) {
-                initializeCsOpSwAccessTimer();
-                initializeCsOpSwValidTimer();
-            }
-
-            // Command Station OpSws are handled via slot 0x7f.
-            p = pL;
-            doingWrite = false;
-            log.debug("read Command Station OpSw{}", CV);
-            parts = CV.split("\\.");
-            ProgListener temp = pL;
-            if (parts.length != 2) {
-                p = null;
-                if (temp != null) {
-                    temp.programmingOpReply(0,ProgListener.NotImplemented);
-                }
-                return;
-            }
-            log.trace("splitting CV: {} becomes {} and {}", CV, parts[0], parts[1]);
-            int typeWord;
-            if ((typeWord = Integer.parseInt(parts[0])) == 1) {
-                int opSwNum = Integer.parseInt(parts[1]);
-                if ((opSwNum < 1) || (opSwNum > 112)) { // allows for both standard and extended opsw numbers
-                    p = null;
-                    if (temp != null) {
-                        temp.programmingOpReply(0,ProgListener.NotImplemented);
-                    }
-                    return;
-                }
-                log.trace("Valid typeWord = 1; attempting to read OpSw{}.", Integer.parseInt(parts[1]));
-                log.trace("starting from state {}", cmdStnOpSwState);
-                readCmdStationOpSw(opSwNum);
-                return;
-            } else {
-                p = null;
-                log.trace("readCV: bad variable number intial value: {} ",typeWord);
-                temp.programmingOpReply(0,ProgListener.NotImplemented);
-                return;
-            }
-        } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             /**
              * CV format is e.g. "113.12" where the first part defines the
              * typeword for the specific board type and the second is the specific bit number
@@ -324,8 +229,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     public void confirmCV(String CV, int val, ProgListener pL) throws ProgrammerException {
         p = null;
         // Check mode
-        if ((getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) ||
-                (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE))) {
+        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             readCV(CV, pL);
         }
         else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
@@ -342,111 +246,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     public void message(LocoNetMessage m) {
 
         log.debug("LocoNet message received: {}",m);
-        if (getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) {
-            boolean value;
-            if ((m.getOpCode() == LnConstants.OPC_SL_RD_DATA) &&
-                    (m.getElement(1) == 0x0E) &&
-                    (m.getElement(2) == 0x7f)) {
-                log.debug("got slot 127 read data");
-                if (cmdStnOpSwState == cmdStnOpSwStateType.QUERY) {
-                    log.debug("got slot 127 read data in response to OpSw query");
-                    if ((m.getElement(7) & 0x40) == 0x40) {
-                        csOpSwAccessTimer.restart();
-                        LocoNetMessage m2 = new LocoNetMessage(new int[] {0xbb, 0x7f, 0x40, 0x00});
-                        cmdStnOpSwState = cmdStnOpSwStateType.QUERY_ENHANCED;
-                        memo.getLnTrafficController().sendLocoNetMessage(m2);
-                        csOpSwAccessTimer.start();
-                        return;
-                    }
-                    csOpSwAccessTimer.stop();
-                    cmdStnOpSwState = cmdStnOpSwStateType.HAS_STATE;
-                    lastCmdStationOpSwMessage = m;  // save a copy of the LocoNet message
-                    csOpSwsAreValid = true;
-                    csOpSwValidTimer.start();   // start the "valid data" timer
-                    if (doingWrite == true) {
-                        log.debug("now can finish the write by updating the correct bit...");
-                        finishTheWrite();
-                    } else {
-                        value = extractCmdStnOpSw(m, cmdStnOpSwNum);
-                        log.debug("now can return the extracted OpSw{} read data ({}) to the programmer", cmdStnOpSwNum, value);
-                        ProgListener temp = p;
-                        p = null;
-                        if (temp != null) {
-                            log.debug("Returning data");
-                            temp.programmingOpReply(value?1:0, ProgListener.OK);
-                        } else {
-                            log.debug("no programmer to return the data to.");
-                        }
-                    }
-                } else if (cmdStnOpSwState == cmdStnOpSwStateType.QUERY_BEFORE_WRITE) {
-                    if ((m.getElement(7) & 0x40) == 0x40) {
-                        csOpSwAccessTimer.restart();
-                        LocoNetMessage m2 = new LocoNetMessage(new int[] {0xbb, 0x7f, 0x40, 0x00});
-                        cmdStnOpSwState = cmdStnOpSwStateType.QUERY_ENHANCED_BEFORE_WRITE;
-                        memo.getLnTrafficController().sendLocoNetMessage(m2);
-                        csOpSwAccessTimer.start();
-                        return;
-                    }
-                    log.debug("hve received OpSw query before a write; now can process the data modification");
-                    csOpSwAccessTimer.stop();
-                    LocoNetMessage m2 = updateOpSwVal(m, cmdStnOpSwNum,
-                            cmdStnOpSwVal);
-                    cmdStnOpSwState = cmdStnOpSwStateType.WRITE;
-                    log.debug("performing enhanced opsw write: {}",m2.toString());
-                    memo.getLnTrafficController().sendLocoNetMessage(m2);
-                    csOpSwAccessTimer.start();
-                }
-            } else if ((m.getOpCode() == LnConstants.OPC_LONG_ACK) &&
-                    (m.getElement(1) == 0x6f) &&
-                    (m.getElement(2) == 0x7f) &&
-                    (cmdStnOpSwState == cmdStnOpSwStateType.WRITE)) {
-                csOpSwAccessTimer.stop();
-                cmdStnOpSwState = cmdStnOpSwStateType.HAS_STATE;
-                value = extractCmdStnOpSw(lastCmdStationOpSwMessage, cmdStnOpSwNum);
-                ProgListener temp = p;
-                p = null;
-                if (temp != null) {
-                    temp.programmingOpReply(value?1:0, ProgListener.OK);
-                }
-            } else if ((m.getOpCode() == 0xe6) &&
-                    (m.getElement(1) == 0x15) &&
-                    (m.getElement(2) == 0x00) &&
-                    (m.getElement(3) == 0x7f)) {
-                if (cmdStnOpSwState == cmdStnOpSwStateType.QUERY_ENHANCED)  {
-                    log.debug("got enhanced slot 127 read data in response to OpSw query");
-                    csOpSwAccessTimer.stop();
-                    cmdStnOpSwState = cmdStnOpSwStateType.HAS_STATE;
-                    lastCmdStationOpSwMessage = m;  // save a copy of the LocoNet message
-                    csOpSwsAreValid = true;
-                    csOpSwValidTimer.start();   // start the "valid data" timer
-                    if (doingWrite == true) {
-                        log.debug("now can finish the write by updating the correct bit...");
-                        finishTheWrite();
-                    } else {
-                        value = extractCmdStnOpSw(m, cmdStnOpSwNum);
-                        log.debug("now can return the extracted OpSw{} read data ({}) to the programmer", cmdStnOpSwNum, value);
-                        ProgListener temp = p;
-                        p = null;
-                        if (temp != null) {
-                            log.debug("Returning data");
-                            temp.programmingOpReply(value?1:0, ProgListener.OK);
-                        } else {
-                            log.debug("no programmer to return the data to.");
-                        }
-                    }
-                } else if (cmdStnOpSwState == cmdStnOpSwStateType.QUERY_ENHANCED_BEFORE_WRITE) {
-                    log.debug("hve received enhanced OpSw query before a write; now can process the data modification");
-                    csOpSwAccessTimer.stop();
-                    LocoNetMessage m2 = updateOpSwVal(m, cmdStnOpSwNum,
-                            cmdStnOpSwVal);
-                    cmdStnOpSwState = cmdStnOpSwStateType.WRITE;
-                    log.debug("performing enhanced opsw write: {}",m2.toString());
-                    memo.getLnTrafficController().sendLocoNetMessage(m2);
-                    csOpSwAccessTimer.start();
-                }
-            }
-        }
-        else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
 
             // are we reading? If not, ignore
             if (p == null) {
@@ -745,221 +545,6 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             });
         bdOpSwAccessTimer.setInitialDelay(1000);
         bdOpSwAccessTimer.setRepeats(false);
-        }
-    }
-
-
-    public void readCmdStationOpSw(int cv) {
-        log.debug("readCmdStationOpSw: state is {}, have valid is ",cmdStnOpSwState, csOpSwsAreValid?"true":"false");
-        if ((cmdStnOpSwState == cmdStnOpSwStateType.HAS_STATE) &&
-                (csOpSwsAreValid == true)) {
-            // can re-use previous state - it has not "expired" due to time since read.
-            log.debug("readCmdStationOpSw: returning state from previously-stored state for OpSw{}", cv);
-            returnCmdStationOpSwVal(cv);
-            return;
-        } else if ((cmdStnOpSwState == cmdStnOpSwStateType.IDLE) ||
-                (cmdStnOpSwState == cmdStnOpSwStateType.HAS_STATE)) {
-            // do not have valid data or old data has "expired" due to time since read.
-            log.debug("readCmdStationOpSw: attempting to read some CVs");
-            updateCmdStnOpSw(cv,false);
-            return;
-        } else {
-            log.debug("readCmdStationOpSw: aborting - cmdStnOpSwState is odd: {}", cmdStnOpSwState);
-            ProgListener temp = p;
-            p = null;
-            temp.programmingOpReply(0, ProgListener.ProgrammerBusy);
-        }
-    }
-
-    public void returnCmdStationOpSwVal(int cmdStnOpSwNum) {
-        boolean returnVal = extractCmdStnOpSw(lastCmdStationOpSwMessage, cmdStnOpSwNum);
-        if (p != null) {
-            // extractCmdStnOpSw did not find an erroneous condition
-            log.debug("returnCmdStationOpSwVal: Returning OpSw{} value of {}", cmdStnOpSwNum, returnVal);
-            p.programmingOpReply(returnVal?1:0, ProgListener.OK);
-        }
-    }
-
-    public boolean updateCmdStnOpSw(int opSwNum, boolean val) {
-        if (cmdStnOpSwState == cmdStnOpSwStateType.HAS_STATE) {
-            if (!doingWrite) {
-                log.debug("updateCmdStnOpSw: should already have OpSw values from previous read.");
-                return false;
-            } else {
-                cmdStnOpSwVal = val;
-                cmdStnOpSwNum = opSwNum;
-                finishTheWrite();
-                return true;
-            }
-        }
-        if (cmdStnOpSwState != cmdStnOpSwStateType.IDLE)  {
-            log.debug("updateCmdStnOpSw: cannot query OpSw values from state {}", cmdStnOpSwState);
-            return false;
-        }
-        log.debug("updateCmdStnOpSw: attempting to query the OpSws when state = ");
-        cmdStnOpSwState = cmdStnOpSwStateType.QUERY;
-        cmdStnOpSwNum = opSwNum;
-        cmdStnOpSwVal = val;
-        int[] contents = {LnConstants.OPC_RQ_SL_DATA, 0x7F, 0x0, 0x0};
-        memo.getLnTrafficController().sendLocoNetMessage(new LocoNetMessage(contents));
-        csOpSwAccessTimer.start();
-
-        return true;
-    }
-
-    public boolean extractCmdStnOpSw(LocoNetMessage m, int cmdStnOpSwNum) {
-        if (((m.getOpCode() == 0xE7) || (m.getOpCode() == 0xEF)) &&
-                ((m.getNumDataElements() == 14)) &&
-                (cmdStnOpSwNum >= 1) &&
-                (cmdStnOpSwNum <= 64)) {
-            log.debug("extractCmdStnOpSw: standard OpSw{} from {}",cmdStnOpSwNum, m);
-            int messageByte;
-            messageByte = 2 + ((cmdStnOpSwNum+7) >> 3);
-            if (cmdStnOpSwNum > 32) {
-                messageByte ++;
-            }
-            int val = m.getElement(messageByte);
-            val = (val >> ((cmdStnOpSwNum - 1) & 0x7)) & 0x1;
-            return (val == 1);
-        } else if (((m.getOpCode() == 0xE6) || (m.getOpCode() == 0xEE)) &&
-                (m.getNumDataElements() == 21) &&
-                (cmdStnOpSwNum >= 1) &&
-                (cmdStnOpSwNum <=112)) {
-            log.debug("extractCmdStnOpSw: extended OpSw{} from {}",cmdStnOpSwNum, m);
-            int messageByte;
-            messageByte = 3 + ((cmdStnOpSwNum+7) >> 3);
-            int val = m.getElement(messageByte);
-            val = (val >> ((cmdStnOpSwNum - 1) & 0x7)) & 0x1;
-            return (val == 1);
-        }
-        log.debug("extractCmdStnOpSw: failure for OpSw{} from {}",cmdStnOpSwNum, m);
-
-        csOpSwAccessTimer.stop();
-        csOpSwValidTimer.stop();
-        ProgListener temp = p;
-        p = null;
-        if (temp != null) {
-            temp.programmingOpReply(0, ProgListener.UnknownError);
-        }
-        cmdStnOpSwState = cmdStnOpSwStateType.IDLE;
-        log.warn("illegal command station opsw access: {}. {}, {}.",
-                m.getOpCode(),
-                m.getNumDataElements(),
-                cmdStnOpSwNum);
-        return false;
-    }
-
-    public LocoNetMessage updateOpSwVal(LocoNetMessage m, int cmdStnOpSwNum, boolean cmdStnOpSwVal) {
-        int messageByte;
-        log.debug("updateOpSwVal: OpSw{} = {}", cmdStnOpSwNum, cmdStnOpSwVal);
-        if (((m.getOpCode() == 0xE7) || (m.getOpCode() == 0xEF)) &&
-                (m.getElement(1) == 14) &&
-                (cmdStnOpSwNum >= 1) &&
-                (cmdStnOpSwNum <= 64)) {
-            messageByte = 2 + ((cmdStnOpSwNum+7) >> 3);
-            if (cmdStnOpSwNum > 32) {
-                messageByte ++;
-            }
-            int val = m.getElement(messageByte);
-            log.debug("updateOpSwVal: working with messageByte {}, value is {}", messageByte, val);
-            if (((cmdStnOpSwNum -1) & 0x07) == 7) {
-                log.warn("Cannot program OpSw{} account LocoNet encoding limitations.",cmdStnOpSwNum);
-                ProgListener temp = p;
-                p = null;
-                if (temp != null) {
-                    temp.programmingOpReply(0, ProgListener.UnknownError);
-                }
-                return new LocoNetMessage(new int[] {LnConstants.OPC_GPBUSY, 0x0});
-            }
-            val &= ~(1 << ((cmdStnOpSwNum - 1) & 0x7));
-            if (cmdStnOpSwVal == true) {
-                val |= 1 << ((cmdStnOpSwNum - 1) & 0x7);
-            }
-            LocoNetMessage m2 = m;
-            log.debug("updateOpSwVal: new value for messageByte{} is {}", messageByte, val);
-            m2.setElement(messageByte, val);
-            return m2;
-        }
-        else if (((m.getOpCode() == 0xE6) || (m.getOpCode() == 0xEE)) &&
-                (m.getElement(1) == 21) &&
-                (cmdStnOpSwNum >= 1) &&
-                (cmdStnOpSwNum <= 112)) {
-            messageByte = 3 + ((cmdStnOpSwNum+7) >> 3);
-            int val = m.getElement(messageByte);
-            log.debug("updateOpSwVal: working with messageByte {}, value is {}", messageByte, val);
-            if (((cmdStnOpSwNum -1) & 0x07) == 7) {
-                log.warn("Cannot program OpSw{} account LocoNet encoding limitations.",cmdStnOpSwNum);
-                ProgListener temp = p;
-                p = null;
-                if (temp != null) {
-                    temp.programmingOpReply(0, ProgListener.UnknownError);
-                }
-                return new LocoNetMessage(new int[] {LnConstants.OPC_GPBUSY, 0x0});
-            }
-            val &= ~(1 << ((cmdStnOpSwNum - 1) & 0x7));
-            if (cmdStnOpSwVal == true) {
-                val |= 1 << ((cmdStnOpSwNum - 1) & 0x7);
-            }
-            LocoNetMessage m2 = m;
-            log.debug("updateOpSwVal: new value for messageByte{} is {}", messageByte, val);
-            m2.setElement(messageByte, val);
-            return m2;
-        }
-        else {
-            log.warn("Cannot program OpSw{}: {} {}.",cmdStnOpSwNum, m.getOpCode(), m.getElement(1));
-            ProgListener temp = p;
-            p = null;
-            if (temp != null) {
-                temp.programmingOpReply(0, ProgListener.UnknownError);
-            }
-            return new LocoNetMessage(new int[] {LnConstants.OPC_GPBUSY, 0x0});
-        }
-    }
-
-    private void finishTheWrite() {
-        cmdStnOpSwState = cmdStnOpSwStateType.WRITE;
-        LocoNetMessage m2 = updateOpSwVal(lastCmdStationOpSwMessage,
-                cmdStnOpSwNum,
-                cmdStnOpSwVal);
-        log.debug("gonna send message {}", m2.toString());
-        m2.setOpCode(LnConstants.OPC_WR_SL_DATA);
-        log.debug("sending LocoNet cmd stn opsw write message {}", m2.toString());
-        memo.getLnTrafficController().sendLocoNetMessage(m2);
-        lastCmdStationOpSwMessage = m2;
-        csOpSwAccessTimer.start();
-    }
-
-    private enum cmdStnOpSwStateType {
-        IDLE,
-        QUERY,
-        QUERY_ENHANCED,
-        QUERY_BEFORE_WRITE,
-        QUERY_ENHANCED_BEFORE_WRITE,
-        WRITE,
-        HAS_STATE}
-
-    void initializeCsOpSwAccessTimer() {
-        if (csOpSwAccessTimer == null) {
-            csOpSwAccessTimer = new javax.swing.Timer(500, (ActionEvent e) -> {
-                log.debug("csOpSwAccessTimer timed out!");
-                ProgListener temp = p;
-                p = null;
-                if (temp != null) {
-                    temp.programmingOpReply(0, ProgListener.FailedTimeout);
-                }
-            });
-        csOpSwAccessTimer.setRepeats(false);
-        }
-    }
-
-    void initializeCsOpSwValidTimer() {
-        if (csOpSwValidTimer == null) {
-            csOpSwValidTimer = new javax.swing.Timer(10000, (ActionEvent e) -> {
-                log.debug("csOpSwValidTimer timed out; invalidating held data!");
-                csOpSwsAreValid = false;
-                cmdStnOpSwState = cmdStnOpSwStateType.IDLE;
-                });
-       csOpSwValidTimer.setRepeats(false);
         }
     }
 
