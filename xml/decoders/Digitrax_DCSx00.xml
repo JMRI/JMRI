@@ -290,42 +290,42 @@
 
             <variable item="Default New Loco Mode">
                 <compositeVal>
-                    <compositeChoice choice="128 Speed-steps">
+                    <compositeChoice choice="128 Speed-steps (t/t/t)*">
                         <compositeSetting label="OpSw 21" value="0"/>
                         <compositeSetting label="OpSw 22" value="0"/>
                         <compositeSetting label="OpSw 23" value="0"/>
                     </compositeChoice>
-                    <compositeChoice choice="128 Speed-steps (FX-mode)">
+                    <compositeChoice choice="128 Speed-steps (&quot;FX-mode&quot; advanced consisting) (t/t/c)">
                         <compositeSetting label="OpSw 21" value="0"/>
                         <compositeSetting label="OpSw 22" value="0"/>
                         <compositeSetting label="OpSw 23" value="1"/>
                     </compositeChoice>
-                    <compositeChoice choice="14 Speed-steps">
+                    <compositeChoice choice="14 Speed-steps (c/t/t)">
                         <compositeSetting label="OpSw 21" value="1"/>
                         <compositeSetting label="OpSw 22" value="0"/>
                         <compositeSetting label="OpSw 23" value="0"/>
                     </compositeChoice>
-                    <compositeChoice choice="28 Speed-steps">
+                    <compositeChoice choice="28 Speed-steps (c/c/t)">
                         <compositeSetting label="OpSw 21" value="1"/>
                         <compositeSetting label="OpSw 22" value="1"/>
                         <compositeSetting label="OpSw 23" value="0"/>
                     </compositeChoice>
-                    <compositeChoice choice="OpSw21/22/23 = t/c/t">
+                    <compositeChoice choice="Motorola Trinary (t/c/t)">
                         <compositeSetting label="OpSw 21" value="0"/>
                         <compositeSetting label="OpSw 22" value="1"/>
                         <compositeSetting label="OpSw 23" value="0"/>
                     </compositeChoice>
-                    <compositeChoice choice="OpSw21/22/23 = c/t/c">
+                    <compositeChoice choice="Undefined (c/t/c)">
                         <compositeSetting label="OpSw 21" value="1"/>
                         <compositeSetting label="OpSw 22" value="0"/>
                         <compositeSetting label="OpSw 23" value="1"/>
                     </compositeChoice>
-                    <compositeChoice choice="OpSw21/22/23 = t/c/c">
+                    <compositeChoice choice="Undefined (t/c/c)">
                         <compositeSetting label="OpSw 21" value="0"/>
                         <compositeSetting label="OpSw 22" value="1"/>
                         <compositeSetting label="OpSw 23" value="1"/>
                     </compositeChoice>
-                    <compositeChoice choice="OpSw21/22/23 = c/c/c">
+                    <compositeChoice choice="28 Speed-Steps (&quot;FX-mode&quot; advanced consisting) (c/c/c)">
                         <compositeSetting label="OpSw 21" value="1"/>
                         <compositeSetting label="OpSw 22" value="1"/>
                         <compositeSetting label="OpSw 23" value="1"/>
