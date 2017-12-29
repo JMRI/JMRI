@@ -27,20 +27,7 @@ public class NamedBeanComparator implements java.util.Comparator<NamedBean> {
     static AlphanumComparator ac = new AlphanumComparator();
     
     @Override
-    public int compare(NamedBean ob1, NamedBean ob2) {
-        String o1 = ob1.getSystemName();
-        String o2 = ob2.getSystemName();
-        
-        int p1len = Manager.getSystemPrefixLength(o1);
-        int p2len = Manager.getSystemPrefixLength(o2);
-        
-        int comp = ac.compare(o1.substring(0, p1len), o2.substring(0, p2len));
-        if (comp != 0) return comp;
-
-        char c1 = o1.charAt(p1len);
-        char c2 = o2.charAt(p2len);
-           
-        if (c1 == c2) return ac.compare(o1.substring(p1len+1), o2.substring(p2len+1));
-        else return (c1 > c2) ? +1 : -1 ;
+    public int compare(NamedBean n1, NamedBean n2) {
+        return NamedBean.compareSystemName(n1, n2);
     }
 }

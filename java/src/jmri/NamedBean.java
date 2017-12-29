@@ -340,6 +340,54 @@ public interface NamedBean {
         return result;
     }
 
+    /**
+     * Provide a comparison between the system names of two beans.
+     * This provides a implementation for e.g. {@link java.util.Comparable<NamedBean>).
+     * @return 0 if the names are the same, -1 if the first argument orders before
+     * the second argument's name, +1 if the first argument's name  orders after the second argument's name.
+     * The comparison is alphanumeric on the system prefix, then alphabetic on the
+     * type letter, then system-specific comparison on the two suffix parts
+     * via the {@link compareSystemNameSuffix} method.
+     *
+     * @parm n1 The first NamedBean in the comparison
+     * @parm n2 The second NamedBean in the comparison
+     * @returns -1,0,+1 for ordering if the names are well-formed; may not provide proper ordering if the names are not well-formed.
+     */
+    @CheckReturnValue
+    static public int compareSystemName(@Nonnull NamedBean n1, @Nonnull NamedBean n2) {
+        jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
+        String o1 = n1.getSystemName();
+        String o2 = n2.getSystemName();
+        
+        int p1len = Manager.getSystemPrefixLength(o1);
+        int p2len = Manager.getSystemPrefixLength(o2);
+        
+        int comp = ac.compare(o1.substring(0, p1len), o2.substring(0, p2len));
+        if (comp != 0) return comp;
+
+        char c1 = o1.charAt(p1len);
+        char c2 = o2.charAt(p2len);
+           
+        if (c1 != c2) {
+            return (c1 > c2) ? +1 : -1 ;
+        } else {
+            return n1.compareSystemNameSuffix(o1.substring(p1len+1), o2.substring(p2len+1), n2);
+        }
+    }
+
+    /**
+     * Compare the suffix of this NamedBean's name with the 
+     * suffix of the argument NamedBean's name for the {@link compareSystemName} operation.
+     * This is intended to be a system-specific comparison that understands the various formats, etc.
+     *
+     * @parm suffix1 The suffix for the 1st bean in the comparison
+     * @parm suffix2 The suffix for the 2nd bean in the comparison
+     * @parm n2 The other (second) NamedBean in the comparison
+     * @returns -1,0,+1 for ordering if the names are well-formed; may not provide proper ordering if the names are not well-formed.
+     */
+    @CheckReturnValue
+    public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n2);
+
     public class BadUserNameException extends IllegalArgumentException {
     }
 
