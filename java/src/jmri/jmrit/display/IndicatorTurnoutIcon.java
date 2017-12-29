@@ -336,6 +336,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
 
     @Override
     public void setScale(double s) {
+        _scale = s;
         if (_iconMaps != null) {
             Iterator<HashMap<Integer, NamedIcon>> it = _iconMaps.values().iterator();
             while (it.hasNext()) {
@@ -359,6 +360,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
                 }
             }
         }
+        setDegrees(deg %360);
         displayState(turnoutState());
     }
 

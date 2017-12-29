@@ -22,17 +22,17 @@ import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalHeadIcon;
 import jmri.jmrit.picker.PickListModel;
-import jmri.util.JmriJFrame;
 import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelectionListener {
 
-    public SignalHeadItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel<SignalHead> model, Editor editor) {
+    public SignalHeadItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<SignalHead> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
 

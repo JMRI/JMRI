@@ -73,8 +73,8 @@ public class TrainBuilder extends TrainCommon {
     Track _terminateStageTrack; // terminate staging track (null if not staging)
     boolean _success; // true when enough cars have been picked up from a location
     PrintWriter _buildReport; // build report for this train
-    List<Car> _notRoutable = new ArrayList<Car>(); // list of cars that couldn't be routed
-    List<Location> _modifiedLocations = new ArrayList<Location>(); // list of locations that have been modified
+    List<Car> _notRoutable = new ArrayList<>(); // list of cars that couldn't be routed
+    List<Location> _modifiedLocations = new ArrayList<>(); // list of locations that have been modified
 
     // managers
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
@@ -782,7 +782,7 @@ public class TrainBuilder extends TrainCommon {
      */
     private Track promptFromStagingDialog() {
         List<Track> tracksIn = _departLocation.getTrackList();
-        List<Track> validTracks = new ArrayList<Track>();
+        List<Track> validTracks = new ArrayList<>();
         // only show valid tracks
         for (Track track : tracksIn) {
             if (checkDepartureStagingTrack(track)) {
@@ -822,7 +822,7 @@ public class TrainBuilder extends TrainCommon {
      */
     private Track promptToStagingDialog() {
         List<Track> tracksIn = _terminateLocation.getTrackByNameList(null);
-        List<Track> validTracks = new ArrayList<Track>();
+        List<Track> validTracks = new ArrayList<>();
         // only show valid tracks
         for (Track track : tracksIn) {
             if (checkTerminateStagingTrack(track)) {
@@ -954,7 +954,7 @@ public class TrainBuilder extends TrainCommon {
         }
 
         boolean foundLoco = false;
-        List<Engine> singleLocos = new ArrayList<Engine>();
+        List<Engine> singleLocos = new ArrayList<>();
         for (int indexEng = 0; indexEng < _engineList.size(); indexEng++) {
             Engine engine = _engineList.get(indexEng);
             log.debug("Engine ({}) at location ({}, {})", engine.toString(), engine.getLocationName(), engine
@@ -1163,25 +1163,33 @@ public class TrainBuilder extends TrainCommon {
     private int getAutoEngines() {
         double numberEngines = 1;
         int moves = 0;
+        int carLength = 40 + Car.COUPLER; // typical 40' car
+        
+        // adjust if length in meters
+        if (!Setup.getLengthUnit().equals(Setup.FEET)) {
+            carLength = 12 + Car.COUPLER; // typical car in meters
+        }
 
         for (RouteLocation rl : _routeList) {
-            moves += rl.getMaxCarMoves();
-            double carDivisor = 16; // number of 40' cars per engine 1% grade
-            // change engine requirements based on grade
-            if (rl.getGrade() > 1) {
-                double grade = rl.getGrade();
-                carDivisor = carDivisor / grade;
-            }
-            log.debug("Maximum train length {} for location ({})", rl.getMaxTrainLength(), rl.getName());
-            if (rl.getMaxTrainLength() / (carDivisor * 40) > numberEngines) {
-                numberEngines = rl.getMaxTrainLength() / (carDivisor * (40 + Car.COUPLER));
-                // round up to next whole integer
-                numberEngines = Math.ceil(numberEngines);
-                if (numberEngines > moves / carDivisor) {
-                    numberEngines = Math.ceil(moves / carDivisor);
+            if (rl.isPickUpAllowed()) {
+                moves += rl.getMaxCarMoves(); // assume all moves are pick ups
+                double carDivisor = 16; // number of 40' cars per engine 1% grade
+                // change engine requirements based on grade
+                if (rl.getGrade() > 1) {
+                    carDivisor = carDivisor / rl.getGrade();
                 }
-                if (numberEngines < 1) {
-                    numberEngines = 1;
+                log.debug("Maximum train length {} for location ({})", rl.getMaxTrainLength(), rl.getName());
+                if (rl.getMaxTrainLength() / (carDivisor * carLength) > numberEngines) {
+                    numberEngines = rl.getMaxTrainLength() / (carDivisor * carLength);
+                    // round up to next whole integer
+                    numberEngines = Math.ceil(numberEngines);
+                    // determine if there's enough car pick ups at this point to reach the max train length
+                    if (numberEngines > moves / carDivisor) {
+                        numberEngines = Math.ceil(moves / carDivisor); // no reduce based on moves
+                    }
+                    if (numberEngines < 1) {
+                        numberEngines = 1;
+                    }
                 }
             }
         }
@@ -1684,7 +1692,7 @@ public class TrainBuilder extends TrainCommon {
         // adjust car list to only have cars from one staging track
         if (_departStageTrack != null) {
             int numCarsFromStaging = 0;
-            _numOfBlocks = new Hashtable<String, Integer>();
+            _numOfBlocks = new Hashtable<>();
             addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
             addLine(_buildReport, SEVEN, Bundle.getMessage("buildRemoveCarsStaging"));
             for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
@@ -1741,7 +1749,7 @@ public class TrainBuilder extends TrainCommon {
         addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildFoundCars"), new Object[]{
                 Integer.toString(_carList.size()), _train.getName()}));
 
-        List<String> locationNames = new ArrayList<String>(); // only show cars once using the train's route
+        List<String> locationNames = new ArrayList<>(); // only show cars once using the train's route
         for (RouteLocation rl : _train.getRoute().getLocationsBySequenceList()) {
             if (locationNames.contains(rl.getName())) {
                 continue;
@@ -3055,7 +3063,7 @@ public class TrainBuilder extends TrainCommon {
                 }
             }
         } else if (_train.getRoadOption().equals(Train.EXCLUDE_ROADS)) {
-            List<String> roads = new ArrayList<String>();
+            List<String> roads = new ArrayList<>();
             for (String road : InstanceManager.getDefault(CarRoads.class).getNames()) {
                 roads.add(road);
             }
@@ -3096,7 +3104,7 @@ public class TrainBuilder extends TrainCommon {
             }
         } else if (_train.getLoadOption().equals(Train.EXCLUDE_LOADS)) {
             // build a list of loads that the staging track must accept
-            List<String> loads = new ArrayList<String>();
+            List<String> loads = new ArrayList<>();
             for (String type : _train.getTypeNames()) {
                 for (String load : InstanceManager.getDefault(CarLoads.class).getNames(type)) {
                     if (!loads.contains(load)) {
@@ -3159,7 +3167,7 @@ public class TrainBuilder extends TrainCommon {
         }
         List<Track> tracks = locationManager.getTracksByMoves(Track.SPUR);
         log.debug("Found {} spurs", tracks.size());
-        List<Location> locations = new ArrayList<Location>(); // locations not reachable
+        List<Location> locations = new ArrayList<>(); // locations not reachable
         for (Track track : tracks) {
             if (car.getTrack() == track || track.getSchedule() == null) {
                 continue;
@@ -3484,7 +3492,7 @@ public class TrainBuilder extends TrainCommon {
         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTryStagingToStaging"),
                 new Object[]{car.toString(), tracks.size()}));
         // list of locations that can't be reached by the router
-        List<Location> locationsNotReachable = new ArrayList<Location>();
+        List<Location> locationsNotReachable = new ArrayList<>();
         while (tracks.size() > 0) {
             // pick a track randomly
             int rnd = (int) (Math.random() * tracks.size());

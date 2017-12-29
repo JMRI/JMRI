@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @author George Warner Copyright (C) 2017
  */
 public class LevelXingXml extends AbstractXmlAdapter {
 

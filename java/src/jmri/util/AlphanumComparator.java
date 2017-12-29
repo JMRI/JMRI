@@ -22,27 +22,29 @@ package jmri.util;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
+
 import java.util.Comparator;
 
 /**
- * This is an updated version with enhancements made by Daniel Migowski, Andre
- * Bogus, and David Koelle
- * <p>
- * To use this class: Use the static "sort" method from the
- * java.util.Collections class: Collections.sort(your list, new
- * AlphanumComparator());
- * <p>
- * Note: this code compares numbers one at a time if those numbers are in chunks
- * of the same size. For example, when comparing abc123 to abc184, 123 and 184
- * are the same size, so their values are compared digit-by- digit: 1 equals 1,
- * 2 is less than 8, etc. This was done to solve the problem of numeric chunks
- * that are too large to fit in range of values allowed by the programming
- * language for a particular datatype: in Java, an int is limited to 2147483647.
- * The problem with this approach is doesn't properly handle numbers that have
- * leading zeros. For example, 0001 is seem as larger than 1 because it's the
- * longer number. A version that does not compare leading zeros is forthcoming.
+ * This is an updated version with enhancements made by Daniel Migowski,
+ * Andre Bogus, and David Koelle
+ *
+ * To use this class:
+ *   Use the static "sort" method from the java.util.Collections class:
+ *   Collections.sort(your list, new AlphanumComparator());
+ *
+ * Note: this code compares numbers one at a time if those numbers are in
+ * chunks of the same size. For example, when comparing abc123 to abc184,
+ * 123 and 184 are the same size, so their values are compared digit-by-
+ * digit: 1 equals 1, 2 is less than 8, etc. This was done to solve the
+ * problem of numeric chunks that are too large to fit in range of values
+ * allowed by the programming language for a particular datatype: in Java,
+ * an int is limited to 2147483647. The problem with this approach is
+ * doesn't properly handle numbers that have leading zeros. For example,
+ * 0001 is seem as larger than 1 because it's the longer number. A
+ * version that does not compare leading zeros is forthcoming.
  */
-public final class AlphanumComparator implements Comparator<String> {
+public class AlphanumComparator implements Comparator<String> {
 
     private final boolean isDigit(char ch) {
         return (('0' <= ch) && (ch <= '9'));
@@ -56,9 +58,8 @@ public final class AlphanumComparator implements Comparator<String> {
         boolean startIsDigit = isDigit(c);
         while (++marker < slength) {
             c = s.charAt(marker);
-            if (isDigit(c) != startIsDigit) {
+            if (isDigit(c) != startIsDigit)
                 break;
-            }
             chunk.append(c);
         }
         return chunk.toString();
@@ -100,9 +101,9 @@ public final class AlphanumComparator implements Comparator<String> {
                 break;
             }
         }
-        if (result == 0) {
-            result = length1 - length2;
-        }
+        if (result == 0 && marker1 == length1 && marker2 < length2) return -1;
+        if (result == 0 && marker1 < length1 && marker2 == length2) return +1;
+        
         return result;
     }
 }

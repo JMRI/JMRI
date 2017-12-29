@@ -15,7 +15,7 @@ import org.junit.Assert;
 public class InputBitsTest extends TestCase {
 
     public void testConstructor1() {
-        Assert.assertNotNull("check instance", InputBits.instance());
+        Assert.assertNotNull("check instance", ibit);
     }
 
     public void testAccessors() {
@@ -187,10 +187,9 @@ public class InputBitsTest extends TestCase {
     @Override
     protected void setUp() {
         // The minimal setup for log4J
-        apps.tests.Log4JFixture.setUp();
-        // force init
-        InputBits.mInstance = null;
-        ibit = InputBits.instance();
+        JUnitUtil.setUp();
+        SerialTrafficControlScaffold tc = new SerialTrafficControlScaffold();
+        ibit = new InputBits(tc);
     }
 
     @Override

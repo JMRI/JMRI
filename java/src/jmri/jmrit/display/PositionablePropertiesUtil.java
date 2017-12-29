@@ -110,8 +110,6 @@ public class PositionablePropertiesUtil {
 
     JComponent _textPanel;
 
-    private JColorChooser fontColorChooser = null;
-    private JColorChooser backgroundColorChooser = null;
     JTextField fontSizeField;
 
     String[] _justification = {Bundle.getMessage("left"), Bundle.getMessage("right"), Bundle.getMessage("center")};
@@ -125,24 +123,6 @@ public class PositionablePropertiesUtil {
         _textPanel.setLayout(new BoxLayout(_textPanel, BoxLayout.Y_AXIS));
         JPanel fontColorPanel = new JPanel();
         fontColorPanel.add(new JLabel(Bundle.getMessage("FontColor") + ": "));
-
-        JPanel backgroundColorPanel = new JPanel();
-        backgroundColorPanel.add(new JLabel(Bundle.getMessage("FontBackgroundColor") + ": "));
-        Color defaultLabelBackground = backgroundColorPanel.getBackground();
-        backgroundColorChooser = new JColorChooser(defaultLabelBackground);
-        backgroundColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-        AbstractColorChooserPanel backgroundColorPanels[] = { new ButtonSwatchColorChooserPanel()};
-        backgroundColorChooser.setChooserPanels(backgroundColorPanels);
-
-        backgroundColorChooser.getSelectionModel().addChangeListener(previewChangeListener);
-        backgroundColorPanel.add(backgroundColorChooser);
-
-        fontColorChooser = new JColorChooser(defaultForeground);
-        fontColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-        AbstractColorChooserPanel fontColorPanels[] = { new ButtonSwatchColorChooserPanel()};
-        fontColorChooser.setChooserPanels(fontColorPanels);
-        fontColorChooser.getSelectionModel().addChangeListener(previewChangeListener);
-        fontColorPanel.add(fontColorChooser);
 
         JPanel fontSizePanel = new JPanel();
         fontSizePanel.setLayout(new BoxLayout(fontSizePanel, BoxLayout.Y_AXIS));
@@ -166,12 +146,6 @@ public class PositionablePropertiesUtil {
         Style.add(italic);
         FontPanel.add(Style);
         _textPanel.add(FontPanel);
-
-        JPanel ColorPanel = new JPanel();
-        ColorPanel.setLayout(new BoxLayout(ColorPanel, BoxLayout.Y_AXIS));
-        //ColorPanel.add(fontColorPanel);
-        //ColorPanel.add(backgroundColorPanel);
-        _textPanel.add(ColorPanel);
 
         JPanel justificationPanel = new JPanel();
         _justificationCombo = new JComboBox<>(_justification);

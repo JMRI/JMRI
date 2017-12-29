@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,11 +18,10 @@ import jmri.swing.RowSorterUtil;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-@SuppressWarnings("serial")
-@SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
 public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
 
     //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+
     private LayoutBlockRouteTableModel dataModel;
     private LayoutBlockNeighbourTableModel neighbourDataModel;
     private TableRowSorter<LayoutBlockNeighbourTableModel> neighbourSorter;
@@ -62,7 +60,7 @@ public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
 
         // set initial sort
         RowSorterUtil.setSortOrder(sorter, LayoutBlockRouteTableModel.HOPCOUNTCOL, SortOrder.ASCENDING);
-        RowSorterUtil.setSortOrder(this.neighbourSorter, LayoutBlockNeighbourTableModel.NEIGHBOURCOL, SortOrder.ASCENDING);
+        RowSorterUtil.setSortOrder(this.neighbourSorter, LayoutBlockNeighbourTableModel.NEIGHBOURCOL,SortOrder.ASCENDING);
         RowSorterUtil.setSortOrder(this.throughPathsSorter, LayoutBlockThroughPathsTableModel.SOURCECOL, SortOrder.ASCENDING);
 
         // allow reordering of the columns

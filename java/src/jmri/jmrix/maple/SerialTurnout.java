@@ -155,9 +155,9 @@ public class SerialTurnout extends AbstractTurnout {
                 // check for pulsed control
                 if (getControlType() == 0) {
                     // steady state control, get current status of the output bit
-                    if ((OutputBits.instance().getOutputBit(tBit) ^ getInverted()) != closed) {
+                    if ((_memo.getTrafficController().outputBits().getOutputBit(tBit) ^ getInverted()) != closed) {
                         // bit state is different from the requested state, set it
-                        OutputBits.instance().setOutputBit(tBit, closed ^ getInverted());
+                        _memo.getTrafficController().outputBits().setOutputBit(tBit, closed ^ getInverted());
                     } else {
                         // Bit state is the same as requested state, so nothing
                         // will happen if requested state is set.
@@ -168,7 +168,7 @@ public class SerialTurnout extends AbstractTurnout {
                             if ((kState & Turnout.THROWN) != 0) {
                                 // known state is different from output bit, set output bit to be correct
                                 //     for known state, then start a timer to set it to requested state
-                                OutputBits.instance().setOutputBit(tBit, false ^ getInverted());
+                                _memo.getTrafficController().outputBits().setOutputBit(tBit, false ^ getInverted());
 //        // start a timer to finish setting this turnout
 //        if (mPulseClosedTimer==null) {
 //         mPulseClosedTimer = new javax.swing.Timer(OutputBits.instance().getPulseWidth(), 
@@ -188,7 +188,7 @@ public class SerialTurnout extends AbstractTurnout {
                             if ((kState & Turnout.CLOSED) != 0) {
                                 // known state is different from output bit, set output bit to be correct
                                 //     for known state, then start a timer to set it to requested state
-                                OutputBits.instance().setOutputBit(tBit, true ^ getInverted());
+                                _memo.getTrafficController().outputBits().setOutputBit(tBit, true ^ getInverted());
 //        // start a timer to finish setting this turnout
 //        if (mPulseThrownTimer==null) {
 //         mPulseThrownTimer = new javax.swing.Timer(OutputBits.instance().getPulseWidth(), 

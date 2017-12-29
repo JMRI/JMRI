@@ -7,7 +7,6 @@ import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -20,7 +19,6 @@ import javax.swing.SwingUtilities;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import org.junit.After;
@@ -28,7 +26,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.ComponentChooser;
 
@@ -44,16 +41,15 @@ import org.netbeans.jemmy.ComponentChooser;
  *
  * @author Bob Jacobsen Copyright 2015
  */
-public class PositionableLabelTest {
+public class PositionableLabelTest extends PositionableTestBase {
 
     PositionableLabel to = null;
-    PanelEditor panel;
 
     @Test
     public void testSmallPanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        panel = new PanelEditor("PositionableLabel Test Panel");
+        editor = new EditorScaffold("PositionableLabel Test Panel");
 
         JFrame jf = new JFrame();
         JPanel p = new JPanel();
@@ -73,9 +69,9 @@ public class PositionableLabelTest {
         doButton.setBounds(0, 0, 120, 40);
         p.add(doButton);
 
-        to = new PositionableLabel("one", panel);
+        to = new PositionableLabel("one", editor);
         to.setBounds(80, 80, 40, 40);
-        panel.putItem(to);
+        editor.putItem(to);
         to.setDisplayLevel(Editor.LABELS);
         Assert.assertEquals("Display Level ", to.getDisplayLevel(), Editor.LABELS);
 
@@ -109,7 +105,6 @@ public class PositionableLabelTest {
         assertPixel("F Bkg blue, label Bkg none color", Pixel.TRANSPARENT, color2); // no blue, looking at transparent label
         assertPixel("F Bkg none, label Bkg yellow color", Pixel.YELLOW, color3);
         assertPixel("F Bkg blue, label Bkg yellow color", Pixel.YELLOW, color4);
-        JUnitUtil.resetWindows(false, false); // dispose all editors and panels
     }
 
     int getColor(String name) {
@@ -546,23 +541,12 @@ public class PositionableLabelTest {
         JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initDefaultUserMessagePreferences();
-    }
-
-    @After
-    public void tearDown() {
-        // now close panel window
-        if (panel != null) {
-            WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
-            for (WindowListener listener : listeners) {
-                panel.getTargetFrame().removeWindowListener(listener);
-            }
-            JFrameOperator jfo = new JFrameOperator(panel.getTargetFrame());
-            jfo.requestClose();
-            panel = null;
-            JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
+        if(!GraphicsEnvironment.isHeadless()) {
+           editor = new EditorScaffold();
+           p = to = new PositionableLabel("one", editor);
+           NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+           to.setIcon(icon);
         }
-
-        JUnitUtil.tearDown();
     }
 
     // All of the Pixel enum, and related methods, below was copied from 
