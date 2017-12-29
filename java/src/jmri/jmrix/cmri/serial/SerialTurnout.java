@@ -3,6 +3,8 @@ package jmri.jmrix.cmri.serial;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import javax.annotation.Nonnull;
+import javax.annotation.CheckReturnValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +58,7 @@ public class SerialTurnout extends AbstractTurnout {
      * <P>
      * 'systemName' was previously validated in SerialTurnoutManager
      */
-    public SerialTurnout(String systemName, String userName, CMRISystemConnectionMemo memo) {
+    public SerialTurnout(@Nonnull String systemName, String userName, CMRISystemConnectionMemo memo) {
         super(systemName, userName);
         // Save system Name
         tSystemName = systemName;
@@ -263,6 +265,45 @@ public class SerialTurnout extends AbstractTurnout {
                 }
             }
         }
+    }
+
+    /**
+     * {@inheritDoc} 
+     * 
+     * By default, does an alphanumeric-by-chunks comparison
+     */
+    @CheckReturnValue
+    public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull jmri.NamedBean n) {
+        jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
+        
+        // extract node numbers and bit numbers
+        int node1 = 0, node2 = 0, bit1, bit2;
+        int t; // a temporary
+        
+        if ((t = suffix1.indexOf("B")) >= 0) {
+            // alt format
+            bit1 = Integer.parseInt(suffix1.substring(t+1));
+            if (t>0) node1 = Integer.parseInt(suffix1.substring(0, t));
+        } else {
+            // std format
+            int len = suffix1.length();
+            bit1 = Integer.parseInt(suffix1.substring(Math.max(0, len-3)));
+            if (len>3) node1 = Integer.parseInt(suffix1.substring(0, len-3));
+        }
+        
+        if ((t = suffix2.indexOf("B")) >= 0) {
+            // alt format
+            bit2 = Integer.parseInt(suffix2.substring(t+1));
+            if (t>0) node2 = Integer.parseInt(suffix2.substring(0, t));
+        } else {
+            // std format
+            int len = suffix2.length();
+            bit2 = Integer.parseInt(suffix2.substring(Math.max(0, len-3)));
+            if (len>3) node2 = Integer.parseInt(suffix2.substring(0, len-3));
+        }
+        
+        if (node1 != node2 ) return Integer.signum(node1-node2);
+        return Integer.signum(bit1-bit2);
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class);
