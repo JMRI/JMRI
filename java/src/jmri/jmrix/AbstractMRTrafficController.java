@@ -229,9 +229,7 @@ abstract public class AbstractMRTrafficController {
             }
         }
         if (m != null) {
-            if (log.isDebugEnabled()) {
-                log.debug("just notified transmit thread with message {}", m.toString());
-            }
+            log.debug("just notified transmit thread with message {}", m);
         }
     }
 
@@ -306,7 +304,7 @@ abstract public class AbstractMRTrafficController {
                     if (mCurrentState == WAITMSGREPLYSTATE) {
                         handleTimeout(m, l);
                     } else if (mCurrentState == AUTORETRYSTATE) {
-                        log.info("Message added back to queue: {}", m.toString());
+                        log.info("Message added back to queue: {}", m);
                         msgQueue.addFirst(m);
                         listenerQueue.addFirst(l);
                         synchronized (xmtRunnable) {
@@ -421,9 +419,9 @@ abstract public class AbstractMRTrafficController {
                 String name = (packages.length >= 2 ? packages[packages.length - 2] + "." : "")
                         + (packages.length >= 1 ? packages[packages.length - 1] : "");
                 if (!threadStopRequest) {
-                    log.error(interruptMessage + " in transmitWait(..) of {}", name);
+                    log.error("{} in transmitWait(..) of {}", interruptMessage, name);
                 } else {
-                    log.debug("during shutdown, " + interruptMessage + " in transmitWait(..) of {}", name);
+                    log.debug("during shutdown, {} in transmitWait(..) of {}", interruptMessage, name);
                 }
             }
         }
@@ -479,7 +477,7 @@ abstract public class AbstractMRTrafficController {
         String name = (packages.length >= 2 ? packages[packages.length - 2] + "." : "")
                 + (packages.length >= 1 ? packages[packages.length - 1] : "");
 
-        log.warn("Timeout on reply to message: {} consecutive timeouts = {} in {}", msg.toString(), timeouts, name);
+        log.warn("Timeout on reply to message: {} consecutive timeouts = {} in {}", msg, timeouts, name);
         timeouts++;
         timeoutFlag = true;
         flushReceiveChars = true;
@@ -568,12 +566,12 @@ abstract public class AbstractMRTrafficController {
         try {
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
-                    StringBuilder f = new StringBuilder("formatted message: ");
+                    StringBuilder f = new StringBuilder();
                     for (int i = 0; i < msg.length; i++) {
                         f.append(Integer.toHexString(0xFF & msg[i]));
                         f.append(" ");
                     }
-                    log.debug(f.toString());
+                    log.debug("formatted message: {}", f);
                 }
                 while (m.getRetries() >= 0) {
                     if (portReadyToSend(controller)) {
@@ -582,9 +580,7 @@ abstract public class AbstractMRTrafficController {
                         log.debug("written, msg timeout: {} mSec", m.getTimeout());
                         break;
                     } else if (m.getRetries() >= 0) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("Retry message: {} attempts remaining: {}", m.toString(), m.getRetries());
-                        }
+                        log.debug("Retry message: {} attempts remaining: {}", m, m.getRetries());
                         m.setRetries(m.getRetries() - 1);
                         try {
                             synchronized (xmtRunnable) {
@@ -865,7 +861,7 @@ abstract public class AbstractMRTrafficController {
             //if (log.isDebugEnabled()) log.debug("char: "+(char1&0xFF)+" i: "+i);
             // if there was a timeout, flush any char received and start over
             if (flushReceiveChars) {
-                log.warn("timeout flushes receive buffer: {}", msg.toString());
+                log.warn("timeout flushes receive buffer: {}", msg);
                 msg.flush();
                 i = 0;  // restart
                 flushReceiveChars = false;
@@ -943,9 +939,7 @@ abstract public class AbstractMRTrafficController {
 
         // message is complete, dispatch it !!
         replyInDispatch = true;
-        if (log.isDebugEnabled()) {
-            log.debug("dispatch reply of length {} contains {} state {}", msg.getNumDataElements(), msg.toString(), mCurrentState);
-        }
+        log.debug("dispatch reply of length {} contains {} state {}", msg.getNumDataElements(), msg, mCurrentState);
 
         // forward the message to the registered recipients,
         // which includes the communications monitor
@@ -961,7 +955,7 @@ abstract public class AbstractMRTrafficController {
                     // to automatically handle by re-queueing the last sent
                     // message, otherwise go on to the next message
                     if (msg.isRetransmittableErrorMsg()) {
-                        log.error("Automatic Recovery from Error Message: {}.  Retransmitted {} times.", msg.toString(), retransmitCount);
+                        log.error("Automatic Recovery from Error Message: {}.  Retransmitted {} times.", msg, retransmitCount);
                         synchronized (xmtRunnable) {
                             mCurrentState = AUTORETRYSTATE;
                             if (retransmitCount > 0) {
@@ -1024,9 +1018,7 @@ abstract public class AbstractMRTrafficController {
                 default: {
                     replyInDispatch = false;
                     if (allowUnexpectedReply == true) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, msg.toString());
-                        }
+                        log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, msg);
                         synchronized (xmtRunnable) {
                             // The transmit thread sometimes gets stuck
                             // when unexpected replies are received.  Notify
@@ -1036,15 +1028,13 @@ abstract public class AbstractMRTrafficController {
                             xmtRunnable.notify();
                         }
                     } else {
-                        log.error("reply complete in unexpected state: {} was {}", mCurrentState, msg.toString());
+                        log.error("reply complete in unexpected state: {} was {}", mCurrentState, msg);
                     }
                 }
             }
             // Unsolicited message
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("Unsolicited Message Received {}", msg.toString());
-            }
+            log.debug("Unsolicited Message Received {}", msg);
 
             replyInDispatch = false;
         }
