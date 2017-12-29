@@ -18,6 +18,28 @@ public class SystemNameComparatorTest {
     }
 
     @Test
+    public void testSystemPrefixTests() {
+        SystemNameComparator t = new SystemNameComparator();
+
+        Assert.assertEquals("IS1 < I2S1", -1, t.compare("IS1", "I2S1"));
+        Assert.assertEquals("I2S1 > IS1", +1, t.compare("I2S1", "IS1"));
+
+        Assert.assertEquals("I2S1 < I10S1", -1, t.compare("I2S1", "I10S1"));
+        Assert.assertEquals("I10S1 > I2S1", +1, t.compare("I10S1", "I2S1"));
+    }
+
+    @Test
+    public void testTypeLetterTests() {
+        SystemNameComparator t = new SystemNameComparator();
+
+        Assert.assertEquals("IS1 < IT1", -1, t.compare("IS1", "IT1"));
+        Assert.assertEquals("IT1 > IS1", +1, t.compare("IT1", "IS1"));
+
+        Assert.assertEquals("I2S1 > IT1", +1, t.compare("I2S1", "IT1"));
+        Assert.assertEquals("IT1 < I2S1", -1, t.compare("IT1", "I2S1"));
+    }
+
+    @Test
     public void testNumericComparison() {
         SystemNameComparator t = new SystemNameComparator();
 
