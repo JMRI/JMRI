@@ -490,11 +490,11 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         } else if (e.getPropertyName().equals("remove")) {
             _re = (RosterEntry) e.getNewValue();
             if (_re.getAttribute(rosterAttribute) != null) {
-                if (p.getRemoveLocoFromEcos() == EcosPreferences.YES){
+                if (p.getRemoveLocoFromEcos() == EcosPreferences.YES) {
                     RemoveObjectFromEcos removeObjectFromEcos = new RemoveObjectFromEcos();
                     removeObjectFromEcos.removeObjectFromEcos(_re.getAttribute(p.getRosterAttribute()), tc);
                     deleteEcosLoco(provideByEcosObject(_re.getAttribute(p.getRosterAttribute())));
-                } else if(p.getRemoveLocoFromEcos() == EcosPreferences.ASK ) {
+                } else if (p.getRemoveLocoFromEcos() == EcosPreferences.ASK) {
                     final JDialog dialog = new JDialog();
                     dialog.setTitle(Bundle.getMessage("RemoveLocoTitle"));
                     //test.setSize(300,130);
@@ -646,7 +646,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         }
         if (line.contains("cv")) {
             String cv = EcosReply.getContentDetails(line, "cv");
-            cv = cv.replaceAll("\\s","");  //remove all white spaces, as 4.1.0 version removed the space after the ,
+            cv = cv.replaceAll("\\s", "");  //remove all white spaces, as 4.1.0 version removed the space after the ,
             int cvnum = Integer.parseInt(cv.substring(0, cv.indexOf(",")));
             int cvval = Integer.parseInt(cv.substring(cv.indexOf(",") + 1, cv.length()));
             tmploco.setCV(cvnum, cvval);
@@ -801,9 +801,10 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
     public void message(EcosMessage m) {
 
     }
+
     /**
-     * The purpose of this is to get some of the basic cv details that are required
-     * for selecting the decoder mfg and family in the roster file.
+     * The purpose of this is to get some of the basic cv details that are
+     * required for selecting the decoder mfg and family in the roster file.
      * This might work as sending a single request rather than multiple.
      */
     private void getEcosCVs(EcosLocoAddress tmploco) {
