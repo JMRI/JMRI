@@ -18,18 +18,17 @@ public class ExceptionDisplayFrameTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ExceptionContext ec = new ExceptionContext(new Exception("Test"),"Test","Test");
+        ExceptionContext ec = new ExceptionContext(new Exception("Test"), "Test", "Test");
         new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(ec.getTitle());
-            jdo.close();
+            jdo.requestClose();
         }).start();
         ExceptionDisplayFrame dialog = new ExceptionDisplayFrame(ec);
-        Assert.assertNotNull("exists",dialog);
+        Assert.assertNotNull("exists", dialog);
         JUnitUtil.waitFor(() -> {
             return !dialog.isVisible();
         }, "Exception Frame did not close");
-        dialog.dispose();
         JUnitUtil.dispose(dialog);
     }
 
