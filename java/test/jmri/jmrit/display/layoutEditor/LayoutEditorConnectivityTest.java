@@ -66,7 +66,6 @@ public class LayoutEditorConnectivityTest {
         pBlock = bm.getBlock("1");
         nBlock = bm.getBlock("3");
         tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
-
         setting = tsList.get(0).getExpectedState();
         Assert.assertEquals("1_2_3Connect", Turnout.CLOSED, setting);
 
