@@ -38,6 +38,7 @@ import jmri.SignalMast;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemNameComparator;
+import jmri.util.AlphanumComparator;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -543,7 +544,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             _AspectModel = new SignalMastAspectModel();
             JTable SignalMastAspectTable = new JTable(_AspectModel);
             TableRowSorter<SignalMastAspectModel> smaSorter = new TableRowSorter<>(_AspectModel);
-            smaSorter.setComparator(SignalMastAspectModel.ASPECT_COLUMN, new SystemNameComparator());
+            smaSorter.setComparator(SignalMastAspectModel.ASPECT_COLUMN, new AlphanumComparator());
             RowSorterUtil.setSortOrder(smaSorter, SignalMastAspectModel.ASPECT_COLUMN, SortOrder.ASCENDING);
             SignalMastAspectTable.setRowSorter(smaSorter);
             SignalMastAspectTable.setRowSelectionAllowed(false);
