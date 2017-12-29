@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.util.JUnitUtil;
 
 public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase{
 
@@ -98,7 +99,7 @@ public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsi
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
         t = new EasyDccTrafficControlScaffold(memo);
         memo.setEasyDccTrafficController(t); // important for successful getTrafficController()
@@ -109,7 +110,8 @@ public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsi
     @Override
     public void tearDown() {
         cm = null;
-        apps.tests.Log4JFixture.tearDown();
+        t.terminateThreads();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManagerTest.class);

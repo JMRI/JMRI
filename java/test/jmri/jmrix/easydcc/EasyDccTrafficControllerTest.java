@@ -29,7 +29,13 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
 
     @Test
     public void testSendThenRcvReply() throws Exception {
-        EasyDccTrafficController c = (EasyDccTrafficController) tc;
+        EasyDccTrafficController c = new EasyDccTrafficController(new EasyDccSystemConnectionMemo("E", "EasyDCC Test")){
+            @Override
+            protected void terminate(){
+               // do nothing, so we don't try to write to a closed pipe
+               // after this test
+            }
+        };
 
         // connect to iostream via port controller
         EasyDccPortControllerScaffold p = new EasyDccPortControllerScaffold();
@@ -61,13 +67,13 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
         tistream.write('P');
         tistream.write(0x0d);
 
-        // drive the mechanism
-        c.handleOneIncomingReply();
-
+        // threading causes the traffic controller to handle the reply,
+        // so wait until that happens.
         JUnitUtil.waitFor(()->{return rcvdReply != null;}, "reply received");
 
         Assert.assertTrue("reply received ", rcvdReply != null);
         Assert.assertEquals("first char of reply ", 'P', rcvdReply.getOpCode());
+        c.terminateThreads(); // stop any threads we might have created.
     }
 
     // internal class to simulate an EasyDccListener

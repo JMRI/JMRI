@@ -314,8 +314,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         } catch (ArrayIndexOutOfBoundsException e) {
             scaleList.setSelectedItem(defaultScale);
         }
-        selectedScale = scales[scaleList.getSelectedIndex()];
-
+        if ( scaleList.getSelectedIndex() > -1 ) {
+            selectedScale = scales[scaleList.getSelectedIndex()];
+        }
         // Listen to selection of scale
         scaleList.addActionListener(new java.awt.event.ActionListener() {
             @SuppressWarnings("unchecked") // action semantics pass an Object that must be a JComboBox<String>

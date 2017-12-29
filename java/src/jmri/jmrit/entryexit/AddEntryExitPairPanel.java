@@ -9,6 +9,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -32,6 +34,8 @@ import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.*;
+import jmri.util.AlphanumComparator;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -86,6 +90,10 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
         top.add(new JLabel(Bundle.getMessage("ToLocation")));  // NOI18N
         top.add(toPoint);
+
+        JComboBoxUtil.setupComboBoxMaxRows(fromPoint);
+        JComboBoxUtil.setupComboBoxMaxRows(toPoint);
+
         top.add(new JLabel(Bundle.getMessage("NXType")));  // NOI18N
         top.add(typeBox);
         add(top);
@@ -198,6 +206,9 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     }
 
     List<ValidPoints> validPoints = new ArrayList<>();
+    boolean doFromCombo;
+    SortedSet<String> fromSet = new TreeSet<>();
+    SortedSet<String> toSet = new TreeSet<>();
 
     private void selectPointsFromPanel() {
         if (selectPanel.getSelectedIndex() == -1) {
@@ -207,8 +218,32 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             return;
         }
         panel = panels.get(selectPanel.getSelectedIndex());
+        fromSet.clear();
+        toSet.clear();
+        doFromCombo = true;
+        selectPoints(panel);
+
+        // Do other panels if any
+        doFromCombo = false;
+        panels = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+        for (int i = 0; i < panels.size(); i++) {
+            if (panels.get(i) != panel) {
+                selectPoints(panels.get(i));
+            }
+        }
+
+        // Update the combo boxes
         fromPoint.removeAllItems();
+        fromSet.forEach((ent) -> {
+            fromPoint.addItem(ent);
+        });
         toPoint.removeAllItems();
+        toSet.forEach((ent) -> {
+            toPoint.addItem(ent);
+        });
+    }
+
+    private void selectPoints(LayoutEditor panel) {
         for (PositionablePoint pp : panel.getPositionablePoints()) {
             addPointToCombo(pp.getWestBoundSignalMastName(), pp.getWestBoundSensorName());
             addPointToCombo(pp.getEastBoundSignalMastName(), pp.getEastBoundSensorName());
@@ -244,8 +279,10 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                 description = sensorName + " (" + signalMastName + ")";
             }
             validPoints.add(new ValidPoints(source, description));
-            fromPoint.addItem(description);
-            toPoint.addItem(description);
+            if (doFromCombo) {
+                fromSet.add(description);
+            }
+            toSet.add(description);
         }
     }
 

@@ -13,6 +13,7 @@
           <text xml:lang="fr">Luminosité valeur 0 - 15 (maximum)</text>
           <text xml:lang="it">Luminosità: 0=spento - 15 (massima)</text>
           <text xml:lang="de">Helligkeitsbereich: 0 (dunkel) - 15 (maximal)</text>
+          <text xml:lang="ca">Lluminositat: 0=apagat - 15 (màxima)</text>
         </label>
         <label>
           <text> </text>

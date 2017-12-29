@@ -70,6 +70,8 @@
 
         <li>Blocks (track segments)</li>
 
+        <li>Conditionals (for logiX, although these are not entirely named beans)</li>
+
         <li>signal Heads</li>
 
         <li>Lights (a type of output)</li>

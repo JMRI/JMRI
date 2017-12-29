@@ -24,7 +24,8 @@ public class SPROGMenu extends JMenu {
             add(new jmri.jmrix.sprog.packetgen.SprogPacketGenAction(Bundle.getMessage("SendCommandTitle"), memo));
             add(new jmri.jmrix.sprog.console.SprogConsoleAction(Bundle.getMessage("MenuItemConsole"), memo));
             add(new jmri.jmrix.sprog.update.SprogVersionAction(Bundle.getMessage("GetSprogFirmwareVersion"), memo));
-            add(new jmri.jmrix.sprog.update.Sprogv4UpdateAction(Bundle.getMessage("SprogXFirmwareUpdate", "v3/v4"), memo));
+            // Removed top avoid confusion with newer SPROG II and 3 athat have now reached v3 and v4
+            //add(new jmri.jmrix.sprog.update.Sprogv4UpdateAction(Bundle.getMessage("SprogXFirmwareUpdate", "v3/v4"), memo));
             add(new jmri.jmrix.sprog.update.SprogIIUpdateAction(Bundle.getMessage("SprogXFirmwareUpdate", " II/SPROG 3"), memo));
         }
     }

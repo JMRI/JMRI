@@ -24,6 +24,16 @@
         &lt;br&gt;
         &lt;strong&gt;Um leere Reiter zu verbergen, deselektiere Voreinstellungen -> Lokpark -> Programmierer -> Zeige leere Reiter.&lt;/strong&gt;
         &lt;/html&gt;</text>
+        <text xml:lang="ca">&lt;html&gt;
+        &lt;strong&gt;Aquesta pestanya és buida perquè els llums es configuren a la següent pestanya:&lt;/strong&gt;
+        &lt;ul&gt;
+          &lt;li&gt;Mapejat de funcions (Mapa de funcions, sentit o moviment a les sortides)&lt;/li&gt;
+          &lt;li&gt;Funcions de sortida (especifica el tipus de llum, brillantor, etc.)&lt;/li&gt;
+          &lt;li&gt;Configuració de sortida (freqüència d'intermitència i grau de creuament)&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        &lt;strong&gt;Per amagar aquesta pestanya, desghabilita Preferències -> Flota -> Programador -> Mostra pestanyes buides.&lt;/strong&gt;
+      &lt;/html&gt;</text>
     </label>
   </column>
 </pane>
