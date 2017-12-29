@@ -14,6 +14,7 @@ import jmri.Manager;
  * <p>
  * Note it's better to use {@link NamedBeanComparator} if possible, as that 
  * can do type-specific comparison of the suffix part of complicated names.
+ * See the <a href="http://jmri.org/help/en/html/doc/Technical/Names.shtml">Names documentation page</a>.
  * <p>
  * Note this is intended to take names as provided:  It does not do normalization or
  * expansion.

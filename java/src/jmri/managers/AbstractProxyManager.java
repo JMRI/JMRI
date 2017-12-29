@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.util.SystemNameComparator;
+import jmri.util.NamedBeanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -415,7 +416,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
 
     @Override
     public List<E> getNamedBeanList() {
-        TreeSet<E> ts = new TreeSet<>(new SystemNameComparator());
+        TreeSet<E> ts = new TreeSet<>(new NamedBeanComparator());
         mgrs.stream().forEach((m) -> {
             ts.addAll(m.getNamedBeanList());
         });

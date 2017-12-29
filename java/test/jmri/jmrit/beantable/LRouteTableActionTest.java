@@ -27,6 +27,9 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
     private LRouteTableAction _lRouteTable;
     private LogixTableAction _logixTable;
 
+    public void testRouteElementComparator() {
+    }
+    
     public void testCreate() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase

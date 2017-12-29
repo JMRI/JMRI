@@ -2468,14 +2468,16 @@ public class LRouteTableAction extends AbstractTableAction {
     /**
      * Sorts RouteElement
      */
-    public static class RouteElementComparator extends SystemNameComparator {
+    public static class RouteElementComparator implements java.util.Comparator<RouteElement> {
 
         RouteElementComparator() {
         }
 
-        @Override
-        public int compare(Object o1, Object o2) {
-            return super.compare(((RouteElement) o1).getSysName(), ((RouteElement) o2).getSysName());
+        private SystemNameComparator sc = new SystemNameComparator();
+        
+        @Override 
+        public int compare(RouteElement o1, RouteElement o2) {
+            return sc.compare(o1.getSysName(), o2.getSysName());
         }
     }
 
