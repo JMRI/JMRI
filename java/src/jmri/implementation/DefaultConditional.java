@@ -38,6 +38,7 @@ import jmri.Turnout;
 import jmri.jmrit.Sound;
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;
+import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.script.JmriScriptEngineManager;
@@ -1223,6 +1224,34 @@ public class DefaultConditional extends AbstractNamedBean
                             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
                         } else {
                             b.setOutOfService(false);
+                            actionCount++;
+                        }
+                        break;
+                    case ACTION_SET_NXPAIR_ENABLED:
+                        DestinationPoints dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
+                        if (dp == null) {
+                            errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
+                        } else {
+                            dp.setEnabled(true);
+                            actionCount++;
+                        }
+                        break;
+                    case ACTION_SET_NXPAIR_DISABLED:
+                        dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
+                        if (dp == null) {
+                            errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
+                        } else {
+                            dp.setEnabled(false);
+                            actionCount++;
+                        }
+                        break;
+                    case ACTION_SET_NXPAIR_SEGMENT:
+                        dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
+                        if (dp == null) {
+                            errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
+                        } else {
+                            jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).
+                                    setSingleSegmentRoute(devName);
                             actionCount++;
                         }
                         break;

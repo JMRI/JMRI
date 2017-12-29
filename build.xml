@@ -2046,11 +2046,13 @@
             <fileset dir="${libdir}/windows"/>
         </copy>
         <mkdir dir="${dist.release}"/>
+        <!-- do not rebuild LaunchJMRI (see https://github.com/JMRI/JMRI/pull/3959)
         <exec executable="${nsis.home}makensis"
               dir="${dist.windows}/JMRI"
               failonerror="true">
             <arg line="-V2 LaunchJMRI.nsi"/>
         </exec>
+        -->
         <exec executable="${nsis.home}makensis"
               dir="${dist.windows}/JMRI"
               failonerror="true">

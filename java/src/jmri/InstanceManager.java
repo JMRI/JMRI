@@ -11,8 +11,6 @@ import java.util.Optional;
 import java.util.ServiceLoader;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.implementation.DccConsistManager;
-import jmri.implementation.NmraConsistManager;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,8 +68,6 @@ import org.slf4j.LoggerFactory;
  */
 public final class InstanceManager {
 
-    // the default instance of the InstanceManager
-    private static volatile InstanceManager defaultInstanceManager = null;
     // data members to hold contact with the property listeners
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private final HashMap<Class<?>, List<Object>> managerLists = new HashMap<>();
@@ -688,14 +684,6 @@ public final class InstanceManager {
     @Deprecated
     static public void setCommandStation(CommandStation p) {
         store(p, CommandStation.class);
-
-        // since there is a command station available, use
-        // the NMRA consist manager instead of the generic consist
-        // manager.
-        if (getNullableDefault(ConsistManager.class) == null
-                || getDefault(ConsistManager.class).getClass() == DccConsistManager.class) {
-            setConsistManager(new NmraConsistManager());
-        }
     }
 
     /**
@@ -743,14 +731,6 @@ public final class InstanceManager {
     @Deprecated
     static public void setAddressedProgrammerManager(AddressedProgrammerManager p) {
         store(p, AddressedProgrammerManager.class);
-
-        // Now that we have a programmer manager, install the default
-        // Consist manager if Ops mode is possible, and there isn't a
-        // consist manager already.
-        if (getDefault(AddressedProgrammerManager.class).isAddressedModePossible()
-                && getNullableDefault(ConsistManager.class) == null) {
-            setConsistManager(new DccConsistManager());
-        }
     }
 
     // Needs to have proxy manager converted to work
@@ -876,6 +856,14 @@ public final class InstanceManager {
     }
 
     /**
+     * A class for lazy initialization of the singleton class InstanceManager.
+     * https://www.ibm.com/developerworks/library/j-jtp03304/
+     */
+    private static class LazyInstanceManager {
+        public static InstanceManager instanceManager = new InstanceManager();
+    }
+    
+    /**
      * Get the default instance of the InstanceManager. This is used for
      * verifying the source of events fired by the InstanceManager.
      *
@@ -883,11 +871,8 @@ public final class InstanceManager {
      *         needed
      */
     @Nonnull
-    public static synchronized InstanceManager getDefault() {
-        if (defaultInstanceManager == null) {
-            defaultInstanceManager = new InstanceManager();
-        }
-        return defaultInstanceManager;
+    public static InstanceManager getDefault() {
+        return LazyInstanceManager.instanceManager;
     }
 
     // support checking for overlapping intialization

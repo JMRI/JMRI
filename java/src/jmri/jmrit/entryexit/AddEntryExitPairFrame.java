@@ -17,7 +17,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 public class AddEntryExitPairFrame extends jmri.util.JmriJFrame {
 
     public AddEntryExitPairFrame() {
-        super(false, true);
+        super(true, true);
     }
 
     JButton sendButton;
