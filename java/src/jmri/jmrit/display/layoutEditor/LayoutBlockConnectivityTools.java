@@ -658,12 +658,11 @@ public class LayoutBlockConnectivityTools {
     private boolean checkForDoubleCrossover(Block prevBlock, LayoutBlock curBlock, Block nextBlock) {
         LayoutEditor le = curBlock.getMaxConnectedPanel();
         ConnectivityUtil ct = le.getConnectivityUtil();
-        List<LayoutTurnout> turnoutList = ct.getTurnoutList(curBlock.getBlock(), prevBlock, nextBlock);
-        List<Integer> settingsList = ct.getTurnoutSettingList();
+        List<LayoutTrackExpectedState<LayoutTurnout>> turnoutList = ct.getTurnoutList(curBlock.getBlock(), prevBlock, nextBlock);
         for (int i = 0; i < turnoutList.size(); i++) {
-            LayoutTurnout lt = turnoutList.get(i);
+            LayoutTurnout lt = turnoutList.get(i).getObject();
             if (lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER) {
-                if (settingsList.get(i) == jmri.Turnout.THROWN) {
+                if (turnoutList.get(i).getExpectedState() == jmri.Turnout.THROWN) {
                     jmri.Turnout t = lt.getTurnout();
                     if (t.getKnownState() == jmri.Turnout.THROWN) {
                         if (lt.getLayoutBlock() == curBlock || lt.getLayoutBlockC() == curBlock) {
