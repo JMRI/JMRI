@@ -9,24 +9,24 @@ import jmri.beans.Bean;
  * @author Randall Wood Copyright 2017
  * @param <T> the supported type of LayoutTrack
  */
-public class LayoutTrackExpectedState<T extends LayoutTrack> extends Bean implements ExpectedState<T> {
+public class LayoutTrackExpectedState<T extends LayoutTrack> extends Bean implements ExpectedState<T, Integer> {
 
     private final T layoutTrack;
-    private int state;
+    private Integer state;
 
-    public LayoutTrackExpectedState(T layoutTrack, int state) {
+    public LayoutTrackExpectedState(T layoutTrack, Integer state) {
         this.layoutTrack = layoutTrack;
         LayoutTrackExpectedState.this.setExpectedState(state);
     }
 
     @Override
-    public int getExpectedState() {
+    public Integer getExpectedState() {
         return state;
     }
 
     @Override
-    public void setExpectedState(int state) throws UnsupportedOperationException {
-        int old = this.state;
+    public void setExpectedState(Integer state) throws UnsupportedOperationException {
+        Integer old = this.state;
         this.state = state;
         this.propertyChangeSupport.firePropertyChange(EXPECTED_STATE, old, state);
     }

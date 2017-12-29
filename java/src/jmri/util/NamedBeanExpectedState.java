@@ -10,24 +10,24 @@ import jmri.beans.Bean;
  * @author Randall Wood Copyright 2017
  * @param <T> the supported type of NamedBean
  */
-public class NamedBeanExpectedState<T extends NamedBean> extends Bean implements ExpectedState<T> {
+public class NamedBeanExpectedState<T extends NamedBean> extends Bean implements ExpectedState<T, Integer> {
 
     private final T bean;
-    private int state;
+    private Integer state;
 
-    public NamedBeanExpectedState(T bean, int state) {
+    public NamedBeanExpectedState(T bean, Integer state) {
         this.bean = bean;
         NamedBeanExpectedState.this.setExpectedState(state);
     }
 
     @Override
-    public int getExpectedState() {
+    public Integer getExpectedState() {
         return state;
     }
 
     @Override
-    public void setExpectedState(int state) throws UnsupportedOperationException {
-        int old = this.state;
+    public void setExpectedState(Integer state) throws UnsupportedOperationException {
+        Integer old = this.state;
         this.state = state;
         this.propertyChangeSupport.firePropertyChange(EXPECTED_STATE, old, state);
     }
