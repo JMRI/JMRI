@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
 public interface ExpectedState<T extends Object, S extends Object> {
 
     /**
-     * Constant for the property name when {@link #setExpectedState(int)} fires
+     * Constant for the property name when {@link #setExpectedState(java.lang.Object)} fires
      * a {@link java.beans.PropertyChangeEvent}.
      */
     public final static String EXPECTED_STATE = "expectedState";
