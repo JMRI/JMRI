@@ -15,7 +15,6 @@ import org.junit.runners.Suite;
         apps.InstallTest.PackageTest.class,
         apps.gui3.PackageTest.class,
         apps.DecoderPro.PackageTest.class,
-        apps.JmriDemo.PackageTest.class,
         apps.DispatcherPro.PackageTest.class,
         apps.PanelPro.PackageTest.class,
         apps.SignalPro.PackageTest.class,

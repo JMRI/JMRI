@@ -205,10 +205,10 @@
       programme</p>
 
       <p><a href=
-      "../../../../../jython/JmriDemo.py">JmriDemo.py</a></p>
+            "../../../../../jython/PanelPro.py">PanelPro.py</a></p>
 
-      <p>Code Python pour lancer une application JmriDemo,
-      compl&egrave;te avec barre de menu</p>
+      <p>Code Python pour lancer une application PanelPro,
+          compl&egrave;te avec barre de menu</p>
 
       <p><a href=
       "../../../../../jython/ListenerExample.py">ListenerExample.py</a></p>

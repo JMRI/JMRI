@@ -1,4 +1,4 @@
-# Python code to start a JmriDemo app, complete with menu bar
+# Python code to start a PanelPro app
 #
 #
 # Obsolete: the usual method now is to start DecoderPro or PanelPro
@@ -12,7 +12,7 @@ import jmri
 
 # start the program
 import apps
-apps.JmriDemo.JMRIdemo.main([]) 
+apps.PanelPro.PanelPro.main([])
 
 # define the usual defaults
 execfile("jython/jmri_defaults.py")
