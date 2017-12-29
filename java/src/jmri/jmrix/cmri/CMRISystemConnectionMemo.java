@@ -153,7 +153,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             }
         } else { // k = position of "B" char in name
             try {
-                n = Integer.parseInt(systemName.substring(k)); // why use a different formula than 13 lines up?
+                n = Integer.parseInt(systemName.substring(k));
             } catch (NumberFormatException e) {
                 log.warn("invalid character in bit number field of CMRI system name: {}", systemName);
                 return 0;
