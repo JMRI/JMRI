@@ -15,7 +15,6 @@ import org.junit.runners.Suite;
         apps.DecoderPro.PackageTest.class,
         apps.DispatcherPro.PackageTest.class,
         apps.PanelPro.PackageTest.class,
-        apps.SignalPro.PackageTest.class,
         apps.SoundPro.PackageTest.class,
         JmriFacelessTest.class,
         apps.systemconsole.PackageTest.class,
