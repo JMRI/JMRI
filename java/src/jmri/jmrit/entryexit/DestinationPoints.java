@@ -25,6 +25,7 @@ import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
+import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -358,16 +359,15 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                         //if we are not using the dispatcher and the signal logic is dynamic, then set the turnouts
                         if (at == null && isSignalLogicDynamic()) {
                             if (i > 0) {
-                                List<LayoutTurnout> turnoutlist;
+                                List<LayoutTrackExpectedState<LayoutTurnout>> turnoutlist;
                                 int nxtBlk = i + 1;
                                 int preBlk = i - 1;
                                 if (i < routeDetails.size() - 1) {
                                     turnoutlist = connection.getTurnoutList(routeDetails.get(i).getBlock(), routeDetails.get(preBlk).getBlock(), routeDetails.get(nxtBlk).getBlock());
-                                    List<Integer> throwlist = connection.getTurnoutSettingList();
                                     for (int x = 0; x < turnoutlist.size(); x++) {
-                                        if (turnoutlist.get(x) instanceof LayoutSlip) {
-                                            int slipState = throwlist.get(x);
-                                            LayoutSlip ls = (LayoutSlip) turnoutlist.get(x);
+                                        if (turnoutlist.get(x).getObject() instanceof LayoutSlip) {
+                                            int slipState = turnoutlist.get(x).getExpectedState();
+                                            LayoutSlip ls = (LayoutSlip) turnoutlist.get(x).getObject();
                                             int taState = ls.getTurnoutState(slipState);
                                             turnoutSettings.put(ls.getTurnout(), taState);
 
@@ -375,12 +375,13 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                                             ls.getTurnoutB().setCommandedState(tbState);
                                             turnoutSettings.put(ls.getTurnoutB(), tbState);
                                         } else {
-                                            String t = turnoutlist.get(x).getTurnoutName();
+                                            String t = turnoutlist.get(x).getObject().getTurnoutName();
                                             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
                                             if (turnout != null) {
-                                                turnoutSettings.put(turnout, throwlist.get(x));
-                                                if (turnoutlist.get(x).getSecondTurnout() != null) {
-                                                    turnoutSettings.put(turnoutlist.get(x).getSecondTurnout(), throwlist.get(x));
+                                                turnoutSettings.put(turnout, turnoutlist.get(x).getExpectedState());
+                                                if (turnoutlist.get(x).getObject().getSecondTurnout() != null) {
+                                                    turnoutSettings.put(turnoutlist.get(x).getObject().getSecondTurnout(),
+                                                            turnoutlist.get(x).getExpectedState());
                                                 }
                                             }
                                         }
