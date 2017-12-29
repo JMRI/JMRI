@@ -68,8 +68,6 @@ import org.slf4j.LoggerFactory;
  */
 public final class InstanceManager {
 
-    // the default instance of the InstanceManager
-    private static volatile InstanceManager defaultInstanceManager = null;
     // data members to hold contact with the property listeners
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private final HashMap<Class<?>, List<Object>> managerLists = new HashMap<>();
@@ -858,6 +856,14 @@ public final class InstanceManager {
     }
 
     /**
+     * A class for lazy initialization of the singleton class InstanceManager.
+     * https://www.ibm.com/developerworks/library/j-jtp03304/
+     */
+    private static class LazyInstanceManager {
+        public static InstanceManager instanceManager = new InstanceManager();
+    }
+    
+    /**
      * Get the default instance of the InstanceManager. This is used for
      * verifying the source of events fired by the InstanceManager.
      *
@@ -865,11 +871,8 @@ public final class InstanceManager {
      *         needed
      */
     @Nonnull
-    public static synchronized InstanceManager getDefault() {
-        if (defaultInstanceManager == null) {
-            defaultInstanceManager = new InstanceManager();
-        }
-        return defaultInstanceManager;
+    public static InstanceManager getDefault() {
+        return LazyInstanceManager.instanceManager;
     }
 
     // support checking for overlapping intialization
