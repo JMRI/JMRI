@@ -10,7 +10,7 @@ import jmri.Manager;
  * A System Name is a system prefix followed by type letter then a suffix with a system-specific format. 
  * This class first compares on prefix, then if the prefixes are equal it 
  * compares the type letter, then if they're still equal it
- * does an {@lnk AlphanumComparater} compare on suffix.
+ * does an {@link AlphanumComparator} compare on suffix.
  * <p>
  * Note it's better to use {@link NamedBeanComparator} if possible, as that 
  * can do type-specific comparison of the suffix part of complicated names.
