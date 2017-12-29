@@ -93,7 +93,6 @@ import org.slf4j.MDC;
  * configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @author George Warner Copyright (C) 2017
  */
 public class LayoutBlock extends AbstractNamedBean implements PropertyChangeListener {
 
@@ -866,6 +865,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     //variables for Edit Layout Block pane
     private JmriJFrame editLayoutBlockFrame = null;
+    private Component callingPane;
     private final JTextField sensorNameField = new JTextField(16);
     private final JTextField sensorDebounceInactiveField = new JTextField(5);
     private final JTextField sensorDebounceActiveField = new JTextField(5);
@@ -887,6 +887,16 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     private JColorChooser trackColorChooser = null;
     private JColorChooser occupiedColorChooser = null;
     private JColorChooser extraColorChooser = null;
+    private final JComboBox<String> blockSpeedBox = new JComboBox<>();
+
+    private final JLabel blockUseLabel = new JLabel(Bundle.getMessage("UseCount"));
+
+    private JButton blockEditDone;
+    private JButton blockEditCancel;
+
+    private boolean editOpen = false;
+
+    private final JComboBox<String> attachedBlocks = new JComboBox<>();
 
     protected void editLayoutBlock(Component callingPane) {
         LayoutBlockEditAction beanEdit = new LayoutBlockEditAction();
@@ -1040,6 +1050,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             }
         }
         //complete
+        editOpen = false;
         editLayoutBlockFrame.setVisible(false);
         editLayoutBlockFrame.dispose();
         editLayoutBlockFrame = null;
@@ -1050,6 +1061,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     void blockEditCancelPressed(ActionEvent a) {
+        editOpen = false;
         editLayoutBlockFrame.setVisible(false);
         editLayoutBlockFrame.dispose();
         editLayoutBlockFrame = null;

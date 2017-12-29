@@ -74,7 +74,6 @@ import org.slf4j.LoggerFactory;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @author George Warner Copyright (C) 2017
  */
 public class LayoutEditorTools {
 
@@ -2667,8 +2666,7 @@ public class LayoutEditorTools {
                     xovers.add(layoutTurnout);
                 }
             }
-            JComboBox<LayoutTurnout> jcb = new JComboBox<>(
-                    xovers.toArray(new LayoutTurnout[xovers.size()]));
+            JComboBox<LayoutTurnout> jcb = new JComboBox(xovers.toArray());
             jcb.setEditable(true);
             JOptionPane.showMessageDialog(layoutEditor, jcb,
                     Bundle.getMessage("MakeLabel",
@@ -5798,7 +5796,7 @@ public class LayoutEditorTools {
         String sensorName = "IS" + namer;
         String logixName = "IX" + namer;
         try {
-            InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         } catch (IllegalArgumentException ex) {
             log.error("Trouble creating sensor " + sensorName + " while setting up Logix.");
             return "";
@@ -7593,7 +7591,7 @@ public class LayoutEditorTools {
                 index = i;
             }
         }
-        if ((h != null) && (index != -1)) {
+        if (index != (-1) && h != null) {
             layoutEditor.sensorList.remove(index);
             h.remove();
             h.dispose();
@@ -8101,11 +8099,11 @@ public class LayoutEditorTools {
         int index = -1;
         for (int i = 0; (i < layoutEditor.signalMastList.size()) && (index == -1); i++) {
             h = layoutEditor.signalMastList.get(i);
-            if ((h != null) && (h.getSignalMast() == signalMast)) {
+            if (h.getSignalMast() == signalMast) {
                 index = i;
             }
         }
-        if ((h != null) && (index != -1)) {
+        if (index != (-1)) {
             layoutEditor.signalMastList.remove(index);
             h.remove();
             h.dispose();
@@ -13473,7 +13471,7 @@ public class LayoutEditorTools {
         String logixName = "IX_LAYOUTSLIP:" + slip.ident;
         String sensorName = "IS:" + logixName + "C" + number;
         try {
-            InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         } catch (IllegalArgumentException ex) {
             log.error("Trouble creating sensor " + sensorName + " while setting up Logix.");
             return "";

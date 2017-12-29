@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
@@ -41,7 +42,6 @@ import org.slf4j.LoggerFactory;
  * method.
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @author George Warner Copyright (C) 2017
  */
 public class ConnectivityUtil {
 
@@ -1290,7 +1290,6 @@ public class ConnectivityUtil {
         TrackSegment tTrack = null;
         switch (cNodeType) {
             case LayoutTrack.POS_POINT:
-                if (cNode instanceof PositionablePoint) {
                 PositionablePoint p = (PositionablePoint) cNode;
                 if (p.getType() == PositionablePoint.END_BUMPER) {
                     log.error("Attempt to search beyond end of track");
@@ -1301,12 +1300,8 @@ public class ConnectivityUtil {
                 } else {
                     tTrack = p.getConnect1();
                 }
-                } else {
-                    log.warn("cNodeType wrong for cNode");
-                }
                 break;
             case LayoutTrack.TURNOUT_A: {
-                if (cNode instanceof LayoutTurnout) {
                 LayoutTurnout lt = (LayoutTurnout) cNode;
                 if ((lt.getTurnoutType() == LayoutTurnout.RH_TURNOUT)
                         || (lt.getTurnoutType() == LayoutTurnout.LH_TURNOUT)
@@ -1432,14 +1427,10 @@ public class ConnectivityUtil {
                             return null;
                     }
                 }
-                } else {
-                    log.error("cNodeType wrong for cNode");
-                }
                 break;
             }
             case LayoutTrack.TURNOUT_B:
             case LayoutTrack.TURNOUT_C: {
-                if (cNode instanceof LayoutTurnout) {
                 LayoutTurnout lt = (LayoutTurnout) cNode;
                 if ((lt.getTurnoutType() == LayoutTurnout.RH_TURNOUT)
                         || (lt.getTurnoutType() == LayoutTurnout.LH_TURNOUT)
@@ -1513,13 +1504,9 @@ public class ConnectivityUtil {
                             return null;
                     }
                 }
-                } else {
-                    log.error("cNodeType wrong for cNode");
-                }
                 break;
             }
             case LayoutTrack.TURNOUT_D: {
-                if (cNode instanceof LayoutTurnout) {
                 LayoutTurnout lt = (LayoutTurnout) cNode;
                 if ((lt.getTurnoutType() == LayoutTurnout.RH_XOVER)
                         || (lt.getTurnoutType() == LayoutTurnout.LH_XOVER)
@@ -1545,9 +1532,6 @@ public class ConnectivityUtil {
                 } else {
                     log.error("Bad traak node type - TURNOUT_D, but not a crossover turnout");
                     return null;
-                }
-                } else {
-                    log.error("cNodeType wrong for cNode");
                 }
                 break;
             }
@@ -2342,7 +2326,7 @@ public class ConnectivityUtil {
         LayoutTrack curObj = ob;
 
         if (log.isDebugEnabled()) {
-            log.info("trackSegmentLeadsTo({}, {}): entry", curTS.getId(), curObj.getName());
+            log.info("trackSegmentLeadsTo({}, {}): entry", curTS.getId(), objectToNameOrIDString(curObj));
         }
 
         // post process track segment and conObj lists
@@ -2373,7 +2357,7 @@ public class ConnectivityUtil {
                 } else {
                     log.error("Connectivity error when following track {} in Block {}", curTS.getId(), currLayoutBlock.getUserName());
                     log.error("{} not connected to {} (connects: {} & {})",
-                            curObj.getName(),
+                            objectToNameOrIDString(curObj),
                             curTS.getId(),
                             curTS.getConnect1Name(),
                             curTS.getConnect2Name());
@@ -2383,9 +2367,9 @@ public class ConnectivityUtil {
                 if (log.isDebugEnabled()) {
                     log.info("In block {}, going from {} thru {} to {} (conType: {}), nextLayoutBlock: {}",
                             currLayoutBlock.getUserName(),
-                            conObj.getName(),
+                            objectToNameOrIDString(conObj),
                             curTS.getId(),
-                            curObj.getName(),
+                            objectToNameOrIDString(curObj),
                             connectionTypeToString(conType),
                             nextLayoutBlock.getId());
                 }
@@ -2660,8 +2644,8 @@ public class ConnectivityUtil {
                                     } else {
                                         log.debug("{} not connected to {} (connections: {} & {})",
                                                 currLayoutBlock.getUserName(), ls.getName(),
-                                                ls.getConnectA().getName(),
-                                                ls.getConnectB().getName());
+                                                objectToNameOrIDString(ls.getConnectA()),
+                                                objectToNameOrIDString(ls.getConnectB()));
                                     }
                                 }
                                 break;
@@ -2715,23 +2699,39 @@ public class ConnectivityUtil {
 
     @Nonnull
     private String connectionTypeToString(int conType) {
-        String result = "<" + conType + ">";
+        String con_type = "TURNTABLE_RAY_OFFSET";
+        if (conType <= LayoutTrack.SLIP_D) {
             String[] con_types = {"NONE", "POS_POINT",
                 "TURNOUT_A", "TURNOUT_B", "TURNOUT_C", "TURNOUT_D",
                 "LEVEL_XING_A", "LEVEL_XING_B", "LEVEL_XING_C", "LEVEL_XING_D",
                 "TRACK", "TURNOUT_CENTER", "LEVEL_XING_CENTER", "TURNTABLE_CENTER",
                 "LAYOUT_POS_LABEL", "LAYOUT_POS_JCOMP", "MULTI_SENSOR", "MARKER",
                 "TRACK_CIRCLE_CENTRE", "UNUSED_19", "SLIP_CENTER",
-            "SLIP_A", "SLIP_B", "SLIP_C", "SLIP_D",
-            "SLIP_LEFT", "SLIP_RIGHT"};
-        if (conType < con_types.length) {
-            result = con_types[conType];
-        } else if ((LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN <= conType)
-                && (conType <= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX)) {
-            result = "BEZIER_CONTROL_POINT #"
-                    + (conType - LayoutTrack.TURNTABLE_RAY_OFFSET);
-        } else if (conType >= LayoutTrack.TURNTABLE_RAY_OFFSET){
-            result = "TURNTABLE_RAY #" + (conType - LayoutTrack.TURNTABLE_RAY_OFFSET);
+                "SLIP_A", "SLIP_B", "SLIP_C", "SLIP_D"};
+            con_type = con_types[conType];
+        }
+        return con_type;
+    }
+
+    @Nonnull
+    private String objectToNameOrIDString(@Nonnull LayoutTrack obj) {
+        String result;
+        try {
+            result = ((NamedBean) obj).getDisplayName();
+        } catch (Exception ex1) {
+            try {
+                result = ((LayoutTrack) obj).getId();
+            } catch (Exception ex2) {
+                try {
+                    result = ((LayoutTrack) obj).getName();
+                } catch (Exception ex3) {
+                    try {
+                        result = ((LayoutTrack) obj).getId();
+                    } catch (Exception ex4) {
+                        result = "<" + obj + ">";
+                    }
+                }
+            }
         }
         return result;
     }

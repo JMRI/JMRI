@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * directly from LayoutEditor or LayoutEditor specific modules.
  * <P>
  * @author Dave Duchamp Copyright (c) 2008
- * @author George Warner Copyright (C) 2017
  */
 public class LayoutEditorAuxTools {
 
@@ -208,7 +207,7 @@ public class LayoutEditorAuxTools {
         }
 
         // Check to see if this connectivity is already in the list
-        // This occurs for the first layout editor panel when there
+        // This occurs for the first layout editor panel when there 
         // are multiple panels connected by edge connectors.
         if (cList.contains(c)) {
             log.debug("checkConnectivity: Duplicate connection: '{}'", c);
@@ -506,6 +505,9 @@ public class LayoutEditorAuxTools {
                     prevConnection = curConnection;
                     curConnection = ((LevelXing) curConnection).getConnectB();
                     typeCurConnection = LayoutTrack.TRACK;
+                } else if (typeCurConnection == LayoutTrack.SLIP_D) {
+                    LayoutSlip lsz = (LayoutSlip) curConnection;
+                    curConnection = null;
                 }
             } else {
                 // block boundary is internal to a crossover turnout
@@ -832,6 +834,6 @@ public class LayoutEditorAuxTools {
     }   // addBeanSettings
 
     // initialize logging
-    private final static Logger log
-            = LoggerFactory.getLogger(LayoutEditorAuxTools.class);
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditorAuxTools.class);
+
 }
