@@ -269,13 +269,7 @@
       invoke a dialog.</p>
 
       <p><a href=
-      "../../../../../jython/PacketPro.py">PacketPro.py</a></p>
-
-      <p>start the PacketPro Java application, including main
-      menu</p>
-
-      <p><a href=
-      "../../../../../jython/ParallelPortTest.py">ParallelPortTest.py</a></p>
+            "../../../../../jython/ParallelPortTest.py">ParallelPortTest.py</a></p>
 
       <p>Try to send some bytes to a parallel port</p>
 

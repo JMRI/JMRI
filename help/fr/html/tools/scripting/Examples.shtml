@@ -296,13 +296,7 @@
       invoquer un dialogue.</p>
 
       <p><a href=
-      "../../../../../jython/PacketPro.py">PacketPro.py</a></p>
-
-      <p>d&eacute;marrer l'application PacketPro Java, y compris le
-      menu principal.</p>
-
-      <p><a href=
-      "../../../../../jython/ParallelPortTest.py">ParallelPortTest.py</a></p>
+            "../../../../../jython/ParallelPortTest.py">ParallelPortTest.py</a></p>
 
       <p>Connect JMRI turnouts to parallel port logic Maps internal
       turnouts to specific values to be send to the parallel port.
