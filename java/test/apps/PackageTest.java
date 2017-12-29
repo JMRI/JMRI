@@ -10,7 +10,6 @@ import org.junit.runners.Suite;
         ValidateConfigFilesTest.class,
         apps.configurexml.PackageTest.class,
         apps.startup.PackageTest.class,
-        apps.PacketScript.PackageTest.class,
         apps.InstallTest.PackageTest.class,
         apps.gui3.PackageTest.class,
         apps.DecoderPro.PackageTest.class,
