@@ -2138,6 +2138,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 break;
 
             case Conditional.ITEM_TYPE_ENTRYEXIT:
+                _variableNamePanel.setToolTipText(Bundle.getMessage("NameHintEntryExit"));  // NOI18N
                 _variableNameField.setText(_curVariable.getName());
                 for (int i = 0; i < Conditional.ITEM_TO_ENTRYEXIT_TEST.length; i++) {
                     _variableStateBox.addItem(
@@ -2979,6 +2980,11 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 }
                 break;
 
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
+                        Conditional.ITEM_TO_ENTRYEXIT_ACTION, actionType) + 1);
+                break;
+
             case Conditional.ITEM_TYPE_AUDIO:
                 _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                         Conditional.ITEM_TO_AUDIO_ACTION, actionType) + 1);
@@ -3340,6 +3346,16 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 setActionNameBox(itemType);
                 break;
 
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                for (int i = 0; i < Conditional.ITEM_TO_ENTRYEXIT_ACTION.length; i++) {
+                    _actionTypeBox.addItem(
+                            DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_ENTRYEXIT_ACTION[i]));
+                }
+                _namePanel.setToolTipText(Bundle.getMessage("NameHintEntryExit"));  // NOI18N
+                _namePanel.setVisible(true);
+                setActionNameBox(itemType);
+                break;
+
             case Conditional.ITEM_TYPE_AUDIO:
                 for (int i = 0; i < Conditional.ITEM_TO_AUDIO_ACTION.length; i++) {
                     _actionTypeBox.addItem(
@@ -3402,6 +3418,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 if (actionType == Conditional.ACTION_TRIGGER_ROUTE) {
                     _namePanel.setToolTipText(Bundle.getMessage("NameHintRoute"));  // NOI18N
                     _namePanel.setVisible(true);
+                    setActionNameBox(itemType);
                 }
                 break;
             default:
@@ -3612,6 +3629,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 return Conditional.ITEM_TO_SCRIPT_ACTION[actionTypeSelection];
             case Conditional.ITEM_TYPE_OTHER:
                 return Conditional.ITEM_TO_OTHER_ACTION[actionTypeSelection];
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                return Conditional.ITEM_TO_ENTRYEXIT_ACTION[actionTypeSelection];
             default:
                 // fall through
                 break;
@@ -3877,6 +3896,17 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     _curAction.setActionString(actionString);
                 }
                 break;
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                if (!referenceByMemory) {
+                    name = validateEntryExitReference(name);
+                    if (name == null) {
+                        return false;
+                    }
+                }
+                actionType = Conditional.ITEM_TO_ENTRYEXIT_ACTION[selection - 1];
+                _actionNameField.setText(name);
+                _curAction.setDeviceName(name);
+                break;
             case Conditional.ITEM_TYPE_CLOCK:
                 actionType = Conditional.ITEM_TO_CLOCK_ACTION[selection - 1];
                 if (actionType == Conditional.ACTION_SET_FAST_CLOCK_TIME) {
@@ -3989,7 +4019,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             }
             if (select1 != _itemType) {
                 if (log.isDebugEnabled()) {
-                    log.error("ActionTypeListener actionItem selection (" + select1 // NOI18N
+                    log.debug("ActionTypeListener actionItem selection (" + select1 // NOI18N
                             + ") != expected actionItem (" + _itemType + ")");  // NOI18N
                 }
             }

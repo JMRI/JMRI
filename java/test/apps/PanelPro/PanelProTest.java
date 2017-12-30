@@ -157,6 +157,7 @@ public class PanelProTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetApplication();
     }
 
     @After

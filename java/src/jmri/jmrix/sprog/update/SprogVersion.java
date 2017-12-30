@@ -98,7 +98,7 @@ public class SprogVersion {
                 || ((major == 2) && (minor >= 1))
                 || (major >= 3))
                 || ((this.sprogType.sprogType >= SprogType.SPROGIIv3)
-                && (this.sprogType.sprogType < SprogType.NANO))) {
+                    && (this.sprogType.sprogType < SprogType.NANO))) {
             if (log.isDebugEnabled()) {
                 log.debug("This version has extra features");
             }

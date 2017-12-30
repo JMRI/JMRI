@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright ($Author$) 2009 -->
 
-  <title>JMRI: Signaling Entry/Exit Interlocking</title>
+  <title>JMRI: Entry/Exit Tools</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -28,206 +28,96 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-    <h1>JMRI: Entry/Exit (NX)</h1>
+    <h1>JMRI: Entry/Exit (NX) Tools</h1>
 
-    <h2>Overview</h2>The Entry/Exit system uses Sensors assigned to
-    Block boundaries in the JMRI Layout Editor to set a route up
-    between two locations in the Layout Editor when these Sensors
-    are activated in the correct order. These two Sensors are
-    refered to as the "NX Pair".
+    For a full description of Entry/Exit (NX), see
+    <a href="../../../../html/tools/EntryExit.shtml">Entry/Exit (NX)
+    Documentation</a>.
 
-    <p><b>Block Boundaries</b> Sensors, like Signals (either Heads
-    or Masts), should be added at block boundaries. To do this,
-    right click on the "Anchor Point" between two track segments.
-    If this location is a boundary point (i.e. with a different
-    block on each side), then you will get the option in the menu
-    to set Signals, Sensors or Signal Masts. What this does is
-    associate that item with that particular location on the
-    layout.<br>
-    The window that pops up allows you to assign the item to work
-    in a particular direction (or protecting a certain block).</p>
+    <h2>Entry/Exit (NX) Window</h2>
+    <p>The <strong>Add Entry Exit Points</strong> window is used to create
+    and delete Entry Exit Pairs for a given layout panel. It is also used to
+    enable the Both Way option and enable/disable NX Pairs. The panel is
+    accessed from the Layout Editor Tools menu.</p>
 
-    <p>There are three different types of Entry/Exit that can be
-    configured.</p>
+    <div style="margin-left: 1em">
+    <img src="images/EntryExitWindow.png" height="517" width="896" alt="NX Window">
+    </div>
 
+    <p>Sensors are assigned at <strong>block</strong> boundaries
+    on the layout editor panel by using the pop up window on anchor points,
+    turnouts, level crossings, end bumpers and edge connectors. These sensors
+    act as the NX selection buttons and are used to create the
+    <strong>Entry Point</strong> and <strong>Exit Point</strong> combo box
+    content.</p>
+
+    <p>When the panel is opened, the <strong>Select Panel</strong> selection
+    will be the current layout editor panel. Use the combo box to select the
+    NX content for other panels.  The <strong>Entry Point</strong> list
+    contains the sensors for the currently selected panel.  The <strong>Exit
+    Point</strong> list contains all of the sensors from all layout editor
+    panels. <em>The Exit Point can be on another panel as long as the panels
+    are linked using edge connectors.</em><span class="since">since 4.11.1</span></p>
+    <p>The <strong>NX Type</strong> defaults to <strong>Set Turnouts
+    Only</strong>.</p>
+
+    <h3>Buttons</h3>
     <ul>
-      <li>Turnout Only</li>
+    <li><strong>Add Pair</strong> &mdash; Select sensors from the Entry Point
+    and Exit Point lists, select the NX Type and click on Add Pair.
+    <strong>Notice:</strong> <em>The sensor pair is not checked for validity</em>.</li>
 
-      <li>Turnout and SignalMast Logic</li>
-
-      <li>Full Interlocking</li>
+    <li><strong>Auto Generate Entry-Exit Pairs</strong> &mdash; The auto generate
+    process will find all of the valid sensors pairs on all of the panels using
+    the layout block routing utilities.</li>
     </ul>
 
-    <p><b>Turnout Only</b> With turnout only, the NX Pair will only
-    set the turnouts to the correct state for that route. If a
-    block is already showing as occupied or reserved within that
-    route, and an alternative one is available then the alternative
-    route will be set, otherwise the route will not be set.</p>
-
-    <p><b>Turnout and SignalMast Logic</b> This option includes
-    what is covered by "Turnout Only" and will also generate the
-    SignalMast Logic for that route. The logic will include the
-    turnout states and the blocks that are within that route. For
-    this to work, SignalMasts must also be placed at the same
-    boundary points as the sensors working in the same direction.
-    The SignalMast logic will remain for the duration of the
-    operating session, however it is not saved and will be
-    re-created the next time the panel is opened.<br>
-    When there is no route set then the SignalMast will be placed
-    in a held state.<br></p>
-
-    <p><b>Full Interlocking</b> This covers the same things as the
-    other two items above. In addition, it will also "reserve" or
-    "lock out" each block in the route so that no other conflicting
-    route can be set. If block occupancy detection is being used
-    the route will automatically be cleared down. If no block
-    occupancy is being used, then it is possible to manually clear
-    the route down by selecting the corresponding NX pair, it will
-    leave the last block as showing occupied, as if the train had
-    travelled the route and was now sitting waiting at the next
-    signal.<br>
-    If there are no Signalmasts configured between the NX pair,
-    then the route will still be set and reserved, but no
-    SignalMast Logic will be generated.<br>
-    The route will stay active, until either a train has passed
-    through the blocks and they have returned to an unoccupied
-    state, the route has been manually cleared down, or has been
-    cancelled.</p>
-
-    <h2>Entry/Exit (NX) Window</h2>From this window you can create
-    and delete Entry Exit Pairs for a given layout panel
-
-    <p>You first need to assign sensors at Block boundaries on the
-    layout editor, by using the pop up window on block boundaries,
-    turnouts or Level Crossings. These sensors act as the NX selection
-    buttons.</p>
-
-    <p>From the Entry Exit window, select the layout panel that you
-    are working on, you can then either manually select the source
-    and destination sensor pair, or all the system to automatically
-    discover all the valid paths, by pressing the "Auto Generate
-    Entry Exit Pairs" button.</p>
-
-    <p>The result will be populated in the table below the
-    button.</p>
-
-    <p>The auto discovery will only discover fully valid pairs for
-    sensors that are effectively protecting blocks that are in the
-    same direction. This also means that to set the route through
-    you must first set the "From" sensor then set the "To" sensor,
-    if you want to be able to set the route by selecting either
-    sensor first, then you will need to check the "Both Way"
-    option. If the end point is assigned to an end Bumper then this
-    will not be possible.</p>
-
-    <p>It is possible to manually add Entry Exit pairs for sensors
-    that are in effect protecting blocks that work in opposite
-    directions. Here you will need to use the drop down options to
-    select the start and finish locations against a layout panel.
-    Again you can select this pair to be "Both Way" working.</p>
-
-    <p>For turnouts you need to right click on the circle at the
-    centre, again this will bring up the same options to set, if
-    there are block boundaries present. On a turnout you can only
-    assign items that will protect the block the turnout is in, you
-    can not protect/assign an item on the way out of a turnout so
-    to speak. The same applies to level-crossings.</p>
-
-    <h3>Options</h3><b>Route reselection</b> Determines what should
-    occur when the NX route is reselected by the user, the options
-    are
-
+    <h3>Columns</h3>
     <ul>
-      <li>Prompt User - Ask the user what they would like to
-      do</li>
-
-      <li>Clear Route - Automatically clear the route down</li>
-
-      <li>Cancel Route - Cancel the route</li>
+    <li><strong>Entry</strong> &mdash; The sensor name for the entry point. If the
+    block boundary has a signal mast, it will be listed in parenthesis.</li>
+    <li><strong>Exit</strong> &mdash; The sensor name for the exit point. If the
+    block boundary has a signal mast, it will be listed in parenthesis.</li>
+    <li><strong>Active</strong> &mdash; Yes when there is a active route.</li>
+    <li><strong>Clear</strong> &mdash; If the entry is active, cancel the route
+    segment.</li>
+    <li><strong>Both Way</strong> &mdash; Enable the ability to press the entry
+    and exit buttons in either order.</li>
+    <li><strong>Delete</strong> &mdash; Delete the NX sensor pair.</li>
+    <li><strong>NX Type</strong> &mdash; The selected NX type for the NX sensor
+    pair.</li>
+    <li><strong>Disabled</strong> &mdash; When checked, the NX pair is Inactive.
+    Attempts to create a route will result in a error dialog.</li>
     </ul>
 
-    <p><b>Initial colour of path while route it Setup</b> While the
-    route is being setup, set the track colour to that in the drop
-    down, after a predetermined time the track will revert back to
-    that defined in the block configuration.</p>
+    <h2>Options</h2>
+    <p><strong>Route Re-selection</strong> &mdash; Determines what should occur when the
+    NX route is reselected by the user.</p>
 
-    <p><b>Duration of setting Colour(ms)</b> How long the initial
-    colour will be displayed for after the route has initial been
+    <ul>
+      <li>Prompt User - Ask the user what they would like to do.</li>
+      <li>Clear Route - Automatically clear the route down. The blocks in the
+      route will become active and then inactive as if a train had traversed
+      the route. The final block will left active.</li>
+      <li>Cancel Route - Cancel the route.</li>
+      <li>Stack Route - Stack the route.</li>
+    </ul>
+
+    <p><strong>Initial colour of path while route it Setup</strong> &mdash;
+    While the route is being setup, set the track colour to that in the drop
+    down, after a predetermined time the track will revert back to that defined
+    in the block configuration.</p>
+
+    <p><strong>Duration of setting Colour(ms)</strong> &mdash; How long the
+    initial colour will be displayed for after the route has initial been
     selected.</p>
 
-    <p><b>Integrate With Dispatcher</b> Select this option if you
-    want to use the NX route to extend the path of an Active Train
-    in the dispatcher, this option will only work if the block
-    prior to the NX route is allocated to an active train and that
-    block is also the end block.</p>
+    <p><strong>Integrate With Dispatcher</strong> &mdash; Select this option if
+    the NX route is to extend the path of an Active Train in the
+    dispatcher. This option will only work if the block prior to the NX route
+    is allocated to an active train and that block is also the end block.</p>
 
-    <h2>Usage</h2>
-
-    <p>Once the NX pairs have been created, you can set a route by
-    simply selecting the Entry Sensor, followed by the Exit Sensor,
-    if a valid path can be found then the route will be set up
-    according to how it has been configured. If a full interlock
-    has been configured the NX Sensors will remain active.</p>
-
-    <p>Whenever you select a NX Sensor, it will flash until a valid
-    Exit sensor has been selected. If no valid Exit sensor has been
-    selected it will automatically be cancelled after 30
-    seconds.</p>
-
-    <p><b>Extended Route Setting</b></p>
-
-    <p>Normally with the NX interlock, you would set a route up
-    selecting the Entry/Exit sensors along a path, so for example
-    to get from location A to D, you would first set up A-B, then
-    B-C and finally C-D. However the system will allow you to set
-    up a route directly from A to D, simply by selecting the
-    A&amp;D NX sensor, it will then go through and find the best
-    valid path and setup each individual interlock along the
-    path.<br>
-    <b>Note -</b> If you are cancelling or clearing an Extended
-    when set as a Full Interlock (see below), then you will be
-    prompted to cancel or clear each individual interlock. In
-    addition it is not currently possible to Stack an extended
-    route.</p>
-
-    <h3>Full Interlock</h3>
-
-    <p>When using the Full Interlock method, it will highlight the
-    route and prevent a conflicting route from being set. In
-    addition the Entry and Exit Sensors will remain active, to show
-    where the path has been set from and to. Once a train has
-    entered the route, the Entry sensor will return back to
-    inactive, while the Exit sensor will only go inactive if no
-    onward route has been selected.</p>
-
-    <p><b>Cancel Route</b></p>
-
-    <p>To cancel a route that has been setup, simply reselect the
-    Entry and Exit Sensors. You will then be given four options,
-    simply select "Cancel".</p>
-
-    <p><b>Route Stacking</b></p>
-
-    <p>If a route cannot be set due to a Block already being
-    allocated or occupied, you will be presented with the option to
-    "Stack" the route. When the route is stacked, a new window will
-    pop up on the screen which shows the routes that have been
-    stacked. Once a route has been stacked, the system will check
-    every 10 seconds to see if it is possible to set-up that NX
-    route, multiple NX routes can be stacked, and they are checked
-    in the order which they were stacked in, a NX route cannot be
-    stacked more than once. To cancel a NX route, selected it in
-    the table and click on the "Cancel" button at the bottom.</p>
-
-    <p><b>Manual Route Clear Down</b></p>
-
-    <p>If the layout is not fully block detected, then with the NX
-    has the ability to clear down the route. What occurs here is
-    that the blocks are made Occupied, then Unoccupied in the
-    correct order, leaving the last block Occupied, thus simulating
-    a train passing through the interlock. To do this, reselect the
-    route and select "Clear Down".
-    <!--#include virtual="/Footer" --></p>
+    <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div>
 </body>
