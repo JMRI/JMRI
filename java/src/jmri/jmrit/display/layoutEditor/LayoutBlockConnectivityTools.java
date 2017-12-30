@@ -21,6 +21,7 @@ import org.slf4j.MDC;
  * layout blocks is usable and free.
  *
  * @author Kevin Dickerson Copyright (C) 2011
+ * @author George Warner Copyright (C) 2017
  */
 public class LayoutBlockConnectivityTools {
 

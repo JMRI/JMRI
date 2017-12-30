@@ -15,6 +15,7 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrack;
+import jmri.jmrit.display.layoutEditor.LayoutTrackDrawingOptions;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import jmri.jmrit.display.layoutEditor.LevelXing;
@@ -31,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp Copyright (c) 2007
+ * @author George Warner Copyright (C) 2017
  */
 public class LayoutEditorXml extends AbstractXmlAdapter {
 
@@ -105,6 +107,17 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         p.resetDirty();
         panel.setAttribute("openDispatcher", p.getOpenDispatcherOnLoad() ? "yes" : "no");
         panel.setAttribute("useDirectTurnoutControl", p.getDirectTurnoutControl() ? "yes" : "no");
+
+        // store layout track drawing options
+        try {
+            LayoutTrackDrawingOptions ltdo = p.getLayoutTrackDrawingOptions();
+            Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(ltdo);
+            if (e != null) {
+                panel.addContent(e);
+            }
+        } catch (Exception e) {
+            log.error("Error storing contents element: " + e);
+        }
 
         // note: moving zoom attribute into per-window user preference
         //panel.setAttribute("zoom", Double.toString(p.getZoom()));
@@ -503,10 +516,13 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             if (log.isDebugEnabled()) {
                 String id = "<null>";
                 try {
-                    id = item.getAttribute("ident").getValue();
+                    id = item.getAttribute("name").getValue();
                     log.debug("Load " + id + " for [" + panel.getName() + "] via " + adapterName);
-                } catch (Exception e) {
+                } catch (NullPointerException e) {
                     log.debug("Load layout object for [" + panel.getName() + "] via " + adapterName);
+                } catch (RuntimeException e) {
+                    throw e;
+                } catch (Exception e) {
                 }
             }
             try {
