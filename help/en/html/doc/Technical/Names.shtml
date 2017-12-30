@@ -893,6 +893,15 @@ SENSOR GROUP:my group:LS2
       <a name="programmers" id="programmers"></a>
       <h2>For Programmers</h2>
       
+      <h3>Normalized form of Names, and how to work with it</h3>
+      
+          After multiple long discussions, we decided that both system and user names 
+          should be kept in a "normal" form which enforces certain restrictions.
+          For user names, that's that leading and trailing whitespace (spaces, tabs) 
+          are not allowed.  For system names, it depends on the system, but 
+          at least the system-prefix and type letter must be correct.
+          
+          <p>
           The code to make sure that names are in normal form 
           has been localized to a single routine for user names:
           <br>
@@ -963,6 +972,41 @@ SENSOR GROUP:my group:LS2
 
         </ul>
 
+      <h3>System Name Comparisons</h3>
+      
+        System names are compared and sorted in multiple places: as labels for table rows, 
+        in selection boxes and lists, etc.  We have two <code>java.util.Comparator&lt;&gt;</code>
+        implementations to handle this:
+        <ul>
+            <li><code>SystemNameComparator</code> - a comparison on Strings
+            <li><code>NamedBeanComparator</code> - a comparison on the NamedBeans themselves
+        </ul>
+        Please use one of these whenever you need to compare or sort by system names to keep the complexity in one place.
+        <p>
+        Both of them sort first by system connection prefix, to group all the objects from one system together.
+        If there are objects of multiple types, the type letter is put in alphabetical order next.
+        Finally, the system-specific suffix is sorted.
+        <p>
+        Because it works with String values, <code>SystemNameComparator</code> can only
+        do a default ordering of the system-specific suffix; it can't do anything that
+        uses any information about the system-specific meaning of that string. It therefore
+        uses an alphanumeric-by-chunks sort.
+        Because it's comparing on the actual NamedBean objects, <code>NamedBeanComparator</code>
+        can do more specific comparisons:  It knows what the C/MRI suffixes in 
+        "CT2003" and "C2B2" mean and can take that into account.
+        <p>
+        Therefore, if you can, do the sort/comparison with <code>NamedBeanComparator</code> and
+        then convert to Strings, rather than converting NamedBeans to Strings and using 
+        <code>SystemNameComparator</code>.
+        <p>
+        Also, if you've created a system that has complex information in the suffix,
+        please have your <code>NamedBean</code> subclasses implement a system-specific
+        version of the
+        <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#compareSystemNameSuffix-java.lang.String-java.lang.String-jmri.NamedBean-">compareSystemNameSuffix()</a>
+        method in <code>NamedBean</code>.
+        For an example, see the bottom of jmri.jmrix.cmri.serial.SerialTurnout
+        and jmri.jmrix.cmri.serial.SerialTurnoutTest.
+      
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
