@@ -59,6 +59,7 @@ public class SerialSensorTest {
 
         set.add(new SerialSensor("CS005"));
 
+        set.add(new SerialSensor("CS1:5"));
         set.add(new SerialSensor("CS01004"));
         set.add(new SerialSensor("CS1003"));
         set.add(new SerialSensor("CS1002"));
@@ -80,6 +81,7 @@ public class SerialSensorTest {
         Assert.assertEquals("CS1002", it.next().getSystemName());
         Assert.assertEquals("CS1003", it.next().getSystemName());
         Assert.assertEquals("CS01004", it.next().getSystemName());
+        Assert.assertEquals("CS1:5", it.next().getSystemName());
 
         Assert.assertEquals("CS3001", it.next().getSystemName());
         Assert.assertEquals("CS3B2", it.next().getSystemName());

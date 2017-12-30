@@ -605,7 +605,9 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         int node1 = 0, node2 = 0, bit1, bit2;
         int t; // a temporary
         
-        if ((t = suffix1.indexOf("B")) >= 0) {
+        t = suffix1.indexOf("B");
+        if (t < 0) t = suffix1.indexOf(":");
+        if (t >= 0) {
             // alt format
             bit1 = Integer.parseInt(suffix1.substring(t+1));
             if (t>0) node1 = Integer.parseInt(suffix1.substring(0, t));
@@ -616,7 +618,9 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             if (len>3) node1 = Integer.parseInt(suffix1.substring(0, len-3));
         }
         
-        if ((t = suffix2.indexOf("B")) >= 0) {
+        t = suffix2.indexOf("B");
+        if (t < 0) t = suffix2.indexOf(":");
+        if (t >= 0) {
             // alt format
             bit2 = Integer.parseInt(suffix2.substring(t+1));
             if (t>0) node2 = Integer.parseInt(suffix2.substring(0, t));

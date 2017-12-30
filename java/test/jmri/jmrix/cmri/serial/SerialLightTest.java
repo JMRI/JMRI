@@ -60,6 +60,7 @@ public class SerialLightTest {
 
         set.add(new SerialLight("CL005",    "to1", memo));
 
+        // Lights don't do : notation
         set.add(new SerialLight("CL01004",    "to1004", memo));
         set.add(new SerialLight("CL1003",    "to1003", memo));
         set.add(new SerialLight("CL1002",    "to1002", memo));

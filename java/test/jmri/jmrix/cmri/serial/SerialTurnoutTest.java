@@ -90,6 +90,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
         set.add(new SerialTurnout("CT005",    "to1", memo));
 
+        set.add(new SerialTurnout("CT1:5",    "to1005", memo));
         set.add(new SerialTurnout("CT01004",    "to1004", memo));
         set.add(new SerialTurnout("CT1003",    "to1003", memo));
         set.add(new SerialTurnout("CT1002",    "to1002", memo));
@@ -111,6 +112,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         Assert.assertEquals("CT1002", it.next().getSystemName());
         Assert.assertEquals("CT1003", it.next().getSystemName());
         Assert.assertEquals("CT01004", it.next().getSystemName());
+        Assert.assertEquals("CT1:5", it.next().getSystemName());
 
         Assert.assertEquals("CT3001", it.next().getSystemName());
         Assert.assertEquals("CT3B2", it.next().getSystemName());
