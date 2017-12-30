@@ -2,6 +2,7 @@ package jmri.jmrix.cmri;
 
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
+import javax.annotation.CheckReturnValue;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.Manager.NameValidity;
@@ -589,6 +590,45 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             }
         }
         return ua;
+    }
+
+    /**
+     * See {@link jmri.NamedBean#compareSystemNameSuffix} for background.
+     * 
+     * This is a common implementation for C/MRI Lights, Sensors and Turnouts
+     * of the comparison method.
+     */
+    @CheckReturnValue
+    public static int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2) {
+        
+        // extract node numbers and bit numbers
+        int node1 = 0, node2 = 0, bit1, bit2;
+        int t; // a temporary
+        
+        if ((t = suffix1.indexOf("B")) >= 0) {
+            // alt format
+            bit1 = Integer.parseInt(suffix1.substring(t+1));
+            if (t>0) node1 = Integer.parseInt(suffix1.substring(0, t));
+        } else {
+            // std format
+            int len = suffix1.length();
+            bit1 = Integer.parseInt(suffix1.substring(Math.max(0, len-3)));
+            if (len>3) node1 = Integer.parseInt(suffix1.substring(0, len-3));
+        }
+        
+        if ((t = suffix2.indexOf("B")) >= 0) {
+            // alt format
+            bit2 = Integer.parseInt(suffix2.substring(t+1));
+            if (t>0) node2 = Integer.parseInt(suffix2.substring(0, t));
+        } else {
+            // std format
+            int len = suffix2.length();
+            bit2 = Integer.parseInt(suffix2.substring(Math.max(0, len-3)));
+            if (len>3) node2 = Integer.parseInt(suffix2.substring(0, len-3));
+        }
+        
+        if (node1 != node2 ) return Integer.signum(node1-node2);
+        return Integer.signum(bit1-bit2);
     }
 
     @Override
