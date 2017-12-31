@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Basic interface for access to named, managed objects.
@@ -326,6 +327,48 @@ public interface Manager<E extends NamedBean> {
     static public @Nonnull
     String getSystemPrefix(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
         return inputName.substring(0,getSystemPrefixLength(inputName));
+    }
+
+    /**
+     * Indicate whether a system-prefix is one of the legacy non-parsable ones
+     * that are being removed during the JMRI 4.11 cycle.
+     * @deprecated to make sure we remember to remove this post-4.11
+     * @since 4.11.2
+     * @return true if a legacy prefix, hence non-parsable
+     */
+    @Deprecated
+    @SuppressWarnings("fallthrough")
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH", justification="intentional to make code more readable")
+    @CheckReturnValue
+    public static boolean isLegacySystemPrefix(@Nonnull String prefix) {
+        return legacyPrefixes.contains(prefix);
+    }
+    
+    @Deprecated
+    static final java.util.TreeSet<String> legacyPrefixes 
+        = new java.util.TreeSet<>(java.util.Arrays.asList(
+            new String[]{
+                "DX", "DCCPP", "DP", "json", "MR", "MC", "PI", "TM" 
+            }));
+
+    /**
+     * If the argument starts with one of the legacy prefixes, detect that and
+     * indicate its length.
+     * <p>
+     * This is a slightly-expensive operation, and should be used sparingly
+     * 
+     * @deprecated to make sure we remember to remove this post-4.11
+     * @since 4.11.2
+     * @return length of a legacy prefix, if present, otherwise -1
+     */
+    @Deprecated
+    @CheckReturnValue
+    public static int startsWithLegacySystemPrefix(@Nonnull String prefix) {
+        // implementation replies on legacy suffix length properties to gain a bit of speed...
+        if (legacyPrefixes.contains(prefix.substring(0,2))) return 2;
+        else if (prefix.startsWith("DCCPP"))  return 5;
+        else if (prefix.startsWith("json"))  return 5;
+        else return -1;
     }
 
     /**

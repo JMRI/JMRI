@@ -7,7 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Tests the static methods of the interface
+ * 
  * @author Bob Jacobsen Copyright (C) 2017	
  */
 public class ManagerTest {
@@ -44,6 +45,42 @@ public class ManagerTest {
             return; // OK
         }
         Assert.fail("should have thrown");
+    }
+    
+    public void testIsLegacySystemPrefix() {
+        Assert.assertTrue(Manager.isLegacySystemPrefix("DX"));
+        Assert.assertTrue(Manager.isLegacySystemPrefix("DCCPP"));
+        Assert.assertTrue(Manager.isLegacySystemPrefix("DP"));
+        Assert.assertTrue(Manager.isLegacySystemPrefix("json"));
+        
+        Assert.assertFalse(Manager.isLegacySystemPrefix("C"));
+        Assert.assertFalse(Manager.isLegacySystemPrefix("C2"));
+        Assert.assertFalse(Manager.isLegacySystemPrefix("D"));
+        
+        for (String s : Manager.legacyPrefixes.toArray(new String[0])) {
+            Assert.assertTrue(Manager.isLegacySystemPrefix(s));
+        }
+    }
+    
+    public void testLegacyPrefixes() {
+        // catch if this is changed, so we remember to change
+        // rest of tests
+        Assert.assertEquals("length of legacy set", 8, Manager.legacyPrefixes.toArray().length);
+    }
+
+    public void startsWithLegacySystemPrefix() {
+        Assert.assertEquals(2, Manager.startsWithLegacySystemPrefix("DXS1"));
+        Assert.assertEquals(5, Manager.startsWithLegacySystemPrefix("DCCPPT4"));
+        Assert.assertEquals(2, Manager.startsWithLegacySystemPrefix("DPS12"));
+        Assert.assertEquals(4, Manager.startsWithLegacySystemPrefix("jsonL1"));
+        
+        Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("CT1"));
+        Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("C2T12"));
+        Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("DT12132"));
+        
+        for (String s : Manager.legacyPrefixes.toArray(new String[0])) {
+            Assert.assertEquals(s.length()+3, Manager.startsWithLegacySystemPrefix(s+"T12"));
+        }
     }
 
     // The minimal setup for log4J
