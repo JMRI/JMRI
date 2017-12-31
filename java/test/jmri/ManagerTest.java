@@ -20,6 +20,15 @@ public class ManagerTest {
         Assert.assertEquals("L21T1", 3, Manager.getSystemPrefixLength("L21T1"));
     }
 
+    // Test legacy prefixes
+    @Deprecated
+    @Test
+    public void testGetSystemPrefixLengthLegacyPrefixes() {
+        Assert.assertEquals("DCCPPT12", 5, Manager.getSystemPrefixLength("DCCPPT12"));
+        Assert.assertEquals("MRT13", 2, Manager.getSystemPrefixLength("MRT13"));
+        Assert.assertEquals("DXT512", 2, Manager.getSystemPrefixLength("DXT512"));
+    }
+
     @Test
     public void testGetSystemPrefixLengthBad() {
         try {
@@ -37,6 +46,15 @@ public class ManagerTest {
         Assert.assertEquals("L21T1", "L21", Manager.getSystemPrefix("L21T1"));
     }
 
+    // Test legacy prefixes
+    @Deprecated
+    @Test
+    public void testGetSystemPrefixLegacyPrefixes() {
+        Assert.assertEquals("DCCPPT12", "DCCPP", Manager.getSystemPrefix("DCCPPT12"));
+        Assert.assertEquals("MRT13", "MR", Manager.getSystemPrefix("MRT13"));
+        Assert.assertEquals("DXT512", "DX", Manager.getSystemPrefix("DXT512"));
+    }
+
     @Test
     public void testGetSystemPrefixBad() {
         try {
@@ -47,6 +65,8 @@ public class ManagerTest {
         Assert.fail("should have thrown");
     }
     
+    // Test legacy prefixes
+    @Deprecated
     public void testIsLegacySystemPrefix() {
         Assert.assertTrue(Manager.isLegacySystemPrefix("DX"));
         Assert.assertTrue(Manager.isLegacySystemPrefix("DCCPP"));
@@ -62,12 +82,16 @@ public class ManagerTest {
         }
     }
     
+    // Test legacy prefixes
+    @Deprecated
     public void testLegacyPrefixes() {
         // catch if this is changed, so we remember to change
         // rest of tests
         Assert.assertEquals("length of legacy set", 8, Manager.legacyPrefixes.toArray().length);
     }
 
+    // Test legacy prefixes
+    @Deprecated
     public void startsWithLegacySystemPrefix() {
         Assert.assertEquals(2, Manager.startsWithLegacySystemPrefix("DXS1"));
         Assert.assertEquals(5, Manager.startsWithLegacySystemPrefix("DCCPPT4"));

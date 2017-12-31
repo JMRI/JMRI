@@ -304,6 +304,13 @@ public interface Manager<E extends NamedBean> {
     static public
     int getSystemPrefixLength(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
         if (inputName.isEmpty()) throw new NamedBean.BadSystemNameException();
+    
+        // As a very special case, check for legacy prefixs - to be removed
+        // This is also quite a bit slower than the tuned implementation below
+        int p = startsWithLegacySystemPrefix(inputName);
+        if (p > 0) return p;
+
+        // implementation for well-formed names
         int i = 1;
         for (i = 1; i < inputName.length(); i++) {
             if ( !Character.isDigit(inputName.charAt(i)))
