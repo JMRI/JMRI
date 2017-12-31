@@ -64,6 +64,21 @@ public class SystemNameComparatorTest {
 
     }
 
+    @Test
+    public void testLegacyCases() {
+        SystemNameComparator t = new SystemNameComparator();
+
+        Assert.assertEquals("same DCCPP100", 0, t.compare("DCCPP100", "DCCPP100"));
+        Assert.assertEquals("same DX12",    0, t.compare("DX12", "DX12"));
+
+        // Should sort first by system, then letter, then rest:
+        //   Compare DCCPP T 100 to D S 100 - DCCPP>D
+        Assert.assertEquals("DCCPPT100 > DS100", +1, t.compare("DCCPPT100", "DS100"));
+        Assert.assertEquals("DS100 < DCCPPT100", -1, t.compare("DS100", "DCCPPT100"));
+
+    }
+
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
