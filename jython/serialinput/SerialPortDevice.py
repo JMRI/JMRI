@@ -65,8 +65,19 @@ class SerialPortDevice(jmri.jmrit.automat.AbstractAutomaton) :
     def handle(self) : 
         # if initial flush pending, do that just once
         if (self.flush) :
-            next = 0
-            while (next != 13) : next = self.inputStream.read()
+            # skip anything listed as available now
+            count = self.inputStream.available()
+            self.inputStream.skip(count)
+            print "Skipping count:", count
+            count = self.inputStream.available()
+            self.inputStream.skip(count)
+            print "Skipping count:", count
+            # now skip 10 lines in hope to flush buffers of partial lines
+            count = 0
+            while (count < 10) :
+                next = 0
+                while (next != 13) : next = self.inputStream.read()  # 13 is Newline
+                count++
             self.flush = False
             print "Ready to process"
             
