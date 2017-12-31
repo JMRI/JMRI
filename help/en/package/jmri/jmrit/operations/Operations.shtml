@@ -2536,7 +2536,7 @@
    </p>
 
    <p>Both options work the same with regards to placing custom car loads into empty cars, only
-    the number the number of spurs considered by the program changes. If a schedule demands a
+    the number of spurs considered by the program changes. If a schedule demands a
     certain car type, and that car type is departing staging, and the car's load is default empty,
     the program will place the custom load into that car if one of the two options is selected.</p>
 
