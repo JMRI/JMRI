@@ -346,15 +346,15 @@ public class TrainPrintUtilities {
             return;
         }
         java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-        if (desktop.isSupported(java.awt.Desktop.Action.EDIT)) {
+        if (desktop.isSupported(java.awt.Desktop.Action.OPEN)) {
             try {
-                desktop.edit(file);
+                desktop.open(file);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else if (desktop.isSupported(java.awt.Desktop.Action.OPEN)) {
+        } else if (desktop.isSupported(java.awt.Desktop.Action.EDIT)) {
             try {
-                desktop.open(file);
+                desktop.edit(file);
             } catch (IOException e) {
                 e.printStackTrace();
             }
