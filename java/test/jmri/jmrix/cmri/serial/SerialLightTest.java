@@ -48,8 +48,6 @@ public class SerialLightTest {
 
     @Test
     public void testSystemSpecificComparisonOfSpecificFormats() {
-        jmri.util.NamedBeanComparator t = new jmri.util.NamedBeanComparator();
-        
         // test by putting into a tree set, then extracting and checking order
         java.util.TreeSet<Light> set = new java.util.TreeSet(new jmri.util.NamedBeanComparator());
         
