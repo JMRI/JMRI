@@ -33,7 +33,7 @@ public class SystemNameComparator implements Comparator<String> {
 
         int p1len = Manager.getSystemPrefixLength(o1);
         int p2len = Manager.getSystemPrefixLength(o2);
-        
+
         int comp = ac.compare(o1.substring(0, p1len), o2.substring(0, p2len));
         if (comp != 0) return comp;
 

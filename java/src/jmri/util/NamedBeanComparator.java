@@ -24,8 +24,6 @@ public class NamedBeanComparator implements java.util.Comparator<NamedBean> {
     public NamedBeanComparator() {
     }
 
-    static AlphanumComparator ac = new AlphanumComparator();
-    
     @Override
     public int compare(NamedBean n1, NamedBean n2) {
         return NamedBean.compareSystemName(n1, n2);
