@@ -18,6 +18,24 @@ public class ReportContextTest {
         Assert.assertNotNull("exists",t);
     }
 
+
+    @Test
+    public void testThatItRuns() {
+        ReportContext t = new ReportContext();
+        Assert.assertNotNull("exists",t);
+        
+        t.getReport(false);  // check it runs OK
+    }
+
+    @Test
+    public void testCheckForNodeID() {
+        ReportContext t = new ReportContext();
+        Assert.assertNotNull("exists",t);
+        
+        String output = t.getReport(false);
+        Assert.assertTrue(output.contains("JMRI Node ID:"));
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

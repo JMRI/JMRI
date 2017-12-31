@@ -68,6 +68,7 @@
         <label xml:lang="it">Volt Partenza</label>
         <label xml:lang="fr">V démarr.v</label>
         <label xml:lang="de">Startspannung</label>
+        <label xml:lang="ca">Voltatge d'arrencada</label>
       </variable>
       <variable CV="3" default="8" item="Accel" tooltip="This value multiplied by 0.869 gives the time from stop to maximum speed (0-64)">
         <decVal min="0" max="64"/>
@@ -75,6 +76,7 @@
         <label xml:lang="it">Accellerazione (0-64)</label>
         <label xml:lang="fr">Accelération (0-64)</label>
         <label xml:lang="de">Anfahrverzögerung (0-64)</label>
+        <label xml:lang="ca">Acceleració (0-63)</label>
       </variable>
       <variable CV="4" default="6" item="Decel" tooltip="This value multiplied by 0.869 gives the time from maximum speed to stop (0-64)">
         <decVal min="1" max="64"/>
@@ -82,18 +84,21 @@
         <label xml:lang="it">Decellerazione (1-64)</label>
         <label xml:lang="fr">Décélération (1-64)</label>
         <label xml:lang="de">Bremszeit (1-64)</label>
+        <label xml:lang="ca">Desacceleració (1-64)</label>
       </variable>
       <variable CV="5" default="64" item="Vhigh" tooltip="Maximum speed of locomotive (0-64)">
         <decVal min="0" max="64"/>
         <label>Maximum Speed</label>
         <label xml:lang="it">Volt Massimi (0-64):</label>
         <label xml:lang="de">Höchstgeschwindigkeit</label>
+        <label xml:lang="ca">Velocitat Màxima</label>
       </variable>
       <variable CV="6" default="22" item="Vmid" tooltip="Speed of locomotive at medium speed step (0-64)">
         <decVal min="0" max="64"/>
         <label>Medium speed</label>
         <label xml:lang="it">Volts intermedi (0-64)</label>
         <label xml:lang="de">Vmittel (0-64)</label>
+        <label xml:lang="ca">Velocitat Intermitja</label>
       </variable>
       <variable CV="7" item="Decoder Version" tooltip="The decoder version number (read only)">
         <decVal/>
@@ -101,6 +106,7 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
+        <label xml:lang="ca">VVersió del descodificador</label>
       </variable>
       <variable CV="8" readOnly="yes" default="151" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
         <decVal/>
@@ -108,6 +114,7 @@
         <label xml:lang="it">ID Costruttore: </label>
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
+        <label xml:lang="ca">ID del fabricant</label>
       </variable>
       <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
@@ -191,8 +198,10 @@
         <label xml:lang="fr">Pas de vitesse</label>
         <label xml:lang="de">Fahrstufen</label>
         <label xml:lang="it">Step Velocità</label>
+        <label xml:lang="ca">Passos de velocitat</label>
         <tooltip>Sets the speed step mode. 128 speed steps are recognized automatically</tooltip>
         <tooltip xml:lang="it">Stabilisce gli Step velocità. 128 Step sono automatici</tooltip>
+        <tooltip xml:lang="ca">Estableix els passos de velocitat. Els 128 es reconeixen automàticament</tooltip>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>

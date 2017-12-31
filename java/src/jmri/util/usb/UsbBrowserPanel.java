@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  */
 public class UsbBrowserPanel extends javax.swing.JPanel {
 
-    private final UsbTreeNode root;
+    private UsbTreeNode root;
     private final UsbDeviceTableModel deviceModel = new UsbDeviceTableModel();
     private final static Logger log = LoggerFactory.getLogger(UsbBrowserPanel.class);
     private transient final UsbServicesListener usbServicesListener = new UsbServicesListener() {
@@ -59,14 +59,14 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                     if (usbTree != null) {
                         TreePath selection = usbTree.getSelectionPath();
                         ((DefaultTreeModel) usbTree.getModel()).nodeChanged(parentNode);
-                        //Shouldn't have to do this… but .nodeChanged(parent) isn't enough
+                        // .nodeChanged(parent) isn't enough
                         ((DefaultTreeModel) usbTree.getModel()).reload(root);
                         usbTree.setSelectionPath(selection);
                     }
                     return;
                 }
             }
-            UsbTreeNode root = UsbBrowserPanel.this.root;
+            UsbTreeNode root = UsbBrowserPanel.this.getRootNode();
             root.removeAllChildren();
             UsbBrowserPanel.this.buildTree(root);
         }
@@ -74,7 +74,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
         @Override
         public void usbDeviceDetached(UsbServicesEvent use) {
             // subtler method to remove usbDevice from tree
-            UsbTreeNode root = UsbBrowserPanel.this.root;
+            UsbTreeNode root = UsbBrowserPanel.this.getRootNode();
             UsbDevice usbDevice = use.getUsbDevice();
             UsbTreeNode usbTreeNode = findNodeForDevice(root, usbDevice);
             if (usbTreeNode != null) {
@@ -108,7 +108,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
      * Create new UsbBrowserPanel.
      */
     public UsbBrowserPanel() {
-        root = new UsbTreeNode();
+        root = getRootNode();
         buildTree(root);
         if (root.getUserObject() != null) {
             try {
@@ -121,6 +121,20 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
         for (int i = 0; i < usbTree.getRowCount(); i++) {
             usbTree.expandRow(i);
         }
+    }
+
+    /*
+     * Protected method to set and retrieve the root node.
+     *
+     * This is partially in place for testing purposes, as
+     * this allows injection of a pre-defined root node by
+     * by overriding this method.
+     */
+    protected UsbTreeNode getRootNode() {
+       if(root == null ) {
+          root = new UsbTreeNode();
+       }
+       return root;
     }
 
     private void buildTree(UsbTreeNode root) {
@@ -231,7 +245,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
     private javax.swing.JTree usbTree;
     // End of variables declaration//GEN-END:variables
 
-    private static class UsbTreeNode extends DefaultMutableTreeNode {
+    protected static class UsbTreeNode extends DefaultMutableTreeNode {
 
         public UsbTreeNode() {
             this(null);

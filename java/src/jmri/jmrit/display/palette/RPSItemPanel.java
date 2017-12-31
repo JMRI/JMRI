@@ -9,18 +9,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.RpsPositionIcon;
-import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RPSItemPanel extends FamilyItemPanel {
 
     /**
-     * Constructor for plain icons and backgrounds
+     * Constructor for plain icons and backgrounds.
      */
-    public RPSItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
+    public RPSItemPanel(DisplayFrame parentFrame, String type, String family, Editor editor) {
         super(parentFrame, type, family, editor);
     }
 
@@ -38,7 +38,7 @@ public class RPSItemPanel extends FamilyItemPanel {
         super.makeDndIconPanel(iconMap, "active");
     }
 
-    /**
+    /*
      * ****************************************************
      */
     @Override
@@ -86,4 +86,5 @@ public class RPSItemPanel extends FamilyItemPanel {
     }
 
     private final static Logger log = LoggerFactory.getLogger(RPSItemPanel.class);
+
 }

@@ -221,6 +221,32 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
         }
     }
 
+    @Override
+    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        _val = val;
+        useProgrammer(p);
+        parseCV(CV);
+        if (valuePI == -1) {
+            lastValuePI = -1;  // next indexed operation needs to write PI, SI
+            lastValueSI = -1;
+
+            // non-indexed operation
+            state = ProgState.PROGRAMMING;
+            prog.confirmCV(CV, val, this);
+        } else if (useCachePiSi()) {
+            // indexed operation with set values is same as non-indexed operation
+            state = ProgState.PROGRAMMING;
+            prog.confirmCV(CV, val, this);
+        } else {
+            lastValuePI = valuePI;  // after check in 'if' statement
+            lastValueSI = valueSI;
+
+            // write index first
+            state = ProgState.FINISHCONFIRM;
+            prog.writeCV(indexPI, valuePI, this);
+        }
+    }
+
     private jmri.ProgListener _usingProgrammer = null;
 
     // internal method to remember who's using the programmer
@@ -243,8 +269,10 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
         PROGRAMMING,
         /** Waiting for response to first or second index write before a final read operation */
         FINISHREAD,
-        /** Waiting for response to first or second index write before a final read operation */
+        /** Waiting for response to first or second index write before a final write operation */
         FINISHWRITE,
+        /** Waiting for response to first or second index write before a final confirm operation */
+        FINISHCONFIRM,
         /** No current operation */
         NOTPROGRAMMING
     }
@@ -319,6 +347,25 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
                         int tempSI = valueSI;
                         valueSI = -1;
                         state = ProgState.FINISHWRITE;
+                        prog.writeCV(indexSI, tempSI, this);
+                    } catch (jmri.ProgrammerException e) {
+                        log.error("Exception doing write SI for write", e);
+                    }
+                }
+                break;
+            case FINISHCONFIRM:
+                if (valueSI == -1) {
+                    try {
+                        state = ProgState.PROGRAMMING;
+                        prog.confirmCV(_cv, _val, this);
+                    } catch (jmri.ProgrammerException e) {
+                        log.error("Exception doing final confirm", e);
+                    }
+                } else {
+                    try {
+                        int tempSI = valueSI;
+                        valueSI = -1;
+                        state = ProgState.FINISHCONFIRM;
                         prog.writeCV(indexSI, tempSI, this);
                     } catch (jmri.ProgrammerException e) {
                         log.error("Exception doing write SI for write", e);

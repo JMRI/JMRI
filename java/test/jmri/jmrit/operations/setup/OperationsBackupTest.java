@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
@@ -49,25 +48,25 @@ import org.junit.Assert;
  */
 public class OperationsBackupTest extends TestCase {
 
-    private File operationsRoot;
+    private final File operationsRoot;
 
     public File getOperationsRoot() {
         return operationsRoot;
     }
 
-    private File defaultBackupRoot;
+    private final File defaultBackupRoot;
 
     public File getDefaultBackupRoot() {
         return defaultBackupRoot;
     }
 
-    private File autoBackupRoot;
+    private final File autoBackupRoot;
 
     public File getAutoBackupRoot() {
         return autoBackupRoot;
     }
 
-    private String[] regularBackupSetFileNames;
+    private final String[] regularBackupSetFileNames;
 
     // public String[] getRegularBackupSetFileNames() {
     // return regularBackupSetFileNames;

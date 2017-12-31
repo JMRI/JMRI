@@ -204,7 +204,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
         return memo;
     }
 
-    private SerialSystemConnectionMemo memo = null;
+    protected SerialSystemConnectionMemo memo = null;
     SerialTrafficController self = null;
 
     boolean sendInterlock = false; // send the 00 interlock when CRC received

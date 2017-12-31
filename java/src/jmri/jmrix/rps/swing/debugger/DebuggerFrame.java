@@ -18,6 +18,7 @@ import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.MeasurementListener;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.ReadingListener;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +30,11 @@ import org.slf4j.LoggerFactory;
 public class DebuggerFrame extends jmri.util.JmriJFrame
         implements ReadingListener, MeasurementListener {
 
-    public DebuggerFrame() {
+    RpsSystemConnectionMemo memo = null;
+
+    public DebuggerFrame(RpsSystemConnectionMemo _memo) {
         super();
+        memo = _memo;
 
         NUMSENSORS = Engine.instance().getMaxReceiverNumber();
 
@@ -156,8 +160,8 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         menuBar.add(fileMenu);
-        fileMenu.add(new jmri.jmrix.rps.swing.CsvExportAction("Export Readings as CSV..."));
-        fileMenu.add(new jmri.jmrix.rps.swing.CsvExportMeasurementAction("Export Measurements as CSV..."));
+        fileMenu.add(new jmri.jmrix.rps.swing.CsvExportAction("Export Readings as CSV...",memo));
+        fileMenu.add(new jmri.jmrix.rps.swing.CsvExportMeasurementAction("Export Measurements as CSV...",memo));
         setJMenuBar(menuBar);
 
         // add help

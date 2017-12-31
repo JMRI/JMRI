@@ -3,6 +3,7 @@ package jmri.jmrit.display.palette;
 import java.awt.Color;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,17 +16,18 @@ import javax.swing.JPanel;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.AnalogClock2Display;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
-import jmri.util.JmriJFrame;
+import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ItemPanel for for plain icons and backgrounds
+ * ItemPanel for Clocks.
  */
 public class ClockItemPanel extends IconItemPanel {
 
-    public ClockItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
+    public ClockItemPanel(DisplayFrame parentFrame, String type, Editor editor) {
         super(parentFrame, type, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
     }
@@ -43,12 +45,15 @@ public class ClockItemPanel extends IconItemPanel {
 
     @Override
     protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
-        _iconPanel = new JPanel();
+        _iconPanel = new ImagePanel();
+        updateBackgrounds(); // create array of backgrounds
+
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
-            NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
+            NamedIcon icon = new NamedIcon(entry.getValue()); // make copy for possible reduction
             JPanel panel = new JPanel();
+            panel.setOpaque(false);
             String borderName = ItemPalette.convertText(entry.getKey());
             panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                     borderName));
@@ -73,6 +78,7 @@ public class ClockItemPanel extends IconItemPanel {
 
     @Override
     public void initButtonPanel() {
+        add(makeBgButtonPanel(_iconPanel, null, _backgrounds, _paletteFrame));
     }
 
     public class ClockDragJLabel extends DragJLabel {
@@ -87,9 +93,7 @@ public class ClockItemPanel extends IconItemPanel {
                 return null;
             }
             String url = ((NamedIcon) getIcon()).getURL();
-            if (log.isDebugEnabled()) {
-                log.debug("DragJLabel.getTransferData url= " + url);
-            }
+            log.debug("DragJLabel.getTransferData url= {}", url);
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
                 AnalogClock2Display c;
                 String link = _linkName.getText().trim();
@@ -114,4 +118,5 @@ public class ClockItemPanel extends IconItemPanel {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ClockItemPanel.class);
+
 }

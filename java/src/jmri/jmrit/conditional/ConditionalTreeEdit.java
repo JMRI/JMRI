@@ -2596,6 +2596,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             case Conditional.ITEM_TYPE_ENTRYEXIT:
+                _variableNameLabel.setToolTipText(Bundle.getMessage("NameHintEntryExit"));  // NOI18N
                 _variableNameField.setText(_curVariable.getName());
                 for (int i = 0; i < Conditional.ITEM_TO_ENTRYEXIT_TEST.length; i++) {
                     _variableStateBox.addItem(
@@ -3280,8 +3281,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         c.gridx = 1;
         c.anchor = java.awt.GridBagConstraints.WEST;
         if ((_selectionMode == SelectionMode.USECOMBO)
-                && (itemType != Conditional.ITEM_TYPE_AUDIO)
-                && (actionType != Conditional.ACTION_TRIGGER_ROUTE)) {
+                && (itemType != Conditional.ITEM_TYPE_AUDIO)) {
             _gridPanel.add(_comboNameBox, c);
         } else {
             _gridPanel.add(_actionNameField, c);
@@ -3597,6 +3597,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 if (actionType == Conditional.ACTION_SET_BLOCK_VALUE) {
                     _shortActionString.setText(_curAction.getActionString());
                 }
+                break;
+
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
+                        Conditional.ITEM_TO_ENTRYEXIT_ACTION, actionType) + 1);
                 break;
 
             case Conditional.ITEM_TYPE_AUDIO:
@@ -3980,6 +3985,15 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 makeDetailGrid(oblockGrid);
                 break;
 
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                for (int i = 0; i < Conditional.ITEM_TO_ENTRYEXIT_ACTION.length; i++) {
+                    _actionTypeBox.addItem(
+                            DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_ENTRYEXIT_ACTION[i]));
+                }
+                setActionNameBox(itemType);
+                makeDetailGrid("NameTypeActionFinal");
+                break;
+
             case Conditional.ITEM_TYPE_AUDIO:
                 _actionNameLabel.setToolTipText(Bundle.getMessage("NameHintOBlock"));  // NOI18N
                 String audioGrid = "TypeAction";  // NOI18N
@@ -4047,6 +4061,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     _actionNameLabel.setToolTipText(Bundle.getMessage("NameHintRoute"));  // NOI18N
                 }
 
+                setActionNameBox(itemType);
                 makeDetailGrid(otherGrid);
                 break;
 
@@ -4156,6 +4171,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 return Conditional.ITEM_TO_SCRIPT_ACTION[actionTypeSelection];
             case Conditional.ITEM_TYPE_OTHER:
                 return Conditional.ITEM_TO_OTHER_ACTION[actionTypeSelection];
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                return Conditional.ITEM_TO_ENTRYEXIT_ACTION[actionTypeSelection];
             default:
                 // fall through
                 break;
@@ -4479,6 +4496,17 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     _curAction.setActionString(actionString);
                 }
                 break;
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                if (!referenceByMemory) {
+                    name = validateEntryExitReference(name);
+                    if (name == null) {
+                        return false;
+                    }
+                }
+                actionType = Conditional.ITEM_TO_ENTRYEXIT_ACTION[selection - 1];
+                _actionNameField.setText(name);
+                _curAction.setDeviceName(name);
+                break;
             case Conditional.ITEM_TYPE_CLOCK:
                 actionType = Conditional.ITEM_TO_CLOCK_ACTION[selection - 1];
                 if (actionType == Conditional.ACTION_SET_FAST_CLOCK_TIME) {
@@ -4590,7 +4618,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             }
             if (select1 != _itemType) {
                 if (log.isDebugEnabled()) {
-                    log.error("ActionTypeListener actionItem selection (" + select1 // NOI18N
+                    log.debug("ActionTypeListener actionItem selection (" + select1 // NOI18N
                             + ") != expected actionItem (" + _itemType + ")");  // NOI18N
                 }
             }

@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  */
 public class OutputBits {
 
-    private OutputBits() {
+    public OutputBits(SerialTrafficController _tc) {
         // clear all output bits
         for (int i = 0; i < 256; i++) {
             outputArray[i] = 0;
@@ -147,13 +147,10 @@ public class OutputBits {
         return m;
     }
 
+    @Deprecated
     public static OutputBits instance() {
-        if (mInstance == null) {
-            mInstance = new OutputBits();
-        }
-        return mInstance;
+        return null;
     }
-    static OutputBits mInstance = null; // package access for tests
 
     private final static Logger log = LoggerFactory.getLogger(OutputBits.class);
 }

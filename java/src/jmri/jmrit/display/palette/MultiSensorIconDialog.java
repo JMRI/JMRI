@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Icons may be added or deleted from a family
+ * Icons may be added or deleted from a family.
  *
  * @author Pete Cressman Copyright (c) 2010
  */
@@ -22,7 +22,7 @@ public class MultiSensorIconDialog extends IconDialog {
 
     /**
      * Constructor for existing family to change icons, add/delete icons, or to
-     * delete the family
+     * delete the family.
      */
     public MultiSensorIconDialog(String type, String family, FamilyItemPanel parent,
             HashMap<String, NamedIcon> iconMap) {
@@ -34,7 +34,7 @@ public class MultiSensorIconDialog extends IconDialog {
     }
 
     /**
-     * add/delete icon. For Multisensor, it adds another sensor position.
+     * Add/delete icon. For Multisensor, it adds another sensor position.
      */
     @Override
     protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
@@ -47,7 +47,7 @@ public class MultiSensorIconDialog extends IconDialog {
                 if (addNewIcon(getIconName())) {
                     InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
                     JPanel p = (JPanel) (getContentPane().getComponent(0));
-                    p.remove(_iconPanel);
+                    p.remove(_iconPanel); // OK to replace on a Dialog
                     _iconPanel = makeIconPanel(_iconMap);
                     p.add(_iconPanel, 1);
                     pack();
@@ -64,7 +64,7 @@ public class MultiSensorIconDialog extends IconDialog {
                 if (deleteIcon()) {
                     InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
                     JPanel p = (JPanel) (getContentPane().getComponent(0));
-                    p.remove(_iconPanel);
+                    p.remove(_iconPanel); // OK to replace on a Dialog
                     _iconPanel = makeIconPanel(_iconMap);
                     p.add(_iconPanel, 1);
                     pack();
@@ -86,7 +86,7 @@ public class MultiSensorIconDialog extends IconDialog {
     }
 
     /**
-     * Action item for makeAddIconButtonPanel
+     * Action item for makeAddIconButtonPanel.
      */
     protected boolean addNewIcon(String name) {
         if (log.isDebugEnabled()) {
@@ -109,7 +109,7 @@ public class MultiSensorIconDialog extends IconDialog {
     }
 
     /**
-     * Action item for makeAddIconButtonPanel
+     * Action item for makeAddIconButtonPanel.
      */
     protected boolean deleteIcon() {
         if (log.isDebugEnabled()) {
@@ -124,4 +124,5 @@ public class MultiSensorIconDialog extends IconDialog {
     }
 
     private final static Logger log = LoggerFactory.getLogger(MultiSensorIconDialog.class);
+
 }

@@ -81,7 +81,7 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
 
             return p;
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
-            log.warn("could not load pane class {}", paneClass, ex);
+            log.warn("could not load pane class: {}", paneClass, ex);
             return null;
         }
     }

@@ -38,7 +38,7 @@ public class AccessoryOpsModeProgrammerFacadeTest {
         dp.setTestReadLimit(1024);
         dp.setTestWriteLimit(1024);
 
-        Programmer p = new AccessoryOpsModeProgrammerFacade(dp, "", 0);
+        Programmer p = new AccessoryOpsModeProgrammerFacade(dp, "", 0, dp);
 
         Assert.assertTrue("CV limit read OK", p.getCanRead("1024"));
         Assert.assertTrue("CV limit write OK", p.getCanWrite("1024"));
@@ -90,7 +90,7 @@ public class AccessoryOpsModeProgrammerFacadeTest {
         // Create an addressed programmer.
         ProgDebugger dp = new ProgDebugger(isLong, addr);
         // Create a facade over the base programmer and also a listener for the facade.
-        Programmer p = new AccessoryOpsModeProgrammerFacade(dp, addrType, 0);
+        Programmer p = new AccessoryOpsModeProgrammerFacade(dp, addrType, 0, dp);
         ProgListener l = new ProgListener() {
             @Override
             public void programmingOpReply(int value, int status) {
@@ -117,7 +117,7 @@ public class AccessoryOpsModeProgrammerFacadeTest {
         StringBuilder sb = new StringBuilder();
         Pattern pattern;
         Matcher matcher;
-        ArrayList<String> retString = new ArrayList();
+        ArrayList<String> retString = new ArrayList<>();
 
         // Extract test parameters from test name.
         String methodName = Thread.currentThread().getStackTrace()[methodOffset].getMethodName();

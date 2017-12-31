@@ -269,7 +269,7 @@ public class PositionablePopupUtil {
     public void setBorder(boolean set) {
         _showBorder = set;
         if (set) {
-            if (borderColor != null && _showBorder) {
+            if (borderColor != null ) {
                 outlineBorder = new LineBorder(borderColor, borderSize);
                 _parent.setBorder(new CompoundBorder(outlineBorder, borderMargin));
             }
@@ -307,15 +307,16 @@ public class PositionablePopupUtil {
     }
 
     public void setBackgroundColor(Color color) {
-        if (color == null) {
-            _hasBackground = false;
-            _textComponent.setBackground(null);
+        if (color == null || color.getAlpha() == 0) {
+            setHasBackground(false);
+            _textComponent.setBackground(color); // retain the passed color
+                                                 // which may not be null
         } else {
-            _hasBackground = true;
+            setHasBackground(true);
             _textComponent.setBackground(color);
             _parent.setBackground(color);
         }
-        if (_hasBackground) {
+        if (hasBackground()) {
             setMargin(margin);  //This rebuilds margin and sets it colour.
         }
         _parent.updateSize();
@@ -337,10 +338,12 @@ public class PositionablePopupUtil {
     }
 
     public Color getBackground() {
+        Color c = _textComponent.getBackground();
         if (!_hasBackground) {
-            return null;
+            // make sure the alpha value is set to 0
+            c = jmri.util.ColorUtil.setAlpha(c,0);
         }
-        return _textComponent.getBackground();
+        return c;
     }
 
     protected JMenu makeFontMenu() {
@@ -589,15 +592,13 @@ public class PositionablePopupUtil {
         ButtonGroup justButtonGroup = new ButtonGroup();
         JRadioButtonMenuItem r;
         switch (just) {
-            case LEFT:
-                r = new JRadioButtonMenuItem(Bundle.getMessage("left"));
-                break;
             case RIGHT:
                 r = new JRadioButtonMenuItem(Bundle.getMessage("right"));
                 break;
             case CENTRE:
                 r = new JRadioButtonMenuItem(Bundle.getMessage("center"));
                 break;
+            case LEFT:
             default:
                 r = new JRadioButtonMenuItem(Bundle.getMessage("left"));
         }
@@ -638,8 +639,6 @@ public class PositionablePopupUtil {
                     ((JTextField) _textComponent).setHorizontalAlignment(JTextField.RIGHT);
                     break;
                 case CENTRE:
-                    ((JTextField) _textComponent).setHorizontalAlignment(JTextField.CENTER);
-                    break;
                 default:
                     ((JTextField) _textComponent).setHorizontalAlignment(JTextField.CENTER);
             }

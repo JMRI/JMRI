@@ -282,6 +282,10 @@ public class ConditionalEditBase {
                 nameBox = new JmriBeanComboBox(
                         InstanceManager.getDefault(EntryExitPairs.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                 break;
+            case Conditional.ITEM_TYPE_OTHER:   // 14
+                nameBox = new JmriBeanComboBox(
+                        InstanceManager.getDefault(jmri.RouteManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                break;
             default:
                 return null;             // Skip any other items.
         }
@@ -1230,7 +1234,7 @@ public class ConditionalEditBase {
             if (name.length() > 0) {
                 nb = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(name);
                 if (nb != null) {
-                    return nb.getSystemName();
+                    return name;
                 }
             }
         }

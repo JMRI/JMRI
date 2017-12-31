@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
+import jmri.AddressedProgrammer;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Attribute;
 import org.jdom2.Content;
@@ -256,15 +257,21 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 ? e.getAttribute("opsOnly").getValue().equals("yes") : false;
 
         // Ops mode doesn't allow reads, therefore we must disable read buttons
-        if (_cvModel.getProgrammer() != null
-                && !_cvModel.getProgrammer().getCanRead()) {
-            // can't read, so adjust
-            if (readOnly) {
+        if (_cvModel.getProgrammer() != null) {
+            if (opsOnly && !AddressedProgrammer.class.isAssignableFrom(_cvModel.getProgrammer().getClass())) {
+                // opsOnly but not Ops mode, so adjust
                 readOnly = false;
+                writeOnly = false;
                 infoOnly = true;
-            }
-            if (!infoOnly) {
-                writeOnly = true;
+            } else if (!_cvModel.getProgrammer().getCanRead()) {
+                // can't read, so adjust
+                if (readOnly) {
+                    readOnly = false;
+                    infoOnly = true;
+                }
+                if (!infoOnly) {
+                    writeOnly = true;
+                }
             }
         }
 

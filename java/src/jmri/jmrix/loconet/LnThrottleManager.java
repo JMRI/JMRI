@@ -393,10 +393,10 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * @since 4.9.2
      */
     @Override
-    public void stealThrottleRequest(DccLocoAddress address, ThrottleListener l, boolean steal){
+    public void stealThrottleRequest(LocoAddress address, ThrottleListener l, boolean steal){
        log.debug("stealThrottleRequest() invoked for address {}, with steal boolean = {}",address.getNumber(),steal);
        if (steal == false) {
-            failedThrottleRequest(address, "User chose not to 'steal' the throttle.");
+            failedThrottleRequest((DccLocoAddress) address, "User chose not to 'steal' the throttle.");
        } else {
            log.warn("user agreed to steal address {}, but no code is in-place to handle the 'steal' (yet)",address.getNumber());
         commitToAcquireThrottle(slotForAddress.get(address.getNumber()));
