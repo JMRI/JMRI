@@ -1,24 +1,26 @@
 package jmri;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the BeanSetting class
  *
  * @author	Bob Jacobsen Copyright (C) 2006
  */
-public class BeanSettingTest extends TestCase {
+public class BeanSettingTest {
 
+    @Test
     public void testCreate() {
         new BeanSetting(null, 0);
     }
 
+    @Test
     public void testCheckSensor() throws JmriException {
-        SensorManager sm = new jmri.managers.InternalSensorManager();
+        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
         Sensor s = sm.provideSensor("IS12");
 
         BeanSetting b = new BeanSetting(s, Sensor.ACTIVE);
@@ -28,8 +30,9 @@ public class BeanSettingTest extends TestCase {
         Assert.assertTrue("check of ACTIVE sensor", b.check());
     }
 
+    @Test
     public void testCheckTurnout() throws JmriException {
-        TurnoutManager sm = new jmri.managers.InternalTurnoutManager();
+        TurnoutManager sm = InstanceManager.getDefault(TurnoutManager.class);
         Turnout s = sm.provideTurnout("IT12");
 
         BeanSetting b = new BeanSetting(s, Turnout.THROWN);
@@ -39,8 +42,9 @@ public class BeanSettingTest extends TestCase {
         Assert.assertTrue("check of THROWN turnout", b.check());
     }
 
+    @Test
     public void testEquals() {
-        TurnoutManager sm = new jmri.managers.InternalTurnoutManager();
+        TurnoutManager sm = InstanceManager.getDefault(TurnoutManager.class);
         Turnout s1 = sm.provideTurnout("IT12");
         Turnout s2 = sm.provideTurnout("IT14");
 
@@ -95,32 +99,15 @@ public class BeanSettingTest extends TestCase {
         Assert.assertTrue(b6.equals(b6));
     }
 
-    // from here down is testing infrastructure
-    public BeanSettingTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {BeanSettingTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(BeanSettingTest.class);
-        return suite;
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }
