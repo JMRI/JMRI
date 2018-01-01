@@ -28,6 +28,15 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
     private LogixTableAction _logixTable;
 
     public void testRouteElementComparator() {
+        LRouteTableAction.RouteElement e1 = new LRouteTableAction.RouteElement("ISname1", "B", 0);
+        LRouteTableAction.RouteElement e2 = new LRouteTableAction.RouteElement("ISname2", "B", 0);
+        
+        LRouteTableAction.RouteElementComparator rc = new LRouteTableAction.RouteElementComparator();
+        
+        assertTrue("e1 = e1", rc.compare(e1, e1) == 0);
+        assertTrue("e2 > e1", rc.compare(e2, e1) > 0);
+        assertTrue("e1 < e2", rc.compare(e1, e2) < 0);
+        
     }
     
     public void testCreate() {
