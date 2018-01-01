@@ -5,6 +5,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -32,8 +35,8 @@ import org.slf4j.LoggerFactory;
 public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     /**
-     * BDL16x Configuration Tool
-     * 
+     * BDL16x Configuration Tool.
+     * <p>
      * Use this constructor when the Unit Address is unknown.
      */
     public BDL16Panel() {
@@ -47,23 +50,22 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     JComboBox<String> comboBox[];
     
     /**
-     * BDL16x Programming tool
-     * 
+     * BDL16x Programming tool.
+     * <p>
      * Use this constructor when the Unit Address is known.
      * 
-     * @param boardNum - integer for the initial Unit Address
-     * @param readOnInit - True to trigger automatic read of the board
+     * @param boardNum    integer for the initial Unit Address
+     * @param readOnInit  True to trigger automatic read of the board
      */
     public BDL16Panel(int boardNum, boolean readOnInit) {
         super(boardNum, readOnInit);
         setTypeWord(0x71);  // configure BDL16x message type
                 origAccessBoardNum = boardNum;
         boardNumsEntryValue.add(boardNum);
-
     }
 
     /**
-     * Gets the URL for the HTML help for this tool
+     * Get the URL for the HTML help for this tool.
      * 
      * @return URL
      */
@@ -73,7 +75,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     /**
-     * Get the name of the tool for use in the title of the window
+     * Get the name of the tool for use in the title of the window.
      * 
      * @return String containing text for the title of the window
      */
@@ -83,9 +85,9 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     /**
-     * Copy from the GUI to the opsw array.
+     * Copy from the GUI to the OpSw array.
      * <p>
-     * Used before write operations start
+     * Used before write operations start.
      */
     @Override
     protected void copyToOpsw() {
@@ -119,7 +121,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     /**
-     * Update the GUI elements
+     * Update the GUI elements.
      */
     @Override
     protected void updateDisplay() {
@@ -153,10 +155,10 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     /**
-     * Determine the next OpSw to be accessed
+     * Determine the next OpSw to be accessed.
      * 
-     * @param state - most-recently accessed OpSw
-     * @return  - next OpSw to be accessed
+     * @param state  most-recently accessed OpSw
+     * @return       next OpSw to be accessed
      */
     @Override
     protected int nextState(int state) {
@@ -210,9 +212,9 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
     
     /**
-     * Initialize LocoNet connection for use by the tool
+     * Initialize LocoNet connection for use by the tool.
      * 
-     * @param memo - LocoNet Connection
+     * @param memo  the LocoNet Connection
      */
     @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
@@ -227,7 +229,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
     
     /**
-     * Initialize the GUI elements for use by the tool
+     * Initialize the GUI elements for use by the tool.
      */
     @Override
     public void initComponents() {
@@ -278,10 +280,10 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         
         JPanel allBoardsOptions = new JPanel();
         allBoardsOptions.setLayout(new BoxLayout(allBoardsOptions, BoxLayout.Y_AXIS));
-        javax.swing.border.TitledBorder allBoardsTitleBorder;
-        javax.swing.border.Border blackline;
-        blackline = javax.swing.BorderFactory.createLineBorder(java.awt.Color.black);
-        allBoardsTitleBorder = javax.swing.BorderFactory.createTitledBorder(blackline,
+        TitledBorder allBoardsTitleBorder;
+        Border blackline;
+        blackline = BorderFactory.createLineBorder(java.awt.Color.black);
+        allBoardsTitleBorder = BorderFactory.createTitledBorder(blackline,
                 Bundle.getMessage("TitledBorderLabelAllBoards"));
         allBoardsOptions.setBorder(allBoardsTitleBorder);
         
@@ -329,8 +331,8 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         
         JPanel bdl162Bdl168BoardsOptions = new JPanel();
         bdl162Bdl168BoardsOptions.setLayout(new BoxLayout(bdl162Bdl168BoardsOptions, BoxLayout.Y_AXIS));
-        javax.swing.border.TitledBorder bdl162Bdl168BoardsTitleBorder;
-        bdl162Bdl168BoardsTitleBorder = javax.swing.BorderFactory.createTitledBorder(blackline,
+        TitledBorder bdl162Bdl168BoardsTitleBorder;
+        bdl162Bdl168BoardsTitleBorder = BorderFactory.createTitledBorder(blackline,
                 Bundle.getMessage("TitledBorderLabelBdl162Bdl168Boards"));
         bdl162Bdl168BoardsOptions.setBorder(bdl162Bdl168BoardsTitleBorder);
         
@@ -366,8 +368,8 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
         JPanel bdl168SpecificOptions = new JPanel();
         bdl168SpecificOptions.setLayout(new BoxLayout(bdl168SpecificOptions, BoxLayout.Y_AXIS));
-        javax.swing.border.TitledBorder bdl168SpecificTitleBorder;
-        bdl168SpecificTitleBorder = javax.swing.BorderFactory.createTitledBorder(blackline,
+        TitledBorder bdl168SpecificTitleBorder;
+        bdl168SpecificTitleBorder = BorderFactory.createTitledBorder(blackline,
                 Bundle.getMessage("TitledBorderLabelBdl168Only"));
         bdl168SpecificOptions.setBorder(bdl168SpecificTitleBorder);
 
@@ -387,14 +389,14 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     /**
-     * Create a JComboBox with two possible values
-     * 
+     * Create a JComboBox with two possible values.
+     * <p>
      * For a given OpSw number, create a JComboBox containing the appropriate 
      * strings from the bundle.  Sets the initial value based on the OpSw's 
      * reported default value.
      * 
-     * @param n OpSw number
-     * @param jp the JPanel into which the JComboBox is placed
+     * @param n   OpSw number
+     * @param jp  the JPanel into which the JComboBox is placed
      */
     private void getComboBox(int n, JPanel jp) {
         String number = Integer.toString(n);
@@ -410,8 +412,8 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     /**
-     * Create a JComboBox with four possible values
-     * 
+     * Create a JComboBox with four possible values.
+     * <p>
      * For two given OpSw numbers, create a JComboBox containing the appropriate 
      * strings from the bundle.  Sets the initial value based on the OpSws' 
      * reported default value.
@@ -442,10 +444,10 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     /**
      * Determine the JComboBox index which corresponds to the default value 
-     * for a given OpSw
+     * for a given OpSw.
      * 
-     * @param n OpSw number
-     * @return JComboBox index
+     * @param   n OpSw number
+     * @return  JComboBox index of default choice
      */
     private int getIndexForDefault(int n) {
         switch (n) {
@@ -461,18 +463,18 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     /**
      * Already know of this board (unit address)?
      * 
-     * @param id - Unit address to be checked against list
-     * @return true if the unit address is already in the list
+     * @param id  Unit address to be checked against list
+     * @return    True if the unit address is already in the list
      */
     private boolean alreadyKnowThisBoardId(Integer id) {
         return (boardNumsEntryValue.contains(id));
     }
 
     /**
-     * Add a board to the list of unit addresses if not already there
+     * Add a board to the list of unit addresses if not already there.
      * 
-     * @param id a unit address to be added
-     * @return index into the boardNumsEntryValue list of entry for unit address "id"
+     * @param   id a unit address to be added
+     * @return  index into the boardNumsEntryValue list of entry for unit address "id"
      */
     private Integer addBoardIdToList(Integer id) {
         boardNumsEntryValue.add(boardNumsEntryValue.size(), id);
@@ -489,17 +491,16 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     /**
-     * Select a device based on an index into the list of unit addresses
+     * Select a device based on an index into the list of unit addresses.
      * 
      * @param index into the list of addresses
-     * 
      */
     private void selectBoardIdByIndex(Integer index) {
         addressComboBox.setSelectedIndex(index);
     }
 
     /**
-     * Read all OpSws, based on the selected unit address in the JComboBox
+     * Read all OpSws, based on the selected unit address in the JComboBox.
      */
     @Override
     public void readAll() {
@@ -515,7 +516,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     /**
-     * Interpret incoming LocoNet messages
+     * Interpret incoming LocoNet messages.
      * 
      * @param m LocoNet message to be interpreted
      */
