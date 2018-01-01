@@ -143,16 +143,8 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
         }
         Image scaledImage = baseColon.getImage().getScaledInstance(iconWidth / 2, iconHeight, Image.SCALE_SMOOTH);
         colonIcon.setImage(scaledImage);
-
-//      Ugly hack to force frame to redo the layout.
-//      Without this the image is scaled but the label size and position doesn't change.
-//      doLayout() doesn't work either
-        this.setVisible(false);
-        this.remove(b);
-        if (clock.getShowStopButton()) {
-            this.getContentPane().add(b); // pick up clock prefs choice
-        }
-        this.setVisible(true);
+        // update the images on screen
+        this.getContentPane().revalidate();
         return;
     }
 

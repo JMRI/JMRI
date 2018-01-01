@@ -39,6 +39,7 @@ public class JMRIdemoTest {
 
 
     @Test
+    @Ignore("ignore test for for app we no longer ship")
     public void testLaunchLocoNet() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
                 
@@ -67,6 +68,7 @@ public class JMRIdemoTest {
     }
 
     @Test
+    @Ignore("ignore test for for app we no longer ship")
     public void testLaunchEasyDcc() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -93,6 +95,7 @@ public class JMRIdemoTest {
     }
 
     @Test
+    @Ignore("ignore test for for app we no longer ship")
     public void testLaunchTmcc() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -118,6 +121,7 @@ public class JMRIdemoTest {
     }
 
     @Test
+    @Ignore("ignore test for for app we no longer ship")
     public void testLaunchInitLoop() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
                 
