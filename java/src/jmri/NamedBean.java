@@ -385,7 +385,7 @@ public interface NamedBean extends Comparable<NamedBean> {
 
     /**
      * Compare the suffix of this NamedBean's name with the 
-     * suffix of the argument NamedBean's name for the {@link compareSystemName} operation.
+     * suffix of the argument NamedBean's name for the {@link #compareTo} operation.
      * This is intended to be a system-specific comparison that understands the various formats, etc.
      *
      * @param suffix1 The suffix for the 1st bean in the comparison
