@@ -38,10 +38,14 @@ public class AlphanumComparatorTest extends TestCase {
 
         Assert.assertEquals("00 == 0", 0, ac.compare("00", "0") );
         Assert.assertEquals("0 == 00", 0, ac.compare("0", "00") );
+        
+        Assert.assertEquals("0 < A", -1, ac.compare("0", "A") );
+        Assert.assertEquals("A < 0", +1, ac.compare("A", "0") );
+
     }
     
     public void testAlphanumCompare1LTA() {
-        Assert.assertEquals("1 < A", ac.compare("1", "A") < 0, true);
+        Assert.assertTrue("1 < A", ac.compare("1", "A") < 0);
     }
 
     public void testAlphanumCompareEquals() {
@@ -100,51 +104,51 @@ public class AlphanumComparatorTest extends TestCase {
     }
 
     public void testAlphanumCompareALTB() {
-        Assert.assertEquals("A < B", ac.compare("A", "B") < 0, true);
+        Assert.assertTrue("A < B", ac.compare("A", "B") < 0);
     }
 
     public void testAlphanumCompareBGTA() {
-        Assert.assertEquals("B > A", ac.compare("B", "A") > 0, true);
+        Assert.assertTrue("B > A", ac.compare("B", "A") > 0);
     }
 
     public void testAlphanumCompareA1LTB1() {
-        Assert.assertEquals("A1 < B1", ac.compare("A1", "B1") < 0, true);
+        Assert.assertTrue("A1 < B1", ac.compare("A1", "B1") < 0);
     }
 
     public void testAlphanumCompareB1GTA1() {
-        Assert.assertEquals("A1 > B1", ac.compare("B1", "A1") > 0, true);
+        Assert.assertTrue("A1 > B1", ac.compare("B1", "A1") > 0);
     }
 
     public void testAlphanumCompareA10LTB1() {
-        Assert.assertEquals("A10 < B1", ac.compare("A10", "B1") < 0, true);
+        Assert.assertTrue("A10 < B1", ac.compare("A10", "B1") < 0);
     }
 
     public void testAlphanumCompareB1GTA10() {
-        Assert.assertEquals("B1 > A10", ac.compare("B1", "A10") > 0, true);
+        Assert.assertTrue("B1 > A10", ac.compare("B1", "A10") > 0);
     }
 
     public void testAlphanumCompareA2LTA10() {
-        Assert.assertEquals("A2 < A10", ac.compare("A2", "A10") < 0, true);
+        Assert.assertTrue("A2 < A10", ac.compare("A2", "A10") < 0);
     }
 
     public void testAlphanumCompareA10GTA2() {
-        Assert.assertEquals("A10 > A2", ac.compare("A10", "A2") > 0, true);
+        Assert.assertTrue("A10 > A2", ac.compare("A10", "A2") > 0);
     }
 
     public void testAlphanumCompareA10LTA010() { // skip leading zero
-        Assert.assertEquals("A10 == A010", ac.compare("A10", "A010") == 0, true);
+        Assert.assertTrue("A10 == A010", ac.compare("A10", "A010") == 0);
     }
 
     public void testAlphanumCompareA010GTA10() { // skip leading zero
-        Assert.assertEquals("A010 == A10", ac.compare("A010", "A10") == 0, true);
+        Assert.assertTrue("A010 == A10", ac.compare("A010", "A10") == 0);
     }
 
     public void testAlphanumCompareA10Z2LTA10Z10() {
-        Assert.assertEquals("A10Z2 < A10Z10", ac.compare("A10Z2", "A10Z10") < 0, true);
+        Assert.assertTrue("A10Z2 < A10Z10", ac.compare("A10Z2", "A10Z10") < 0);
     }
 
     public void testAlphanumCompareA10Z10GTA10Z2() {
-        Assert.assertEquals("A10Z10 > A10Z2", ac.compare("A10Z10", "A10Z2") > 0, true);
+        Assert.assertTrue("A10Z10 > A10Z2", ac.compare("A10Z10", "A10Z2") > 0);
     }
 
     public void testMixedComparison() {     
