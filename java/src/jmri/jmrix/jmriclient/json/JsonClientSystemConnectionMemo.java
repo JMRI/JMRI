@@ -33,7 +33,7 @@ public class JsonClientSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     public JsonClientSystemConnectionMemo(JsonClientTrafficController trafficController) {
-        super("json", "JSON Client");
+        super("J2", "JSON Client");
         this.trafficController = trafficController;
         this.componentFactory = new JsonClientComponentFactory(this);
         this.register(); // registers general type
