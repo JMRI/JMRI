@@ -46,8 +46,8 @@ import jmri.jmrit.beantable.beanedit.BlockEditAction;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
-import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.ButtonSwatchColorChooserPanel;
+import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -324,11 +324,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * to upper case if it is a system name.
      *
      * @param sensorName to check
-     * @param openFrame     determines the <code>Frame</code> in which the
-     *                      dialog is displayed; if <code>null</code>, or if the
-     *                      <code>parentComponent</code> has no
-     *                      <code>Frame</code>, a default <code>Frame</code> is
-     *                      used
+     * @param openFrame  determines the <code>Frame</code> in which the dialog
+     *                   is displayed; if <code>null</code>, or if the
+     *                   <code>parentComponent</code> has no <code>Frame</code>,
+     *                   a default <code>Frame</code> is used
      * @return the validated sensor
      */
     public Sensor validateSensor(String sensorName, Component openFrame) {
@@ -1105,19 +1104,19 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
             trackColorChooser = new JColorChooser(blockTrackColor);
             trackColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel trackColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            AbstractColorChooserPanel trackColorPanels[] = {new ButtonSwatchColorChooserPanel()};
             trackColorChooser.setChooserPanels(trackColorPanels);
             layout.addItem(new BeanEditItem(trackColorChooser, Bundle.getMessage("TrackColor"), Bundle.getMessage("TrackColorHint")));
 
             occupiedColorChooser = new JColorChooser(blockOccupiedColor);
             occupiedColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel occupiedColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            AbstractColorChooserPanel occupiedColorPanels[] = {new ButtonSwatchColorChooserPanel()};
             occupiedColorChooser.setChooserPanels(occupiedColorPanels);
             layout.addItem(new BeanEditItem(occupiedColorChooser, Bundle.getMessage("OccupiedColor"), Bundle.getMessage("OccupiedColorHint")));
 
             extraColorChooser = new JColorChooser(blockExtraColor);
             extraColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel extraColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            AbstractColorChooserPanel extraColorPanels[] = {new ButtonSwatchColorChooserPanel()};
             extraColorChooser.setChooserPanels(extraColorPanels);
             layout.addItem(new BeanEditItem(extraColorChooser, Bundle.getMessage("ExtraColor"), Bundle.getMessage("ExtraColorHint")));
 
@@ -2464,13 +2463,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     block.getDisplayName(), srcBlock.getDisplayName(), dstBlock.getDisplayName());
         }
         connection = new ConnectivityUtil(panel);
-        List<LayoutTurnout> stod;
-        List<Integer> stodSet;
+        List<LayoutTrackExpectedState<LayoutTurnout>> stod;
 
         try {
             MDC.put("loggingDisabled", connection.getClass().getCanonicalName());
             stod = connection.getTurnoutList(block, srcBlock, dstBlock, true);
-            stodSet = connection.getTurnoutSettingList();
             MDC.remove("loggingDisabled");
         } catch (java.lang.NullPointerException ex) {
             MDC.remove("loggingDisabled");
@@ -2487,13 +2484,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         if (!connection.isTurnoutConnectivityComplete()) {
             layoutConnectivity = false;
         }
-        List<LayoutTurnout> tmpdtos;
-        List<Integer> tmpdtosSet;
+        List<LayoutTrackExpectedState<LayoutTurnout>> tmpdtos;
 
         try {
             MDC.put("loggingDisabled", connection.getClass().getName());
             tmpdtos = connection.getTurnoutList(block, dstBlock, srcBlock, true);
-            tmpdtosSet = connection.getTurnoutSettingList();
             MDC.remove("loggingDisabled");
         } catch (java.lang.NullPointerException ex) {
             MDC.remove("loggingDisabled");
@@ -2511,49 +2506,39 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             layoutConnectivity = false;
         }
 
-        if ((stod.size() == tmpdtos.size()) && (stodSet.size() == tmpdtosSet.size())) {
+        if (stod.size() == tmpdtos.size()) {
             //Need to reorder the tmplist (dst-src) to be the same order as src-dst
-            List<LayoutTurnout> dtos = new ArrayList<>();
+            List<LayoutTrackExpectedState<LayoutTurnout>> dtos = new ArrayList<>();
             for (int i = tmpdtos.size(); i > 0; i--) {
                 dtos.add(tmpdtos.get(i - 1));
             }
 
             //check to make sure that we pass through the same turnouts
             if (enableAddRouteLogging) {
-                log.info("From " + this.getDisplayName()
-                        + " destination size " + dtos.size()
-                        + " v source size " + stod.size());
-                log.info("From " + this.getDisplayName()
-                        + " destination setting size " + tmpdtosSet.size()
-                        + " v source setting size " + stodSet.size());
+                log.info("From {} destination size {} v source size {}", this.getDisplayName(), dtos.size(), stod.size());
             }
 
             for (int i = 0; i < dtos.size(); i++) {
                 if (dtos.get(i) != stod.get(i)) {
                     if (enableAddRouteLogging) {
-                        log.info(dtos.get(i) + " != " + stod.get(i) + ": will quit");
+                        log.info("{} != {}: will quit", dtos.get(i), stod.get(i));
                     }
                     return;
                 }
             }
-            List<Integer> dtosSet = new ArrayList<>();
-            for (int i = tmpdtosSet.size(); i > 0; i--) {
-                //Need to reorder the tmplist (dst-src) to be the same order as src-dst
-                dtosSet.add(tmpdtosSet.get(i - 1));
-            }
 
-            for (int i = 0; i < dtosSet.size(); i++) {
-                int x = stodSet.get(i);
-                int y = dtosSet.get(i);
+            for (int i = 0; i < dtos.size(); i++) {
+                int x = stod.get(i).getExpectedState();
+                int y = dtos.get(i).getExpectedState();
 
                 if (x != y) {
                     if (enableAddRouteLogging) {
-                        log.info(block.getDisplayName() + " not on setting equal will quit " + x + ", " + y);
+                        log.info("{} not on setting equal will quit {}, {}", block.getDisplayName(), x, y);
                     }
                     return;
                 } else if (x == Turnout.UNKNOWN) {
                     if (enableAddRouteLogging) {
-                        log.info(block.getDisplayName() + " turnout state returned as UNKNOWN");
+                        log.info("{} turnout state returned as UNKNOWN", block.getDisplayName());
                     }
                     return;
                 }
@@ -2561,7 +2546,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             Set<LayoutTurnout> set = new HashSet<>();
 
             for (int i = 0; i < stod.size(); i++) {
-                boolean val = set.add(stod.get(i));
+                boolean val = set.add(stod.get(i).getObject());
                 if (val == false) {
                     //Duplicate found. will not add
                     return;
@@ -2572,24 +2557,21 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             //        //Further checks might be required.
             //    }
             //}
-            addThroughPathPostChecks(srcBlock, dstBlock, stod, stodSet);
+            addThroughPathPostChecks(srcBlock, dstBlock, stod);
         } else {
             //We know that a path that contains a double cross-over, is not reported correctly,
             //therefore we shall do some additional checks and add it.
             if (enableAddRouteLogging) {
                 log.info("sizes are not the same therefore, we will do some further checks");
             }
-            List<LayoutTurnout> maxt;
-            List<Integer> maxtSet;
+            List<LayoutTrackExpectedState<LayoutTurnout>> maxt;
             if (stod.size() >= tmpdtos.size()) {
                 maxt = stod;
-                maxtSet = stodSet;
             } else {
                 maxt = tmpdtos;
-                maxtSet = tmpdtosSet;
             }
 
-            Set<LayoutTurnout> set = new HashSet<>(maxt);
+            Set<LayoutTrackExpectedState<LayoutTurnout>> set = new HashSet<>(maxt);
 
             if (set.size() == maxt.size()) {
                 if (enableAddRouteLogging) {
@@ -2597,14 +2579,14 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 }
                 boolean allowAddition = false;
                 for (int i = 0; i < maxt.size(); i++) {
-                    LayoutTurnout turn = maxt.get(i);
+                    LayoutTurnout turn = maxt.get(i).getObject();
                     if (turn.type == LayoutTurnout.DOUBLE_XOVER) {
                         allowAddition = true;
                         //The double crossover gets reported in the opposite setting.
-                        if (maxtSet.get(i) == 2) {
-                            maxtSet.set(i, 4);
+                        if (maxt.get(i).getExpectedState() == 2) {
+                            maxt.get(i).setExpectedState(4);
                         } else {
-                            maxtSet.set(i, 2);
+                            maxt.get(i).setExpectedState(2);
                         }
                     }
                 }
@@ -2613,7 +2595,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     if (enableAddRouteLogging) {
                         log.info("addition allowed");
                     }
-                    addThroughPathPostChecks(srcBlock, dstBlock, maxt, maxtSet);
+                    addThroughPathPostChecks(srcBlock, dstBlock, maxt);
                 } else if (enableAddRouteLogging) {
                     log.info("No double cross-over so not a valid path");
                 }
@@ -2622,7 +2604,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }   // addThroughPath
 
     private void addThroughPathPostChecks(Block srcBlock,
-            Block dstBlock, List<LayoutTurnout> stod, List<Integer> stodSet) {
+            Block dstBlock, List<LayoutTrackExpectedState<LayoutTurnout>> stod) {
         List<Path> paths = block.getPaths();
         Path srcPath = null;
 
@@ -2639,7 +2621,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             }
         }
         ThroughPaths path = new ThroughPaths(srcBlock, srcPath, dstBlock, dstPath);
-        path.setTurnoutList(stod, stodSet);
+        path.setTurnoutList(stod);
 
         if (enableAddRouteLogging) {
             log.info("From " + this.getDisplayName() + " added Throughpath "
@@ -4443,7 +4425,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             return pathActive;
         }
 
-        void setTurnoutList(List<LayoutTurnout> turnouts, List<Integer> turnoutSettings) {
+        void setTurnoutList(List<LayoutTrackExpectedState<LayoutTurnout>> turnouts) {
             if (!_turnouts.isEmpty()) {
                 Set<Turnout> en = _turnouts.keySet();
                 for (Turnout listTurnout : en) {
@@ -4460,9 +4442,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             }
             _turnouts = new HashMap<>(turnouts.size());
             for (int i = 0; i < turnouts.size(); i++) {
-                if (turnouts.get(i) instanceof LayoutSlip) {
-                    int slipState = turnoutSettings.get(i);
-                    LayoutSlip ls = (LayoutSlip) turnouts.get(i);
+                if (turnouts.get(i).getObject() instanceof LayoutSlip) {
+                    int slipState = turnouts.get(i).getExpectedState();
+                    LayoutSlip ls = (LayoutSlip) turnouts.get(i).getObject();
                     int taState = ls.getTurnoutState(slipState);
                     _turnouts.put(ls.getTurnout(), taState);
                     ls.getTurnout().addPropertyChangeListener(this, ls.getTurnoutName(), "Layout Block Routing");
@@ -4471,12 +4453,12 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     _turnouts.put(ls.getTurnoutB(), tbState);
                     ls.getTurnoutB().addPropertyChangeListener(this, ls.getTurnoutBName(), "Layout Block Routing");
                 } else {
-                    if (turnouts.get(i).getTurnout() != null) {
-                        _turnouts.put(turnouts.get(i).getTurnout(), turnoutSettings.get(i));
-                        turnouts.get(i).getTurnout().addPropertyChangeListener(this, turnouts.get(i).getTurnoutName(),
-                                "Layout Block Routing");
+                    LayoutTurnout lt = turnouts.get(i).getObject();
+                    if (lt.getTurnout() != null) {
+                        _turnouts.put(lt.getTurnout(), turnouts.get(i).getExpectedState());
+                        lt.getTurnout().addPropertyChangeListener(this, lt.getTurnoutName(), "Layout Block Routing");
                     } else {
-                        log.error(turnouts.get(i) + " has no physical turnout allocated");
+                        log.error("{} has no physical turnout allocated", lt);
                     }
                 }
             }

@@ -973,15 +973,6 @@
         </antcall>
     </target>
 
-    <target name="jmridemo"
-            depends="debug"
-            description="build and run build and run JmriDemo app">
-        <antcall target="-run-jmri-application">
-            <param name="application.classname" value="apps.JmriDemo.JMRIdemo"/>
-            <param name="antargline" value="JmriDemoConfig2.xml"/>
-        </antcall>
-    </target>
-
     <target name="SampleMinimalProgram"
             depends="debug"
             description="build and run build and run SampleMinimalProgram class">
