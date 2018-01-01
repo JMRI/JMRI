@@ -2483,7 +2483,7 @@ public class LRouteTableAction extends AbstractTableAction {
      * Base class for all the output (ConditionalAction) and input
      * (ConditionalVariable) elements
      */
-    class RouteElement {
+    static class RouteElement {
 
         String _sysName;
         String _userName;
