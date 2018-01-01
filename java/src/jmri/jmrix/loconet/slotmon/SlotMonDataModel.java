@@ -1,21 +1,17 @@
 package jmri.jmrix.loconet.slotmon;
 
-import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumnModel;
 import jmri.Throttle;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSlot;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.SlotListener;
 import jmri.util.StringUtil;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,9 +45,9 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 
     static public final int NUMCOLUMN = 19;
 
-    jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo;
+    private final transient LocoNetSystemConnectionMemo memo;
 
-    SlotMonDataModel(int row, int column, jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo) {
+    SlotMonDataModel(int row, int column, LocoNetSystemConnectionMemo memo) {
         this.memo = memo;
 
         // connect to SlotManager for updates
@@ -68,32 +64,12 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
      * <p>
      * This should probably use a local cache instead of counting/searching each
      * time.
+     *
+     * @return the number of rows
      */
     @Override
     public int getRowCount() {
-        if (_allSlots) {
-            // will show the entire set, so don't bother counting
-            if (_systemSlots) {
-                return 128;
-            } else {
-                return 120;  // skip 0, and 120 through 127
-            }
-        }
-        int n = 0;
-        int nMin = 1;
-        int nMax = 120;
-        if (_systemSlots) {
-            nMin = 0;
-            nMax = 128;
-        }
-        for (int i = nMin; i < nMax; i++) {
-            LocoNetSlot s = memo.getSlotManager().slot(i);
-            if (s.slotStatus() != LnConstants.LOCO_FREE
-                    || i == 0 || i >= 120) {
-                n++;    // always show system slots if requested
-            }
-        }
-        return n;
+        return 128;
     }
 
     @Override
@@ -181,8 +157,6 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
-            case ESTOPCOLUMN:
-            case DISPCOLUMN:
             case F0COLUMN:
             case F1COLUMN:
             case F2COLUMN:
@@ -193,32 +167,29 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F7COLUMN:
             case F8COLUMN:
                 // system slots to be marked Read only
-                return (Integer.valueOf(slotNum(row)) >= 120) ? false : true;
+                return (row < 120);
             default:
                 return false;
         }
     }
 
-    static final Boolean True = Boolean.valueOf(true);
-    static final Boolean False = Boolean.valueOf(false);
-
     @Override
     public Object getValueAt(int row, int col) {
-        LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
+        LocoNetSlot s = memo.getSlotManager().slot(row);
         String t;
         if (s == null) {
-            log.error("slot pointer was null for slot row: " + row + " col: " + col);
+            log.error("slot pointer was null for slot row: {} col: {}", row, col);
             return null;
         }
 
         switch (col) {
             case SLOTCOLUMN:  // slot number
-                return Integer.valueOf(slotNum(row));
-            case ESTOPCOLUMN:  //
+                return row;
+            case ESTOPCOLUMN:
                 return Bundle.getMessage("ButtonEstop"); // will be name of button in default GUI
-            case ADDRCOLUMN:  //
-                return Integer.valueOf(s.locoAddr());
-            case SPDCOLUMN:  //
+            case ADDRCOLUMN:
+                return s.locoAddr();
+            case SPDCOLUMN:
                 switch (s.consistStatus()) {
                     case LnConstants.CONSIST_TOP:
                     case LnConstants.CONSIST_NO:
@@ -234,7 +205,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                     default:
                         return Bundle.getMessage("StateError");
                 }
-            case TYPECOLUMN:  //
+            case TYPECOLUMN:
                 switch (s.decoderType()) {
                     case LnConstants.DEC_MODE_128A:
                         return "128 step adv";
@@ -251,7 +222,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                     default:
                         return Bundle.getMessage("StateUnknown");
                 }
-            case STATCOLUMN:  //
+            case STATCOLUMN:
                 switch (s.slotStatus()) {
                     case LnConstants.LOCO_IN_USE:
                         return Bundle.getMessage("StateInUse");
@@ -264,7 +235,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                     default:
                         return Bundle.getMessage("StateError");
                 }
-            case CONSCOLUMN:  //
+            case CONSCOLUMN:
                 switch (s.consistStatus()) {
                     case LnConstants.CONSIST_MID:
                         t = Bundle.getMessage("SlotConsistMidX", s.speed());
@@ -279,41 +250,39 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                     default:
                         return Bundle.getMessage("StateError");
                 }
-            case DISPCOLUMN:  //
+            case DISPCOLUMN:
                 return Bundle.getMessage("ButtonRelease"); // will be name of button in default GUI
-            case DIRCOLUMN:  //
-                return (s.isForward() ? Bundle.getMessage("DirColForward") : Bundle.getMessage("DirColReverse"));
-            case F0COLUMN:  //
-                return (s.isF0() ? True : False);
-            case F1COLUMN:  //
-                return (s.isF1() ? True : False);
-            case F2COLUMN:  //
-                return (s.isF2() ? True : False);
-            case F3COLUMN:  //
-                return (s.isF3() ? True : False);
-            case F4COLUMN:  //
-                return (s.isF4() ? True : False);
-            case F5COLUMN:  //
-                return (s.isF5() ? True : False);
-            case F6COLUMN:  //
-                return (s.isF6() ? True : False);
-            case F7COLUMN:  //
-                return (s.isF7() ? True : False);
-            case F8COLUMN:  //
-                return (s.isF8() ? True : False);
+            case DIRCOLUMN:
+                return s.isForward() ? Bundle.getMessage("DirColForward") : Bundle.getMessage("DirColReverse");
+            case F0COLUMN:
+                return s.isF0();
+            case F1COLUMN:
+                return s.isF1();
+            case F2COLUMN:
+                return s.isF2();
+            case F3COLUMN:
+                return s.isF3();
+            case F4COLUMN:
+                return s.isF4();
+            case F5COLUMN:
+                return s.isF5();
+            case F6COLUMN:
+                return s.isF6();
+            case F7COLUMN:
+                return s.isF7();
+            case F8COLUMN:
+                return s.isF8();
             case THROTCOLUMN:
                 int upper = (s.id() >> 7) & 0x7F;
                 int lower = s.id() & 0x7F;
                 return StringUtil.twoHexFromInt(upper) + " " + StringUtil.twoHexFromInt(lower);
 
             default:
-                log.error("internal state inconsistent with table requst for " + row + " " + col);
+                log.error("internal state inconsistent with table requst for {} {}", row, col);
                 return null;
         }
-    }         
-   
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
-                                justification="better to keep cases in column order rather than to combine")
+    }
+
     public int getPreferredWidth(int col) {
         switch (col) {
             case SLOTCOLUMN:
@@ -323,11 +292,10 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case ADDRCOLUMN:
                 return new JTextField(5).getPreferredSize().width;
             case SPDCOLUMN:
+            case STATCOLUMN:
                 return new JTextField(6).getPreferredSize().width;
             case TYPECOLUMN:
                 return new JTextField(12).getPreferredSize().width;
-            case STATCOLUMN:
-                return new JTextField(6).getPreferredSize().width;
             case CONSCOLUMN:
                 return new JTextField(4).getPreferredSize().width;
             case DIRCOLUMN:
@@ -353,153 +321,24 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-        int status = 0;
+        int status;
+        LocoNetMessage msg;
+        LocoNetSlot s = memo.getSlotManager().slot(row);
+        if (s == null) {
+            log.error("slot pointer was null for slot row: {} col: {}", row, col);
+            return;
+        }
 
-        if (col == ESTOPCOLUMN) {
-            log.debug("Start estop in slot " + row);
-            // check for in use
-            LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
-            if (s == null) {
-                log.error("slot pointer was null for slot row: " + row + " col: " + col);
-                return;
-            }
-            if ((s.consistStatus() == LnConstants.CONSIST_SUB)
-                    || (s.consistStatus() == LnConstants.CONSIST_MID)) {
-                Object[] options = {Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")};
-                int result
-                        = JOptionPane.showOptionDialog(null,
-                                Bundle.getMessage("SlotEstopWarning"),
-                                Bundle.getMessage("WarningTitle"),
-                                JOptionPane.DEFAULT_OPTION,
-                                JOptionPane.WARNING_MESSAGE,
-                                null, options, options[1]);
-                if (result == 1) {
-                    return;
-                }
-            }
-            LocoNetMessage msg = new LocoNetMessage(4);
-            msg.setOpCode(LnConstants.OPC_LOCO_SPD);
-            msg.setElement(1, s.getSlot());
-            msg.setElement(2, 1);       // 1 here is estop
-            memo.getLnTrafficController().sendLocoNetMessage(msg);
-            fireTableRowsUpdated(row, row);
-        } else if ((col == F0COLUMN)
-                || (col == F1COLUMN)
-                || (col == F2COLUMN)
-                || (col == F3COLUMN)
-                || (col == F4COLUMN)) {
-            log.debug("F0-F4 change requested " + row);
-            LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
-            if (s == null) {
-                log.error("slot pointer was null for slot row: " + row + " col: " + col);
-                return;
-            }
-            boolean tempF0 = (col == F0COLUMN) ? !s.isF0() : s.isF0();
-            boolean tempF1 = (col == F1COLUMN) ? !s.isF1() : s.isF1();
-            boolean tempF2 = (col == F2COLUMN) ? !s.isF2() : s.isF2();
-            boolean tempF3 = (col == F3COLUMN) ? !s.isF3() : s.isF3();
-            boolean tempF4 = (col == F4COLUMN) ? !s.isF4() : s.isF4();
-
-            int new_dirf = ((s.isForward() ? 0 : LnConstants.DIRF_DIR)
-                    | (tempF0 ? LnConstants.DIRF_F0 : 0)
-                    | (tempF1 ? LnConstants.DIRF_F1 : 0)
-                    | (tempF2 ? LnConstants.DIRF_F2 : 0)
-                    | (tempF3 ? LnConstants.DIRF_F3 : 0)
-                    | (tempF4 ? LnConstants.DIRF_F4 : 0));
-
-            // set status to 'In Use' if other
-            status = s.slotStatus();
-            if (status != LnConstants.LOCO_IN_USE) {
-                memo.getLnTrafficController().sendLocoNetMessage(
-                        s.writeStatus(LnConstants.LOCO_IN_USE
-                        ));
-            }
-            LocoNetMessage msg = new LocoNetMessage(4);
-            msg.setOpCode(LnConstants.OPC_LOCO_DIRF);
-            msg.setElement(1, s.getSlot());
-            msg.setElement(2, new_dirf);       // 1 here is estop
-            memo.getLnTrafficController().sendLocoNetMessage(msg);
-            // Delay here allows command station time to xmit on the rails.
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException ex) {
-                log.error(null, ex);
-            }
-            // reset status to original value if not previously 'in use'
-            if (status != LnConstants.LOCO_IN_USE) {
-                memo.getLnTrafficController().sendLocoNetMessage(
-                        s.writeStatus(status));
-            }
-            fireTableRowsUpdated(row, row);
-        } else if ((col == F5COLUMN)
-                || (col == F6COLUMN)
-                || (col == F7COLUMN)
-                || (col == F8COLUMN)) {
-            log.debug("F5-F8 change requested " + row);
-            LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
-            if (s == null) {
-                log.error("slot pointer was null for slot row: " + row + " col: " + col);
-                return;
-            }
-
-            boolean tempF5 = (col == F5COLUMN) ? !s.isF5() : s.isF5();
-            boolean tempF6 = (col == F6COLUMN) ? !s.isF6() : s.isF6();
-            boolean tempF7 = (col == F7COLUMN) ? !s.isF7() : s.isF7();
-            boolean tempF8 = (col == F8COLUMN) ? !s.isF8() : s.isF8();
-
-            int new_snd = ((tempF8 ? LnConstants.SND_F8 : 0)
-                    | (tempF7 ? LnConstants.SND_F7 : 0)
-                    | (tempF6 ? LnConstants.SND_F6 : 0)
-                    | (tempF5 ? LnConstants.SND_F5 : 0));
-
-            // set status to 'In Use' if other
-            status = s.slotStatus();
-            if (status != LnConstants.LOCO_IN_USE) {
-                memo.getLnTrafficController().sendLocoNetMessage(
-                        s.writeStatus(LnConstants.LOCO_IN_USE
-                        ));
-            }
-
-            LocoNetMessage msg = new LocoNetMessage(4);
-            msg.setOpCode(LnConstants.OPC_LOCO_SND);
-            msg.setElement(1, s.getSlot());
-            msg.setElement(2, new_snd);       // 1 here is estop
-            memo.getLnTrafficController().sendLocoNetMessage(msg);
-            // Delay here allows command station time to xmit on the rails.
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException ex) {
-                log.error(null, ex);
-            }
-
-            // reset status to original value if not previously 'in use'
-            if (status != LnConstants.LOCO_IN_USE) {
-                memo.getLnTrafficController().sendLocoNetMessage(
-                        s.writeStatus(status));
-            }
-
-            fireTableRowsUpdated(row, row);
-        } else if (col == DISPCOLUMN) {
-            log.debug("Start freeing slot " + row);
-            // check for in use
-            LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
-            if (s == null) {
-                log.error("slot pointer was null for slot row: " + row + " col: " + col);
-                return;
-            }
-            if (s.slotStatus() != LnConstants.LOCO_FREE) {
-                if (s.consistStatus() != LnConstants.CONSIST_NO) {
-                    // Freeing a member takes it out of the consist
-                    // entirely (i.e., while the slot is LOCO_FREE, it
-                    // still reads the former consist information, but
-                    // the next time that loco is selected, it comes
-                    // back as CONSIST_NO).  Freeing the CONSIST_TOP
-                    // will kill the entire consist.
-                    Object[] options = {"OK", "Cancel"};
+        switch (col) {
+            case ESTOPCOLUMN:
+                log.debug("Start estop in slot {}", row);
+                if ((s.consistStatus() == LnConstants.CONSIST_SUB)
+                        || (s.consistStatus() == LnConstants.CONSIST_MID)) {
+                    Object[] options = {Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")};
                     int result
                             = JOptionPane.showOptionDialog(null,
-                                    "Freeing a consist member will destroy the consist.\n\nAre you sure you want to do that?",
-                                    "Warning",
+                                    Bundle.getMessage("SlotEstopWarning"),
+                                    Bundle.getMessage("WarningTitle"),
                                     JOptionPane.DEFAULT_OPTION,
                                     JOptionPane.WARNING_MESSAGE,
                                     null, options, options[1]);
@@ -507,24 +346,150 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                         return;
                     }
                 }
-                // send status to free
-                memo.getLnTrafficController().sendLocoNetMessage(
-                        s.writeStatus(LnConstants.LOCO_FREE
-                        ));
-            } else {
-                log.debug("Slot not in use");
-            }
-            fireTableRowsUpdated(row, row);
+                msg = new LocoNetMessage(4);
+                msg.setOpCode(LnConstants.OPC_LOCO_SPD);
+                msg.setElement(1, s.getSlot());
+                msg.setElement(2, 1);       // 1 here is estop
+                memo.getLnTrafficController().sendLocoNetMessage(msg);
+                fireTableRowsUpdated(row, row);
+                break;
+            case F0COLUMN:
+            case F1COLUMN:
+            case F2COLUMN:
+            case F3COLUMN:
+            case F4COLUMN:
+                log.debug("F0-F4 change requested {}", row);
+                s = memo.getSlotManager().slot(row);
+                if (s == null) {
+                    log.error("slot pointer was null for slot row: {} col: {}", row, col);
+                    return;
+                }
+                boolean tempF0 = (col == F0COLUMN) ? !s.isF0() : s.isF0();
+                boolean tempF1 = (col == F1COLUMN) ? !s.isF1() : s.isF1();
+                boolean tempF2 = (col == F2COLUMN) ? !s.isF2() : s.isF2();
+                boolean tempF3 = (col == F3COLUMN) ? !s.isF3() : s.isF3();
+                boolean tempF4 = (col == F4COLUMN) ? !s.isF4() : s.isF4();
+
+                int new_dirf = ((s.isForward() ? 0 : LnConstants.DIRF_DIR)
+                        | (tempF0 ? LnConstants.DIRF_F0 : 0)
+                        | (tempF1 ? LnConstants.DIRF_F1 : 0)
+                        | (tempF2 ? LnConstants.DIRF_F2 : 0)
+                        | (tempF3 ? LnConstants.DIRF_F3 : 0)
+                        | (tempF4 ? LnConstants.DIRF_F4 : 0));
+
+                // set status to 'In Use' if other
+                status = s.slotStatus();
+                if (status != LnConstants.LOCO_IN_USE) {
+                    memo.getLnTrafficController().sendLocoNetMessage(
+                            s.writeStatus(LnConstants.LOCO_IN_USE
+                            ));
+                }
+                msg = new LocoNetMessage(4);
+                msg.setOpCode(LnConstants.OPC_LOCO_DIRF);
+                msg.setElement(1, s.getSlot());
+                msg.setElement(2, new_dirf);       // 1 here is estop
+                memo.getLnTrafficController().sendLocoNetMessage(msg);
+                // Delay here allows command station time to xmit on the rails.
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                    log.error(null, ex);
+                }
+                // reset status to original value if not previously 'in use'
+                if (status != LnConstants.LOCO_IN_USE) {
+                    memo.getLnTrafficController().sendLocoNetMessage(
+                            s.writeStatus(status));
+                }
+                fireTableRowsUpdated(row, row);
+                break;
+            case F5COLUMN:
+            case F6COLUMN:
+            case F7COLUMN:
+            case F8COLUMN:
+                log.debug("F5-F8 change requested {}", row);
+
+                boolean tempF5 = (col == F5COLUMN) ? !s.isF5() : s.isF5();
+                boolean tempF6 = (col == F6COLUMN) ? !s.isF6() : s.isF6();
+                boolean tempF7 = (col == F7COLUMN) ? !s.isF7() : s.isF7();
+                boolean tempF8 = (col == F8COLUMN) ? !s.isF8() : s.isF8();
+
+                int new_snd = ((tempF8 ? LnConstants.SND_F8 : 0)
+                        | (tempF7 ? LnConstants.SND_F7 : 0)
+                        | (tempF6 ? LnConstants.SND_F6 : 0)
+                        | (tempF5 ? LnConstants.SND_F5 : 0));
+
+                // set status to 'In Use' if other
+                status = s.slotStatus();
+                if (status != LnConstants.LOCO_IN_USE) {
+                    memo.getLnTrafficController().sendLocoNetMessage(
+                            s.writeStatus(LnConstants.LOCO_IN_USE
+                            ));
+                }
+
+                msg = new LocoNetMessage(4);
+                msg.setOpCode(LnConstants.OPC_LOCO_SND);
+                msg.setElement(1, s.getSlot());
+                msg.setElement(2, new_snd);       // 1 here is estop
+                memo.getLnTrafficController().sendLocoNetMessage(msg);
+                // Delay here allows command station time to xmit on the rails.
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                    log.error(null, ex);
+                }
+
+                // reset status to original value if not previously 'in use'
+                if (status != LnConstants.LOCO_IN_USE) {
+                    memo.getLnTrafficController().sendLocoNetMessage(
+                            s.writeStatus(status));
+                }
+
+                fireTableRowsUpdated(row, row);
+                break;
+            case DISPCOLUMN:
+                log.debug("Start freeing slot {}", row);
+                if (s.slotStatus() != LnConstants.LOCO_FREE) {
+                    if (s.consistStatus() != LnConstants.CONSIST_NO) {
+                        // Freeing a member takes it out of the consist
+                        // entirely (i.e., while the slot is LOCO_FREE, it
+                        // still reads the former consist information, but
+                        // the next time that loco is selected, it comes
+                        // back as CONSIST_NO).  Freeing the CONSIST_TOP
+                        // will kill the entire consist.
+                        Object[] options = {"OK", "Cancel"};
+                        int result
+                                = JOptionPane.showOptionDialog(null,
+                                        "Freeing a consist member will destroy the consist.\n\nAre you sure you want to do that?",
+                                        "Warning",
+                                        JOptionPane.DEFAULT_OPTION,
+                                        JOptionPane.WARNING_MESSAGE,
+                                        null, options, options[1]);
+                        if (result == 1) {
+                            return;
+                        }
+                    }
+                    // send status to free
+                    memo.getLnTrafficController().sendLocoNetMessage(
+                            s.writeStatus(LnConstants.LOCO_FREE
+                            ));
+                } else {
+                    log.debug("Slot not in use");
+                }
+                fireTableRowsUpdated(row, row);
+                break;
+            default:
+                // nothing to do if column not recognized
+                break;
         }
     }
 
-    //Added by Jeffrey Machacek, date: 2013 
+    //Added by Jeffrey Machacek, date: 2013
     //changed 8/22/2013
     public void clearAllSlots() {
         int count = getRowCount();
 
         for (int row = 0; row < (count - 1); row++) {
-            LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
+            LocoNetSlot s = memo.getSlotManager().slot(row);
 
             if ((s.slotStatus() != LnConstants.LOCO_IN_USE) && (s.consistStatus() == LnConstants.CONSIST_NO)) {
                 log.debug("Freeing {} from slot {}, old status: {}", s.locoAddr(), s.getSlot(), s.slotStatus());
@@ -542,57 +507,9 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
      * optional, in that other table formats can use this table model. But we
      * put it here to help keep it consistent.
      *
+     * @param slotTable the table to configure
      */
     public void configureTable(JTable slotTable) {
-        // allow reordering of the columns
-        slotTable.getTableHeader().setReorderingAllowed(true);
-
-        // shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        slotTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-        // resize columns as requested
-        for (int i = 0; i < slotTable.getColumnCount(); i++) {
-            int width = getPreferredWidth(i);
-            slotTable.getColumnModel().getColumn(i).setPreferredWidth(width);
-        }
-        slotTable.sizeColumnsToFit(-1);
-
-        // install a button renderer & editor in the "DISP" column for freeing a slot
-        setColumnToHoldButton(slotTable, SlotMonDataModel.DISPCOLUMN);
-
-        // install a button renderer & editor in the "ESTOP" column for stopping a loco
-        setColumnToHoldEStopButton(slotTable, SlotMonDataModel.ESTOPCOLUMN);
-    }
-
-    void setColumnToHoldButton(JTable slotTable, int column) {
-        TableColumnModel tcm = slotTable.getColumnModel();
-        // install the button renderers & editors in this column
-        ButtonRenderer buttonRenderer = new ButtonRenderer();
-        tcm.getColumn(column).setCellRenderer(buttonRenderer);
-        TableCellEditor buttonEditor = new ButtonEditor(new JButton());
-        tcm.getColumn(column).setCellEditor(buttonEditor);
-        // ensure the table rows, columns have enough room for buttons
-        slotTable.setRowHeight(new JButton("  " + getValueAt(1, column)).getPreferredSize().height);
-        slotTable.getColumnModel().getColumn(column)
-                .setPreferredWidth(new JButton("  " + getValueAt(1, column)).getPreferredSize().width);
-    }
-
-    void setColumnToHoldEStopButton(JTable slotTable, int column) {
-        TableColumnModel tcm = slotTable.getColumnModel();
-        // install the button renderers & editors in this column
-        ButtonRenderer buttonRenderer = new ButtonRenderer();
-        tcm.getColumn(column).setCellRenderer(buttonRenderer);
-        TableCellEditor buttonEditor = new ButtonEditor(new JButton()) {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                stopCellEditing();
-            }
-        };
-        tcm.getColumn(column).setCellEditor(buttonEditor);
-        // ensure the table rows, columns have enough room for buttons
-        slotTable.setRowHeight(new JButton("  " + getValueAt(1, column)).getPreferredSize().height);
-        slotTable.getColumnModel().getColumn(column)
-                .setPreferredWidth(new JButton("  " + getValueAt(1, column)).getPreferredSize().width);
     }
 
     // methods to communicate with SlotManager
@@ -608,24 +525,16 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 memo.getSlotManager().update();
             }
         } else {
-            slotNum = -1;
+            slotNum = -1; // all rows
         }
 
-        if (_allSlots) {        // this will be row until we show only active slots
-            slotNum = s.getSlot();  // and we are displaying the System slots otherwise
-            if (!_systemSlots) // we need to subtract 1 as slot 0 will not be displayed
-            {
-                slotNum--;
-            }
-        }
         // notify the JTable object that a row has changed; do that in the Swing thread!
-        Runnable r = new Notify(slotNum, this);   // -1 in first arg means all
-        javax.swing.SwingUtilities.invokeLater(r);
+        javax.swing.SwingUtilities.invokeLater(new Notify(slotNum, this));
     }
 
-    static class Notify implements Runnable {
+    static private class Notify implements Runnable {
 
-        private int _row;
+        private final int _row;
         javax.swing.table.AbstractTableModel _model;
 
         public Notify(int row, javax.swing.table.AbstractTableModel model) {
@@ -644,48 +553,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    // methods for control of "all slots" vs "only active slots"
-    private boolean _allSlots = true;
-
-    public void showAllSlots(boolean val) {
-        _allSlots = val;
-    }
-
-    // methods for control of display of system slots
-    private boolean _systemSlots = true;
-
-    public void showSystemSlots(boolean val) {
-        _systemSlots = val;
-    }
-
-    /**
-     * Returns slot number for a specific row.
-     * <P>
-     * This should probably use a local cache instead of counting/searching each
-     * time.
-     *
-     * @param row Row number in the displayed table
-     */
-    protected int slotNum(int row) {
-        int slotNum;
-        int n = -1;   // need to find a used slot to have the 0th one!
-        int nMin = 1;
-        int nMax = 120;
-        if (_systemSlots) {
-            nMin = 0;
-            nMax = 128;
-        }
-        for (slotNum = nMin; slotNum < nMax; slotNum++) {
-            LocoNetSlot s = memo.getSlotManager().slot(slotNum);
-            if (_allSlots || s.slotStatus() != LnConstants.LOCO_FREE
-                    || slotNum == 0 || slotNum >= 120) {
-                n++;    // always show system slots if requested
-            }
-            if (n == row) {
-                break;
-            }
-        }
-        return slotNum;
+    protected LocoNetSlot getSlot(int row) {
+        return memo.getSlotManager().slot(row);
     }
 
     /**
@@ -711,8 +580,6 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 
     public void dispose() {
         memo.getSlotManager().removeSlotListener(this);
-        // table.removeAllElements();
-        // table = null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(SlotMonDataModel.class);

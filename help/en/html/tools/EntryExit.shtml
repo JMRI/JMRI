@@ -28,100 +28,269 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Entry/Exit (NX) Routing Documentation</h1>
+    <h1>JMRI: Entry/Exit (NX) Routing Documentation</h1>
 
-      <h2>What is NX Routing?</h2>
+    <p>Note:  References to <strong>turnout</strong> include all types including
+    slips and cross-overs.</p>
+    
+    <h2>Overview</h2>
+    <p>NX Routing builds a dynamic valid path between two
+    locations on a Layout Editor panel.
+    The path can traverse a number of Turnouts and different
+    Blocks. The Entry and Exit locations on the Layout Editor are
+    defined by the placement of Sensors at various Block
+    boundaries. When two Sensors are activated and a clear and
+    valid route is found between them, then the Turnouts in the
+    route will automatically be set accordingly.  If the path between
+    the two sensors was created with the type set to <strong>Full Interlock</strong>,
+    then the blocks will be reserved and will display a different track
+    color.</p>
 
-      <p>NX Routing builds a dynamic valid path between two
-      locations on a Layout Editor such as Sensors or Signal Masts.
-      The path can traverse a number of Turnouts and different
-      Blocks. The Entry and Exit locations on the Layout Editor are
-      defined by the placement of Sensors at various Block
-      boundaries. When two Sensors are activated and a clear and
-      valid route is found between them, then the Turnouts in the
-      route will automatically be set accordingly.</p>
+    <p>If there are multiple paths between two locations, then
+    the system will use the path with the smallest cost or number
+    of different Blocks. If one of the Blocks on the path is
+    already occupied and there is a valid alternative path, then
+    this will be taken.</p>
 
-      <p>If there are multiple paths between two locations, then
-      the system will use the path with the smallest cost or number
-      of different Blocks. If one on the Blocks on the path is
-      already occupied and there is a valid alternative path, then
-      this will be taken.</p>
+    <p>The two sensors are referred to as a <strong>NX Pair</strong>.  <em>It is
+    also possible to define a NX pair where the destination sensor is on another
+    panel. This requires that the panels are linked using <strong>Edge
+    Connectors</strong>.</em><span class="since">since 4.11.1</span></p>
 
-      <h2>How to setup for Entry Exit Routing</h2>First you will
-      need to have built a representation of your layout in the
-      <a href=
-      "../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout
-      Editor</a>. <a href="Blocks.shtml">Blocks</a> will also need
-      be defined so that the <a href="Sensors.shtml">Sensors</a>
-      can be assigned to their boundaries.
+    <h3>Entry/Exit Types</h3>
+    <p>There are three different types of Entry/Exit pairs that can be
+    configured.</p>
 
-      <h3>Placing Sensors</h3>Sensors can be placed by Turnouts,
-      Layout Editor anchor points and level crossings, but only
-      where there is a boundary between two different layout
-      Blocks.<br>
-      To add a Sensor, right click on the Turnout, level crossing
-      or anchor point on your <a href=
-      "../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout
-      Editor</a> Panel. If a Block boundary exists you will be
-      given the option to "Set Sensors..." You can also set Sensors
-      at End Bumpers or Buffer Stops.
+    <ul>
+      <li>Turnout Only</li>
+      <li>Turnout and SignalMast Logic</li>
+      <li>Full Interlocking</li>
+    </ul>
 
-      <p>You will then be presented with a new pane that allows you
-      to select the Sensor that will be used to either "protect" or
-      be on the boundary between Block x &amp; y.<br>
-      The boundary or the protecting Block selected will define
-      which direction the Sensors is active in.</p>
+    <p><strong>Turnout Only</strong> &mdash; With turnout only, the NX Pair
+    will only set the turnouts to the correct state for that route. If a
+    block is already showing as occupied or reserved within that route, and an
+    alternative one is available then the alternative route will be set,
+    otherwise the route will not be set.</p>
 
-      <p><img src="images/EntryExitExample1.png" height="560"
-      width="628"></p>
+    <p><strong>Turnout and SignalMast Logic</strong> &mdash; This option
+    includes what is covered by "Turnout Only" and will also generate the
+    SignalMast Logic for that route. The logic will include the turnout states
+    and the blocks that are within that route. For this to work, SignalMasts
+    must also be placed at the same boundary points as the sensors working
+    in the same direction.  The SignalMast logic will remain for the duration
+    of the operating session, however it is not saved and will be re-created
+    the next time the panel is opened.  When there is no route set then the
+    SignalMast will be placed in a held state.</p>
 
-      <p>In the example above, the Sensor protecting Block 51 will
-      be used for routes going in an easterly direction. While the
-      Sensor protecting Block 50 will be used for routes going in a
-      westerly direction.</p>
+    <p><strong>Full Interlocking</strong> &mdash; This covers the same things
+    as the other two items above. In addition, it will also "reserve" or
+    "lock out" each block in the route so that no other conflicting route can
+    be set. If block occupancy detection is being used the route will
+    automatically be cleared down. If no block occupancy is being used, then it
+    is possible to manually clear the route down by selecting the corresponding
+    NX pair, it will leave the last block as showing occupied, as if the train
+    had travelled the route and was now sitting waiting at the next signal.
+    If there are no Signalmasts configured between the NX pair, then the route
+    will still be set and reserved, but no SignalMast Logic will be generated.
+    The route will stay active, until either a train has passed through the
+    blocks and they have returned to an unoccupied state, the route has been
+    manually cleared down, or has been cancelled.  The normal mode for related
+    signal mast is to keep the mast in a Held state until a route has been
+    create, at which time the hold is released.  When the first block becomes
+    occupied the hold is set.  If all of the NX Pairs related to a source mast
+    are disabled, then the hold for the mast is released, effectively setting
+    the mast to ABS mode.</p>
 
-      <p>For Turnouts and crossings, you can only add sensors for
-      the boundary going <em>into</em> the Turnout or crossing. It
-      is not possible to add a Sensor for the boundary going
-      <em>out</em> from the Turnout or crossing.<br>
-      E.g., if Block A is the section of track attached to the
-      Turnout and the Turnout is in Block B, you can only add a
-      Sensor that faces into Block A that protects Block B; you
-      cannot add a Sensor that faces into Block B to protect Block
-      A.</p>
+    <p>For the second and third types, if the signal mast logic has already been 
+    created, temporary signal mast logic will not be created.</p>
 
-      <p><img src="images/EntryExitLayout.png" height="232" width=
-      "725"></p>
+    <h2>How to setup for Entry Exit Routing</h2>
 
-      <h3>Generating Entry Exit Pairs</h3>You can have the system
-      automatically generate the basic Entry Exit pairs and it is
-      also possible to manually add pairs in the system, along with
-      adding in what would normally be considered invalid
-      configuration. To access the Entry Exit panel, select "Entry
-      Exit" from the Tools menu of the Layout Editor. You will then
-      be presented with the following screen...
+    Entry/Exit routing requires a representation of the layout using Layout
+    Editor panels.  If desired, multiple panels can be used that are linked 
+    using Edge Connectors.  For Layout Editor details, see
+    <a href=
+    "../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout
+    Editor</a>. <a href="Blocks.shtml">Blocks</a> will also need
+    be assigned to all of the controlled track components so that
+    <a href="Sensors.shtml">Sensors</a> can be assigned to their boundaries.
 
-      <p><img src="images/AddEntryExit.png" height="302" width=
-      "633"></p>
+    <h3>Placing Sensors</h3>
 
-      <p>If you press the <b>Auto Generate Entry Exit Pairs</b>
-      this will then discover all the valid Entry Exit pairs on the
-      layout.<br>
-      Using the combo boxes it is also possible to manually add in
-      additional Entry Exit pairs.<br>
-      In all cases when the <b>From</b> Sensor is set active
-      followed by the <b>To</b> Sensor, the route will be set
-      between those two points and the two Sensors will return back
-      to the "Inactive" state. If the <b>Both Way</b> option is
-      ticked, then it is possible to activate the route in either
-      direction, i.e. you can select the <b>To</b> Sensor prior to
-      the <b>From</b> Sensor and the same route will be set.</p>
+    <p>Sensors, along with Signal Heads and Signal Masts, can be added at
+    <strong>Block Boundaries</strong>.  Block boundaries can occur at
+    <strong>Anchor Points</strong>, <strong>Turnouts</strong>,
+    <strong>Level Crossings</strong> and <strong>End Bumpers</strong>.
+    <strong>Edge Connectors</strong> are always a block boundary.</p>
 
-      <h2>Limitation</h2>The Entry Exit currently only deals with
-      the throwing of Turnouts between two Routes. It does not yet
-      provide a method to set-up <a href=
-      "signaling/SignalMastLogic.shtml">Signal Mast Logic</a> or
-      full interlocking. <!--#include virtual="/Footer" -->
+    <p>Sensors are assigned to anchor points, end bumpers and edge connectors by 
+    right clicking on the small colored box that represents the point and
+    select <strong>Set Sensors...</strong>.  For end bumpers there will be
+    one choice to make.  Anchor points and edge connectors provide two choices.</p>
+
+    <div style="margin-left: 1em">
+    <img src="images/EntryExitAnchorPoint.png"
+    height="512" width="364" alt="Anchor Point Dialog">
+    </div>
+
+    <p>Select the sensor name that will be used to protect the desired block.
+    This becomes the entry sensor for routes starting with this block.  It is
+    also the exit sensor for routes that end before the desired block.
+    <strong>Note:</strong> For edge connectors, ignore the East and West
+    reference.  Use only the <strong>Protecting Block</strong> to determine
+    which section to use.</p>
+
+    <p>Turnouts and level crossings can have from zero to four block boundaries.
+    If a track segment is attached to a turnout leg and it has been assigned
+    the same block as the turnout itself, there will not be a boundary for that
+    leg.</p>
+
+    <p>Right click the turnout or level crossing and select <strong>Set
+    Sensors...</strong>.</p>  
+
+    <div style="margin-left: 1em">
+    <img src="images/EntryExitTurnout.png"
+    height="518" width="484" alt="Turnout Dialog">
+    </div>
+
+    <p>For turnouts and level crossings, the <strong>protected block</strong>
+    is the block that contains the turnout or level crossing.  In other words,
+    sensors are for the boundary going <em>into</em> the turnout or crossing.
+    It is not possible to add a sensor for the boundary going <em>out</em> from
+    the turnout or crossing.</p>
+
+    <h3>Generating Entry Exit Pairs</h3>
+    <p>To access the <strong>Add Entry Exit Points</strong> panel, select
+    <strong>Entry Exit</strong> from the Layout Editor <strong>Tools</strong>
+    menu. Entry/Exit pairs can be created manually using the <strong>Add Pair
+    </strong> button or automatically using the <strong>Auto Generate Entry-Exit
+    Pairs</strong> button.</p>
+
+    <div style="margin-left: 1em">
+    <p><img src="../../package/jmri/jmrit/entryexit/images/EntryExitWindow.png"
+    height="517" width="896" alt="NX Window"><br>For additional details, see
+    <a href="../../package/jmri/jmrit/entryexit/EntryExitFrame.shtml">
+    Entry/Exit (NX) Tools</a></p>
+    </div>
+
+    <p><strong>Auto Generate Entry-Exit Pairs</strong>
+    will discover all the valid Entry Exit pairs on the layout. Using the
+    combo boxes it is also possible to manually add in additional Entry Exit
+    pairs. In all cases when the <strong>From</strong> Sensor is set active
+    followed by the <b>To</b> Sensor, the route will be set between those two
+    points and the two Sensors will return back to the "Inactive" state. If the
+    <strong>Both Way</strong> option is ticked, then it is possible to activate
+    the route in either direction, i.e. you can select the <b>To</b> Sensor
+    prior to the <b>From</b> Sensor and the same route will be set.</p>
+
+    <p>With the manual method, it is possible to create invalid pairs.  Invalid
+    pairs will never be used.</p>
+
+    <h2>Usage</h2>
+
+    <p>Once the NX pairs have been created, a route can be set by selecting the
+    <strong>Entry Sensor</strong>, followed by the <strong>Exit Sensor</strong>.
+    When the entry sensor is selected, it will start flashing.  When the exit
+    sensor is selected, a route will be created if possible.  If a valid route
+    cannot be found, both sensors will return to the inactive state. If a valid
+    path can be found then the route will be set up according to how it has
+    been configured. If full interlock has been configured for the NX Pair the
+    sensors will remain active and the track components will be assigned the
+    alternate track color.</p>
+
+    <p>Whenever an entry NX Sensor has been selected, it will flash until a
+    valid exit sensor has been selected. If no valid exit sensor has been
+    selected it will automatically be cancelled after 30 seconds.</p>
+
+    <h3>Extended Route Setting</h3>
+
+    <p>Normally with the NX interlock, a route will be up by selecting the
+    Entry/Exit sensors along a path, so for example to get from location A to
+    D, A-B would be selected, then B-C and finally C-D. However the system will
+    allow the full route to be setup by selecting A and D. The system will then
+    go through and find the best valid path and setup each individual interlock
+    along the path. <strong>Note: </strong>If an extended route is cleared or
+    cancelled, each segment will need to be cancelled or cleared by responding
+    to the prompt.</p>
+
+    <h3>Route Stacking &mdash; Following</h3>
+
+    <p>When using the Full Interlock NX type, re-selecting the entry and exit
+    sensors will display a dialog box:</p>
+
+    <div style="margin-left: 1em">
+    <img src="images/EntryExitStack1.png"
+    height="135" width="380" alt="Re-select Dialog">
+    </div>
+
+    <p>Options:</p>
+    <ul>
+      <li>Cancel &mdash; Cancel the route.  The block reservations will be 
+      released and the track components will be set to the normal color.</li>
+      <li>Clear Down &mdash; The blocks will be set occupied and then not
+      occupied in sequence as if a train had traversed the route.  The last
+      block in the route will be left occupied.   This can be useful for
+      simulating train movements or for layouts that don't have block detection.</li>
+      <li>Stack &mdash; Add this route to a pending list of routes.  When the
+      first route completes, the next route in the list will be activated.  For 
+      multiple segment routes, one segment at a time will be added to the list.</li>
+      <li>Exit &mdash; Do nothing, close the window.</li>
+    </ul>
+    <p>Pending route list:</p>
+
+    <div style="margin-left: 1em">
+    <img src="images/EntryExitStackList.png"
+    height="225" width="269" alt="Re-select Dialog">
+    </div>
+
+    <p>Once a route has been stacked, the system will check every 10 seconds to
+    see if it is possible to set-up that NX route. Multiple NX routes can be
+    stacked, and they are checked in the order which they were stacked. A NX
+    route cannot be stacked more than once. To cancel a NX route, select it in
+    the table and click on the "Cancel" button at the bottom.</p>
+
+    <h3>Route Stacking &mdash; Conflicts</h3>
+    
+    <p>If a selected route tries to cross a block that is occupied or reserved 
+    and there is not an alternate route available, the <strong>Route Not Clear
+    </strong> dialog box is displayed.</p>
+
+    <div style="margin-left: 1em">
+    <img src="images/EntryExitStack2.png"
+    height="167" width="485" alt="Conflict Dialog">
+    </div>
+
+    <p>If Yes is selected, the route will be added to the pending route list.
+    <strong>Note:</strong> Only single segment conflicts are detected.  A
+    multiple segment route request will not provide the stack option.  
+
+    <h3>Logix Support</h3>
+
+    There are two conditional variables and three actions that can be used in
+    Logix Conditionals.
+    <ul>
+      <li>Variables
+        <ul>
+          <li>NX Pair Active &mdash; Check if a segment for the selected NX Pair
+          is Active.</li>
+          <li>NX Pair Inactive &mdash; Check if a segment for the selected NX Pair
+          is Inactive.</li>
+        </ul>
+      </li>
+      <li>Actions<span class="since">since 4.11.1</span>
+        <ul>
+          <li>Set NX Pair Enabled &mdash; Enable a NX Pair.  When enabled, it can
+          used to create a route.</li>
+          <li>Set NX Pair Disabled &mdash; Disable a NX Pair.  This will prevent
+          the use of the pair to create a route.</li>
+          <li>Set NX Pair Segment Active / Inactive &mdash; If the route is not
+          active, create the route, otherwise clear down, cancel or stack the
+          route depending on the default actions or user response.</li>
+        </ul>
+      </li>
+    </ul>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

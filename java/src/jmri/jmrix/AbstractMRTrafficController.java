@@ -1037,7 +1037,7 @@ abstract public class AbstractMRTrafficController {
                             xmtRunnable.notify();
                         }
                     } else {
-                        log.error("reply complete in unexpected state: {} was {}", mCurrentState, msg.toString());
+                        unexpectedReplyStateError(mCurrentState,msg.toString());
                     }
                 }
             }
@@ -1049,6 +1049,16 @@ abstract public class AbstractMRTrafficController {
 
             replyInDispatch = false;
         }
+    }
+
+    /*
+     * log an error message for a message received in an unexpected state. 
+     */
+    protected void unexpectedReplyStateError(int State,String msgString) {
+       String[] packages = this.getClass().getName().split("\\.");
+       String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
+                     +(packages.length>=1 ? packages[packages.length-1] :"");
+       log.error("reply complete in unexpected state: {} was {} in class {}", State, msgString,name);
     }
 
     /*

@@ -20,7 +20,7 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
      * Constructor that associates a newly created panel with the given window, showing a name
      *
      * @param s         Human-readable panel name for display by the action
-     * @param wi        Window into which to install the new panel. If you want it to be put into a existing 
+     * @param wi        Window into which to install the new panel. If you want it to be put into a existing
      *                  one, provide a reference. To create a new window
      *                  containing just this pane, use "new jmri.util.swing.sdi.JmriJFrameInterface()"
      * @param paneClass Name of the panel's class, which must be a subclass of JmriPanel. That's not
@@ -37,7 +37,7 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
      *
      * @param s         Human-readable panel name for display by the action
      * @param i         Icon for display by the action
-     * @param wi        Window into which to install the new panel. If you want it to be put into a existing 
+     * @param wi        Window into which to install the new panel. If you want it to be put into a existing
      *                  one, provide a reference. To create a new window
      *                  containing just this pane, use "new jmri.util.swing.sdi.JmriJFrameInterface()"
      * @param paneClass Name of the panel's class, which must be a subclass of JmriPanel. That's not
@@ -65,7 +65,7 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
 
     /**
      * Invoked as part of the action being invoked, e.g. when button pressed
-     * or menu item selected, this runs the panel through the initial part of 
+     * or menu item selected, this runs the panel through the initial part of
      * its life cycle and installs in the given window interface.
      * <p>
      * It different or additional initialization is needed, inherit from this class and
@@ -80,9 +80,8 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
             p.initContext(context);
 
             return p;
-        } catch (Exception ex) {
-            log.warn("could not load pane class: " + paneClass + " due to:" + ex);
-            ex.printStackTrace();
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
+            log.warn("could not load pane class: {}", paneClass, ex);
             return null;
         }
     }

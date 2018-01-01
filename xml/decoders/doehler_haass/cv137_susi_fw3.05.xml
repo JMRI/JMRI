@@ -37,11 +37,13 @@
     <label>Revert SUSI direction</label>
     <label xml:lang="fr">Inverser sens de marche SUSI</label>
     <label xml:lang="de">SUSI-Fahrtrichtung invertieren</label>
+    <label xml:lang="ca">Inverteix sentit SUSI</label>
   </variable>
   <variable item="Deactivate SUSI startup delay" CV="137" mask="XXXXVXXX" tooltip="CV137 bit 3">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Deactivate SUSI startup delay</label>
     <label xml:lang="fr">Désactiver délai de départ SUSI</label>
     <label xml:lang="de">SUSI­Anfahrverzögerung ausschalten</label>
+    <label xml:lang="ca">Desactiva el retard d'arrencada SUSI</label>
   </variable>
 </variables>

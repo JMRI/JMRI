@@ -164,14 +164,14 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /**
      * Provide a manager-agnostic tooltip for the Add new item beantable pane.
+     *
+     * @return the tooltip
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
-        return entryToolTip;
+        return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractReporterManager.class);
 
 }
-

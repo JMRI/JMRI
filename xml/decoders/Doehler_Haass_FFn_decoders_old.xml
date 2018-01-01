@@ -89,42 +89,51 @@
         <label>Output F0F (white) function mapping</label>
         <label xml:lang="it">Uscita F0 in avanti (bianca) mappa funzioni</label>
         <label xml:lang="de">Ausgang F0F (weiss) Funktionszuordnung</label>
+        <label xml:lang="ca">Mapa de funcions de F0 endavant (bianc)</label>
       </variable>
 	  <variable CV="33" mask="XXXVXXXX" item="Function F0F check 1" default="0">
 		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Running only</label>
         <label xml:lang="de">Fahrtabhängig</label>
         <label xml:lang="it">Solo in marcia</label>
+        <label xml:lang="ca">Només en marxa</label>
 		    <tooltip>Output is ON only when the vehicle is running (speed different from 0)</tooltip>
 		    <tooltip xml:lang="it">Uscita in On solo se il veicolo è in marcia (velocità diversa da 0)</tooltip>
-        <tooltip xml:lang="de">Der Ausgang ist nur an, wenn das Fahrzeug fährt (Fahrstufe nicht 0)</tooltip>
+			<tooltip xml:lang="de">Der Ausgang ist nur an, wenn das Fahrzeug fährt (Fahrstufe nicht 0)</tooltip>
+			<tooltip xml:lang="ca">La funció és encesa només quan el vehicle corre</tooltip>
 	  </variable>
 	  <variable CV="33" mask="XXVXXXXX" item="Function F0F check 2" default="1">
 		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 		    <label>Forward only</label>
 		    <label xml:lang="it">Solo in avanti</label>
-        <label xml:lang="de">Richtungsabhängig (vorwärts)</label>
+			<label xml:lang="de">Richtungsabhängig (vorwärts)</label>
+		    <label xml:lang="ca">Només endavant</label>
 		    <tooltip>Output is ON only when the vehicle is running forwards</tooltip>
 		    <tooltip xml:lang="it">Uscita in On solo se il veicolo è in marcia in avanti</tooltip>
-        <tooltip xml:lang="de">Der Ausgang ist nur an, wenn die Fahrtrichtung vorwärts ist</tooltip>			
+			<tooltip xml:lang="de">Der Ausgang ist nur an, wenn die Fahrtrichtung vorwärts ist</tooltip>	
+                        <tooltip xml:lang="ca">Sortida activa només si el vehicle està en marxa endavant</tooltip>
 	  </variable>
 	  <variable CV="33" mask="XVXXXXXX" item="Function F0F check 3" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 		    <label>Reverse</label>
         <label xml:lang="de">Invertiert</label>
         <label xml:lang="it">Invertita</label>
+        <label xml:lang="ca">Invert</label>
 		    <tooltip>Output is ON when the function is OFF (use for reverse)</tooltip>
 		    <tooltip xml:lang="it">Uscita in On quando la funzione è in Off</tooltip>
         <tooltip xml:lang="de">Der Ausgang ist an, wenn die zugeordnete Funktion aus ist (benutzen für rückwärts)</tooltip>
+        <tooltip xml:lang="ca">La sortida està activada quan la funció està apagada</tooltip>
 	  </variable>
 	  <variable CV="33" mask="VXXXXXXX" item="Function F0F check 4" default="0">
 		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 		    <label>Impulse</label>
         <label xml:lang="de">Impuls</label>
         <label xml:lang="it">Impulsiva</label>
+        <label xml:lang="ca">Impuls</label>
 		    <tooltip>Ouptut is ON during ca. 0.5 sec</tooltip>
 		    <tooltip xml:lang="it">Uscita in On per circa 0,5 sec</tooltip>
-        <tooltip xml:lang="de">Abschaltung des Ausgangs nach ca. 0,5 Sekunden</tooltip>
+			<tooltip xml:lang="de">Abschaltung des Ausgangs nach ca. 0,5 Sekunden</tooltip>
+			<tooltip xml:lang="ca">La sortida està activada 0,5 segons</tooltip>
 	  </variable>
      <variable CV="34" mask="XXXXVVVV" item="Function F0R options" default="0" tooltip="Functions F0 to F8 (F9 for SelecTRIX only)">
         <enumVal>
@@ -162,47 +171,57 @@
         <label>Output F0R (yellow) function mapping</label>
         <label xml:lang="it">Uscita F0 (giallo) in retro mappa funzioni</label>
         <label xml:lang="de">Ausgang F0R (gelb) Funktionszuordnung</label>
+        <label xml:lang="ca">Mapejat de funciions F0 Enrere</label>
       </variable>	  
 	  <variable CV="34" mask="XXXVXXXX" item="Function F0R check 1" default="0">
 		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Running only</label>
         <label xml:lang="it">Solo in marcia</label>
         <label xml:lang="de">Fahrtabhängig</label>
+        <label xml:lang="ca">Només amb el vehicle en marxa</label>
 		    <tooltip>Output is ON only when the vehicle is running (speed different from 0)</tooltip>
 		    <tooltip xml:lang="it">Uscita in On solo se il veicolo è in marcia (velocità diversa da 0)</tooltip>
-        <tooltip xml:lang="de">Der Ausgang ist nur an, wenn das Fahrzeug fährt (Fahrstufe nicht 0)</tooltip>
+			<tooltip xml:lang="de">Der Ausgang ist nur an, wenn das Fahrzeug fährt (Fahrstufe nicht 0)</tooltip>
+			<tooltip xml:lang="ca">La funció és on quan el vehicle es mou</tooltip>
 	  </variable>
 	  <variable CV="34" mask="XXVXXXXX" item="Function F0R check 2" default="1">
 		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 		    <label>Forward only</label>
 		    <label xml:lang="it">Solo in avanti</label>
-        <label xml:lang="de">Richtungsabhängig (vorwärts)</label>
+			<label xml:lang="de">Richtungsabhängig (vorwärts)</label>
+			<label xml:lang="ca">Només endavant</label>
 		    <tooltip>Output is ON only when the vehicle is running forwards</tooltip>
 		    <tooltip xml:lang="it">Uscita in On solo se il veicolo è in marcia in avanti</tooltip>
-        <tooltip xml:lang="de">Der Ausgang ist nur an, wenn die Fahrtrichtung vorwärts ist</tooltip>
+		    <tooltip xml:lang="ca">La sortida està engegafda si el vehicle va endavant</tooltip>
+            <tooltip xml:lang="de">Der Ausgang ist nur an, wenn die Fahrtrichtung vorwärts ist</tooltip>
 	  </variable>
 	  <variable CV="34" mask="XVXXXXXX" item="Function F0R check 3" default="1">
 		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 		    <label>Reverse</label>
 		    <label xml:lang="it">Invertita</label>
-        <label xml:lang="de">Invertiert</label>
+			<label xml:lang="de">Invertiert</label>
+			<label xml:lang="ca">Invertida</label>
 		    <tooltip>Output is ON when the function is OFF (use for reverse)</tooltip>
 		    <tooltip xml:lang="it">Uscita in On quando la funzione è in Off</tooltip>
-        <tooltip xml:lang="de">Der Ausgang ist an, wenn die zugeordnete Funktion aus ist (benutzen für rückwärts)</tooltip>
+		    <tooltip xml:lang="ca">La sortida està activada quan la funció està apagada</tooltip>
+			<tooltip xml:lang="de">Der Ausgang ist an, wenn die zugeordnete Funktion aus ist (benutzen für rückwärts)</tooltip>
 	  </variable>
 	  <variable CV="34" mask="VXXXXXXX" item="Function F0R check 4" default="0">
 		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 		    <label>Impulse</label>
 		    <label xml:lang="it">Impulsiva</label>
-        <label xml:lang="de">Impuls</label>
+			<label xml:lang="de">Impuls</label>
+			<label xml:lang="ca">Impuls</label>
 		    <tooltip>Ouptut is ON during ca. 0.5 sec</tooltip>
 		    <tooltip xml:lang="it">Uscita in On per circa 0,5 sec</tooltip>
-        <tooltip xml:lang="de">Abschaltung des Ausgangs nach ca. 0,5 Sekunden</tooltip>
+			<tooltip xml:lang="de">Abschaltung des Ausgangs nach ca. 0,5 Sekunden</tooltip>
+			<tooltip xml:lang="ca">La soprtida està activada durant 0,5 segons</tooltip>
 	  </variable>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">
          <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+         <label xml:lang="ca">Reset de les CV a valors de fàbrica</label>
      </factReset>
     </resets>
   </decoder>
