@@ -731,6 +731,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     TableCellRenderer getRenderer(int row, int column) {
                         TableCellRenderer retval = null;
                         Turnout t = (Turnout) getModel().getValueAt(row, SYSNAMECOL);
+                        java.util.Objects.requireNonNull(t, "SYSNAMECOL column content must be nonnull");
                         if (column == SENSOR1COL) {
                             retval = rendererMapSensor1.get(t);
                         } else if (column == SENSOR2COL) {
@@ -739,12 +740,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                             return null;
                         }
 
-                        if (retval == null) {
-                            if (t == null) {
-                                log.warn("renderer unexpectedly found null turnout in row {}", row);
-                                return null;
-                            }
-                                                        
+                        if (retval == null) {                                                        
                             if (column == SENSOR1COL) {
                                 loadRenderEditMaps(rendererMapSensor1, editorMapSensor1, t, t.getFirstSensor());
                                 retval = rendererMapSensor1.get(t);
@@ -760,6 +756,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     TableCellEditor getEditor(int row, int column) {
                         TableCellEditor retval = null;
                         Turnout t = (Turnout) getModel().getValueAt(row, SYSNAMECOL);
+                        java.util.Objects.requireNonNull(t, "SYSNAMECOL column content must be nonnull");
                         switch (column) {
                             case SENSOR1COL:
                                 retval = editorMapSensor1.get(t);
@@ -771,10 +768,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                                 return null;
                         }
                         if (retval == null) {
-                            if (t == null) {
-                                log.warn("editor unexpectedly found null turnout in row {}", row);
-                                return null;
-                            }
                             if (column == SENSOR1COL) {
                                 loadRenderEditMaps(rendererMapSensor1, editorMapSensor1, t, t.getFirstSensor());
                                 retval = editorMapSensor1.get(t);
