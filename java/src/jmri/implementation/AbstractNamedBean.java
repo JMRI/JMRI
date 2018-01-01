@@ -202,6 +202,13 @@ public abstract class AbstractNamedBean implements NamedBean {
         return mSystemName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
+    public String toString() { return getSystemName(); }
+
+
     @Override
     public String getUserName() {
         return mUserName;
