@@ -5,6 +5,8 @@ import jmri.Manager;
 
 /**
  * Comparator for JMRI NamedBeans via their system Names.
+ * <p>
+ * Uses the in-built Comparable interface of the named beans.
  * <P>
  * A System Name is a system prefix followed by type letter then a suffix with a system-specific format. 
  * This class first compares on prefix, then if the prefixes are equal it 
@@ -26,6 +28,6 @@ public class NamedBeanComparator implements java.util.Comparator<NamedBean> {
 
     @Override
     public int compare(NamedBean n1, NamedBean n2) {
-        return NamedBean.compareSystemName(n1, n2);
+        return n1.compareTo(n2);
     }
 }
