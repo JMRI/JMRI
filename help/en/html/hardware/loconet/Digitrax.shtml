@@ -8,7 +8,7 @@
 
   <title>JMRI Hardware Support - Digitrax LocoNet</title>
   <meta name="keywords" content=
-  "Digitrax LocoNet LocoBuffer LocoBuffer-II LocoBuffer-USB MS100 PR2 PR3 DCS100 DCS240 DCS50 DCS51 DB150 JMRI">
+  "Digitrax LocoNet LocoBuffer LocoBuffer-II LocoBuffer-USB MS100 PR2 PR3 PR4 DCS210 DCS240 DCS100 DCS240 DCS50 DCS51 DB150 JMRI">
   <!-- Style -->
   <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
@@ -33,8 +33,7 @@
             <a href="#LocoNetConnect">Supported Hardware</a>
 
             <ul>
-              <li><a href="#Programmer">PR2 and PR3
-              Programmers</a></li>
+              <li><a href="#Programmer">PR2, PR3, and PR4 Programmers</a></li>
             </ul>
           </li>
 
@@ -157,8 +156,11 @@
         <li><a title="RR-CirKits USB interface" href=
         "LocoBufferUSB.shtml">LocoBuffer-USB</a></li>
 
-        <li><a title="Digitrax USB interface" href=
-        "PR3.shtml">PR3</a></li>
+        <li><a title="Digitrax PR3 and PR3 Xtra USB interface" href=
+        "PR3.shtml">PR3, PR3 Xtra, and DCS240's "integrated" PR3 USB Interface</a></li>
+
+        <li><a title="Digitrax PR4 USB interface" href=
+        "PR4.shtml">PR4</a></li>
 
         <li><a title="RR-CirKits Serial interface" href=
         "LocoBufferII.shtml">LocoBuffer II</a></li>
@@ -196,19 +198,20 @@
       connection; there's a <a href="Uhlenbrock.shtml">separate
       page</a> on how to do this.</p>
 
-      <h4><a name="Programmer" id="Programmer">PR2 and PR3
+      <h4><a name="Programmer" id="Programmer">PR2, PR3, and PR4
       Programmers</a></h4>JMRI can also use a <a title=
-      "Digitrax programmer" href="PR2.shtml">Digitrax PR2</a> or
+      "Digitrax programmer" href="PR2.shtml">Digitrax PR2</a>, the 
       <a title="Digitrax Programmer/USB interface" href=
-      "PR3.shtml">PR3</a> to program and test decoders. The PR2 is
+         "PR3.shtml">Digitrax PR3</a>, or the <a title="PR4.shtml">Digitrax PR4</a>
+         to program and test decoders. The PR2 is
       a stand-alone decoder programming unit which does not connect
       to the rest of the layout, the command station, nor to a
       LocoNet. For more information on using a PR2 with DecoderPro,
       please see the <a href="PR2.shtml">PR2 setup page</a>. The
-      PR3 can be configured in JMRI to operate as either a stand
+      PR3 and PR4 devices can be configured in JMRI to operate as either a stand-
       alone programmer, or as an interface to to a LocoNet. There
       is more information on the <a href="PR3.shtml">PR3 setup
-      page</a>.
+          page</a> and the <a href="PR4.shtml">PR4 setup page</a>.
 
       <h2><a name="Limitation" id="Limitation">Limitations</a></h2>
 
@@ -416,8 +419,9 @@
       significant delays when you're controlling signals, etc. To
       turn it off, you can use the "Configure Command Station" tool
       in the <b>LocoNet</b> menu to set Option Switch 31 to "T"
-      (Thrown), or set it directly in the command station using a
-      Digitrax Throttle.</p>
+      (Thrown), or set it via the Roster-based mechanism, or set 
+      it directly in the command station using a Digitrax 
+      Throttle.</p>
 
       <p>If you will have multiple connections, the "Defaults" tab
       in the "Preferences" panel may be used to direct certain
@@ -649,9 +653,10 @@
           may decide to prevent the command station from forwarding
           <i>any</i> LocoNet switch control messages to the DCC
           track signal (and RailSync wires) by enabling the command
-          station's "Bushby bit". See the JMRI LocoNet <a href=
+          station's "Bushby bit". Use the JMRI LocoNet <a href=
           "../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">
-          Configure Command Station</a> tool.<br>
+          Configure Command Station</a> tool, or the Roster-based
+          mechanism for Command Station OpSw settings.<br>
           One good way to avoid this problem is to prevent the
           Digitrax command station from receiving the LocoNet
           switch control messages. This can be done by using only
@@ -786,8 +791,10 @@
             "../../apps/DecoderPro/index.shtml">DecoderPro3</a>)</li>
 
             <li><a href=
+            "CommandStationConfig.shtml">
+            Roster-based Command Station Configuration</a> (recommended), or the <a href=
             "../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">
-            Configure Command Station</a></li>
+            Configure Command Station Tool</a></li>
 
             <li><a href=
             "../../../package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">

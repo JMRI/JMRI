@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.11.1ish+jake+20171224T2211Z+R571bc69cf3 on Sun Dec 24 14:12:08 PST 2017-->
+  <!--Written by JMRI version 4.11.1ish+given+20180101T1600Z on Mon Jan 01 11:00:28 EST 2018-->
   <decoderIndex version="874">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -2410,6 +2410,21 @@
       <family name="Basic CS" mfg="Digitrax" lowVersionID="225" highVersionID="239" file="Digitrax_CS.xml">
         <model model="DZ121" numOuts="2" numFns="0" />
         <model model="DN122K2" numOuts="2" numFns="0" />
+      </family>
+      <family name="Command Stations" mfg="Digitrax" file="Digitrax_DB150.xml">
+        <model model="DB150" />
+      </family>
+      <family name="Command Stations" mfg="Digitrax" file="Digitrax_DCS240_DCS210.xml">
+        <model model="DCS210" />
+        <model model="DCS240" />
+      </family>
+      <family name="Command Stations" mfg="Digitrax" file="Digitrax_DCS5x.xml">
+        <model model="DCS50" />
+        <model model="DCS51" />
+      </family>
+      <family name="Command Stations" mfg="Digitrax" file="Digitrax_DCSx00.xml">
+        <model model="DCS100" />
+        <model model="DCS200" />
       </family>
       <family name="DS64" mfg="Digitrax" file="Digitrax_DS64.xml">
         <model model="DS64" />
@@ -7273,8 +7288,8 @@
           <output name="8" label="Output H" />
         </model>
         <model model="SC1 version 0.23" lowVersionID="9" highVersionID="10" numOuts="8" numFns="16" formFactor="HO" productID="57379">
-          <!--productID=57379 should match Version=E023Hex    
-			Version numbers are in CV112/113 and take values 224 and 035 (ie. the version is in hex, so Hex23 = 35) 
+          <!--productID=57379 should match Version=E023Hex
+			Version numbers are in CV112/113 and take values 224 and 035 (ie. the version is in hex, so Hex23 = 35)
 			-->
           <output name="1" label="Output A" />
           <output name="2" label="Output B" />
@@ -20524,7 +20539,7 @@
           <functionlabel num="6" lockable="true">Smoke</functionlabel>
           <functionlabel num="7" lockable="true">Dimmer</functionlabel>
           <functionlabel num="8" lockable="true">Mute</functionlabel>
-          <!-- regular Soundtraxx functions, not used for Bachmann  
+          <!-- regular Soundtraxx functions, not used for Bachmann
         <functionlabel num="5" lockable="true">FX5 Light</functionlabel>
         <functionlabel num="6" lockable="true">FX6 Light</functionlabel>
         <functionlabel num="9" lockable="true">Water Stop</functionlabel>
