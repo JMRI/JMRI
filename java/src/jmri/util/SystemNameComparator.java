@@ -19,8 +19,10 @@ import jmri.Manager;
  * Note this is intended to take names as provided:  It does not do normalization or
  * expansion.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author	Bob Jacobsen Copyright (C) 2004, 2009, 2017
+ * @deprecated Use NamedBean comparison instead
  */
+@Deprecated
 public class SystemNameComparator implements Comparator<String> {
 
     public SystemNameComparator() {
