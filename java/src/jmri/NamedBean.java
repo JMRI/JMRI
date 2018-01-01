@@ -56,7 +56,7 @@ import javax.annotation.Nonnull;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004
  * @see jmri.Manager
  */
-public interface NamedBean {
+public interface NamedBean extends Comparable<NamedBean> {
 
     /**
      * Constant representing an "unknown" state, indicating that the object's
@@ -96,11 +96,20 @@ public interface NamedBean {
      * Get a system-specific name. This encodes the hardware addressing
      * information. Any given system name must be unique within the layout.
      *
+     *
      * @return the system-specific name.
      */
     @CheckReturnValue
     @Nonnull
     public String getSystemName();
+
+    /**
+     * Display the system-specific name. 
+     *
+     * @return the system-specific name.
+     */
+    @Nonnull
+    public String toString(); 
 
     /**
      * return user name if it exists, otherwise return System name
@@ -349,14 +358,13 @@ public interface NamedBean {
      * type letter, then system-specific comparison on the two suffix parts
      * via the {@link compareSystemNameSuffix} method.
      *
-     * @param n1 The first NamedBean in the comparison
-     * @param n2 The second NamedBean in the comparison
+     * @param n2 The second NamedBean in the comparison ("this" is the first one)
      * @return -1,0,+1 for ordering if the names are well-formed; may not provide proper ordering if the names are not well-formed.
      */
     @CheckReturnValue
-    static public int compareSystemName(@Nonnull NamedBean n1, @Nonnull NamedBean n2) {
+    public default int compareTo(@Nonnull NamedBean n2) {
         jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
-        String o1 = n1.getSystemName();
+        String o1 = this.getSystemName();
         String o2 = n2.getSystemName();
         
         int p1len = Manager.getSystemPrefixLength(o1);
@@ -371,7 +379,7 @@ public interface NamedBean {
         if (c1 != c2) {
             return (c1 > c2) ? +1 : -1 ;
         } else {
-            return n1.compareSystemNameSuffix(o1.substring(p1len+1), o2.substring(p2len+1), n2);
+            return this.compareSystemNameSuffix(o1.substring(p1len+1), o2.substring(p2len+1), n2);
         }
     }
 
