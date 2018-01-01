@@ -66,7 +66,8 @@ public class AudioTablePanel extends JPanel {
         super();
         listenerDataModel = listenerModel;
         TableRowSorter<AudioTableDataModel> sorter = new TableRowSorter<>(listenerDataModel);
-        sorter.setComparator(AudioTableDataModel.SYSNAMECOL, new SystemNameComparator());
+
+        // use NamedBean's built-in Comparator interface for sorting the system name column
         RowSorterUtil.setSortOrder(sorter, AudioTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
         listenerDataTable = listenerDataModel.makeJTable(listenerDataModel.getMasterClassName(), listenerDataModel, sorter);
         listenerDataScroll = new JScrollPane(listenerDataTable);

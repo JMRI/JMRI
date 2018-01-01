@@ -190,7 +190,7 @@ public class TransitTableAction extends AbstractTableAction {
 
                         @Override
                         public void run() {
-                            String sName = (String) getValueAt(row, SYSNAMECOL);
+                            String sName = ((Transit) getValueAt(row, SYSNAMECOL)).getSystemName();
                             editPressed(sName);
                         }
                     }
@@ -208,7 +208,7 @@ public class TransitTableAction extends AbstractTableAction {
 
                         @Override
                         public void run() {
-                            String sName = (String) getValueAt(row, SYSNAMECOL);
+                            String sName = ((Transit) getValueAt(row, SYSNAMECOL)).getSystemName();
                             duplicatePressed(sName);
                         }
                     }

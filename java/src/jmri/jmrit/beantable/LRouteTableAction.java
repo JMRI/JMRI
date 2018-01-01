@@ -200,8 +200,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 case EDITCOL:
                     return Bundle.getMessage("ButtonEdit");
                 case ENABLECOL:
-                    return ((Logix) getBySystemName((String) getValueAt(row,
-                            SYSNAMECOL))).getEnabled();
+                    return ((Logix) getValueAt(row, SYSNAMECOL)).getEnabled();
                 default:
                     return super.getValueAt(row, col);
             }
@@ -212,13 +211,12 @@ public class LRouteTableAction extends AbstractTableAction {
             switch (col) {
                 case EDITCOL:
                     // set up to edit
-                    String sName = (String) getValueAt(row, SYSNAMECOL);
+                    String sName = ((Logix) getValueAt(row, SYSNAMECOL)).getSystemName();
                     editPressed(sName);
                     break;
                 case ENABLECOL:
                     // alternate
-                    Logix x = (Logix) getBySystemName((String) getValueAt(row,
-                            SYSNAMECOL));
+                    Logix x = (Logix) getValueAt(row, SYSNAMECOL);
                     boolean v = x.getEnabled();
                     x.setEnabled(!v);
                     break;
