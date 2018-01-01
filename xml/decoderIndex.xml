@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.9.7ish+jake+20171205T1330Z+R9f0d748f65 on Tue Dec 05 05:30:40 PST 2017-->
-  <decoderIndex version="872">
+  <!--Written by JMRI version 4.11.1ish+given+20180101T1600Z on Mon Jan 01 11:00:28 EST 2018-->
+  <decoderIndex version="874">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -2401,6 +2401,21 @@
       <family name="Basic CS" mfg="Digitrax" lowVersionID="225" highVersionID="239" file="Digitrax_CS.xml">
         <model model="DZ121" numOuts="2" numFns="0" />
         <model model="DN122K2" numOuts="2" numFns="0" />
+      </family>
+      <family name="Command Stations" mfg="Digitrax" file="Digitrax_DB150.xml">
+        <model model="DB150" />
+      </family>
+      <family name="Command Stations" mfg="Digitrax" file="Digitrax_DCS240_DCS210.xml">
+        <model model="DCS210" />
+        <model model="DCS240" />
+      </family>
+      <family name="Command Stations" mfg="Digitrax" file="Digitrax_DCS5x.xml">
+        <model model="DCS50" />
+        <model model="DCS51" />
+      </family>
+      <family name="Command Stations" mfg="Digitrax" file="Digitrax_DCSx00.xml">
+        <model model="DCS100" />
+        <model model="DCS200" />
       </family>
       <family name="DS64" mfg="Digitrax" file="Digitrax_DS64.xml">
         <model model="DS64" />
@@ -12026,7 +12041,8 @@
         <model model="LNCP" comment="LocoNet Control Point" lowVersionID="01" />
       </family>
       <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The MotorMan is programmed in OPs mode" file="RR-CirKits-MotorMan.xml">
-        <model model="MotorMan" comment="8 Line Output Driver" lowVersionID="10" />
+        <model model="MotorMan" comment="8 Line Output Driver" />
+        <model model="MotorMan-II" comment="8 Line Output Driver" />
       </family>
       <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The SignalMan is normally programmed in OPs mode" file="RR-CirKits-SignalMan-basic.xml">
         <model model="SignalMan" comment="Signal Mast Driver" lowVersionID="10" />
@@ -18869,7 +18885,7 @@
         <!--  Model with name "Tsunami SoundCar" kept for compatibility with previous versions.
             Will not appear as such in the decoder list, because of having the same name as its family
             However selecting family name in the tree and then opening programmer will lead to this defintion.-->
-        <model model="Tsunami SoundCar" numOuts="4" numFns="14" connector="9pin" productID="SoundCar101" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; Early SW version 1.01 (2014-2016) without livestock support&lt;br&gt;">
+        <model model="Tsunami SoundCar" numOuts="4" numFns="14" connector="9pin" productID="SoundCar101" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; Early SW version 1.01 (2014-2016) without livestock support.&lt;br&gt;Check CV105 firmware version.&lt;br&gt;">
           <versionCV lowVersionID="69" highVersionID="69" />
           <output name="Airhorn" label="Whistle">
             <label xml:lang="it">Fischio</label>
@@ -18906,7 +18922,7 @@
         </model>
         <!-- Model with name "Tsunami SoundCar 1.01" is exactly the same as model with name "Tsunami SoundCar".
             Added to allow a separate and visible listing in the decoder tree. -->
-        <model model="Tsunami SoundCar 1.01" numOuts="4" numFns="14" connector="9pin" productID="SoundCar101" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; Early SW version 1.01 (2014-2016) without livestock support&lt;br&gt;">
+        <model model="Tsunami SoundCar 1.01" numOuts="4" numFns="14" connector="9pin" productID="SoundCar101" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; Early SW version 1.01 (2014-2016) without livestock support.&lt;br&gt;Check CV105 firmware version.&lt;br&gt;">
           <versionCV lowVersionID="69" highVersionID="69" />
           <output name="Airhorn" label="Whistle">
             <label xml:lang="it">Fischio</label>
@@ -18941,7 +18957,7 @@
             <functionlabel num="12" lockable="false">Coupler Clank</functionlabel>
           </functionlabels>
         </model>
-        <model model="Tsunami SoundCar 1.03" numOuts="4" numFns="14" connector="9pin" productID="SoundCar103" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; SW version 1.03 (2017) with livestock support&lt;br&gt;and additional airhorns and bells&lt;br&gt;">
+        <model model="Tsunami SoundCar 1.03" numOuts="4" numFns="14" connector="9pin" productID="SoundCar103" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; SW version 1.03 (2017) with livestock support&lt;br&gt;and additional airhorns and bells.&lt;br&gt;Check CV105 firmware version.&lt;br&gt;">
           <versionCV lowVersionID="69" highVersionID="69" />
           <output name="Airhorn" label="Whistle">
             <label xml:lang="it">Fischio</label>
@@ -18974,6 +18990,202 @@
             <functionlabel num="10" lockable="false">Uncoupling</functionlabel>
             <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
             <functionlabel num="12" lockable="false">Coupler Clank</functionlabel>
+          </functionlabels>
+        </model>
+      </family>
+      <family name="Tsunami SoundCar Walthers OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are the OEM Walthers versions of Tsunami SoundCar decoders" file="SoundTraxx_Tsu_SoundCar_Walthers.xml">
+        <model model="ATSF El Capitan Baggage-Dormitory" numOuts="3" numFns="28" connector="Wires" productID="24B410DD3" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt;for Walthers Proto Deluxe HO ATSF &quot;El Capitan&quot; Baggage-Dormitory car&lt;br&gt;Rev.A 1117 PN: 923-24B410DD3&lt;br&gt;">
+          <versionCV lowVersionID="85" highVersionID="85" />
+          <output name="3" label="Interior|Lights (FX5)" />
+          <!-- All following outputs likely not to used       -->
+          <!-- as this decoder used Flex-Map function mapping -->
+          <!-- Kept for traceability with legacy SoundCar     -->
+          <output name="4" label="  FX6  " />
+          <output name="Airhorn" label="Whistle">
+            <label xml:lang="it">Fischio</label>
+          </output>
+          <output name="Bell" />
+          <output name="Reserved" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Generator" />
+          <output name="Reserved 2" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Uncoupling" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <!-- not used for this OEM decoder
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Airhorn/Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Spook the Livestock</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Output</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Output</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          -->
+            <functionlabel num="8" lockable="true">Mute</functionlabel>
+            <functionlabel num="9" lockable="false">Brake Set/Release</functionlabel>
+            <functionlabel num="10" lockable="false">Couple</functionlabel>
+            <!-- not used for this OEM decoder
+          <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
+          -->
+            <functionlabel num="12" lockable="false">Uncouple/Glad Hands</functionlabel>
+            <functionlabel num="13" lockable="true">Interior Lights</functionlabel>
+            <functionlabel num="14" lockable="false">Coach Doors</functionlabel>
+            <functionlabel num="15" lockable="false">"All Aboard!"</functionlabel>
+            <functionlabel num="16" lockable="true">Generator/HVAC</functionlabel>
+            <functionlabel num="17" lockable="false">Announcement A</functionlabel>
+            <functionlabel num="18" lockable="false">Announcement B</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="ATSF El Capitan Lunch Counter" numOuts="3" numFns="28" connector="Wires" productID="24B410DD2" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt;for Walthers Proto Deluxe HO ATSF &quot;El Capitan&quot; Lunch Counter 20-Seat Diner car&lt;br&gt;Rev.A 1117 PN: 923-24B410DD2&lt;br&gt;">
+          <versionCV lowVersionID="85" highVersionID="85" />
+          <output name="3" label="Interior|Lights (FX5)" />
+          <!-- All following outputs likely not to used       -->
+          <!-- as this decoder used Flex-Map function mapping -->
+          <!-- Kept for traceability with legacy SoundCar     -->
+          <output name="4" label="  FX6  " />
+          <output name="Airhorn" label="Whistle">
+            <label xml:lang="it">Fischio</label>
+          </output>
+          <output name="Bell" />
+          <output name="Reserved" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Generator" />
+          <output name="Reserved 2" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Uncoupling" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <!-- not used for this OEM decoder
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Airhorn/Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Spook the Livestock</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Output</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Output</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          -->
+            <functionlabel num="8" lockable="true">Mute</functionlabel>
+            <functionlabel num="9" lockable="false">Brake Set/Release</functionlabel>
+            <functionlabel num="10" lockable="false">Couple</functionlabel>
+            <!-- not used for this OEM decoder
+          <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
+          -->
+            <functionlabel num="12" lockable="false">Uncouple/Glad Hands</functionlabel>
+            <functionlabel num="13" lockable="true">Interior Lights</functionlabel>
+            <functionlabel num="14" lockable="false">Coach Doors</functionlabel>
+            <functionlabel num="15" lockable="false">"All Aboard!"</functionlabel>
+            <functionlabel num="16" lockable="true">Generator/HVAC</functionlabel>
+            <functionlabel num="17" lockable="false">Announcement A</functionlabel>
+            <functionlabel num="18" lockable="false">Announcement B</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="PRR 1960's Broadway Limited 4-4-2 Sleeper" numOuts="3" numFns="28" connector="Wires" productID="24B410DD1" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt;for Walthers Proto Deluxe HO PRR 1960's Broadway Limited 4-4-2 Sleeper car&lt;br&gt;Rev.A 0317 PN: 923-24B410DD1&lt;br&gt;">
+          <versionCV lowVersionID="85" highVersionID="85" />
+          <output name="3" label="Interior|Lights (FX5)" />
+          <!-- All following outputs likely not to used       -->
+          <!-- as this decoder used Flex-Map function mapping -->
+          <!-- Kept for traceability with legacy SoundCar     -->
+          <output name="4" label="  FX6  " />
+          <output name="Airhorn" label="Whistle">
+            <label xml:lang="it">Fischio</label>
+          </output>
+          <output name="Bell" />
+          <output name="Reserved" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Generator" />
+          <output name="Reserved 2" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Uncoupling" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <!-- not used for this OEM decoder
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Airhorn/Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Spook the Livestock</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Output</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Output</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          -->
+            <functionlabel num="8" lockable="true">Mute</functionlabel>
+            <functionlabel num="9" lockable="false">Brake Set/Release</functionlabel>
+            <functionlabel num="10" lockable="false">Couple</functionlabel>
+            <!-- not used for this OEM decoder
+          <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
+          -->
+            <functionlabel num="12" lockable="false">Uncouple/Glad Hands</functionlabel>
+            <functionlabel num="13" lockable="true">Interior Lights</functionlabel>
+            <functionlabel num="14" lockable="false">Coach Doors</functionlabel>
+            <functionlabel num="15" lockable="false">"All Aboard!"</functionlabel>
+            <functionlabel num="16" lockable="true">Generator/HVAC</functionlabel>
+            <functionlabel num="17" lockable="false">Announcement A</functionlabel>
+            <functionlabel num="18" lockable="false">Announcement B</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="PRR 1960's Broadway Limited Kitchen-Dorm" numOuts="3" numFns="28" connector="Wires" productID="24B410DD0" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt;for Walthers Proto Deluxe HO PRR 1960's Broadway Limited Kitchen-Dormitory car&lt;br&gt;Rev.A 0317 PN: 923-24B410DD0&lt;br&gt;">
+          <versionCV lowVersionID="85" highVersionID="85" />
+          <output name="3" label="Interior|Lights (FX5)" />
+          <!-- All following outputs likely not to used       -->
+          <!-- as this decoder used Flex-Map function mapping -->
+          <!-- Kept for traceability with legacy SoundCar     -->
+          <output name="4" label="  FX6  " />
+          <output name="Airhorn" label="Whistle">
+            <label xml:lang="it">Fischio</label>
+          </output>
+          <output name="Bell" />
+          <output name="Reserved" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Generator" />
+          <output name="Reserved 2" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Uncoupling" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <!-- not used for this OEM decoder
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Airhorn/Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Spook the Livestock</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Output</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Output</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          -->
+            <functionlabel num="8" lockable="true">Mute</functionlabel>
+            <functionlabel num="9" lockable="false">Brake Set/Release</functionlabel>
+            <functionlabel num="10" lockable="false">Couple</functionlabel>
+            <!-- not used for this OEM decoder
+          <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
+          -->
+            <functionlabel num="12" lockable="false">Uncouple/Glad Hands</functionlabel>
+            <functionlabel num="13" lockable="true">Interior Lights</functionlabel>
+            <functionlabel num="14" lockable="false">Coach Doors</functionlabel>
+            <functionlabel num="15" lockable="false">"All Aboard!"</functionlabel>
+            <functionlabel num="16" lockable="true">Generator/HVAC</functionlabel>
+            <!-- not available for this model
+          <functionlabel num="17" lockable="false">Announcement A</functionlabel>
+          <functionlabel num="18" lockable="false">Announcement B</functionlabel>
+          -->
           </functionlabels>
         </model>
       </family>
