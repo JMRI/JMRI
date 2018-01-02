@@ -432,7 +432,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _oBlockModel = new OBlockTableModel(this);
         _oBlockTable = new JTable(_oBlockModel);
         TableRowSorter<OBlockTableModel> sorter = new TableRowSorter<>(_oBlockModel);
-        sorter.setComparator(OBlockTableModel.SYSNAMECOL, new jmri.util.SystemNameComparator());
+        // use NamedBean's built-in Comparator interface for sorting
         _oBlockTable.setRowSorter(sorter);
         _oBlockTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{OBlockTableModel.EDIT_COL,
             OBlockTableModel.DELETE_COL, OBlockTableModel.REPORT_CURRENTCOL, OBlockTableModel.SPEEDCOL,

@@ -180,31 +180,6 @@
       copied from the distributed disk image onto the user's disk
       drive.</p>
 
-      <h3>Bundle Details</h3>JMRI has registered five application
-      signatures:
-
-      <dl>
-        <dt>JMRD</dt>
-
-        <dd>DecoderPro</dd>
-
-        <dt>JMRP</dt>
-
-        <dd>PanelPro</dd>
-
-        <dt>JMRI</dt>
-
-        <dd>(generic JMRI, was JMRIdemo; no longer used)</dd>
-
-        <dt>JMRL</dt>
-
-        <dd>LocoTools (no longer used)</dd>
-
-        <dt>JMRC</dt>
-
-        <dd>Cornwall demo (no longer used)</dd>
-      </dl>
-
       <h3>Script Details</h3>Each bundle has a startup bash shell
       script in the Contents/MacOSX directory what does the actual
       startup. This is the same script as used for Linux, see

@@ -1,6 +1,8 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.implementation.AbstractTurnoutTestBase;
+import jmri.*;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,6 +57,65 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 //                tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
 //		Assert.assertTrue("message sent", tcis.outbound.size()>0);
 //		Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
+    }
+
+    @Test
+    public void testSystemSpecificComparisonOfStandardNames() {
+        jmri.util.NamedBeanComparator t = new jmri.util.NamedBeanComparator();
+        
+        Turnout t1 = new SerialTurnout("CT1", "to1", memo);
+        Turnout t2 = new SerialTurnout("CT2", "to2", memo);
+        Turnout t10 = new SerialTurnout("CT10", "to10", memo);
+
+        Assert.assertEquals("T1 == T1", 0, t.compare(t1, t1));
+
+        Assert.assertEquals("T1 < T2", -1, t.compare(t1, t2));
+        Assert.assertEquals("T2 > T1", +1, t.compare(t2, t1));
+
+        Assert.assertEquals("T10 > T2", +1, t.compare(t10, t2));
+        Assert.assertEquals("T2 < T10", -1, t.compare(t2, t10));    
+    }
+
+    @Test
+    public void testSystemSpecificComparisonOfSpecificFormats() {
+        // test by putting into a tree set, then extracting and checking order
+        java.util.TreeSet<Turnout> set = new java.util.TreeSet(new jmri.util.NamedBeanComparator());
+        
+        set.add(new SerialTurnout("CT3B4",    "to3004", memo));
+        set.add(new SerialTurnout("CT3003",    "to3003", memo));
+        set.add(new SerialTurnout("CT3B2",    "to3002", memo));
+        set.add(new SerialTurnout("CT3001",    "to3001", memo));
+
+        set.add(new SerialTurnout("CT005",    "to1", memo));
+
+        set.add(new SerialTurnout("CT1:5",    "to1005", memo));
+        set.add(new SerialTurnout("CT01004",    "to1004", memo));
+        set.add(new SerialTurnout("CT1003",    "to1003", memo));
+        set.add(new SerialTurnout("CT1002",    "to1002", memo));
+        set.add(new SerialTurnout("CT01001",    "to1001", memo));
+
+        set.add(new SerialTurnout("CT2",    "to2", memo));
+        set.add(new SerialTurnout("CT10",   "to10", memo));
+        set.add(new SerialTurnout("CT1",    "to1", memo));
+        
+        
+        java.util.Iterator<Turnout> it = set.iterator();
+        
+        Assert.assertEquals("CT1", it.next().getSystemName());
+        Assert.assertEquals("CT2", it.next().getSystemName());
+        Assert.assertEquals("CT005", it.next().getSystemName());
+        Assert.assertEquals("CT10", it.next().getSystemName());
+
+        Assert.assertEquals("CT01001", it.next().getSystemName());
+        Assert.assertEquals("CT1002", it.next().getSystemName());
+        Assert.assertEquals("CT1003", it.next().getSystemName());
+        Assert.assertEquals("CT01004", it.next().getSystemName());
+        Assert.assertEquals("CT1:5", it.next().getSystemName());
+
+        Assert.assertEquals("CT3001", it.next().getSystemName());
+        Assert.assertEquals("CT3B2", it.next().getSystemName());
+        Assert.assertEquals("CT3003", it.next().getSystemName());
+        Assert.assertEquals("CT3B4", it.next().getSystemName());
     }
 
 }
