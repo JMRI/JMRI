@@ -188,8 +188,12 @@
         serial</a></li>
 
         <li>D <a href=
-        "../../hardware/SRCP/index.shtml">SRCP</a></li>
-
+        "../../hardware/SRCP/index.shtml">SRCP</a>,
+        <br>D1: Anyma DX512
+        <br>D2: <a href="../../hardware/dccpp/index.shtml">DCC++</a> (sometimes written DCCpp)
+        <br>D3: <a href="../../hardware/dcc4pc/index.shtml">DCC4PC</a>
+        </li>
+        
         <li>E <a href=
         "../../hardware/easydcc/EasyDCC.shtml">EasyDCC</a></li>
 
@@ -215,9 +219,9 @@
         <li>M Model railroad layout control buses, including
         <a href="../../hardware/openlcb/index.shtml">OpenLCB</a>
         and <a href="../../hardware/can/cbus/index.shtml">MERG
-        CBUS</a>. Also used for the <a href=
-        "../../hardware/modbus/index.shtml">Modbus</a> master and
-        slave implementation.
+        CBUS</a>
+        <br><a href="../../hardware/mrc/index.shtml">Model Rectifier Corp (MRC)</a>
+        <br>M2: <a href="../../hardware/marklin/index.shtml">Marklin CS2</a>
         </li>
 
         <li>N <a href="../../hardware/nce/NCE.shtml">NCE</a> (also
@@ -229,7 +233,9 @@
 
         <li>P <a href=
         "../../hardware/powerline/index.shtml">Powerline
-        transmission</a>, e.g. X10 and Insteon</li>
+        transmission</a>, e.g. X10 and Insteon,
+        <br>P2: Raspberry Pi native pins
+        </li>
 
         <li>Q <a href="../../hardware/qsi/index.shtml">QSI
         programmer interface</a></li>
@@ -240,9 +246,10 @@
         <li>S <a href=
         "../../hardware/sprog/SPROG.shtml">SPROG</a></li>
 
-        <li>T <a href="../../hardware/tmcc/index.shtml">Lionel
-        TMCC</a></li>
-
+        <li>T <a href="../../hardware/tmcc/index.shtml">Lionel TMCC</a>, 
+        <a href="../../hardware/tams/index.shtml">TAMS</a>
+        </li>
+        
         <li>U <a href="../../hardware/ecos/index.shtml">ESU
         ECoS</a></li>
 
