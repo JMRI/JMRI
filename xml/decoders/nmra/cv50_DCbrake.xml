@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>10</revnumber>
+      <date>2018-01-02</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>French translation</revremark>
+    </revision>
+    <revision>
       <revnumber>9</revnumber>
       <date>2016-10-23</date>
       <authorinitials>PS</authorinitials>
@@ -43,24 +49,28 @@
         <enumVal>
           <enumChoice choice="Loco runs under DC analog voltage control">
             <choice>Loco runs under DC analog voltage control</choice>
-            <choice xml:lang="it">Loco va in Analogico</choice>
-            <choice xml:lang="de">Loco runs under DC analog voltage control</choice>
             <choice xml:lang="cs">Lokomotiva používá pro řízení analogové stejnosměrné napětí</choice>
+            <choice xml:lang="fr">Loco roule sous contrôle analogique</choice>
+            <choice xml:lang="de">Loco runs under DC analog voltage control(de)</choice>
+            <choice xml:lang="it">Loco va in Analogico</choice>
           </enumChoice>
           <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
             <choice>Loco brakes to a stop using momentum set in CV4</choice>
-            <choice xml:lang="it">Loco frena fino a fermarsi usando inerzia in CV4</choice>
-            <choice xml:lang="de">Loco brakes to a stop using momentum set in CV4</choice>
             <choice xml:lang="cs">Lokomotiva při brždění do zastavení používá zpomalení nastavené v CV4</choice>
+            <choice xml:lang="de">Loco brakes to a stop using momentum set in CV4(de)</choice>
+            <choice xml:lang="fr">Loco freine jusqu'à arrêt selon inertie définie en CV4</choice>
+            <choice xml:lang="it">Loco frena fino a fermarsi usando inerzia in CV4</choice>
           </enumChoice>
         </enumVal>
         <label>Brake Momentum on DC</label>
-        <label xml:lang="it">Inerzia frenata in Analogico</label>
-        <label xml:lang="de">DC Brake Momentum</label>
-        <comment>Governs how loco acts in DC track block</comment>
-        <comment xml:lang="it">Comportamento Loco in blocco analogico</comment>
-        <comment xml:lang="de">Governs how loco acts in DC track block</comment>
         <label xml:lang="cs">DC brzdné zpomalení</label>
-        <comment xml:lang="cs">Určuje jak bude lokomotiva reagovat na DC kolejovém obvodu</comment>
+        <label xml:lang="de">DC Brake Momentum(de)</label>
+        <label xml:lang="fr">Inertie freinage en analogique</label>
+        <label xml:lang="it">Inerzia frenata in Analogico</label>
+        <tooltip>Governs how loco acts in DC track block</tooltip>
+        <tooltip xml:lang="cs">Určuje jak bude lokomotiva reagovat na DC kolejovém obvodu</tooltip>
+        <tooltip xml:lang="de">Governs how loco acts in DC track block(de)</tooltip>
+        <tooltip xml:lang="fr">Commande comment la loco réagit dans un canton analogique</tooltip>
+        <tooltip xml:lang="it">Comportamento Loco in blocco analogico</tooltip>
     </variable>
 </variables>

@@ -3,17 +3,20 @@
 <enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Off">
     <choice>Off</choice>
+    <choice xml:lang="cs">Zhasnuto</choice>
+    <choice xml:lang="fr">Éteint</choice>
     <choice xml:lang="it">Off</choice>
-    <choice xml:lang="cs">Vypnuto</choice>
   </enumChoice>
   <enumChoice choice="Automatic">
     <choice>Automatic</choice>
-    <choice xml:lang="it">Automatico</choice>
     <choice xml:lang="cs">Automaticky</choice>
+    <choice xml:lang="fr">Automatique</choice>
+    <choice xml:lang="it">Automatico</choice>
   </enumChoice>
   <enumChoice choice="On">
     <choice>On</choice>
+    <choice xml:lang="cs">Rozsvíceno</choice>
+    <choice xml:lang="fr">Allumé</choice>
     <choice xml:lang="it">On</choice>
-    <choice xml:lang="cs">Zapnuto</choice>
   </enumChoice>
 </enumVal>
