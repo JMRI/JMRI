@@ -29,6 +29,7 @@
         <label xml:lang="fr">Accelération (0-255)</label>
         <label xml:lang="de">Beschleunigungszeit</label>
         <label xml:lang="ca">Acceleració (0-255)</label>
+        <tooltip>Value multiplied by 0.25 = Time from Stop to Full Speed.</tooltip>
         <tooltip xml:lang="de">Wert multipliziert mit 0.25 = Zeit vom Stop bis Maximalgeschwindigkeit.</tooltip>
     </variable>
     <variable CV="4" default="12" item="Decel">
@@ -38,6 +39,7 @@
         <label xml:lang="fr">Décélération (0-255)</label>
         <label xml:lang="de">Bremszeit</label>
         <label xml:lang="ca">Desacceleració (0-255)</label>
+        <tooltip>Value multiplied by 0.25 = Time from Full Speed to Stop.</tooltip>
         <tooltip xml:lang="de">Wert multipliziert mit 0.25 = Zeit von Maximalgeschwindigkeit bis Stop</tooltip>
     </variable>
     <variable CV="5" default="255" item="Vhigh" exclude="LokPilot Fx V4.0">
@@ -616,6 +618,16 @@
         <tooltip xml:lang="de">die Einheit ist Grad Celsius</tooltip>
         <label xml:lang="ca">Temperatra de preescalfat de segon fumigen</label>
     </variable>
+    <variable CV="179" default="40" item="ESU V4 Dynamic Brake Slider 1">
+        <decVal/>
+        <label>Deceleration with Dynamic Brake</label>
+        <label xml:lang="it">Decellerazione with Dynamic Brake (0-255)</label>
+        <label xml:lang="fr">Décélération with Dynamic Brake (0-255)</label>
+        <label xml:lang="de">Bremszeit with Dynamic Brake</label>
+        <label xml:lang="ca">Desacceleració with Dynamic Brake (0-255)</label>
+        <tooltip>Value multiplied by 0.25 = Time from Full Speed to Stop.</tooltip>
+        <tooltip xml:lang="de">Wert multipliziert mit 0.25 = Zeit von Maximalgeschwindigkeit bis Stop</tooltip>
+    </variable>
     <variable CV="245" mask="XVXXXXXX" default="0" item="ESU V4 Advanced Stop Behaviour Option 1" include="LokSound Micro V4.0,LokSound XL V4.0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stop immediately on speed step 0</label>
@@ -686,8 +698,9 @@
         <decVal/>
         <label>Firmware Major Version</label>
     </variable>
-    <!-- Decoder Information -->
+    <!-- Decoder & Project Information -->
     <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/> -->
+    <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4projectInfoCVs.xml"/> -->
     <!-- Function Outputs -->
     <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutCVs.xml"/>
     <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testCVs.xml"/> -->
