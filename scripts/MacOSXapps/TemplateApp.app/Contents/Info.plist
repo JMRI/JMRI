@@ -8,8 +8,6 @@
         <string>jmri.@NAME@</string>
         <key>CFBundleIconFile</key>
         <string>@NAME@.icns</string>
-        <key>CFBundleSignature</key>
-        <string>JMRD</string>
         <key>CFBundleShortVersionString</key>
         <string>@VERSION@</string>
         <key>CFBundleLongVersionString</key>
