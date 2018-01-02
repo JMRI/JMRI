@@ -218,31 +218,6 @@
             Tout, le script produira une sortie d&eacute;bogage
             apr&egrave;s chaque section</p>
 
-            <h3>D&eacute;tails sur le Pack (Bundle)</h3>JMRI a
-            enregistr&eacute; cinq signatures d'applications:
-
-            <dl>
-              <dt>JMRD</dt>
-
-              <dd>DecoderPro</dd>
-
-              <dt>JMRP</dt>
-
-              <dd>PanelPro</dd>
-
-              <dt>JMRI</dt>
-
-              <dd>JmriDemo (n'est plus utilis&eacute;)</dd>
-
-              <dt>JMRL</dt>
-
-              <dd>LocoTools (n'est plus utilis&eacute;)</dd>
-
-              <dt>JMRC</dt>
-
-              <dd>Cornwall demo (n'est plus utilis&eacute;)</dd>
-            </dl>
-
             <h3>Details des Scripts</h3>Chaque Pack (bundle) a un
             shell de d&eacute;marrage (Bash) dans le script dans le
             r&eacute;pertoire Contents/Mac OS X qui fait le
@@ -735,17 +710,6 @@ Ceux-ci fournissent des ic&#244;nes d'application famili&#232;res pour l'utilisa
 <p>
 Pour enregistrer les groupements avec Mac OS X, ils doivent &#234;tre copi&#233;s
 depuis l'image disque distribu&#233;e sur le disque de dur de l'utilisateur..
-
-<h3>D&#233;tails sur le Groupement</h3>
-
-JMRI a enregistr&#233; cinq signatures d'applications: 
-<dl>
-<dt>JMRD<dd>DecoderPro
-<dt>JMRP<dd>PanelPro
-<dt>JMRI<dd>JMRI g&#233;n&#233;rique, qui &#233;tait JmriDemo
-<dt>JMRL<dd>LocoTools ( n'est plus utilis&#233; )
-<dt>JMRC<dd>Cornwall demo ( n'est plus utilis&#233; )
-</dl>
 
 <h3>D&#233;tails des Scripts</h3>
 
