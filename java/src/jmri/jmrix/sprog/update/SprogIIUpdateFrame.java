@@ -132,7 +132,7 @@ public class SprogIIUpdateFrame
                     // Force SPROG version SPROG II 1.x or 2.x
                     sv = new SprogVersion(new SprogType(SprogType.SPROGII), "");
                 } else {
-                    // Force SPROG version SPROG SPROG II v3.x (also covers SPROG 3 and Nano)
+                    // Force SPROG version SPROG SPROG II v3.x (also covers IIv4, SPROG 3 and Nano)
                     sv = new SprogVersion(new SprogType(SprogType.SPROGIIv3), "");
                 }
                 blockLen = sv.sprogType.getBlockLen();

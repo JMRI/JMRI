@@ -233,9 +233,11 @@ public class SprogVersionQuery implements SprogListener {
                         v = new SprogVersion(new SprogType(SprogType.NOT_RECOGNISED));
                     }
 
-                    if ((v.sprogType.sprogType == SprogType.SPROGII) && (v.getMajorVersion() >= 3)) {
-                        // Correct for SPROG IIv3 which is different hardware
+                    // Correct for SPROG IIv3/IIv4 which are different hardware
+                    if ((v.sprogType.sprogType == SprogType.SPROGII) && (v.getMajorVersion() == 3)) {
                         v = new SprogVersion(new SprogType(SprogType.SPROGIIv3), v.sprogVersion);
+                    } else if ((v.sprogType.sprogType == SprogType.SPROGII) && (v.getMajorVersion() >= 4)) {
+                        v = new SprogVersion(new SprogType(SprogType.SPROGIIv4), v.sprogVersion);
                     }
                     log.debug("Found: " + v.toString());
                     notifyVersion(v);

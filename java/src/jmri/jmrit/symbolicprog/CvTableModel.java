@@ -331,7 +331,8 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
             cv.setReadOnly(readOnly);
         }
         if (infoOnly) {
-            cv.setReadOnly(infoOnly);
+            cv.setReadOnly(!infoOnly);
+            cv.setWriteOnly(!infoOnly);
             cv.setInfoOnly(infoOnly);
         }
         if (writeOnly) {

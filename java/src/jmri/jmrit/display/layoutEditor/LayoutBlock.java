@@ -46,8 +46,8 @@ import jmri.jmrit.beantable.beanedit.BlockEditAction;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
-import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.ButtonSwatchColorChooserPanel;
+import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -96,16 +96,16 @@ import org.slf4j.MDC;
  */
 public class LayoutBlock extends AbstractNamedBean implements PropertyChangeListener {
 
-    private boolean enableAddRouteLogging = false;
-    private boolean enableUpdateRouteLogging = false;
+    private final boolean enableAddRouteLogging = false;
+    private final boolean enableUpdateRouteLogging = false;
     private boolean enableDeleteRouteLogging = false;
-    private boolean enableSearchRouteLogging = false;
+    private final boolean enableSearchRouteLogging = false;
 
     private static List<Integer> updateReferences = new ArrayList<>(500);
 
     //might want to use the jmri ordered HashMap, so that we can add at the top
     //and remove at the bottom.
-    private List<Integer> actedUponUpdates = new ArrayList<>(500);
+    private final List<Integer> actedUponUpdates = new ArrayList<>(500);
 
     public void enableDeleteRouteLog() {
         enableDeleteRouteLogging = false;
@@ -324,11 +324,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * to upper case if it is a system name.
      *
      * @param sensorName to check
-     * @param openFrame     determines the <code>Frame</code> in which the
-     *                      dialog is displayed; if <code>null</code>, or if the
-     *                      <code>parentComponent</code> has no
-     *                      <code>Frame</code>, a default <code>Frame</code> is
-     *                      used
+     * @param openFrame  determines the <code>Frame</code> in which the dialog
+     *                   is displayed; if <code>null</code>, or if the
+     *                   <code>parentComponent</code> has no <code>Frame</code>,
+     *                   a default <code>Frame</code> is used
      * @return the validated sensor
      */
     public Sensor validateSensor(String sensorName, Component openFrame) {
@@ -449,6 +448,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     /**
      * Returns the color for drawing items in this block. Returns color based on
      * block occupancy.
+     * @return color for block
      */
     public Color getBlockColor() {
         if (getOccupancy() == OCCUPIED) {
@@ -462,6 +462,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Get the Block corresponding to this LayoutBlock
+     * @return block
      */
     public Block getBlock() {
         return block;
@@ -469,6 +470,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Returns Memory name
+     * @return name of memory
      */
     public String getMemoryName() {
         if (namedMemory != null) {
@@ -479,6 +481,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Returns Memory
+     * @return memory bean
      */
     public Memory getMemory() {
         if (namedMemory == null) {
@@ -492,6 +495,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Add Memory by name
+     * @param name for memory
      */
     public void setMemoryName(String name) {
         if ((name == null) || name.isEmpty()) {
@@ -517,6 +521,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Returns occupancy Sensor name
+     * @return name of occupancy sensor
      */
     public String getOccupancySensorName() {
         if (occupancyNamedSensor != null) {
@@ -527,6 +532,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Returns occupancy Sensor
+     * @return occ sensor name
      */
     public Sensor getOccupancySensor() {
         if (occupancyNamedSensor != null) {
@@ -537,6 +543,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Add occupancy sensor by name
+     * @param name for senor to add
      */
     public void setOccupancySensorName(String name) {
         if ((name == null) || name.isEmpty()) {
@@ -564,6 +571,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Get/Set occupied sense
+     * @return occ sense
      */
     public int getOccupiedSense() {
         return occupiedSense;
@@ -575,6 +583,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Test block occupancy
+     * @return occ state
      */
     public int getOccupancy() {
         if (occupancyNamedSensor == null) {
@@ -619,6 +628,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Get the panel with the highest connectivity to this Layout Block
+     * @return panel with most connections to this block
      */
     public LayoutEditor getMaxConnectedPanel() {
         LayoutEditor result = null;
@@ -694,6 +704,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     /**
      * Check/Update Path objects for the attached Block using the connectivity
      * in the specified Layout Editor panel.
+     * @param panel to extract paths
      */
     public void updatePathsUsingPanel(LayoutEditor panel) {
         if (panel == null) {
@@ -823,6 +834,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Handle tasks when block changes
+     * @param e propChgEvent
      */
     void handleBlockChange(PropertyChangeEvent e) {
         //Update memory object if there is one
@@ -859,6 +871,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * Sets/resets update of memory name when block goes from occupied to
      * unoccupied or vice versa. If set is true, name update is suppressed. If
      * set is false, name update works normally.
+     * @param set true, update suppress. false, update normal
      */
     public void setSuppressNameUpdate(boolean set) {
         suppressNameUpdate = set;
@@ -1105,19 +1118,19 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
             trackColorChooser = new JColorChooser(blockTrackColor);
             trackColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel trackColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            AbstractColorChooserPanel trackColorPanels[] = {new ButtonSwatchColorChooserPanel()};
             trackColorChooser.setChooserPanels(trackColorPanels);
             layout.addItem(new BeanEditItem(trackColorChooser, Bundle.getMessage("TrackColor"), Bundle.getMessage("TrackColorHint")));
 
             occupiedColorChooser = new JColorChooser(blockOccupiedColor);
             occupiedColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel occupiedColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            AbstractColorChooserPanel occupiedColorPanels[] = {new ButtonSwatchColorChooserPanel()};
             occupiedColorChooser.setChooserPanels(occupiedColorPanels);
             layout.addItem(new BeanEditItem(occupiedColorChooser, Bundle.getMessage("OccupiedColor"), Bundle.getMessage("OccupiedColorHint")));
 
             extraColorChooser = new JColorChooser(blockExtraColor);
             extraColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel extraColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            AbstractColorChooserPanel extraColorPanels[] = {new ButtonSwatchColorChooserPanel()};
             extraColorChooser.setChooserPanels(extraColorPanels);
             layout.addItem(new BeanEditItem(extraColorChooser, Bundle.getMessage("ExtraColor"), Bundle.getMessage("ExtraColorHint")));
 
@@ -1373,6 +1386,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * path between two location on the layout, a lower path cost is always
      * preferred For Layout blocks defined as Mainline the default metric is 50.
      * For Layout blocks defined as a Siding the default metric is 200.
+     * @param m metric value
      */
     public void setBlockMetric(int m) {
         if (metric == m) {
@@ -1386,6 +1400,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Returns the layout block metric cost
+     * @return metric cost of block
      */
     public int getBlockMetric() {
         return metric;
@@ -2464,13 +2479,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     block.getDisplayName(), srcBlock.getDisplayName(), dstBlock.getDisplayName());
         }
         connection = new ConnectivityUtil(panel);
-        List<LayoutTurnout> stod;
-        List<Integer> stodSet;
+        List<LayoutTrackExpectedState<LayoutTurnout>> stod;
 
         try {
             MDC.put("loggingDisabled", connection.getClass().getCanonicalName());
             stod = connection.getTurnoutList(block, srcBlock, dstBlock, true);
-            stodSet = connection.getTurnoutSettingList();
             MDC.remove("loggingDisabled");
         } catch (java.lang.NullPointerException ex) {
             MDC.remove("loggingDisabled");
@@ -2487,13 +2500,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         if (!connection.isTurnoutConnectivityComplete()) {
             layoutConnectivity = false;
         }
-        List<LayoutTurnout> tmpdtos;
-        List<Integer> tmpdtosSet;
+        List<LayoutTrackExpectedState<LayoutTurnout>> tmpdtos;
 
         try {
             MDC.put("loggingDisabled", connection.getClass().getName());
             tmpdtos = connection.getTurnoutList(block, dstBlock, srcBlock, true);
-            tmpdtosSet = connection.getTurnoutSettingList();
             MDC.remove("loggingDisabled");
         } catch (java.lang.NullPointerException ex) {
             MDC.remove("loggingDisabled");
@@ -2511,49 +2522,39 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             layoutConnectivity = false;
         }
 
-        if ((stod.size() == tmpdtos.size()) && (stodSet.size() == tmpdtosSet.size())) {
+        if (stod.size() == tmpdtos.size()) {
             //Need to reorder the tmplist (dst-src) to be the same order as src-dst
-            List<LayoutTurnout> dtos = new ArrayList<>();
+            List<LayoutTrackExpectedState<LayoutTurnout>> dtos = new ArrayList<>();
             for (int i = tmpdtos.size(); i > 0; i--) {
                 dtos.add(tmpdtos.get(i - 1));
             }
 
             //check to make sure that we pass through the same turnouts
             if (enableAddRouteLogging) {
-                log.info("From " + this.getDisplayName()
-                        + " destination size " + dtos.size()
-                        + " v source size " + stod.size());
-                log.info("From " + this.getDisplayName()
-                        + " destination setting size " + tmpdtosSet.size()
-                        + " v source setting size " + stodSet.size());
+                log.info("From {} destination size {} v source size {}", this.getDisplayName(), dtos.size(), stod.size());
             }
 
             for (int i = 0; i < dtos.size(); i++) {
                 if (dtos.get(i) != stod.get(i)) {
                     if (enableAddRouteLogging) {
-                        log.info(dtos.get(i) + " != " + stod.get(i) + ": will quit");
+                        log.info("{} != {}: will quit", dtos.get(i), stod.get(i));
                     }
                     return;
                 }
             }
-            List<Integer> dtosSet = new ArrayList<>();
-            for (int i = tmpdtosSet.size(); i > 0; i--) {
-                //Need to reorder the tmplist (dst-src) to be the same order as src-dst
-                dtosSet.add(tmpdtosSet.get(i - 1));
-            }
 
-            for (int i = 0; i < dtosSet.size(); i++) {
-                int x = stodSet.get(i);
-                int y = dtosSet.get(i);
+            for (int i = 0; i < dtos.size(); i++) {
+                int x = stod.get(i).getExpectedState();
+                int y = dtos.get(i).getExpectedState();
 
                 if (x != y) {
                     if (enableAddRouteLogging) {
-                        log.info(block.getDisplayName() + " not on setting equal will quit " + x + ", " + y);
+                        log.info("{} not on setting equal will quit {}, {}", block.getDisplayName(), x, y);
                     }
                     return;
                 } else if (x == Turnout.UNKNOWN) {
                     if (enableAddRouteLogging) {
-                        log.info(block.getDisplayName() + " turnout state returned as UNKNOWN");
+                        log.info("{} turnout state returned as UNKNOWN", block.getDisplayName());
                     }
                     return;
                 }
@@ -2561,7 +2562,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             Set<LayoutTurnout> set = new HashSet<>();
 
             for (int i = 0; i < stod.size(); i++) {
-                boolean val = set.add(stod.get(i));
+                boolean val = set.add(stod.get(i).getObject());
                 if (val == false) {
                     //Duplicate found. will not add
                     return;
@@ -2572,24 +2573,21 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             //        //Further checks might be required.
             //    }
             //}
-            addThroughPathPostChecks(srcBlock, dstBlock, stod, stodSet);
+            addThroughPathPostChecks(srcBlock, dstBlock, stod);
         } else {
             //We know that a path that contains a double cross-over, is not reported correctly,
             //therefore we shall do some additional checks and add it.
             if (enableAddRouteLogging) {
                 log.info("sizes are not the same therefore, we will do some further checks");
             }
-            List<LayoutTurnout> maxt;
-            List<Integer> maxtSet;
+            List<LayoutTrackExpectedState<LayoutTurnout>> maxt;
             if (stod.size() >= tmpdtos.size()) {
                 maxt = stod;
-                maxtSet = stodSet;
             } else {
                 maxt = tmpdtos;
-                maxtSet = tmpdtosSet;
             }
 
-            Set<LayoutTurnout> set = new HashSet<>(maxt);
+            Set<LayoutTrackExpectedState<LayoutTurnout>> set = new HashSet<>(maxt);
 
             if (set.size() == maxt.size()) {
                 if (enableAddRouteLogging) {
@@ -2597,14 +2595,14 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 }
                 boolean allowAddition = false;
                 for (int i = 0; i < maxt.size(); i++) {
-                    LayoutTurnout turn = maxt.get(i);
+                    LayoutTurnout turn = maxt.get(i).getObject();
                     if (turn.type == LayoutTurnout.DOUBLE_XOVER) {
                         allowAddition = true;
                         //The double crossover gets reported in the opposite setting.
-                        if (maxtSet.get(i) == 2) {
-                            maxtSet.set(i, 4);
+                        if (maxt.get(i).getExpectedState() == 2) {
+                            maxt.get(i).setExpectedState(4);
                         } else {
-                            maxtSet.set(i, 2);
+                            maxt.get(i).setExpectedState(2);
                         }
                     }
                 }
@@ -2613,7 +2611,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     if (enableAddRouteLogging) {
                         log.info("addition allowed");
                     }
-                    addThroughPathPostChecks(srcBlock, dstBlock, maxt, maxtSet);
+                    addThroughPathPostChecks(srcBlock, dstBlock, maxt);
                 } else if (enableAddRouteLogging) {
                     log.info("No double cross-over so not a valid path");
                 }
@@ -2622,7 +2620,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }   // addThroughPath
 
     private void addThroughPathPostChecks(Block srcBlock,
-            Block dstBlock, List<LayoutTurnout> stod, List<Integer> stodSet) {
+            Block dstBlock, List<LayoutTrackExpectedState<LayoutTurnout>> stod) {
         List<Path> paths = block.getPaths();
         Path srcPath = null;
 
@@ -2639,7 +2637,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             }
         }
         ThroughPaths path = new ThroughPaths(srcBlock, srcPath, dstBlock, dstPath);
-        path.setTurnoutList(stod, stodSet);
+        path.setTurnoutList(stod);
 
         if (enableAddRouteLogging) {
             log.info("From " + this.getDisplayName() + " added Throughpath "
@@ -2880,6 +2878,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     /**
      * Provides an output to the console of how to reach a specific block from
      * our block
+     * @param inBlockName to find in route
      */
     public void printRoutes(String inBlockName) {
         log.info("Routes for block " + this.getDisplayName());
@@ -2896,6 +2895,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     /**
      * @param destBlock - is the destination of the block we are following
      * @param direction - is the direction of travel from the previous block
+     * @return next block
      */
     public Block getNextBlock(Block destBlock, int direction) {
         int bestMetric = 965000;
@@ -2917,6 +2917,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * Used if we already know the block prior to our block, and the destination
      * block. direction, is optional and is used where the previousBlock is
      * equal to our block.
+     * @param previousBlock start block
+     * @param destBlock finish block
+     * @return next block
      */
     @CheckForNull
     public Block getNextBlock(Block previousBlock, Block destBlock) {
@@ -3006,6 +3009,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * block returned. if the exclude block list is empty this is the first
      * time, it has been used. The parameters for the best last block are based
      * upon the last entry in the excludedBlock list
+     * @param previousBlock starting block
+     * @param destBlock finish block
+     * @param excludeBlock blocks to skip
+     * @param routingMethod value to match metric
+     * @return next block
      */
     public int getNextBestBlock(Block previousBlock, Block destBlock, List<Integer> excludeBlock, int routingMethod) {
         if (enableSearchRouteLogging) {
@@ -3208,6 +3216,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Returns valid Routes, based upon the next block and destination block
+     * @param nxtBlock next block
+     * @param dstBlock final block
+     * @return route that fit, or null
      */
     @CheckForNull
     Routes getValidRoute(Block nxtBlock, Block dstBlock) {
@@ -3240,6 +3251,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * Is the route to the destination block, going via our neighbouring block
      * valid. ie Does the block have a route registered via neighbour
      * "protecting" to the destination block.
+     * @param protecting neighbour block that might protect
+     * @param destination block
+     * @return true if we have valid path to block
      */
     public boolean isRouteToDestValid(Block protecting, Block destination) {
         if (protecting == destination) {
@@ -3257,6 +3271,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Returns a list of valid Routes to our destination block
+     * @param dstBlock target to find
+     * @return routes between this and dstBlock
      */
     List<Routes> getDestRoutes(Block dstBlock) {
         List<Routes> rtr = new ArrayList<>();
@@ -3270,6 +3286,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Returns a list of valid Routes via our next block
+     * @param nxtBlock target block
+     * @return list of routes to target block
      */
     List<Routes> getNextRoutes(Block nxtBlock) {
         List<Routes> rtr = new ArrayList<>();
@@ -3761,6 +3779,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     /* this should look after removal of a specific next hop from our neighbour*/
     /**
      * Gets the direction of travel to our neighbouring block.
+     * @param neigh neighbor block
+     * @return direction to get to neighbor block
      */
     public int getNeighbourDirection(LayoutBlock neigh) {
         if (neigh == null) {
@@ -3848,14 +3868,17 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /**
-     * Get the number of neighbour blocks attached to this block
+     * Get the number of neighbor blocks attached to this block
+     * @return count of neighbor
      */
     public int getNumberOfNeighbours() {
         return neighbours.size();
     }
 
     /**
-     * Get the neighbouring block at index i
+     * Get the neighboring block at index i
+     * @param i index to neighbor
+     * @return neighbor block
      */
     public Block getNeighbourAtIndex(int i) {
         return neighbours.get(i).getBlock();
@@ -3863,6 +3886,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Get the direction of travel to neighbouring block at index i
+     * @param i index in neighbors
+     * @return neighbor block
      */
     public int getNeighbourDirection(int i) {
         return neighbours.get(i).getDirection();
@@ -3870,6 +3895,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Get the metric/cost to neighbouring block at index i
+     * @param i index in neighbors
+     * @return metric of neighbor
      */
     public int getNeighbourMetric(int i) {
         return neighbours.get(i).getMetric();
@@ -3881,6 +3908,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * only recieve traffic from our neighbour, we can not send traffic to it
      * TXONLY - Means we do not recieve traffic from our neighbour, but can send
      * traffic to it.
+     * @param i index in neighbors
+     * @return direction of traffic
      */
     public String getNeighbourPacketFlowAsString(int i) {
         return decodePacketFlow(neighbours.get(i).getPacketFlow());
@@ -3889,6 +3918,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     /**
      * Is our neighbouring block at index i a mutual neighbour, ie both blocks
      * have each other registered as neighbours and are exchaning information.
+     * @param i index of neighbor
+     * @return true if both are mutual neighbors
      */
     public boolean isNeighbourMutual(int i) {
         return neighbours.get(i).isMutual();
@@ -4080,6 +4111,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Get the number of routes that the block has registered.
+     * @return count of routes
      */
     public int getNumberOfRoutes() {
         return routes.size();
@@ -4087,6 +4119,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Get the direction of route i.
+     * @param i index in routes
+     * @return direction
      */
     public int getRouteDirectionAtIndex(int i) {
         return routes.get(i).getDirection();
@@ -4094,6 +4128,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Get the destination block at route i
+     * @param i index in routes
+     * @return dest block from route
      */
     public Block getRouteDestBlockAtIndex(int i) {
         return routes.get(i).getDestBlock();
@@ -4101,6 +4137,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Get the next block at route i
+     * @param i index in routes
+     * @return next block from route
      */
     public Block getRouteNextBlockAtIndex(int i) {
         return routes.get(i).getNextBlock();
@@ -4110,6 +4148,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * Get the hop count of route i.<br>
      * The Hop count is the number of other blocks that we traverse to get to
      * the destination
+     * @param i index in routes
+     * @return hop count
      */
     public int getRouteHopCountAtIndex(int i) {
         return routes.get(i).getHopCount();
@@ -4119,6 +4159,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * Get the length of route i.<br>
      * The length is the combined length of all the blocks that we traverse to
      * get to the destination
+     * @param i index in routes
+     * @return length of block in route
      */
     public float getRouteLengthAtIndex(int i) {
         return routes.get(i).getLength();
@@ -4126,6 +4168,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Get the metric/cost at route i
+     * @param i index in routes
+     * @return metric
      */
     public int getRouteMetric(int i) {
         return routes.get(i).getMetric();
@@ -4134,6 +4178,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     /**
      * Gets the state (Occupied, unoccupied) of the destination layout block at
      * index i
+     * @param i index in routes
+     * @return state of block
      */
     public int getRouteState(int i) {
         return routes.get(i).getState();
@@ -4141,6 +4187,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Is the route to the destination potentially valid from our block.
+     * @param i index in route
+     * @return true if route is valid
      */
     //TODO: @Deprecated // Java standard pattern for boolean getters is "isRouteValid()"
     public boolean getRouteValid(int i) {
@@ -4149,6 +4197,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Gets the state of the destination layout block at index i as a string
+     * @param i index in routes
+     * @return dest status
      */
     public String getRouteStateAsString(int i) {
         int state = routes.get(i).getState();
@@ -4187,6 +4237,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * returned. If no valid route to the destination block can be found via the
      * next block then -1 is returned. If more than one route exists to the
      * destination then the route with the lowest count is returned.
+     * @param destination final block
+     * @param nextBlock adjcent block 
+     * @return hop count to final, -1 if not available
      */
     public int getBlockHopCount(Block destination, Block nextBlock) {
         if ((destination == nextBlock) && (isValidNeighbour(nextBlock))) {
@@ -4210,6 +4263,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * valid route to the destination block can be found via the next block then
      * -1 is returned. If more than one route exists to the destination then the
      * route with the lowest count is returned.
+     * @param destination final block
+     * @param nextBlock adjcent block
+     * @return metric to final block, -1 if not available
      */
     public int getBlockMetric(Block destination, Block nextBlock) {
         if ((destination == nextBlock) && (isValidNeighbour(nextBlock))) {
@@ -4233,6 +4289,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * If no valid route to the destination block can be found via the next
      * block then -1 is returned. If more than one route exists to the
      * destination then the route with the lowest count is returned.
+     * @param destination final block
+     * @param nextBlock adjcent block
+     * @return lenght to final, -1 if not viable
      */
     public float getBlockLength(Block destination, Block nextBlock) {
         if ((destination == nextBlock) && (isValidNeighbour(nextBlock))) {
@@ -4379,6 +4438,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Returns the number of valid through paths on this block.
+     * @return count of paths through this block
      */
     public int getNumberOfThroughPaths() {
         return throughPaths.size();
@@ -4386,6 +4446,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Returns the source block at index i
+     * @param i index in throughPaths
+     * @return source block
      */
     public Block getThroughPathSource(int i) {
         return throughPaths.get(i).getSourceBlock();
@@ -4393,6 +4455,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Returns the destination block at index i
+     * @param i index in throughPaths
+     * @return final block
      */
     public Block getThroughPathDestination(int i) {
         return throughPaths.get(i).getDestinationBlock();
@@ -4400,6 +4464,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Is the through path at index i active
+     * @param i index in path
+     * @return active or not
      */
     public Boolean isThroughPathActive(int i) {
         return throughPaths.get(i).isPathActive();
@@ -4443,7 +4509,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             return pathActive;
         }
 
-        void setTurnoutList(List<LayoutTurnout> turnouts, List<Integer> turnoutSettings) {
+        void setTurnoutList(List<LayoutTrackExpectedState<LayoutTurnout>> turnouts) {
             if (!_turnouts.isEmpty()) {
                 Set<Turnout> en = _turnouts.keySet();
                 for (Turnout listTurnout : en) {
@@ -4460,9 +4526,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             }
             _turnouts = new HashMap<>(turnouts.size());
             for (int i = 0; i < turnouts.size(); i++) {
-                if (turnouts.get(i) instanceof LayoutSlip) {
-                    int slipState = turnoutSettings.get(i);
-                    LayoutSlip ls = (LayoutSlip) turnouts.get(i);
+                if (turnouts.get(i).getObject() instanceof LayoutSlip) {
+                    int slipState = turnouts.get(i).getExpectedState();
+                    LayoutSlip ls = (LayoutSlip) turnouts.get(i).getObject();
                     int taState = ls.getTurnoutState(slipState);
                     _turnouts.put(ls.getTurnout(), taState);
                     ls.getTurnout().addPropertyChangeListener(this, ls.getTurnoutName(), "Layout Block Routing");
@@ -4471,12 +4537,12 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     _turnouts.put(ls.getTurnoutB(), tbState);
                     ls.getTurnoutB().addPropertyChangeListener(this, ls.getTurnoutBName(), "Layout Block Routing");
                 } else {
-                    if (turnouts.get(i).getTurnout() != null) {
-                        _turnouts.put(turnouts.get(i).getTurnout(), turnoutSettings.get(i));
-                        turnouts.get(i).getTurnout().addPropertyChangeListener(this, turnouts.get(i).getTurnoutName(),
-                                "Layout Block Routing");
+                    LayoutTurnout lt = turnouts.get(i).getObject();
+                    if (lt.getTurnout() != null) {
+                        _turnouts.put(lt.getTurnout(), turnouts.get(i).getExpectedState());
+                        lt.getTurnout().addPropertyChangeListener(this, lt.getTurnoutName(), "Layout Block Routing");
                     } else {
-                        log.error(turnouts.get(i) + " has no physical turnout allocated");
+                        log.error("{} has no physical turnout allocated", lt);
                     }
                 }
             }

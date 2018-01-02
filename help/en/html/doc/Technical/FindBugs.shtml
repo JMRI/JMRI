@@ -192,14 +192,15 @@ scanning through the code.
         javax.annotation.Nullable</code></a> - This doesn't really
         mean what people think it does, as FindBugs doesn't really
         check anything when this is used. From the FindBugs documentation:
-        <blockquote>
+          <blockquote>
             FindBugs will treat the annotated items as though they had
             no annotation. In practice this annotation is useful only
             for overriding an overarching NonNull annotation. Use
             javax.annotation.ParametersAreNullableByDefault to set it
             for an entire class. Prefer the use of
-            <code>CheckForNull</code>.</li>
-        </blockquote>
+            <code>CheckForNull</code>.
+          </blockquote>
+        </li>
       </ul>
 
       <h3>Suppressed Warnings</h3>We have turned off the routine

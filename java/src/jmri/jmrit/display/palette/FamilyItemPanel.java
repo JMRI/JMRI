@@ -25,14 +25,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.util.swing.ImagePanel;
-import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ItemPanel general implementation for placing of CPE items having sets of icons (families).
+ * ItemPanel general implementation for placement of CPE items having sets of icons (families).
+ * @see ItemPanel palette class diagram
  * 
  * @author Pete Cressman Copyright (c) 2010, 2011
  * @author Egbert Broerse 2017
@@ -54,26 +55,26 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected HashMap<String, NamedIcon> _currentIconMap;
     IconDialog _dialog;
     ButtonGroup _familyButtonGroup;
-    protected JPanel bgBoxPanel; // panel with a combo box to set a contrasting background behind the icon preview
+    protected JPanel bgBoxPanel; // panel with a combo box to manually pick a contrasting background behind the icon preview
 
     static boolean _suppressNamePrompts = false;
 
     /**
      * Constructor types with multiple families and multiple icon families.
      *
-     * @param parentFrame enclosing parentFrame
-     * @param type bean type
-     * @param family icon family
-     * @param editor panel editor
+     * @param parentFrame   enclosing parentFrame
+     * @param type          bean type
+     * @param family        icon family
+     * @param editor        panel editor
      */
-    public FamilyItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
+    public FamilyItemPanel(DisplayFrame parentFrame, String type, String family, Editor editor) {
         super(parentFrame, type, editor);
         _family = family;
     }
 
     /**
-     * Init for creation.
-     * Also called by enclosing TabbedPanel on change of displayed tab Pane.
+     * Create a FamilyIconPanel.
+     * Also called by the enclosing TabbedPanel on change of displayed tab Pane to activate a different pane.
      */
     @Override
     public void init() {
@@ -85,8 +86,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
             makeBottomPanel(null);
             super.init();
         }
-        // updateBgCombo(); // TODO (see proposed method in ItemPanel class
-        log.debug("tab redisplayed. BgSet = {}", previewBgSet);
     }
 
     /**
@@ -184,7 +183,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             log.debug("null panels for combo");
             return;
         }
-        bgBoxPanel = makeBgButtonPanel(_iconPanel, null, _backgrounds);
+        bgBoxPanel = makeBgButtonPanel(_iconPanel, null, _backgrounds, _paletteFrame);
         // to enable returning null for some types, skip Reporter. Don't add here for SignalMast (takes care of its own combo)
         if (bgBoxPanel != null) {
             _bottom1Panel.add(bgBoxPanel);
@@ -245,10 +244,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
             return;
         } else { // no match with Palette families
             if (ItemPalette.getIconMap(_itemType, _family) != null) {
-            //                JOptionPane.showMessageDialog(_paletteFrame,
-            //                        Bundle.getMessage("DuplicateFamilyName", _family, _itemType),
-            //                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-                // make sure name does not duplicate a known name
+            // JOptionPane.showMessageDialog(_paletteFrame,
+            //      Bundle.getMessage("DuplicateFamilyName", _family, _itemType),
+            //      Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            // make sure name does not duplicate a known name
                 _family = null;
             }
         }
@@ -478,14 +477,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (_dragIconPanel == null) {
             _dragIconPanel = new ImagePanel();
             _dragIconPanel.setOpaque(true); // to show background color/squares
-            if (_backgrounds != null) {
-                _dragIconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
-                if (_iconPanel != null) {
-                    _iconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
-                }
-            } else {
-                log.debug("FamilyItemPanel - no value for previewBgSet");
-            }
             _dragIconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                     Bundle.getMessage("PreviewBorderTitle")));
             _dragIconPanel.setLayout(new FlowLayout());
@@ -494,12 +485,21 @@ public abstract class FamilyItemPanel extends ItemPanel {
         } else {
             _dragIconPanel.removeAll();
         }
+        if (_backgrounds != null) {
+            int previewBgSet = _paletteFrame.getPreviewBg();
+            log.debug("set backgrounds to {}", previewBgSet);
+            _dragIconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
+            if (_iconPanel != null) {
+                _iconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
+            }
+        } else {
+            log.debug("FamilyItemPanel - no value for previewBgSet");
+        }
         _dragIconPanel.setVisible(true);
 
         // add a SetBackground combo
-        // TODO add updating of panel upon display via previewBgSet
         if (_bottom1Panel != null && bgBoxPanel == null && !"SignalMast".equals(_itemType)) {
-            bgBoxPanel = makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds);
+            bgBoxPanel = makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds, _paletteFrame);
             // to enable returning null for some types, skip Reporter. Don't add here for SignalMast (takes care of its own combo)
             if (bgBoxPanel != null) {
                 _bottom1Panel.add(bgBoxPanel);

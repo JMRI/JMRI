@@ -25,29 +25,37 @@
       <model model="FH05B v3.06.26 (firmware 3.06+)" lowVersionID="26" highVersionID="26" numOuts="6" numFns="16" productID="FH05B_2016.03" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from March 2016" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
         </output>
         <output name="2" label="Rear|Light" maxcurrent="150mA">
           <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Posterior</label>
         </output>
         <output name="3" label="AUX|1" maxcurrent="300mA">
           <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
         </output>
         <output name="4" label="AUX|2" maxcurrent="300mA">
           <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
         </output>
         <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
         <!-- New from fw3.03  -->
           <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+          <label xml:lang="ca">AUX 3|o SUSI ZCLK</label>
         </output>
         <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
         <!-- New from fw3.03  -->
           <label xml:lang="de">AUX 4|(o. SUSI ZDAT)</label>
+          <label xml:lang="ca">AUX 4|(o SUSI ZDAT)</label>
         </output>
         <output name="7" label="Dimmed|Lights">
           <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat de llums</label>
         </output>
         <output name="8" label="Shunting|Speed">
           <label xml:lang="de">Rangiergang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
         </output>
         <size length="13.7" width="7.8" height="1.5" units="mm"/>
         <protocols>
@@ -58,35 +66,45 @@
       <model model="FH22A v3.06.26 (firmware 3.06+)" lowVersionID="26" highVersionID="26" numOuts="8" numFns="16" productID="FH22A_2016.03" comment="FH22A with update from March 2016" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
         </output>
         <output name="2" label="Rear|Light" maxcurrent="150mA">
           <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Posterior</label>
         </output>
         <output name="3" label="AUX|1" maxcurrent="300mA">
           <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
         </output>
         <output name="4" label="AUX|2" maxcurrent="300mA">
           <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
         </output>
         <output name="5" label="AUX|3" maxcurrent="1A">
           <label xml:lang="de">AUX 3</label>
+          <label xml:lang="ca">AUX 3</label>
         </output>
         <output name="6" label="AUX|4" maxcurrent="1A">
           <label xml:lang="de">AUX 4</label>
+          <label xml:lang="ca">AUX 4</label>
         </output>
         <output name="7" label="AUX 5|(or SUSI ZCLK)" maxcurrent="20mA">
         <!-- New from fw3.03  -->
           <label xml:lang="de">AUX 5|(o. SUSI ZCLK)</label>
+		  <label xml:lang="ca">AUX 5| SUSI ZCLK</label>
         </output>
         <output name="8" label="AUX 6|(or SUSI ZDAT)" maxcurrent="20mA">
         <!-- New from fw3.03  -->
           <label xml:lang="de">AUX 6|(o. SUSI ZDAT)</label>
+          <label xml:lang="ca">AUX 6| SUSI ZDAT</label>
         </output>
         <output name="9" label="Dimmed|Lights">
           <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
         </output>
         <output name="10" label="Shunting|Speed">
           <label xml:lang="de">Rangiergang</label>
+          <label xml:lang="ca">Marxa de Maniobres</label>
         </output>
         <size length="16.1" width="15.8" height="3.3" units="mm"/>
         <protocols>
@@ -97,29 +115,37 @@
       <model model="FH05B v3.07.66 (firmware 3.07+)" lowVersionID="66" highVersionID="66" numOuts="6" numFns="16" productID="FH05B_2016.06" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from June 2016" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
         </output>
         <output name="2" label="Rear|Light" maxcurrent="150mA">
           <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Posterior</label>
         </output>
         <output name="3" label="AUX|1" maxcurrent="300mA">
           <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
         </output>
         <output name="4" label="AUX|2" maxcurrent="300mA">
           <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>       
         </output>
         <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
         <!-- New from fw3.03  -->
           <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+          <label xml:lang="ca">AUX 3| SUSI ZCLK</label>
         </output>
         <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
         <!-- New from fw3.03  -->
           <label xml:lang="de">AUX 4|(o. SUSI ZDAT)</label>
+          <label xml:lang="ca">AUX 4\SUSI ZDAT</label>
         </output>
         <output name="7" label="Dimmed|Lights">
           <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat de llums</label>
         </output>
         <output name="8" label="Shunting|Speed">
           <label xml:lang="de">Rangiergang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
         </output>
         <size length="13.7" width="7.8" height="1.5" units="mm"/>
         <protocols>
@@ -130,35 +156,44 @@
       <model model="FH22A v3.07.66 (firmware 3.07+)" lowVersionID="66" highVersionID="66" numOuts="8" numFns="16" productID="FH22A_2016.06" comment="FH22A with update from June 2016" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
         </output>
         <output name="2" label="Rear|Light" maxcurrent="150mA">
-          <label xml:lang="de">LR</label>
+          <label xml:lang="de">Llum Posterior</label>
         </output>
         <output name="3" label="AUX|1" maxcurrent="300mA">
           <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
         </output>
         <output name="4" label="AUX|2" maxcurrent="300mA">
           <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
         </output>
         <output name="5" label="AUX|3" maxcurrent="1A">
           <label xml:lang="de">AUX 3</label>
+          <label xml:lang="ca">AUX 3</label>
         </output>
         <output name="6" label="AUX|4" maxcurrent="1A">
           <label xml:lang="de">AUX 4</label>
+          <label xml:lang="ca">AUX 4</label>
         </output>
         <output name="7" label="AUX 5|(or SUSI ZCLK)" maxcurrent="20mA">
         <!-- New from fw3.03  -->
           <label xml:lang="de">AUX 5|(o. SUSI ZCLK)</label>
+          <label xml:lang="ca">AUX 5| SUSI ZCLK</label>
         </output>
         <output name="8" label="AUX 6|(or SUSI ZDAT)" maxcurrent="20mA">
         <!-- New from fw3.03  -->
           <label xml:lang="de">AUX 6|(o. SUSI ZDAT)</label>
+          <label xml:lang="ca">AUX 6| SUSI ZDAT</label>
         </output>
         <output name="9" label="Dimmed|Lights">
           <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
         </output>
         <output name="10" label="Shunting|Speed">
           <label xml:lang="de">Rangiergang</label>
+          <label xml:lang="ca">Marxa Maniobres</label>
         </output>
         <size length="16.1" width="15.8" height="3.3" units="mm"/>
         <protocols>
@@ -218,6 +253,7 @@
       <label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
       <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
       <label xml:lang="de">Zurücksetzen aller CV auf die Werkseinstellungen</label>
+      <label xml:lang="ca">Reset a valors de fàbrica</label>
      </factReset>
     </resets>
   </decoder>

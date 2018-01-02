@@ -31,6 +31,6 @@ public class ProgCheckActionTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgCheckActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ProgCheckActionTest.class.getName());
 
 }

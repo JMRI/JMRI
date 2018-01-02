@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
     public static final String NONE = "";
+//    protected static final int RANGE_DEFAULT = 25;
 
     protected String _id = NONE;
     protected Location _location = null; // the location in the route
@@ -38,6 +39,8 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     protected String _departureTime = NONE; // departure time from this location
     protected int _trainIconX = 0; // the x & y coordinates for the train icon
     protected int _trainIconY = 0;
+//    protected int _trainIconRangeX = RANGE_DEFAULT; // the x & y detection range for the train icon
+//    protected int _trainIconRangeY = RANGE_DEFAULT;
     protected String _comment = NONE;
 
     protected int _carMoves = 0; // number of moves at this location
@@ -384,6 +387,40 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     public int getTrainIconY() {
         return _trainIconY;
     }
+    
+ 
+//    public void setTrainIconRangeX(int x) {
+//        int old = _trainIconRangeX;
+//        _trainIconRangeX = x;
+//        if (old != x) {
+//            setDirtyAndFirePropertyChange("trainIconRangeX", Integer.toString(old), Integer.toString(x)); // NOI18N
+//        }
+//    }
+
+    /**
+     * Gets the X range for detecting the manual movement of a train icon.
+     * @return the range for detection
+     */
+    public int getTrainIconRangeX() {
+        return getLocation().getTrainIconRangeX();
+    }
+
+
+//    public void setTrainIconRangeY(int y) {
+//        int old = _trainIconRangeY;
+//        _trainIconRangeY = y;
+//        if (old != y) {
+//            setDirtyAndFirePropertyChange("trainIconRangeY", Integer.toString(old), Integer.toString(y)); // NOI18N
+//        }
+//    }
+
+    /**
+     * Gets the Y range for detecting the manual movement of a train icon.
+     * @return the range for detection
+     */
+    public int getTrainIconRangeY() {
+        return getLocation().getTrainIconRangeY();
+    }
 
     /**
      * Set the train icon panel coordinates to the location defaults.
@@ -550,6 +587,14 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         e.setAttribute(Xml.DEPART_TIME, getDepartureTime());
         e.setAttribute(Xml.TRAIN_ICON_X, Integer.toString(getTrainIconX()));
         e.setAttribute(Xml.TRAIN_ICON_Y, Integer.toString(getTrainIconY()));
+        
+//        if (getTrainIconRangeX() != RANGE_DEFAULT) {
+//            e.setAttribute(Xml.TRAIN_ICON_RANGE_X, Integer.toString(getTrainIconRangeX()));
+//        }
+//        if (getTrainIconRangeY() != RANGE_DEFAULT) {
+//            e.setAttribute(Xml.TRAIN_ICON_RANGE_Y, Integer.toString(getTrainIconRangeY()));
+//        }
+        
         e.setAttribute(Xml.COMMENT, getComment());
 
         return e;

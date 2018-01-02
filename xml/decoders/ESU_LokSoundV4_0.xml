@@ -58,6 +58,10 @@
     <version author="Ronald Kuhn" version="18" lastUpdated="20170722"/>
     <!-- ver19 concealed obsolete legacy definitions and removed obsolete functionlabels & soundlabels -->
     <version author="Dave Heap" version="19" lastUpdated="20170819"/>
+    <!-- ver20 added German translation for functionlabels-->
+    <version author="Ronald Kuhn" version="20" lastUpdated="20171217"/>
+    <!-- ver21 added Dynamic Brake deceleration rate -->
+    <version author="Dave Heap" version="21" lastUpdated="20180102"/>
     <decoder>
         <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554493,33554503,33554538">
@@ -100,13 +104,32 @@
                 <size length="51" width="41" height="14" units="mm"/>
             </model>
             <functionlabels>
-                <functionlabel num="0" lockable="true">Light</functionlabel>
-                <functionlabel num="2" lockable="false">Horn</functionlabel>
+                <functionlabel num="0" lockable="true">
+                  <text>Light</text>
+                  <text xml:lang="de">Licht</text>
+                </functionlabel>
+                <functionlabel num="1" lockable="true">
+                  <text>Bell</text>
+                  <text xml:lang="de">Sound</text>
+                </functionlabel>
+                <functionlabel num="2" lockable="false">
+                  <text>Horn</text>
+                  <text xml:lang="de">Pfeife / Signalhorn</text>
+                </functionlabel>
             </functionlabels>
             <soundlabels>
-                <soundlabel num="25">Random sounds</soundlabel>
-                <soundlabel num="26">Automatic brake sound</soundlabel>
-                <soundlabel num="27">Gear shift sound</soundlabel>
+                <soundlabel num="25">
+                  <text>Random sounds</text>
+                  <text xml:lang="de">Zufallssound</text>
+                </soundlabel>
+                <soundlabel num="26">
+                  <text>Automatic brake sound</text>
+                  <text xml:lang="de">automatischer Bremssound</text>
+                </soundlabel>
+                <soundlabel num="27">
+                  <text>Gear shift sound</text>
+                  <text xml:lang="de">Schaltgeräusch</text>
+                </soundlabel>
             </soundlabels>
         </family>
         <programming direct="yes" paged="yes" register="yes" ops="yes">
@@ -132,6 +155,7 @@
                 <decVal/>
                 <label>Sound Configuration Number</label>
                 <label xml:lang="de">Gewählte Soundkonfiguration</label>
+                <label xml:lang="ca">Número configurqació de so</label>
             </variable>
             <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
         </variables>

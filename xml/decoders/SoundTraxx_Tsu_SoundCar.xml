@@ -17,18 +17,23 @@
   <version author="Marc Fournier" version="2" lastUpdated="20171014"/>
   <version author="Marc Fournier/Alain Le Marchand" version="3" lastUpdated="20171126"/>
   <version author="Alain Le Marchand" version="3.1" lastUpdated="20171210"/>
+  <version author="Alain Le Marchand" version="3.2" lastUpdated="20180101"/>
   <!-- This file contains the Tsunami definitions for ALL of the internal combustion engine locomotives	-->
-  <!-- version 1	Created from "Soundtraxx_Tsu_Diesel.xml" version 14.					-->
+  <!-- Version 1	Created from "Soundtraxx_Tsu_Diesel.xml" version 14.					-->
   <!--				Based on Soundtraxx SoundCar Manuals version 0, software 1.01			-->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Airhorn=output 5, etc.
                 FX5 or FX6 are either physical or logical outputs used for "Rule 17 mode"         -->
   <!-- 			For SoundCar decoders outputs "7" and "10" are reserved (not used).  Associated bits are skipped -->
-  <!-- 	version 2	Added Livestock related CV's 144,203,266 to definition -->
+  <!-- Version 2	Added Livestock related CV's 144,203,266 to definition -->
   <!--				Based on Soundtraxx SoundCar Technical Reference software 1.03, Rev.D		-->
-  <!--  version 3	Combined Old (1.01) and New (1.03) Soundcar software levels into one definition -->
-  <!--  version 3.1	Label update for function map + tooltips for CV105-106 (version number) -->
+  <!-- Version 3	Combined Old (1.01) and New (1.03) Soundcar software levels into one definition -->
+  <!-- Version 3.1	Label update for function map + tooltips for CV105-106 (version number) -->
+  <!-- version 3.2: Update after clarification with SoundTraxx customer support                         -->
+  <!--              CV61, 63, 64, Speed table (CV66-95) added  + Specific pane for Speed Table          -->
+  <!--              CV112.0 effect linked to generator, not to a specific key                           -->
+
   <!-- Decoder Model information follows -->
 <decoder>
     <family name="Tsunami SoundCar" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Tsunami SoundCar decoders">
@@ -1601,12 +1606,12 @@
         <label>Transponding Control</label>
       </variable>
 	  -->
-  	  <!-- Not used in this decoder	- Sound only decoder
-      <variable CV="63" item="Radio Power Conversion" default="20" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
+  	  <!-- Sound only decoder - Motor control CVS used for synchronizing the clickety clack, flat spot, wheel noise and flange squeal sound effects -->
+      <variable CV="63" item="Radio Power Conversion" default="20" tooltip="&lt;html&gt;Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move.&lt;br&gt;Note: used for synchronizing the clickety clack, flat spot, wheel noise and flange squeal sound effects&lt;/html&gt;">
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
       </variable>
-      <variable CV="64" item="Zero-1 Power Conversion" default="180" tooltip="Sets the maximum average voltage applied to the motor when operating in analog mode">
+      <variable CV="64" item="Zero-1 Power Conversion" default="180" tooltip="&lt;html&gt;Sets the maximum average voltage applied to the motor when operating in analog mode.&lt;br&gt;Note: used for synchronizing the clickety clack, flat spot, wheel noise and flange squeal sound effects&lt;/html&gt;">
         <decVal/>
         <label>Analog Mode Max Motor Voltage (0-255)</label>
       </variable>
@@ -1622,22 +1627,23 @@
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-	  -->
+
       <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUuserId.xml"/>
 	  <!-- Sound Configuration starts here -->
-      <variable CV="112" mask="XXXXXXXV" item="Sound Option 1" default="0" tooltip="Generator Control">
+      <variable CV="112" mask="XXXXXXXV" item="Sound Option 1" default="0">
         <enumVal>
-          <enumChoice choice="Generator sound effect controlled by F9">
-            <choice>Generator sound effect controlled by F9</choice>
-            <choice xml:lang="it">Effetto suono Generatore controllato da F9</choice>
+          <enumChoice choice="Sound effect controlled by Function key">
+            <choice>Sound effect controlled by Function key</choice>
+            <choice xml:lang="it">Effetto suono controllato da tasto Funzione</choice>
           </enumChoice>
-          <enumChoice choice="Generator sound effect always on">
-            <choice>Generator sound effect always on</choice>
-            <choice xml:lang="it">Effetto suono Generatore sempre On</choice>
+          <enumChoice choice="Sound effect always on">
+            <choice>Sound effect always on</choice>
+            <choice xml:lang="it">Effetto suono sempre On</choice>
           </enumChoice>
         </enumVal>
         <label>Generator Control</label>
         <label xml:lang="it">Controllo Generatore</label>
+        <tooltip>&lt;html&gt;The generator can either be automatic or controlled with a function key (default F9).&lt;br&gt;  When the automatic generator is enabled, the function key is ignored.&lt;/html&gt;</tooltip>
       </variable>
       <variable CV="112" mask="XXXXXXVX" item="Sound Option 2" default="0" tooltip="Sets the number of axles per truck used to determine the clickety-clack rate">
         <enumVal>
@@ -2213,4 +2219,6 @@
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneReverb.xml"/>
   -->
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCsoundcar.xml"/>
+  <!-- Specific pane for Speed table with information related to this SoundCar decoder -->
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/SNDSpeedTablePane.xml"/>
 </decoder-config>
