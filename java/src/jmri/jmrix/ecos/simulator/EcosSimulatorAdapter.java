@@ -3,6 +3,8 @@ package jmri.jmrix.ecos.simulator;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 import jmri.jmrix.NetworkPortAdapter;
 import jmri.jmrix.ecos.EcosConnectionTypeList;
 import jmri.jmrix.ecos.EcosMessage;
@@ -10,8 +12,6 @@ import jmri.jmrix.ecos.EcosPortController;
 import jmri.jmrix.ecos.EcosReply;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.jmrix.ecos.EcosTrafficController;
-import org.apache.commons.io.input.NullInputStream;
-import org.apache.commons.io.output.NullOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +29,13 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood Copyright 2017
  */
 public class EcosSimulatorAdapter extends EcosPortController implements NetworkPortAdapter, Runnable {
+
+    // streams to share with user class
+    private DataOutputStream pout = null; // provided to classes who want to write to us
+    private DataInputStream pin = null; // provided to classes who want data from us
+    // internal ends of the pipes
+    private DataOutputStream outpipe = null; // feed pin
+    private DataInputStream inpipe = null; // feed pout
 
     // private control members
     private boolean opened = true;
@@ -88,7 +95,7 @@ public class EcosSimulatorAdapter extends EcosPortController implements NetworkP
     public void configure() {
         // connect to the traffic controller
         log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
-        EcosTrafficController control = new EcosSimulatorTrafficController(getSystemConnectionMemo());
+        EcosTrafficController control = new EcosTrafficController(getSystemConnectionMemo());
         //compare with: XNetTrafficController packets = new XNetPacketizer(new LenzCommandStation());
         control.connectPort(this);
         this.getSystemConnectionMemo().setEcosTrafficController(control);
@@ -108,6 +115,19 @@ public class EcosSimulatorAdapter extends EcosPortController implements NetworkP
     @Override
     public void connect() throws java.io.IOException {
         log.debug("connect called");
+        try {
+            PipedOutputStream tempPipeI = new PipedOutputStream();
+            log.debug("tempPipeI created");
+            pout = new DataOutputStream(tempPipeI);
+            inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
+            log.debug("inpipe created {}", inpipe != null);
+            PipedOutputStream tempPipeO = new PipedOutputStream();
+            outpipe = new DataOutputStream(tempPipeO);
+            pin = new DataInputStream(new PipedInputStream(tempPipeO));
+        } catch (IOException e) {
+            log.error("IOException creating pipes", e);
+        }
+        opened = true;
     }
 
     // Base class methods for the ECoSPortController simulated interface
@@ -291,7 +311,7 @@ public class EcosSimulatorAdapter extends EcosPortController implements NetworkP
     /**
      * Write reply to output.
      * <p>
- Copied from jmri.jmrix.nce.simulator.EcosSimulatorAdapter.
+     * Copied from jmri.jmrix.nce.simulator.EcosSimulatorAdapter.
      *
      * @param r reply on message
      */
@@ -332,13 +352,6 @@ public class EcosSimulatorAdapter extends EcosPortController implements NetworkP
         }
         return msg;
     }
-
-    // streams to share with user class
-    private DataOutputStream pout = new DataOutputStream(new NullOutputStream());
-    private DataInputStream pin = new DataInputStream(new NullInputStream(0));
-    // internal ends of the pipes
-    private DataOutputStream outpipe = null; // feed pin
-    private DataInputStream inpipe = null; // feed pout
 
     private final static Logger log = LoggerFactory.getLogger(EcosSimulatorAdapter.class);
 
