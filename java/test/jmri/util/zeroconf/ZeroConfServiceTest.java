@@ -2,16 +2,38 @@ package jmri.util.zeroconf;
 
 import apps.tests.Log4JFixture;
 import java.util.HashMap;
-import javax.jmdns.ServiceInfo;
 import jmri.util.JUnitUtil;
 import jmri.web.server.WebServerPreferences;
+import javax.jmdns.JmDNS;
+import javax.jmdns.impl.JmDNSImpl;
+import javax.jmdns.impl.DNSOutgoing;
+import javax.jmdns.impl.DNSIncoming;
+import javax.jmdns.ServiceInfo;
+import java.net.InetAddress;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.modules.junit4.PowerMockRunner;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import org.mockito.Mockito;
+import static org.mockito.Mockito.verify;
+import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
+import org.powermock.core.classloader.annotations.MockPolicy;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+
+
+@MockPolicy(Slf4jMockPolicy.class)
+@PrepareForTest({ JmDNS.class})
+
 
 /**
  * Tests for the ZeroConfService class
@@ -19,35 +41,66 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2014
  * @author Randall Wood Copyright (C) 2016
  */
+@RunWith(PowerMockRunner.class)
 public class ZeroConfServiceTest {
 
     private static final String HTTP = "_http._tcp.local.";
 
+    private static JmDNS jmdns;
+
     @BeforeClass
     public static void setUpClass() throws Exception {
+        mockStatic(JmDNS.class);
+        Mockito.when(JmDNS.create()).thenReturn(jmdns);
+        Mockito.when(JmDNS.create(any(InetAddress.class))).thenReturn(jmdns);
+        Mockito.when(JmDNS.create(any(InetAddress.class), anyString())).thenReturn(jmdns);
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
 
+
+    class TestZeroConfServiceListener implements ZeroConfServiceListener {
+
+       public boolean queuedService = false;
+       public boolean publishedService = false;
+       public boolean unpublishedService = false;
+
+       public void serviceQueued(ZeroConfServiceEvent se){
+          queuedService = true;
+       }
+
+       public void servicePublished(ZeroConfServiceEvent se) {
+          publishedService = true;
+       }
+
+       public void serviceUnpublished(ZeroConfServiceEvent se) {
+          unpublishedService = true;
+       }
+
+    }
+
     @Before
     public void setUp() throws Exception {
-        JUnitUtil.setUp();
+        ZeroConfService.reset();
         JUnitUtil.resetProfileManager();
-        ZeroConfService.stopAll();
-        JUnitUtil.waitFor(() -> {
-            return (ZeroConfService.allServices().isEmpty());
-        }, "Stopping all ZeroConf Services");
+
+        java.net.InetAddress addr = java.net.Inet4Address.getLoopbackAddress();
+        JmDNSImpl jmdnsi = PowerMockito.spy(new JmDNSImpl(addr,"test"));
+
+        PowerMockito.doNothing().when(jmdnsi).send(any(DNSOutgoing.class));
+        PowerMockito.doNothing().when(jmdnsi).respondToQuery(any(DNSIncoming.class));
+        PowerMockito.doNothing().when(jmdnsi).registerService(any(ServiceInfo.class));
+        PowerMockito.doNothing().when(jmdnsi).unregisterService(any(ServiceInfo.class));
+        jmdns = jmdnsi;
     }
 
     @After
     public void tearDown() throws Exception {
-        ZeroConfService.stopAll();
-        JUnitUtil.waitFor(() -> {
-            return (ZeroConfService.allServices().isEmpty());
-        }, "Stopping all ZeroConf Services");
-        JUnitUtil.tearDown();
+        ZeroConfService.reset();
+        jmdns.close();
+        jmdns = null;
     }
 
     /**
@@ -98,6 +151,16 @@ public class ZeroConfServiceTest {
      * Test of key method, of class ZeroConfService.
      */
     @Test
+    public void testKey_0args_from_2arg_create() {
+        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        String result = instance.key();
+        Assert.assertEquals(WebServerPreferences.getDefault().getRailroadName().toLowerCase() + "." + HTTP, result);
+    }
+
+    /**
+     * Test of key method, of class ZeroConfService.
+     */
+    @Test
     public void testKey_String_String() {
         String result = ZeroConfService.key("THAT", "THIS");
         Assert.assertEquals("this.that", result);
@@ -138,21 +201,33 @@ public class ZeroConfServiceTest {
     public void testIsPublished() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         Assert.assertFalse(instance.isPublished());
+        instance.publish();
+        Assert.assertTrue(instance.isPublished());
     }
 
     /**
-     * Test of publish method, of class ZeroConfService.
+     * Test of the publish and stop methods, of class ZeroConfService.
      */
     @Test
-    public void testPublish() {
+    public void testPublishAndStop() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         Assert.assertFalse(instance.isPublished());
+        TestZeroConfServiceListener zcl = new TestZeroConfServiceListener();
+        instance.addEventListener(zcl);
         // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
-        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
-            return instance.isPublished() == true;
+        Assume.assumeTrue("queued event received", JUnitUtil.waitFor(() -> {
+           return zcl.queuedService;
+        }));
+        Assume.assumeTrue("published event received", JUnitUtil.waitFor(() -> {
+           return zcl.publishedService;
         }));
         Assert.assertTrue(instance.isPublished());
+        instance.stop();
+        Assume.assumeTrue("unpublished event received", JUnitUtil.waitFor(() -> {
+           return zcl.unpublishedService;
+        }));
+        Assert.assertFalse(instance.isPublished());
     }
 
     /**
@@ -162,12 +237,10 @@ public class ZeroConfServiceTest {
     public void testStop() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         Assert.assertFalse(instance.isPublished());
-        // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
-        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
-            return instance.isPublished() == true;
-        }));
-        Assert.assertTrue(instance.isPublished());
+        // note that we don't make sure the service
+        // is actually published before calling stop,
+        // so this is different than the PublishAndStop test.
         instance.stop();
         JUnitUtil.waitFor(() -> {
             return instance.isPublished() == false;
@@ -182,17 +255,46 @@ public class ZeroConfServiceTest {
     public void testStopAll() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         Assert.assertFalse(instance.isPublished());
+        TestZeroConfServiceListener zcl = new TestZeroConfServiceListener();
+        instance.addEventListener(zcl);
         // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
-        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
-            return instance.isPublished() == true;
+        Assume.assumeTrue("queued event received", JUnitUtil.waitFor(() -> {
+           return zcl.queuedService;
+        }));
+        Assume.assumeTrue("published event received", JUnitUtil.waitFor(() -> {
+           return zcl.publishedService;
         }));
         Assert.assertTrue(instance.isPublished());
         ZeroConfService.stopAll();
-        JUnitUtil.waitFor(() -> {
-            return instance.isPublished() == false;
-        }, "Stopping ZeroConf Service");
+        Assume.assumeTrue("unpublished event received", JUnitUtil.waitFor(() -> {
+           return zcl.unpublishedService;
+        }));
         Assert.assertFalse(instance.isPublished());
+    }
+
+    /**
+     * Test of that the right messages are sent during the publish and stop 
+     * stop sequence.  Does not check status of the JmDNS instance.
+     */
+    @Test
+    public void testPublishAndStopMessageSequence() {
+        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        Assert.assertFalse(instance.isPublished());
+        TestZeroConfServiceListener zcl = new TestZeroConfServiceListener();
+        instance.addEventListener(zcl);
+        // can fail if platform does not release earlier stopped service within 15 seconds
+        instance.publish();
+        Assert.assertTrue("queued event received", JUnitUtil.waitFor(() -> {
+           return zcl.queuedService;
+        }));
+        Assert.assertTrue("published event received", JUnitUtil.waitFor(() -> {
+           return zcl.publishedService;
+        }));
+        instance.stop();
+        Assert.assertTrue("unpublished event received", JUnitUtil.waitFor(() -> {
+           return zcl.unpublishedService;
+        }));
     }
 
     /**
@@ -204,12 +306,9 @@ public class ZeroConfServiceTest {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         Assert.assertEquals(WebServerPreferences.getDefault().getDefaultRailroadName(), instance.name());
         Assert.assertEquals(0, ZeroConfService.allServices().size());
-        // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
-        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
-            return instance.isPublished() == true;
-        }));
         Assert.assertEquals(1, ZeroConfService.allServices().size());
+        Assert.assertTrue(ZeroConfService.allServices().contains(instance));
     }
 
 }
