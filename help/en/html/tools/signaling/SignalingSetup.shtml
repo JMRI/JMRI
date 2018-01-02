@@ -37,10 +37,10 @@
       describe in detail how to set up Signaling in JMRI.</p>
 
       <ul>
-        <li><a href="#7steps">JMRI Signaling in 7 steps</a></li>
+        <li>JMRI Signaling in 7 steps</li>
 
         <li><a href="#magic">Magic SignalMan Set Up</a></li>
-      </ul><a name="7steps"></a>
+      </ul>
 
       <h2>Start to use JMRI Signaling in 7 steps</h2>
 

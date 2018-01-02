@@ -502,8 +502,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         Vector<String> comboaspects = boxMap.get(this.getValueAt(row, SYSNAMECOL));
         if (comboaspects == null) {
             // create a new one with right aspects
-            Vector<String> v = InstanceManager.getDefault(jmri.SignalMastManager.class)
-                    .getSignalMast((String) this.getValueAt(row, SYSNAMECOL)).getValidAspects();
+            Vector<String> v = ((SignalMast) this.getValueAt(row, SYSNAMECOL)).getValidAspects();
             comboaspects = v;
             boxMap.put(this.getValueAt(row, SYSNAMECOL), comboaspects);
         }
