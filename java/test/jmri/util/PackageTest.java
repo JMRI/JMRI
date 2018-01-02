@@ -10,7 +10,6 @@ import org.junit.runners.Suite;
         JUnitAppenderTest.class,
         IntlUtilitiesTest.class,
         Log4JUtilTest.class,
-        NamedBeanHandleTest.class,
         OrderedHashtableTest.class,
         PreferNumericComparatorTest.class,
         StringUtilTest.class,
