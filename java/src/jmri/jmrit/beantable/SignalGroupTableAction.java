@@ -37,7 +37,7 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.SystemNameComparator;
+import jmri.util.AlphanumComparator;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -188,10 +188,10 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 if (col == EDITCOL) {
                     return Bundle.getMessage("ButtonEdit");
                 } else if (col == ENABLECOL) {
-                    return Boolean.valueOf(((SignalGroup) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getEnabled());
+                    return Boolean.valueOf(((SignalGroup) getValueAt(row, SYSNAMECOL)).getEnabled());
                     //return true;
                 } else if (col == COMMENTCOL) {
-                    b = getBySystemName(sysNameList.get(row));
+                    b = (NamedBean) getValueAt(row, SYSNAMECOL);
                     return (b != null) ? b.getComment() : null;
                 } else if (col == DELETECOL) //
                 {
@@ -216,7 +216,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                         @Override
                         public void run() {
                             addPressed(null); // set up add/edit panel addFrame (starts as Add pane)
-                            _systemName.setText((String) getValueAt(row, SYSNAMECOL));
+                            _systemName.setText(((SignalGroup) getValueAt(row, SYSNAMECOL)).toString());
                             editPressed(null); // adjust addFrame for Edit
                         }
                     }
@@ -224,7 +224,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     javax.swing.SwingUtilities.invokeLater(t);
                 } else if (col == ENABLECOL) {
                     // alternate
-                    SignalGroup r = (SignalGroup) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+                    SignalGroup r = (SignalGroup) getValueAt(row, SYSNAMECOL);
                     boolean v = r.getEnabled();
                     r.setEnabled(!v);
                 } else if (col == COMMENTCOL) {
@@ -543,7 +543,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             _AspectModel = new SignalMastAspectModel();
             JTable SignalMastAspectTable = new JTable(_AspectModel);
             TableRowSorter<SignalMastAspectModel> smaSorter = new TableRowSorter<>(_AspectModel);
-            smaSorter.setComparator(SignalMastAspectModel.ASPECT_COLUMN, new SystemNameComparator());
+            smaSorter.setComparator(SignalMastAspectModel.ASPECT_COLUMN, new AlphanumComparator());
             RowSorterUtil.setSortOrder(smaSorter, SignalMastAspectModel.ASPECT_COLUMN, SortOrder.ASCENDING);
             SignalMastAspectTable.setRowSorter(smaSorter);
             SignalMastAspectTable.setRowSelectionAllowed(false);
@@ -606,7 +606,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             _SignalGroupHeadModel = new SignalGroupSignalHeadModel();
             JTable SignalGroupHeadTable = new JTable(_SignalGroupHeadModel);
             TableRowSorter<SignalGroupSignalHeadModel> sgsSorter = new TableRowSorter<>(_SignalGroupHeadModel);
-            sgsSorter.setComparator(SignalGroupSignalHeadModel.SNAME_COLUMN, new SystemNameComparator());
+
+            // use NamedBean's built-in Comparator interface for sorting the system name column
             RowSorterUtil.setSortOrder(sgsSorter, SignalGroupSignalHeadModel.SNAME_COLUMN, SortOrder.ASCENDING);
             SignalGroupHeadTable.setRowSorter(sgsSorter);
             SignalGroupHeadTable.setRowSelectionAllowed(false);

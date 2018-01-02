@@ -13660,7 +13660,7 @@ public class LayoutEditorTools {
         } else if (linkType == LayoutTurnout.THROAT_TO_THROAT) {
             String text = Bundle.getMessage("ThroatToThroat") + " (";
             text += Bundle.getMessage("BeanNameTurnout") + ", " + Bundle.getMessage("BeanNameRoute");
-            text += ", " + Bundle.getMessage("Signal") + ":)";
+            text += ", " + Bundle.getMessage("BeanNameSignalHead") + ":)";
             JMenuItem jmi = inMenu.add(text);
             jmi.setEnabled(false);
             inMenu.add(new JSeparator());

@@ -30,14 +30,14 @@
       <h2>JMRI: LDT Signaling for CSD/CD/ZSR Signals</h2>
 
       <h2><b>Entry signal <img src="output6_html_6f691e17.png"
-      name="obr&#225;zky20" align="middle" width="6" height="30"
+      align="middle" width="6" height="30"
       border="0"></b><b>+</b> <b>advance signal <img src=
-      "output6_html_7e3459b4.png" name="obr&#225;zky21" align=
+      "output6_html_7e3459b4.png" align=
       "middle" width="6" height="13" border="0"></b></h2>
 
       <p style="margin-bottom: 0in">decoder: DP2N, mode 0</p>
 
-      <table width="100%" border="1" bordercolor="#000000"
+      <table width="100%" border="1"
       cellpadding="3" cellspacing="0">
         <col width="40*">
         <col width="29*">
@@ -196,12 +196,12 @@
       <p style="margin-bottom: 0in"><br></p>
 
       <h2><b>Exit signal</b> <b><img src=
-      "output6_html_m5289f733.png" name="obr&#225;zky19" align=
+      "output6_html_m5289f733.png" align=
       "middle" width="6" height="20" border="0"></b></h2>
 
       <p style="margin-bottom: 0in">decoder: DP2N, mode 1</p>
 
-      <table width="100%" border="1" bordercolor="#000000"
+      <table width="100%" border="1"
       cellpadding="3" cellspacing="0">
         <col width="40*">
         <col width="29*">
@@ -360,12 +360,12 @@
       <p style="margin-bottom: 0in"><br></p>
 
       <h2><b>Repeating signal <img src="output6_html_m2a349567.png"
-      name="obr&#225;zky22" align="middle" width="6" height="23"
+      align="middle" width="6" height="23"
       border="0"></b></h2>
 
       <p style="margin-bottom: 0in">decoder: DP2N, mode 2</p>
 
-      <table width="100%" border="1" bordercolor="#000000"
+      <table width="100%" border="1"
       cellpadding="3" cellspacing="0">
         <col width="40*">
         <col width="29*">

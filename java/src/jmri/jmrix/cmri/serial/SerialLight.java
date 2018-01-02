@@ -2,6 +2,11 @@ package jmri.jmrix.cmri.serial;
 
 import jmri.implementation.AbstractLight;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+
+import javax.annotation.Nonnull;
+import javax.annotation.CheckReturnValue;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,6 +81,16 @@ public class SerialLight extends AbstractLight {
                 log.warn("illegal state requested for Light: " + getSystemName());
             }
         }
+    }
+
+    /**
+     * {@inheritDoc} 
+     * 
+     * Sorts by node number and then by bit
+     */
+    @CheckReturnValue
+    public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull jmri.NamedBean n) {
+        return CMRISystemConnectionMemo.compareSystemNameSuffix(suffix1, suffix2);
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialLight.class);

@@ -136,7 +136,7 @@
       image file name. Generally, a good size for the width of an
       image is 500 pixels or less, at a web resolution of 72 pixels
       per inch. If you know how to resize your images, it would be
-      very helpful.</a>
+      very helpful.
 
       <h2><a name="submitpage" id="submitpage">Submitting
       to GitHub</a></h2>
@@ -144,7 +144,7 @@
       <p>If you understand this, you
       are ready to help us update the many JMRI documents that we
       use for both the JMRI website and for the Help files in a
-      next software build.</a></p>
+      next software build.</p>
 
       <p>When you submit your changes to be included in future JMRI
       releases, they are given a quick check and then merged into
