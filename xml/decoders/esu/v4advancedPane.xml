@@ -138,6 +138,20 @@
     </label>
     <separator/>
     <label>
+      <text>Dynamic Brake Settings</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Dynamic Brake Slider 1" layout="above" label=""/>
+      <display item="ESU V4 Dynamic Brake Slider 1" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
       <text>Power Pack</text>
     </label>
     <label>
