@@ -34,7 +34,7 @@ public class OlcbTurnoutTest extends TestCase {
     private static final String KNOWN_STATE = "KnownState";
     public void testIncomingChange() {
         Assert.assertNotNull("exists", t);
-        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.finishLoad();
 
         // message for Active and Inactive
@@ -71,7 +71,7 @@ public class OlcbTurnoutTest extends TestCase {
 
     public void testLocalChange() throws jmri.JmriException {
         // load dummy TrafficController
-        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.finishLoad();
 
         s.addPropertyChangeListener(l);
@@ -108,7 +108,7 @@ public class OlcbTurnoutTest extends TestCase {
     }
 
     public void testDirectFeedback() throws jmri.JmriException {
-        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.setFeedbackMode(Turnout.DIRECT);
         s.finishLoad();
 
@@ -158,9 +158,9 @@ public class OlcbTurnoutTest extends TestCase {
     public void testLoopback() throws jmri.JmriException {
         // Two turnouts behaving in opposite ways. One will be used to generate an event and the
         // other will be observed to make sure it catches it.
-        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.finishLoad();
-        OlcbTurnout r = new OlcbTurnout("MT", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.8", t.iface);
+        OlcbTurnout r = new OlcbTurnout("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.8", t.iface);
         r.finishLoad();
 
         r.addPropertyChangeListener(l);
@@ -181,7 +181,7 @@ public class OlcbTurnoutTest extends TestCase {
     }
 
     public void testEventTable() {
-        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.finishLoad();
 
         EventTable.EventTableEntry[] elist = t.iface.getEventTable()
@@ -207,7 +207,7 @@ public class OlcbTurnoutTest extends TestCase {
 
     public void testNameFormatXlower() {
         // load dummy TrafficController
-        OlcbTurnout s = new OlcbTurnout("MT", "x0501010114FF2000;x0501010114FF2001", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "x0501010114FF2000;x0501010114FF2001", t.iface);
         s.finishLoad();
         Assert.assertNotNull("to exists", s);
 
@@ -237,7 +237,7 @@ public class OlcbTurnoutTest extends TestCase {
 
     public void testNameFormatXupper() {
         // load dummy TrafficController
-        OlcbTurnout s = new OlcbTurnout("MT", "X0501010114FF2000;X0501010114FF2001", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2001", t.iface);
         s.finishLoad();
         Assert.assertNotNull("to exists", s);
 
@@ -263,6 +263,24 @@ public class OlcbTurnoutTest extends TestCase {
         t.sendMessage(mInactive);
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
 
+    }
+
+    public void testSystemSpecificComparisonOfSpecificFormats() {
+
+        // test by putting into a tree set, then extracting and checking order
+        java.util.TreeSet<Turnout> set = new java.util.TreeSet(new jmri.util.NamedBeanComparator());
+        
+        set.add(new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface));
+        set.add(new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2011", t.iface));
+        set.add(new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2001", t.iface));
+        set.add(new OlcbTurnout("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", t.iface));
+        
+        java.util.Iterator<Turnout> it = set.iterator();
+        
+        Assert.assertEquals("MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", it.next().getSystemName());
+        Assert.assertEquals("MT1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", it.next().getSystemName());
+        Assert.assertEquals("MTX0501010114FF2000;X0501010114FF2001", it.next().getSystemName());
+        Assert.assertEquals("MTX0501010114FF2000;X0501010114FF2011", it.next().getSystemName());
     }
 
     // from here down is testing infrastructure

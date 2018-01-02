@@ -35,7 +35,6 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.SystemNameComparator;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -388,7 +387,8 @@ public class SignalGroupSubTableAction {
             _SignalGroupTurnoutModel = new SignalGroupTurnoutModel();
             JTable SignalGroupTurnoutTable = new JTable(_SignalGroupTurnoutModel);
             TableRowSorter<SignalGroupTurnoutModel> sgtSorter = new TableRowSorter<>(_SignalGroupTurnoutModel);
-            sgtSorter.setComparator(SignalGroupTurnoutModel.SNAME_COLUMN, new SystemNameComparator());
+
+            // use NamedBean's built-in Comparator interface for sorting the system name column
             RowSorterUtil.setSortOrder(sgtSorter, SignalGroupTurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
             SignalGroupTurnoutTable.setRowSorter(sgtSorter);
             SignalGroupTurnoutTable.setRowSelectionAllowed(false);
@@ -446,7 +446,8 @@ public class SignalGroupSubTableAction {
             _SignalGroupSensorModel = new SignalGroupSensorModel();
             JTable SignalGroupSensorTable = new JTable(_SignalGroupSensorModel);
             TableRowSorter<SignalGroupSensorModel> sgsSorter = new TableRowSorter<>(_SignalGroupSensorModel);
-            sgsSorter.setComparator(SignalGroupSensorModel.SNAME_COLUMN, new SystemNameComparator());
+
+            // use NamedBean's built-in Comparator interface for sorting the system name column
             RowSorterUtil.setSortOrder(sgsSorter, SignalGroupSensorModel.SNAME_COLUMN, SortOrder.ASCENDING);
             SignalGroupSensorTable.setRowSorter(sgsSorter);
             SignalGroupSensorTable.setRowSelectionAllowed(false);

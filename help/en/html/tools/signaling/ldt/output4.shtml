@@ -31,16 +31,13 @@
       <h2>JMRI: Examples of LDT Signaling for NS - Nederlandse
       Spoorwegen (Dutch National Railways) Signals</h2>
 
-      <h2><b>Three-aspects signal with/without illuminated speed
-      sign</b><b><img src="output4_html_3840eb.png" name=
-      "obr&#225;zky13" align="middle" width="9" height="31" border=
-      "0"> <img src="output4_html_71c5a86b.png" name=
-      "obr&#225;zky15" align="middle" width="9" height="20" border=
-      "0"></b></h2>
+      <h2><b>Three-aspects signal with/without illuminated speed sign</b>
+      <b><img src="output4_html_3840eb.png" align="middle" width="9" height="31" border="0"> 
+      <img src="output4_html_71c5a86b.png" align="middle" width="9" height="20" border="0"></b></h2>
 
       <p style="margin-bottom: 0in">decoder: LS-DEC-NS</p>
 
-      <table width="100%" border="1" bordercolor="#000000"
+      <table width="100%" border="1"
       cellpadding="3" cellspacing="0">
         <col width="40*">
         <col width="29*">

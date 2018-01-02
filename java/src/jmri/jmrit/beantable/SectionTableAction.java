@@ -190,7 +190,7 @@ public class SectionTableAction extends AbstractTableAction {
 
                         @Override
                         public void run() {
-                            String sName = (String) getValueAt(row, SYSNAMECOL);
+                            String sName = ((Section) getValueAt(row, SYSNAMECOL)).getSystemName();
                             editPressed(sName);
                         }
                     }

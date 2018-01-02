@@ -19,7 +19,6 @@ import jmri.Manager;
 import jmri.swing.RowSorterUtil;
 import jmri.util.AlphanumComparator;
 import jmri.util.ConnectionNameFromSystemName;
-import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -186,7 +185,6 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
             dataTable = dataModel.makeJTable(dataModel.getMasterClassName() + ":" + getItemString(), dataModel, sorter);
             dataScroll = new JScrollPane(dataTable);
 
-            sorter.setComparator(BeanTableDataModel.SYSNAMECOL, new SystemNameComparator());
             RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
 
             sorter.setComparator(BeanTableDataModel.USERNAMECOL, new AlphanumComparator());
