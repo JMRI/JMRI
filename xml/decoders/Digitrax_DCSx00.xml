@@ -847,14 +847,6 @@
         <name>Basic</name>
         <column>
             <label>
-                <text>This pane is intentionally left blank</text>
-            </label>
-        </column>
-    </pane>
-    <pane>
-        <name>Basic Settings</name>
-        <column>
-            <label>
                 <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
                     Basic Operating Mode&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
             </label>
