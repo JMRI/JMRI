@@ -147,7 +147,7 @@
 
     <h2>Exceptions</h2>
     
-    <a href="">FindBugs</a>
+    FindBugs
     will object to
     <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/lastSuccessfulBuild/findbugsResult/type.-1293684328/">code like this</a>:
 

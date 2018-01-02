@@ -7,7 +7,7 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import jmri.Manager;
 import jmri.NamedBean;
-import jmri.util.SystemNameComparator;
+import jmri.util.NamedBeanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -390,32 +390,50 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         return getMgr(0).makeSystemName(s);
     }
 
-    @Override
-    public String[] getSystemNameArray() {
-        TreeSet<String> ts = new TreeSet<>(new SystemNameComparator());
-        this.mgrs.stream().forEach((mgr) -> {
-            ts.addAll(mgr.getSystemNameList());
-        });
-        return ts.toArray(new String[ts.size()]);
-    }
-
     /**
      * Get a list of all system names.
+     * <p>
+     * The list is ordered by system name
      *
      * @return a list, possibly empty, of system names
      */
     @Override
-    public List<String> getSystemNameList() {
-        TreeSet<String> ts = new TreeSet<>(new SystemNameComparator());
-        for (int i = 0; i < nMgrs(); i++) {
-            ts.addAll(getMgr(i).getSystemNameList());
-        }
-        return new ArrayList<>(ts);
+    @Nonnull
+    public String[] getSystemNameArray() {
+        List<E> list = getNamedBeanList();
+        String[] retval = new String[list.size()];
+        int i = 0;
+        for (E e : list) retval[i++] = e.getSystemName();
+        return retval;
     }
 
+    /**
+     * Get a list of all system names.
+     * <p>
+     * The list is ordered by system name
+     *
+     * @return a list, possibly empty, of system names
+     */
     @Override
+    @Nonnull
+    public List<String> getSystemNameList() {
+        List<E> list = getNamedBeanList();
+        ArrayList<String> retval = new ArrayList<>(list.size());
+        for (E e : list) retval.add(e.getSystemName());
+        return retval;
+    }
+
+    /**
+     * Get a list of all system names.
+     * <p>
+     * The list is ordered by system name
+     *
+     * @return a list, possibly empty, of system names
+     */
+    @Override
+    @Nonnull
     public List<E> getNamedBeanList() {
-        TreeSet<E> ts = new TreeSet<>(new SystemNameComparator());
+        TreeSet<E> ts = new TreeSet<>(new NamedBeanComparator());
         mgrs.stream().forEach((m) -> {
             ts.addAll(m.getNamedBeanList());
         });

@@ -4,6 +4,8 @@ import java.util.ResourceBundle;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import org.openlcb.OlcbInterface;
+import javax.annotation.Nonnull;
+import javax.annotation.CheckReturnValue;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -161,5 +163,27 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
             InstanceManager.deregister(sensorManager, OlcbSensorManager.class);
         }
         super.dispose();
+    }
+
+    /**
+     * See {@link jmri.NamedBean#compareSystemNameSuffix} for background.
+     * 
+     * This is a common implementation for OpenLCB Sensors and Turnouts
+     * of the comparison method.
+     */
+    @CheckReturnValue
+    public static int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2) {
+        
+        // extract addresses
+        OlcbAddress[] array1 = new OlcbAddress(suffix1).split();
+        OlcbAddress[] array2 = new OlcbAddress(suffix2).split();
+
+        // compare on content
+        for (int i = 0; i < Math.min(array1.length, array2.length); i++) {
+            int c = array1[i].compare(array2[i]);
+            if (c != 0) return c;
+        }
+        // check for different length (shorter sorts first)
+        return Integer.signum(array1.length - array2.length);
     }
 }
