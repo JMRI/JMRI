@@ -1,6 +1,8 @@
 package jmri.jmrix.nce.simulator;
 
 import javax.swing.JPanel;
+import jmri.jmrix.AbstractSimulatorConnectionConfig;
+import jmri.jmrix.SerialPortAdapter;
 
 /**
  * Definition of objects to handle configuring a layout connection via an NCE
@@ -9,7 +11,7 @@ import javax.swing.JPanel;
  * @author Bob Jacobsen Copyright (C) 2001, 2003 Convert to multiple connection
  * @author kcameron Copyright (C) 2010
   */
-public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
+public class ConnectionConfig extends AbstractSimulatorConnectionConfig<SerialPortAdapter> {
 
     public final static String NAME = "Simulator";
 
@@ -18,7 +20,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
      * deferred.
      * @param p SerialPortAdapter for existing adapter
      */
-    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
+    public ConnectionConfig(SerialPortAdapter p) {
         super(p);
     }
 

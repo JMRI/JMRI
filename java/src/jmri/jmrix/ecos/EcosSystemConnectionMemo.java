@@ -1,6 +1,7 @@
 package jmri.jmrix.ecos;
 
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 
@@ -27,7 +28,11 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     public EcosSystemConnectionMemo() {
-        super("U", "ECoS");
+        this("U", "ECoS");
+    }
+
+    public EcosSystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
+        super(prefix, userName);
         register(); // registers general type
         InstanceManager.store(this, EcosSystemConnectionMemo.class); // also register as specific type
         //Needs to be implemented

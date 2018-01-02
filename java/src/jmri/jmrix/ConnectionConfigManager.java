@@ -327,7 +327,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                     if (!connectionTypeLists.containsKey(manufacturer)) {
                         connectionTypeLists.put(manufacturer, ctl);
                     } else {
-                        log.debug("Need a proxy for {} from {} in {}", manufacturer, ctl.getClass().getName(), this);
+                        log.debug("Need a proxy for {} from {}", manufacturer, ctl.getClass().getName());
                         ProxyConnectionTypeList proxy;
                         ConnectionTypeList existing = connectionTypeLists.get(manufacturer);
                         if (existing instanceof ProxyConnectionTypeList) {
@@ -434,7 +434,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
         }
 
         public List<InitializationException> getExceptions() {
-            return this.exceptions;
+            return new ArrayList<>(this.exceptions);
         }
     }
 }

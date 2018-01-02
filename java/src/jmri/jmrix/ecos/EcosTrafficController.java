@@ -1,6 +1,5 @@
 package jmri.jmrix.ecos;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -32,11 +31,16 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         this.setSynchronizeRx(false);
     }
 
+    public EcosTrafficController(EcosSystemConnectionMemo memo) {
+        this();
+        this.setAdapterMemo(memo);
+    }
+
     public void setAdapterMemo(EcosSystemConnectionMemo memo) {
         adaptermemo = memo;
     }
 
-    EcosSystemConnectionMemo adaptermemo;
+    protected EcosSystemConnectionMemo adaptermemo;
 
     // The methods to implement the EcosInterface
     @Override
@@ -97,7 +101,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     protected boolean unsolicitedSensorMessageSeen = false;
 
     /**
-     *  ECoS doesn't support this function.
+     * ECoS does not support this function.
      */
     @Override
     protected AbstractMRMessage enterProgMode() {
@@ -110,33 +114,14 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return EcosMessage.getExitProgMode();
     }
 
-    /**
-     * Static function returning the EcosTrafficController instance to use.
-     *
-     * @return The registered EcosTrafficController instance for general use, if
-     *         need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public EcosTrafficController instance() {
-        return self;
-    }
-
-    //This can be removed once multi-connection is complete
     @Override
     @Deprecated
     public void setInstance() {
     }
 
-    @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // FindBugs wants this package protected, but we're removing it when multi-connection
-    // migration is complete
-    final static protected EcosTrafficController self = null;
-
     @Override
     protected AbstractMRReply newReply() {
-        EcosReply reply = new EcosReply();
-        return reply;
+        return new EcosReply();
     }
 
     /**

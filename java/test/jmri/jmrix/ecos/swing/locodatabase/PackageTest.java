@@ -5,9 +5,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        BundleTest.class,
-        EcosLocoTableActionTest.class,
-        EcosLocoTableTabActionTest.class,
+    BundleTest.class,
+    EcosLocoTableActionTest.class
 })
 
 /**
@@ -15,5 +14,5 @@ import org.junit.runners.Suite;
  *
  * @author	Bob Jacobsen
  */
-public class PackageTest  {
+public class PackageTest {
 }

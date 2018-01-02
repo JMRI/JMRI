@@ -2,6 +2,7 @@ package jmri.jmrix.ecos.swing;
 
 import javax.swing.JMenu;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
+import jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,17 +34,9 @@ public class EcosMenu extends JMenu {
             }
         }
 
-        if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
-            try {
-                new jmri.jmrit.beantable.ListedTableFrame();
-            } catch (java.lang.NullPointerException ex) {
-                log.error("Unable to register ECoS table");
-            }
-        }
-
-        add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemDatabase"), "jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableTabAction"));
         add(new apps.gui3.TabbedPreferencesAction(Bundle.getMessage("MenuItemECoSPrefs"), "ECoS", title));
         if (memo != null) {
+            add(new EcosLocoTableAction(memo));
             add(new jmri.jmrix.ecos.utilities.AddRosterEntryToEcos(Bundle.getMessage("MenuItemAddLocoToEcos"), memo));
         }
     }
