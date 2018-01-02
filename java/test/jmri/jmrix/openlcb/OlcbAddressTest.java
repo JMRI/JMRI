@@ -83,6 +83,20 @@ public class OlcbAddressTest extends TestCase {
         assertTrue((new OlcbAddress("x013405009A0B0E00")).equals(new OlcbAddress("X013405009A0B0E00")));
     }
 
+    public void testCompare() {
+        assertEquals(0, (new OlcbAddress("1.34.5.0.9A.B.E.0")).compare(new OlcbAddress("x013405009A0B0E00")));
+        assertEquals(0, (new OlcbAddress("x013405009A0B0E00")).compare(new OlcbAddress("1.34.5.0.9A.B.E.0")));
+        assertEquals(0, (new OlcbAddress("x013405009A0B0E00")).compare(new OlcbAddress("X013405009A0B0E00")));
+        
+        assertEquals(-1, (new OlcbAddress("x013405009A0B0E00")).compare(new OlcbAddress("X013405009A0B0E01")));
+        assertEquals(+1, (new OlcbAddress("x013405009A0B0E01")).compare(new OlcbAddress("X013405009A0B0E00")));
+
+        assertEquals(-1, (new OlcbAddress("x013405009A0B0E")).compare(new OlcbAddress("X013405009A0B0E00")));
+        assertEquals(+1, (new OlcbAddress("x013405009A0B0E00")).compare(new OlcbAddress("X013405009A0B0E")));
+
+        // not testing the cases for non-match addresses
+    }
+    
     public void testSplitCheckOK() {
         assertTrue(new OlcbAddress("x123456789ABCDEF0").checkSplit());
         assertTrue(new OlcbAddress("12.34.56.78.9A.BC.DE.F0").checkSplit());

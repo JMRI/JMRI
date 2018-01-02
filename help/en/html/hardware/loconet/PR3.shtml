@@ -45,6 +45,11 @@
       This is simply a PR3 device plus a suitable power supply. It
       may be considered as "identical" to a PR3 for all practical
       purposes.</p>
+      
+      <p>Digitrax introduced the DCS240 device in 2016.  This 
+      command station includes an integrated PR3 device.  For the 
+      purposes of JMRI, the DCS240 USB interface device is equivalent 
+      to a PR3.</p>
 
       <h1>PR3 as a stand-alone decoder programmer</h1>
 

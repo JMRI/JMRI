@@ -231,7 +231,7 @@
 </pre>                
                 <p>or</p>
 <pre style="font-family: monospace;">                
-                $ git pull https://github.com/JMRI/JMRI.git</code><br>
+                $ git pull https://github.com/JMRI/JMRI.git<br>
 </pre>
                 </li>
 
