@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.11.1ish+given+20180101T1600Z on Mon Jan 01 11:00:28 EST 2018-->
-  <decoderIndex version="874">
+  <!--Written by JMRI version 4.11.2ish+heap+20180102T1058Z+R08624ad on Tue Jan 02 21:58:31 AEDT 2018-->
+  <decoderIndex version="876">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -5767,10 +5767,8 @@
           <output name="10" label="|Dimmer" />
           <output name="11" label="Dynamic|Brake" />
           <output name="12" label="Virtual|Sound" />
-          <output name="13" label="|" />
-          <output name="14" label="|" />
-          <output name="15" label="|" />
-          <output name="16" label="|" />
+          <output name="13" label="AUX|5" />
+          <output name="14" label="AUX|6" />
           <size length="25.5" width="15.5" height="4.5" units="mm" />
           <!-- connector="NEM651, 21MTC, Plux12, wires" -->
         </model>
@@ -5779,36 +5777,28 @@
           <output name="2" label="Rear|Light" maxcurrent="150 mA" />
           <output name="3" label="AUX|1" maxcurrent="150 mA" />
           <output name="4" label="AUX|2" maxcurrent="150 mA" />
+          <output name="5" label="|" maxcurrent="logic" />
+          <output name="6" label="|" maxcurrent="logic" />
           <output name="7" label="Shunt|Mode" />
           <output name="8" label="Acceleration|Deceleration" />
           <output name="9" label="Grade|Crossing" />
           <output name="10" label="|Dimmer" />
           <output name="11" label="Dynamic|Brake" />
           <output name="12" label="Virtual|Sound" />
-          <output name="13" label="|" />
-          <output name="14" label="|" />
-          <output name="15" label="|" />
-          <output name="16" label="|" />
-          <size length="25.5" width="15.5" height="4.5" units="mm" />
-          <!-- connector="NEM651, 21MTC, Plux12, wires" -->
         </model>
         <model model="LokPilot Fx Nano V1.0" numOuts="4" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.0 A" formFactor="N" productID="16777352">
           <output name="1" label="Front|Light" maxcurrent="150 mA" />
           <output name="2" label="Rear|Light" maxcurrent="150 mA" />
           <output name="3" label="AUX|1" maxcurrent="150 mA" />
           <output name="4" label="AUX|2" maxcurrent="150 mA" />
+          <output name="5" label="AUX|3" maxcurrent="logic" />
+          <output name="6" label="AUX|4" maxcurrent="logic" />
           <output name="7" label="Shunt|Mode" />
           <output name="8" label="Acceleration|Deceleration" />
           <output name="9" label="Grade|Crossing" />
           <output name="10" label="|Dimmer" />
           <output name="11" label="Dynamic|Brake" />
           <output name="12" label="Virtual|Sound" />
-          <output name="13" label="|" />
-          <output name="14" label="|" />
-          <output name="15" label="|" />
-          <output name="16" label="|" />
-          <size length="25.5" width="15.5" height="4.5" units="mm" />
-          <!-- connector="NEM651, 21MTC, Plux12, wires" -->
         </model>
         <model show="no" model="LokPilot Standard" replacementModel="LokPilot Standard V1.0" replacementFamily="ESU LokPilot Standard V1.0" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="LokPilot Standard V1.0">
           <output name="1" label="Front|Light" maxcurrent="250 mA" />
@@ -5823,12 +5813,44 @@
           <output name="10" label="|Dimmer" />
           <output name="11" label="Dynamic|Brake" />
           <output name="12" label="Virtual|Sound" />
-          <output name="13" label="|" />
-          <output name="14" label="|" />
-          <output name="15" label="|" />
-          <output name="16" label="|" />
           <size length="25.5" width="15.5" height="4.5" units="mm" />
           <!-- connector="NEM651, 21MTC, Plux12, wires" -->
+        </model>
+        <model model="MBW Silberling" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777360">
+          <output name="1" label="|White" />
+          <output name="2" label="Front|Red" />
+          <output name="3" label="Rear|Red" />
+          <output name="4" label="Interior|Light 1" />
+          <output name="5" label="Interior|Light 2" />
+          <output name="6" label="|Entrance" />
+          <output name="7" label="Rear|Coupler" />
+          <output name="8" label="Front|Coupler" />
+        </model>
+        <model model="Bachmann MK2F" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777362">
+          <output name="1" label="Front|White" />
+          <output name="2" label="Rear|White" />
+          <output name="3" label="Red|Light" />
+          <output name="4" label="Cab|Light" />
+          <output name="5" label="Interior|Front" />
+          <output name="6" label="Interior|Rear" />
+          <output name="7" label="Door Interlock|Light Left" />
+          <output name="8" label="Door Interlock|Light Right" />
+        </model>
+        <model model="Walthers ML8" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777367">
+          <output name="1" label="Front|Light" maxcurrent="250 mA" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="Shunt|Mode" />
+          <output name="8" label="Acceleration|Deceleration" />
+          <output name="9" label="Grade|Crossing" />
+          <output name="10" label="|Dimmer" />
+          <output name="11" label="Dynamic|Brake" />
+          <output name="12" label="Virtual|Sound" />
+          <output name="13" label="AUX|5" />
+          <output name="14" label="AUX|6" />
         </model>
       </family>
       <family name="ESU LokSound2 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="21" highVersionID="22" file="ESU_LokSound2_21.xml">
@@ -7288,8 +7310,8 @@
           <output name="8" label="Output H" />
         </model>
         <model model="SC1 version 0.23" lowVersionID="9" highVersionID="10" numOuts="8" numFns="16" formFactor="HO" productID="57379">
-          <!--productID=57379 should match Version=E023Hex
-			Version numbers are in CV112/113 and take values 224 and 035 (ie. the version is in hex, so Hex23 = 35)
+          <!--productID=57379 should match Version=E023Hex    
+			Version numbers are in CV112/113 and take values 224 and 035 (ie. the version is in hex, so Hex23 = 35) 
 			-->
           <output name="1" label="Output A" />
           <output name="2" label="Output B" />
@@ -20539,7 +20561,7 @@
           <functionlabel num="6" lockable="true">Smoke</functionlabel>
           <functionlabel num="7" lockable="true">Dimmer</functionlabel>
           <functionlabel num="8" lockable="true">Mute</functionlabel>
-          <!-- regular Soundtraxx functions, not used for Bachmann
+          <!-- regular Soundtraxx functions, not used for Bachmann  
         <functionlabel num="5" lockable="true">FX5 Light</functionlabel>
         <functionlabel num="6" lockable="true">FX6 Light</functionlabel>
         <functionlabel num="9" lockable="true">Water Stop</functionlabel>
