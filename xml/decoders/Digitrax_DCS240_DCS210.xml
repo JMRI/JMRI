@@ -16,7 +16,7 @@
                 xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
                 showEmptyPanes="no">
 
-    <version author="Bob Milhaupt" version="1" lastUpdated="20171219" />
+    <version author="Bob Milhaupt" version="1" lastUpdated="20180102" />
 
     <decoder>
 
@@ -718,7 +718,7 @@
                 <column>
                     <label>
                         <text>&lt;html&gt;The "CV" column in the table above shows "OpSw"
-                            numbers, where the value "1." &lt;p&gt;is pre-pended to
+                            numbers, where the value "csOpSw." &lt;p&gt;is pre-pended to
                             the OpSw Number.
                         </text>
                     </label>
@@ -755,8 +755,8 @@
                     Slot "Purging" Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
             </label>
 
-            <display item="OpSw 013"/>
             <display item="OpSw 014"/>
+            <display item="OpSw 013"/>
             <display item="OpSw 015"/>
 
             <separator/>

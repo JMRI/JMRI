@@ -16,7 +16,7 @@
                 xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
                 showEmptyPanes="no">
 
-    <version author="Bob Milhaupt" version="1" lastUpdated="20171217" />
+    <version author="Bob Milhaupt" version="1" lastUpdated="20180102" />
 
     <decoder>
 
@@ -116,6 +116,12 @@
                 <tooltip>OpSw12</tooltip>
             </variable>
 
+            <variable CV="csOpSw.14" item="OpSw 14" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
+                <label>Command Station Slot "Purge"</label>
+                <tooltip>OpSw14</tooltip>
+            </variable>
+
             <variable CV="csOpSw.13" item="OpSw 13" default="0">
                 <qualifier>
                     <variableref>OpSw 14</variableref>
@@ -132,12 +138,6 @@
                 </enumVal>
                 <label>Command Station Slot "Purge" Time</label>
                 <tooltip>OpSw13</tooltip>
-            </variable>
-
-            <variable CV="csOpSw.14" item="OpSw 14" default="0">
-                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
-                <label>Command Station Slot "Purge"</label>
-                <tooltip>OpSw14</tooltip>
             </variable>
 
             <variable CV="csOpSw.15" item="OpSw 15" default="0">
@@ -658,7 +658,7 @@
                 <column>
                     <label>
                         <text>&lt;html&gt;The "CV" column in the table above shows "OpSw"
-                            numbers, where the value "1." &lt;p&gt;is pre-pended to
+                            numbers, where the value "csOpSw." &lt;p&gt;is pre-pended to
                             the OpSw Number.
                         </text>
                     </label>
@@ -696,8 +696,8 @@
                     Slot "Purging" Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
             </label>
 
-            <display item="OpSw 13"/>
             <display item="OpSw 14"/>
+            <display item="OpSw 13"/>
             <display item="OpSw 15"/>
 
             <separator/>

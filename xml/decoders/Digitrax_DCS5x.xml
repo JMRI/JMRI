@@ -16,7 +16,7 @@
                 xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
                 showEmptyPanes="no">
 
-    <version author="Bob Milhaupt" version="1" lastUpdated="20171217" />
+    <version author="Bob Milhaupt" version="1" lastUpdated="20180102" />
 
     <decoder>
 
@@ -112,6 +112,23 @@
                 <tooltip>OpSw10</tooltip>
             </variable>
 
+            <variable CV="csOpSw.11" item="OpSw 11(DCS50)" default="0" exclude="DCS51">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw11</label>
+                <tooltip>OpSw11</tooltip>
+            </variable>
+
+            <variable CV="csOpSw.11" item="OpSw 11" default="0" exclude="DCS50">
+                <enumVal>
+                    <enumChoice>
+                        <choice>addresses as defined in OpSw10 *</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>up to 8 previously-used addresses</choice>
+                    </enumChoice>
+                </enumVal>
+            </variable>
+
             <variable CV="csOpSw.10" item="OpSw 10" default="0" exclude="DCS50">
                 <qualifier>
                     <variableref>OpSw 11</variableref>
@@ -128,24 +145,6 @@
                 </enumVal>
             </variable>
 
-            <variable CV="csOpSw.11" item="OpSw 11(DCS50)" default="0" exclude="DCS51">
-                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
-                <label>OpSw11</label>
-                <tooltip>OpSw11</tooltip>
-            </variable>
-
-
-            <variable CV="csOpSw.11" item="OpSw 11" default="0" exclude="DCS50">
-                <enumVal>
-                    <enumChoice>
-                        <choice>addresses as defined in OpSw10 *</choice>
-                    </enumChoice>
-                    <enumChoice>
-                        <choice>up to 8 previously-used addresses</choice>
-                    </enumChoice>
-                </enumVal>
-            </variable>
-          
             <variable item="RecallDepth" include="DCS51" exclude="DCS50">
                 <compositeVal>
                     <compositeChoice choice="up to 2 addresses *">
@@ -175,6 +174,12 @@
                 <tooltip>OpSw12</tooltip>
             </variable>
 
+            <variable CV="csOpSw.14" item="OpSw 14" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
+                <label>Command Station Slot "Purge"</label>
+                <tooltip>OpSw14</tooltip>
+            </variable>
+
             <variable CV="csOpSw.13" item="OpSw 13" default="0">
                 <qualifier>
                     <variableref>OpSw 14</variableref>
@@ -191,12 +196,6 @@
                 </enumVal>
                 <label>Command Station Slot "Purge" Time</label>
                 <tooltip>OpSw13</tooltip>
-            </variable>
-
-            <variable CV="csOpSw.14" item="OpSw 14" default="0">
-                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
-                <label>Command Station Slot "Purge"</label>
-                <tooltip>OpSw14</tooltip>
             </variable>
 
             <variable CV="csOpSw.15" item="OpSw 15" default="0">
@@ -619,7 +618,7 @@
                 <column>
                     <label>
                         <text>&lt;html&gt;The "CV" column in the table above shows "OpSw"
-                            numbers, where the value "1." &lt;p&gt;is pre-pended to
+                            numbers, where the value "csOpSw." &lt;p&gt;is pre-pended to
                             the OpSw Number.
                         </text>
                     </label>
@@ -657,8 +656,8 @@
                     Slot "Purging" Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
             </label>
 
-            <display item="OpSw 13"/>
             <display item="OpSw 14"/>
+            <display item="OpSw 13"/>
             <display item="OpSw 15"/>
 
             <separator/>
