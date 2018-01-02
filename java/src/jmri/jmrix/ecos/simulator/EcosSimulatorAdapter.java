@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import jmri.jmrix.NetworkPortAdapter;
 import jmri.jmrix.ecos.EcosConnectionTypeList;
 import jmri.jmrix.ecos.EcosMessage;
 import jmri.jmrix.ecos.EcosPortController;
@@ -28,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Egbert Broerse, Copyright (C) 2017
  * @author Randall Wood Copyright 2017
  */
-public class EcosSimulatorAdapter extends EcosPortController implements NetworkPortAdapter, Runnable {
+public class EcosSimulatorAdapter extends EcosPortController implements Runnable {
 
     // streams to share with user class
     private DataOutputStream pout = null; // provided to classes who want to write to us
@@ -38,18 +37,13 @@ public class EcosSimulatorAdapter extends EcosPortController implements NetworkP
     private DataInputStream inpipe = null; // feed pout
 
     // private control members
-    private boolean opened = true;
     private Thread sourceThread;
 
     final static int SENSOR_MSG_RATE = 10;
 
     private boolean outputBufferEmpty = true;
-    private boolean checkBuffer = true;
+    private final boolean checkBuffer = true;
     private boolean trackPowerState = false;
-
-    // Simulator responses
-    char EDC_OPS = 0x4F;
-    char EDC_PROG = 0x50;
 
     public EcosSimulatorAdapter() {
         super(new EcosSystemConnectionMemo("U", "ECoS Simulator")); // pass customized user name
@@ -171,7 +165,7 @@ public class EcosSimulatorAdapter extends EcosPortController implements NetworkP
             }
             EcosMessage m = readMessage();
             EcosReply r;
-            if (log.isDebugEnabled()) {
+            if (log.isTraceEnabled()) {
                 StringBuilder buf = new StringBuilder();
                 buf.append("ECoS Simulator Thread received message: ");
                 if (m != null) {
@@ -181,18 +175,18 @@ public class EcosSimulatorAdapter extends EcosPortController implements NetworkP
                 } else {
                     buf.append("null message buffer");
                 }
-//                log.debug(buf.toString());
+                log.trace(buf.toString());
             }
             if (m != null) {
                 r = generateReply(m);
                 writeReply(r);
-                if (log.isDebugEnabled() && r != null) {
+                if (log.isTraceEnabled() && r != null) {
                     StringBuilder buf = new StringBuilder();
                     buf.append("ECoS Simulator Thread sent reply: ");
                     for (int i = 0; i < r.getNumDataElements(); i++) {
                         buf.append(Integer.toHexString(0xFF & r.getElement(i))).append(" ");
                     }
-                    log.debug(buf.toString());
+                    log.trace(buf.toString());
                 }
             }
         }
@@ -219,93 +213,28 @@ public class EcosSimulatorAdapter extends EcosPortController implements NetworkP
     /**
      * This is the heart of the simulation. It translates an incoming
      * EcosMessage into an outgoing EcosReply.
-     * <p>
-     * As yet, not all messages receive a meaningful reply. TODO: Throttle,
-     * Program
      */
-    @SuppressWarnings("fallthrough")
     private EcosReply generateReply(EcosMessage msg) {
-        log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg);
+        log.debug("Generate Reply to message: {}", msg);
 
-        String s, r;
-        EcosReply reply = new EcosReply();
-        int i = 0;
-        char command = msg.toString().charAt(0);
-        log.debug("Message type = {}", command);
-        switch (command) {
-
-            case 'X': // eXit programming
-            case 'S': // Send packet
-            case 'D': // Deque packet
-            case 'Q': // Que packet
-            case 'F': // display memory
-            case 'C': // program loCo
-                reply.setElement(i++, EDC_OPS); // capital O for Operation
+        EcosReply reply;
+        log.error("Replying to \"{}\"", msg.toString().substring(0, msg.toString().indexOf(',')));
+        switch (msg.toString().substring(0, msg.toString().indexOf(','))) {
+            case "request(1":
+                reply = new EcosReply(String.format("<EVENT 1>status[%s]", trackPowerState ? "GO" : "STOP"));
                 break;
-
-            case 'P':
-            case 'M':
-                reply.setElement(i++, EDC_PROG); // capital P for Programming
+            case "get(1": // power request
+                reply = new EcosReply(String.format("<REPLY get(1,%s", trackPowerState ? " go)" : " stop)"));
                 break;
-
-            case 'E':
-                log.debug("TRACK_POWER_ON detected");
-                trackPowerState = true;
-                reply.setElement(i++, EDC_OPS); // capital O for Operation
+            case "set(1": // power set
+                trackPowerState = msg.toString().contains("go");
+                reply = new EcosReply(String.format("<REPLY set(1,%s", trackPowerState ? " go)" : " stop)"));
                 break;
-
-            case 'K':
-                log.debug("TRACK_POWER_OFF detected");
-                trackPowerState = false;
-                reply.setElement(i++, EDC_OPS); // capital O for Operation
-                break;
-
-            case 'V':
-                log.debug("Read_CS_Version detected");
-                String replyString = "V999 01 01 1999";
-                reply = new EcosReply(replyString); // fake version number reply
-                i = replyString.length();
-//                reply.setElement(i++, 0x0d); // add CR for second reply line
-//                reply.setElement(i++, EDC_OPS); // capital O for Operation
-                break;
-
-            case 'G': // Consist
-                log.debug("Consist detected");
-                if (msg.toString().charAt(0) == 'D') { // Display consist
-                    replyString = "G" + msg.getElement(2) + msg.getElement(3) + "0000";
-                    reply = new EcosReply(replyString); // fake version number reply
-                    i = replyString.length();
-//                    reply.setElement(i++, 0x0d); // add CR
-                    break;
-                }
-                reply.setElement(i++, EDC_OPS); // capital O for Operation, anyway
-                break;
-
-            case 'L': // Read Loco
-                log.debug("Read Loco detected");
-                replyString = "L" + msg.getElement(1) + msg.getElement(2) + msg.getElement(3) + msg.getElement(4) + "000000";
-                reply = new EcosReply(replyString); // fake reply dir = 00 step = 00 F5-12=00
-                i = replyString.length();
-//                reply.setElement(i++, 0x0d); // add CR for second reply line
-//                reply.setElement(i++, EDC_OPS); // capital O for Operation, anyway
-                break;
-
-            case 'R':
-                log.debug("Read_CV detected");
-                replyString = "--";
-                reply = new EcosReply(replyString); // cannot read
-                i = replyString.length();
-//                reply.setElement(i++, 0x0d); // add CR for second reply line
-//                reply.setElement(i++, EDC_PROG); // capital O for Operation
-                break;
-
             default:
-                log.debug("non-reply message detected");
-                reply.setElement(i++, EDC_OPS); // capital O for Operation
+                reply = null; // all others
         }
-        log.debug("Reply generated = {}", reply);
-        reply.setElement(i++, 0x0d); // add final CR for all replies
-        return (reply);
+        log.debug("Reply is: {}", reply);
+        return reply;
     }
 
     /**
