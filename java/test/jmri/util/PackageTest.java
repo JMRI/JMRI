@@ -10,7 +10,6 @@ import org.junit.runners.Suite;
         JUnitAppenderTest.class,
         IntlUtilitiesTest.class,
         Log4JUtilTest.class,
-        NamedBeanHandleTest.class,
         OrderedHashtableTest.class,
         PreferNumericComparatorTest.class,
         StringUtilTest.class,
@@ -82,6 +81,8 @@ import org.junit.runners.Suite;
         IterableEnumerationTest.class,
         BusyGlassPaneTest.class,
         MultipartMessageTest.class,
+        NamedBeanExpectedStateTest.class,
+        NamedBeanExpectedValueTest.class,
 
         // deliberately at end
         jmri.util.Log4JErrorIsErrorTest.class,
