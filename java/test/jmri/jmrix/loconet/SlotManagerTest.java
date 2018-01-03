@@ -11,8 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import java.util.List;
 
-public class SlotManagerTest extends TestCase {
-
 public class SlotManagerTest {
 
     /**
@@ -762,6 +760,7 @@ public class SlotManagerTest {
         log.debug(".... end testReadThroughFacadeFail ...");
     }
 
+    @Test
     public void testGetProgrammingModes() {
         List<ProgrammingMode> l = slotmanager.getSupportedModes();
         Assert.assertEquals("programming mode list length ok", 5, l.size());
@@ -770,19 +769,6 @@ public class SlotManagerTest {
         Assert.assertEquals("programming mode 2", ProgrammingMode.REGISTERMODE, l.get(2));
         Assert.assertEquals("programming mode 3", ProgrammingMode.ADDRESSMODE, l.get(3));
         Assert.assertEquals("programming mode 4", "LOCONETCSOPSWMODE", l.get(4).getStandardName());
-    }
-
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SlotManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SlotManagerTest.class);
-        return suite;
     }
 
     // The minimal setup for log4J
