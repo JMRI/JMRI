@@ -29,6 +29,9 @@
                    SoundCar files.
                    Tooltip for CV 218 fixed based on latest Econami manual
                    (Alain Le Marchand)                                      -->
+<!-- version 2.4 - Specific UserID with tooltip indicating version number,
+                   from SoundTraxx Product Identification guide Rev.B
+                   (Alain Le Marchand)                                      -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
@@ -233,7 +236,7 @@
         <label>Speed Table</label>
     </variable>
     <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2userId.xml"/>
     <variable CV="113" item="Sound Group 3 Option 1" default="0" tooltip="&lt;html&gt;When loco has stopped and all functions are turned off, sound effects will turn&lt;br&gt;      off automatically after timeout period has elapsed.  Set to zero to disable.&lt;/html&gt;">
         <decVal/>
         <label>Quiet Mode Timeout Period</label>
