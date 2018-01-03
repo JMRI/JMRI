@@ -19,6 +19,7 @@
           <label xml:lang="de">Um diese einfache Einstellungen zu benutzen, diesen Button markieren</label>
           <label xml:lang="cs">Pro použití nastavení níže zvolte toto tlačítko</label>
           <label xml:lang="nl">Selecteer om onderstaande basisinstellingen toe te passen</label>
+		  <label xml:lang="da">Vælg denne knap for at bruge indstillingerne vist herunder</label>
         </display>
         <label>
           <text>           To turn off, use Speed Table pane</text>
@@ -27,6 +28,7 @@
 		  <text xml:lang="ca">           Per deshabilitar usa la Taula de velocitats</text>
           <text xml:lang="cs">           pro vypnutí použijte Rychlostní tabulku</text>
           <text xml:lang="nl">           Om deze tab uit te schakelen, de tab Snelheidsgrafiek activeren</text>
+		  <text xml:lang="da">           For at deaktivere, brug hastigheds tabel fanen</text>
         </label>
         <label>
           <text> </text>
@@ -51,6 +53,7 @@
           <tooltip xml:lang="de">Geschwindigkeit bei niedrigster Fahrstufe einstellen</tooltip>
           <tooltip xml:lang="cs">Nastavení rozjezdového napětí pro 1. rychlostní krok ovladače</tooltip>
           <tooltip xml:lang="nl">Snelheid voor laagste rijstand instellen</tooltip>
+		  <tooltip xml:lang="da">Indstiller start volt ved hastighedstrin 1</tooltip>
         </display>
         <display item="Vmid" tooltip="Sets the voltage at mid throttle">
           <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Intermedia</tooltip>
@@ -58,6 +61,7 @@
           <tooltip xml:lang="de">Geschwindigkeit bei mittlerer Fahrstufe einstellen</tooltip>
           <tooltip xml:lang="cs">Nastavení napětí pro střední rychlostní krok ovladače</tooltip>
           <tooltip xml:lang="nl">Snelheid voor middelste rijstand instellen</tooltip>
+		  <tooltip xml:lang="da">Indstiller midt volt hastighedstrin</tooltip>
         </display>
         <display item="Vhigh" tooltip="Sets the maximum voltage at full throttle">
           <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Massima</tooltip>
@@ -65,6 +69,7 @@
           <tooltip xml:lang="de">Geschwindigkeit bei höchster Fahrstufe einstellen</tooltip>
           <tooltip xml:lang="cs">Nastavení napětí pro poslední rychlostní krok ovladače</tooltip>
           <tooltip xml:lang="nl">Snelheid voor hoogste rijstand instellen</tooltip>
+		  <tooltip xml:lang="da">Indstiller maks volt hastighedstrin</tooltip>
         </display>
       </column>
       <column>
@@ -74,6 +79,7 @@
           <tooltip xml:lang="de">Geschwindigkeit bei niedrigster Fahrstufe einstellen</tooltip>
           <tooltip xml:lang="cs">Nastavení rozjezdového napětí pro 1. rychlostní krok ovladače</tooltip>
           <tooltip xml:lang="nl">Snelheid voor laagste rijstand instellen</tooltip>
+		  <tooltip xml:lang="da">Indstiller start volt ved hastighedstrin 1</tooltip>
         </display>
         <display item="Vmid" format="hslider" label="" tooltip="Sets the voltage at mid throttle">
           <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Intermedia</tooltip>
@@ -81,6 +87,7 @@
           <tooltip xml:lang="de">Geschwindigkeit bei mittlerer Fahrstufe einstellen</tooltip>
           <tooltip xml:lang="cs">Nastavení napětí pro střední rychlostní krok ovladače</tooltip>
           <tooltip xml:lang="nl">Snelheid voor middelste rijstand instellen</tooltip>
+		  <tooltip xml:lang="da">Indstiller midt volt hastighedstrin</tooltip>
         </display>
         <display item="Vhigh" format="hslider" label="" tooltip="Sets the maximum voltage at full throttle">
           <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Massima</tooltip>
@@ -88,6 +95,7 @@
           <tooltip xml:lang="de">Geschwindigkeit bei höchster Fahrstufe einstellen</tooltip>
           <tooltip xml:lang="cs">Nastavení napětí pro poslední rychlostní krok ovladače</tooltip>
           <tooltip xml:lang="nl">Snelheid voor hoogste rijstand instellen</tooltip>
+		  <tooltip xml:lang="da">Indstiller maks volt hastighedstrin</tooltip>
         </display>
       </column>
     </row>
@@ -102,6 +110,7 @@
           <tooltip xml:lang="de">Geschwindigkeitkurve bei mittlerer Fahrstufe einstellen, erst Vmin und Vmax einstellen</tooltip>
           <tooltip xml:lang="cs">Nastavení křivky napětí pro střední rychlostní korky ovladače, nejprve nastavte 1. a poslední rychlostní krok</tooltip>
           <tooltip xml:lang="nl">Snelheidsgrafiek instellen voor middenstand Rijregelaar; vooraf Vmin en Vmax instellen</tooltip>
+		  <tooltip xml:lang="da">Indstiller midt volt kurve hastighedstrin, indstil først Vstart og Vhigh</tooltip>
         </display>
         <label>
           <text> </text>
