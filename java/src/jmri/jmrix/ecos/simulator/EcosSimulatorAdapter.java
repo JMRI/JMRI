@@ -215,11 +215,17 @@ public class EcosSimulatorAdapter extends EcosPortController implements Runnable
      * EcosMessage into an outgoing EcosReply.
      */
     private EcosReply generateReply(EcosMessage msg) {
-        log.debug("Generate Reply to message: {}", msg);
+        log.debug("Generate Reply to message: {}", msg.toString().trim());
 
         EcosReply reply;
-        log.error("Replying to \"{}\"", msg.toString().substring(0, msg.toString().indexOf(',')));
-        switch (msg.toString().substring(0, msg.toString().indexOf(','))) {
+        String command;
+        if (msg.toString().indexOf(',') >= 1) {
+            command = msg.toString().substring(0, msg.toString().indexOf(','));
+        } else {
+            command = msg.toString();
+        }
+        log.error("Replying to \"{}\"", command);
+        switch (command) {
             case "request(1":
                 reply = new EcosReply(String.format("<EVENT 1>status[%s]", trackPowerState ? "GO" : "STOP"));
                 break;
