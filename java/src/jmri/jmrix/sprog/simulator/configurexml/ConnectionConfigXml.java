@@ -1,8 +1,8 @@
-package jmri.jmrix.easydcc.simulator.configurexml;
+package jmri.jmrix.sprog.simulator.configurexml;
 
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
-import jmri.jmrix.easydcc.simulator.ConnectionConfig;
-import jmri.jmrix.easydcc.simulator.SimulatorAdapter;
+import jmri.jmrix.sprog.simulator.ConnectionConfig;
+import jmri.jmrix.sprog.simulator.SimulatorAdapter;
 
 /**
  * Handle XML persistence of layout connections by persisting the
@@ -25,15 +25,15 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     @Override
-    protected void getInstance(Object object) {
-        adapter = ((ConnectionConfig) object).getAdapter();
-    }
-
-    @Override
     protected void getInstance() {
         if (adapter == null) {
             adapter = new SimulatorAdapter();
         }
+    }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
     }
 
     @Override
