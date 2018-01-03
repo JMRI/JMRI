@@ -209,6 +209,14 @@ abstract public class AbstractPortController implements PortAdapter {
     static protected class Option {
 
         String currentValue = null;
+        
+        /** 
+         * As a heuristic, we consider the 1st non-null
+         * currentValue as the configured value.  Changes away from that
+         * mark an Option object as "dirty".
+         */
+        String configuredValue = null;
+        
         String displayText;
         String[] options;
         Boolean advancedOption = true;
@@ -225,6 +233,7 @@ abstract public class AbstractPortController implements PortAdapter {
         }
 
         void configure(String value) {
+            if (configuredValue == null ) configuredValue = value;
             currentValue = value;
         }
 
@@ -248,7 +257,7 @@ abstract public class AbstractPortController implements PortAdapter {
         }
 
         boolean isDirty() {
-            return (currentValue != null && !currentValue.equals(options[0]));
+            return (currentValue != null && !currentValue.equals(configuredValue));
         }
     }
 
