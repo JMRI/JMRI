@@ -6,9 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SprogReply.java
- *
- * Description:	Carries the reply to a SprogMessage
+ * Carries the reply to a SprogMessage.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Andrew Berridge - refactored, cleaned up, Feb 2010

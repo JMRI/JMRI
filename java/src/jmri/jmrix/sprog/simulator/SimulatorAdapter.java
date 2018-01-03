@@ -42,8 +42,8 @@ public class SimulatorAdapter extends SprogPortController implements jmri.jmrix.
     private boolean trackPowerState = false;
 
     // Simulator responses
-    char EDC_OPS = 0x4F;
-    char EDC_PROG = 0x50;
+//    char EDC_OPS = 0x4F;
+//    char EDC_PROG = 0x50;
 
     public SimulatorAdapter() {
         super(new SprogSystemConnectionMemo(SprogMode.SERVICE)); // uses default user name, suppose Service mode
@@ -239,7 +239,7 @@ public class SimulatorAdapter extends SprogPortController implements jmri.jmrix.
      * This is the heart of the simulation. It translates an
      * incoming SprogMessage into an outgoing SprogReply.
      *
-     * As yet, not all messages receive a meaningful reply. TODO: Throttle, Program
+     * As yet, no messages receive a meaningful reply. TODO: all msg
      */
     @SuppressWarnings("fallthrough")
     private SprogReply generateReply(SprogMessage msg) {
@@ -252,74 +252,76 @@ public class SimulatorAdapter extends SprogPortController implements jmri.jmrix.
         log.debug("Message type = " + command);
         switch (command) {
 
-            case 'X': // eXit programming
-            case 'S': // Send packet
-            case 'D': // Deque packet
-            case 'Q': // Que packet
-            case 'F': // display memory
-            case 'C': // program loCo
-                reply.setElement(i++, EDC_OPS); // capital O for Operation
-                break;
+            // TODO add in all SPROG replies to
 
-            case 'P':
-            case 'M':
-                reply.setElement(i++, EDC_PROG); // capital P for Programming
-                break;
+//            case 'X': // eXit programming
+//            case 'S': // Send packet
+//            case 'D': // Deque packet
+//            case 'Q': // Que packet
+//            case 'F': // display memory
+//            case 'C': // program loCo
+//                reply.setElement(i++, EDC_OPS); // capital O for Operation
+//                break;
+//
+//            case 'P':
+//            case 'M':
+//                reply.setElement(i++, EDC_PROG); // capital P for Programming
+//                break;
+//
+//            case 'E':
+//                log.debug("TRACK_POWER_ON detected");
+//                trackPowerState = true;
+//                reply.setElement(i++, EDC_OPS); // capital O for Operation
+//                break;
+//
+//            case 'K':
+//                log.debug("TRACK_POWER_OFF detected");
+//                trackPowerState = false;
+//                reply.setElement(i++, EDC_OPS); // capital O for Operation
+//                break;
 
-            case 'E':
-                log.debug("TRACK_POWER_ON detected");
-                trackPowerState = true;
-                reply.setElement(i++, EDC_OPS); // capital O for Operation
-                break;
-
-            case 'K':
-                log.debug("TRACK_POWER_OFF detected");
-                trackPowerState = false;
-                reply.setElement(i++, EDC_OPS); // capital O for Operation
-                break;
-
-            case 'V':
-                log.debug("Read_CS_Version detected");
-                String replyString = "V999 01 01 1999";
+            case '?':
+                log.debug("Read_Sprog_Version detected");
+                String replyString = "V0.1 - simulator";
                 reply = new SprogReply(replyString); // fake version number reply
                 i = replyString.length();
 //                reply.setElement(i++, 0x0d); // add CR for second reply line
 //                reply.setElement(i++, EDC_OPS); // capital O for Operation
                 break;
 
-            case 'G': // Consist
-                log.debug("Consist detected");
-                if (msg.toString().charAt(0) == 'D') { // Display consist
-                    replyString = "G" + msg.getElement(2) + msg.getElement(3) + "0000";
-                    reply = new SprogReply(replyString); // fake version number reply
-                    i = replyString.length();
-//                    reply.setElement(i++, 0x0d); // add CR
-                    break;
-                }
-                reply.setElement(i++, EDC_OPS); // capital O for Operation, anyway
-                break;
-
-            case 'L': // Read Loco
-                log.debug("Read Loco detected");
-                replyString = "L" + msg.getElement(1) + msg.getElement(2) + msg.getElement(3) + msg.getElement(4) + "000000";
-                reply = new SprogReply(replyString); // fake reply dir = 00 step = 00 F5-12=00
-                i = replyString.length();
-//                reply.setElement(i++, 0x0d); // add CR for second reply line
+//            case 'G': // Consist
+//                log.debug("Consist detected");
+//                if (msg.toString().charAt(0) == 'D') { // Display consist
+//                    replyString = "G" + msg.getElement(2) + msg.getElement(3) + "0000";
+//                    reply = new SprogReply(replyString); // fake version number reply
+//                    i = replyString.length();
+////                    reply.setElement(i++, 0x0d); // add CR
+//                    break;
+//                }
 //                reply.setElement(i++, EDC_OPS); // capital O for Operation, anyway
-                break;
-
-            case 'R':
-                log.debug("Read_CV detected");
-                replyString = "--";
-                reply = new SprogReply(replyString); // cannot read
-                i = replyString.length();
-//                reply.setElement(i++, 0x0d); // add CR for second reply line
-//                reply.setElement(i++, EDC_PROG); // capital O for Operation
-                break;
+//                break;
+//
+//            case 'L': // Read Loco
+//                log.debug("Read Loco detected");
+//                replyString = "L" + msg.getElement(1) + msg.getElement(2) + msg.getElement(3) + msg.getElement(4) + "000000";
+//                reply = new SprogReply(replyString); // fake reply dir = 00 step = 00 F5-12=00
+//                i = replyString.length();
+////                reply.setElement(i++, 0x0d); // add CR for second reply line
+////                reply.setElement(i++, EDC_OPS); // capital O for Operation, anyway
+//                break;
+//
+//            case 'R':
+//                log.debug("Read_CV detected");
+//                replyString = "--";
+//                reply = new SprogReply(replyString); // cannot read
+//                i = replyString.length();
+////                reply.setElement(i++, 0x0d); // add CR for second reply line
+////                reply.setElement(i++, EDC_PROG); // capital O for Operation
+//                break;
 
             default:
                 log.debug("non-reply message detected");
-                reply.setElement(i++, EDC_OPS); // capital O for Operation
+//                reply.setElement(i++, 0); // the default SPROG reply?
         }
         log.debug("Reply generated = {}", reply.toString());
         reply.setElement(i++, 0x0d); // add final CR for all replies

@@ -7,15 +7,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for simulator SerialDriverAdapter.
+ * Tests for sprog SimulatorAdapter.
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class SerialDriverAdapterTest {
+public class SimulatorAdapterTest {
 
    @Test
    public void ConstructorTest(){
-       SerialDriverAdapter a = new SerialDriverAdapter();
+       SimulatorAdapter a = new SimulatorAdapter();
        Assert.assertNotNull(a);
    }
 
