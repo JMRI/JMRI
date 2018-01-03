@@ -817,9 +817,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 log.debug("going to try the opsw access");
                 csOpSwAccessor.writeCsOpSw(cvNum, val, p);
                 return;
-                
+
             } else {
-                log.debug("rejecting the cs opsw access");
+                log.warn("rejecting the cs opsw access account unsupported CV name format");
                 // unsupported format in "cv" name.  Signal an error.
                 p.programmingOpReply(1, ProgListener.SequenceError);
                 return;
@@ -883,6 +883,28 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         lopsa = 0;
         hopsa = 0;
         mServiceMode = true;
+        if (getMode().equals(csOpSwProgrammingMode)) {
+            log.debug("cvOpSw mode!");
+            //handle Command Station OpSw programming here
+            String[] parts = CVname.split("\\.");
+            if ((parts[0].equals("csOpSw")) && (parts.length==2)) {
+                if (csOpSwAccessor == null) {
+                    csOpSwAccessor = new csOpSwAccess(adaptermemo, p);
+                } else {
+                    csOpSwAccessor.setProgrammerListener(p);
+                }
+                // perform the CsOpSwMode read access
+                log.debug("going to try the opsw access");
+                csOpSwAccessor.readCsOpSw(CVname, p);
+                return;
+            } else {
+                log.warn("rejecting the cs opsw access account unsupported CV name format");
+                // unsupported format in "cv" name.  Signal an error.
+                p.programmingOpReply(1, ProgListener.SequenceError);
+                return;
+            }
+        }
+
         // parse the programming command
         int pcmd = 0x03;       // LPE imples 0x00, but 0x03 is observed
         if (getMode().equals(ProgrammingMode.PAGEMODE)) {
@@ -940,9 +962,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 log.debug("going to try the opsw access");
                 csOpSwAccessor.readCsOpSw(cvNum, p);
                 return;
-                
+
             } else {
-                log.debug("rejecting the cs opsw access");
+                log.warn("rejecting the cs opsw access account unsupported CV name format");
                 // unsupported format in "cv" name.  Signal an error.
                 p.programmingOpReply(1, ProgListener.SequenceError);
                 return;
