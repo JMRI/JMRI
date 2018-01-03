@@ -230,12 +230,9 @@ abstract public class AbstractPortController implements PortAdapter {
             this.displayText = displayText;
             this.options = new String[options.length];
             System.arraycopy(options, 0, this.options, 0, options.length);
-            System.out.println("Option ctor: "+displayText);
         }
 
         void configure(String value) {
-            System.out.println("configure: "+displayText+" from "+currentValue+" to "+value);
-            
             if (configuredValue == null ) configuredValue = value;
             currentValue = value;
         }
