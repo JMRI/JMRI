@@ -289,8 +289,7 @@ abstract public class AbstractCanTrafficController
                                     + mCurrentState + " was " + msg.toString());
                         }
                     } else {
-                        log.error("reply complete in unexpected state: "
-                                + mCurrentState + " was " + msg.toString());
+                        unexpectedReplyStateError(mCurrentState,msg.toString());
                     }
                 }
             }

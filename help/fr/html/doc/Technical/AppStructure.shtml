@@ -40,13 +40,13 @@
 
     <div id="mainContent">
       <h1>JMRI: Structure de l'Application</h1>Le programme
-      JmriDemo est juste un exemple, mais il est cens&eacute;
+      PanelPro est juste un exemple, mais il est cens&eacute;
       &ecirc;tre un bon.
 
-Le programme JmriDemo est juste un exemple, mais il est cens&#233; &#234;tre un bon.
-<P>
-La source de la classe principale est actuellement dans apps/JmriDemo/JMRIdemo.java,
-qui d&#233;finit la classe principale apps.JmriDemo.JMRIdemo.
+      Le programme PanelPro est juste un exemple, mais il est cens&#233; &#234;tre un bon.
+      <P>
+    La source de la classe principale est actuellement dans apps/PanelPro/PanelPro.java,
+    qui d&#233;finit la classe principale apps.PanelPro.PanelPro.
 <P>
 La d&#233;mo principale cr&#233;e juste la barre de menus, et la remplit avec les menus
 et les &#233;l&#233;ments  d&#233;sir&#233;s. Chaque &#233;l&#233;ment a comme une classe objet "Action" qui lui est associ&#233;e qui fera l'
@@ -54,11 +54,11 @@ initialisation n&#233;cessaire en cas de besoin.
 <P>
 Parce que nous nous attendons &#224; avoir des interfaces diff&#233;rentes dans le paquet  <code>jmrix</code> package, les outils JMRI
 ne cr&#233;ent pas directement les objets d'interface dont ils ont besoin. Plut&#244;t, ils demandent des exemples
-d'interfaces. Pour les interfaces dans le package <code>jmri</code>, qui pourraient &#234;tre mises en œuvre par
+d'interfaces. Pour les interfaces dans le package <code>jmri</code>, qui pourraient &#234;tre mises en ��uvre par
 beaucoup de types de r&#233;seau diff&#233;rents, <code>jmri.InstanceManager</code> r&#233;pond &#224; ces demandes.
 
 <P>
-Plus d'informations sur la fa&#231;on dont les choses (par exemple des objets repr&#233;sentant les &#233;l&#233;ments sur le réseau)
+Plus d'informations sur la fa&#231;on dont les choses (par exemple des objets repr&#233;sentant les &#233;l&#233;ments sur le r��seau)
 sont nomm&#233;s si disponibles sur <A HREF="Names.shtml">une page s&#233;par&#233;e </a>.
 
       <p>Parce que nous nous attendons &agrave; avoir des

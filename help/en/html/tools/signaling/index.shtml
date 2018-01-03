@@ -497,22 +497,19 @@
       <h4><a name="action" id="action">Signal Actions in
       Logix</a></h4>
 
-      <p><a name="action" id="action">Actions related to Signals
+      <p>Actions related to Signals
       Heads and Masts currently available for use in Logix
       Conditionals are listed below along with information on each.
-      <i>Note:</i> Not all Logix actions are included here.</a></p>
+      <i>Note:</i> Not all Logix actions are included here.</p>
 
       <ul>
-        <li><a name="action" id="action"><b>Set Signal Head
+        <li><b>Set Signal Head
         Appearance</b>: Sets the specified Signal Head to the
         chosen Appearance. Specify the Signal Head to set by
         entering its System Name or User Name. Specify the
         Appearance to set by choosing from the popup menu that
         appears after you enter a Signal Head System Name (or drag
-        it from one of the Pick Lists).</a></li>
-
-        <li style="list-style: none"><a name="action" id=
-        "action"></a></li>
+        it from one of the Pick Lists).</li>
 
         <li><b>Set Signal Head Held</b>: Sets the specified Signal
         Head to Hold. Specify the Signal Head to hold by entering

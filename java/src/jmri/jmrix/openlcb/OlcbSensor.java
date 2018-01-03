@@ -11,6 +11,8 @@ import org.openlcb.implementations.EventTable;
 import org.openlcb.implementations.VersionedValueListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.annotation.Nonnull;
+import javax.annotation.CheckReturnValue;
 
 /**
  * Extend jmri.AbstractSensor for OpenLCB controls.
@@ -177,6 +179,16 @@ public class OlcbSensor extends AbstractSensor {
         if (sensorListener != null) sensorListener.release();
         if (pc != null) pc.release();
         super.dispose();
+    }
+
+    /**
+     * {@inheritDoc} 
+     * 
+     * Sorts by decoded EventID(s)
+     */
+    @CheckReturnValue
+    public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull jmri.NamedBean n) {
+        return OlcbSystemConnectionMemo.compareSystemNameSuffix(suffix1, suffix2);
     }
 
     private final static Logger log = LoggerFactory.getLogger(OlcbSensor.class);

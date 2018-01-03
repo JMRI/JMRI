@@ -1,12 +1,14 @@
 package jmri.jmrix.loconet;
 
 import jmri.ProgListener;
+import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.junit.Assert;
+import java.util.List;
 
 public class SlotManagerTest extends TestCase {
 
@@ -733,6 +735,16 @@ public class SlotManagerTest extends TestCase {
         Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
 
         log.debug(".... end testReadThroughFacadeFail ...");
+    }
+
+    public void testGetProgrammingModes() {
+        List<ProgrammingMode> l = slotmanager.getSupportedModes();
+        Assert.assertEquals("programming mode list length ok", 5, l.size());
+        Assert.assertEquals("programming mode 0", ProgrammingMode.PAGEMODE, l.get(0));
+        Assert.assertEquals("programming mode 1", ProgrammingMode.DIRECTBYTEMODE, l.get(1));
+        Assert.assertEquals("programming mode 2", ProgrammingMode.REGISTERMODE, l.get(2));
+        Assert.assertEquals("programming mode 3", ProgrammingMode.ADDRESSMODE, l.get(3));
+        Assert.assertEquals("programming mode 4", "LOCONETCSOPSWMODE", l.get(4).getStandardName());
     }
 
 
