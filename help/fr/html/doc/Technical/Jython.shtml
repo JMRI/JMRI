@@ -64,14 +64,14 @@ taper des instructions Python.
 Nous avons fourni quelques fichiers de commandes Python pour rendre 
 plus facile le d&#233;marrage. 
 <P>
-Par exemple, vous pouvez d&#233;marrer les applications JmriDemo depuis des 
-lignes de commandes Jython, qui sont ensuite disponibles pour la manipulation 
+    Par exemple, vous pouvez d&#233;marrer les applications PanelPro depuis des
+    lignes de commandes Jython, qui sont ensuite disponibles pour la manipulation 
 des objets comme les aiguillages et les capteurs:
 
 <pre>
-execfile("JmriDemo.py")
-     0 JmriDemo.JMRIdemo                     INFO  - programme d&#233;marre [principal]
- 11109 JmriDemo.JMRIdemo                     INFO  - initialisation principale termin&#233;e [principal]
+execfile("PanelPro.py")
+     0 PanelPro.PanelPro                     INFO  - programme d&#233;marre [principal]
+ 11109 PanelPro.PanelPro                     INFO  - initialisation principale termin&#233;e [principal]
 
 >>> turnouts.newTurnout("LT1", "")
 jmri.jmrix.loconet.LnTurnout@1a8f49
@@ -94,7 +94,7 @@ jmri.jmrix.loconet.LnTurnout@1a8f49
 >>> 
 </PRE>
 
-Notez que ceci ex&#233;cute une version compl&#232;te de l'application JmriDemo;
+Notez que ceci ex&#233;cute une version compl&#232;te de l'application PanelPro;
 toutes les fen&#234;tres et les menus sont pr&#233;sent&#233;s de la m&#234;me fa&#231;on, la configuration 
 se fait par le panneau de pr&#233;f&#233;rences, etc. Ce que la connexion Jython ajoute est une 
 ligne de commande &#224; partir de laquelle vous pouvez manipuler directement les choses.
@@ -183,7 +183,7 @@ Cette section de la page est un tas d'informations utiles sur
 le contr&#244;le de JMRI depuis Jython directement.
 <P>
 Notez que vous n'avez pas plus besoin de ceci lors de l'ex&#233;cution 
-des scripts JmriDemo.py ou similaire, car ils g&#232;rent le d&#233;marrage 
+des scripts PanelPro.py ou similaire, car ils g&#232;rent le d&#233;marrage
 d'une application compl&#232;te. 
 
 <h3>Initialisation</h3>
@@ -206,25 +206,25 @@ Pour rendre les classes JMRI disponible, vous avez &#224; faire:
 Tel qu'il est actuellement configur&#233;, celui-ci n'ex&#233;cute pas n'importe quel code d'initialisation 
 pour commencer les connexions mat&#233;rielles, etc.
  Une fa&#231;on de faire est de charger un fichier de configuration, peut-&#234;tre un 
-que vous avez cr&#233;&#233; pr&#233;c&#233;demment via le panneau de pr&#233;f&#233;rences JmriDemo:
-<PRE>
+ que vous avez cr&#233;&#233; pr&#233;c&#233;demment via le panneau de pr&#233;f&#233;rences PanelPro:
+ <PRE>
   import java.io
-  configfile = java.io.File(jmri.util.FileUtil.getPreferencesPath()+"JmriDemoConfig2.xml")
+  configfile = java.io.File(jmri.util.FileUtil.getPreferencesPath()+"PanelProConfig2.xml")
   jmri.InstanceManager.setConfigureManager(jmri.configurexml.ConfigXmlManager())
   jmri.InstanceManager.configureManagerInstance().load(configfile)
 </PRE>
 pour activer les classes JMRI et vous connecter &#224; votre r&#233;seau. 
-JmriDemoConfig2.xml "est le nom du fichier de configuration depuis 
-le programme JmriDemo; vous pouvez utiliser un autre nom si vous le souhaitez.
+PanelProConfig2.xml "est le nom du fichier de configuration depuis
+le programme PanelPro; vous pouvez utiliser un autre nom si vous le souhaitez.
 Le fichier de configuration contr&#244;le la connexion au r&#233;seau, et toute autre 
 option qui peut avoir &#233;t&#233; mise quand il a &#233;t&#233; cr&#233;&#233;.
 
 <P>
-Alternativement, si vous voulez d&#233;marrer l'application JmriDemo compl&#232;te, 
-y compris la barre de menu, l'&#233;cran d'accueil, etc, vous pouvez faire::
+    Alternativement, si vous voulez d&#233;marrer l'application PanelPro compl&#232;te,
+    y compris la barre de menu, l'&#233;cran d'accueil, etc, vous pouvez faire::
 <PRE>
  import apps
- apps.JmriDemo.JMRIdemo.main([]) 
+ apps.PanelPro.PanelPro.main([])
 </PRE>
 <P>
 Cela va d&#233;marrer le programme, y compris sa configuration de d&#233;marrage, etc
@@ -232,7 +232,7 @@ Cela va d&#233;marrer le programme, y compris sa configuration de d&#233;marrage
 <P>
 Pour simplifier ce d&#233;marrage encore plus, vous pouvez faire:
 <PRE>
- execfile("JmriDemo.py")
+ execfile("PanelPro.py")
 </PRE>
 pour appeler ces commandes . 
 
@@ -333,31 +333,31 @@ un fichier .py:
   % ./jmrithon
   Jython 2.1 on java1.4.1_01 (JIT: null)
   Taper "copyright", "credits" ou "license" pour plus d'informations
-  >>> import JmriDemo
+  >>> import PanelPro
 </PRE>
 Cela fonctionne, en ce sens que le programme d&#233;marre. Mais 
-les m&#233;thodes commodes sont toutes dans le namespace JmriDemo:
+les m&#233;thodes commodes sont toutes dans le namespace PanelPro:
 <PRE>
   >>> turnouts.newTurnout("LT1","")
   Traceback (innermost last):
     File "<console>", line 1, in ?
   NameError: turnouts
 
-  >>> JmriDemo.turnouts.newTurnout("LT1","")
+  >>> PanelPro.turnouts.newTurnout("LT1","")
   jmri.jmrix.loconet.LnTurnout@36b91b
 </PRE>
 ce qui fait nettement plus &#224; taper plus tard..
 Et il est d&#233;routant, car selon que vous ayez commenc&#233;
-JmriDemo, DecoderPro ou une autre application, les noms seront
- diff&#233;rents.
+PanelPro, DecoderPro ou une autre application, les noms seront
+diff&#233;rents.
 <LI>
 <PRE>
   % ./jmrithon
-  >>>  execfile("JmriDemo.py")
+  >>>  execfile("PanelPro.py")
 </PRE>
 
-  % ./jmrithon -JmriDemo.py
-</PRE>
+    % ./jmrithon -PanelPro.py
+    </PRE>
 
 Cela semble un peu moche, car ce n'est pas en utilisant les modules techniques normaux de Python
 . Mais les m&#233;thodes commodes sont

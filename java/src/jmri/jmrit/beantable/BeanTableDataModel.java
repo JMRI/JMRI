@@ -173,6 +173,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case SYSNAMECOL:
+                return NamedBean.class;
             case USERNAMECOL:
             case COMMENTCOL:
                 return String.class;
@@ -209,7 +210,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         NamedBean b;
         switch (col) {
             case SYSNAMECOL:  // slot number
-                return sysNameList.get(row);
+                return getBySystemName(sysNameList.get(row));
             case USERNAMECOL:  // return user name
                 // sometimes, the TableSorter invokes this on rows that no longer exist, so we check
                 b = getBySystemName(sysNameList.get(row));

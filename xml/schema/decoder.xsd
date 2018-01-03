@@ -18,10 +18,10 @@
 
     <!-- not yet in proper Venetian blind form -->
     <!-- needs to share the pane type with programmer definition -->
-    
+
     <!-- needs more attribute restrictions -->
     <!-- needs attribute defaults -->
-    
+
 <xs:schema xmlns:xi="http://www.w3.org/2001/XInclude"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
@@ -42,12 +42,12 @@
     <xs:annotation>
       <xs:documentation>
       Defines the JMRI decoder definition files.
-      
+
       This version is for use with JMRI 4.1.1 and later, in which
       support for the "ivariable" element and contained elements
       have been deprecated.  Those will not validate with this
       schema.
-      
+
       </xs:documentation>
       <xs:appinfo>
         <jmri:usingclass configurexml="false">jmri.jmrit.decoderdefn.DecoderFile</jmri:usingclass>
@@ -71,7 +71,7 @@
           <xs:sequence>
             <xs:element name="capability" minOccurs="0" maxOccurs="unbounded">
               <xs:annotation><xs:documentation>
-              Indicate programmer facades to be added. 
+              Indicate programmer facades to be added.
               Later ones work through earlier ones.
               </xs:documentation></xs:annotation>
               <xs:complexType>
@@ -92,9 +92,9 @@
                           <xs:attribute name="name" type="xs:string" >
                             <xs:annotation><xs:documentation>
                             Name of the particular attribute being set.
-                            Whether this is required is defined by a 
+                            Whether this is required is defined by a
                             particular facade; facades may take their
-                            parameters in a specified order instead of using names.  
+                            parameters in a specified order instead of using names.
                             </xs:documentation></xs:annotation>
                           </xs:attribute>
                         </xs:extension>
@@ -108,7 +108,7 @@
             <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
               <xs:annotation><xs:documentation>
               Content is the internal name of a supported programmer mode.
-              Having at least one of these (or the 
+              Having at least one of these (or the
               historical direct, paged, et al attributes)
               is required or programming is not possible.
               </xs:documentation></xs:annotation>
@@ -116,8 +116,8 @@
           </xs:sequence>
           <xs:attribute name="direct" default="yes" >
             <xs:annotation><xs:documentation>
-            Yes indicates programmer supports one of the direct 
-            programming modes,  
+            Yes indicates programmer supports one of the direct
+            programming modes,
             specifically the DIRECTMODE, none, DIRECTBITMODE or DIRECTBYTEMODE
             respectively.
             </xs:documentation></xs:annotation>
@@ -132,19 +132,19 @@
           </xs:attribute>
           <xs:attribute name="paged" type="yesNoType" default="yes">
             <xs:annotation><xs:documentation>
-            Yes indicates programmer supports Paged mode, 
+            Yes indicates programmer supports Paged mode,
             specifically the PAGEMODE type.
             </xs:documentation></xs:annotation>
           </xs:attribute>
           <xs:attribute name="register" type="yesNoType" default="yes">
             <xs:annotation><xs:documentation>
-            Yes indicates programmer supports Register mode, 
+            Yes indicates programmer supports Register mode,
             specifically the REGISTERMODE type.
             </xs:documentation></xs:annotation>
           </xs:attribute>
           <xs:attribute name="ops" type="yesNoType" default="yes">
             <xs:annotation><xs:documentation>
-            Yes indicates programmer supports Ops mode for locomotive decoders, 
+            Yes indicates programmer supports Ops mode for locomotive decoders,
             specifically the OPSBITMODE type.
             </xs:documentation></xs:annotation>
           </xs:attribute>
@@ -160,13 +160,13 @@
       <xs:element name="variables" type="VariablesType" minOccurs="1" maxOccurs="1">
         <xs:unique name="UniqueVariableItemAttribute2">
           <xs:annotation><xs:documentation>Insist that the variable item attribute is unique</xs:documentation></xs:annotation>
-          <xs:selector xpath=".//variable"/> 
-          <xs:field xpath="@item"/>           
-          <xs:field xpath="@include"/>           
-          <xs:field xpath="@exclude"/>           
+          <xs:selector xpath=".//variable"/>
+          <xs:field xpath="@item"/>
+          <xs:field xpath="@include"/>
+          <xs:field xpath="@exclude"/>
         </xs:unique>
       </xs:element>
-      
+
       <xs:element name="resets" type="ResetsType" minOccurs="0" maxOccurs="1"/>
 
     </xs:sequence>
@@ -192,7 +192,7 @@
           </xs:element>
         <xs:element name="version" type="VersionType" minOccurs="0" maxOccurs="unbounded">
               <xs:annotation><xs:documentation>
-              Older form of version information. Not deprecated as such, but prefer 
+              Older form of version information. Not deprecated as such, but prefer
               the authorgroup/revhistory style to enable future automated processing.
               </xs:documentation></xs:annotation>
         </xs:element>
@@ -222,15 +222,15 @@
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
-                  <xs:attribute name="nmraListDate" type="xs:string"/>                  
-                  <xs:attribute name="updated" type="xs:string"/>                  
-                  <xs:attribute name="lastadd" type="xs:string">                  
+                  <xs:attribute name="nmraListDate" type="xs:string"/>
+                  <xs:attribute name="updated" type="xs:string"/>
+                  <xs:attribute name="lastadd" type="xs:string">
                     <xs:annotation><xs:documentation>
                         Comma-separated list of numbers recently added; next time
-                        you update, check to see if these entries have had 
-                        names changed to correct NMRA transcription errors. Also can be 
+                        you update, check to see if these entries have had
+                        names changed to correct NMRA transcription errors. Also can be
                         useful to look near these values for new additions to the
-                        NMRA list. 
+                        NMRA list.
                     </xs:documentation></xs:annotation>
                   </xs:attribute>
                 </xs:complexType>
@@ -243,7 +243,7 @@
                         <xs:complexContent>
                           <xs:extension base="FamilyType">
                             <xs:annotation><xs:documentation>
-                                This element is the same as in the decoder definition itself, 
+                                This element is the same as in the decoder definition itself,
                                 with the addition of a file name attribute.
                             </xs:documentation></xs:annotation>
                             <xs:attribute name="file" type="xs:string" />
@@ -271,9 +271,9 @@
     </xs:annotation>
     <xs:unique name="UniqueVariableItemAttribute3">
       <xs:annotation><xs:documentation>Insist that the variable item attribute is unique</xs:documentation></xs:annotation>
-      <xs:selector xpath=".//variable"/> 
-      <xs:field xpath="@item"/>           
-      <xs:field xpath="@include"/> <!-- Duplicates are OK so long as include, exclude only get one. -->      
+      <xs:selector xpath=".//variable"/>
+      <xs:field xpath="@item"/>
+      <xs:field xpath="@include"/> <!-- Duplicates are OK so long as include, exclude only get one. -->
       <xs:field xpath="@exclude"/> <!-- This isn't quite right, but it's a start -->
     </xs:unique>
   </xs:element>
@@ -410,15 +410,15 @@
           <xs:attribute name="lowVersionID" type="xs:int" />
           <xs:attribute name="highVersionID" type="xs:int" />
           <xs:attribute name="productID" type="xs:string" >
-            <xs:annotation><xs:documentation>For a decoder definition which 
-                describes a device implementing the LocoNet SV2 messaging protocol, 
+            <xs:annotation><xs:documentation>For a decoder definition which
+                describes a device implementing the LocoNet SV2 messaging protocol,
                 this value is used to match a "discovered" device
                 to an appropriate decoder definition</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="developerID" type="xs:int" default="-1" >
-            <xs:annotation><xs:documentation>For a decoder definition which 
-                describes a device implementing the LocoNet SV2 messaging protocol, 
+            <xs:annotation><xs:documentation>For a decoder definition which
+                describes a device implementing the LocoNet SV2 messaging protocol,
                 this value is used to match a "discovered" device
                 to an appropriate decoder definition</xs:documentation>
             </xs:annotation>
@@ -472,9 +472,9 @@
       </xs:element>
 
       <xs:element name="functionlabels" type="functionlabelsType" minOccurs="0" maxOccurs="1"/>
-      
+
       <xs:element name="soundlabels" type="soundlabelsType" minOccurs="0" maxOccurs="1"/>
-      
+
       <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation><xs:documentation>Provide internationalized comment text</xs:documentation></xs:annotation>
       </xs:element>
@@ -487,7 +487,7 @@
     <xs:attribute name="type" type="xs:string" />
     <xs:attribute name="comment" type="xs:string" />
   </xs:complexType>
-      
+
   <xs:complexType name="functionlabelsType">
     <xs:sequence>
       <xs:element name="functionlabel" minOccurs="0" maxOccurs="unbounded">
@@ -507,7 +507,7 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  
+
   <xs:complexType name="soundlabelsType">
     <xs:sequence>
       <xs:element name="soundlabel" minOccurs="0" maxOccurs="unbounded">
@@ -541,10 +541,10 @@
             <xs:annotation><xs:documentation>Can be nested to make it possible to include groups</xs:documentation></xs:annotation>
             <xs:unique name="UniqueVariableItemAttribute1">
               <xs:annotation><xs:documentation>Insist that the variable item attribute is unique</xs:documentation></xs:annotation>
-              <xs:selector xpath=".//variable"/> 
-              <xs:field xpath="@item"/>           
-              <xs:field xpath="@include"/>           
-              <xs:field xpath="@exclude"/>           
+              <xs:selector xpath=".//variable"/>
+              <xs:field xpath="@item"/>
+              <xs:field xpath="@include"/>
+              <xs:field xpath="@exclude"/>
             </xs:unique>
           </xs:element>
 
@@ -554,14 +554,14 @@
               For use in subfiles.
               </xs:documentation></xs:annotation>
           </xs:element>
-        
+
           <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" >
               <xs:annotation><xs:documentation>
               DocBook element(s) describing the authors in standard form.
               For use in subfiles.
               </xs:documentation></xs:annotation>
           </xs:element>
-        
+
           <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" >
               <xs:annotation><xs:documentation>
               DocBook element(s) describing the revision history in standard form.
@@ -595,7 +595,7 @@
               <xs:field xpath="@xml:lang"/>
             </xs:unique>
           </xs:element>
-      
+
           <xs:element name="variable" minOccurs="0" maxOccurs="unbounded" >
             <xs:complexType>
               <xs:sequence minOccurs="1" maxOccurs="1">
@@ -766,7 +766,7 @@
               <xs:field xpath="@xml:lang"/>
             </xs:unique>
           </xs:element>
-      
+
           <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:sequence>
@@ -925,6 +925,7 @@
       <xs:enumeration value="LOCONETSV1MODE"/>
       <xs:enumeration value="LOCONETSV2MODE"/>
       <xs:enumeration value="LOCONETBDOPSWMODE"/>
+      <xs:enumeration value="LOCONETCSOPSWMODE"/>
     </xs:restriction>
   </xs:simpleType>
 
