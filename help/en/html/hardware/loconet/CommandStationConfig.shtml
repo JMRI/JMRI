@@ -137,7 +137,8 @@
                 <a name="ConfigViaTool" id=
                    "ConfigViaTool"></a><h2>Command Station Configuration Using the &quot;Configure Command Station&quot; Tool</h2>
 
-                See the JMRI LocoNet <a href=
+                <p>The previous JMRI method for configuring Command Station Operation Switches (OpSws) is described at
+                    the <a href=
                                         "../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">
                     Configure Command Station</a> tool page.<br>
 
@@ -152,6 +153,9 @@
                         intervention.  When using the JMRI Roster-based configuration mechanisms,
                         further information may be found in the "Notes" shown on the "Internal Storage
                         Management" sheet in the decoder definition.</li>
+                    <li>JMRI can only modify Command Station Operation Switches using these tools for 
+                        those command stations which implement the required LocoNet messaging.  Non-
+                        Digitrax command stations are not supported by these mechanisms.</li>
                 </ul>
 
 
