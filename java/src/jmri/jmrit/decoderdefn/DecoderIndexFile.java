@@ -645,7 +645,7 @@ public class DecoderIndexFile extends XmlFile {
 
         @Override
         public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
-            log.error("How was DecoderIndexFile.Initializer#getDefault called?", new Exception());
+            log.warn("How was DecoderIndexFile.Initializer#getDefault called?", new Exception());
             if (type.equals(DecoderIndexFile.class)) {
                 // create and load
                 DecoderIndexFile instance = new DecoderIndexFile();
