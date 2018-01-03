@@ -186,6 +186,17 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             public CatalogPanel doInBackground() {
                 return CatalogPanel.makeDefaultCatalog();
             }
+            /**
+             * Minimal implementation to catch and log errors
+             */
+            @Override
+            protected void done() {
+                try {
+                    get();  // called to get errors
+                } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
+                    log.error("Exception while in MakeCatalog", e);
+                }
+            }
         }
         (new MakeCatalog()).execute();
         log.debug("Init SwingWorker launched");
