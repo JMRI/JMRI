@@ -11,8 +11,6 @@ import java.util.Optional;
 import java.util.ServiceLoader;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.implementation.DccConsistManager;
-import jmri.implementation.NmraConsistManager;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,8 +68,6 @@ import org.slf4j.LoggerFactory;
  */
 public final class InstanceManager {
 
-    // the default instance of the InstanceManager
-    private static volatile InstanceManager defaultInstanceManager = null;
     // data members to hold contact with the property listeners
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private final HashMap<Class<?>, List<Object>> managerLists = new HashMap<>();
@@ -237,87 +233,89 @@ public final class InstanceManager {
         log.trace("getOptionalDefault of type {}", type.getName());
         List<T> l = getList(type);
         if (l.isEmpty()) {
+            synchronized (type) {
 
-            // example of tracing where something is being initialized
-            //if (type == jmri.implementation.SignalSpeedMap.class) new Exception("jmri.implementation.SignalSpeedMap init").printStackTrace();
-            if (traceFileActive) {
-                traceFilePrint("Start initialization: " + type.toString());
-                traceFileIndent++;
-            }
-
-            // check whether already working on this type
-            InitializationState working = getDefault().getInitializationState(type);
-            Exception except = getDefault().getInitializationException(type);
-            getDefault().setInitializationState(type, InitializationState.STARTED);
-            if (working == InitializationState.STARTED) {
-                log.error("Proceeding to initialize {} while already in initialization", type, new Exception("Thread \"" + Thread.currentThread().getName() + "\""));
-                log.error("    Prior initialization:", except);
+                // example of tracing where something is being initialized
+                //if (type == jmri.implementation.SignalSpeedMap.class) new Exception("jmri.implementation.SignalSpeedMap init").printStackTrace();
                 if (traceFileActive) {
-                    traceFilePrint("*** Already in process ***");
+                    traceFilePrint("Start initialization: " + type.toString());
+                    traceFileIndent++;
                 }
-            } else if (working == InitializationState.DONE) {
-                log.error("Proceeding to initialize {} but initialization is marked as complete", type, new Exception("Thread \"" + Thread.currentThread().getName() + "\""));
-            }
 
-            // see if can autocreate
-            log.debug("    attempt auto-create of {}", type.getName());
-            if (InstanceManagerAutoDefault.class.isAssignableFrom(type)) {
-                try {
-                    T obj = type.getConstructor((Class[]) null).newInstance((Object[]) null);
-                    l.add(obj);
-                    // obj has been added, now initialize it if needed
-                    if (obj instanceof InstanceManagerAutoInitialize) {
-                        ((InstanceManagerAutoInitialize) obj).initialize();
-                    }
-                    log.debug("      auto-created default of {}", type.getName());
-                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                    log.error("Exception creating auto-default object for {}", type.getName(), e); // unexpected
-                    getDefault().setInitializationState(type, InitializationState.FAILED);
+                // check whether already working on this type
+                InitializationState working = getDefault().getInitializationState(type);
+                Exception except = getDefault().getInitializationException(type);
+                getDefault().setInitializationState(type, InitializationState.STARTED);
+                if (working == InitializationState.STARTED) {
+                    log.error("Proceeding to initialize {} while already in initialization", type, new Exception("Thread \"" + Thread.currentThread().getName() + "\""));
+                    log.error("    Prior initialization:", except);
                     if (traceFileActive) {
-                        traceFileIndent--;
-                        traceFilePrint("End initialization (no object) A: " + type.toString());
+                        traceFilePrint("*** Already in process ***");
                     }
-                    return null;
+                } else if (working == InitializationState.DONE) {
+                    log.error("Proceeding to initialize {} but initialization is marked as complete", type, new Exception("Thread \"" + Thread.currentThread().getName() + "\""));
                 }
-                getDefault().setInitializationState(type, InitializationState.DONE);
-                if (traceFileActive) {
-                    traceFileIndent--;
-                    traceFilePrint("End initialization A: " + type.toString());
-                }
-                return l.get(l.size() - 1);
-            }
-            // see if initializer can handle
-            log.debug("    attempt initializer create of {}", type.getName());
-            if (getDefault().initializers.containsKey(type)) {
-                try {
-                    @SuppressWarnings("unchecked")
-                    T obj = (T) getDefault().initializers.get(type).getDefault(type);
-                    log.debug("      initializer created default of {}", type.getName());
-                    l.add(obj);
-                    // obj has been added, now initialize it if needed
-                    if (obj instanceof InstanceManagerAutoInitialize) {
-                        ((InstanceManagerAutoInitialize) obj).initialize();
+
+                // see if can autocreate
+                log.debug("    attempt auto-create of {}", type.getName());
+                if (InstanceManagerAutoDefault.class.isAssignableFrom(type)) {
+                    try {
+                        T obj = type.getConstructor((Class[]) null).newInstance((Object[]) null);
+                        l.add(obj);
+                        // obj has been added, now initialize it if needed
+                        if (obj instanceof InstanceManagerAutoInitialize) {
+                            ((InstanceManagerAutoInitialize) obj).initialize();
+                        }
+                        log.debug("      auto-created default of {}", type.getName());
+                    } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                        log.error("Exception creating auto-default object for {}", type.getName(), e); // unexpected
+                        getDefault().setInitializationState(type, InitializationState.FAILED);
+                        if (traceFileActive) {
+                            traceFileIndent--;
+                            traceFilePrint("End initialization (no object) A: " + type.toString());
+                        }
+                        return null;
                     }
                     getDefault().setInitializationState(type, InitializationState.DONE);
                     if (traceFileActive) {
                         traceFileIndent--;
-                        traceFilePrint("End initialization I: " + type.toString());
+                        traceFilePrint("End initialization A: " + type.toString());
                     }
                     return l.get(l.size() - 1);
-                } catch (IllegalArgumentException ex) {
-                    log.error("Known initializer for {} does not provide a default instance for that class", type.getName());
                 }
-            } else {
-                log.debug("        no initializer registered for {}", type.getName());
-            }
+                // see if initializer can handle
+                log.debug("    attempt initializer create of {}", type.getName());
+                if (getDefault().initializers.containsKey(type)) {
+                    try {
+                        @SuppressWarnings("unchecked")
+                        T obj = (T) getDefault().initializers.get(type).getDefault(type);
+                        log.debug("      initializer created default of {}", type.getName());
+                        l.add(obj);
+                        // obj has been added, now initialize it if needed
+                        if (obj instanceof InstanceManagerAutoInitialize) {
+                            ((InstanceManagerAutoInitialize) obj).initialize();
+                        }
+                        getDefault().setInitializationState(type, InitializationState.DONE);
+                        if (traceFileActive) {
+                            traceFileIndent--;
+                            traceFilePrint("End initialization I: " + type.toString());
+                        }
+                        return l.get(l.size() - 1);
+                    } catch (IllegalArgumentException ex) {
+                        log.error("Known initializer for {} does not provide a default instance for that class", type.getName());
+                    }
+                } else {
+                    log.debug("        no initializer registered for {}", type.getName());
+                }
 
-            // don't have, can't make
-            getDefault().setInitializationState(type, InitializationState.FAILED);
-            if (traceFileActive) {
-                traceFileIndent--;
-                traceFilePrint("End initialization (no object) E: " + type.toString());
+                // don't have, can't make
+                getDefault().setInitializationState(type, InitializationState.FAILED);
+                if (traceFileActive) {
+                    traceFileIndent--;
+                    traceFilePrint("End initialization (no object) E: " + type.toString());
+                }
+                return null;
             }
-            return null;
         }
         return l.get(l.size() - 1);
     }
@@ -688,14 +686,6 @@ public final class InstanceManager {
     @Deprecated
     static public void setCommandStation(CommandStation p) {
         store(p, CommandStation.class);
-
-        // since there is a command station available, use
-        // the NMRA consist manager instead of the generic consist
-        // manager.
-        if (getNullableDefault(ConsistManager.class) == null
-                || getDefault(ConsistManager.class).getClass() == DccConsistManager.class) {
-            setConsistManager(new NmraConsistManager());
-        }
     }
 
     /**
@@ -743,14 +733,6 @@ public final class InstanceManager {
     @Deprecated
     static public void setAddressedProgrammerManager(AddressedProgrammerManager p) {
         store(p, AddressedProgrammerManager.class);
-
-        // Now that we have a programmer manager, install the default
-        // Consist manager if Ops mode is possible, and there isn't a
-        // consist manager already.
-        if (getDefault(AddressedProgrammerManager.class).isAddressedModePossible()
-                && getNullableDefault(ConsistManager.class) == null) {
-            setConsistManager(new DccConsistManager());
-        }
     }
 
     // Needs to have proxy manager converted to work
@@ -876,6 +858,15 @@ public final class InstanceManager {
     }
 
     /**
+     * A class for lazy initialization of the singleton class InstanceManager.
+     * https://www.ibm.com/developerworks/library/j-jtp03304/
+     */
+    private static class LazyInstanceManager {
+
+        public static InstanceManager instanceManager = new InstanceManager();
+    }
+
+    /**
      * Get the default instance of the InstanceManager. This is used for
      * verifying the source of events fired by the InstanceManager.
      *
@@ -883,11 +874,8 @@ public final class InstanceManager {
      *         needed
      */
     @Nonnull
-    public static synchronized InstanceManager getDefault() {
-        if (defaultInstanceManager == null) {
-            defaultInstanceManager = new InstanceManager();
-        }
-        return defaultInstanceManager;
+    public static InstanceManager getDefault() {
+        return LazyInstanceManager.instanceManager;
     }
 
     // support checking for overlapping intialization
