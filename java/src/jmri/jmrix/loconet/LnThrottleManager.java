@@ -154,15 +154,6 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 return;
             }
         }
-        if ((s.consistStatus() == LnConstants.CONSIST_MID) ||
-                (s.consistStatus() == LnConstants.CONSIST_SUB)) {
-            // cannot acquire loco account is consist-mid or consist-sub 
-            log.warn("slot {} address {} cannot be acquired for loco control account already in-use, consist-mid or consist-sub.",
-                    s.getSlot(), s.locoAddr());
-            // notify the LnThrottleManager about failure of acquisition.
-            notifyRefused(s.locoAddr(), "Locomotive burried in a consist cannot be acquired.");
-            return;
-        }
         commitToAcquireThrottle(s);
     }
 
