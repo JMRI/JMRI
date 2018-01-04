@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * Provide access to a simulated SPROG system.
  * <p>
  * Currently, the SPROG SimulatorAdapter reacts to commands sent from the user interface
- * with messages an appropriate reply message.
+ * with an appropriate reply message.
  * Based on jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter / DCCppSimulatorAdapter 2017
  * <p>
  * NOTE: Some material in this file was modified from other portions of the
@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2018
  */
-public class SimulatorAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter, Runnable {
+public class SimulatorAdapter extends SprogPortController implements Runnable {
 
     // private control members
     private boolean opened = false;
@@ -42,8 +42,7 @@ public class SimulatorAdapter extends SprogPortController implements jmri.jmrix.
     private boolean trackPowerState = false;
 
     // Simulator responses
-//    char EDC_OPS = 0x4F;
-//    char EDC_PROG = 0x50;
+    String SPR_OK = "OK"; // TODO replace by documented ack reply
 
     public SimulatorAdapter() {
         super(new SprogSystemConnectionMemo(SprogMode.SERVICE)); // uses default user name, suppose Service mode
@@ -100,8 +99,7 @@ public class SimulatorAdapter extends SprogPortController implements jmri.jmrix.
     }
 
     /**
-     * Set up all of the other objects to operate with an SprogSimulator
-     * connected to this port.
+     * Set up all of the other objects to operate with an Sprog Simulator.
      */
     @Override
     public void configure() {
@@ -239,7 +237,7 @@ public class SimulatorAdapter extends SprogPortController implements jmri.jmrix.
      * This is the heart of the simulation. It translates an
      * incoming SprogMessage into an outgoing SprogReply.
      *
-     * As yet, no messages receive a meaningful reply. TODO: all msg
+     * As yet, no messages receive a meaningful reply. TODO: add all supported msg as cases, fill in useful ack reply in SPR_OK
      */
     @SuppressWarnings("fallthrough")
     private SprogReply generateReply(SprogMessage msg) {
@@ -247,85 +245,64 @@ public class SimulatorAdapter extends SprogPortController implements jmri.jmrix.
 
         String s, r;
         SprogReply reply = new SprogReply();
-        int i = 0;
         char command = msg.toString().charAt(0);
         log.debug("Message type = " + command);
         switch (command) {
+            // TODO add in more SPROG replies
 
-            // TODO add in all SPROG replies to
-
+            case 'O': // Send packet
 //            case 'X': // eXit programming
-//            case 'S': // Send packet
 //            case 'D': // Deque packet
 //            case 'Q': // Que packet
 //            case 'F': // display memory
 //            case 'C': // program loCo
-//                reply.setElement(i++, EDC_OPS); // capital O for Operation
-//                break;
-//
-//            case 'P':
-//            case 'M':
-//                reply.setElement(i++, EDC_PROG); // capital P for Programming
-//                break;
-//
-//            case 'E':
-//                log.debug("TRACK_POWER_ON detected");
-//                trackPowerState = true;
-//                reply.setElement(i++, EDC_OPS); // capital O for Operation
-//                break;
-//
-//            case 'K':
-//                log.debug("TRACK_POWER_OFF detected");
-//                trackPowerState = false;
-//                reply.setElement(i++, EDC_OPS); // capital O for Operation
-//                break;
+                reply = new SprogReply(SPR_OK); // confirm
+                break;
+
+            case 'A':
+                log.debug("Aquire Throttle command detected");
+                reply = new SprogReply(SPR_OK); // confirm
+                break;
+
+            case '>':
+                log.debug("Set Throttle command detected");
+                reply = new SprogReply(SPR_OK); // confirm
+                break;
+
+            case '+':
+                log.debug("TRACK_POWER_ON detected");
+                trackPowerState = true;
+                reply = new SprogReply(SPR_OK); // confirm
+                break;
+
+            case '-':
+                log.debug("TRACK_POWER_OFF detected");
+                trackPowerState = false;
+                reply = new SprogReply(SPR_OK); // confirm
+                break;
 
             case '?':
                 log.debug("Read_Sprog_Version detected");
                 String replyString = "V0.1 - simulator";
                 reply = new SprogReply(replyString); // fake version number reply
-                i = replyString.length();
-//                reply.setElement(i++, 0x0d); // add CR for second reply line
-//                reply.setElement(i++, EDC_OPS); // capital O for Operation
                 break;
-
-//            case 'G': // Consist
-//                log.debug("Consist detected");
-//                if (msg.toString().charAt(0) == 'D') { // Display consist
-//                    replyString = "G" + msg.getElement(2) + msg.getElement(3) + "0000";
-//                    reply = new SprogReply(replyString); // fake version number reply
-//                    i = replyString.length();
-////                    reply.setElement(i++, 0x0d); // add CR
-//                    break;
-//                }
-//                reply.setElement(i++, EDC_OPS); // capital O for Operation, anyway
-//                break;
 //
 //            case 'L': // Read Loco
 //                log.debug("Read Loco detected");
-//                replyString = "L" + msg.getElement(1) + msg.getElement(2) + msg.getElement(3) + msg.getElement(4) + "000000";
-//                reply = new SprogReply(replyString); // fake reply dir = 00 step = 00 F5-12=00
-//                i = replyString.length();
-////                reply.setElement(i++, 0x0d); // add CR for second reply line
-////                reply.setElement(i++, EDC_OPS); // capital O for Operation, anyway
+//                reply = new SprogReply(SPR_OK); // confirm
 //                break;
 //
 //            case 'R':
 //                log.debug("Read_CV detected");
-//                replyString = "--";
-//                reply = new SprogReply(replyString); // cannot read
-//                i = replyString.length();
-////                reply.setElement(i++, 0x0d); // add CR for second reply line
-////                reply.setElement(i++, EDC_PROG); // capital O for Operation
+//                reply = new SprogReply(SPR_OK); // confirm
 //                break;
 
             default:
                 log.debug("non-reply message detected");
-//                reply.setElement(i++, 0); // the default SPROG reply?
+                reply = null; // is there a default SPROG reply?
         }
         log.debug("Reply generated = {}", reply.toString());
-        reply.setElement(i++, 0x0d); // add final CR for all replies
-        return (reply);
+        return reply;
     }
 
     /**

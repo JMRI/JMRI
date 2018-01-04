@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * Provide access to a simulated EasyDCC system.
  * <p>
  * Currently, the EasyDCC SimulatorAdapter reacts to commands sent from the user interface
- * with messages an appropriate reply message.
+ * with an appropriate reply message.
  * Based on jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter / DCCppSimulatorAdapter 2017
  * <p>
  * NOTE: Some material in this file was modified from other portions of the
@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2017
  */
-public class SimulatorAdapter extends EasyDccPortController implements jmri.jmrix.SerialPortAdapter, Runnable {
+public class SimulatorAdapter extends EasyDccPortController implements Runnable {
 
     // private control members
     private boolean opened = false;

@@ -154,8 +154,10 @@ public class SprogReply extends AbstractMRReply {
      * Extract Read-CV returned value from a message.
      * <p>
      * SPROG is assumed to not be echoing commands. A reply to a command may
-     * include the prompt that was printed after the previous command Reply to a
-     * CV read is of the form " = hvv" where vv is the CV value in hex
+     * include the prompt that was printed after the previous command.
+     * <p>
+     * Reply to a CV read is of the form " = hvv" where vv is the CV value in hex
+     *
      * @return -1 if message can't be parsed
      */
     @Override
