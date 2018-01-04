@@ -91,8 +91,12 @@ abstract public class Siglet {
                         setOutput();
                     });
                 } catch (InterruptedException e) {
+                    log.trace("InterruptedException");
+                    thread.interrupt();
+                }
+                if (thread.isInterrupted()) {
+                    log.trace("isInterrupted()");
                     // done
-                    log.trace("Siglet {} cleaning up due to interrupt", name);
                     pq.dispose();
                     thread = null; // flag that this won't execute again
                     return;
@@ -117,6 +121,9 @@ abstract public class Siglet {
         }
     }
 
+    public boolean isRunning() {
+        return thread != null;
+    }
     /**
      * Set inputs to the items in in.
      *
@@ -126,8 +133,8 @@ abstract public class Siglet {
         inputs = Arrays.copyOf(in, in.length);
     }
 
-    PropertyChangeEventQueue pq;
-    Thread thread;
+    protected PropertyChangeEventQueue pq;
+    protected Thread thread;
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Siglet.class);
 
 }

@@ -19,7 +19,6 @@ public class JMRIClientConnectionTypeList implements jmri.jmrix.ConnectionTypeLi
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
-            // "jmri.jmrix.jmriclient.json.JsonNetworkConnectionConfig", // do not allow configuration
             "jmri.jmrix.jmriclient.networkdriver.ConnectionConfig"
         };
     }
