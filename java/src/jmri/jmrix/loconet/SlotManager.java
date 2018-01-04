@@ -94,6 +94,17 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Send a DCC packet to the rails. This implements the CommandStation
      * interface.
      *
+     * @param packet  Byte array representing the packet, including the
+     *                error-correction byte.  The error-correction byte
+     *                need not be correct as it is not propagated as part
+     *                of the LocoNet message.  The length of packet
+     *                determines the number of bytes to be sent in the NMRA
+     *                packet.  The command station computes and
+     *                fills-in the error-correction byte as the last byte of the
+     *                packet.  When packet includes fewer than 6 bytes, the
+     *                LocoNet message will encode the remaining bytes as 0.
+     * @param repeats Number of times to repeat the transmission.  repeats
+     *                must be in the range {0...7}
      */
     @Override
     public void sendPacket(byte[] packet, int repeats) {
