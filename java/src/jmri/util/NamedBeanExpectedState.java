@@ -1,8 +1,8 @@
 package jmri.util;
 
-import jmri.ExpectedState;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import jmri.NamedBean;
-import jmri.beans.Bean;
 
 /**
  * Retain a NamedBean and its expected state.
@@ -10,31 +10,27 @@ import jmri.beans.Bean;
  * @author Randall Wood Copyright 2017
  * @param <T> the supported type of NamedBean
  */
-public class NamedBeanExpectedState<T extends NamedBean> extends Bean implements ExpectedState<T, Integer> {
+public class NamedBeanExpectedState<T extends NamedBean> extends NamedBeanExpectedValue<T, Integer> {
 
-    private final T bean;
-    private Integer state;
-
-    public NamedBeanExpectedState(T bean, Integer state) {
-        this.bean = bean;
-        NamedBeanExpectedState.this.setExpectedState(state);
+    public NamedBeanExpectedState(@Nonnull T bean, @Nonnull String name, @Nonnull Integer state) {
+        super(bean, name, state);
+        Objects.requireNonNull(state, "state Integer must not be null");
     }
 
+    public NamedBeanExpectedState(@Nonnull T bean, @Nonnull Integer state) {
+        this(bean, bean.getDisplayName(), state);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation requires a non-null parameter.
+     *
+     * @throws NullPointerException if state is null
+     */
     @Override
-    public Integer getExpectedState() {
-        return state;
+    public void setExpectedState(@Nonnull Integer state) {
+        Objects.requireNonNull(state, "state Integer must not be null");
+        super.setExpectedState(state);
     }
-
-    @Override
-    public void setExpectedState(Integer state) throws UnsupportedOperationException {
-        Integer old = this.state;
-        this.state = state;
-        this.propertyChangeSupport.firePropertyChange(EXPECTED_STATE, old, state);
-    }
-
-    @Override
-    public T getObject() {
-        return this.bean;
-    }
-
 }

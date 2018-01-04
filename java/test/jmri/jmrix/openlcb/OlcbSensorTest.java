@@ -23,7 +23,7 @@ public class OlcbSensorTest extends TestCase {
 
     public void testIncomingChange() {
         Assert.assertNotNull("exists", t);
-        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
 
         // message for Active and Inactive
         CanMessage mActive = new CanMessage(
@@ -53,7 +53,7 @@ public class OlcbSensorTest extends TestCase {
         Assert.assertNotNull("exists", t);
         t.tc.rcvMessage = null;
 
-        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         t.flush();
 
         assertNotNull(t.tc.rcvMessage);
@@ -88,7 +88,7 @@ public class OlcbSensorTest extends TestCase {
 
     public void testMomentarySensor() throws Exception {
         Assert.assertNotNull("exists", t);
-        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8", t.iface);
+        OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8", t.iface);
 
         // message for Active and Inactive
         CanMessage mActive = new CanMessage(
@@ -125,7 +125,7 @@ public class OlcbSensorTest extends TestCase {
     }
 
     public void testLocalChange() throws jmri.JmriException {
-        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         t.waitForStartup();
 
         t.tc.rcvMessage = null;
@@ -151,7 +151,7 @@ public class OlcbSensorTest extends TestCase {
     }
 
     public void testEventTable() {
-        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
 
         EventTable.EventTableEntry[] elist = t.iface.getEventTable()
                 .getEventInfo(new EventID("1.2.3.4.5.6.7.8")).getAllEntries();
@@ -172,6 +172,24 @@ public class OlcbSensorTest extends TestCase {
 
         Assert.assertEquals(1, elist.length);
         Assert.assertEquals("Sensor MyInput Inactive", elist[0].getDescription());
+    }
+
+    public void testSystemSpecificComparisonOfSpecificFormats() {
+
+        // test by putting into a tree set, then extracting and checking order
+        java.util.TreeSet<Sensor> set = new java.util.TreeSet(new jmri.util.NamedBeanComparator());
+        
+        set.add(new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface));
+        set.add(new OlcbSensor("M", "X0501010114FF2000;X0501010114FF2011", t.iface));
+        set.add(new OlcbSensor("M", "X0501010114FF2000;X0501010114FF2001", t.iface));
+        set.add(new OlcbSensor("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", t.iface));
+        
+        java.util.Iterator<Sensor> it = set.iterator();
+        
+        Assert.assertEquals("MS1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", it.next().getSystemName());
+        Assert.assertEquals("MS1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", it.next().getSystemName());
+        Assert.assertEquals("MSX0501010114FF2000;X0501010114FF2001", it.next().getSystemName());
+        Assert.assertEquals("MSX0501010114FF2000;X0501010114FF2011", it.next().getSystemName());
     }
 
     OlcbTestInterface t;

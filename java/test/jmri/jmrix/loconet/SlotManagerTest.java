@@ -4,23 +4,21 @@ import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import java.util.List;
 
-public class SlotManagerTest extends TestCase {
-
-    public SlotManagerTest(String s) {
-        super(s);
-    }
+public class SlotManagerTest {
 
     /**
      * Local member to recall when a SlotListener has been invoked.
      */
     private LocoNetSlot testSlot;
 
+    @Test
     public void testGetDirectFunctionAddressOK() {
         LocoNetMessage m1;
 
@@ -55,6 +53,7 @@ public class SlotManagerTest extends TestCase {
                 slotmanager.getDirectFunctionAddress(m1));
     }
 
+    @Test
     public void testGetDirectDccPacketOK() {
         LocoNetMessage m1;
 
@@ -89,6 +88,7 @@ public class SlotManagerTest extends TestCase {
                 slotmanager.getDirectDccPacket(m1));
     }
 
+    @Test
     public void testGetSlotSend() {
         testSlot = null;
         SlotListener p2 = new SlotListener() {
@@ -108,6 +108,7 @@ public class SlotManagerTest extends TestCase {
                 slotmanager.mLocoAddrHash.contains(p2));
     }
 
+    @Test
     public void testGetSlotRcv() {
         testSlot = null;
         SlotListener p2 = new SlotListener() {
@@ -148,6 +149,7 @@ public class SlotManagerTest extends TestCase {
         Assert.assertEquals("returned slot", null, testSlot);
     }
 
+    @Test
     public void testReadCVPaged() throws jmri.ProgrammerException {
         int CV1 = 12;
         ProgListener p2 = null;
@@ -162,6 +164,7 @@ public class SlotManagerTest extends TestCase {
     // etc methods.  If you remove the older writeCV(int, ...) tests,
     // you can rename these. Note that not all (int,...) tests may have a
     // String(String, ...) test defined, in which case you should create those.
+    @Test
     public void testReadCVPagedString() throws jmri.ProgrammerException {
         String CV1 = "12";
         ProgListener p2 = null;
@@ -172,6 +175,7 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testReadCVRegister() throws jmri.ProgrammerException {
         int CV1 = 2;
         ProgListener p2 = null;
@@ -182,6 +186,7 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testReadCVRegisterString() throws jmri.ProgrammerException {
         String CV1 = "2";
         ProgListener p2 = null;
@@ -192,6 +197,7 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testReadCVDirect() throws jmri.ProgrammerException {
         log.debug(".... start testReadCVDirect ...");
         int CV1 = 29;
@@ -226,6 +232,7 @@ public class SlotManagerTest extends TestCase {
         log.debug(".... end testReadCVDirect ...");
     }
 
+    @Test
     public void testReadCVDirectString() throws jmri.ProgrammerException {
         log.debug(".... start testReadCVDirect ...");
         String CV1 = "29";
@@ -260,6 +267,7 @@ public class SlotManagerTest extends TestCase {
         log.debug(".... end testReadCVDirect ...");
     }
 
+    @Test
     public void testReadCVOpsModeLong() throws jmri.ProgrammerException {
         int CV1 = 12;
         ProgListener p2 = null;
@@ -269,6 +277,7 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testReadCVOpsModeShort() throws jmri.ProgrammerException {
         int CV1 = 12;
         ProgListener p2 = null;
@@ -278,6 +287,7 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testWriteCVPaged() throws jmri.ProgrammerException {
         int CV1 = 12;
         int val2 = 34;
@@ -289,6 +299,7 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testWriteCVPagedString() throws jmri.ProgrammerException {
         String CV1 = "12";
         int val2 = 34;
@@ -300,6 +311,7 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testWriteCVRegister() throws jmri.ProgrammerException {
         int CV1 = 2;
         int val2 = 34;
@@ -311,6 +323,7 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testWriteCVRegisterString() throws jmri.ProgrammerException {
         String CV1 = "2";
         int val2 = 34;
@@ -322,6 +335,7 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testWriteCVDirect() throws jmri.ProgrammerException {
         int CV1 = 12;
         int val2 = 34;
@@ -333,6 +347,7 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testWriteCVDirectString() throws jmri.ProgrammerException {
         String CV1 = "12";
         int val2 = 34;
@@ -344,6 +359,7 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testWriteCVDirectStringDCS240() throws jmri.ProgrammerException {
         log.debug(".... start testWriteCVDirectStringDCS240 ...");
         String CV1 = "31";
@@ -381,6 +397,7 @@ public class SlotManagerTest extends TestCase {
         log.debug(".... end testWriteCVDirectStringDCS240 ...");
     }
 
+    @Test
     public void testLackLogic() {
         LocoNetMessage m = new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25});
         Assert.assertTrue("checkLackTaskAccepted(m.getElement(2))", slotmanager.checkLackTaskAccepted(m.getElement(2)));
@@ -388,6 +405,7 @@ public class SlotManagerTest extends TestCase {
         Assert.assertFalse("checkLackAcceptedBlind(m.getElement(2))", slotmanager.checkLackAcceptedBlind(m.getElement(2)));
     }
 
+    @Test
     public void testWriteCVDirectStringDCS240Interrupted() throws jmri.ProgrammerException {
         log.debug(".... start testWriteCVDirectStringDCS240 ...");
         String CV1 = "31";
@@ -433,6 +451,7 @@ public class SlotManagerTest extends TestCase {
         log.debug(".... end testWriteCVDirectStringDCS240 ...");
     }
 
+    @Test
     public void testWriteCVOpsLongAddr() throws jmri.ProgrammerException {
         int CV1 = 12;
         int val2 = 34;
@@ -445,6 +464,7 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testWriteCVOpsShortAddr() throws jmri.ProgrammerException {
         int CV1 = 12;
         int val2 = 34;
@@ -455,6 +475,7 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Test
     public void testWriteThroughFacade() throws jmri.ProgrammerException {
         log.debug(".... start testWriteThroughFacade ...");
         slotmanager.setMode(ProgrammingMode.DIRECTBYTEMODE);
@@ -570,6 +591,7 @@ public class SlotManagerTest extends TestCase {
         log.debug(".... end testWriteThroughFacade ...");
     }
 
+    @Test
     public void testReadThroughFacade() throws jmri.ProgrammerException {
         log.debug(".... start testReadThroughFacade ...");
         slotmanager.setMode(ProgrammingMode.DIRECTBYTEMODE);
@@ -685,6 +707,7 @@ public class SlotManagerTest extends TestCase {
         log.debug(".... end testReadThroughFacade ...");
     }
 
+    @Test
     public void testReadThroughFacadeFail() throws jmri.ProgrammerException {
         log.debug(".... start testReadThroughFacadeFail ...");
         slotmanager.setMode(ProgrammingMode.DIRECTBYTEMODE);
@@ -737,6 +760,7 @@ public class SlotManagerTest extends TestCase {
         log.debug(".... end testReadThroughFacadeFail ...");
     }
 
+    @Test
     public void testGetProgrammingModes() {
         List<ProgrammingMode> l = slotmanager.getSupportedModes();
         Assert.assertEquals("programming mode list length ok", 5, l.size());
@@ -745,19 +769,6 @@ public class SlotManagerTest extends TestCase {
         Assert.assertEquals("programming mode 2", ProgrammingMode.REGISTERMODE, l.get(2));
         Assert.assertEquals("programming mode 3", ProgrammingMode.ADDRESSMODE, l.get(3));
         Assert.assertEquals("programming mode 4", "LOCONETCSOPSWMODE", l.get(4).getStandardName());
-    }
-
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SlotManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SlotManagerTest.class);
-        return suite;
     }
 
     // The minimal setup for log4J
@@ -772,9 +783,9 @@ public class SlotManagerTest extends TestCase {
     ProgListener lstn;
     int releaseTestDelay = 150; // probably needs to be at least 150, see SlotManager.postProgDelay
 
-    @Override
-    protected void setUp() {
-        jmri.util.JUnitUtil.resetInstanceManager();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
 
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
@@ -811,11 +822,10 @@ public class SlotManagerTest extends TestCase {
             }
         };
 
-        apps.tests.Log4JFixture.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
