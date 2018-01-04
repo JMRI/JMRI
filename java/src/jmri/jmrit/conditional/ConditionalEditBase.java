@@ -2,8 +2,8 @@ package jmri.jmrit.conditional;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
@@ -302,7 +302,7 @@ public class ConditionalEditBase {
      *
      * @since 4.7.3
      */
-    static class NameBoxListener implements ItemListener {
+    static class NameBoxListener implements ActionListener {
 
         /**
          * @param textField The target field object when an entry is selected
@@ -314,9 +314,8 @@ public class ConditionalEditBase {
         JTextField saveTextField;
 
         @Override
-        public void itemStateChanged(ItemEvent e) {
-            // Get the combo box, the display name and the new state
-            int newState = e.getStateChange();
+        public void actionPerformed(ActionEvent e) {
+            // Get the combo box and display name
             Object src = e.getSource();
             if (!(src instanceof JmriBeanComboBox)) {
                 return;
@@ -324,12 +323,10 @@ public class ConditionalEditBase {
             JmriBeanComboBox srcBox = (JmriBeanComboBox) src;
             String newName = srcBox.getSelectedDisplayName();
 
-            if (newState == ItemEvent.SELECTED) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Name ComboBox Item Event: new name = '{}'", newName);  // NOI18N
-                }
-                saveTextField.setText(newName);
+            if (log.isDebugEnabled()) {
+                log.debug("NameBoxListener: new name = '{}'", newName);  // NOI18N
             }
+            saveTextField.setText(newName);
         }
     }
 
