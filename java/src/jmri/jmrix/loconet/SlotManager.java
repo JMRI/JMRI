@@ -119,7 +119,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         }
 
         LocoNetMessage m = new LocoNetMessage(11);
-        m.setElement(0, 0xED);
+        m.setElement(0, LnConstants.OPC_IMM_PACKET);
         m.setElement(1, 0x0B);
         m.setElement(2, 0x7F);
         // the incoming packet includes a check byte that's not included in LocoNet packet
@@ -293,12 +293,15 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     @Override
     public void message(LocoNetMessage m) {
         // LACK processing for resend of immediate command
-        if (!mTurnoutNoRetry && immedPacket != null && m.getOpCode() == LnConstants.OPC_LONG_ACK && m.getElement(1) == 0x6D && m.getElement(2) == 0x00) {
+        if (!mTurnoutNoRetry && immedPacket != null &&
+                m.getOpCode() == LnConstants.OPC_LONG_ACK &&
+                m.getElement(1) == 0x6D && m.getElement(2) == 0x00) {
             // LACK reject, resend immediately
             tc.sendLocoNetMessage(immedPacket);
             immedPacket = null;
         }
-        if (m.getOpCode() == 0xED && m.getElement(1) == 0x0B && m.getElement(2) == 0x7F) {
+        if (m.getOpCode() == LnConstants.OPC_IMM_PACKET &&
+                m.getElement(1) == 0x0B && m.getElement(2) == 0x7F) {
             immedPacket = m;
         } else {
             immedPacket = null;
@@ -355,7 +358,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * address word
      */
     int getDirectFunctionAddress(LocoNetMessage m) {
-        if (m.getElement(0) != 0xED) {
+        if (m.getElement(0) != LnConstants.OPC_IMM_PACKET) {
             return -1;
         }
         if (m.getElement(1) != 0x0B) {
@@ -389,7 +392,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * address bytes.
      */
     int getDirectDccPacket(LocoNetMessage m) {
-        if (m.getElement(0) != 0xED) {
+        if (m.getElement(0) != LnConstants.OPC_IMM_PACKET) {
             return -1;
         }
         if (m.getElement(1) != 0x0B) {
