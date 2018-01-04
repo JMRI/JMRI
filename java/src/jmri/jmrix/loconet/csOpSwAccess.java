@@ -108,11 +108,7 @@ public class csOpSwAccess implements LocoNetListener {
         log.debug("CS OpSw number {}", opSwNum);
         if (!updateCmdStnOpSw(opSwNum,
                 (val==1)?true:false)) {
-            ProgListener temp =p;
-            p = null;
-            if (temp != null) {
-                temp.programmingOpReply(0, ProgListener.ProgrammerBusy);
-            }
+            sendFinalProgrammerReply(ProgListener.ProgrammerBusy);
         }
     }
 
@@ -128,6 +124,7 @@ public class csOpSwAccess implements LocoNetListener {
             if (cmdStnOpSwState == cmdStnOpSwStateType.QUERY) {
                 log.debug("got slot 127 read data in response to OpSw query");
                 if ((m.getElement(7) & 0x40) == 0x40) {
+                    // attempt to get extended OpSw info
                     csOpSwAccessTimer.restart();
                     LocoNetMessage m2 = new LocoNetMessage(new int[] {0xbb, 0x7f, 0x40, 0x00});
                     cmdStnOpSwState = cmdStnOpSwStateType.QUERY_ENHANCED;
@@ -144,15 +141,19 @@ public class csOpSwAccess implements LocoNetListener {
                     log.debug("now can finish the write by updating the correct bit...");
                     finishTheWrite();
                 } else {
-                    value = extractCmdStnOpSw(m, cmdStnOpSwNum);
-                    log.debug("now can return the extracted OpSw{} read data ({}) to the programmer", cmdStnOpSwNum, value);
-                    ProgListener temp = p;
-                    p = null;
-                    if (temp != null) {
-                        log.debug("Returning data");
-                        temp.programmingOpReply(value?1:0, ProgListener.OK);
+                    if (!canExtractValidData(m, cmdStnOpSwNum)) {
+                        ProgListener temp = p;
+                        p = null;
+                        if (temp != null) {
+                            log.debug("Aborting - OpSw {} beyond allowd range", cmdStnOpSwNum);
+                            temp.programmingOpReply(0, ProgListener.NotImplemented);
+                        } else {
+                            log.warn("no programmer to which the error condition can be returned.");
+                        }
                     } else {
-                        log.debug("no programmer to return the data to.");
+                        value = extractCmdStnOpSw(m, cmdStnOpSwNum);
+                        log.debug("now can return the extracted OpSw{} read data ({}) to the programmer", cmdStnOpSwNum, value);
+                        sendFinalProgrammerReply(ProgListener.OK);
                     }
                 }
             } else if (cmdStnOpSwState == cmdStnOpSwStateType.QUERY_BEFORE_WRITE) {
@@ -164,7 +165,7 @@ public class csOpSwAccess implements LocoNetListener {
                     csOpSwAccessTimer.start();
                     return;
                 }
-                log.debug("hve received OpSw query before a write; now can process the data modification");
+                log.debug("have received OpSw query before a write; now can process the data modification");
                 csOpSwAccessTimer.stop();
                 LocoNetMessage m2 = updateOpSwVal(m, cmdStnOpSwNum,
                         cmdStnOpSwVal);
@@ -180,11 +181,7 @@ public class csOpSwAccess implements LocoNetListener {
             csOpSwAccessTimer.stop();
             cmdStnOpSwState = cmdStnOpSwStateType.HAS_STATE;
             value = extractCmdStnOpSw(lastCmdStationOpSwMessage, cmdStnOpSwNum);
-            ProgListener temp = p;
-            p = null;
-            if (temp != null) {
-                temp.programmingOpReply(value?1:0, ProgListener.OK);
-            }
+            sendFinalProgrammerReply(ProgListener.OK);
         } else if ((m.getOpCode() == 0xe6) &&
                 (m.getElement(1) == 0x15) &&
                 (m.getElement(2) == 0x00) &&
@@ -202,14 +199,7 @@ public class csOpSwAccess implements LocoNetListener {
                 } else {
                     value = extractCmdStnOpSw(m, cmdStnOpSwNum);
                     log.debug("now can return the extracted OpSw{} read data ({}) to the programmer", cmdStnOpSwNum, value);
-                    ProgListener temp = p;
-                    p = null;
-                    if (temp != null) {
-                        log.debug("Returning data");
-                        temp.programmingOpReply(value?1:0, ProgListener.OK);
-                    } else {
-                        log.debug("no programmer to return the data to.");
-                    }
+                    sendFinalProgrammerReply(ProgListener.ProgrammerBusy);
                 }
             } else if (cmdStnOpSwState == cmdStnOpSwStateType.QUERY_ENHANCED_BEFORE_WRITE) {
                 log.debug("hve received enhanced OpSw query before a write; now can process the data modification");
@@ -241,9 +231,7 @@ public class csOpSwAccess implements LocoNetListener {
             return;
         } else {
             log.debug("readCmdStationOpSw: aborting - cmdStnOpSwState is odd: {}", cmdStnOpSwState);
-            ProgListener temp = p;
-            p = null;
-            temp.programmingOpReply(0, ProgListener.ProgrammerBusy);
+            sendFinalProgrammerReply(ProgListener.ProgrammerBusy);
         }
     }
 
@@ -283,6 +271,18 @@ public class csOpSwAccess implements LocoNetListener {
         return true;
     }
 
+    public boolean canExtractValidData(LocoNetMessage m, int cmdStnOpSwNum) {
+        int nde = m.getNumDataElements();
+        if ((nde != 0x0e) && (nde != 0x15)) {
+            return false;
+        }
+        if ((cmdStnOpSwNum > 0) ||
+            (cmdStnOpSwNum < (nde==0x0e?65:113))) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean extractCmdStnOpSw(LocoNetMessage m, int cmdStnOpSwNum) {
         if (((m.getOpCode() == 0xE7) || (m.getOpCode() == 0xEF)) &&
                 ((m.getNumDataElements() == 14)) &&
@@ -312,11 +312,7 @@ public class csOpSwAccess implements LocoNetListener {
 
         csOpSwAccessTimer.stop();
         csOpSwValidTimer.stop();
-        ProgListener temp = p;
-        p = null;
-        if (temp != null) {
-            temp.programmingOpReply(0, ProgListener.UnknownError);
-        }
+        sendFinalProgrammerReply(ProgListener.UnknownError);
         cmdStnOpSwState = cmdStnOpSwStateType.IDLE;
         log.warn("illegal command station opsw access: {}. {}, {}.",
                 m.getOpCode(),
@@ -340,11 +336,7 @@ public class csOpSwAccess implements LocoNetListener {
             log.debug("updateOpSwVal: working with messageByte {}, value is {}", messageByte, val);
             if (((cmdStnOpSwNum -1) & 0x07) == 7) {
                 log.warn("Cannot program OpSw{} account LocoNet encoding limitations.",cmdStnOpSwNum);
-                ProgListener temp = p;
-                p = null;
-                if (temp != null) {
-                    temp.programmingOpReply(0, ProgListener.UnknownError);
-                }
+                sendFinalProgrammerReply(ProgListener.UnknownError);
                 return new LocoNetMessage(new int[] {LnConstants.OPC_GPBUSY, 0x0});
             }
             val &= ~(1 << ((cmdStnOpSwNum - 1) & 0x7));
@@ -365,11 +357,7 @@ public class csOpSwAccess implements LocoNetListener {
             log.debug("updateOpSwVal: working with messageByte {}, value is {}", messageByte, val);
             if (((cmdStnOpSwNum -1) & 0x07) == 7) {
                 log.warn("Cannot program OpSw{} account LocoNet encoding limitations.",cmdStnOpSwNum);
-                ProgListener temp = p;
-                p = null;
-                if (temp != null) {
-                    temp.programmingOpReply(0, ProgListener.UnknownError);
-                }
+                sendFinalProgrammerReply(ProgListener.UnknownError);
                 return new LocoNetMessage(new int[] {LnConstants.OPC_GPBUSY, 0x0});
             }
             val &= ~(1 << ((cmdStnOpSwNum - 1) & 0x7));
@@ -383,26 +371,43 @@ public class csOpSwAccess implements LocoNetListener {
         }
         else {
             log.warn("Cannot program OpSw{}: {} {}.",cmdStnOpSwNum, m.getOpCode(), m.getElement(1));
-            ProgListener temp = p;
-            p = null;
-            if (temp != null) {
-                temp.programmingOpReply(0, ProgListener.UnknownError);
-            }
+            sendFinalProgrammerReply(ProgListener.UnknownError);
             return new LocoNetMessage(new int[] {LnConstants.OPC_GPBUSY, 0x0});
         }
     }
 
     private void finishTheWrite() {
         cmdStnOpSwState = cmdStnOpSwStateType.WRITE;
+        if ((lastCmdStationOpSwMessage.getNumDataElements() != 0x0e) &&
+                (lastCmdStationOpSwMessage.getNumDataElements() != 0x15)) {
+            log.warn("odd happening- didn't have a previous read, so cannot update it! {}", 
+                    lastCmdStationOpSwMessage.toString());
+            sendFinalProgrammerReply(ProgListener.UnknownError);
+            return;
+        }
         LocoNetMessage m2 = updateOpSwVal(lastCmdStationOpSwMessage,
                 cmdStnOpSwNum,
                 cmdStnOpSwVal);
-        log.debug("gonna send message {}", m2.toString());
+        if (m2.getNumDataElements() == 2) {
+            // failure - no message provided - must be out-of-range opsw number
+            sendFinalProgrammerReply(ProgListener.UnknownError);
+            return;
+        }
+
         m2.setOpCode(LnConstants.OPC_WR_SL_DATA);
-        log.debug("sending LocoNet cmd stn opsw write message {}", m2.toString());
+        log.debug("finish the write sending LocoNet cmd stn opsw write message {}, length=", m2.toString(), m2.getNumDataElements());
         memo.getLnTrafficController().sendLocoNetMessage(m2);
         lastCmdStationOpSwMessage = m2;
         csOpSwAccessTimer.start();
+    }
+    
+    private void sendFinalProgrammerReply(int error) {
+                    ProgListener temp = p;
+            p = null;
+            if (temp != null) {
+                temp.programmingOpReply(0, error);
+            }
+
     }
 
     private enum cmdStnOpSwStateType {
