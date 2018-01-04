@@ -42,7 +42,6 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
     public void connect() throws java.io.IOException {
         super.connect();
         log.debug("openPort called");
-        keepAliveTimer();
     }
 
     /**
@@ -76,6 +75,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
         new XNetInitializationManager(this.getSystemConnectionMemo());
+        keepAliveTimer();
     }
 
     /**
