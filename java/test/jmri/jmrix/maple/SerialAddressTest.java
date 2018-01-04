@@ -64,8 +64,8 @@ public class SerialAddressTest {
 
     @Test
     public void testValidSystemNameConfig() {
-        ibits.setNumInputBits(40);
-        obits.setNumOutputBits(201);
+        InputBits.setNumInputBits(40);
+        OutputBits.setNumOutputBits(201);
         Assert.assertTrue("valid config KL47", SerialAddress.validSystemNameConfig("KL47", 'L', memo));
         Assert.assertTrue("valid config KS17", SerialAddress.validSystemNameConfig("KS17", 'S', memo));
         Assert.assertTrue("valid config KL148", SerialAddress.validSystemNameConfig("KL148", 'L', memo));
@@ -111,11 +111,6 @@ public class SerialAddressTest {
         Assert.assertEquals("make KS999", "KS999", SerialAddress.makeSystemName("S", 999, "K"));
         Assert.assertEquals("make KS1000", "KS1000", SerialAddress.makeSystemName("S", 1000, "K"));
     }
-
-    private SerialNode n = null;
-    private SerialNode d = null;
-    private SerialNode c = null;
-    private SerialNode b = null;
 
     @Test
     public void testIsOutputBitFree() {
@@ -210,10 +205,10 @@ public class SerialAddressTest {
         memo.setTrafficController(tc);
         ibits = new InputBits(tc);
         obits = new OutputBits(tc);
-        d = new SerialNode(4, 0,tc);
-        c = new SerialNode(10, 0,tc);
-        b = new SerialNode(99, 0,tc);
-        n = new SerialNode(18, 0,tc);
+        new SerialNode(4, 0,tc);
+        new SerialNode(10, 0,tc);
+        new SerialNode(99, 0,tc);
+        new SerialNode(18, 0,tc);
 
         SerialTurnoutManager l = new SerialTurnoutManager(memo) {
             @Override
@@ -243,10 +238,6 @@ public class SerialAddressTest {
     @After
     public void tearDown() {
         memo = null;
-        d = null;
-        c = null;
-        b = null;
-        n = null;
         JUnitUtil.tearDown();
     }
 

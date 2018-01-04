@@ -286,7 +286,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             public void clickOn(NamedBean t) {
                 int oldState = ((SignalHead) t).getAppearance();
                 int newState = 99;
-                int[] stateList = ((SignalHead) t).getValidStates(); // getValidAppearances((String)
+                int[] stateList = ((SignalHead) t).getValidStates();
                 for (int i = 0; i < stateList.length; i++) {
                     if (oldState == stateList[i]) {
                         if (i < stateList.length - 1) {
@@ -452,10 +452,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
              * @param head the name of the signal head
              * @return List of valid signal head appearance names
              */
-            public Vector<String> getValidAppearances(String head) {
+            public Vector<String> getValidAppearances(SignalHead head) {
                 // convert String[] validStateNames to Vector
-                String[] app = InstanceManager.getDefault(jmri.SignalHeadManager.class)
-                        .getSignalHead(head).getValidStateNames();
+                String[] app = head.getValidStateNames();
                 Vector<String> v = new Vector<String>();
                 for (int i = 0; i < app.length; i++) {
                     String appearance = app[i];
@@ -476,7 +475,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 Vector<String> comboappearances = boxMap.get(this.getValueAt(row, SYSNAMECOL));
                 if (comboappearances == null) {
                     // create a new one with right appearance
-                    Vector<String> v = getValidAppearances((String) this.getValueAt(row, SYSNAMECOL));
+                    Vector<String> v = getValidAppearances((SignalHead) this.getValueAt(row, SYSNAMECOL));
                     comboappearances = v;
                     boxMap.put(this.getValueAt(row, SYSNAMECOL), comboappearances);
                 }
@@ -1821,9 +1820,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     private void editSignal(int row) {
         // Logix was found, initialize for edit
-        String eSName = (String) m.getValueAt(row, BeanTableDataModel.SYSNAMECOL);
-        _curSignal = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(eSName);
-        //numConditionals = _curLogix.getNumConditionals();
+        _curSignal = (SignalHead) m.getValueAt(row, BeanTableDataModel.SYSNAMECOL);
+        String eSName = _curSignal.getSystemName();
+
         // create the Edit Logix Window
         // Use separate Runnable so window is created on top
         Runnable t = new Runnable() {

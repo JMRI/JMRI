@@ -73,7 +73,7 @@
       "http://docs.oracle.com/javase/7/docs/technotes/guides/javadoc/deprecation/deprecation.html">
       "How and When To Deprecate APIs" page</a>.</p>
 
-    <a name="html" item="html"></a>
+    <a name="html" id="html"></a>
     <h3>HTML in Javadoc</h3>
     
       <p>The Javadoc content is interpreted as HTML 4.01, so it

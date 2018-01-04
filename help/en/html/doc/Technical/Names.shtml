@@ -70,6 +70,8 @@
 
         <li>Blocks (track segments)</li>
 
+        <li>Conditionals (for logiX, although these are not entirely named beans)</li>
+
         <li>signal Heads</li>
 
         <li>Lights (a type of output)</li>
@@ -96,10 +98,10 @@
       and "user names" to reference things.
 
       <p>We want users to be able to call things what they want.
-      Names like "p(24,23)*" are not useful. Every named item will
+      Names like "p(24,23)*" are not useful. Every named item can
       therefore have a "user name", which is an entirely free-form
       string. You can put whatever you want in there, so long as
-      it's not a duplicate of the name given to something else. For
+      it's not a duplicate of the user name given to something else. For
       example, you might call a Turnout "West Yard Lead" or
       "Turnout 32" or "Green Wire from Controller" or whatever.</p>
 
@@ -114,25 +116,48 @@
       <h2>System Name Format</h2>
       
       A system name is formed from a
-      short prefix representing the hardware system, followed by a
-      single upper case letter indicating the type, followed by a
-      system- and type-specific suffix string identifying a specific
-      object. The suffix string is meant to be related to the hardware
-      addressing for the specific hardware system, but is otherwise unconstrained.
+      short "system prefix" representing the hardware system, followed by a
+      single upper case "type letter" indicating the type of the object, 
+      followed by a
+      system- and type-specific "suffix string" identifying a specific
+      object. 
+      <ul>
+        <li>The system prefix is a single uppercase or lowercase letter, optionally followed
+            by one or more digits. Special characters are not allowed.
+            This simple form allows us to always fine the system prefix
+            and type letter even if we don't know the full list of 
+            hardware systems involved.
+        <li>The type letter defines the type of model-railroad object, 
+            such as (T)urnout or (S)ensor.
+        <li>The suffix string is meant to be related to the hardware
+            addressing for the specific hardware system, but is otherwise unconstrained.
+            Some are simple numbers, such as a device address. Others
+            are much more complicated strings to carry more complex 
+            information.
+      </ul>
 
       <p>Examples:</p>
 
+      Note: These assume the default values of system prefix letters,
+      but they certainly could have been defined to be something else.
+      
       <ul>
         <li>LT23 - <u>L</u>ocoNet <u>T</u>urnout <u>23</u>.</li>
+        <li>L2T23 - <u>T</u>urnout <u>23</u> on the second <u>L</u>ocoNet connection.</li>
 
-        <li>CS12 - The <u>12</u>th <u>C</u>/MRI <u>S</u>ensor
-        (input line).</li>
-      </ul>Note that there is no assumption of pattern to the
+        <li>CS2012 - A <u>C</u>/MRI <u>S</u>ensor
+            (input line) addressed as 2012, which means the 12th pin on  
+            on the node with address 2.</li>
+      </ul>
+      
+      Note that there is no assumption of pattern to the
       names; they don't have to be assigned monotonically, nor are
-      they restricted to a single system. <a name="hardware" id=
-      "hardware"></a>
-
-      <h3>Hardware Prefix</h3>Originally, the "hardware prefix" was
+      they restricted to a single system. 
+      
+      <a name="hardware" id="hardware"></a>
+      <h3>System Prefix</h3>
+      
+      Originally, the "hardware prefix" was
       a single uppercase letter identifying a single system
       connection: L for LocoNet, N for NCE, etc. The default
       letters for those are listed below. This is still by far the
@@ -142,8 +167,8 @@
       <p>The JMRI code is much more flexible than that, however.
       This allows it to deal with multiple system connections and
       overlaps of letters (such as the multiple possibilities
-      defined for "M" below). You change the letter associated with
-      a system connection in the preferences to any other uppercase
+      defined for "D" or "M" below). You change the letter associated with
+      a system connection in the preferences to any other uppercase or lowercase
       letter. You can call your NCE connection "P" if you want to.
       If you have two of them, you can call one "X" and the other
       "Y". You can also use an upper case letter followed by
@@ -155,7 +180,9 @@
 
       <ul>
         <li>A CTI <a href=
-        "../../hardware/acela/index.shtml">Acela</a></li>
+        "../../hardware/acela/index.shtml">Acela</a>,
+        Bachrus Speedometer
+        </li>
 
         <li>B Direct DCC control</li>
 
@@ -179,7 +206,7 @@
         <li>I Internal, e.g. objects with no associated
         hardware</li>
 
-        <li>J</li>
+        <li>J JMRI network connections</li>
 
         <li>K <a href="../../hardware/maple/index.shtml">Maple
         Systems</a></li>
@@ -192,7 +219,8 @@
         and <a href="../../hardware/can/cbus/index.shtml">MERG
         CBUS</a>. Also used for the <a href=
         "../../hardware/modbus/index.shtml">Modbus</a> master and
-        slave implementation.</li>
+        slave implementation.
+        </li>
 
         <li>N <a href="../../hardware/nce/NCE.shtml">NCE</a> (also
         <a href="../../hardware/nce/Wangrow.shtml">Wangrow</a>
@@ -227,13 +255,21 @@
         combined with NCE)</li>
 
         <li>X <a href=
-        "../../hardware/XPressNet/index.shtml">XpressNet</a></li>
+        "../../hardware/XPressNet/index.shtml">XpressNet</a>
+        used by a number of Lenz, Atlas, Hornby and other connections
+        </li>
 
-        <li>Z <a href="../../hardware/zimo/Zimo.shtml">Zimo
-        MX-1</a></li>
-      </ul><a name="types" id="types"></a>
+        <li>Z <a href="../../hardware/zimo/Zimo.shtml">ZimoMX-1</a>,
+            IEEE802.15.4
+            and Z21 connections
+        </li>
+      </ul>
+      
+      <a name="types" id="types"></a>
 
-      <h3>Device type letters</h3>Note that some of these are
+      <h3>Device type letters</h3>
+      
+      Note that some of these are
       placeholders, and have no underlying implementation. Also,
       there is no guarantee that any given hardware system will
       ever implement all of them.
@@ -300,9 +336,9 @@
         hardware on the layout. For example, if a signal head is
         implemented as three different outputs, LT1, LT2 and LT3, the
         signal head object might be called IH3. 
-        <a name="special" id=
+        
+     <a name="special" id=
                 "special"></a></p>
-
       <p>Each different hardware system
       can specify the "suffix string" that follows the system and type
       letters. Generally, these are small numbers, but their exact
@@ -859,6 +895,15 @@ SENSOR GROUP:my group:LS2
       <a name="programmers" id="programmers"></a>
       <h2>For Programmers</h2>
       
+      <h3>Normalized form of Names, and how to work with it</h3>
+      
+          After multiple long discussions, we decided that both system and user names 
+          should be kept in a "normal" form which enforces certain restrictions.
+          For user names, that's that leading and trailing whitespace (spaces, tabs) 
+          are not allowed.  For system names, it depends on the system, but 
+          at least the system-prefix and type letter must be correct.
+          
+          <p>
           The code to make sure that names are in normal form 
           has been localized to a single routine for user names:
           <br>
@@ -929,6 +974,41 @@ SENSOR GROUP:my group:LS2
 
         </ul>
 
+      <h3>System Name Comparisons</h3>
+      
+        System names are compared and sorted in multiple places: as labels for table rows, 
+        in selection boxes and lists, etc.  We have two <code>java.util.Comparator&lt;&gt;</code>
+        implementations to handle this:
+        <ul>
+            <li><code>SystemNameComparator</code> - a comparison on Strings
+            <li><code>NamedBeanComparator</code> - a comparison on the NamedBeans themselves
+        </ul>
+        Please use one of these whenever you need to compare or sort by system names to keep the complexity in one place.
+        <p>
+        Both of them sort first by system connection prefix, to group all the objects from one system together.
+        If there are objects of multiple types, the type letter is put in alphabetical order next.
+        Finally, the system-specific suffix is sorted.
+        <p>
+        Because it works with String values, <code>SystemNameComparator</code> can only
+        do a default ordering of the system-specific suffix; it can't do anything that
+        uses any information about the system-specific meaning of that string. It therefore
+        uses an alphanumeric-by-chunks sort.
+        Because it's comparing on the actual NamedBean objects, <code>NamedBeanComparator</code>
+        can do more specific comparisons:  It knows what the C/MRI suffixes in 
+        "CT2003" and "C2B2" mean and can take that into account.
+        <p>
+        Therefore, if you can, do the sort/comparison with <code>NamedBeanComparator</code> and
+        then convert to Strings, rather than converting NamedBeans to Strings and using 
+        <code>SystemNameComparator</code>.
+        <p>
+        Also, if you've created a system that has complex information in the suffix,
+        please have your <code>NamedBean</code> subclasses implement a system-specific
+        version of the
+        <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#compareSystemNameSuffix-java.lang.String-java.lang.String-jmri.NamedBean-">compareSystemNameSuffix()</a>
+        method in <code>NamedBean</code>.
+        For an example, see the bottom of jmri.jmrix.cmri.serial.SerialTurnout
+        and jmri.jmrix.cmri.serial.SerialTurnoutTest.
+      
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

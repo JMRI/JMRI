@@ -190,7 +190,7 @@ public class TransitTableAction extends AbstractTableAction {
 
                         @Override
                         public void run() {
-                            String sName = (String) getValueAt(row, SYSNAMECOL);
+                            String sName = ((Transit) getValueAt(row, SYSNAMECOL)).getSystemName();
                             editPressed(sName);
                         }
                     }
@@ -208,7 +208,7 @@ public class TransitTableAction extends AbstractTableAction {
 
                         @Override
                         public void run() {
-                            String sName = (String) getValueAt(row, SYSNAMECOL);
+                            String sName = ((Transit) getValueAt(row, SYSNAMECOL)).getSystemName();
                             duplicatePressed(sName);
                         }
                     }
@@ -2242,7 +2242,7 @@ public class TransitTableAction extends AbstractTableAction {
                 whatStringField.setText(tWhatString); // re-enter normalized value in display field
                 break;
             case TransitSectionAction.LOCOFUNCTION:
-                tWhatData1 = (Integer) whatMinuteSpinner1.getValue();
+                tWhatData1 = (Integer) locoFunctionSpinner.getValue();
                 tWhatString = "On"; // NOI18N
                 if (offButton.isSelected()) {
                     tWhatString = "Off"; // NOI18N
