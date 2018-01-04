@@ -48,6 +48,7 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTestBase {
     // The minimal setup for log4J
     @After
     public void tearDown() {
+        tcis.terminateThreads();
         t.dispose();
         JUnitUtil.tearDown();
     }

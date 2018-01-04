@@ -34,5 +34,5 @@ import org.junit.runners.Suite;
  *
  * @author	Paul Bender
  */
-public class PackageTest  {
+public class PackageTest {
 }

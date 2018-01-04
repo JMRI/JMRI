@@ -10,12 +10,14 @@ import org.junit.Before;
  * @author Paul Bender Copyright (C) 2016
  */
 public class EasyDccPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
+       
+    private EasyDccSystemConnectionMemo memo;
 
     @Override
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo();
+       memo = new EasyDccSystemConnectionMemo();
        EasyDccTrafficController tc = new EasyDccTrafficControlScaffold(memo);
        memo.setEasyDccTrafficController(tc); // important for successful getTrafficController()
        apc = new EasyDccPortController(memo){
@@ -58,6 +60,7 @@ public class EasyDccPortControllerTest extends jmri.jmrix.AbstractSerialPortCont
     @Override
     @After
     public void tearDown(){
+       memo.getTrafficController().terminateThreads();
        JUnitUtil.tearDown();
     }
 

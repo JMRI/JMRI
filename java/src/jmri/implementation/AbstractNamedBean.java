@@ -202,6 +202,13 @@ public abstract class AbstractNamedBean implements NamedBean {
         return mSystemName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
+    public String toString() { return getSystemName(); }
+
+
     @Override
     public String getUserName() {
         return mUserName;
@@ -333,4 +340,17 @@ public abstract class AbstractNamedBean implements NamedBean {
         }
         return result;
     }
+    
+    /**
+     * {@inheritDoc} 
+     * 
+     * By default, does an alphanumeric-by-chunks comparison
+     */
+    @CheckReturnValue
+    public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
+        jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
+        return ac.compare(suffix1, suffix2);
+    }
+    
+
 }

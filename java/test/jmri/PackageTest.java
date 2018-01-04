@@ -14,6 +14,7 @@ import org.junit.runners.Suite;
     InstanceManagerTest.class,
     NamedBeanTest.class,
     LightTest.class,
+    ManagerTest.class,
     NmraPacketTest.class,
     ConditionalVariableTest.class,
     PathTest.class,

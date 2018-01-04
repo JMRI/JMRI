@@ -189,7 +189,7 @@ public class LogixTableAction extends AbstractTableAction {
                 if (col == EDITCOL) {
                     return Bundle.getMessage("ButtonSelect");  // NOI18N
                 } else if (col == ENABLECOL) {
-                    Logix logix = (Logix) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+                    Logix logix = (Logix) getValueAt(row, SYSNAMECOL);
                     if (logix == null) {
                         return null;
                     }
@@ -203,7 +203,7 @@ public class LogixTableAction extends AbstractTableAction {
             public void setValueAt(Object value, int row, int col) {
                 if (col == EDITCOL) {
                     // set up to edit
-                    String sName = (String) getValueAt(row, SYSNAMECOL);
+                    String sName = ((Logix) getValueAt(row, SYSNAMECOL)).getSystemName();
                     if (Bundle.getMessage("ButtonEdit").equals(value)) {  // NOI18N
                         editPressed(sName);
 
@@ -219,8 +219,7 @@ public class LogixTableAction extends AbstractTableAction {
                     }
                 } else if (col == ENABLECOL) {
                     // alternate
-                    Logix x = (Logix) getBySystemName((String) getValueAt(row,
-                            SYSNAMECOL));
+                    Logix x = (Logix) getValueAt(row, SYSNAMECOL);
                     boolean v = x.getEnabled();
                     x.setEnabled(!v);
                 } else {
@@ -1856,9 +1855,10 @@ public class LogixTableAction extends AbstractTableAction {
 
             if (actionList.size() > 0) {
                 condText.append("             " + rbx.getString("BrowserTHEN") + "   \n");  // NOI18N
+                boolean triggerType = curConditional.getTriggerOnChange();
                 for (int i = 0; i < actionList.size(); i++) {
                     action = actionList.get(i);
-                    condName = action.description(false);
+                    condName = action.description(triggerType);
                     condText.append("               " + condName + "   \n");
                 }  // for _actionList
             } else {

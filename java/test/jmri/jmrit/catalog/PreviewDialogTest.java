@@ -42,6 +42,6 @@ public class PreviewDialogTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PreviewDialogTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PreviewDialogTest.class.getName());
 
 }
