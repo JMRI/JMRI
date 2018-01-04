@@ -46,13 +46,12 @@ public class EcosSimulatorAdapter extends EcosPortController {
      */
     @Override
     public void configure() {
+        // override any stored port with current port
+        this.setPort(this.server.getPort());
         // connect to the traffic controller
-        log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
-        EcosTrafficController control = new EcosTrafficController(getSystemConnectionMemo());
-        //compare with: XNetTrafficController packets = new XNetPacketizer(new LenzCommandStation());
+        EcosTrafficController control = new EcosSimulatorTrafficController(this.getSystemConnectionMemo());
         control.connectPort(this);
         this.getSystemConnectionMemo().setEcosTrafficController(control);
-        // do the common manager config
         this.getSystemConnectionMemo().configureManagers();
     }
 

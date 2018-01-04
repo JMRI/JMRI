@@ -1,11 +1,11 @@
 package jmri.jmrix.ecos.simulator;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 import jmri.PowerManager;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmris.JmriServer;
@@ -47,10 +47,24 @@ class EcosSimulatorServer extends JmriServer {
     // Handle communication to a client through inStream and outStream
     @Override
     public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, StandardCharsets.UTF_8));
-        while (true) {
-            while (reader.ready()) {
-                outStream.writeUTF(this.generateReply(reader.readLine()));
+        // Listen for commands from the client until the connection closes
+        try (Scanner inputScanner = new Scanner(new InputStreamReader(inStream, "UTF-8"))) {
+            // Listen for commands from the client until the connection closes
+            String cmd;
+
+            while (true) {
+                inputScanner.skip("[\r\n]*");// skip any stray end of line characters.
+                // Read the command from the client
+                try {
+                    cmd = inputScanner.nextLine();
+                } catch (NoSuchElementException nse) {
+                    // we get an nse when we are finished with this client
+                    // so break out of the loop.
+                    break;
+                }
+
+                log.debug("Received from client: {}", cmd);
+                outStream.writeBytes(this.generateReply(cmd));
             }
         }
     }
