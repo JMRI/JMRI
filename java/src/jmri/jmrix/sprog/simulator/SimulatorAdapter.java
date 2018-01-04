@@ -299,7 +299,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
             default:
                 log.debug("non-reply message detected");
-                reply = null; // is there a default SPROG reply?
+                reply = new SprogReply(""); // is there a default SPROG error reply?
         }
         log.debug("Reply generated = {}", reply.toString());
         return reply;
