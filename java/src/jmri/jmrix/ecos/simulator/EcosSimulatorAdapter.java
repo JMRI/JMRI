@@ -41,6 +41,18 @@ public class EcosSimulatorAdapter extends EcosPortController {
     }
 
     /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation sets the port to the port used by the simulation
+     * server before connecting.
+     */
+    @Override
+    public void connect() throws IOException {
+        this.setPort(server.getPort());
+        super.connect();
+    }
+
+    /**
      * Set up all of the other objects to operate with an EcosSimulator
      * connected to this port.
      */
