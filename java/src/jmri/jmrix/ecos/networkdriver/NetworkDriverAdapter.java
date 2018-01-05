@@ -2,6 +2,7 @@ package jmri.jmrix.ecos.networkdriver;
 
 import java.io.IOException;
 import jmri.jmrix.ecos.EcosPortController;
+import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.jmrix.ecos.EcosTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,11 @@ import org.slf4j.LoggerFactory;
 public class NetworkDriverAdapter extends EcosPortController implements jmri.jmrix.NetworkPortAdapter {
 
     public NetworkDriverAdapter() {
-        super(new jmri.jmrix.ecos.EcosSystemConnectionMemo());
+        this(new EcosSystemConnectionMemo());
+    }
+
+    public NetworkDriverAdapter(EcosSystemConnectionMemo memo) {
+        super(memo);
         allowConnectionRecovery = true;
         manufacturerName = jmri.jmrix.ecos.EcosConnectionTypeList.ESU;
     }
@@ -28,8 +33,11 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
      */
     @Override
     public void configure() {
+        this.configure(new EcosTrafficController());
+    }
+
+    public void configure(EcosTrafficController control) {
         // connect to the traffic controller
-        EcosTrafficController control = new EcosTrafficController();
         control.connectPort(this);
         control.setAdapterMemo(this.getSystemConnectionMemo());
         this.getSystemConnectionMemo().setEcosTrafficController(control);

@@ -1,10 +1,8 @@
 package jmri.jmrix.ecos.simulator;
 
 import java.io.IOException;
-import jmri.jmrix.ecos.EcosConnectionTypeList;
-import jmri.jmrix.ecos.EcosPortController;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
-import jmri.jmrix.ecos.EcosTrafficController;
+import jmri.jmrix.ecos.networkdriver.NetworkDriverAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,13 +19,12 @@ import org.slf4j.LoggerFactory;
  * @author Egbert Broerse, Copyright (C) 2017
  * @author Randall Wood Copyright 2017
  */
-public class EcosSimulatorAdapter extends EcosPortController {
+public class EcosSimulatorAdapter extends NetworkDriverAdapter {
 
     private EcosSimulatorServer server = null;
 
     public EcosSimulatorAdapter() {
         super(new EcosSystemConnectionMemo("U", "ECoS Simulator")); // pass customized user name
-        setManufacturer(EcosConnectionTypeList.ESU);
         this.setHostAddress("127.0.0.1");
         this.setHostName("localhost");
         try {
@@ -58,13 +55,7 @@ public class EcosSimulatorAdapter extends EcosPortController {
      */
     @Override
     public void configure() {
-        // override any stored port with current port
-        this.setPort(this.server.getPort());
-        // connect to the traffic controller
-        EcosTrafficController control = new EcosSimulatorTrafficController(this.getSystemConnectionMemo());
-        control.connectPort(this);
-        this.getSystemConnectionMemo().setEcosTrafficController(control);
-        this.getSystemConnectionMemo().configureManagers();
+        this.configure(new EcosSimulatorTrafficController(this.getSystemConnectionMemo()));
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosSimulatorAdapter.class);
