@@ -34,8 +34,8 @@
     </revhistory>
     <version author="Alain Le Marchand" version="1" lastUpdated="20180105"/>
     <!-- Specific Econami UK information as per http://soundtraxxuk.com/ web site -->
-    <!-- References for V1: Econami_Diesel_Users_Guide 1.6 Ref.F
-                            Econami-Diesel-Tech-Reference 1.6 Rev.E               -->
+    <!-- References for V1: Econami_Steam_Users_Guide 1.6 Ref.G
+                            Econami-Steam-Tech-Reference 1.6 Rev.H               -->
     <!-- Product ID= CV253 (High-Byte) + CV256 (Low-Byte)
          as per SoundTraxx Product Identification guide Rev.B.
          CV253=1 for SoundTraxx products.
