@@ -1479,7 +1479,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
 
 <!-- Signal mapping -->
             <variable item="Signal 1 Output" CV="143" default="1" comment="Signal 1 Output" include="4018">
-                <decVal min="1" max="8" />
+                <decVal min="0" max="15" />
                 <label xml:lang="fr">Signal n° 1 á:</label>
                 <label xml:lang="de">Signal 1 an:</label>
                 <label xml:lang="nl">Sein 1 op:</label>
@@ -1720,7 +1720,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </variable>
 
 <!-- Function mapping variables-->
-            <variable CV="141" mask="VVVVVVVV" item="Set input 1" default="0" writeOnly="no" include="4018">
+            <variable CV="141" mask="VVVVVVVV" item="Set input 1" default="0" writeOnly="no" ><!-- include="4018" -->
                 <decVal min="0" max="255"/>
                 <label>CV141:</label>
                 <tooltip>Set the output ports to be switched</tooltip>
@@ -3578,7 +3578,1403 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             <variable CV="235" mask="VXXXXXXX" item="Set Input 16 to Output-off 16" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             </variable>
-<!-- End Function mapping variables-->
+<!-- End Function mapping variables DR4018-->
+
+<!--Start Function variables DR4024 -->
+<!--CV141
+    full byte -->
+  <variable CV="141" default="0" mask="VVVVVVVV" item="fmap key1 on to posAB" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV141:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="141" default="1" mask="XXXXXXXV" item="fmap key1 on servo1 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="141" default="0" mask="XXXXXXVX" item="fmap key1 on servo1 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="141" default="0" mask="XXXXXVXX" item="fmap key1 on servo2 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="141" default="0" mask="XXXXVXXX" item="fmap key1 on servo2 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="141" default="0" mask="XXXVXXXX" item="fmap key1 on servo3 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="141" default="0" mask="XXVXXXXX" item="fmap key1 on servo3 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="141" default="0" mask="XVXXXXXX" item="fmap key1 on servo4 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="141" default="0" mask="VXXXXXXX" item="fmap key1 on servo4 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV141-->
+<!--CV142
+    full byte -->
+  <variable CV="142" default="0" mask="VVVVVVVV" item="fmap key1 on to posCD" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV142:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="142" default="0" mask="XXXXXXXV" item="fmap key1 on servo1 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="142" default="0" mask="XXXXXXVX" item="fmap key1 on servo1 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="142" default="0" mask="XXXXXVXX" item="fmap key1 on servo2 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="142" default="0" mask="XXXXVXXX" item="fmap key1 on servo2 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="142" default="0" mask="XXXVXXXX" item="fmap key1 on servo3 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="142" default="0" mask="XXVXXXXX" item="fmap key1 on servo3 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="142" default="0" mask="XVXXXXXX" item="fmap key1 on servo4 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="142" default="0" mask="VXXXXXXX" item="fmap key1 on servo4 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV142-->
+<!--CV143
+    full byte -->
+  <variable CV="143" default="0" mask="VVVVVVVV" item="fmap key1 on to out" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV143:</label>
+    <tooltip>Set outputs 5 to 8</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="143" default="0" mask="XXXXXXXV" item="fmap key1 on out5" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="143" default="0" mask="XXXXXXVX" item="fmap key1 on out6" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="143" default="0" mask="XXXXXVXX" item="fmap key1 on out7" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="143" default="0" mask="XXXXVXXX" item="fmap key1 on out8" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV143-->
+<!--CV144
+    full byte -->
+  <variable CV="144" default="0" mask="VVVVVVVV" item="fmap key1 off to posAB" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV144:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="144" default="0" mask="XXXXXXXV" item="fmap key1 off servo1 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="144" default="1" mask="XXXXXXVX" item="fmap key1 off servo1 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="144" default="0" mask="XXXXXVXX" item="fmap key1 off servo2 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="144" default="0" mask="XXXXVXXX" item="fmap key1 off servo2 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="144" default="0" mask="XXXVXXXX" item="fmap key1 off servo3 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="144" default="0" mask="XXVXXXXX" item="fmap key1 off servo3 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="144" default="0" mask="XVXXXXXX" item="fmap key1 off servo4 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="144" default="0" mask="VXXXXXXX" item="fmap key1 off servo4 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV144-->
+<!--CV145
+    full byte -->
+  <variable CV="145" default="0" mask="VVVVVVVV" item="fmap key1 off to posCD" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV145:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="145" default="0" mask="XXXXXXXV" item="fmap key1 off servo1 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="145" default="0" mask="XXXXXXVX" item="fmap key1 off servo1 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="145" default="0" mask="XXXXXVXX" item="fmap key1 off servo2 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="145" default="0" mask="XXXXVXXX" item="fmap key1 off servo2 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="145" default="0" mask="XXXVXXXX" item="fmap key1 off servo3 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="145" default="0" mask="XXVXXXXX" item="fmap key1 off servo3 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="145" default="0" mask="XVXXXXXX" item="fmap key1 off servo4 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="145" default="0" mask="VXXXXXXX" item="fmap key1 off servo4 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV145-->
+<!--CV146
+    full byte -->
+  <variable CV="146" default="0" mask="VVVVVVVV" item="fmap key1 off to out" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV146:</label>
+    <tooltip>Set outputs 5 to 8</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="146" default="0" mask="XXXXXXXV" item="fmap key1 off out5" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="146" default="0" mask="XXXXXXVX" item="fmap key1 off out6" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="146" default="0" mask="XXXXXVXX" item="fmap key1 off out7" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="146" default="0" mask="XXXXVXXX" item="fmap key1 off out8" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV146-->
+<!--CV147
+    full byte -->
+  <variable CV="147" default="0" mask="VVVVVVVV" item="fmap key2 on to posAB" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV147:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="147" default="0" mask="XXXXXXXV" item="fmap key2 on servo1 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="147" default="0" mask="XXXXXXVX" item="fmap key2 on servo1 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="147" default="1" mask="XXXXXVXX" item="fmap key2 on servo2 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="147" default="0" mask="XXXXVXXX" item="fmap key2 on servo2 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="147" default="0" mask="XXXVXXXX" item="fmap key2 on servo3 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="147" default="0" mask="XXVXXXXX" item="fmap key2 on servo3 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="147" default="0" mask="XVXXXXXX" item="fmap key2 on servo4 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="147" default="0" mask="VXXXXXXX" item="fmap key2 on servo4 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV147-->
+<!--CV148
+    full byte -->
+  <variable CV="148" default="0" mask="VVVVVVVV" item="fmap key2 on to posCD" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV148:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="148" default="0" mask="XXXXXXXV" item="fmap key2 on servo1 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="148" default="0" mask="XXXXXXVX" item="fmap key2 on servo1 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="148" default="0" mask="XXXXXVXX" item="fmap key2 on servo2 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="148" default="0" mask="XXXXVXXX" item="fmap key2 on servo2 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="148" default="0" mask="XXXVXXXX" item="fmap key2 on servo3 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="148" default="0" mask="XXVXXXXX" item="fmap key2 on servo3 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="148" default="0" mask="XVXXXXXX" item="fmap key2 on servo4 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="148" default="0" mask="VXXXXXXX" item="fmap key2 on servo4 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV148-->
+<!--CV149
+    full byte -->
+  <variable CV="149" default="0" mask="VVVVVVVV" item="fmap key2 on to out" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV149:</label>
+    <tooltip>Set outputs 5 to 8</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="149" default="0" mask="XXXXXXXV" item="fmap key2 on out5" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="149" default="0" mask="XXXXXXVX" item="fmap key2 on out6" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="149" default="0" mask="XXXXXVXX" item="fmap key2 on out7" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="149" default="0" mask="XXXXVXXX" item="fmap key2 on out8" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV149-->
+<!--CV150
+    full byte -->
+  <variable CV="150" default="0" mask="VVVVVVVV" item="fmap key2 off to posAB" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV150:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="150" default="0" mask="XXXXXXXV" item="fmap key2 off servo1 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="150" default="0" mask="XXXXXXVX" item="fmap key2 off servo1 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="150" default="0" mask="XXXXXVXX" item="fmap key2 off servo2 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="150" default="1" mask="XXXXVXXX" item="fmap key2 off servo2 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="150" default="0" mask="XXXVXXXX" item="fmap key2 off servo3 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="150" default="0" mask="XXVXXXXX" item="fmap key2 off servo3 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="150" default="0" mask="XVXXXXXX" item="fmap key2 off servo4 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="150" default="0" mask="VXXXXXXX" item="fmap key2 off servo4 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV150-->
+<!--CV151
+    full byte -->
+  <variable CV="151" default="0" mask="VVVVVVVV" item="fmap key2 off to posCD" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV151:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="151" default="0" mask="XXXXXXXV" item="fmap key2 off servo1 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="151" default="0" mask="XXXXXXVX" item="fmap key2 off servo1 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="151" default="0" mask="XXXXXVXX" item="fmap key2 off servo2 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="151" default="0" mask="XXXXVXXX" item="fmap key2 off servo2 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="151" default="0" mask="XXXVXXXX" item="fmap key2 off servo3 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="151" default="0" mask="XXVXXXXX" item="fmap key2 off servo3 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="151" default="0" mask="XVXXXXXX" item="fmap key2 off servo4 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="151" default="0" mask="VXXXXXXX" item="fmap key2 off servo4 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV151-->
+<!--CV152
+    full byte -->
+  <variable CV="152" default="0" mask="VVVVVVVV" item="fmap key2 off to out" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV152:</label>
+    <tooltip>Set outputs 5 to 8</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="152" default="0" mask="XXXXXXXV" item="fmap key2 off out5" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="152" default="0" mask="XXXXXXVX" item="fmap key2 off out6" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="152" default="0" mask="XXXXXVXX" item="fmap key2 off out7" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="152" default="0" mask="XXXXVXXX" item="fmap key2 off out8" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV152-->
+<!--CV153
+    full byte -->
+  <variable CV="153" default="0" mask="VVVVVVVV" item="fmap key3 on to posAB" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV153:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="153" default="0" mask="XXXXXXXV" item="fmap key3 on servo1 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="153" default="0" mask="XXXXXXVX" item="fmap key3 on servo1 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="153" default="0" mask="XXXXXVXX" item="fmap key3 on servo2 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="153" default="0" mask="XXXXVXXX" item="fmap key3 on servo2 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="153" default="1" mask="XXXVXXXX" item="fmap key3 on servo3 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="153" default="0" mask="XXVXXXXX" item="fmap key3 on servo3 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="153" default="0" mask="XVXXXXXX" item="fmap key3 on servo4 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="153" default="0" mask="VXXXXXXX" item="fmap key3 on servo4 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV153-->
+<!--CV154
+    full byte -->
+  <variable CV="154" default="0" mask="VVVVVVVV" item="fmap key3 on to posCD" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV154:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="154" default="0" mask="XXXXXXXV" item="fmap key3 on servo1 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="154" default="0" mask="XXXXXXVX" item="fmap key3 on servo1 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="154" default="0" mask="XXXXXVXX" item="fmap key3 on servo2 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="154" default="0" mask="XXXXVXXX" item="fmap key3 on servo2 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="154" default="0" mask="XXXVXXXX" item="fmap key3 on servo3 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="154" default="0" mask="XXVXXXXX" item="fmap key3 on servo3 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="154" default="0" mask="XVXXXXXX" item="fmap key3 on servo4 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="154" default="0" mask="VXXXXXXX" item="fmap key3 on servo4 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV154-->
+<!--CV155
+    full byte -->
+  <variable CV="155" default="0" mask="VVVVVVVV" item="fmap key3 on to out" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV155:</label>
+    <tooltip>Set outputs 5 to 8</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="155" default="0" mask="XXXXXXXV" item="fmap key3 on out5" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="155" default="0" mask="XXXXXXVX" item="fmap key3 on out6" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="155" default="0" mask="XXXXXVXX" item="fmap key3 on out7" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="155" default="0" mask="XXXXVXXX" item="fmap key3 on out8" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV155-->
+<!--CV156
+    full byte -->
+  <variable CV="156" default="0" mask="VVVVVVVV" item="fmap key3 off to posAB" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV156:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="156" default="0" mask="XXXXXXXV" item="fmap key3 off servo1 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="156" default="0" mask="XXXXXXVX" item="fmap key3 off servo1 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="156" default="0" mask="XXXXXVXX" item="fmap key3 off servo2 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="156" default="0" mask="XXXXVXXX" item="fmap key3 off servo2 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="156" default="0" mask="XXXVXXXX" item="fmap key3 off servo3 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="156" default="1" mask="XXVXXXXX" item="fmap key3 off servo3 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="156" default="0" mask="XVXXXXXX" item="fmap key3 off servo4 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="156" default="0" mask="VXXXXXXX" item="fmap key3 off servo4 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV156-->
+<!--CV157
+    full byte -->
+  <variable CV="157" default="0" mask="VVVVVVVV" item="fmap key3 off to posCD" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV157:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="157" default="0" mask="XXXXXXXV" item="fmap key3 off servo1 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="157" default="0" mask="XXXXXXVX" item="fmap key3 off servo1 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="157" default="0" mask="XXXXXVXX" item="fmap key3 off servo2 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="157" default="0" mask="XXXXVXXX" item="fmap key3 off servo2 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="157" default="0" mask="XXXVXXXX" item="fmap key3 off servo3 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="157" default="0" mask="XXVXXXXX" item="fmap key3 off servo3 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="157" default="0" mask="XVXXXXXX" item="fmap key3 off servo4 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="157" default="0" mask="VXXXXXXX" item="fmap key3 off servo4 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV157-->
+<!--CV158
+    full byte -->
+  <variable CV="158" default="0" mask="VVVVVVVV" item="fmap key3 off to out" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV158:</label>
+    <tooltip>Set outputs 5 to 8</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="158" default="0" mask="XXXXXXXV" item="fmap key3 off out5" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="158" default="0" mask="XXXXXXVX" item="fmap key3 off out6" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="158" default="0" mask="XXXXXVXX" item="fmap key3 off out7" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="158" default="0" mask="XXXXVXXX" item="fmap key3 off out8" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV158-->
+<!--CV159
+    full byte -->
+  <variable CV="159" default="0" mask="VVVVVVVV" item="fmap key4 on to posAB" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV159:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="159" default="0" mask="XXXXXXXV" item="fmap key4 on servo1 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="159" default="0" mask="XXXXXXVX" item="fmap key4 on servo1 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="159" default="0" mask="XXXXXVXX" item="fmap key4 on servo2 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="159" default="0" mask="XXXXVXXX" item="fmap key4 on servo2 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="159" default="0" mask="XXXVXXXX" item="fmap key4 on servo3 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="159" default="0" mask="XXVXXXXX" item="fmap key4 on servo3 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="159" default="1" mask="XVXXXXXX" item="fmap key4 on servo4 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="159" default="0" mask="VXXXXXXX" item="fmap key4 on servo4 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV159-->
+<!--CV160
+    full byte -->
+  <variable CV="160" default="0" mask="VVVVVVVV" item="fmap key4 on to posCD" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV160:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="160" default="0" mask="XXXXXXXV" item="fmap key4 on servo1 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="160" default="0" mask="XXXXXXVX" item="fmap key4 on servo1 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="160" default="0" mask="XXXXXVXX" item="fmap key4 on servo2 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="160" default="0" mask="XXXXVXXX" item="fmap key4 on servo2 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="160" default="0" mask="XXXVXXXX" item="fmap key4 on servo3 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="160" default="0" mask="XXVXXXXX" item="fmap key4 on servo3 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="160" default="0" mask="XVXXXXXX" item="fmap key4 on servo4 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="160" default="0" mask="VXXXXXXX" item="fmap key4 on servo4 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV160-->
+<!--CV161
+    full byte -->
+  <variable CV="161" default="0" mask="VVVVVVVV" item="fmap key4 on to out" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV161:</label>
+    <tooltip>Set outputs 5 to 8</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="161" default="0" mask="XXXXXXXV" item="fmap key4 on out5" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="161" default="0" mask="XXXXXXVX" item="fmap key4 on out6" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="161" default="0" mask="XXXXXVXX" item="fmap key4 on out7" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="161" default="0" mask="XXXXVXXX" item="fmap key4 on out8" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV161-->
+<!--CV162
+    full byte -->
+  <variable CV="162" default="0" mask="VVVVVVVV" item="fmap key4 off to posAB" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV162:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="162" default="0" mask="XXXXXXXV" item="fmap key4 off servo1 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="162" default="0" mask="XXXXXXVX" item="fmap key4 off servo1 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="162" default="0" mask="XXXXXVXX" item="fmap key4 off servo2 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="162" default="0" mask="XXXXVXXX" item="fmap key4 off servo2 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="162" default="0" mask="XXXVXXXX" item="fmap key4 off servo3 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="162" default="0" mask="XXVXXXXX" item="fmap key4 off servo3 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="162" default="0" mask="XVXXXXXX" item="fmap key4 off servo4 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="162" default="1" mask="VXXXXXXX" item="fmap key4 off servo4 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV162-->
+<!--CV163
+    full byte -->
+  <variable CV="163" default="0" mask="VVVVVVVV" item="fmap key4 off to posCD" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV163:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="163" default="0" mask="XXXXXXXV" item="fmap key4 off servo1 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="163" default="0" mask="XXXXXXVX" item="fmap key4 off servo1 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="163" default="0" mask="XXXXXVXX" item="fmap key4 off servo2 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="163" default="0" mask="XXXXVXXX" item="fmap key4 off servo2 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="163" default="0" mask="XXXVXXXX" item="fmap key4 off servo3 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="163" default="0" mask="XXVXXXXX" item="fmap key4 off servo3 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="163" default="0" mask="XVXXXXXX" item="fmap key4 off servo4 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="163" default="0" mask="VXXXXXXX" item="fmap key4 off servo4 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV163-->
+<!--CV164
+    full byte -->
+  <variable CV="164" default="0" mask="VVVVVVVV" item="fmap key4 off to out" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV164:</label>
+    <tooltip>Set outputs 5 to 8</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="164" default="0" mask="XXXXXXXV" item="fmap key4 off out5" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="164" default="0" mask="XXXXXXVX" item="fmap key4 off out6" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="164" default="0" mask="XXXXXVXX" item="fmap key4 off out7" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="164" default="0" mask="XXXXVXXX" item="fmap key4 off out8" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV164-->
+<!--CV165
+    full byte -->
+  <variable CV="165" default="0" mask="VVVVVVVV" item="fmap key5 on to posAB" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV165:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="165" default="0" mask="XXXXXXXV" item="fmap key5 on servo1 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="165" default="0" mask="XXXXXXVX" item="fmap key5 on servo1 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="165" default="0" mask="XXXXXVXX" item="fmap key5 on servo2 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="165" default="0" mask="XXXXVXXX" item="fmap key5 on servo2 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="165" default="0" mask="XXXVXXXX" item="fmap key5 on servo3 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="165" default="0" mask="XXVXXXXX" item="fmap key5 on servo3 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="165" default="0" mask="XVXXXXXX" item="fmap key5 on servo4 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="165" default="0" mask="VXXXXXXX" item="fmap key5 on servo4 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV165-->
+<!--CV166
+    full byte -->
+  <variable CV="166" default="0" mask="VVVVVVVV" item="fmap key5 on to posCD" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV166:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="166" default="0" mask="XXXXXXXV" item="fmap key5 on servo1 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="166" default="0" mask="XXXXXXVX" item="fmap key5 on servo1 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="166" default="0" mask="XXXXXVXX" item="fmap key5 on servo2 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="166" default="0" mask="XXXXVXXX" item="fmap key5 on servo2 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="166" default="0" mask="XXXVXXXX" item="fmap key5 on servo3 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="166" default="0" mask="XXVXXXXX" item="fmap key5 on servo3 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="166" default="0" mask="XVXXXXXX" item="fmap key5 on servo4 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="166" default="0" mask="VXXXXXXX" item="fmap key5 on servo4 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV166-->
+<!--CV167
+    full byte -->
+  <variable CV="167" default="0" mask="VVVVVVVV" item="fmap key5 on to out" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV167:</label>
+    <tooltip>Set outputs 5 to 8</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="167" default="1" mask="XXXXXXXV" item="fmap key5 on out5" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="167" default="0" mask="XXXXXXVX" item="fmap key5 on out6" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="167" default="0" mask="XXXXXVXX" item="fmap key5 on out7" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="167" default="0" mask="XXXXVXXX" item="fmap key5 on out8" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV167-->
+<!--CV168
+    full byte -->
+  <variable CV="168" default="0" mask="VVVVVVVV" item="fmap key5 off to posAB" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV168:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="168" default="0" mask="XXXXXXXV" item="fmap key5 off servo1 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="168" default="0" mask="XXXXXXVX" item="fmap key5 off servo1 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="168" default="0" mask="XXXXXVXX" item="fmap key5 off servo2 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="168" default="0" mask="XXXXVXXX" item="fmap key5 off servo2 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="168" default="0" mask="XXXVXXXX" item="fmap key5 off servo3 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="168" default="0" mask="XXVXXXXX" item="fmap key5 off servo3 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="168" default="0" mask="XVXXXXXX" item="fmap key5 off servo4 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="168" default="0" mask="VXXXXXXX" item="fmap key5 off servo4 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV168-->
+<!--CV169
+    full byte -->
+  <variable CV="169" default="0" mask="VVVVVVVV" item="fmap key5 off to posCD" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV169:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="169" default="0" mask="XXXXXXXV" item="fmap key5 off servo1 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="169" default="0" mask="XXXXXXVX" item="fmap key5 off servo1 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="169" default="0" mask="XXXXXVXX" item="fmap key5 off servo2 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="169" default="0" mask="XXXXVXXX" item="fmap key5 off servo2 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="169" default="0" mask="XXXVXXXX" item="fmap key5 off servo3 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="169" default="0" mask="XXVXXXXX" item="fmap key5 off servo3 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="169" default="0" mask="XVXXXXXX" item="fmap key5 off servo4 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="169" default="0" mask="VXXXXXXX" item="fmap key5 off servo4 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV169-->
+<!--CV170
+    full byte -->
+  <variable CV="170" default="0" mask="VVVVVVVV" item="fmap key5 off to out" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV170:</label>
+    <tooltip>Set outputs 5 to 8</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="170" default="0" mask="XXXXXXXV" item="fmap key5 off out5" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="170" default="0" mask="XXXXXXVX" item="fmap key5 off out6" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="170" default="0" mask="XXXXXVXX" item="fmap key5 off out7" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="170" default="0" mask="XXXXVXXX" item="fmap key5 off out8" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV170-->
+<!--CV171
+    full byte -->
+  <variable CV="171" default="0" mask="VVVVVVVV" item="fmap key6 on to posAB" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV171:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="171" default="0" mask="XXXXXXXV" item="fmap key6 on servo1 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="171" default="0" mask="XXXXXXVX" item="fmap key6 on servo1 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="171" default="0" mask="XXXXXVXX" item="fmap key6 on servo2 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="171" default="0" mask="XXXXVXXX" item="fmap key6 on servo2 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="171" default="0" mask="XXXVXXXX" item="fmap key6 on servo3 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="171" default="0" mask="XXVXXXXX" item="fmap key6 on servo3 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="171" default="0" mask="XVXXXXXX" item="fmap key6 on servo4 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="171" default="0" mask="VXXXXXXX" item="fmap key6 on servo4 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV171-->
+<!--CV172
+    full byte -->
+  <variable CV="172" default="0" mask="VVVVVVVV" item="fmap key6 on to posCD" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV172:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="172" default="0" mask="XXXXXXXV" item="fmap key6 on servo1 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="172" default="0" mask="XXXXXXVX" item="fmap key6 on servo1 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="172" default="0" mask="XXXXXVXX" item="fmap key6 on servo2 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="172" default="0" mask="XXXXVXXX" item="fmap key6 on servo2 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="172" default="0" mask="XXXVXXXX" item="fmap key6 on servo3 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="172" default="0" mask="XXVXXXXX" item="fmap key6 on servo3 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="172" default="0" mask="XVXXXXXX" item="fmap key6 on servo4 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="172" default="0" mask="VXXXXXXX" item="fmap key6 on servo4 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV172-->
+<!--CV173
+    full byte -->
+  <variable CV="173" default="0" mask="VVVVVVVV" item="fmap key6 on to out" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV173:</label>
+    <tooltip>Set outputs 5 to 8</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="173" default="0" mask="XXXXXXXV" item="fmap key6 on out5" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="173" default="1" mask="XXXXXXVX" item="fmap key6 on out6" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="173" default="0" mask="XXXXXVXX" item="fmap key6 on out7" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="173" default="0" mask="XXXXVXXX" item="fmap key6 on out8" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV173-->
+<!--CV174
+    full byte -->
+  <variable CV="174" default="0" mask="VVVVVVVV" item="fmap key6 off to posAB" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV174:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="174" default="0" mask="XXXXXXXV" item="fmap key6 off servo1 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="174" default="0" mask="XXXXXXVX" item="fmap key6 off servo1 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="174" default="0" mask="XXXXXVXX" item="fmap key6 off servo2 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="174" default="0" mask="XXXXVXXX" item="fmap key6 off servo2 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="174" default="0" mask="XXXVXXXX" item="fmap key6 off servo3 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="174" default="0" mask="XXVXXXXX" item="fmap key6 off servo3 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="174" default="0" mask="XVXXXXXX" item="fmap key6 off servo4 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="174" default="0" mask="VXXXXXXX" item="fmap key6 off servo4 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV174-->
+<!--CV175
+    full byte -->
+  <variable CV="175" default="0" mask="VVVVVVVV" item="fmap key6 off to posCD" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV175:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="175" default="0" mask="XXXXXXXV" item="fmap key6 off servo1 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="175" default="0" mask="XXXXXXVX" item="fmap key6 off servo1 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="175" default="0" mask="XXXXXVXX" item="fmap key6 off servo2 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="175" default="0" mask="XXXXVXXX" item="fmap key6 off servo2 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="175" default="0" mask="XXXVXXXX" item="fmap key6 off servo3 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="175" default="0" mask="XXVXXXXX" item="fmap key6 off servo3 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="175" default="0" mask="XVXXXXXX" item="fmap key6 off servo4 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="175" default="0" mask="VXXXXXXX" item="fmap key6 off servo4 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV175-->
+<!--CV176
+    full byte -->
+  <variable CV="176" default="0" mask="VVVVVVVV" item="fmap key6 off to out" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV176:</label>
+    <tooltip>Set outputs 5 to 8</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="176" default="0" mask="XXXXXXXV" item="fmap key6 off out5" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="176" default="0" mask="XXXXXXVX" item="fmap key6 off out6" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="176" default="0" mask="XXXXXVXX" item="fmap key6 off out7" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="176" default="0" mask="XXXXVXXX" item="fmap key6 off out8" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV176-->
+<!--CV177
+    full byte -->
+  <variable CV="177" default="0" mask="VVVVVVVV" item="fmap key7 on to posAB" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV177:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="177" default="0" mask="XXXXXXXV" item="fmap key7 on servo1 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="177" default="0" mask="XXXXXXVX" item="fmap key7 on servo1 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="177" default="0" mask="XXXXXVXX" item="fmap key7 on servo2 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="177" default="0" mask="XXXXVXXX" item="fmap key7 on servo2 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="177" default="0" mask="XXXVXXXX" item="fmap key7 on servo3 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="177" default="0" mask="XXVXXXXX" item="fmap key7 on servo3 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="177" default="0" mask="XVXXXXXX" item="fmap key7 on servo4 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="177" default="0" mask="VXXXXXXX" item="fmap key7 on servo4 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV177-->
+<!--CV178
+    full byte -->
+  <variable CV="178" default="0" mask="VVVVVVVV" item="fmap key7 on to posCD" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV178:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="178" default="0" mask="XXXXXXXV" item="fmap key7 on servo1 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="178" default="0" mask="XXXXXXVX" item="fmap key7 on servo1 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="178" default="0" mask="XXXXXVXX" item="fmap key7 on servo2 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="178" default="0" mask="XXXXVXXX" item="fmap key7 on servo2 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="178" default="0" mask="XXXVXXXX" item="fmap key7 on servo3 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="178" default="0" mask="XXVXXXXX" item="fmap key7 on servo3 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="178" default="0" mask="XVXXXXXX" item="fmap key7 on servo4 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="178" default="0" mask="VXXXXXXX" item="fmap key7 on servo4 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV178-->
+<!--CV179
+    full byte -->
+  <variable CV="179" default="0" mask="VVVVVVVV" item="fmap key7 on to out" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV179:</label>
+    <tooltip>Set outputs 5 to 8</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="179" default="0" mask="XXXXXXXV" item="fmap key7 on out5" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="179" default="0" mask="XXXXXXVX" item="fmap key7 on out6" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="179" default="1" mask="XXXXXVXX" item="fmap key7 on out7" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="179" default="0" mask="XXXXVXXX" item="fmap key7 on out8" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV179-->
+<!--CV180
+    full byte -->
+  <variable CV="180" default="0" mask="VVVVVVVV" item="fmap key7 off to posAB" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV180:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="180" default="0" mask="XXXXXXXV" item="fmap key7 off servo1 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="180" default="0" mask="XXXXXXVX" item="fmap key7 off servo1 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="180" default="0" mask="XXXXXVXX" item="fmap key7 off servo2 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="180" default="0" mask="XXXXVXXX" item="fmap key7 off servo2 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="180" default="0" mask="XXXVXXXX" item="fmap key7 off servo3 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="180" default="0" mask="XXVXXXXX" item="fmap key7 off servo3 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="180" default="0" mask="XVXXXXXX" item="fmap key7 off servo4 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="180" default="0" mask="VXXXXXXX" item="fmap key7 off servo4 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV180-->
+<!--CV181
+    full byte -->
+  <variable CV="181" default="0" mask="VVVVVVVV" item="fmap key7 off to posCD" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV181:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="181" default="0" mask="XXXXXXXV" item="fmap key7 off servo1 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="181" default="0" mask="XXXXXXVX" item="fmap key7 off servo1 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="181" default="0" mask="XXXXXVXX" item="fmap key7 off servo2 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="181" default="0" mask="XXXXVXXX" item="fmap key7 off servo2 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="181" default="0" mask="XXXVXXXX" item="fmap key7 off servo3 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="181" default="0" mask="XXVXXXXX" item="fmap key7 off servo3 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="181" default="0" mask="XVXXXXXX" item="fmap key7 off servo4 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="181" default="0" mask="VXXXXXXX" item="fmap key7 off servo4 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV181-->
+<!--CV182
+    full byte -->
+  <variable CV="182" default="0" mask="VVVVVVVV" item="fmap key7 off to out" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV182:</label>
+    <tooltip>Set outputs 5 to 8</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="182" default="0" mask="XXXXXXXV" item="fmap key7 off out5" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="182" default="0" mask="XXXXXXVX" item="fmap key7 off out6" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="182" default="0" mask="XXXXXVXX" item="fmap key7 off out7" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="182" default="0" mask="XXXXVXXX" item="fmap key7 off out8" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV182-->
+<!--CV183
+    full byte -->
+  <variable CV="183" default="0" mask="VVVVVVVV" item="fmap key8 on to posAB" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV183:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="183" default="0" mask="XXXXXXXV" item="fmap key8 on servo1 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="183" default="0" mask="XXXXXXVX" item="fmap key8 on servo1 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="183" default="0" mask="XXXXXVXX" item="fmap key8 on servo2 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="183" default="0" mask="XXXXVXXX" item="fmap key8 on servo2 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="183" default="0" mask="XXXVXXXX" item="fmap key8 on servo3 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="183" default="0" mask="XXVXXXXX" item="fmap key8 on servo3 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="183" default="0" mask="XVXXXXXX" item="fmap key8 on servo4 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="183" default="0" mask="VXXXXXXX" item="fmap key8 on servo4 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV183-->
+<!--CV184
+    full byte -->
+  <variable CV="184" default="0" mask="VVVVVVVV" item="fmap key8 on to posCD" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV184:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="184" default="0" mask="XXXXXXXV" item="fmap key8 on servo1 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="184" default="0" mask="XXXXXXVX" item="fmap key8 on servo1 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="184" default="0" mask="XXXXXVXX" item="fmap key8 on servo2 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="184" default="0" mask="XXXXVXXX" item="fmap key8 on servo2 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="184" default="0" mask="XXXVXXXX" item="fmap key8 on servo3 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="184" default="0" mask="XXVXXXXX" item="fmap key8 on servo3 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="184" default="0" mask="XVXXXXXX" item="fmap key8 on servo4 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="184" default="0" mask="VXXXXXXX" item="fmap key8 on servo4 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV184-->
+<!--CV185
+    full byte -->
+  <variable CV="185" default="0" mask="VVVVVVVV" item="fmap key8 on to out" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV185:</label>
+    <tooltip>Set outputs 5 to 8</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="185" default="0" mask="XXXXXXXV" item="fmap key8 on out5" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="185" default="0" mask="XXXXXXVX" item="fmap key8 on out6" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="185" default="0" mask="XXXXXVXX" item="fmap key8 on out7" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="185" default="1" mask="XXXXVXXX" item="fmap key8 on out8" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV185-->
+<!--CV186
+    full byte -->
+  <variable CV="186" default="0" mask="VVVVVVVV" item="fmap key8 off to posAB" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV186:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="186" default="0" mask="XXXXXXXV" item="fmap key8 off servo1 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="186" default="0" mask="XXXXXXVX" item="fmap key8 off servo1 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="186" default="0" mask="XXXXXVXX" item="fmap key8 off servo2 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="186" default="0" mask="XXXXVXXX" item="fmap key8 off servo2 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="186" default="0" mask="XXXVXXXX" item="fmap key8 off servo3 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="186" default="0" mask="XXVXXXXX" item="fmap key8 off servo3 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="186" default="0" mask="XVXXXXXX" item="fmap key8 off servo4 posA" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="186" default="0" mask="VXXXXXXX" item="fmap key8 off servo4 posB" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV186-->
+<!--CV187
+    full byte -->
+  <variable CV="187" default="0" mask="VVVVVVVV" item="fmap key8 off to posCD" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV187:</label>
+    <tooltip>Set Servo to preset position</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="187" default="0" mask="XXXXXXXV" item="fmap key8 off servo1 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="187" default="0" mask="XXXXXXVX" item="fmap key8 off servo1 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="187" default="0" mask="XXXXXVXX" item="fmap key8 off servo2 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="187" default="0" mask="XXXXVXXX" item="fmap key8 off servo2 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="187" default="0" mask="XXXVXXXX" item="fmap key8 off servo3 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="187" default="0" mask="XXVXXXXX" item="fmap key8 off servo3 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="187" default="0" mask="XVXXXXXX" item="fmap key8 off servo4 posC" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="187" default="0" mask="VXXXXXXX" item="fmap key8 off servo4 posD" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV187-->
+<!--CV188
+    full byte -->
+  <variable CV="188" default="0" mask="VVVVVVVV" item="fmap key8 off to out" include="4024">
+    <decVal min="0" max="255" />
+    <label>CV188:</label>
+    <tooltip>Set outputs 5 to 8</tooltip>
+  </variable>
+<!-- bits in use -->
+  <variable CV="188" default="0" mask="XXXXXXXV" item="fmap key8 off out5" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="188" default="0" mask="XXXXXXVX" item="fmap key8 off out6" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="188" default="0" mask="XXXXXVXX" item="fmap key8 off out7" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+  <variable CV="188" default="0" mask="XXXXVXXX" item="fmap key8 off out8" include="4024">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  </variable>
+<!--End CV188-->
+
+<!--End Function variables DR4024 -->
 
         </variables>
         
@@ -4417,7 +5813,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
     <pane include="4018">
         <name>Function map</name>
         <name xml:lang="de">Funktionskarte</name>
-        <name xml:lang="nl">Funktie map</name>
+        <name xml:lang="fr">Mappage de fonctions</name>
+        <name xml:lang="nl">Funktie-map</name>
         <column>
         <row>
           <separator/>
@@ -4510,6 +5907,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="2">
           <label>
             <text>Key  1 ON  - </text>
+            <text xml:lang="de">Taste 1 EIN  - </text>
+            <text xml:lang="nl">Toets 1 AAN - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="2">
@@ -4565,6 +5964,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="3">
           <label>
             <text>Key  1 OFF - </text>
+            <text xml:lang="de">Taste 1 AUS - </text>
+            <text xml:lang="nl">Toets 1 UIT  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="3">
@@ -4620,6 +6021,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="4">
           <label>
             <text>Key  2 ON  - </text>
+            <text xml:lang="de">Taste 2 EIN  - </text>
+            <text xml:lang="nl">Toets 2 AAN - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="4">
@@ -4675,6 +6078,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="5">
           <label>
             <text>Key  2 OFF - </text>
+            <text xml:lang="de">Taste 2 AUS - </text>
+            <text xml:lang="nl">Toets 2 UIT  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="5">
@@ -4730,6 +6135,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="6">
           <label>
             <text>Key  3 ON  - </text>
+            <text xml:lang="de">Taste 3 EIN  - </text>
+            <text xml:lang="nl">Toets 3 AAN - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="6">
@@ -4785,6 +6192,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="7">
           <label>
             <text>Key  3 OFF - </text>
+            <text xml:lang="de">Taste 3 AUS - </text>
+            <text xml:lang="nl">Toets 3 UIT  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="7">
@@ -4840,6 +6249,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="8">
           <label>
             <text>Key  4 ON  - </text>
+            <text xml:lang="de">Taste 4 EIN  - </text>
+            <text xml:lang="nl">Toets 4 AAN - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="8">
@@ -4895,6 +6306,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="9">
           <label>
             <text>Key  4 OFF - </text>
+            <text xml:lang="de">Taste 4 AUS - </text>
+            <text xml:lang="nl">Toets 4 UIT  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="9">
@@ -4950,6 +6363,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="10">
           <label>
             <text>Key  5 ON  - </text>
+            <text xml:lang="de">Taste 5 EIN  - </text>
+            <text xml:lang="nl">Toets 5 AAN - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="10">
@@ -5005,6 +6420,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="11">
           <label>
             <text>Key  5 OFF - </text>
+            <text xml:lang="de">Taste 5 AUS - </text>
+            <text xml:lang="nl">Toets 5 UIT  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="11">
@@ -5060,6 +6477,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="12">
           <label>
             <text>Key  6 ON  - </text>
+            <text xml:lang="de">Taste 6 EIN  - </text>
+            <text xml:lang="nl">Toets 6 AAN - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="12">
@@ -5115,6 +6534,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="13">
           <label>
             <text>Key  6 OFF - </text>
+            <text xml:lang="de">Taste 6 AUS - </text>
+            <text xml:lang="nl">Toets 6 UIT  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="13">
@@ -5170,6 +6591,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="14">
           <label>
             <text>Key  7 ON  - </text>
+            <text xml:lang="de">Taste 7 EIN  - </text>
+            <text xml:lang="nl">Toets 7 AAN - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="14">
@@ -5225,6 +6648,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="15">
           <label>
             <text>Key  7 OFF - </text>
+            <text xml:lang="de">Taste 7 AUS - </text>
+            <text xml:lang="nl">Toets 7 UIT  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="15">
@@ -5280,6 +6705,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="16">
           <label>
             <text>Key  8 ON  - </text>
+            <text xml:lang="de">Taste 8 EIN  - </text>
+            <text xml:lang="nl">Toets 8 AAN - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="16">
@@ -5334,7 +6761,9 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
 <!-- line 17 Input 8 OFF -->
         <griditem gridx="0" gridy="17">
             <label>
-                <text>Key  8 OFF - </text>
+              <text>Key  8 OFF - </text>
+              <text xml:lang="de">Taste 8 AUS - </text>
+              <text xml:lang="nl">Toets 8 UIT  - </text>
             </label>
         </griditem>
         <griditem gridx="2" gridy="17">
@@ -5390,6 +6819,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="18">
           <label>
             <text>Key  9 ON  - </text>
+            <text xml:lang="de">Taste 9 EIN  - </text>
+            <text xml:lang="nl">Toets 9 AAN - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="18">
@@ -5445,6 +6876,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="19">
           <label>
             <text >Key  9 OFF - </text>
+            <text xml:lang="de">Taste 9 AUS - </text>
+            <text xml:lang="nl">Toets 9 UIT  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="19">
@@ -5500,6 +6933,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="20">
           <label>
             <text>Key 10 ON  - </text>
+            <text xml:lang="de">Taste10 EIN  - </text>
+            <text xml:lang="nl">Toets10 AAN  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="20">
@@ -5555,6 +6990,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="21">
           <label>
             <text>Key 10 OFF - </text>
+            <text xml:lang="de">Taste10 AUS  - </text>
+            <text xml:lang="nl">Toets10 UIT  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="21">
@@ -5610,6 +7047,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="22">
           <label>
             <text>Key 11 ON  - </text>
+            <text xml:lang="de">Taste11 EIN  - </text>
+            <text xml:lang="nl">Toets11 AAN  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="22">
@@ -5665,6 +7104,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="23">
           <label>
             <text>Key 11 OFF - </text>
+            <text xml:lang="de">Taste11 AUS  - </text>
+            <text xml:lang="nl">Toets11 UIT  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="23">
@@ -5720,6 +7161,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="24">
           <label>
             <text>Key 12 ON  - </text>
+            <text xml:lang="de">Taste12 EIN  - </text>
+            <text xml:lang="nl">Toets12 AAN  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="24">
@@ -5775,6 +7218,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="25">
           <label>
             <text>Key 12 OFF - </text>
+            <text xml:lang="de">Taste12 AUS  - </text>
+            <text xml:lang="nl">Toets12 UIT  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="25">
@@ -5830,6 +7275,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="26">
           <label>
             <text>Key 13 ON  - </text>
+            <text xml:lang="de">Taste13 EIN  - </text>
+            <text xml:lang="nl">Toets13 AAN  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="26">
@@ -5885,6 +7332,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="27">
           <label>
             <text>Key 13 OFF - </text>
+            <text xml:lang="de">Taste13 AUS  - </text>
+            <text xml:lang="nl">Toets13 UIT  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="27">
@@ -5940,6 +7389,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="28">
           <label>
             <text>Key 14 ON  - </text>
+            <text xml:lang="de">Taste14 EIN  - </text>
+            <text xml:lang="nl">Toets14 AAN  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="28">
@@ -5995,6 +7446,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="29">
           <label>
             <text>Key 14 OFF - </text>
+            <text xml:lang="de">Taste14 AUS  - </text>
+            <text xml:lang="nl">Toets14 UIT  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="29">
@@ -6050,6 +7503,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="30">
           <label>
             <text>Key 15 ON  - </text>
+            <text xml:lang="de">Taste15 EIN  - </text>
+            <text xml:lang="nl">Toets15 AAN  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="30">
@@ -6105,6 +7560,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="31">
           <label>
             <text>Key 15 OFF - </text>
+            <text xml:lang="de">Taste15 AUS  - </text>
+            <text xml:lang="nl">Toets15 UIT  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="31">
@@ -6160,6 +7617,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <griditem gridx="0" gridy="32">
           <label>
             <text>Key 16 ON  - </text>
+            <text xml:lang="de">Taste16 EIN  - </text>
+            <text xml:lang="nl">Toets16 AAN  - </text>
           </label>
         </griditem>
         <griditem gridx="2" gridy="32">
@@ -6214,7 +7673,9 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
 <!-- Line 33 Input 16 OFF -->
         <griditem gridx="0" gridy="33">
             <label>
-                <text>Key 16 OFF - </text>
+              <text>Key 16 OFF - </text>
+              <text xml:lang="de">Taste16 AUS  - </text>
+              <text xml:lang="nl">Toets16 UIT  - </text>
             </label>
         </griditem>
         <griditem gridx="2" gridy="33">
@@ -6355,44 +7816,1872 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
       </column>
     </pane>
 
-<!-- TODO: add Function Mapping Pane for DR4024 -->
-
+<!-- Function Mapping Pane for DR4024 -->
+<pane include="4024">
+  <name>Function map</name>
+  <name xml:lang="de">Funktionskarte</name>
+  <name xml:lang="fr">Mappage de fonctions</name>
+  <name xml:lang="nl">Funktie-map</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>&lt;html&gt;
+                &lt;b&gt;Before setting these functions please read the DR4024 Extended User Manual thoroughly.&lt;/b&gt; &lt;br/&gt; &lt;br/&gt;
+                &lt;b&gt;Caution:&lt;/b&gt; you can only set one servo position, labeled A, B, C or D, per Key. &lt;br/&gt;
+                &lt;/html&gt;
+          </text>
+          <text xml:lang="nl">&lt;html&gt;
+                &lt;b&gt;Bestudeer de DR4024 Uitgebreide Gebruikershandleiding zorgvuldig voordat u deze instellingen aanpast.&lt;/b&gt; &lt;br/&gt; &lt;br/&gt;
+                &lt;b&gt;Waarschuwing:&lt;/b&gt; per Toets op de Centrale is 1 servopositie in te stellen, gelabeled A, B, C of D. &lt;br/&gt;
+                &lt;/html&gt;
+          </text>
+        </label>
+        <separator/>
+        <label>
+          <text>&lt;html&gt; &lt;br/&gt; &lt;br/&gt; &lt;/html&gt;
+          </text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <grid>
+<!-- Line 1 bitnames -->
+        <griditem gridx="1" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt;S1&lt;br/&gt; A&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx="2" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt; &lt;br/&gt; B&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx="3" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt; &lt;br/&gt; C&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx="4" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt; &lt;br/&gt; D&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx="5" gridy="0">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="6" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt;S2&lt;br/&gt; A&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx="7" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt; &lt;br/&gt; B&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx="8" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt; &lt;br/&gt; C&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx="9" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt; &lt;br/&gt; D&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx ="10" gridy="0">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="11" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt;S3&lt;br/&gt; A&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx="12" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt; &lt;br/&gt; B&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx="13" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt; &lt;br/&gt; C&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx="14" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt; &lt;br/&gt; D&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx ="15" gridy="0">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="16" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt;S4&lt;br/&gt; A&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx="17" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt; &lt;br/&gt; B&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx="18" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt; &lt;br/&gt; C&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx="19" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt; &lt;br/&gt; D&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx ="20" gridy="0">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="21" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt;OUT&lt;br/&gt;   5&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx="22" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt; &lt;br/&gt; 6&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx="23" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt; &lt;br/&gt; 7&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+        <griditem gridx="24" gridy="0">
+          <label>
+            <text>&lt;html&gt;&lt;b&gt; &lt;br/&gt; 8&lt;/b&gt;&lt;/html&gt;</text>
+          </label>
+        </griditem>
+<!-- End Line 1 bitnames -->
+<!-- Line 2 Key 1 ON -->
+        <griditem gridx="0" gridy="1">
+          <label>
+            <text>Key  1 ON  - </text>
+            <text xml:lang="de">Taste 1 EIN  - </text>
+            <text xml:lang="nl">Toets 1 AAN - </text>
+          </label>
+        </griditem>
+        <griditem gridx="1" gridy="1">
+            <display item="fmap key1 on servo1 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="2" gridy="1">
+            <display item="fmap key1 on servo1 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="3" gridy="1">
+            <display item="fmap key1 on servo1 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="4" gridy="1">
+            <display item="fmap key1 on servo1 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="5" gridy="1">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="6" gridy="1">
+            <display item="fmap key1 on servo2 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="7" gridy="1">
+            <display item="fmap key1 on servo2 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="8" gridy="1">
+            <display item="fmap key1 on servo2 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="9" gridy="1">
+            <display item="fmap key1 on servo2 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="10" gridy="1">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="11" gridy="1">
+            <display item="fmap key1 on servo3 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="12" gridy="1">
+            <display item="fmap key1 on servo3 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="13" gridy="1">
+            <display item="fmap key1 on servo3 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="14" gridy="1">
+            <display item="fmap key1 on servo3 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="15" gridy="1">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="16" gridy="1">
+            <display item="fmap key1 on servo4 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="17" gridy="1">
+            <display item="fmap key1 on servo4 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="18" gridy="1">
+            <display item="fmap key1 on servo4 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="19" gridy="1">
+            <display item="fmap key1 on servo4 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="20" gridy="1">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="21" gridy="1">
+            <display item="fmap key1 on out5" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="22" gridy="1">
+            <display item="fmap key1 on out6" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="23" gridy="1">
+            <display item="fmap key1 on out7" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="24" gridy="1">
+            <display item="fmap key1 on out8" label="" format="checkbox" />
+        </griditem>
+<!-- End Line 2 Key 1 ON -->
+<!-- Line 3 Key 1 OFF -->
+        <griditem gridx="0" gridy="2">
+          <label>
+            <text>Key  1 OFF - </text>
+            <text xml:lang="de">Taste 1 AUS - </text>
+            <text xml:lang="nl">Toets 1 UIT  - </text>
+          </label>
+        </griditem>
+        <griditem gridx="1" gridy="2">
+            <display item="fmap key1 off servo1 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="2" gridy="2">
+            <display item="fmap key1 off servo1 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="3" gridy="2">
+            <display item="fmap key1 off servo1 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="4" gridy="2">
+            <display item="fmap key1 off servo1 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="5" gridy="2">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="6" gridy="2">
+            <display item="fmap key1 off servo2 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="7" gridy="2">
+            <display item="fmap key1 off servo2 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="8" gridy="2">
+            <display item="fmap key1 off servo2 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="9" gridy="2">
+            <display item="fmap key1 off servo2 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="10" gridy="2">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="11" gridy="2">
+            <display item="fmap key1 off servo3 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="12" gridy="2">
+            <display item="fmap key1 off servo3 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="13" gridy="2">
+            <display item="fmap key1 off servo3 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="14" gridy="2">
+            <display item="fmap key1 off servo3 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="15" gridy="2">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="16" gridy="2">
+            <display item="fmap key1 off servo4 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="17" gridy="2">
+            <display item="fmap key1 off servo4 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="18" gridy="2">
+            <display item="fmap key1 off servo4 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="19" gridy="2">
+            <display item="fmap key1 off servo4 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="20" gridy="2">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="21" gridy="2">
+            <display item="fmap key1 off out5" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="22" gridy="2">
+            <display item="fmap key1 off out6" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="23" gridy="2">
+            <display item="fmap key1 off out7" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="24" gridy="2">
+            <display item="fmap key1 off out8" label="" format="checkbox" />
+        </griditem>
+<!-- End Line 3 Key 1 OFF -->
+<!-- Line 4 Key 2 ON -->
+        <griditem gridx="0" gridy="3">
+          <label>
+            <text>Key  2 ON  - </text>
+            <text xml:lang="de">Taste 2 EIN  - </text>
+            <text xml:lang="nl">Toets 2 AAN - </text>
+          </label>
+        </griditem>
+        <griditem gridx="1" gridy="3">
+            <display item="fmap key2 on servo1 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="2" gridy="3">
+            <display item="fmap key2 on servo1 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="3" gridy="3">
+            <display item="fmap key2 on servo1 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="4" gridy="3">
+            <display item="fmap key2 on servo1 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="5" gridy="3">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="6" gridy="3">
+            <display item="fmap key2 on servo2 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="7" gridy="3">
+            <display item="fmap key2 on servo2 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="8" gridy="3">
+            <display item="fmap key2 on servo2 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="9" gridy="3">
+            <display item="fmap key2 on servo2 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="10" gridy="3">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="11" gridy="3">
+            <display item="fmap key2 on servo3 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="12" gridy="3">
+            <display item="fmap key2 on servo3 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="13" gridy="3">
+            <display item="fmap key2 on servo3 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="14" gridy="3">
+            <display item="fmap key2 on servo3 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="15" gridy="3">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="16" gridy="3">
+            <display item="fmap key2 on servo4 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="17" gridy="3">
+            <display item="fmap key2 on servo4 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="18" gridy="3">
+            <display item="fmap key2 on servo4 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="19" gridy="3">
+            <display item="fmap key2 on servo4 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="20" gridy="3">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="21" gridy="3">
+            <display item="fmap key2 on out5" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="22" gridy="3">
+            <display item="fmap key2 on out6" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="23" gridy="3">
+            <display item="fmap key2 on out7" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="24" gridy="3">
+            <display item="fmap key2 on out8" label="" format="checkbox" />
+        </griditem>
+<!-- End Line 4 Key 2 ON -->
+<!-- Line 5 Key 2 OFF -->
+        <griditem gridx="0" gridy="4">
+          <label>
+            <text>Key  2 OFF - </text>
+            <text xml:lang="de">Taste 2 AUS - </text>
+            <text xml:lang="nl">Toets 2 UIT  - </text>
+          </label>
+        </griditem>
+        <griditem gridx="1" gridy="4">
+            <display item="fmap key2 off servo1 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="2" gridy="4">
+            <display item="fmap key2 off servo1 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="3" gridy="4">
+            <display item="fmap key2 off servo1 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="4" gridy="4">
+            <display item="fmap key2 off servo1 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="5" gridy="4">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="6" gridy="4">
+            <display item="fmap key2 off servo2 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="7" gridy="4">
+            <display item="fmap key2 off servo2 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="8" gridy="4">
+            <display item="fmap key2 off servo2 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="9" gridy="4">
+            <display item="fmap key2 off servo2 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="10" gridy="4">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="11" gridy="4">
+            <display item="fmap key2 off servo3 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="12" gridy="4">
+            <display item="fmap key2 off servo3 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="13" gridy="4">
+            <display item="fmap key2 off servo3 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="14" gridy="4">
+            <display item="fmap key2 off servo3 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="15" gridy="4">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="16" gridy="4">
+            <display item="fmap key2 off servo4 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="17" gridy="4">
+            <display item="fmap key2 off servo4 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="18" gridy="4">
+            <display item="fmap key2 off servo4 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="19" gridy="4">
+            <display item="fmap key2 off servo4 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="20" gridy="4">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="21" gridy="4">
+            <display item="fmap key2 off out5" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="22" gridy="4">
+            <display item="fmap key2 off out6" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="23" gridy="4">
+            <display item="fmap key2 off out7" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="24" gridy="4">
+            <display item="fmap key2 off out8" label="" format="checkbox" />
+        </griditem>
+<!-- End Line 5 Key 2 OFF -->
+<!-- line 6 Key 3 ON -->
+        <griditem gridx="0" gridy="5">
+          <label>
+            <text>Key  3 ON  - </text>
+            <text xml:lang="de">Taste 3 EIN  - </text>
+            <text xml:lang="nl">Toets 3 AAN - </text>
+          </label>
+        </griditem>
+        <griditem gridx="1" gridy="5">
+            <display item="fmap key3 on servo1 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="2" gridy="5">
+            <display item="fmap key3 on servo1 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="3" gridy="5">
+            <display item="fmap key3 on servo1 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="4" gridy="5">
+            <display item="fmap key3 on servo1 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="5" gridy="5">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="6" gridy="5">
+            <display item="fmap key3 on servo2 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="7" gridy="5">
+            <display item="fmap key3 on servo2 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="8" gridy="5">
+            <display item="fmap key3 on servo2 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="9" gridy="5">
+            <display item="fmap key3 on servo2 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="10" gridy="5">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="11" gridy="5">
+            <display item="fmap key3 on servo3 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="12" gridy="5">
+            <display item="fmap key3 on servo3 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="13" gridy="5">
+            <display item="fmap key3 on servo3 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="14" gridy="5">
+            <display item="fmap key3 on servo3 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="15" gridy="5">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="16" gridy="5">
+            <display item="fmap key3 on servo4 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="17" gridy="5">
+            <display item="fmap key3 on servo4 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="18" gridy="5">
+            <display item="fmap key3 on servo4 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="19" gridy="5">
+            <display item="fmap key3 on servo4 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="20" gridy="5">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="21" gridy="5">
+            <display item="fmap key3 on out5" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="22" gridy="5">
+            <display item="fmap key3 on out6" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="23" gridy="5">
+            <display item="fmap key3 on out7" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="24" gridy="5">
+            <display item="fmap key3 on out8" label="" format="checkbox" />
+        </griditem>
+<!-- End line 6 Key 3 ON -->
+<!-- line 7 Key 3 OFF -->
+        <griditem gridx="0" gridy="6">
+          <label>
+            <text>Key  3 OFF - </text>
+            <text xml:lang="de">Taste 3 AUS - </text>
+            <text xml:lang="nl">Toets 3 UIT  - </text>
+          </label>
+        </griditem>
+        <griditem gridx="1" gridy="6">
+            <display item="fmap key3 off servo1 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="2" gridy="6">
+            <display item="fmap key3 off servo1 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="3" gridy="6">
+            <display item="fmap key3 off servo1 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="4" gridy="6">
+            <display item="fmap key3 off servo1 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="5" gridy="6">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="6" gridy="6">
+            <display item="fmap key3 off servo2 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="7" gridy="6">
+            <display item="fmap key3 off servo2 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="8" gridy="6">
+            <display item="fmap key3 off servo2 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="9" gridy="6">
+            <display item="fmap key3 off servo2 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="10" gridy="6">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="11" gridy="6">
+            <display item="fmap key3 off servo3 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="12" gridy="6">
+            <display item="fmap key3 off servo3 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="13" gridy="6">
+            <display item="fmap key3 off servo3 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="14" gridy="6">
+            <display item="fmap key3 off servo3 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="15" gridy="6">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="16" gridy="6">
+            <display item="fmap key3 off servo4 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="17" gridy="6">
+            <display item="fmap key3 off servo4 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="18" gridy="6">
+            <display item="fmap key3 off servo4 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="19" gridy="6">
+            <display item="fmap key3 off servo4 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="20" gridy="6">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="21" gridy="6">
+            <display item="fmap key3 off out5" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="22" gridy="6">
+            <display item="fmap key3 off out6" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="23" gridy="6">
+            <display item="fmap key3 off out7" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="24" gridy="6">
+            <display item="fmap key3 off out8" label="" format="checkbox" />
+        </griditem>
+<!-- End line 7 Key 3 OFF -->
+<!-- line 8 Key 4 ON -->
+        <griditem gridx="0" gridy="7">
+          <label>
+            <text>Key  4 ON  - </text>
+            <text xml:lang="de">Taste 4 EIN  - </text>
+            <text xml:lang="nl">Toets 4 AAN - </text>
+          </label>
+        </griditem>
+        <griditem gridx="1" gridy="7">
+            <display item="fmap key4 on servo1 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="2" gridy="7">
+            <display item="fmap key4 on servo1 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="3" gridy="7">
+            <display item="fmap key4 on servo1 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="4" gridy="7">
+            <display item="fmap key4 on servo1 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="5" gridy="7">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="6" gridy="7">
+            <display item="fmap key4 on servo2 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="7" gridy="7">
+            <display item="fmap key4 on servo2 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="8" gridy="7">
+            <display item="fmap key4 on servo2 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="9" gridy="7">
+            <display item="fmap key4 on servo2 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="10" gridy="7">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="11" gridy="7">
+            <display item="fmap key4 on servo3 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="12" gridy="7">
+            <display item="fmap key4 on servo3 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="13" gridy="7">
+            <display item="fmap key4 on servo3 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="14" gridy="7">
+            <display item="fmap key4 on servo3 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="15" gridy="7">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="16" gridy="7">
+            <display item="fmap key4 on servo4 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="17" gridy="7">
+            <display item="fmap key4 on servo4 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="18" gridy="7">
+            <display item="fmap key4 on servo4 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="19" gridy="7">
+            <display item="fmap key4 on servo4 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="20" gridy="7">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="21" gridy="7">
+            <display item="fmap key4 on out5" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="22" gridy="7">
+            <display item="fmap key4 on out6" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="23" gridy="7">
+            <display item="fmap key4 on out7" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="24" gridy="7">
+            <display item="fmap key4 on out8" label="" format="checkbox" />
+        </griditem>
+<!-- End line 8 Key 4 ON -->
+<!-- line 9 Key 4 OFF -->
+        <griditem gridx="0" gridy="8">
+          <label>
+            <text>Key  4 OFF - </text>
+            <text xml:lang="de">Taste 4 AUS - </text>
+            <text xml:lang="nl">Toets 4 UIT  - </text>
+          </label>
+        </griditem>
+        <griditem gridx="1" gridy="8">
+            <display item="fmap key4 off servo1 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="2" gridy="8">
+            <display item="fmap key4 off servo1 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="3" gridy="8">
+            <display item="fmap key4 off servo1 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="4" gridy="8">
+            <display item="fmap key4 off servo1 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="5" gridy="8">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="6" gridy="8">
+            <display item="fmap key4 off servo2 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="7" gridy="8">
+            <display item="fmap key4 off servo2 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="8" gridy="8">
+            <display item="fmap key4 off servo2 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="9" gridy="8">
+            <display item="fmap key4 off servo2 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="10" gridy="8">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="11" gridy="8">
+            <display item="fmap key4 off servo3 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="12" gridy="8">
+            <display item="fmap key4 off servo3 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="13" gridy="8">
+            <display item="fmap key4 off servo3 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="14" gridy="8">
+            <display item="fmap key4 off servo3 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="15" gridy="8">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="16" gridy="8">
+            <display item="fmap key4 off servo4 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="17" gridy="8">
+            <display item="fmap key4 off servo4 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="18" gridy="8">
+            <display item="fmap key4 off servo4 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="19" gridy="8">
+            <display item="fmap key4 off servo4 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="20" gridy="8">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="21" gridy="8">
+            <display item="fmap key4 off out5" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="22" gridy="8">
+            <display item="fmap key4 off out6" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="23" gridy="8">
+            <display item="fmap key4 off out7" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="24" gridy="8">
+            <display item="fmap key4 off out8" label="" format="checkbox" />
+        </griditem>
+<!-- End line 9 Key 4 OFF -->
+<!-- line 10 Key 5 ON -->
+        <griditem gridx="0" gridy="9">
+          <label>
+            <text>Key  5 ON  - </text>
+            <text xml:lang="de">Taste 5 EIN  - </text>
+            <text xml:lang="nl">Toets 5 AAN - </text>
+          </label>
+        </griditem>
+        <griditem gridx="1" gridy="9">
+            <display item="fmap key5 on servo1 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="2" gridy="9">
+            <display item="fmap key5 on servo1 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="3" gridy="9">
+            <display item="fmap key5 on servo1 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="4" gridy="9">
+            <display item="fmap key5 on servo1 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="5" gridy="9">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="6" gridy="9">
+            <display item="fmap key5 on servo2 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="7" gridy="9">
+            <display item="fmap key5 on servo2 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="8" gridy="9">
+            <display item="fmap key5 on servo2 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="9" gridy="9">
+            <display item="fmap key5 on servo2 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="10" gridy="9">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="11" gridy="9">
+            <display item="fmap key5 on servo3 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="12" gridy="9">
+            <display item="fmap key5 on servo3 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="13" gridy="9">
+            <display item="fmap key5 on servo3 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="14" gridy="9">
+            <display item="fmap key5 on servo3 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="15" gridy="9">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="16" gridy="9">
+            <display item="fmap key5 on servo4 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="17" gridy="9">
+            <display item="fmap key5 on servo4 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="18" gridy="9">
+            <display item="fmap key5 on servo4 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="19" gridy="9">
+            <display item="fmap key5 on servo4 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="20" gridy="9">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="21" gridy="9">
+            <display item="fmap key5 on out5" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="22" gridy="9">
+            <display item="fmap key5 on out6" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="23" gridy="9">
+            <display item="fmap key5 on out7" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="24" gridy="9">
+            <display item="fmap key5 on out8" label="" format="checkbox" />
+        </griditem>
+<!-- End line 10 Key 5 ON -->
+<!-- line 11 Key 5 OFF -->
+        <griditem gridx="0" gridy="10">
+          <label>
+            <text>Key  5 OFF - </text>
+              <text xml:lang="de">Taste 5 AUS - </text>
+              <text xml:lang="nl">Toets 5 UIT  - </text>
+          </label>
+        </griditem>
+        <griditem gridx="1" gridy="10">
+            <display item="fmap key5 off servo1 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="2" gridy="10">
+            <display item="fmap key5 off servo1 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="3" gridy="10">
+            <display item="fmap key5 off servo1 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="4" gridy="10">
+            <display item="fmap key5 off servo1 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="5" gridy="10">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="6" gridy="10">
+            <display item="fmap key5 off servo2 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="7" gridy="10">
+            <display item="fmap key5 off servo2 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="8" gridy="10">
+            <display item="fmap key5 off servo2 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="9" gridy="10">
+            <display item="fmap key5 off servo2 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="10" gridy="10">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="11" gridy="10">
+            <display item="fmap key5 off servo3 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="12" gridy="10">
+            <display item="fmap key5 off servo3 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="13" gridy="10">
+            <display item="fmap key5 off servo3 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="14" gridy="10">
+            <display item="fmap key5 off servo3 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="15" gridy="10">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="16" gridy="10">
+            <display item="fmap key5 off servo4 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="17" gridy="10">
+            <display item="fmap key5 off servo4 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="18" gridy="10">
+            <display item="fmap key5 off servo4 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="19" gridy="10">
+            <display item="fmap key5 off servo4 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="20" gridy="10">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="21" gridy="10">
+            <display item="fmap key5 off out5" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="22" gridy="10">
+            <display item="fmap key5 off out6" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="23" gridy="10">
+            <display item="fmap key5 off out7" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="24" gridy="10">
+            <display item="fmap key5 off out8" label="" format="checkbox" />
+        </griditem>
+<!-- End line 11 Key 5 OFF -->
+<!-- line 12 Key 6 ON -->
+        <griditem gridx="0" gridy="11">
+          <label>
+            <text>Key  6 ON  - </text>
+            <text xml:lang="de">Taste 6 EIN  - </text>
+            <text xml:lang="nl">Toets 6 AAN - </text>
+          </label>
+        </griditem>
+        <griditem gridx="1" gridy="11">
+            <display item="fmap key6 on servo1 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="2" gridy="11">
+            <display item="fmap key6 on servo1 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="3" gridy="11">
+            <display item="fmap key6 on servo1 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="4" gridy="11">
+            <display item="fmap key6 on servo1 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="5" gridy="11">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="6" gridy="11">
+            <display item="fmap key6 on servo2 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="7" gridy="11">
+            <display item="fmap key6 on servo2 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="8" gridy="11">
+            <display item="fmap key6 on servo2 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="9" gridy="11">
+            <display item="fmap key6 on servo2 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="10" gridy="11">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="11" gridy="11">
+            <display item="fmap key6 on servo3 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="12" gridy="11">
+            <display item="fmap key6 on servo3 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="13" gridy="11">
+            <display item="fmap key6 on servo3 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="14" gridy="11">
+            <display item="fmap key6 on servo3 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="15" gridy="11">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="16" gridy="11">
+            <display item="fmap key6 on servo4 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="17" gridy="11">
+            <display item="fmap key6 on servo4 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="18" gridy="11">
+            <display item="fmap key6 on servo4 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="19" gridy="11">
+            <display item="fmap key6 on servo4 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="20" gridy="11">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="21" gridy="11">
+            <display item="fmap key6 on out5" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="22" gridy="11">
+            <display item="fmap key6 on out6" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="23" gridy="11">
+            <display item="fmap key6 on out7" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="24" gridy="11">
+            <display item="fmap key6 on out8" label="" format="checkbox" />
+        </griditem>
+<!-- End line 12 Key 6 ON -->
+<!-- line 13 Key 6 OFF -->
+        <griditem gridx="0" gridy="12">
+          <label>
+            <text>Key  6 OFF - </text>
+            <text xml:lang="de">Taste 6 AUS - </text>
+            <text xml:lang="nl">Toets 6 UIT  - </text>
+          </label>
+        </griditem>
+        <griditem gridx="1" gridy="12">
+            <display item="fmap key6 off servo1 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="2" gridy="12">
+            <display item="fmap key6 off servo1 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="3" gridy="12">
+            <display item="fmap key6 off servo1 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="4" gridy="12">
+            <display item="fmap key6 off servo1 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="5" gridy="12">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="6" gridy="12">
+            <display item="fmap key6 off servo2 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="7" gridy="12">
+            <display item="fmap key6 off servo2 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="8" gridy="12">
+            <display item="fmap key6 off servo2 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="9" gridy="12">
+            <display item="fmap key6 off servo2 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="10" gridy="12">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="11" gridy="12">
+            <display item="fmap key6 off servo3 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="12" gridy="12">
+            <display item="fmap key6 off servo3 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="13" gridy="12">
+            <display item="fmap key6 off servo3 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="14" gridy="12">
+            <display item="fmap key6 off servo3 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="15" gridy="12">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="16" gridy="12">
+            <display item="fmap key6 off servo4 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="17" gridy="12">
+            <display item="fmap key6 off servo4 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="18" gridy="12">
+            <display item="fmap key6 off servo4 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="19" gridy="12">
+            <display item="fmap key6 off servo4 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="20" gridy="12">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="21" gridy="12">
+            <display item="fmap key6 off out5" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="22" gridy="12">
+            <display item="fmap key6 off out6" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="23" gridy="12">
+            <display item="fmap key6 off out7" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="24" gridy="12">
+            <display item="fmap key6 off out8" label="" format="checkbox" />
+        </griditem>
+<!-- End line 13 Key 6 OFF -->
+<!-- line 14 Key 7 ON -->
+        <griditem gridx="0" gridy="13">
+          <label>
+            <text>Key  7 ON  - </text>
+            <text xml:lang="de">Taste 7 EIN  - </text>
+            <text xml:lang="nl">Toets 7 AAN - </text>
+          </label>
+        </griditem>
+        <griditem gridx="1" gridy="13">
+            <display item="fmap key7 on servo1 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="2" gridy="13">
+            <display item="fmap key7 on servo1 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="3" gridy="13">
+            <display item="fmap key7 on servo1 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="4" gridy="13">
+            <display item="fmap key7 on servo1 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="5" gridy="13">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="6" gridy="13">
+            <display item="fmap key7 on servo2 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="7" gridy="13">
+            <display item="fmap key7 on servo2 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="8" gridy="13">
+            <display item="fmap key7 on servo2 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="9" gridy="13">
+            <display item="fmap key7 on servo2 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="10" gridy="13">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="11" gridy="13">
+            <display item="fmap key7 on servo3 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="12" gridy="13">
+            <display item="fmap key7 on servo3 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="13" gridy="13">
+            <display item="fmap key7 on servo3 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="14" gridy="13">
+            <display item="fmap key7 on servo3 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="15" gridy="13">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="16" gridy="13">
+            <display item="fmap key7 on servo4 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="17" gridy="13">
+            <display item="fmap key7 on servo4 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="18" gridy="13">
+            <display item="fmap key7 on servo4 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="19" gridy="13">
+            <display item="fmap key7 on servo4 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="20" gridy="13">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="21" gridy="13">
+            <display item="fmap key7 on out5" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="22" gridy="13">
+            <display item="fmap key7 on out6" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="23" gridy="13">
+            <display item="fmap key7 on out7" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="24" gridy="13">
+            <display item="fmap key7 on out8" label="" format="checkbox" />
+        </griditem>
+<!-- End line 14 Key 7 ON -->
+<!-- line 15 Key 7 OFF -->
+        <griditem gridx="0" gridy="14">
+          <label>
+            <text>Key  7 OFF - </text>
+            <text xml:lang="de">Taste 7 AUS - </text>
+            <text xml:lang="nl">Toets 7 UIT  - </text>
+          </label>
+        </griditem>
+        <griditem gridx="1" gridy="14">
+            <display item="fmap key7 off servo1 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="2" gridy="14">
+            <display item="fmap key7 off servo1 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="3" gridy="14">
+            <display item="fmap key7 off servo1 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="4" gridy="14">
+            <display item="fmap key7 off servo1 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="5" gridy="14">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="6" gridy="14">
+            <display item="fmap key7 off servo2 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="7" gridy="14">
+            <display item="fmap key7 off servo2 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="8" gridy="14">
+            <display item="fmap key7 off servo2 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="9" gridy="14">
+            <display item="fmap key7 off servo2 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="10" gridy="14">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="11" gridy="14">
+            <display item="fmap key7 off servo3 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="12" gridy="14">
+            <display item="fmap key7 off servo3 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="13" gridy="14">
+            <display item="fmap key7 off servo3 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="14" gridy="14">
+            <display item="fmap key7 off servo3 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="15" gridy="14">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="16" gridy="14">
+            <display item="fmap key7 off servo4 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="17" gridy="14">
+            <display item="fmap key7 off servo4 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="18" gridy="14">
+            <display item="fmap key7 off servo4 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="19" gridy="14">
+            <display item="fmap key7 off servo4 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="20" gridy="14">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="21" gridy="14">
+            <display item="fmap key7 off out5" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="22" gridy="14">
+            <display item="fmap key7 off out6" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="23" gridy="14">
+            <display item="fmap key7 off out7" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="24" gridy="14">
+            <display item="fmap key7 off out8" label="" format="checkbox" />
+        </griditem>
+<!-- End line 15 Key 7 OFF -->
+<!-- line 16 Key 8 ON -->
+        <griditem gridx="0" gridy="15">
+          <label>
+            <text>Key  8 ON  - </text>
+            <text xml:lang="de">Taste 8 EIN  - </text>
+            <text xml:lang="nl">Toets 8 AAN - </text>
+          </label>
+        </griditem>
+        <griditem gridx="1" gridy="15">
+            <display item="fmap key8 on servo1 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="2" gridy="15">
+            <display item="fmap key8 on servo1 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="3" gridy="15">
+            <display item="fmap key8 on servo1 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="4" gridy="15">
+            <display item="fmap key8 on servo1 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="5" gridy="15">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="6" gridy="15">
+            <display item="fmap key8 on servo2 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="7" gridy="15">
+            <display item="fmap key8 on servo2 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="8" gridy="15">
+            <display item="fmap key8 on servo2 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="9" gridy="15">
+            <display item="fmap key8 on servo2 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="10" gridy="15">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="11" gridy="15">
+            <display item="fmap key8 on servo3 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="12" gridy="15">
+            <display item="fmap key8 on servo3 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="13" gridy="15">
+            <display item="fmap key8 on servo3 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="14" gridy="15">
+            <display item="fmap key8 on servo3 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="15" gridy="15">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="16" gridy="15">
+            <display item="fmap key8 on servo4 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="17" gridy="15">
+            <display item="fmap key8 on servo4 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="18" gridy="15">
+            <display item="fmap key8 on servo4 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="19" gridy="15">
+            <display item="fmap key8 on servo4 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="20" gridy="15">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="21" gridy="15">
+            <display item="fmap key8 on out5" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="22" gridy="15">
+            <display item="fmap key8 on out6" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="23" gridy="15">
+            <display item="fmap key8 on out7" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="24" gridy="15">
+            <display item="fmap key8 on out8" label="" format="checkbox" />
+        </griditem>
+<!-- End line 16 Key 8 ON -->
+<!-- line 17 Key 8 OFF -->
+        <griditem gridx="0" gridy="16">
+          <label>
+            <text>Key  8 OFF - </text>
+            <text xml:lang="de">Taste 8 AUS - </text>
+            <text xml:lang="nl">Toets 8 UIT  - </text>
+          </label>
+        </griditem>
+        <griditem gridx="1" gridy="16">
+            <display item="fmap key8 off servo1 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="2" gridy="16">
+            <display item="fmap key8 off servo1 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="3" gridy="16">
+            <display item="fmap key8 off servo1 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="4" gridy="16">
+            <display item="fmap key8 off servo1 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="5" gridy="16">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="6" gridy="16">
+            <display item="fmap key8 off servo2 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="7" gridy="16">
+            <display item="fmap key8 off servo2 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="8" gridy="16">
+            <display item="fmap key8 off servo2 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="9" gridy="16">
+            <display item="fmap key8 off servo2 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="10" gridy="16">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="11" gridy="16">
+            <display item="fmap key8 off servo3 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="12" gridy="16">
+            <display item="fmap key8 off servo3 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="13" gridy="16">
+            <display item="fmap key8 off servo3 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="14" gridy="16">
+            <display item="fmap key8 off servo3 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="15" gridy="16">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="16" gridy="16">
+            <display item="fmap key8 off servo4 posA" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="17" gridy="16">
+            <display item="fmap key8 off servo4 posB" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="18" gridy="16">
+            <display item="fmap key8 off servo4 posC" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="19" gridy="16">
+            <display item="fmap key8 off servo4 posD" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="20" gridy="16">
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+        </griditem>
+        <griditem gridx="21" gridy="16">
+            <display item="fmap key8 off out5" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="22" gridy="16">
+            <display item="fmap key8 off out6" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="23" gridy="16">
+            <display item="fmap key8 off out7" label="" format="checkbox" />
+        </griditem>
+        <griditem gridx="24" gridy="16">
+            <display item="fmap key8 off out8" label="" format="checkbox" />
+        </griditem>
+<!-- End line 17 Key 8 OFF -->
+          
+      </grid>
+    </row>
+  </column>
+</pane>
 <!-- End of Function Mapping Panes -->
 
-<!-- ReadMe pane -->
-<pane include="4018">
+<!-- ReadMe panes -->
+<pane include="4024">
     <name>ReadMe</name>
-    <name xml:lang="nl">LeesMij</name>
+    <name xml:lang="de">Lese Mich</name>
+    <name xml:lang="fr">Lisez Moi</name>
+    <name xml:lang="nl">Lees Mij</name>
     <column>
         <label>
             <text> </text>
         </label>
         <label>
-           <text>&lt;html&gt;&lt;strong&gt;JMRI 4.8 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;
-           </text>
+          <text>&lt;html&gt;&lt;strong&gt;JMRI 4.8 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;strong&gt;JMRI 4.8 oder neuer erforderlich für diese Decoderdefinition.&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;JMRI 4.8 ou plus nouveau est réquis pour útiliser cette Definition Décodeur.&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;JMRI 4.8 of later vereist met deze definitie.&lt;/strong&gt;&lt;/html&gt;</text>
         </label>
         <separator/>
         <label>
-          <text>&lt;html&gt;&lt;h1&gt;Important information about DigiRails decoders&lt;/h1&gt;&lt;/html&gt;
-          </text>
+          <text>&lt;html&gt;&lt;h1&gt;Important information about DigiRails decoders&lt;/h1&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Wichtige information bzw. DigiKeijs decoder&lt;/h1&gt;&lt;/html&gt;</text>
+          <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;d'Information importante sur les Décodeurs DigiKeijs&lt;/h1&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Belangrijke informatie over DigiKeijs decoders&lt;/h1&gt;&lt;/html&gt;</text>
         </label>
         <separator/>
-        <separator/>
         <label>
-          <text>&lt;html&gt;&lt;h3&gt;CV Programming/reading through the programming track&lt;/h3&gt;&lt;html&gt;
-          </text>
+          <text>&lt;html&gt;&lt;h3&gt;CV Programming/reading through the programming track&lt;/h3&gt;&lt;html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;h3&gt;CV-Programmierung / Lesen auf dem Programmiergleis&lt;/h3&gt;&lt;/html&gt;</text>
+          <text xml:lang="fr">&lt;html&gt;&lt;h3&gt;Programmation de CV / lecture par la voie de programmation&lt;/h3&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;CV Programmeren/Uitlezen via programmeerspoor&lt;/h3&gt;&lt;/html&gt;</text>
         </label>
         <label>
           <text>&lt;html&gt;
-This common way of programming can become rather complicated.&lt;br/&gt;The decoder must first be prepared by placing a 150 - 270 Ohm resistor&lt;br/&gt;between output 1 (1 on OUT1) and common (C on OUT1).&lt;br/&gt;&lt;br/&gt;
-The resistor ensures that there is a resistance on the programming&lt;br/&gt;track, which your control unit requires as confirmation that a module is present&lt;br/&gt;and that the programming commands have been received from the control unit.&lt;br/&gt;Unfortunately, no two control units are the same and it is possible that&lt;br/&gt;the attached resistor does not provide enough, or provides too much,&lt;br/&gt;resistance. If this happens, consult your control unit’s manual to find out what&lt;br/&gt;resistance is required. In most cases using a bulb (12 Volt—60 mA) works well.&lt;br/&gt;&lt;br/&gt;Step 1: Connect both the power and signal inputs on the decoder to the rails output on your control unit.&lt;br/&gt;Step 2: Press the program button on the module until the red LED stays on.&lt;br/&gt;Step 3: Now connect both the power and signal input on the decoder to the program output on your control unit.&lt;br/&gt;Step 4: You can now modify the CVs using CV byte or CV bit programming.&lt;br/&gt;(For information about CV byte or CV bit programming, please consult your control unit’s manual)&lt;br/&gt;Step 5: Connect both the power and signal inputs on the decoder to the rails output on your control unit.&lt;br/&gt;Step 6: Press the program button on the decoder module until the LED goes out. &lt;br/&gt;Step 7: Your modifications have been saved and the decoder module is ready for use.
+            This common way of programming can be rather complicated, so carefully follow these steps:&lt;br/&gt;
+            &lt;br/&gt;
+            The DR4024 servo module is equipped with an internal load resistor, so you do not need to attach an external resistor to the module.&lt;br/&gt;
+            &lt;br/&gt;
+            Step 1: Connect both the Power and Signal inputs on the decoder to the rails output on your control unit.&lt;br/&gt;
+            Step 2: Press the program button on the module until the red LED stays on.&lt;br/&gt;
+            Step 3: Now connect both the power and signal input on the decoder to the program output on your control unit.&lt;br/&gt;
+            Step 4: You can now modify the CVs using CV byte or CV bit programming. *)&lt;br/&gt;
+            Step 5: Connect both the Power and Signal inputs on the decoder to the rails output on your control unit.&lt;br/&gt;
+            Step 6: Press the program button on the decoder module until the LED goes out.&lt;br/&gt;
+            Step 7: Your modifications have been saved and the decoder module is ready for use.&lt;br/&gt;
+            &lt;br/&gt;
+            *) For information about CV byte or CV bit programming, please consult your control unit’s manual.
+          &lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;
+            Diese Programmiermethode wird häufig verwendet aber kann auch kompliziert sein. &lt;br/&gt;
+              &lt;br/&gt;
+            Das DR4024 Servo-Modul ist mit einem internen Belastungswiderstand ausgestattet, sodass Sie keinen externen Widerstand an das Modul anschließen müssen.&lt;br/&gt;
+            &lt;br/&gt;
+            Schritt 1: Schließen Sie sowohl den Power- als auch den Signal-Eingang des Decoders an den Schienenausgang Ihrer Zentrale an.&lt;br/&gt;
+            Schritt 2: Drücken und halten Sie den Program-Schalter des Moduls, bis das rote LED-Licht an bleibt.&lt;br/&gt;
+            Schritt 3: Schließen Sie nun Power- und Signal-Eingang des Decoders an den Programmier-Ausgang Ihrer Zentrale.&lt;br/&gt;
+            Schritt 4: Nun können Sie die gewünschten CVs mit CV-Byte- oder CV-Bit-Programmierung ändern. *)&lt;br/&gt;
+            Schritt 5: Schließen Sie Power- und Signal-Eingang des Decoders an den Schienenausgang Ihrer Konsole an.&lt;br/&gt;
+            Schritt 6: Drücken Sie den Programmier-Schalter des Moduls so lange, bis das LED-Licht erlischt.&lt;br/&gt;
+            Schritt 7: Ihre Änderungen wurden gespeichert und das Modul kann nun verwendet werden.&lt;br/&gt;
+            &lt;br/&gt;
+            *) Weiter Informationen zu CV-Byte- oder CV-Bit-Programmierung finden Sie in der Bedienungsanleitung Ihrer Zentrale.
+          &lt;/html&gt;</text>
+          <text xml:lang="fr">&lt;html&gt;
+            Cette méthode de programmation est communément utilisée mais peut s’avérer compliquée. &lt;br/&gt;
+            &lt;br/&gt;
+            Le module servo DR4024 est équipé d’une résistance de charge interne. Vous n’avez donc pas besoin de raccorder une résistance externe au module.&lt;br/&gt;
+            &lt;br/&gt;
+            Etape 1 : Connectez à la fois les entrées power et signal sur le décodeur aux entrées rails de votre centrale de commande.&lt;br/&gt;
+            Etape 2 : Appuyez et maintenez l’interrupteur de programma on sur le module jusqu’à ce que la LED rouge reste allumée.&lt;br/&gt;
+            Etape 3 : Maintenant connectez à la fois les entrées power et signal sur le décodeur aux sorties programma on de votre Centrale de Commande.&lt;br/&gt;
+            Etape 4 : Vous pouvez alors modi er les CVs de votre choix avec la programma on CV-byte ou CV-bit. *)&lt;br/&gt;
+            Etape 6 : Appuyez sur l’interrupteur de programma on sur le module jusqu’à ce que la LED rouge s’éteigne.&lt;br/&gt;
+            Etape 7 : Vos modi ca ons sont enregistrées et le module est prêt à l’emploi.&lt;br/&gt;
+            &lt;br/&gt;
+            *) Reportez-vous au manuel d’information de votre Centrale de Commande pour plus d’informations sur la programmation CV-byte ou CV-bit.
+          &lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;
+            Deze manier van programmeren wordt veel gebruikt, maar kan ingewikkeld zijn. Volg dus zorgvuldig de volgende stappen: &lt;br/&gt;
+              &lt;br/&gt;
+            De DR4024 decoder is voorzien van een interne belastingsweerstand, dus U hoeft geen externe belasting aan te sluiten op de module.&lt;br/&gt;
+            &lt;br/&gt;
+            Stap 1: Sluit zowel Power als Signal ingang van de decoder aan op de rails uitgang van uw centrale.&lt;br/&gt;
+            Stap 2: Druk de Program schakelaar op de decoder in totdat de rode led blij branden.&lt;br/&gt;
+            Stap 3: Sluit nu zowel power als signal ingang van de decoder aan op de programmeer uitgang van uw centrale.&lt;br/&gt;
+            Stap 4: Nu kunt u de gewenste CV’s wijzigen doormiddel van CV-byte of CV-bit programmering. *)&lt;br/&gt;
+            Stap 5: Sluit zowel Power als Signal ingang van de decoder aan op de rails uitgang van uw centrale.&lt;br/&gt;
+            Stap 6: Druk de programmeer schakelaar op de module in totdat de led dooft.&lt;br/&gt;
+            Stap 7: Uw wijzigingen zijn opgeslagen en de module is klaar voor gebruik.&lt;br/&gt;
+            &lt;br/&gt;
+            *) Voor informatie over CV-byte of CV-bit programmering raadpleegt u de handleiding van uw Centrale.
           &lt;/html&gt;</text>
         </label>
         <label>
-          <text>&lt;html&gt;&lt;h3&gt;For further information on this hardware and how to install it, please consult the manual available at https://www.digikeijs.com&lt;/h3&gt;&lt;html&gt;
-          </text>
+          <text>&lt;html&gt;&lt;h3&gt;For further information on this hardware and how to install it, please consult the manual available at https://www.digikeijs.com&lt;/h3&gt;&lt;html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;h3&gt;Weitere Informationen zur Anwendung dieser Hardware finden Sie in der digitalen Anleitung, verfügbar über https://www.digikeijs.com&lt;/h3&gt;&lt;html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;Raadpleeg voor meer informatie over installatie en toepassing van deze hardware de handleiding, te vinden op https://www.digikeijs.com&lt;/h3&gt;&lt;html&gt;</text>
         </label>
     </column>
 </pane>
+<!-- End of Readme Pane 4024-->
+<pane include="4018">
+    <name>ReadMe</name>
+    <name xml:lang="de">Lese Mich</name>
+    <name xml:lang="fr">Lisez Moi</name>
+    <name xml:lang="nl">Lees Mij</name>
+    <column>
+        <label>
+            <text> </text>
+        </label>
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;JMRI 4.8 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;strong&gt;JMRI 4.8 oder neuer erforderlich für diese Decoderdefinition.&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;JMRI 4.8 ou plus nouveau est réquis pour útiliser cette Definition Décodeur.&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;JMRI 4.8 of later vereist met deze definitie.&lt;/strong&gt;&lt;/html&gt;</text>
+        </label>
+        <separator/>
+        <label>
+          <text>&lt;html&gt;&lt;h1&gt;Important information about DigiRails decoders&lt;/h1&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Wichtige information bzw. DigiKeijs decoder&lt;/h1&gt;&lt;/html&gt;</text>
+          <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;d'Information importante sur les Décodeurs DigiKeijs&lt;/h1&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Belangrijke informatie over DigiKeijs decoders&lt;/h1&gt;&lt;/html&gt;</text>
+        </label>
+        <separator/>
+        <label>
+          <text>&lt;html&gt;&lt;h3&gt;CV Programming/reading through the programming track&lt;/h3&gt;&lt;html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;h3&gt;CV-Programmierung / Lesen auf dem Programmiergleis&lt;/h3&gt;&lt;/html&gt;</text>
+          <text xml:lang="fr">&lt;html&gt;&lt;h3&gt;Programmation de CV / lecture par la voie de programmation&lt;/h3&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;CV Programmeren/Uitlezen via programmeerspoor&lt;/h3&gt;&lt;/html&gt;</text>
+        </label>
+        <label>
+          <text>&lt;html&gt;
+            This common way of programming can be rather complicated, so carefully follow these steps:&lt;br/&gt;
+              &lt;br/&gt;
+            The decoder must first be prepared by placing a 150 - 270 Ohm resistor between output 1 (1 on OUT1) and common (C on OUT1).&lt;br/&gt;
+            The resistor ensures that there is a resistance on the programming track, which your control unit requires as confirmation that a module is present&lt;br/&gt;
+            and that the programming commands have been received from the control unit.&lt;br/&gt;
+            Unfortunately, no two control units are the same and it is possible that the attached resistor does not provide enough, or provides too much,&lt;br/&gt;
+            resistance. If this happens, consult your control unit’s manual to find out what resistance is required.&lt;br/&gt;
+            In most cases using a bulb (12 Volt—60 mA) works well.&lt;br/&gt;
+            &lt;br/&gt;
+            Step 1: Connect both the power and signal inputs on the decoder to the rails output on your control unit.&lt;br/&gt;
+            Step 2: Press the program button on the module until the red LED stays on.&lt;br/&gt;
+            Step 3: Now connect both the power and signal input on the decoder to the program output on your control unit.&lt;br/&gt;
+            Step 4: You can now modify the CVs using CV byte or CV bit programming. *)&lt;br/&gt;
+            Step 5: Connect both the power and signal inputs on the decoder to the rails output on your control unit.&lt;br/&gt;
+            Step 6: Press the program button on the decoder module until the LED goes out.&lt;br/&gt;
+            Step 7: Your modifications have been saved and the decoder module is ready for use.&lt;br/&gt;
+            &lt;br/&gt;
+            *) For information about CV byte or CV bit programming, please consult your control unit’s manual.
+          &lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;
+            Diese Programmiermethode wird häufig verwendet aber kann auch kompliziert sein. &lt;br/&gt;
+            &lt;br/&gt;
+            Als erstes muss der Decoder vorbereitet werden, indem ein 150—270 Ohm Widerstand an den Ausgang 1 angeschlossen wird (zwischen OUT1 1 und C).&lt;br/&gt;
+            Der Widerstand sorgt dafür, dass es einen Widerstand am Programmiergleis gibt. Dies benötigt die Kontrolleinheit als Bestätigung, dass das Modul vorhanden ist und dass die Programmiervorgaben von der Kontrolleinheit erhalten worden sind.&lt;br/&gt;
+            Leider sind alle Kontrolleinheiten unterschiedlich und es kann also sein, dass der angeschlossenen Widerstand nicht genug, oder zu viel Widerstand leistet.&lt;br/&gt;
+            Wenn dies der Fall ist, dann prüfen Sie im Handbuch Ihrer Kontrolleinheit nach welcher Widerstand benötigt wird.&lt;br/&gt;
+            In den meisten Fällen kann man auch eine Glühbirne (12 Volt—60 mA) verwenden.&lt;br/&gt;
+            &lt;br/&gt;
+            Schritt 1: Schließen Sie sowohl den Power- als auch den Signal-Eingang des Decoders an den Schienenausgang Ihrer Zentrale an.&lt;br/&gt;
+            Schritt 2: Drücken und halten Sie den Program-Schalter des Moduls, bis das rote LED-Licht an bleibt.&lt;br/&gt;
+            Schritt 3: Schließen Sie nun Power- und Signal-Eingang des Decoders an den Programmier-Ausgang Ihrer Zentrale.&lt;br/&gt;
+            Schritt 4: Nun können Sie die gewünschten CVs mit CV-Byte- oder CV-Bit-Programmierung ändern. *)&lt;br/&gt;
+            Schritt 5: Schließen Sie Power- und Signal-Eingang des Decoders an den Schienenausgang Ihrer Konsole an.&lt;br/&gt;
+            Schritt 6: Drücken Sie den Programmier-Schalter des Moduls so lange, bis das LED-Licht erlischt.&lt;br/&gt;
+            Schritt 7: Ihre Änderungen wurden gespeichert und das Modul kann nun verwendet werden.&lt;br/&gt;
+            &lt;br/&gt;
+            *) Weiter Informationen zu CV-Byte- oder CV-Bit-Programmierung finden Sie in der Bedienungsanleitung Ihrer Zentrale.
+          &lt;/html&gt;</text>
+          <text xml:lang="fr">&lt;html&gt;
+            Cette méthode de programmation est communément utilisée mais peut s’avérer compliquée. &lt;br/&gt;
+            &lt;br/&gt;
+            Le décodeur doit d’abord être préparé en utilisant une résistance de 150-270 ohms reliée à la sortie 1 (entre OUT1 1 et C).&lt;br/&gt;
+            La résistance simule un consommateur de courant sur le rail de programma on. L’unité de contrôle nécessite une confirmation lui permettant&lt;br/&gt;
+            de reconnaître la présence du module et que les ordres de commande de programma on ont bien été envoyés par l’unité de commande.&lt;br/&gt;
+            Malheureusement, toutes les unités de commande différent et il se peut que la résistance connectée ne soit pas suffisante, ou soit trop importante.&lt;br/&gt;
+            Si c’est le cas, vérifiez le manuel de votre unité de contrôle pour voir quelle résistance est nécessaire.&lt;br/&gt;
+            Dans la plupart des cas, utilisez une ampoule (12 V - 60 mA).&lt;br/&gt;
+            &lt;br/&gt;
+            Etape 1 : Connectez à la fois les entrées power et signal sur le décodeur aux entrées rails de votre centrale de commande.&lt;br/&gt;
+            Etape 2 : Appuyez et maintenez l’interrupteur de programma on sur le module jusqu’à ce que la LED rouge reste allumée.&lt;br/&gt;
+            Etape 3 : Maintenant connectez à la fois les entrées power et signal sur le décodeur aux sorties programma on de votre Centrale de Commande.&lt;br/&gt;
+            Etape 4 : Vous pouvez alors modi er les CVs de votre choix avec la programma on CV-byte ou CV-bit. *)&lt;br/&gt;
+            Etape 6 : Appuyez sur l’interrupteur de programma on sur le module jusqu’à ce que la LED rouge s’éteigne.&lt;br/&gt;
+            Etape 7 : Vos modi ca ons sont enregistrées et le module est prêt à l’emploi.&lt;br/&gt;
+            &lt;br/&gt;
+            *) Reportez-vous au manuel d’information de votre Centrale de Commande pour plus d’informations sur la programmation CV-byte ou CV-bit.
+          &lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;
+            Deze manier van programmeren wordt veel gebruikt, maar kan ingewikkeld zijn. Volg dus zorgvuldig de volgende stappen: &lt;br/&gt;
+            &lt;br/&gt;
+              Eerst moet u de decoder voorbereiden door het plaatsen van een belastingsweerstand van 150 of 270 Ohm tussen uitgang 1 (1 op OUT1) en common (C op OUT1).&lt;br/&gt;
+              De weerstand zorgt er voor dat er een belasting op het programmeerspoor ontstaat die uw centrale nodig heeft als bevestiging dat er een module aanwezig is&lt;br/&gt;
+              en ook daadwerkelijk de programmeeropdracht van uw centrale heeft ontvangen.&lt;br/&gt;
+              Helaas is geen centrale hetzelfde en kan het zijn dat de gemonteerde weerstand niet voldoende of juist teveel belasting creëert.&lt;br/&gt;
+              In dat geval dient u de handleiding van uw centrale te raadplegen om de grootte van de benodigde belasting te bepalen.&lt;br/&gt;
+              In de meeste gevallen werkt een gloeilampje (12 Volt - 60 mA).&lt;br/&gt;
+              &lt;br/&gt;
+            Stap 1: Sluit zowel Power als Signal ingang van de decoder aan op de rails uitgang van uw centrale.&lt;br/&gt;
+            Stap 2: Druk de Program schakelaar op de decoder in totdat de rode led blij branden.&lt;br/&gt;
+            Stap 3: Sluit nu zowel power als signal ingang van de decoder aan op de programmeer uitgang van uw centrale.&lt;br/&gt;
+            Stap 4: Nu kunt u de gewenste CV’s wijzigen doormiddel van CV-byte of CV-bit programmering. *)&lt;br/&gt;
+            Stap 5: Sluit zowel Power als Signal ingang van de decoder aan op de rails uitgang van uw centrale.&lt;br/&gt;
+            Stap 6: Druk de programmeer schakelaar op de module in totdat de led dooft.&lt;br/&gt;
+            Stap 7: Uw wijzigingen zijn opgeslagen en de module is klaar voor gebruik.&lt;br/&gt;
+            &lt;br/&gt;
+            *) Voor informatie over CV-byte of CV-bit programmering raadpleegt u de handleiding van uw Centrale.
+          &lt;/html&gt;</text>
+        </label>
+        <label>
+          <text>&lt;html&gt;&lt;h3&gt;For further information on this hardware and how to install it, please consult the manual available at https://www.digikeijs.com&lt;/h3&gt;&lt;html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;h3&gt;Weitere Informationen zur Anwendung dieser Hardware finden Sie in der digitalen Anleitung, verfügbar über https://www.digikeijs.com&lt;/h3&gt;&lt;html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;Raadpleeg voor meer informatie over installatie en toepassing van deze hardware de handleiding, te vinden op https://www.digikeijs.com&lt;/h3&gt;&lt;html&gt;</text>
+        </label>
+    </column>
+</pane>
+<!-- End of Readme Pane 4018-->
 
 </decoder-config>

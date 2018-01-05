@@ -2630,7 +2630,7 @@ public class Llnmon {
         String reporterSystemName;
         String reporterUserName;
         String zone;
-        switch (l.getElement(2) & 0x0F) {
+        switch (l.getElement(2) & 0x0E) { // ignore bit 0 which seems to provide some unknown info from the BXP88
             case 0x00:
                 zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEA");
                 break;
@@ -2857,7 +2857,7 @@ public class Llnmon {
 
     private String interpretOpcSwState(LocoNetMessage l) {
         // get system and user names
-        if ((l.getElement(2) & 0x70) != 0x00) {
+        if ((l.getElement(2) & 0x40) != 0x00) {
             return "";
         }
         String turnoutSystemName;
