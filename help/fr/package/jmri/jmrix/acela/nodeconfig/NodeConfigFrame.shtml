@@ -34,13 +34,12 @@ Merci d'avoir lu ceci, j'espère que les quelques minutes que vous consacrerez �
 Si vous ne l''avez pas déjà fait, s'il vous plaît n'oubliez pas de lire davantage dans JMRI le support matériel sur <a href="../../../../../html/hardware/acela/index.shtml"> Acela </a> et le <a href="../../../../../html/hardware/acela/Names.shtml"> système Noms CTI Acela </a>. </p>
 <H2>Fichiers de configuration 
 </H2>
-Juste pour être parfaitement clair, DecoderPro, PanelPro et JmriDemo sont tous des environnements graphiques différents ou des interfaces utilisateur pour le même programme JMRI.
+Juste pour être parfaitement clair, DecoderPro, PanelPro et SoundPro sont tous des environnements graphiques différents ou des interfaces utilisateur pour le même programme JMRI.
 <p>
 Vous pouvez faire quelque chose avec n'importe lequel de ces trois programmes, l'interface utilisateur a juste été adapté dans une tentative de rendre plus facile pour vous de pouvoir faire ce que vous voulez :
 <ul>
 <li>Programme Décodeurs utilisant DecoderPro
 <li> Contrôlez votre réseau en utilisant PanelPro
-<li>Expérimentation utilisant JmriDemo
 </Ul>
 <p>
 La seule différence est que chaque configurateur graphique à sa propre version de votre configuration.
@@ -57,7 +56,7 @@ Donc, si vous effectuez une modification et sauvegarder votre fichier de configu
 <p>
 C'est bien beau jusqu'à ce que vous réalisiez que vous n'étiez pas connecté au réseau et venez de perdre votre configuration personnalisée CTI Acela(voir ci-dessous).
 <p>
-Donc, à nouveau, faites des copies de sauvegarde de vos fichiers de configuration (c'est à dire DecoderProConfig2.xml, PanelProConfig2.xml, JmriDemoConfig2.xml) souvent et de les stocker dans un endroit sûr.
+    Donc, à nouveau, faites des copies de sauvegarde de vos fichiers de configuration (c'est à dire DecoderProConfig2.xml, PanelProConfig2.xml) souvent et de les stocker dans un endroit sûr.
 
 <H2> Connexion à votre système CTI Acela
 </H2>
@@ -65,11 +64,11 @@ Il est fortement recommandé que vous laissez le logiciel JMRI découvrir votre 
 <p>
 À cette fin, les boutons Ajouter et Supprimer ont été désactivés pour le moment.
 <p>
-Vous pouvez aller avancer et modifier votre fichier de préférences par exemple DecoderProConfig2.xml ou PanelProConfig2.xml ou JmriDemoConfig2.xml) si vous voulez vraiment changer les choses manuellement.<p>
-Il vous est recommandé de configurez votre réseau CTI Acela en trois étapes: établir votre connexion, la découverte de votre réseau CTI Acela , puis personnaliser votre configuration.
+    Vous pouvez aller avancer et modifier votre fichier de préférences par exemple DecoderProConfig2.xml ou PanelProConfig2.xml) si vous voulez vraiment changer les choses manuellement.<p>
+    Il vous est recommandé de configurez votre réseau CTI Acela en trois étapes: établir votre connexion, la découverte de votre réseau CTI Acela , puis personnaliser votre configuration.
 <h3>Établir la Connexion
 </h3>
-Avec le système CTI Acela allumé et connecté à votre ordinateur, lancez JMRI (DecoderPro ou PanelPro ou JmriDemo).
+Avec le système CTI Acela allumé et connecté à votre ordinateur, lancez JMRI (DecoderPro ou PanelPro).
 <p>
 Depuis le menu principal, sélectionnez <Éditer> puis sélectionnez <Préférences>.
 <p>
@@ -79,8 +78,8 @@ Vous devez alors sélectionner le port série correct. Assurez-vous que vous obt
 <p>
 Appuyez sur le bouton <Sauvegarder>. Le programme JMRI prendra fin.
 <p>
-Si vous regardez votre fichier de configuration (c'est à dire DecoderProConfig2.xml ou PanelProConfig2.xml ou JmriDemoConfig2.xml selon le programme que vous avez exécuté), vous devriez voir une entrée de connexion avec le port série spécifié.
-Il va ressembler à (à noter la seconde ligne "port de connexion"):
+    Si vous regardez votre fichier de configuration (c'est à dire DecoderProConfig2.xml ou PanelProConfig2.xml selon le programme que vous avez exécuté), vous devriez voir une entrée de connexion avec le port série spécifié.
+    Il va ressembler à (à noter la seconde ligne "port de connexion"):
 <p>
 &lt?xml version="1.0" encoding="UTF-8"?>
 <p>
@@ -103,7 +102,7 @@ Il va ressembler à (à noter la seconde ligne "port de connexion"):
 &lt;/layout-config>
 <h3>Laissez JMRI découvrir votre configuration réseau CTI Acela
 </H3>
-Redémarrez JMRI (DecoderPro ou PanelPro ou JmriDemo). Si vous avez spécifié le bon port série à l'étape précédente, alors le logiciel JMRI doitt se connecter au réseau CTI Acela, réinitialiser le nœud Acela puis interroger le réseau CTI Acela  et découvrir quels modules (un module JMRI s'appelle un nœud) vous avez et dans quel ordre.
+Redémarrez JMRI (DecoderPro ou PanelPro). Si vous avez spécifié le bon port série à l'étape précédente, alors le logiciel JMRI doitt se connecter au réseau CTI Acela, réinitialiser le nœud Acela puis interroger le réseau CTI Acela  et découvrir quels modules (un module JMRI s'appelle un nœud) vous avez et dans quel ordre.
 <p>
 JMRI va créer un noeud pour chaque module qu'il trouve.
 <p>
@@ -115,7 +114,7 @@ La première section est intitulée Les nœuds dans le réseau et il affichera u
 <p>
 A ce stade, vous devriez fermer cette fenêtre et une fois de plus utiliser le bouton "Sauvegarder" sur l'écran Préférences.
 <p>
-Si vous regardez maintenant à votre fichier de configuration (c'est à dire DecoderProConfig2.xml ou PanelProConfig2.xml ou JmriDemoConfig2.xml selon le programme que vous avez exécuté) en plus de l'entrée de connexion avec le port série spécifié pour le réseau CTI Acela, vous devriez voir la description de noeud pour chaque nœud CTI Acela qui a été trouvé.
+    Si vous regardez maintenant à votre fichier de configuration (c'est à dire DecoderProConfig2.xml ou PanelProConfig2.xml selon le programme que vous avez exécuté) en plus de l'entrée de connexion avec le port série spécifié pour le réseau CTI Acela, vous devriez voir la description de noeud pour chaque nœud CTI Acela qui a été trouvé.
 <p>
 Il ressemblera à (notez les lignes après le second "port de connexion" ligne):
 <p>
@@ -355,7 +354,7 @@ Des valeurs élevées correspondent à un filtrage plus lourd
 <p>
 Par défaut, JMRI initialise tous les circuits du capteur à l'intervalle de voiture, Inversion de polarité, et un seuil de 4. Cela semble fonctionner plutôt bien pour le CTI qui a fourni des trousses de capteur infra-rouge.
 <p>
-N'oubliez pas de sauvegarder votre nouvelle configuration en utilisant le bouton Enregistrer dans la fenêtre Préférences. Aussi n'oubliez pas d'enregistrer une copie de votre fichier de configuration (c'est à dire DecoderProConfig2.xml ou PanelProConfig2.xml ou JmriDemoConfig2.xml) dans un endroit sûr.
+    N'oubliez pas de sauvegarder votre nouvelle configuration en utilisant le bouton Enregistrer dans la fenêtre Préférences. Aussi n'oubliez pas d'enregistrer une copie de votre fichier de configuration (c'est à dire DecoderProConfig2.xml ou PanelProConfig2.xml) dans un endroit sûr.
 <h3> Configuration des sorties</H3>
 Si un circuit de sortie est contrôlé par un relais, le relais peut être câblé dans l'une des trois façons suivantes:
 <ul>
@@ -394,7 +393,7 @@ Le circuit de sortie peut aussi avoir une configuration état initiale ou config
 </ul>
 </ul>
 
-N'oubliez pas de sauvegarder votre nouvelle configuration en utilisant le bouton Enregistrer dans la fenêtre Préférences. Aussi n'oubliez pas d'enregistrer une copie de votre fichier de configuration (c'est à dire DecoderProConfig2.xml ou PanelProConfig2.xml ou JmriDemoConfig2.xml) dans un endroit sûr.
+N'oubliez pas de sauvegarder votre nouvelle configuration en utilisant le bouton Enregistrer dans la fenêtre Préférences. Aussi n'oubliez pas d'enregistrer une copie de votre fichier de configuration (c'est à dire DecoderProConfig2.xml ou PanelProConfig2.xml) dans un endroit sûr.
 <!--#include virtual="/Footer" -->
 </body>
 </html>

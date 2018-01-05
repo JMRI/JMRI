@@ -97,7 +97,7 @@
         <dd><code>mvn test</code><br>Use <code>mvn test -Dtest=PATTERN</code> to
           run specific tests. See
           <a href="https://maven.apache.org/surefire/maven-surefire-plugin/examples/single-test.html">Running a Single Test</a>
-        for more details, including running only a single test method.</dt>
+        for more details, including running only a single test method.</dd>
         <dt>Check for vulnerabilities in JMRI dependencies</dt>
         <dd><code>mvn compile net.ossindex:ossindex-maven-plugin:audit</code></dd>
         <dt>Check for newer versions of JMRI dependencies</dt>

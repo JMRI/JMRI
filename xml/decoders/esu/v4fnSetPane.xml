@@ -82,70 +82,140 @@
       <display item="ESU V4 Function Settings Auto Uncoupling Slider 3" layout="above" format="hslider"/>
     </row>
   </column>
-  <column>
-    <separator/>
-    <label>
-      <text>ESU Smoke Unit</text>
-      <text xml:lang="it">Gener.Fumo ESU</text>
-      <text xml:lang="de">Rauchentwickler</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="ESU V4 Function Settings Smoke Unit Slider 1" layout="above" label=""/>
-      <display item="ESU V4 Function Settings Smoke Unit Slider 1" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="ESU V4 Function Settings Smoke Unit Slider 2" layout="above" label=""/>
-      <display item="ESU V4 Function Settings Smoke Unit Slider 2" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="ESU V4 Function Settings Smoke Unit Slider 3" layout="above" label=""/>
-      <display item="ESU V4 Function Settings Smoke Unit Slider 3" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="ESU V4 Function Settings Smoke Unit Slider 4" layout="above" label=""/>
-      <display item="ESU V4 Function Settings Smoke Unit Slider 4" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <separator/>
-    <label>
-      <text>Smoke Chuffs</text>
-      <text xml:lang="it">Chuff Fumo</text>
-      <text xml:lang="de">Dampfstöße</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="ESU V4 Function Settings Smoke Chuffs Slider 1" layout="above" label=""/>
-      <display item="ESU V4 Function Settings Smoke Chuffs Slider 1" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="ESU V4 Function Settings Smoke Chuffs Slider 2" layout="above" label=""/>
-      <display item="ESU V4 Function Settings Smoke Chuffs Slider 2" layout="above" format="hslider"/>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <display item="ESU V4 Function Settings Smoke Chuffs Slider 3" layout="above" label=""/>
-      <display item="ESU V4 Function Settings Smoke Chuffs Slider 3" layout="above" format="hslider"/>
-    </row>
-  </column>
+    <group exclude="ESU LokPilot Standard V1.0">
+      <column>
+        <separator/>
+        <label>
+          <text>ESU Smoke Unit</text>
+          <text xml:lang="it">Gener.Fumo ESU</text>
+          <text xml:lang="de">Rauchentwickler</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="ESU V4 Function Settings Smoke Unit Slider 1" layout="above" label=""/>
+          <display item="ESU V4 Function Settings Smoke Unit Slider 1" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="ESU V4 Function Settings Smoke Unit Slider 2" layout="above" label=""/>
+          <display item="ESU V4 Function Settings Smoke Unit Slider 2" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="ESU V4 Function Settings Smoke Unit Slider 3" layout="above" label=""/>
+          <display item="ESU V4 Function Settings Smoke Unit Slider 3" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="ESU V4 Function Settings Smoke Unit Slider 4" layout="above" label=""/>
+          <display item="ESU V4 Function Settings Smoke Unit Slider 4" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <separator/>
+        <label>
+          <text>Smoke Chuffs</text>
+          <text xml:lang="it">Chuff Fumo</text>
+          <text xml:lang="de">Dampfstöße</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="ESU V4 Function Settings Smoke Chuffs Slider 1" layout="above" label=""/>
+          <display item="ESU V4 Function Settings Smoke Chuffs Slider 1" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="ESU V4 Function Settings Smoke Chuffs Slider 2" layout="above" label=""/>
+          <display item="ESU V4 Function Settings Smoke Chuffs Slider 2" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="ESU V4 Function Settings Smoke Chuffs Slider 3" layout="above" label=""/>
+          <display item="ESU V4 Function Settings Smoke Chuffs Slider 3" layout="above" format="hslider"/>
+        </row>
+      </column>
+    </group>
+    <group include="MBW Silberling,Bachmann MK2F">
+      <column>
+        <separator/>
+        <label>
+          <text>Power On Delay</text>
+          <text xml:lang="it">it:Power On Delay</text>
+          <text xml:lang="de">de:Power On Delay</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="ESU V4 Function Settings Power On Delay Slider 1" layout="above" label=""/>
+          <display item="ESU V4 Function Settings Power On Delay Slider 1" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="ESU V4 Function Settings Power On Delay Slider 2" layout="above" label=""/>
+          <display item="ESU V4 Function Settings Power On Delay Slider 2" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="ESU V4 Function Settings Power On Delay Slider 3" layout="above" label=""/>
+          <display item="ESU V4 Function Settings Power On Delay Slider 3" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="ESU V4 Function Settings Power On Delay Slider 4" layout="above" label=""/>
+          <display item="ESU V4 Function Settings Power On Delay Slider 4" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <separator/>
+        <label>
+          <text>Random Switching</text>
+          <text xml:lang="it">it:Power On Delay</text>
+          <text xml:lang="de">de:Power On Delay</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="ESU V4 Function Settings Random Switching Slider 1" layout="above" label=""/>
+          <display item="ESU V4 Function Settings Random Switching Slider 1" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="ESU V4 Function Settings Random Switching Slider 2" layout="above" label=""/>
+          <display item="ESU V4 Function Settings Random Switching Slider 2" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="ESU V4 Function Settings Random Switching Slider 3" layout="above" label=""/>
+          <display item="ESU V4 Function Settings Random Switching Slider 3" layout="above" format="hslider"/>
+        </row>
+      </column>
+    </group>
 </pane>

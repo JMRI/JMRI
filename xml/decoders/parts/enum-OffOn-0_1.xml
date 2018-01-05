@@ -6,7 +6,7 @@
   <enumChoice choice="Off" value="0">
     <choice>Off</choice>
     <choice xml:lang="it">Off</choice>
-    <choice xml:lang="fr">Eteint</choice>
+    <choice xml:lang="fr">Éteint</choice>
     <choice xml:lang="de">Aus</choice>
     <choice xml:lang="es">De</choice>
     <choice xml:lang="cs">Vypnuto</choice>
