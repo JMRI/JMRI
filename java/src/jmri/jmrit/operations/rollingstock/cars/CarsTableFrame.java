@@ -329,7 +329,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     }
 
     public List<Car> getSortByList() {
-        return carsTableModel.sysList;
+        return carsTableModel.carList;
     }
 
     CarEditFrame f = null;
