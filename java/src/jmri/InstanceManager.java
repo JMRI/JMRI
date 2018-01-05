@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -74,7 +76,7 @@ public final class InstanceManager {
 
     // data members to hold contact with the property listeners
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private final HashMap<Class<?>, List<Object>> managerLists = new HashMap<>();
+    private final Map<Class<?>, List<Object>> managerLists = Collections.synchronizedMap(new HashMap<>());
     private final HashMap<Class<?>, InstanceInitializer> initializers = new HashMap<>();
     private final HashMap<Class<?>, StateHolder> initState = new HashMap<>();
 
@@ -262,7 +264,7 @@ public final class InstanceManager {
         log.trace("getOptionalDefault of type {}", type.getName());
         List<T> l = getInstances(type);
         if (l.isEmpty()) {
-            synchronized (l) {
+            synchronized (type) {
 
                 // example of tracing where something is being initialized
                 //if (type == jmri.implementation.SignalSpeedMap.class) new Exception("jmri.implementation.SignalSpeedMap init").printStackTrace();
@@ -819,11 +821,13 @@ public final class InstanceManager {
     @Nonnull
     public <T> List<T> getInstances(@Nonnull Class<T> type) {
         log.trace("Get list of type {}", type.getName());
-        if (managerLists.get(type) == null) {
-            managerLists.put(type, new ArrayList<>());
-            pcs.fireIndexedPropertyChange(getListPropertyName(type), 0, null, null);
+        synchronized (type) {
+            if (managerLists.get(type) == null) {
+                managerLists.put(type, new ArrayList<>());
+                pcs.fireIndexedPropertyChange(getListPropertyName(type), 0, null, null);
+            }
+            return (List<T>) managerLists.get(type);
         }
-        return (List<T>) managerLists.get(type);
     }
 
     /**
