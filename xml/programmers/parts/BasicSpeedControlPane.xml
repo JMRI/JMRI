@@ -50,68 +50,75 @@
     </row>
     <row>
       <column>
-        <row>
-          <display item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1">
-            <tooltip xml:lang="ca">Estableix el voltatge inicial al pas 1</tooltip>
-            <tooltip xml:lang="cs">Nastavení rozjezdového napětí pro 1. rychlostní krok ovladače</tooltip>
-            <tooltip xml:lang="da">Indstiller start volt ved hastighedstrin 1</tooltip>
-            <tooltip xml:lang="de">Geschwindigkeit bei niedrigster Fahrstufe einstellen</tooltip>
-            <tooltip xml:lang="fr">Régle la tension de démarrage au cran 1</tooltip>
-            <tooltip xml:lang="it">Imposta Tensione Motore iniziale a Velocità 1</tooltip>
-            <tooltip xml:lang="nl">Snelheid voor laagste rijstand instellen</tooltip>
-          </display>
-          <display item="Vstart" format="hslider" label="" tooltip="Sets the starting voltage at throttle speed step 1">
-            <tooltip xml:lang="ca">Estableix el voltatge inicial al pas 1</tooltip>
-            <tooltip xml:lang="cs">Nastavení rozjezdového napětí pro 1. rychlostní krok ovladače</tooltip>
-            <tooltip xml:lang="da">Indstiller start volt ved hastighedstrin 1</tooltip>
-            <tooltip xml:lang="de">Geschwindigkeit bei niedrigster Fahrstufe einstellen</tooltip>
-            <tooltip xml:lang="fr">Régle la tension de démarrage au cran 1</tooltip>
-            <tooltip xml:lang="it">Imposta Tensione Motore iniziale a Velocità 1</tooltip>
-            <tooltip xml:lang="nl">Snelheid voor laagste rijstand instellen</tooltip>
-		  <tooltip xml:lang="da">Indstiller start volt ved hastighedstrin 1</tooltip>
-          </display>
-        </row>
-        <row>
-          <display item="Vmid" tooltip="Sets the voltage at mid throttle">
-            <tooltip xml:lang="ca">Estableix el voltatge a mig regulador</tooltip>
-            <tooltip xml:lang="cs">Nastavení napětí pro střední rychlostní krok ovladače</tooltip>
-            <tooltip xml:lang="da">Indstiller midt volt hastighedstrin</tooltip>
-            <tooltip xml:lang="de">Geschwindigkeit bei mittlerer Fahrstufe einstellen</tooltip>
-            <tooltip xml:lang="fr">Régle la tension au cran de vitesse intermédiaire</tooltip>
-            <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Intermedia</tooltip>
-            <tooltip xml:lang="nl">Snelheid voor middelste rijstand instellen</tooltip>
-          </display>
-          <display item="Vmid" format="hslider" label="" tooltip="Sets the voltage at mid throttle">
-            <tooltip xml:lang="ca">Estableix el voltatge a mig regulador</tooltip>
-            <tooltip xml:lang="cs">Nastavení napětí pro střední rychlostní krok ovladače</tooltip>
-            <tooltip xml:lang="da">Indstiller midt volt hastighedstrin</tooltip>
-            <tooltip xml:lang="de">Geschwindigkeit bei mittlerer Fahrstufe einstellen</tooltip>
-            <tooltip xml:lang="fr">Régle la tension au cran de vitesse intermédiaire</tooltip>
-            <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Intermedia</tooltip>
-            <tooltip xml:lang="nl">Snelheid voor middelste rijstand instellen</tooltip>
-          </display>
-        </row>
-        <row>
-          <display item="Vhigh" tooltip="Sets the maximum voltage at full throttle">
-            <tooltip xml:lang="ca">Estableix el voltatge amb el regulador al màxim</tooltip>
-            <tooltip xml:lang="cs">Nastavení napětí pro poslední rychlostní krok ovladače</tooltip>
-            <tooltip xml:lang="da">Indstiller maks volt hastighedstrin</tooltip>
-            <tooltip xml:lang="de">Geschwindigkeit bei höchster Fahrstufe einstellen</tooltip>
-            <tooltip xml:lang="fr">Régle la tension à la vitesse maximale</tooltip>
-            <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Massima</tooltip>
-            <tooltip xml:lang="nl">Snelheid voor hoogste rijstand instellen</tooltip>
-          </display>
-          <display item="Vhigh" format="hslider" label="" tooltip="Sets the maximum voltage at full throttle">
-            <tooltip xml:lang="ca">Estableix el voltatge amb el regulador al màxim</tooltip>
-            <tooltip xml:lang="cs">Nastavení napětí pro poslední rychlostní krok ovladače</tooltip>
-            <tooltip xml:lang="de">Geschwindigkeit bei höchster Fahrstufe einstellen</tooltip>
-            <tooltip xml:lang="da">Indstiller maks volt hastighedstrin</tooltip>
-            <tooltip xml:lang="fr">Régle la tension à la vitesse maximale</tooltip>
-            <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Massima</tooltip>
-            <tooltip xml:lang="nl">Snelheid voor hoogste rijstand instellen</tooltip>
-		  <tooltip xml:lang="da">Indstiller maks volt hastighedstrin</tooltip>
-          </display>
-        </row>
+        <grid ipadx="10" ipady="2">
+          <!-- default padding for all grid items -->
+          <griditem gridx="0" gridy="0" weightx="1" anchor="LINE_END">
+            <display item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1">
+              <tooltip xml:lang="ca">Estableix el voltatge inicial al pas 1</tooltip>
+              <tooltip xml:lang="cs">Nastavení rozjezdového napětí pro 1. rychlostní krok ovladače</tooltip>
+              <tooltip xml:lang="da">Indstiller start volt ved hastighedstrin 1</tooltip>
+              <tooltip xml:lang="de">Geschwindigkeit bei niedrigster Fahrstufe einstellen</tooltip>
+              <tooltip xml:lang="fr">Régle la tension de démarrage au cran 1</tooltip>
+              <tooltip xml:lang="it">Imposta Tensione Motore iniziale a Velocità 1</tooltip>
+              <tooltip xml:lang="nl">Snelheid voor laagste rijstand instellen</tooltip>
+            </display>
+          </griditem>
+          <griditem gridx="1" gridy="0" weightx="1" anchor="LINE_END">
+            <display item="Vstart" format="hslider" label="" tooltip="Sets the starting voltage at throttle speed step 1">
+              <tooltip xml:lang="ca">Estableix el voltatge inicial al pas 1</tooltip>
+              <tooltip xml:lang="cs">Nastavení rozjezdového napětí pro 1. rychlostní krok ovladače</tooltip>
+              <tooltip xml:lang="da">Indstiller start volt ved hastighedstrin 1</tooltip>
+              <tooltip xml:lang="de">Geschwindigkeit bei niedrigster Fahrstufe einstellen</tooltip>
+              <tooltip xml:lang="fr">Régle la tension de démarrage au cran 1</tooltip>
+              <tooltip xml:lang="it">Imposta Tensione Motore iniziale a Velocità 1</tooltip>
+              <tooltip xml:lang="nl">Snelheid voor laagste rijstand instellen</tooltip>
+            </display>
+          </griditem>
+          <griditem gridx="0" gridy="1" weightx="1" anchor="LINE_END">
+            <display item="Vmid" tooltip="Sets the voltage at mid throttle">
+              <tooltip xml:lang="ca">Estableix el voltatge a mig regulador</tooltip>
+              <tooltip xml:lang="cs">Nastavení napětí pro střední rychlostní krok ovladače</tooltip>
+              <tooltip xml:lang="da">Indstiller midt volt hastighedstrin</tooltip>
+              <tooltip xml:lang="de">Geschwindigkeit bei mittlerer Fahrstufe einstellen</tooltip>
+              <tooltip xml:lang="fr">Régle la tension au cran de vitesse intermédiaire</tooltip>
+              <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Intermedia</tooltip>
+              <tooltip xml:lang="nl">Snelheid voor middelste rijstand instellen</tooltip>
+            </display>
+          </griditem>
+          <griditem gridx="1" gridy="1" weightx="1" anchor="LINE_END">
+            <display item="Vmid" format="hslider" label="" tooltip="Sets the voltage at mid throttle">
+              <tooltip xml:lang="ca">Estableix el voltatge a mig regulador</tooltip>
+              <tooltip xml:lang="cs">Nastavení napětí pro střední rychlostní krok ovladače</tooltip>
+              <tooltip xml:lang="da">Indstiller midt volt hastighedstrin</tooltip>
+              <tooltip xml:lang="de">Geschwindigkeit bei mittlerer Fahrstufe einstellen</tooltip>
+              <tooltip xml:lang="fr">Régle la tension au cran de vitesse intermédiaire</tooltip>
+              <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Intermedia</tooltip>
+              <tooltip xml:lang="nl">Snelheid voor middelste rijstand instellen</tooltip>
+            </display>
+          </griditem>
+          <griditem gridx="0" gridy="2" weightx="1" anchor="LINE_END">
+            <display item="Vhigh" tooltip="Sets the maximum voltage at full throttle">
+              <tooltip xml:lang="ca">Estableix el voltatge amb el regulador al màxim</tooltip>
+              <tooltip xml:lang="cs">Nastavení napětí pro poslední rychlostní krok ovladače</tooltip>
+              <tooltip xml:lang="da">Indstiller maks volt hastighedstrin</tooltip>
+              <tooltip xml:lang="de">Geschwindigkeit bei höchster Fahrstufe einstellen</tooltip>
+              <tooltip xml:lang="fr">Régle la tension à la vitesse maximale</tooltip>
+              <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Massima</tooltip>
+              <tooltip xml:lang="nl">Snelheid voor hoogste rijstand instellen</tooltip>
+            </display>
+          </griditem>
+          <griditem gridx="1" gridy="2" weightx="1" anchor="LINE_END">
+            <display item="Vhigh" format="hslider" label="" tooltip="Sets the maximum voltage at full throttle">
+              <tooltip xml:lang="ca">Estableix el voltatge amb el regulador al màxim</tooltip>
+              <tooltip xml:lang="cs">Nastavení napětí pro poslední rychlostní krok ovladače</tooltip>
+              <tooltip xml:lang="de">Geschwindigkeit bei höchster Fahrstufe einstellen</tooltip>
+              <tooltip xml:lang="da">Indstiller maks volt hastighedstrin</tooltip>
+              <tooltip xml:lang="fr">Régle la tension à la vitesse maximale</tooltip>
+              <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Massima</tooltip>
+              <tooltip xml:lang="nl">Snelheid voor hoogste rijstand instellen</tooltip>
+            </display>
+          </griditem>
+        </grid>
       </column>
     </row>
     <row>
