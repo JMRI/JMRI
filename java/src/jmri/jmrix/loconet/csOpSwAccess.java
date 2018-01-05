@@ -216,7 +216,7 @@ public class csOpSwAccess implements LocoNetListener {
     }
 
     public void readCmdStationOpSw(int cv) {
-        log.debug("readCmdStationOpSw: state is {}, have valid is ",cmdStnOpSwState, csOpSwsAreValid?"true":"false");
+        log.debug("readCmdStationOpSw: state is {}, have valid is {}",cmdStnOpSwState, csOpSwsAreValid?"true":"false");
         if ((cmdStnOpSwState == cmdStnOpSwStateType.HAS_STATE) &&
                 (csOpSwsAreValid == true)) {
             // can re-use previous state - it has not "expired" due to time since read.
