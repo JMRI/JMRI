@@ -11,8 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeSet;
@@ -158,6 +156,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     ArrayList<ConditionalAction> _actionList;       // Current Action List
     ConditionalVariable _curVariable;               // Current Variable
     ConditionalAction _curAction;                   // Current Action
+    int _curVariableItem = 0;
+    int _curActionItem = 0;
     String _curConditionalName = "";
     String _antecedent;
     int _logicType;
@@ -173,13 +173,13 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     ArrayList<String> _selectConditionalList = new ArrayList<String>();
 
     // ------------ Components of Edit Variable pane ------------
-    JComboBox<String> _variableTypeBox;
+    JComboBox<String> _variableItemBox;
+    JComboBox<String> _variableStateBox;
     JComboBox<String> _variableOperBox;
     JCheckBox _variableNegated;
     JCheckBox _variableTriggerActions;
     JTextField _variableNameField;
     JLabel _variableNameLabel = new JLabel(Bundle.getMessage("LabelItemName"));  // NOI18N
-    JComboBox<String> _variableStateBox;
     JComboBox<String> _variableCompareOpBox;
     JComboBox<String> _variableSignalBox;
     JComboBox<String> _variableCompareTypeBox;
@@ -188,11 +188,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     JTextField _variableData2Field;
 
     // ------------ Components of Edit Action pane ------------
-    JComboBox<String> _actionItemTypeBox;
-    JTextField _actionNameField;
-    JLabel _actionNameLabel = new JLabel("Name");  // NOI18N
+    JComboBox<String> _actionItemBox;
     JComboBox<String> _actionTypeBox;
     JLabel _actionTypeLabel = new JLabel("Type");  // NOI18N
+    JTextField _actionNameField;
+    JLabel _actionNameLabel = new JLabel("Name");  // NOI18N
     JComboBox<String> _actionBox;
     JLabel _actionBoxLabel = new JLabel("Box");  // NOI18N
     JTextField _longActionString;
@@ -400,18 +400,23 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
         JButton upButton = new JButton(Bundle.getMessage("ButtonUp"));      // NOI18N
         upButton.setToolTipText(Bundle.getMessage("HintUpButton"));         // NOI18N
+        JButton downButton = new JButton(Bundle.getMessage("ButtonDown"));  // NOI18N
+        downButton.setToolTipText(Bundle.getMessage("HintDownButton"));     // NOI18N
+
         upButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                downButton.setEnabled(false);
+                upButton.setEnabled(false);
                 upPressed();
             }
         });
 
-        JButton downButton = new JButton(Bundle.getMessage("ButtonDown"));  // NOI18N
-        downButton.setToolTipText(Bundle.getMessage("HintDownButton"));     // NOI18N
         downButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                upButton.setEnabled(false);
+                downButton.setEnabled(false);
                 downPressed();
             }
         });
@@ -733,6 +738,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
         cancelPressed();    // Make sure that there are no active edit sessions
         _showReminder = true;
+        _curVariableItem = 0;
         ConditionalVariable variable = new ConditionalVariable();
         _variableList.add(variable);
         _newVariableItem = true;
@@ -750,7 +756,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         }
         appendToAntecedent(_curVariable);
         size--;
-        _curConditional.setStateVariables(_variableList);
 
         // Update tree structure
         if (_curNodeType.equals("Variables")) {  // NOI18N
@@ -777,6 +782,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     void newAction() {
         cancelPressed();    // Make sure that there are no active edit sessions
         _showReminder = true;
+        _curActionItem = 0;
         ConditionalAction action = new DefaultConditionalAction();
         _actionList.add(action);
         _newActionItem = true;
@@ -785,7 +791,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         int size = _actionList.size();
         _curAction = _actionList.get(size - 1);
         size--;
-        _curConditional.setAction(_actionList);
 
         // Update tree structure
         if (_curNodeType.equals("Actions")) {  // NOI18N
@@ -838,7 +843,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             case "Variable":     // NOI18N
                 _labelPanel.add(_variableLabel);
                 _curVariable = _variableList.get(_curNodeRow);
-                variableTypeChanged(Conditional.TYPE_NONE);
+                _curVariableItem = Conditional.TEST_TO_ITEM[_curVariable.getType()];
                 initializeStateVariables();
                 if (_logicType != Conditional.MIXED) {
                     setMoveButtons();
@@ -854,8 +859,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 for (int i = 1; i <= Conditional.NUM_ACTION_OPTIONS; i++) {
                     _actionOptionBox.addItem(DefaultConditionalAction.getOptionString(i, _triggerMode));
                 }
-
-                actionItemChanged(Conditional.TYPE_NONE);
+                _curActionItem = Conditional.ACTION_TO_ITEM[_curAction.getType()];
                 initializeActionVariables();
                 setMoveButtons();
                 break;
@@ -1140,9 +1144,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _curNode.setText(buildNodeText("TriggerMode", _curConditional, 0));  // NOI18N
         _cdlModel.nodeChanged(_curNode);
 
-        // get next sibling and update the children node text
         // refresh the action list to get the updated action descriptions
         _actionList = _curConditional.getCopyOfActions();
+        // get next sibling and update the children node text
         ConditionalTreeNode actionsNode = (ConditionalTreeNode) _curNode.getNextSibling();
         for (int i = 0; i < _actionList.size(); i++) {
             ConditionalAction action = _actionList.get(i);
@@ -1180,7 +1184,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Except for the root node, all nodes are ConditionalTreeNode")  // NOI18N
     void deletePressed() {
-        _curLogix.deActivateLogix();
         TreePath parentPath;
         ConditionalTreeNode parentNode;
         TreeSet<String> oldTargetNames = new TreeSet<>();
@@ -1192,7 +1195,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             case "Conditional":   // NOI18N
                 loadReferenceNames(_variableList, oldTargetNames);
                 // Delete the conditional.
+                _curLogix.deActivateLogix();
                 String[] msgs = _curLogix.deleteConditional(_curNodeName);
+                _curLogix.activateLogix();
                 if (msgs != null) {
                     // Unable to delete due to existing conditional references
                     javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
@@ -1240,7 +1245,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
                 // Remove the row, update and refresh the Variable list, update references
                 _variableList.remove(_curNodeRow);
-                _curConditional.setStateVariables(_variableList);
+                updateVariableList();
                 loadReferenceNames(_variableList, newTargetNames);
                 updateWhereUsed(oldTargetNames, newTargetNames, _curNodeName);
                 _showReminder = true;
@@ -1274,8 +1279,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
             case "Action":        // NOI18N
                 // Remove the row, update and refresh the Action list
+                removeActionTimers();
                 _actionList.remove(_curNodeRow);
-                _curConditional.setAction(_actionList);
+                updateActionList();
                 _showReminder = true;
 
                 // Update the tree components
@@ -1297,13 +1303,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
                 _cdlModel.nodeStructureChanged(parentNode);
                 _cdlTree.setSelectionPath(parentPath);
-
                 break;
 
             default:
                 log.error("Delete called for unsupported node type: '{}'", _curNodeType);  // NOI18N
         }
-        _curLogix.activateLogix();
     }
 
     /**
@@ -1311,10 +1315,13 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     void upPressed() {
         _showReminder = true;
+
         switch (_curNodeType) {
             case "Conditional":         // NOI18N
                 // Update Logix index
+                _curLogix.deActivateLogix();
                 _curLogix.swapConditional(_curNodeRow - 1, _curNodeRow);
+                _curLogix.activateLogix();
                 moveTreeNode("Up");     // NOI18N
                 break;
 
@@ -1330,7 +1337,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                             ? Conditional.OPERATOR_AND : Conditional.OPERATOR_OR;
                     _variableList.get(_curNodeRow).setOpern(newOper);
                 }
-                _curConditional.setStateVariables(_variableList);
+                updateVariableList();
                 moveTreeNode("Up");     // NOI18N
                 break;
 
@@ -1339,7 +1346,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 int newActRow = _curNodeRow - 1;
                 _actionList.set(_curNodeRow, _actionList.get(newActRow));
                 _actionList.set(newActRow, tempAct);
-                _curConditional.setAction(_actionList);
+                removeActionTimers();
+                updateActionList();
                 moveTreeNode("Up");     // NOI18N
                 break;
 
@@ -1353,9 +1361,12 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     void downPressed() {
         _showReminder = true;
+
         switch (_curNodeType) {
             case "Conditional":         // NOI18N
+                _curLogix.deActivateLogix();
                 _curLogix.swapConditional(_curNodeRow, _curNodeRow + 1);
+                _curLogix.activateLogix();
                 moveTreeNode("Down");   // NOI18N
                 break;
 
@@ -1371,7 +1382,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                             ? Conditional.OPERATOR_AND : Conditional.OPERATOR_OR;
                     _variableList.get(newVarRow).setOpern(newOper);
                 }
-                _curConditional.setStateVariables(_variableList);
+                updateVariableList();
                 moveTreeNode("Down");   // NOI18N
                 break;
 
@@ -1380,7 +1391,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 int newActRow = _curNodeRow + 1;
                 _actionList.set(_curNodeRow, _actionList.get(newActRow));
                 _actionList.set(newActRow, tempAct);
-                _curConditional.setAction(_actionList);
+                removeActionTimers();
+                updateActionList();
                 moveTreeNode("Down");   // NOI18N
                 break;
 
@@ -1390,9 +1402,28 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     }
 
     /**
+     * Remove Action timers and listeners before Action list structure changes.
+     * This relates to moving and deleting rows.  New actions at the end are not problem.
+     * The issue is that the timer listeners are tied to the action row number.
+     * This can result in orphan timers and listeners that keep running.
+     * @since 4.11.2
+     */
+    void removeActionTimers() {
+        // Use the real list, not a copy.
+        DefaultConditional cdl = (DefaultConditional) _curConditional;
+        for (ConditionalAction act : cdl.getActionList()) {
+            if (act.getTimer() != null) {
+                act.stopTimer();
+                act.setTimer(null);
+                act.setListener(null);
+            }
+        }
+    }
+
+    /**
      * Move a tree node in response to a up or down request
      *
-     * @param direction The direction of movement, Up or down
+     * @param direction The direction of movement, Up or Down
      */
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Except for the root node, all nodes are ConditionalTreeNode")  // NOI18N
     void moveTreeNode(String direction) {
@@ -1522,6 +1553,20 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Clean up, notify the parent Logix that edit session is done
      */
     void donePressed() {
+        if (_curNodeType != null) {
+            switch (_curNodeType) {
+                case "Variable":       // NOI18N
+                    cancelEditVariable();
+                    break;
+
+                case "Action":         // NOI18N
+                    cancelEditAction();
+                    break;
+
+                default:
+                    break;
+            }
+        }
         closeSinglePanelPickList();
         if (_pickTables != null) {
             _pickTables.dispose();
@@ -1895,7 +1940,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _editConditionalUserName.addFocusListener(detailFocusEvent);
         _editAntecedent.addFocusListener(detailFocusEvent);
         _editOperatorMode.addFocusListener(detailFocusEvent);
-        _variableTypeBox.addFocusListener(detailFocusEvent);
+        _variableItemBox.addFocusListener(detailFocusEvent);
         _variableOperBox.addFocusListener(detailFocusEvent);
         _variableNegated.addFocusListener(detailFocusEvent);
         _variableTriggerActions.addFocusListener(detailFocusEvent);
@@ -1908,7 +1953,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _variableCompareTypeBox.addFocusListener(detailFocusEvent);
         _variableData1Field.addFocusListener(detailFocusEvent);
         _variableData2Field.addFocusListener(detailFocusEvent);
-        _actionItemTypeBox.addFocusListener(detailFocusEvent);
+        _actionItemBox.addFocusListener(detailFocusEvent);
         _actionNameField.addFocusListener(detailFocusEvent);
         _actionTypeBox.addFocusListener(detailFocusEvent);
         _actionBox.addFocusListener(detailFocusEvent);
@@ -1942,10 +1987,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             }
         }
         if (active) {
-            _curLogix.deActivateLogix();
             setPickWindow("Activate", 0);  // NOI18N
         } else {
-            _curLogix.activateLogix();
             setPickWindow("Deactivate", 0);  // NOI18N
         }
     }
@@ -2025,17 +2068,27 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     void buildVariableComponents() {
         // Item Type
-        _variableTypeBox = new JComboBox<String>();
+        _variableItemBox = new JComboBox<String>();
         for (int i = 0; i <= Conditional.ITEM_TYPE_LAST_STATE_VAR; i++) {
-            _variableTypeBox.addItem(ConditionalVariable.getItemTypeString(i));
+            _variableItemBox.addItem(ConditionalVariable.getItemTypeString(i));
         }
-        JComboBoxUtil.setupComboBoxMaxRows(_variableTypeBox);
-        _variableTypeBox.addItemListener(new ItemListener() {
+        JComboBoxUtil.setupComboBoxMaxRows(_variableItemBox);
+        _variableItemBox.addActionListener(new ActionListener() {
             @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    variableTypeChanged(_variableTypeBox.getSelectedIndex());
+            public void actionPerformed(ActionEvent e) {
+                int newVariableItem = _variableItemBox.getSelectedIndex();
+                if (log.isDebugEnabled()) {
+                    log.debug("_variableItemBox Listener: new = {}, curr = {}, row = {}",  // NOI18N
+                            newVariableItem, _curVariableItem, _curNodeRow);
                 }
+                if (newVariableItem != _curVariableItem) {
+                    if (_curNodeRow >= 0) {
+                        _curVariable = new ConditionalVariable();
+                        _variableList.set(_curNodeRow, _curVariable);
+                    }
+                    _curVariableItem = newVariableItem;
+                }
+                variableTypeChanged(newVariableItem);
             }
         });
 
@@ -2079,7 +2132,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         for (int i = 0; i < Conditional.ITEM_TO_MEMORY_TEST.length; i++) {
             _variableCompareTypeBox.addItem(ConditionalVariable.describeState(Conditional.ITEM_TO_MEMORY_TEST[i]));
         }
-        _variableCompareTypeBox.addItemListener(compareTypeBoxListener);
+        _variableCompareTypeBox.addActionListener(compareTypeBoxListener);
 
         // Data 1
         _variableData1Field = new JTextField(10);
@@ -2105,7 +2158,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _gridPanel.add(row0Label, c);
         c.gridx = 1;
         c.anchor = java.awt.GridBagConstraints.WEST;
-        _gridPanel.add(_variableTypeBox, c);
+        _gridPanel.add(_variableItemBox, c);
     }
 
     /*
@@ -2340,11 +2393,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         if (log.isDebugEnabled()) {
             log.debug("initializeStateVariables: itemType= " + itemType + ", testType= " + testType);  // NOI18N
         }
-        if (itemType == _variableTypeBox.getSelectedIndex()) {
+        if (itemType == _variableItemBox.getSelectedIndex()) {
             // Force a refresh of variableTypeChanged
             variableTypeChanged(itemType);
         }
-        _variableTypeBox.setSelectedIndex(itemType);
+        _variableItemBox.setSelectedIndex(itemType);
         _variableOperBox.setSelectedItem(_curVariable.getOpernString());
         _variableNegated.setSelected(_curVariable.isNegated());
         _variableTriggerActions.setSelected(_curVariable.doTriggerActions());
@@ -2468,8 +2521,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _detailGrid.setVisible(false);
 
         if (_comboNameBox != null) {
-            for (ItemListener item : _comboNameBox.getItemListeners()) {
-                _comboNameBox.removeItemListener(item);
+            for (ActionListener item : _comboNameBox.getActionListeners()) {
+                _comboNameBox.removeActionListener(item);
             }
             _comboNameBox.removeFocusListener(detailFocusEvent);
         }
@@ -2628,7 +2681,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         }
         // Select the current entry, add the listener
         _comboNameBox.setSelectedBeanByName(_curVariable.getName());
-        _comboNameBox.addItemListener(new NameBoxListener(_variableNameField));
+        _comboNameBox.addActionListener(new NameBoxListener(_variableNameField));
         _comboNameBox.addFocusListener(detailFocusEvent);
     }
 
@@ -2860,7 +2913,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         updateVariableNegation();
         _curVariable.setTriggerActions(_variableTriggerActions.isSelected());
 
-        int itemType = _variableTypeBox.getSelectedIndex();
+        int itemType = _variableItemBox.getSelectedIndex();
         int testType = 0;
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
@@ -3106,6 +3159,19 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         }
     }
 
+    /**
+     * Update the conditional variable list and refresh the local copy.
+     * The parent Logix is de-activated and re-activated.  This insures
+     * that listeners are properly handled.
+     * @since 4.11.2
+     */
+    void updateVariableList() {
+        _curLogix.deActivateLogix();
+        _curConditional.setStateVariables(_variableList);
+        _variableList = _curConditional.getCopyOfStateVariables();
+        _curLogix.activateLogix();
+    }
+
     // ------------ Variable detail listeners ------------
     transient ActionListener variableSignalHeadNameListener = new ActionListener() {
         @Override
@@ -3130,11 +3196,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     transient ActionListener variableSignalTestStateListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            log.debug("variableSignalTestStateListener fires; _variableTypeBox.getSelectedIndex()= " // NOI18N
-                    + _variableTypeBox.getSelectedIndex()
+            log.debug("variableSignalTestStateListener fires; _variableItemBox.getSelectedIndex()= " // NOI18N
+                    + _variableItemBox.getSelectedIndex()
                     + "\" _variableStateBox.getSelectedIndex()= \"" + _variableStateBox.getSelectedIndex() + "\"");
 
-            int itemType = _variableTypeBox.getSelectedIndex();
+            int itemType = _variableItemBox.getSelectedIndex();
 
             if (_variableStateBox.getSelectedIndex() == 1) {
                 if (itemType == Conditional.ITEM_TYPE_SIGNALHEAD) {
@@ -3178,13 +3244,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         }
     };
 
-    transient ItemListener compareTypeBoxListener = new ItemListener() {
+    transient ActionListener compareTypeBoxListener = new ActionListener() {
         @Override
-        public void itemStateChanged(ItemEvent e) {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                int selection = _variableCompareTypeBox.getSelectedIndex();
-                compareTypeChanged(Conditional.ITEM_TO_MEMORY_TEST[selection]);
-            }
+        public void actionPerformed(ActionEvent e) {
+            int selection = _variableCompareTypeBox.getSelectedIndex();
+            compareTypeChanged(Conditional.ITEM_TO_MEMORY_TEST[selection]);
         }
     };
 
@@ -3195,17 +3259,27 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     void buildActionComponents() {
         // Item Type
-        _actionItemTypeBox = new JComboBox<String>();
+        _actionItemBox = new JComboBox<String>();
         for (int i = 0; i <= Conditional.ITEM_TYPE_LAST_ACTION; i++) {
-            _actionItemTypeBox.addItem(DefaultConditionalAction.getItemTypeString(i));
+            _actionItemBox.addItem(DefaultConditionalAction.getItemTypeString(i));
         }
-        JComboBoxUtil.setupComboBoxMaxRows(_actionItemTypeBox);
-        _actionItemTypeBox.addItemListener(new ItemListener() {
+        JComboBoxUtil.setupComboBoxMaxRows(_actionItemBox);
+        _actionItemBox.addActionListener(new ActionListener() {
             @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    actionItemChanged(_actionItemTypeBox.getSelectedIndex());
+            public void actionPerformed(ActionEvent e) {
+                int newActionItem = _actionItemBox.getSelectedIndex();
+                if (log.isDebugEnabled()) {
+                    log.debug("_actionItemBox Listener: new = {}, curr = {}, row = {}",  // NOI18N
+                            newActionItem, _curActionItem, _curNodeRow);
                 }
+                if (newActionItem != _curActionItem) {
+                    if (_curNodeRow >= 0) {
+                        _curAction = new DefaultConditionalAction();
+                        _actionList.set(_curNodeRow, _curAction);
+                    }
+                    _curActionItem = newActionItem;
+                }
+                actionItemChanged(newActionItem);
             }
         });
 
@@ -3257,7 +3331,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _gridPanel.add(row0Label, c);
         c.gridx = 1;
         c.anchor = java.awt.GridBagConstraints.WEST;
-        _gridPanel.add(_actionItemTypeBox, c);
+        _gridPanel.add(_actionItemBox, c);
     }
 
     /*
@@ -3467,7 +3541,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         if (log.isDebugEnabled()) {
             log.debug("initializeActionVariables: itemType= " + itemType + ", actionType= " + actionType);  // NOI18N
         }
-        _actionItemTypeBox.setSelectedIndex(itemType);
+        _actionItemBox.setSelectedIndex(itemType);
         _actionNameField.setText(_curAction.getDeviceName());
         switch (itemType) {
             case Conditional.TYPE_NONE:
@@ -3702,8 +3776,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _actionNameField.removeActionListener(actionSignalMastNameListener);
 
         if (_comboNameBox != null) {
-            for (ItemListener item : _comboNameBox.getItemListeners()) {
-                _comboNameBox.removeItemListener(item);
+            for (ActionListener item : _comboNameBox.getActionListeners()) {
+                _comboNameBox.removeActionListener(item);
             }
             _comboNameBox.removeFocusListener(detailFocusEvent);
         }
@@ -4089,7 +4163,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         }
         // Select the current entry
         _comboNameBox.setSelectedBeanByName(_curAction.getDeviceName());
-        _comboNameBox.addItemListener(new NameBoxListener(_actionNameField));
+        _comboNameBox.addActionListener(new NameBoxListener(_actionNameField));
         _comboNameBox.addFocusListener(detailFocusEvent);
     }
 
@@ -4116,7 +4190,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             return;
         }
         _newActionItem = false;
-        _curConditional.setAction(_actionList);
+        updateActionList();
 
         // Update the Action node
         _curNode.setText(_curAction.description(_triggerMode));
@@ -4250,7 +4324,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * @return true if all data checks out OK, otherwise false.
      */
     boolean validateAction() {
-        int itemType = _actionItemTypeBox.getSelectedIndex();
+        int itemType = _actionItemBox.getSelectedIndex();
         int actionType = Conditional.ACTION_NONE;
         int selection = _actionTypeBox.getSelectedIndex();
         if (selection == 0) {
@@ -4600,6 +4674,20 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         return (true);
     }
 
+    /**
+     * Update the conditional action list and refresh the local copy.
+     * The parent Logix is de-activated and re-activated.  This insures
+     * that listeners are properly handled, specifically the delayed sensor
+     * and turnout options.
+     * @since 4.11.2
+     */
+    void updateActionList() {
+        _curLogix.deActivateLogix();
+        _curConditional.setAction(_actionList);
+        _actionList = _curConditional.getCopyOfActions();
+        _curLogix.activateLogix();
+    }
+
     // ------------ Action detail listeners ------------
     /**
      * Listener for _actionTypeBox.
@@ -4610,17 +4698,15 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            int select1 = _actionItemTypeBox.getSelectedIndex();
+            int select1 = _actionItemBox.getSelectedIndex();
             int select2 = _actionTypeBox.getSelectedIndex() - 1;
             if (log.isDebugEnabled()) {
-                log.debug("ActionTypeListener: actionItemType= " + select1 + ", _itemType= " // NOI18N
-                        + _itemType + ", action= " + select2);
+                log.debug("ActionTypeListener: itemType = {}, local itemType = {}, actionType = {}",  // NOI18N
+                        select1, _itemType, select2);
             }
             if (select1 != _itemType) {
-                if (log.isDebugEnabled()) {
-                    log.debug("ActionTypeListener actionItem selection (" + select1 // NOI18N
-                            + ") != expected actionItem (" + _itemType + ")");  // NOI18N
-                }
+                log.error("ActionTypeListener actionItem selection ({}) != expected actionItem ({})",  // NOI18N
+                        select1, _itemType);
             }
             if (_curAction != null) {
                 if (select1 > 0 && _itemType == select1) {

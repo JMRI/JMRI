@@ -103,6 +103,9 @@ public class ThreadingUtil {
      *     mine.setVisible();
      * }); }
      *
+     * If an InterruptedException is encountered, it'll be deferred to the 
+     * next blocking call via Thread.currentThread().interrupt()
+     * 
      * @param ta What to run, usually as a lambda expression
      */
     static public void runOnGUI(@Nonnull ThreadAction ta) {
@@ -114,8 +117,8 @@ public class ThreadingUtil {
             try {
                 SwingUtilities.invokeAndWait(ta);
             } catch (InterruptedException e) {
-                log.warn("While on GUI thread", e);
-                // we just continue from InterruptedException for now
+                log.debug("Interrupted while running on GUI thread");
+                Thread.currentThread().interrupt();
             } catch (InvocationTargetException e) {
                 log.error("Error while on GUI thread", e.getCause());
                 // should have been handled inside the ThreadAction

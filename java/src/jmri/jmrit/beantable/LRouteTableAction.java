@@ -200,8 +200,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 case EDITCOL:
                     return Bundle.getMessage("ButtonEdit");
                 case ENABLECOL:
-                    return ((Logix) getBySystemName((String) getValueAt(row,
-                            SYSNAMECOL))).getEnabled();
+                    return ((Logix) getValueAt(row, SYSNAMECOL)).getEnabled();
                 default:
                     return super.getValueAt(row, col);
             }
@@ -212,13 +211,12 @@ public class LRouteTableAction extends AbstractTableAction {
             switch (col) {
                 case EDITCOL:
                     // set up to edit
-                    String sName = (String) getValueAt(row, SYSNAMECOL);
+                    String sName = ((Logix) getValueAt(row, SYSNAMECOL)).getSystemName();
                     editPressed(sName);
                     break;
                 case ENABLECOL:
                     // alternate
-                    Logix x = (Logix) getBySystemName((String) getValueAt(row,
-                            SYSNAMECOL));
+                    Logix x = (Logix) getValueAt(row, SYSNAMECOL);
                     boolean v = x.getEnabled();
                     x.setEnabled(!v);
                     break;
@@ -2468,14 +2466,16 @@ public class LRouteTableAction extends AbstractTableAction {
     /**
      * Sorts RouteElement
      */
-    public static class RouteElementComparator extends SystemNameComparator {
+    public static class RouteElementComparator implements java.util.Comparator<RouteElement> {
 
         RouteElementComparator() {
         }
 
-        @Override
-        public int compare(Object o1, Object o2) {
-            return super.compare(((RouteElement) o1).getSysName(), ((RouteElement) o2).getSysName());
+        private SystemNameComparator sc = new SystemNameComparator();
+        
+        @Override 
+        public int compare(RouteElement o1, RouteElement o2) {
+            return sc.compare(o1.getSysName(), o2.getSysName());
         }
     }
 
@@ -2483,7 +2483,7 @@ public class LRouteTableAction extends AbstractTableAction {
      * Base class for all the output (ConditionalAction) and input
      * (ConditionalVariable) elements
      */
-    class RouteElement {
+    static class RouteElement {
 
         String _sysName;
         String _userName;
