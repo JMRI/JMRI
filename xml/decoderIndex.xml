@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.9.7ish+jake+20171205T1330Z+R9f0d748f65 on Tue Dec 05 05:30:40 PST 2017-->
-  <decoderIndex version="872">
+  <!--Written by JMRI version 4.11.2ish+heap+20180102T1058Z+R08624ad on Tue Jan 02 21:58:31 AEDT 2018-->
+  <decoderIndex version="876">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1655,67 +1655,76 @@
           <size length="1.158" width="0.386" height="0.115" units="inches" />
         </model>
         <model model="DN166I0" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale SD40T-2/SD45T-2 Tunnel Motor">
-          <output name="1" label="LED" connection="LED" />
-          <output name="2" label="LED" connection="LED" />
-          <output name="3" label="Pad" connection="solder" />
-          <output name="4" label="Pad" connection="solder" />
-          <output name="5" label="Pad" connection="solder" />
-          <output name="6" label="Pad" connection="solder" />
+          <output name="1" label="LED|Front" connection="LED" />
+          <output name="2" label="LED|Rear" connection="LED" />
+          <output name="3" label="Pad|F1" connection="solder" />
+          <output name="4" label="Pad|F2" connection="solder" />
+          <output name="5" label="Pad|F3" connection="solder" />
+          <output name="6" label="Pad|F4" connection="solder" />
           <size length="3.5" width=".367" height="0.135" units="inches" />
         </model>
         <model model="DN166I1A" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FT-A Units">
-          <output name="1" label="Pad/LED" connection="solder" />
-          <output name="2" label="Pad/LED" connection="solder" />
-          <output name="3" label="Pad" connection="solder" />
-          <output name="4" label="Pad" connection="solder" />
-          <output name="5" label="Pad" connection="solder" />
-          <output name="6" label="Pad" connection="solder" />
+          <output name="1" label="Pad|F0F" connection="solder" />
+          <output name="2" label="Pad|F0R" connection="solder" />
+          <output name="3" label="Pad|F1" connection="solder" />
+          <output name="4" label="Pad|F2" connection="solder" />
+          <output name="5" label="Pad|F3" connection="solder" />
+          <output name="6" label="Pad|F4" connection="solder" />
           <size length="2.165" width="0.472" height="0.098" units="inches" />
         </model>
         <model model="DN166I1B" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FT-B Units">
-          <output name="1" label="Pad/LED" connection="solder" />
-          <output name="2" label="Pad/LED" connection="solder" />
-          <output name="3" label="Pad" connection="solder" />
-          <output name="4" label="Pad" connection="solder" />
-          <output name="5" label="Pad" connection="solder" />
-          <output name="6" label="Pad" connection="solder" />
+          <output name="1" label="Pad|F0F" connection="solder" />
+          <output name="2" label="Pad|F0R" connection="solder" />
+          <output name="3" label="Pad|F1" connection="solder" />
+          <output name="4" label="Pad|F2" connection="solder" />
+          <output name="5" label="Pad|F3" connection="solder" />
+          <output name="6" label="Pad|F4" connection="solder" />
           <size length="2.165" width="0.472" height="0.098" units="inches" />
         </model>
         <model model="DN166I1C" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale F3 &amp; F7 Units">
-          <output name="1" label="Pad/LED" connection="solder" />
-          <output name="2" label="Pad/LED" connection="solder" />
-          <output name="3" label="Pad" connection="solder" />
-          <output name="4" label="Pad" connection="solder" />
-          <output name="5" label="Pad" connection="solder" />
-          <output name="6" label="Pad" connection="solder" />
+          <output name="1" label="Pad|F0F" connection="solder" />
+          <output name="2" label="Pad|F0R" connection="solder" />
+          <output name="3" label="Pad|F1" connection="solder" />
+          <output name="4" label="Pad|F2" connection="solder" />
+          <output name="5" label="Pad|F3" connection="solder" />
+          <output name="6" label="Pad|F4" connection="solder" />
           <size length="2.165" width="0.472" height="0.098" units="inches" />
         </model>
         <model model="DN166I1D" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for New InterMountain N-Scale F7A/B, FP7 &amp; FP9 Units">
-          <output name="1" label="Pad/LED" connection="solder" />
-          <output name="2" label="Pad/LED" connection="solder" />
-          <output name="3" label="Pad" connection="solder" />
-          <output name="4" label="Pad" connection="solder" />
-          <output name="5" label="Pad" connection="solder" />
-          <output name="6" label="Pad" connection="solder" />
+          <output name="1" label="Pad|F0F" connection="solder" />
+          <output name="2" label="Pad|F0R" connection="solder" />
+          <output name="3" label="Pad|F1" connection="solder" />
+          <output name="4" label="Pad|F2" connection="solder" />
+          <output name="5" label="Pad|F3" connection="solder" />
+          <output name="6" label="Pad|F4" connection="solder" />
           <size length="2.165" width="0.472" height="0.098" units="inches" />
         </model>
         <model model="DN166I2" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FP7 &amp; FP9 Units">
-          <output name="1" label="Pad/LED" connection="solder" />
-          <output name="2" label="Pad/LED" connection="solder" />
-          <output name="3" label="Pad" connection="solder" />
-          <output name="4" label="Pad" connection="solder" />
-          <output name="5" label="Pad" connection="solder" />
-          <output name="6" label="Pad" connection="solder" />
+          <output name="1" label="Pad|F0F" connection="solder" />
+          <output name="2" label="Pad|F0R" connection="solder" />
+          <output name="3" label="Pad|F1" connection="solder" />
+          <output name="4" label="Pad|F2" connection="solder" />
+          <output name="5" label="Pad|F3" connection="solder" />
+          <output name="6" label="Pad|F4" connection="solder" />
           <size length="2.165" width="0.472" height="0.098" units="inches" />
         </model>
         <model model="DN166I2B" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FP7 released 2014">
-          <output name="1" label="Pad/LED" connection="solder" />
-          <output name="2" label="Pad/LED" connection="solder" />
-          <output name="3" label="Pad" connection="solder" />
-          <output name="4" label="Pad" connection="solder" />
-          <output name="5" label="Pad" connection="solder" />
-          <output name="6" label="Pad" connection="solder" />
+          <output name="1" label="Pad|F0F" connection="solder" />
+          <output name="2" label="Pad|F0R" connection="solder" />
+          <output name="3" label="Pad|F1" connection="solder" />
+          <output name="4" label="Pad|F2" connection="solder" />
+          <output name="5" label="Pad|F3" connection="solder" />
+          <output name="6" label="Pad|F4" connection="solder" />
           <size length="2.165" width="0.472" height="0.098" units="inches" />
+        </model>
+        <model model="DN166I3" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N Scale SD40-2 released 2017">
+          <output name="1" label="LED|Front" connection="LED" />
+          <output name="2" label="LED|Rear" connection="LED" />
+          <output name="3" label="Pad|F1" connection="solder" />
+          <output name="4" label="Pad|F2" connection="solder" />
+          <output name="5" label="Pad|F3" connection="solder" />
+          <output name="6" label="Pad|F4" connection="solder" />
+          <size length="2.603" width="0.329" height="0.065" units="inches" />
         </model>
         <model model="DN166PS" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="NMRAmedium" comment="N/HO-Scale, with Medium Plug">
           <output name="1" label="White" connection="plug" />
@@ -2402,6 +2411,21 @@
         <model model="DZ121" numOuts="2" numFns="0" />
         <model model="DN122K2" numOuts="2" numFns="0" />
       </family>
+      <family name="Command Stations" mfg="Digitrax" file="Digitrax_DB150.xml">
+        <model model="DB150" />
+      </family>
+      <family name="Command Stations" mfg="Digitrax" file="Digitrax_DCS240_DCS210.xml">
+        <model model="DCS210" />
+        <model model="DCS240" />
+      </family>
+      <family name="Command Stations" mfg="Digitrax" file="Digitrax_DCS5x.xml">
+        <model model="DCS50" />
+        <model model="DCS51" />
+      </family>
+      <family name="Command Stations" mfg="Digitrax" file="Digitrax_DCSx00.xml">
+        <model model="DCS100" />
+        <model model="DCS200" />
+      </family>
       <family name="DS64" mfg="Digitrax" file="Digitrax_DS64.xml">
         <model model="DS64" />
       </family>
@@ -2510,27 +2534,34 @@
         <model model="SD10A (firmware 1.06+)" lowVersionID="026" highVersionID="026" numOuts="6" numFns="16" productID="SD10A_1.06" comment="SD10A-0 / SD10A-1 / SD10A-3 with update from March 2016" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
-            <label xml:lang="de">LR</label>
+            <label xml:lang="de">Llum porsterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
             <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+            <label xml:lang="ca">Aux 3|(o ZCLK SUSI </label>
           </output>
           <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
             <label xml:lang="de">AUX 4|(or SUSI ZDAT)</label>
+            <label xml:lang="ca">AUX 4|(o ZDAT SUSI</label>
           </output>
           <output name="7" label="Dimmed Lights|(or AUX 5)">
             <label xml:lang="de">Abblend-|licht (o. AUX 5)</label>
+            <label xml:lang="ca">Intensitat llums|(o AUX5)</label>
           </output>
           <output name="8" label="Shunting Speed|(or AUX 6)">
             <label xml:lang="de">Rangiergang|(o. AUX 6)</label>
+            <label xml:lang="ca">Velocitat de maniobres|(o F6)</label>
           </output>
           <size length="21.4" width="9.1" height="3.4" units="mm" />
           <protocols>
@@ -2542,33 +2573,43 @@
         <model model="SD16A (firmware 1.06+)" lowVersionID="026" highVersionID="026" numOuts="8" numFns="16" productID="SD16A_1.06" comment="SD16A-4 with update from March 2016" maxInputVolts="30V" maxMotorCurrent="1,5A" maxTotalCurrent="1,5A" connector="PluX16">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="ca">Llum Posterior</label>
             <label xml:lang="de">LR</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="1.0A">
             <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
           </output>
           <output name="6" label="AUX|4" maxcurrent="1.0A">
             <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
           </output>
           <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 5</label>
+            <label xml:lang="ca">AUX 6</label>
           </output>
           <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 6</label>
+            <label xml:lang="ca">AUX 6</label>
           </output>
           <output name="9" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat llums</label>
           </output>
           <output name="10" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">velocitat de maniobres</label>
           </output>
           <size length="21.5" width="10.5" height="3.0" units="mm" />
           <protocols>
@@ -2612,33 +2653,43 @@
         <model model="SD21A (firmware 1.06+)" lowVersionID="026" highVersionID="026" numOuts="8" numFns="16" productID="SD21A_1.06" comment="SD21A-4 with update from March 2016" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="1.0A">
             <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
           </output>
           <output name="6" label="AUX|4" maxcurrent="1.0A">
             <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
           </output>
           <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 5</label>
+            <label xml:lang="ca">AUX 5</label>
           </output>
           <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 6</label>
+            <label xml:lang="ca">AUX 6</label>
           </output>
           <output name="9" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de Llum</label>
           </output>
           <output name="10" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Velocitat de maniobres</label>
           </output>
           <size length="30.2" width="15.8" height="5.2" units="mm" />
           <protocols>
@@ -2650,33 +2701,43 @@
         <model model="SD22A (firmware 1.06+)" lowVersionID="026" highVersionID="026" numOuts="8" numFns="16" productID="SD22A_1.06" comment="SD22A-4 with update from March 2016" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="PluX22">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="1.0A">
             <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
           </output>
           <output name="6" label="AUX|4" maxcurrent="1.0A">
             <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
           </output>
           <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 5</label>
+            <label xml:lang="ca">AUX 5</label>
           </output>
           <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 6</label>
+            <label xml:lang="ca">AUX 6</label>
           </output>
           <output name="9" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de llums</label>
           </output>
           <output name="10" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Velocitat de Maniobres</label>
           </output>
           <size length="30.2" width="15.8" height="5.2" units="mm" />
           <protocols>
@@ -2688,27 +2749,35 @@
         <model model="SD10A (firmware 1.07+)" lowVersionID="056" highVersionID="056" numOuts="6" numFns="16" productID="SD10A_1.07" comment="SD10A-0 / SD10A-1 / SD10A-3 with update from June 2016" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">Aux 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">Aux 2</label>
           </output>
           <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
             <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+            <label xml:lang="ca">AUX 3|o SUSI ZCLK</label>
           </output>
           <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
             <label xml:lang="de">AUX 4|(or SUSI ZDAT)</label>
+            <label xml:lang="ca">AUX 4| o SUSI ZDAT</label>
           </output>
           <output name="7" label="Dimmed Lights|(or AUX 5)">
             <label xml:lang="de">Abblend-|licht (o. AUX 5)</label>
+            <label xml:lang="ca">Intensitat llums o AUX 5</label>
           </output>
           <output name="8" label="Shunting Speed|(or AUX 6)">
             <label xml:lang="de">Rangiergang|(o. AUX 6)</label>
+            <label xml:lang="ca">Velocitat de Maniobres|o AUX 6</label>
           </output>
           <size length="21.4" width="9.1" height="3.4" units="mm" />
           <protocols>
@@ -2720,18 +2789,23 @@
         <model model="SD16A (firmware 1.07+)" lowVersionID="056" highVersionID="056" numOuts="8" numFns="16" productID="SD16A_1.07" comment="SD16A-4 with update from June 2016" maxInputVolts="30V" maxMotorCurrent="1,5A" maxTotalCurrent="1,5A" connector="PluX16">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="1.0A">
             <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
           </output>
           <output name="6" label="AUX|4" maxcurrent="1.0A">
             <label xml:lang="de">AUX 4</label>
@@ -4104,29 +4178,37 @@
         <model model="DH05C v3.06.26 (firmware 3.06+)" lowVersionID="26" highVersionID="26" numOuts="4" numFns="16" productID="DH05C_2016.03" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from March 2016" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
             <!-- New from fw3.03  -->
             <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+            <label xml:lang="ca">AUX 3|o SUSI ZCLK</label>
           </output>
           <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
             <!-- New from fw3.03  -->
             <label xml:lang="de">AUX 4|(o. SUSI ZDAT)</label>
+            <label xml:lang="ca">AUX 4|(o. SUSI ZDAT)</label>
           </output>
           <output name="7" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de llums</label>
           </output>
           <output name="8" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
           </output>
           <size length="13.2" width="6.8" height="1.4" units="mm" />
           <protocols>
@@ -4138,29 +4220,37 @@
         <model model="DH10C v3.06.26 (firmware 3.06+)" lowVersionID="26" highVersionID="26" numOuts="4" numFns="16" productID="DH10C_2016.03" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from March 2016" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
             <!-- New from fw3.03  -->
             <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+            <label xml:lang="ca">AUX 3| (o SUSI ZCLK</label>
           </output>
           <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
             <!-- New from fw3.03  -->
             <label xml:lang="de">AUX 4|(o. SUSI ZDAT)</label>
+            <label xml:lang="ca">AUX 4 |(o SUSI ZDAT</label>
           </output>
           <output name="7" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat llums</label>
           </output>
           <output name="8" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
           </output>
           <size length="14.2" width="9.3" height="1.5" units="mm" />
           <protocols>
@@ -4172,27 +4262,35 @@
         <model model="DH12A v3.06.26 (firmware 3.06+)" lowVersionID="26" highVersionID="26" numOuts="6" numFns="16" productID="DH12A_2016.03" comment="DH12A with update from March 2016" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
           </output>
           <output name="6" label="AUX|4" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
           </output>
           <output name="7" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat llum</label>
           </output>
           <output name="8" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
           </output>
           <size length="14.5" width="8" height="2.8" units="mm" />
           <protocols>
@@ -4204,27 +4302,35 @@
         <model model="DH16A v3.06.26 (firmware 3.06+)" lowVersionID="26" highVersionID="26" numOuts="6" numFns="16" productID="DH16A_2016.03" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from March 2016" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum poserior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="1.0A">
             <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
           </output>
           <output name="6" label="AUX|4" maxcurrent="1.0A">
             <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
           </output>
           <output name="7" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Internsitat de llums</label>
           </output>
           <output name="8" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">marxa de maniobres</label>
           </output>
           <size length="16.7" width="10.9" height="2.8" units="mm" />
           <protocols>
@@ -4236,33 +4342,43 @@
         <model model="DH18A v3.06.26 (firmware 3.06+)" lowVersionID="26" highVersionID="26" numOuts="8" numFns="16" productID="DH18A_2016.03" comment="DH18A with update from March 2016" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="ca">Llum Posterior</label>
             <label xml:lang="de">LR</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
           </output>
           <output name="6" label="AUX|4" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
           </output>
           <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 5</label>
+            <label xml:lang="ca">AUX 5</label>
           </output>
           <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 6</label>
+            <label xml:lang="ca">AUX 6</label>
           </output>
           <output name="9" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de llums</label>
           </output>
           <output name="10" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
           </output>
           <size length="13.5" width="9.0" height="2.8" units="mm" />
           <protocols>
@@ -4274,33 +4390,43 @@
         <model model="DH21A v3.06.26 (firmware 3.06+)" lowVersionID="26" highVersionID="26" numOuts="8" numFns="16" productID="DH21A_2016.03" comment="DH21A with update from March 2016" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="1.0A">
             <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
           </output>
           <output name="6" label="AUX|4" maxcurrent="1.0A">
             <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
           </output>
           <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 5</label>
+            <label xml:lang="ca">AUX 5</label>
           </output>
           <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 6</label>
+            <label xml:lang="ca">AUX 6</label>
           </output>
           <output name="9" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de llums</label>
           </output>
           <output name="10" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
           </output>
           <size length="20.7" width="15.8" height="5.2" units="mm" />
           <protocols>
@@ -4312,27 +4438,35 @@
         <model model="DH22A v3.06.26 (firmware 3.06+)" lowVersionID="26" highVersionID="26" numOuts="6" numFns="16" productID="DH22A_2016.03" comment="DH22A with update from March 2016" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="PluX22">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="1.0A">
             <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
           </output>
           <output name="6" label="AUX|4" maxcurrent="1.0A">
             <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
           </output>
           <output name="7" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de Llums</label>
           </output>
           <output name="8" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
           </output>
           <size length="20.7" width="15.8" height="5.2" units="mm" />
           <protocols>
@@ -4344,21 +4478,27 @@
         <model model="PD12A v3.06.26 (firmware 3.06+)" lowVersionID="26" highVersionID="26" numOuts="4" numFns="16" productID="PD12A_2016.03" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from March 2016" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="PluX12">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="7" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat llums</label>
           </output>
           <output name="8" label="Shunting|Speed">
             <label xml:lang="de">Rangier-|gang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
           </output>
           <size length="24.2" width="11.0" height="2.4" units="mm" />
           <protocols>
@@ -4368,29 +4508,37 @@
         <model model="DH05C v3.07.66 (firmware 3.07+)" lowVersionID="66" highVersionID="66" numOuts="4" numFns="16" productID="DH05C_2016.06" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from June 2016" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
             <!-- New from fw3.03  -->
             <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+            <label xml:lang="ca">AUX 3| SUSI ZCLK </label>
           </output>
           <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
             <!-- New from fw3.03  -->
             <label xml:lang="de">AUX 4|(o. SUSI ZDAT)</label>
+            <label xml:lang="ca">AUX 4| SUSI ZDAT</label>
           </output>
           <output name="7" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de llums</label>
           </output>
           <output name="8" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
           </output>
           <size length="13.2" width="6.8" height="1.4" units="mm" />
           <protocols>
@@ -4402,29 +4550,37 @@
         <model model="DH10C v3.07.66 (firmware 3.07+)" lowVersionID="66" highVersionID="66" numOuts="4" numFns="16" productID="DH10C_2016.06" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from June 2016" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
             <!-- New from fw3.03  -->
             <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+            <label xml:lang="ca">AUX 3| SUSI XCLK</label>
           </output>
           <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
             <!-- New from fw3.03  -->
             <label xml:lang="de">AUX 4|(o. SUSI ZDAT)</label>
+            <label xml:lang="ca">AUX 4| SUSI ZDAT</label>
           </output>
           <output name="7" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat Llums</label>
           </output>
           <output name="8" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa Maniobres</label>
           </output>
           <size length="14.2" width="9.3" height="1.5" units="mm" />
           <protocols>
@@ -4436,27 +4592,35 @@
         <model model="DH12A v3.07.66 (firmware 3.07+)" lowVersionID="66" highVersionID="66" numOuts="6" numFns="16" productID="DH12A_2016.06" comment="DH12A with update from June 2016" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 12</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
           </output>
           <output name="6" label="AUX|4" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
           </output>
           <output name="7" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat Llums</label>
           </output>
           <output name="8" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa maniobres</label>
           </output>
           <size length="14.5" width="8" height="2.8" units="mm" />
           <protocols>
@@ -4468,27 +4632,35 @@
         <model model="DH16A v3.07.66 (firmware 3.07+)" lowVersionID="66" highVersionID="66" numOuts="6" numFns="16" productID="DH16A_2016.06" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from June 2016" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="1.0A">
             <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
           </output>
           <output name="6" label="AUX|4" maxcurrent="1.0A">
             <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
           </output>
           <output name="7" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat Llums</label>
           </output>
           <output name="8" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa Maniobres</label>
           </output>
           <size length="16.7" width="10.9" height="2.8" units="mm" />
           <protocols>
@@ -4500,33 +4672,43 @@
         <model model="DH18A v3.07.66 (firmware 3.07+)" lowVersionID="66" highVersionID="66" numOuts="8" numFns="16" productID="DH18A_2016.06" comment="DH18A with update from June 2016" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
           </output>
           <output name="6" label="AUX|4" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
           </output>
           <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 5</label>
+            <label xml:lang="ca">AUX 5</label>
           </output>
           <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 6</label>
+            <label xml:lang="ca">AUX 6</label>
           </output>
           <output name="9" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de llum</label>
           </output>
           <output name="10" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
           </output>
           <size length="13.5" width="9.0" height="2.8" units="mm" />
           <protocols>
@@ -4538,33 +4720,43 @@
         <model model="DH21A v3.07.66 (firmware 3.07+)" lowVersionID="66" highVersionID="66" numOuts="8" numFns="16" productID="DH21A_2016.06" comment="DH21A with update from June 2016" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="1.0A">
             <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
           </output>
           <output name="6" label="AUX|4" maxcurrent="1.0A">
             <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
           </output>
           <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 5</label>
+            <label xml:lang="ca">AUX 5</label>
           </output>
           <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 6</label>
+            <label xml:lang="ca">AUX 6</label>
           </output>
           <output name="9" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de llums</label>
           </output>
           <output name="10" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
           </output>
           <size length="20.7" width="15.8" height="5.2" units="mm" />
           <protocols>
@@ -4576,27 +4768,35 @@
         <model model="DH22A v3.07.66 (firmware 3.07+)" lowVersionID="66" highVersionID="66" numOuts="6" numFns="16" productID="DH22A_2016.06" comment="DH22A with update from June 2016" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="PluX22">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="1.0A">
             <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
           </output>
           <output name="6" label="AUX|4" maxcurrent="1.0A">
             <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
           </output>
           <output name="7" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat Llums</label>
           </output>
           <output name="8" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
           </output>
           <size length="20.7" width="15.8" height="5.2" units="mm" />
           <protocols>
@@ -4608,21 +4808,27 @@
         <model model="PD12A v3.07.66 (firmware 3.07+)" lowVersionID="66" highVersionID="66" numOuts="4" numFns="16" productID="PD12A_2016.06" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from June 2016" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="PluX12">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Poserior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="7" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat Llums</label>
           </output>
           <output name="8" label="Shunting|Speed">
             <label xml:lang="de">Rangier-|gang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
           </output>
           <size length="24.2" width="11.0" height="2.4" units="mm" />
           <protocols>
@@ -4634,29 +4840,37 @@
         <model model="FH05B v3.06.26 (firmware 3.06+)" lowVersionID="26" highVersionID="26" numOuts="6" numFns="16" productID="FH05B_2016.03" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from March 2016" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
             <!-- New from fw3.03  -->
             <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+            <label xml:lang="ca">AUX 3|o SUSI ZCLK</label>
           </output>
           <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
             <!-- New from fw3.03  -->
             <label xml:lang="de">AUX 4|(o. SUSI ZDAT)</label>
+            <label xml:lang="ca">AUX 4|(o SUSI ZDAT)</label>
           </output>
           <output name="7" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de llums</label>
           </output>
           <output name="8" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
           </output>
           <size length="13.7" width="7.8" height="1.5" units="mm" />
           <protocols>
@@ -4667,35 +4881,45 @@
         <model model="FH22A v3.06.26 (firmware 3.06+)" lowVersionID="26" highVersionID="26" numOuts="8" numFns="16" productID="FH22A_2016.03" comment="FH22A with update from March 2016" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="1A">
             <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
           </output>
           <output name="6" label="AUX|4" maxcurrent="1A">
             <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
           </output>
           <output name="7" label="AUX 5|(or SUSI ZCLK)" maxcurrent="20mA">
             <!-- New from fw3.03  -->
             <label xml:lang="de">AUX 5|(o. SUSI ZCLK)</label>
+            <label xml:lang="ca">AUX 5| SUSI ZCLK</label>
           </output>
           <output name="8" label="AUX 6|(or SUSI ZDAT)" maxcurrent="20mA">
             <!-- New from fw3.03  -->
             <label xml:lang="de">AUX 6|(o. SUSI ZDAT)</label>
+            <label xml:lang="ca">AUX 6| SUSI ZDAT</label>
           </output>
           <output name="9" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat Llums</label>
           </output>
           <output name="10" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de Maniobres</label>
           </output>
           <size length="16.1" width="15.8" height="3.3" units="mm" />
           <protocols>
@@ -4706,29 +4930,37 @@
         <model model="FH05B v3.07.66 (firmware 3.07+)" lowVersionID="66" highVersionID="66" numOuts="6" numFns="16" productID="FH05B_2016.06" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from June 2016" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
             <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
             <!-- New from fw3.03  -->
             <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+            <label xml:lang="ca">AUX 3| SUSI ZCLK</label>
           </output>
           <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
             <!-- New from fw3.03  -->
             <label xml:lang="de">AUX 4|(o. SUSI ZDAT)</label>
+            <label xml:lang="ca">AUX 4\SUSI ZDAT</label>
           </output>
           <output name="7" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de llums</label>
           </output>
           <output name="8" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
           </output>
           <size length="13.7" width="7.8" height="1.5" units="mm" />
           <protocols>
@@ -4739,35 +4971,44 @@
         <model model="FH22A v3.07.66 (firmware 3.07+)" lowVersionID="66" highVersionID="66" numOuts="8" numFns="16" productID="FH22A_2016.06" comment="FH22A with update from June 2016" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="150mA">
-            <label xml:lang="de">LR</label>
+            <label xml:lang="de">Llum Posterior</label>
           </output>
           <output name="3" label="AUX|1" maxcurrent="300mA">
             <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="1A">
             <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
           </output>
           <output name="6" label="AUX|4" maxcurrent="1A">
             <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
           </output>
           <output name="7" label="AUX 5|(or SUSI ZCLK)" maxcurrent="20mA">
             <!-- New from fw3.03  -->
             <label xml:lang="de">AUX 5|(o. SUSI ZCLK)</label>
+            <label xml:lang="ca">AUX 5| SUSI ZCLK</label>
           </output>
           <output name="8" label="AUX 6|(or SUSI ZDAT)" maxcurrent="20mA">
             <!-- New from fw3.03  -->
             <label xml:lang="de">AUX 6|(o. SUSI ZDAT)</label>
+            <label xml:lang="ca">AUX 6| SUSI ZDAT</label>
           </output>
           <output name="9" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat Llums</label>
           </output>
           <output name="10" label="Shunting|Speed">
             <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa Maniobres</label>
           </output>
           <size length="16.1" width="15.8" height="3.3" units="mm" />
           <protocols>
@@ -5032,10 +5273,12 @@
           <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <size length="13.5" width="9" height="3.0" units="mm" />
         </model>
@@ -5043,10 +5286,12 @@
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5061,10 +5306,12 @@
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="ca">Llum Anterior</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5074,10 +5321,12 @@
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="ca">Llum anterior</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5091,10 +5340,12 @@
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="ca">Llum anterior</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5110,10 +5361,12 @@
           <output name="1" label="Front light" maxcurrent="600 mA" connection="other">
             <label xml:lang="it">Luci Front</label>
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="600 mA" connection="other">
             <label xml:lang="it">Luci Retro</label>
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="ca">Llum anterior</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="600 mA" connection="other" />
           <output name="4" label="   AUX2    " maxcurrent="600 mA" connection="other" />
@@ -5131,10 +5384,12 @@
           <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="ca">Llum anterior</label>
           </output>
           <size length="13.5" width="9" height="3.0" units="mm" />
           <protocols>
@@ -5147,10 +5402,12 @@
           <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <size length="13.5" width="9" height="3.0" units="mm" />
         </model>
@@ -5158,10 +5415,12 @@
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5176,10 +5435,12 @@
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="ca">Llum Frontal</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5189,10 +5450,12 @@
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5206,10 +5469,12 @@
           <output name="1" label="Front light" maxcurrent="600 mA" connection="other">
             <label xml:lang="it">Luci Front</label>
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="600 mA" connection="other">
             <label xml:lang="it">Luci Retro</label>
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="600 mA" connection="other" />
           <output name="4" label="   AUX2    " maxcurrent="600 mA" connection="other" />
@@ -5227,10 +5492,12 @@
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="ca">Llum frontal</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="ca">Llum posterior</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5500,10 +5767,8 @@
           <output name="10" label="|Dimmer" />
           <output name="11" label="Dynamic|Brake" />
           <output name="12" label="Virtual|Sound" />
-          <output name="13" label="|" />
-          <output name="14" label="|" />
-          <output name="15" label="|" />
-          <output name="16" label="|" />
+          <output name="13" label="AUX|5" />
+          <output name="14" label="AUX|6" />
           <size length="25.5" width="15.5" height="4.5" units="mm" />
           <!-- connector="NEM651, 21MTC, Plux12, wires" -->
         </model>
@@ -5512,36 +5777,28 @@
           <output name="2" label="Rear|Light" maxcurrent="150 mA" />
           <output name="3" label="AUX|1" maxcurrent="150 mA" />
           <output name="4" label="AUX|2" maxcurrent="150 mA" />
+          <output name="5" label="|" maxcurrent="logic" />
+          <output name="6" label="|" maxcurrent="logic" />
           <output name="7" label="Shunt|Mode" />
           <output name="8" label="Acceleration|Deceleration" />
           <output name="9" label="Grade|Crossing" />
           <output name="10" label="|Dimmer" />
           <output name="11" label="Dynamic|Brake" />
           <output name="12" label="Virtual|Sound" />
-          <output name="13" label="|" />
-          <output name="14" label="|" />
-          <output name="15" label="|" />
-          <output name="16" label="|" />
-          <size length="25.5" width="15.5" height="4.5" units="mm" />
-          <!-- connector="NEM651, 21MTC, Plux12, wires" -->
         </model>
         <model model="LokPilot Fx Nano V1.0" numOuts="4" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.0 A" formFactor="N" productID="16777352">
           <output name="1" label="Front|Light" maxcurrent="150 mA" />
           <output name="2" label="Rear|Light" maxcurrent="150 mA" />
           <output name="3" label="AUX|1" maxcurrent="150 mA" />
           <output name="4" label="AUX|2" maxcurrent="150 mA" />
+          <output name="5" label="AUX|3" maxcurrent="logic" />
+          <output name="6" label="AUX|4" maxcurrent="logic" />
           <output name="7" label="Shunt|Mode" />
           <output name="8" label="Acceleration|Deceleration" />
           <output name="9" label="Grade|Crossing" />
           <output name="10" label="|Dimmer" />
           <output name="11" label="Dynamic|Brake" />
           <output name="12" label="Virtual|Sound" />
-          <output name="13" label="|" />
-          <output name="14" label="|" />
-          <output name="15" label="|" />
-          <output name="16" label="|" />
-          <size length="25.5" width="15.5" height="4.5" units="mm" />
-          <!-- connector="NEM651, 21MTC, Plux12, wires" -->
         </model>
         <model show="no" model="LokPilot Standard" replacementModel="LokPilot Standard V1.0" replacementFamily="ESU LokPilot Standard V1.0" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="LokPilot Standard V1.0">
           <output name="1" label="Front|Light" maxcurrent="250 mA" />
@@ -5556,12 +5813,44 @@
           <output name="10" label="|Dimmer" />
           <output name="11" label="Dynamic|Brake" />
           <output name="12" label="Virtual|Sound" />
-          <output name="13" label="|" />
-          <output name="14" label="|" />
-          <output name="15" label="|" />
-          <output name="16" label="|" />
           <size length="25.5" width="15.5" height="4.5" units="mm" />
           <!-- connector="NEM651, 21MTC, Plux12, wires" -->
+        </model>
+        <model model="MBW Silberling" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777360">
+          <output name="1" label="|White" />
+          <output name="2" label="Front|Red" />
+          <output name="3" label="Rear|Red" />
+          <output name="4" label="Interior|Light 1" />
+          <output name="5" label="Interior|Light 2" />
+          <output name="6" label="|Entrance" />
+          <output name="7" label="Rear|Coupler" />
+          <output name="8" label="Front|Coupler" />
+        </model>
+        <model model="Bachmann MK2F" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777362">
+          <output name="1" label="Front|White" />
+          <output name="2" label="Rear|White" />
+          <output name="3" label="Red|Light" />
+          <output name="4" label="Cab|Light" />
+          <output name="5" label="Interior|Front" />
+          <output name="6" label="Interior|Rear" />
+          <output name="7" label="Door Interlock|Light Left" />
+          <output name="8" label="Door Interlock|Light Right" />
+        </model>
+        <model model="Walthers ML8" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777367">
+          <output name="1" label="Front|Light" maxcurrent="250 mA" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="Shunt|Mode" />
+          <output name="8" label="Acceleration|Deceleration" />
+          <output name="9" label="Grade|Crossing" />
+          <output name="10" label="|Dimmer" />
+          <output name="11" label="Dynamic|Brake" />
+          <output name="12" label="Virtual|Sound" />
+          <output name="13" label="AUX|5" />
+          <output name="14" label="AUX|6" />
         </model>
       </family>
       <family name="ESU LokSound2 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="21" highVersionID="22" file="ESU_LokSound2_21.xml">
@@ -6398,22 +6687,70 @@
           </protocols>
         </model>
         <functionlabels>
-          <functionlabel num="0" lockable="true">Light</functionlabel>
-          <functionlabel num="1" lockable="true">Bell</functionlabel>
-          <functionlabel num="2" lockable="false">Horn</functionlabel>
-          <functionlabel num="3" lockable="false">Coupler</functionlabel>
-          <functionlabel num="4" lockable="true">Blower</functionlabel>
-          <functionlabel num="5" lockable="false">Rev Up</functionlabel>
-          <functionlabel num="6" lockable="false">Rev Dn</functionlabel>
-          <functionlabel num="7" lockable="true">Mars</functionlabel>
-          <functionlabel num="8" lockable="true">Mute</functionlabel>
-          <functionlabel num="9" lockable="true">Squeal</functionlabel>
-          <functionlabel num="10" lockable="false">CPC</functionlabel>
-          <functionlabel num="11" lockable="true">Shunt</functionlabel>
-          <functionlabel num="12" lockable="false">Set Brk</functionlabel>
-          <functionlabel num="13" lockable="false">Rel Brk</functionlabel>
-          <functionlabel num="14" lockable="false">Slack</functionlabel>
-          <functionlabel num="15" lockable="false">Smash</functionlabel>
+          <functionlabel num="0" lockable="true">
+            <text>Light</text>
+            <text xml:lang="de">Licht</text>
+          </functionlabel>
+          <functionlabel num="1" lockable="true">
+            <text>Bell</text>
+            <text xml:lang="de">Sound</text>
+          </functionlabel>
+          <functionlabel num="2" lockable="false">
+            <text>Horn</text>
+            <text xml:lang="de">Pfeife</text>
+          </functionlabel>
+          <functionlabel num="3" lockable="false">
+            <text>Coupler</text>
+            <text xml:lang="de">Kuppeln</text>
+          </functionlabel>
+          <functionlabel num="4" lockable="false">
+            <text>Blower</text>
+            <text xml:lang="de">Bläser</text>
+          </functionlabel>
+          <functionlabel num="5" lockable="false">
+            <text>Rev Up</text>
+            <text xml:lang="de">Rev Up</text>
+          </functionlabel>
+          <functionlabel num="6" lockable="false">
+            <text>Rev Dn</text>
+            <text xml:lang="de">Rev Dn</text>
+          </functionlabel>
+          <functionlabel num="7" lockable="true">
+            <text>Mars</text>
+            <text xml:lang="de">Mars</text>
+          </functionlabel>
+          <functionlabel num="8" lockable="true">
+            <text>Mute</text>
+            <text xml:lang="de">Stumm</text>
+          </functionlabel>
+          <functionlabel num="9" lockable="true">
+            <text>Squeal</text>
+            <text xml:lang="de">Kurvenquietschen</text>
+          </functionlabel>
+          <functionlabel num="10" lockable="false">
+            <text>CPC</text>
+            <text xml:lang="de">Kurzpfiff</text>
+          </functionlabel>
+          <functionlabel num="11" lockable="false">
+            <text>Shunt</text>
+            <text xml:lang="de">Rangieren</text>
+          </functionlabel>
+          <functionlabel num="12" lockable="false">
+            <text>Set Brk</text>
+            <text xml:lang="de">Bremse anlegen</text>
+          </functionlabel>
+          <functionlabel num="13" lockable="false">
+            <text>Rel Brk</text>
+            <text xml:lang="de">Bremse lösen</text>
+          </functionlabel>
+          <functionlabel num="14" lockable="false">
+            <text>Slack</text>
+            <text xml:lang="de">Slack</text>
+          </functionlabel>
+          <functionlabel num="15" lockable="false">
+            <text>Smash</text>
+            <text xml:lang="de">Smash</text>
+          </functionlabel>
         </functionlabels>
       </family>
       <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSoundV4_0.xml">
@@ -6457,13 +6794,32 @@
           <size length="51" width="41" height="14" units="mm" />
         </model>
         <functionlabels>
-          <functionlabel num="0" lockable="true">Light</functionlabel>
-          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="0" lockable="true">
+            <text>Light</text>
+            <text xml:lang="de">Licht</text>
+          </functionlabel>
+          <functionlabel num="1" lockable="true">
+            <text>Bell</text>
+            <text xml:lang="de">Sound</text>
+          </functionlabel>
+          <functionlabel num="2" lockable="false">
+            <text>Horn</text>
+            <text xml:lang="de">Pfeife / Signalhorn</text>
+          </functionlabel>
         </functionlabels>
         <soundlabels>
-          <soundlabel num="25">Random sounds</soundlabel>
-          <soundlabel num="26">Automatic brake sound</soundlabel>
-          <soundlabel num="27">Gear shift sound</soundlabel>
+          <soundlabel num="25">
+            <text>Random sounds</text>
+            <text xml:lang="de">Zufallssound</text>
+          </soundlabel>
+          <soundlabel num="26">
+            <text>Automatic brake sound</text>
+            <text xml:lang="de">automatischer Bremssound</text>
+          </soundlabel>
+          <soundlabel num="27">
+            <text>Gear shift sound</text>
+            <text xml:lang="de">Schaltgeräusch</text>
+          </soundlabel>
         </soundlabels>
       </family>
       <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSound_Select.xml">
@@ -12026,7 +12382,8 @@
         <model model="LNCP" comment="LocoNet Control Point" lowVersionID="01" />
       </family>
       <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The MotorMan is programmed in OPs mode" file="RR-CirKits-MotorMan.xml">
-        <model model="MotorMan" comment="8 Line Output Driver" lowVersionID="10" />
+        <model model="MotorMan" comment="8 Line Output Driver" />
+        <model model="MotorMan-II" comment="8 Line Output Driver" />
       </family>
       <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The SignalMan is normally programmed in OPs mode" file="RR-CirKits-SignalMan-basic.xml">
         <model model="SignalMan" comment="Signal Mast Driver" lowVersionID="10" />
@@ -18869,7 +19226,7 @@
         <!--  Model with name "Tsunami SoundCar" kept for compatibility with previous versions.
             Will not appear as such in the decoder list, because of having the same name as its family
             However selecting family name in the tree and then opening programmer will lead to this defintion.-->
-        <model model="Tsunami SoundCar" numOuts="4" numFns="14" connector="9pin" productID="SoundCar101" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; Early SW version 1.01 (2014-2016) without livestock support&lt;br&gt;">
+        <model model="Tsunami SoundCar" numOuts="4" numFns="14" connector="9pin" productID="SoundCar101" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; Early SW version 1.01 (2014-2016) without livestock support.&lt;br&gt;Check CV105 firmware version.&lt;br&gt;">
           <versionCV lowVersionID="69" highVersionID="69" />
           <output name="Airhorn" label="Whistle">
             <label xml:lang="it">Fischio</label>
@@ -18906,7 +19263,7 @@
         </model>
         <!-- Model with name "Tsunami SoundCar 1.01" is exactly the same as model with name "Tsunami SoundCar".
             Added to allow a separate and visible listing in the decoder tree. -->
-        <model model="Tsunami SoundCar 1.01" numOuts="4" numFns="14" connector="9pin" productID="SoundCar101" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; Early SW version 1.01 (2014-2016) without livestock support&lt;br&gt;">
+        <model model="Tsunami SoundCar 1.01" numOuts="4" numFns="14" connector="9pin" productID="SoundCar101" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; Early SW version 1.01 (2014-2016) without livestock support.&lt;br&gt;Check CV105 firmware version.&lt;br&gt;">
           <versionCV lowVersionID="69" highVersionID="69" />
           <output name="Airhorn" label="Whistle">
             <label xml:lang="it">Fischio</label>
@@ -18941,7 +19298,7 @@
             <functionlabel num="12" lockable="false">Coupler Clank</functionlabel>
           </functionlabels>
         </model>
-        <model model="Tsunami SoundCar 1.03" numOuts="4" numFns="14" connector="9pin" productID="SoundCar103" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; SW version 1.03 (2017) with livestock support&lt;br&gt;and additional airhorns and bells&lt;br&gt;">
+        <model model="Tsunami SoundCar 1.03" numOuts="4" numFns="14" connector="9pin" productID="SoundCar103" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt; SW version 1.03 (2017) with livestock support&lt;br&gt;and additional airhorns and bells.&lt;br&gt;Check CV105 firmware version.&lt;br&gt;">
           <versionCV lowVersionID="69" highVersionID="69" />
           <output name="Airhorn" label="Whistle">
             <label xml:lang="it">Fischio</label>
@@ -18974,6 +19331,202 @@
             <functionlabel num="10" lockable="false">Uncoupling</functionlabel>
             <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
             <functionlabel num="12" lockable="false">Coupler Clank</functionlabel>
+          </functionlabels>
+        </model>
+      </family>
+      <family name="Tsunami SoundCar Walthers OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are the OEM Walthers versions of Tsunami SoundCar decoders" file="SoundTraxx_Tsu_SoundCar_Walthers.xml">
+        <model model="ATSF El Capitan Baggage-Dormitory" numOuts="3" numFns="28" connector="Wires" productID="24B410DD3" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt;for Walthers Proto Deluxe HO ATSF &quot;El Capitan&quot; Baggage-Dormitory car&lt;br&gt;Rev.A 1117 PN: 923-24B410DD3&lt;br&gt;">
+          <versionCV lowVersionID="85" highVersionID="85" />
+          <output name="3" label="Interior|Lights (FX5)" />
+          <!-- All following outputs likely not to used       -->
+          <!-- as this decoder used Flex-Map function mapping -->
+          <!-- Kept for traceability with legacy SoundCar     -->
+          <output name="4" label="  FX6  " />
+          <output name="Airhorn" label="Whistle">
+            <label xml:lang="it">Fischio</label>
+          </output>
+          <output name="Bell" />
+          <output name="Reserved" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Generator" />
+          <output name="Reserved 2" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Uncoupling" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <!-- not used for this OEM decoder
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Airhorn/Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Spook the Livestock</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Output</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Output</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          -->
+            <functionlabel num="8" lockable="true">Mute</functionlabel>
+            <functionlabel num="9" lockable="false">Brake Set/Release</functionlabel>
+            <functionlabel num="10" lockable="false">Couple</functionlabel>
+            <!-- not used for this OEM decoder
+          <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
+          -->
+            <functionlabel num="12" lockable="false">Uncouple/Glad Hands</functionlabel>
+            <functionlabel num="13" lockable="true">Interior Lights</functionlabel>
+            <functionlabel num="14" lockable="false">Coach Doors</functionlabel>
+            <functionlabel num="15" lockable="false">"All Aboard!"</functionlabel>
+            <functionlabel num="16" lockable="true">Generator/HVAC</functionlabel>
+            <functionlabel num="17" lockable="false">Announcement A</functionlabel>
+            <functionlabel num="18" lockable="false">Announcement B</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="ATSF El Capitan Lunch Counter" numOuts="3" numFns="28" connector="Wires" productID="24B410DD2" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt;for Walthers Proto Deluxe HO ATSF &quot;El Capitan&quot; Lunch Counter 20-Seat Diner car&lt;br&gt;Rev.A 1117 PN: 923-24B410DD2&lt;br&gt;">
+          <versionCV lowVersionID="85" highVersionID="85" />
+          <output name="3" label="Interior|Lights (FX5)" />
+          <!-- All following outputs likely not to used       -->
+          <!-- as this decoder used Flex-Map function mapping -->
+          <!-- Kept for traceability with legacy SoundCar     -->
+          <output name="4" label="  FX6  " />
+          <output name="Airhorn" label="Whistle">
+            <label xml:lang="it">Fischio</label>
+          </output>
+          <output name="Bell" />
+          <output name="Reserved" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Generator" />
+          <output name="Reserved 2" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Uncoupling" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <!-- not used for this OEM decoder
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Airhorn/Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Spook the Livestock</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Output</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Output</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          -->
+            <functionlabel num="8" lockable="true">Mute</functionlabel>
+            <functionlabel num="9" lockable="false">Brake Set/Release</functionlabel>
+            <functionlabel num="10" lockable="false">Couple</functionlabel>
+            <!-- not used for this OEM decoder
+          <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
+          -->
+            <functionlabel num="12" lockable="false">Uncouple/Glad Hands</functionlabel>
+            <functionlabel num="13" lockable="true">Interior Lights</functionlabel>
+            <functionlabel num="14" lockable="false">Coach Doors</functionlabel>
+            <functionlabel num="15" lockable="false">"All Aboard!"</functionlabel>
+            <functionlabel num="16" lockable="true">Generator/HVAC</functionlabel>
+            <functionlabel num="17" lockable="false">Announcement A</functionlabel>
+            <functionlabel num="18" lockable="false">Announcement B</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="PRR 1960's Broadway Limited 4-4-2 Sleeper" numOuts="3" numFns="28" connector="Wires" productID="24B410DD1" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt;for Walthers Proto Deluxe HO PRR 1960's Broadway Limited 4-4-2 Sleeper car&lt;br&gt;Rev.A 0317 PN: 923-24B410DD1&lt;br&gt;">
+          <versionCV lowVersionID="85" highVersionID="85" />
+          <output name="3" label="Interior|Lights (FX5)" />
+          <!-- All following outputs likely not to used       -->
+          <!-- as this decoder used Flex-Map function mapping -->
+          <!-- Kept for traceability with legacy SoundCar     -->
+          <output name="4" label="  FX6  " />
+          <output name="Airhorn" label="Whistle">
+            <label xml:lang="it">Fischio</label>
+          </output>
+          <output name="Bell" />
+          <output name="Reserved" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Generator" />
+          <output name="Reserved 2" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Uncoupling" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <!-- not used for this OEM decoder
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Airhorn/Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Spook the Livestock</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Output</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Output</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          -->
+            <functionlabel num="8" lockable="true">Mute</functionlabel>
+            <functionlabel num="9" lockable="false">Brake Set/Release</functionlabel>
+            <functionlabel num="10" lockable="false">Couple</functionlabel>
+            <!-- not used for this OEM decoder
+          <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
+          -->
+            <functionlabel num="12" lockable="false">Uncouple/Glad Hands</functionlabel>
+            <functionlabel num="13" lockable="true">Interior Lights</functionlabel>
+            <functionlabel num="14" lockable="false">Coach Doors</functionlabel>
+            <functionlabel num="15" lockable="false">"All Aboard!"</functionlabel>
+            <functionlabel num="16" lockable="true">Generator/HVAC</functionlabel>
+            <functionlabel num="17" lockable="false">Announcement A</functionlabel>
+            <functionlabel num="18" lockable="false">Announcement B</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="PRR 1960's Broadway Limited Kitchen-Dorm" numOuts="3" numFns="28" connector="Wires" productID="24B410DD0" comment="&lt;html&gt;Tsunami SoundCar Digital Sound Decoder&lt;br&gt;for Walthers Proto Deluxe HO PRR 1960's Broadway Limited Kitchen-Dormitory car&lt;br&gt;Rev.A 0317 PN: 923-24B410DD0&lt;br&gt;">
+          <versionCV lowVersionID="85" highVersionID="85" />
+          <output name="3" label="Interior|Lights (FX5)" />
+          <!-- All following outputs likely not to used       -->
+          <!-- as this decoder used Flex-Map function mapping -->
+          <!-- Kept for traceability with legacy SoundCar     -->
+          <output name="4" label="  FX6  " />
+          <output name="Airhorn" label="Whistle">
+            <label xml:lang="it">Fischio</label>
+          </output>
+          <output name="Bell" />
+          <output name="Reserved" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Generator" />
+          <output name="Reserved 2" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Uncoupling" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <!-- not used for this OEM decoder
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Airhorn/Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Spook the Livestock</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Output</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Output</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          -->
+            <functionlabel num="8" lockable="true">Mute</functionlabel>
+            <functionlabel num="9" lockable="false">Brake Set/Release</functionlabel>
+            <functionlabel num="10" lockable="false">Couple</functionlabel>
+            <!-- not used for this OEM decoder
+          <functionlabel num="11" lockable="true">Apply/Release Brakes</functionlabel>
+          -->
+            <functionlabel num="12" lockable="false">Uncouple/Glad Hands</functionlabel>
+            <functionlabel num="13" lockable="true">Interior Lights</functionlabel>
+            <functionlabel num="14" lockable="false">Coach Doors</functionlabel>
+            <functionlabel num="15" lockable="false">"All Aboard!"</functionlabel>
+            <functionlabel num="16" lockable="true">Generator/HVAC</functionlabel>
+            <!-- not available for this model
+          <functionlabel num="17" lockable="false">Announcement A</functionlabel>
+          <functionlabel num="18" lockable="false">Announcement B</functionlabel>
+          -->
           </functionlabels>
         </model>
       </family>

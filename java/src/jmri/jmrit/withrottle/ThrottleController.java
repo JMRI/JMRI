@@ -35,6 +35,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -199,16 +200,16 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     }
 
     @Override
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+    public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         log.warn("Throttle request failed for {} because {}.", address, reason);
         for (ThrottleControllerListener l : listeners) {
-            l.notifyControllerAddressDeclined(this, address);
+            l.notifyControllerAddressDeclined(this, (DccLocoAddress) address);
             log.debug("Notify TCListener address declined in-use: {}", l.getClass());
         }
     }
 
     @Override
-    public void notifyStealThrottleRequired(DccLocoAddress address) {
+    public void notifyStealThrottleRequired(LocoAddress address) {
         notifyFailedThrottleRequest(address, "Steal Required");
 
         // this is an automatically stealing impelementation.

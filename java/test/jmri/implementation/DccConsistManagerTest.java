@@ -12,11 +12,6 @@ import org.junit.Test;
  */
 public class DccConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase  {
 
-    @Test
-    public void testCtor2(){
-        Assert.assertNotNull("DccConsistManager Default Constructor",new DccConsistManager());
-    }
-
     // The minimal setup for log4J
     @Before
     @Override

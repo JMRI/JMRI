@@ -117,7 +117,7 @@ public class AccessoryOpsModeProgrammerFacadeTest {
         StringBuilder sb = new StringBuilder();
         Pattern pattern;
         Matcher matcher;
-        ArrayList<String> retString = new ArrayList();
+        ArrayList<String> retString = new ArrayList<>();
 
         // Extract test parameters from test name.
         String methodName = Thread.currentThread().getStackTrace()[methodOffset].getMethodName();

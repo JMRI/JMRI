@@ -5,6 +5,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import javax.swing.tree.DefaultTreeModel;
 import jmri.CatalogTree;
 import jmri.NamedBean;
@@ -13,10 +14,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * TreeModel used by CatalogPanel to create a tree of resources.
- * <P>
  *
  * @author Pete Cressman Copyright 2009
- *
  */
 public abstract class AbstractCatalogTree extends DefaultTreeModel implements CatalogTree {
 
@@ -270,6 +269,17 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+    }
+
+    /**
+     * {@inheritDoc} 
+     * 
+     * By default, does an alphanumeric-by-chunks comparison
+     */
+    @CheckReturnValue
+    public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
+        jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
+        return ac.compare(suffix1, suffix2);
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractCatalogTree.class);

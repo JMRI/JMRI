@@ -24,7 +24,7 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2017"/>
+    <property name="jmri.copyright.year" value="1997-2018"/>
 
     <property environment="env"/>
 
@@ -971,15 +971,6 @@
         <antcall target="-run-jmri-application">
             <param name="application.classname" value="apps.InstallTest.InstallTest"/>
             <param name="antargline" value="InstallTestConfig2.xml"/>
-        </antcall>
-    </target>
-
-    <target name="jmridemo"
-            depends="debug"
-            description="build and run build and run JmriDemo app">
-        <antcall target="-run-jmri-application">
-            <param name="application.classname" value="apps.JmriDemo.JMRIdemo"/>
-            <param name="antargline" value="JmriDemoConfig2.xml"/>
         </antcall>
     </target>
 
@@ -2047,11 +2038,13 @@
             <fileset dir="${libdir}/windows"/>
         </copy>
         <mkdir dir="${dist.release}"/>
+        <!-- do not rebuild LaunchJMRI (see https://github.com/JMRI/JMRI/pull/3959)
         <exec executable="${nsis.home}makensis"
               dir="${dist.windows}/JMRI"
               failonerror="true">
             <arg line="-V2 LaunchJMRI.nsi"/>
         </exec>
+        -->
         <exec executable="${nsis.home}makensis"
               dir="${dist.windows}/JMRI"
               failonerror="true">
@@ -2327,5 +2320,55 @@
     </target>
 
     <target name="appveyor" description="CI tasks on Appveyor" depends="checkPropertiesFiles, ci-test-appveyor-coveragecheck"/>
+
+    <!-- end of distribution build targets -->
+
+    <!-- ============================================================================= -->
+    <!-- Run Remote targets                                                    -->
+    <!-- ============================================================================= -->
+
+    <!-- The following properties should be set in local.properties                    -->
+    <!-- YOu can also set remote.platform.password if you do not mind a clear text     -->
+    <!-- password in local.properties. If you do not set remote.platform.password then -->
+    <!-- you will be prompoted to enter the password each time you run a remote target -->
+
+    <target name="-init-remote-platform-properties">
+        <fail unless="remote.platform.host">Must set remote.platform.host (e.g. IP address) in local.properties</fail>
+        <fail unless="remote.platform.port">Must set remote.platform.port (e.g. 22) in local.properties</fail>
+        <fail unless="remote.platform.user">Must set remote.platform.user (your username on the remote device) local.properties</fail>
+        <fail unless="remote.jmri.dir">Must set remote.jmri.dir (path to JMRI install directory) local.properties</fail>
+    </target>
+    
+    <target name="-ask-password" unless="remote.platform.password">
+        <input message="Password ${remote.platform.user}@${remote.platform.host}:" addproperty="remote.platform.password">
+            <handler type="secure"/>
+        </input>
+    </target>
+
+    <target name="-run-remote-passwd" depends="init, debug, jar, -init-remote-platform-properties, -ask-password">
+        <sequential>
+            <echo message="run with passwd"/>
+            <scp file="./jmri.jar" todir="${remote.platform.user}@${remote.platform.host}:${remote.jmri.dir}" port="${remote.platform.port}" password="${remote.platform.password}" trust="true"> </scp>
+            <sshexec host="${remote.platform.host}" port="${remote.platform.port}" username="${remote.platform.user}" password="${remote.platform.password}" trust="true" usepty="true"
+                command="export DISPLAY=:0; cd '${remote.jmri.dir}'; ${remote.jmri.app} "/>
+        </sequential>
+    </target>
+
+    <target name="decoderpro-remote"
+        description="build and run DecoderPro on remote target"
+        depends="-init-remote-platform-properties">
+        <property name="remote.jmri.app" value="${remote.jmri.dir}/DecoderPro"/>
+        <antcall target="-run-remote-passwd"/>
+    </target>
+
+    <target name="panelpro-remote"
+        description="build and run PanelPro app on remote target"
+        depends="-init-remote-platform-properties">
+        <property name="remote.jmri.app" value="${remote.jmri.dir}/PanelPro"/>
+        <antcall target="-run-remote-passwd"/>
+    </target>
+
+    <!-- end of run remote targets -->
+
 
 </project>

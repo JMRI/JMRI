@@ -182,7 +182,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                 log.warn("sendMessage: no connection established");
             }
         } catch (Exception e) {
-            log.warn("sendMessage: Exception: {}", e.toString());
+            log.warn("sendMessage: Exception: ", e);
         }
     }
 

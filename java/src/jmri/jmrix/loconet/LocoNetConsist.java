@@ -11,6 +11,7 @@ package jmri.jmrix.loconet;
 import java.util.ArrayList;
 import jmri.Consist;
 import jmri.ConsistListener;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.ThrottleListener;
 import org.slf4j.Logger;
@@ -344,6 +345,13 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             msg.setElement(1, follow.getSlot());
             msg.setElement(2, lead.getSlot());
             trafficController.sendLocoNetMessage(msg);
+        } else {
+          // lead == follow
+          // this is an error, notify the consist listeners.
+          follow.removeSlotListener(this);
+          notifyConsistListeners(new DccLocoAddress(follow.locoAddr(),
+                throttleManager.canBeLongAddress(follow.locoAddr())),
+                ConsistListener.CONSIST_ERROR);
         }
         consistRequestState = IDLESTATE;
         if (needToWrite.size() != 0) {
@@ -363,6 +371,13 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             msg.setElement(1, follow.getSlot());
             msg.setElement(2, lead.getSlot());
             trafficController.sendLocoNetMessage(msg);
+        } else {
+          // lead == follow
+          // this is an error, notify the consist listeners.
+          follow.removeSlotListener(this);
+          notifyConsistListeners(new DccLocoAddress(follow.locoAddr(),
+                throttleManager.canBeLongAddress(follow.locoAddr())),
+                ConsistListener.CONSIST_ERROR | ConsistListener.DELETE_ERROR );
         }
         consistRequestState = IDLESTATE;
         if (needToWrite.size() != 0) {
@@ -467,15 +482,18 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     }
 
     @Override
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
-        notifyConsistListeners(address,
+    public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+        if (! (address instanceof DccLocoAddress)) {
+            throw new IllegalArgumentException("address is not a DccLocoAddress object");
+        }
+        notifyConsistListeners((DccLocoAddress) address,
                 ConsistListener.CONSIST_ERROR);
-        removeFromConsistList(address);
+        removeFromConsistList((DccLocoAddress) address);
         consistRequestState = IDLESTATE;
     }
 
     @Override
-    public void notifyStealThrottleRequired(DccLocoAddress address){
+    public void notifyStealThrottleRequired(LocoAddress address){
         // this is an automatically stealing impelementation.
         throttleManager.stealThrottleRequest(address, this, true);
     }

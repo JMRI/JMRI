@@ -154,15 +154,6 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 return;
             }
         }
-        if ((s.consistStatus() == LnConstants.CONSIST_MID) ||
-                (s.consistStatus() == LnConstants.CONSIST_SUB)) {
-            // cannot acquire loco account is consist-mid or consist-sub 
-            log.warn("slot {} address {} cannot be acquired for loco control account already in-use, consist-mid or consist-sub.",
-                    s.getSlot(), s.locoAddr());
-            // notify the LnThrottleManager about failure of acquisition.
-            notifyRefused(s.locoAddr(), "Locomotive burried in a consist cannot be acquired.");
-            return;
-        }
         commitToAcquireThrottle(s);
     }
 
@@ -393,10 +384,10 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * @since 4.9.2
      */
     @Override
-    public void stealThrottleRequest(DccLocoAddress address, ThrottleListener l, boolean steal){
+    public void stealThrottleRequest(LocoAddress address, ThrottleListener l, boolean steal){
        log.debug("stealThrottleRequest() invoked for address {}, with steal boolean = {}",address.getNumber(),steal);
        if (steal == false) {
-            failedThrottleRequest(address, "User chose not to 'steal' the throttle.");
+            failedThrottleRequest((DccLocoAddress) address, "User chose not to 'steal' the throttle.");
        } else {
            log.warn("user agreed to steal address {}, but no code is in-place to handle the 'steal' (yet)",address.getNumber());
         commitToAcquireThrottle(slotForAddress.get(address.getNumber()));

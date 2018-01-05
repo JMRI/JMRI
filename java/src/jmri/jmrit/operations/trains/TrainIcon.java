@@ -221,7 +221,6 @@ public class TrainIcon extends LocoIcon {
         }
     }
 
-    private final int range = 25; // how close the train icon needs to be to the next location coordinates in a train's
 
     // route
 
@@ -237,7 +236,7 @@ public class TrainIcon extends LocoIcon {
             if (next != null) {
                 Point nextPoint = next.getTrainIconCoordinates();
                 log.debug("Next location (" + next.getName() + "), X=" + nextPoint.x + " Y=" + nextPoint.y);
-                if (Math.abs(getX() - nextPoint.x) < range && Math.abs(getY() - nextPoint.y) < range) {
+                if (Math.abs(getX() - nextPoint.x) < next.getTrainIconRangeX() && Math.abs(getY() - nextPoint.y) < next.getTrainIconRangeY()) {
                     log.debug("Train icon (" + _train.getName() + ") within range of (" + next.getName() + ")");
                     if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("MoveTrainTo"),
                             new Object[]{next.getName()}), MessageFormat.format(Bundle.getMessage("MoveTrain"),

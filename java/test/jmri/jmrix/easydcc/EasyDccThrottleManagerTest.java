@@ -12,6 +12,9 @@ import org.junit.Test;
  */
 public class EasyDccThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
+    private EasyDccTrafficControlScaffold tc = null;
+    private EasyDccSystemConnectionMemo memo = null;
+
     @Test
     public void testCTor() {
         // infrastructure objects
@@ -22,8 +25,8 @@ public class EasyDccThrottleManagerTest extends jmri.managers.AbstractThrottleMa
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        EasyDccTrafficControlScaffold tc = new EasyDccTrafficControlScaffold(null);
-        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo(tc);
+        tc = new EasyDccTrafficControlScaffold(null);
+        memo = new EasyDccSystemConnectionMemo(tc);
         tm = new EasyDccThrottleManager(memo);
     }
 

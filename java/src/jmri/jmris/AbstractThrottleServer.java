@@ -101,12 +101,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
     public void requestThrottle(LocoAddress l) {
         ThrottleManager t = InstanceManager.throttleManagerInstance();
         boolean result;
-        if (l instanceof DccLocoAddress) {
-            result = t.requestThrottle(((DccLocoAddress) l), this);
-        } else {
-            result = t.requestThrottle(l.getNumber(), t.canBeLongAddress(l.getNumber()),
-                    this);
-        }
+        result = t.requestThrottle(l, this); 
         if (!result) {
             try {
                 sendErrorStatus();
@@ -153,7 +148,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
     }
 
     @Override
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+    public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         try {
             sendErrorStatus();
         } catch (java.io.IOException ioe) {
@@ -162,7 +157,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
     }
 
     @Override
-    public void notifyStealThrottleRequired(DccLocoAddress address) {
+    public void notifyStealThrottleRequired(LocoAddress address) {
         // this is an automatically stealing impelementation.
         InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }

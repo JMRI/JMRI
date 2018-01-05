@@ -450,7 +450,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     protected void editItem() {
         makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSensor")));
-        _itemPanel = new TableItemPanel(_paletteFrame, "Sensor", _iconFamily,
+        _itemPanel = new TableItemPanel((DisplayFrame) _paletteFrame, "Sensor", _iconFamily,
                 PickListModel.sensorPickModelInstance(), _editor); // NOI18N
         ActionListener updateAction = (ActionEvent a) -> {
             updateItem();
