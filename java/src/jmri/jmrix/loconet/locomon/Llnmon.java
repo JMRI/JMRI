@@ -2857,7 +2857,7 @@ public class Llnmon {
 
     private String interpretOpcSwState(LocoNetMessage l) {
         // get system and user names
-        if ((l.getElement(2) & 0x70) != 0x00) {
+        if ((l.getElement(2) & 0x40) != 0x00) {
             return "";
         }
         String turnoutSystemName;
