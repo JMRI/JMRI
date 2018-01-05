@@ -179,8 +179,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                                 xmtRunnable.notify();
                             }
                         } else {
-                            log.error("reply complete in unexpected state: "
-                                    + mCurrentState + " was " + e.toString());
+                            unexpectedReplyStateError(mCurrentState,e.toString());
                         }
                     }
                 }

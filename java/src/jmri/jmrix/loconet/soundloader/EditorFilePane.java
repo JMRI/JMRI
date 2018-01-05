@@ -14,7 +14,6 @@ import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
 import jmri.jmrix.loconet.spjfile.SpjFile;
 import jmri.swing.RowSorterUtil;
-import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,9 +50,8 @@ public class EditorFilePane extends javax.swing.JPanel {
         JTable dataTable = new JTable(dataModel);
         JScrollPane dataScroll = new JScrollPane(dataTable);
 
-        // give system name column a smarter sorter and use it initially
+        // set default sort order
         TableRowSorter<EditorTableDataModel> sorter = new TableRowSorter<>(dataModel);
-        sorter.setComparator(EditorTableDataModel.HEADERCOL, new SystemNameComparator());
         RowSorterUtil.setSortOrder(sorter, EditorTableDataModel.HEADERCOL, SortOrder.ASCENDING);
 
         // configure items for GUI

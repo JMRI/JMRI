@@ -147,9 +147,8 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     public BlockBossLogic(String name) {
         super(name + Bundle.getMessage("_BlockBossLogic"));
         this.name = name;
-        if (log.isTraceEnabled()) {
-            log.trace("Create BBL " + name);
-        }
+        log.trace("Create BBL {}", name);
+
         jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).addVetoableChangeListener(this);
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
@@ -747,9 +746,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      */
     @Override
     public void setOutput() {
-        if (log.isTraceEnabled()) {
-            log.trace("setOutput for " + name);
-        }
+
+        log.trace("setOutput for {}", name);
+
         // make sure init is complete
         if ((outputs == null) || (outputs[0] == null)) {
             return;
@@ -758,9 +757,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         // if "hold" is true, must show red
         if (getHold()) {
             ((SignalHead) outputs[0]).setAppearance(SignalHead.RED);
-            if (log.isDebugEnabled()) {
-                log.debug("setOutput red due to held for " + name);
-            }
+            log.debug("setOutput red due to held for {}", name);
             return;
         }
 

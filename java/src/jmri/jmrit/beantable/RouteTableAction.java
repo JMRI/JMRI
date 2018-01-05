@@ -48,7 +48,6 @@ import jmri.swing.RowSorterUtil;
 import jmri.util.AlphanumComparator;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.SystemNameComparator;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -186,7 +185,7 @@ public class RouteTableAction extends AbstractTableAction {
                 }
                 // Route lock is available if turnouts are lockable
                 if (col == LOCKCOL) {
-                    Route r = (Route) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+                    Route r = (Route) getValueAt(row, SYSNAMECOL);
                     return r.canLock();
                 } else {
                     return super.isCellEditable(row, col);
@@ -199,11 +198,11 @@ public class RouteTableAction extends AbstractTableAction {
                     case SETCOL:
                         return Bundle.getMessage("ButtonEdit");
                     case ENABLECOL:
-                        return ((Route) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getEnabled();
+                        return ((Route)getValueAt(row, SYSNAMECOL)).getEnabled();
                     case LOCKCOL:
-                        Route r = (Route) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+                        Route r = (Route) getValueAt(row, SYSNAMECOL);
                         if (r.canLock()) {
-                            return ((Route) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getLocked();
+                            return r.getLocked();
                         } else {
                             // this covers the case when route was locked and lockable turnouts were removed from the route
                             r.setLocked(false);
@@ -251,7 +250,7 @@ public class RouteTableAction extends AbstractTableAction {
                             @Override
                             public void run() {
                                 addPressed(null);
-                                _systemName.setText((String) getValueAt(row, SYSNAMECOL));
+                                _systemName.setText(((Route) getValueAt(row, SYSNAMECOL)).getSystemName());
                                 editPressed(null); // don't really want to stop Route w/o user action
                             }
                         }
@@ -260,14 +259,14 @@ public class RouteTableAction extends AbstractTableAction {
                         break;
                     case ENABLECOL: {
                         // alternate
-                        Route r = (Route) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+                        Route r = (Route) getValueAt(row, SYSNAMECOL);
                         boolean v = r.getEnabled();
                         r.setEnabled(!v);
                         break;
                     }
                     case LOCKCOL: {
                         // alternate
-                        Route r = (Route) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+                        Route r = (Route) getValueAt(row, SYSNAMECOL);
                         boolean v = r.getLocked();
                         r.setLocked(!v);
                         break;
@@ -577,7 +576,8 @@ public class RouteTableAction extends AbstractTableAction {
             _routeTurnoutModel = new RouteTurnoutModel();
             JTable routeTurnoutTable = new JTable(_routeTurnoutModel);
             TableRowSorter<RouteTurnoutModel> rtSorter = new TableRowSorter<>(_routeTurnoutModel);
-            rtSorter.setComparator(RouteTurnoutModel.SNAME_COLUMN, new SystemNameComparator());
+
+            // use NamedBean's built-in Comparator interface for sorting the system name column
             RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
             rtSorter.setComparator(RouteTurnoutModel.UNAME_COLUMN, new AlphanumComparator());
             RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.UNAME_COLUMN, SortOrder.ASCENDING);
@@ -631,7 +631,8 @@ public class RouteTableAction extends AbstractTableAction {
             _routeSensorModel = new RouteSensorModel();
             JTable routeSensorTable = new JTable(_routeSensorModel);
             TableRowSorter<RouteSensorModel> rsSorter = new TableRowSorter<>(_routeSensorModel);
-            rsSorter.setComparator(RouteSensorModel.SNAME_COLUMN, new SystemNameComparator());
+
+            // use NamedBean's built-in Comparator interface for sorting the system name column
             RowSorterUtil.setSortOrder(rsSorter, RouteSensorModel.SNAME_COLUMN, SortOrder.ASCENDING);
             rtSorter.setComparator(RouteTurnoutModel.UNAME_COLUMN, new AlphanumComparator());
             RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.UNAME_COLUMN, SortOrder.ASCENDING);

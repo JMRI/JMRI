@@ -50,9 +50,10 @@
       selected tree row.</li>
       </ul>
 
-      <p>The workflow for the tree editor is dynamic.  As each change is made,
-      it is applied to the Conditional tables.  As long as the panel xml file
-      has not been updated, it is still possible to recover.</p>
+      <p><strong><em>The workflow for the tree editor is dynamic.  As each
+      change is made, it is applied to the Conditional tables.  As long as the
+      panel xml file has not been updated, it is still possible to recover.
+      </em></strong></p>
 
       <p>The tree structure makes it very easy to move around.  The only
       restriction is that a different tree node cannot be selected if there is

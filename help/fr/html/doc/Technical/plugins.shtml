@@ -33,7 +33,7 @@
       les gens pourraient utiliser pour cr&eacute;er leurs propres
       applications. Bien que certaines personnes l'aient fait,
       beaucoup utilisent les applications existantes telles que
-      DecoderPro, PanelPro et JmriDemo. Nous voulons rendre ceci
+      DecoderPro, PanelPro et SoundPro. Nous voulons rendre ceci
       plus souple en fournissant un moyen d'&eacute;tendre ces
       programmes sans avoir &agrave; les reconstruire &agrave;
       partir de z&eacute;ro. Cette note d&eacute;crit le
