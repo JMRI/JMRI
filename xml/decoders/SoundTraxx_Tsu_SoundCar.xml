@@ -1815,7 +1815,7 @@
               <label>Brake Sounds</label>
               <label xml:lang="it">Suono freni</label>
         </variable>
-      <variable CV="118" item="Advanced Group 2 Option 6" default="204" tooltip="&lt;html&gt;Adjust the motor response following a momentary power glitch&lt;br&gt;      0 or 128 = Disabled&lt;br&gt;      1-127 = Absolute Limiting (will return to this speed step)&lt;br&gt;      129-255 = Proportional Limiting (a percentage of set speed)&lt;br&gt;      Note: This feature is not available in early decoders&lt;/html&gt;">
+      <variable CV="118" item="Advanced Group 2 Option 6" default="204" tooltip="&lt;html&gt;Adjust the motor response following a momentary power glitch&lt;br&gt;      0 or 128 = Disabled&lt;br&gt;      1-127 = Absolute Limiting (will return to this speed step)&lt;br&gt;      129-255 = Proportional Limiting (a percentage of set speed)&lt;br&gt;Note: used for synchronizing the clickety clack, flat spot, wheel noise and flange squeal sound effects&lt;/html&gt;">
         <decVal/>
         <label>Motor Recovery Speed (0-255)</label>
         <label xml:lang="it">Velocità ripristino motore (0-255)</label>
