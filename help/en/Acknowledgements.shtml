@@ -76,6 +76,8 @@
         <li>Ron W. Auld, whose llnmon program formed the basis for
         the LocoNet monitoring <a name="B" id="B"></a></li>
 
+        <li>Cees Baarda, who added the DigiRails DR4018 decoder definition</li>
+        
         <li>Harald Barth, who improved the SRCP implementation</li>
 
         <li>Michal Basta, who contributed the Czech
@@ -355,6 +357,10 @@
 
         <li>Michael Dunn, who provided a decoder definition for the
         MRC 1645 decoder <a name="E" id="E"></a></li>
+
+        <li>Mike Dunston, who provided 
+            <a href="https://github.com/JMRI/JMRI/pull/4533">several updates</a> 
+            for the DCC++ code</li>
 
         <li>Joe Ellis provided the DecoderPro configuration files
         for the Lenz LE077XF decoder and has done a fantastic job

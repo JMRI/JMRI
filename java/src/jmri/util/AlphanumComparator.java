@@ -42,7 +42,7 @@ import java.util.Comparator;
  * leading zeros. For example, 0001 is seem as larger than 1 because it's the
  * longer number. A version that does not compare leading zeros is forthcoming.
  */
-public final class AlphanumComparator implements Comparator<String> {
+public class AlphanumComparator implements Comparator<String> {
 
     private final boolean isDigit(char ch) {
         return (('0' <= ch) && (ch <= '9'));
@@ -100,9 +100,9 @@ public final class AlphanumComparator implements Comparator<String> {
                 break;
             }
         }
-        if (result == 0) {
-            result = length1 - length2;
-        }
+        if (result == 0 && marker1 == length1 && marker2 < length2) return -1;
+        if (result == 0 && marker1 < length1 && marker2 == length2) return +1;
+        
         return result;
     }
 }

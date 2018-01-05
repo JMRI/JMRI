@@ -217,6 +217,14 @@ public class DefaultConditionalAction implements ConditionalAction {
                         log.error("invalid OBlock name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
+                case Conditional.ITEM_TYPE_ENTRYEXIT:
+                    try {
+                        bean = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
+                    } catch (IllegalArgumentException e) {
+                        bean = null;
+                        log.error("invalid NX name= \"" + devName + "\" in conditional action");
+                    }
+                    break;
                 default:
                     if (getType() == Conditional.ACTION_TRIGGER_ROUTE) {
                         try {
@@ -482,6 +490,8 @@ public class DefaultConditionalAction implements ConditionalAction {
                 return (Bundle.getMessage("BeanNameWarrant"));
             case Conditional.ITEM_TYPE_OBLOCK:
                 return (Bundle.getMessage("BeanNameOBlock"));
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                return (Bundle.getMessage("EntryExit"));
             case Conditional.ITEM_TYPE_CLOCK:
                 return (Bundle.getMessage("FastClock"));
             case Conditional.ITEM_TYPE_AUDIO:
@@ -605,6 +615,12 @@ public class DefaultConditionalAction implements ConditionalAction {
                 return (rbx.getString("ActionSetBlockOutOfService"));
             case Conditional.ACTION_SET_BLOCK_IN_SERVICE:
                 return (rbx.getString("ActionBlockInService"));
+            case Conditional.ACTION_SET_NXPAIR_ENABLED:
+                return (rbx.getString("ActionNXPairEnabled"));
+            case Conditional.ACTION_SET_NXPAIR_DISABLED:
+                return (rbx.getString("ActionNXPairDisabled"));
+            case Conditional.ACTION_SET_NXPAIR_SEGMENT:
+                return (rbx.getString("ActionNXPairSegment"));
             default:
                 // fall through
                 break;
@@ -850,6 +866,9 @@ public class DefaultConditionalAction implements ConditionalAction {
                 case Conditional.ACTION_DEALLOCATE_BLOCK:
                 case Conditional.ACTION_SET_BLOCK_OUT_OF_SERVICE:
                 case Conditional.ACTION_SET_BLOCK_IN_SERVICE:
+                case Conditional.ACTION_SET_NXPAIR_ENABLED:
+                case Conditional.ACTION_SET_NXPAIR_DISABLED:
+                case Conditional.ACTION_SET_NXPAIR_SEGMENT:
                     str = str + ", \"" + _deviceName + "\".";
                     break;
                 case Conditional.ACTION_SET_ROUTE_TURNOUTS:

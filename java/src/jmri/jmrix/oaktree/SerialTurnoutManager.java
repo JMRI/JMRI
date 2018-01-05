@@ -17,14 +17,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     OakTreeSystemConnectionMemo _memo = null;
     protected String prefix = "O";
 
-    public SerialTurnoutManager() {
-        prefix = getSystemPrefix();
-
-    }
-
     public SerialTurnoutManager(OakTreeSystemConnectionMemo memo) {
         _memo = memo;
-        prefix = memo.getSystemPrefix();
+        prefix = getSystemPrefix();
     }
 
     /**
@@ -32,7 +27,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     public String getSystemPrefix() {
-        return prefix;
+        return _memo.getSystemPrefix();
 
     }
 
@@ -81,14 +76,11 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return true;
     }
 
+    @Deprecated
     static public SerialTurnoutManager instance() {
-        if (_instance == null) {
-            _instance = new SerialTurnoutManager();
-        }
-        return _instance;
+        return null;
     }
 
-    static SerialTurnoutManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 

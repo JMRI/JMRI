@@ -5,6 +5,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  *
@@ -12,9 +13,11 @@ import org.junit.Test;
  */
 public class DebuggerActionTest {
 
+    private RpsSystemConnectionMemo memo = null;
+
     @Test
     public void testCTor() {
-        DebuggerAction t = new DebuggerAction();
+        DebuggerAction t = new DebuggerAction(memo);
         Assert.assertNotNull("exists",t);
     }
 
@@ -22,6 +25,7 @@ public class DebuggerActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new RpsSystemConnectionMemo();
     }
 
     @After

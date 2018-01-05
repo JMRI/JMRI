@@ -39,26 +39,7 @@ public class TrafficController implements jmri.CommandStation {
      */
     @Deprecated
     static public TrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new TrafficController object");
-            }
-            self = new TrafficController();
-        }
-        return self;
-    }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
-     * multi-system support structure
-     */
-    @Deprecated
-    static TrafficController self = null;
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
-    protected void setInstance() {
-        self = this;
+        return null;
     }
 
     /**

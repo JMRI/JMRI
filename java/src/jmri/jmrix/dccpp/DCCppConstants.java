@@ -135,7 +135,9 @@ public final class DCCppConstants {
     public final static String PROGRAM_REPLY_REGEX = "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+([-]*\\d+)\\s*";
     public final static String PROGRAM_BIT_REPLY_REGEX = "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
     public final static String CURRENT_REPLY_REGEX = "\\s*a\\s*(\\d+)";
+    public final static String CURRENT_REPLY_NAMED_REGEX = "\\s*a\\s*(\\w+)\\s*(\\d+)";
     public final static String TRACK_POWER_REPLY_REGEX = "\\s*p\\s*([0,1])\\s*";
+    public final static String TRACK_POWER_REPLY_NAMED_REGEX = "\\s*p\\s*(\\d+)\\s+(\\w+)\\s*";
     public final static String SENSOR_REPLY_REGEX = "\\s*[Qq]\\s*(\\d+)\\s*";
     public final static String SENSOR_DEF_REPLY_REGEX = "\\s*Q\\s*(\\d+)\\s+(\\d+)\\s+([0|1])\\s*";
     public final static String SENSOR_ACTIVE_REPLY_REGEX = "\\s*Q\\s*(\\d+)\\s*";
@@ -148,6 +150,7 @@ public final class DCCppConstants {
 //    public final static String STATUS_REPLY_REGEX = "i(DCC\\+\\+.*): BUILD (.*)"; // V1.0
 //    public final static String STATUS_REPLY_REGEX = "i(DCC\\+\\+[^:]*): BUILD (.*)"; // V1.0 / V1.1
     public final static String STATUS_REPLY_REGEX = "i(DCC\\+\\+[^:]*):(?:\\sBUILD)? (.*)"; // V1.0 / V1.1 / V1.2
+    public final static String STATUS_REPLY_ESP32_REGEX = "iDCC\\+\\+.*ESP32.*: V-([\\d\\.]+)\\s+/\\s+(.*)"; // V1.0
     //public final static String STATUS_REPLY_REGEX = "i(DCC\\+\\+\\s?.*):\\s?(?:BUILD)? (.*)"; // V1.0 / V1.1 / V1.2
     public final static String FREE_MEMORY_REPLY_REGEX = "\\s*f\\s*(\\d+)\\s*";
     public final static String WRITE_EEPROM_REPLY_REGEX = "\\s*e\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";

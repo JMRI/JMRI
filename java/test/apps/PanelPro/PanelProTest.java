@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 import org.junit.rules.Timeout;
+import jmri.util.junit.rules.RetryRule;
 
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
@@ -35,6 +36,9 @@ public class PanelProTest {
 
     @Rule
     public Timeout globalTimeout = Timeout.seconds(90); // 90 second timeout for methods in this test class.
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     @Test
     public void testLaunchLocoNet() throws IOException {
@@ -153,6 +157,7 @@ public class PanelProTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetApplication();
     }
 
     @After

@@ -21,9 +21,9 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  *
  * @author	Bob Jacobsen Copyright 2008
  */
-public class RpsPositionIconTest {
+public class RpsPositionIconTest extends PositionableTestBase {
 
-    jmri.jmrit.display.panelEditor.PanelEditor panel = null;
+    private RpsPositionIcon rpsIcon = null;
 
     @Test
     public void testShow() {
@@ -31,7 +31,6 @@ public class RpsPositionIconTest {
         JmriJFrame jf = new JmriJFrame("RpsPositionIcon Test");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        RpsPositionIcon rpsIcon = new RpsPositionIcon(panel);
         jf.getContentPane().add(rpsIcon);
 
         // test buttons
@@ -93,28 +92,9 @@ public class RpsPositionIconTest {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         if (!GraphicsEnvironment.isHeadless()) {
-            panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel");
+            editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel");
+            p = rpsIcon = new RpsPositionIcon(editor);
         }
-    }
-
-    @After
-    public void tearDown() {
-        // now close panel window
-        if (panel != null) {
-            java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
-            for (WindowListener listener : listeners) {
-                panel.getTargetFrame().removeWindowListener(listener);
-            }
-
-            // close the panel target frame.
-            EditorFrameOperator to = new EditorFrameOperator(panel.getTargetFrame());
-            // this panel isn't behaving like others that create a 
-            // panelEditor. It does not create dialogs when it closes, so call 
-            // requestClose without handling the dialogs as in 
-            // to.closeFrameWithConfirmations()
-            to.requestClose();
-        }
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(RpsPositionIconTest.class);
