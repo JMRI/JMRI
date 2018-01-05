@@ -640,6 +640,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         d.add(new jmri.jmrix.libusb.UsbViewAction());
 
         d.add(new JSeparator());
+
         d.add(new RailDriverMenuItem());
 
         try {
