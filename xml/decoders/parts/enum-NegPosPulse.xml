@@ -5,14 +5,16 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Negative Pulse">
    <choice>Negative Pulse</choice>
-   <choice xml:lang="it">Impulso negativo</choice>
-   <choice xml:lang="de">negativer Impuls</choice>
    <choice xml:lang="cs">Záporný pulz</choice>
+   <choice xml:lang="de">negativer Impuls</choice>
+   <choice xml:lang="fr">Impulsion négative</choice>
+   <choice xml:lang="it">Impulso negativo</choice>
   </enumChoice>
   <enumChoice choice="Positive Pulse">
    <choice>Positive Pulse</choice>
-   <choice xml:lang="it">Impulso positivo</choice>
-   <choice xml:lang="de">positiver Impuls</choice>
    <choice xml:lang="cs">Kladný pulz</choice>
+   <choice xml:lang="de">positiver Impuls</choice>
+   <choice xml:lang="fr">Impulsion positive</choice>
+   <choice xml:lang="it">Impulso positivo</choice>
   </enumChoice>
 </enumVal>
