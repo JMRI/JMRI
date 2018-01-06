@@ -2,6 +2,7 @@ package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -16,6 +17,19 @@ public class LocoNetConsistManagerTest extends jmri.implementation.AbstractConsi
     @Test
     @Override
     public void testGetConsist() {
+    }
+
+    @Ignore("Need to implement a loconet specific version of this test that responds to slot messages")
+    @Test
+    @Override
+    public void testDelConsist() {
+    }
+
+    @Test
+    @Override
+    public void testIsCommandStationConsistPossible(){
+       // possible for LocoNet
+       Assert.assertTrue("CS Consist Possible",cm.isCommandStationConsistPossible());
     }
 
     // The minimal setup for log4J
