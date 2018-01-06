@@ -31,7 +31,6 @@ import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.palette.InitEventListener;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.FileUtil;
 import org.jdom2.Element;

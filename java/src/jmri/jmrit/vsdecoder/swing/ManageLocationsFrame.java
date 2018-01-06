@@ -40,7 +40,6 @@ import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.util.JmriJFrame;
 import jmri.util.PhysicalLocation;
-import jmri.util.WindowMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

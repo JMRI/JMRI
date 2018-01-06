@@ -6,12 +6,8 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
-import jmri.util.ThreadingUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.swing.SwingUtilities;
 
 /**
  * Abstract base for TrafficControllers in a CANbus based Message/Reply

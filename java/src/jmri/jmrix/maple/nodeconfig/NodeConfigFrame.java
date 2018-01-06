@@ -2,7 +2,6 @@ package jmri.jmrix.maple.nodeconfig;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -12,7 +11,6 @@ import jmri.jmrix.maple.InputBits;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.jmrix.maple.OutputBits;
 import jmri.jmrix.maple.SerialNode;
-import jmri.jmrix.maple.SerialTrafficController;
 
 /**
  * Frame for user configuration of Maple panel nodes

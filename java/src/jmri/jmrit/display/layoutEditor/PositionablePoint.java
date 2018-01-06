@@ -1,7 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
-
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;

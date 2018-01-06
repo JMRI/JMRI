@@ -3,7 +3,6 @@ package jmri.jmrix.grapevine.serialmon;
 import jmri.jmrix.grapevine.SerialListener;
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialReply;
-import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -8,8 +8,6 @@ import jmri.SignalMast;
 import jmri.implementation.DefaultSignalHead;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
