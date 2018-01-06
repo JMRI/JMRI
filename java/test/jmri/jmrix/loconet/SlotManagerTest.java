@@ -1,9 +1,7 @@
 package jmri.jmrix.loconet;
 
 import jmri.ProgListener;
-import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import jmri.util.JUnitUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

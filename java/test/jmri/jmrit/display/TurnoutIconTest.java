@@ -5,7 +5,6 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;

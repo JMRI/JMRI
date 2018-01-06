@@ -7,8 +7,6 @@ import jmri.ReporterManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.JUnitUtil;
-import jmri.util.ThreadingUtil;
-import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;

@@ -153,7 +153,7 @@ public class ListedTableFrame extends BeanTableFrame {
         cardHolder.addPropertyChangeListener((PropertyChangeEvent e) -> {
             if (e.getPropertyName().equals("dividerLocation")) {
                 InstanceManager.getDefault(UserPreferencesManager.class)
-                        .setProperty(ListedTableFrame.class.getName(), "dividerLocation", (Integer) e.getNewValue());
+                        .setProperty(ListedTableFrame.class.getName(), "dividerLocation", e.getNewValue());
             }
         });
 

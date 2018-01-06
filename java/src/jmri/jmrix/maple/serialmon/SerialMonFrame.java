@@ -3,7 +3,6 @@ package jmri.jmrix.maple.serialmon;
 import jmri.jmrix.maple.SerialListener;
 import jmri.jmrix.maple.SerialMessage;
 import jmri.jmrix.maple.SerialReply;
-import jmri.jmrix.maple.SerialTrafficController;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
 
 /**

@@ -4,7 +4,6 @@ import java.util.List;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.oaktree.SerialNode;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
-import jmri.jmrix.oaktree.SerialTrafficController;
 import jmri.jmrix.oaktree.serialdriver.ConnectionConfig;
 import jmri.jmrix.oaktree.serialdriver.SerialDriverAdapter;
 import org.jdom2.Element;
