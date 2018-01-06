@@ -2114,12 +2114,12 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x15, 0x00, 0x03, 0x63});
         assertEquals(" basic Transponding Test 12",
-                "Transponder address 3 (short) present at LR22 () (BDL16x Board ID 2 RX4 zone (Unknown 5)).\n",
+                "Transponder address 3 (short) present at LR22 () (BDL16x Board ID 2 RX4 zone C).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x00, 0x15, 0x00, 0x03, 0x63});
         assertEquals(" basic Transponding Test 12",
-                "Transponder address 3 (short) absent at LR22 () (BDL16x Board ID 2 RX4 zone (Unknown 5)).\n",
+                "Transponder address 3 (short) absent at LR22 () (BDL16x Board ID 2 RX4 zone C).\n",
                 f.displayMessage(l));
 
     }
