@@ -1,11 +1,11 @@
 package jmri.util.usb;
 
-import static jmri.server.json.JSON.NULL;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
+import javax.annotation.Nonnull;
 import javax.swing.JMenuItem;
 import javax.swing.JSlider;
 import javax.usb.UsbDevice;
@@ -209,7 +209,7 @@ public class RailDriverMenuItem extends JMenuItem
      * @param string what to send
      * @param delay  how much to delay before shifting in next character
      */
-    public void sendStringAsync(String string, double delay) {
+    public void sendStringAsync(@Nonnull String string, double delay) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -224,7 +224,7 @@ public class RailDriverMenuItem extends JMenuItem
      * @param string what to send
      * @param delay  how much to delay before shifting in next character
      */
-    public void sendString(String string, double delay) {
+    public void sendString(@Nonnull String string, double delay) {
         for (int i = 0; i < string.length(); i++) {
             String ledstring = "";
             int maxJ = 3;
@@ -281,13 +281,10 @@ public class RailDriverMenuItem extends JMenuItem
     private final byte DPSEGMENT = (byte) 0x80;
 
     // Set the LEDS.
-    public void setLEDs(String ledstring) {
+    public void setLEDs(@Nonnull String ledstring) {
         byte[] buff = new byte[7];	// Segment buffer.
         Arrays.fill(buff, (byte) 0);
 
-        if (ledstring == NULL) {
-            ledstring = "---";
-        }
         int outIdx = 2;
         for (int i = 0; i < ledstring.length(); i++) {
             char c = ledstring.charAt(i);
