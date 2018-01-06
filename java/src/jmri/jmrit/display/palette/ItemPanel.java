@@ -71,7 +71,7 @@ public abstract class ItemPanel extends JPanel {
      * @param editor      Editor that called this ItemPalette
      */
     public ItemPanel(DisplayFrame parentFrame, String type, Editor editor) {
-        _paletteFrame = (DisplayFrame) parentFrame;
+        _paletteFrame = parentFrame;
         _itemType = type;
         _editor = editor;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

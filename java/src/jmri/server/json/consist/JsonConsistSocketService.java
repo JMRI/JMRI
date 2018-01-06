@@ -84,7 +84,7 @@ public class JsonConsistSocketService extends JsonSocketService {
             } catch (IOException ex) {
                 // this IO execption caused by broken comms with client
                 service.manager.getConsist(locoaddress).removeConsistListener(this);
-                consists.remove((DccLocoAddress) locoaddress);
+                consists.remove(locoaddress);
             }
             try {
                 (new ConsistFile()).writeFile(service.manager.getConsistList());

@@ -550,7 +550,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Background"));
         _tabIndex.put("Background", iconPanel);
 
-        iconPanel = new TextItemPanel((ItemPalette) palette, "Text", editor);
+        iconPanel = new TextItemPanel(palette, "Text", editor);
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Text"));
         _tabIndex.put("Text", iconPanel);
 
