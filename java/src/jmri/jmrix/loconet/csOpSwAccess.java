@@ -66,7 +66,7 @@ public class csOpSwAccess implements LocoNetListener {
         if ((parts.length == 2) &&
                (parts[0].equals("csOpSw")) &&
                 ((Integer.parseInt(parts[1])) >= 1) &&
-                (Integer.parseInt(parts[1]) <= 112)) {
+                (Integer.parseInt(parts[1]) <= 128)) {
             log.trace("splitting CV: {} becomes {} and {}", opSw, parts[0], parts[1]);
             // a valid command station OpSw identifier was found
             log.trace("Valid typeWord = 1; attempting to read OpSw{}.", Integer.parseInt(parts[1]));
@@ -90,7 +90,7 @@ public class csOpSwAccess implements LocoNetListener {
                 (parts.length != 2) ||
                 (!parts[0].equals("csOpSw")) ||
                 (Integer.parseInt(parts[1]) <= 0) ||
-                (Integer.parseInt(parts[1]) >= 113)) {
+                (Integer.parseInt(parts[1]) >= 129)) {
             // invalid request - signal it to the programmer
             if (pL != null) {
                 pL.programmingOpReply(0,ProgListener.NotImplemented);
@@ -150,7 +150,8 @@ public class csOpSwAccess implements LocoNetListener {
                     log.debug("now can finish the write by updating the correct bit...");
                     finishTheWrite();
                 } else {
-                    if (!canExtractValidData(m, cmdStnOpSwNum)) {
+                    if (!(((cmdStnOpSwNum > 0) && (cmdStnOpSwNum < 65) && (haveValidLowBytes)) || 
+                            ((cmdStnOpSwNum > 64) && (cmdStnOpSwNum < 129) && (haveValidHighBytes)))) {
                         ProgListener temp = p;
                         p = null;
                         if (temp != null) {
@@ -251,18 +252,6 @@ public class csOpSwAccess implements LocoNetListener {
         csOpSwAccessTimer.start();
 
         return true;
-    }
-
-    public boolean canExtractValidData(LocoNetMessage m, int cmdStnOpSwNum) {
-        int nde = m.getNumDataElements();
-        if ((nde != 0x0e) && (nde != 0x15)) {
-            return false;
-        }
-        if ((cmdStnOpSwNum > 0) ||
-            (cmdStnOpSwNum < (nde==0x0e?65:113))) {
-            return true;
-        }
-        return false;
     }
 
     public boolean extractCmdStnOpSw(int cmdStnOpSwNum) {
