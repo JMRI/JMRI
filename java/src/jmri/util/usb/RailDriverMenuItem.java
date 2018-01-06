@@ -1,13 +1,16 @@
 package jmri.util.usb;
 
-
+import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 import javax.swing.JMenuItem;
 import javax.swing.JSlider;
+import javax.swing.SwingUtilities;
 import javax.usb.UsbDevice;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -17,6 +20,7 @@ import jmri.jmrit.throttle.AddressPanel;
 import jmri.jmrit.throttle.ControlPanel;
 import jmri.jmrit.throttle.FunctionButton;
 import jmri.jmrit.throttle.FunctionPanel;
+import jmri.jmrit.throttle.LoadXmlThrottlesLayoutAction;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrit.throttle.ThrottleWindow;
@@ -39,6 +43,8 @@ public class RailDriverMenuItem extends JMenuItem
     private static final int PACKET_LENGTH = 64;
     public static final String SERIAL_NUMBER = null;
 
+    private HidServices hidServices = null;
+
     private UsbDevice usbDevice = null;
     private HidDevice hidDevice = null;
 
@@ -52,7 +58,7 @@ public class RailDriverMenuItem extends JMenuItem
         super();
 
         //TODO: remove " (build in)" if/when this replaces Raildriver script
-        setText("RailDriver (built in)");
+        setText("RailDriver Throttle (built in)");
 
         try {
             HidServicesSpecification hidServicesSpecification = new HidServicesSpecification();
@@ -62,7 +68,7 @@ public class RailDriverMenuItem extends JMenuItem
             hidServicesSpecification.setScanMode(ScanMode.SCAN_AT_FIXED_INTERVAL_WITH_PAUSE_AFTER_WRITE);
 
             // Get HID services using custom specification
-            HidServices hidServices = HidManager.getHidServices(hidServicesSpecification);
+            hidServices = HidManager.getHidServices(hidServicesSpecification);
             hidServices.addHidServicesListener(RailDriverMenuItem.this);
 
             log.debug("Starting HID services.");
@@ -74,6 +80,23 @@ public class RailDriverMenuItem extends JMenuItem
             //    log.info(hidDevice.toString());
             //}
             //
+            if (!invokeOnMenuOnly) {
+                // Open the device device by Vendor ID, Product ID and serial number
+                HidDevice hidDevice = hidServices.getHidDevice(VENDOR_ID, PRODUCT_ID, SERIAL_NUMBER);
+                if (hidDevice != null) {
+                    log.info("Got RailDriver hidDevice: " + hidDevice);
+                    // Consider overriding dropReportIdZero on Windows
+                    // if you see "The parameter is incorrect"
+                    // HidApi.dropReportIdZero = true;
+                    setupRailDriver(hidDevice);
+                }
+            }
+        } catch (HidException ex) {
+            log.error("HidException: {}", ex);
+        }
+
+        addActionListener((ActionEvent e) -> {
+            log.info("RailDriverMenuItem Action!");
             // Open the device device by Vendor ID, Product ID and serial number
             HidDevice hidDevice = hidServices.getHidDevice(VENDOR_ID, PRODUCT_ID, SERIAL_NUMBER);
             if (hidDevice != null) {
@@ -83,10 +106,11 @@ public class RailDriverMenuItem extends JMenuItem
                 // HidApi.dropReportIdZero = true;
                 setupRailDriver(hidDevice);
             }
-        } catch (HidException ex) {
-            log.error("HidException: {}", ex);
-        }
+        });
     }
+
+    //TODO: Remove this if/when the RailDriver script is removed
+    private boolean invokeOnMenuOnly = true;
 
     private Thread thread = null;
     private ThrottleWindow throttleWindow = null;
@@ -103,38 +127,69 @@ public class RailDriverMenuItem extends JMenuItem
 
             testRailDriver(false);  // set true to test RailDriver functions
 
-            //# open a throttle window and get components
             ThrottleFrameManager tfManager = InstanceManager.getDefault(ThrottleFrameManager.class);
-            throttleWindow = tfManager.createThrottleWindow();
-            activeThrottleFrame = throttleWindow.addThrottleFrame();
-            //# move throttle on screen so multiple throttles don't overlay each other
-            //throttleWindow.setLocation(400 * numThrottles, 50 * numThrottles);
 
-            activeThrottleFrame.toFront();
-            controlPanel = activeThrottleFrame.getControlPanel();
-            functionPanel = activeThrottleFrame.getFunctionPanel();
-            addressPanel = activeThrottleFrame.getAddressPanel();
-            throttleWindow.addPropertyChangeListener(this);
-            activeThrottleFrame.addPropertyChangeListener(this);
+            // if there's no active throttle frame
+            if (activeThrottleFrame == null) {
+                // we're going to try to open the default throttles layout
+                try {
+                    LoadXmlThrottlesLayoutAction lxta = new LoadXmlThrottlesLayoutAction();
+                    if (!lxta.loadThrottlesLayout(new File(ThrottleFrame.getDefaultThrottleFilename()))) {
+                        // if there's no default throttle layout...
+                        // throw this exception so we'll create a new throttle window
+                        throw new IOException();
+                    }
+                } catch (IOException ex) {
+                    //log.debug("No default throttle layout, creating an empty throttle window");
+                    // open a new throttle window and get its components
+                    throttleWindow = tfManager.createThrottleWindow();
+                    activeThrottleFrame = throttleWindow.addThrottleFrame();
+                }
+                // move throttle on screen so multiple throttles don't overlay each other
+                //throttleWindow.setLocation(400 * numThrottles, 50 * numThrottles);
+            }
 
-            // we also send them to ourself
+            // since LoadXmlThrottlesLayoutAction uses an invokeLater to 
+            // open the default throttles layout then we have to delay our
+            // actions here until after that one is done.
+            SwingUtilities.invokeLater(() -> {
+                if (activeThrottleFrame == null) {
+                    throttleWindow = tfManager.getCurrentThrottleFrame();
+                    if (throttleWindow != null) {
+                        activeThrottleFrame = throttleWindow.getCurrentThrottleFrame();
+                    }
+                }
+                if (activeThrottleFrame != null) {
+                    activeThrottleFrame.toFront();
+                    controlPanel = activeThrottleFrame.getControlPanel();
+                    functionPanel = activeThrottleFrame.getFunctionPanel();
+                    addressPanel = activeThrottleFrame.getAddressPanel();
+
+                    throttleWindow.addPropertyChangeListener(this);
+                    activeThrottleFrame.addPropertyChangeListener(this);
+                }
+            });
+
             addPropertyChangeListener(this);
 
+            // if I already have a thread running
             if (thread != null) {
+                // interrupt it
                 thread.interrupt();
                 try {
-                    thread.join(3);
+                    // wait (500 mSec) for it to die
+                    thread.join(500);
                 } catch (InterruptedException ex) {
                     log.debug("InterruptedException : {}", ex);
                 }
             }
+            // start a new thread
             thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     byte[] buff_old = new byte[14];	// read buffer
                     Arrays.fill(buff_old, (byte) 0);
 
-                    boolean first = true;
                     while (!thread.isInterrupted()) {
                         byte[] buff_new = new byte[14];	// read buffer
                         int ret = hidDevice.read(buff_new);
@@ -142,14 +197,11 @@ public class RailDriverMenuItem extends JMenuItem
                             //log.debug("hidDevice.read: " + buff_new);
                             for (int i = 0; i < buff_new.length; i++) {
                                 if (buff_old[i] != buff_new[i]) {
-                                    if (!first) {
-                                        //log.debug("buff[{}] = {}", i, String.format("0x%02X", buff_new[i]));
-                                        firePropertyChange("Value", "" + i, "" + buff_new[i]);
-                                    }
+                                    //log.info("buff[{}] = {}", i, String.format("0x%02X", buff_new[i]));
+                                    firePropertyChange("Value", "" + i, "" + buff_new[i]);
                                     buff_old[i] = buff_new[i];
                                 }
                             }
-                            first = false;
                         } else {
                             String error = hidDevice.getLastErrorMessage();
                             if (error != null) {
@@ -359,11 +411,15 @@ public class RailDriverMenuItem extends JMenuItem
             hidDevice.open();
         }
 
-        int ret = hidDevice.write(message, message.length, (byte) reportID);
-        if (ret >= 0) {
-            log.debug("hidDevice.write returned: " + ret);
-        } else {
-            log.error("hidDevice.write error: " + hidDevice.getLastErrorMessage());
+        try {
+            int ret = hidDevice.write(message, message.length, (byte) reportID);
+            if (ret >= 0) {
+                log.debug("hidDevice.write returned: " + ret);
+            } else {
+                log.error("hidDevice.write error: " + hidDevice.getLastErrorMessage());
+            }
+        } catch (IllegalStateException ex) {
+            log.error("hidDevice.write Exception : " + ex);
         }
     }
 
@@ -377,7 +433,9 @@ public class RailDriverMenuItem extends JMenuItem
         if (tHidDevice.getVendorId() == VENDOR_ID) {
             if (tHidDevice.getProductId() == PRODUCT_ID) {
                 if ((SERIAL_NUMBER == null) || (tHidDevice.getSerialNumber().equals(SERIAL_NUMBER))) {
-                    setupRailDriver(tHidDevice);
+                    if (!invokeOnMenuOnly) {
+                        setupRailDriver(tHidDevice);
+                    }
                 }
             }
         }
@@ -462,7 +520,7 @@ public class RailDriverMenuItem extends JMenuItem
         } else if (event.getPropertyName().equals("Value")) {
             String oldValue = event.getOldValue().toString();
             String newValue = event.getNewValue().toString();
-            //log.debug("propertyChange \"Value\" old: " + oldValue + ", new: " + newValue);
+            //log.info("propertyChange \"Value\" old: " + oldValue + ", new: " + newValue);
             int index = -1;
             try {
                 index = Integer.parseInt(oldValue);
@@ -640,8 +698,12 @@ public class RailDriverMenuItem extends JMenuItem
                                                 int cnt = recb.getItemCount();
                                                 int selectedIndex = addressPanel.getRosterSelectedIndex();
                                                 if (selectedIndex + 1 < cnt) {
-                                                    addressPanel.setRosterSelectedIndex(selectedIndex + 1);
-                                                    ledString = String.format("Next %d", selectedIndex + 1);
+                                                    try {
+                                                        addressPanel.setRosterSelectedIndex(selectedIndex + 1);
+                                                        ledString = String.format("Next %d", selectedIndex + 1);
+                                                    } catch (ArrayIndexOutOfBoundsException ex) {
+                                                        // ignore this
+                                                    }
                                                 }
                                             }
                                         }
