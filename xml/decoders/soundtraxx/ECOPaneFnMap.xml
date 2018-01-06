@@ -880,26 +880,32 @@
 			<griditem gridx="0" gridy="40" anchor="LINE_END">
 				<display item="Extended Function Map Fuel Loading"/>
 				<display item="Extended Function Map Airhorn2"/>
+				<display item="Extended Function Map ShuntWhistle"/>
 			</griditem>
 			<griditem gridx="1" gridy="40" anchor="CENTER">
 				<display item="Fuel Loading Automatic Effects - FWDD" label="" format="checkbox"/>
 				<display item="Airhorn2 Automatic Effects - FWDD" label="" format="checkbox"/>
+				<display item="ShuntWhistle Automatic Effects - FWDD" label="" format="checkbox"/>
 			</griditem>
 			<griditem gridx="2" gridy="40" anchor="CENTER">
 				<display item="Fuel Loading Automatic Effects - REVD" label="" format="checkbox"/>
 				<display item="Airhorn2 Automatic Effects - REVD" label="" format="checkbox"/>
+				<display item="ShuntWhistle Automatic Effects - REVD" label="" format="checkbox"/>
 			</griditem>
 			<griditem gridx="3" gridy="40" anchor="CENTER">
 				<display item="Fuel Loading Automatic Effects - FWDS" label="" format="checkbox"/>
 				<display item="Airhorn2 Automatic Effects - FWDS" label="" format="checkbox"/>
+				<display item="ShuntWhistle Automatic Effects - FWDS" label="" format="checkbox"/>
 			</griditem>
 			<griditem gridx="4" gridy="40" anchor="CENTER">
 				<display item="Fuel Loading Automatic Effects - REVS" label="" format="checkbox"/>
 				<display item="Airhorn2 Automatic Effects - REVS" label="" format="checkbox"/>
+				<display item="ShuntWhistle Automatic Effects - REVS" label="" format="checkbox"/>
 			</griditem>
 			<griditem gridx="5" gridy="40" anchor="CENTER">
 				<display item="Fuel Loading Automatic Effects - ESTP" label="" format="checkbox"/>
 				<display item="Airhorn2 Automatic Effects - ESTP" label="" format="checkbox"/>
+				<display item="ShuntWhistle Automatic Effects - ESTP" label="" format="checkbox"/>
 			</griditem>
 			<griditem gridx="0" gridy="41" anchor="LINE_END">
 				<display item="Extended Function Map Ash Dump"/>

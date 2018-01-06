@@ -1034,7 +1034,7 @@
                 <label>Blowdown</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.313" item="Extended Function Map Airhorn2" default="1">
+            <variable CV="1.313" item="Extended Function Map ShuntWhistle" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>Shunt Whistle</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
@@ -1265,23 +1265,23 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="1.441" mask="XXXXXXXV" item="Airhorn2 Automatic Effects - FWDD" default="0">
+            <variable CV="1.441" mask="XXXXXXXV" item="ShuntWhistle Automatic Effects - FWDD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="1.441" mask="XXXXXXVX" item="Airhorn2 Automatic Effects - REVD" default="0">
+            <variable CV="1.441" mask="XXXXXXVX" item="ShuntWhistle Automatic Effects - REVD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="1.441" mask="XXXXXVXX" item="Airhorn2 Automatic Effects - FWDS" default="0">
+            <variable CV="1.441" mask="XXXXXVXX" item="ShuntWhistle Automatic Effects - FWDS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="1.441" mask="XXXXVXXX" item="Airhorn2 Automatic Effects - REVS" default="0">
+            <variable CV="1.441" mask="XXXXVXXX" item="ShuntWhistle Automatic Effects - REVS" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="1.441" mask="XXXVXXXX" item="Airhorn2 Automatic Effects - ESTP" default="0">
+            <variable CV="1.441" mask="XXXVXXXX" item="ShuntWhistle Automatic Effects - ESTP" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
