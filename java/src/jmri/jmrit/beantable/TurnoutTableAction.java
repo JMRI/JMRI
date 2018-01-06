@@ -57,10 +57,13 @@ import jmri.TurnoutOperationManager;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
+import jmri.jmrix.openlcb.OlcbTurnout;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.XTableColumnModel;
+
+import org.apache.http.auth.AUTH;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -149,6 +152,9 @@ public class TurnoutTableAction extends AbstractTableAction {
     static public final int LOCKDECCOL = LOCKOPRCOL + 1;
     static public final int STRAIGHTCOL = LOCKDECCOL + 1;
     static public final int DIVERGCOL = STRAIGHTCOL + 1;
+    static public final int FORGETCOL = DIVERGCOL + 1;
+    static public final int QUERYCOL = FORGETCOL + 1;
+    static public final int AUTHCOL = QUERYCOL + 1;
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
@@ -170,7 +176,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
             @Override
             public int getColumnCount() {
-                return DIVERGCOL + 1;
+                return AUTHCOL + 1;
             }
 
             @Override
@@ -199,6 +205,12 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return Bundle.getMessage("ThrownSpeed");
                 } else if (col == STRAIGHTCOL) {
                     return Bundle.getMessage("ClosedSpeed");
+                } else if (col == FORGETCOL) {
+                    return Bundle.getMessage("StateForgetHeader");
+                } else if (col == QUERYCOL) {
+                    return Bundle.getMessage("StateQueryHeader");
+                } else if (col == AUTHCOL) {
+                    return Bundle.getMessage("StateAuthHeader");
                 } else if (col == EDITCOL) {
                     return "";
                 } else {
@@ -234,6 +246,12 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return JComboBox.class;
                 } else if (col == STRAIGHTCOL) {
                     return JComboBox.class;
+                } else if (col == FORGETCOL) {
+                    return JButton.class;
+                } else if (col == QUERYCOL) {
+                    return JButton.class;
+                } else if (col == AUTHCOL) {
+                    return Boolean.class;
                 } else if (col == VALUECOL && _graphicState) {
                     return JLabel.class; // use an image to show turnout state
                 } else {
@@ -270,6 +288,14 @@ public class TurnoutTableAction extends AbstractTableAction {
                         return new JTextField(14).getPreferredSize().width;
                     case STRAIGHTCOL:
                         return new JTextField(14).getPreferredSize().width;
+                    case FORGETCOL:
+                        return new JButton(Bundle.getMessage("StateForgetButton")).getPreferredSize().width;
+                    case QUERYCOL:
+                        return new JButton(Bundle.getMessage("StateQueryButton")).getPreferredSize()
+                                .width;
+                    case AUTHCOL:
+                        return new JTextField(Bundle.getMessage("StateAuthHeader").length())
+                                .getPreferredSize().width;
                     default:
                         super.getPreferredWidth(col);
                 }
@@ -310,6 +336,12 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return true;
                 } else if (col == EDITCOL) {
                     return true;
+                } else if (col == FORGETCOL) {
+                    return (t instanceof OlcbTurnout);
+                } else if (col == QUERYCOL) {
+                    return (t instanceof OlcbTurnout);
+                } else if (col == AUTHCOL) {
+                    return (t instanceof OlcbTurnout);
                 } else {
                     return super.isCellEditable(row, col);
                 }
@@ -436,7 +468,17 @@ public class TurnoutTableAction extends AbstractTableAction {
                     c.setSelectedItem(speed);
                     return c;
                     // } else if (col == VALUECOL && _graphicState) { // not neeeded as the
-                    //  graphic ImageIconRenderer uses the same super.getValueAt(row, col) as classic bean state text button
+                    //  graphic ImageIconRenderer uses the same super.getValueAt(row, col) as
+                    // classic bean state text button
+                } else if (col == FORGETCOL) {
+                    return Bundle.getMessage("StateForgetButton");
+                } else if (col == QUERYCOL) {
+                    return Bundle.getMessage("StateQueryButton");
+                } else if (col == AUTHCOL) {
+                    if (t instanceof OlcbTurnout) {
+                        return ((OlcbTurnout) t).isAuthoritative();
+                    }
+                    return Boolean.FALSE;
                 }
                 return super.getValueAt(row, col);
             }
@@ -542,6 +584,20 @@ public class TurnoutTableAction extends AbstractTableAction {
                         speedListThrown.add(speed);
                     }
                     fireTableRowsUpdated(row, row);
+                } else if (col == FORGETCOL) {
+                    if (t instanceof OlcbTurnout) {
+                        ((OlcbTurnout) t).doForgetState();
+                    }
+                    t.setCommandedState(Turnout.UNKNOWN);
+                } else if (col == QUERYCOL) {
+                    if (t instanceof OlcbTurnout) {
+                        ((OlcbTurnout) t).doQueryState();
+                    }
+                } else if (col == AUTHCOL) {
+                    boolean b = ((Boolean) value).booleanValue();
+                    if (t instanceof OlcbTurnout) {
+                        ((OlcbTurnout) t).setAuthoritative(b);
+                    }
                 } else if (col == VALUECOL && _graphicState) { // respond to clicking on ImageIconRenderer CellEditor
                     clickOn(t);
                     fireTableRowsUpdated(row, row);
@@ -628,6 +684,14 @@ public class TurnoutTableAction extends AbstractTableAction {
                 columnModel.setColumnVisible(column, false);
                 column = columnModel.getColumnByModelIndex(LOCKDECCOL);
                 columnModel.setColumnVisible(column, false);
+
+                boolean isOpenLCB = (getManager().getClass().getName().contains("Olcb"));
+                column = columnModel.getColumnByModelIndex(FORGETCOL);
+                columnModel.setColumnVisible(column, isOpenLCB);
+                column = columnModel.getColumnByModelIndex(QUERYCOL);
+                columnModel.setColumnVisible(column, isOpenLCB);
+                column = columnModel.getColumnByModelIndex(AUTHCOL);
+                columnModel.setColumnVisible(column, isOpenLCB);
 
                 super.configureTable(table);
             }
