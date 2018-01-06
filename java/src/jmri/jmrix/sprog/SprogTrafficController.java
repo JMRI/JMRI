@@ -79,9 +79,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             // serial Sprogs, but I have no way of testing:
             // getController().setHandshake(0);
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Setting sprogState {}", s);
-        }
+        log.debug("Setting sprogState {}", s);
     }
 
     public boolean isNormalMode() {
@@ -127,7 +125,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     protected synchronized void notifyReply(SprogReply r) {
         for (SprogListener listener : this.getCopyOfListeners()) {
             try {
-                // if is message don't send it back to the originator!
+                // don't send message back to the originator!
                 // skip forwarding to the last sender for now, we'll get them later
                 if (lastSender != listener) {
                     listener.notifyReply(r);
@@ -177,6 +175,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         try {
             if (ostream != null) {
                 ostream.write(m.getFormattedMessage(sprogState));
+                log.debug("sendSprogMessage written to ostream");
             } else {
                 // no stream connected
                 log.warn("sendMessage: no connection established");

@@ -42,13 +42,14 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     private boolean trackPowerState = false;
 
     // Simulator responses
-    String SPR_OK = "OK"; // TODO replace by documented ack reply
+    String SPR_OK = "OK";
+    String SPR_NO = "No Ack";
+    String SPR_PR = "\\n\\rP> "; // prompt
 
     public SimulatorAdapter() {
-        super(new SprogSystemConnectionMemo(SprogMode.SERVICE)); // uses default user name, suppose Service mode
+        super(new SprogSystemConnectionMemo(SprogMode.SERVICE)); // uses default user name, suppose SERVICE mode, not OPS
         setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
         this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogSimulatorTitle"));
-        // create the traffic controller
         this.getSystemConnectionMemo().setSprogTrafficController(new SprogTrafficController(this.getSystemConnectionMemo()));
     }
 
@@ -99,18 +100,16 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     }
 
     /**
-     * Set up all of the other objects to operate with an Sprog Simulator.
+     * Set up all of the other objects to operate with a Sprog Simulator.
      */
     @Override
     public void configure() {
         // connect to the traffic controller
         log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
-        SprogTrafficController control = new SprogTrafficController(getSystemConnectionMemo());
-        //compare with: XNetTrafficController packets = new XNetPacketizer(new LenzCommandStation());
-        control.connectPort(this);
-        this.getSystemConnectionMemo().setSprogTrafficController(control);
+        this.getSystemConnectionMemo().getSprogTrafficController().connectPort(this);
+
         // do the common manager config
-        //this.getSystemConnectionMemo().configureCommandStation();
+        this.getSystemConnectionMemo().configureCommandStation(); // for OPS mode
         this.getSystemConnectionMemo().configureManagers();
 
         // start the simulator
@@ -188,28 +187,21 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
             }
             SprogMessage m = readMessage();
             SprogReply r;
-            if (log.isDebugEnabled()) {
+            if (log.isDebugEnabled() && m != null) {
                 StringBuffer buf = new StringBuffer();
                 buf.append("SPROG Simulator Thread received message: ");
                 if (m != null) {
-                    for (int i = 0; i < m.getNumDataElements(); i++) {
-                        buf.append(Integer.toHexString(0xFF & m.getElement(i)) + " ");
-                    }
+                    buf.append(m);
                 } else {
                     buf.append("null message buffer");
                 }
-//                log.debug(buf.toString());
+                log.debug(buf.toString());
             }
             if (m != null) {
                 r = generateReply(m);
                 writeReply(r);
                 if (log.isDebugEnabled() && r != null) {
-                    StringBuffer buf = new StringBuffer();
-                    buf.append("SPROG Simulator Thread sent reply: ");
-                    for (int i = 0; i < r.getNumDataElements(); i++) {
-                        buf.append(Integer.toHexString(0xFF & r.getElement(i)) + " ");
-                    }
-                    log.debug(buf.toString());
+                    log.debug("Simulator Thread sent Reply: \"{}\"", r);
                 }
             }
         }
@@ -237,71 +229,67 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
      * This is the heart of the simulation. It translates an
      * incoming SprogMessage into an outgoing SprogReply.
      *
-     * As yet, no messages receive a meaningful reply. TODO: add all supported msg as cases, fill in useful ack reply in SPR_OK
+     * Based on SPROG information from A. Crosland.
      */
     @SuppressWarnings("fallthrough")
     private SprogReply generateReply(SprogMessage msg) {
         log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg.toString());
 
-        String s, r;
         SprogReply reply = new SprogReply();
+        int i = 0;
         char command = msg.toString().charAt(0);
         log.debug("Message type = " + command);
         switch (command) {
-            // TODO add in more SPROG replies
 
-            case 'O': // Send packet
-//            case 'X': // eXit programming
-//            case 'D': // Deque packet
-//            case 'Q': // Que packet
-//            case 'F': // display memory
-//            case 'C': // program loCo
-                reply = new SprogReply(SPR_OK); // confirm
+            case 'O':
+                log.debug("Send packet command detected");
+                //reply = new SprogReply(SPR_PR);
                 break;
 
             case 'A':
-                log.debug("Aquire Throttle command detected");
-                reply = new SprogReply(SPR_OK); // confirm
+                log.debug("Address (open Throttle) command detected");
+                reply = new SprogReply(msg.toString().substring(2)); // echo address (decimal)
                 break;
 
             case '>':
-                log.debug("Set Throttle command detected");
-                reply = new SprogReply(SPR_OK); // confirm
+                log.debug("Set speed (Throttle) command detected");
+                reply = new SprogReply(msg.toString().substring(2)); // echo speed (decimal)
                 break;
 
             case '+':
                 log.debug("TRACK_POWER_ON detected");
                 trackPowerState = true;
-                reply = new SprogReply(SPR_OK); // confirm
+                //reply = new SprogReply(SPR_PR);
                 break;
 
             case '-':
                 log.debug("TRACK_POWER_OFF detected");
                 trackPowerState = false;
-                reply = new SprogReply(SPR_OK); // confirm
+                //reply = new SprogReply(SPR_PR);
                 break;
 
             case '?':
                 log.debug("Read_Sprog_Version detected");
-                String replyString = "V0.1 - simulator";
-                reply = new SprogReply(replyString); // fake version number reply
+                String replyString = "\\n\\rSPROG II Ver 4.3\\n\\r";
+                reply = new SprogReply(replyString);
                 break;
-//
-//            case 'L': // Read Loco
-//                log.debug("Read Loco detected");
-//                reply = new SprogReply(SPR_OK); // confirm
-//                break;
-//
-//            case 'R':
-//                log.debug("Read_CV detected");
-//                reply = new SprogReply(SPR_OK); // confirm
-//                break;
+
+            case '=':
+                log.debug("Read_CV detected");
+                reply = new SprogReply("= " + msg.toString().substring(2)); // echo CV value (decimal)
+                break;
 
             default:
-                log.debug("non-reply message detected");
-                reply = new SprogReply(""); // is there a default SPROG error reply?
+                log.debug("non-reply message detected: {}", msg.toString());
+                reply = new SprogReply();
+                // reply = new SprogReply("!E"); // SPROG error reply
         }
-        log.debug("Reply generated = {}", reply.toString());
+        i = reply.toString().length();
+        //reply.setElement(i++, '\n'); // add CR + prompt for all replies
+        reply.setElement(i++, 'P');
+        reply.setElement(i++, '>');
+        reply.setElement(i++, ' ');
+        log.debug("Reply generated = \"{}\"", reply.toString());
         return reply;
     }
 
@@ -316,9 +304,11 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         if (r == null) {
             return; // there is no reply to be sent
         }
-        for (int i = 0; i < r.getNumDataElements(); i++) {
+        int len = r.getNumDataElements();
+        for (int i = 0; i < len; i++) {
             try {
                 outpipe.writeByte((byte) r.getElement(i));
+                log.debug("{} of {} bytes written to outpipe", i + 1, len);
             } catch (java.io.IOException ex) {
             }
         }
@@ -337,6 +327,18 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
      * @throws IOException when presented by the input source.
      */
     private SprogMessage loadChars() throws java.io.IOException {
+        // code copied from XNet (Lenz Simulator)
+//        int i;
+//        byte char1;
+//        char1 = readByteProtected(inpipe);
+//        int len = (char1 & 0x0f) + 2;  // opCode+Nbytes+ECC
+//        SprogMessage msg = new SprogMessage(len);
+//        msg.setElement(0, char1 & 0xFF);
+//        for (i = 1; i < len; i++) {
+//            char1 = readByteProtected(inpipe);
+//            msg.setElement(i, char1 & 0xFF);
+//        }
+        // code copied from EasyDcc/NCE Simulator
         int nchars;
         byte[] rcvBuffer = new byte[32];
 
@@ -349,6 +351,26 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         }
         return msg;
     }
+
+    /**
+     * Read a single byte, protecting against various timeouts, etc.
+     * <p>
+     * When a port is set to have a receive timeout (via the
+     * enableReceiveTimeout() method), some will return zero bytes or an
+     * EOFException at the end of the timeout. In that case, the read should be
+     * repeated to get the next real character.
+     * Copied from jmri.jmrix.lenz.simulator.XNetSimulatorAdapter (Lenz Simulator)
+     */
+//    protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
+//        byte[] rcvBuffer = new byte[1];
+//        while (true) { // loop will repeat until character found
+//            int nchars;
+//            nchars = istream.read(rcvBuffer, 0, 1);
+//            if (nchars > 0) {
+//                return rcvBuffer[0];
+//            }
+//        }
+//    }
 
     // streams to share with user class
     private DataOutputStream pout = null; // this is provided to classes who want to write to us

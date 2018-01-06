@@ -204,8 +204,8 @@ public class SprogReply extends AbstractMRReply {
         return index;
     }
 
-    /*
-     * Normal SPROG replies will end with the prompt for the next command
+    /**
+     * Normal SPROG replies will end with the prompt for the next command.
      * Bootloader will end with ETX with no preceding DLE.
      * SPROG v4 bootloader replies "L>" on entry and replies "." at other
      * times.
@@ -240,9 +240,9 @@ public class SprogReply extends AbstractMRReply {
     }
 
     public boolean endBootReply() {
-        // Detect that the reply buffer ends with ETX with no preceding DLE
+        // Detect that the reply buffer ends with ETX with no preceding DLE.
         // This is the end of a SPROG II bootloader reply or the end of
-        // a SPROG v4 echoing the botloader version request
+        // a SPROG v4 echoing the bootloader version request
         int num = this.getNumDataElements();
         if (num >= 2) {
             // ptr is offset of last element in SprogReply

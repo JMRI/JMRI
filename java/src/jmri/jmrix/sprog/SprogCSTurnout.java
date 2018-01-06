@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Sprog implementation of the Turnout interface.
- * <P>
+ * <p>
  * This object doesn't listen to the Sprog communications. This is because it
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
@@ -24,6 +24,7 @@ public class SprogCSTurnout extends AbstractTurnout {
      * <p>
      * Sprog turnouts use the NMRA number (0-511) as their numerical
      * identification.
+     *
      * @param number address for turnout
      * @param memo connection to get prefix from
      */

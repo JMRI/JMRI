@@ -195,7 +195,7 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
                 } else {
                     buf.append("null message buffer");
                 }
-//                log.debug(buf.toString());
+                // log.debug(buf.toString()); // generates a lot of traffic
             }
             if (m != null) {
                 r = generateReply(m);
@@ -249,8 +249,8 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
 
             case 'X': // eXit programming
             case 'S': // Send packet
-            case 'D': // Deque packet
-            case 'Q': // Que packet
+            case 'D': // Dequeue packet
+            case 'Q': // Queue packet
             case 'F': // display memory
             case 'C': // program loCo
                 reply.setElement(i++, EDC_OPS); // capital O for Operation
