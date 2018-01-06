@@ -95,6 +95,8 @@ public class RailDriverMenuItem extends JMenuItem
             log.error("HidException: {}", ex);
         }
 
+        addPropertyChangeListener(this);
+
         addActionListener((ActionEvent e) -> {
             log.info("RailDriverMenuItem Action!");
             // Open the device device by Vendor ID, Product ID and serial number
@@ -169,8 +171,6 @@ public class RailDriverMenuItem extends JMenuItem
                     activeThrottleFrame.addPropertyChangeListener(this);
                 }
             });
-
-            addPropertyChangeListener(this);
 
             // if I already have a thread running
             if (thread != null) {
