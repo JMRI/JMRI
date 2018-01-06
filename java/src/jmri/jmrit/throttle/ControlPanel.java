@@ -936,7 +936,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * Perform an emergency stop.
      *
      */
-    private void stop() {
+    public void stop() {
         if (this.throttle == null) {
             return;
         }

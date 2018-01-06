@@ -9,9 +9,13 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JMenuItem;
 import javax.swing.JSlider;
 import javax.usb.UsbDevice;
+import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.jmrit.roster.swing.RosterEntryComboBox;
+import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.jmrit.throttle.AddressPanel;
 import jmri.jmrit.throttle.ControlPanel;
+import jmri.jmrit.throttle.FunctionButton;
 import jmri.jmrit.throttle.FunctionPanel;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
@@ -90,8 +94,6 @@ public class RailDriverMenuItem extends JMenuItem
     private ControlPanel controlPanel = null;
     private FunctionPanel functionPanel = null;
     private AddressPanel addressPanel = null;
-    private int numThrottles = 0;
-    private int numControllers = 0;
 
     private void setupRailDriver(HidDevice hidDevice) {
         this.hidDevice = hidDevice;
@@ -106,9 +108,8 @@ public class RailDriverMenuItem extends JMenuItem
             throttleWindow = tfManager.createThrottleWindow();
             activeThrottleFrame = throttleWindow.addThrottleFrame();
             //# move throttle on screen so multiple throttles don't overlay each other
-            throttleWindow.setLocation(400 * numThrottles, 50 * numThrottles);
-            numThrottles++;
-            numControllers++;
+            //throttleWindow.setLocation(400 * numThrottles, 50 * numThrottles);
+
             activeThrottleFrame.toFront();
             controlPanel = activeThrottleFrame.getControlPanel();
             functionPanel = activeThrottleFrame.getFunctionPanel();
@@ -138,11 +139,11 @@ public class RailDriverMenuItem extends JMenuItem
                         byte[] buff_new = new byte[14];	// read buffer
                         int ret = hidDevice.read(buff_new);
                         if (ret >= 0) {
-                            //log.info("hidDevice.read: " + buff_new);
+                            //log.debug("hidDevice.read: " + buff_new);
                             for (int i = 0; i < buff_new.length; i++) {
                                 if (buff_old[i] != buff_new[i]) {
                                     if (!first) {
-                                        log.info("buff[{}] = {}", i, String.format("0x%02X", buff_new[i]));
+                                        //log.debug("buff[{}] = {}", i, String.format("0x%02X", buff_new[i]));
                                         firePropertyChange("Value", "" + i, "" + buff_new[i]);
                                     }
                                     buff_old[i] = buff_new[i];
@@ -203,7 +204,7 @@ public class RailDriverMenuItem extends JMenuItem
     }
 
     /**
-     * send a string to the LED display (asychroniously)
+     * send a string to the LED display (asynchronously)
      *
      * @param string what to send
      * @param delay  how much to delay before shifting in next character
@@ -291,7 +292,7 @@ public class RailDriverMenuItem extends JMenuItem
         for (int i = 0; i < ledstring.length(); i++) {
             char c = ledstring.charAt(i);
             if (Character.isDigit(c)) {
-                //log.info("buff[{}] = {}", outIdx, "" + c);
+                //log.debug("buff[{}] = {}", outIdx, "" + c);
                 // Get seven segment code for digit.
                 buff[outIdx] = SevenSegment[c - '0'];
             } else if (Character.isWhitespace(c)) {
@@ -374,7 +375,7 @@ public class RailDriverMenuItem extends JMenuItem
      */
     @Override
     public void hidDeviceAttached(HidServicesEvent event) {
-        log.info("{}", event);
+        log.info("hidDeviceAttached({})", event);
         HidDevice tHidDevice = event.getHidDevice();
         if (tHidDevice.getVendorId() == VENDOR_ID) {
             if (tHidDevice.getProductId() == PRODUCT_ID) {
@@ -390,7 +391,7 @@ public class RailDriverMenuItem extends JMenuItem
      */
     @Override
     public void hidDeviceDetached(HidServicesEvent event) {
-        log.info("{}", event);
+        log.info("hidDeviceDetached({})", event);
         if (hidDevice == event.getHidDevice()) {
             hidDevice = null;
         }
@@ -401,7 +402,7 @@ public class RailDriverMenuItem extends JMenuItem
      */
     @Override
     public void hidFailure(HidServicesEvent event) {
-        log.info("{}", event);
+        log.warn("hidFailure({})", event);
     }
 
     /*
@@ -414,13 +415,17 @@ public class RailDriverMenuItem extends JMenuItem
             //ancestor property change - closing throttle window
             // Remove all property change listeners and
             // dereference all throttle components
-            activeThrottleFrame.removePropertyChangeListener(this);
-            throttleWindow.removePropertyChangeListener(this);
-            activeThrottleFrame = null;
+            if (throttleWindow != null) {
+                throttleWindow.removePropertyChangeListener(this);
+                throttleWindow = null;
+            }
+            if (activeThrottleFrame != null) {
+                activeThrottleFrame.removePropertyChangeListener(this);
+                activeThrottleFrame = null;
+            }
             controlPanel = null;
             functionPanel = null;
             addressPanel = null;
-            throttleWindow = null;
             // Now remove this propertyChangeListener from the model
             //global model
             //model.removePropertyChangeListener(self)
@@ -429,12 +434,30 @@ public class RailDriverMenuItem extends JMenuItem
             Object object = event.getNewValue();
             //log.debug("event.newValue(): " + object);
             if (object == null) {
-                activeThrottleFrame = null;
+                if (activeThrottleFrame != null) {
+                    activeThrottleFrame.removePropertyChangeListener(this);
+                    activeThrottleFrame = null;
+                }
                 controlPanel = null;
                 functionPanel = null;
                 addressPanel = null;
             } else if (object instanceof ThrottleFrame) {
+
+                if (throttleWindow != null) {
+                    throttleWindow.removePropertyChangeListener(this);
+                    throttleWindow = null;
+                }
+                if (activeThrottleFrame != null) {
+                    activeThrottleFrame.removePropertyChangeListener(this);
+                    activeThrottleFrame = null;
+                }
+
                 activeThrottleFrame = (ThrottleFrame) object;
+                throttleWindow = activeThrottleFrame.getThrottleWindow();
+
+                throttleWindow.addPropertyChangeListener(this);
+                activeThrottleFrame.addPropertyChangeListener(this);
+
                 addressPanel = activeThrottleFrame.getAddressPanel();
                 controlPanel = activeThrottleFrame.getControlPanel();
                 functionPanel = activeThrottleFrame.getFunctionPanel();
@@ -442,7 +465,7 @@ public class RailDriverMenuItem extends JMenuItem
         } else if (event.getPropertyName().equals("Value")) {
             String oldValue = event.getOldValue().toString();
             String newValue = event.getNewValue().toString();
-            log.info("propertyChange \"Value\" old: " + oldValue + ", new: " + newValue);
+            //log.debug("propertyChange \"Value\" old: " + oldValue + ", new: " + newValue);
             int index = -1;
             try {
                 index = Integer.parseInt(oldValue);
@@ -455,195 +478,270 @@ public class RailDriverMenuItem extends JMenuItem
             } catch (NumberFormatException ex) {
                 log.error("RailDriver parse property new value ('{}') exception: {}", newValue, ex);
             }
+            byte vByte = (byte) value;
+            int vInt = 0xFF & (int) vByte;
 
             int fNum = -1;
             switch (index) {
-                case 1: {
+                case 0: {
                     // REVERSER is the state of the reverser lever, values (much) less
                     // than 128 are forward, a value at or near 128 is neutral and values
                     // (much) greater than 128 are reverse.
-                    if (controlPanel.isEnabled()) {
-                        if (value < 0.3) {
+                    log.debug("REVERSER value: {}", value);
+                    if ((controlPanel != null) && controlPanel.isEnabled()) {
+                        if (vInt < 120) {
                             controlPanel.setForwardDirection(true);
-                        }
-                        if (value > 0.3) {
+                        } else if (vInt > 136) {
                             controlPanel.setForwardDirection(false);
                         }
                     }
                     break;
                 }
-                case 2: {
+                case 1: {
                     // THROTTLE is the state of the Throttle (and dynamic brake).  Values
                     // (much) greater than 128 are for throttle (maximum throttle is are
                     // values close to 255), values near 128 are at the center position
                     // (idle/coasting), and values (much) less than 128 are for dynamic
                     // braking, with values aproaching 0 for full dynamic braking.
-                    JSlider slider = controlPanel.getSpeedSlider();
-                    if (slider.isEnabled()) {
-                        // lever front is negative (0xD0 to 0x80)
-                        // back is positive (0x7F to 0x50)
-                        // limit range to only positive side of lever
-                        int throttle_min = 0x50;
-                        int throttle_max = 0x7F;
-                        value = throttle_max - MathUtil.pin(value, throttle_min, throttle_max);
-                        // compute fraction (0.0 to 1.0)
-                        double fraction = (value - throttle_min) / ((double) throttle_max - throttle_min);
-                        // convert fraction to slider setting
-                        int setting = (int) (fraction * (slider.getMaximum() - slider.getMinimum()));
-                        slider.setValue(setting);
-                        String speed = String.format("%03d", setting);
-                        log.info("••••    speed: " + speed);
-                        setLEDs(speed);
-                        //TODO: dynamic braking
+                    log.debug("THROTTLE value: " + value);
+
+                    if (controlPanel != null) {
+                        JSlider slider = controlPanel.getSpeedSlider();
+                        if ((slider != null) && slider.isEnabled()) {
+                            // lever front is negative (0xD0 to 0x80)
+                            // back is positive (0x7F to 0x50)
+                            // limit range to only positive side of lever
+                            int throttle_min = 0x30;
+                            int throttle_max = 0x78;
+                            int v = MathUtil.pin(throttle_max - value, throttle_min, throttle_max);
+                            // compute fraction (0.0 to 1.0)
+                            double fraction = (v - throttle_min) / ((double) throttle_max - throttle_min);
+                            fraction = (value < 0) ? 0.0 : fraction;
+                            // convert fraction to slider setting
+                            int setting = (int) (fraction * (slider.getMaximum() - slider.getMinimum()));
+                            slider.setValue(setting);
+
+                            if (value < 0) {
+                                //TODO: dynamic braking
+                                setLEDs("DBr");
+                            } else {
+                                String speed = String.format("%03d", setting);
+                                //log.debug("••••    speed: " + speed);
+                                setLEDs(speed);
+                            }
+                        }
                     }
                     break;
                 }
-                case 3: {
+                case 2: {
                     // AUTOBRAKE is the state of the Automatic (trainline) brake.  Large
                     // values for no braking, small values for more braking.
+                    log.debug("AUTOBRAKE value: " + vInt);
                     break;
                 }
-                case 4: {
+                case 3: {
                     // INDEPENDBRK is the state of the Independent (engine only) brake.
                     // Like the Automatic brake: large values for no braking, small
                     // values for more braking.
+                    log.debug("INDEPENDBRK value: " + vInt);
                     break;
                 }
-                case 5: {
+                case 4: {
                     // BAILOFF is the Independent brake 'bailoff', this is the spring
                     // loaded right movement of the Independent brake lever.  Larger
                     // values mean the lever has been shifted right.
+                    log.debug("BAILOFF value: " + vInt);
                     break;
                 }
-                case 6: {
+                case 5: {
                     // HEADLIGHT is the state of the headlight switch.  A value below 128
                     // is off, a value near 128 is dim, and a number much larger than 128
                     // is full. This is an analog input w/detents, not a switch!
+                    log.debug("HEADLIGHT value: " + vInt);
                     break;
                 }
-                case 7: {
+                case 6: {
                     // WIPER is the state of the wiper switch.  Much like the headlight
                     // switch, this is also an analog input w/detents, not a switch!
                     // Small values (much less than 128) are off, values near 128 are
                     // slow, and larger values are full.
+                    log.debug("WIPER value: " + vInt);
                     break;
                 }
-                case 8: {
-                    // DIGITAL1 is the leftmost eight blue buttons in the top row, BB1,
-                    // BB2 BB3, BB4, BB5, BB6, BB7, and BB8.
-                    break;
-                }
-                case 9: {
-                    // DIGITAL2 is the rightmost six blue buttons in the top row and the
-                    // leftmost two buttons in the bottom row, BB9, BB10, BB11, BB12,
-                    // BB13, BB14, BB15, and BB16.
-                    break;
-                }
-                case 10: {
-                    // DIGITAL3 is the eight buttons on the bottom row, starting with the
-                    // third from the left, BB17, BB18, BB19, BB20, BB21, BB22, BB23, and
-                    // BB24. 
-                    break;
-                }
-                case 11: {
-                    // DIGITAL4 is the rightmost four buttons on the bottom row, plus the
-                    // zoom up and zoom down, plus the pan right and pan up buttons, named
-                    // BB25, BB26, BB27, BB28, Zoom Up, Zoom Down, Pan Right, and Pan Up.
-                    break;
-                }
+                case 7:
+                // DIGITAL1 is the leftmost eight blue buttons in the top row, BB1,
+                // BB2 BB3, BB4, BB5, BB6, BB7, and BB8.
+                case 8:
+                // DIGITAL2 is the rightmost six blue buttons in the top row and the
+                // leftmost two buttons in the bottom row, BB9, BB10, BB11, BB12,
+                // BB13, BB14, BB15, and BB16.
+                case 9:
+                // DIGITAL3 is the eight buttons on the bottom row, starting with the
+                // third from the left, BB17, BB18, BB19, BB20, BB21, BB22, BB23, and
+                // BB24. 
+                case 10:
+                // DIGITAL4 is the rightmost four buttons on the bottom row, plus the
+                // zoom up and zoom down, plus the pan right and pan up buttons, named
+                // BB25, BB26, BB27, BB28, Zoom Up, Zoom Down, Pan Right, and Pan Up.
+                case 11:
+                // DIGITAL5 is the pan left and pan down, range up and range down, and
+                // E-Stop up and E-Stop down switches, named Pan Left, Pan Down,
+                // Range Up, Range Down, Emergency Brake Up, Emergency Brake Down.
                 case 12: {
-                    // DIGITAL5 is the pan left and pan down, range up and range down, and
-                    // E-Stop up and E-Stop down switches, named Pan Left, Pan Down,
-                    // Range Up, Range Down, Emergency Brake Up, Emergency Brake Down.
-                    break;
-                }
-                case 13: {
                     // DIGITAL6 is the whistle up and whistle down, Alert, Sand, P
                     // (Pantograph), and Bell buttons, named Whistle Up, Whistle Down,
                     // Alert, Sand, Pantograph, and Bell.
+                    if (functionPanel != null) {
+                        FunctionButton[] functionButtons = functionPanel.getFunctionButtons();
+                        for (int bit = 0; bit < 8; bit++) {
+                            boolean isDown = (0 != (vByte & (1 << bit)));
+                            fNum = ((index - 7) * 8) + bit;
+                            String ledString = String.format("F%d", fNum + 1);
+
+                            switch (fNum) {
+                                case 28: {  // zoom/rocker button up
+                                    if ((addressPanel != null) && isDown) {
+                                        addressPanel.selectRosterEntry();
+                                        DccLocoAddress a = addressPanel.getCurrentAddress();
+                                        ledString = "sel " + ((a != null) ? a.toString() : "null");
+                                    }
+                                    break;
+                                }
+                                case 29: {  // zoom/rocker button down
+                                    if ((addressPanel != null) && isDown) {
+                                        addressPanel.dispatchAddress();
+                                        DccLocoAddress a = addressPanel.getCurrentAddress();
+                                        ledString = "dis " + ((a != null) ? a.toString() : "null");
+                                    }
+                                    break;
+                                }
+                                case 30: {  // four way panning up
+                                    if ((addressPanel != null) && isDown) {
+                                        int selectedIndex = addressPanel.getRosterSelectedIndex();
+                                        if (selectedIndex > 1) {
+                                            addressPanel.setRosterSelectedIndex(selectedIndex - 1);
+                                            ledString = String.format("Prev %d", selectedIndex - 1);
+                                        }
+                                    }
+                                    break;
+                                }
+                                case 31: {  // four way panning right
+                                    if (isDown) {
+                                        if (throttleWindow != null) {
+                                            throttleWindow.nextThrottleFrame();
+                                        }
+                                        ledString = "NXT";
+                                    }
+                                    break;
+                                }
+                                case 32: {  // four way panning down
+                                    if ((addressPanel != null) && isDown) {
+                                        RosterEntrySelectorPanel resp = addressPanel.getRosterEntrySelector();
+                                        if (resp != null) {
+                                            RosterEntryComboBox recb = resp.getRosterEntryComboBox();
+                                            if (recb != null) {
+                                                int cnt = recb.getItemCount();
+                                                int selectedIndex = addressPanel.getRosterSelectedIndex();
+                                                if (selectedIndex + 1 < cnt) {
+                                                    addressPanel.setRosterSelectedIndex(selectedIndex + 1);
+                                                    ledString = String.format("Next %d", selectedIndex + 1);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    break;
+                                }
+                                case 33: {  // four way panning left
+                                    if (isDown) {
+                                        if (throttleWindow != null) {
+                                            throttleWindow.previousThrottleFrame();
+                                        }
+                                        ledString = "PRE";
+                                    }
+                                    break;
+                                }
+                                case 34: {  // Gear Shift Up
+                                    if (isDown) {
+                                        // shuntFn
+                                        functionButtons[3].changeState(false);
+                                    }
+                                    break;
+                                }
+                                case 35: {  // Gear Shift Down
+                                    if (isDown) {
+                                        // shuntFn
+                                        functionButtons[3].changeState(true);
+                                    }
+                                    break;
+                                }
+                                case 36:
+                                case 37: {  // Emergency Brake up/down
+                                    if ((controlPanel != null) && isDown) {
+                                        controlPanel.stop();
+                                    }
+                                    break;
+                                }
+
+                                case 38: {  // Alerter
+                                    if (isDown) {
+                                        fNum = 6;   // alertFn
+                                    }
+                                    break;
+                                }
+                                case 39: {  // Sander
+                                    if (isDown) {
+                                        fNum = 7;   // sandFn
+                                    }
+                                    break;
+                                }
+                                case 40: {  // Pantograph
+                                    if (isDown) {
+                                        fNum = 8;   // pantoFn
+                                    }
+                                    break;
+                                }
+                                case 41: {  // Bell
+                                    if (isDown) {
+                                        fNum = 1;   // bellFn
+                                    }
+                                    break;
+                                }
+                                case 42:
+                                case 43: {  // Horn/Whistle
+                                    fNum = 2;   // hornFn
+                                    break;
+                                }
+                                default: {
+                                    break;
+                                }
+                            }
+                            if (fNum < functionButtons.length) {
+                                FunctionButton button = functionButtons[fNum];
+                                if (button != null) {
+                                    if (button.getIsLockable()) {
+                                        if (isDown) {
+                                            button.changeState(!button.getState());
+                                        }
+                                    } else {
+                                        button.changeState(isDown);
+                                    }
+                                }
+                            }
+                            if (isDown) {
+                                if (ledString.length() <= 3) {
+                                    setLEDs(ledString);
+                                } else {
+                                    sendStringAsync(ledString, 0.333);
+                                }
+                            }
+                        }   // for (int bit = 0; bit < 8; bit++)
+                    }
                     break;
                 }
                 default: {
                     break;
                 }
-            }
-            //            // Function buttons
-            //            int fNum = -1;
-            //            try {
-            //                fNum = Integer.parseInt(oldValue); // direct mapping of buttons 0 -> maxFunction
-            //            } catch (NumberFormatException ex) {
-            //                fNum = 99;             // axis
-            //            }
-            //            // cab button mapping
-            //            if (component == componentAlert)  {
-            //                fNum = alertFn;
-            //            }
-            //            if (component == componentSand)  {
-            //                fNum = sandFn;
-            //            }
-            //            if (component == componentPanto)  {
-            //                fNum = pantoFn;
-            //            }
-            //            if (component == componentBell)  {
-            //                fNum = bellFn;
-            //            }
-            //            // toggle / fixed setting depending on throttle button definition
-            //            if (fNum <= componentMaxFunction) {
-            //                // component out of range (not a blue button or cab button with special mapping)
-            //                button = functionPanel.getFunctionButtons()[fNum];
-            //                if (button != null)  {
-            //                    if (button.getIsLockable())  {
-            //                        if (value > 0.5)  {
-            //                            button.changeState(not button.getState());
-            //                        }
-            //                    } else {
-            //                        button.changeState(value > 0.5);
-            //                    }
-            //                    // only display if actually setting the function
-            //                    if ((value > 0.5) && button.getState())  {
-            //                        cont.displayStrTemp("F" + str(fNum)) #, tempMillis);
-            //                    }
-            //                }
-            //            }
-
-            //            // Function buttons
-            //            int fNum = -1;
-            //            try {
-            //                fNum = Integer.parseInt(oldValue); // direct mapping of buttons 0 -> maxFunction
-            //            } catch (NumberFormatException ex) {
-            //                fNum = 99;             // axis
-            //            }
-            //            // cab button mapping
-            //            if (component == componentAlert)  {
-            //                fNum = alertFn;
-            //            }
-            //            if (component == componentSand)  {
-            //                fNum = sandFn;
-            //            }
-            //            if (component == componentPanto)  {
-            //                fNum = pantoFn;
-            //            }
-            //            if (component == componentBell)  {
-            //                fNum = bellFn;
-            //            }
-            //            // toggle / fixed setting depending on throttle button definition
-            //            if (fNum <= componentMaxFunction) {
-            //                // component out of range (not a blue button or cab button with special mapping)
-            //                button = functionPanel.getFunctionButtons()[fNum];
-            //                if (button != null)  {
-            //                    if (button.getIsLockable())  {
-            //                        if (value > 0.5)  {
-            //                            button.changeState(not button.getState());
-            //                        }
-            //                    } else {
-            //                        button.changeState(value > 0.5);
-            //                    }
-            //                    // only display if actually setting the function
-            //                    if ((value > 0.5) && button.getState())  {
-            //                        cont.displayStrTemp("F" + str(fNum)) #, tempMillis);
-            //                    }
-            //                }
-            //            }
+            }   // switch (index)
         }
     }
     //initialize logging
