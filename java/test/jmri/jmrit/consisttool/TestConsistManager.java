@@ -2,6 +2,8 @@ package jmri.jmrit.consisttool;
 
 import jmri.Consist;
 import jmri.LocoAddress;
+import jmri.DccLocoAddress;
+import jmri.implementation.DccConsist;
 
 /**
  * Consist Manager used for consist tool tests.
@@ -19,8 +21,22 @@ public class TestConsistManager extends jmri.implementation.AbstractConsistManag
      */
     @Override
     protected Consist addConsist(LocoAddress address){
-         // no operation for now.
-         return null;
+        if (! (address instanceof DccLocoAddress)) {
+            throw new IllegalArgumentException("address is not a DccLocoAddress object");
+        }
+        if (consistTable.containsKey(address)) {
+            return consistTable.get(address);
+        }
+        DccConsist consist = new DccConsist((DccLocoAddress) address,null){
+           @Override
+           protected void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal){
+           }
+           @Override
+           protected void removeFromAdvancedConsist(DccLocoAddress LocoAddress){
+           }
+        };
+        consistTable.put(address, consist);
+        return consist;
     }
 
     /**
