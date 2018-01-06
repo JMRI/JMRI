@@ -458,16 +458,20 @@
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw56</label>
             </variable>
-            <variable CV="csOpSw.057" item="OpSw 057" default="0" readOnly="yes">
-                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+            <variable CV="csOpSw.057" item="OpSw 057" default="1" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw57</label>
             </variable>
-            <variable CV="csOpSw.058" item="OpSw 058" default="0" readOnly="yes">
-                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+            <variable CV="csOpSw.058" item="OpSw 058" default="1" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw58</label>
             </variable>
-            <variable CV="csOpSw.059" item="OpSw 059" default="1" readOnly="yes">
+            <variable CV="csOpSw.059" item="OpSw 059" default="1" readOnly="yes" exclude="DCS210">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
+                <label>OpSw59</label>
+            </variable>
+            <variable CV="csOpSw.059" item="OpSw 059" default="0" readOnly="yes" exclude="DCS240">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw59</label>
             </variable>
 
@@ -714,8 +718,8 @@
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw114</label>
             </variable>
-            <variable CV="csOpSw.115" item="OpSw 115" default="0" readOnly="yes">
-                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+            <variable CV="csOpSw.115" item="OpSw 115" default="1" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw115</label>
             </variable>
             <variable CV="csOpSw.116" item="OpSw 116" default="0" readOnly="yes">
@@ -730,8 +734,8 @@
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw118</label>
             </variable>
-            <variable CV="csOpSw.119" item="OpSw 119" default="0" readOnly="yes">
-                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+            <variable CV="csOpSw.119" item="OpSw 119" default="1" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw119</label>
             </variable>
             <variable CV="csOpSw.120" item="OpSw 120" default="0" readOnly="yes" infoOnly="yes">
@@ -770,43 +774,8 @@
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw128</label>
             </variable>
-
-
-
-
-
         </variables>
     </decoder>
-    <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-        <name>OpSws</name>
-        <column>
-            <row>
-                <cvtable/>
-            </row>
-            <row>
-                <column>
-                    <label>
-                        <text>&lt;html&gt;The "CV" column in the table above shows "OpSw"
-                            numbers, where the value "csOpSw." &lt;p&gt;is pre-pended to
-                            the OpSw Number.
-                        </text>
-                    </label>
-                    <label>
-                        <text> </text>
-                    </label>
-                </column>
-            </row>
-            <row>
-                <label>
-                    <text>&lt;html&gt;
-                    &lt;p&gt;&lt;p&gt;OpSw value 0 = "T"hrown.  OpSw value 1 = "C"losed.&lt;p&gt;
-                    &lt;/html&gt;&lt;/html&gt;
-                    </text>
-                </label>
-            </row>
-        </column>
-
-    </pane>
     <pane>
         <name>Basic</name>
         <column>
@@ -1157,6 +1126,36 @@
                 &lt;/strong&gt;&lt;/html&gt;</text>
             </label>
         </column>
+    </pane>
+    <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+        <name>OpSws</name>
+        <column>
+            <row>
+                <cvtable/>
+            </row>
+            <row>
+                <column>
+                    <label>
+                        <text>&lt;html&gt;The "CV" column in the table above shows "OpSw"
+                            numbers, where the value "csOpSw." &lt;p&gt;is pre-pended to
+                            the OpSw Number.
+                        </text>
+                    </label>
+                    <label>
+                        <text> </text>
+                    </label>
+                </column>
+            </row>
+            <row>
+                <label>
+                    <text>&lt;html&gt;
+                    &lt;p&gt;&lt;p&gt;OpSw value 0 = "T"hrown.  OpSw value 1 = "C"losed.&lt;p&gt;
+                    &lt;/html&gt;&lt;/html&gt;
+                    </text>
+                </label>
+            </row>
+        </column>
+
     </pane>
 
     <pane>
