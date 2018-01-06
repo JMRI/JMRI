@@ -235,8 +235,7 @@ class Steam1Sound extends EngineSound {
                 fn = fe.getText();
                 log.debug("notch: {}, file: {}", nn, fn);
                 AudioBuffer b = S1Notch.getBuffer(vf, fn, _soundName + 
-                        "_NOTCH_" + i + "_" + j + "_", _soundName + "_NOTCH_" + 
-                        i + "_" + j + "_");
+                        "_NOTCH_" + i + "_" + j, _soundName + "_NOTCH_" + i + "_" + j);
                 log.debug("buffer created: {}, name: {}, format: {}", b, 
                         b.getSystemName(), b.getFormat());
                 sb.addChuffBuffer(b);
@@ -259,7 +258,7 @@ class Steam1Sound extends EngineSound {
                 log.debug("notch filler file: {}", fn);
                 AudioBuffer bnf = S1Notch.getBuffer(vf, 
                         el.getChildText("notchfiller-file"), _soundName + 
-                        "_NOTCHFILLER_" + i + "_", _soundName + "_NOTCHFILLER_" + i + "_");
+                        "_NOTCHFILLER_" + i, _soundName + "_NOTCHFILLER_" + i);
                 log.debug("buffer created: {}, name: {}, format: {}", bnf, bnf.getSystemName(), bnf.getFormat());
                 sb.setNotchFillerBuffer(bnf);
                 sb.setNotchFillerData(AudioUtil.getWavData(S1Notch.getWavStream(vf, fn)));
@@ -278,7 +277,7 @@ class Steam1Sound extends EngineSound {
                     fn = fe.getText();
                     log.debug("coasting file: {}", fn);
                     AudioBuffer bc = S1Notch.getBuffer(vf, fn, _soundName + 
-                            "_COAST_" + j + "_", _soundName + "_COAST_" + j + "_");
+                            "_COAST_" + j, _soundName + "_COAST_" + j);
                     log.debug("buffer created: {}, name: {}, format: {}", 
                             bc, bc.getSystemName(), bc.getFormat());
                     sb.addCoastBuffer(bc); // WAV in Buffer for queueing.
@@ -293,7 +292,7 @@ class Steam1Sound extends EngineSound {
                 if (fn != null) {
                     log.debug("coasting filler file: {}", fn);
                     AudioBuffer bcf = S1Notch.getBuffer(vf, fn, _soundName +
-                            "_COASTFILLER_", _soundName + "_COASTFILLER_");
+                            "_COASTFILLER", _soundName + "_COASTFILLER");
                     log.debug("buffer created: {}, name: {}, format: {}", bcf, 
                             bcf.getSystemName(), bcf.getFormat());
                     sb.setCoastFillerBuffer(bcf);
@@ -335,7 +334,7 @@ class Steam1Sound extends EngineSound {
         if (el != null) {
             fn = el.getChild("sound-file").getValue();
             log.debug("idle sound: {}", fn);
-            idle_sound = new SoundBite(vf, fn, _soundName + "Idle", _soundName + "Idle");
+            idle_sound = new SoundBite(vf, fn, _soundName + "_IDLE", _soundName + "_Idle");
             idle_sound.setGain(setXMLGain(el)); // Handle gain
             log.debug("idle sound gain: {}", idle_sound.getGain());
             idle_sound.setLooped(true);
@@ -349,7 +348,7 @@ class Steam1Sound extends EngineSound {
         if (el != null) {
             fn = el.getChild("sound-file").getValue();
             log.debug("brake sound: {}", fn);
-            brake_sound = new SoundBite(vf, fn, _soundName + "Brake", _soundName + "Brake");
+            brake_sound = new SoundBite(vf, fn, _soundName + "_BRAKE", _soundName + "_Brake");
             brake_sound.setGain(setXMLGain(el));
             log.debug("brake sound gain: {}", brake_sound.getGain());
             brake_sound.setLooped(false);
@@ -363,8 +362,8 @@ class Steam1Sound extends EngineSound {
         if (el != null) {
             fn = el.getChild("sound-file").getValue();
             log.debug("pre-arrival sound: {}", fn);
-            pre_arrival_sound = new SoundBite(vf, fn, _soundName + "Pre-arrival", 
-                    _soundName + "Pre-arrival");
+            pre_arrival_sound = new SoundBite(vf, fn, _soundName + "_PRE-ARRIVAL", 
+                    _soundName + "_Pre-arrival");
             pre_arrival_sound.setGain(setXMLGain(el));
             log.debug("pre-arrival sound gain: {}", pre_arrival_sound.getGain());
             pre_arrival_sound.setLooped(false);
@@ -509,7 +508,7 @@ class Steam1Sound extends EngineSound {
             AudioBuffer b = null;
             AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
             try {
-                b = (AudioBuffer) am.provideAudio(VSDSound.BufSysNamePrefix + sname + filename);
+                b = (AudioBuffer) am.provideAudio(VSDSound.BufSysNamePrefix + sname);
                 b.setUserName(VSDSound.BufUserNamePrefix + uname);
                 if (vf == null) {
                     log.warn("No VSD File");
@@ -1039,7 +1038,7 @@ class Steam1Sound extends EngineSound {
                 // Regular queueing. Whole sound clip goes to the queue. Low notches.
                 _sound.queueBuffer(b);
                 log.debug("chuff or coast buffer queued. Interval: {}", interval);
-                setWait( ((sbl - SLEEP_INTERVAL * 4) / SLEEP_INTERVAL));
+                setWait((sbl - SLEEP_INTERVAL * 4) / SLEEP_INTERVAL);
                 if (getWait() < 3) {
                     setWait(0);
                 } else {
@@ -1053,14 +1052,12 @@ class Steam1Sound extends EngineSound {
                 if (interval > (SLEEP_INTERVAL + 10)) {
                     log.debug("need to cut sound clip from {} to length {}", 
                             (int)SoundBite.calcLength(b), interval); 
-                    setWait( ((interval - SLEEP_INTERVAL * 8) / SLEEP_INTERVAL));
+                    setWait((interval - SLEEP_INTERVAL * 8) / SLEEP_INTERVAL);
                     if (getWait() < 4) {
                         setWait(0);
                     }
                     // Take <interval> ms of the buffer. Regard sample size.
-                    int bbufcount = b.getFrameSize() * interval * b.getFrequency() / 1000;
-                    // Must be rounded down to avoid size errors (16-bit sounds).
-                    bbufcount = bbufcount / b.getFrameSize() * b.getFrameSize();
+                    int bbufcount = b.getFrameSize() * (interval * b.getFrequency() / 1000);
                     // Empty buffer (bound to the coast notch, notch = 1).
                     AudioBuffer buf = helper_notch.bufs_helper.get(incHelperIndex());
                     byte[] bbytes = new byte[bbufcount];
@@ -1113,13 +1110,11 @@ class Steam1Sound extends EngineSound {
                         k, _sound.getSource().numQueuedBuffers());
                 // Create a buffer to queue rest of the filling time. Ignore small sound bites.
                 if (imrest > (SLEEP_INTERVAL + 10)) {
-                    setWait( ((imrest - SLEEP_INTERVAL * 4) / SLEEP_INTERVAL));
+                    setWait((imrest - SLEEP_INTERVAL * 4) / SLEEP_INTERVAL);
                     if (getWait() < 3) {
                         setWait(0);
                     }
-                    int bbufcount = fill_buf.getFrameSize() * imrest * fill_buf.getFrequency() / 1000;
-                    // Must be rounded down to avoid size error (16-bit sounds).
-                    bbufcount = bbufcount / fill_buf.getFrameSize() * fill_buf.getFrameSize();
+                    int bbufcount = fill_buf.getFrameSize() * (imrest * fill_buf.getFrequency() / 1000);
                     log.debug("chuff_index: {}", chuffIndex());
                     // Empty buffer (bound to notch = 1).
                     AudioBuffer buf  = helper_notch.bufs_helper.get(incHelperIndex());
