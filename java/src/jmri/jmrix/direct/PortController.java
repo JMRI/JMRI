@@ -1,8 +1,5 @@
 package jmri.jmrix.direct;
 
-import java.util.ResourceBundle;
-import jmri.jmrix.SystemConnectionMemo;
-
 /*
  * Identifying class representing a direct-drive communications port
  * @author   Bob Jacobsen    Copyright (C) 2001, 2004

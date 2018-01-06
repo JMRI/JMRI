@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import jmri.jmrix.secsi.SerialMessage;
 import jmri.jmrix.secsi.SerialReply;
-import jmri.jmrix.secsi.SerialTrafficController;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 import jmri.util.StringUtil;
 

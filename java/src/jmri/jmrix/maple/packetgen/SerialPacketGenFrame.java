@@ -9,7 +9,6 @@ import javax.swing.JSeparator;
 import jmri.jmrix.maple.InputBits;
 import jmri.jmrix.maple.SerialMessage;
 import jmri.jmrix.maple.SerialReply;
-import jmri.jmrix.maple.SerialTrafficController;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.util.StringUtil;
 

@@ -3,7 +3,6 @@ package jmri.jmrix.oaktree.serialmon;
 import jmri.jmrix.oaktree.SerialListener;
 import jmri.jmrix.oaktree.SerialMessage;
 import jmri.jmrix.oaktree.SerialReply;
-import jmri.jmrix.oaktree.SerialTrafficController;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 
 /**
