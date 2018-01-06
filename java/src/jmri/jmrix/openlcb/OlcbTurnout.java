@@ -43,6 +43,7 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
 
     VersionedValueListener<Boolean> turnoutListener;
     BitProducerConsumer pc;
+    boolean isAuthoritative = true;
     EventTable.EventTableEntryHolder thrownEventTableEntryHolder = null;
     EventTable.EventTableEntryHolder closedEventTableEntryHolder = null;
 
@@ -221,6 +222,29 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
         if (turnoutListener != null) turnoutListener.release();
         if (pc != null) pc.release();
         super.dispose();
+    }
+
+    public void setAuthoritative(boolean authoritative) {
+        isAuthoritative = authoritative;
+    }
+
+    public boolean isAuthoritative() {
+        return isAuthoritative;
+    }
+
+    public void doForgetState() {
+        if (pc != null) {
+            pc.resetToDefault();
+        }
+        newCommandedState(Turnout.UNKNOWN);
+        newKnownState(Turnout.UNKNOWN);
+    }
+
+    public void doQueryState() {
+        if (pc != null) {
+            pc.resetToDefault();
+            pc.sendQuery();
+        }
     }
 
     /**
