@@ -331,7 +331,7 @@
             </variable>
 
             <variable CV="csOpSw.25" item="OpSw 25" default="1">
-                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw25</label>
                 <tooltip>OpSw25</tooltip>
             </variable>
@@ -612,36 +612,6 @@
             </variable>
         </variables>
     </decoder>
-    <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-        <name>OpSws</name>
-        <column>
-            <row>
-                <cvtable/>
-            </row>
-            <row>
-                <column>
-                    <label>
-                        <text>&lt;html&gt;The "CV" column in the table above shows "OpSw"
-                            numbers, where the value "csOpSw." &lt;p&gt;is pre-pended to
-                            the OpSw Number.
-                        </text>
-                    </label>
-                    <label>
-                        <text> </text>
-                    </label>
-                </column>
-            </row>
-            <row>
-                <label>
-                    <text>&lt;html&gt;
-                    &lt;p&gt;&lt;p&gt;OpSw value 0 = "T"hrown.  OpSw value 1 = "C"losed.&lt;p&gt;
-                    &lt;/html&gt;&lt;/html&gt;
-                    </text>
-                </label>
-            </row>
-        </column>
-
-    </pane>
     <pane>
         <name>Basic</name>
         <column>
@@ -780,29 +750,41 @@
             <label>
                 <text>These OpSw ought not be changed from factory default settings.</text>
             </label>
-            <display item="OpSw 4"/>
-            <display item="OpSw 9"/>
-            <group include="DCS50">
-                <display item="OpSw 10(DCS50)"/>
-            </group>
-            <group include="DCS50">
-                <display item="OpSw 11(DCS50)"/>
-            </group>
-            <display item="OpSw 12"/>
-            <display item="OpSw 19"/>
-            <display item="OpSw 25"/>
-            <display item="OpSw 26"/>
-            <display item="OpSw 29"/>
-            <display item="OpSw 30"/>
-            <display item="OpSw 31"/>
-            <display item="OpSw 35"/>
-            <display item="OpSw 37"/>
-            <display item="OpSw 38"/>
-            <display item="OpSw 41"/>
-            <display item="OpSw 42"/>
-            <display item="OpSw 44"/>
-            <display item="OpSw 46"/>
-            <display item="OpSw 47"/>
+            <row>
+                <column>
+                    <display item="OpSw 4"/>
+                    <display item="OpSw 9"/>
+                    <group include="DCS50">
+                        <display item="OpSw 10(DCS50)"/>
+                    </group>
+                    <group include="DCS50">
+                        <display item="OpSw 11(DCS50)"/>
+                    </group>
+                    <display item="OpSw 12"/>
+                    <display item="OpSw 19"/>
+                    <display item="OpSw 25"/>
+                </column>
+                <column>
+                    <display item="OpSw 26"/>
+                    <display item="OpSw 29"/>
+                    <display item="OpSw 30"/>
+                    <display item="OpSw 31"/>
+                </column>
+                <column>
+                    <display item="OpSw 35"/>
+                    <display item="OpSw 37"/>
+                    <display item="OpSw 38"/>
+                    <display item="OpSw 41"/>
+                </column>
+                <column>
+                    <display item="OpSw 42"/>
+                    <display item="OpSw 44"/>
+                    <display item="OpSw 46"/>
+                    <display item="OpSw 47"/>
+                </column>
+                    
+            </row>
+            
 
             <label>
                 <text> </text>
@@ -826,7 +808,36 @@
             </label>
         </column>
     </pane>
+    <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+        <name>OpSws</name>
+        <column>
+            <row>
+                <cvtable/>
+            </row>
+            <row>
+                <column>
+                    <label>
+                        <text>&lt;html&gt;The "CV" column in the table above shows "OpSw"
+                            numbers, where the value "csOpSw." &lt;p&gt;is pre-pended to
+                            the OpSw Number.
+                        </text>
+                    </label>
+                    <label>
+                        <text> </text>
+                    </label>
+                </column>
+            </row>
+            <row>
+                <label>
+                    <text>&lt;html&gt;
+                    &lt;p&gt;&lt;p&gt;OpSw value 0 = "T"hrown.  OpSw value 1 = "C"losed.&lt;p&gt;
+                    &lt;/html&gt;&lt;/html&gt;
+                    </text>
+                </label>
+            </row>
+        </column>
 
+    </pane>
     <pane>
         <name>Notes</name>
         <column>
