@@ -1,8 +1,5 @@
 package jmri.jmrix.loconet;
 
-import static jmri.jmrix.loconet.LnConstants.STAT1_SL_ACTIVE;
-import static jmri.jmrix.loconet.LnConstants.STAT1_SL_BUSY;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -13,7 +10,6 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -15,7 +15,6 @@ import javax.annotation.CheckReturnValue;
 import javax.swing.ComboBoxEditor;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JComboBox;
-import javax.swing.JComboBox.KeySelectionManager;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;

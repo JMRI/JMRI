@@ -1,11 +1,8 @@
 package jmri.jmrix.easydcc.easydccmon;
 
 import java.awt.GraphicsEnvironment;
-import java.util.ArrayList;
-import jmri.jmrix.easydcc.EasyDccListener;
 import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccReply;
-import jmri.jmrix.easydcc.EasyDccTrafficController;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import org.junit.After;
 import org.junit.Assert;

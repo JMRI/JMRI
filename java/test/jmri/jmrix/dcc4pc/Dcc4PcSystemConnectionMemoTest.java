@@ -1,6 +1,5 @@
 package jmri.jmrix.dcc4pc;
 
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

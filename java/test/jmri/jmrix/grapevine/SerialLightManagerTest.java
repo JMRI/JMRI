@@ -1,8 +1,6 @@
 package jmri.jmrix.grapevine;
 
 import jmri.Light;
-import jmri.jmrix.AbstractMRListener;
-import jmri.jmrix.AbstractMRMessage;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

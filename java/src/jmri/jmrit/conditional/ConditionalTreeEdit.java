@@ -43,7 +43,6 @@ import jmri.ConditionalVariable;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.Logix;
-import jmri.NamedBean;
 import jmri.Route;
 import jmri.Sensor;
 import jmri.SignalHead;
