@@ -46,6 +46,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         super(memo);
         this.slot = slot;
         network = memo.getLnTrafficController();
+        network.sendLocoNetMessage(
+                    slot.writeStatus(LnConstants.LOCO_IDLE));
         LocoNetMessage msg = new LocoNetMessage(4);
         msg.setOpCode(LnConstants.OPC_MOVE_SLOTS);
         msg.setElement(1, slot.getSlot());
