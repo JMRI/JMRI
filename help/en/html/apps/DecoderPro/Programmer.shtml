@@ -119,12 +119,12 @@
               Table" pane of Comprehensive.xml for an example.</p>
             </li>
 
-            <li><dfn>tooltip</dfn> - Allows you to specify a
+            <li><dfn>tooltip</dfn> - Allows you to specify a default
             tooltip to be presented when the cursor is left over
-            the variable. If not present, the tooltip defined in
-            the decoder file is used. (Note: This is not fully
-            implemented yet, but you should include them in your
-            programmer definitions as they will work soon)</li>
+            the variable. This tooltip will be overridden by any
+             tooltip defined in the decoder file.
+             (Note: This behaviour differs from
+             <a href="#display">the behaviour of the label attribute</a>.)</li>
           </ul><a name="display" id="display"></a>
 
           <p>Which name to display is controlled by the pane's

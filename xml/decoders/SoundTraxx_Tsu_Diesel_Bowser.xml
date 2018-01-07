@@ -18,15 +18,18 @@
   <version author="Michael Mosher" version="3" lastUpdated="20130220"/>
   <version author="Alain Le Marchand" version="4" lastUpdated="20140530"/>
   <version author="Alain Le Marchand" version="5" lastUpdated="20140819"/>
+  <version author="Alain Le Marchand" version="6" lastUpdated="20180103"/>
   <!-- This file contains the Tsunami definitions for Bowser OEM diesel locomotives	-->
   <!-- version 1    Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file. -->
   <!-- version 2    Add Rule 17 bit to CV51 & 52 -->
   <!-- version 3    make more use of extrenal includes -->
   <!-- version 4    Added Function Groups 2/3 exchange from Dave Heap (initially introduced for Genesis)     -->
   <!--              Used official Soundtraxx/Bowser documentation for function mapping, which is Soundtraxx default -->
-  <!-- version 5    Added PCC Streetcar. CV list provided by George Huckaby, Custom Traxx                   -->
-  <!--              Removed from display sound options obviously not used (airhorn, diesel engine)          -->
+  <!-- version 5    Added PCC Streetcar. CV list provided by George Huckaby, Custom Traxx                    -->
+  <!--              Removed from display sound options obviously not used (airhorn, diesel engine)           -->
   <!--              but left the CVs in the CV list. Unclear which are really used until someone test it.    -->
+  <!-- version 6    Specific UserID with tooltip indicating version number,
+                    from SoundTraxx Product Identification guide Rev.B                                       -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
@@ -1552,7 +1555,7 @@
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUuserId.xml"/>
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 2" default="0" exclude="PCC" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Air Compressor Enable</label>

@@ -1,15 +1,9 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.Point;
-import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;

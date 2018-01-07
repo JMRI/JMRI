@@ -4,7 +4,6 @@ import java.awt.GraphicsEnvironment;
 import java.util.HashMap;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
-import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.DecVariableValue;
 import jmri.jmrit.symbolicprog.VariableValue;

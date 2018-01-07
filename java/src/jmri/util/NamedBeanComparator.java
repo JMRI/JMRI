@@ -1,7 +1,6 @@
 package jmri.util;
 
 import jmri.NamedBean;
-import jmri.Manager;
 
 /**
  * Comparator for JMRI NamedBeans via their system Names.

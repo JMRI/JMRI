@@ -3,7 +3,6 @@ package jmri.jmrix.secsi.serialmon;
 import jmri.jmrix.secsi.SerialListener;
 import jmri.jmrix.secsi.SerialMessage;
 import jmri.jmrix.secsi.SerialReply;
-import jmri.jmrix.secsi.SerialTrafficController;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 
 /**

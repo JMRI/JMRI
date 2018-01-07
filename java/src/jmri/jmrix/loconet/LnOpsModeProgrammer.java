@@ -11,7 +11,6 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,7 +64,10 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         p = null;
         // Check mode
         LocoNetMessage m;
-        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+        if (getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) {
+            mSlotMgr.setMode(LnProgrammerManager.LOCONETCSOPSWMODE);
+            mSlotMgr.writeCV(CV, val, pL); // deal with this via service-mode programmer
+        } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             /**
              * CV format is e.g. "113.12" where the first part defines the
              * typeword for the specific board type and the second is the specific bit number
@@ -146,7 +148,10 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         // Check mode
         String[] parts;
         LocoNetMessage m;
-        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+        if (getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) {
+            mSlotMgr.setMode(LnProgrammerManager.LOCONETCSOPSWMODE);
+            mSlotMgr.readCV(CV, pL); // deal with this via service-mode programmer
+        } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             /**
              * CV format is e.g. "113.12" where the first part defines the
              * typeword for the specific board type and the second is the specific bit number
@@ -229,7 +234,10 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     public void confirmCV(String CV, int val, ProgListener pL) throws ProgrammerException {
         p = null;
         // Check mode
-        if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+        if (getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) {
+            mSlotMgr.setMode(LnProgrammerManager.LOCONETCSOPSWMODE);
+            mSlotMgr.readCV(CV, pL); // deal with this via service-mode programmer
+        } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             readCV(CV, pL);
         }
         else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {

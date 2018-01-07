@@ -2114,12 +2114,12 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x15, 0x00, 0x03, 0x63});
         assertEquals(" basic Transponding Test 12",
-                "Transponder address 3 (short) present at LR22 () (BDL16x Board ID 2 RX4 zone (Unknown 5)).\n",
+                "Transponder address 3 (short) present at LR22 () (BDL16x Board ID 2 RX4 zone C).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x00, 0x15, 0x00, 0x03, 0x63});
         assertEquals(" basic Transponding Test 12",
-                "Transponder address 3 (short) absent at LR22 () (BDL16x Board ID 2 RX4 zone (Unknown 5)).\n",
+                "Transponder address 3 (short) absent at LR22 () (BDL16x Board ID 2 RX4 zone C).\n",
                 f.displayMessage(l));
 
     }
@@ -5424,12 +5424,12 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xBC, 0x00, 0x10, 0x53});
         assertEquals("Switch test 30",
-                "Unable to parse LocoNet message.\ncontents: BC 00 10 53\n",
+                "Request status of switch LT1 ().\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xBC, 0x00, 0x20, 0x63});
         assertEquals("Switch test 31",
-                "Unable to parse LocoNet message.\ncontents: BC 00 20 63\n",
+                "Request status of switch LT1 ().\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xBC, 0x00, 0x40, 0x33});
@@ -5442,6 +5442,10 @@ public class LlnmonTest extends TestCase {
                 "Unable to parse LocoNet message.\ncontents: BD 00 40 00\n",
                 f.displayMessage(l));
 
+        l = new LocoNetMessage(new int[] {0xBC, 0x05, 0x30, 0x76});
+        assertEquals("Switch test 34",
+                "Request status of switch LT6 ().\n",
+                f.displayMessage(l));
 }
 
     public void testDirf() {

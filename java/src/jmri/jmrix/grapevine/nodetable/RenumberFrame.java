@@ -9,7 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrix.grapevine.SerialMessage;
-import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 
 /**
