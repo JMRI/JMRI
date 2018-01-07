@@ -1,7 +1,11 @@
 package jmri.jmrix.openlcb;
 
 import java.util.concurrent.Semaphore;
+
+import jmri.InstanceManager;
 import jmri.jmrix.can.CanMessage;
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.ConfigurationManager;
 import jmri.jmrix.can.TestTrafficController;
 import org.openlcb.Connection;
 import org.openlcb.NodeID;
@@ -13,6 +17,9 @@ import org.openlcb.can.CanInterface;
  */
 
 public class OlcbTestInterface {
+    /**
+     * Creates a lightweight test setup.
+     */
     public OlcbTestInterface() {
         tc = new TestTrafficController();
         nodeID = new NodeID("02.01.0D.00.00.01");
@@ -20,17 +27,23 @@ public class OlcbTestInterface {
         iface = canInterface.getInterface();
     }
 
-    static class CreateConfigurationManager {}
+    public static class CreateConfigurationManager {}
 
+    /**
+     * Creates a more heavyweight test setup, using the standard ConfigurationManager class.
+     * @param hh ignored
+     */
     public OlcbTestInterface(CreateConfigurationManager hh) {
         tc = new TestTrafficController();
-        OlcbSystemConnectionMemo memo = new OlcbSystemConnectionMemo();
+        InstanceManager.store(new NodeID("02.01.0D.00.00.01"), NodeID.class);
+        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
-        configurationManager = new OlcbConfigurationManager(memo);
+        memo.setProtocol(ConfigurationManager.OPENLCB);
+        memo.configureManagers();
+        configurationManager = InstanceManager.getDefault(OlcbConfigurationManager.class);
         canInterface = configurationManager.olcbCanInterface;
-        //canInterface = OlcbConfigurationManager.createOlcbCanInterface(nodeID, tc);
         iface = canInterface.getInterface();
-        nodeID = iface.getNodeId(); //new NodeID("02.01.0D.00.00.01");
+        nodeID = iface.getNodeId(); //
         waitForStartup();
     }
 
