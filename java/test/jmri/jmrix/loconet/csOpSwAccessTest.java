@@ -12,16 +12,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import jmri.util.JUnitUtil;
-//import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.junit.Assert;
 import jmri.jmrix.loconet.SlotManager;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
-import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 

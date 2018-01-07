@@ -1,6 +1,5 @@
 package jmri.util;
 
-import java.util.Comparator;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.junit.After;

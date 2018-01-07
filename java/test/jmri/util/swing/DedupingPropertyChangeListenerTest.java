@@ -5,8 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.beans.PropertyChangeSupport;
-import java.lang.reflect.InvocationTargetException;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Semaphore;
 
 import javax.swing.SwingUtilities;
@@ -14,7 +12,6 @@ import javax.swing.SwingUtilities;
 import jmri.util.JUnitUtil;
 import jmri.util.MockPropertyChangeListener;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;

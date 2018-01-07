@@ -1,9 +1,6 @@
 package jmri.util.usb;
 
-import java.io.UnsupportedEncodingException;
 import javax.usb.UsbDevice;
-import javax.usb.UsbDisconnectedException;
-import javax.usb.UsbException;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

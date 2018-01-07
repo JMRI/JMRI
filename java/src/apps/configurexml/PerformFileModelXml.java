@@ -3,7 +3,6 @@ package apps.configurexml;
 import apps.PerformFileModel;
 import apps.StartupActionsManager;
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;

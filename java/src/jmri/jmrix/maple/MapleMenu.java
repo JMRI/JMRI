@@ -1,6 +1,5 @@
 package jmri.jmrix.maple;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
