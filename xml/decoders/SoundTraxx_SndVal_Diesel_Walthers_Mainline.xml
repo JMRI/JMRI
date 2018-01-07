@@ -14,8 +14,11 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20171110"/>
-  <!-- This file contains the Tsunami definitions for Walthers OEM diesel locomotives                           -->
-  <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel_Walthers.xml" Ver 6 file.                                    -->
+  <version author="Alain Le Marchand" version="1.1" lastUpdated="20180103"/>
+  <!-- This file contains the Tsunami definitions for Walthers OEM diesel locomotives        -->
+  <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel_Walthers.xml" Ver 6 file.              -->
+  <!-- version 1.1 Specific UserID with tooltip indicating version number,
+                  from SoundTraxx Product Identification guide Rev.B                         -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Sound Value Diesel Walthers Mainline OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Walthers Mainline Sound Value diesel decoders">
@@ -35,7 +38,7 @@
         <output name="Mute"/>
         <functionlabels>
           <functionlabel num="5" lockable="true">Beacon</functionlabel>
-        </functionlabels>          
+        </functionlabels>
       </model>
       <model model="GP15" numOuts="3" numFns="14" connector="other" productID="GP15">
         <versionCV lowVersionID="82"/>
@@ -53,8 +56,8 @@
         <output name="Mute"/>
         <functionlabels>
           <functionlabel num="5" lockable="true">Beacon</functionlabel>
-        </functionlabels>         
-      </model>             
+        </functionlabels>
+      </model>
       <model model="SD60" numOuts="3" numFns="14" connector="other" productID="SD60">
         <versionCV lowVersionID="82"/>
         <output name="3" label="  FX5  "/>
@@ -71,8 +74,8 @@
         <output name="Mute"/>
         <functionlabels>
           <functionlabel num="5" lockable="true">Beacon</functionlabel>
-        </functionlabels>         
-      </model>      
+        </functionlabels>
+      </model>
       <model model="SD70ACe" numOuts="3" numFns="14" connector="other" productID="SD70ACe">
         <versionCV lowVersionID="82"/>
         <output name="3" label="  FX5  "/>
@@ -89,7 +92,7 @@
         <output name="Mute"/>
         <functionlabels>
           <functionlabel num="5" lockable="true">FX5</functionlabel>
-        </functionlabels>          
+        </functionlabels>
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Headlight</functionlabel>
@@ -169,7 +172,7 @@
       <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F6</label>
-      </variable>      
+      </variable>
       <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0" tooltip="Check to enable function F7 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F7</label>
@@ -393,7 +396,7 @@
           <variableref>Function Group 2 and 3 Exchange</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier>      
+        </qualifier>
           <!-- begin normal function group 2 -->
             <variable item="F5 controls output 6" CV="39" mask="XXXXXXXV" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -422,11 +425,11 @@
             <variable item="F6 controls output 3" CV="40" mask="XXXXXXVX" minOut="1" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output FX5</label>
-            </variable>            
+            </variable>
             <variable item="F6 controls output 4" CV="40" mask="XXXXXVXX" minOut="2" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output FX6</label>
-            </variable>            
+            </variable>
             <variable item="F6 controls output 8" CV="40" mask="XXXVXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output Short Horn</label>
@@ -460,7 +463,7 @@
                 <label>F8 controls output Mute</label>
             </variable>
             <!-- end normal function group 2 -->
-            <!-- begin normal function group 3 -->    
+            <!-- begin normal function group 3 -->
             <variable item="F9 controls output 8" CV="43" mask="XXXXXXVX" default="0" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output Short Horn</label>
@@ -549,7 +552,7 @@
             <variable item="F10 controls output 4(alt)" CV="40" mask="XXXXXVXX" minOut="2" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output FX6</label>
-            </variable>            
+            </variable>
             <variable item="F10 controls output 8(alt)" CV="40" mask="XXXVXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output Short Horn</label>
@@ -583,7 +586,7 @@
                 <label>F12 controls output Mute</label>
             </variable>
           <!-- end exchanged function group 2 -->
-          <!-- begin exchanged function group 3 -->   
+          <!-- begin exchanged function group 3 -->
             <variable item="F5 controls output 8(alt)" CV="43" mask="XXXXXXVX" default="0" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output Short Horn</label>
@@ -634,7 +637,7 @@
             </variable>
           <!-- end exchanged function group 3 -->
       </variables>
-      <!-- end exchangeable function groups -->   
+      <!-- end exchangeable function groups -->
       <!-- Lighting Configuration follows -->
       <variable item="Headlight F0(f) Effect Selection" CV="49" mask="XXXXVVVV" default="0" tooltip="Determines the effect generated from the headlight">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
@@ -659,7 +662,7 @@
       <variable item="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXVVVV" default="0" tooltip="Determines the effect generated from the backup light">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>Backup Light F0(r) Effect Selection</label>
-      </variable>      
+      </variable>
       <variable item="Backup Light F0(r) Phase Selection" CV="50" mask="XXXVXXXX" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>Backup Light F0(r) Phase Selection</label>
@@ -738,7 +741,7 @@
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUuserId.xml"/>
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 2" default="0" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Air Compressor Enable</label>

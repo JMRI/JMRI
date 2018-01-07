@@ -104,6 +104,12 @@
             <authorinitials>DGH</authorinitials>
             <revremark>Change product ID to values in CVs 253(high byte) and 256(low byte)</revremark>
         </revision>
+        <revision>
+            <revnumber>4</revnumber>
+            <date>2018-01-05</date>
+            <authorinitials>ALM</authorinitials>
+            <revremark>Separate ECO CVs file for Extended Function Map. Add labels to Extended Function map CVs. CV287/288 default 255 (disabled)</revremark>
+        </revision>
     </revhistory>
     <version author="Michael Mosher" version="1" lastUpdated="20150725"/>
     <version author="Alain Le Marchand" version="1.1" lastUpdated="20150726"/>
@@ -116,6 +122,7 @@
     <version author="Alain Le Marchand" version="2.1" lastUpdated="20160604"/>
     <version author="Alain Le Marchand" version="2.2" lastUpdated="20160612"/>
     <version author="Michael Mosher" version="3" lastUpdated="20161021"/>
+    <version author="Alain Le Marchand" version="4" lastUpdated="20180105"/>
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Econami Steam" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Steam decoders">
@@ -148,7 +155,7 @@
                     <label xml:lang="it">Silenzio| </label>
                 </output>
                 <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>	
+                <output name="14" label="Brake| "/>
                 <output name="15" label="Coupler| ">
                     <label xml:lang="it">Accoppiatore| </label>
                 </output>
@@ -183,7 +190,7 @@
                     <label xml:lang="it">Silenzio| </label>
                 </output>
                 <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>	
+                <output name="14" label="Brake| "/>
                 <output name="15" label="Coupler| ">
                     <label xml:lang="it">Accoppiatore| </label>
                 </output>
@@ -218,7 +225,7 @@
                     <label xml:lang="it">Silenzio| </label>
                 </output>
                 <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>	
+                <output name="14" label="Brake| "/>
                 <output name="15" label="Coupler| ">
                     <label xml:lang="it">Accoppiatore| </label>
                 </output>
@@ -253,7 +260,7 @@
                     <label xml:lang="it">Silenzio| </label>
                 </output>
                 <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>	
+                <output name="14" label="Brake| "/>
                 <output name="15" label="Coupler| ">
                     <label xml:lang="it">Accoppiatore| </label>
                 </output>
@@ -288,7 +295,7 @@
                     <label xml:lang="it">Silenzio| </label>
                 </output>
                 <output name="13" label="|"/>	<!-- Not used for for this decoder -->
-                <output name="14" label="Brake| "/>	
+                <output name="14" label="Brake| "/>
                 <output name="15" label="Coupler| ">
                     <label xml:lang="it">Accoppiatore| </label>
                 </output>
@@ -310,6 +317,7 @@
                 <functionlabel num="13" lockable="true">Coupler</functionlabel>
                 <functionlabel num="14" lockable="true">Half Speed</functionlabel>
                 <functionlabel num="16" lockable="true">Water Stop</functionlabel>
+                <functionlabel num="23" lockable="true">All Aboard/Coach Doors</functionlabel>
                 <functionlabel num="24" lockable="true">FX3 Output</functionlabel>
                 <functionlabel num="25" lockable="true">FX4 Output</functionlabel>
                 <functionlabel num="26" lockable="true">FX5 Output</functionlabel>
@@ -327,6 +335,7 @@
         <!-- Configuration Variable (CV) information follows -->
         <variables>
             <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOCV.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOCVFnMap.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOCVLightEffect.xml"/>
             <!-- Function Mapping follows -->
             <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="0">
@@ -1084,52 +1093,65 @@
             </variable>
             <variable CV="1.275" item="Extended Function Map Brake" default="11">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Brake</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.285" item="Extended Function Map Drift Mode On" default="5">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Drift Mode On</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.286" item="Extended Function Map Drift Mode Off" default="6">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Drift Mode Off</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.287" item="Extended Function Map Two Shorts Signal" default="0">
+            <variable CV="1.287" item="Extended Function Map Two Shorts Signal" default="255">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Two Shorts Signal</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.288" item="Extended Function Map One Long Signal" default="0">
+            <variable CV="1.288" item="Extended Function Map One Long Signal" default="255">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>One Long Signal</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.297" item="Extended Function Map Whistle" default="2">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Whistle</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.299" item="Extended Function Map Dynamo" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Dynamo</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.300" item="Extended Function Map Short Whistle" default="3">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Short Whistle</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.301" item="Extended Function Map Cylinder Cocks" default="4">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Cylinder Cocks</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.302" item="Extended Function Map Water Stop" default="16">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Water Stop</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.312" item="Extended Function Map Blowdown" default="10">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Blowdown</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.320" item="Extended Function Map Johnson Bar" default="255">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Johnson Bar</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
+            <!-- Effect Auxiliary Map Registers -->
             <variable CV="1.403" mask="XXXXXXXV" item="Brake Automatic Effects - FWDD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>

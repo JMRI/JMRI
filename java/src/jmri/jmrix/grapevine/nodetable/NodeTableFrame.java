@@ -2,7 +2,6 @@ package jmri.jmrix.grapevine.nodetable;
 
 import java.awt.Container;
 import javax.swing.BoxLayout;
-import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 
 /**

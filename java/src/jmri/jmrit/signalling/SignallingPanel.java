@@ -45,7 +45,6 @@ import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.beantable.RowComboBoxPanel; // access to RowComboBoxPanel() for valid Signal Mast Aspects and other states
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import jmri.jmrit.signalling.SignallingPanel.SignalMastModel;
 import jmri.swing.RowSorterUtil;
 import jmri.util.SystemNameComparator;
 import jmri.util.swing.JmriBeanComboBox;

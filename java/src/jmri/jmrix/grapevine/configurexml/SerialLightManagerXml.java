@@ -1,6 +1,5 @@
 package jmri.jmrix.grapevine.configurexml;
 
-import jmri.jmrix.grapevine.SerialLightManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
