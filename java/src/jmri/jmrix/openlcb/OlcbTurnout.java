@@ -232,7 +232,11 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
      *                      state inquiries.
      */
     public void setAuthoritative(boolean authoritative) {
+        boolean recreate = (authoritative != isAuthoritative()) && (pc != null);
         setProperty(OlcbUtils.PROPERTY_IS_AUTHORITATIVE, Boolean.toString(authoritative));
+        if (recreate) {
+            finishLoad();
+        }
     }
 
     /**
