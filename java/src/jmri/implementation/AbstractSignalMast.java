@@ -29,7 +29,6 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         super(systemName);
     }
 
-    @OverridingMethodsMustInvokeSuper
     @Override
     public void setAspect(String aspect) {
         String oldAspect = this.aspect;
@@ -132,7 +131,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     DefaultSignalAppearanceMap map;
     SignalSystem systemDefn;
 
-    void configureSignalSystemDefinition(String name) {
+    protected void configureSignalSystemDefinition(String name) {
         systemDefn = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(name);
         if (systemDefn == null) {
             log.error("Did not find signal definition: {}", name);
@@ -140,7 +139,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         }
     }
 
-    void configureAspectTable(String signalSystemName, String aspectMapName) {
+    protected void configureAspectTable(String signalSystemName, String aspectMapName) {
         map = DefaultSignalAppearanceMap.getMap(signalSystemName, aspectMapName);
     }
 
