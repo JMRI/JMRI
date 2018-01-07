@@ -24,6 +24,7 @@ public class OlcbSensorTest extends TestCase {
     public void testIncomingChange() {
         Assert.assertNotNull("exists", t);
         OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.finishLoad();
 
         // message for Active and Inactive
         CanMessage mActive = new CanMessage(
@@ -54,6 +55,7 @@ public class OlcbSensorTest extends TestCase {
         t.tc.rcvMessage = null;
 
         OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.finishLoad();
         t.flush();
 
         assertNotNull(t.tc.rcvMessage);
@@ -89,6 +91,7 @@ public class OlcbSensorTest extends TestCase {
     public void testMomentarySensor() throws Exception {
         Assert.assertNotNull("exists", t);
         OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8", t.iface);
+        s.finishLoad();
 
         // message for Active and Inactive
         CanMessage mActive = new CanMessage(
@@ -126,6 +129,7 @@ public class OlcbSensorTest extends TestCase {
 
     public void testLocalChange() throws jmri.JmriException {
         OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.finishLoad();
         t.waitForStartup();
 
         t.tc.rcvMessage = null;
@@ -152,6 +156,7 @@ public class OlcbSensorTest extends TestCase {
 
     public void testEventTable() {
         OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.finishLoad();
 
         EventTable.EventTableEntry[] elist = t.iface.getEventTable()
                 .getEventInfo(new EventID("1.2.3.4.5.6.7.8")).getAllEntries();

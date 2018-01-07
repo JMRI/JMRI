@@ -57,33 +57,48 @@ public class OlcbSensor extends AbstractSensor {
                 // momentary sensor
                 addrActive = v[0];
                 addrInactive = null;
-                pc = new BitProducerConsumer(iface, addrActive.toEventID(), BitProducerConsumer.nullEvent, false);
-                timer = new Timer(true);
-                sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
-                    @Override
-                    public void update(Boolean value) {
-                        setOwnState(value ? Sensor.ACTIVE : Sensor.INACTIVE);
-                        if (value) {
-                            setTimeout();
-                        }
-                    }
-                };
                 break;
             case 2:
                 addrActive = v[0];
                 addrInactive = v[1];
-                pc = new BitProducerConsumer(iface, addrActive.toEventID(),
-                        addrInactive.toEventID(), false);
-                sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
-                    @Override
-                    public void update(Boolean value) {
-                        setOwnState(value ? Sensor.ACTIVE : Sensor.INACTIVE);
-                    }
-                };
                 break;
             default:
                 log.error("Can't parse OpenLCB Sensor system name: " + address);
                 return;
+        }
+
+    }
+
+    /**
+     * Helper function that will be invoked after construction once the properties have been
+     * loaded. Used specifically for preventing double initialization when loading sensors from
+     * XML.
+     */
+    void finishLoad() {
+        int flags = BitProducerConsumer.DEFAULT_FLAGS;
+        flags = OlcbUtils.overridePCFlagsFromProperties(this, flags);
+        if (addrInactive == null) {
+            pc = new BitProducerConsumer(iface, addrActive.toEventID(), BitProducerConsumer.nullEvent, flags);
+
+            timer = new Timer(true);
+            sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
+                @Override
+                public void update(Boolean value) {
+                    setOwnState(value ? Sensor.ACTIVE : Sensor.INACTIVE);
+                    if (value) {
+                        setTimeout();
+                    }
+                }
+            };
+        } else {
+            pc = new BitProducerConsumer(iface, addrActive.toEventID(),
+                    addrInactive.toEventID(), flags);
+            sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
+                @Override
+                public void update(Boolean value) {
+                    setOwnState(value ? Sensor.ACTIVE : Sensor.INACTIVE);
+                }
+            };
         }
         activeEventTableEntryHolder = iface.getEventTable().addEvent(addrActive.toEventID(), getEventName(true));
         if (addrInactive != null) {

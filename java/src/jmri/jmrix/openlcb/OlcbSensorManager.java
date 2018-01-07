@@ -10,6 +10,8 @@ import org.openlcb.OlcbInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+
 /**
  * Manage the OpenLCB-specific Sensor implementation.
  *
@@ -20,6 +22,11 @@ import org.slf4j.LoggerFactory;
 public class OlcbSensorManager extends jmri.managers.AbstractSensorManager implements CanListener {
 
     String prefix = "M";
+
+    // Whether we accumulate partially loaded objects in pendingSensors.
+    private boolean isLoading = false;
+    // Turnouts that are being loaded from XML.
+    private final ArrayList<OlcbSensor> pendingSensors = new ArrayList<>();
 
     @Override
     public String getSystemPrefix() {
@@ -54,11 +61,47 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         }
 
         // OK, make
-        Sensor s = new OlcbSensor(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
+        OlcbSensor s = new OlcbSensor(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
         s.setUserName(userName);
+        
+        synchronized (pendingSensors) {
+            if (isLoading) {
+                pendingSensors.add(s);
+            } else {
+                s.finishLoad();
+            }
+        }
         return s;
     }
 
+    /**
+     * This function is invoked before an XML load is started. We defer initialization of the
+     * newly created Sensors until finishLoad because the feedback type might be changing as we
+     * are parsing the XML.
+     */
+    public void startLoad() {
+        log.debug("Sensor manager : start load");
+        synchronized (pendingSensors) {
+            isLoading = true;
+        }
+    }
+
+    /**
+     * This function is invoked after the XML load is complete and all Sensors are instantiated
+     * and their feedback type is read in. We use this hook to finalize the construction of the
+     * OpenLCB objects whose instantiation was deferred until the feedback type was known.
+     */
+    public void finishLoad() {
+        log.debug("Sensor manager : finish load");
+        synchronized (pendingSensors) {
+            for (OlcbSensor s : pendingSensors) {
+                s.finishLoad();
+            }
+            pendingSensors.clear();
+            isLoading = false;
+        }
+    }
+    
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
