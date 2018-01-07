@@ -16,7 +16,6 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableRowSorter;
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialReply;
-import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.nodeconfig.NodeConfigFrame;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.swing.RowSorterUtil;

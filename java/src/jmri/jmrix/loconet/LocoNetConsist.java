@@ -345,6 +345,13 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             msg.setElement(1, follow.getSlot());
             msg.setElement(2, lead.getSlot());
             trafficController.sendLocoNetMessage(msg);
+        } else {
+          // lead == follow
+          // this is an error, notify the consist listeners.
+          follow.removeSlotListener(this);
+          notifyConsistListeners(new DccLocoAddress(follow.locoAddr(),
+                throttleManager.canBeLongAddress(follow.locoAddr())),
+                ConsistListener.CONSIST_ERROR);
         }
         consistRequestState = IDLESTATE;
         if (needToWrite.size() != 0) {
@@ -364,6 +371,13 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             msg.setElement(1, follow.getSlot());
             msg.setElement(2, lead.getSlot());
             trafficController.sendLocoNetMessage(msg);
+        } else {
+          // lead == follow
+          // this is an error, notify the consist listeners.
+          follow.removeSlotListener(this);
+          notifyConsistListeners(new DccLocoAddress(follow.locoAddr(),
+                throttleManager.canBeLongAddress(follow.locoAddr())),
+                ConsistListener.CONSIST_ERROR | ConsistListener.DELETE_ERROR );
         }
         consistRequestState = IDLESTATE;
         if (needToWrite.size() != 0) {

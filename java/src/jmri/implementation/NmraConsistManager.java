@@ -1,11 +1,9 @@
 package jmri.implementation;
 
 import jmri.Consist;
-import jmri.ConsistManager;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.CommandStation;
-import jmri.InstanceManager;
 
 /**
  * Default Consist Manager which uses the NmraConsist class for

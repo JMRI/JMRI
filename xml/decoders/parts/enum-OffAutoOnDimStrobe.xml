@@ -3,27 +3,32 @@
 <enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Off" value="0">
     <choice>Off</choice>
-    <choice xml:lang="it">Off</choice>
     <choice xml:lang="cs">Zhasnuto</choice>
+    <choice xml:lang="fr">Éteint</choice>
+    <choice xml:lang="it">Off</choice>
   </enumChoice>
   <enumChoice choice="Automatic" value="1">
     <choice>Automatic</choice>
-    <choice xml:lang="it">Automatico</choice>
     <choice xml:lang="cs">Automaticky</choice>
+    <choice xml:lang="fr">Automatique</choice>
+    <choice xml:lang="it">Automatico</choice>
   </enumChoice>
   <enumChoice choice="On" value="2">
     <choice>On</choice>
-    <choice xml:lang="it">On</choice>
     <choice xml:lang="cs">Rozsvíceno</choice>
+    <choice xml:lang="fr">Allumé</choice>
+    <choice xml:lang="it">On</choice>
   </enumChoice>
   <enumChoice choice="Dim" value="4">
     <choice>Dim</choice>
-    <choice xml:lang="it">Smorzato</choice>
     <choice xml:lang="cs">Tlumené</choice>
+    <choice xml:lang="fr">Atténué</choice>
+    <choice xml:lang="it">Smorzato</choice>
   </enumChoice>
   <enumChoice choice="Strobe" value="8">
     <choice>Strobe</choice>
-    <choice xml:lang="it">Strobo</choice>
     <choice xml:lang="cs">Stroboskopický</choice>
+    <choice xml:lang="fr">Stroboscopique</choice>
+    <choice xml:lang="it">Strobo</choice>
   </enumChoice>
 </enumVal>

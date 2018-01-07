@@ -2,8 +2,6 @@ package jmri.jmrix.cmri.serial;
 
 import jmri.implementation.AbstractLight;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
-
 import javax.annotation.Nonnull;
 import javax.annotation.CheckReturnValue;
 

@@ -1,176 +1,195 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+    "http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang="en">
-<head>
+    <head>
 
-  <title>JMRI Hardware Support - Digitrax Command Station Configuration</title>
-  <meta name="keywords" content=
-  "Digitrax Command Station DCS100 DCS200 DCS240 DCS210 DCS50 DCS51 DB150 JMRI">
-  <!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head>
+        <title>JMRI Hardware Support - Digitrax Command Station Configuration</title>
+        <meta name="keywords" content=
+              "Digitrax Command Station DCS100 DCS200 DCS240 DCS210 DCS50 DCS51 DB150 JMRI">
+        <!-- Style -->
+        <meta http-equiv="content-type" content=
+              "text/html; charset=us-ascii">
+        <link rel="stylesheet" type="text/css" href="/css/default.css"
+              media="screen">
+        <link rel="stylesheet" type="text/css" href="/css/print.css"
+              media="print">
+        <link rel="icon" href="/images/jmri.ico" type="image/png">
+        <link rel="home" title="Home" href="/"><!-- /Style -->
+    </head>
 
-<body>
-  <!--#include virtual="/Header" -->
+    <body>
+        <!--#include virtual="/Header" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h1>Digitrax Command Station Configuration</h1>
+        <div class="nomenu" id="mBody">
+            <div id="mainContent">
+                <h1>Digitrax Command Station Configuration</h1>
 
-      <div class="toc">
-        <ul>
-            <li><a href="#ConfigurationBasics">Configuring Digitrax Command Station OpSw Settings</a>
-                <ul>
-                    <li><a href="#Requirements">Requirements</a></li>
+                <div class="toc">
+                    <table border="0">
+                        <tr>
+                            <td align="left" colspan="2">Table of Contents</td>
+                        </tr>
+
+                        <tr>
+                            <td align="left" valign="top" colspan="1">
+                        <li><a href="#ConfigurationBasics">Configuring Digitrax Command Station Operation Switch (OpSw) Settings</a>
+                            <ul>
+                                <li><a href="#Requirements">Requirements</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#ConfigViaRoster">Configuration via a &quot;Roster&quot; entry</a></li>
+                        <li><a href="#ConfigViaTool">Configuration via the "Command Station Configuration tool</a></li>
+                        <li><a href="#Limitation">Limitations</a></li>
+
+                        <li><a href="#Support">Support</a></li>
+                        </ul> </td>
+                        <td align="right" colspan="1"><img src=
+                                                           "images/RosterCmdStnConfig.png" alt=
+                                                           "Example of the Roster-based Command Station Configuration Window"></td>
+                        </td>
+                        </tr>
+                    </table>
+                </div><a name="ConfigurationBasics" id=
+                         "ConfigurationBasics"></a>
+
+                <h2>Configuring Digitrax Command Station Operation Switch (OpSw) Settings</h2>
+                <p>Digitrax command stations include a variety of "Operation Switch" (OpSw) 
+                    settings which influence the command station's behavior.  While each 
+                    command station model implements its own set of OpSw settings, the 
+                    mechanisms which may be used to configure those OpSw settings is common 
+                    across Digitrax command stations.</p>
+
+                <p>The Digitrax manual for yhour command station will generally describe
+                    a mechanism where command station OpSw settings are manipulated using
+                    "Switch" control operations issued from a throttle, while the command station
+                    is in a mode where OpSw settings may be changed.  For many OpSw settings,
+                    once the settings have been changed, the command station may be returned
+                    to its normal operating mode, and the OpSw settings will take immediate
+                    effect.  For some OpSw settings, it may be necessary to change the command
+                    station to a different mode before it is returned to its normal operating
+                    mode.</p>
+                <p>For DCS50 and DCS51 (Zephyr and Zephyr Xtra) command stations, OpSw
+                    configuration operations can be performed from the integrated keypad.  The
+                    DCS50/DCS51 will automatically perform any necessary mode-change before
+                    returning to normal operating mode.</p>
+
+                <p>Alternately, JMRI, when configured to communicate with LocoNet, can make
+                    command station OpSw changes.  For many years, JMRI has provided a specific
+                    tool, under the "LocoNet" menu item: the "Configure Command Station" tool.
+                    Recent JMRI versions allow Command Station OpSw configuration via a "Roster"
+                    entry, as if the command station were simply a mobile decoder.  Both of these
+                    methods are described below.</p>
+
+                <a name="Requirements" id=
+                   "Requirements"></a><h3>Requirements</h3>
+
+                <ul><li>JMRI can only configure those command stations which implement OpSw
+                        settings accessed in the same way in which Digitrax command stations
+                        are configured.  Supported command stations include:
+                        <ul>
+                            <li>DCS50 (Zephyr&trade;)</li>
+                            <li>DCS51 (Zephyr Xtra&trade;)</li>
+                            <li>DB150 (Empire Builder&trade;, Empire Builder II&trade;, Super Empire Builder&trade;, Super Empire Builder Xtra&trade;, Genesis&trade;)</li>
+                            <li>DCS100, DCS200 (Chief&trade;, Chief II&trade;, Super Chief&trade;, Super Chief Xtra&trade;)</li>
+                            <li>DCS210 (Evolution&trade;)</li>
+                            <li>DCS240 (Advanced&trade;)</li>
+                        </ul>
+                    </li>
+                    <li>JMRI must have a properly-configured computer interface to LocoNet in
+                        order to configure the command station.</li>
+                    <li>JMRI cannot configure the Challenger or Big Boy command stations.</li>
                 </ul>
-            </li>
-            <li><a href="#ConfigViaRoster">Configuration via a &quot;Roster&quot; entry</a></li>
-            <li><a href="#ConfigViaTool">Configuration via the "Command Station Configuration tool</a></li>
-            <li><a href="#Limitation">Limitations</a></li>
-          <li><a href="#SeeAlso">Documentation</a></li>
 
-          <li><a href="#Support">Support</a></li>
-        </ul>
-      </div><a name="ConfigurationBasics" id=
-      "ConfigurationBasics"></a>
+                <a name="ConfigViaRoster" id=
+                   "ConfigViaRoster"></a><h2>Command Station Configuration Using a Roster Entry</h2>
+                <p>First, it is necessary to create a new Roster Entry which specifies the
+                    correct &quot;decoder&quot; type for the command station.  Here are some
+                    step-by-step instructions:</p>
+                <ul>
+                    <li>Open the Roster.  If you are using the DecoderPro application, this
+                        is open by default.  If you are using the PanelPro application, Select
+                        the "Roster" menu item in the "Roster" menu.</li>
+                    <li>Select the &quot;New Loco&quot; button to begin creating a new Roster
+                        Entry.</li>
+                    <li>A window showing the manufacturers of DCC equipment with &quot;decoder&quot;
+                        definitions will appear.  Open the &quot;Digitrax&quot; folder.</li>
+                    <li>A list of decoder definitions for Digitrax hardware will appear.  Select
+                        the "Command Stations" folder.</li>
+                    <li>From the list of command stations, select your command station.  Be sure
+                        to select the correct model.  If you select an incorrect model, the
+                        OpSw settings may be incompatible with your hardware and behavior may
+                        be unpredictable.</li>
+                    <li>Give the Roster Entry a unique &quot;Roster ID&quot;.</li>
+                    <li>It is not necessary to enter an &quot;Active Address&quot;.  You may enter
+                        an address, but that address will be not be used in any way when
+                        reading and writing OpSw values to the command station.</li>
+                    <li>Save the Roster Entry to the Roster.
+                    <li>Select "Open Comprehensive Programmer".</li>
+                    <li>Use the Roster Entry like you would for any locomotive.</li>
+                    <li>Be sure to save your Roster Entry so that any changes which you have
+                        made may be easily restored at a future date.</li>
+                </ul>
+                <p>Once you have a saved Roster Entry for your command station, you may
+                    open it at a later time and restore those settings to the command station or
+                    modify them and then update the OpSw settings in your command station.</p>
 
-      <h2>Configuring Digitrax Command Station OpSw Settings</h2>
-      <p>Digitrax command stations include a variety of "OpSw" settings which influence
-      the command station's behavior.  While each command station model implements
-      its own set of OpSw settings, the mechanisms which may be used to configure
-      those OpSw settings is common across Digitrax command stations.</p>
+                <a name="ConfigViaTool" id=
+                   "ConfigViaTool"></a><h2>Command Station Configuration Using the &quot;Configure Command Station&quot; Tool</h2>
 
-      <p>The Digitrax manual for yhour command station will generally describe
-      a mechanism where command station OpSw settings are manipulated using
-      "Switch" control operations issued from a throttle, while the command station
-      is in a mode where OpSw settings may be changed.  For many OpSw settings,
-      once the settings have been changed, the command station may be returned
-      to its normal operating mode, and the OpSw settings will take immediate
-      effect.  For some OpSw settings, it may be necessary to change the command
-      station to a different mode before it is returned to its normal operating
-      mode.</p>
-      <p>For DCS50 and DCS51 (Zephyr and Zephyr Xtra) command stations, OpSw
-      configuration operations can be performed from the integrated keypad.  The
-      DCS50/DCS51 will automatically perform any necessary mode-change before
-      returning to normal operating mode.</p>
+                <p>The previous JMRI method for configuring Command Station Operation Switches (OpSws) is described at
+                    the <a href=
+                                        "../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">
+                    Configure Command Station</a> tool page.<br>
 
-      <p>Alternately, JMRI, when configured to communicate with LocoNet, can make
-      command station OpSw changes.  For many years, JMRI has provided a specific
-      tool, under the "LocoNet" menu item: the "Configure Command Station" tool.
-      Recent JMRI versions allow Command Station OpSw configuration via a "Roster"
-      entry, as if the command station were simply a mobile decoder.  Both of these
-      methods are described below.</p>
-
-      <a name="Requirements" id=
-      "Requirements"></a><h3>Requirements</h3>
-
-      <ul><li>JMRI can only configure those command stations which implement OpSw
-              settings accessed in the same way in which Digitrax command stations
-              are configured.  Supported command stations include:
-              <ul>
-                  <li>DCS50 (Zephyr&trade;)</li>
-                  <li>DCS51 (Zephyr Xtra&trade;)</li>
-                  <li>DB150 (Empire Builder&trade;, Empire Builder II&trade;, Super Empire Builder&trade;, Super Empire Builder Xtra&trade;, Genesis&trade;)</li>
-                  <li>DCS100, DCS200 (Chief&trade;, Chief II&trade;, Super Chief&trade;, Super Chief Xtra&trade;)</li>
-                  <li>DCS210 (Evolution&trade;)</li>
-                  <li>DCS240 (Advanced&trade;)</li>
-              </ul>
-          </li>
-          <li>JMRI must have a properly-configured computer interface to LocoNet in
-          order to configure the command station.</li>
-          <li>JMRI cannot configure the Challenger or Big Boy command stations.</li>
-      </ul>
-
-      <a name="ConfigViaRoster" id=
-      "ConfigViaRoster"></a><h2>Command Station Configuration Using a Roster Entry</h2>
-      <p>First, it is necessary to create a new Roster Entry which specifies the
-          correct &quot;decoder&quot; type for the command station.  Here are some
-          step-by-step instructions:</p>
-      <ul>
-          <li>Open the Roster.  If you are using the DecoderPro application, this
-              is open by default.  If you are using the PanelPro application, Select
-              the "Roster" menu item in the "Roster" menu.</li>
-          <li>Select the &quot;New Loco&quot; button to begin creating a new Roster
-              Entry.</li>
-          <li>A window showing the manufacturers of DCC equipment with &quot;decoder&quot;
-              definitions will appear.  Open the &quot;Digitrax&quot; folder.</li>
-          <li>A list of decoder definitions for Digitrax hardware will appear.  Select
-              the "Command Stations" folder.</li>
-          <li>From the list of command stations, select your command station.  Be sure
-              to select the correct model.  If you select an incorrect model, the
-              OpSw settings may be incompatible with your hardware and behavior may
-              be unpredictable.</li>
-          <li>Give the Roster Entry a unique &quot;Roster ID&quot;.</li>
-          <li>It is not necessary to enter an &quot;Active Address&quot;.  You may enter
-              an address, but that address will be not be used in any way when
-              reading and writing OpSw values to the command station.</li>
-          <li>Save the Roster Entry to the Roster.
-          <li>Select "Open Comprehensive Programmer".</li>
-          <li>Use the Roster Entry like you would for any locomotive.</li>
-          <li>Be sure to save your Roster Entry so that any changes which you have
-              made may be easily restored at a future date.</li>
-      </ul>
-      <p>Once you have a saved Roster Entry for your command station, you may
-      open it at a later time and restore those settings to the command station or
-      modify them and then update the OpSw settings in your command station.</p>
-
-      <a name="ConfigViaTool" id=
-      "ConfigViaTool"></a><h2>Command Station Configuration Using the &quot;Configure Command Station&quot; Tool</h2>
-
-      See the JMRI LocoNet <a href=
-          "../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">
-          Configure Command Station</a> tool page.<br>
-
-      <a name="Limitation" id=
-      "Limitation"></a><h2>Limitations</h2>
-      <ul>
-      <li>The JMRI mechanisms for modifying Command Station OpSw settings does not allow
-          modifications to any OpSw which has an OpSw number which is evenly divisible by 8.</li>
-      <li>The JMRI mechanisms for modifying Command Station OpSw settings is unable to
-      complete the process of performing some "reset" OpSw functions without user
-      intervention.  When using the JMRI Roster-based configuration mechanisms,
-      further information may be found in the "Notes" shown on the "Internal Storage
-      Management" sheet in the decoder definition.</li>
-      </ul>
+                <a name="Limitation" id=
+                   "Limitation"></a><h2>Limitations</h2>
+                <ul>
+                    <li>The LocoNet mechanisms used by JMRI for modifying Command Station OpSw 
+                        settings do not allow modifications to any OpSw which has an OpSw number 
+                        which is evenly divisible by 8.</li>
+                    <li>The JMRI mechanisms for modifying Command Station OpSw settings is unable to
+                        complete the process of performing some "reset" OpSw functions without user
+                        intervention.  When using the JMRI Roster-based configuration mechanisms,
+                        further information may be found in the "Notes" shown on the "Internal Storage
+                        Management" sheet in the decoder definition.</li>
+                    <li>JMRI can only modify Command Station Operation Switches using these tools for 
+                        those command stations which implement the required LocoNet messaging.  Non-
+                        Digitrax command stations are not supported by these mechanisms.</li>
+                </ul>
 
 
-      <a name="Support" id="Support"></a><h3>Support</h3>
+                <a name="Support" id="Support"></a><h3>Support</h3>
 
-      <p>For JMRI-specific questions, including questions about how
-      JMRI and Digitrax hardware interact, the <a href=
-      "https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI
-      users Yahoo group</a> is very helpful.</p>
+                <p>For JMRI-specific questions, including questions about how
+                    JMRI and Digitrax hardware interact, the <a href=
+                                                                "https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI
+                        users Yahoo group</a> is very helpful.  Many knowledgeable 
+                        Digitrax users contribute to the group and answer questions
+                        on JMRI issues.</p>
+                <p>For Digitrax-specific questions, the <a href=
+                    "https://groups.yahoo.com/neo/groups/Digitrax/info">Digitrax
+                    users Yahoo group </a> provides great support from other
+                    Digitrax users.  If you have a problem with Digitrax
+                    equipment, this is a good place to pose your
+                    Digitrax-specific problems. This user's group is run by and
+                    for Digitrax users. It is not directly supported by
+                    Digitrax.</p>
 
-      <p>Support for Digitrax hardware products is available
-      through <a href="http://www.digitrax.com">Digitrax, Inc.</a>
-      Digitrax product manuals may be found <a href=
-      "http://www.digitrax.com/support/manuals/">here</a>. Note
-      that Digitrax does not provide support for JMRI software.</p>
 
-      <p>Many knowledgeable Digitrax users contribute to the
-      <a href=
-      "https://groups.yahoo.com/neo/groups/Digitrax/info">Digitrax
-      users Yahoo group</a>. If you have a problem with Digitrax
-      equipment, this is a good place to pose your
-      Digitrax-specific problems. This user's group is run by and
-      for Digitrax users. It is not directly supported by
-      Digitrax.</p>
+                <p>Support for Digitrax hardware products is available
+                    through <a href="http://www.digitrax.com">Digitrax, Inc.</a>
+                    Digitrax product manuals may be found <a href=
+                                                             "http://www.digitrax.com/support/manuals/">here</a>. Note
+                    that Digitrax does not provide support for JMRI software.</p>
 
-      <p>LocoNet&reg; is a registered trademark, and Zephyr&trade;, Zephyr Xtra&trade;,
-        Empire Builder&trade;, Empire Builder II&trade;, Super Empire Builder&trade;,
-        Super Empire Builder Xtra&trade;, Genesis&trade;, Chief&trade;, Chief II&trade;,
-        Super Chief&trade;, Super Chief Xtra&trade;, Evolution&trade;,and Advanced&trade;
-        are trademarks of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
-      <!--#include virtual="/Footer" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
-</body>
+                <p>LocoNet&reg; is a registered trademark, and Zephyr&trade;, Zephyr Xtra&trade;,
+                    Empire Builder&trade;, Empire Builder II&trade;, Super Empire Builder&trade;,
+                    Super Empire Builder Xtra&trade;, Genesis&trade;, Chief&trade;, Chief II&trade;,
+                    Super Chief&trade;, Super Chief Xtra&trade;, Evolution&trade;,and Advanced&trade;
+                    are trademarks of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+                <!--#include virtual="/Footer" -->
+            </div><!-- closes #mainContent-->
+        </div><!-- closes #mBody-->
+    </body>
 </html>

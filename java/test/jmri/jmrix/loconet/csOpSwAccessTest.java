@@ -12,16 +12,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import jmri.util.JUnitUtil;
-//import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.junit.Assert;
 import jmri.jmrix.loconet.SlotManager;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
-import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 
@@ -365,7 +359,7 @@ public class csOpSwAccessTest {
         Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
-        Assert.assertEquals("Reply value matches", 1, pl.getRcvdValue());
+        Assert.assertEquals("Reply value matches", 0, pl.getRcvdValue());
 
         // attempt another command station opsw access
         csosa.readCsOpSw("csOpSw.02", pl);
@@ -978,7 +972,7 @@ public class csOpSwAccessTest {
         Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
-        Assert.assertEquals("Reply value matches", 1, pl.getRcvdValue());
+        Assert.assertEquals("Reply value matches", 0, pl.getRcvdValue());
 
 
         // attempt an out-of-range command station opsw access
@@ -1269,10 +1263,11 @@ public class csOpSwAccessTest {
         // try another write
         csosa.writeCsOpSw("csOpSw.56", 1, pl);
 
-        // should have written
-        Assert.assertEquals("another message sent", 7, lnis.outbound.size());
+        // should NOT have written OpSw56 (56 is evenly divisible by 8, so not writable)
+        Assert.assertEquals("no additional message sent", 6, lnis.outbound.size());
         Assert.assertEquals("six programming replies", 6, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status bad", 1, pl.getRcvdStatus());
+        
      }
 
     // Main entry point
