@@ -274,7 +274,6 @@ public class PositionablePropertiesUtil {
      * Create and fill in the Border tab of the UI.
      */
     void borderPanel() {
-        Color desiredColor = null;
         JPanel borderPanel = new JPanel();
 
         borderColorChooser = new JColorChooser(defaultBorderColor);

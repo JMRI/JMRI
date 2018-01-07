@@ -19,7 +19,6 @@ public class ExportRosterItemActionTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame jf = new JmriJFrame("TestExportWindow");
-        jmri.util.swing.WindowInterface wi = jf;
         ExportRosterItemAction t = new ExportRosterItemAction("test export",jf);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(jf);

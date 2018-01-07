@@ -17,7 +17,7 @@ public class MrcPortControllerTest extends jmri.jmrix.AbstractSerialPortControll
     public void setUp(){
        JUnitUtil.setUp();
        MrcSystemConnectionMemo memo = new MrcSystemConnectionMemo();
-       MrcTrafficController tc = new MrcInterfaceScaffold();
+       new MrcInterfaceScaffold();
        apc = new MrcPortController(memo){
             @Override
             public boolean status(){

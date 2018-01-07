@@ -27,7 +27,7 @@ public class TurnoutIconWindowTest {
         jmri.jmrit.display.panelEditor.PanelEditor panel
                 = new jmri.jmrit.display.panelEditor.PanelEditor("TurnoutIconWindowTest.testPanelEditor");
         
-        JComponent jf = panel.getTargetPanel();
+        panel.getTargetPanel();
         
         TurnoutIcon icon = new TurnoutIcon(panel);
         Turnout sn = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
@@ -87,7 +87,7 @@ public class TurnoutIconWindowTest {
         jmri.jmrit.display.layoutEditor.LayoutEditor panel
                 = new jmri.jmrit.display.layoutEditor.LayoutEditor("TurnoutIconWindowTest.testLayoutEditor");
         
-        JComponent jf = panel.getTargetPanel();
+        panel.getTargetPanel();
         
         TurnoutIcon icon = new TurnoutIcon(panel);
         icon.setDisplayLevel(Editor.TURNOUTS);

@@ -47,7 +47,7 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Override
     @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
-        Turnout t = l.provideTurnout("");
+        l.provideTurnout("");
     }
 
 

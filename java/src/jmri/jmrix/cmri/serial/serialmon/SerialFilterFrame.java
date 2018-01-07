@@ -311,9 +311,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
      */
     public void initializeNodes()  //c2
     {
-	String str = "";
-
-    // get all configured nodes
+	// get all configured nodes
 //	SerialNode aNode = (SerialNode) SerialTrafficController.instance().getNode(0);
         SerialNode node = (SerialNode) _memo.getTrafficController().getNode(0);
         int index = 1;

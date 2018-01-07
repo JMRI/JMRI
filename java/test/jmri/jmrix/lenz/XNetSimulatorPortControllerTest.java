@@ -17,7 +17,7 @@ public class XNetSimulatorPortControllerTest extends jmri.jmrix.AbstractSerialPo
     public void setUp(){
        JUnitUtil.setUp();
        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
-       XNetSystemConnectionMemo memo = new XNetSystemConnectionMemo(tc);
+       new XNetSystemConnectionMemo(tc);
        apc = new XNetSimulatorPortController(){
             @Override
             public boolean status(){

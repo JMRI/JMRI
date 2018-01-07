@@ -19,8 +19,6 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
 
     private JTextField railroadName;
     private WebServerPreferences preferences;
-    private JFrame parentFrame = null;
-
     public RailroadNamePreferencesPanel() {
         preferences = WebServerPreferences.getDefault();
         initGUI();
@@ -29,7 +27,6 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
 
     public RailroadNamePreferencesPanel(JFrame f) {
         this();
-        parentFrame = f;
     }
 
     private void initGUI() {
