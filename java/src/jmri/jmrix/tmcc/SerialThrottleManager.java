@@ -30,7 +30,7 @@ public class SerialThrottleManager extends AbstractThrottleManager {
         // station for this, so immediately trigger the callback.
         DccLocoAddress address = (DccLocoAddress) a;
         log.debug("new throttle for {}", address);
-        notifyThrottleKnown(new SerialThrottle((TmccSystemConnectionMemo) _memo, (DccLocoAddress) address), address);
+        notifyThrottleKnown(new SerialThrottle(_memo, address), address);
     }
 
     /**

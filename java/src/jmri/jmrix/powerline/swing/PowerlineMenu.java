@@ -1,6 +1,5 @@
 package jmri.jmrix.powerline.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 

@@ -9,14 +9,12 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.swing.AbstractAction;
-import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.Timer;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -450,7 +448,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     protected void editItem() {
         makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSensor")));
-        _itemPanel = new TableItemPanel((DisplayFrame) _paletteFrame, "Sensor", _iconFamily,
+        _itemPanel = new TableItemPanel(_paletteFrame, "Sensor", _iconFamily,
                 PickListModel.sensorPickModelInstance(), _editor); // NOI18N
         ActionListener updateAction = (ActionEvent a) -> {
             updateItem();
@@ -809,7 +807,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         JMenu menu = new JMenu(name);
         JMenuItem colorMenu = new JMenuItem(Bundle.getMessage("FontColor"));
         colorMenu.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog((JComponent)this,
+            Color desiredColor = JColorChooser.showDialog(this,
                                  Bundle.getMessage("FontColor"),
                                  getColor(state));
             if (desiredColor!=null ) {
@@ -819,7 +817,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         menu.add(colorMenu);
         colorMenu = new JMenuItem(Bundle.getMessage("FontBackgroundColor"));
         colorMenu.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog((JComponent)this,
+            Color desiredColor = JColorChooser.showDialog(this,
                                  Bundle.getMessage("FontBackgroundColor"),
                                  getColor(state+1));
             if (desiredColor!=null ) {

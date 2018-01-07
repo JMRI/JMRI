@@ -16,17 +16,20 @@
   <version author="Steve Lowens  sjlowens@comcast.net" version="1" lastUpdated="20121108"/>
   <version author="Michael Mosher" version="2" lastUpdated="20130220"/>
   <version author="Stephen Lowens" version="3" lastUpdated="20130501"/>
-  <version author="Alain Le Marchand" version="4" lastUpdated="20140530"/>  
+  <version author="Alain Le Marchand" version="4" lastUpdated="20140530"/>
+  <version author="Alain Le Marchand" version="5" lastUpdated="20180103"/>
   <!-- This file contains the Tsunami definitions for Rapido OEM Diesel locomotives	-->
   <!-- version 1	Based on the "Soundtraxx_Tsu_(various diesels)" series of files.					-->
   <!--			Co-authored by Jack Shall & Michael Mosher.			-->
   <!-- version 2	make more use of extrenal includes -->
   <!-- version 4	Added Function Groups 2/3 exchange from Dave Heap (initially introduced for Genesis)     -->
   <!--                  Added Function labels               -->
+  <!-- version 5  Specific UserID with tooltip indicating version number,
+                  from SoundTraxx Product Identification guide Rev.B                                -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
-                For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc. 
-                FX5 or FX6 are either physical or logical outputs (for TSU-750) used for "Rule 17 mode"         --> 
+                For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
+                FX5 or FX6 are either physical or logical outputs (for TSU-750) used for "Rule 17 mode"         -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Diesel Rapido OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are the Rapido OEM version Tsunami diesel decoders">
@@ -43,16 +46,16 @@
         </output>
         <output name="Roof" label="Light">
           <label xml:lang="it">Luci tetto</label>
-        </output> 
+        </output>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Class" label="Light">
           <label xml:lang="it">Luci Classe</label>
-        </output> 
+        </output>
         <output name="Brakes"/>
         <output name="Grade" label="Xing">
           <label xml:lang="it">Incrocio</label>
-        </output> 
+        </output>
       </model>
       <model model="FP9A - CP/VIA-The Canadian" numOuts="4" numFns="14" connector="9pin" productID="102" comment="CP-Canadian configuration">
         <versionCV lowVersionID="64"/>
@@ -67,16 +70,16 @@
         </output>
         <output name="Roof" label="Light">
           <label xml:lang="it">Luci tetto</label>
-        </output> 
+        </output>
         <output name="Dimming"/>
         <output name="Mute"/>
         <output name="Class" label="Light">
           <label xml:lang="it">Luci Classe</label>
-        </output> 
+        </output>
         <output name="Brakes"/>
         <output name="Grade" label="Xing">
           <label xml:lang="it">Incrocio</label>
-        </output> 
+        </output>
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Headlight</functionlabel>
@@ -92,7 +95,7 @@
         <functionlabel num="10" lockable="true">Class Light</functionlabel>
         <functionlabel num="11" lockable="true">Brake Squeal</functionlabel>
         <functionlabel num="12" lockable="true">Grade Xing</functionlabel>
-      </functionlabels>      
+      </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <!-- Configuration Variable (CV) information follows -->
@@ -459,8 +462,8 @@
           <variableref>Function Group 2 and 3 Exchange</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier>      
-        <!-- begin normal function group 2 -->	  
+        </qualifier>
+        <!-- begin normal function group 2 -->
         <variable item="F5 controls output 6" CV="39" mask="XXXXXXXV" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
           <label>F5 controls output Bell</label>
@@ -574,7 +577,7 @@
           <label>F8 controls output Brakes</label>
         </variable>
         <!-- end normal function group 2 -->
-        <!-- begin normal function group 3 -->    	  
+        <!-- begin normal function group 3 -->
         <variable item="F9 controls output 7" CV="43" mask="XXXXXXXV" default="0" minFn="9">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
           <label>F9 controls output Dynamics</label>
@@ -810,7 +813,7 @@
           <label>F12 controls output Brakes</label>
         </variable>
         <!-- end exchanged function group 2 -->
-        <!-- begin exchanged function group 3 -->    	  
+        <!-- begin exchanged function group 3 -->
         <variable item="F5 controls output 7(alt)" CV="43" mask="XXXXXXXV" default="0" minFn="9">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
           <label>F5 controls output Dynamics</label>
@@ -923,10 +926,10 @@
         <variable item="F8 controls output 15(alt)" CV="46" mask="VXXXXXXX" default="1" minFn="12">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
           <label>F8 controls output Grade</label>
-        </variable>		
+        </variable>
         <!-- end exchanged function group 3 -->
       </variables>
-      <!-- end exchangeable function groups -->         
+      <!-- end exchangeable function groups -->
       <variable CV="47" mask="XVVVVVVV" item="Sound Option 11" default="0" tooltip="Value of 0 = Disabled.  See command station instructions for value to enable this feature.">
         <decVal/>
         <label>Analog Horn Control (0-255)</label>
@@ -1077,7 +1080,7 @@
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUuserId.xml"/>
       <!--  The following CV has been disabled in this OEM decoder
 
       <variable label="Auto Air Compressor Enable" CV="112" mask="XXXXXXXV"

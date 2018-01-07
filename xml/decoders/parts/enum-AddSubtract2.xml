@@ -5,14 +5,16 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Add value to baseline braking rate (increases braking delay)">
     <choice>Add value to baseline braking rate (increases braking delay)</choice>
-    <choice xml:lang="it">Aggiunge valore al tasso di Frenata base</choice>
-    <choice xml:lang="de">Addiere Wert zur Basis-Bremsverzögerung</choice>
     <choice xml:lang="cs">Přidat hodnotu k základní míře brždění (zvyšuje zpoždění brždění)</choice>
+    <choice xml:lang="de">Addiere Wert zur Basis-Bremsverzögerung</choice>
+    <choice xml:lang="fr">Ajouter la valeur au taux de freinage de base (accroît le retard au freinage)</choice>
+    <choice xml:lang="it">Aggiunge valore al tasso di Frenata base</choice>
   </enumChoice>
   <enumChoice choice="Subtract value from baseline braking rate (decreases braking delay)">
     <choice>Subtract value from baseline braking rate (decreases braking delay)</choice>
-    <choice xml:lang="it">Sottrae valore al tasso di Frenata base</choice>
-    <choice xml:lang="de">Subtrahiere Wert von der Basis-Bremsverzögerung</choice>
     <choice xml:lang="cs">Odečíst hodnotu od základní míry brždění (snižuje zpoždění brždění)</choice>
+    <choice xml:lang="de">Subtrahiere Wert von der Basis-Bremsverzögerung</choice>
+    <choice xml:lang="fr">Soustraire la valeur au taux de freinage de base (décroît le retard au freinage)</choice>
+    <choice xml:lang="it">Sottrae valore al tasso di Frenata base</choice>
   </enumChoice>
 </enumVal>
