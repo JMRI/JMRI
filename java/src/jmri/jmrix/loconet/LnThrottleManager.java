@@ -157,9 +157,6 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     }
 
     private void commitToAcquireThrottle(LocoNetSlot s) {
-                tc.sendLocoNetMessage(s.writeThrottleID(throttleID));
-        log.debug("Attempting to update slot with this JMRI instance's throttle id ({})", throttleID);
-
         // haven't identified a particular reason to refuse throttle acquisition at this time...
         DccThrottle throttle = createThrottle((LocoNetSystemConnectionMemo) adapterMemo, s);
         s.notifySlotListeners();    // make sure other listeners for this slot know about what's going on!
@@ -325,6 +322,11 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     }
 
     protected int throttleID = 0x0171;
+
+    public int getThrottleID(){
+        return throttleID;
+    }
+
     /**
      * Dispose of this manager, typically for testing
      */
