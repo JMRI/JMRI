@@ -12,11 +12,11 @@ import jmri.NamedBean;
  */
 
 public final class OlcbUtils {
-    static final String PROPERTY_IS_AUTHORITATIVE = "IsAuthoritative";
-    static final String PROPERTY_IS_PRODUCER = "IsProducer";
-    static final String PROPERTY_IS_CONSUMER = "IsConsumer";
-    static final String PROPERTY_QUERY_AT_STARTUP = "QueryAtStartup";
-    static final String PROPERTY_LISTEN = "ListenStateMessages";
+    public static final String PROPERTY_IS_AUTHORITATIVE = "IsAuthoritative";
+    public static final String PROPERTY_IS_PRODUCER = "IsProducer";
+    public static final String PROPERTY_IS_CONSUMER = "IsConsumer";
+    public static final String PROPERTY_QUERY_AT_STARTUP = "QueryAtStartup";
+    public static final String PROPERTY_LISTEN = "ListenStateMessages";
 
     /**
      * Updates existing flags based on a boolean property.
