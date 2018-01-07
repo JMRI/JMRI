@@ -68,10 +68,13 @@ class SerialPortDevice(jmri.jmrit.automat.AbstractAutomaton) :
             # skip anything listed as available now
             count = self.inputStream.available()
             self.inputStream.skip(count)
-            print "Skipping count:", count
+            print "Skipped character count:", count
             count = self.inputStream.available()
             self.inputStream.skip(count)
-            print "Skipping count:", count
+            print "Skipped character count:", count
+            count = self.inputStream.available()
+            self.inputStream.skip(count)
+            print "Skipped character count:", count
             # now skip 10 lines in hope to flush buffers of partial lines
             count = 0
             while (count < 10) :
@@ -81,24 +84,28 @@ class SerialPortDevice(jmri.jmrit.automat.AbstractAutomaton) :
             self.flush = False
             print "Ready to process"
             
-        # get next byte
-        next = self.inputStream.read()
-        
-        # this sample doesn't do anything with that character except echo it
-        if (next == 10) : return 1 # ignore LF
- 
-        if (next != 13) :  # unless CR, return - if CR, process line
-            self.line += chr(next)
-            return 1    # to continue
-        
+        # get next line
+        self.line = ""
+        next = self.inputStream.read()       
+        while (next != 13) :  # unless CR, return - if CR, process line
+            if (next != 10) : self.line += chr(next)  # ignore LF 10
+            next = self.inputStream.read()
+                
         # split line into array of string values
         values = self.parse(self.line)
 
         # send that array to be processed        
         self.process(values);
         
+        # flush buffer and skip line (test of performance)
+        count = self.inputStream.available()
+        self.inputStream.skip(count)
+        if (count > 10) : print "  Found buffer with excess: ", count
+        next = self.inputStream.read()       
+        while (next != 13) :  # loop until consume CR
+            next = self.inputStream.read()
+
         # and continue around again
-        self.line = ""
         return 1
 
     def parse(self, line) : 
