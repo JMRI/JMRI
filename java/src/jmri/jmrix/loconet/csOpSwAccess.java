@@ -92,6 +92,7 @@ public class csOpSwAccess implements LocoNetListener {
                 (Integer.parseInt(parts[1]) <= 0) ||
                 (Integer.parseInt(parts[1]) >= 129)) {
             // invalid request - signal it to the programmer
+            log.warn("Cannot perform Cs OpSw access: parts.length={}, parts[]={}, val={}",parts.length, parts, val);
             if (pL != null) {
                 pL.programmingOpReply(0,ProgListener.NotImplemented);
             }
@@ -156,7 +157,7 @@ public class csOpSwAccess implements LocoNetListener {
                         ProgListener temp = p;
                         p = null;
                         if (temp != null) {
-                            log.debug("Aborting - OpSw {} beyond allowd range", cmdStnOpSwNum);
+                            log.debug("Aborting - OpSw {} beyond allowed range", cmdStnOpSwNum);
                             temp.programmingOpReply(0, ProgListener.NotImplemented);
                         } else {
                             log.warn("no programmer to which the error condition can be returned.");
@@ -183,7 +184,7 @@ public class csOpSwAccess implements LocoNetListener {
                 cmdStnOpSwState = cmdStnOpSwStateType.WRITE;
                 LocoNetMessage m2 = updateOpSwVal(cmdStnOpSwNum, cmdStnOpSwVal);
                 log.debug("performing enhanced opsw write: {}",m2.toString());
-                log.debug("todo; uncomment the send");
+                log.debug("todo; uncomment the send?");
                 //memo.getLnTrafficController().sendLocoNetMessage(m2);
                 csOpSwAccessTimer.start();
             }
@@ -202,12 +203,16 @@ public class csOpSwAccess implements LocoNetListener {
         log.debug("readCmdStationOpSw: state is {}, have lowvalid {}, have highvalid {}, asking for OpSw{}",
                 cmdStnOpSwState, haveValidLowBytes?"true":"false",
                 haveValidHighBytes?"true":"false", cv);
-        if ((cmdStnOpSwState == cmdStnOpSwStateType.HAS_STATE) &&
-                (((cv > 0) && (cv < 65) && haveValidLowBytes)) ||
-                (((cv > 64) && (cv < 129) && haveValidHighBytes))){
-            // can re-use previous state - it has not "expired" due to time since read.
+        if (cmdStnOpSwState == cmdStnOpSwStateType.HAS_STATE) {
+            if ((((cv > 0) && (cv < 65) && haveValidLowBytes)) ||
+                (((cv > 64) && (cv < 129) && haveValidHighBytes))) {
+                // can re-use previous state - it has not "expired" due to time since read.
             log.debug("readCmdStationOpSw: returning state from previously-stored state for OpSw{}", cv);
-            returnCmdStationOpSwVal(cv);
+                returnCmdStationOpSwVal(cv);
+            } else {
+                log.warn("Cannot perform Cs OpSw access of OpSw {} account out-of-range for this command station.",cv);
+                sendFinalProgrammerReply(-1,ProgListener.NotImplemented);
+            }
         } else if ((cmdStnOpSwState == cmdStnOpSwStateType.IDLE) ||
                 (cmdStnOpSwState == cmdStnOpSwStateType.HAS_STATE)) {
             // do not have valid data or old data has "expired" due to time since read.
@@ -215,8 +220,8 @@ public class csOpSwAccess implements LocoNetListener {
             log.debug("readCmdStationOpSw: attempting to read some CVs");
             updateCmdStnOpSw(cv,false);
         } else {
-            log.debug("readCmdStationOpSw: aborting - cmdStnOpSwState is odd: {}", cmdStnOpSwState);
-            sendFinalProgrammerReply(-1,ProgListener.ProgrammerBusy);
+            log.warn("readCmdStationOpSw: aborting - cmdStnOpSwState is odd: {}", cmdStnOpSwState);
+            sendFinalProgrammerReply(-1,ProgListener.UnknownError);
         }
     }
 
@@ -336,7 +341,7 @@ public class csOpSwAccess implements LocoNetListener {
 
     }
 
-    private enum cmdStnOpSwStateType {
+    enum cmdStnOpSwStateType {
         IDLE,
         QUERY,
         QUERY_ENHANCED,
@@ -412,6 +417,11 @@ public class csOpSwAccess implements LocoNetListener {
         int newVal = (opSwBytes[msgByte] & (~(1<<bitpos))) | ((cmdStnOpSwVal?1:0)<<bitpos);
         log.debug("updating OpSwBytes[{}] from {} to {}", msgByte, opSwBytes[msgByte], newVal);
         opSwBytes[msgByte] = newVal;
+    }
+    
+    // accessor
+    public cmdStnOpSwStateType getState() {
+        return cmdStnOpSwState;
     }
 
     // initialize logging
