@@ -77,7 +77,7 @@ class SerialPortDevice(jmri.jmrit.automat.AbstractAutomaton) :
             while (count < 10) :
                 next = 0
                 while (next != 13) : next = self.inputStream.read()  # 13 is Newline
-                count++
+                count = count+1
             self.flush = False
             print "Ready to process"
             
