@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.jmrix.loconet;
 
 import jmri.ProgListenerScaffold;
@@ -365,7 +360,7 @@ public class csOpSwAccessTest {
         Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
-        Assert.assertEquals("Reply value matches", 0, pl.getRcvdValue());
+        Assert.assertEquals("Reply value matches", 1, pl.getRcvdValue());
 
         // attempt another command station opsw access
         csosa.readCsOpSw("csOpSw.02", pl);
@@ -941,7 +936,7 @@ public class csOpSwAccessTest {
         // should not have sent another message
         Assert.assertEquals("no new message sent", 1, lnis.outbound.size());
         Assert.assertEquals("should get a programming reply", 65, pl.getRcvdInvoked());
-        Assert.assertEquals("Reply status Not Implemented", 1, pl.getRcvdStatus());
+        Assert.assertEquals("Reply status: Busy", 4, pl.getRcvdStatus());
 
      }
 
@@ -978,7 +973,7 @@ public class csOpSwAccessTest {
         Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
-        Assert.assertEquals("Reply value matches", 0, pl.getRcvdValue());
+        Assert.assertEquals("Reply value matches", 1, pl.getRcvdValue());
 
 
         // attempt an out-of-range command station opsw access
@@ -1123,20 +1118,19 @@ public class csOpSwAccessTest {
         Assert.assertEquals("three messages sent", 3, lnis.outbound.size());
         Assert.assertEquals("one previous programming reply", 1, pl.getRcvdInvoked());
 
-        Assert.assertEquals("sent byte 0",  0xeF, lnis.outbound.get(1).getElement( 0) & 0xFF);
-        Assert.assertEquals("sent byte 1",  0x0e, lnis.outbound.get(1).getElement( 1) & 0xFF);
-        Assert.assertEquals("sent byte 2",  0x7f, lnis.outbound.get(1).getElement( 2) & 0xFF);
-        Assert.assertEquals("sent byte 3",  0x00, lnis.outbound.get(1).getElement( 3) & 0xFF);
-        Assert.assertEquals("sent byte 4",  0x00, lnis.outbound.get(1).getElement( 4) & 0xFF);
-        Assert.assertEquals("sent byte 5",  0x00, lnis.outbound.get(1).getElement( 5) & 0xFF);
-        Assert.assertEquals("sent byte 6",  0x00, lnis.outbound.get(1).getElement( 6) & 0xFF);
-        Assert.assertEquals("sent byte 7",  0x00, lnis.outbound.get(1).getElement( 7) & 0xFF);
-        Assert.assertEquals("sent byte 8",  0x00, lnis.outbound.get(1).getElement( 8) & 0xFF);
-        Assert.assertEquals("sent byte 9",  0x00, lnis.outbound.get(1).getElement( 9) & 0xFF);
-        Assert.assertEquals("sent byte 10", 0x00, lnis.outbound.get(1).getElement(10) & 0xFF);
-        Assert.assertEquals("sent byte 11", 0x00, lnis.outbound.get(1).getElement(11) & 0xFF);
-        Assert.assertEquals("sent byte 12", 0x00, lnis.outbound.get(1).getElement(12) & 0xFF);
-
+        Assert.assertEquals("sent byte 0",  0xeF, lnis.outbound.get(2).getElement( 0) & 0xFF);
+        Assert.assertEquals("sent byte 1",  0x0e, lnis.outbound.get(2).getElement( 1) & 0xFF);
+        Assert.assertEquals("sent byte 2",  0x7f, lnis.outbound.get(2).getElement( 2) & 0xFF);
+        Assert.assertEquals("sent byte 3",  0x00, lnis.outbound.get(2).getElement( 3) & 0xFF);
+        Assert.assertEquals("sent byte 4",  0x00, lnis.outbound.get(2).getElement( 4) & 0xFF);
+        Assert.assertEquals("sent byte 5",  0x00, lnis.outbound.get(2).getElement( 5) & 0xFF);
+        Assert.assertEquals("sent byte 6",  0x00, lnis.outbound.get(2).getElement( 6) & 0xFF);
+        Assert.assertEquals("sent byte 7",  0x00, lnis.outbound.get(2).getElement( 7) & 0xFF);
+        Assert.assertEquals("sent byte 8",  0x00, lnis.outbound.get(2).getElement( 8) & 0xFF);
+        Assert.assertEquals("sent byte 9",  0x00, lnis.outbound.get(2).getElement( 9) & 0xFF);
+        Assert.assertEquals("sent byte 10", 0x00, lnis.outbound.get(2).getElement(10) & 0xFF);
+        Assert.assertEquals("sent byte 11", 0x00, lnis.outbound.get(2).getElement(11) & 0xFF);
+        Assert.assertEquals("sent byte 12", 0x00, lnis.outbound.get(2).getElement(12) & 0xFF);
         // check echo of sent message has no effect
         m = lnis.outbound.get(2);
         csosa.message(m); // propagate the message from
