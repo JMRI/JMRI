@@ -58,6 +58,7 @@ import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.jmrix.openlcb.OlcbTurnout;
+import jmri.managers.AbstractProxyManager;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriBeanComboBox;
@@ -684,14 +685,12 @@ public class TurnoutTableAction extends AbstractTableAction {
                 columnModel.setColumnVisible(column, false);
                 column = columnModel.getColumnByModelIndex(LOCKDECCOL);
                 columnModel.setColumnVisible(column, false);
-
-                boolean isOpenLCB = (getManager().getClass().getName().contains("Olcb"));
                 column = columnModel.getColumnByModelIndex(FORGETCOL);
-                columnModel.setColumnVisible(column, isOpenLCB);
+                columnModel.setColumnVisible(column, false);
                 column = columnModel.getColumnByModelIndex(QUERYCOL);
-                columnModel.setColumnVisible(column, isOpenLCB);
+                columnModel.setColumnVisible(column, false);
                 column = columnModel.getColumnByModelIndex(AUTHCOL);
-                columnModel.setColumnVisible(column, isOpenLCB);
+                columnModel.setColumnVisible(column, false);
 
                 super.configureTable(table);
             }
@@ -1435,6 +1434,21 @@ public class TurnoutTableAction extends AbstractTableAction {
     JCheckBox showLockBox = new JCheckBox(Bundle.getMessage("ShowLockInfo"));
     JCheckBox showTurnoutSpeedBox = new JCheckBox(Bundle.getMessage("ShowTurnoutSpeedDetails"));
     JCheckBox doAutomationBox = new JCheckBox(Bundle.getMessage("AutomaticRetry"));
+    JCheckBox showOpenLCBBox = new JCheckBox(Bundle.getMessage("ShowOpenLCB"));
+
+    /**
+     * @return true if this manager is an OpenLCB manager or it is a proxy manager with an OpenLCB manager inside.
+     */
+    private boolean isOpenLCBManager() {
+        if (turnManager.getClass().getName().contains("Olcb")) return true;
+        if (turnManager instanceof AbstractProxyManager) {
+            List<Manager> l = ((AbstractProxyManager) turnManager).getManagerList();
+            for (Manager m : l) {
+                if (m.getClass().getName().contains("Olcb")) return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Add the check boxes to show/hide extra columns to the Turnout table
@@ -1480,6 +1494,17 @@ public class TurnoutTableAction extends AbstractTableAction {
                 showTurnoutSpeedChanged();
             }
         });
+        if (isOpenLCBManager()) {
+            f.addToBottomBox(showOpenLCBBox, this.getClass().getName());
+            showOpenLCBBox.setToolTipText(Bundle.getMessage("OpenLCBBoxToolTip"));
+            showOpenLCBBox.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    showOpenLCBChanged();
+                }
+            });
+        }
+        showOpenLCBChanged();
     }
 
     /**
@@ -1530,6 +1555,17 @@ public class TurnoutTableAction extends AbstractTableAction {
                 showTurnoutSpeedChanged();
             }
         });
+        if (isOpenLCBManager()) {
+            f.addToBottomBox(showOpenLCBBox, systemPrefix);
+            showOpenLCBBox.setToolTipText(Bundle.getMessage("OpenLCBBoxToolTip"));
+            showOpenLCBBox.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    showOpenLCBChanged();
+                }
+            });
+        }
+        showOpenLCBChanged();
     }
 
     void showFeedbackChanged() {
@@ -1568,6 +1604,17 @@ public class TurnoutTableAction extends AbstractTableAction {
         columnModel.setColumnVisible(column, showTurnoutSpeed);
     }
 
+    public void showOpenLCBChanged() {
+        boolean showOpenLCB = showOpenLCBBox.isSelected();
+        XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
+
+        TableColumn column = columnModel.getColumnByModelIndex(FORGETCOL);
+        columnModel.setColumnVisible(column, showOpenLCB);
+        column = columnModel.getColumnByModelIndex(QUERYCOL);
+        columnModel.setColumnVisible(column, showOpenLCB);
+        column = columnModel.getColumnByModelIndex(AUTHCOL);
+        columnModel.setColumnVisible(column, showOpenLCB);
+    }
     /**
      * Insert a table specific Operations menu. Account for the Window and Help
      * menus, which are already added to the menu bar as part of the creation of
