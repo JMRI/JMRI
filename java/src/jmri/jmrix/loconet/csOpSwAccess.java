@@ -112,11 +112,12 @@ public class csOpSwAccess implements LocoNetListener {
         int opSwNum = Integer.parseInt(parts[1]);
         log.debug("CS OpSw number {}", opSwNum);
         if (!updateCmdStnOpSw(opSwNum,
-                (val==1)?true:false)) {
+                (val==1))) {
             sendFinalProgrammerReply(-1, ProgListener.ProgrammerBusy);
         }
     }
 
+    @Override
     public void message(LocoNetMessage m) {
         if (cmdStnOpSwState == cmdStnOpSwStateType.IDLE) {
             return;
@@ -150,7 +151,7 @@ public class csOpSwAccess implements LocoNetListener {
                     log.debug("now can finish the write by updating the correct bit...");
                     finishTheWrite();
                 } else {
-                    if (!(((cmdStnOpSwNum > 0) && (cmdStnOpSwNum < 65) && (haveValidLowBytes)) || 
+                    if (!(((cmdStnOpSwNum > 0) && (cmdStnOpSwNum < 65) && (haveValidLowBytes)) ||
                             ((cmdStnOpSwNum > 64) && (cmdStnOpSwNum < 129) && (haveValidHighBytes)))) {
                         ProgListener temp = p;
                         p = null;
@@ -210,6 +211,7 @@ public class csOpSwAccess implements LocoNetListener {
         } else if ((cmdStnOpSwState == cmdStnOpSwStateType.IDLE) ||
                 (cmdStnOpSwState == cmdStnOpSwStateType.HAS_STATE)) {
             // do not have valid data or old data has "expired" due to time since read.
+            // Need to send a slot 127 (and 126, as appropriate) read to LocoNet
             log.debug("readCmdStationOpSw: attempting to read some CVs");
             updateCmdStnOpSw(cv,false);
         } else {
@@ -259,7 +261,7 @@ public class csOpSwAccess implements LocoNetListener {
         if (((cmdStnOpSwNum > 0) && (cmdStnOpSwNum < 65) && (haveValidLowBytes)) ||
                 ((cmdStnOpSwNum > 64) && (cmdStnOpSwNum < 129) && (haveValidHighBytes))){
 
-            log.debug("attempting to extract value for OpSw {} with haveValidLowBytes {} and haveValidHighBytes {}", 
+            log.debug("attempting to extract value for OpSw {} with haveValidLowBytes {} and haveValidHighBytes {}",
                     cmdStnOpSwNum, haveValidLowBytes, haveValidHighBytes);
             int msgByte = (cmdStnOpSwNum-1) /8;
             int bitpos = (cmdStnOpSwNum-1)-(8*msgByte);
@@ -267,7 +269,7 @@ public class csOpSwAccess implements LocoNetListener {
             log.debug("extractCmdStnOpSw: opsw{} from bit {} of opSwByte[{}]={} gives {}", cmdStnOpSwNum, bitpos, msgByte, opSwBytes[msgByte], retval);
             return retval;
         } else {
-            log.debug("failing extract account problem with cmdStnOpSwNum={}, haveValidLowBytes {} and haveValidHighBytes {}", 
+            log.debug("failing extract account problem with cmdStnOpSwNum={}, haveValidLowBytes {} and haveValidHighBytes {}",
                 cmdStnOpSwNum, haveValidLowBytes, haveValidHighBytes);
             csOpSwAccessTimer.stop();
             csOpSwValidTimer.stop();
@@ -319,7 +321,7 @@ public class csOpSwAccess implements LocoNetListener {
         }
 
         m2.setOpCode(LnConstants.OPC_WR_SL_DATA);
-        log.debug("finish the write sending LocoNet cmd stn opsw write message {}, length=", m2.toString(), m2.getNumDataElements());
+        log.debug("finish the write sending LocoNet cmd stn opsw write message {}, length={}", m2.toString(), m2.getNumDataElements());
         memo.getLnTrafficController().sendLocoNetMessage(m2);
         csOpSwAccessTimer.start();
     }
