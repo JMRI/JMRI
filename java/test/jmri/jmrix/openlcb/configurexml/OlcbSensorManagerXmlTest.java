@@ -35,10 +35,9 @@ public class OlcbSensorManagerXmlTest {
     @Test
     public void testSaveAndRestoreWithProperties() throws Exception {
         log.debug("FIRST START");
-        t = new OlcbTestInterface();
-
+        t = new OlcbTestInterface(new OlcbTestInterface.CreateConfigurationManager());
+        OlcbSensorManager mgr = t.configurationManager.getSensorManager();
         OlcbSensorManagerXml xmlmgr = new OlcbSensorManagerXml();
-        OlcbSensorManager mgr = t.createConfigurationManager().getSensorManager();
 
         Sensor s = mgr.newSensor("MS1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", "sen1");
         CanMessage expected = new CanMessage(new byte[]{1,2,3,4,5,6,7,8}, 0x198F4C4C);
@@ -69,8 +68,8 @@ public class OlcbSensorManagerXmlTest {
 
         log.debug("SECOND START");
 
-        t = new OlcbTestInterface();
-        mgr = t.createConfigurationManager().getSensorManager();
+        t = new OlcbTestInterface(new OlcbTestInterface.CreateConfigurationManager());
+        mgr = t.configurationManager.getSensorManager();
 
         xmlmgr.load(stored, null);
 
@@ -87,11 +86,8 @@ public class OlcbSensorManagerXmlTest {
         t.tc.rcvMessage = null;
 
         log.debug("SET STATE");
-        s.setKnownState(Sensor.ACTIVE);
-        log.debug("STATE SET DONE");
-        SwingUtilities.invokeAndWait(()->{});
+        s2.setKnownState(Sensor.ACTIVE);
         t.flush();
-        //Thread.sleep(100);
         expected = new CanMessage(new byte[]{1,2,3,4,5,6,7,8}, 0x195B4C4C);
         expected.setExtended(true);
         Assert.assertEquals(expected, t.tc.rcvMessage);
