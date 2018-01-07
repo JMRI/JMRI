@@ -16,14 +16,13 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.SwingUtilities;
-
 /**
  * OlcbSensorManagerXmlTest.java
  *
  * Description: tests for the OlcbSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
+ *           Balazs Racz    (C) 2018
  */
 public class OlcbSensorManagerXmlTest {
 
@@ -40,6 +39,7 @@ public class OlcbSensorManagerXmlTest {
         OlcbSensorManagerXml xmlmgr = new OlcbSensorManagerXml();
 
         Sensor s = mgr.newSensor("MS1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", "sen1");
+        t.flush();
         CanMessage expected = new CanMessage(new byte[]{1,2,3,4,5,6,7,8}, 0x198F4C4C);
         expected.setExtended(true);
         Assert.assertEquals(expected, t.tc.rcvMessage);
@@ -80,6 +80,8 @@ public class OlcbSensorManagerXmlTest {
 
         t.flush();
 
+        // The last message from the initialization is not a query (like above), because query at
+        // init is disabled.
         expected = new CanMessage(new byte[]{1,2,3,4,5,6,7,9}, 0x194C7C4C);
         expected.setExtended(true);
         Assert.assertEquals(expected, t.tc.rcvMessage);
