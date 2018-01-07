@@ -506,6 +506,7 @@ public class LayoutEditorAuxTools {
                     curConnection = ((LevelXing) curConnection).getConnectB();
                     typeCurConnection = LayoutTrack.TRACK;
                 } else if (typeCurConnection == LayoutTrack.SLIP_D) {
+                    LayoutSlip lsz = (LayoutSlip) curConnection;
                     curConnection = null;
                 }
             } else {
