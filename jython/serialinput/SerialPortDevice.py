@@ -97,13 +97,13 @@ class SerialPortDevice(jmri.jmrit.automat.AbstractAutomaton) :
         # send that array to be processed        
         self.process(values);
         
-        # flush buffer and skip line (test of performance)
+        # flush buffer and skip line if falling behind
         count = self.inputStream.available()
-        self.inputStream.skip(count)
-        if (count > 10) : print "  Found buffer with excess: ", count
-        next = self.inputStream.read()       
-        while (next != 13) :  # loop until consume CR
-            next = self.inputStream.read()
+        if (count > 60) : # falling behind, flush
+            self.inputStream.skip(count)
+            next = self.inputStream.read()       
+            while (next != 13) :  # loop until consume CR
+                next = self.inputStream.read()
 
         # and continue around again
         return 1
