@@ -155,6 +155,40 @@ public class OlcbTurnoutTest extends TestCase {
         verifyNoMoreInteractions(l.m);
     }
 
+    public void testAuthoritative() throws jmri.JmriException {
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.setFeedbackMode(Turnout.MONITORING);
+        s.finishLoad();
+
+        s.setState(Turnout.THROWN);
+        t.flush();
+
+        // message for Active and Inactive
+        CanMessage qActive = new CanMessage(new int[]{1, 2, 3, 4, 5, 6, 7, 8},
+                0x19914123
+        );
+        qActive.setExtended(true);
+        t.sendMessage(qActive);
+        t.flush();
+
+        CanMessage expected = new CanMessage(new int[]{1, 2, 3, 4, 5, 6, 7, 8},
+                0x19544c4c);
+        expected.setExtended(true);
+        Assert.assertEquals(expected, t.tc.rcvMessage);
+        t.tc.rcvMessage = null;
+
+        s.setAuthoritative(false);
+        s.setState(Turnout.CLOSED);
+        t.flush();
+
+        t.sendMessage(qActive);
+        t.flush();
+        expected = new CanMessage(new int[]{1, 2, 3, 4, 5, 6, 7, 8},
+                0x19547c4c);
+        expected.setExtended(true);
+        Assert.assertEquals(expected, t.tc.rcvMessage);
+    }
+
     public void testLoopback() throws jmri.JmriException {
         // Two turnouts behaving in opposite ways. One will be used to generate an event and the
         // other will be observed to make sure it catches it.
