@@ -43,10 +43,10 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
 
     VersionedValueListener<Boolean> turnoutListener;
     BitProducerConsumer pc;
-    boolean isAuthoritative = true;
     EventTable.EventTableEntryHolder thrownEventTableEntryHolder = null;
     EventTable.EventTableEntryHolder closedEventTableEntryHolder = null;
 
+    private static final boolean DEFAULT_IS_AUTHORITATIVE = true;
     private static final String[] validFeedbackNames = {"MONITORING", "ONESENSOR", "TWOSENSOR",
             "DIRECT"};
     private static final int[] validFeedbackModes = {MONITORING, ONESENSOR, TWOSENSOR, DIRECT};
@@ -109,8 +109,8 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
             case DIRECT:
                 flags = BitProducerConsumer.IS_PRODUCER;
                 break;
-
         }
+        flags = OlcbUtils.overridePCFlagsFromProperties(this, flags);
         pc = new BitProducerConsumer(iface, addrThrown.toEventID(), addrClosed.toEventID(), flags);
         turnoutListener = new VersionedValueListener<Boolean>(pc.getValue()) {
             @Override
@@ -224,14 +224,32 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
         super.dispose();
     }
 
+    /**
+     * Changes how the turnout reacts to inquire state events. With authoritative == false the
+     * state will always be reported as UNKNOWN to the layout when queried.
+     *
+     * @param authoritative whether we should respond true state or unknown to the layout event
+     *                      state inquiries.
+     */
     public void setAuthoritative(boolean authoritative) {
-        isAuthoritative = authoritative;
+        setProperty(OlcbUtils.PROPERTY_IS_AUTHORITATIVE, Boolean.toString(authoritative));
     }
 
+    /**
+     * @return whether this producer/consumer is enabled to return state to the layout upon queries.
+     */
     public boolean isAuthoritative() {
-        return isAuthoritative;
+        String value = (String) getProperty(OlcbUtils.PROPERTY_IS_AUTHORITATIVE);
+        if (value != null) {
+            return Boolean.parseBoolean(value);
+        }
+        return DEFAULT_IS_AUTHORITATIVE;
     }
 
+    /**
+     * Resets internal state to unknown. This enables any state query method to resynchronize
+     * state from the layout.
+     */
     public void doForgetState() {
         if (pc != null) {
             pc.resetToDefault();
@@ -240,6 +258,11 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
         newKnownState(Turnout.UNKNOWN);
     }
 
+    /**
+     * Sends out state query messages. If the turnout is set to monitoring mode, these will
+     * re-set the turnout's internal state to the layout state and cause the property change
+     * listeners to be invoked.
+     */
     public void doQueryState() {
         if (pc != null) {
             pc.resetToDefault();
