@@ -29,7 +29,7 @@ public class ConditionalTreeEditTest {
     @Test
     public void addConditionalTest() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ConditionalTreeEdit cdlTreeEdit = new ConditionalTreeEdit("IX102");  // NOI18N
+        new ConditionalTreeEdit("IX102");
 
         JFrameOperator editFrame = new JFrameOperator(Bundle.getMessage("TitleEditLogix"));  // NOI18N
         Assert.assertNotNull(editFrame);
@@ -81,7 +81,7 @@ public class ConditionalTreeEditTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                 setProperty("jmri.jmrit.beantable.LogixTableAction", "Selection Mode", "USESINGLE");  // NOI18N
-        ConditionalTreeEdit cdlTreeEdit = new ConditionalTreeEdit("IX102");  // NOI18N
+        new ConditionalTreeEdit("IX102");
 
         JFrameOperator editFrame = new JFrameOperator(Bundle.getMessage("TitleEditLogix"));  // NOI18N
         Assert.assertNotNull(editFrame);
@@ -114,7 +114,7 @@ public class ConditionalTreeEditTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                 setProperty("jmri.jmrit.beantable.LogixTableAction", "Selection Mode", "USECOMBO");  // NOI18N
-        ConditionalTreeEdit cdlTreeEdit = new ConditionalTreeEdit("IX102");  // NOI18N
+        new ConditionalTreeEdit("IX102");
 
         JFrameOperator editFrame = new JFrameOperator(Bundle.getMessage("TitleEditLogix"));  // NOI18N
         Assert.assertNotNull(editFrame);

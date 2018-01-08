@@ -93,8 +93,6 @@ public class csOpSwAccess implements LocoNetListener {
             return;
         }
 
-        // validity check is ok - have a valid command station config variable access.
-        LocoNetMessage m;
         if (csOpSwAccessTimer == null) {
             initializeCsOpSwAccessTimer();
             initializeCsOpSwValidTimer();

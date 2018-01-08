@@ -67,9 +67,6 @@ public class SerialThrottleManager extends AbstractThrottleManager {
         return null;
     }
 
-    @Deprecated
-    static private SerialThrottleManager _instance;
-    
     private final static Logger log = LoggerFactory.getLogger(SerialThrottleManager.class);
 
 }

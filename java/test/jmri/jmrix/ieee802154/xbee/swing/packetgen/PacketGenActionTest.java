@@ -18,7 +18,7 @@ public class PacketGenActionTest {
 
     @Test
     public void testCTor() {
-        XBeeTrafficController tc = new XBeeInterfaceScaffold();
+        new XBeeInterfaceScaffold();
         XBeeConnectionMemo m = new XBeeConnectionMemo();
         InstanceManager.store(m,XBeeConnectionMemo.class);
 
@@ -28,7 +28,7 @@ public class PacketGenActionTest {
 
     @Test
     public void testStringCTor() {
-        XBeeTrafficController tc = new XBeeInterfaceScaffold();
+        new XBeeInterfaceScaffold();
         XBeeConnectionMemo m = new XBeeConnectionMemo();
         InstanceManager.store(m,XBeeConnectionMemo.class);
 
@@ -38,7 +38,7 @@ public class PacketGenActionTest {
 
     @Test
     public void testStringMemoCTor() {
-        XBeeTrafficController tc = new XBeeInterfaceScaffold();
+        new XBeeInterfaceScaffold();
         XBeeConnectionMemo m = new XBeeConnectionMemo();
 
         PacketGenAction t = new PacketGenAction("Test Action",m);
@@ -47,7 +47,7 @@ public class PacketGenActionTest {
 
     @Test
     public void testMemoCTor() {
-        XBeeTrafficController tc = new XBeeInterfaceScaffold();
+        new XBeeInterfaceScaffold();
         XBeeConnectionMemo m = new XBeeConnectionMemo();
 
         PacketGenAction t = new PacketGenAction(m);

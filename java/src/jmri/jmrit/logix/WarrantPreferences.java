@@ -131,8 +131,6 @@ public class WarrantPreferences extends AbstractPreferencesManager {
 
     public enum Shutdown {NO_MERGE, PROMPT, MERGE_ALL}
     private Shutdown _shutdown = Shutdown.PROMPT;     // choice for handling session RosterSpeedProfiles
-    private float _mf = 0.8f;    // momentum factor (guess) for speed change
-
     /**
      * Get the default instance.
      *

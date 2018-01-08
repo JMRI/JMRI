@@ -23,8 +23,8 @@ public class KnownLocoSelPaneTest {
 
     @Test
     public void testBooleanCTor() {
-        JLabel jl = new JLabel("test selector");
-        ProgModePane pmp = new ProgModePane(javax.swing.BoxLayout.X_AXIS);
+        new JLabel("test selector");
+        new ProgModePane(javax.swing.BoxLayout.X_AXIS);
         KnownLocoSelPane t = new KnownLocoSelPane(false);
         Assert.assertNotNull("exists",t);
     }
