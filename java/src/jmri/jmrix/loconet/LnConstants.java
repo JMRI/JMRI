@@ -18,50 +18,50 @@ package jmri.jmrix.loconet;
  *<p>
  * Slot Status byte definitions and macros
  * <UL>
- * <li>D7-SL_SPURGE : 1=SLOT purge en,  ALSO adrSEL (INTERNAL use only) (not seen on NET!) 
- * 
+ * <li>D7-SL_SPURGE : 1=SLOT purge en,  ALSO adrSEL (INTERNAL use only) (not seen on NET!)
+ *
  * <li>D6-SL_CONUP : CONDN/CONUP: bit encoding-Control double
- * linked Consist List 
+ * linked Consist List
  *    <ul>
  *    <li> 11=LOGICAL MID CONSIST , Linked up AND down
- *    <li> 10=LOGICAL CONSIST TOP, Only linked downwards 
- *    <li> 01=LOGICAL CONSIST SUB-MEMBER, Only linked upwards 
- *    <li> 00=FREE locomotive, no CONSIST indirection/linking 
+ *    <li> 10=LOGICAL CONSIST TOP, Only linked downwards
+ *    <li> 01=LOGICAL CONSIST SUB-MEMBER, Only linked upwards
+ *    <li> 00=FREE locomotive, no CONSIST indirection/linking
  *    </ul>
- * ALLOWS "CONSISTS of CONSISTS". Uplinked means that Slot SPD number is 
- * now SLOT adr of SPD/DIR and STATUS of 
- * consist. i.e. is an Indirect pointer. This Slot 
- * has same BUSY/ACTIVE bits as TOP of Consist. TOP is 
- * loco with SPD/DIR for whole consist. (top of list). 
- * 
- * <li> D5-SL_BUSY: BUSY/ACTIVE: bit encoding for SLOT activity 
+ * ALLOWS "CONSISTS of CONSISTS". Uplinked means that Slot SPD number is
+ * now SLOT adr of SPD/DIR and STATUS of
+ * consist. i.e. is an Indirect pointer. This Slot
+ * has same BUSY/ACTIVE bits as TOP of Consist. TOP is
+ * loco with SPD/DIR for whole consist. (top of list).
+ *
+ * <li> D5-SL_BUSY: BUSY/ACTIVE: bit encoding for SLOT activity
  *      <ul>
- *      <li> 11=IN_USE loco adr in SLOT -REFRESHED 
+ *      <li> 11=IN_USE loco adr in SLOT -REFRESHED
  *      </ul>
  *
  * <li> D4-SL_ACTIVE ;
  *      <ul>
- *      <li>10=IDLE loco adr in SLOT -NOT refreshed 
- *      <li>01=COMMON loco adr IN SLOT-refreshed 
- *      <li>00=FREE SLOT, no valid DATA -not refreshed 
+ *      <li>10=IDLE loco adr in SLOT -NOT refreshed
+ *      <li>01=COMMON loco adr IN SLOT-refreshed
+ *      <li>00=FREE SLOT, no valid DATA -not refreshed
  *      </ul>
  *
- * <li>D3-SL_CONDN : shows other SLOT Consist linked INTO this slot, see SL_CONUP 
- * 
- * <li>D2-SL_SPDEX ; 3 BITS for Decoder TYPE encoding for this SLOT 
- * 
+ * <li>D3-SL_CONDN : shows other SLOT Consist linked INTO this slot, see SL_CONUP
+ *
+ * <li>D2-SL_SPDEX ; 3 BITS for Decoder TYPE encoding for this SLOT
+ *
  * <li>D1-SL_SPD14
  *      <ul>
- *      <li>011=send 128 speed mode packets 
- *      </ul> 
- * 
+ *      <li>011=send 128 speed mode packets
+ *      </ul>
+ *
  * <li>D0-SL_SPD28
  *      <ul>
- *      <li>010=14 step MODE 
- *      <li>001=28 step. Generate Trinary packets for this Mobile ADR 
- *      <li>000=28 step. 3 BYTE PKT regular mode 
- *      <li>111=128 Step decoder, Allow Advanced DCC consisting 
- *      <li>100=28 Step decoder ,Allow Advanced DCC consisting 
+ *      <li>010=14 step MODE
+ *      <li>001=28 step. Generate Trinary packets for this Mobile ADR
+ *      <li>000=28 step. 3 BYTE PKT regular mode
+ *      <li>111=128 Step decoder, Allow Advanced DCC consisting
+ *      <li>100=28 Step decoder ,Allow Advanced DCC consisting
  *      </ul>
  * </ul><p>
  * Note that the values in this class have been taken from the llnmom C program
@@ -89,6 +89,7 @@ package jmri.jmrix.loconet;
  * @author  Ron W. Auld
  * @author  John Kabat
  * @author  Alain Le Marchand
+ * @author B. Milhaupt Copyright (C) 2018
  *
  */
 public final class LnConstants {
@@ -148,29 +149,29 @@ public final class LnConstants {
     public final static int STAT1_SL_SPURGE = 0x80;  /* internal use only, not seen on net */
 
     /** consist status                     */
-    public final static int STAT1_SL_CONUP = 0x40; 
+    public final static int STAT1_SL_CONUP = 0x40;
 
     /** Used with STAT1_SL_ACTIVE         */
     public final static int STAT1_SL_BUSY = 0x20;
 
-    public final static int STAT1_SL_ACTIVE = 0x10; 
+    public final static int STAT1_SL_ACTIVE = 0x10;
 
-    public final static int STAT1_SL_CONDN = 0x08; 
+    public final static int STAT1_SL_CONDN = 0x08;
 
-    public final static int STAT1_SL_SPDEX = 0x04; 
+    public final static int STAT1_SL_SPDEX = 0x04;
 
-    public final static int STAT1_SL_SPD14 = 0x02; 
+    public final static int STAT1_SL_SPD14 = 0x02;
 
     public final static int STAT1_SL_SPD28 = 0x01;
 
     /** 1 = Adv. Consisting supressed      */
-    public final static int STAT2_SL_SUPPRESS = 0x01;  
+    public final static int STAT2_SL_SUPPRESS = 0x01;
 
     /** 1 = ID1/ID2 is not ID usage        */
-    public final static int STAT2_SL_NOT_ID = 0x04;  
+    public final static int STAT2_SL_NOT_ID = 0x04;
 
     /** 1 = ID1/ID2 is not encoded alias   */
-    public final static int STAT2_SL_NOTENCOD = 0x08;  
+    public final static int STAT2_SL_NOTENCOD = 0x08;
 
     public final static int STAT2_ALIAS_MASK = STAT2_SL_NOTENCOD | STAT2_SL_NOT_ID;
     public final static int STAT2_ID_IS_ALIAS = STAT2_SL_NOT_ID;
@@ -190,9 +191,9 @@ public final class LnConstants {
                                 : "Not Consisted")); // NOI18N
     }
 
-    /** Mask for locomotive use determination. 
-    * Compare value to {@link #LOCO_IN_USE},  {@link #LOCO_IDLE},  
-    * {@link #LOCO_COMMON},  {@link #LOCO_FREE} 
+    /** Mask for locomotive use determination.
+    * Compare value to {@link #LOCO_IN_USE},  {@link #LOCO_IDLE},
+    * {@link #LOCO_COMMON},  {@link #LOCO_FREE}
     */
     public final static int LOCOSTAT_MASK = STAT1_SL_BUSY | STAT1_SL_ACTIVE;
     /** Value for locomotive use determination */
@@ -205,7 +206,7 @@ public final class LnConstants {
     public final static int LOCO_FREE = 0;
 
     /**Encode loco status as a string */
-    public final static String LOCO_STAT(int s) { 
+    public final static String LOCO_STAT(int s) {
         return ((s & LOCOSTAT_MASK) == LOCO_IN_USE) ? "In-Use" // NOI18N
                 : (((s & LOCOSTAT_MASK) == LOCO_IDLE) ? "Idle" // NOI18N
                         : (((s & LOCOSTAT_MASK) == LOCO_COMMON) ? "Common" // NOI18N
@@ -213,8 +214,8 @@ public final class LnConstants {
     }
 
     /** Mask for decoder type encoding for this slot.
-    * Compare value to 
-    * {@link #DEC_MODE_128A}, {@link #DEC_MODE_28A}, {@link #DEC_MODE_128}, 
+    * Compare value to
+    * {@link #DEC_MODE_128A}, {@link #DEC_MODE_28A}, {@link #DEC_MODE_128},
     * {@link #DEC_MODE_14}, {@link #DEC_MODE_28TRI}, {@link #DEC_MODE_28}
     */
     public final static int DEC_MODE_MASK = STAT1_SL_SPDEX | STAT1_SL_SPD14 | STAT1_SL_SPD28;
@@ -250,13 +251,16 @@ public final class LnConstants {
     public final static int GTRK_POWER = 0x01;      /* 1=DCC packets are ON in MASTER, Global POWER up      */
 
     /** Fast clock is in this slot                           */
-    public final static int FC_SLOT = 0x7b;      
+    public final static int FC_SLOT = 0x7b;
 
      /** This slot communicates with the programming track    */
-    public final static int PRG_SLOT = 0x7c;     
+    public final static int PRG_SLOT = 0x7c;
+
+    /** This slot holds extended configuration bits for some command stations */
+    public final static int CFG_EXT_SLOT = 0x7e;
 
     /** This slot holds configuration bits                   */
-    public final static int CFG_SLOT = 0x7f;      
+    public final static int CFG_SLOT = 0x7f;
 
     /** Values and macros to decode programming messages */
     public final static int PCMD_RW = 0x40;      /* 1 = write, 0 = read                                  */
@@ -409,7 +413,7 @@ public final class LnConstants {
             default: return "<unknown>"; // NOI18N
         }
     }
-    
+
 // start of values not from llnmon.c
 
 // Expanded slot index values
