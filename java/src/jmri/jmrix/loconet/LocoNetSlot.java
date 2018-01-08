@@ -234,7 +234,7 @@ public class LocoNetSlot {
     }
 
     public LocoNetSlot(LocoNetMessage l) throws LocoNetException {
-        slot = l.getElement(1);
+        slot = l.getElement(2);
         setSlot(l);
     }
 
@@ -522,10 +522,7 @@ public class LocoNetSlot {
         synchronized (this) {
             v = new ArrayList<SlotListener>(slotListeners);
         }
-        if (log.isDebugEnabled()) {
-            log.debug("notify " + v.size() // NOI18N
-                    + " SlotListeners"); // NOI18N
-        }
+        log.debug("notify {} SlotListeners",v.size()); // NOI18N
         // forward to all listeners
         int cnt = v.size();
         for (int i = 0; i < cnt; i++) {

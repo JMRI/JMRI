@@ -409,8 +409,9 @@ public class Ib2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new Ib2ThrottleManager(memo));
-        instance = new Ib2Throttle(new LocoNetSystemConnectionMemo(lnis,slotmanager),new LocoNetSlot(5));
+        memo.setThrottleManager(new Ib2ThrottleManager(memo));
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,memo.getThrottleManager());
+        instance = new Ib2Throttle(memo,new LocoNetSlot(5));
     }
 
     @After
