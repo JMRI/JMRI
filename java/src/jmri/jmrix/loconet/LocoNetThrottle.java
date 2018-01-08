@@ -37,7 +37,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     protected int slotStatus;
     protected boolean isDisposing = false;
     // set isInitialized to false to enable setting the throttle ID.
-    protected boolean isInitialized = true;
+    protected boolean isInitialized = false;
 
     /**
      * Constructor
@@ -413,7 +413,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         }
         log.debug("notifyChangedSlot executing for slot {}, slotStatus {}", slot.getSlot(), Integer.toHexString(slot.slotStatus()));
 
-        if(!isInitialized){
+        if(!isInitialized && slot.slotStatus() == LnConstants.LOCO_IN_USE){
            log.debug("Attempting to update slot with this JMRI instance's throttle id ({})", throttleManager.getThrottleID());
            network.sendLocoNetMessage(slot.writeThrottleID(throttleManager.getThrottleID()));
            isInitialized = true;
