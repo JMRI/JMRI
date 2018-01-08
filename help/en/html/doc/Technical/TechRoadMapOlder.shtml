@@ -429,7 +429,7 @@
         <li>Start using <a href=
         "https://jcp.org/en/jsr/detail?id=305">JSR 305
         annotations</a> <a href=
-        "https://code.google.com/p/findbugs/">via Findbugs</a> to
+           "http://spotbugs.github.io">via SpotBugs</a> to
         strengthen the code checking (see <a href=
         "https://today.java.net/pub/a/today/2008/09/11/jsr-305-annotations.html">
         this</a> and <a href=

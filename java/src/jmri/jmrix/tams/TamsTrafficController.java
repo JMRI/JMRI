@@ -309,7 +309,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     }
 
     @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // FindBugs wants this package protected, but we're removing it when multi-connection
+    // SpotBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected TamsTrafficController self = null;
 

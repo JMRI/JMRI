@@ -1518,7 +1518,7 @@ public class LayoutEditorTools {
      */
     public boolean initializeBlockBossLogic(@Nonnull String signalHeadName) {
         logic = BlockBossLogic.getStoppedObject(signalHeadName);
-        //TODO: Findbugs says this test isn't necessary - dead code strip
+        //TODO: SpotBugs says this test isn't necessary - dead code strip
 //        if (logic == null) {
 //            log.error("Trouble creating BlockBossLogic for '" + signalHeadName + "'.");
 //            return false;

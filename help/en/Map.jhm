@@ -2000,7 +2000,7 @@
 
 <mapID target="html.hardware.sprog.SPROG_documentation" url="html/hardware/sprog/SPROG.shtml#documentation"/>
 
-<mapID target="html.doc.Technical.FindBugs" url="html/doc/Technical/FindBugs.shtml"/>
+<mapID target="html.doc.Technical.SpotBugs" url="html/doc/Technical/FindBugs.shtml"/>
 
 <mapID target="manual.DecoderPro.Basic_Start" url="manual/DecoderPro/Basic_Start.shtml"/>
 

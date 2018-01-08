@@ -9,6 +9,8 @@ junit-results.xml
 junit*.properties
 findbugs.xml
 findbugs.html
+spotbugs.xml
+spotbugs.html
 jacoco.exec
 coveragereport
 
