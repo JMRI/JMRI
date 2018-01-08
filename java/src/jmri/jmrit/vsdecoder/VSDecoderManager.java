@@ -317,7 +317,7 @@ public class VSDecoderManager implements PropertyChangeListener {
         log.debug("Decoder Address: " + a.getNumber());
         for (VSDecoder d : decodertable.values()) {
             // Get the Decoder's address protocol.  If it's a DCC_LONG or DCC_SHORT, convert to DCC
-            // since the LnReprter can't tell the difference and will always report "DCC".
+            // since the LnReporter can't tell the difference and will always report "DCC".
             if (d == null) {
                 log.debug("VSdecoder null pointer!");
                 return;
