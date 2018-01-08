@@ -234,7 +234,7 @@ public class LocoNetSlot {
     }
 
     public LocoNetSlot(LocoNetMessage l) throws LocoNetException {
-        slot = l.getElement(1);
+        slot = l.getElement(2);
         setSlot(l);
     }
 
