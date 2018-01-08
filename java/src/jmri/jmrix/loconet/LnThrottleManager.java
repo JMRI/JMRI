@@ -122,6 +122,8 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 }
                 log.error("No response to slot request for {} after {} attempts.", address, attempts - 1); // NOI18N
                 failedThrottleRequest(address, "Failed to get response from command station");
+                requestOutstanding = false;
+                processQueuedThrottleSetupRequest();
             }
         }
         
