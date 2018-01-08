@@ -2880,14 +2880,6 @@ public class LlnmonTest extends TestCase {
     }
 
     public void testPlayableWhistleMessages() {
-        LocoNetMessage l;
-/*
-        l = new LocoNetMessage(new int[] {0xEd, 0x0b, 0x7f, 0x44, 0x00, 0x3c, 0x3d, 0x7c, 0x00, 0x00, 0x00});
-        assertEquals("Playable Whistle test 01", "Send packet immediate: Locomotive 4013 set F13=Off, F14=Off, F15=Off, F16=On, F17=Off, F18=Off, F19=Off, F20=Off.\n",
-                f.displayMessage(l));
-
-*/
-        // TODO : add some "playable whistle" message testing
     }
 
     public void testBasicTurnoutControlMessages() {

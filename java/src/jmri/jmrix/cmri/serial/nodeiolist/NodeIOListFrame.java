@@ -153,7 +153,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         userColumn.setMinWidth(90);
         userColumn.setMaxWidth(250);
         userColumn.setResizable(true);
-        TableColumn commentColumn = assignmentColumnModel.getColumn(AssignmentTableModel.COMMENT_COLUMN);
+        assignmentColumnModel.getColumn(AssignmentTableModel.COMMENT_COLUMN);
         userColumn.setMinWidth(90);
         userColumn.setMaxWidth(250);
         userColumn.setResizable(true);

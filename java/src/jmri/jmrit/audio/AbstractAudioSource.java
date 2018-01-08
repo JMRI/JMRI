@@ -170,7 +170,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         if (!queued) {
             AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
             Audio a = am.getBySystemName(bufferSystemName);
-            if (a.getSubType() == Audio.BUFFER) {
+            if (a != null && a.getSubType() == Audio.BUFFER) {
                 setAssignedBuffer((AudioBuffer) a);
             } else {
                 log.warn("Attempt to assign incorrect object type to buffer - AudioBuffer expected.");
@@ -872,7 +872,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         /**
          * Internal variable to hold the fade direction
          */
-        private int fadeDirection;
+        private final int fadeDirection;
 
         /**
          * Constructor that takes handle to looping AudioSource to monitor
