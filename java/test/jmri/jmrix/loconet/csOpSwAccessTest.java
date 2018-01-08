@@ -350,7 +350,7 @@ public class csOpSwAccessTest {
         Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
-        Assert.assertEquals("Reply value matches", 0, pl.getRcvdValue());
+        Assert.assertEquals("Reply value matches", 1, pl.getRcvdValue());
 
         // attempt another command station opsw access
         csosa.readCsOpSw("csOpSw.02", pl);
@@ -964,7 +964,7 @@ public class csOpSwAccessTest {
         Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
-        Assert.assertEquals("Reply value matches", 0, pl.getRcvdValue());
+        Assert.assertEquals("Reply value matches", 1, pl.getRcvdValue());
 
         // attempt an out-of-range command station opsw access
         csosa.readCsOpSw("csOpSw.0", pl);
