@@ -61,7 +61,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
             panel.setAttribute("sidetrackwidth", Integer.toString(editor.getSideTrackWidth()));
             panel.setAttribute("turnoutcircles", (editor.getTurnoutCircles()) ? "yes" : "no");
             panel.setAttribute("turnoutcirclesize", Integer.toString(editor.getTurnoutCircleSize()));
-            panel.setAttribute("turnoutdrawunselectedleg", (editor.getTurnoutDrawUnselectedLeg()) ? "yes" : "no");
+            panel.setAttribute("turnoutdrawunselectedleg", (editor.isTurnoutDrawUnselectedLeg()) ? "yes" : "no");
             if (editor.getBackgroundColor() == null) {
                 panel.setAttribute("backgroundcolor", ColorUtil.colorToColorName(Color.lightGray));
             } else {

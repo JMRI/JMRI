@@ -354,7 +354,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     public void testGetTurnoutDrawUnselectedLeg() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to true
-        Assert.assertTrue("getTurnoutDrawUnselectedLeg", le.getTurnoutDrawUnselectedLeg());
+        Assert.assertTrue("getTurnoutDrawUnselectedLeg", le.isTurnoutDrawUnselectedLeg());
     }
 
     @Test
@@ -790,7 +790,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
         jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
                              + Bundle.getMessage("ToolBar") + "/"
                              + Bundle.getMessage("ToolBarSideTop"), "/");
-         
+
         //Left
         jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
                              + Bundle.getMessage("ToolBar") + "/"

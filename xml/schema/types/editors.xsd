@@ -216,6 +216,7 @@
       <xs:all>
         <xs:element name="mainBallastColor" type="screenColorType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="mainBallastWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainBlockLineDashPercentageX10" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="mainBlockLineWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="mainRailColor" type="screenColorType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="mainRailCount" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
@@ -227,6 +228,7 @@
         <xs:element name="mainTieWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="sideBallastColor" type="screenColorType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="sideBallastWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideBlockLineDashPercentageX10" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="sideBlockLineWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="sideRailColor" type="screenColorType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="sideRailCount" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
@@ -1323,7 +1325,7 @@
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
       <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
-      
+
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="train" type="xs:string"></xs:attribute>
       <xs:attribute name="trainName" type="xs:string"></xs:attribute>

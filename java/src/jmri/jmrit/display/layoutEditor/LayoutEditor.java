@@ -2715,7 +2715,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //    //bring up enter track width dialog
         //    enterTrackWidth();
         //});
-
         //track colors item menu item
         JMenu trkColourMenu = new JMenu(Bundle.getMessage("TrackColorSubMenu"));
         trackMenu.add(trkColourMenu);
@@ -2858,7 +2857,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public LayoutTrackDrawingOptions getLayoutTrackDrawingOptions() {
         if (layoutTrackDrawingOptions == null) {
             layoutTrackDrawingOptions = new LayoutTrackDrawingOptions(getLayoutName());
-            //Integrate-LayoutEditor-drawing-options-with-previous-drawing-options
+            // integrate LayoutEditor drawing options with previous drawing options
             layoutTrackDrawingOptions.setMainBlockLineWidth((int) mainlineTrackWidth);
             layoutTrackDrawingOptions.setSideBlockLineWidth((int) sidelineTrackWidth);
             layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
@@ -2872,7 +2871,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public void setLayoutTrackDrawingOptions(LayoutTrackDrawingOptions ltdo) {
         layoutTrackDrawingOptions = ltdo;
 
-        //Integrate-LayoutEditor-drawing-options-with-previous-drawing-options
+        // integrate LayoutEditor drawing options with previous drawing options
         mainlineTrackWidth = layoutTrackDrawingOptions.getMainRailWidth();
         sidelineTrackWidth = layoutTrackDrawingOptions.getSideRailWidth();
         defaultTrackColor = layoutTrackDrawingOptions.getMainRailColor();
@@ -8994,8 +8993,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return turnoutCircleSize;
     }
 
-    //TODO: @Deprecated // Java standard pattern for boolean getters is "isTurnoutDrawUnselectedLeg()"
+    /**
+     * @deprecated since 4.11.2 use {@link #isTurnoutDrawUnselectedLeg()} instead.
+     */
+    @Deprecated
     public boolean getTurnoutDrawUnselectedLeg() {
+        return turnoutDrawUnselectedLeg;
+    }
+
+    public boolean isTurnoutDrawUnselectedLeg() {
         return turnoutDrawUnselectedLeg;
     }
 
@@ -9586,9 +9592,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         drawLayoutTracksBallast(g2);
         drawLayoutTracksTies(g2);
-        drawLayoutTracksRails2(g2);
+        drawLayoutTracksRails(g2);
         drawLayoutTracksBlockLines(g2);
-        drawLayoutTracksRails1(g2);
 
         drawPositionablePoints(g2, false);
         drawPositionablePoints(g2, true);
@@ -9617,20 +9622,22 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }   // draw
 
     private void drawLayoutTracksHidden(Graphics2D g2) {
+        LayoutTrackDrawingOptions ltdo = getLayoutTrackDrawingOptions();
         Stroke stroke = new BasicStroke(1.F);
         Stroke dashedStroke = new BasicStroke(1.F,
                 BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
                 new float[]{6.F, 4.F}, 0);
 
         //setup for drawing hidden sideline rails
-        g2.setColor(getLayoutTrackDrawingOptions().getSideRailColor());
+        g2.setColor(ltdo.getSideRailColor());
         g2.setStroke(stroke);
         boolean main = false, block = false, hidden = true, dashed = false;
         draw1(g2, main, block, hidden, dashed);
         g2.setStroke(dashedStroke);
         draw1(g2, main, block, hidden, dashed = true);
+
         //setup for drawing mainline rails
-        g2.setColor(getLayoutTrackDrawingOptions().getMainRailColor());
+        g2.setColor(ltdo.getMainRailColor());
         g2.setStroke(stroke);
         draw1(g2, main, block, hidden, dashed = false);
         g2.setStroke(dashedStroke);
@@ -9640,138 +9647,172 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private void drawTrackSegmentsDashed(Graphics2D g2) {
         boolean main = false, block = false, hidden = false, dashed = true;
         float[] dashArray = new float[]{6.F, 4.F};
+        LayoutTrackDrawingOptions ltdo = getLayoutTrackDrawingOptions();
+
         //setup for drawing dashed sideline rails
-        int railWidth = getLayoutTrackDrawingOptions().getSideRailWidth();
+        int railWidth = ltdo.getSideRailWidth();
         float railDisplacement = ((railWidth * 2.F)
-                + getLayoutTrackDrawingOptions().getSideRailGap()) / 2.F;
+                + ltdo.getSideRailGap()) / 2.F;
         g2.setStroke(new BasicStroke(
                 railWidth,
                 BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND,
-                10.F, dashArray, 10));
-        g2.setColor(getLayoutTrackDrawingOptions().getSideRailColor());
-        if ((getLayoutTrackDrawingOptions().getSideRailCount() & 1) == 1) {
+                10.F, dashArray, 0));
+        g2.setColor(ltdo.getSideRailColor());
+        if ((ltdo.getSideRailCount() & 1) == 1) {
             draw1(g2, main, block, hidden, dashed);
         }
-        if (getLayoutTrackDrawingOptions().getSideRailCount() >= 2) {
+        if (ltdo.getSideRailCount() >= 2) {
             draw2(g2, main, railDisplacement, dashed);
         }
+
         //setup for drawing dashed mainline rails
         main = true;
         g2.setStroke(new BasicStroke(
-                getLayoutTrackDrawingOptions().getMainRailWidth(),
+                ltdo.getMainRailWidth(),
                 BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND,
-                10.F, dashArray, 10));
-        g2.setColor(getLayoutTrackDrawingOptions().getMainRailColor());
-        if ((getLayoutTrackDrawingOptions().getMainRailCount() & 1) == 1) {
+                10.F, dashArray, 0));
+        g2.setColor(ltdo.getMainRailColor());
+        if ((ltdo.getMainRailCount() & 1) == 1) {
             draw1(g2, main, block, hidden, dashed);
         }
-        if (getLayoutTrackDrawingOptions().getMainRailCount() >= 2) {
+        if (ltdo.getMainRailCount() >= 2) {
             draw2(g2, main, railDisplacement, dashed);
         }
     }
 
     private void drawLayoutTracksBallast(Graphics2D g2) {
+        LayoutTrackDrawingOptions ltdo = getLayoutTrackDrawingOptions();
+
         //setup for drawing sideline ballast
-        int ballastWidth = getLayoutTrackDrawingOptions().getSideBallastWidth();
+        int ballastWidth = ltdo.getSideBallastWidth();
         if (ballastWidth > 0) {
             g2.setStroke(new BasicStroke(ballastWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-            g2.setColor(getLayoutTrackDrawingOptions().getSideBallastColor());
+            g2.setColor(ltdo.getSideBallastColor());
             draw1(g2, false);
         }
 
         //setup for drawing mainline ballast
-        ballastWidth = getLayoutTrackDrawingOptions().getMainBallastWidth();
+        ballastWidth = ltdo.getMainBallastWidth();
         if (ballastWidth > 0) {
             g2.setStroke(new BasicStroke(ballastWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-            g2.setColor(getLayoutTrackDrawingOptions().getMainBallastColor());
+            g2.setColor(ltdo.getMainBallastColor());
             draw1(g2, true);
         }
     }
 
     private void drawLayoutTracksTies(Graphics2D g2) {
+        LayoutTrackDrawingOptions ltdo = getLayoutTrackDrawingOptions();
+
         //setup for drawing sideline ties
-        int tieLength = getLayoutTrackDrawingOptions().getSideTieLength();
+        int tieLength = ltdo.getSideTieLength();
         if (tieLength > 0) {
-            int tieWidth = getLayoutTrackDrawingOptions().getSideTieWidth();
-            int tieGap = getLayoutTrackDrawingOptions().getSideTieGap();
+            int tieWidth = ltdo.getSideTieWidth();
+            int tieGap = ltdo.getSideTieGap();
             g2.setStroke(new BasicStroke(tieLength,
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
                     new float[]{tieWidth, tieGap}, 0));
-            g2.setColor(getLayoutTrackDrawingOptions().getSideTieColor());
+            g2.setColor(ltdo.getSideTieColor());
             draw1(g2, false);
         }
 
         //setup for drawing mainline ties
-        tieLength = getLayoutTrackDrawingOptions().getMainTieLength();
+        tieLength = ltdo.getMainTieLength();
         if (tieLength > 0) {
-            int tieWidth = getLayoutTrackDrawingOptions().getMainTieWidth();
-            int tieGap = getLayoutTrackDrawingOptions().getMainTieGap();
+            int tieWidth = ltdo.getMainTieWidth();
+            int tieGap = ltdo.getMainTieGap();
             g2.setStroke(new BasicStroke(tieLength,
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
                     new float[]{tieWidth, tieGap}, 0));
-            g2.setColor(getLayoutTrackDrawingOptions().getMainTieColor());
+            g2.setColor(ltdo.getMainTieColor());
             draw1(g2, true);
         }
     }
 
-    private void drawLayoutTracksRails1(Graphics2D g2) {
-        if ((getLayoutTrackDrawingOptions().getSideRailCount() & 1) == 1) {
+    private void drawLayoutTracksRails(Graphics2D g2) {
+        LayoutTrackDrawingOptions ltdo = getLayoutTrackDrawingOptions();
+        if (ltdo.getSideRailCount() > 1) {
+            //setup for drawing sideline rails
+            int railWidth = ltdo.getSideRailWidth();
+            float railDisplacement = ((railWidth * 2.F)
+                    + ltdo.getSideRailGap()) / 2.F;
+            g2.setStroke(new BasicStroke(railWidth,
+                    BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+            g2.setColor(ltdo.getSideRailColor());
+            draw2(g2, false, railDisplacement);
+        }
+        if ((ltdo.getSideRailCount() & 1) == 1) {
             //setup for drawing sideline rails
             g2.setStroke(new BasicStroke(
-                    getLayoutTrackDrawingOptions().getSideRailWidth(),
+                    ltdo.getSideRailWidth(),
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-            g2.setColor(getLayoutTrackDrawingOptions().getSideRailColor());
+            g2.setColor(ltdo.getSideRailColor());
             draw1(g2, false, false, false, false);
             draw1(g2, false, false, false, true);
         }
-        if ((getLayoutTrackDrawingOptions().getMainRailCount() & 1) == 1) {
+
+        if (ltdo.getMainRailCount() > 1) {
+            //setup for drawing mainline rails
+            int railWidth = ltdo.getMainRailWidth();
+            float railDisplacement = ((railWidth * 2.F)
+                    + ltdo.getMainRailGap()) / 2.F;
+            g2.setStroke(new BasicStroke(railWidth,
+                    BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+            g2.setColor(ltdo.getMainRailColor());
+            draw2(g2, true, railDisplacement);
+        }
+        if ((ltdo.getMainRailCount() & 1) == 1) {
             //setup for drawing mainline rails
             g2.setStroke(new BasicStroke(
-                    getLayoutTrackDrawingOptions().getMainRailWidth(),
+                    ltdo.getMainRailWidth(),
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-            g2.setColor(getLayoutTrackDrawingOptions().getMainRailColor());
+            g2.setColor(ltdo.getMainRailColor());
             draw1(g2, true, false, false, false);
             draw1(g2, true, false, false, true);
         }
     }
 
-    private void drawLayoutTracksRails2(Graphics2D g2) {
-        if (getLayoutTrackDrawingOptions().getSideRailCount() > 1) {
-            //setup for drawing sideline rails
-            int railWidth = getLayoutTrackDrawingOptions().getSideRailWidth();
-            float railDisplacement = ((railWidth * 2.F)
-                    + getLayoutTrackDrawingOptions().getSideRailGap()) / 2.F;
-            g2.setStroke(new BasicStroke(railWidth,
-                    BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-            g2.setColor(getLayoutTrackDrawingOptions().getSideRailColor());
-            draw2(g2, false, railDisplacement);
-        }
-
-        if (getLayoutTrackDrawingOptions().getMainRailCount() > 1) {
-            //setup for drawing mainline rails
-            int railWidth = getLayoutTrackDrawingOptions().getMainRailWidth();
-            float railDisplacement = ((railWidth * 2.F)
-                    + getLayoutTrackDrawingOptions().getMainRailGap()) / 2.F;
-            g2.setStroke(new BasicStroke(railWidth,
-                    BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-            g2.setColor(getLayoutTrackDrawingOptions().getMainRailColor());
-            draw2(g2, true, railDisplacement);
-        }
-    }
-
     private void drawLayoutTracksBlockLines(Graphics2D g2) {
-        //setup for drawing sideline ties
+        LayoutTrackDrawingOptions ltdo = getLayoutTrackDrawingOptions();
+
+        //setup for drawing sideline block lines
+        int dashPercentageX10 = ltdo.getSideBlockLineDashPercentageX10();
+        int blockLineWidth = ltdo.getSideBlockLineWidth();
+        if (dashPercentageX10 > 0) {
+            float[] dashArray = new float[]{dashPercentageX10,
+                10 - dashPercentageX10 + blockLineWidth};
+            g2.setStroke(new BasicStroke(
+                    blockLineWidth,
+                    BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND,
+                    10.F, dashArray, 0));
+
+        } else {
         g2.setStroke(new BasicStroke(
-                getLayoutTrackDrawingOptions().getSideBlockLineWidth(),
+                    ltdo.getSideBlockLineWidth(),
                 BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        }
+
         //note: color is set in layout track's draw1 when isBlock is true
         draw1(g2, false, true, false, false);
-        //setup for drawing mainline ties
+
+        //setup for drawing mainline block lines
+        dashPercentageX10 = ltdo.getMainBlockLineDashPercentageX10();
+        blockLineWidth = ltdo.getMainBlockLineWidth();
+        if (dashPercentageX10 > 0) {
+            float[] dashArray = new float[]{dashPercentageX10,
+                10 - dashPercentageX10 + blockLineWidth};
+            g2.setStroke(new BasicStroke(
+                    blockLineWidth,
+                    BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND,
+                    10.F, dashArray, 0));
+
+        } else {
         g2.setStroke(new BasicStroke(
-                getLayoutTrackDrawingOptions().getMainBlockLineWidth(),
+                    ltdo.getMainBlockLineWidth(),
                 BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        }
+
         //note: color is set in layout track's draw1 when isBlock is true
         draw1(g2, true, true, false, false);
     }
@@ -9998,7 +10039,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         int maxY = (int) MathUtil.granulize(panelHeight, gridSize1st);
 
         //log.info("  minX: {}, minY: {}, maxX: {}, maxY: {}", minX, minY, maxX, maxY);
-
         Point2D startPt = new Point2D.Double();
         Point2D stopPt = new Point2D.Double();
         BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
