@@ -51,8 +51,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
     @Test
     public void testAdd() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // create a signal mast
-        SignalMast sm = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0002)", "VM1");
+        new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0002)", "VM1");
         // create a Turnout
         Turnout it1 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         // create a signal head

@@ -54,10 +54,8 @@ public class ReporterItemPanel extends TableItemPanel {
      */
     @Override
     protected void initIconFamiliesPanel() {
-        boolean initialize = false;
         if (_iconFamilyPanel == null) {
             log.debug("new _iconFamilyPanel created");
-            initialize = true;
             _iconFamilyPanel = new JPanel();
             _iconFamilyPanel.setOpaque(true);
             _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
