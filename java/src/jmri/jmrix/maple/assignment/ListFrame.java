@@ -28,7 +28,6 @@ import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.jmrix.maple.OutputBits;
 import jmri.jmrix.maple.SerialAddress;
 import jmri.jmrix.maple.SerialNode;
-import jmri.jmrix.maple.SerialTrafficController;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

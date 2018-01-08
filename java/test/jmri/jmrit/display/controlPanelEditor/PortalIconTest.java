@@ -3,7 +3,6 @@ package jmri.jmrit.display.controlPanelEditor;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import jmri.jmrit.display.PositionableIconTest;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;

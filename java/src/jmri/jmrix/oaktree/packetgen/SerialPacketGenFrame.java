@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import jmri.jmrix.oaktree.SerialMessage;
 import jmri.jmrix.oaktree.SerialReply;
-import jmri.jmrix.oaktree.SerialTrafficController;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import jmri.util.StringUtil;
 

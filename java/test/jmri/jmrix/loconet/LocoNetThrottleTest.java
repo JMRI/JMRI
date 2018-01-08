@@ -3,14 +3,13 @@ package jmri.jmrix.loconet;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 
 public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
-
+        
     @Test
     public void testCTor() {
         Assert.assertNotNull(instance);
@@ -32,7 +31,7 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
                 return 0;
             }
         };
-        LocoNetThrottle t1 = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, slotmanager), s1);
+        LocoNetThrottle t1 = new LocoNetThrottle(memo, s1);
         Assert.assertEquals(0.0f, t1.getSpeedSetting(), 0.0);
         t1.setSpeedSetting(0.5f);
         // the speed change SHOULD be changed.
@@ -50,7 +49,7 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
                 return 0;
             }
         };
-        LocoNetThrottle t2 = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, slotmanager), s2);
+        LocoNetThrottle t2 = new LocoNetThrottle(memo, s2);
         Assert.assertEquals(0.0f, t2.getSpeedSetting(), 0.0);
         t2.setSpeedSetting(0.5f);
         // the speed change SHOULD be changed.
@@ -68,7 +67,7 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
                 return 0;
             }
         };
-        LocoNetThrottle t3 = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, slotmanager), s3);
+        LocoNetThrottle t3 = new LocoNetThrottle(memo, s3);
         Assert.assertEquals(0.0f, t3.getSpeedSetting(), 0.0);
         t3.setSpeedSetting(0.5f);
         // the speed change SHOULD NOT be changed.
@@ -87,7 +86,7 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
                 return 0;
             }
         };
-        LocoNetThrottle t4 = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, slotmanager), s4);
+        LocoNetThrottle t4 = new LocoNetThrottle(memo, s4);
         Assert.assertEquals(0.0f, t4.getSpeedSetting(), 0.0);
         t4.setSpeedSetting(0.5f);
         // the speed change SHOULD be ignored.
@@ -482,6 +481,7 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     private LocoNetInterfaceScaffold lnis;
     private SlotManager slotmanager;
+    private LocoNetSystemConnectionMemo memo = null;
 
     // The minimal setup for log4J
     @Before
@@ -506,10 +506,11 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(9, 0x01);
         slotmanager.slot(4).setSlot(m);
 
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new LnThrottleManager(memo));
+        memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
+        memo.setThrottleManager(new LnThrottleManager(memo));
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,memo.getThrottleManager());
 
-        instance = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, slotmanager), new LocoNetSlot(0));
+        instance = new LocoNetThrottle(memo, new LocoNetSlot(0));
     }
 
     @After

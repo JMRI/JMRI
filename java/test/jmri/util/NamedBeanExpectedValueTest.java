@@ -100,14 +100,14 @@ public class NamedBeanExpectedValueTest {
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
         boolean thrown = false;
         try {
-            NamedBeanExpectedValue<Memory, Sensor> instance = new NamedBeanExpectedValue<>(null, sm.provideSensor("IS12"));
+            new NamedBeanExpectedValue<>(null, sm.provideSensor("IS12"));
         } catch (NullPointerException ex) {
             thrown = true;
         }
         Assert.assertTrue("NPE thrown for null bean", thrown);
         thrown = false;
         try {
-            NamedBeanExpectedValue<Memory, Sensor> instance = new NamedBeanExpectedValue<>(mm.provideMemory("IMTEST"), null);
+            new NamedBeanExpectedValue<>(mm.provideMemory("IMTEST"), null);
         } catch (NullPointerException ex) {
             thrown = true;
         }

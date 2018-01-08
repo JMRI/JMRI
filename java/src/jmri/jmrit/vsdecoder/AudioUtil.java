@@ -274,7 +274,7 @@ public class AudioUtil {
         // freq == samples per second.  time_us = microseconds to calculate.
         // samples = time_us * freq / 1e3.
         // This will be approximate due to integer rounding.
-        int rv = frameSize(fmt) * ((time_ms * freq) / 1000);
+        int rv = frameSize(fmt) * (time_ms * freq / 1000);
         log.debug("calcTimeIndex: freq = {} time_us = {} rv = {}", freq, time_ms, rv);
         return rv;
     }
@@ -375,7 +375,7 @@ public class AudioUtil {
             retbuf.put(retbytes, 0, bufcount);
             log.debug("\tAfter: source= {}bufcount={} retbuf= {}", source, bufcount, retbuf);
         } else {
-            log.warn("Remaining bytes less than minimum time interval.  Discarding.");
+            log.debug("Remaining bytes less than minimum time interval.  Discarding.");
             return null;
         }
         return retbuf;

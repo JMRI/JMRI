@@ -8,6 +8,7 @@
     <choice xml:lang="it">Si</choice>
     <choice xml:lang="fr">Oui</choice>
     <choice xml:lang="de">Ja</choice>
+	<choice xml:lang="da">Ja</choice>
     <choice xml:lang="cs">Ano</choice>
   </enumChoice>
   <enumChoice choice="No">
@@ -15,6 +16,7 @@
     <choice xml:lang="it">No</choice>
     <choice xml:lang="fr">Non</choice>
     <choice xml:lang="de">Nein</choice>
+	<choice xml:lang="da">Nej</choice>
     <choice xml:lang="cs">Ne</choice>
   </enumChoice>
 </enumVal>

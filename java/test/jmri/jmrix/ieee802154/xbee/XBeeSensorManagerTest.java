@@ -23,11 +23,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @RunWith(PowerMockRunner.class)
 public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
-    private static final String NODE_ID = "id";
-        
-    private XBeeDevice localDevice;	
-    private RemoteXBeeDevice remoteDevice1;
-
     @Override
     public String getSystemName(int i) {
         return "ABCS2:" + i;

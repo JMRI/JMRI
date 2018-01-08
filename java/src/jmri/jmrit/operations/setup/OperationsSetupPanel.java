@@ -43,48 +43,46 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
     private final static Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
 
     // labels
-    private JLabel textIconNorth = new JLabel(Bundle.getMessage("IconNorth"));
-    private JLabel textIconSouth = new JLabel(Bundle.getMessage("IconSouth"));
-    private JLabel textIconEast = new JLabel(Bundle.getMessage("IconEast"));
-    private JLabel textIconWest = new JLabel(Bundle.getMessage("IconWest"));
-    private JLabel textIconLocal = new JLabel(Bundle.getMessage("IconLocal"));
-    private JLabel textIconTerminate = new JLabel(Bundle.getMessage("IconTerminate"));
-    // private JLabel textComment = new JLabel(Bundle.getMessage("Comment"));
+    private final JLabel textIconNorth = new JLabel(Bundle.getMessage("IconNorth"));
+    private final JLabel textIconSouth = new JLabel(Bundle.getMessage("IconSouth"));
+    private final JLabel textIconEast = new JLabel(Bundle.getMessage("IconEast"));
+    private final JLabel textIconWest = new JLabel(Bundle.getMessage("IconWest"));
+    private final JLabel textIconLocal = new JLabel(Bundle.getMessage("IconLocal"));
+    private final JLabel textIconTerminate = new JLabel(Bundle.getMessage("IconTerminate"));
 
     // major buttons
-    private JButton backupButton = new JButton(Bundle.getMessage("Backup"));
-    private JButton restoreButton = new JButton(Bundle.getMessage("Restore"));
-    private JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
+    private final JButton backupButton = new JButton(Bundle.getMessage("Backup"));
+    private final JButton restoreButton = new JButton(Bundle.getMessage("Restore"));
+    private final JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // radio buttons
-    private JRadioButton scaleZ = new JRadioButton("Z"); // NOI18N
-    private JRadioButton scaleN = new JRadioButton("N"); // NOI18N
-    private JRadioButton scaleTT = new JRadioButton("TT"); // NOI18N
-    private JRadioButton scaleHOn3 = new JRadioButton("HOn3"); // NOI18N
-    private JRadioButton scaleOO = new JRadioButton("OO"); // NOI18N
-    private JRadioButton scaleHO = new JRadioButton("HO"); // NOI18N
-    private JRadioButton scaleSn3 = new JRadioButton("Sn3"); // NOI18N
-    private JRadioButton scaleS = new JRadioButton("S"); // NOI18N
-    private JRadioButton scaleOn3 = new JRadioButton("On3"); // NOI18N
-    private JRadioButton scaleO = new JRadioButton("O"); // NOI18N
-    private JRadioButton scaleG = new JRadioButton("G"); // NOI18N
+    private final JRadioButton scaleZ = new JRadioButton("Z"); // NOI18N
+    private final JRadioButton scaleN = new JRadioButton("N"); // NOI18N
+    private final JRadioButton scaleTT = new JRadioButton("TT"); // NOI18N
+    private final JRadioButton scaleHOn3 = new JRadioButton("HOn3"); // NOI18N
+    private final JRadioButton scaleOO = new JRadioButton("OO"); // NOI18N
+    private final JRadioButton scaleHO = new JRadioButton("HO"); // NOI18N
+    private final JRadioButton scaleSn3 = new JRadioButton("Sn3"); // NOI18N
+    private final JRadioButton scaleS = new JRadioButton("S"); // NOI18N
+    private final JRadioButton scaleOn3 = new JRadioButton("On3"); // NOI18N
+    private final JRadioButton scaleO = new JRadioButton("O"); // NOI18N
+    private final JRadioButton scaleG = new JRadioButton("G"); // NOI18N
 
-    private JRadioButton typeDesc = new JRadioButton(Bundle.getMessage("Descriptive"));
-    private JRadioButton typeAAR = new JRadioButton(Bundle.getMessage("AAR"));
+    private final JRadioButton typeDesc = new JRadioButton(Bundle.getMessage("Descriptive"));
+    private final JRadioButton typeAAR = new JRadioButton(Bundle.getMessage("AAR"));
 
-    private JRadioButton feetUnit = new JRadioButton(Bundle.getMessage("Feet"));
-    private JRadioButton meterUnit = new JRadioButton(Bundle.getMessage("Meter"));
+    private final JRadioButton feetUnit = new JRadioButton(Bundle.getMessage("Feet"));
+    private final JRadioButton meterUnit = new JRadioButton(Bundle.getMessage("Meter"));
 
     // check boxes
-    private JCheckBox eastCheckBox = new JCheckBox(Bundle.getMessage("eastwest"));
-    private JCheckBox northCheckBox = new JCheckBox(Bundle.getMessage("northsouth"));
-    private JCheckBox mainMenuCheckBox = new JCheckBox(Bundle.getMessage("MainMenu"));
-    private JCheckBox closeOnSaveCheckBox = new JCheckBox(Bundle.getMessage("CloseOnSave"));
-    private JCheckBox autoSaveCheckBox = new JCheckBox(Bundle.getMessage("AutoSave"));
-    private JCheckBox autoBackupCheckBox = new JCheckBox(Bundle.getMessage("AutoBackup"));
-    private JCheckBox iconCheckBox = new JCheckBox(Bundle.getMessage("trainIcon"));
-    private JCheckBox appendCheckBox = new JCheckBox(Bundle.getMessage("trainIconAppend"));
-    // private JCheckBox rfidCheckBox = new JCheckBox(Bundle.getMessage("EnableRfid"));
+    private final JCheckBox eastCheckBox = new JCheckBox(Bundle.getMessage("eastwest"));
+    private final JCheckBox northCheckBox = new JCheckBox(Bundle.getMessage("northsouth"));
+    private final JCheckBox mainMenuCheckBox = new JCheckBox(Bundle.getMessage("MainMenu"));
+    private final JCheckBox closeOnSaveCheckBox = new JCheckBox(Bundle.getMessage("CloseOnSave"));
+    private final JCheckBox autoSaveCheckBox = new JCheckBox(Bundle.getMessage("AutoSave"));
+    private final JCheckBox autoBackupCheckBox = new JCheckBox(Bundle.getMessage("AutoBackup"));
+    private final JCheckBox iconCheckBox = new JCheckBox(Bundle.getMessage("trainIcon"));
+    private final JCheckBox appendCheckBox = new JCheckBox(Bundle.getMessage("trainIconAppend"));
 
     // text field
     // JTextField ownerTextField = new JTextField(10);
@@ -98,15 +96,15 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
     JTextField yearTextField = new JTextField(4);
 
     // combo boxes
-    private JComboBox<String> northComboBox = new JComboBox<>();
-    private JComboBox<String> southComboBox = new JComboBox<>();
-    private JComboBox<String> eastComboBox = new JComboBox<>();
-    private JComboBox<String> westComboBox = new JComboBox<>();
-    private JComboBox<String> localComboBox = new JComboBox<>();
-    private JComboBox<String> terminateComboBox = new JComboBox<>();
+    private final JComboBox<String> northComboBox = new JComboBox<>();
+    private final JComboBox<String> southComboBox = new JComboBox<>();
+    private final JComboBox<String> eastComboBox = new JComboBox<>();
+    private final JComboBox<String> westComboBox = new JComboBox<>();
+    private final JComboBox<String> localComboBox = new JComboBox<>();
+    private final JComboBox<String> terminateComboBox = new JComboBox<>();
 
     // text area
-    private JTextArea commentTextArea = new JTextArea(2, 80);
+    private final JTextArea commentTextArea = new JTextArea(2, 80);
 
     public OperationsSetupPanel() {
         super();
@@ -371,7 +369,6 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         add(panelPane);
         add(options);
         add(pIconPane);
-//        add(pC);
         add(pControl);
 
         // setup buttons
@@ -385,9 +382,10 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
 
         // now provide the railroad name
         railroadNameTextField.setText(Setup.getRailroadName());
-        if (Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailroadName())) {
-            railroadNameTextField.setEnabled(false);
-        }
+        //DAB commented out these three lines to always allow user to directly change the railroad name from operations
+//        if (Setup.getRailroadName().equals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName())) {
+//            railroadNameTextField.setEnabled(false);
+//        }
         createShutDownTask();
     }
 
@@ -563,15 +561,15 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         if (scaleG.isSelected()) {
             Setup.setScale(Setup.G_SCALE);
         }
-        if (!Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailroadName())) {
+        if (!railroadNameTextField.getText().equals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName())) {
             Setup.setRailroadName(railroadNameTextField.getText());
             int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
                     .getMessage("ChangeRailroadName"), new Object[]{
-                WebServerPreferences.getDefault().getRailroadName(), Setup.getRailroadName()}), Bundle
+                            InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), Setup.getRailroadName()}), Bundle
                     .getMessage("ChangeJMRIRailroadName"), JOptionPane.YES_NO_OPTION);
-            if (results == JOptionPane.OK_OPTION) {
-                WebServerPreferences.getDefault().setRailroadName(Setup.getRailroadName());
-                WebServerPreferences.getDefault().save();
+            if (results == JOptionPane.OK_OPTION) {               
+                InstanceManager.getDefault(WebServerPreferences.class).setRailroadName(Setup.getRailroadName());
+                InstanceManager.getDefault(WebServerPreferences.class).save();
             }
         }
         // Set Unit of Length

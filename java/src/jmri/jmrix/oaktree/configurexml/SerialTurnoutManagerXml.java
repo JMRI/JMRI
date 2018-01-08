@@ -1,6 +1,5 @@
 package jmri.jmrix.oaktree.configurexml;
 
-import jmri.jmrix.oaktree.SerialTurnoutManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

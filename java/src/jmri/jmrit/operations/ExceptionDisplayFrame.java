@@ -3,7 +3,7 @@ package jmri.jmrit.operations;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Objects;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
  * Dialog to display the details of an Exception. The Exception and additional
  * details about what was happening when the exception occurred are passed in
  * using an ExceptionContext object.
- *
+ * <p>
  * This is a preliminary version that is incomplete, but works. Copy to the
  * clipboard needs to be added.
  *
@@ -26,7 +26,7 @@ import javax.swing.border.EmptyBorder;
  */
 public class ExceptionDisplayFrame extends JDialog {
 
-    private ExceptionContext context;
+    private final ExceptionContext context;
 
     // This needs MAJOR clean-up to better organize the controls and their
     // hierarchy.
@@ -70,14 +70,12 @@ public class ExceptionDisplayFrame extends JDialog {
 
     /**
      * Create the frame.
+     *
      * @param context The ExceptionContext.
      *
      */
     public ExceptionDisplayFrame(ExceptionContext context) {
-        if (context == null) {
-            throw new IllegalArgumentException(
-                    "ExceptionContext argument passed to ErrorDisplayFrame constructor cannot be null."); // NOI18N
-        }
+        Objects.requireNonNull(context, "ExceptionContext argument passed to ErrorDisplayFrame constructor cannot be null."); // NOI18N
         this.context = context;
 
         initComponents();
@@ -85,6 +83,7 @@ public class ExceptionDisplayFrame extends JDialog {
 
     /**
      * Constructor that takes just an Exception and defaults everything else.
+     *
      * @param ex The Exception.
      *
      */
@@ -121,12 +120,9 @@ public class ExceptionDisplayFrame extends JDialog {
 
         showDetailsButton = new JButton("Show details"); // NOI18N
         showDetailsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        showDetailsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                detailsPanel.setVisible(true);
-                pack();
-            }
+        showDetailsButton.addActionListener((ActionEvent arg0) -> {
+            detailsPanel.setVisible(true);
+            pack();
         });
         contentPane.add(showDetailsButton);
 
@@ -209,11 +205,8 @@ public class ExceptionDisplayFrame extends JDialog {
         buttonPanel.add(copyButton);
 
         closeButton = new JButton("Close"); // NOI18N
-        closeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                dispose();
-            }
+        closeButton.addActionListener((ActionEvent arg0) -> {
+            dispose();
         });
         buttonPanel.add(closeButton);
 

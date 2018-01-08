@@ -5,7 +5,6 @@
  */
 package jmri.jmrix.easydcc;
 
-import java.util.Vector;
 import jmri.JmriException;
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;

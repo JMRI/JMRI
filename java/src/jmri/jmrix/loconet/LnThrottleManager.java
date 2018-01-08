@@ -1,6 +1,6 @@
 package jmri.jmrix.loconet;
 
-import java.util.ArrayList;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.Hashtable;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
@@ -32,6 +32,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         super(memo);
         this.slotManager = memo.getSlotManager();//slotManager;
         this.tc = memo.getLnTrafficController();
+        requestList = new LinkedBlockingQueue<>();
         slotForAddress = new Hashtable<>();
     }
 
@@ -55,7 +56,40 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         log.debug("requestThrottleSetup: address {}, control {}", address, control);
+        if(requestOutstanding) {
+           try {
+              // queue this request for later.
+              requestList.put(new throttleRequest(address,control));
+           } catch(InterruptedException ie){
+              log.error("Interrupted while trying to store throttle request");
+              requestOutstanding = false;
+              return;
+           }
+        } else {
+           // handle this now
+           requestOutstanding = true;
+           processThrottleSetupRequest(address, control);
+        }
+     }
+ 
+     protected void processQueuedThrottleSetupRequest(){
+        if(requestOutstanding) {
+           return;
+        } else if(requestList.size() != 0 ){
+           requestOutstanding = true;
+           try {
+              throttleRequest tr = requestList.take();
+              processThrottleSetupRequest(tr.getAddress(),tr.getControl());
+           } catch(InterruptedException ie){
+              log.error("Interrupted while trying to process process throttle request");
+              requestOutstanding = false;
+              return;
+           }
+        }
+     }
 
+
+     private void processThrottleSetupRequest(LocoAddress address, boolean control) {
         slotManager.slotFromLocoAddress(address.getNumber(), this);  //first try
 
         class RetrySetup implements Runnable {  //setup for retries and failure check
@@ -88,6 +122,8 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 }
                 log.error("No response to slot request for {} after {} attempts.", address, attempts - 1); // NOI18N
                 failedThrottleRequest(address, "Failed to get response from command station");
+                requestOutstanding = false;
+                processQueuedThrottleSetupRequest();
             }
         }
         
@@ -104,6 +140,8 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     Hashtable<Integer, Thread> waitingForNotification = new Hashtable<Integer, Thread>(5);
     
     Hashtable<Integer, LocoNetSlot> slotForAddress;
+    LinkedBlockingQueue<throttleRequest> requestList;
+    boolean requestOutstanding = false;
 
     /**
      * LocoNet does have a Dispatch function
@@ -158,9 +196,6 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     }
 
     private void commitToAcquireThrottle(LocoNetSlot s) {
-                tc.sendLocoNetMessage(s.writeThrottleID(throttleID));
-        log.debug("Attempting to update slot with this JMRI instance's throttle id ({})", throttleID);
-
         // haven't identified a particular reason to refuse throttle acquisition at this time...
         DccThrottle throttle = createThrottle((LocoNetSystemConnectionMemo) adapterMemo, s);
         s.notifySlotListeners();    // make sure other listeners for this slot know about what's going on!
@@ -174,6 +209,8 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         else {
             log.debug("LnThrottleManager.notifyChangedSlot() - ignoring slot notification for slot {}, address {} account not attempting to acquire that address", s.getSlot(), s.locoAddr() );
         }
+        requestOutstanding = false;
+        processQueuedThrottleSetupRequest();
     }
     
     public void notifyRefused(int address, String cause) {
@@ -204,12 +241,9 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             }
             Thread thr = new Thread(new InformRejection( address, cause));
             thr.start();
-
-            
-            
-            
         }
-        
+        requestOutstanding = false;
+        processQueuedThrottleSetupRequest();
     }
     
 
@@ -326,6 +360,11 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     }
 
     protected int throttleID = 0x0171;
+
+    public int getThrottleID(){
+        return throttleID;
+    }
+
     /**
      * Dispose of this manager, typically for testing
      */
@@ -393,6 +432,29 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         commitToAcquireThrottle(slotForAddress.get(address.getNumber()));
        }
     }   
+
+
+    /*
+     * internal class for holding throttleListener/LocoAddress pairs for 
+     * outstanding requests.
+     */
+    protected class throttleRequest{
+         private LocoAddress la = null;
+         private boolean tc = false;
+         
+         throttleRequest(LocoAddress l,boolean control){
+             la = l;
+             tc = control;
+         }
+
+         public boolean getControl(){
+            return tc;
+         }
+         public LocoAddress getAddress(){
+            return la;
+         }
+
+    }
 
     private final static Logger log = LoggerFactory.getLogger(LnThrottleManager.class);
 }

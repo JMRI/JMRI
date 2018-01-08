@@ -14,8 +14,6 @@ import org.junit.Test;
  */
 public class RaspberryPiTurnoutTest {
 
-    private GpioProvider myprovider = null;
-
     @Test
     public void testCTor() {
         RaspberryPiTurnout t = new RaspberryPiTurnout("PiT2");
