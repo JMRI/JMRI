@@ -52,6 +52,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         }
         if (!cmdListeners.contains(l)) {
             cmdListeners.addElement(l);
+            log.debug("SprogListener added to {} tc", memo.getUserName());
         }
     }
 

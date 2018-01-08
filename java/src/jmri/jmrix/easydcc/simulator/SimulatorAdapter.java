@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-//import jmri.jmrix.easydcc.EasyDccCommandStation;
 import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccPortController; // no special xSimulatorController
 import jmri.jmrix.easydcc.EasyDccReply;
@@ -28,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2017
  */
-public class SimulatorAdapter extends EasyDccPortController implements Runnable {
+public class SimulatorAdapter extends EasyDccPortController implements jmri.jmrix.SerialPortAdapter, Runnable {
 
     // private control members
     private boolean opened = false;
@@ -152,8 +151,7 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
     }
 
     /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed.
+     * Get an array of valid baud rates.
      *
      * @return null
      */

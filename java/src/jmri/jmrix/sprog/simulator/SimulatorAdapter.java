@@ -35,8 +35,6 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     private boolean opened = false;
     private Thread sourceThread;
 
-    final static int SENSOR_MSG_RATE = 10;
-
     private boolean outputBufferEmpty = true;
     private boolean checkBuffer = true;
     private boolean trackPowerState = false;
@@ -50,6 +48,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         super(new SprogSystemConnectionMemo(SprogMode.SERVICE)); // uses default user name, suppose SERVICE mode, not OPS
         setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
         this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogSimulatorTitle"));
+        // create the traffic controller
         this.getSystemConnectionMemo().setSprogTrafficController(new SprogTrafficController(this.getSystemConnectionMemo()));
     }
 
@@ -105,12 +104,18 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     @Override
     public void configure() {
         // connect to the traffic controller
-        log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
         this.getSystemConnectionMemo().getSprogTrafficController().connectPort(this);
 
-        // do the common manager config
         this.getSystemConnectionMemo().configureCommandStation(); // for OPS mode
         this.getSystemConnectionMemo().configureManagers();
+
+        if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals(Bundle.getMessage("PowerStateOn"))) {
+            try {
+                this.getSystemConnectionMemo().getPowerManager().setPower(jmri.PowerManager.ON);
+            } catch (jmri.JmriException e) {
+                log.error(e.toString());
+            }
+        }
 
         // start the simulator
         sourceThread = new Thread(this);
@@ -150,12 +155,11 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
     @Override
     public boolean status() {
-        return opened;
+        return (pout != null && pin != null);
     }
 
     /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed.
+     * Get an array of valid baud rates.
      *
      * @return null
      */
@@ -353,6 +357,8 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     }
 
     /**
+     * Copy is here to debug loadChars()
+     *
      * Read a single byte, protecting against various timeouts, etc.
      * <p>
      * When a port is set to have a receive timeout (via the
@@ -373,11 +379,11 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 //    }
 
     // streams to share with user class
-    private DataOutputStream pout = null; // this is provided to classes who want to write to us
-    private DataInputStream pin = null; // this is provided to classes who want data from us
+    private DataOutputStream pout = null;    // this is provided to classes who want to write to us
+    private DataInputStream pin = null;      // this is provided to classes who want data from us
     // internal ends of the pipes
     private DataOutputStream outpipe = null; // feed pin
-    private DataInputStream inpipe = null; // feed pout
+    private DataInputStream inpipe = null;   // feed pout
 
     private final static Logger log = LoggerFactory.getLogger(SimulatorAdapter.class);
 
