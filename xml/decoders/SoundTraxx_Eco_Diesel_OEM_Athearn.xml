@@ -23,6 +23,12 @@
                 <surname>Mosher</surname>
             </personname>
         </author>
+        <author>
+            <personname>
+                <firstname>Alain</firstname>
+                <surname>Le Marchand</surname>
+            </personname>
+        </author>
     </authorgroup>
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
@@ -30,6 +36,12 @@
             <date>2016-12-20</date>
             <authorinitials>MM</authorinitials>
             <revremark>New file, based on TSU2 Diesel file</revremark>
+        </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2018-01-05</date>
+            <authorinitials>ALM</authorinitials>
+            <revremark>Add labels to Extended Function map CVs.</revremark>
         </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
@@ -244,18 +256,22 @@
             <!-- Extended Function Map -->
             <variable CV="1.260" item="Extended Function Map FX4 Effect" default="6" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>FX4 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.261" item="Extended Function Map FX5 Effect" default="255" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>FX5 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.262" item="Extended Function Map FX6 Effect" default="255" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>FX6 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.275" item="Extended Function Map Brake" default="11">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Brake</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <!-- highest used so far: -->

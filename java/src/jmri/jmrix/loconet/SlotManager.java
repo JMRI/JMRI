@@ -1,8 +1,5 @@
 package jmri.jmrix.loconet;
 
-import static jmri.jmrix.loconet.LnConstants.STAT1_SL_ACTIVE;
-import static jmri.jmrix.loconet.LnConstants.STAT1_SL_BUSY;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -13,7 +10,6 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,6 +90,17 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Send a DCC packet to the rails. This implements the CommandStation
      * interface.
      *
+     * @param packet  Byte array representing the packet, including the
+     *                error-correction byte.  The error-correction byte
+     *                need not be correct as it is not propagated as part
+     *                of the LocoNet message.  The length of packet
+     *                determines the number of bytes to be sent in the NMRA
+     *                packet.  The command station computes and
+     *                fills-in the error-correction byte as the last byte of the
+     *                packet.  When packet includes fewer than 6 bytes, the
+     *                LocoNet message will encode the remaining bytes as 0.
+     * @param repeats Number of times to repeat the transmission.  repeats
+     *                must be in the range {0...7}
      */
     @Override
     public void sendPacket(byte[] packet, int repeats) {
@@ -108,7 +115,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         }
 
         LocoNetMessage m = new LocoNetMessage(11);
-        m.setElement(0, 0xED);
+        m.setElement(0, LnConstants.OPC_IMM_PACKET);
         m.setElement(1, 0x0B);
         m.setElement(2, 0x7F);
         // the incoming packet includes a check byte that's not included in LocoNet packet
@@ -282,12 +289,15 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     @Override
     public void message(LocoNetMessage m) {
         // LACK processing for resend of immediate command
-        if (!mTurnoutNoRetry && immedPacket != null && m.getOpCode() == LnConstants.OPC_LONG_ACK && m.getElement(1) == 0x6D && m.getElement(2) == 0x00) {
+        if (!mTurnoutNoRetry && immedPacket != null &&
+                m.getOpCode() == LnConstants.OPC_LONG_ACK &&
+                m.getElement(1) == 0x6D && m.getElement(2) == 0x00) {
             // LACK reject, resend immediately
             tc.sendLocoNetMessage(immedPacket);
             immedPacket = null;
         }
-        if (m.getOpCode() == 0xED && m.getElement(1) == 0x0B && m.getElement(2) == 0x7F) {
+        if (m.getOpCode() == LnConstants.OPC_IMM_PACKET &&
+                m.getElement(1) == 0x0B && m.getElement(2) == 0x7F) {
             immedPacket = m;
         } else {
             immedPacket = null;
@@ -344,7 +354,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * address word
      */
     int getDirectFunctionAddress(LocoNetMessage m) {
-        if (m.getElement(0) != 0xED) {
+        if (m.getElement(0) != LnConstants.OPC_IMM_PACKET) {
             return -1;
         }
         if (m.getElement(1) != 0x0B) {
@@ -378,7 +388,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * address bytes.
      */
     int getDirectDccPacket(LocoNetMessage m) {
-        if (m.getElement(0) != 0xED) {
+        if (m.getElement(0) != LnConstants.OPC_IMM_PACKET) {
             return -1;
         }
         if (m.getElement(1) != 0x0B) {
@@ -817,9 +827,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 log.debug("going to try the opsw access");
                 csOpSwAccessor.writeCsOpSw(cvNum, val, p);
                 return;
-                
+
             } else {
-                log.debug("rejecting the cs opsw access");
+                log.warn("rejecting the cs opsw access account unsupported CV name format");
                 // unsupported format in "cv" name.  Signal an error.
                 p.programmingOpReply(1, ProgListener.SequenceError);
                 return;
@@ -883,6 +893,28 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         lopsa = 0;
         hopsa = 0;
         mServiceMode = true;
+        if (getMode().equals(csOpSwProgrammingMode)) {
+            log.debug("cvOpSw mode!");
+            //handle Command Station OpSw programming here
+            String[] parts = CVname.split("\\.");
+            if ((parts[0].equals("csOpSw")) && (parts.length==2)) {
+                if (csOpSwAccessor == null) {
+                    csOpSwAccessor = new csOpSwAccess(adaptermemo, p);
+                } else {
+                    csOpSwAccessor.setProgrammerListener(p);
+                }
+                // perform the CsOpSwMode read access
+                log.debug("going to try the opsw access");
+                csOpSwAccessor.readCsOpSw(CVname, p);
+                return;
+            } else {
+                log.warn("rejecting the cs opsw access account unsupported CV name format");
+                // unsupported format in "cv" name.  Signal an error.
+                p.programmingOpReply(1, ProgListener.SequenceError);
+                return;
+            }
+        }
+
         // parse the programming command
         int pcmd = 0x03;       // LPE imples 0x00, but 0x03 is observed
         if (getMode().equals(ProgrammingMode.PAGEMODE)) {
@@ -940,9 +972,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 log.debug("going to try the opsw access");
                 csOpSwAccessor.readCsOpSw(cvNum, p);
                 return;
-                
+
             } else {
-                log.debug("rejecting the cs opsw access");
+                log.warn("rejecting the cs opsw access account unsupported CV name format");
                 // unsupported format in "cv" name.  Signal an error.
                 p.programmingOpReply(1, ProgListener.SequenceError);
                 return;

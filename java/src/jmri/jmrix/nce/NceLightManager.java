@@ -1,7 +1,6 @@
 package jmri.jmrix.nce;
 
 import jmri.Light;
-import jmri.Manager;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
