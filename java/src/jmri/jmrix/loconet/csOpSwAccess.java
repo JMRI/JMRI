@@ -330,7 +330,7 @@ public class csOpSwAccess implements LocoNetListener {
         memo.getLnTrafficController().sendLocoNetMessage(m2);
         csOpSwAccessTimer.start();
     }
-
+    
     private void sendFinalProgrammerReply(int val, int response) {
         log.debug("returning response {} with value {} to programmer", response, val);
             ProgListener temp = p;

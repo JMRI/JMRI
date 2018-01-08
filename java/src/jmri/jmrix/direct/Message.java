@@ -2,7 +2,6 @@ package jmri.jmrix.direct;
 
 import javax.annotation.Nonnull;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>3</revnumber>
+      <date>2018-01-02</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>French translation</revremark>
+    </revision>
+    <revision>
       <revnumber>2</revnumber>
       <date>2016-10-23</date>
       <authorinitials>PS</authorinitials>
@@ -40,28 +46,32 @@
     </revision>
   </revhistory>
   <variable item="Directional Headlights" CV="51" default="0" comment="output A" mask="XXXXXXXV" tooltip="Enables Rule 17 for headlights (independent control)">
-        <enumVal>
-          <enumChoice choice="Headlights are directional and operate automatically">
-            <choice>Headlights are directional and operate automatically</choice>
-            <choice xml:lang="it">Luci di testa direzionali e automatiche</choice>
-            <choice xml:lang="de">Headlights are directional and operate automatically</choice>
-          </enumChoice>
-          <enumChoice choice="Headlights are independantly controlled (F0-Front, F1-Rear)">
-            <choice>Rule 17, Headlights are independantly controlled (F0-Front, F1-Rear)</choice>
-            <choice xml:lang="it">Luci di testa controllate indipendentemente (F0-Avanti, F1-Retro)</choice>
-            <choice xml:lang="de">Headlights are independantly controlled (F0-Front, F1-Rear)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Directional Headlights</label>
-        <label xml:lang="it">Luci di testa direzionali</label>
-        <label xml:lang="de">Directional Headlights</label>
-        <comment>output A</comment>
-        <comment xml:lang="it">Uscita A</comment>
-        <comment xml:lang="de">output A</comment>
-        <tooltip xml:lang="it">Abilita Regola 17 per luci frontali (controllo independentel)</tooltip>
-        <tooltip xml:lang="de">Enables Rule 17 for headlights (independent control)</tooltip>
-        <label xml:lang="cs">Směr světlometu</label>
-        <comment xml:lang="cs">Výstup A</comment>
-        <tooltip xml:lang="cs">Zpřístupní pravidlo 17 pro světlomet (nezávislé ovládání)</tooltip>
-      </variable>
+    <enumVal>
+      <enumChoice choice="Headlights are directional and operate automatically">
+        <choice>Headlights are directional and operate automatically</choice>
+    <choice xml:lang="de">Headlights are directional and operate automatically(de)</choice>
+    <choice xml:lang="fr">Feux directionnels; fonctionnent automatiquement</choice>
+        <choice xml:lang="it">Luci di testa direzionali e automatiche</choice>
+      </enumChoice>
+      <enumChoice choice="Headlights are independantly controlled (F0-Front, F1-Rear)">
+        <choice>Rule 17, Headlights are independantly controlled (F0-Front, F1-Rear)</choice>
+    <choice xml:lang="de">Headlights are independantly controlled (F0-Front, F1-Rear)(de)</choice>
+    <choice xml:lang="fr">Feux contrôlés indépendamment (F0-Avant, F1-Arrière)</choice>
+        <choice xml:lang="it">Luci di testa controllate indipendentemente (F0-Avanti, F1-Retro)</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Directional Headlights</label>
+    <label xml:lang="cs">Směr světlometu</label>
+    <label xml:lang="de">Directional Headlights(de)</label>
+    <label xml:lang="fr">Feux directionnels</label>
+    <label xml:lang="it">Luci di testa direzionali</label>
+    <comment>output A</comment>
+    <comment xml:lang="cs">Výstup A</comment>
+    <comment xml:lang="de">output A(de)</comment>
+    <comment xml:lang="it">Uscita A</comment>
+    <tooltip xml:lang="cs">Zpřístupní pravidlo 17 pro světlomet (nezávislé ovládání)</tooltip>
+    <tooltip xml:lang="de">Enables Rule 17 for headlights (independent control)(de)</tooltip>
+    <tooltip xml:lang="fr">Active la 'Règle 17' pour les feux (contrôle indépendant)</tooltip>
+    <tooltip xml:lang="it">Abilita Regola 17 per luci frontali (controllo independentel)</tooltip>
+  </variable>
 </variables>

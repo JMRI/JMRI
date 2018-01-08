@@ -7,16 +7,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import jmri.util.JUnitUtil;
-//import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.junit.Assert;
 import jmri.jmrix.loconet.SlotManager;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
-import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 
@@ -356,7 +350,7 @@ public class csOpSwAccessTest {
         Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
-        Assert.assertEquals("Reply value matches", 1, pl.getRcvdValue());
+        Assert.assertEquals("Reply value matches", 0, pl.getRcvdValue());
 
         // attempt another command station opsw access
         csosa.readCsOpSw("csOpSw.02", pl);
@@ -970,7 +964,7 @@ public class csOpSwAccessTest {
         Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
-        Assert.assertEquals("Reply value matches", 1, pl.getRcvdValue());
+        Assert.assertEquals("Reply value matches", 0, pl.getRcvdValue());
 
         // attempt an out-of-range command station opsw access
         csosa.readCsOpSw("csOpSw.0", pl);
@@ -1263,7 +1257,6 @@ public class csOpSwAccessTest {
         Assert.assertEquals("six programming replies", 6, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status bad", 1, pl.getRcvdStatus());
         jmri.util.JUnitAppender.assertWarnMessage("Cannot program OpSw56 account LocoNet encoding limitations.");
-
      }
 
 @Test

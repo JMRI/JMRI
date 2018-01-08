@@ -1,7 +1,5 @@
 package jmri.jmrix.roco.z21;
 
-import jmri.MultiMeter;
-import jmri.beans.Bean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

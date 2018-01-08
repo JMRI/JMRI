@@ -8,8 +8,6 @@ import java.util.Arrays;
 import java.util.TooManyListenersException;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.jmrix.maple.SerialPortController;
-import jmri.jmrix.maple.SerialSensorManager;
-import jmri.jmrix.maple.SerialTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;

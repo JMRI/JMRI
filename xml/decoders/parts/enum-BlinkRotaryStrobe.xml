@@ -3,17 +3,20 @@
 <enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Blinking">
     <choice>Blinking</choice>
-    <choice xml:lang="it">Lampeggio</choice>
     <choice xml:lang="cs">Blikající</choice>
+    <choice xml:lang="fr">Clignotant</choice>
+    <choice xml:lang="it">Lampeggio</choice>
   </enumChoice>
   <enumChoice choice="Rotary">
     <choice>Rotary</choice>
-    <choice xml:lang="it">Rotante</choice>
     <choice xml:lang="cs">Otáčivý</choice>
+    <choice xml:lang="fr">Rotatif</choice>
+    <choice xml:lang="it">Rotante</choice>
   </enumChoice>
   <enumChoice choice="Strobe">
     <choice>Strobe</choice>
-    <choice xml:lang="it">Strobo</choice>
     <choice xml:lang="cs">Stroboskopický</choice>
+    <choice xml:lang="fr">stroboscopique</choice>
+    <choice xml:lang="it">Strobo</choice>
   </enumChoice>
 </enumVal>
