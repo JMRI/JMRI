@@ -9977,6 +9977,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    // get selection rectangle
     private Rectangle2D getSelectionRect() {
         double selX = Math.min(selectionX, selectionX + selectionWidth);
         double selY = Math.min(selectionY, selectionY + selectionHeight);
