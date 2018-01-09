@@ -105,7 +105,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     @Override
     public void sendPacket(byte[] packet, int repeats) {
         if (repeats > 7) {
-            log.error("Too many repeats!"); // NOI18N
+            log.warn("Ops Mode Accessory Packet 'Repeat count' reduced from {} to 7.", repeats); // NOI18N
+            repeats = 7;
+        }
+        if (repeats < 0) {
+            log.warn("Ops Mode Accessory Packet 'Repeat count' of {} is illegal and is forced to 0.", repeats); // NOI18N
+            repeats = 0;
         }
         if (packet.length <= 1) {
             log.error("Invalid DCC packet length: " + packet.length); // NOI18N
