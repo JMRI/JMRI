@@ -174,7 +174,7 @@ public class SprogReply extends AbstractMRReply {
             sum += 16 * Integer.valueOf(s1, 16).intValue();
             val = sum;  // don't do this assign until now in case the conversion throws
         } catch (NumberFormatException e) {
-            log.error("Unable to get number from reply: \"{}{}\" index:  message: \"{}\"", s1, s2, index, toString());
+            log.error("Unable to get number from reply: \"{}{}\" index: {} message: \"{}\"", s1, s2, index, toString());
         }
         return val;
     }

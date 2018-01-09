@@ -193,7 +193,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
             }
             SprogMessage m = readMessage();
             SprogReply r;
-            if (log.isDebugEnabled() && m != null) {
+            if (log.isDebugEnabled()) {
                 StringBuffer buf = new StringBuffer();
                 buf.append("SPROG Simulator Thread received message: ");
                 if (m != null) {
@@ -201,7 +201,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
                 } else {
                     buf.append("null message buffer");
                 }
-                log.debug(buf.toString());
+                //log.debug(buf.toString()); // generates a lot of output
             }
             if (m != null) {
                 r = generateReply(m);
@@ -236,6 +236,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
      * incoming SprogMessage into an outgoing SprogReply.
      *
      * Based on SPROG information from A. Crosland.
+     * @see jmri.jmrix.sprog.SprogReply#value()
      */
     @SuppressWarnings("fallthrough")
     private SprogReply generateReply(SprogMessage msg) {
@@ -248,13 +249,19 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         switch (command) {
 
             case 'I':
-                log.debug("CURRENTQUERYSENT detected");
-                reply = new SprogReply("1000\n");
+                log.debug("CurrentQuery detected");
+                reply = new SprogReply("= h3E7\n"); // reply fictionary current (decimal 999mA)
+                break;
+
+            case 'C':
+            case 'V':
+                log.debug("Read CV detected");
+                reply = new SprogReply("= " + msg.toString().substring(2) + "\n"); // echo CV value (hex)
                 break;
 
             case 'O':
                 log.debug("Send packet command detected");
-                //reply = new SprogReply(SPR_PR);
+                reply = new SprogReply("= " + msg.toString().substring(2) + "\n"); // echo command (hex)
                 break;
 
             case 'A':
@@ -264,7 +271,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
             case '>':
                 log.debug("Set speed (Throttle) command detected");
-                reply = new SprogReply(msg.toString().substring(2) + "\n"); // echo speed (decimal)
+                reply = new SprogReply(msg.toString().substring(1) + "\n"); // echo speed (decimal)
                 break;
 
             case '+':
@@ -285,14 +292,14 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
                 reply = new SprogReply(replyString);
                 break;
 
-            case '=':
-                log.debug("Read_CV detected");
-                reply = new SprogReply("= " + msg.toString().substring(2) + "\n"); // echo CV value (decimal)
+            case 'S':
+                log.debug("getStatus detected");
+                reply = new SprogReply("S\n");
                 break;
 
             default:
                 log.debug("non-reply message detected: {}", msg.toString());
-                reply = new SprogReply("!E"); // SPROG error reply
+                reply = new SprogReply("!E\n"); // SPROG error reply
         }
         i = reply.toString().length();
         reply.setElement(i++, 'P'); // add prompt to all replies
@@ -340,17 +347,6 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
      * @throws IOException when presented by the input source.
      */
     private SprogMessage loadChars() throws java.io.IOException {
-        // code copied from XNet (Lenz Simulator)
-//        int i;
-//        byte char1;
-//        char1 = readByteProtected(inpipe);
-//        int len = (char1 & 0x0f) + 2;  // opCode+Nbytes+ECC
-//        SprogMessage msg = new SprogMessage(len);
-//        msg.setElement(0, char1 & 0xFF);
-//        for (i = 1; i < len; i++) {
-//            char1 = readByteProtected(inpipe);
-//            msg.setElement(i, char1 & 0xFF);
-//        }
         // code copied from EasyDcc/NCE Simulator
         int nchars;
         byte[] rcvBuffer = new byte[32];
@@ -364,28 +360,6 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         }
         return msg;
     }
-
-    /**
-     * Copy is here to debug loadChars()
-     *
-     * Read a single byte, protecting against various timeouts, etc.
-     * <p>
-     * When a port is set to have a receive timeout (via the
-     * enableReceiveTimeout() method), some will return zero bytes or an
-     * EOFException at the end of the timeout. In that case, the read should be
-     * repeated to get the next real character.
-     * Copied from jmri.jmrix.lenz.simulator.XNetSimulatorAdapter (Lenz Simulator)
-     */
-//    protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
-//        byte[] rcvBuffer = new byte[1];
-//        while (true) { // loop will repeat until character found
-//            int nchars;
-//            nchars = istream.read(rcvBuffer, 0, 1);
-//            if (nchars > 0) {
-//                return rcvBuffer[0];
-//            }
-//        }
-//    }
 
     // streams to share with user class
     private DataOutputStream pout = null;    // this is provided to classes who want to write to us
