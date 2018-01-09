@@ -156,7 +156,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                 }
 
             } catch (Exception e) {
-                log.warn("notify: During dispatch to {}\nException {}", listener, e.toString());
+                log.warn("notify: During dispatch to {}\nException: {}", listener, e.toString());
             }
         }
         // forward to the last listener who sent a message
@@ -329,15 +329,15 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     /**
      * Handle an incoming reply.
      */
-    void handleOneIncomingReply() {
-        // we get here if data has been received
-        //fill the current reply with any data received
+    public void handleOneIncomingReply() {
+        // we get here if data has been received and this method is explicitly invoked
+        // fill the current reply with any data received
         int replyCurrentSize = this.reply.getNumDataElements();
         int i;
         for (i = replyCurrentSize; i < SprogReply.maxSize - replyCurrentSize; i++) {
             try {
                 if (istream.available() == 0) {
-                    break; //nothing waiting to be read
+                    break; // nothing waiting to be read
                 }
                 byte char1 = istream.readByte();
                 this.reply.setElement(i, char1);

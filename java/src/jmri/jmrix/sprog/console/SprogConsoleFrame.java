@@ -358,7 +358,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         // Save it for others
         _memo.setSprogVersion(v);
         if (log.isDebugEnabled()) {
-            log.debug("Found: " + sv.toString());
+            log.debug("Found: {}", sv.toString());
         }
         if (sv.sprogType.isSprog() == false) {
             // Didn't recognize a SPROG so check if it is in boot mode already

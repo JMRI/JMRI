@@ -34,6 +34,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     // private control members
     private boolean opened = false;
     private Thread sourceThread;
+    private SprogTrafficController control;
 
     private boolean outputBufferEmpty = true;
     private boolean checkBuffer = true;
@@ -42,14 +43,15 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     // Simulator responses
     String SPR_OK = "OK";
     String SPR_NO = "No Ack";
-    String SPR_PR = "\\n\\rP> "; // prompt
+    String SPR_PR = "\nP> "; // prompt
 
     public SimulatorAdapter() {
         super(new SprogSystemConnectionMemo(SprogMode.SERVICE)); // uses default user name, suppose SERVICE mode, not OPS
         setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
         this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogSimulatorTitle"));
         // create the traffic controller
-        this.getSystemConnectionMemo().setSprogTrafficController(new SprogTrafficController(this.getSystemConnectionMemo()));
+        control = new SprogTrafficController(this.getSystemConnectionMemo());
+        this.getSystemConnectionMemo().setSprogTrafficController(control);
     }
 
     @Override
@@ -245,6 +247,11 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         log.debug("Message type = " + command);
         switch (command) {
 
+            case 'I':
+                log.debug("CURRENTQUERYSENT detected");
+                reply = new SprogReply("1000\n");
+                break;
+
             case 'O':
                 log.debug("Send packet command detected");
                 //reply = new SprogReply(SPR_PR);
@@ -252,12 +259,12 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
             case 'A':
                 log.debug("Address (open Throttle) command detected");
-                reply = new SprogReply(msg.toString().substring(2)); // echo address (decimal)
+                reply = new SprogReply(msg.toString().substring(2) + "\n"); // echo address (decimal)
                 break;
 
             case '>':
                 log.debug("Set speed (Throttle) command detected");
-                reply = new SprogReply(msg.toString().substring(2)); // echo speed (decimal)
+                reply = new SprogReply(msg.toString().substring(2) + "\n"); // echo speed (decimal)
                 break;
 
             case '+':
@@ -274,23 +281,21 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
             case '?':
                 log.debug("Read_Sprog_Version detected");
-                String replyString = "\\n\\rSPROG II Ver 4.3\\n\\r";
+                String replyString = "\nSPROG II Ver 4.3\n";
                 reply = new SprogReply(replyString);
                 break;
 
             case '=':
                 log.debug("Read_CV detected");
-                reply = new SprogReply("= " + msg.toString().substring(2)); // echo CV value (decimal)
+                reply = new SprogReply("= " + msg.toString().substring(2) + "\n"); // echo CV value (decimal)
                 break;
 
             default:
                 log.debug("non-reply message detected: {}", msg.toString());
-                reply = new SprogReply();
-                // reply = new SprogReply("!E"); // SPROG error reply
+                reply = new SprogReply("!E"); // SPROG error reply
         }
         i = reply.toString().length();
-        //reply.setElement(i++, '\n'); // add CR + prompt for all replies
-        reply.setElement(i++, 'P');
+        reply.setElement(i++, 'P'); // add prompt to all replies
         reply.setElement(i++, '>');
         reply.setElement(i++, ' ');
         log.debug("Reply generated = \"{}\"", reply.toString());
@@ -300,7 +305,8 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     /**
      * Write reply to output.
      * <p>
-     * Copied from jmri.jmrix.nce.simulator.SimulatorAdapter.
+     * Copied from jmri.jmrix.nce.simulator.SimulatorAdapter,
+     * adapted for {@link jmri.jmrix.sprog.SprogTrafficController#handleOneIncomingReply()}.
      *
      * @param r reply on message
      */
@@ -313,6 +319,9 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
             try {
                 outpipe.writeByte((byte) r.getElement(i));
                 log.debug("{} of {} bytes written to outpipe", i + 1, len);
+                if (pin.available() > 0) {
+                    control.handleOneIncomingReply();
+                }
             } catch (java.io.IOException ex) {
             }
         }

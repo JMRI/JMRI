@@ -174,8 +174,7 @@ public class SprogReply extends AbstractMRReply {
             sum += 16 * Integer.valueOf(s1, 16).intValue();
             val = sum;  // don't do this assign until now in case the conversion throws
         } catch (NumberFormatException e) {
-            log.error("Unable to get number from reply: \"" + s1 + s2 + "\" index: " + index
-                    + " message: \"" + toString() + "\"");
+            log.error("Unable to get number from reply: \"{}{}\" index:  message: \"{}\"", s1, s2, index, toString());
         }
         return val;
     }
@@ -207,7 +206,7 @@ public class SprogReply extends AbstractMRReply {
     /**
      * Normal SPROG replies will end with the prompt for the next command.
      * Bootloader will end with ETX with no preceding DLE.
-     * SPROG v4 bootloader replies "L>" on entry and replies "." at other
+     * SPROG v4 bootloader replies "L{@literal >}" on entry and replies "." at other
      * times.
      */
     public boolean endNormalReply() {
