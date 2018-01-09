@@ -9573,7 +9573,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         // (above or below the Positionables)
     }
 
+    //
     // this is called by the layoutEditorComponent
+    //
     protected void draw(Graphics2D g2) {
 
         //drawPositionableLabelBorder(g2);
@@ -9622,6 +9624,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }   // draw
 
+    //
+    //  draw hidden layout tracks
+    //
     private void drawLayoutTracksHidden(Graphics2D g2) {
         LayoutTrackDrawingOptions ltdo = getLayoutTrackDrawingOptions();
         Stroke stroke = new BasicStroke(1.F);
@@ -9645,6 +9650,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         draw1(g2, main, block, hidden, dashed = true);
     }
 
+    //
+    //  draw dashed track segments
+    //
     private void drawTrackSegmentsDashed(Graphics2D g2) {
         float[] dashArray = new float[]{6.F, 4.F};
         LayoutTrackDrawingOptions ltdo = getLayoutTrackDrawingOptions();
@@ -9684,8 +9692,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 draw2(g2, main, railDisplacement, dashed);
             }
         }
-    }
+    }   // drawTrackSegmentsDashed
 
+    //
+    // draw layout track ballast
+    //
     private void drawLayoutTracksBallast(Graphics2D g2) {
         LayoutTrackDrawingOptions ltdo = getLayoutTrackDrawingOptions();
 
@@ -9708,6 +9719,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    //
+    // draw layout track ties
+    //
     private void drawLayoutTracksTies(Graphics2D g2) {
         LayoutTrackDrawingOptions ltdo = getLayoutTrackDrawingOptions();
 
@@ -9736,6 +9750,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    //
+    // draw layout track rails
+    //
     private void drawLayoutTracksRails(Graphics2D g2) {
         LayoutTrackDrawingOptions ltdo = getLayoutTrackDrawingOptions();
         int railWidth = ltdo.getSideRailWidth();
@@ -9781,6 +9798,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }   // drawLayoutTracksRails
 
+    //
+    // draw layout track block lines
+    //
     private void drawLayoutTracksBlockLines(Graphics2D g2) {
         LayoutTrackDrawingOptions ltdo = getLayoutTrackDrawingOptions();
 
@@ -9845,6 +9865,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         draw1(g2, isMain, false);
     }
 
+    // draw single line (ballast, ties & block lines)
     private void draw1(Graphics2D g2,
             boolean isMain,
             boolean isBlock,
@@ -9865,6 +9886,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    // draw positionable points
     private void drawPositionablePoints(Graphics2D g2, boolean isMain) {
         for (LayoutTrack layoutTrack : layoutTrackList) {
             if (layoutTrack instanceof PositionablePoint) {
@@ -9873,10 +9895,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    // isDashed defaults to false
     private void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
         draw2(g2, isMain, railDisplacement, false);
     }
 
+    // draw parallel lines (rails)
     private void draw2(Graphics2D g2, boolean isMain, float railDisplacement, boolean isDashed) {
         for (LayoutTrack layoutTrack : layoutTrackList) {
             if ((layoutTrack instanceof TrackSegment)) {
@@ -9889,12 +9913,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    // draw decorations
     private void drawDecorations(Graphics2D g2) {
         for (LayoutTrack tr : layoutTrackList) {
             tr.drawDecorations(g2);
         }
     }
 
+    // draw track segment (in progress)
     private void drawTrackSegmentInProgress(Graphics2D g2) {
         //check for segment in progress
         if (isEditable() && (beginObject != null) && trackButton.isSelected()) {
@@ -9921,6 +9947,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     } //drawTrackInProgress
 
+    // draw layout track edit controls
     private void drawLayoutTrackEditControls(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
@@ -9929,6 +9956,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    // draw layout turnout controls
     private void drawTurnoutControls(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2.setColor(turnoutCircleColor);
