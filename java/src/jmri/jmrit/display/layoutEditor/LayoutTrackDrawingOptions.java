@@ -126,7 +126,7 @@ public class LayoutTrackDrawingOptions {
         sideRailCount = val;
     }
 
-    private int sideRailWidth = 2;
+    private int sideRailWidth = 1;
 
     public int getSideRailWidth() {
         return sideRailWidth;
@@ -146,7 +146,7 @@ public class LayoutTrackDrawingOptions {
         sideRailGap = val;
     }
 
-    private Color sideRailColor = Color.BLACK;
+    private Color sideRailColor = Color.GRAY;
 
     public Color getSideRailColor() {
         return sideRailColor;
@@ -246,7 +246,7 @@ public class LayoutTrackDrawingOptions {
         mainRailCount = val;
     }
 
-    private int mainRailWidth = 4;
+    private int mainRailWidth = 1;
 
     public int getMainRailWidth() {
         return mainRailWidth;
@@ -266,7 +266,7 @@ public class LayoutTrackDrawingOptions {
         mainRailGap = val;
     }
 
-    private Color mainRailColor = Color.BLACK;
+    private Color mainRailColor = Color.GRAY;
 
     public Color getMainRailColor() {
         return mainRailColor;

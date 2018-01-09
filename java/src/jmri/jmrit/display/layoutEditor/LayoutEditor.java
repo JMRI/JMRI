@@ -2860,10 +2860,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             // integrate LayoutEditor drawing options with previous drawing options
             layoutTrackDrawingOptions.setMainBlockLineWidth((int) mainlineTrackWidth);
             layoutTrackDrawingOptions.setSideBlockLineWidth((int) sidelineTrackWidth);
-            layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
-            layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
-            layoutTrackDrawingOptions.setMainRailColor(defaultTrackColor);
-            layoutTrackDrawingOptions.setSideRailColor(defaultTrackColor);
+            //layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
+            //layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
+            //layoutTrackDrawingOptions.setMainRailColor(defaultTrackColor);
+            //layoutTrackDrawingOptions.setSideRailColor(defaultTrackColor);
         }
         return layoutTrackDrawingOptions;
     }
@@ -2872,8 +2872,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         layoutTrackDrawingOptions = ltdo;
 
         // integrate LayoutEditor drawing options with previous drawing options
-        mainlineTrackWidth = layoutTrackDrawingOptions.getMainRailWidth();
-        sidelineTrackWidth = layoutTrackDrawingOptions.getSideRailWidth();
+        mainlineTrackWidth = layoutTrackDrawingOptions.getMainBlockLineWidth();
+        sidelineTrackWidth = layoutTrackDrawingOptions.getSideBlockLineWidth();
         defaultTrackColor = layoutTrackDrawingOptions.getMainRailColor();
         redrawPanel();
     }

@@ -1165,7 +1165,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO.setMainRailColor(Color.BLACK);
         tempLTDO.setMainRailCount(1);
         tempLTDO.setMainRailGap(0);
-        tempLTDO.setMainRailWidth(4);
+        tempLTDO.setMainRailWidth(1);
         tempLTDO.setMainTieColor(Color.BLACK);
         tempLTDO.setMainTieGap(0);
         tempLTDO.setMainTieLength(0);
@@ -1177,7 +1177,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO.setSideRailColor(Color.BLACK);
         tempLTDO.setSideRailCount(1);
         tempLTDO.setSideRailGap(0);
-        tempLTDO.setSideRailWidth(2);
+        tempLTDO.setSideRailWidth(1);
         tempLTDO.setSideTieColor(Color.BLACK);
         tempLTDO.setSideTieGap(0);
         tempLTDO.setSideTieLength(0);
