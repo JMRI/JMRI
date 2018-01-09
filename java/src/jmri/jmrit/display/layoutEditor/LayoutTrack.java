@@ -180,8 +180,8 @@ public abstract class LayoutTrack {
     /**
      * draw two lines (rails)
      *
-     * @param g2      the graphics context
-     * @param isMain  true if drawing mainlines
+     * @param g2               the graphics context
+     * @param isMain           true if drawing mainlines
      * @param railDisplacement the offset from center to draw the lines
      */
     protected abstract void draw2(Graphics2D g2, boolean isMain, float railDisplacement);
@@ -646,5 +646,5 @@ public abstract class LayoutTrack {
     public abstract void setAllLayoutBlocks(LayoutBlock layoutBlock);
 
     //private final static Logger log
-        // = LoggerFactory.getLogger(LayoutTrack.class);
+    // = LoggerFactory.getLogger(LayoutTrack.class);
 }

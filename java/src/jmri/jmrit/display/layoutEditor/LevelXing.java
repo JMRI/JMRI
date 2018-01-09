@@ -3,7 +3,6 @@ package jmri.jmrit.display.layoutEditor;
 import static java.lang.Float.POSITIVE_INFINITY;
 import static java.lang.Math.PI;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;

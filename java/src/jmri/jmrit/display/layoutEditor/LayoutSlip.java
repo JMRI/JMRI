@@ -1157,78 +1157,76 @@ public class LayoutSlip extends LayoutTurnout {
 
         if (isBlock) {
             if (slipState == STATE_AD) {
-            // draw A<===>D
-            if (drawMain == mainlineA) {
-                g2.setColor(colorA);
-                g2.draw(new Line2D.Double(pA, oneThirdPointAC));
-                g2.draw(new Line2D.Double(oneThirdPointAC, midPointAD));
-            }
-            if (drawMain == mainlineD) {
-                g2.setColor(colorD);
-                g2.draw(new Line2D.Double(midPointAD, twoThirdsPointBD));
-                g2.draw(new Line2D.Double(twoThirdsPointBD, pD));
-            }
-            } else
-
-            if (slipState == STATE_AC) {
-            // draw A<===>C
-            if (drawMain == mainlineA) {
-                g2.setColor(colorA);
-                g2.draw(new Line2D.Double(pA, midPointAC));
-            }
-            if (drawMain == mainlineC) {
-                g2.setColor(colorC);
-                g2.draw(new Line2D.Double(midPointAC, pC));
-            }
-            } else if (drawUnselectedLeg) {
-            // draw A<= =>C
-            if (drawMain == mainlineA) {
-                g2.setColor(colorA);
-                g2.draw(new Line2D.Double(pA, oneThirdPointAC));
-            }
-            if (drawMain == mainlineC) {
-                g2.setColor(colorC);
-                g2.draw(new Line2D.Double(twoThirdsPointAC, pC));
-            }
-        }
-
-            if (slipState == STATE_BD) {
-            // draw B<===>D
-            if (drawMain == mainlineB) {
-                g2.setColor(colorB);
-                g2.draw(new Line2D.Double(pB, midPointBD));
-            }
-            if (drawMain == mainlineD) {
-                g2.setColor(colorD);
-                g2.draw(new Line2D.Double(midPointBD, pD));
-            }
-            } else if (drawUnselectedLeg) {
-            // draw B<= =>D
-            if (drawMain == mainlineB) {
-                g2.setColor(colorB);
-                g2.draw(new Line2D.Double(pB, oneThirdPointBD));
-            }
-            if (drawMain == mainlineD) {
-                g2.setColor(colorD);
-                g2.draw(new Line2D.Double(twoThirdsPointBD, pD));
-            }
-        }
-
-        if (getTurnoutType() == DOUBLE_SLIP) {
-                if (slipState == STATE_BC) {
-                // draw B<===>C
-                if (drawMain == mainlineB) {
-                    g2.setColor(colorB);
-                    g2.draw(new Line2D.Double(pB, oneThirdPointBD));
-                    g2.draw(new Line2D.Double(oneThirdPointBD, midPointBC));
+                // draw A<===>D
+                if (drawMain == mainlineA) {
+                    g2.setColor(colorA);
+                    g2.draw(new Line2D.Double(pA, oneThirdPointAC));
+                    g2.draw(new Line2D.Double(oneThirdPointAC, midPointAD));
+                }
+                if (drawMain == mainlineD) {
+                    g2.setColor(colorD);
+                    g2.draw(new Line2D.Double(midPointAD, twoThirdsPointBD));
+                    g2.draw(new Line2D.Double(twoThirdsPointBD, pD));
+                }
+            } else if (slipState == STATE_AC) {
+                // draw A<===>C
+                if (drawMain == mainlineA) {
+                    g2.setColor(colorA);
+                    g2.draw(new Line2D.Double(pA, midPointAC));
                 }
                 if (drawMain == mainlineC) {
                     g2.setColor(colorC);
-                    g2.draw(new Line2D.Double(midPointBC, twoThirdsPointAC));
+                    g2.draw(new Line2D.Double(midPointAC, pC));
+                }
+            } else if (drawUnselectedLeg) {
+                // draw A<= =>C
+                if (drawMain == mainlineA) {
+                    g2.setColor(colorA);
+                    g2.draw(new Line2D.Double(pA, oneThirdPointAC));
+                }
+                if (drawMain == mainlineC) {
+                    g2.setColor(colorC);
                     g2.draw(new Line2D.Double(twoThirdsPointAC, pC));
                 }
             }
-        }   // DOUBLE_SLIP
+
+            if (slipState == STATE_BD) {
+                // draw B<===>D
+                if (drawMain == mainlineB) {
+                    g2.setColor(colorB);
+                    g2.draw(new Line2D.Double(pB, midPointBD));
+                }
+                if (drawMain == mainlineD) {
+                    g2.setColor(colorD);
+                    g2.draw(new Line2D.Double(midPointBD, pD));
+                }
+            } else if (drawUnselectedLeg) {
+                // draw B<= =>D
+                if (drawMain == mainlineB) {
+                    g2.setColor(colorB);
+                    g2.draw(new Line2D.Double(pB, oneThirdPointBD));
+                }
+                if (drawMain == mainlineD) {
+                    g2.setColor(colorD);
+                    g2.draw(new Line2D.Double(twoThirdsPointBD, pD));
+                }
+            }
+
+            if (getTurnoutType() == DOUBLE_SLIP) {
+                if (slipState == STATE_BC) {
+                    // draw B<===>C
+                    if (drawMain == mainlineB) {
+                        g2.setColor(colorB);
+                        g2.draw(new Line2D.Double(pB, oneThirdPointBD));
+                        g2.draw(new Line2D.Double(oneThirdPointBD, midPointBC));
+                    }
+                    if (drawMain == mainlineC) {
+                        g2.setColor(colorC);
+                        g2.draw(new Line2D.Double(midPointBC, twoThirdsPointAC));
+                        g2.draw(new Line2D.Double(twoThirdsPointAC, pC));
+                    }
+                }
+            }   // DOUBLE_SLIP
         } else {
             // draw A<===>D
             if (drawMain == mainlineA) {
