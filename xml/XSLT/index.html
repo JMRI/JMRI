@@ -2,58 +2,73 @@
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-   <meta name="Author" content="Bob Jacobsen, JMRI">
-   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="author" content="Bob Jacobsen, JMRI">
    <title>JMRI Decoder Information</title>
+    <!-- Style -->
+    <link rel="stylesheet" type="text/css" href="http://jmri.org/css/default.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="http://jmri.org/css/print.css" media="print">
+    <link rel="icon" href="http://jmri.org/images/jmri.ico" type="image/png">
+    <link rel="home" title="Home" href="http://jmri.org/">
+    <!-- /Style -->
 </head>
 <body>
+<div class="nomenu" id="mBody">
+    <a href="http://jmri.org/index.html"><img src="http://jmri.org/images/logo-jmri.gif" align="right" width="160" height="135"
+                               hspace="0" vspace="0"></a>
+    <div id="mainContent">
 
-<A href="/index.html"><IMG SRC="/images/logo-jmri.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0"></A>
+        <h1>JMRI Decoder Information</h1>
 
-<h1>JMRI Decoder Information</h1>
-The JMRI DecoderPro information on decoders has been made available
-in several forms on the following web pages:
-<UL>
-<LI>
-<A HREF="pages/DecoderId.html">Decoder identification CV values</a>
-used by DecoderPro to identify the manufacturer and 
-type of an unknown decoder.
-<LI>
-<A HREF="pages/decoderIndex.html">Index to individual decoder pages</a>,
-listed by manufacturer.  This provides a one-page summary of the characteristics
-and CV contents of the decoders.
-<LI>Selection guides listing 
-<A HREF="pages/SelectionGuide.html#size">decoder size</a>, and by
-<A HREF="pages/SelectionGuide.html#electrical">decoder electrical characteristics</a>.
-</UL>
+        <p>The JMRI DecoderPro information on decoders has been made available
+        in several forms on the following web pages:</p>
+            <ul>
+            <li>
+            <a href="pages/DecoderId.html">Decoder identification CV values</a>
+            used by DecoderPro to identify the manufacturer and
+            type of an unknown decoder.</li>
+            <li>
+            <a href="pages/decoderIndex.html">Index to individual decoder pages</a>,
+            listed by manufacturer.  This provides a one-page summary of the characteristics
+            and CV contents of the decoders.</li>
+            <li>Selection guides listing
+            <a href="pages/SelectionGuide.html#size">decoder size</a>, and by
+            <a href="pages/SelectionGuide.html#electrical">decoder electrical characteristics</a>.</li>
+            </ul>
 
-There are also files in "comma separated variable" format
-available via a 
-<A HREF="CSVindex.html">separate index page</a>.
-<P>
-Windows and Java .properties files containing some of the information are
-<a HREF="properties">available in a separate directory</a>.
-<P>
-All of these files are created automatically from the JMRI
-decoder files using XSLT.  The toolkit to do this 
-is available from the JMRI distribution, or our
-<A HREF="http://jmri.svn.sourceforge.net/viewvc/jmri/trunk/jmri/xml/XSLT/">SVN repository</a>.
-<P>
-These pages are updated as people contribute decoder information to JMRI.
-<A HREF="../../help/en/Acknowledgements.shtml">Many people</a>
-have worked on this, and we thank 
-<A HREF="../../help/en/Acknowledgements.shtml">all of them</a>.
-If you find this information useful, we encourage you to 
-<a href="http://jmri.org/donations.shtml">donate to support JMRI</a>.
+        <p>We also provide files in
+        "<a href="https://en.wikipedia.org/wiki/Comma-separated_values">comma-separated values</a>" format via a
+        <a href="CSVindex.html">separate index page</a>.</p>
+        <p>
+        Windows and Java .properties files containing some of the information are
+        <a href="properties">available in a separate directory</a>.</p>
+        <p>
+        All of these files are created automatically from the JMRI decoder files using XSLT.
+        The toolkit to do this is available from the JMRI distribution, or our
+        <a href="https://github.com/JMRI/JMRI/tree/master/xml/XSLT/">GitHub repository</a>.</p>
 
-<HR>
-	<p>Copyright &copy; 1997 - 2016 JMRI Community. 
-	<P>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
-	<P><A href="/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a></p>
-<P>Site hosted by: <BR>
-<A href="http://sourceforge.net"> 
-<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+        <p>These pages are updated as people contribute decoder information to JMRI.</p>
 
+        <!-- footer copied from !include footer, current as of Jan. 2018, JMRI 4.10 -->
+        <hr class="hide">
+        <div id="footer">
+            <ul id="bn">
+                <li>Contact us via the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users</a> Yahoo group</li>
+            </ul>
+
+            <p>Thanks and congratulations to
+            <a href="http://jmri.org/help/en/Acknowledgements.shtml" title="Who is JMRI">
+                all who contributed</a>!</p>
+
+            <p>Copyright &copy; 1997 - 2018 JMRI Community.
+            <p>JMRI&reg;, DecoderPro&reg;, PanelPro&trade;, SignalPro&trade;, TrainPro&trade;, DispatcherPro&trade;, OperationsPro&trade; and associated logos are our trademarks.
+            <p><a href="http://jmri.org/Copyright.html">Additional information on copyright,
+                trademarks and licenses is linked here.</a></p>
+
+            <br>Site hosted by:<br>
+            <a href="http://sourceforge.net/projects/jmri/"><img src="https://sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0"
+                                                                 alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
+        </div>
+    </div><!-- closes #mainContent-->
+</div><!-- closes #mBody-->
 </body>
 </html>
-
