@@ -61,8 +61,6 @@ public abstract class ItemPanel extends JPanel {
      * Array of BufferedImage backgrounds loaded as background image in Preview (not shared across tabs)
      */
     protected BufferedImage[] _backgrounds;
-    private InitEventListener listener;
-
     /**
      * Constructor for all item types.
      *

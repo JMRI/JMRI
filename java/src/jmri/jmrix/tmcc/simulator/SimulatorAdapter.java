@@ -37,8 +37,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
 
     private boolean outputBufferEmpty = true;
     private boolean checkBuffer = true;
-    private boolean trackPowerState = false;
-
     // Simulator responses
     char EDC_OPS = 0x4F;
     char EDC_PROG = 0x50;
@@ -239,9 +237,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     private SerialReply generateReply(SerialMessage msg) {
         log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg.toString());
 
-        String s, r;
         SerialReply reply = new SerialReply();
-        int i = 0;
         char command = msg.toString().charAt(0);
         log.debug("Message type = " + command);
         switch (command) {

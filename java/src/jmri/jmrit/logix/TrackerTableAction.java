@@ -130,7 +130,6 @@ public class TrackerTableAction extends AbstractAction {
         JTextField _status = new JTextField(80);
         ArrayList<String> _statusHistory = new ArrayList<String>();
         public int _maxHistorySize = 20;
-        boolean _appendStatus = false;
         HashMap<OBlock, List<Tracker>> _blocks = new HashMap<OBlock, List<Tracker>>();
 
         TableFrame() {

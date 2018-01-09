@@ -48,6 +48,7 @@
     <label xml:lang="fr">Adresse décodeur</label>
     <label xml:lang="de">Basisadresse</label>
     <label xml:lang="nl">Primair adres</label>
+	<label xml:lang="da">Primær Adresse</label>
     <comment xml:lang="it">Indirizzo Corto</comment>
     <comment xml:lang="fr">Adresse courte</comment>
     <comment xml:lang="de">Kurze Adresse</comment>
@@ -62,6 +63,7 @@
     <label xml:lang="de">Erweiterte Adresse</label>
     <label xml:lang="nl">Lang adres</label>
     <label xml:lang="cs">Rozšířená adresa</label>
+	<label xml:lang="da">Udvidet Adresse</label>
   </variable>
   <variable item="Address Format" CV="29" mask="XXVXXXXX">
     <enumVal>
@@ -71,6 +73,7 @@
         <choice xml:lang="de">Basisadresse (1 byte)</choice>
         <choice xml:lang="cs">Základní adresa (1 byte)</choice>
         <choice xml:lang="nl">Basisadres (1 byte)</choice>
+		<choice xml:lang="da">Kort (1 byte) adresse</choice>
       </enumChoice>
       <enumChoice choice="Long (two byte) address">
         <choice xml:lang="it">Ind.Esteso (2 byte)</choice>
@@ -78,6 +81,7 @@
         <choice xml:lang="de">Erweiterte Adresse (2 byte)</choice>
         <choice xml:lang="cs">Rozšířená adresa (2 byte)</choice>
         <choice xml:lang="nl">Lang adres (2 byte)</choice>
+		<choice xml:lang="da">Lang (2 byte) adresse</choice>
       </enumChoice>
     </enumVal>
     <label>Address Format</label>
@@ -86,5 +90,6 @@
     <label xml:lang="de">Adresse Format</label>
     <label xml:lang="nl">Adresformaat</label>
     <label xml:lang="cs">Typ adresy</label>
+	<label xml:lang="da">Adresse Format</label>
   </variable>
 </variables>

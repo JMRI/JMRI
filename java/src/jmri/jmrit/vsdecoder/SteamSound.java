@@ -223,7 +223,7 @@ class SteamSound extends EngineSound {
 
         super.setXml(e, vf);
 
-        log.debug("Steam EngineSound: " + e.getAttribute("name").getValue());
+        log.debug("Steam EngineSound: {}, name: {}", e.getAttribute("name").getValue(), name);
         String n = e.getChild("top-speed").getValue();
         if (n != null) {
             top_speed = Integer.parseInt(n);
@@ -240,7 +240,7 @@ class SteamSound extends EngineSound {
             //log.debug("Num Cylinders: " + num_cylinders);
         }
         // For now, num_rpms is not used.  
- /*
+        /*
          n = e.getChild("rpm-steps").getValue();
          if (n != null) {
          num_rpms = Integer.parseInt(n);
@@ -259,7 +259,7 @@ class SteamSound extends EngineSound {
             int min_r = Integer.parseInt(el.getChildText("min-rpm"));
             int max_r = Integer.parseInt(el.getChildText("max-rpm"));
             //log.debug("Notch: " + nn + " File: " + fn);
-            sb = new SoundBite(vf, fn, "Steam_n" + i, "Steam_" + i);
+            sb = new SoundBite(vf, fn, name + "Steam_n" + i, name + "Steam_" + i);
             sb.setLooped(true);
             sb.setFadeTimes(100, 100);
             sb.setGain(setXMLGain(el));

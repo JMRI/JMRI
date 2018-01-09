@@ -12,8 +12,6 @@ import org.junit.Test;
  */
 public class NceSensorTest {
 
-    private NceTrafficControlScaffold tcis = null;
-
     @Test
     public void testCTor() {
         NceSensor t = new NceSensor("NS1");

@@ -195,7 +195,6 @@ public class Z21ReplyTest {
         byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
         Z21Reply m = new Z21Reply(msg,20);
         Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
-        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         Assert.assertEquals("Main Current",256,m.getSystemDataMainCurrent());
     }
 
@@ -204,7 +203,6 @@ public class Z21ReplyTest {
         byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
         Z21Reply m = new Z21Reply(msg,20);
         Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
-        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         Assert.assertEquals("Programming Track Current",0,m.getSystemDataProgCurrent());
     }
 
@@ -213,7 +211,6 @@ public class Z21ReplyTest {
         byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
         Z21Reply m = new Z21Reply(msg,20);
         Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
-        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         Assert.assertEquals("Filtered Main Current",256,m.getSystemDataFilteredMainCurrent());
     }
 
@@ -222,7 +219,6 @@ public class Z21ReplyTest {
         byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
         Z21Reply m = new Z21Reply(msg,20);
         Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
-        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         Assert.assertEquals("Temperature",0,m.getSystemDataTemperature());
     }
 
@@ -231,7 +227,6 @@ public class Z21ReplyTest {
         byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
         Z21Reply m = new Z21Reply(msg,20);
         Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
-        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         Assert.assertEquals("Supply Voltage",1280,m.getSystemDataSupplyVoltage());
     }
 
@@ -240,7 +235,6 @@ public class Z21ReplyTest {
         byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
         Z21Reply m = new Z21Reply(msg,20);
         Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
-        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         Assert.assertEquals("Main Current",1798,m.getSystemDataVCCVoltage());
     }
 
