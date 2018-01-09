@@ -420,7 +420,7 @@
 
       <h2>Configuration Process</h2>
 
-      See <a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/JmrixConfigPane.html">jmrix.JmrixConfigPane Javadoc</a>
+      See <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/JmrixConfigPane.html">jmrix.JmrixConfigPane Javadoc</a>
       for links to configuration elements.
       (Is there another place that the configuration process and preferences support is described? If so, it should
       be linked from here.)
@@ -444,7 +444,8 @@ jmri.jmrix.loconet.LnConnectionTypeList
       <p>
       The contents of the
       <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/loconet/LnConnectionTypeList.java"><code>jmri.jmrix.loconet.LnConnectionTypeList</code></a>, an instance of
-      <A href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/ConnectionTypeList.html"><code>jmri.jmrix.ConnectionTypeList</code></a>
+      <A href="http://jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionTypeList.html"><code>jmri.jmrix
+          .ConnectionTypeList</code></a>
       then provides the contents for the second-level JComboBox of specific connection
       types, each corresponding (generally) to a specific
       <code>ConnectionConfig</code> implementation that can configure a specific connection type.
