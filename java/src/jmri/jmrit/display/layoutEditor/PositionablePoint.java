@@ -1456,8 +1456,6 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     protected void drawEditControls(Graphics2D g2) {
-        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-
         TrackSegment ts1 = getConnect1();
         if (ts1 == null) {
             g2.setColor(Color.red);

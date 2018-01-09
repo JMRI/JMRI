@@ -1405,8 +1405,6 @@ public class LevelXing extends LayoutTrack {
      */
     @Override
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
-        g2.setStroke(new BasicStroke(1.F));
-
         Point2D pA = getCoordsA();
         Point2D pB = getCoordsB();
         Point2D pC = getCoordsC();

@@ -5,6 +5,7 @@ import static java.lang.Float.POSITIVE_INFINITY;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
@@ -752,10 +753,14 @@ public class LayoutTurntable extends LayoutTrack {
         double radius = getRadius(), diameter = radius + radius;
 
         if (isBlock && isMain) {
+            Stroke stroke = g2.getStroke();
+            Color color = g2.getColor();
             // draw turntable circle - default track color, side track width
             g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
             g2.setColor(defaultTrackColor);
             g2.draw(new Ellipse2D.Double(center.getX() - radius, center.getY() - radius, diameter, diameter));
+            g2.setStroke(stroke);
+            g2.setColor(color);
         }
 
         // draw ray tracks

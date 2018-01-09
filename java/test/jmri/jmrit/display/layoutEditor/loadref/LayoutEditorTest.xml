@@ -209,10 +209,10 @@
       <mainBallastWidth>0</mainBallastWidth>
       <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
       <mainBlockLineWidth>4</mainBlockLineWidth>
-      <mainRailColor>#000000</mainRailColor>
+      <mainRailColor>#808080</mainRailColor>
       <mainRailCount>1</mainRailCount>
       <mainRailGap>0</mainRailGap>
-      <mainRailWidth>4</mainRailWidth>
+      <mainRailWidth>1</mainRailWidth>
       <mainTieColor>#000000</mainTieColor>
       <mainTieGap>0</mainTieGap>
       <mainTieLength>0</mainTieLength>
@@ -221,10 +221,10 @@
       <sideBallastWidth>0</sideBallastWidth>
       <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
       <sideBlockLineWidth>2</sideBlockLineWidth>
-      <sideRailColor>#000000</sideRailColor>
+      <sideRailColor>#808080</sideRailColor>
       <sideRailCount>1</sideRailCount>
       <sideRailGap>0</sideRailGap>
-      <sideRailWidth>2</sideRailWidth>
+      <sideRailWidth>1</sideRailWidth>
       <sideTieColor>#000000</sideTieColor>
       <sideTieGap>0</sideTieGap>
       <sideTieLength>0</sideTieLength>
@@ -320,5 +320,5 @@
   </LayoutEditor>
   <filehistory>
   </filehistory>
-  <!--Written by JMRI version 4.11.2ish+geowar+20180109T0007Z+R4aa1b2dad1 on Mon Jan 08 16:08:33 PST 2018-->
+  <!--Written by JMRI version 4.11.2ish+geowar+20180109T1731Z+R5ae862366f on Tue Jan 09 09:31:51 PST 2018-->
 </layout-config>

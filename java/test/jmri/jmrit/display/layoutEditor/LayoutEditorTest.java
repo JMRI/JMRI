@@ -4,20 +4,14 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
+import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.ColorUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import jmri.jmrit.display.EditorFrameOperator;
-import org.netbeans.jemmy.operators.JRadioButtonOperator;
-import org.netbeans.jemmy.operators.JMenuBarOperator;
-import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
