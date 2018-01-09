@@ -16,7 +16,7 @@
                 xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
                 showEmptyPanes="no">
 
-    <version author="Bob Milhaupt" version="1" lastUpdated="20171219" />
+    <version author="Bob Milhaupt" version="1" lastUpdated="20180102" />
 
     <decoder>
 
@@ -194,7 +194,12 @@
 
             <variable item="Default New Loco Mode">
                 <compositeVal>
-                    <compositeChoice choice="128 Speed-steps (t/t/t)*">
+                    <compositeChoice choice="28 Speed-steps (c/c/t)*">
+                        <compositeSetting label="OpSw 021" value="1"/>
+                        <compositeSetting label="OpSw 022" value="1"/>
+                        <compositeSetting label="OpSw 023" value="0"/>
+                    </compositeChoice>
+                    <compositeChoice choice="128 Speed-steps (t/t/t)">
                         <compositeSetting label="OpSw 021" value="0"/>
                         <compositeSetting label="OpSw 022" value="0"/>
                         <compositeSetting label="OpSw 023" value="0"/>
@@ -207,11 +212,6 @@
                     <compositeChoice choice="14 Speed-steps (c/t/t)">
                         <compositeSetting label="OpSw 021" value="1"/>
                         <compositeSetting label="OpSw 022" value="0"/>
-                        <compositeSetting label="OpSw 023" value="0"/>
-                    </compositeChoice>
-                    <compositeChoice choice="28 Speed-steps (c/c/t)">
-                        <compositeSetting label="OpSw 021" value="1"/>
-                        <compositeSetting label="OpSw 022" value="1"/>
                         <compositeSetting label="OpSw 023" value="0"/>
                     </compositeChoice>
                     <compositeChoice choice="Motorola Trinary (t/c/t)">
@@ -458,16 +458,20 @@
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw56</label>
             </variable>
-            <variable CV="csOpSw.057" item="OpSw 057" default="0" readOnly="yes">
-                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+            <variable CV="csOpSw.057" item="OpSw 057" default="1" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw57</label>
             </variable>
-            <variable CV="csOpSw.058" item="OpSw 058" default="0" readOnly="yes">
-                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+            <variable CV="csOpSw.058" item="OpSw 058" default="1" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw58</label>
             </variable>
-            <variable CV="csOpSw.059" item="OpSw 059" default="1" readOnly="yes">
+            <variable CV="csOpSw.059" item="OpSw 059" default="1" readOnly="yes" exclude="DCS210">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
+                <label>OpSw59</label>
+            </variable>
+            <variable CV="csOpSw.059" item="OpSw 059" default="0" readOnly="yes" exclude="DCS240">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw59</label>
             </variable>
 
@@ -706,48 +710,74 @@
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw112</label>
             </variable>
+            <variable CV="csOpSw.113" item="OpSw 113" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw113</label>
+            </variable>
+            <variable CV="csOpSw.114" item="OpSw 114" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw114</label>
+            </variable>
+            <variable CV="csOpSw.115" item="OpSw 115" default="1" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
+                <label>OpSw115</label>
+            </variable>
+            <variable CV="csOpSw.116" item="OpSw 116" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw116</label>
+            </variable>
+            <variable CV="csOpSw.117" item="OpSw 117" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw117</label>
+            </variable>
+            <variable CV="csOpSw.118" item="OpSw 118" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw118</label>
+            </variable>
+            <variable CV="csOpSw.119" item="OpSw 119" default="1" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
+                <label>OpSw119</label>
+            </variable>
+            <variable CV="csOpSw.120" item="OpSw 120" default="0" readOnly="yes" infoOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw120</label>
+            </variable>
+            <variable CV="csOpSw.121" item="OpSw 121" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw121</label>
+            </variable>
+            <variable CV="csOpSw.122" item="OpSw 122" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw122</label>
+            </variable>
+            <variable CV="csOpSw.123" item="OpSw 123" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw123</label>
+            </variable>
+            <variable CV="csOpSw.124" item="OpSw 124" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw124</label>
+            </variable>
+            <variable CV="csOpSw.125" item="OpSw 125" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw125</label>
+            </variable>
+            <variable CV="csOpSw.126" item="OpSw 126" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw126</label>
+            </variable>
+            <variable CV="csOpSw.127" item="OpSw 127" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw127</label>
+            </variable>
+            <variable CV="csOpSw.128" item="OpSw 128" default="0" readOnly="yes" infoOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+                <label>OpSw128</label>
+            </variable>
         </variables>
     </decoder>
-    <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-        <name>OpSws</name>
-        <column>
-            <row>
-                <cvtable/>
-            </row>
-            <row>
-                <column>
-                    <label>
-                        <text>&lt;html&gt;The "CV" column in the table above shows "OpSw"
-                            numbers, where the value "1." &lt;p&gt;is pre-pended to
-                            the OpSw Number.
-                        </text>
-                    </label>
-                    <label>
-                        <text> </text>
-                    </label>
-                </column>
-            </row>
-            <row>
-                <label>
-                    <text>&lt;html&gt;
-                    &lt;p&gt;&lt;p&gt;OpSw value 0 = "T"hrown.  OpSw value 1 = "C"losed.&lt;p&gt;
-                    &lt;/html&gt;&lt;/html&gt;
-                    </text>
-                </label>
-            </row>
-        </column>
-
-    </pane>
     <pane>
         <name>Basic</name>
-        <column>
-            <label>
-                <text>This pane is intentionally left blank</text>
-            </label>
-        </column>
-    </pane>
-    <pane>
-        <name>Basic OpSw Settings</name>
         <column>
             <label>
                 <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
@@ -763,8 +793,8 @@
                     Slot "Purging" Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
             </label>
 
-            <display item="OpSw 013"/>
             <display item="OpSw 014"/>
+            <display item="OpSw 013"/>
             <display item="OpSw 015"/>
 
             <separator/>
@@ -780,12 +810,6 @@
                     <display item="OpSw 044"/>
                 </column>
             </group>
-            <group include="DCS210" exclude="DCS240">
-                <column>
-                    <display item="OpSw 038"/>
-                </column>
-            </group>
-
             <separator/>
 
             <label>
@@ -887,6 +911,11 @@
                 &lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
             </label>
             <display item="OpSw 035"/>
+            <group include="DCS210" exclude="DCS240">
+                <column>
+                    <display item="OpSw 038"/>
+                </column>
+            </group>
             <label>
                 <text> </text>
             </label>
@@ -973,11 +1002,11 @@
                         </column>
                     </group>
                     <display item="OpSw 046"/>
-                </column>
-                <column>
                     <display item="OpSw 049"/>
                     <display item="OpSw 050"/>
                     <display item="OpSw 051"/>
+                </column>
+                <column>
                     <display item="OpSw 052"/>
                     <display item="OpSw 053"/>
                     <display item="OpSw 054"/>
@@ -989,14 +1018,14 @@
                     <display item="OpSw 061"/>
                     <display item="OpSw 062"/>
                     <display item="OpSw 063"/>
-                </column>
-                <column>
                     <display item="OpSw 065"/>
                     <display item="OpSw 066"/>
                     <display item="OpSw 067"/>
                     <display item="OpSw 068"/>
                     <display item="OpSw 069"/>
                     <display item="OpSw 070"/>
+                </column>
+                <column>
                     <display item="OpSw 071"/>
                     <display item="OpSw 073"/>
                     <display item="OpSw 074"/>
@@ -1005,9 +1034,6 @@
                     <display item="OpSw 078"/>
                     <display item="OpSw 079"/>
                     <display item="OpSw 081"/>
-
-                </column>
-                <column>
                     <display item="OpSw 082"/>
                     <display item="OpSw 083"/>
                     <display item="OpSw 084"/>
@@ -1017,14 +1043,13 @@
                     <display item="OpSw 089"/>
                     <display item="OpSw 090"/>
                     <display item="OpSw 091"/>
+                </column>
+                <column>
                     <display item="OpSw 092"/>
                     <display item="OpSw 093"/>
                     <display item="OpSw 094"/>
                     <display item="OpSw 095"/>
                     <display item="OpSw 097"/>
-
-                </column>
-                <column>
                     <display item="OpSw 098"/>
                     <display item="OpSw 099"/>
                     <display item="OpSw 100"/>
@@ -1036,8 +1061,24 @@
                     <display item="OpSw 107"/>
                     <display item="OpSw 108"/>
                     <display item="OpSw 109"/>
+                </column>
+                <column>
                     <display item="OpSw 110"/>
                     <display item="OpSw 111"/>
+                    <display item="OpSw 113"/>
+                    <display item="OpSw 114"/>
+                    <display item="OpSw 115"/>
+                    <display item="OpSw 116"/>
+                    <display item="OpSw 117"/>
+                    <display item="OpSw 118"/>
+                    <display item="OpSw 119"/>
+                    <display item="OpSw 121"/>
+                    <display item="OpSw 122"/>
+                    <display item="OpSw 123"/>
+                    <display item="OpSw 124"/>
+                    <display item="OpSw 125"/>
+                    <display item="OpSw 126"/>
+                    <display item="OpSw 127"/>
 
                 </column>
             </row>
@@ -1067,10 +1108,13 @@
                 <column>
                     <display item="OpSw 088"/>
                     <display item="OpSw 096"/>
+                    <display item="OpSw 104"/>
+                    
                 </column>
                 <column>
-                    <display item="OpSw 104"/>
                     <display item="OpSw 112"/>
+                    <display item="OpSw 120"/>
+                    <display item="OpSw 128"/>
                 </column>
             </row>
             <label>
@@ -1082,6 +1126,36 @@
                 &lt;/strong&gt;&lt;/html&gt;</text>
             </label>
         </column>
+    </pane>
+    <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+        <name>OpSws</name>
+        <column>
+            <row>
+                <cvtable/>
+            </row>
+            <row>
+                <column>
+                    <label>
+                        <text>&lt;html&gt;The "CV" column in the table above shows "OpSw"
+                            numbers, where the value "csOpSw." &lt;p&gt;is pre-pended to
+                            the OpSw Number.
+                        </text>
+                    </label>
+                    <label>
+                        <text> </text>
+                    </label>
+                </column>
+            </row>
+            <row>
+                <label>
+                    <text>&lt;html&gt;
+                    &lt;p&gt;&lt;p&gt;OpSw value 0 = "T"hrown.  OpSw value 1 = "C"losed.&lt;p&gt;
+                    &lt;/html&gt;&lt;/html&gt;
+                    </text>
+                </label>
+            </row>
+        </column>
+
     </pane>
 
     <pane>

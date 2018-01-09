@@ -221,6 +221,7 @@
         <pathelement location="${libdir}/usb-api-1.0.2.jar"/>
         <pathelement location="${libdir}/usb4java-1.2.0.jar"/>
         <pathelement location="${libdir}/usb4java-javax-1.2.0.jar"/>
+        <pathelement location="${libdir}/hid4java-0.5.0.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 

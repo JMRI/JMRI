@@ -8,8 +8,6 @@ import java.util.Arrays;
 import java.util.TooManyListenersException;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import jmri.jmrix.oaktree.SerialPortController;
-import jmri.jmrix.oaktree.SerialSensorManager;
-import jmri.jmrix.oaktree.SerialTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;

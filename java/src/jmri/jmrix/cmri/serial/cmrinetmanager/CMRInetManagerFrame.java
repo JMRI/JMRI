@@ -58,12 +58,9 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
     JButton netStatsButton = new JButton(Bundle.getMessage("NetStatsButtonText") );
 
     private CMRISystemConnectionMemo _memo = null;
-    private CMRInetManagerFrame curFrame;
-
     public CMRInetManagerFrame(CMRISystemConnectionMemo memo) {
         super();
 	_memo = memo;
-        curFrame = this;
         addHelpMenu("package.jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetManagerFrame", true); // c2
    }
 
@@ -240,9 +237,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
      */
     public void initializeNodes()  //c2
     {
-	String str = "";
-
-    // get all configured nodes
+	// get all configured nodes
         SerialNode node = (SerialNode) _memo.getTrafficController().getNode(0);
         int index = 1;
         while (node != null)

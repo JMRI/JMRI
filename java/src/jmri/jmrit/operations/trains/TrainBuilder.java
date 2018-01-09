@@ -3751,8 +3751,11 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildBypassCarServiceOrder"),
                     new Object[]{car.toString(), car.getTrackName(), car.getTrack().getServiceOrder()}));
             // move car in front of current pointer so car is no longer used on this pass
-            _carList.remove(car);
-            _carList.add(_carIndex, car);
+            // confirm that car index is in range (FYI a caboose can have an out of range index)
+            if (_carIndex < _carList.size()) {
+                _carList.remove(car);
+                _carList.add(_carIndex, car);
+            }
         }
         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoDestForCar"),
                 new Object[]{car.toString()}));

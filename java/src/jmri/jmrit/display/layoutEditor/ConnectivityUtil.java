@@ -2720,13 +2720,13 @@ public class ConnectivityUtil {
             result = ((NamedBean) obj).getDisplayName();
         } catch (Exception ex1) {
             try {
-                result = ((LayoutTrack) obj).getId();
+                result = obj.getId();
             } catch (Exception ex2) {
                 try {
-                    result = ((LayoutTrack) obj).getName();
+                    result = obj.getName();
                 } catch (Exception ex3) {
                     try {
-                        result = ((LayoutTrack) obj).getId();
+                        result = obj.getId();
                     } catch (Exception ex4) {
                         result = "<" + obj + ">";
                     }

@@ -6,7 +6,6 @@ import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJComponentTest;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;

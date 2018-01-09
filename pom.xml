@@ -764,7 +764,7 @@
             <!-- vulnerabilities elsewhere in this file -->
             <groupId>org.python</groupId>
             <artifactId>jython-standalone</artifactId>
-            <version>2.7.0</version><!-- versions < 2.7.1 have CVE against them --> 
+            <version>2.7.0</version><!-- versions < 2.7.1 have CVE against them -->
         </dependency>
         <!--
         <dependency>
@@ -967,6 +967,12 @@
             <artifactId>org-openide-util-lookup</artifactId>
             <version>${netbeans.version}</version>
             <scope>compile</scope>
+        </dependency>
+        <!-- hid4java for cross-platform HID USB -->
+        <dependency>
+            <groupId>org.hid4java</groupId>
+            <artifactId>hid4java</artifactId>
+            <version>0.5.0</version>
         </dependency>
     </dependencies>
 

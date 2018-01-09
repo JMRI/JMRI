@@ -38,8 +38,6 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
 
     private boolean outputBufferEmpty = true;
     private boolean checkBuffer = true;
-    private boolean trackPowerState = false;
-
     // Simulator responses
     char EDC_OPS = 0x4F;
     char EDC_PROG = 0x50;
@@ -240,7 +238,6 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
     private EasyDccReply generateReply(EasyDccMessage msg) {
         log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg.toString());
 
-        String s, r;
         EasyDccReply reply = new EasyDccReply();
         int i = 0;
         char command = msg.toString().charAt(0);
@@ -263,13 +260,11 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
 
             case 'E':
                 log.debug("TRACK_POWER_ON detected");
-                trackPowerState = true;
                 reply.setElement(i++, EDC_OPS); // capital O for Operation
                 break;
 
             case 'K':
                 log.debug("TRACK_POWER_OFF detected");
-                trackPowerState = false;
                 reply.setElement(i++, EDC_OPS); // capital O for Operation
                 break;
 

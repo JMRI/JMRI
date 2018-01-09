@@ -24,7 +24,7 @@ public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionM
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       SerialTrafficController tc = new SerialTrafficController(){
+       new SerialTrafficController(){
           @Override
           public void sendSerialMessage(SerialMessage m,SerialListener reply) {
           }

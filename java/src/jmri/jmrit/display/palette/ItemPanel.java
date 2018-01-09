@@ -3,7 +3,6 @@ package jmri.jmrit.display.palette;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import javax.annotation.Nonnull;
@@ -12,8 +11,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
@@ -64,8 +61,6 @@ public abstract class ItemPanel extends JPanel {
      * Array of BufferedImage backgrounds loaded as background image in Preview (not shared across tabs)
      */
     protected BufferedImage[] _backgrounds;
-    private InitEventListener listener;
-
     /**
      * Constructor for all item types.
      *
@@ -74,7 +69,7 @@ public abstract class ItemPanel extends JPanel {
      * @param editor      Editor that called this ItemPalette
      */
     public ItemPanel(DisplayFrame parentFrame, String type, Editor editor) {
-        _paletteFrame = (DisplayFrame) parentFrame;
+        _paletteFrame = parentFrame;
         _itemType = type;
         _editor = editor;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

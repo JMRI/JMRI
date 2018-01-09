@@ -22,7 +22,6 @@ public abstract class DCCppTableModel extends AbstractTableModel {
     private int _dirtyCol = 0;
     private int _newCol = 0;
     private int _deleteCol = 0;
-    private int _numCols = 0;
     protected int _lastDataCol = 0;
 
     public DCCppTableModel(int dc, int nc, int delc, int numc) {
@@ -30,7 +29,6 @@ public abstract class DCCppTableModel extends AbstractTableModel {
         _dirtyCol = dc;
         _newCol = nc;
         _deleteCol = delc;
-        _numCols = numc;
         _lastDataCol = numc - 4;
         rowData = new ArrayList<>();
         deletedData = new ArrayList<>();

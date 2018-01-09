@@ -3,7 +3,6 @@ package jmri.jmrit.logix;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
-import java.util.Locale;
 import jmri.ConfigureManager;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -11,14 +10,12 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.rules.RetryRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.Rule;
-import jmri.util.junit.rules.RetryRule;
-
+import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -38,11 +35,7 @@ public class LearnWarrantTest {
     public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     private OBlockManager _OBlockMgr;
-//    PortalManager _portalMgr;
-    private SensorManager _sensorMgr;
-//    TurnoutManager _turnoutMgr;
-
-    @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
+@SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
     @Test
     public void testLearnWarrant() throws Exception {
         if (GraphicsEnvironment.isHeadless()) {
@@ -65,7 +58,7 @@ public class LearnWarrantTest {
         InstanceManager.getDefault(ConfigureManager.class).load(f);
 //        ControlPanelEditor panel = (ControlPanelEditor)null;
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
-        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
+        InstanceManager.getDefault(SensorManager.class);
 
         Warrant w = new Warrant("IW00", "Learning");
         WarrantFrame frame = new WarrantFrame(w, true);

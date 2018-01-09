@@ -54,7 +54,6 @@ public class TurnoutEditAction extends BeanEditAction {
         return InstanceManager.turnoutManagerInstance().getByUserName(name);
     }
 
-    private JmriBeanComboBox reporterField;
     private JCheckBox useCurrent = new JCheckBox();
     private JCheckBox inverted = new JCheckBox();
 
@@ -299,8 +298,6 @@ public class TurnoutEditAction extends BeanEditAction {
     private final static String noneText = "None";
 
     private JComboBox<String> lockBox;
-    private JComboBox<String> lockOperationBox;
-
     protected BeanItemPanel lock() {
         Turnout t = (Turnout) bean;
         BeanItemPanel lock = new BeanItemPanel();

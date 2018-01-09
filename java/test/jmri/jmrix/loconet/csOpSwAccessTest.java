@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.jmrix.loconet;
 
 import jmri.ProgListenerScaffold;
@@ -12,16 +7,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import jmri.util.JUnitUtil;
-//import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.junit.Assert;
 import jmri.jmrix.loconet.SlotManager;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
-import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 
@@ -30,7 +19,7 @@ import jmri.ProgrammingMode;
  * @author given
  */
 public class csOpSwAccessTest {
-    
+
     LocoNetInterfaceScaffold lnis;
     SlotManager sm;
     LocoNetSystemConnectionMemo memo;
@@ -38,15 +27,15 @@ public class csOpSwAccessTest {
 
     public csOpSwAccessTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
         // The minimal setup for log4J
@@ -57,7 +46,7 @@ public class csOpSwAccessTest {
         pl = new ProgListenerScaffold();
         sm.setSystemConnectionMemo(memo);
     }
-    
+
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
@@ -65,12 +54,12 @@ public class csOpSwAccessTest {
 
     @Test
     public void testCommandStationRead1() throws ProgrammerException {
-        
+
         csOpSwAccess csosa = new csOpSwAccess(memo,pl);
-        
+
         Assert.assertNotNull("checkMemo", memo);
         Assert.assertNotNull("checkTc", memo.getLnTrafficController());
-        
+
         // attempt a command station opsw access
         csosa.readCsOpSw("csOpSw.01", pl);
 
@@ -166,7 +155,6 @@ public class csOpSwAccessTest {
         Assert.assertEquals("should get a programming error reply ", 8, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
         Assert.assertEquals("Reply value matches", 0, pl.getRcvdValue());
-
 
         // attempt another command station opsw access
         csosa.readCsOpSw("csOpSw.17", pl);
@@ -311,9 +299,6 @@ public class csOpSwAccessTest {
         Assert.assertEquals("should get a programming reply", 24, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
         Assert.assertEquals("Reply value matches", 0, pl.getRcvdValue());
-
-
-
      }
 
     @Test
@@ -420,7 +405,6 @@ public class csOpSwAccessTest {
         Assert.assertEquals("should get a programming reply", 7, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
         Assert.assertEquals("Reply value matches", 1, pl.getRcvdValue());
-
 
         // attempt another command station opsw access
         csosa.readCsOpSw("csOpSw.08", pl);
@@ -940,8 +924,10 @@ public class csOpSwAccessTest {
 
         // should not have sent another message
         Assert.assertEquals("no new message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("Reply status: Not Implemented", 8, pl.getRcvdStatus());
         Assert.assertEquals("should get a programming reply", 65, pl.getRcvdInvoked());
-        Assert.assertEquals("Reply status Not Implemented", 1, pl.getRcvdStatus());
+
+        jmri.util.JUnitAppender.assertWarnMessage("Cannot perform Cs OpSw access of OpSw 65 account out-of-range for this command station.");
 
      }
 
@@ -980,7 +966,6 @@ public class csOpSwAccessTest {
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
         Assert.assertEquals("Reply value matches", 1, pl.getRcvdValue());
 
-
         // attempt an out-of-range command station opsw access
         csosa.readCsOpSw("csOpSw.0", pl);
 
@@ -988,6 +973,7 @@ public class csOpSwAccessTest {
         Assert.assertEquals("no new message sent", 1, lnis.outbound.size());
         Assert.assertEquals("should get a programming reply", 2, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status Not Implemented", 8, pl.getRcvdStatus());
+        jmri.util.JUnitAppender.assertWarnMessage("Cannot perform Cs OpSw access: parts.length=2, parts[]=[csOpSw, 0]");
 
         // attempt an out-of-range command station opsw access
         csosa.readCsOpSw("csOpSw.-1", pl);
@@ -996,6 +982,7 @@ public class csOpSwAccessTest {
         Assert.assertEquals("no new message sent", 1, lnis.outbound.size());
         Assert.assertEquals("should get a programming reply", 3, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status Not Implemented", 8, pl.getRcvdStatus());
+        jmri.util.JUnitAppender.assertWarnMessage("Cannot perform Cs OpSw access: parts.length=2, parts[]=[csOpSw, -1]");
 
         // attempt an out-of-range command station opsw access
         csosa.readCsOpSw("cs", pl);
@@ -1004,6 +991,7 @@ public class csOpSwAccessTest {
         Assert.assertEquals("no new message sent", 1, lnis.outbound.size());
         Assert.assertEquals("should get a programming reply", 4, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status Not Implemented", 8, pl.getRcvdStatus());
+        jmri.util.JUnitAppender.assertWarnMessage("Cannot perform Cs OpSw access: parts.length=1, parts[]=[cs]");
 
      }
 
@@ -1018,6 +1006,7 @@ public class csOpSwAccessTest {
         Assert.assertEquals("no new message sent", 0, lnis.outbound.size());
         Assert.assertEquals("should get a programming reply", 1, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status Not Implemented", 8, pl.getRcvdStatus());
+        jmri.util.JUnitAppender.assertWarnMessage("Cannot perform Cs OpSw access: parts.length=2, parts[]=[csOpSw, 0], val=1");
 
         // attempt an out-of-range command station opsw access
         csosa.writeCsOpSw("csOpSw.-1", 0, pl);
@@ -1026,6 +1015,7 @@ public class csOpSwAccessTest {
         Assert.assertEquals("no new message sent", 0, lnis.outbound.size());
         Assert.assertEquals("should get a programming reply", 2, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status Not Implemented", 8, pl.getRcvdStatus());
+        jmri.util.JUnitAppender.assertWarnMessage("Cannot perform Cs OpSw access: parts.length=2, parts[]=[csOpSw, -1], val=0");
 
         // attempt an out-of-range command station opsw access
         csosa.writeCsOpSw("cs", 1, pl);
@@ -1034,6 +1024,7 @@ public class csOpSwAccessTest {
         Assert.assertEquals("no new message sent", 0, lnis.outbound.size());
         Assert.assertEquals("should get a programming reply", 3, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status Sequence Error", 8, pl.getRcvdStatus());
+        jmri.util.JUnitAppender.assertWarnMessage("Cannot perform Cs OpSw access: parts.length=1, parts[]=[cs], val=1");
 
         // attempt an out-of-range command station opsw access
         csosa.writeCsOpSw("csOpSw.1", -1, pl);
@@ -1042,6 +1033,7 @@ public class csOpSwAccessTest {
         Assert.assertEquals("no new message sent", 0, lnis.outbound.size());
         Assert.assertEquals("should get a programming reply", 4, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status Not Implemented", 8, pl.getRcvdStatus());
+        jmri.util.JUnitAppender.assertWarnMessage("Cannot perform Cs OpSw access: parts.length=2, parts[]=[csOpSw, 1], val=-1");
 
         // attempt an out-of-range command station opsw access
         csosa.writeCsOpSw("csOpSw.1", 2, pl);
@@ -1050,19 +1042,13 @@ public class csOpSwAccessTest {
         Assert.assertEquals("no new message sent", 0, lnis.outbound.size());
         Assert.assertEquals("should get a programming reply", 5, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status Not Implemented", 8, pl.getRcvdStatus());
+        jmri.util.JUnitAppender.assertWarnMessage("Cannot perform Cs OpSw access: parts.length=2, parts[]=[csOpSw, 1], val=2");
 
      }
 
      @Test
      public void testCmdStnOpSwWrite() throws ProgrammerException {
         csOpSwAccess csosa = new csOpSwAccess(memo,pl);
-        List<ProgrammingMode> l = sm.getSupportedModes();
-        Assert.assertEquals("programming mode list length ok", 5, l.size());
-        Assert.assertEquals("programming mode 0", ProgrammingMode.PAGEMODE, l.get(0));
-        Assert.assertEquals("programming mode 1", ProgrammingMode.DIRECTBYTEMODE, l.get(1));
-        Assert.assertEquals("programming mode 2", ProgrammingMode.REGISTERMODE, l.get(2));
-        Assert.assertEquals("programming mode 3", ProgrammingMode.ADDRESSMODE, l.get(3));
-        Assert.assertEquals("programming mode 4", "LOCONETCSOPSWMODE", l.get(4).getStandardName());
 
         csosa.writeCsOpSw("csOpSw.5", 1, pl);
 
@@ -1123,20 +1109,19 @@ public class csOpSwAccessTest {
         Assert.assertEquals("three messages sent", 3, lnis.outbound.size());
         Assert.assertEquals("one previous programming reply", 1, pl.getRcvdInvoked());
 
-        Assert.assertEquals("sent byte 0",  0xeF, lnis.outbound.get(1).getElement( 0) & 0xFF);
-        Assert.assertEquals("sent byte 1",  0x0e, lnis.outbound.get(1).getElement( 1) & 0xFF);
-        Assert.assertEquals("sent byte 2",  0x7f, lnis.outbound.get(1).getElement( 2) & 0xFF);
-        Assert.assertEquals("sent byte 3",  0x00, lnis.outbound.get(1).getElement( 3) & 0xFF);
-        Assert.assertEquals("sent byte 4",  0x00, lnis.outbound.get(1).getElement( 4) & 0xFF);
-        Assert.assertEquals("sent byte 5",  0x00, lnis.outbound.get(1).getElement( 5) & 0xFF);
-        Assert.assertEquals("sent byte 6",  0x00, lnis.outbound.get(1).getElement( 6) & 0xFF);
-        Assert.assertEquals("sent byte 7",  0x00, lnis.outbound.get(1).getElement( 7) & 0xFF);
-        Assert.assertEquals("sent byte 8",  0x00, lnis.outbound.get(1).getElement( 8) & 0xFF);
-        Assert.assertEquals("sent byte 9",  0x00, lnis.outbound.get(1).getElement( 9) & 0xFF);
-        Assert.assertEquals("sent byte 10", 0x00, lnis.outbound.get(1).getElement(10) & 0xFF);
-        Assert.assertEquals("sent byte 11", 0x00, lnis.outbound.get(1).getElement(11) & 0xFF);
-        Assert.assertEquals("sent byte 12", 0x00, lnis.outbound.get(1).getElement(12) & 0xFF);
-
+        Assert.assertEquals("sent byte 0",  0xeF, lnis.outbound.get(2).getElement( 0) & 0xFF);
+        Assert.assertEquals("sent byte 1",  0x0e, lnis.outbound.get(2).getElement( 1) & 0xFF);
+        Assert.assertEquals("sent byte 2",  0x7f, lnis.outbound.get(2).getElement( 2) & 0xFF);
+        Assert.assertEquals("sent byte 3",  0x00, lnis.outbound.get(2).getElement( 3) & 0xFF);
+        Assert.assertEquals("sent byte 4",  0x00, lnis.outbound.get(2).getElement( 4) & 0xFF);
+        Assert.assertEquals("sent byte 5",  0x00, lnis.outbound.get(2).getElement( 5) & 0xFF);
+        Assert.assertEquals("sent byte 6",  0x00, lnis.outbound.get(2).getElement( 6) & 0xFF);
+        Assert.assertEquals("sent byte 7",  0x00, lnis.outbound.get(2).getElement( 7) & 0xFF);
+        Assert.assertEquals("sent byte 8",  0x00, lnis.outbound.get(2).getElement( 8) & 0xFF);
+        Assert.assertEquals("sent byte 9",  0x00, lnis.outbound.get(2).getElement( 9) & 0xFF);
+        Assert.assertEquals("sent byte 10", 0x00, lnis.outbound.get(2).getElement(10) & 0xFF);
+        Assert.assertEquals("sent byte 11", 0x00, lnis.outbound.get(2).getElement(11) & 0xFF);
+        Assert.assertEquals("sent byte 12", 0x00, lnis.outbound.get(2).getElement(12) & 0xFF);
         // check echo of sent message has no effect
         m = lnis.outbound.get(2);
         csosa.message(m); // propagate the message from
@@ -1189,9 +1174,7 @@ public class csOpSwAccessTest {
         Assert.assertEquals("another message sent", 4, lnis.outbound.size());
         Assert.assertEquals("three programming replies", 3, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
-
-
-
+        
         // try another write
         csosa.writeCsOpSw("csOpSw.1", 1, pl);
 
@@ -1269,13 +1252,250 @@ public class csOpSwAccessTest {
         // try another write
         csosa.writeCsOpSw("csOpSw.56", 1, pl);
 
-        // should have written
-        Assert.assertEquals("another message sent", 7, lnis.outbound.size());
+        // should NOT have written OpSw56 (56 is evenly divisible by 8, so not writable)
+        Assert.assertEquals("no additional message sent", 6, lnis.outbound.size());
         Assert.assertEquals("six programming replies", 6, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status bad", 1, pl.getRcvdStatus());
+        jmri.util.JUnitAppender.assertWarnMessage("Cannot program OpSw56 account LocoNet encoding limitations.");
      }
 
-    // Main entry point
+@Test
+     public void testCmdStnExtendedOpSwWrite() throws ProgrammerException {
+        int obIndex=0;
+        csOpSwAccess csosa = new csOpSwAccess(memo,pl);
+
+        Assert.assertEquals("Are no outbound messages so far", 0, lnis.transmittedMsgCount);
+
+        Assert.assertEquals("Correct state is idle",csOpSwAccess.cmdStnOpSwStateType.IDLE, csosa.getState());
+        csosa.writeCsOpSw("csOpSw.65", 0, pl);
+
+        // should have sent read reqiest
+        Assert.assertEquals("Correct state is QUERY",csOpSwAccess.cmdStnOpSwStateType.QUERY, csosa.getState());
+        Assert.assertEquals("one message sent", 1, obIndex = lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+
+        obIndex--;
+        Assert.assertEquals("sent byte 0", 0xbb, lnis.outbound.get(obIndex).getElement(0) & 0xFF);
+        Assert.assertEquals("sent byte 1", 0x7f, lnis.outbound.get(obIndex).getElement(1) & 0xFF);
+        Assert.assertEquals("sent byte 2", 0x00, lnis.outbound.get(obIndex).getElement(2) & 0xFF);
+
+        // check echo of sent message has no effect
+        LocoNetMessage m = lnis.outbound.get(0);
+        csosa.message(m); // propagate the message from lsis to the csosa
+
+        Assert.assertEquals("still one message sent", 1, obIndex = lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        Assert.assertEquals("received no messages", 0, lnis.getReceivedMsgCount());
+
+        // Known-good message in reply (reply to query of slot 0x7f)
+        m = new LocoNetMessage(new int[]{0xE7, 0x0e, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0x69});
+
+        lnis.sendTestMessage(m);
+
+        Assert.assertEquals("one message sent", 2, obIndex = lnis.outbound.size());
+
+        obIndex--;
+        Assert.assertEquals("sent byte 0", 0xbb, lnis.outbound.get(obIndex).getElement(0) & 0xFF);
+        Assert.assertEquals("sent byte 1", 0x7e, lnis.outbound.get(obIndex).getElement(1) & 0xFF);
+        Assert.assertEquals("sent byte 2", 0x00, lnis.outbound.get(obIndex).getElement(2) & 0xFF);
+        Assert.assertEquals("Correct state is QUERY_ENHANCED",csOpSwAccess.cmdStnOpSwStateType.QUERY_ENHANCED, csosa.getState());
+
+        // check echo of sent message has no effect
+        m = lnis.outbound.get(1);
+        csosa.message(m); // echo the message back to the csosa
+
+        // Known-good message in reply (reply to query of slot 0x7e)
+        m = new LocoNetMessage(new int[]{0xE7, 0x0e, 0x7e, 0x65, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0x69});
+
+        lnis.sendTestMessage(m);
+
+        // No reply message, wait for timeout
+        jmri.util.JUnitUtil.waitFor(()->{return lnis.outbound.size() == 3;},"programming reply not received");
+//        csosa.message(m); // propagate reply
+
+        Assert.assertEquals("three messages sent", 3, obIndex = lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        Assert.assertEquals("received two messages", 2, lnis.getReceivedMsgCount());
+
+        obIndex--;
+        // check the csosa slot write message for validity
+        Assert.assertEquals("opcode of third csosa-transmitted message", 0xEF, lnis.outbound.get(obIndex).getElement(0) & 0xFF);
+        Assert.assertEquals("Byte 1 of third csosa-transmitted message", 0x0E, lnis.outbound.get(obIndex).getElement(1) & 0xFF);
+        Assert.assertEquals("Byte 2 of third csosa-transmitted message", 0x7E, lnis.outbound.get(obIndex).getElement(2) & 0xFF);
+        Assert.assertEquals("Byte 3 of third csosa-transmitted message", 0x64, lnis.outbound.get(obIndex).getElement(3) & 0xFF);
+        Assert.assertEquals("Byte 4 of third csosa-transmitted message", 0x00, lnis.outbound.get(obIndex).getElement(4) & 0xFF);
+        Assert.assertEquals("Byte 5 of third csosa-transmitted message", 0x00, lnis.outbound.get(obIndex).getElement(5) & 0xFF);
+        Assert.assertEquals("Byte 6 of third csosa-transmitted message", 0x00, lnis.outbound.get(obIndex).getElement(6) & 0xFF);
+        Assert.assertEquals("Byte 8 of third csosa-transmitted message", 0x00, lnis.outbound.get(obIndex).getElement(8) & 0xFF);
+        Assert.assertEquals("Byte 9 of third csosa-transmitted message", 0x00, lnis.outbound.get(obIndex).getElement(9) & 0xFF);
+        Assert.assertEquals("Byte 10 of third csosa-transmitted message", 0x00, lnis.outbound.get(obIndex).getElement(10) & 0xFF);
+        Assert.assertEquals("Byte 11 of third csosa-transmitted message", 0x00, lnis.outbound.get(obIndex).getElement(11) & 0xFF);
+        Assert.assertEquals("Byte 12 of third csosa-transmitted message", 0x00, lnis.outbound.get(obIndex).getElement(12) & 0xFF);
+
+        m = new LocoNetMessage(new int[]{0xb4, 0x6f, 0x7f, 0x00});
+        lnis.sendTestMessage(m);
+
+        Assert.assertEquals("three messages sent", 3, lnis.outbound.size());
+        Assert.assertEquals("got a programming reply", 1, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+
+        // try another write
+        csosa.writeCsOpSw("csOpSw.5", 1, pl);
+
+        // should have written
+        Assert.assertEquals("four messages sent", 4, obIndex = lnis.outbound.size());
+        Assert.assertEquals("one previous programming reply", 1, pl.getRcvdInvoked());
+
+        obIndex--;
+        Assert.assertEquals("sent byte 0",  0xeF, lnis.outbound.get(obIndex).getElement( 0) & 0xFF);
+        Assert.assertEquals("sent byte 1",  0x0e, lnis.outbound.get(obIndex).getElement( 1) & 0xFF);
+        Assert.assertEquals("sent byte 2",  0x7f, lnis.outbound.get(obIndex).getElement( 2) & 0xFF);
+        Assert.assertEquals("sent byte 3",  0x10, lnis.outbound.get(obIndex).getElement( 3) & 0xFF);
+        Assert.assertEquals("sent byte 4",  0x00, lnis.outbound.get(obIndex).getElement( 4) & 0xFF);
+        Assert.assertEquals("sent byte 5",  0x00, lnis.outbound.get(obIndex).getElement( 5) & 0xFF);
+        Assert.assertEquals("sent byte 6",  0x00, lnis.outbound.get(obIndex).getElement( 6) & 0xFF);
+        Assert.assertEquals("sent byte 7",  0x00, lnis.outbound.get(obIndex).getElement( 7) & 0xFF);
+        Assert.assertEquals("sent byte 8",  0x00, lnis.outbound.get(obIndex).getElement( 8) & 0xFF);
+        Assert.assertEquals("sent byte 9",  0x00, lnis.outbound.get(obIndex).getElement( 9) & 0xFF);
+        Assert.assertEquals("sent byte 10", 0x00, lnis.outbound.get(obIndex).getElement(10) & 0xFF);
+        Assert.assertEquals("sent byte 11", 0x00, lnis.outbound.get(obIndex).getElement(11) & 0xFF);
+        Assert.assertEquals("sent byte 12", 0x00, lnis.outbound.get(obIndex).getElement(12) & 0xFF);
+
+        Assert.assertEquals("four messages sent", 4, lnis.outbound.size());
+        Assert.assertEquals("one previous programming reply", 1, pl.getRcvdInvoked());
+        Assert.assertEquals("received a messages", 3, lnis.getReceivedMsgCount());
+
+        // Known-good message in reply
+        m = new LocoNetMessage(new int[]{0xb4, 0x6f, 0x7f, 0x00});
+        lnis.sendTestMessage(m);
+
+        Assert.assertEquals("no new message sent",4, lnis.outbound.size());
+        Assert.assertEquals("two programming reply", 2, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+
+        // try another write
+        csosa.writeCsOpSw("csOpSw.65", 1, pl);
+
+        // should have written
+        Assert.assertEquals("another messages sent", 5, obIndex = lnis.outbound.size());
+        Assert.assertEquals("two previous programming replies", 2, pl.getRcvdInvoked());
+        Assert.assertEquals("received a messages", 4, lnis.getReceivedMsgCount());
+
+        obIndex--;
+        Assert.assertEquals("sent byte 0",  0xeF, lnis.outbound.get(obIndex).getElement( 0) & 0xFF);
+        Assert.assertEquals("sent byte 1",  0x0e, lnis.outbound.get(obIndex).getElement( 1) & 0xFF);
+        Assert.assertEquals("sent byte 2",  0x7e, lnis.outbound.get(obIndex).getElement( 2) & 0xFF);
+        Assert.assertEquals("sent byte 3",  0x65, lnis.outbound.get(obIndex).getElement( 3) & 0xFF);
+        Assert.assertEquals("sent byte 4",  0x00, lnis.outbound.get(obIndex).getElement( 4) & 0xFF);
+        Assert.assertEquals("sent byte 5",  0x00, lnis.outbound.get(obIndex).getElement( 5) & 0xFF);
+        Assert.assertEquals("sent byte 6",  0x00, lnis.outbound.get(obIndex).getElement( 6) & 0xFF);
+        Assert.assertEquals("sent byte 7",  0x00, lnis.outbound.get(obIndex).getElement( 7) & 0xFF);
+        Assert.assertEquals("sent byte 8",  0x00, lnis.outbound.get(obIndex).getElement( 8) & 0xFF);
+        Assert.assertEquals("sent byte 9",  0x00, lnis.outbound.get(obIndex).getElement( 9) & 0xFF);
+        Assert.assertEquals("sent byte 10", 0x00, lnis.outbound.get(obIndex).getElement(10) & 0xFF);
+        Assert.assertEquals("sent byte 11", 0x00, lnis.outbound.get(obIndex).getElement(11) & 0xFF);
+        Assert.assertEquals("sent byte 12", 0x00, lnis.outbound.get(obIndex).getElement(12) & 0xFF);
+
+        Assert.assertEquals("five messages sent", 5, lnis.outbound.size());
+        Assert.assertEquals("two previous programming replies", 2, pl.getRcvdInvoked());
+        Assert.assertEquals("received a messages", 4, lnis.getReceivedMsgCount());
+
+        // Known-good message in reply
+        m = new LocoNetMessage(new int[]{0xb4, 0x6f, 0x7f, 0x00});
+        lnis.sendTestMessage(m);
+
+        Assert.assertEquals("five message sent", 5, lnis.outbound.size());
+        Assert.assertEquals("three programming replies", 3, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+
+        // try another write
+        csosa.writeCsOpSw("csOpSw.1", 1, pl);
+
+        // should have written
+        Assert.assertEquals("six messages sent", 6, obIndex = lnis.outbound.size());
+        Assert.assertEquals("three previous programming replies", 3, pl.getRcvdInvoked());
+
+        obIndex--;
+        Assert.assertEquals("sent byte 0",  0xeF, lnis.outbound.get(obIndex).getElement( 0) & 0xFF);
+        Assert.assertEquals("sent byte 1",  0x0e, lnis.outbound.get(obIndex).getElement( 1) & 0xFF);
+        Assert.assertEquals("sent byte 2",  0x7f, lnis.outbound.get(obIndex).getElement( 2) & 0xFF);
+        Assert.assertEquals("sent byte 3",  0x11, lnis.outbound.get(obIndex).getElement( 3) & 0xFF);
+        Assert.assertEquals("sent byte 4",  0x00, lnis.outbound.get(obIndex).getElement( 4) & 0xFF);
+        Assert.assertEquals("sent byte 5",  0x00, lnis.outbound.get(obIndex).getElement( 5) & 0xFF);
+        Assert.assertEquals("sent byte 6",  0x00, lnis.outbound.get(obIndex).getElement( 6) & 0xFF);
+        Assert.assertEquals("sent byte 7",  0x00, lnis.outbound.get(obIndex).getElement( 7) & 0xFF);
+        Assert.assertEquals("sent byte 8",  0x00, lnis.outbound.get(obIndex).getElement( 8) & 0xFF);
+        Assert.assertEquals("sent byte 9",  0x00, lnis.outbound.get(obIndex).getElement( 9) & 0xFF);
+        Assert.assertEquals("sent byte 10", 0x00, lnis.outbound.get(obIndex).getElement(10) & 0xFF);
+        Assert.assertEquals("sent byte 11", 0x00, lnis.outbound.get(obIndex).getElement(11) & 0xFF);
+        Assert.assertEquals("sent byte 12", 0x00, lnis.outbound.get(obIndex).getElement(12) & 0xFF);
+
+        Assert.assertEquals("six messages sent", 6, lnis.outbound.size());
+        Assert.assertEquals("three previous programming replies", 3, pl.getRcvdInvoked());
+        Assert.assertEquals("received a messages", 5, lnis.getReceivedMsgCount());
+
+        // Known-good message in reply
+        m = new LocoNetMessage(new int[]{0xb4, 0x6f, 0x7f, 0x00});
+        lnis.sendTestMessage(m);
+
+        Assert.assertEquals("six messages sent", 6, lnis.outbound.size());
+        Assert.assertEquals("four programming replies", 4, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+
+        // try another write
+        csosa.writeCsOpSw("csOpSw.68", 1, pl);
+
+        // should have written
+        Assert.assertEquals("seven messages sent", 7, obIndex = lnis.outbound.size());
+        Assert.assertEquals("four previous programming replies", 4, pl.getRcvdInvoked());
+
+        obIndex--;
+        Assert.assertEquals("sent byte 0",  0xeF, lnis.outbound.get(obIndex).getElement( 0) & 0xFF);
+        Assert.assertEquals("sent byte 1",  0x0e, lnis.outbound.get(obIndex).getElement( 1) & 0xFF);
+        Assert.assertEquals("sent byte 2",  0x7e, lnis.outbound.get(obIndex).getElement( 2) & 0xFF);
+        Assert.assertEquals("sent byte 3",  0x6D, lnis.outbound.get(obIndex).getElement( 3) & 0xFF);
+        Assert.assertEquals("sent byte 4",  0x00, lnis.outbound.get(obIndex).getElement( 4) & 0xFF);
+        Assert.assertEquals("sent byte 5",  0x00, lnis.outbound.get(obIndex).getElement( 5) & 0xFF);
+        Assert.assertEquals("sent byte 6",  0x00, lnis.outbound.get(obIndex).getElement( 6) & 0xFF);
+        Assert.assertEquals("sent byte 7",  0x00, lnis.outbound.get(obIndex).getElement( 7) & 0xFF);
+        Assert.assertEquals("sent byte 8",  0x00, lnis.outbound.get(obIndex).getElement( 8) & 0xFF);
+        Assert.assertEquals("sent byte 9",  0x00, lnis.outbound.get(obIndex).getElement( 9) & 0xFF);
+        Assert.assertEquals("sent byte 10", 0x00, lnis.outbound.get(obIndex).getElement(10) & 0xFF);
+        Assert.assertEquals("sent byte 11", 0x00, lnis.outbound.get(obIndex).getElement(11) & 0xFF);
+        Assert.assertEquals("sent byte 12", 0x00, lnis.outbound.get(obIndex).getElement(12) & 0xFF);
+
+        Assert.assertEquals("received a messages", 6, lnis.getReceivedMsgCount());
+
+        // Known-good message in reply
+        m = new LocoNetMessage(new int[]{0xb4, 0x6f, 0x7f, 0x00});
+        lnis.sendTestMessage(m);
+
+        Assert.assertEquals("seven messages sent", 7, lnis.outbound.size());
+        Assert.assertEquals("five programming replies", 5, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+
+        // try another write
+        csosa.writeCsOpSw("csOpSw.56", 1, pl);
+
+        // should NOT have written OpSw56 (56 is evenly divisible by 8, so not writable)
+        Assert.assertEquals("no additional message sent", 7, lnis.outbound.size());
+        Assert.assertEquals("six programming replies", 6, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status bad", 1, pl.getRcvdStatus());
+        jmri.util.JUnitAppender.assertWarnMessage("Cannot program OpSw56 account LocoNet encoding limitations.");
+
+        // try another write
+        csosa.writeCsOpSw("csOpSw.129", 1, pl);
+
+        // should NOT have written OpSw129 (129 is out-of-range)
+        Assert.assertEquals("no additional message sent", 7, lnis.outbound.size());
+        Assert.assertEquals("six programming replies", 7, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status bad", 8, pl.getRcvdStatus());
+        jmri.util.JUnitAppender.assertWarnMessage("Cannot perform Cs OpSw access: parts.length=2, parts[]=[csOpSw, 129], val=1");
+     }
+     
+// Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SlotManagerTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);

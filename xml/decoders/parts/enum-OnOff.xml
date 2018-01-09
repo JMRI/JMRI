@@ -10,11 +10,11 @@
     <choice xml:lang="de">An</choice>
     <choice xml:lang="es">En</choice>
     <choice xml:lang="cs">Vypnuto</choice>
-  </enumChoice>  
+  </enumChoice>
   <enumChoice choice="Off">
     <choice>Off</choice>
     <choice xml:lang="it">Off</choice>
-    <choice xml:lang="fr">Eteint</choice>
+    <choice xml:lang="fr">Éteint</choice>
     <choice xml:lang="de">Aus</choice>
     <choice xml:lang="es">De</choice>
     <choice xml:lang="cs">Zapnuto</choice>
