@@ -63,7 +63,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         //fires when drop down list item is selected
         addItemListener((ItemEvent event) -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
-                JmriBeanComboBox cb = (JmriBeanComboBox) event.getSource();
                 validateText();
             }
         });
