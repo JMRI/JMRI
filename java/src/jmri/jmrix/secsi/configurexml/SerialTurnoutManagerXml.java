@@ -1,6 +1,5 @@
 package jmri.jmrix.secsi.configurexml;
 
-import jmri.jmrix.secsi.SerialTurnoutManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

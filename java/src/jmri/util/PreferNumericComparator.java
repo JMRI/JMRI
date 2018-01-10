@@ -1,7 +1,5 @@
 package jmri.util;
 
-import java.util.Comparator;
-
 /**
  * Originally, this attempted to compare as Integer, and then alphanumeric.
  * It's now deprecated in favor of the more general AlphanumComparator

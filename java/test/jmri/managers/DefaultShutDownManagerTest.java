@@ -27,10 +27,11 @@ public class DefaultShutDownManagerTest {
         Assert.assertNotNull("exists", dsdm);
     }
 
+    @SuppressWarnings("null")
     @Test
     public void testRegister() {
         DefaultShutDownManager dsdm = new DefaultShutDownManager();
-        List tasks = this.exposeTasks(dsdm);
+        List<?> tasks = this.exposeTasks(dsdm);
         Assert.assertEquals(0, tasks.size());
         ShutDownTask task = new QuietShutDownTask("task") {
             @Override
@@ -53,7 +54,7 @@ public class DefaultShutDownManagerTest {
     @Test
     public void testDeregister() {
         DefaultShutDownManager dsdm = new DefaultShutDownManager();
-        List tasks = this.exposeTasks(dsdm);
+        List<?> tasks = this.exposeTasks(dsdm);
         Assert.assertEquals(0, tasks.size());
         ShutDownTask task = new QuietShutDownTask("task") {
             @Override
@@ -94,12 +95,12 @@ public class DefaultShutDownManagerTest {
         JUnitUtil.tearDown();
     }
 
-    private ArrayList exposeTasks(DefaultShutDownManager manager) {
-        ArrayList tasks = null;
+    private ArrayList<?> exposeTasks(DefaultShutDownManager manager) {
+        ArrayList<?> tasks = null;
         try {
             Field f = manager.getClass().getDeclaredField("tasks");
             f.setAccessible(true);
-            tasks = (ArrayList) f.get(manager);
+            tasks = (ArrayList<?>) f.get(manager);
         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
             Assert.fail("Unable to introspect tasks field");
         }

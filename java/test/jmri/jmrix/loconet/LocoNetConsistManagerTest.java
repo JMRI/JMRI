@@ -2,6 +2,7 @@ package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -12,20 +13,24 @@ import org.junit.Test;
  */
 public class LocoNetConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
 
-    @Ignore("Need to implement a loconet specific version of this test that responds to slot messages")
+    private LocoNetSystemConnectionMemo memo = null;
+
     @Test
     @Override
-    public void testGetConsist() {
+    public void testIsCommandStationConsistPossible(){
+       // possible for LocoNet
+       Assert.assertTrue("CS Consist Possible",cm.isCommandStationConsistPossible());
     }
 
     // The minimal setup for log4J
     @Before
     @Override
-    public void setUp() {
+    public void setUp()  {
         JUnitUtil.setUp();
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, slotmanager);
+        memo = new LocoNetSystemConnectionMemo(lnis, slotmanager);
+        memo.setThrottleManager(new LnThrottleManager(memo));
         cm = new LocoNetConsistManager(memo);
     }
 
@@ -33,6 +38,7 @@ public class LocoNetConsistManagerTest extends jmri.implementation.AbstractConsi
     @Override
     public void tearDown() {
         cm = null;
+        ((LnThrottleManager)memo.getThrottleManager()).dispose();
         JUnitUtil.tearDown();
     }
 

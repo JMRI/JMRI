@@ -37,7 +37,6 @@ import jmri.jmrix.dccpp.DCCppSensorManager;
 import jmri.jmrix.dccpp.DCCppTrafficController;
 import jmri.jmrix.dccpp.DCCppTurnoutManager;
 import jmri.util.JmriJFrame;
-import jmri.util.WindowMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -770,13 +769,10 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
 
         protected JButton button;
         private String label;
-        private final JTable table;
-
         public ButtonEditor(JCheckBox checkBox, JTable t) {
             super(checkBox);
             button = new JButton();
             button.setOpaque(true);
-            table = t;
             button.addActionListener((ActionEvent e) -> {
                 //fireEditingStopped();
             });

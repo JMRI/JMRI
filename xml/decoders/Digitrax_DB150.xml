@@ -15,26 +15,20 @@
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
                 showEmptyPanes="no">
-
-    <version author="Bob Milhaupt" version="1" lastUpdated="20171217" />
-
+    <version author="Bob Milhaupt" version="1" lastUpdated="20180106" />
     <decoder>
-
         <family name="Command Stations" mfg="Digitrax">
             <model model="DB150"/>
         </family>
-
         <programming direct="no" paged="no" register="no" ops="no">
             <mode>LOCONETCSOPSWMODE</mode>
         </programming>
-
         <variables>
-            <variable CV="csOpSw.01" item="OpSw 1" default="0">
+            <variable CV="csOpSw.01" item="OpSw 1" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw01</label>
                 <tooltip>OpSw01</tooltip>
             </variable>
-
             <variable CV="csOpSw.02" item="OpSw 2" default="0">
                 <enumVal>
                     <enumChoice>
@@ -53,13 +47,11 @@
                 <label>AutoReversing Mode is</label>
                 <tooltip>OpSw03</tooltip>
             </variable>
-
-            <variable CV="csOpSw.04" item="OpSw 4" default="0">
+            <variable CV="csOpSw.04" item="OpSw 4" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw04</label>
                 <tooltip>OpSw04</tooltip>
             </variable>
-
             <variable CV="csOpSw.05" item="OpSw 5" default="1"
                       tooltip="OpSw05">
                 <enumVal>
@@ -73,49 +65,46 @@
                 <label>Command Station</label>
                 <tooltip>OpSw05</tooltip>
             </variable>
-
-            <variable CV="csOpSw.06" item="OpSw 6" default="0">
+            <variable CV="csOpSw.06" item="OpSw 6" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw06</label>
                 <tooltip>OpSw06</tooltip>
             </variable>
-
-            <variable CV="csOpSw.07" item="OpSw 7" default="0">
+            <variable CV="csOpSw.07" item="OpSw 7" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw07</label>
                 <tooltip>OpSw07</tooltip>
             </variable>
-
             <variable CV="csOpSw.08" item="OpSw 8" default="0" readOnly="yes" infoOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw08</label>
                 <tooltip>OpSw08</tooltip>
             </variable>
-
-            <variable CV="csOpSw.09" item="OpSw 9" default="0">
+            <variable CV="csOpSw.09" item="OpSw 9" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw09</label>
                 <tooltip>OpSw09</tooltip>
             </variable>
-
-            <variable CV="csOpSw.10" item="OpSw 10" default="0">
+            <variable CV="csOpSw.10" item="OpSw 10" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw10</label>
                 <tooltip>OpSw10</tooltip>
             </variable>
-
-            <variable CV="csOpSw.11" item="OpSw 11" default="0">
+            <variable CV="csOpSw.11" item="OpSw 11" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw11</label>
                 <tooltip>OpSw11</tooltip>
             </variable>
-
-            <variable CV="csOpSw.12" item="OpSw 12" default="0">
+            <variable CV="csOpSw.12" item="OpSw 12" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw12</label>
                 <tooltip>OpSw12</tooltip>
             </variable>
-
+            <variable CV="csOpSw.14" item="OpSw 14" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
+                <label>Command Station Slot "Purge"</label>
+                <tooltip>OpSw14</tooltip>
+            </variable>
             <variable CV="csOpSw.13" item="OpSw 13" default="0">
                 <qualifier>
                     <variableref>OpSw 14</variableref>
@@ -133,13 +122,6 @@
                 <label>Command Station Slot "Purge" Time</label>
                 <tooltip>OpSw13</tooltip>
             </variable>
-
-            <variable CV="csOpSw.14" item="OpSw 14" default="0">
-                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
-                <label>Command Station Slot "Purge"</label>
-                <tooltip>OpSw14</tooltip>
-            </variable>
-
             <variable CV="csOpSw.15" item="OpSw 15" default="0">
                 <qualifier>
                     <variableref>OpSw 14</variableref>
@@ -150,19 +132,16 @@
                 <label>"Purge" forces loco speed to 0</label>
                 <tooltip>OpSw15</tooltip>
             </variable>
-
             <variable CV="csOpSw.16" item="OpSw 16" default="0" readOnly="yes" infoOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw16</label>
                 <tooltip>OpSw16</tooltip>
             </variable>
-
             <variable CV="csOpSw.17" item="OpSw 17" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledDisabledStar.xml"/>
                 <label>Automatic Advanced Decoder-Assisted consisting is</label>
                 <tooltip>OpSw17</tooltip>
             </variable>
-
             <variable CV="csOpSw.18" item="OpSw 18" default="0">
                 <enumVal>
                     <enumChoice>
@@ -175,19 +154,16 @@
                 <label>Short-Circuit Shutdown Time is</label>
                 <tooltip>OpSw18</tooltip>
             </variable>
-
-            <variable CV="csOpSw.19" item="OpSw 19" default="0">
+            <variable CV="csOpSw.19" item="OpSw 19" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw19</label>
                 <tooltip>OpSw19</tooltip>
             </variable>
-
             <variable CV="csOpSw.20" item="OpSw 20" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>Address 00 (Analog stretching) is</label>
                 <tooltip>OpSw20</tooltip>
             </variable>
-
             <variable CV="csOpSw.21" item="OpSw 21" default="0">
                 <enumVal>
                     <enumChoice>
@@ -198,7 +174,6 @@
                     </enumChoice>
                 </enumVal>
             </variable>
-
             <variable CV="csOpSw.22" item="OpSw 22" default="0">
                 <enumVal>
                     <enumChoice>
@@ -209,7 +184,6 @@
                     </enumChoice>
                 </enumVal>
             </variable>
-
             <variable CV="csOpSw.23" item="OpSw 23" default="0">
                 <enumVal>
                     <enumChoice>
@@ -220,7 +194,6 @@
                     </enumChoice>
                 </enumVal>
             </variable>
-
             <variable item="Default New Loco Mode">
                 <compositeVal>
                     <compositeChoice choice="128 Speed-steps (t/t/t)*">
@@ -267,25 +240,21 @@
                 <label>Global System Loco "Speed-step Mode" Default for New Loco Acquisition</label>
                 <tooltip>OpSw21, OpSw22, OpSw23</tooltip>
             </variable>
-
             <variable CV="csOpSw.24" item="OpSw 24" default="0" readOnly="yes" infoOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw24</label>
                 <tooltip>OpSw24</tooltip>
             </variable>
-
-            <variable CV="csOpSw.25" item="OpSw 25" default="1" readOnly="yes" infoOnly="yes">
+            <variable CV="csOpSw.25" item="OpSw 25" default="1" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw25</label>
                 <tooltip>OpSw25</tooltip>
             </variable>
-
-            <variable CV="csOpSw.26" item="OpSw 26" default="0">
+            <variable CV="csOpSw.26" item="OpSw 26" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw26</label>
                 <tooltip>OpSw26</tooltip>
             </variable>
-
             <variable CV="csOpSw.27" item="OpSw 27" default="0">
                 <enumVal>
                     <enumChoice>
@@ -298,37 +267,31 @@
                 <label>Throttle Switch Control Messages</label>
                 <tooltip>OpSw27 - the "Bushby" bit</tooltip>
             </variable>
-
-            <variable CV="csOpSw.28" item="OpSw 28" default="0">
+            <variable CV="csOpSw.28" item="OpSw 28" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw28</label>
                 <tooltip>OpSw28</tooltip>
             </variable>
-
-            <variable CV="csOpSw.29" item="OpSw 29" default="0">
+            <variable CV="csOpSw.29" item="OpSw 29" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw29</label>
                 <tooltip>OpSw29</tooltip>
             </variable>
-
-            <variable CV="csOpSw.30" item="OpSw 30" default="0">
+            <variable CV="csOpSw.30" item="OpSw 30" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw30</label>
                 <tooltip>OpSw30</tooltip>
             </variable>
-
-            <variable CV="csOpSw.31" item="OpSw 31" default="0">
+            <variable CV="csOpSw.31" item="OpSw 31" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw31</label>
                 <tooltip>OpSw31</tooltip>
             </variable>
-
             <variable CV="csOpSw.32" item="OpSw 32" default="0" readOnly="yes" infoOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw32</label>
                 <tooltip>OpSw32</tooltip>
             </variable>
-
             <variable CV="csOpSw.33" item="OpSw 33" default="1">
                 <enumVal>
                     <enumChoice>
@@ -341,7 +304,6 @@
                 <label>Track Power</label>
                 <tooltip>OpSw33</tooltip>
             </variable>
-
             <variable CV="csOpSw.34" item="OpSw 34" default="1">
                 <enumVal>
                     <enumChoice>
@@ -354,13 +316,11 @@
                 <label>Track Power</label>
                 <tooltip>OpSw34</tooltip>
             </variable>
-
-            <variable CV="csOpSw.35" item="OpSw 35" default="0">
+            <variable CV="csOpSw.35" item="OpSw 35" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw35</label>
                 <tooltip>OpSw35</tooltip>
             </variable>
-
             <variable CV="csOpSw.36" item="OpSw 36" default="0">
                 <enumVal>
                     <enumChoice>
@@ -373,13 +333,11 @@
                 <label>OpSw36</label>
                 <tooltip>OpSw36 - May require power-cycle or switch from "Run" to "Ops" mode</tooltip>
             </variable>
-
-            <variable CV="csOpSw.37" item="OpSw 37" default="0">
+            <variable CV="csOpSw.37" item="OpSw 37" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw37</label>
                 <tooltip>OpSw37</tooltip>
             </variable>
-
             <variable CV="csOpSw.38" item="OpSw 38" default="0">
                 <enumVal>
                     <enumChoice>
@@ -392,7 +350,6 @@
                 <label>OpSw38</label>
                 <tooltip>OpSw38 - May require power-cycle or switch from "Run" to "Ops" mode</tooltip>
             </variable>
-
             <variable CV="csOpSw.39" item="OpSw 39" default="0">
                 <enumVal>
                     <enumChoice>
@@ -405,289 +362,135 @@
                 <label>OpSw39</label>
                 <tooltip>OpSw39 - May require power-cycle or switch from "Run" to "Ops" mode</tooltip>
             </variable>
-
             <variable CV="csOpSw.40" item="OpSw 40" default="0" readOnly="yes" infoOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw40</label>
                 <tooltip>OpSw40</tooltip>
             </variable>
-
             <variable CV="csOpSw.41" item="OpSw 41" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
                 <label>Click on LocoNet Activity is</label>
                 <tooltip>OpSw41</tooltip>
             </variable>
-
             <variable CV="csOpSw.42" item="OpSw 42" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>Beep on Loco "Purge" is </label>
                 <tooltip>OpSw42</tooltip>
             </variable>
-
             <variable CV="csOpSw.43" item="OpSw 43" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>LocoNet Update of Command Station's Track Status is</label>
                 <tooltip>OpSw43</tooltip>
             </variable>
-
-            <variable CV="csOpSw.44" item="OpSw 44" default="0">
+            <variable CV="csOpSw.44" item="OpSw 44" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw44</label>
                 <tooltip>OpSw44</tooltip>
             </variable>
-
-            <variable CV="csOpSw.45" item="OpSw 45" default="0">
+            <variable CV="csOpSw.45" item="OpSw 45" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw45</label>
                 <tooltip>OpSw45</tooltip>
             </variable>
-
-            <variable CV="csOpSw.46" item="OpSw 46" default="0">
+            <variable CV="csOpSw.46" item="OpSw 46" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw46</label>
                 <tooltip>OpSw46</tooltip>
             </variable>
-
-            <variable CV="csOpSw.47" item="OpSw 47" default="0">
+            <variable CV="csOpSw.47" item="OpSw 47" default="0" readOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw47</label>
                 <tooltip>OpSw47</tooltip>
             </variable>
-
             <variable CV="csOpSw.48" item="OpSw 48" default="0" readOnly="yes" infoOnly="yes">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw48</label>
                 <tooltip>OpSw48</tooltip>
             </variable>
-
             <variable CV="csOpSw.49" item="OpSw 49" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>Beep on programming operation is</label>
                 <tooltip>OpSw49</tooltip>
             </variable>
-
             <variable CV="csOpSw.50" item="OpSw 50" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-disabledStarEnabled.xml"/>
                 <label>Increased booster short-circuit recovery time is</label>
                 <tooltip>OpSw50</tooltip>
             </variable>
-
             <variable CV="csOpSw.51" item="OpSw 51" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
                 <label>External voltage on track can restart the booster</label>
                 <tooltip>OpSw51</tooltip>
             </variable>
-
-            <variable CV="csOpSw.52" item="OpSw 52" default="0" readOnly="yes" infoOnly="yes">
-                <enumVal>
-                    <enumChoice>
-                        <choice>Normal *</choice>
-                    </enumChoice>
-                    <enumChoice>
-                        <choice>Reserved</choice>
-                    </enumChoice>
-                </enumVal>
+            <variable CV="csOpSw.52" item="OpSw 52" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw52</label>
                 <tooltip>OpSw52</tooltip>
             </variable>
-
-            <variable CV="csOpSw.53" item="OpSw 53" default="0" readOnly="yes" infoOnly="yes">
-                <enumVal>
-                    <enumChoice>
-                        <choice>Normal *</choice>
-                    </enumChoice>
-                    <enumChoice>
-                        <choice>Reserved</choice>
-                    </enumChoice>
-                </enumVal>
+            <variable CV="csOpSw.53" item="OpSw 53" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw53</label>
                 <tooltip>OpSw53</tooltip>
             </variable>
-
-            <variable CV="csOpSw.54" item="OpSw 54" default="0" readOnly="yes" infoOnly="yes">
-                <enumVal>
-                    <enumChoice>
-                        <choice>Normal *</choice>
-                    </enumChoice>
-                    <enumChoice>
-                        <choice>Reserved</choice>
-                    </enumChoice>
-                </enumVal>
+            <variable CV="csOpSw.54" item="OpSw 54" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw54</label>
                 <tooltip>OpSw54</tooltip>
             </variable>
-
-            <variable CV="csOpSw.55" item="OpSw 55" default="0" readOnly="yes" infoOnly="yes">
-                <enumVal>
-                    <enumChoice>
-                        <choice>Normal *</choice>
-                    </enumChoice>
-                    <enumChoice>
-                        <choice>Reserved</choice>
-                    </enumChoice>
-                </enumVal>
+            <variable CV="csOpSw.55" item="OpSw 55" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw55</label>
                 <tooltip>OpSw55</tooltip>
             </variable>
-
             <variable CV="csOpSw.56" item="OpSw 56" default="0" readOnly="yes" infoOnly="yes">
-                <enumVal>
-                    <enumChoice>
-                        <choice>Normal *</choice>
-                    </enumChoice>
-                    <enumChoice>
-                        <choice>Reserved</choice>
-                    </enumChoice>
-                </enumVal>
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw56</label>
                 <tooltip>OpSw56</tooltip>
             </variable>
-
-            <variable CV="csOpSw.57" item="OpSw 57" default="0" readOnly="yes" infoOnly="yes">
-                <enumVal>
-                    <enumChoice>
-                        <choice>Normal *</choice>
-                    </enumChoice>
-                    <enumChoice>
-                        <choice>Reserved</choice>
-                    </enumChoice>
-                </enumVal>
+            <variable CV="csOpSw.57" item="OpSw 57" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw57</label>
                 <tooltip>OpSw57</tooltip>
             </variable>
-
-            <variable CV="csOpSw.58" item="OpSw 58" default="0" readOnly="yes" infoOnly="yes">
-                <enumVal>
-                    <enumChoice>
-                        <choice>Normal *</choice>
-                    </enumChoice>
-                    <enumChoice>
-                        <choice>Reserved</choice>
-                    </enumChoice>
-                </enumVal>
+            <variable CV="csOpSw.58" item="OpSw 58" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw58</label>
                 <tooltip>OpSw58</tooltip>
             </variable>
-
-            <variable CV="csOpSw.59" item="OpSw 59" default="0" readOnly="yes" infoOnly="yes">
-                <enumVal>
-                    <enumChoice>
-                        <choice>Normal *</choice>
-                    </enumChoice>
-                    <enumChoice>
-                        <choice>Reserved</choice>
-                    </enumChoice>
-                </enumVal>
+            <variable CV="csOpSw.59" item="OpSw 59" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw59</label>
                 <tooltip>OpSw59</tooltip>
             </variable>
-
-            <variable CV="csOpSw.60" item="OpSw 60" default="0" readOnly="yes" infoOnly="yes">
-                <enumVal>
-                    <enumChoice>
-                        <choice>Normal *</choice>
-                    </enumChoice>
-                    <enumChoice>
-                        <choice>Reserved</choice>
-                    </enumChoice>
-                </enumVal>
+            <variable CV="csOpSw.60" item="OpSw 60" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw60</label>
                 <tooltip>OpSw60</tooltip>
             </variable>
-
-            <variable CV="csOpSw.61" item="OpSw 61" default="0" readOnly="yes" infoOnly="yes">
-                <enumVal>
-                    <enumChoice>
-                        <choice>Normal *</choice>
-                    </enumChoice>
-                    <enumChoice>
-                        <choice>Reserved</choice>
-                    </enumChoice>
-                </enumVal>
+            <variable CV="csOpSw.61" item="OpSw 61" default="1" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalReservedStar.xml"/>
                 <label>OpSw61</label>
                 <tooltip>OpSw61</tooltip>
             </variable>
-
-            <variable CV="csOpSw.62" item="OpSw 62" default="0" readOnly="yes" infoOnly="yes">
-                <enumVal>
-                    <enumChoice>
-                        <choice>Normal *</choice>
-                    </enumChoice>
-                    <enumChoice>
-                        <choice>Reserved</choice>
-                    </enumChoice>
-                </enumVal>
+            <variable CV="csOpSw.62" item="OpSw 62" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw62</label>
                 <tooltip>OpSw62</tooltip>
             </variable>
-
-            <variable CV="csOpSw.63" item="OpSw 63" default="0" readOnly="yes" infoOnly="yes">
-                <enumVal>
-                    <enumChoice>
-                        <choice>Normal *</choice>
-                    </enumChoice>
-                    <enumChoice>
-                        <choice>Reserved</choice>
-                    </enumChoice>
-                </enumVal>
+            <variable CV="csOpSw.63" item="OpSw 63" default="0" readOnly="yes">
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw63</label>
                 <tooltip>OpSw63</tooltip>
             </variable>
-
             <variable CV="csOpSw.64" item="OpSw 64" default="0" readOnly="yes" infoOnly="yes">
-                <enumVal>
-                    <enumChoice>
-                        <choice>Normal *</choice>
-                    </enumChoice>
-                    <enumChoice>
-                        <choice>Reserved</choice>
-                    </enumChoice>
-                </enumVal>
+                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
                 <label>OpSw64</label>
                 <tooltip>OpSw64</tooltip>
             </variable>
         </variables>
     </decoder>
-    <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-        <name>OpSws</name>
-        <column>
-            <row>
-                <cvtable/>
-            </row>
-            <row>
-                <column>
-                    <label>
-                        <text>&lt;html&gt;The "CV" column in the table above shows "OpSw"
-                            numbers, where the value "1." &lt;p&gt;is pre-pended to
-                            the OpSw Number.
-                        </text>
-                    </label>
-                    <label>
-                        <text> </text>
-                    </label>
-                </column>
-            </row>
-            <row>
-                <label>
-                    <text>&lt;html&gt;
-        &lt;p&gt;&lt;p&gt;OpSw value 0 = "T"hrown.  OpSw value 1 = "C"losed.&lt;p&gt;
-        &lt;/html&gt;&lt;/html&gt;
-                    </text>
-                </label>
-            </row>
-        </column>
-
-    </pane>
     <pane>
         <name>Basic</name>
-        <column>
-            <label>
-                <text>This pane is intentionally left blank</text>
-            </label>
-        </column>
-    </pane>
-    <pane>
-        <name>Basic OpSw Settings</name>
         <column>
             <label>
                 <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
@@ -696,65 +499,46 @@
             <display item="OpSw 2"/>
             <display item="OpSw 3"/>
             <display item="OpSw 5"/>
-
             <separator/>
-
             <label>
                 <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
                     Slot "Purging" Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
             </label>
-
-            <display item="OpSw 13"/>
             <display item="OpSw 14"/>
+            <display item="OpSw 13"/>
             <display item="OpSw 15"/>
-
             <separator/>
-
             <label>
                 <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
                     Locomotive and Slot Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
             </label>
-
             <display item="OpSw 17"/>
-
             <separator/>
-
             <label>
                 <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
                     New Locomotive Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
             </label>
-
             <display item="Default New Loco Mode"/>
-
             <separator/>
-
             <label>
                 <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
                     Switch Control Message Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
             </label>
-
             <display item="OpSw 27"/>
-
             <separator/>
-
             <label>
                 <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
                     Command Station Sounds Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
             </label>
-
             <display item="OpSw 41"/>
             <display item="OpSw 42"/>
             <display item="OpSw 49"/>
-
             <separator/>
-
             <label>
                 <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
                     LocoNet Track Status Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
             </label>
-
             <display item="OpSw 43"/>
-
             <label>
                 <text> </text>
             </label>
@@ -763,31 +547,24 @@
     &lt;strong&gt;* - Indicates the "Factory Default" setting
     &lt;/strong&gt;&lt;/html&gt;</text>
             </label>
-      
-      
-      
+
         </column>
     </pane>
-
     <pane>
         <name>Track Outputs Control</name>
         <column>
-
             <label>
                 <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h3&gt;&lt;strong&gt;
                     Track Output Management&lt;/strong&gt;&lt;/h3&gt;&lt;/html&gt;</text>
             </label>
-
             <display item="OpSw 18"/>
             <display item="OpSw 50"/>
             <display item="OpSw 20"/>
             <display item="OpSw 33"/>
             <display item="OpSw 34"/>
             <display item="OpSw 51"/>
-
         </column>
     </pane>
-
     <pane>
         <name>Internal Storage Clearing</name>
         <column>
@@ -847,7 +624,13 @@
             <display item="OpSw 53"/>
             <display item="OpSw 54"/>
             <display item="OpSw 55"/>
-
+            <display item="OpSw 57"/>
+            <display item="OpSw 58"/>
+            <display item="OpSw 59"/>
+            <display item="OpSw 60"/>
+            <display item="OpSw 61"/>
+            <display item="OpSw 62"/>
+            <display item="OpSw 63"/>
             <label>
                 <text> </text>
             </label>
@@ -861,6 +644,7 @@
             <display item="OpSw 40"/>
             <display item="OpSw 48"/>
             <display item="OpSw 56"/>
+            <display item="OpSw 64"/>
             <label>
                 <text> </text>
             </label>
@@ -871,7 +655,35 @@
             </label>
         </column>
     </pane>
-
+    <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+        <name>OpSws</name>
+        <column>
+            <row>
+                <cvtable/>
+            </row>
+            <row>
+                <column>
+                    <label>
+                        <text>&lt;html&gt;The "CV" column in the table above shows "OpSw"
+                            numbers, where the value "csOpSw." &lt;p&gt;is pre-pended to
+                            the OpSw Number.
+                        </text>
+                    </label>
+                    <label>
+                        <text> </text>
+                    </label>
+                </column>
+            </row>
+            <row>
+                <label>
+                    <text>&lt;html&gt;
+        &lt;p&gt;&lt;p&gt;OpSw value 0 = "T"hrown.  OpSw value 1 = "C"losed.&lt;p&gt;
+        &lt;/html&gt;&lt;/html&gt;
+                    </text>
+                </label>
+            </row>
+        </column>
+    </pane>
     <pane>
         <name>Notes</name>
         <column>

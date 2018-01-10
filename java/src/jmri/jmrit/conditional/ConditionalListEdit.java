@@ -6,8 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -141,9 +139,9 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
     // ------------ Components of Edit Variable panes ------------
     JmriJFrame _editVariableFrame = null;
-    JComboBox<String> _variableTypeBox;
-    JTextField _variableNameField;
+    JComboBox<String> _variableItemBox;
     JComboBox<String> _variableStateBox;
+    JTextField _variableNameField;
     JComboBox<String> _variableCompareOpBox;
     JComboBox<String> _variableSignalBox;
     JComboBox<String> _variableCompareTypeBox;
@@ -160,7 +158,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
     // ------------ Components of Edit Action panes ------------
     JmriJFrame _editActionFrame = null;
-    JComboBox<String> _actionItemTypeBox;
+    JComboBox<String> _actionItemBox;
     JComboBox<String> _actionTypeBox;
     JComboBox<String> _actionBox;
     JTextField _actionNameField;
@@ -182,12 +180,14 @@ public class ConditionalListEdit extends ConditionalEditBase {
     ArrayList<ConditionalVariable> _variableList;
     ConditionalVariable _curVariable;
     int _curVariableRowNumber;
+    int _curVariableItem = 0;
     TreeSet<String> _oldTargetNames = new TreeSet<String>();
 
     // ------------ Current Action Information ------------
     ArrayList<ConditionalAction> _actionList;
     ConditionalAction _curAction;
     int _curActionRowNumber;
+    int _curActionItem = 0;
 
     static final int STRUT = 10;
 
@@ -1028,6 +1028,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             return;
         }
         _showReminder = true;
+        _curVariableItem = 0;
         ConditionalVariable variable = new ConditionalVariable();
         _variableList.add(variable);
         _newItem = true;
@@ -1164,6 +1165,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             return;
         }
         _showReminder = true;
+        _curActionItem = 0;
         _actionList.add(new DefaultConditionalAction());
         _newItem = true;
         _actionTableModel.fireTableRowsInserted(_actionList.size(),
@@ -1674,10 +1676,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (alreadyEditingActionOrVariable()) {
             return;
         }
+        log.debug("makeEditVariableWindow: row = {}", row);
         _curVariableRowNumber = row;
         _curVariable = _variableList.get(row);
         _editVariableFrame = new JmriJFrame(Bundle.getMessage("TitleEditVariable"), true, true);  // NOI18N
-        //        _editVariableFrame.setLocation(10, 100);
         JPanel topPanel = makeTopPanel(_editVariableFrame, "TitleAntecedentPhrase", 500, 160);  // NOI18N
 
         Box panel1 = Box.createHorizontalBox();
@@ -1685,12 +1687,12 @@ public class ConditionalListEdit extends ConditionalEditBase {
         panel1.add(Box.createHorizontalStrut(STRUT));
 
         // Item Type
-        _variableTypeBox = new JComboBox<String>();
+        _variableItemBox = new JComboBox<>();
         for (int i = 0; i <= Conditional.ITEM_TYPE_LAST_STATE_VAR; i++) {
-            _variableTypeBox.addItem(ConditionalVariable.getItemTypeString(i));
+            _variableItemBox.addItem(ConditionalVariable.getItemTypeString(i));
         }
-        JComboBoxUtil.setupComboBoxMaxRows(_variableTypeBox);
-        panel1.add(makeEditPanel(_variableTypeBox, "LabelVariableType", "VariableTypeHint"));  // NOI18N
+        JComboBoxUtil.setupComboBoxMaxRows(_variableItemBox);
+        panel1.add(makeEditPanel(_variableItemBox, "LabelVariableType", "VariableTypeHint"));  // NOI18N
         panel1.add(Box.createHorizontalStrut(STRUT));
 
         // Item Name
@@ -1756,9 +1758,9 @@ public class ConditionalListEdit extends ConditionalEditBase {
         }
         _variableComparePanel.add(makeEditPanel(_variableCompareTypeBox, "LabelCompareType", "CompareTypeHint"));  // NOI18N
         _variableComparePanel.setVisible(false);
-        _variableCompareTypeBox.addItemListener(new ItemListener() {
+        _variableCompareTypeBox.addActionListener(new ActionListener() {
             @Override
-            public void itemStateChanged(ItemEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 compareTypeChanged(_variableCompareTypeBox.getSelectedIndex());
                 _editVariableFrame.pack();
             }
@@ -1812,10 +1814,22 @@ public class ConditionalListEdit extends ConditionalEditBase {
         contentPane.add(topPanel);
         // note - this listener cannot be added before other action items
         // have been created
-        _variableTypeBox.addItemListener(new ItemListener() {
+        _variableItemBox.addActionListener(new ActionListener() {
             @Override
-            public void itemStateChanged(ItemEvent e) {
-                variableTypeChanged(_variableTypeBox.getSelectedIndex());
+            public void actionPerformed(ActionEvent e) {
+                int newVariableItem = _variableItemBox.getSelectedIndex();
+                if (log.isDebugEnabled()) {
+                    log.debug("_variableItemBox Listener: new = {}, curr = {}, row = {}",  // NOI18N
+                            newVariableItem, _curVariableItem, _curVariableRowNumber);
+                }
+                if (newVariableItem != _curVariableItem) {
+                    if (_curVariableRowNumber >= 0) {
+                        _curVariable = new ConditionalVariable();
+                        _variableList.set(_curVariableRowNumber, _curVariable);
+                    }
+                    _curVariableItem = newVariableItem;
+                }
+                variableItemChanged(newVariableItem);
                 _editVariableFrame.pack();
             }
         });
@@ -1827,6 +1841,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 cancelEditVariablePressed();
             }
         });
+        _curVariableItem = Conditional.TEST_TO_ITEM[_curVariable.getType()];
         initializeStateVariables();
         _editVariableFrame.pack();
         _editVariableFrame.setVisible(true);
@@ -1834,23 +1849,19 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
     // ------------ Main Variable methods ------------
     /**
-     * Set display to show current state variable (curVariable) parameters.
+     * Set display to show current state variable (_curVariable) parameters.
      */
     void initializeStateVariables() {
         int testType = _curVariable.getType();
+        int itemType = Conditional.TEST_TO_ITEM[testType];
         if (log.isDebugEnabled()) {
-            log.debug("initializeStateVariables: testType= " + testType);  // NOI18N
+            log.debug("initializeStateVariables: itemType = {}, testType = {}", itemType, testType);  // NOI18N
         }
         if (testType == Conditional.TYPE_NONE) {
             return;
         }
-        int itemType = Conditional.TEST_TO_ITEM[testType];
-        if (log.isDebugEnabled()) {
-            log.debug("initializeStateVariables: itemType= " + itemType + ", testType= " + testType);  // NOI18N
-        }
-        // set type after call to variableTypeChanged - addItemListener action will call variableTypeChanged
-        _variableTypeBox.setSelectedIndex(itemType);
-        //variableTypeChanged(itemType);
+        // set item - _variableItemBox Listener will call variableItemChanged
+        _variableItemBox.setSelectedIndex(itemType);
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
                 _variableStateBox.setSelectedIndex(DefaultConditional.getIndexInTable(
@@ -1956,7 +1967,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     /**
-     * Respond to change in variable type chosen in the State Variable Table in
+     * Respond to change in variable item chosen in the State Variable Table in
      * the Edit Conditional pane.
      * <p>
      * Also used to set up for Edit of a Conditional with state variables.
@@ -1964,10 +1975,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
      * @param itemType value representing the newly selected Conditional type,
      *                 i.e. ITEM_TYPE_SENSOR
      */
-    private void variableTypeChanged(int itemType) {
+    private void variableItemChanged(int itemType) {
         int testType = _curVariable.getType();
         if (log.isDebugEnabled()) {
-            log.debug("variableTypeChanged: itemType= " + itemType + ", testType= " + testType);  // NOI18N
+            log.debug("variableItemChanged: itemType = {}, testType = {}", itemType, testType);  // NOI18N
         }
         _variableNamePanel.setVisible(false);
         _variableStatePanel.setVisible(false);
@@ -2170,7 +2181,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (_comboNameBox == null) {
             return;
         }
-        _comboNameBox.addItemListener(new NameBoxListener(_variableNameField));
+        _comboNameBox.addActionListener(new NameBoxListener(_variableNameField));
         _comboNameBox.setSelectedBeanByName(_curVariable.getName());
         _variableComboNamePanel.remove(1);
         _variableComboNamePanel.add(_comboNameBox, null, 1);
@@ -2399,7 +2410,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _curVariable.setDataString("");
         _curVariable.setNum1(0);
         _curVariable.setNum2(0);
-        int itemType = _variableTypeBox.getSelectedIndex();
+        int itemType = _variableItemBox.getSelectedIndex();
         int testType = 0;
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
@@ -2603,11 +2614,11 @@ public class ConditionalListEdit extends ConditionalEditBase {
     transient ActionListener variableSignalTestStateListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            log.debug("variableSignalTestStateListener fires; _variableTypeBox.getSelectedIndex()= " // NOI18N
-                    + _variableTypeBox.getSelectedIndex()
+            log.debug("variableSignalTestStateListener fires; _variableItemBox.getSelectedIndex()= " // NOI18N
+                    + _variableItemBox.getSelectedIndex()
                     + "\" _variableStateBox.getSelectedIndex()= \"" + _variableStateBox.getSelectedIndex() + "\"");  // NOI18N
 
-            int itemType = _variableTypeBox.getSelectedIndex();
+            int itemType = _variableItemBox.getSelectedIndex();
 
             if (_variableStateBox.getSelectedIndex() == 1) {
                 if (itemType == Conditional.ITEM_TYPE_SIGNALHEAD) {
@@ -2685,6 +2696,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (alreadyEditingActionOrVariable()) {
             return;
         }
+        log.debug("makeEditActionWindow: row = {}", row);
         _curActionRowNumber = row;
         _curAction = _actionList.get(row);
         _editActionFrame = new JmriJFrame(Bundle.getMessage("TitleEditAction"), true, true);  // NOI18N
@@ -2694,12 +2706,12 @@ public class ConditionalListEdit extends ConditionalEditBase {
         Box panel1 = Box.createHorizontalBox();
         panel1.add(Box.createHorizontalGlue());
 
-        _actionItemTypeBox = new JComboBox<String>();
+        _actionItemBox = new JComboBox<>();
         for (int i = 0; i <= Conditional.ITEM_TYPE_LAST_ACTION; i++) {
-            _actionItemTypeBox.addItem(DefaultConditionalAction.getItemTypeString(i));
+            _actionItemBox.addItem(DefaultConditionalAction.getItemTypeString(i));
         }
-        JComboBoxUtil.setupComboBoxMaxRows(_actionItemTypeBox);
-        panel1.add(makeEditPanel(_actionItemTypeBox, "LabelActionItem", "ActionItemHint"));  // NOI18N
+        JComboBoxUtil.setupComboBoxMaxRows(_actionItemBox);
+        panel1.add(makeEditPanel(_actionItemBox, "LabelActionItem", "ActionItemHint"));  // NOI18N
         panel1.add(Box.createHorizontalStrut(STRUT));
 
         _actionNameField = new JTextField(30);
@@ -2816,15 +2828,23 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
         Container contentPane = _editActionFrame.getContentPane();
         contentPane.add(topPanel);
-        // note - this listener cannot be added until all items are entered into _actionItemTypeBox
-        _actionItemTypeBox.addActionListener(new ActionListener() {
+        // note - this listener cannot be added until all items are entered into _actionItemBox
+        _actionItemBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int select = _actionItemTypeBox.getSelectedIndex();
+                int newActionItem = _actionItemBox.getSelectedIndex();
                 if (log.isDebugEnabled()) {
-                    log.debug("_actionItemTypeBoxListener: select= " + select);  // NOI18N
+                    log.debug("_actionItemBox Listener: new = {}, curr = {}, row = {}",  // NOI18N
+                            newActionItem, _curActionItem, _curActionRowNumber);
                 }
-                actionItemChanged(select);
+                if (newActionItem != _curActionItem) {
+                    if (_curActionRowNumber >= 0) {
+                        _curAction = new DefaultConditionalAction();
+                        _actionList.set(_curActionRowNumber, _curAction);
+                    }
+                    _curActionItem = newActionItem;
+                }
+                actionItemChanged(newActionItem);
                 _editActionFrame.pack();
             }
         });
@@ -2836,7 +2856,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 cancelEditActionPressed();
             }
         });
-        actionItemChanged(Conditional.TYPE_NONE);
+        _curActionItem = Conditional.ACTION_TO_ITEM[_curAction.getType()];
         initializeActionVariables();
         _editActionFrame.setVisible(true);
         _editActionFrame.pack();
@@ -2850,12 +2870,12 @@ public class ConditionalListEdit extends ConditionalEditBase {
         int actionType = _curAction.getType();
         int itemType = Conditional.ACTION_TO_ITEM[actionType];
         if (log.isDebugEnabled()) {
-            log.debug("initializeActionVariables: itemType= " + itemType + ", actionType= " + actionType);  // NOI18N
+            log.debug("initializeActionVariables: itemType = {}, actionType = {}", itemType, actionType);  // NOI18N
         }
         if (actionType == Conditional.ACTION_NONE) {
             return;
         }
-        _actionItemTypeBox.setSelectedIndex(itemType);
+        _actionItemBox.setSelectedIndex(itemType);
         _actionNameField.setText(_curAction.getDeviceName());
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
@@ -3065,7 +3085,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     void actionItemChanged(int type) {
         int actionType = _curAction.getType();
         if (log.isDebugEnabled()) {
-            log.debug("actionItemChanged: itemType= " + type + ", actionType= " + actionType);  // NOI18N
+            log.debug("actionItemChanged: itemType = {}, actionType = {}", type, actionType);  // NOI18N
         }
         _actionTypeBox.removeActionListener(_actionTypeListener);
         _actionTypePanel.setVisible(false);
@@ -3428,10 +3448,6 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _actionBox.setMaximumSize(_actionBox.getPreferredSize());
         _actionTypeListener.setItemType(itemType);
         _actionTypeBox.addActionListener(_actionTypeListener);
-        if (log.isDebugEnabled()) {
-            log.debug("Exit actionItemChanged size: " + _editActionFrame.getWidth() // NOI18N
-                    + " X " + _editActionFrame.getHeight());
-        }
     }
 
     /**
@@ -3450,7 +3466,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             return;
         }
         _comboNameBox.setSelectedBeanByName(_curAction.getDeviceName());
-        _comboNameBox.addItemListener(new NameBoxListener(_actionNameField));
+        _comboNameBox.addActionListener(new NameBoxListener(_actionNameField));
         _actionComboNamePanel.remove(1);
         _actionComboNamePanel.add(_comboNameBox, null, 1);
         _namePanel.setVisible(false);
@@ -3650,7 +3666,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
      * @return true if all data checks out OK, otherwise false.
      */
     boolean validateAction() {
-        int itemType = _actionItemTypeBox.getSelectedIndex();
+        int itemType = _actionItemBox.getSelectedIndex();
         int actionType = Conditional.ACTION_NONE;
         int selection = _actionTypeBox.getSelectedIndex();
         if (selection == 0) {
@@ -4011,7 +4027,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            int select1 = _actionItemTypeBox.getSelectedIndex();
+            int select1 = _actionItemBox.getSelectedIndex();
             int select2 = _actionTypeBox.getSelectedIndex() - 1;
             if (log.isDebugEnabled()) {
                 log.debug("ActionTypeListener: actionItemType= " + select1 + ", _itemType= " // NOI18N

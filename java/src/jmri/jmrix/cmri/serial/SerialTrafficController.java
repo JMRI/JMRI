@@ -121,8 +121,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     //------------------------------------------
     private int initTimeout = 500;
     private int xmitTimeout = 2;
-    private int pollTimeout = 2;
-
     // cpNode poll list
     public ArrayList<Integer> cmriNetPollList = new ArrayList<>();
 

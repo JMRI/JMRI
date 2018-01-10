@@ -53,7 +53,7 @@ import org.slf4j.LoggerFactory;
  * permission.
  * <P>
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
- * @author B. Milhaupt Copyright 2015, 2016
+ * @author B. Milhaupt Copyright 2015, 2016, 2018
  * @author Randall Wood Copyright 2016
  */
 public class Llnmon {
@@ -2630,7 +2630,7 @@ public class Llnmon {
         String reporterSystemName;
         String reporterUserName;
         String zone;
-        switch (l.getElement(2) & 0x0F) {
+        switch (l.getElement(2) & 0x0E) { // ignore bit 0 which seems to provide some unknown info from the BXP88
             case 0x00:
                 zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEA");
                 break;
@@ -2724,8 +2724,14 @@ public class Llnmon {
             case 0x79:
             case 0x7a:
             case 0x7D:
-            case 0x7E:
                 return "";
+            case LnConstants.CFG_EXT_SLOT:
+                result = interpretCmdStnExtCfgSlotRdWr(l, command);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
+
             // end programming track block
             case LnConstants.CFG_SLOT:
                 result = interpretCmdStnCfgSlotRdWr(l, command);
@@ -2857,7 +2863,7 @@ public class Llnmon {
 
     private String interpretOpcSwState(LocoNetMessage l) {
         // get system and user names
-        if ((l.getElement(2) & 0x70) != 0x00) {
+        if ((l.getElement(2) & 0x40) != 0x00) {
             return "";
         }
         String turnoutSystemName;
@@ -2883,12 +2889,13 @@ public class Llnmon {
                 return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_FC_SLOT");
             case LnConstants.CFG_SLOT:
                 return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_CFG_SLOT");
+            case LnConstants.CFG_EXT_SLOT:
+                return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_EXT_CFG_SLOT");
             case LnConstants.PRG_SLOT:
                 return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_PRG_SLOT");
             case 0x79:
             case 0x7a:
             case 0x7d:
-            case 0x7e:
                 break;
             default:
                 return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_LOCO_SLOT", slot);
@@ -3742,6 +3749,96 @@ public class Llnmon {
                 opswGroup1, opswGroup2, opswGroup3, opswGroup4,
                 opswGroup5, opswGroup6, opswGroup7, opswGroup8);
 
+    }
+
+    private String interpretCmdStnExtCfgSlotRdWr(LocoNetMessage l, int command) {
+    /*
+     * ************************************************
+     * Extended Configuration slot, holding op switches
+     * ************************************************
+     */
+        String thrown = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_THROWN");
+        String closed = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_CLOSED");
+
+        String opswGroup1, opswGroup2, opswGroup3, opswGroup4,
+                opswGroup5, opswGroup6, opswGroup7, opswGroup8;
+        opswGroup1 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
+                65, ((l.getElement(3) & 0x01) != 0 ? closed : thrown),
+                66, ((l.getElement(3) & 0x02) != 0 ? closed : thrown),
+                67, ((l.getElement(3) & 0x04) != 0 ? closed : thrown),
+                68, ((l.getElement(3) & 0x08) != 0 ? closed : thrown),
+                69, ((l.getElement(3) & 0x10) != 0 ? closed : thrown),
+                70, ((l.getElement(3) & 0x20) != 0 ? closed : thrown),
+                71, ((l.getElement(3) & 0x40) != 0 ? closed : thrown),
+                72, thrown);
+        opswGroup2 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
+                73, ((l.getElement(4) & 0x01) != 0 ? closed : thrown),
+                74, ((l.getElement(4) & 0x02) != 0 ? closed : thrown),
+                75, ((l.getElement(4) & 0x04) != 0 ? closed : thrown),
+                76, ((l.getElement(4) & 0x08) != 0 ? closed : thrown),
+                77, ((l.getElement(4) & 0x10) != 0 ? closed : thrown),
+                78, ((l.getElement(4) & 0x20) != 0 ? closed : thrown),
+                79, ((l.getElement(4) & 0x40) != 0 ? closed : thrown),
+                80, thrown);
+        opswGroup3 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
+                81, ((l.getElement(5) & 0x01) != 0 ? closed : thrown),
+                82, ((l.getElement(5) & 0x02) != 0 ? closed : thrown),
+                83, ((l.getElement(5) & 0x04) != 0 ? closed : thrown),
+                84, ((l.getElement(5) & 0x08) != 0 ? closed : thrown),
+                85, ((l.getElement(5) & 0x10) != 0 ? closed : thrown),
+                86, ((l.getElement(5) & 0x20) != 0 ? closed : thrown),
+                87, ((l.getElement(5) & 0x40) != 0 ? closed : thrown),
+                88, thrown);
+        opswGroup4 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
+                89, ((l.getElement(6) & 0x01) != 0 ? closed : thrown),
+                90, ((l.getElement(6) & 0x02) != 0 ? closed : thrown),
+                91, ((l.getElement(6) & 0x04) != 0 ? closed : thrown),
+                92, ((l.getElement(6) & 0x08) != 0 ? closed : thrown),
+                93, ((l.getElement(6) & 0x10) != 0 ? closed : thrown),
+                94, ((l.getElement(6) & 0x20) != 0 ? closed : thrown),
+                95, ((l.getElement(6) & 0x40) != 0 ? closed : thrown),
+                96, thrown);
+        opswGroup5 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
+                97, ((l.getElement(8) & 0x01) != 0 ? closed : thrown),
+                98, ((l.getElement(8) & 0x02) != 0 ? closed : thrown),
+                99, ((l.getElement(8) & 0x04) != 0 ? closed : thrown),
+                100, ((l.getElement(8) & 0x08) != 0 ? closed : thrown),
+                101, ((l.getElement(8) & 0x10) != 0 ? closed : thrown),
+                102, ((l.getElement(8) & 0x20) != 0 ? closed : thrown),
+                103, ((l.getElement(8) & 0x40) != 0 ? closed : thrown),
+                104, thrown);
+        opswGroup6 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
+                105, ((l.getElement(9) & 0x01) != 0 ? closed : thrown),
+                106, ((l.getElement(9) & 0x02) != 0 ? closed : thrown),
+                107, ((l.getElement(9) & 0x04) != 0 ? closed : thrown),
+                108, ((l.getElement(9) & 0x08) != 0 ? closed : thrown),
+                109, ((l.getElement(9) & 0x10) != 0 ? closed : thrown),
+                110, ((l.getElement(9) & 0x20) != 0 ? closed : thrown),
+                111, ((l.getElement(9) & 0x40) != 0 ? closed : thrown),
+                112, thrown);
+        opswGroup7 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
+                113, ((l.getElement(10) & 0x01) != 0 ? closed : thrown),
+                114, ((l.getElement(10) & 0x02) != 0 ? closed : thrown),
+                115, ((l.getElement(10) & 0x04) != 0 ? closed : thrown),
+                116, ((l.getElement(10) & 0x08) != 0 ? closed : thrown),
+                117, ((l.getElement(10) & 0x10) != 0 ? closed : thrown),
+                118, ((l.getElement(10) & 0x20) != 0 ? closed : thrown),
+                119, ((l.getElement(10) & 0x40) != 0 ? closed : thrown),
+                120, thrown);
+        opswGroup8 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
+                121, ((l.getElement(11) & 0x01) != 0 ? closed : thrown),
+                122, ((l.getElement(11) & 0x02) != 0 ? closed : thrown),
+                123, ((l.getElement(11) & 0x04) != 0 ? closed : thrown),
+                124, ((l.getElement(11) & 0x08) != 0 ? closed : thrown),
+                125, ((l.getElement(11) & 0x10) != 0 ? closed : thrown),
+                126, ((l.getElement(11) & 0x20) != 0 ? closed : thrown),
+                127, ((l.getElement(11) & 0x40) != 0 ? closed : thrown),
+                128, thrown);
+        return Bundle.getMessage(((command == LnConstants.OPC_WR_SL_DATA)
+                ? "LN_MSG_SLOT_CMD_STN_EXT_CFG_WRITE_REQ"
+                : "LN_MSG_SLOT_CMD_STN_EXT_CFG_READ_REPORT"),
+                opswGroup1, opswGroup2, opswGroup3, opswGroup4,
+                opswGroup5, opswGroup6, opswGroup7, opswGroup8);
     }
 
     private String interpretStandardSlotRdWr(LocoNetMessage l, int id1, int id2, int command, int slot) {

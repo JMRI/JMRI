@@ -3,7 +3,6 @@ package jmri.jmrit.display;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import jmri.jmrit.catalog.NamedIcon;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -25,7 +24,7 @@ public class BlockContentsIconTest extends PositionableLabelTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        BlockContentsIcon bci = new BlockContentsIcon("foo",editor);
+        new BlockContentsIcon("foo",editor);
         Assert.assertNotNull("BlockContentsIcon Constructor",p);
     }
 

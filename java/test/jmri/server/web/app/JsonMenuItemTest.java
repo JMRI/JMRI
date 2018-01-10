@@ -34,15 +34,14 @@ public class JsonMenuItemTest {
 
     @Test
     public void testContstructor() {
-        JsonMenuItem mi;
         try {
-            mi = new JsonMenuItem(null);
+            new JsonMenuItem(null);
             fail("should have thrown NPE");
         } catch (NullPointerException ex) {
             // passes
         }
         try {
-            mi = new JsonMenuItem(mapper.createObjectNode());
+            new JsonMenuItem(mapper.createObjectNode());
             fail("should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException ex) {
             // passes
@@ -50,7 +49,7 @@ public class JsonMenuItemTest {
         ObjectNode node = mapper.createObjectNode();
         node.put("path", "/");
         try {
-            mi = new JsonMenuItem(node);
+            new JsonMenuItem(node);
         } catch (NullPointerException | IllegalArgumentException ex) {
             fail("should not have thrown exception");
         }

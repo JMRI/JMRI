@@ -22,11 +22,9 @@ import purejavacomm.SerialPortEventListener;
  */
 public class SpeedoTrafficController implements SpeedoInterface, SerialPortEventListener {
 
-    private SpeedoSystemConnectionMemo memo = null;
     private SpeedoReply reply = new SpeedoReply();
 
     public SpeedoTrafficController(SpeedoSystemConnectionMemo adaptermemo) {
-        memo = adaptermemo;
     }
 
     // The methods to implement the SpeedoInterface
