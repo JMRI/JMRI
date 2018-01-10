@@ -9986,6 +9986,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return result;
     }
 
+    // set selection rectangle
     public void setSelectionRect(@Nonnull Rectangle2D selectionRect) {
         //selectionRect = selectionRect.createIntersection(MathUtil.zeroToInfinityRectangle2D);
         selectionX = selectionRect.getX();
