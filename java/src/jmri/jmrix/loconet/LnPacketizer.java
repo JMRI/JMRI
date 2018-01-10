@@ -321,7 +321,7 @@ public class LnPacketizer extends LnTrafficController {
      * looking for input messages in character form on the stream connected to
      * the LnPortController via <code>connectPort</code>.
      */
-    class RcvHandler implements Runnable {
+    protected class RcvHandler implements Runnable {
 
         /**
          * Remember the LnPacketizer object

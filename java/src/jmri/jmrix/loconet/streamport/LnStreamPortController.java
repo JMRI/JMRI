@@ -17,7 +17,7 @@ import jmri.jmrix.loconet.LnConnectionTypeList;
  */
 public class LnStreamPortController extends jmri.jmrix.AbstractStreamPortController {
 
-    protected LnStreamPortController(LocoNetSystemConnectionMemo connectionMemo,DataInputStream in, DataOutputStream out, String pname) {
+    public LnStreamPortController(LocoNetSystemConnectionMemo connectionMemo,DataInputStream in, DataOutputStream out, String pname) {
         super(connectionMemo,in,out,pname);
         setManufacturer(LnConnectionTypeList.DIGITRAX);
     }

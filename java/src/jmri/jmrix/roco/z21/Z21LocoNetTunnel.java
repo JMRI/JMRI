@@ -5,23 +5,24 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import jmri.jmrix.lenz.XNetListener;
-import jmri.jmrix.lenz.XNetMessage;
-import jmri.jmrix.lenz.XNetReply;
+import jmri.jmrix.loconet.LocoNetListener;
+import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.streamport.LnStreamPortController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Interface between z21 messages and an XpressNet stream.
+ * Interface between z21 messages and an LocoNet stream.
  * <p>
  * Parts of this code are derived from the
  * jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter class.
  *
  * @author	Paul Bender Copyright (C) 2014
  */
-public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
+public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable {
 
-    jmri.jmrix.lenz.XNetStreamPortController xsc = null;
+    LnStreamPortController lsc = null;
     private DataOutputStream pout = null; // for output to other classes
     private DataInputStream pin = null; // for input from other classes
     // internal ends of the pipes
@@ -31,14 +32,14 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     private Thread sourceThread;
 
     /**
-     * Build a new XpressNet tunnel.
+     * Build a new LocoNet tunnel.
      */
-    public Z21XPressNetTunnel(Z21SystemConnectionMemo memo) {
+    public Z21LocoNetTunnel(Z21SystemConnectionMemo memo) {
         // save the SystemConnectionMemo.
         _memo = memo;
 
         // configure input and output pipes to use for
-        // the communication with the XpressNet implementation.
+        // the communication with the LocoNet implementation.
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
             pout = new DataOutputStream(tempPipeI);
@@ -53,18 +54,19 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
 
         // start a thread to read from the input pipe.
         sourceThread = new Thread(this);
-        sourceThread.setName("z21.Z21XpressNetTunnel sourceThread");
+        sourceThread.setName("z21.Z21LocoNetTunnel sourceThread");
         sourceThread.start();
 
         // Then use those pipes as the input and output pipes for
-        // a new XNetStreamPortController object.
-        setStreamPortController(new Z21XNetStreamPortController(pin, pout, "None"));
+        // a new LnStreamPortController object.
+        LocoNetSystemConnectionMemo lnMemo = new LocoNetSystemConnectionMemo();
+        setStreamPortController(new LnStreamPortController(lnMemo,pin, pout, "None"));
 
         // register as a Z21Listener, so we can receive replies
         _memo.getTrafficController().addz21Listener(this);
 
-        // start the XpressNet configuration.
-        xsc.configure();
+        // start the LocoNet configuration.
+        lsc.configure();
     }
 
     @Override
@@ -72,9 +74,9 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         // this thread has one task.  It repeatedly reads from the input pipe
         // and writes modified data to the output pipe.  This is the heart
         // of the command station simulation.
-        log.debug("Simulator Thread Started");
+        log.debug("LocoNet Tunnel Thread Started");
         for (;;) {
-            XNetMessage m = readMessage();
+            LocoNetMessage m = readMessage();
             if(m != null) {
                // don't forward a null message.
                message(m);
@@ -86,8 +88,8 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
      * Read one incoming message from the buffer and set
      * outputBufferEmpty to true.
      */
-    private XNetMessage readMessage() {
-        XNetMessage msg = null;
+    private LocoNetMessage readMessage() {
+        LocoNetMessage msg = null;
         try {
             msg = loadChars();
         } catch (java.io.IOException e) {
@@ -107,7 +109,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
      * @returns filled message
      * @throws IOException when presented by the input source.
      */
-    private XNetMessage loadChars() throws java.io.IOException {
+    private LocoNetMessage loadChars() throws java.io.IOException {
         int i;
         byte char1;
         char1 = readByteProtected(inpipe);
@@ -119,7 +121,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         {
            len=4;
         }
-        XNetMessage msg = new XNetMessage(len);
+        LocoNetMessage msg = new LocoNetMessage(len);
         msg.setElement(0, char1 & 0xFF);
         for (i = 1; i < len; i++) {
             char1 = readByteProtected(inpipe);
@@ -158,11 +160,11 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
      */
     @Override
     public void reply(Z21Reply msg) {
-        // This funcction forwards the payload of an XpressNet message
+        // This funcction forwards the payload of an LocoNet message
         // tunneled in a z21 message and forwards it to the XpressNet
         // implementation's input stream.
-        if (msg.isXPressNetTunnelMessage()) {
-            XNetReply reply = msg.getXNetReply();
+        if (msg.isLocoNetTunnelMessage()) {
+            LocoNetMessage reply = msg.getLocoNetMessage();
             log.debug("Z21 Reply {} forwarded to XpressNet implementation as {}",
                     msg, reply);
             for (int i = 0; i < reply.getNumDataElements(); i++) {
@@ -188,74 +190,50 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         // this function does nothing.
     }
 
-    // XNetListener Interface methods.
+    // LocoNetListener Interface methods.
 
     /**
-     * Member function that will be invoked by a XNetInterface implementation to
-     * forward a XNet message from the layout.
-     *
-     * @param msg The received XNet message. Note that this same object may be
-     *            presented to multiple users. It should not be modified here.
-     */
-    @Override
-    public void message(XNetReply msg) {
-        // we don't do anything with replies.
-    }
-
-    /**
-     * Member function that will be invoked by a XNetInterface implementation to
-     * forward a XNet message sent to the layout. Normally, this function will
+     * Member function that will be invoked by a LocoNet Interface implementation to
+     * forward a LocoNet message sent to the layout. Normally, this function will
      * do nothing.
      *
-     * @param msg The received XNet message. Note that this same object may be
+     * @param msg The received LocoNet message. Note that this same object may be
      *            presented to multiple users. It should not be modified here.
      */
     @Override
-    public void message(XNetMessage msg) {
+    public void message(LocoNetMessage msg) {
         // when an XpressNet message shows up here, package it in a Z21Message
         Z21Message message = new Z21Message(msg);
-        log.debug("XpressNet Message {} forwarded to z21 Interface as {}",
+        log.debug("LocoNet Message {} forwarded to z21 Interface as {}",
                     msg, message);
         // and send the z21 message to the interface
         _memo.getTrafficController().sendz21Message(message, this);
     }
 
     /**
-     * Member function invoked by an XNetInterface implementation to notify a
-     * sender that an outgoing message timed out and was dropped from the queue.
-     */
-    @Override
-    public void notifyTimeout(XNetMessage msg) {
-        // we don't do anything with timeouts.
-    }
-
-    /**
      * Package protected method to retrieve the stream port controller
      * associated with this tunnel.
      */
-    jmri.jmrix.lenz.XNetStreamPortController getStreamPortController() {
-       return xsc;
+    jmri.jmrix.loconet.streamport.LnStreamPortController getStreamPortController() {
+       return lsc;
     }
 
     /**
      * Package protected method to set the stream port controller
      * associated with this tunnel.
      */
-    void setStreamPortController(jmri.jmrix.lenz.XNetStreamPortController x){
-        xsc = x;
+    void setStreamPortController(LnStreamPortController x){
+        lsc = x;
 
         // configure the XpressNet connections properties.
-        xsc.getSystemConnectionMemo().setSystemPrefix("X");
-        xsc.getSystemConnectionMemo().setUserName(_memo.getUserName() + "XpressNet");
+        lsc.getSystemConnectionMemo().setSystemPrefix("L");
+        lsc.getSystemConnectionMemo().setUserName(_memo.getUserName() + "LocoNet");
 
-        // register a connection config object for this stream port.
-        //jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).registerPref(new Z21XNetConnectionConfig(xsc));
-        //jmri.InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class).add(new Z21XNetConnectionConfig(xsc));
     }
 
     public void dispose(){
-       if(xsc != null){
-          xsc.dispose();
+       if(lsc != null){
+          lsc.dispose();
        }
        sourceThread.stop();
        try {
@@ -265,6 +243,6 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
        }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XPressNetTunnel.class);
+    private final static Logger log = LoggerFactory.getLogger(Z21LocoNetTunnel.class);
 
 }
