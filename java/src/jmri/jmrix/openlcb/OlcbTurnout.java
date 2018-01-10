@@ -191,7 +191,23 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
             if (_activeFeedbackType == MONITORING) {
                 newKnownState(CLOSED);
             }
+        } else if (s == Turnout.UNKNOWN) {
+            if (pc != null) {
+                pc.resetToDefault();
+            }
+            newKnownState(Turnout.UNKNOWN);
         }
+    }
+
+    @Override
+    public void requestUpdateFromLayout() {
+        if (_activeFeedbackType == MONITORING) {
+            if (pc != null) {
+                pc.resetToDefault();
+                pc.sendQuery();
+            }
+        }
+        super.requestUpdateFromLayout();
     }
 
     @Override
@@ -248,30 +264,6 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
             return Boolean.parseBoolean(value);
         }
         return DEFAULT_IS_AUTHORITATIVE;
-    }
-
-    /**
-     * Resets internal state to unknown. This enables any state query method to resynchronize
-     * state from the layout.
-     */
-    public void doForgetState() {
-        if (pc != null) {
-            pc.resetToDefault();
-        }
-        newCommandedState(Turnout.UNKNOWN);
-        newKnownState(Turnout.UNKNOWN);
-    }
-
-    /**
-     * Sends out state query messages. If the turnout is set to monitoring mode, these will
-     * re-set the turnout's internal state to the layout state and cause the property change
-     * listeners to be invoked.
-     */
-    public void doQueryState() {
-        if (pc != null) {
-            pc.resetToDefault();
-            pc.sendQuery();
-        }
     }
 
     /**
