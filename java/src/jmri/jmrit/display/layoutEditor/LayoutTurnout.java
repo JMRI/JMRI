@@ -3031,6 +3031,8 @@ public class LayoutTurnout extends LayoutTrack {
         boolean mainlineC = isMainlineC();
         boolean mainlineD = isMainlineD();
 
+        boolean drawUnselectedLeg = layoutEditor.isTurnoutDrawUnselectedLeg();
+
         Color color = g2.getColor();
 
         // if this isn't a block line all these will be the same color
@@ -3076,22 +3078,30 @@ public class LayoutTurnout extends LayoutTrack {
                 if (isMain == mainlineA) {
                     g2.setColor(colorA);
                     g2.draw(new Line2D.Double(pA, pABM));
-                    g2.draw(new Line2D.Double(pAF, pM));
+                    if (isBlock && drawUnselectedLeg) {
+                        g2.draw(new Line2D.Double(pAF, pM));
+                    }
                 }
                 if (isMain == mainlineB) {
                     g2.setColor(colorB);
                     g2.draw(new Line2D.Double(pB, pABM));
-                    g2.draw(new Line2D.Double(pBF, pM));
+                    if (isBlock && drawUnselectedLeg) {
+                        g2.draw(new Line2D.Double(pBF, pM));
+                    }
                 }
                 if (isMain == mainlineC) {
                     g2.setColor(colorC);
                     g2.draw(new Line2D.Double(pC, pCDM));
-                    g2.draw(new Line2D.Double(pCF, pM));
+                    if (isBlock && drawUnselectedLeg) {
+                        g2.draw(new Line2D.Double(pCF, pM));
+                    }
                 }
                 if (isMain == mainlineD) {
                     g2.setColor(colorD);
                     g2.draw(new Line2D.Double(pD, pCDM));
-                    g2.draw(new Line2D.Double(pDF, pM));
+                    if (isBlock && drawUnselectedLeg) {
+                        g2.draw(new Line2D.Double(pDF, pM));
+                    }
                 }
             }
             if (!isBlock || (state != Turnout.CLOSED)) { // unknown or diverting path - crossed over
@@ -3099,25 +3109,33 @@ public class LayoutTurnout extends LayoutTrack {
                     g2.setColor(colorA);
                     g2.draw(new Line2D.Double(pA, pAM));
                     g2.draw(new Line2D.Double(pAM, pM));
-                    g2.draw(new Line2D.Double(pAMP, pABM));
+                    if (isBlock && drawUnselectedLeg) {
+                        g2.draw(new Line2D.Double(pAMP, pABM));
+                    }
                 }
                 if (isMain == mainlineB) {
                     g2.setColor(colorB);
                     g2.draw(new Line2D.Double(pB, pBM));
                     g2.draw(new Line2D.Double(pBM, pM));
-                    g2.draw(new Line2D.Double(pBMP, pABM));
+                    if (isBlock && drawUnselectedLeg) {
+                        g2.draw(new Line2D.Double(pBMP, pABM));
+                    }
                 }
                 if (isMain == mainlineC) {
                     g2.setColor(colorC);
                     g2.draw(new Line2D.Double(pC, pCM));
                     g2.draw(new Line2D.Double(pCM, pM));
-                    g2.draw(new Line2D.Double(pCMP, pCDM));
+                    if (isBlock && drawUnselectedLeg) {
+                        g2.draw(new Line2D.Double(pCMP, pCDM));
+                    }
                 }
                 if (isMain == mainlineD) {
                     g2.setColor(colorD);
                     g2.draw(new Line2D.Double(pD, pDM));
                     g2.draw(new Line2D.Double(pDM, pM));
-                    g2.draw(new Line2D.Double(pDMP, pCDM));
+                    if (isBlock && drawUnselectedLeg) {
+                        g2.draw(new Line2D.Double(pDMP, pCDM));
+                    }
                 }
             }
         } else if ((type == RH_XOVER)
@@ -3143,23 +3161,25 @@ public class LayoutTurnout extends LayoutTrack {
                     g2.setColor(colorD);
                     g2.draw(new Line2D.Double(pCDM, pD));
                 }
-                if (getTurnoutType() == RH_XOVER) {
-                    if (isMain == mainlineA) {
-                        g2.setColor(colorA);
-                        g2.draw(new Line2D.Double(pAF, pM));
-                    }
-                    if (isMain == mainlineC) {
-                        g2.setColor(colorC);
-                        g2.draw(new Line2D.Double(pCF, pM));
-                    }
-                } else if (getTurnoutType() == LH_XOVER) {
-                    if (isMain == mainlineB) {
-                        g2.setColor(colorB);
-                        g2.draw(new Line2D.Double(pBF, pM));
-                    }
-                    if (isMain == mainlineD) {
-                        g2.setColor(colorD);
-                        g2.draw(new Line2D.Double(pDF, pM));
+                if (isBlock && drawUnselectedLeg) {
+                    if (getTurnoutType() == RH_XOVER) {
+                        if (isMain == mainlineA) {
+                            g2.setColor(colorA);
+                            g2.draw(new Line2D.Double(pAF, pM));
+                        }
+                        if (isMain == mainlineC) {
+                            g2.setColor(colorC);
+                            g2.draw(new Line2D.Double(pCF, pM));
+                        }
+                    } else if (getTurnoutType() == LH_XOVER) {
+                        if (isMain == mainlineB) {
+                            g2.setColor(colorB);
+                            g2.draw(new Line2D.Double(pBF, pM));
+                        }
+                        if (isMain == mainlineD) {
+                            g2.setColor(colorD);
+                            g2.draw(new Line2D.Double(pDF, pM));
+                        }
                     }
                 }
             }
@@ -3170,32 +3190,40 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.draw(new Line2D.Double(pA, pABM));
                         g2.draw(new Line2D.Double(pABM, pM));
                     }
-                    if (isMain == mainlineB) {
-                        g2.setColor(colorB);
-                        g2.draw(new Line2D.Double(pBM, pB));
+                    if (isBlock && drawUnselectedLeg) {
+                        if (isMain == mainlineB) {
+                            g2.setColor(colorB);
+                            g2.draw(new Line2D.Double(pBM, pB));
+                        }
                     }
                     if (isMain == mainlineC) {
                         g2.setColor(colorC);
                         g2.draw(new Line2D.Double(pC, pCDM));
                         g2.draw(new Line2D.Double(pCDM, pM));
                     }
-                    if (isMain == mainlineD) {
-                        g2.setColor(colorD);
-                        g2.draw(new Line2D.Double(pDM, pD));
+                    if (isBlock && drawUnselectedLeg) {
+                        if (isMain == mainlineD) {
+                            g2.setColor(colorD);
+                            g2.draw(new Line2D.Double(pDM, pD));
+                        }
                     }
                 } else if (getTurnoutType() == LH_XOVER) {
-                    if (isMain == mainlineA) {
-                        g2.setColor(colorA);
-                        g2.draw(new Line2D.Double(pA, pAM));
+                    if (isBlock && drawUnselectedLeg) {
+                        if (isMain == mainlineA) {
+                            g2.setColor(colorA);
+                            g2.draw(new Line2D.Double(pA, pAM));
+                        }
                     }
                     if (isMain == mainlineB) {
                         g2.setColor(colorB);
                         g2.draw(new Line2D.Double(pB, pABM));
                         g2.draw(new Line2D.Double(pABM, pM));
                     }
-                    if (isMain == mainlineC) {
-                        g2.setColor(colorC);
-                        g2.draw(new Line2D.Double(pC, pCM));
+                    if (isBlock && drawUnselectedLeg) {
+                        if (isMain == mainlineC) {
+                            g2.setColor(colorC);
+                            g2.draw(new Line2D.Double(pC, pCM));
+                        }
                     }
                     if (isMain == mainlineD) {
                         g2.setColor(colorD);
@@ -3204,8 +3232,7 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             }
-        } else if ((type == SINGLE_SLIP)
-                || (type == DOUBLE_SLIP)) {
+        } else if ((type == SINGLE_SLIP) || (type == DOUBLE_SLIP)) {
             log.error("slips should be being drawn by LayoutSlip sub-class");
         } else {    // LH, RH, or WYE Turnouts
             // draw A<===>center
@@ -3219,7 +3246,7 @@ public class LayoutTurnout extends LayoutTrack {
                     g2.setColor(colorB);
                     g2.draw(new Line2D.Double(pM, pB));
                 }
-            } else {
+            } else if (isBlock && drawUnselectedLeg) {
                 // draw center<--=>B
                 if (isMain == mainlineB) {
                     g2.setColor(colorB);
@@ -3232,7 +3259,7 @@ public class LayoutTurnout extends LayoutTrack {
                     g2.setColor(colorC);
                     g2.draw(new Line2D.Double(pM, pC));
                 }
-            } else {
+            } else if (isBlock && drawUnselectedLeg) {
                 // draw center<--=>C
                 if (isMain == mainlineC) {
                     g2.setColor(colorC);
@@ -3246,7 +3273,8 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement
+    ) {
         int type = getTurnoutType();
 
         Point2D pA = getCoordsA();
@@ -3923,7 +3951,8 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void drawUnconnected(Graphics2D g2) {
+    protected void drawUnconnected(Graphics2D g2
+    ) {
         if (getConnectA() == null) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
         }

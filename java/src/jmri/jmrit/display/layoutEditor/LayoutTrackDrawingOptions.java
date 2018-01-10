@@ -22,28 +22,30 @@ public class LayoutTrackDrawingOptions {
 
     public LayoutTrackDrawingOptions(LayoutTrackDrawingOptions ltdo) {
         name = ltdo.getName();
-        sideBallastWidth = ltdo.getSideBallastWidth();
-        sideBallastColor = ltdo.getSideBallastColor();
-        sideTieLength = ltdo.getSideTieLength();
-        sideTieWidth = ltdo.getSideTieWidth();
-        sideTieColor = ltdo.getSideTieColor();
-        sideTieGap = ltdo.getSideTieGap();
-        sideRailCount = ltdo.getSideRailCount();
-        sideRailWidth = ltdo.getSideRailWidth();
-        sideRailGap = ltdo.getSideRailGap();
-        sideRailColor = ltdo.getSideRailColor();
-        sideBlockLineWidth = ltdo.getSideBlockLineWidth();
-        mainBallastWidth = ltdo.getMainBallastWidth();
         mainBallastColor = ltdo.getMainBallastColor();
+        mainBallastWidth = ltdo.getMainBallastWidth();
+        mainBlockLineDashPercentageX10 = ltdo.getMainBlockLineDashPercentageX10();
+        mainBlockLineWidth = ltdo.getMainBlockLineWidth();
+        mainRailColor = ltdo.getMainRailColor();
+        mainRailCount = ltdo.getMainRailCount();
+        mainRailGap = ltdo.getMainRailGap();
+        mainRailWidth = ltdo.getMainRailWidth();
+        mainTieColor = ltdo.getMainTieColor();
+        mainTieGap = ltdo.getMainTieGap();
         mainTieLength = ltdo.getMainTieLength();
         mainTieWidth = ltdo.getMainTieWidth();
-        mainTieGap = ltdo.getMainTieGap();
-        mainTieColor = ltdo.getMainTieColor();
-        mainRailCount = ltdo.getMainRailCount();
-        mainRailWidth = ltdo.getMainRailWidth();
-        mainRailGap = ltdo.getMainRailGap();
-        mainRailColor = ltdo.getMainRailColor();
-        mainBlockLineWidth = ltdo.getMainBlockLineWidth();
+        sideBallastColor = ltdo.getSideBallastColor();
+        sideBallastWidth = ltdo.getSideBallastWidth();
+        sideBlockLineDashPercentageX10 = ltdo.getSideBlockLineDashPercentageX10();
+        sideBlockLineWidth = ltdo.getSideBlockLineWidth();
+        sideRailColor = ltdo.getSideRailColor();
+        sideRailCount = ltdo.getSideRailCount();
+        sideRailGap = ltdo.getSideRailGap();
+        sideRailWidth = ltdo.getSideRailWidth();
+        sideTieColor = ltdo.getSideTieColor();
+        sideTieGap = ltdo.getSideTieGap();
+        sideTieLength = ltdo.getSideTieLength();
+        sideTieWidth = ltdo.getSideTieWidth();
     }
 
     public String getName() {
@@ -54,7 +56,7 @@ public class LayoutTrackDrawingOptions {
         this.name = name;
     }
 
-    private int sideBallastWidth = 13;   // defaults to zero (off)
+    private int sideBallastWidth = 0;   // defaults to zero (off)
 
     public int getSideBallastWidth() {
         return sideBallastWidth;
@@ -64,7 +66,7 @@ public class LayoutTrackDrawingOptions {
         sideBallastWidth = val;
     }
 
-    private Color sideBallastColor = Color.decode("#AEACAD");
+    private Color sideBallastColor = Color.BLACK;
 
     public Color getSideBallastColor() {
         return sideBallastColor;
@@ -74,7 +76,7 @@ public class LayoutTrackDrawingOptions {
         sideBallastColor = val;
     }
 
-    private int sideTieLength = 9;
+    private int sideTieLength = 0;
 
     public int getSideTieLength() {
         return sideTieLength;
@@ -84,7 +86,7 @@ public class LayoutTrackDrawingOptions {
         sideTieLength = val;
     }
 
-    private Color sideTieColor = Color.decode("#391E16");
+    private Color sideTieColor = Color.BLACK;
 
     public Color getSideTieColor() {
         return sideTieColor;
@@ -94,7 +96,7 @@ public class LayoutTrackDrawingOptions {
         sideTieColor = val;
     }
 
-    private int sideTieWidth = 3;
+    private int sideTieWidth = 0;
 
     public int getSideTieWidth() {
         return sideTieWidth;
@@ -104,7 +106,7 @@ public class LayoutTrackDrawingOptions {
         sideTieWidth = val;
     }
 
-    private int sideTieGap = 4;
+    private int sideTieGap = 0;
 
     public int getSideTieGap() {
         return sideTieGap;
@@ -114,7 +116,7 @@ public class LayoutTrackDrawingOptions {
         sideTieGap = val;
     }
 
-    private int sideRailCount = 2;
+    private int sideRailCount = 1;
 
     public int getSideRailCount() {
         return sideRailCount;
@@ -134,7 +136,7 @@ public class LayoutTrackDrawingOptions {
         sideRailWidth = val;
     }
 
-    private int sideRailGap = 3;
+    private int sideRailGap = 0;
 
     public int getSideRailGap() {
         return sideRailGap;
@@ -144,7 +146,7 @@ public class LayoutTrackDrawingOptions {
         sideRailGap = val;
     }
 
-    private Color sideRailColor = Color.decode("#9B705E");
+    private Color sideRailColor = Color.GRAY;
 
     public Color getSideRailColor() {
         return sideRailColor;
@@ -154,7 +156,17 @@ public class LayoutTrackDrawingOptions {
         sideRailColor = val;
     }
 
-    private int sideBlockLineWidth = 3;
+    private int sideBlockLineDashPercentageX10 = 0;
+
+    public int getSideBlockLineDashPercentageX10() {
+        return sideBlockLineDashPercentageX10;
+    }
+
+    public void setSideBlockLineDashPercentageX10(int val) {
+        sideBlockLineDashPercentageX10 = val;
+    }
+
+    private int sideBlockLineWidth = 2;
 
     public int getSideBlockLineWidth() {
         return sideBlockLineWidth;
@@ -164,7 +176,7 @@ public class LayoutTrackDrawingOptions {
         sideBlockLineWidth = val;
     }
 
-    private int mainBallastWidth = 15;   // defaults to zero (off)
+    private int mainBallastWidth = 0;   // defaults to zero (off)
 
     public int getMainBallastWidth() {
         return mainBallastWidth;
@@ -174,7 +186,7 @@ public class LayoutTrackDrawingOptions {
         mainBallastWidth = val;
     }
 
-    private Color mainBallastColor = Color.decode("#9E9C9D");
+    private Color mainBallastColor = Color.BLACK;
 
     public Color getMainBallastColor() {
         return mainBallastColor;
@@ -184,7 +196,7 @@ public class LayoutTrackDrawingOptions {
         mainBallastColor = val;
     }
 
-    private int mainTieLength = 11;
+    private int mainTieLength = 0;
 
     public int getMainTieLength() {
         return mainTieLength;
@@ -194,7 +206,7 @@ public class LayoutTrackDrawingOptions {
         mainTieLength = val;
     }
 
-    private Color mainTieColor = Color.decode("#D5CFCC");
+    private Color mainTieColor = Color.BLACK;
 
     public Color getMainTieColor() {
         return mainTieColor;
@@ -204,7 +216,7 @@ public class LayoutTrackDrawingOptions {
         mainTieColor = val;
     }
 
-    private int mainTieWidth = 2;
+    private int mainTieWidth = 0;
 
     public int getMainTieWidth() {
         return mainTieWidth;
@@ -214,7 +226,7 @@ public class LayoutTrackDrawingOptions {
         mainTieWidth = val;
     }
 
-    private int mainTieGap = 5;
+    private int mainTieGap = 0;
 
     public int getMainTieGap() {
         return mainTieGap;
@@ -224,7 +236,7 @@ public class LayoutTrackDrawingOptions {
         mainTieGap = val;
     }
 
-    private int mainRailCount = 2;
+    private int mainRailCount = 1;
 
     public int getMainRailCount() {
         return mainRailCount;
@@ -234,7 +246,7 @@ public class LayoutTrackDrawingOptions {
         mainRailCount = val;
     }
 
-    private int mainRailWidth = 2;
+    private int mainRailWidth = 1;
 
     public int getMainRailWidth() {
         return mainRailWidth;
@@ -244,7 +256,7 @@ public class LayoutTrackDrawingOptions {
         mainRailWidth = val;
     }
 
-    private int mainRailGap = 3;
+    private int mainRailGap = 0;
 
     public int getMainRailGap() {
         return mainRailGap;
@@ -254,7 +266,7 @@ public class LayoutTrackDrawingOptions {
         mainRailGap = val;
     }
 
-    private Color mainRailColor = Color.decode("#C0BFBF");
+    private Color mainRailColor = Color.GRAY;
 
     public Color getMainRailColor() {
         return mainRailColor;
@@ -264,7 +276,17 @@ public class LayoutTrackDrawingOptions {
         mainRailColor = val;
     }
 
-    private int mainBlockLineWidth = 3;
+    private int mainBlockLineDashPercentageX10 = 0;
+
+    public int getMainBlockLineDashPercentageX10() {
+        return mainBlockLineDashPercentageX10;
+    }
+
+    public void setMainBlockLineDashPercentageX10(int val) {
+        mainBlockLineDashPercentageX10 = val;
+    }
+
+    private int mainBlockLineWidth = 4;
 
     public int getMainBlockLineWidth() {
         return mainBlockLineWidth;
@@ -330,6 +352,10 @@ public class LayoutTrackDrawingOptions {
                         break;
                     }
 
+                    if (sideBlockLineDashPercentageX10 != ltdo.getSideBlockLineDashPercentageX10()) {
+                        break;
+                    }
+
                     if (sideBlockLineWidth != ltdo.getSideBlockLineWidth()) {
                         break;
                     }
@@ -366,6 +392,9 @@ public class LayoutTrackDrawingOptions {
                     if (!mainRailColor.equals(ltdo.getMainRailColor())) {
                         break;
                     }
+                    if (mainBlockLineDashPercentageX10 != ltdo.getMainBlockLineDashPercentageX10()) {
+                        break;
+                    }
                     if (mainBlockLineWidth != ltdo.getMainBlockLineWidth()) {
                         break;
                     }
@@ -394,6 +423,7 @@ public class LayoutTrackDrawingOptions {
         result = (37 * result) + sideRailWidth;
         result = (37 * result) + sideRailGap;
         result = (37 * result) + (sideRailColor == null ? 0 : sideRailColor.hashCode());
+        result = (37 * result) + sideBlockLineDashPercentageX10;
         result = (37 * result) + sideBlockLineWidth;
 
         // mainline values
@@ -407,9 +437,9 @@ public class LayoutTrackDrawingOptions {
         result = (37 * result) + mainRailWidth;
         result = (37 * result) + mainRailGap;
         result = (37 * result) + (mainRailColor == null ? 0 : mainRailColor.hashCode());
+        result = (37 * result) + mainBlockLineDashPercentageX10;
         result = (37 * result) + mainBlockLineWidth;
 
         return result;
     }
-
 }

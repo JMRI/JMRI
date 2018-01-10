@@ -2613,7 +2613,7 @@ public class TrackSegment extends LayoutTrack {
         switch (arrowStyle) {
             default:
                 arrowStyle = 0;
-                //$FALL-THROUGH$
+            //$FALL-THROUGH$
             case 0: {
                 break;
             }

@@ -4,7 +4,7 @@
   <jmriversion>
     <major>4</major>
     <minor>11</minor>
-    <test>1</test>
+    <test>2</test>
     <modifier>ish</modifier>
   </jmriversion>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
@@ -207,6 +207,7 @@
     <layoutTrackDrawingOptions name="Layout Editor Test" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
       <mainBallastColor>#9E9C9D</mainBallastColor>
       <mainBallastWidth>15</mainBallastWidth>
+      <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
       <mainBlockLineWidth>4</mainBlockLineWidth>
       <mainRailColor>#000000</mainRailColor>
       <mainRailCount>2</mainRailCount>
@@ -218,6 +219,7 @@
       <mainTieWidth>2</mainTieWidth>
       <sideBallastColor>#AEACAD</sideBallastColor>
       <sideBallastWidth>13</sideBallastWidth>
+      <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
       <sideBlockLineWidth>2</sideBlockLineWidth>
       <sideRailColor>#000000</sideRailColor>
       <sideRailCount>2</sideRailCount>
@@ -318,5 +320,5 @@
   </LayoutEditor>
   <filehistory>
   </filehistory>
-  <!--Written by JMRI version 4.11.1ish+geowar+20171215T0538Z+R32ebf00136 on Thu Dec 14 21:39:31 PST 2017-->
+  <!--Written by JMRI version 4.11.2ish+geowar+20180109T0016Z+Rb9005b3fb5 on Mon Jan 08 16:17:02 PST 2018-->
 </layout-config>

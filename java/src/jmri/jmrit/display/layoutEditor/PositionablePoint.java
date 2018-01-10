@@ -3,7 +3,6 @@ package jmri.jmrit.display.layoutEditor;
 import static java.lang.Float.POSITIVE_INFINITY;
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
 
-import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -1456,8 +1455,6 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     protected void drawEditControls(Graphics2D g2) {
-        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-
         TrackSegment ts1 = getConnect1();
         if (ts1 == null) {
             g2.setColor(Color.red);

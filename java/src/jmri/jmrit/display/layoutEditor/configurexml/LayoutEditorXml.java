@@ -88,7 +88,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("defaulttextcolor", p.getDefaultTextColor());
         panel.setAttribute("turnoutcirclecolor", p.getTurnoutCircleColor());
         panel.setAttribute("turnoutcirclesize", "" + p.getTurnoutCircleSize());
-        panel.setAttribute("turnoutdrawunselectedleg", (p.getTurnoutDrawUnselectedLeg() ? "yes" : "no"));
+        panel.setAttribute("turnoutdrawunselectedleg", (p.isTurnoutDrawUnselectedLeg() ? "yes" : "no"));
         panel.setAttribute("turnoutbx", Float.toString((float) p.getTurnoutBX()));
         panel.setAttribute("turnoutcx", Float.toString((float) p.getTurnoutCX()));
         panel.setAttribute("turnoutwid", Float.toString((float) p.getTurnoutWid()));

@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This module handles saving and loading LayoutTrackDrawingOptions
- * for a LayoutEditor.
+ * This module handles saving and loading LayoutTrackDrawingOptions for a
+ * LayoutEditor.
  *
  * @author George Warner Copyright (c) 2017
  */
@@ -42,6 +42,7 @@ public class LayoutTrackDrawingOptionsXml extends AbstractXmlAdapter {
         // add elements
         element.addContent(new Element("mainBallastColor").addContent(ColorUtil.colorToHexString(p.getMainBallastColor())));
         element.addContent(new Element("mainBallastWidth").addContent("" + p.getMainBallastWidth()));
+        element.addContent(new Element("mainBlockLineDashPercentageX10").addContent("" + p.getMainBlockLineDashPercentageX10()));
         element.addContent(new Element("mainBlockLineWidth").addContent("" + p.getMainBlockLineWidth()));
         element.addContent(new Element("mainRailColor").addContent(ColorUtil.colorToHexString(p.getMainRailColor())));
         element.addContent(new Element("mainRailCount").addContent("" + p.getMainRailCount()));
@@ -51,8 +52,10 @@ public class LayoutTrackDrawingOptionsXml extends AbstractXmlAdapter {
         element.addContent(new Element("mainTieGap").addContent("" + p.getMainTieGap()));
         element.addContent(new Element("mainTieLength").addContent("" + p.getMainTieLength()));
         element.addContent(new Element("mainTieWidth").addContent("" + p.getMainTieWidth()));
+
         element.addContent(new Element("sideBallastColor").addContent(ColorUtil.colorToHexString(p.getSideBallastColor())));
         element.addContent(new Element("sideBallastWidth").addContent("" + p.getSideBallastWidth()));
+        element.addContent(new Element("sideBlockLineDashPercentageX10").addContent("" + p.getSideBlockLineDashPercentageX10()));
         element.addContent(new Element("sideBlockLineWidth").addContent("" + p.getSideBlockLineWidth()));
         element.addContent(new Element("sideRailColor").addContent(ColorUtil.colorToHexString(p.getSideRailColor())));
         element.addContent(new Element("sideRailCount").addContent("" + p.getSideRailCount()));
@@ -95,6 +98,7 @@ public class LayoutTrackDrawingOptionsXml extends AbstractXmlAdapter {
         // get remaining option elements
         ltdo.setMainBallastColor(getElementColor(element, "mainBallastColor", ltdo.getMainBallastColor()));
         ltdo.setMainBallastWidth(getElementInt(element, "mainBallastWidth", ltdo.getMainBallastWidth()));
+        ltdo.setMainBlockLineDashPercentageX10(getElementInt(element, "mainBlockLineDashPercentageX10", ltdo.getMainBlockLineDashPercentageX10()));
         ltdo.setMainBlockLineWidth(getElementInt(element, "mainBlockLineWidth", ltdo.getMainBlockLineWidth()));
         ltdo.setMainRailColor(getElementColor(element, "mainRailColor", ltdo.getMainRailColor()));
         ltdo.setMainRailCount(getElementInt(element, "mainRailCount", ltdo.getMainRailCount()));
@@ -104,8 +108,10 @@ public class LayoutTrackDrawingOptionsXml extends AbstractXmlAdapter {
         ltdo.setMainTieGap(getElementInt(element, "mainTieGap", ltdo.getMainTieGap()));
         ltdo.setMainTieLength(getElementInt(element, "mainTieLength", ltdo.getMainTieLength()));
         ltdo.setMainTieWidth(getElementInt(element, "mainTieWidth", ltdo.getMainTieWidth()));
+
         ltdo.setSideBallastColor(getElementColor(element, "sideBallastColor", ltdo.getSideBallastColor()));
         ltdo.setSideBallastWidth(getElementInt(element, "sideBallastWidth", ltdo.getSideBallastWidth()));
+        ltdo.setSideBlockLineDashPercentageX10(getElementInt(element, "sideBlockLineDashPercentageX10", ltdo.getSideBlockLineDashPercentageX10()));
         ltdo.setSideBlockLineWidth(getElementInt(element, "sideBlockLineWidth", ltdo.getSideBlockLineWidth()));
         ltdo.setSideRailColor(getElementColor(element, "sideRailColor", ltdo.getSideBallastColor()));
         ltdo.setSideRailCount(getElementInt(element, "sideRailCount", ltdo.getSideRailCount()));
