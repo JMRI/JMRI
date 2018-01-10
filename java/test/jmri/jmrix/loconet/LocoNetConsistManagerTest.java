@@ -13,6 +13,8 @@ import org.junit.Test;
  */
 public class LocoNetConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
 
+    private LocoNetSystemConnectionMemo memo = null;
+
     @Test
     @Override
     public void testIsCommandStationConsistPossible(){
@@ -27,7 +29,7 @@ public class LocoNetConsistManagerTest extends jmri.implementation.AbstractConsi
         JUnitUtil.setUp();
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, slotmanager);
+        memo = new LocoNetSystemConnectionMemo(lnis, slotmanager);
         memo.setThrottleManager(new LnThrottleManager(memo));
         cm = new LocoNetConsistManager(memo);
     }
@@ -36,6 +38,7 @@ public class LocoNetConsistManagerTest extends jmri.implementation.AbstractConsi
     @Override
     public void tearDown() {
         cm = null;
+        ((LnThrottleManager)memo.getThrottleManager()).dispose();
         JUnitUtil.tearDown();
     }
 
