@@ -15,9 +15,7 @@ public class LnSv2MessageContentsTest {
     @Test(expected = IllegalArgumentException.class )
     public void testCTorIllegalArgument() {
         LocoNetMessage lm = new LocoNetMessage(3);
-        // lm is not the right message type, so the constructor is supposed
-        // to throw an IllegalArgumentException
-        LnSv2MessageContents t = new LnSv2MessageContents(lm);
+        new LnSv2MessageContents(lm);
     }
 
     // The minimal setup for log4J

@@ -21,7 +21,7 @@ public class IconDialogTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        EditorScaffold es = new EditorScaffold();
+        new EditorScaffold();
         PickListModel tableModel = PickListModel.turnoutPickModelInstance(); // N11N
         DisplayFrame df = new DisplayFrame("Icon Dialog Test");
         Editor editor = new EditorScaffold();

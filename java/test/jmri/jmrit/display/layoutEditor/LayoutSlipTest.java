@@ -316,7 +316,7 @@ public class LayoutSlipTest {
         Assert.assertEquals("lts.getBounds() is equal to...",
                 new Rectangle2D.Double(30.20101012677667, 85.85786437626905, 39.59797974644667, 28.284271247461902),
                 lts.getBounds());
-        Rectangle2D b = ltd.getBounds();
+        ltd.getBounds();
         Assert.assertEquals("ltd.getBounds() is equal to...",
                 new Rectangle2D.Double(30.20101012677667, 85.85786437626905, 39.59797974644667, 28.284271247461902),
                 lts.getBounds());

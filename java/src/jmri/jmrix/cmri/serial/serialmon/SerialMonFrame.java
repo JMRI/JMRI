@@ -351,7 +351,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
 
     StringBuffer linesBuffer = new StringBuffer();
-    static private int MAX_LINES = 500 ;
     private final static Logger log = LoggerFactory.getLogger(SerialMonFrame.class);
 
 }

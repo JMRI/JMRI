@@ -17,7 +17,7 @@ public class SignallingSourcePanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.SignalMastManager smm = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
+        jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
         SignallingSourcePanel t = new SignallingSourcePanel(new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($1)"));
         Assert.assertNotNull("exists",t);
     }

@@ -36,7 +36,7 @@ public class XBeeNodeConfigActionTest {
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XBeeConnectionMemo memo = new XBeeConnectionMemo();
-        XBeeTrafficController tc = new XBeeTrafficController(){
+        new XBeeTrafficController(){
             @Override
             public void setInstance() {
             }
@@ -58,7 +58,7 @@ public class XBeeNodeConfigActionTest {
     public void testDefaultCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XBeeConnectionMemo memo = new XBeeConnectionMemo();
-        XBeeTrafficController tc = new XBeeTrafficController(){
+        new XBeeTrafficController(){
             @Override
             public void setInstance() {
             }
