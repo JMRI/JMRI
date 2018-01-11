@@ -3071,7 +3071,14 @@ public class LayoutTurnout extends LayoutTrack {
         Point2D pCF = MathUtil.midPoint(pCM, pM);
         Point2D pDF = MathUtil.midPoint(pDM, pM);
 
-        int state = getState();
+        int state = UNKNOWN;
+        if (layoutEditor.isAnimating()) {
+            Turnout to = getTurnout();
+            if (to != null) {
+                state = to.getKnownState();
+            }
+        }
+
         int type = getTurnoutType();
         if (type == DOUBLE_XOVER) {
             if (!isBlock || (state != Turnout.THROWN)) { // unknown or continuing path - not crossed over
@@ -3273,8 +3280,7 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement
-    ) {
+    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
         int type = getTurnoutType();
 
         Point2D pA = getCoordsA();
@@ -3335,7 +3341,13 @@ public class LayoutTurnout extends LayoutTrack {
         boolean mainlineC = isMainlineC();
         boolean mainlineD = isMainlineD();
 
-        int state = getState();
+        int state = UNKNOWN;
+        if (layoutEditor.isAnimating()) {
+            Turnout to = getTurnout();
+            if (to != null) {
+                state = to.getKnownState();
+            }
+        }
 
         switch (type) {
             case RH_TURNOUT: {
