@@ -2163,7 +2163,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public int getState() {
-        int result = Turnout.UNKNOWN;
+        int result = UNKNOWN;
         if (getTurnout() != null) {
             result = getTurnout().getKnownState();
         }
@@ -3247,7 +3247,7 @@ public class LayoutTurnout extends LayoutTrack {
                 g2.setColor(colorA);
                 g2.draw(new Line2D.Double(pA, pM));
             }
-            if (!isBlock || (state != Turnout.THROWN)) { // unknown or continuing path
+            if (!isBlock || ((state == UNKNOWN) || (continuingSense == state))) { // unknown or continuing path
                 // draw center<===>B
                 if (isMain == mainlineB) {
                     g2.setColor(colorB);
@@ -3260,7 +3260,7 @@ public class LayoutTurnout extends LayoutTrack {
                     g2.draw(new Line2D.Double(MathUtil.twoThirdsPoint(pM, pB), pB));
                 }
             }
-            if (!isBlock || (state != Turnout.CLOSED)) { // unknown or diverting path
+            if (!isBlock || (continuingSense != state)) { // unknown or diverting path
                 // draw center<===>C
                 if (isMain == mainlineC) {
                     g2.setColor(colorC);
@@ -3358,7 +3358,7 @@ public class LayoutTurnout extends LayoutTrack {
                 if (isMain == mainlineB) {
                     g2.draw(new Line2D.Double(pML, pBL));
                     g2.draw(new Line2D.Double(pF, pBR));
-                    if (state != Turnout.CLOSED) {  // unknown or diverting path
+                    if (continuingSense != state) {  // unknown or diverting path
                         g2.draw(new Line2D.Double(pSR, pFPR));
                     } else {
                         g2.draw(new Line2D.Double(pAPR, pF));
@@ -3372,7 +3372,7 @@ public class LayoutTurnout extends LayoutTrack {
                     path.quadTo(pMR.getX(), pMR.getY(), pFR.getX(), pFR.getY());
                     path.lineTo(pCR.getX(), pCR.getY());
                     g2.draw(path);
-                    if (state != Turnout.CLOSED) {  // unknown or diverting path
+                    if (continuingSense != state) {  // unknown or diverting path
                         path = new GeneralPath();
                         path.moveTo(pAPL.getX(), pAPL.getY());
                         path.quadTo(pML.getX(), pML.getY(), pF.getX(), pF.getY());
@@ -3395,7 +3395,7 @@ public class LayoutTurnout extends LayoutTrack {
                 if (isMain == mainlineB) {
                     g2.draw(new Line2D.Double(pMR, pBR));
                     g2.draw(new Line2D.Double(pF, pBL));
-                    if (state != Turnout.CLOSED) {  // unknown or diverting path
+                    if (continuingSense != state) {  // unknown or diverting path
                         g2.draw(new Line2D.Double(pSL, pFPL));
                     } else {
                         g2.draw(new Line2D.Double(pAPL, pF));
@@ -3408,7 +3408,7 @@ public class LayoutTurnout extends LayoutTrack {
                     path.quadTo(pML.getX(), pML.getY(), pFL.getX(), pFL.getY());
                     path.lineTo(pCL.getX(), pCL.getY());
                     g2.draw(path);
-                    if (state != Turnout.CLOSED) {  // unknown or diverting path
+                    if (continuingSense != state) {  // unknown or diverting path
                         path = new GeneralPath();
                         path.moveTo(pAPR.getX(), pAPR.getY());
                         path.quadTo(pMR.getX(), pMR.getY(), pF.getX(), pF.getY());
@@ -3435,7 +3435,7 @@ public class LayoutTurnout extends LayoutTrack {
                     path.quadTo(pMR.getX(), pMR.getY(), pFR.getX(), pFR.getY());
                     path.lineTo(pBR.getX(), pBR.getY());
                     g2.draw(path);
-                    if (state != Turnout.CLOSED) {  // unknown or diverting path
+                    if (continuingSense != state) {  // unknown or diverting path
                         path = new GeneralPath();
                         path.moveTo(pAPR.getX(), pAPR.getY());
                         path.quadTo(pMR.getX(), pMR.getY(), pF.getX(), pF.getY());
@@ -3455,7 +3455,7 @@ public class LayoutTurnout extends LayoutTrack {
                     path.lineTo(pCL.getX(), pCL.getY());
                     g2.draw(path);
                     g2.draw(new Line2D.Double(pF, pCR));
-                    if (state != Turnout.CLOSED) {  // unknown or diverting path
+                    if (continuingSense != state) {  // unknown or diverting path
                         path = new GeneralPath();
                         path.moveTo(pSL.getX(), pSL.getY());
                         path.quadTo(pML.getX(), pML.getY(), pFPL.getX(), pFPL.getY());
@@ -4047,7 +4047,7 @@ public class LayoutTurnout extends LayoutTrack {
             LayoutBlock prevLayoutBlock,
             LayoutBlock nextLayoutBlock,
             boolean suppress) {
-        int result = Turnout.UNKNOWN;
+        int result = UNKNOWN;
 
         LayoutBlock layoutBlockA = ((TrackSegment) getConnectA()).getLayoutBlock();
         LayoutBlock layoutBlockB = ((TrackSegment) getConnectB()).getLayoutBlock();
