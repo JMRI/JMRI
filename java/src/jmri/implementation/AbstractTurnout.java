@@ -189,8 +189,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     /**
      * Show whether state is one you can safely run trains over.
      *
-     * @return true if state is a valid one and the known state is the same as
-     *         commanded
+     * @return true iff is a valid one and the known state is the same as commanded
      */
     @Override
     public boolean isConsistentState() {
