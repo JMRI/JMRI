@@ -167,35 +167,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     // that can
     @Override
     public void setKnownState(int s) throws jmri.JmriException {
-        if (_rawState != s) {
-            if (((s == ACTIVE) && (sensorDebounceGoingActive > 0))
-                    || ((s == INACTIVE) && (sensorDebounceGoingInActive > 0))) {
-
-                int oldRawState = _rawState;
-                _rawState = s;
-                if (thr != null) {
-                    thr.interrupt();
-                }
-                if ((restartcount != 0) && (restartcount % 10 == 0)) {
-                    log.warn("Sensor \"{}\" state keeps flapping: {}", getDisplayName(), restartcount);
-                }
-                firePropertyChange("RawState", oldRawState, s);
-                sensorDebounce();
-                return;
-            } else {
-                //we shall try to stop the thread as one of the state changes 
-                //might start the thread, while the other may not.
-                if (thr != null) {
-                    thr.interrupt();
-                }
-                _rawState = s;
-            }
-        }
-        if (_knownState != s) {
-            int oldState = _knownState;
-            _knownState = s;
-            firePropertyChange("KnownState", oldState, _knownState);
-        }
+        setOwnState(s);
     }
 
     /**
