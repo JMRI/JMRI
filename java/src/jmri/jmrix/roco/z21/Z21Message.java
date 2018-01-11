@@ -44,6 +44,15 @@ public class Z21Message extends AbstractMRMessage {
         }
     }
 
+    // from an LocoNetNet message (used for protocol tunneling)
+    public Z21Message(jmri.jmrix.loconet.LocoNetMessage m) {
+        this(m.getNumDataElements() + 4);
+        this.setOpCode(0x00A2);
+        for (int i = 0; i < m.getNumDataElements(); i++) {
+            setElement(i + 4, m.getElement(i));
+        }
+    }
+
     /**
      * This ctor interprets the String as the exact sequence to send,
      * byte-for-byte.
@@ -244,11 +253,38 @@ public class Z21Message extends AbstractMRMessage {
                return Bundle.getMessage("Z21MessageStringVersionRequest");
            case 0x0040:
                return Bundle.getMessage("Z21MessageXpressNetTunnelRequest",new Z21XNetMessage(this).toMonitorString());
+           case 0x00A2:
+               return Bundle.getMessage("Z21LocoNetLanMessage", getLocoNetMessage().toString());
            default:
         }
         return toString();
     }
 
+    // handle LocoNet messages tunneled in Z21 messages
+    boolean isLocoNetTunnelMessage() {
+        return( getOpCode() == 0x00A2);
+    }
+
+    boolean isLocoNetDispatchMessage() {
+       return (getOpCode() == 0x00A3);
+    }
+
+    boolean isLocoNetDetectorMessage() {
+       return (getOpCode() == 0x00A4);
+    }
+
+    jmri.jmrix.loconet.LocoNetMessage getLocoNetMessage() {
+        jmri.jmrix.loconet.LocoNetMessage lnr = null;
+        if (isLocoNetTunnelMessage()) {
+            int i = 4;
+            lnr = new jmri.jmrix.loconet.LocoNetMessage(getLength()-4);
+            for (; i < getLength(); i++) {
+                lnr.setElement(i - 4, getElement(i));
+            }
+        }
+        return lnr;
+    }
+   
     private final static Logger log = LoggerFactory.getLogger(Z21Message.class);
 
 }
