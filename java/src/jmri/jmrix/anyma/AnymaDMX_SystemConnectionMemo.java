@@ -24,7 +24,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * constructor
      */
     public AnymaDMX_SystemConnectionMemo() {
-        this("DX", AnymaDMX_ConnectionTypeList.ANYMA_DMX); // default to "DX" prefix
+        this("D", AnymaDMX_ConnectionTypeList.ANYMA_DMX); // default to "DX" prefix
         log.debug("* Constructor()");
     }
 
