@@ -2535,9 +2535,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             }
 
             for (int i = 0; i < dtos.size(); i++) {
-                if (dtos.get(i) != stod.get(i)) {
+                if (dtos.get(i).getObject() != stod.get(i).getObject()) {
                     if (enableAddRouteLogging) {
-                        log.info("{} != {}: will quit", dtos.get(i), stod.get(i));
+                        log.info("{} != {}: will quit", dtos.get(i).getObject(), stod.get(i).getObject());
                     }
                     return;
                 }
@@ -4238,7 +4238,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * next block then -1 is returned. If more than one route exists to the
      * destination then the route with the lowest count is returned.
      * @param destination final block
-     * @param nextBlock adjcent block 
+     * @param nextBlock adjcent block
      * @return hop count to final, -1 if not available
      */
     public int getBlockHopCount(Block destination, Block nextBlock) {
