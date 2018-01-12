@@ -61,6 +61,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
     }
 
     protected String mastType = "F$olm";
+    boolean consistent = false; // vs inconsistent/initializing
     
     // not sure why this is a CanSystemConnectionMemo in simulator, but it is 
     jmri.jmrix.can.CanSystemConnectionMemo systemMemo;
@@ -107,7 +108,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
         configureAspectTable(system, mast);
     }
 
-    int mastNumber;
+    int mastNumber; // used to tell them apart
     
     protected HashMap<String, OlcbAddress> appearanceToOutput = new HashMap<>();
 
@@ -154,8 +155,17 @@ public class OlcbSignalMast extends AbstractSignalMast {
                 }
             }
         }
-        if (event.equals(unLitId)) {
+        if (event.equals(notLitEventId)) {
             // complete this
+            //
+            //
+            //firePropertyChange("Lit", oldLit, newLit);
+        }
+        if (event.equals(notHeldEventId)) {
+            // complete this
+            //
+            //
+            //firePropertyChange("Held", oldHeld, newHeld);
         }
         return false;
     }
@@ -171,6 +181,9 @@ public class OlcbSignalMast extends AbstractSignalMast {
         firePropertyChange("Aspect", oldAspect, aspect);
     }
 
+    /** 
+     * Always communicates via OpenLCB
+     */
     @Override
     public void setLit(boolean newLit) {
         if (!allowUnLit() || newLit == getLit()) {
@@ -179,20 +192,41 @@ public class OlcbSignalMast extends AbstractSignalMast {
         if (newLit) {
             setAspect(getAspect());
         } else {
-            System.out.println("Produce output event "+unLitId);
+            System.out.println("Produce output event "+notLitEventId);
         }
         super.setLit(newLit);
     }
 
-    OlcbAddress unLitId = null;
-
-    public void setUnlitId(String event) {
-        unLitId = new OlcbAddress(event);
+    /** 
+     * Always communicates via OpenLCB
+     */
+    @Override
+    public void setHeld(boolean newLit) {
+        if (!allowUnLit() || newLit == getLit()) {
+            return;
+        }
+        if (newLit) {
+            setAspect(getAspect());
+        } else {
+            System.out.println("Produce output event "+notLitEventId);
+        }
+        super.setLit(newLit);
     }
 
-    public String getUnlitId() {
-        return unLitId.toCanonicalString();
-    }
+    OlcbAddress litEventId = null;
+    public void setLitEventId(String event) { litEventId = new OlcbAddress(event); }
+    public String getLitEventId() { return litEventId.toCanonicalString(); }
+    OlcbAddress notLitEventId = null;
+    public void setNotLitEventId(String event) { notLitEventId = new OlcbAddress(event); }
+    public String getNotLitEventId() { return notLitEventId.toCanonicalString(); }
+
+    OlcbAddress heldEventId = null;
+    public void setHeldEventId(String event) { heldEventId = new OlcbAddress(event); }
+    public String getHeldEventId() { return heldEventId.toCanonicalString(); }
+    OlcbAddress notHeldEventId = null;
+    public void setNotHeldEventId(String event) { notHeldEventId = new OlcbAddress(event); }
+    public String getNotHeldEventId() { return notHeldEventId.toCanonicalString(); }
+
 
     private final static Logger log = LoggerFactory.getLogger(OlcbSignalMast.class);
 

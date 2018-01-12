@@ -94,7 +94,6 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
      *
      * @param newLit the new value of lit
      */
-    @OverridingMethodsMustInvokeSuper
     @Override
     public void setLit(boolean newLit) {
         boolean oldLit = mLit;
@@ -116,7 +115,6 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
      *
      * @param newHeld the new value of the help property
      */
-    @OverridingMethodsMustInvokeSuper
     @Override
     public void setHeld(boolean newHeld) {
         boolean oldHeld = mHeld;
@@ -125,7 +123,6 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
             // notify listeners, if any
             firePropertyChange("Held", oldHeld, newHeld);
         }
-
     }
 
     DefaultSignalAppearanceMap map;

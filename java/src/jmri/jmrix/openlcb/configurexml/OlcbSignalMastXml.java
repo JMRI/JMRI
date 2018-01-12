@@ -35,14 +35,17 @@ public class OlcbSignalMastXml
         e.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, e);
-        Element unlit = new Element("unlit");
-        if (p.allowUnLit()) {
-            unlit.setAttribute("allowed", "yes");
-            unlit.addContent(new Element("aspect").addContent(p.getUnlitId()));
-        } else {
-            unlit.setAttribute("allowed", "no");
-        }
-        e.addContent(unlit);
+        
+        Element lit = new Element("lit");
+        lit.addContent(new Element("lit").addContent(p.getLitEventId()));
+        lit.addContent(new Element("notlit").addContent(p.getNotLitEventId()));
+        e.addContent(lit);
+        
+        Element held = new Element("held");
+        held.addContent(new Element("held").addContent(p.getHeldEventId()));
+        held.addContent(new Element("notheld").addContent(p.getNotHeldEventId()));
+        e.addContent(held);
+        
         SignalAppearanceMap appMap = p.getAppearanceMap();
         if (appMap != null) {
             java.util.Enumeration<String> aspects = appMap.getAspects();
@@ -84,17 +87,19 @@ public class OlcbSignalMastXml
 
     protected boolean loadCommonOlcbMast(OlcbSignalMast m, Element element) {
         loadCommon(m, element);
-        if (element.getChild("unlit") != null) {
-            Element unlit = element.getChild("unlit");
-            if (unlit.getAttribute("allowed") != null) {
-                if (unlit.getAttribute("allowed").getValue().equals("no")) {
-                    m.setAllowUnLit(false);
-                } else {
-                    m.setAllowUnLit(true);
-                    m.setUnlitId(unlit.getChild("aspect").getValue());
-                }
-            }
+        
+        if (element.getChild("lit") != null) {
+            Element lit = element.getChild("lit");
+            m.setLitEventId(lit.getChild("lit").getValue());
+            m.setNotLitEventId(lit.getChild("notlit").getValue());
         }
+        
+        if (element.getChild("held") != null) {
+            Element held = element.getChild("held");
+            m.setHeldEventId(held.getChild("held").getValue());
+            m.setNotHeldEventId(held.getChild("notheld").getValue());
+        }
+        
         List<Element> list = element.getChildren("aspect");
         for (int i = 0; i < list.size(); i++) {
             Element e = list.get(i);

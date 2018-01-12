@@ -5,9 +5,14 @@
     <olcbsignalmast class="jmri.jmrix.openlcb.configurexml.OlcbSignalMastXml" userName="Olcb Mast 1">
       <systemName>MF$olm:NS-2008:CLS-3-3-hi(1)</systemName>
       <userName>Whithead W2</userName>
-      <unlit allowed="yes">
-        <aspect>1.2.3.4.5.6.7.1</aspect>
-      </unlit>
+      <lit>
+        <lit>1.2.3.4.1.6.7.1</lit>
+        <notlit>1.2.3.4.1.6.7.2</notlit>
+      </lit>
+      <held>
+        <held>1.2.3.4.11.6.7.1</held>
+        <notheld>1.2.3.4.11.6.7.2</notheld>
+      </held>
       <aspect defines="Clear">
         <event>1.2.3.4.5.6.7.1</event>
       </aspect>
@@ -45,9 +50,14 @@
     <olcbsignalmast class="jmri.jmrix.openlcb.configurexml.OlcbSignalMastXml" userName="Olcb Mast 2">
       <systemName>MF$olm:NS-2008:CLS-3-3-hi(10)</systemName>
       <userName>Manion W1</userName>
-      <unlit allowed="yes">
-        <aspect>1.5.3.4.5.6.7.1</aspect>
-      </unlit>
+      <lit>
+        <lit>1.2.3.4.1.7.7.1</lit>
+        <notlit>1.2.3.4.1.7 .7.2</notlit>
+      </lit>
+      <held>
+        <held>1.2.3.4.12.6.7.1</held>
+        <notheld>1.2.3.4.12.6.7.2</notheld>
+      </held>
       <aspect defines="Clear">
         <event>1.5.3.4.5.6.7.1</event>
       </aspect>

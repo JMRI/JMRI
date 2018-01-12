@@ -315,16 +315,26 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="unlit" minOccurs="0" maxOccurs="1">
+      <xs:element name="lit" minOccurs="1" maxOccurs="1">
         <xs:complexType>
+          <xs:annotation>
+            <xs:documentation>Specifies eventsIDs to set lit and not lit</xs:documentation>
+          </xs:annotation>
           <xs:sequence>
-            <xs:element name="aspect" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="lit" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="notlit" type="xs:string" minOccurs="1" maxOccurs="1"/>
           </xs:sequence>
-          <xs:attribute name="allowed"  use="required">
-            <xs:annotation>
-              <xs:documentation>Specifies if the signal can go unlit</xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="held" minOccurs="1" maxOccurs="1">
+        <xs:complexType>
+          <xs:annotation>
+            <xs:documentation>Specifies eventsIDs to set held and not held</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+            <xs:element name="held" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="notheld" type="xs:string" minOccurs="1" maxOccurs="1"/>
+          </xs:sequence>
         </xs:complexType>
       </xs:element>
       <xs:element name="aspect" minOccurs="0" maxOccurs="unbounded">
@@ -334,7 +344,7 @@
           </xs:sequence>
           <xs:attribute name="defines"  use="required">
             <xs:annotation>
-              <xs:documentation>Specifies which appearance the turnout drives</xs:documentation>
+              <xs:documentation>Specifies which appearance corresponds to this EventID</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:complexType>
