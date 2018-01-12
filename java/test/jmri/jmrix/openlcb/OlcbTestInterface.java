@@ -1,5 +1,6 @@
 package jmri.jmrix.openlcb;
 
+import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import jmri.InstanceManager;
@@ -7,10 +8,14 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.ConfigurationManager;
 import jmri.jmrix.can.TestTrafficController;
+
+import org.junit.Assert;
 import org.openlcb.Connection;
 import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
+import org.openlcb.can.CanFrame;
 import org.openlcb.can.CanInterface;
+import org.openlcb.can.GridConnect;
 
 /**
  * Created by bracz on 11/7/16.
@@ -61,6 +66,35 @@ public class OlcbTestInterface {
 
     public void sendMessage(CanMessage msg) {
         canInterface.frameInput().send(OlcbConfigurationManager.convertFromCan(msg));
+    }
+
+    /**
+     * Injects an incoming message from the bus.
+     * @param gridconnectMessage CAN frame in gridconnect format. Can contain multiple frames.
+     */
+    public void sendMessage(String gridconnectMessage) {
+        List<CanFrame> l = GridConnect.parse(gridconnectMessage);
+        for (CanFrame m : l) {
+            canInterface.frameInput().send(m);
+        }
+    }
+
+    /**
+     * Asserts that the last message sent to the bus is a given CAN frame.
+     * @param gridconnectMessage single CAN frame in gridconnect format.
+     */
+    public void assertSentMessage(String gridconnectMessage) {
+        List<CanFrame> l = GridConnect.parse(gridconnectMessage);
+        Assert.assertEquals(1, l.size());
+        Assert.assertEquals(OlcbConfigurationManager.convertToCan(l.get(0)), tc.rcvMessage);
+        tc.rcvMessage = null;
+    }
+
+    /**
+     * Asserts that no message was sent to the bus.
+     */
+    public void assertNoSentMessages() {
+        Assert.assertNull(tc.rcvMessage);
     }
 
     public void flush() {
