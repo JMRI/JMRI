@@ -41,6 +41,20 @@ public class OlcbAddress {
 
     static final int NODEFACTOR = 100000;
 
+    /** 
+     * Construct from OlcbEvent
+     *
+     */
+    public OlcbAddress(EventID e) {
+        byte[] contents = e.getContents();
+        aFrame = new int[contents.length];
+        int i = 0;
+        for (byte b : contents) {
+            aFrame[i++] = b;
+        }
+        aString = toCanonicalString();
+    }
+    
     /**
      * Construct from string without leading system or type letters
      * @param s hex coded string of address

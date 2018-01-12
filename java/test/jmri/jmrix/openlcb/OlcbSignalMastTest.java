@@ -52,17 +52,23 @@ public class OlcbSignalMastTest {
 
         t.setLitEventId("1.2.3.4.5.6.7.1");
         t.setNotLitEventId("1.2.3.4.5.6.7.2");
+        t.setHeldEventId("1.2.3.4.5.6.7.3");
+        t.setNotHeldEventId("1.2.3.4.5.6.7.4");
+        t.setOutputForAppearance("Clear", "1.2.3.4.5.6.7.10");
+        t.setOutputForAppearance("Approach", "1.2.3.4.5.6.7.11");
+        t.setOutputForAppearance("Permissive", "1.2.3.4.5.6.7.12");
+        t.setOutputForAppearance("Stop", "1.2.3.4.5.6.7.13");
         
-        t.consumeEvent(new OlcbAddress("1.2.3.4.5.6.7.1"));
+        Assert.assertEquals("lit defaults true", true, t.getLit());
+        
+        t.consumeEvent(new OlcbAddress("1.2.3.4.5.6.7.2").toEventID());
+        Assert.assertEquals("lit false", false, t.getLit());
+        // and check the IdentifyConsumers result
+        
+        t.consumeEvent(new OlcbAddress("1.2.3.4.5.6.7.1").toEventID());
         Assert.assertEquals("lit true", true, t.getLit());         
         // and check the IdentifyConsumers result
-        
-        
-        t.consumeEvent(new OlcbAddress("1.2.3.4.5.6.7.2"));
-        Assert.assertEquals("lit false", true, t.getLit());
-        // and check the IdentifyConsumers result
-        
-        
+                
                  
     }
  

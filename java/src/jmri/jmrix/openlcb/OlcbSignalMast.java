@@ -1,12 +1,17 @@
 package jmri.jmrix.openlcb;
 
 import java.util.HashMap;
+import javax.annotation.Nonnull;
+
 import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.NmraPacket;
 import jmri.SignalMast;
 import jmri.implementation.AbstractSignalMast;
 import jmri.jmrix.SystemConnectionMemo;
+
+import org.openlcb.EventID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -146,7 +151,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
      * Maybe run through a manager that does a single search to
      * find the relevant OlcbSignalMast(s)?
      */
-    public boolean consumeEvent(OlcbAddress event) {
+    public boolean consumeEvent(@Nonnull EventID event) {
         if (appearanceToOutput.containsValue(event)) {
             for (String aspect : appearanceToOutput.keySet()) {
                 if (appearanceToOutput.get(aspect).equals(event)) {
@@ -155,17 +160,17 @@ public class OlcbSignalMast extends AbstractSignalMast {
                 }
             }
         }
+        if (event.equals(litEventId)) {
+            super.setLit(true);
+        }
         if (event.equals(notLitEventId)) {
-            // complete this
-            //
-            //
-            //firePropertyChange("Lit", oldLit, newLit);
+            super.setLit(false);
+        }
+        if (event.equals(heldEventId)) {
+            super.setHeld(true);
         }
         if (event.equals(notHeldEventId)) {
-            // complete this
-            //
-            //
-            //firePropertyChange("Held", oldHeld, newHeld);
+            super.setHeld(false);
         }
         return false;
     }
@@ -186,46 +191,40 @@ public class OlcbSignalMast extends AbstractSignalMast {
      */
     @Override
     public void setLit(boolean newLit) {
-        if (!allowUnLit() || newLit == getLit()) {
-            return;
-        }
         if (newLit) {
-            setAspect(getAspect());
+            System.out.println("Produce output event "+getLitEventId());
         } else {
-            System.out.println("Produce output event "+notLitEventId);
+            System.out.println("Produce output event "+getNotLitEventId());
         }
-        super.setLit(newLit);
+        // does not call super.setLit because no local state change until Event consumed
     }
 
     /** 
      * Always communicates via OpenLCB
      */
     @Override
-    public void setHeld(boolean newLit) {
-        if (!allowUnLit() || newLit == getLit()) {
-            return;
-        }
-        if (newLit) {
-            setAspect(getAspect());
+    public void setHeld(boolean newHeld) {
+        if (newHeld) {
+            System.out.println("Produce output event "+getHeldEventId());
         } else {
-            System.out.println("Produce output event "+notLitEventId);
+            System.out.println("Produce output event "+getNotHeldEventId());
         }
-        super.setLit(newLit);
+        // does not call super.setHeld because no local state change until Event consumed
     }
 
-    OlcbAddress litEventId = null;
-    public void setLitEventId(String event) { litEventId = new OlcbAddress(event); }
-    public String getLitEventId() { return litEventId.toCanonicalString(); }
-    OlcbAddress notLitEventId = null;
-    public void setNotLitEventId(String event) { notLitEventId = new OlcbAddress(event); }
-    public String getNotLitEventId() { return notLitEventId.toCanonicalString(); }
+    EventID litEventId = null;
+    public void setLitEventId(String event) { litEventId = new OlcbAddress(event).toEventID(); }
+    public String getLitEventId() { return new OlcbAddress(litEventId).toCanonicalString(); }
+    EventID notLitEventId = null;
+    public void setNotLitEventId(String event) { notLitEventId = new OlcbAddress(event).toEventID(); }
+    public String getNotLitEventId() { return new OlcbAddress(notLitEventId).toCanonicalString(); }
 
-    OlcbAddress heldEventId = null;
-    public void setHeldEventId(String event) { heldEventId = new OlcbAddress(event); }
-    public String getHeldEventId() { return heldEventId.toCanonicalString(); }
-    OlcbAddress notHeldEventId = null;
-    public void setNotHeldEventId(String event) { notHeldEventId = new OlcbAddress(event); }
-    public String getNotHeldEventId() { return notHeldEventId.toCanonicalString(); }
+    EventID heldEventId = null;
+    public void setHeldEventId(String event) { heldEventId = new OlcbAddress(event).toEventID(); }
+    public String getHeldEventId() { return new OlcbAddress(heldEventId).toCanonicalString(); }
+    EventID notHeldEventId = null;
+    public void setNotHeldEventId(String event) { notHeldEventId = new OlcbAddress(event).toEventID(); }
+    public String getNotHeldEventId() { return new OlcbAddress(notHeldEventId).toCanonicalString(); }
 
 
     private final static Logger log = LoggerFactory.getLogger(OlcbSignalMast.class);
