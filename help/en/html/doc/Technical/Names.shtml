@@ -189,9 +189,9 @@
 
         <li>D <a href=
         "../../hardware/SRCP/index.shtml">SRCP</a>,
-        <br>D1: Anyma DX512
-        <br>D2: <a href="../../hardware/dccpp/index.shtml">DCC++</a> (sometimes written DCCpp)
-        <br>D3: <a href="../../hardware/dcc4pc/index.shtml">DCC4PC</a>
+        <br>Anyma DX512
+        <br><a href="../../hardware/dccpp/index.shtml">DCC++</a> (previously written DCCpp)
+        <br><a href="../../hardware/dcc4pc/index.shtml">DCC4PC</a>
         </li>
         
         <li>E <a href=
@@ -221,7 +221,7 @@
         and <a href="../../hardware/can/cbus/index.shtml">MERG
         CBUS</a>
         <br><a href="../../hardware/mrc/index.shtml">Model Rectifier Corp (MRC)</a>
-        <br>M2: <a href="../../hardware/marklin/index.shtml">Marklin CS2</a>
+        <br><a href="../../hardware/marklin/index.shtml">Marklin CS2</a>
         </li>
 
         <li>N <a href="../../hardware/nce/NCE.shtml">NCE</a> (also
@@ -234,7 +234,7 @@
         <li>P <a href=
         "../../hardware/powerline/index.shtml">Powerline
         transmission</a>, e.g. X10 and Insteon,
-        <br>P2: Raspberry Pi native pins
+        <br>Raspberry Pi native pins
         </li>
 
         <li>Q <a href="../../hardware/qsi/index.shtml">QSI
@@ -247,7 +247,7 @@
         "../../hardware/sprog/SPROG.shtml">SPROG</a></li>
 
         <li>T <a href="../../hardware/tmcc/index.shtml">Lionel TMCC</a>, 
-        <a href="../../hardware/tams/index.shtml">TAMS</a>
+        <br><a href="../../hardware/tams/index.shtml">TAMS</a>
         </li>
         
         <li>U <a href="../../hardware/ecos/index.shtml">ESU
@@ -458,7 +458,7 @@
           <td>i</td>
           <td>4:3</td>
           <td>(converts to 50)</td>
-          <td>DCCPP50</td>
+          <td>DT50</td>
           <td>node : pin</td>
           <td> </td>
           <td>0</td>
@@ -469,7 +469,7 @@
           <td>o</td>
           <td>12</td>
           <td>ID in internal DCC++ table</td>
-          <td>DCCPP12</td>
+          <td>DT1212</td>
           <td>integer</td>
           <td> </td>
           <td>0</td>

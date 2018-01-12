@@ -24,7 +24,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * constructor
      */
     public AnymaDMX_SystemConnectionMemo() {
-        this("D", AnymaDMX_ConnectionTypeList.ANYMA_DMX); // default to "DX" prefix
+        this("D", AnymaDMX_ConnectionTypeList.ANYMA_DMX); // default to "D" prefix
         log.debug("* Constructor()");
     }
 
@@ -241,7 +241,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * 0 - 127 range, or the channel number is out of the 1 - 512 range, an
      * error message is logged and the null string "" is returned.
      *
-     * @return a system name in the DXaLnnnxxx format
+     * @return a system name in the DaLnnnxxx format
      */
     public String makeSystemName(String type, int nAddress, int channelNum) {
         log.debug("* makeSystemName('{}', {}, {})", type, nAddress, channelNum);
