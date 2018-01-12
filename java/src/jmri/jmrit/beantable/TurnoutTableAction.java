@@ -338,9 +338,9 @@ public class TurnoutTableAction extends AbstractTableAction {
                 } else if (col == EDITCOL) {
                     return true;
                 } else if (col == FORGETCOL) {
-                    return (t instanceof OlcbTurnout);
+                    return true;
                 } else if (col == QUERYCOL) {
-                    return (t instanceof OlcbTurnout);
+                    return true;
                 } else if (col == AUTHCOL) {
                     return (t instanceof OlcbTurnout);
                 } else {
@@ -586,14 +586,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                     }
                     fireTableRowsUpdated(row, row);
                 } else if (col == FORGETCOL) {
-                    if (t instanceof OlcbTurnout) {
-                        ((OlcbTurnout) t).doForgetState();
-                    }
                     t.setCommandedState(Turnout.UNKNOWN);
                 } else if (col == QUERYCOL) {
-                    if (t instanceof OlcbTurnout) {
-                        ((OlcbTurnout) t).doQueryState();
-                    }
+                    t.setCommandedState(Turnout.UNKNOWN);
+                    t.requestUpdateFromLayout();
                 } else if (col == AUTHCOL) {
                     boolean b = ((Boolean) value).booleanValue();
                     if (t instanceof OlcbTurnout) {
