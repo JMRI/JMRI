@@ -2711,6 +2711,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @After
     public void tearDown() throws Exception {
+        ((XNetThrottle)instance).throttleDispose();
         JUnitUtil.tearDown();
     }
 
