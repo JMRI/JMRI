@@ -47,6 +47,7 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
     EventTable.EventTableEntryHolder closedEventTableEntryHolder = null;
 
     private static final boolean DEFAULT_IS_AUTHORITATIVE = true;
+    private static final boolean DEFAULT_LISTEN = true;
     private static final String[] validFeedbackNames = {"MONITORING", "ONESENSOR", "TWOSENSOR",
             "DIRECT"};
     private static final int[] validFeedbackModes = {MONITORING, ONESENSOR, TWOSENSOR, DIRECT};
@@ -265,6 +266,34 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
         }
         return DEFAULT_IS_AUTHORITATIVE;
     }
+
+    /**
+     * @return whether this producer/consumer is always listening to state declaration messages.
+     */
+    public boolean isListeningToStateMessages() {
+        String value = (String) getProperty(OlcbUtils.PROPERTY_LISTEN);
+        if (value != null) {
+            return Boolean.parseBoolean(value);
+        }
+        return DEFAULT_LISTEN;
+    }
+
+    /**
+     * Changes how the turnout reacts to state declaration messages. With listen == true state
+     * declarations will update local state at all times. With listen == false state declarations
+     * will update local state only if local state is unknown.
+     *
+     * @param listen whether we should always listen to state declaration messages.
+     */
+    public void setListeningToStateMessages(boolean listen) {
+        boolean recreate = (listen != isListeningToStateMessages()) && (pc != null);
+        setProperty(OlcbUtils.PROPERTY_LISTEN, Boolean.toString(listen));
+        if (recreate) {
+            finishLoad();
+        }
+    }
+
+
 
     /**
      * {@inheritDoc} 

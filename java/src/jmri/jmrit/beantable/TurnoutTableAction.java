@@ -64,7 +64,6 @@ import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.XTableColumnModel;
 
-import org.apache.http.auth.AUTH;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -156,6 +155,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     static public final int FORGETCOL = DIVERGCOL + 1;
     static public final int QUERYCOL = FORGETCOL + 1;
     static public final int AUTHCOL = QUERYCOL + 1;
+    static public final int LISTENCOL = AUTHCOL + 1;
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
@@ -177,7 +177,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
             @Override
             public int getColumnCount() {
-                return AUTHCOL + 1;
+                return LISTENCOL + 1;
             }
 
             @Override
@@ -211,7 +211,9 @@ public class TurnoutTableAction extends AbstractTableAction {
                 } else if (col == QUERYCOL) {
                     return Bundle.getMessage("StateQueryHeader");
                 } else if (col == AUTHCOL) {
-                    return Bundle.getMessage("StateAuthHeader");
+                    return Bundle.getMessage("OlcbStateAuthHeader");
+                } else if (col == LISTENCOL) {
+                    return Bundle.getMessage("OlcbStateListenHeader");
                 } else if (col == EDITCOL) {
                     return "";
                 } else {
@@ -252,6 +254,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                 } else if (col == QUERYCOL) {
                     return JButton.class;
                 } else if (col == AUTHCOL) {
+                    return Boolean.class;
+                } else if (col == LISTENCOL) {
                     return Boolean.class;
                 } else if (col == VALUECOL && _graphicState) {
                     return JLabel.class; // use an image to show turnout state
@@ -295,7 +299,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                         return new JButton(Bundle.getMessage("StateQueryButton")).getPreferredSize()
                                 .width;
                     case AUTHCOL:
-                        return new JTextField(Bundle.getMessage("StateAuthHeader").length())
+                        return new JTextField(Bundle.getMessage("OlcbStateAuthHeader").length())
+                                .getPreferredSize().width;
+                    case LISTENCOL:
+                        return new JTextField(Bundle.getMessage("OlcbStateListenHeader").length())
                                 .getPreferredSize().width;
                     default:
                         super.getPreferredWidth(col);
@@ -342,6 +349,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                 } else if (col == QUERYCOL) {
                     return true;
                 } else if (col == AUTHCOL) {
+                    return (t instanceof OlcbTurnout);
+                } else if (col == LISTENCOL) {
                     return (t instanceof OlcbTurnout);
                 } else {
                     return super.isCellEditable(row, col);
@@ -480,6 +489,11 @@ public class TurnoutTableAction extends AbstractTableAction {
                         return ((OlcbTurnout) t).isAuthoritative();
                     }
                     return Boolean.FALSE;
+                } else if (col == LISTENCOL) {
+                    if (t instanceof OlcbTurnout) {
+                        return ((OlcbTurnout) t).isListeningToStateMessages();
+                    }
+                    return Boolean.FALSE;
                 }
                 return super.getValueAt(row, col);
             }
@@ -595,6 +609,11 @@ public class TurnoutTableAction extends AbstractTableAction {
                     if (t instanceof OlcbTurnout) {
                         ((OlcbTurnout) t).setAuthoritative(b);
                     }
+                } else if (col == LISTENCOL) {
+                    boolean b = ((Boolean) value).booleanValue();
+                    if (t instanceof OlcbTurnout) {
+                        ((OlcbTurnout) t).setListeningToStateMessages(b);
+                    }
                 } else if (col == VALUECOL && _graphicState) { // respond to clicking on ImageIconRenderer CellEditor
                     clickOn(t);
                     fireTableRowsUpdated(row, row);
@@ -687,6 +706,15 @@ public class TurnoutTableAction extends AbstractTableAction {
                 columnModel.setColumnVisible(column, false);
                 column = columnModel.getColumnByModelIndex(AUTHCOL);
                 columnModel.setColumnVisible(column, false);
+                EnablingCheckboxRenderer r = new EnablingCheckboxRenderer();
+                r.setToolTipText(Bundle.getMessage("OlcbStateAuthToolTip"));
+                column.setCellRenderer(r);
+
+                column = columnModel.getColumnByModelIndex(LISTENCOL);
+                columnModel.setColumnVisible(column, false);
+                r = new EnablingCheckboxRenderer();
+                r.setToolTipText(Bundle.getMessage("OlcbStateListenToolTip"));
+                column.setCellRenderer(r);
 
                 super.configureTable(table);
             }
@@ -1430,7 +1458,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     JCheckBox showLockBox = new JCheckBox(Bundle.getMessage("ShowLockInfo"));
     JCheckBox showTurnoutSpeedBox = new JCheckBox(Bundle.getMessage("ShowTurnoutSpeedDetails"));
     JCheckBox doAutomationBox = new JCheckBox(Bundle.getMessage("AutomaticRetry"));
-    JCheckBox showOpenLCBBox = new JCheckBox(Bundle.getMessage("ShowOpenLCB"));
+    JCheckBox showStateBox = new JCheckBox(Bundle.getMessage("ShowState"));
 
     /**
      * @return true if this manager is an OpenLCB manager or it is a proxy manager with an OpenLCB manager inside.
@@ -1490,17 +1518,15 @@ public class TurnoutTableAction extends AbstractTableAction {
                 showTurnoutSpeedChanged();
             }
         });
-        if (isOpenLCBManager()) {
-            f.addToBottomBox(showOpenLCBBox, this.getClass().getName());
-            showOpenLCBBox.setToolTipText(Bundle.getMessage("OpenLCBBoxToolTip"));
-            showOpenLCBBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    showOpenLCBChanged();
-                }
-            });
-        }
-        showOpenLCBChanged();
+        f.addToBottomBox(showStateBox, this.getClass().getName());
+        showStateBox.setToolTipText(Bundle.getMessage("StateBoxToolTip"));
+        showStateBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showStateChanged();
+            }
+        });
+        showStateChanged();
     }
 
     /**
@@ -1551,17 +1577,15 @@ public class TurnoutTableAction extends AbstractTableAction {
                 showTurnoutSpeedChanged();
             }
         });
-        if (isOpenLCBManager()) {
-            f.addToBottomBox(showOpenLCBBox, systemPrefix);
-            showOpenLCBBox.setToolTipText(Bundle.getMessage("OpenLCBBoxToolTip"));
-            showOpenLCBBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    showOpenLCBChanged();
-                }
-            });
-        }
-        showOpenLCBChanged();
+        f.addToBottomBox(showStateBox, systemPrefix);
+        showStateBox.setToolTipText(Bundle.getMessage("StateBoxToolTip"));
+        showStateBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showStateChanged();
+            }
+        });
+        showStateChanged();
     }
 
     void showFeedbackChanged() {
@@ -1600,15 +1624,18 @@ public class TurnoutTableAction extends AbstractTableAction {
         columnModel.setColumnVisible(column, showTurnoutSpeed);
     }
 
-    public void showOpenLCBChanged() {
-        boolean showOpenLCB = showOpenLCBBox.isSelected();
+    public void showStateChanged() {
+        boolean showState = showStateBox.isSelected();
+        boolean showOpenLCB = showState && isOpenLCBManager();
         XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
 
         TableColumn column = columnModel.getColumnByModelIndex(FORGETCOL);
-        columnModel.setColumnVisible(column, showOpenLCB);
+        columnModel.setColumnVisible(column, showState);
         column = columnModel.getColumnByModelIndex(QUERYCOL);
-        columnModel.setColumnVisible(column, showOpenLCB);
+        columnModel.setColumnVisible(column, showState);
         column = columnModel.getColumnByModelIndex(AUTHCOL);
+        columnModel.setColumnVisible(column, showOpenLCB);
+        column = columnModel.getColumnByModelIndex(LISTENCOL);
         columnModel.setColumnVisible(column, showOpenLCB);
     }
     /**
