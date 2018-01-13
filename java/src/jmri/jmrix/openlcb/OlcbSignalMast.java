@@ -134,6 +134,10 @@ public class OlcbSignalMast extends AbstractSignalMast {
         litMachine = new StateMachine<Boolean>(connection, node, Boolean.TRUE);
         heldMachine = new StateMachine<Boolean>(connection, node, Boolean.FALSE);
         aspectMachine = new StateMachine<String>(connection, node, getAspect());
+        
+        ((OlcbInterface)systemMemo.get(OlcbInterface.class)).registerMessageListener(litMachine);
+        ((OlcbInterface)systemMemo.get(OlcbInterface.class)).registerMessageListener(heldMachine);
+        ((OlcbInterface)systemMemo.get(OlcbInterface.class)).registerMessageListener(aspectMachine);
     }
 
     int mastNumber; // used to tell them apart
