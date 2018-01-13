@@ -271,6 +271,23 @@ public class OlcbTurnoutTest extends TestCase {
         assertEquals(Turnout.CLOSED, s.getKnownState());
     }
 
+    public void testQueryState() {
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.finishLoad();
+
+        t.tc.rcvMessage = null;
+        s.requestUpdateFromLayout();
+        t.flush();
+        t.assertSentMessage(":X198F4C4CN0102030405060708;");
+
+        s.setFeedbackMode(Turnout.DIRECT);
+        t.flush();
+        t.tc.rcvMessage = null;
+        s.requestUpdateFromLayout();
+        t.flush();
+        t.assertNoSentMessages();
+    }
+
     public void testEventTable() {
         OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.finishLoad();
