@@ -114,7 +114,8 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
     }
 
     // request a stuatus update from the layout.
-    protected void requestUpdateFromLayout() {
+    @Override
+    public void requestUpdateFromLayout() {
         // create the message
         String text = "TURNOUT " + transmitName + "\n";
         // create and send the message itself
