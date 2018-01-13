@@ -10,6 +10,7 @@ import org.openlcb.EventID;
 import org.openlcb.EventState;
 import org.openlcb.Message;
 import org.openlcb.NodeID;
+import org.openlcb.OlcbInterface;
 import org.openlcb.ProducerConsumerEventReportMessage;
 import org.openlcb.IdentifyConsumersMessage;
 import org.openlcb.ConsumerIdentifiedMessage;
@@ -59,31 +60,6 @@ public class OlcbSignalMastTest {
         t.setNotHeldEventId("1.2.3.4.5.6.7.4");
         Assert.assertEquals("lit", "x0102030405060704", t.getNotHeldEventId());  
     }
-
-    @Test
-    public void testLitStateTransitions() {
-        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs(1)");
-
-        t.setLitEventId("1.2.3.4.5.6.7.1");
-        t.setNotLitEventId("1.2.3.4.5.6.7.2");
-        t.setHeldEventId("1.2.3.4.5.6.7.3");
-        t.setNotHeldEventId("1.2.3.4.5.6.7.4");
-        t.setOutputForAppearance("Clear", "1.2.3.4.5.6.7.10");
-        t.setOutputForAppearance("Approach", "1.2.3.4.5.6.7.11");
-        t.setOutputForAppearance("Permissive", "1.2.3.4.5.6.7.12");
-        t.setOutputForAppearance("Stop", "1.2.3.4.5.6.7.13");
-        
-        Assert.assertEquals("lit defaults true", true, t.getLit());
-        
-        t.consumeEvent(new OlcbAddress("1.2.3.4.5.6.7.2").toEventID());
-        Assert.assertEquals("lit false", false, t.getLit());
-        // and check the IdentifyConsumers result
-        
-        t.consumeEvent(new OlcbAddress("1.2.3.4.5.6.7.1").toEventID());
-        Assert.assertEquals("lit true", true, t.getLit());         
-        // and check the IdentifyConsumers result
-                       
-    }
  
     @Test
     public void testReceiveLitPcerMessage() {
@@ -101,13 +77,15 @@ public class OlcbSignalMastTest {
         Assert.assertEquals("lit defaults true", true, t.getLit());
         
         org.openlcb.Message msg;
-        msg = new org.openlcb.ProducerConsumerEventReportMessage(null, new OlcbAddress("1.2.3.4.5.6.7.2").toEventID());
+        msg = new org.openlcb.ProducerConsumerEventReportMessage(new NodeID(), new OlcbAddress("1.2.3.4.5.6.7.2").toEventID());
         t.handleMessage(msg);
         Assert.assertEquals("lit false", false, t.getLit());
         
-        msg = new org.openlcb.ProducerConsumerEventReportMessage(null, new OlcbAddress("1.2.3.4.5.6.7.1").toEventID());
+        msg = new org.openlcb.ProducerConsumerEventReportMessage(new NodeID(), new OlcbAddress("1.2.3.4.5.6.7.1").toEventID());
         t.handleMessage(msg);
         Assert.assertEquals("lit true", true, t.getLit());                           
+
+        Assert.assertEquals("none sent", 0, messages.size());
     }
 
     @Test
@@ -126,8 +104,12 @@ public class OlcbSignalMastTest {
         Assert.assertEquals("lit defaults true", true, t.getLit());
         
         org.openlcb.Message msg;
-        msg = new org.openlcb.IdentifyProducersMessage(null, new OlcbAddress("1.2.3.4.5.6.7.2").toEventID());
+        msg = new org.openlcb.IdentifyProducersMessage(new NodeID(), new OlcbAddress("1.2.3.4.5.6.7.2").toEventID());
         t.handleMessage(msg);
+
+        Assert.assertEquals("lit still true", true, t.getLit());
+
+        Assert.assertEquals("reply sent", 1, messages.size());
     }
 
     @Test
@@ -146,31 +128,33 @@ public class OlcbSignalMastTest {
         Assert.assertEquals("lit defaults true", true, t.getLit());
         
         org.openlcb.Message msg;
-        msg = new org.openlcb.ProducerIdentifiedMessage(null, new OlcbAddress(t.getNotLitEventId()).toEventID(), org.openlcb.EventState.Invalid);
+        msg = new org.openlcb.ProducerIdentifiedMessage(new NodeID(), new OlcbAddress(t.getNotLitEventId()).toEventID(), org.openlcb.EventState.Invalid);
         t.handleMessage(msg);
         Assert.assertEquals("lit true", true, t.getLit()); // default
-        msg = new org.openlcb.ProducerIdentifiedMessage(null, new OlcbAddress(t.getNotLitEventId()).toEventID(), org.openlcb.EventState.Unknown);
+        msg = new org.openlcb.ProducerIdentifiedMessage(new NodeID(), new OlcbAddress(t.getNotLitEventId()).toEventID(), org.openlcb.EventState.Unknown);
         t.handleMessage(msg);
         Assert.assertEquals("lit true", true, t.getLit());
-        msg = new org.openlcb.ProducerIdentifiedMessage(null, new OlcbAddress("FF.2.3.4.5.6.7.2").toEventID(), org.openlcb.EventState.Valid); // wrong event
+        msg = new org.openlcb.ProducerIdentifiedMessage(new NodeID(), new OlcbAddress("FF.2.3.4.5.6.7.2").toEventID(), org.openlcb.EventState.Valid); // wrong event
         t.handleMessage(msg);
         Assert.assertEquals("lit true", true, t.getLit());
-        msg = new org.openlcb.ProducerIdentifiedMessage(null, new OlcbAddress(t.getNotLitEventId()).toEventID(), org.openlcb.EventState.Valid);
+        msg = new org.openlcb.ProducerIdentifiedMessage(new NodeID(), new OlcbAddress(t.getNotLitEventId()).toEventID(), org.openlcb.EventState.Valid);
         t.handleMessage(msg);
         Assert.assertEquals("lit false", false, t.getLit());
         
-        msg = new org.openlcb.ProducerIdentifiedMessage(null, new OlcbAddress(t.getLitEventId()).toEventID(), org.openlcb.EventState.Invalid);
+        msg = new org.openlcb.ProducerIdentifiedMessage(new NodeID(), new OlcbAddress(t.getLitEventId()).toEventID(), org.openlcb.EventState.Invalid);
         t.handleMessage(msg);
         Assert.assertEquals("lit false", false, t.getLit());                           
-        msg = new org.openlcb.ProducerIdentifiedMessage(null, new OlcbAddress(t.getLitEventId()).toEventID(), org.openlcb.EventState.Unknown);
+        msg = new org.openlcb.ProducerIdentifiedMessage(new NodeID(), new OlcbAddress(t.getLitEventId()).toEventID(), org.openlcb.EventState.Unknown);
         t.handleMessage(msg);
         Assert.assertEquals("lit false", false, t.getLit());                           
-        msg = new org.openlcb.ProducerIdentifiedMessage(null, new OlcbAddress("FF.2.3.4.5.6.7.1").toEventID(), org.openlcb.EventState.Valid); // wrong event
+        msg = new org.openlcb.ProducerIdentifiedMessage(new NodeID(), new OlcbAddress("FF.2.3.4.5.6.7.1").toEventID(), org.openlcb.EventState.Valid); // wrong event
         t.handleMessage(msg);
         Assert.assertEquals("lit false", false, t.getLit());                           
-        msg = new org.openlcb.ProducerIdentifiedMessage(null, new OlcbAddress(t.getLitEventId()).toEventID(), org.openlcb.EventState.Valid);
+        msg = new org.openlcb.ProducerIdentifiedMessage(new NodeID(), new OlcbAddress(t.getLitEventId()).toEventID(), org.openlcb.EventState.Valid);
         t.handleMessage(msg);
         Assert.assertEquals("lit true", true, t.getLit());                           
+
+        Assert.assertEquals("none sent", 0, messages.size());
     }
 
     enum States2 { A, B };
@@ -206,6 +190,8 @@ public class OlcbSignalMastTest {
         machine.setEventForState(States2.A, new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}));
         machine.setEventForState(States2.B, new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}));
 
+        Assert.assertEquals("none sent", 0, messages.size());
+        
         machine.handleIdentifyEvents( new IdentifyEventsMessage(new NodeID(), new NodeID()), null); 
         Assert.assertEquals("no reply if wrong address", 0, messages.size());
         
@@ -252,6 +238,7 @@ public class OlcbSignalMastTest {
         Assert.assertEquals("A event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}), machine.getEventForState("A"));
         Assert.assertEquals("B event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}), machine.getEventForState("B"));
         
+        Assert.assertEquals("none sent", 0, messages.size());
         machine.setState("A");
         Assert.assertEquals("still starting state", "B", machine.getState());
         Assert.assertEquals("one sent", 1, messages.size());
@@ -270,6 +257,8 @@ public class OlcbSignalMastTest {
         
         machine.setEventForState("A", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}));
         machine.setEventForState("B", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}));
+
+        Assert.assertEquals("none sent", 0, messages.size());
 
         machine.handleIdentifyEvents( new IdentifyEventsMessage(new NodeID(), new NodeID()), null); 
         Assert.assertEquals("no reply if wrong address", 0, messages.size());
@@ -315,8 +304,6 @@ public class OlcbSignalMastTest {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
         
-        new OlcbSystemConnectionMemo(); // this self-registers as 'M'
-
         messages = new java.util.ArrayList<>();
         connection = new AbstractConnection() {
             @Override
@@ -324,6 +311,13 @@ public class OlcbSignalMastTest {
                 messages.add(msg);
             }
         };
+
+        OlcbSystemConnectionMemo memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
+        memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
+        memo.setInterface(new OlcbInterface(nodeID, connection));
+        
+        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        messages = new java.util.ArrayList<>();
     }
 
     @After

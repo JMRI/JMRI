@@ -15,6 +15,7 @@ import org.openlcb.EventID;
 import org.openlcb.EventState;
 import org.openlcb.Message;
 import org.openlcb.NodeID;
+import org.openlcb.OlcbInterface;
 import org.openlcb.ProducerConsumerEventReportMessage;
 import org.openlcb.IdentifyConsumersMessage;
 import org.openlcb.ConsumerIdentifiedMessage;
@@ -80,6 +81,9 @@ public class OlcbSignalMast extends AbstractSignalMast {
     StateMachine<Boolean> litMachine;
     StateMachine<Boolean> heldMachine;
     StateMachine<String> aspectMachine;
+    
+    NodeID node;
+    Connection connection;
         
     // not sure why this is a CanSystemConnectionMemo in simulator, but it is 
     jmri.jmrix.can.CanSystemConnectionMemo systemMemo;
@@ -99,10 +103,10 @@ public class OlcbSignalMast extends AbstractSignalMast {
 
             for (SystemConnectionMemo memo : memoList) {
                 if (memo.getSystemPrefix().equals(systemPrefix)) {
-                    if (memo instanceof OlcbSystemConnectionMemo) {
-                        systemMemo = (OlcbSystemConnectionMemo) memo;
+                    if (memo instanceof jmri.jmrix.can.CanSystemConnectionMemo) {
+                        systemMemo = (jmri.jmrix.can.CanSystemConnectionMemo) memo;
                     } else {
-                        log.error("Can't create mast \""+systemName+"\" because system \"" + systemPrefix + "\" is not OlcbSystemConnectionMemo but rather "+memo.getClass());
+                        log.error("Can't create mast \""+systemName+"\" because system \"" + systemPrefix + "\" is not CanSystemConnectionMemo but rather "+memo.getClass());
                     }
                     break;
                 }
@@ -111,7 +115,8 @@ public class OlcbSignalMast extends AbstractSignalMast {
             if (systemMemo == null) {
                 log.error("No OpenLCB connection found for system prefix \"" + systemPrefix + "\", so mast \""+systemName+"\" will not function");
             }
-            
+            node = ((OlcbInterface)systemMemo.get(OlcbInterface.class)).getNodeId();
+            connection = ((OlcbInterface)systemMemo.get(OlcbInterface.class)).getOutputConnection();
         }
         String system = parts[1];
         String mast = parts[2];
@@ -126,8 +131,8 @@ public class OlcbSignalMast extends AbstractSignalMast {
         configureSignalSystemDefinition(system);
         configureAspectTable(system, mast);
 
-        litMachine = new StateMachine<Boolean>(connection, node, Boolean.True);
-        heldMachine = new StateMachine<Boolean>(connection, node, Boolean.False);
+        litMachine = new StateMachine<Boolean>(connection, node, Boolean.TRUE);
+        heldMachine = new StateMachine<Boolean>(connection, node, Boolean.FALSE);
         aspectMachine = new StateMachine<String>(connection, node, getAspect());
     }
 
@@ -138,12 +143,12 @@ public class OlcbSignalMast extends AbstractSignalMast {
     }
 
     public String getOutputForAppearance(String appearance) {
-        String retval = aspectMachine.getEventForState(appearance);
+        EventID retval = aspectMachine.getEventForState(appearance);
         if (retval == null) {
             log.error("Trying to get appearance " + appearance + " but it has not been configured");
             return "";
         }
-        return retval;
+        return new OlcbAddress(retval).toString();
     }
 
     @Override
@@ -178,13 +183,12 @@ public class OlcbSignalMast extends AbstractSignalMast {
      */
     @Override
     public void setLit(boolean newLit) {
-        litInitialized = true;
-        if (newLit) {
-            log.debug("Produce lit event {}", litEventId);
-        } else {
-            log.debug("Produce not lit event {}", notLitEventId);
-        }
+        litMachine.setState(newLit);
         // does not call super.setLit because no local state change until Event consumed
+    }
+    @Override
+    public boolean getLit() {
+        return litMachine.getState();
     }
 
     /** 
@@ -192,23 +196,23 @@ public class OlcbSignalMast extends AbstractSignalMast {
      */
     @Override
     public void setHeld(boolean newHeld) {
-        if (newHeld) {
-            System.out.println("Produce output event "+getHeldEventId());
-        } else {
-            System.out.println("Produce output event "+getNotHeldEventId());
-        }
+        heldMachine.setState(newHeld);
         // does not call super.setHeld because no local state change until Event consumed
     }
+    @Override
+    public boolean getHeld() {
+        return heldMachine.getState();
+    }
 
-    public void setLitEventId(String event) { litMachine.setEventForState(Boolean.True, new OlcbAddress(event).toEventID()); }
-    public String getLitEventId() { return new OlcbAddress(litMachine.getEventForState(Boolean.True)).toCanonicalString(); }
-    public void setNotLitEventId(String event) { litMachine.setEventForState(Boolean.False, new OlcbAddress(event).toEventID()); }
-    public String getNotLitEventId() { return new OlcbAddress(litMachine.getEventForState(Boolean.False)).toCanonicalString(); }
+    public void setLitEventId(String event) { litMachine.setEventForState(Boolean.TRUE, new OlcbAddress(event).toEventID()); }
+    public String getLitEventId() { return new OlcbAddress(litMachine.getEventForState(Boolean.TRUE)).toCanonicalString(); }
+    public void setNotLitEventId(String event) { litMachine.setEventForState(Boolean.FALSE, new OlcbAddress(event).toEventID()); }
+    public String getNotLitEventId() { return new OlcbAddress(litMachine.getEventForState(Boolean.FALSE)).toCanonicalString(); }
 
-    public void setHeldEventId(String event) { heldlitMachine.setEventForState(Boolean.True, new OlcbAddress(event).toEventID()); }
-    public String getHeldEventId() { return new OlcbAddress(heldMachine.getEventForState(Boolean.True)).toCanonicalString(); }
-    public void setNotHeldEventId(String event) { heldMachine.setEventForState(Boolean.False, new OlcbAddress(event).toEventID()); }
-    public String getNotHeldEventId() { return new OlcbAddress(heldMachine.getEventForState(Boolean.False)).toCanonicalString(); }
+    public void setHeldEventId(String event) { heldMachine.setEventForState(Boolean.TRUE, new OlcbAddress(event).toEventID()); }
+    public String getHeldEventId() { return new OlcbAddress(heldMachine.getEventForState(Boolean.TRUE)).toCanonicalString(); }
+    public void setNotHeldEventId(String event) { heldMachine.setEventForState(Boolean.FALSE, new OlcbAddress(event).toEventID()); }
+    public String getNotHeldEventId() { return new OlcbAddress(heldMachine.getEventForState(Boolean.FALSE)).toCanonicalString(); }
 
     
 
