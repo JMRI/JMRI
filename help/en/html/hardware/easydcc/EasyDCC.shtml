@@ -99,7 +99,7 @@
         <li>Select "EasyDCC via Serial" as the System Connection.
         You can then select the proper serial port from the
         drop-down list under Settings.</li>
-        <li>Accept the suggested Connection Name and prefix,
+        <li>Accept the suggested Connection Prefix and Name,
         or replace it with a more fitting one. Make sure it is unique.</li>
         <li>Under Additional Connection Settings, the baud rate box
         will be fixed at 9,600 baud.</li>

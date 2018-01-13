@@ -29,7 +29,7 @@
       <h1>Hardware Support: Fleischmann/Roco z21/Z21</h1>
 
       <p>The Roco z21/Z21 is a command stations with support for
-      LocoNet,R-Bus and XPressNet devices and it includes a built
+      LocoNet, R-Bus and XPressNet devices and it includes a built
       in Ethernet port. The device is also sold under the
       Fleischmann name.</p>
 
@@ -68,15 +68,14 @@
 
       <h2>Supported Hardware</h2>
 
-      <p>Roco has sells two devices it sells as the White Z21 and
-      the Black Z21. The White Z21 is also sometimes refered to as
+      <p>Roco has two devices it sells as the White Z21 and
+      the Black Z21. The White Z21 is also sometimes referred to as
       the z21. Both devices support connections via the Ethernet
       Port, to R-Bus Devices, and to XPressNet devices. The Black
       Z21 also supports connections via LocoNet and Zimo's CAN
       bus.</p>
 
-      <p><a name="Limitations" id="Limitations"></a></p>
-
+      <a name="Limitations" id="Limitations"></a>
       <h2>Limitations</h2>
 
       <div class="list">
@@ -109,8 +108,9 @@
             this time.</p>
           </dd>
         </dl>
-      </div><a name="connecting" id="connecting"></a>
+      </div>
 
+      <a name="connecting" id="connecting"></a>
       <h2>Connecting</h2><a name="RocoZ21Ethernet" id=
       "RocoZ21Ethernet"></a>
 
@@ -145,8 +145,9 @@
         program to quit, click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
-      </ol><a name="RocoZ21Simulator" id="RocoZ21Simulator"></a>
+      </ol>
 
+      <a name="RocoZ21Simulator" id="RocoZ21Simulator"></a>
       <h3>Connecting to the Roco Z21 Simulator</h3>
 
       <ol>
@@ -185,9 +186,9 @@
 
       <p>In addition to the Z21 specific menu, you will also find
       the Z21XPressNet menu, which contains the same XPressNet
-      tools found on any XPressNet system. <a name="documentation"
-      id="documentation"></a></p>
+      tools found on any XPressNet system.</p>
 
+      <a name="documentation" id="documentation"></a>
       <h2>Documentation</h2>
 
       <h3>JMRI Help</h3>
@@ -202,7 +203,8 @@
       <h3>Credits</h3>
 
       <p>Thanks to Paul Bender and others for implementing Z21
-      Support. <!--#include virtual="/Footer" --></p>
+      Support.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

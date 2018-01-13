@@ -292,6 +292,11 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
                 reply = new SprogReply(replyString);
                 break;
 
+            case 'M':
+                log.debug("Mode Word detected");
+                reply = new SprogReply("P>M=h800\n"); // default mode reply
+                break;
+
             case 'S':
                 log.debug("getStatus detected");
                 reply = new SprogReply("S\n");
