@@ -293,8 +293,6 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
         }
     }
 
-
-
     /**
      * {@inheritDoc} 
      * 
