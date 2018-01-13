@@ -72,9 +72,15 @@
 
         <li>Conditionals (for logiX, although these are not entirely named beans)</li>
 
+        <li>signal mast Groups</li>
+        
         <li>signal Heads</li>
+        
+        <li>signal masts (F, for some reason)</li>
 
         <li>Lights (a type of output)</li>
+
+        <li>logiX</li>
 
         <li>Memories</li>
 
@@ -822,6 +828,20 @@
       <!-- this table is maintained on the help/en/html/doc/Technical/Names.shtml based on information from the
       Hardware help pages by Egbert Broerse @silverailscolo July 2017 -->
 
+    <h3>Some Type-Specific Information</h2>
+    
+    <p><b>Block</b> system names are all upper case, have no trailing whitespace and start with IM.
+    
+    <p><b>Memory</b> system names are all upper case, have no trailing whitespace and start with IM.
+        
+    <p><b>SignalGroup</b> system names are all upper case and have no trailing whitespace.
+                        For historical reasons, they're not required to have a system prefix or 
+                        type letter; the example name is "R12".  This might change, so
+                        using "IG" at the start is recommended.
+
+    <p><b>SignalHead</b> system names are all upper case, have no trailing whitespace and mostly, but not always, start with IH.
+                         
+    
       <h2>Naming Conventions For Automated Use</h2>Some
       higher-level constructs create their own items. For example,
       a "Sensor Group" is really just a collection of Routes that
