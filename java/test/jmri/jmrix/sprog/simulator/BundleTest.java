@@ -1,4 +1,4 @@
-package jmri.jmrix.sprog.serialdriver;
+package jmri.jmrix.sprog.simulator;
 
 
 import org.junit.Assert;

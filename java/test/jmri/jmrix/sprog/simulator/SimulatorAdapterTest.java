@@ -1,4 +1,4 @@
-package jmri.jmrix.sprog.serialdriver.configurexml;
+package jmri.jmrix.sprog.simulator;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -7,16 +7,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the ConnectionConfigXml class.
+ * Tests for sprog SimulatorAdapter.
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class ConnectionConfigXmlTest {
+public class SimulatorAdapterTest {
 
-    @Test
-    public void testCtor(){
-      Assert.assertNotNull("ConnectionConfigXml constructor",new ConnectionConfigXml());
-    }
+   @Test
+   public void ConstructorTest(){
+       SimulatorAdapter a = new SimulatorAdapter();
+       Assert.assertNotNull(a);
+   }
 
     // The minimal setup for log4J
     @Before
@@ -30,4 +31,3 @@ public class ConnectionConfigXmlTest {
     }
 
 }
-
