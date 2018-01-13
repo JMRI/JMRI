@@ -1,22 +1,24 @@
-package jmri.jmrix.easydcc.simulator;
+package jmri.jmrix.sprog.simulator;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import jmri.jmrix.easydcc.EasyDccMessage;
-import jmri.jmrix.easydcc.EasyDccPortController; // no special xSimulatorController
-import jmri.jmrix.easydcc.EasyDccReply;
-import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
-import jmri.jmrix.easydcc.EasyDccTrafficController;
+import jmri.jmrix.sprog.SprogCommandStation;
+import jmri.jmrix.sprog.SprogConstants.SprogMode;
+import jmri.jmrix.sprog.SprogMessage;
+import jmri.jmrix.sprog.SprogPortController; // no special xSimulatorController
+import jmri.jmrix.sprog.SprogReply;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
+import jmri.jmrix.sprog.SprogTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide access to a simulated EasyDCC system.
+ * Provide access to a simulated SPROG system.
  * <p>
- * Currently, the EasyDCC SimulatorAdapter reacts to commands sent from the user interface
+ * Currently, the SPROG SimulatorAdapter reacts to commands sent from the user interface
  * with an appropriate reply message.
  * Based on jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter / DCCppSimulatorAdapter 2017
  * <p>
@@ -25,25 +27,31 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender, Copyright (C) 2009-2010
  * @author Mark Underwood, Copyright (C) 2015
- * @author Egbert Broerse, Copyright (C) 2017
+ * @author Egbert Broerse, Copyright (C) 2018
  */
-public class SimulatorAdapter extends EasyDccPortController implements jmri.jmrix.SerialPortAdapter, Runnable {
+public class SimulatorAdapter extends SprogPortController implements Runnable {
 
     // private control members
     private boolean opened = false;
     private Thread sourceThread;
-
-    final static int SENSOR_MSG_RATE = 10;
+    private SprogTrafficController control;
 
     private boolean outputBufferEmpty = true;
     private boolean checkBuffer = true;
+    private boolean trackPowerState = false;
+
     // Simulator responses
-    char EDC_OPS = 0x4F;
-    char EDC_PROG = 0x50;
+    String SPR_OK = "OK";
+    String SPR_NO = "No Ack";
+    String SPR_PR = "\nP> "; // prompt
 
     public SimulatorAdapter() {
-        super(new EasyDccSystemConnectionMemo("E", "EasyDCC Simulator")); // pass customized user name
-        setManufacturer(jmri.jmrix.easydcc.EasyDccConnectionTypeList.EASYDCC);
+        super(new SprogSystemConnectionMemo(SprogMode.SERVICE)); // uses default user name, suppose SERVICE mode, not OPS
+        setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
+        this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogSimulatorTitle"));
+        // create the traffic controller
+        control = new SprogTrafficController(this.getSystemConnectionMemo());
+        this.getSystemConnectionMemo().setSprogTrafficController(control);
     }
 
     @Override
@@ -93,23 +101,27 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
     }
 
     /**
-     * Set up all of the other objects to operate with an EasyDccSimulator
-     * connected to this port.
+     * Set up all of the other objects to operate with a Sprog Simulator.
      */
     @Override
     public void configure() {
         // connect to the traffic controller
-        log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
-        EasyDccTrafficController control = new EasyDccTrafficController(getSystemConnectionMemo());
-        //compare with: XNetTrafficController packets = new XNetPacketizer(new LenzCommandStation());
-        control.connectPort(this);
-        this.getSystemConnectionMemo().setEasyDccTrafficController(control);
-        // do the common manager config
+        this.getSystemConnectionMemo().getSprogTrafficController().connectPort(this);
+
+        this.getSystemConnectionMemo().configureCommandStation(); // for OPS mode
         this.getSystemConnectionMemo().configureManagers();
+
+        if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals(Bundle.getMessage("PowerStateOn"))) {
+            try {
+                this.getSystemConnectionMemo().getPowerManager().setPower(jmri.PowerManager.ON);
+            } catch (jmri.JmriException e) {
+                log.error(e.toString());
+            }
+        }
 
         // start the simulator
         sourceThread = new Thread(this);
-        sourceThread.setName("EasyDCC Simulator");
+        sourceThread.setName("SPROG Simulator");
         sourceThread.setPriority(Thread.MIN_PRIORITY);
         sourceThread.start();
     }
@@ -123,7 +135,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
         super.connect();
     }
 
-    // Base class methods for the EasyDccPortController simulated interface
+    // Base class methods for the SprogPortController simulated interface
 
     @Override
     public DataInputStream getInputStream() {
@@ -145,7 +157,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
 
     @Override
     public boolean status() {
-        return opened;
+        return (pout != null && pin != null);
     }
 
     /**
@@ -168,8 +180,8 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
     public void run() { // start a new thread
         // This thread has one task. It repeatedly reads from the input pipe
         // and writes an appropriate response to the output pipe. This is the heart
-        // of the EasyDCC command station simulation.
-        log.info("EasyDCC Simulator Started");
+        // of the SPROG command station simulation.
+        log.info("SPROG Simulator Started");
         while (true) {
             try {
                 synchronized (this) {
@@ -179,30 +191,23 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
                 log.debug("interrupted, ending");
                 return;
             }
-            EasyDccMessage m = readMessage();
-            EasyDccReply r;
+            SprogMessage m = readMessage();
+            SprogReply r;
             if (log.isDebugEnabled()) {
                 StringBuffer buf = new StringBuffer();
-                buf.append("EasyDCC Simulator Thread received message: ");
+                buf.append("SPROG Simulator Thread received message: ");
                 if (m != null) {
-                    for (int i = 0; i < m.getNumDataElements(); i++) {
-                        buf.append(Integer.toHexString(0xFF & m.getElement(i)) + " ");
-                    }
+                    buf.append(m);
                 } else {
                     buf.append("null message buffer");
                 }
-                // log.debug(buf.toString()); // generates a lot of traffic
+                //log.debug(buf.toString()); // generates a lot of output
             }
             if (m != null) {
                 r = generateReply(m);
                 writeReply(r);
                 if (log.isDebugEnabled() && r != null) {
-                    StringBuffer buf = new StringBuffer();
-                    buf.append("EasyDCC Simulator Thread sent reply: ");
-                    for (int i = 0; i < r.getNumDataElements(); i++) {
-                        buf.append(Integer.toHexString(0xFF & r.getElement(i)) + " ");
-                    }
-                    log.debug(buf.toString());
+                    log.debug("Simulator Thread sent Reply: \"{}\"", r);
                 }
             }
         }
@@ -212,8 +217,8 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
      * Read one incoming message from the buffer
      * and set outputBufferEmpty to true.
      */
-    private EasyDccMessage readMessage() {
-        EasyDccMessage msg = null;
+    private SprogMessage readMessage() {
+        SprogMessage msg = null;
 //        log.debug("Simulator reading message");
         try {
             if (inpipe != null && inpipe.available() > 0) {
@@ -228,106 +233,102 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
 
     /**
      * This is the heart of the simulation. It translates an
-     * incoming EasyDccMessage into an outgoing EasyDccReply.
+     * incoming SprogMessage into an outgoing SprogReply.
      *
-     * As yet, not all messages receive a meaningful reply. TODO: Throttle, Program
+     * Based on SPROG information from A. Crosland.
+     * @see jmri.jmrix.sprog.SprogReply#value()
      */
     @SuppressWarnings("fallthrough")
-    private EasyDccReply generateReply(EasyDccMessage msg) {
+    private SprogReply generateReply(SprogMessage msg) {
         log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg.toString());
 
-        EasyDccReply reply = new EasyDccReply();
+        SprogReply reply = new SprogReply();
         int i = 0;
         char command = msg.toString().charAt(0);
         log.debug("Message type = " + command);
         switch (command) {
 
-            case 'X': // eXit programming
-            case 'S': // Send packet
-            case 'D': // Dequeue packet
-            case 'Q': // Queue packet
-            case 'F': // display memory
-            case 'C': // program loCo
-                reply.setElement(i++, EDC_OPS); // capital O for Operation
+            case 'I':
+                log.debug("CurrentQuery detected");
+                reply = new SprogReply("= h3E7\n"); // reply fictionary current (decimal 999mA)
                 break;
 
-            case 'P':
-            case 'M':
-                reply.setElement(i++, EDC_PROG); // capital P for Programming
-                break;
-
-            case 'E':
-                log.debug("TRACK_POWER_ON detected");
-                reply.setElement(i++, EDC_OPS); // capital O for Operation
-                break;
-
-            case 'K':
-                log.debug("TRACK_POWER_OFF detected");
-                reply.setElement(i++, EDC_OPS); // capital O for Operation
-                break;
-
+            case 'C':
             case 'V':
-                log.debug("Read_CS_Version detected");
-                String replyString = "V999 01 01 1999";
-                reply = new EasyDccReply(replyString); // fake version number reply
-                i = replyString.length();
-//                reply.setElement(i++, 0x0d); // add CR for second reply line
-//                reply.setElement(i++, EDC_OPS); // capital O for Operation
+                log.debug("Read CV detected");
+                reply = new SprogReply("= " + msg.toString().substring(2) + "\n"); // echo CV value (hex)
                 break;
 
-            case 'G': // Consist
-                log.debug("Consist detected");
-                if (msg.toString().charAt(0) == 'D') { // Display consist
-                    replyString = "G" + msg.getElement(2) + msg.getElement(3) + "0000";
-                    reply = new EasyDccReply(replyString); // fake version number reply
-                    i = replyString.length();
-//                    reply.setElement(i++, 0x0d); // add CR
-                    break;
-                }
-                reply.setElement(i++, EDC_OPS); // capital O for Operation, anyway
+            case 'O':
+                log.debug("Send packet command detected");
+                reply = new SprogReply("= " + msg.toString().substring(2) + "\n"); // echo command (hex)
                 break;
 
-            case 'L': // Read Loco
-                log.debug("Read Loco detected");
-                replyString = "L" + msg.getElement(1) + msg.getElement(2) + msg.getElement(3) + msg.getElement(4) + "000000";
-                reply = new EasyDccReply(replyString); // fake reply dir = 00 step = 00 F5-12=00
-                i = replyString.length();
-//                reply.setElement(i++, 0x0d); // add CR for second reply line
-//                reply.setElement(i++, EDC_OPS); // capital O for Operation, anyway
+            case 'A':
+                log.debug("Address (open Throttle) command detected");
+                reply = new SprogReply(msg.toString().substring(2) + "\n"); // echo address (decimal)
                 break;
 
-            case 'R':
-                log.debug("Read_CV detected");
-                replyString = "--";
-                reply = new EasyDccReply(replyString); // cannot read
-                i = replyString.length();
-//                reply.setElement(i++, 0x0d); // add CR for second reply line
-//                reply.setElement(i++, EDC_PROG); // capital O for Operation
+            case '>':
+                log.debug("Set speed (Throttle) command detected");
+                reply = new SprogReply(msg.toString().substring(1) + "\n"); // echo speed (decimal)
+                break;
+
+            case '+':
+                log.debug("TRACK_POWER_ON detected");
+                trackPowerState = true;
+                //reply = new SprogReply(SPR_PR);
+                break;
+
+            case '-':
+                log.debug("TRACK_POWER_OFF detected");
+                trackPowerState = false;
+                //reply = new SprogReply(SPR_PR);
+                break;
+
+            case '?':
+                log.debug("Read_Sprog_Version detected");
+                String replyString = "\nSPROG II Ver 4.3\n";
+                reply = new SprogReply(replyString);
+                break;
+
+            case 'S':
+                log.debug("getStatus detected");
+                reply = new SprogReply("S\n");
                 break;
 
             default:
-                log.debug("non-reply message detected");
-                reply.setElement(i++, EDC_OPS); // capital O for Operation
+                log.debug("non-reply message detected: {}", msg.toString());
+                reply = new SprogReply("!E\n"); // SPROG error reply
         }
-        log.debug("Reply generated = {}", reply.toString());
-        reply.setElement(i++, 0x0d); // add final CR for all replies
-        return (reply);
+        i = reply.toString().length();
+        reply.setElement(i++, 'P'); // add prompt to all replies
+        reply.setElement(i++, '>');
+        reply.setElement(i++, ' ');
+        log.debug("Reply generated = \"{}\"", reply.toString());
+        return reply;
     }
 
     /**
      * Write reply to output.
      * <p>
-     * Copied from jmri.jmrix.nce.simulator.SimulatorAdapter.
+     * Copied from jmri.jmrix.nce.simulator.SimulatorAdapter,
+     * adapted for {@link jmri.jmrix.sprog.SprogTrafficController#handleOneIncomingReply()}.
      *
      * @param r reply on message
      */
-    private void writeReply(EasyDccReply r) {
+    private void writeReply(SprogReply r) {
         if (r == null) {
             return; // there is no reply to be sent
         }
-        for (int i = 0; i < r.getNumDataElements(); i++) {
+        int len = r.getNumDataElements();
+        for (int i = 0; i < len; i++) {
             try {
                 outpipe.writeByte((byte) r.getElement(i));
+                log.debug("{} of {} bytes written to outpipe", i + 1, len);
+                if (pin.available() > 0) {
+                    control.handleOneIncomingReply();
+                }
             } catch (java.io.IOException ex) {
             }
         }
@@ -345,13 +346,14 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
      * @returns filled message, only when the message is complete.
      * @throws IOException when presented by the input source.
      */
-    private EasyDccMessage loadChars() throws java.io.IOException {
+    private SprogMessage loadChars() throws java.io.IOException {
+        // code copied from EasyDcc/NCE Simulator
         int nchars;
         byte[] rcvBuffer = new byte[32];
 
         nchars = inpipe.read(rcvBuffer, 0, 32);
         //log.debug("new message received");
-        EasyDccMessage msg = new EasyDccMessage(nchars);
+        SprogMessage msg = new SprogMessage(nchars);
 
         for (int i = 0; i < nchars; i++) {
             msg.setElement(i, rcvBuffer[i] & 0xFF);
@@ -360,11 +362,11 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
     }
 
     // streams to share with user class
-    private DataOutputStream pout = null; // this is provided to classes who want to write to us
-    private DataInputStream pin = null; // this is provided to classes who want data from us
+    private DataOutputStream pout = null;    // this is provided to classes who want to write to us
+    private DataInputStream pin = null;      // this is provided to classes who want data from us
     // internal ends of the pipes
     private DataOutputStream outpipe = null; // feed pin
-    private DataInputStream inpipe = null; // feed pout
+    private DataInputStream inpipe = null;   // feed pout
 
     private final static Logger log = LoggerFactory.getLogger(SimulatorAdapter.class);
 

@@ -508,6 +508,10 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         getDefault().trackImmediatelyAvail = enabled;
     }
 
+    /**
+     * allow cars to return to the same staging location if no other options (tracks) are available
+     * @return true if cars are allowed to depart and return to same staging location
+     */
     public static boolean isAllowReturnToStagingEnabled() {
         return getDefault().allowCarsReturnStaging;
     }

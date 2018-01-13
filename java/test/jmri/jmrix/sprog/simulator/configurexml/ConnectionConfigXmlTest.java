@@ -1,4 +1,4 @@
-package jmri.jmrix.sprog.serialdriver.configurexml;
+package jmri.jmrix.sprog.simulator.configurexml;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
