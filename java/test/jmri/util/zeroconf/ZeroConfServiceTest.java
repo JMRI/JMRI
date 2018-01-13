@@ -1,6 +1,5 @@
 package jmri.util.zeroconf;
 
-import apps.tests.Log4JFixture;
 import java.util.HashMap;
 import javax.jmdns.ServiceInfo;
 import jmri.util.JUnitUtil;

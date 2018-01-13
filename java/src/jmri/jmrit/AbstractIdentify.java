@@ -2,7 +2,6 @@ package jmri.jmrit;
 
 import jmri.Programmer;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

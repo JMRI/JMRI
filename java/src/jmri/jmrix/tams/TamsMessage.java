@@ -1,8 +1,5 @@
 package jmri.jmrix.tams;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Encodes a message to a Tams MasterConttol command station.
  * <P>

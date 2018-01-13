@@ -1,7 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -420,7 +418,7 @@ public class TrackSegment extends LayoutTrack {
     private String getConnectName(@Nullable LayoutTrack layoutTrack, int type) {
         String result = null;
         if (layoutTrack != null) {
-            result = ((LayoutTrack) layoutTrack).getName();
+            result = layoutTrack.getName();
         }
         return result;
     }
@@ -567,12 +565,12 @@ public class TrackSegment extends LayoutTrack {
         connect1 = p.getFinder().findObjectByName(tConnect1Name);
         if (null == connect1) { // findObjectByName failed... try findObjectByTypeAndName
             log.warn("Unknown connect1 object prefix: '" + tConnect1Name + "' of type " + type1 + ".");
-            connect1 = (LayoutTrack) p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
+            connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
         }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
         if (null == connect2) { // findObjectByName failed; try findObjectByTypeAndName
             log.warn("Unknown connect2 object prefix: '" + tConnect2Name + "' of type " + type2 + ".");
-            connect2 = (LayoutTrack) p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
+            connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         }
     }
 
