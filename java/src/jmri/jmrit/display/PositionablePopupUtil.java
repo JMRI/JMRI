@@ -44,7 +44,6 @@ public class PositionablePopupUtil {
     protected PositionablePropertiesUtil _propertiesUtil;
 
     private Color defaultForeground;
-    private Color defaultBackground;
     private Color defaultBorderColor;
 
     protected final int LABEL = 1;

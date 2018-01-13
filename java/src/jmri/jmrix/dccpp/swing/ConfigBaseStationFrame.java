@@ -359,8 +359,25 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                     "Delete Item",
                     JOptionPane.OK_CANCEL_OPTION);
             if (value == JOptionPane.OK_OPTION) {
-                model.removeRow(sel);
-                log.debug("Delete sensor {}", idx);
+               if (null != cTab) {
+                  switch (cTab) {
+                     case SENSOR:
+                       tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg(idx), this);
+                       model.removeRow(sel);
+                       log.debug("Delete sensor {}", idx);
+                       break;
+                      case TURNOUT:
+                        String m = "T " + Integer.toString(idx);
+                        tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
+                        log.debug("Sending: {}", m);
+                        turnoutModel.getRowData().remove(row);
+                        break;
+                      case OUTPUT:
+                        tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg(idx), this);
+                        outputModel.getRowData().remove(row);
+                        break;
+                   }
+                }
             }
 
         }
@@ -769,13 +786,10 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
 
         protected JButton button;
         private String label;
-        private final JTable table;
-
         public ButtonEditor(JCheckBox checkBox, JTable t) {
             super(checkBox);
             button = new JButton();
             button.setOpaque(true);
-            table = t;
             button.addActionListener((ActionEvent e) -> {
                 //fireEditingStopped();
             });

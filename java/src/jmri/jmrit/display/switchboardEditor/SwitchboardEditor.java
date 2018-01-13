@@ -142,8 +142,6 @@ public class SwitchboardEditor extends Editor {
     private JScrollPane editToolBarScroll = null;
     private JPanel editToolBarContainer = null;
     private Color defaultTextColor = Color.BLACK;
-    // option menu items not in Editor
-    private boolean showHelpBar = true;
     private boolean _hideUnconnected = false;
     //saved state of options when panel was loaded or created
     private boolean savedEditMode = true; // TODO store/load accordingly
@@ -2011,9 +2009,6 @@ public class SwitchboardEditor extends Editor {
         }
         repaint();
     }
-
-    // ********************* Mouse Methods ***********************
-    private long _clickTime;
 
     @Override
     public void mousePressed(MouseEvent event) {

@@ -450,8 +450,6 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
      * box
      */
     public void initializeNodes() {
-        String str = "";
-
         // get all configured nodes
         if (!cmriNode.isEmpty()) {
             cmriNode.clear();

@@ -17,7 +17,7 @@ public class QsiPortControllerTest extends jmri.jmrix.AbstractSerialPortControll
     public void setUp(){
        JUnitUtil.setUp();
        QsiSystemConnectionMemo memo = new QsiSystemConnectionMemo();
-       QsiTrafficController tc = new QsiTrafficControlScaffold();
+       new QsiTrafficControlScaffold();
        apc = new QsiPortController(memo){
             @Override
             public boolean status(){

@@ -18,7 +18,7 @@ public class CsvImportActionTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CvTableModel tm = new CvTableModel(new JLabel(), null);
         jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("test Csv Import");
-        CsvImportAction t = new CsvImportAction("Test Action",tm,jf,new JLabel());
+        new CsvImportAction("Test Action",tm,jf,new JLabel());
         jf.dispose();
     } 
 

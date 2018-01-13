@@ -98,14 +98,14 @@ public class NamedBeanExpectedStateTest {
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
         boolean thrown = false;
         try {
-            NamedBeanExpectedState<Sensor> instance = new NamedBeanExpectedState<>(null, 3);
+            new NamedBeanExpectedState<>(null, 3);
         } catch (NullPointerException ex) {
             thrown = true;
         }
         Assert.assertTrue("NPE thrown for null bean", thrown);
         thrown = false;
         try {
-            NamedBeanExpectedState<Sensor> instance = new NamedBeanExpectedState<>(sm.provideSensor("IS12"), null);
+            new NamedBeanExpectedState<>(sm.provideSensor("IS12"), null);
         } catch (NullPointerException ex) {
             thrown = true;
         }

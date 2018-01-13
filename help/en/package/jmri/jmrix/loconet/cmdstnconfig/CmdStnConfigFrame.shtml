@@ -29,7 +29,7 @@
       
       <p>Recent JMRI versions support configuration of the Command Station
           "Operation Switches" (OpSws) via a "roster" entry.  See the JMRI 
-          <a href="../../../html/hardware/loconet/CommandStationConfig.shtml">
+          <a href="../../../../../html/hardware/loconet/CommandStationConfig.shtml">
           Digitrax Command Station Configuration</a> page for details.  The
           new "roster" entry-based method is preferred over the tool described
           below.</p>

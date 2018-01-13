@@ -613,8 +613,6 @@ public class SlotManagerTest {
                 = new jmri.implementation.MultiIndexProgrammerFacade(pf1, PI, SI, cvFirst, false);
 
         String CV1 = "16.2.257";
-        int val2 = 55;
-
         // Start overall sequence
         pf2.readCV(CV1, lstn);
 
@@ -729,8 +727,6 @@ public class SlotManagerTest {
                 = new jmri.implementation.MultiIndexProgrammerFacade(pf1, PI, SI, cvFirst, false);
 
         String CV1 = "16.2.257";
-        int val2 = 55;
-
         // Start overall sequence
         pf2.readCV(CV1, lstn);
 
