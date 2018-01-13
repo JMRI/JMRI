@@ -1,6 +1,6 @@
 package jmri.jmrix.openlcb;
 
-import java.util.HashMap;
+import java.util.*;
 import javax.annotation.Nonnull;
 
 import jmri.CommandStation;
@@ -14,6 +14,7 @@ import org.openlcb.Connection;
 import org.openlcb.EventID;
 import org.openlcb.EventState;
 import org.openlcb.Message;
+import org.openlcb.NodeID;
 import org.openlcb.ProducerConsumerEventReportMessage;
 import org.openlcb.IdentifyConsumersMessage;
 import org.openlcb.ConsumerIdentifiedMessage;
@@ -326,10 +327,133 @@ public class OlcbSignalMast extends AbstractSignalMast {
     
     }
 
-    static class StateMachine<T extends Enum<T>> {
+    static class StateMachine<T> extends org.openlcb.MessageDecoder {
+        public StateMachine(Connection connection, NodeID node, T start) {
+            this.connection = connection;
+            this.node = node;
+            if (start != null) this.state = start;
+        }
+        
+        Connection connection;
+        NodeID node;
         T state;
-        public void setState(T newState) { state = newState; }
+        boolean initizalized = false;
+        protected HashMap<T, EventID> stateToEvent = new HashMap<>();
+        protected HashMap<EventID, T> eventToState = new HashMap<>(); // for efficiency, but requires no null entries
+        
+        public void setState(@Nonnull T newState) {
+            log.debug("sending PCER to {}", getEventForState(newState));
+            connection.put(
+                    new ProducerConsumerEventReportMessage(node, getEventForState(newState)),
+                    null);
+        }
         public T getState() { return state; }
+        
+        public void setEventForState(@Nonnull T key, @Nonnull EventID value) {
+            stateToEvent.put(key, value);
+            eventToState.put(value, key);
+        }
+        public EventID getEventForState(@Nonnull T key) {
+            return stateToEvent.get(key);
+        }
+
+        /**
+         * Internal method to determine the EventState for a reply
+         * to an Identify* method
+         */
+        EventState getEventState(EventID event) {
+            T value = eventToState.get(event);
+            if (initizalized) {
+                if (value.equals(state)) {
+                    return EventState.Valid;
+                } else {
+                    return EventState.Invalid;
+                }
+            } else {
+                return EventState.Unknown;
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public void handleProducerConsumerEventReport(ProducerConsumerEventReportMessage msg, Connection sender){
+            if (eventToState.containsKey(msg.getEventID())) {
+                initizalized = true;
+                state = eventToState.get(msg.getEventID());
+            }
+        }
+        /**
+         * {@inheritDoc}
+         */
+        public void handleProducerIdentified(ProducerIdentifiedMessage msg, Connection sender){
+            // process if for here and marked "valid"
+            if (eventToState.containsKey(msg.getEventID()) && msg.getEventState() == EventState.Valid) {
+                initizalized = true;
+                state = eventToState.get(msg.getEventID());
+            }
+        }
+        /**
+         * {@inheritDoc}
+         */
+        public void handleConsumerIdentified(ConsumerIdentifiedMessage msg, Connection sender){
+            // process if for here and marked "valid"
+            if (eventToState.containsKey(msg.getEventID()) && msg.getEventState() == EventState.Valid) {
+                initizalized = true;
+                state = eventToState.get(msg.getEventID());
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public void handleIdentifyEvents(IdentifyEventsMessage msg, Connection sender){
+            // ours?
+            if (! node.equals(msg.getDestNodeID())) return;  // not to us
+            sendAllIdentifiedMessages();
+        }            
+        
+        /**
+         * Used at start up to emit the required messages, and in response to a IdentifyEvents message
+         */
+        public void sendAllIdentifiedMessages() {
+            // identify as consumer and producer in same pass
+            Set<Map.Entry<EventID,T>> set = eventToState.entrySet();
+            for (Map.Entry<EventID,T> entry : set) {
+                EventID event = entry.getKey();
+                T value = entry.getValue();
+                connection.put(
+                    new ConsumerIdentifiedMessage(node, event, getEventState(event)),
+                    null);
+                connection.put(
+                    new ProducerIdentifiedMessage(node, event, getEventState(event)),
+                    null);
+            }
+        }
+        /**
+         * {@inheritDoc}
+         */
+        public void handleIdentifyProducers(IdentifyProducersMessage msg, Connection sender){
+            // process if we have the event
+            EventID event = msg.getEventID();
+            if (eventToState.containsKey(event)) {
+                connection.put(
+                    new ProducerIdentifiedMessage(node, event, getEventState(event)),
+                    null);
+            }
+        }
+        /**
+         * {@inheritDoc}
+         */
+        public void handleIdentifyConsumers(IdentifyConsumersMessage msg, Connection sender){
+            // process if we have the event
+            EventID event = msg.getEventID();
+            if (eventToState.containsKey(event)) {
+                connection.put(
+                    new ConsumerIdentifiedMessage(node, event, getEventState(event)),
+                    null);
+            }
+        }
         
     }
     

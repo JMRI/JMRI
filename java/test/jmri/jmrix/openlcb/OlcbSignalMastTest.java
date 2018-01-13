@@ -3,6 +3,20 @@ package jmri.jmrix.openlcb;
 import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
+
+import org.openlcb.AbstractConnection;
+import org.openlcb.Connection;
+import org.openlcb.EventID;
+import org.openlcb.EventState;
+import org.openlcb.Message;
+import org.openlcb.NodeID;
+import org.openlcb.ProducerConsumerEventReportMessage;
+import org.openlcb.IdentifyConsumersMessage;
+import org.openlcb.ConsumerIdentifiedMessage;
+import org.openlcb.IdentifyProducersMessage;
+import org.openlcb.ProducerIdentifiedMessage;
+import org.openlcb.IdentifyEventsMessage;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -159,8 +173,142 @@ public class OlcbSignalMastTest {
         Assert.assertEquals("lit true", true, t.getLit());                           
     }
 
-    // from here down is testing infrastructure
+    enum States2 { A, B };
+    @Test
+    public void testStateMachine2Setup() {
+        
+        OlcbSignalMast.StateMachine<States2> machine = new OlcbSignalMast.StateMachine<>(connection, nodeID, States2.B);
+        
+        Assert.assertEquals("starting state", States2.B, machine.getState());
+        
+        machine.setEventForState(States2.A, new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}));
+        machine.setEventForState(States2.B, new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}));
 
+        Assert.assertEquals("A event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}), machine.getEventForState(States2.A));
+        Assert.assertEquals("B event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}), machine.getEventForState(States2.B));
+        
+        machine.setState(States2.A);
+        Assert.assertEquals("still starting state", States2.B, machine.getState());
+        Assert.assertEquals("one sent", 1, messages.size());
+
+        machine.handleProducerConsumerEventReport( new ProducerConsumerEventReportMessage(nodeID, new EventID(new byte[]{2, 0, 0, 0, 0, 0, 1, 0})), null); // other eventID
+        Assert.assertEquals("still starting state", States2.B, machine.getState());
+
+        machine.handleProducerConsumerEventReport( new ProducerConsumerEventReportMessage(nodeID, new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0})), null); // A eventID
+        Assert.assertEquals("new state", States2.A, machine.getState());
+    }
+ 
+    @Test
+    public void testStateMachine2IdEvents() {
+        
+        OlcbSignalMast.StateMachine<States2> machine = new OlcbSignalMast.StateMachine<>(connection, nodeID, States2.B);
+        
+        machine.setEventForState(States2.A, new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}));
+        machine.setEventForState(States2.B, new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}));
+
+        machine.handleIdentifyEvents( new IdentifyEventsMessage(new NodeID(), new NodeID()), null); 
+        Assert.assertEquals("no reply if wrong address", 0, messages.size());
+        
+        machine.handleIdentifyEvents( new IdentifyEventsMessage(new NodeID(), nodeID), null); 
+        Assert.assertEquals("four sent", 4, messages.size());
+        // check by string comparison as a short cut
+        Assert.assertEquals("msg 0", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(0).toString());
+        Assert.assertEquals("msg 1", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(1).toString());
+        Assert.assertEquals("msg 2", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(2).toString());
+        Assert.assertEquals("msg 3", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(3).toString());
+
+        messages = new java.util.ArrayList<>();
+
+        machine.handleIdentifyProducers( new IdentifyProducersMessage(new NodeID(), new EventID(new byte[]{11, 0, 0, 0, 0, 0, 2, 0})), null); 
+        Assert.assertEquals("no reply", 0, messages.size());
+
+        machine.handleIdentifyProducers( new IdentifyProducersMessage(new NodeID(), new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0})), null); 
+        Assert.assertEquals("one sent", 1, messages.size());
+        // check by string comparison as a short cut
+        Assert.assertEquals("reply", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(0).toString());
+        
+        messages = new java.util.ArrayList<>();
+
+        machine.handleIdentifyConsumers( new IdentifyConsumersMessage(new NodeID(), new EventID(new byte[]{11, 0, 0, 0, 0, 0, 2, 0})), null); 
+        Assert.assertEquals("no reply", 0, messages.size());
+
+        machine.handleIdentifyConsumers( new IdentifyConsumersMessage(new NodeID(), new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0})), null); 
+        Assert.assertEquals("one sent", 1, messages.size());
+        // check by string comparison as a short cut
+        Assert.assertEquals("reply", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(0).toString());
+        
+    }
+
+    @Test
+    public void testStateMachineStringSetup() {
+        
+        OlcbSignalMast.StateMachine<String> machine = new OlcbSignalMast.StateMachine<>(connection, nodeID, "B");
+        
+        Assert.assertEquals("starting state", "B", machine.getState());
+        
+        machine.setEventForState("A", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}));
+        machine.setEventForState("B", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}));
+
+        Assert.assertEquals("A event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}), machine.getEventForState("A"));
+        Assert.assertEquals("B event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}), machine.getEventForState("B"));
+        
+        machine.setState("A");
+        Assert.assertEquals("still starting state", "B", machine.getState());
+        Assert.assertEquals("one sent", 1, messages.size());
+
+        machine.handleProducerConsumerEventReport( new ProducerConsumerEventReportMessage(nodeID, new EventID(new byte[]{2, 0, 0, 0, 0, 0, 1, 0})), null); // other eventID
+        Assert.assertEquals("still starting state", "B", machine.getState());
+
+        machine.handleProducerConsumerEventReport( new ProducerConsumerEventReportMessage(nodeID, new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0})), null); // A eventID
+        Assert.assertEquals("new state", "A", machine.getState());
+    }
+
+    @Test
+    public void testStateMachineStringIdEvents() {
+        
+        OlcbSignalMast.StateMachine<String> machine = new OlcbSignalMast.StateMachine<>(connection, nodeID, "B");
+        
+        machine.setEventForState("A", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}));
+        machine.setEventForState("B", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}));
+
+        machine.handleIdentifyEvents( new IdentifyEventsMessage(new NodeID(), new NodeID()), null); 
+        Assert.assertEquals("no reply if wrong address", 0, messages.size());
+        
+        machine.handleIdentifyEvents( new IdentifyEventsMessage(new NodeID(), nodeID), null); 
+        Assert.assertEquals("four sent", 4, messages.size());
+        // check by string comparison as a short cut
+        Assert.assertEquals("msg 0", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(0).toString());
+        Assert.assertEquals("msg 1", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(1).toString());
+        Assert.assertEquals("msg 2", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(2).toString());
+        Assert.assertEquals("msg 3", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(3).toString());
+
+        messages = new java.util.ArrayList<>();
+
+        machine.handleIdentifyProducers( new IdentifyProducersMessage(new NodeID(), new EventID(new byte[]{11, 0, 0, 0, 0, 0, 2, 0})), null); 
+        Assert.assertEquals("no reply", 0, messages.size());
+
+        machine.handleIdentifyProducers( new IdentifyProducersMessage(new NodeID(), new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0})), null); 
+        Assert.assertEquals("one sent", 1, messages.size());
+        // check by string comparison as a short cut
+        Assert.assertEquals("reply", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(0).toString());
+        
+        messages = new java.util.ArrayList<>();
+
+        machine.handleIdentifyConsumers( new IdentifyConsumersMessage(new NodeID(), new EventID(new byte[]{11, 0, 0, 0, 0, 0, 2, 0})), null); 
+        Assert.assertEquals("no reply", 0, messages.size());
+
+        machine.handleIdentifyConsumers( new IdentifyConsumersMessage(new NodeID(), new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0})), null); 
+        Assert.assertEquals("one sent", 1, messages.size());
+        // check by string comparison as a short cut
+        Assert.assertEquals("reply", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(0).toString());
+        
+    }
+
+    // from here down is testing infrastructure
+    Connection connection;
+    NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+    java.util.ArrayList<Message> messages;
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
@@ -168,6 +316,14 @@ public class OlcbSignalMastTest {
         JUnitUtil.initInternalTurnoutManager();
         
         new OlcbSystemConnectionMemo(); // this self-registers as 'M'
+
+        messages = new java.util.ArrayList<>();
+        connection = new AbstractConnection() {
+            @Override
+            public void put(Message msg, Connection sender) {
+                messages.add(msg);
+            }
+        };
     }
 
     @After
