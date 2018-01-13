@@ -3825,7 +3825,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient JmriJFrame enterTrackWidthFrame = null;
     private boolean enterTrackWidthOpen = false;
     private boolean trackWidthChange = false;
-    private transient JTextField sideTrackWidthField = new JTextField(6);
+    private transient JTextField sidelineTrackWidthField = new JTextField(6);
     private transient JTextField mainlineTrackWidthField = new JTextField(6);
     private transient JButton trackWidthDone;
     private transient JButton trackWidthCancel;
@@ -3857,10 +3857,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             //setup side track width
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
-            JLabel sideWidthLabel = new JLabel(Bundle.getMessage("SideTrackWidth"));
+            JLabel sideWidthLabel = new JLabel(Bundle.getMessage("sidelineTrackWidth"));
             panel2.add(sideWidthLabel);
-            panel2.add(sideTrackWidthField);
-            sideTrackWidthField.setToolTipText(Bundle.getMessage("SideTrackWidthHint"));
+            panel2.add(sidelineTrackWidthField);
+            sidelineTrackWidthField.setToolTipText(Bundle.getMessage("sidelineTrackWidthHint"));
             theContentPane.add(panel2);
 
             //set up Done and Cancel buttons
@@ -3890,7 +3890,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //Set up for Entry of Track Widths
         mainlineTrackWidthField.setText(Integer.toString((int) mainlineTrackWidth));
-        sideTrackWidthField.setText(Integer.toString((int) sidelineTrackWidth));
+        sidelineTrackWidthField.setText(Integer.toString((int) sidelineTrackWidth));
         enterTrackWidthFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent event) {
@@ -3905,7 +3905,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     void trackWidthDonePressed(ActionEvent evemt) {
         //get side track width
-        String newWidth = sideTrackWidthField.getText().trim();
+        String newWidth = sidelineTrackWidthField.getText().trim();
         float wid = 0.0F;
         try {
             wid = Float.parseFloat(newWidth);
@@ -5327,7 +5327,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         // the points below and test if this location is in any of those
         // rectangles just create a hit rectangle for the location and
         // see if any of the points below are in it instead...
-        Rectangle2D r = trackControlRectAt(loc);
+        Rectangle2D r = trackControlCircleRectAt(loc);
 
         //check Track Segments, if any
         for (TrackSegment ts : getTrackSegments()) {
@@ -8953,9 +8953,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return (int) mainlineTrackWidth;
     } //getMainlineTrackWidth
 
-    public int getSideTrackWidth() {
+    public int getSidelineTrackWidth() {
         return (int) sidelineTrackWidth;
-    } //getSideTrackWidth
+    } //getSidelineTrackWidth
 
     public double getXScale() {
         return xScale;
@@ -9128,7 +9128,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         mainlineTrackWidth = w;
     }
 
-    public void setSideTrackWidth(int w) {
+    public void setSidelineTrackWidth(int w) {
         sidelineTrackWidth = w;
     }
 
@@ -9529,7 +9529,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //reset the panel changed bit
         resetDirty();
-    }
+    } //setConnections
 
     //these are convenience methods to return rectangles
     //to use when (hit point-in-rect testing
@@ -9538,10 +9538,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public Rectangle2D trackEditControlRectAt(@Nonnull Point2D inPoint) {
         return new Rectangle2D.Double(inPoint.getX() - SIZE,
                 inPoint.getY() - SIZE, SIZE2, SIZE2);
-    }
+    } //trackEditControlRectAt
 
     //compute the turnout circle control rect at inPoint
-    public Rectangle2D trackControlRectAt(@Nonnull Point2D inPoint) {
+    public Rectangle2D trackControlCircleRectAt(@Nonnull Point2D inPoint) {
         return new Rectangle2D.Double(inPoint.getX() - circleRadius,
                 inPoint.getY() - circleRadius, circleDiameter, circleDiameter);
     }
@@ -10071,7 +10071,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         int maxX = (int) MathUtil.granulize(panelWidth, gridSize1st);
         int maxY = (int) MathUtil.granulize(panelHeight, gridSize1st);
 
-        //log.info("  minX: {}, minY: {}, maxX: {}, maxY: {}", minX, minY, maxX, maxY);
+        log.debug("drawPanelGrid: minX: {}, minY: {}, maxX: {}, maxY: {}", minX, minY, maxX, maxY);
+
         Point2D startPt = new Point2D.Double();
         Point2D stopPt = new Point2D.Double();
         BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
