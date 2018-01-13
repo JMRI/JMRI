@@ -76,9 +76,11 @@ public class OlcbSignalMast extends AbstractSignalMast {
     }
 
     protected String mastType = "F$olm";
-    boolean consistent = false; // vs inconsistent/initializing
-    MessageDecoder decoder = new MessageDecoder();
-    
+
+    StateMachine<Boolean> litMachine;
+    StateMachine<Boolean> heldMachine;
+    StateMachine<String> aspectMachine;
+        
     // not sure why this is a CanSystemConnectionMemo in simulator, but it is 
     jmri.jmrix.can.CanSystemConnectionMemo systemMemo;
 
@@ -109,6 +111,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
             if (systemMemo == null) {
                 log.error("No OpenLCB connection found for system prefix \"" + systemPrefix + "\", so mast \""+systemName+"\" will not function");
             }
+            
         }
         String system = parts[1];
         String mast = parts[2];
@@ -122,81 +125,43 @@ public class OlcbSignalMast extends AbstractSignalMast {
         }
         configureSignalSystemDefinition(system);
         configureAspectTable(system, mast);
+
+        litMachine = new StateMachine<Boolean>(connection, node, Boolean.True);
+        heldMachine = new StateMachine<Boolean>(connection, node, Boolean.False);
+        aspectMachine = new StateMachine<String>(connection, node, getAspect());
     }
 
     int mastNumber; // used to tell them apart
     
-    protected HashMap<String, OlcbAddress> appearanceToOutput = new HashMap<>();
-
     public void setOutputForAppearance(String appearance, String event) {
-        if (appearanceToOutput.containsKey(appearance)) {
-            log.debug("Appearance " + appearance + " is already defined as " + appearanceToOutput.get(appearance).toCanonicalString());
-            appearanceToOutput.remove(appearance);
-        }
-        appearanceToOutput.put(appearance, new OlcbAddress(event));
+        aspectMachine.setEventForState(appearance, new OlcbAddress(event).toEventID());
     }
 
     public String getOutputForAppearance(String appearance) {
-        if (!appearanceToOutput.containsKey(appearance)) {
+        String retval = aspectMachine.getEventForState(appearance);
+        if (retval == null) {
             log.error("Trying to get appearance " + appearance + " but it has not been configured");
             return "";
         }
-        return appearanceToOutput.get(appearance).toCanonicalString();
+        return retval;
     }
 
     @Override
     public void setAspect(String aspect) {
-
-        if (appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect) != null) {
-            System.out.println("Produce output event "+appearanceToOutput.get(aspect));
-        } else {
-            log.warn("Trying to set aspect (" + aspect + ") that has not been configured on mast " + getDisplayName());
-        }
+        aspectMachine.setState(aspect);
         // Normally, the local state is changed by super.setAspect(aspect); here; see comment at top
     }
 
     /**
      * Handle incoming messages
      * 
-     * Dummy interface for now
      */
     public void handleMessage(Message msg) {
-        msg.applyTo(decoder, null);
+        msg.applyTo(litMachine, null);
+        msg.applyTo(heldMachine, null);
+        msg.applyTo(aspectMachine, null);
     }
     
-    /**
-     * This needs a better implementation, because 
-     * now it's going to do a linear search through
-     * the aspects in every OlcbSignalMast in the program.
-     * Maybe run through a manager that does a single search to
-     * find the relevant OlcbSignalMast(s)?
-     */
-    public boolean consumeEvent(@Nonnull EventID event) {
-        if (appearanceToOutput.containsValue(event)) {
-            for (String aspect : appearanceToOutput.keySet()) {
-                if (appearanceToOutput.get(aspect).equals(event)) {
-                    updateState(aspect); // only the first is done; there shouldn't be more than one, and order isn't preserved
-                    return true;
-                }
-            }
-        }
-        if (event.equals(litEventId)) {
-            litInitialized = true;
-            super.setLit(true);
-        }
-        if (event.equals(notLitEventId)) {
-            litInitialized = true;
-            super.setLit(false);
-        }
-        if (event.equals(heldEventId)) {
-            super.setHeld(true);
-        }
-        if (event.equals(notHeldEventId)) {
-            super.setHeld(false);
-        }
-        return false;
-    }
-
     /** 
      * When the aspect change has returned from the OpenLCB network,
      * change the local state and notify
@@ -208,7 +173,6 @@ public class OlcbSignalMast extends AbstractSignalMast {
         firePropertyChange("Aspect", oldAspect, aspect);
     }
 
-    boolean litInitialized = false;
     /** 
      * Always communicates via OpenLCB
      */
@@ -223,7 +187,6 @@ public class OlcbSignalMast extends AbstractSignalMast {
         // does not call super.setLit because no local state change until Event consumed
     }
 
-    boolean heldInitialized = false;
     /** 
      * Always communicates via OpenLCB
      */
@@ -237,95 +200,17 @@ public class OlcbSignalMast extends AbstractSignalMast {
         // does not call super.setHeld because no local state change until Event consumed
     }
 
-    EventID litEventId = null;
-    public void setLitEventId(String event) { litEventId = new OlcbAddress(event).toEventID(); }
-    public String getLitEventId() { return new OlcbAddress(litEventId).toCanonicalString(); }
-    EventID notLitEventId = null;
-    public void setNotLitEventId(String event) { notLitEventId = new OlcbAddress(event).toEventID(); }
-    public String getNotLitEventId() { return new OlcbAddress(notLitEventId).toCanonicalString(); }
+    public void setLitEventId(String event) { litMachine.setEventForState(Boolean.True, new OlcbAddress(event).toEventID()); }
+    public String getLitEventId() { return new OlcbAddress(litMachine.getEventForState(Boolean.True)).toCanonicalString(); }
+    public void setNotLitEventId(String event) { litMachine.setEventForState(Boolean.False, new OlcbAddress(event).toEventID()); }
+    public String getNotLitEventId() { return new OlcbAddress(litMachine.getEventForState(Boolean.False)).toCanonicalString(); }
 
-    EventID heldEventId = null;
-    public void setHeldEventId(String event) { heldEventId = new OlcbAddress(event).toEventID(); }
-    public String getHeldEventId() { return new OlcbAddress(heldEventId).toCanonicalString(); }
-    EventID notHeldEventId = null;
-    public void setNotHeldEventId(String event) { notHeldEventId = new OlcbAddress(event).toEventID(); }
-    public String getNotHeldEventId() { return new OlcbAddress(notHeldEventId).toCanonicalString(); }
+    public void setHeldEventId(String event) { heldlitMachine.setEventForState(Boolean.True, new OlcbAddress(event).toEventID()); }
+    public String getHeldEventId() { return new OlcbAddress(heldMachine.getEventForState(Boolean.True)).toCanonicalString(); }
+    public void setNotHeldEventId(String event) { heldMachine.setEventForState(Boolean.False, new OlcbAddress(event).toEventID()); }
+    public String getNotHeldEventId() { return new OlcbAddress(heldMachine.getEventForState(Boolean.False)).toCanonicalString(); }
 
-    boolean isOurEvent(EventID event) {
-        if (event.equals(litEventId)) return true;
-        if (event.equals(notLitEventId)) return true;
-        if (event.equals(heldEventId)) return true;
-        if (event.equals(notHeldEventId)) return true;
-        return false;
-    }
     
-    /**
-     * Stub to centralize sending to OpenLCB network
-     */
-    public void sendToNetwork(Message msg) {
-        log.debug("sending to layout: {}", msg);
-    }
-    
-    /**
-     * Captive class to mimic double inheritance, decodes and 
-     * acts on incoming message types.
-     */
-    class MessageDecoder extends org.openlcb.MessageDecoder {
-    
-        /**
-         * {@inheritDoc}
-         */
-        public void handleProducerConsumerEventReport(ProducerConsumerEventReportMessage msg, Connection sender){
-            // extract eventID and process
-            EventID event = msg.getEventID();
-            consumeEvent(event);
-        }
-        /**
-         * {@inheritDoc}
-         */
-        public void handleIdentifyConsumers(IdentifyConsumersMessage msg, Connection sender){
-            defaultHandler(msg, sender);
-        }
-        /**
-         * {@inheritDoc}
-         */
-        public void handleConsumerIdentified(ConsumerIdentifiedMessage msg, Connection sender){
-            // extract eventID and process if marked "valid"
-            if (msg.getEventState() == EventState.Valid) {
-                EventID event = msg.getEventID();
-                consumeEvent(event);
-            }
-        }
-        /**
-         * {@inheritDoc}
-         */
-        public void handleIdentifyProducers(IdentifyProducersMessage msg, Connection sender){
-            EventID event = msg.getEventID();
-            // much duplication with handleIdentifyConsumers, consider refactoring
-            if (event.equals(litEventId)) {
-                sendToNetwork(
-                    null
-                );
-            }
-        }
-        /**
-         * {@inheritDoc}
-         */
-        public void handleProducerIdentified(ProducerIdentifiedMessage msg, Connection sender){
-            // extract eventID and process if marked "valid"
-            if (msg.getEventState() == EventState.Valid) {
-                EventID event = msg.getEventID();
-                consumeEvent(event);
-            }
-        }
-        /**
-         * {@inheritDoc}
-         */
-        public void handleIdentifyEvents(IdentifyEventsMessage msg, Connection sender){
-            defaultHandler(msg, sender);
-        }
-    
-    }
 
     static class StateMachine<T> extends org.openlcb.MessageDecoder {
         public StateMachine(Connection connection, NodeID node, T start) {
