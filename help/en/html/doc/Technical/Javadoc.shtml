@@ -212,7 +212,7 @@ should include explanatory text:
       "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/lenz/XNetProgrammer.java#L32">
       java/src/jmri/jmrix/lenz/XNetProgrammer.java</a> file. The
       resulting diagrams are visible in the <a href=
-      "http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/lenz/XNetProgrammer.html">
+      "http://jmri.org/JavaDoc/doc/jmri/jmrix/lenz/XNetProgrammer.html">
       Javadoc output</a>.
       <p>PlantUml can also be used for standalone diagrams, c.f.
       <a href="SystemStructure.shtml">the connection sequence diagram</a>.

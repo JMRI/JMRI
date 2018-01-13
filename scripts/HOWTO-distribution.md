@@ -311,7 +311,6 @@ This has the nice property that if multiple things arise, they can definitely be
 ====================================================================================
 ## Release Files on SF.net
 
-
 This step uploads the Linux, Mac OS X and Windows files to the SourceForge file distribution system. In the process, it generates checksums and some useful text for announcements.  
 
 (replace "user" below with your SourceForge.net user name; must have SSH keys for SourceForge.net set up)
@@ -403,20 +402,10 @@ scp user,jmri@shell.sf.net:release.zip .
 then expand the release.zip file and drag-and-drop the three files onto the web page one at a time.
 
 Note there's a little progress bar that has to go across & "Uploading your release now..." has to complete before you publish; make sure all three files show.
-
-Alternatively, if you have shell access to the Jenkins server, you perhaps can upload directly from there, once the initial draft release has been created (this hasn't been tested):
-
-```
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.11.1 -n "JMRI.4.11.1+Rd144052.dmg" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.11.1/workspace/dist/release/JMRI.4.11.1+Rd144052.dmg 
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.11.1 -n "JMRI.4.11.1+Rd144052.exe" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.5/workspace/dist/release/JMRI.4.11.1+Rd144052.exe 
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.11.1 -n "JMRI.4.11.1+Rd144052.tgz" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.5/workspace/dist/release/JMRI.4.11.1+Rd144052.tgz 
-```
     
 - Click "Publish Release"
 - Wait for completion, which might be a while with big uploads
 
-(It might be possible to automate this in Ant, see http://stackoverflow.com/questions/24585609/upload-build-artifact-to-github-as-release-in-jenkins )
-    
 
 ### Final Branch Management
 
@@ -480,13 +469,6 @@ git push github
 
 - Commit site, push, etc.
 
-- Consider submitting an anti-virus white-list request at, particularly for production versions:
-```
-        https://submit.symantec.com/whitelist/isv/
-```
-
-If you don't, a bunch of Windows users are likely to whine
-
 - Wait for update on JMRI web server (or [ask Jenkins](http://jmri.tagadab.com/jenkins/job/WebSite/) to speed it along; note there are multiple components that need to run)
 
 ====================================================================================
@@ -500,7 +482,7 @@ If you don't, a bunch of Windows users are likely to whine
     
 Test version 4.11.1 of JMRI/DecoderPro is available for download.
 
-This is the next in a series of test releases that will culminate in a production release, hopefully in December 2017.
+This is the next in a series of test releases that will culminate in a production release, hopefully in Summer 2018.
 
 - Alt: There have been a lot of updates in this version, so it should be considered experimental.
 - Alt: We're getting close to the end of the development series, so we'd appreciate feedback on whether or not this release works for your layout.
@@ -667,6 +649,22 @@ Some of the operations that are performed will still generate files with CRLF li
         git pull
 ```
 
+================================================================================
+================================================================================
+
+Possibilities for automating GitHub release creation:
+
+
+Alternatively, if you have shell access to the Jenkins server, you perhaps can upload directly from there, once the initial draft release has been created (this hasn't been tested):
+
+```
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.11.1 -n "JMRI.4.11.1+Rd144052.dmg" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.11.1/workspace/dist/release/JMRI.4.11.1+Rd144052.dmg 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.11.1 -n "JMRI.4.11.1+Rd144052.exe" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.5/workspace/dist/release/JMRI.4.11.1+Rd144052.exe 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.11.1 -n "JMRI.4.11.1+Rd144052.tgz" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.5/workspace/dist/release/JMRI.4.11.1+Rd144052.tgz 
+```
+
+(It might be possible to automate this in Ant, see http://stackoverflow.com/questions/24585609/upload-build-artifact-to-github-as-release-in-jenkins )
+    
 
 
 ================================================================================

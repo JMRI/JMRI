@@ -358,8 +358,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     private int statusDue = 0;
-    private int[] statusA = new int[4];
-
     @Override
     /**
      * The run() method will only be called (from SprogSystemconnecionMemo 
@@ -439,8 +437,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             ignoreReply--;
         } else if (running == true) {
             byte[] p;
-            statusA = new int[4];
-
             if (m.isUnsolicited() && m.isOverload()) {
                 log.error("Overload");
 

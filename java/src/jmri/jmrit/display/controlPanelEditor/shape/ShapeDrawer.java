@@ -143,7 +143,7 @@ public class ShapeDrawer {
     }
 
     public boolean doMouseReleased(Positionable selection, MouseEvent event, Editor ed) {
-        if (_drawFrame != null) {
+        if (_drawFrame != null && _drawFrame._shape == null) {
             _drawFrame.makeFigure(event, ed);
         }
         return false;

@@ -5,14 +5,17 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Add value to base acceleration rate (increases acceleration delay)">
     <choice>Add value to base acceleration rate (increases acceleration delay)</choice>
-    <choice xml:lang="it">Aggiunge valore al tasso di accellerazione base</choice>
-    <choice xml:lang="de">Addiere Wert zur Basis-Beschleunigung</choice>
     <choice xml:lang="cs">Přidat hodnotu k základní míře zrychlení (zvyšuje zpoždění zrychlení)</choice>
+    <choice xml:lang="de">Addiere Wert zur Basis-Beschleunigung</choice>
+    <choice xml:lang="fr">Ajouter la valeur au taux d'accélération de base (accroît le retard d'accélération)</choice>
+    <choice xml:lang="it">Aggiunge valore al tasso di accellerazione base</choice>
+
   </enumChoice>
   <enumChoice choice="Subtract value from base acceleration rate (decreases acceleration delay)">
     <choice>Subtract value from base acceleration rate (decreases acceleration delay)</choice>
-    <choice xml:lang="it">Sottrae valore al tasso di accellerazione base</choice>
-    <choice xml:lang="de">Subtrahiere Wert von der Basis-Beschleunigung</choice>
     <choice xml:lang="cs">Odečíst hodnotu od základní míry zrychlení (snižuje zpoždění zrychlení)</choice>
+    <choice xml:lang="de">Subtrahiere Wert von der Basis-Beschleunigung</choice>
+    <choice xml:lang="fr">Soustraire la valeur au taux d'accélération de base (décroît le retard d'accélération)</choice>
+    <choice xml:lang="it">Sottrae valore al tasso di accellerazione base</choice>
   </enumChoice>
 </enumVal>

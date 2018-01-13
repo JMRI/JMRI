@@ -67,6 +67,12 @@
             <authorinitials>MJM</authorinitials>
             <revremark>Added TSU-4400 model</revremark>
         </revision>
+        <revision>
+            <revnumber>6</revnumber>
+            <date>2018-01-05</date>
+            <authorinitials>ALM</authorinitials>
+            <revremark>Separate ECO CVs file for Extended Function Map. Add labels to Extended Function map CVs.</revremark>
+        </revision>
     </revhistory>
     <version author="Alain Le Marchand" version="1" lastUpdated="20160604"/>
     <!-- Decoder Model information follows -->
@@ -251,6 +257,7 @@
         <!-- Configuration Variable (CV) information follows -->
         <variables>
             <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOCV.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOCVFnMap.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2CV.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2CVLightEffect.xml"/>
             <!-- Function Mapping follows -->
@@ -1044,68 +1051,85 @@
             <!-- Extended Function Mapping -->
             <variable CV="1.275" item="Extended Function Map Brake" default="11">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Brake</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.283" item="Extended Function Map Brake Select" default="12">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Brake Select</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.284" item="Extended Function Map Alternate Mixer" default="255">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Alternate Mixer</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.285" item="Extended Function Map Forward Trolley Bell" default="255">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Forward Trolley Bell</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.286" item="Extended Function Map Reverse Trolley Bell" default="255">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Reverse Trolley Bell</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.297" item="Extended Function Map Airhorn" default="2">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Airhorn</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.299" item="Extended Function Map Pneumatic Doors" default="6">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Pneumatic Doors</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.300" item="Extended Function Map Short Airhorn" default="3">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Short Airhorn</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.301" item="Extended Function Map Pantograph" default="4">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Pantograph</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.302" item="Extended Function Map General Service" default="18"> <!-- Maybe not supported - inconsistent doc.-->
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>General Service</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.303" item="Extended Function Map Stop Request Bell" default="5">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Stop Request Bell</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.304" item="Extended Function Map Cab Chatter" default="22">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Cab Chatter</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.308" item="Extended Function Map Handbrake" default="15">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Handbrake</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.309" item="Extended Function Map Sander Valve" default="21">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Sander Valve</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.312" item="Extended Function Map Steam Generator" default="20">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Steam Generator</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="1.315" item="Extended Function Map Trolley Bell" default="10">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Trolley Bell</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
+            <!-- Effect Auxiliary Map Registers -->
             <variable CV="1.403" mask="XXXXXXXV" item="Brake Automatic Effects - FWDD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>

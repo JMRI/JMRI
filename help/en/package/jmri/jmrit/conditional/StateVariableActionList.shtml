@@ -373,6 +373,21 @@
               Specify the logix to disable by entering its name.</li>
             </ul></li>
 
+            <li>Entry Exit<ul>
+              <li><strong>Set NX Pair Enabled</strong>: Enables the specified
+              Entry/Exit Pair.  Specify the Entry/Exit Pair to enable by
+              entering its name.</li>
+
+              <li><strong>Set NX Pair Disabled</strong>: Disables the specified
+              Entry/Exit Pair.  Specify the Entry/Exit Pair to enable by
+              entering its name.</li>
+
+              <li><strong>Set NX Pair Segment Active / Inactive</strong>:
+              Request that the route segment for the specified Entry/Exit Pair
+              be activated if not active or deactivated if active. Specify the
+              Entry/Exit Pair to enable by entering its name.</li>
+            </ul></li>
+
             <li>Warrant<ul>
               <li><strong>Allocate Warrant Route</strong>: Allocates (reserves) the
               OBlocks comprising the route of the warrant for use by the

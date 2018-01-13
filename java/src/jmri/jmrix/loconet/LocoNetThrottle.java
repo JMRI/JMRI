@@ -24,6 +24,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
     protected LocoNetSlot slot;
     protected LocoNetInterface network;
+    protected LnThrottleManager throttleManager;
     protected int address;
 
     // members to record the last known spd/dirf/snd bytes AS READ FROM THE LAYOUT!!
@@ -35,6 +36,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     // slot status to be warned if slot released or dispatched
     protected int slotStatus;
     protected boolean isDisposing = false;
+    // set isInitialized to false to enable setting the throttle ID.
+    protected boolean isInitialized = false;
 
     /**
      * Constructor
@@ -46,11 +49,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         super(memo);
         this.slot = slot;
         network = memo.getLnTrafficController();
-        LocoNetMessage msg = new LocoNetMessage(4);
-        msg.setOpCode(LnConstants.OPC_MOVE_SLOTS);
-        msg.setElement(1, slot.getSlot());
-        msg.setElement(2, slot.getSlot());
-        network.sendLocoNetMessage(msg);
+        throttleManager = (LnThrottleManager)memo.getThrottleManager();
 
         // save last known layout state for spd/dirf/snd so we can
         // avoid race condition if another LocoNet process queries
@@ -115,9 +114,16 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 log.warn("Unhandled decoder type: {}", slot.decoderType());
                 break;
         }
-
+                
         // listen for changes
         slot.addSlotListener(this);
+
+        // perform the null slot move
+        LocoNetMessage msg = new LocoNetMessage(4);
+        msg.setOpCode(LnConstants.OPC_MOVE_SLOTS);
+        msg.setElement(1, slot.getSlot());
+        msg.setElement(2, slot.getSlot());
+        network.sendLocoNetMessage(msg);
 
         // start periodically sending the speed, to keep this
         // attached
@@ -407,6 +413,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         }
         log.debug("notifyChangedSlot executing for slot {}, slotStatus {}", slot.getSlot(), Integer.toHexString(slot.slotStatus()));
 
+        if(!isInitialized && slot.slotStatus() == LnConstants.LOCO_IN_USE){
+           log.debug("Attempting to update slot with this JMRI instance's throttle id ({})", throttleManager.getThrottleID());
+           network.sendLocoNetMessage(slot.writeThrottleID(throttleManager.getThrottleID()));
+           isInitialized = true;
+        }
+
         // Save current layout state of spd/dirf/snd so we won't run amok
         // toggling values if another LocoNet entity accesses the slot while
         // our most recent change request is still in-flight.
@@ -677,9 +689,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         return new DccLocoAddress(address, LnThrottleManager.isLongAddress(65536));
     }
     
-    //note: throttle listener expects to have "callback" method notifyStealThrottleRequired 
-    //invoked if a "steal" is required.  Make that happen as part of the "acquisition" process
-
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(LocoNetThrottle.class);
 

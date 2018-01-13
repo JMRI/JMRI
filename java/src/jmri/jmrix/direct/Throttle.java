@@ -4,8 +4,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to a direct serial
@@ -149,6 +147,6 @@ public class Throttle extends AbstractThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Throttle.class);
+    // private final static Logger log = LoggerFactory.getLogger(Throttle.class);
 
 }

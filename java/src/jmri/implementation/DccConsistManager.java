@@ -1,7 +1,6 @@
 package jmri.implementation;
 
 import jmri.Consist;
-import jmri.ConsistManager;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.AddressedProgrammerManager;
@@ -18,10 +17,6 @@ import jmri.AddressedProgrammerManager;
 public class DccConsistManager extends AbstractConsistManager {
 
     private AddressedProgrammerManager opsProgManager = null;
-
-    public DccConsistManager() {
-        this(jmri.InstanceManager.getDefault(AddressedProgrammerManager.class));
-    }
 
     public DccConsistManager(AddressedProgrammerManager apm) {
         super();

@@ -7,6 +7,7 @@ package jmri.jmrix.easydcc;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import jmri.util.JUnitUtil;
@@ -93,6 +94,20 @@ public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsi
         EasyDccConsist c = (EasyDccConsist) m.getConsist(new jmri.DccLocoAddress(255, true));
         Assert.assertNotNull(c);
 
+    }
+
+    @Test
+    @Override
+    public void testIsCommandStationConsistPossible(){
+       // possible for EasyDCC
+       Assert.assertTrue("CS Consist Possible",cm.isCommandStationConsistPossible());
+    }
+
+    @Test
+    public void tesCsConsistNeedsSeperateAddress(){
+       Assume.assumeTrue(cm.isCommandStationConsistPossible());
+       // EasyDCC requires an address for CS consists.
+       Assert.assertTrue("CS Consist Needs Seperate Address",cm.csConsistNeedsSeperateAddress());
     }
 
     // The minimal setup for log4J

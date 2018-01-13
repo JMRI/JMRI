@@ -82,6 +82,7 @@ import org.junit.runners.Suite;
         SE8cSignalHeadTest.class,
         UhlenbrockSlotManagerTest.class,
         UhlenbrockSlotTest.class,
+        jmri.jmrix.loconet.streamport.PackageTest.class,
 })
 
 /**

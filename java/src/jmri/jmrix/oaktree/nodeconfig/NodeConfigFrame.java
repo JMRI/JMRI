@@ -2,7 +2,6 @@ package jmri.jmrix.oaktree.nodeconfig;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -12,7 +11,6 @@ import javax.swing.border.Border;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import jmri.jmrix.oaktree.SerialNode;
 import jmri.jmrix.oaktree.SerialSensorManager;
-import jmri.jmrix.oaktree.SerialTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

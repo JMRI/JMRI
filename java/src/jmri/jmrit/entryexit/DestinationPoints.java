@@ -25,6 +25,7 @@ import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
+import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,10 +56,29 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
         return enabled;
     }
 
-    void setEnabled(boolean boo) {
-        //boolean oldEnabled = enabled;
-        //Need to do other bits when enabling
+    public void setEnabled(boolean boo) {
         enabled = boo;
+
+        // Modify source signal mast held state
+        Sensor sourceSensor = src.getPoint().getSensor();
+        if (sourceSensor == null) {
+            return;
+        }
+        SignalMast sourceMast = src.getPoint().getSignalMast();
+        if (sourceMast == null) {
+            return;
+        }
+        if (enabled) {
+            sourceMast.setHeld(true);
+        } else {
+            // All destinations for the source must be disabled before the mast hold can be released
+            for (PointDetails pd : src.getDestinationPoints()) {
+                if (src.getDestForPoint(pd).isEnabled()) {
+                    return;
+                }
+            }
+            sourceMast.setHeld(false);
+        }
     }
 
     transient Source src = null;
@@ -79,7 +99,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
 
     @Override
     public String getDisplayName() {
-        return getUserName();
+        if (getUserName() != null) {
+            return getUserName();
+        }
+        return getSystemName();
     }
 
     String getUniqueId() {
@@ -328,6 +351,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                     Hashtable<Turnout, Integer> turnoutSettings = new Hashtable<Turnout, Integer>();
 
                     ConnectivityUtil connection = new ConnectivityUtil(point.getPanel());
+//                     log.info("@@ New ConnectivityUtil = '{}'", point.getPanel().getLayoutName());
 
                     // This for loop was after the if statement
                     // Last block in the route is the one that we are protecting at the last sensor/signalmast
@@ -335,16 +359,15 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                         //if we are not using the dispatcher and the signal logic is dynamic, then set the turnouts
                         if (at == null && isSignalLogicDynamic()) {
                             if (i > 0) {
-                                List<LayoutTurnout> turnoutlist;
+                                List<LayoutTrackExpectedState<LayoutTurnout>> turnoutlist;
                                 int nxtBlk = i + 1;
                                 int preBlk = i - 1;
                                 if (i < routeDetails.size() - 1) {
                                     turnoutlist = connection.getTurnoutList(routeDetails.get(i).getBlock(), routeDetails.get(preBlk).getBlock(), routeDetails.get(nxtBlk).getBlock());
-                                    List<Integer> throwlist = connection.getTurnoutSettingList();
                                     for (int x = 0; x < turnoutlist.size(); x++) {
-                                        if (turnoutlist.get(x) instanceof LayoutSlip) {
-                                            int slipState = throwlist.get(x);
-                                            LayoutSlip ls = (LayoutSlip) turnoutlist.get(x);
+                                        if (turnoutlist.get(x).getObject() instanceof LayoutSlip) {
+                                            int slipState = turnoutlist.get(x).getExpectedState();
+                                            LayoutSlip ls = (LayoutSlip) turnoutlist.get(x).getObject();
                                             int taState = ls.getTurnoutState(slipState);
                                             turnoutSettings.put(ls.getTurnout(), taState);
 
@@ -352,11 +375,14 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                                             ls.getTurnoutB().setCommandedState(tbState);
                                             turnoutSettings.put(ls.getTurnoutB(), tbState);
                                         } else {
-                                            String t = turnoutlist.get(x).getTurnoutName();
+                                            String t = turnoutlist.get(x).getObject().getTurnoutName();
                                             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
-                                            turnoutSettings.put(turnout, throwlist.get(x));
-                                            if (turnoutlist.get(x).getSecondTurnout() != null) {
-                                                turnoutSettings.put(turnoutlist.get(x).getSecondTurnout(), throwlist.get(x));
+                                            if (turnout != null) {
+                                                turnoutSettings.put(turnout, turnoutlist.get(x).getExpectedState());
+                                                if (turnoutlist.get(x).getObject().getSecondTurnout() != null) {
+                                                    turnoutSettings.put(turnoutlist.get(x).getObject().getSecondTurnout(),
+                                                            turnoutlist.get(x).getExpectedState());
+                                                }
                                             }
                                         }
                                     }
@@ -381,6 +407,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                         }
                         for (Map.Entry< Turnout, Integer> entry : turnoutSettings.entrySet()) {
                             entry.getKey().setCommandedState(entry.getValue());
+//                             log.info("**> Set turnout '{}'", entry.getKey().getDisplayName());
                             Runnable r = new Runnable() {
                                 @Override
                                 public void run() {
@@ -391,7 +418,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                                     }
                                 }
                             };
-                            Thread thr = new Thread(r, "Entry Exit Route, turnout setting");  // NOI18N
+                            Thread thr = new Thread(r, "Entry Exit Route: Turnout Setting");  // NOI18N
                             thr.start();
                             try {
                                 thr.join();
@@ -426,7 +453,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                             routeDetails.remove(0);
 
                             synchronized (this) {
-                                smSource.setHeld(false);
+                                releaseMast(smSource, turnoutSettings);
                                 //Only change the block and turnout details if this a temp signalmast logic
                                 if (sml.getStoreState(smDest) == jmri.SignalMastLogic.STORENONE) {
                                     LinkedHashMap<Block, Integer> blks = new LinkedHashMap<Block, Integer>();
@@ -455,7 +482,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                         } else {
                             if (src.sourceSignal instanceof SignalMast) {
                                 SignalMast mast = (SignalMast) src.sourceSignal;
-                                mast.setHeld(false);
+                                releaseMast(mast, turnoutSettings);
                             } else if (src.sourceSignal instanceof SignalHead) {
                                 SignalHead head = (SignalHead) src.sourceSignal;
                                 head.setHeld(false);
@@ -547,6 +574,49 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
         if (log.isDebugEnabled()) {
             log.debug("finish route " + src.getPoint().getDisplayName());  // NOI18N
         }
+    }
+
+    /**
+     * Remove the hold on the mast when all of the turnouts have completed moving.
+     * This only applies to turnouts using ONESENSOR feedback.  TWOSENSOR has an
+     * intermediate inconsistent state which prevents erroneous signal aspects.
+     * The maximum wait time is 10 seconds.
+     *
+     * @since 4.11.1
+     * @param mast The signal mast that will be released.
+     * @param turnoutSettings The turnouts that are being set for the current NX route.
+     */
+    private void releaseMast(SignalMast mast, Hashtable<Turnout, Integer> turnoutSettings) {
+        Hashtable<Turnout, Integer> turnoutList = new Hashtable<>(turnoutSettings);
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    for (int i = 20; i > 0; i--) {
+                        int active = 0;
+                        for (Map.Entry< Turnout, Integer> entry : turnoutList.entrySet()) {
+                            Turnout tout = entry.getKey();
+                            if (tout.getFeedbackMode() == Turnout.ONESENSOR) {
+                                // Check state
+                                if (tout.getKnownState() != tout.getCommandedState()) {
+                                    active += 1;
+                                }
+                            }
+                        }
+                        if (active == 0) {
+                            break;
+                        }
+                        Thread.sleep(500);
+                    }
+                    log.debug("Release mast: {}", mast.getDisplayName());
+                    mast.setHeld(false);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        };
+        Thread thr = new Thread(r, "Entry Exit Route: Release Mast");  // NOI18N
+        thr.start();
     }
 
     private boolean isSignalLogicDynamic() {
@@ -865,6 +935,12 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
     }
 
     synchronized void activeBean(boolean reverseDirection, boolean showMessage) {
+        if (!isEnabled()) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("RouteDisabled", getDisplayName()));  // NOI18N
+            src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+            point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+            return;
+        }
         if (activeEntryExit) {
             // log.debug(getUserName() + "  Our route is active so this would go for a clear down but we need to check that the we can clear it down" + activeEndPoint);
             if (!isEnabled()) {
@@ -1054,8 +1130,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                     //No valid paths found so will quit
                     if (pathList.get(0).getListOfBlocks().isEmpty()) {
                         if (showMessage) {
-                            log.error(getUserName() + " " + pathList.get(0).getErrorMessage());
-                            //Considered normal if not a valid through path
+                            //Considered normal if not a valid through path, provide an option to stack
                             handleNoCurrentRoute(reverseDirection, pathList.get(0).getErrorMessage());
                             src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                             point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);

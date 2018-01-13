@@ -2,20 +2,13 @@ package jmri.implementation;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
 public class DccConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase  {
-
-    @Test
-    public void testCtor2(){
-        Assert.assertNotNull("DccConsistManager Default Constructor",new DccConsistManager());
-    }
 
     // The minimal setup for log4J
     @Before

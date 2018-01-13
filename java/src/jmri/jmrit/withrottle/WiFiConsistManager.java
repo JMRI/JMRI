@@ -18,7 +18,7 @@ public class WiFiConsistManager extends NmraConsistManager {
     boolean isValid = false;
 
     public WiFiConsistManager() {
-        super();
+        super(jmri.InstanceManager.getDefault(jmri.CommandStation.class));
         log.debug("New WiFiConsistManager");
         isValid = true;
     }

@@ -189,7 +189,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     JComboBox<String> outputType;
 
     JLabel delayTimeLabel;
-    JComboBox delayTime;
+    JComboBox<String> delayTime;
 
     JLabel outputStatesLabel;
     JComboBox<String> outputStates;

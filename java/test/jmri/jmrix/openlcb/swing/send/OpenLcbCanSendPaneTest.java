@@ -2,9 +2,7 @@ package jmri.jmrix.openlcb.swing.send;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 /**
  * @author Bob Jacobsen Copyright 2013

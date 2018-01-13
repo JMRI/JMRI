@@ -6,8 +6,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -18,7 +16,7 @@ public class SpeedUtilTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Warrant warrant = new Warrant("IW0", "AllTestWarrant");
+        new Warrant("IW0", "AllTestWarrant");
         SpeedUtil t = new SpeedUtil(null);
         Assert.assertNotNull("exists",t);
     }
