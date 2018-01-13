@@ -742,7 +742,7 @@ public class VSDecoder implements PropertyChangeListener {
         // Read and create all of its components.
         // Check for default element.
         if (e.getChild("default") != null) {
-            log.debug("" + getProfileName() + "is default.");
+            log.debug("{} is default", getProfileName());
             is_default = true;
         } else {
             is_default = false;
@@ -783,17 +783,17 @@ public class VSDecoder implements PropertyChangeListener {
                 es.setXml(el, vf);
                 sound_list.put(el.getAttributeValue("name"), es);
             } else if (el.getAttributeValue("type").equals("diesel3")) {
-                // Handle a Diesel Engine sound
+                // Handle a Diesel3 Engine sound
                 Diesel3Sound es = new Diesel3Sound(prefix + el.getAttributeValue("name"));
                 es.setXml(el, vf);
                 sound_list.put(el.getAttributeValue("name"), es);
             } else if (el.getAttributeValue("type").equals("steam")) {
-                // Handle a Diesel Engine sound
+                // Handle a Steam Engine sound
                 SteamSound es = new SteamSound(prefix + el.getAttributeValue("name"));
                 es.setXml(el, vf);
                 sound_list.put(el.getAttributeValue("name"), es);
             } else if (el.getAttributeValue("type").equals("steam1")) {
-                // Handle a Steam Engine sound
+                // Handle a Steam1 Engine sound
                 Steam1Sound es = new Steam1Sound(prefix + el.getAttributeValue("name"));
                 es.setXml(el, vf);
                 sound_list.put(el.getAttributeValue("name"), es);

@@ -15,8 +15,6 @@ import org.junit.Test;
  */
 public class RaspberryPiSensorTest {
 
-    private GpioProvider myprovider = null;
-
     @Test
     public void testCTor() {
         RaspberryPiSensor t = new RaspberryPiSensor("PiS1");

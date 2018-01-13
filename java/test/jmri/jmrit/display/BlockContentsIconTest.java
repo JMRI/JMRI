@@ -24,7 +24,7 @@ public class BlockContentsIconTest extends PositionableLabelTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        BlockContentsIcon bci = new BlockContentsIcon("foo",editor);
+        new BlockContentsIcon("foo",editor);
         Assert.assertNotNull("BlockContentsIcon Constructor",p);
     }
 

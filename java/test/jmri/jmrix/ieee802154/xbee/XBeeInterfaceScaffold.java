@@ -28,9 +28,6 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
 
     private XBeeDevice localDevice;
     private RemoteXBeeDevice remoteDevice1;
-    private RemoteXBeeDevice remoteDevice2;
-    private RemoteXBeeDevice remoteDevice3;
-
     public XBeeInterfaceScaffold() {
         super();
 
@@ -128,8 +125,6 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
     public void dispose(){
           localDevice=null;
           remoteDevice1=null;
-          remoteDevice2=null;
-          remoteDevice3=null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeInterfaceScaffold.class);

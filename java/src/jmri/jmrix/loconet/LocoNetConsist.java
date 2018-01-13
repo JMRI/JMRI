@@ -312,6 +312,11 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                     + " With Direction Normal " // NOI18N
                     + directionNormal + ".");
         }
+        if(consistList.size()<=1 && LocoAddress.equals(consistAddress)){
+          // there is only one address in this consist, no reason to link.
+          notifyConsistListeners(LocoAddress,ConsistListener.OPERATION_SUCCESS);
+          return;
+        }
         throttleManager.requestThrottle(LocoAddress, this);
         // skip right to stage 2, we do not need to status edit. 
         consistRequestState = LINKSTAGETWOSTATE;
@@ -328,6 +333,11 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                     + " from Standard Consist " // NOI18N
                     + consistAddress.toString()
                     + ".");
+        }
+        if(consistList.size()==1 && LocoAddress.equals(consistAddress)){
+          // there is only one address in this consist, no reason to link.
+          notifyConsistListeners(LocoAddress,ConsistListener.OPERATION_SUCCESS);
+          return;
         }
         slotManager.slotFromLocoAddress(LocoAddress.getNumber(), this);
         consistRequestState = UNLINKSTAGEONESTATE;
