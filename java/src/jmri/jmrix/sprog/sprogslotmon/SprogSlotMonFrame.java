@@ -181,7 +181,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
     public void notifyReply(SprogReply m) {
         int [] statusA = new int[4];
         String s = m.toString();
-        log.debug("Reply received: "+s);
+        log.debug("Reply received: {}", s);
         if (s.indexOf('S') > -1) {
             // Handle a status reply
             log.debug("Status reply");

@@ -258,7 +258,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     @Override
     public String getSystemPrefix() {
         if (adaptermemo == null) {
-            return "MC";
+            return "M";
         }
         return adaptermemo.getSystemPrefix();
     }
