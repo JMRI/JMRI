@@ -10,7 +10,16 @@ import jmri.SignalMast;
 import jmri.implementation.AbstractSignalMast;
 import jmri.jmrix.SystemConnectionMemo;
 
+import org.openlcb.Connection;
 import org.openlcb.EventID;
+import org.openlcb.EventState;
+import org.openlcb.Message;
+import org.openlcb.ProducerConsumerEventReportMessage;
+import org.openlcb.IdentifyConsumersMessage;
+import org.openlcb.ConsumerIdentifiedMessage;
+import org.openlcb.IdentifyProducersMessage;
+import org.openlcb.ProducerIdentifiedMessage;
+import org.openlcb.IdentifyEventsMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,6 +76,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
 
     protected String mastType = "F$olm";
     boolean consistent = false; // vs inconsistent/initializing
+    MessageDecoder decoder = new MessageDecoder();
     
     // not sure why this is a CanSystemConnectionMemo in simulator, but it is 
     jmri.jmrix.can.CanSystemConnectionMemo systemMemo;
@@ -145,6 +155,15 @@ public class OlcbSignalMast extends AbstractSignalMast {
     }
 
     /**
+     * Handle incoming messages
+     * 
+     * Dummy interface for now
+     */
+    public void handleMessage(Message msg) {
+        msg.applyTo(decoder, null);
+    }
+    
+    /**
      * This needs a better implementation, because 
      * now it's going to do a linear search through
      * the aspects in every OlcbSignalMast in the program.
@@ -161,9 +180,11 @@ public class OlcbSignalMast extends AbstractSignalMast {
             }
         }
         if (event.equals(litEventId)) {
+            litInitialized = true;
             super.setLit(true);
         }
         if (event.equals(notLitEventId)) {
+            litInitialized = true;
             super.setLit(false);
         }
         if (event.equals(heldEventId)) {
@@ -186,19 +207,22 @@ public class OlcbSignalMast extends AbstractSignalMast {
         firePropertyChange("Aspect", oldAspect, aspect);
     }
 
+    boolean litInitialized = false;
     /** 
      * Always communicates via OpenLCB
      */
     @Override
     public void setLit(boolean newLit) {
+        litInitialized = true;
         if (newLit) {
-            System.out.println("Produce output event "+getLitEventId());
+            log.debug("Produce lit event {}", litEventId);
         } else {
-            System.out.println("Produce output event "+getNotLitEventId());
+            log.debug("Produce not lit event {}", notLitEventId);
         }
         // does not call super.setLit because no local state change until Event consumed
     }
 
+    boolean heldInitialized = false;
     /** 
      * Always communicates via OpenLCB
      */
@@ -226,7 +250,89 @@ public class OlcbSignalMast extends AbstractSignalMast {
     public void setNotHeldEventId(String event) { notHeldEventId = new OlcbAddress(event).toEventID(); }
     public String getNotHeldEventId() { return new OlcbAddress(notHeldEventId).toCanonicalString(); }
 
+    boolean isOurEvent(EventID event) {
+        if (event.equals(litEventId)) return true;
+        if (event.equals(notLitEventId)) return true;
+        if (event.equals(heldEventId)) return true;
+        if (event.equals(notHeldEventId)) return true;
+        return false;
+    }
+    
+    /**
+     * Stub to centralize sending to OpenLCB network
+     */
+    public void sendToNetwork(Message msg) {
+        log.debug("sending to layout: {}", msg);
+    }
+    
+    /**
+     * Captive class to mimic double inheritance, decodes and 
+     * acts on incoming message types.
+     */
+    class MessageDecoder extends org.openlcb.MessageDecoder {
+    
+        /**
+         * {@inheritDoc}
+         */
+        public void handleProducerConsumerEventReport(ProducerConsumerEventReportMessage msg, Connection sender){
+            // extract eventID and process
+            EventID event = msg.getEventID();
+            consumeEvent(event);
+        }
+        /**
+         * {@inheritDoc}
+         */
+        public void handleIdentifyConsumers(IdentifyConsumersMessage msg, Connection sender){
+            defaultHandler(msg, sender);
+        }
+        /**
+         * {@inheritDoc}
+         */
+        public void handleConsumerIdentified(ConsumerIdentifiedMessage msg, Connection sender){
+            // extract eventID and process if marked "valid"
+            if (msg.getEventState() == EventState.Valid) {
+                EventID event = msg.getEventID();
+                consumeEvent(event);
+            }
+        }
+        /**
+         * {@inheritDoc}
+         */
+        public void handleIdentifyProducers(IdentifyProducersMessage msg, Connection sender){
+            EventID event = msg.getEventID();
+            // much duplication with handleIdentifyConsumers, consider refactoring
+            if (event.equals(litEventId)) {
+                sendToNetwork(
+                    null
+                );
+            }
+        }
+        /**
+         * {@inheritDoc}
+         */
+        public void handleProducerIdentified(ProducerIdentifiedMessage msg, Connection sender){
+            // extract eventID and process if marked "valid"
+            if (msg.getEventState() == EventState.Valid) {
+                EventID event = msg.getEventID();
+                consumeEvent(event);
+            }
+        }
+        /**
+         * {@inheritDoc}
+         */
+        public void handleIdentifyEvents(IdentifyEventsMessage msg, Connection sender){
+            defaultHandler(msg, sender);
+        }
+    
+    }
 
+    static class StateMachine<T extends Enum<T>> {
+        T state;
+        public void setState(T newState) { state = newState; }
+        public T getState() { return state; }
+        
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(OlcbSignalMast.class);
 
 }
