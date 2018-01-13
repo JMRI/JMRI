@@ -769,129 +769,130 @@ public class SlotManagerTest {
     public void testSendPacket() {
         ProgListener p2 = null;
         byte msg[] = jmri.NmraPacket.accDecPktOpsMode(1, 4, 53);
-        slotmanager.sendPacket(msg, 0);
+        slotmanager.sendPacket(msg, 1);
         Assert.assertEquals("nmra packet 1",
                 "ED 0B 7F 50 07 01 70 6C 03 35 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accDecPktOpsMode(128, 4, 53);
-        slotmanager.sendPacket(msg, 1);
+        slotmanager.sendPacket(msg, 2);
         Assert.assertEquals("nmra packet 2",
                 "ED 0B 7F 51 07 00 50 6C 03 35 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         
         msg= jmri.NmraPacket.accDecPktOpsMode(256, 4, 53);
-        slotmanager.sendPacket(msg, 2);
+        slotmanager.sendPacket(msg, 3);
         Assert.assertEquals("nmra packet 3",
                 "ED 0B 7F 52 07 00 30 6C 03 35 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accDecPktOpsMode(1, 37, 53);
-        slotmanager.sendPacket(msg, 3);
+        slotmanager.sendPacket(msg, 4);
         Assert.assertEquals("nmra packet 4",
                 "ED 0B 7F 53 07 01 70 6C 24 35 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accDecPktOpsMode(1, 129, 53);
-        slotmanager.sendPacket(msg, 4);
+        slotmanager.sendPacket(msg, 5);
         Assert.assertEquals("nmra packet 5",
                 "ED 0B 7F 54 0F 01 70 6C 00 35 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         
         msg = jmri.NmraPacket.accDecPktOpsMode(1, 10, 0);
-        slotmanager.sendPacket(msg, 5);
+        slotmanager.sendPacket(msg, 6);
         Assert.assertEquals("nmra packet 6",
                 "ED 0B 7F 55 07 01 70 6C 09 00 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accDecPktOpsMode(1, 10, 128);
-        slotmanager.sendPacket(msg, 6);
+        slotmanager.sendPacket(msg, 7);
         Assert.assertEquals("nmra packet 7",
                 "ED 0B 7F 56 17 01 70 6C 09 00 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accDecPktOpsMode(1, 10, 255);
-        slotmanager.sendPacket(msg, 7);
+        slotmanager.sendPacket(msg, 8);
         Assert.assertEquals("nmra packet 8",
                 "ED 0B 7F 57 17 01 70 6C 09 7F 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accDecPktOpsMode(511, 255, 0);
-        slotmanager.sendPacket(msg, 8);
-        jmri.util.JUnitAppender.assertWarnMessage("Ops Mode Accessory Packet 'Repeat count' reduced from 8 to 7.");
+        slotmanager.sendPacket(msg, 9);
+        jmri.util.JUnitAppender.assertWarnMessage("Ops Mode Accessory Packet 'Send count' reduced from 9 to 8.");
         Assert.assertEquals("nmra packet 9",
                 "ED 0B 7F 57 0F 3F 00 6C 7E 00 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accSignalDecoderPkt(1, 31);
-        slotmanager.sendPacket(msg, -1);
-        jmri.util.JUnitAppender.assertWarnMessage("Ops Mode Accessory Packet 'Repeat count' of -1 is illegal and is forced to 0.");
+        slotmanager.sendPacket(msg, 0);
+        jmri.util.JUnitAppender.assertWarnMessage("Ops Mode Accessory Packet 'Send count' of 0 is illegal and is forced to 1.");
         Assert.assertEquals("nmra packet 10",
                 "ED 0B 7F 30 01 01 71 1F 00 00 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accSignalDecoderPkt(2, 30);
         slotmanager.sendPacket(msg, -1);
+        jmri.util.JUnitAppender.assertWarnMessage("Ops Mode Accessory Packet 'Send count' of -1 is illegal and is forced to 1.");
         Assert.assertEquals("nmra packet 10",
                 "ED 0B 7F 30 01 01 73 1E 00 00 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accSignalDecoderPkt(4, 29);
-        slotmanager.sendPacket(msg, 2);
+        slotmanager.sendPacket(msg, 3);
         Assert.assertEquals("nmra packet 10",
                 "ED 0B 7F 32 01 01 77 1D 00 00 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accSignalDecoderPkt(8, 27);
-        slotmanager.sendPacket(msg, 1);
+        slotmanager.sendPacket(msg, 2);
         Assert.assertEquals("nmra packet 10",
                 "ED 0B 7F 31 01 02 77 1B 00 00 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accSignalDecoderPkt(16, 23);
-        slotmanager.sendPacket(msg, 1);
+        slotmanager.sendPacket(msg, 2);
         Assert.assertEquals("nmra packet 10",
                 "ED 0B 7F 31 01 04 77 17 00 00 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accSignalDecoderPkt(32, 15);
-        slotmanager.sendPacket(msg, 1);
+        slotmanager.sendPacket(msg, 2);
         Assert.assertEquals("nmra packet 10",
                 "ED 0B 7F 31 01 08 77 0F 00 00 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accSignalDecoderPkt(64, 1);
-        slotmanager.sendPacket(msg, 1);
+        slotmanager.sendPacket(msg, 2);
         Assert.assertEquals("nmra packet 10",
                 "ED 0B 7F 31 01 10 77 01 00 00 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accSignalDecoderPkt(128, 0);
-        slotmanager.sendPacket(msg, 1);
+        slotmanager.sendPacket(msg, 2);
         Assert.assertEquals("nmra packet 10",
                 "ED 0B 7F 31 01 20 77 00 00 00 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accSignalDecoderPkt(256, 2);
-        slotmanager.sendPacket(msg, 1);
+        slotmanager.sendPacket(msg, 2);
         Assert.assertEquals("nmra packet 10",
                 "ED 0B 7F 31 01 00 67 02 00 00 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accSignalDecoderPkt(512, 4);
-        slotmanager.sendPacket(msg, 1);
+        slotmanager.sendPacket(msg, 2);
         Assert.assertEquals("nmra packet 10",
                 "ED 0B 7F 31 01 00 57 04 00 00 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accSignalDecoderPkt(1024, 8);
-        slotmanager.sendPacket(msg, 1);
+        slotmanager.sendPacket(msg, 2);
         Assert.assertEquals("nmra packet 10",
                 "ED 0B 7F 31 01 00 37 08 00 00 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         msg = jmri.NmraPacket.accSignalDecoderPkt(511, 16);
-        slotmanager.sendPacket(msg, 1);
+        slotmanager.sendPacket(msg, 2);
         Assert.assertEquals("nmra packet 10",
                 "ED 0B 7F 31 01 00 55 10 00 00 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
