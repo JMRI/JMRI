@@ -14,6 +14,7 @@ import org.openlcb.Connection;
 import org.openlcb.EventID;
 import org.openlcb.EventState;
 import org.openlcb.Message;
+import org.openlcb.MessageDecoder;
 import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.ProducerConsumerEventReportMessage;
@@ -135,7 +136,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
         heldMachine = new StateMachine<Boolean>(connection, node, Boolean.FALSE);
         aspectMachine = new StateMachine<String>(connection, node, getAspect());
         
-        ((OlcbInterface)systemMemo.get(OlcbInterface.class)).registerMessageListener(new MessageHandler(){
+        ((OlcbInterface)systemMemo.get(OlcbInterface.class)).registerMessageListener(new MessageDecoder(){
             public void put(Message msg, Connection sender) {
                 handleMessage(msg);
             }
@@ -170,9 +171,22 @@ public class OlcbSignalMast extends AbstractSignalMast {
      * 
      */
     public void handleMessage(Message msg) {
+        // gather before state
+        Boolean litBefore = litMachine.getState();
+        Boolean heldBefore = heldMachine.getState();
+        String aspectBefore = aspectMachine.getState();
+        
+        // handle message
         msg.applyTo(litMachine, null);
         msg.applyTo(heldMachine, null);
         msg.applyTo(aspectMachine, null);
+        
+        // handle changes, if any
+        if (!litBefore.equals(litMachine.getState())) firePropertyChange("Lit", litBefore, litMachine.getState());
+        if (!heldBefore.equals(heldMachine.getState())) firePropertyChange("Held", heldBefore, heldMachine.getState());
+        
+        if ( (aspectBefore==null && aspectMachine.getState()!=null) || (aspectBefore!=null && !aspectBefore.equals(aspectMachine.getState()) ) ) updateState(aspectMachine.getState());
+
     }
     
     /** 
