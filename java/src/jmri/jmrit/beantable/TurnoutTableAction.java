@@ -878,7 +878,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                             
                             TableCellEditor editor = new BeanComboBoxEditor(c);
                             e.put(t, editor);
-                            log.error("initialize for Turnout \"{}\" Sensor \"{}\"", t, s);
+                            log.debug("initialize for Turnout \"{}\" Sensor \"{}\"", t, s);
                     }
                                                         
                     Hashtable<Turnout, TableCellRenderer> rendererMapSensor1 = new Hashtable<>();
