@@ -516,6 +516,7 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @After
     @Override
     public void tearDown() {
+        ((LnThrottleManager)memo.getThrottleManager()).dispose();
         JUnitUtil.tearDown();
     }
 

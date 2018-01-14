@@ -416,6 +416,7 @@ public class Ib1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @After
     @Override
     public void tearDown() {
+        ((Ib1ThrottleManager)jmri.InstanceManager.getDefault(jmri.ThrottleManager.class)).dispose();
         JUnitUtil.tearDown();
     }
 

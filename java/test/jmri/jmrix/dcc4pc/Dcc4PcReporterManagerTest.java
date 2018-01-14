@@ -17,7 +17,7 @@ public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgr
 
     @Override
     public String getSystemName(String i) {
-        return "DPR" + i;
+        return "DR" + i;
     }
 
 

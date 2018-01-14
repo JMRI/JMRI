@@ -47,7 +47,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Standard error handling for port-not-found case
+     * Standard error handling for port-not-found case.
      */
     public String handlePortNotFound(NoSuchPortException p, String portName, Logger log) {
         log.error("Serial port " + portName + " not found");
@@ -123,7 +123,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Sets the flow control, while also setting RTS and DTR to active.
+     * Set the flow control, while also setting RTS and DTR to active.
      *
      * @param serialPort Port to be updated
      * @param flow       flow control mode from (@link purejavacomm.SerialPort}

@@ -14,7 +14,7 @@ public class TamsSensorTest {
 
     @Test
     public void testCTor() {
-        TamsSensor t = new TamsSensor("TMS1");
+        TamsSensor t = new TamsSensor("TS1");
         Assert.assertNotNull("exists",t);
     }
 

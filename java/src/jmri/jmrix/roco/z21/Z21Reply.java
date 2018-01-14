@@ -97,6 +97,12 @@ public class Z21Reply extends AbstractMRReply {
                return Bundle.getMessage("Z21ReplyStringVersion",java.lang.Integer.toHexString(hwversion), swversion);
            case 0x0040:
                return Bundle.getMessage("Z21XpressNetTunnelReply", getXNetReply().toMonitorString());
+           case 0x00A0:
+               return Bundle.getMessage("Z21LocoNetRxReply", getLocoNetMessage().toString());
+           case 0x00A1:
+               return Bundle.getMessage("Z21LocoNetTxReply", getLocoNetMessage().toString());
+           case 0x00A2:
+               return Bundle.getMessage("Z21LocoNetLanReply", getLocoNetMessage().toString());
            default:
         }
 
@@ -322,5 +328,37 @@ public class Z21Reply extends AbstractMRReply {
                        (0xff&(getElement(offset)));
          return current;
     }
-    
+
+    // handle LocoNet replies tunneled in Z21 messages
+    boolean isLocoNetTunnelMessage() {
+        switch (getOpCode()){
+          case 0xA0: // LAN_LOCONET_Z21_RX
+          case 0xA1: // LAN_LOCONET_Z21_TX
+          case 0xA2: // LAN_LOCONET_FROM_LAN
+             return true;
+          default:
+             return false;
+        }
+    }
+
+    boolean isLocoNetDispatchMessage() {
+       return (getOpCode() == 0xA3);
+    }
+
+    boolean isLocoNetDetectorMessage() {
+       return (getOpCode() == 0xA4);
+    }
+
+    jmri.jmrix.loconet.LocoNetMessage getLocoNetMessage() {
+        jmri.jmrix.loconet.LocoNetMessage lnr = null;
+        if (isLocoNetTunnelMessage()) {
+            int i = 4;
+            lnr = new jmri.jmrix.loconet.LocoNetMessage(getLength()-4);
+            for (; i < getLength(); i++) {
+                lnr.setElement(i - 4, getElement(i));
+            }
+        }
+        return lnr;
+    }
+   
 }
