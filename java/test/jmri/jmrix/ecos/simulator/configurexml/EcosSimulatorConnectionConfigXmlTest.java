@@ -11,7 +11,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class ConnectionConfigXmlTest {
+public class EcosSimulatorConnectionConfigXmlTest {
 
     @Test
     public void testCtor() {

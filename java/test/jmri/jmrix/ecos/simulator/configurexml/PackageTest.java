@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   ConnectionConfigXmlTest.class
+   EcosSimulatorConnectionConfigXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.easydcc.simulator.configurexml package.
