@@ -34,6 +34,8 @@ public class OlcbSensor extends AbstractSensor {
     EventTable.EventTableEntryHolder inactiveEventTableEntryHolder = null;
     private static final boolean DEFAULT_IS_AUTHORITATIVE = true;
     private static final boolean DEFAULT_LISTEN = true;
+    private static final int PC_DEFAULT_FLAGS = BitProducerConsumer.DEFAULT_FLAGS &
+            (~BitProducerConsumer.LISTEN_INVALID_STATE);
 
     public OlcbSensor(String prefix, String address, OlcbInterface iface) {
         super(prefix + "S" + address);
@@ -77,7 +79,7 @@ public class OlcbSensor extends AbstractSensor {
      * XML.
      */
     void finishLoad() {
-        int flags = BitProducerConsumer.DEFAULT_FLAGS;
+        int flags = PC_DEFAULT_FLAGS;
         flags = OlcbUtils.overridePCFlagsFromProperties(this, flags);
         if (addrInactive == null) {
             pc = new BitProducerConsumer(iface, addrActive.toEventID(), BitProducerConsumer.nullEvent, flags);
@@ -162,6 +164,10 @@ public class OlcbSensor extends AbstractSensor {
             }
         } else if (s == Sensor.INACTIVE) {
             sensorListener.setFromOwnerWithForceNotify(false);
+        } else if (s == Sensor.UNKNOWN) {
+            if (pc != null) {
+                pc.resetToDefault();
+            }
         }
     }
 
