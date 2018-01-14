@@ -92,6 +92,7 @@ public class JmriServer {
         /* Start the server thread */
         if (this.listenThread == null) {
             this.listenThread = new Thread(new NewClientListener(connectSocket));
+            this.listenThread.setName("port-" + this.getPort() + "-listener");
             this.listenThread.start();
             this.advertise();
         }
@@ -193,6 +194,7 @@ public class JmriServer {
 
         public void start() {
             clientThread = new Thread(this);
+            clientThread.setName("port-" + getPort() + "-client-" + clientSocket.getInetAddress().toString() + ":" + clientSocket.getPort());
             clientThread.start();
         }
 
