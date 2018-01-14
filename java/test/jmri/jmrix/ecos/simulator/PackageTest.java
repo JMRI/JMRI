@@ -7,7 +7,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     EcosSimulatorConnectionConfigTest.class,
     EcosSimulatorAdapterTest.class,
-    jmri.jmrix.easydcc.simulator.configurexml.PackageTest.class,
+    jmri.jmrix.ecos.simulator.configurexml.PackageTest.class,
     BundleTest.class
 })
 /**
