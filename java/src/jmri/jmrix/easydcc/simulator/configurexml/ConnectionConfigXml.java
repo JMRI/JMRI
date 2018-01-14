@@ -31,7 +31,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     @Override
     protected void getInstance() {
-        adapter = new SimulatorAdapter();
+        if (adapter == null) {
+            adapter = new SimulatorAdapter();
+        }
     }
 
     @Override
