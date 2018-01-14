@@ -51,6 +51,7 @@ class EcosSimulatorServer extends JmriServer {
         try (Scanner inputScanner = new Scanner(new InputStreamReader(inStream, "UTF-8"))) {
             // Listen for commands from the client until the connection closes
             String cmd;
+            String reply;
 
             while (true) {
                 inputScanner.skip("[\r\n]*");// skip any stray end of line characters.
@@ -64,7 +65,11 @@ class EcosSimulatorServer extends JmriServer {
                 }
 
                 log.debug("Received from client: {}", cmd);
-                outStream.writeBytes(this.generateReply(cmd));
+                // Only send non-null replies
+                reply = this.generateReply(cmd);
+                if (reply != null) {
+                    outStream.writeBytes(reply);
+                }
             }
         }
     }
@@ -82,30 +87,75 @@ class EcosSimulatorServer extends JmriServer {
     private String generateReply(String msg) {
         log.debug("Generate Reply to message: \"{}\"", msg);
 
-        String reply;
+        String header;
+        String body = "";
         String command;
-        if (msg.indexOf(',') >= 1) {
-            command = msg.substring(0, msg.indexOf(','));
+        int id = 0;
+        String[] options = new String[0];
+        if (msg.indexOf('(') >= 1) {
+            command = msg.substring(0, msg.indexOf('('));
         } else {
             command = msg;
         }
-        log.error("Replying to \"{}\"", command);
+        if (msg.indexOf(',') >= 1) {
+            id = Integer.parseInt(msg.substring(command.length() + 1, msg.indexOf(',')));
+            options = msg.substring(msg.indexOf(',') + 1, msg.length() - 1).trim().split("[,\\s]+");
+        } else {
+            id = Integer.parseInt(msg.substring(command.length() + 1, msg.length() - 1));
+        }
+        log.debug("Replying to cmd: \"{}\", id: {}, options: {}", command, id, options);
         switch (command) {
-            case "request(1": // power monitor
-                reply = String.format("<EVENT 1>status[%s]", trackPowerState == PowerManager.ON ? "GO" : "STOP");
+            case "request":
+                switch (id) {
+                    case 1: // power or EcoS Status
+                        header = String.format("<REPLY request(1, %s)>", String.join(", ", options));
+                        break;
+                    default:
+                        header = null;
+                }
                 break;
-            case "get(1": // power get
-                reply = String.format("<REPLY get(1,%s", trackPowerState == PowerManager.ON ? " go)" : " stop)");
+            case "get":
+                switch (id) {
+                    case 1: // power or EcoS Status
+                        header = String.format("<REPLY get(1, %s)>", String.join(", ", options));
+                        switch (options[0]) {
+                            case "info":
+                                body = "1 ECoS\n1ProtocolVersion[0.1]\n1 ApplicationVersion[1.0.1]\n1 HardwareVersion[1.3]";
+                                break;
+                            case "status":
+                                body = String.format("1 Status[%s]", trackPowerState == PowerManager.ON ? "GO" : "STOP");
+                                break;
+                            default:
+                                header = null;
+                        }
+                        break;
+                    default:
+                        header = null;
+                }
                 break;
-            case "set(1": // power set
-                trackPowerState = msg.contains("go") ? PowerManager.ON : PowerManager.OFF;
-                reply = String.format("<REPLY set(1,%s", trackPowerState == PowerManager.ON ? " go)" : " stop)");
+            case "set":
+                switch (id) {
+                    case 1: // power or EcoS Status
+                        trackPowerState = msg.contains("go") ? PowerManager.ON : PowerManager.OFF;
+                        header = String.format("<REPLY set(1,%s", trackPowerState == PowerManager.ON ? " go)" : " stop)");
+                        break;
+                    default:
+                        header = null;
+                }
                 break;
             default:
-                reply = null; // all others
+                header = null;
         }
-        log.debug("Reply is: {}", reply);
-        return reply;
+        // Do not respond if header is null
+        if (header == null) {
+            return null;
+        }
+        if (body.isEmpty()) {
+            log.debug("Reply is:\n{}\n<END 0 (OK)>", header);
+            return String.format("%s%n<END 0 (OK)>", header);
+        }
+        log.debug("Reply is:\n{}\n{}\n<END 0 (OK)>", header, body);
+        return String.format("%s%n%s%n<END 0 (OK)>", header, body);
     }
 
 }
