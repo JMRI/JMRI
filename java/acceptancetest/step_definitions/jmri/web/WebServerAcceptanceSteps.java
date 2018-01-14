@@ -1,7 +1,6 @@
 package jmri.web;
 
 import cucumber.api.java8.En;
-import cucumber.api.PendingException;
 import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -12,12 +11,10 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.awt.GraphicsEnvironment;
 import java.util.concurrent.TimeUnit;
-import jmri.web.server.WebServer;
 
 /**
  * Cucumber step defintions for Web Server Acceptance tests.

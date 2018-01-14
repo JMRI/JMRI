@@ -3,17 +3,20 @@
 <enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Off">
     <choice>Off</choice>
-    <choice xml:lang="it">Off</choice>
     <choice xml:lang="cs">Vypnout</choice>
+    <choice xml:lang="fr">Éteint</choice>
+    <choice xml:lang="it">Off</choice>
   </enumChoice>
   <enumChoice choice="On">
     <choice>On</choice>
-    <choice xml:lang="it">On</choice>
     <choice xml:lang="cs">Zapnout</choice>
+    <choice xml:lang="fr">Allumé</choice>
+    <choice xml:lang="it">On</choice>
   </enumChoice>
   <enumChoice choice="On with Bell">
     <choice>On with Bell</choice>
-    <choice xml:lang="it">On con Campana</choice>
     <choice xml:lang="cs">Zapnout se zazvoněním</choice>
+    <choice xml:lang="fr">Allumé avec la cloche</choice>
+    <choice xml:lang="it">On con Campana</choice>
   </enumChoice>
 </enumVal>

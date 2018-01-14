@@ -2150,7 +2150,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
         JTable cvTable = new JTable(_cvModel);
 
-        sorter.setComparator(CvTableModel.NUMCOLUMN, new jmri.util.PreferNumericComparator());
+        sorter.setComparator(CvTableModel.NUMCOLUMN, new jmri.util.AlphanumComparator());
 
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));

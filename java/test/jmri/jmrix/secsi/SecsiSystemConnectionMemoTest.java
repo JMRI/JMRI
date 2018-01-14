@@ -24,7 +24,7 @@ public class SecsiSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       SerialTrafficController tc = new SerialTrafficControlScaffold();
+       new SerialTrafficControlScaffold();
        scm = new SecsiSystemConnectionMemo();
     }
 

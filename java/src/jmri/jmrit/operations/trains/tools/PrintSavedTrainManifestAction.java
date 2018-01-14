@@ -12,6 +12,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.jmrit.operations.trains.TrainPrintUtilities;
+import jmri.jmrit.operations.trains.TrainUtilities;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +59,7 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
             return;
         }
         if (_isPreview && Setup.isManifestEditorEnabled()) {
-            TrainPrintUtilities.openDesktopEditor(file);
+            TrainUtilities.openDesktop(file);
             return;
         }
         String logoURL = Setup.NONE;

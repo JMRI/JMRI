@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.jmrit.catalog.NamedIcon;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;

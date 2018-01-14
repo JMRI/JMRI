@@ -1,8 +1,5 @@
 package jmri.jmrix.loconet;
 
-import static jmri.jmrix.loconet.LnConstants.STAT1_SL_ACTIVE;
-import static jmri.jmrix.loconet.LnConstants.STAT1_SL_BUSY;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -13,7 +10,6 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,6 +90,17 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Send a DCC packet to the rails. This implements the CommandStation
      * interface.
      *
+     * @param packet  Byte array representing the packet, including the
+     *                error-correction byte.  The error-correction byte
+     *                need not be correct as it is not propagated as part
+     *                of the LocoNet message.  The length of packet
+     *                determines the number of bytes to be sent in the NMRA
+     *                packet.  The command station computes and
+     *                fills-in the error-correction byte as the last byte of the
+     *                packet.  When packet includes fewer than 6 bytes, the
+     *                LocoNet message will encode the remaining bytes as 0.
+     * @param repeats Number of times to repeat the transmission.  repeats
+     *                must be in the range {0...7}
      */
     @Override
     public void sendPacket(byte[] packet, int repeats) {
@@ -108,7 +115,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         }
 
         LocoNetMessage m = new LocoNetMessage(11);
-        m.setElement(0, 0xED);
+        m.setElement(0, LnConstants.OPC_IMM_PACKET);
         m.setElement(1, 0x0B);
         m.setElement(2, 0x7F);
         // the incoming packet includes a check byte that's not included in LocoNet packet
@@ -261,7 +268,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (log.isDebugEnabled()) {
             log.debug("notify " + v.size() // NOI18N
                     + " SlotListeners about slot " // NOI18N
-                    + s.getSlot()); 
+                    + s.getSlot());
         }
         // forward to all listeners
         int cnt = v.size();
@@ -282,12 +289,15 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     @Override
     public void message(LocoNetMessage m) {
         // LACK processing for resend of immediate command
-        if (!mTurnoutNoRetry && immedPacket != null && m.getOpCode() == LnConstants.OPC_LONG_ACK && m.getElement(1) == 0x6D && m.getElement(2) == 0x00) {
+        if (!mTurnoutNoRetry && immedPacket != null &&
+                m.getOpCode() == LnConstants.OPC_LONG_ACK &&
+                m.getElement(1) == 0x6D && m.getElement(2) == 0x00) {
             // LACK reject, resend immediately
             tc.sendLocoNetMessage(immedPacket);
             immedPacket = null;
         }
-        if (m.getOpCode() == 0xED && m.getElement(1) == 0x0B && m.getElement(2) == 0x7F) {
+        if (m.getOpCode() == LnConstants.OPC_IMM_PACKET &&
+                m.getElement(1) == 0x0B && m.getElement(2) == 0x7F) {
             immedPacket = m;
         } else {
             immedPacket = null;
@@ -327,7 +337,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 found = true;
             }
             if (!found) {
-                // rats! Slot not loaded since program start.  Request it be 
+                // rats! Slot not loaded since program start.  Request it be
                 // reloaded for later, but that'll be too late
                 // for this one.
                 LocoNetMessage mo = new LocoNetMessage(4);
@@ -344,7 +354,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * address word
      */
     int getDirectFunctionAddress(LocoNetMessage m) {
-        if (m.getElement(0) != 0xED) {
+        if (m.getElement(0) != LnConstants.OPC_IMM_PACKET) {
             return -1;
         }
         if (m.getElement(1) != 0x0B) {
@@ -378,7 +388,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * address bytes.
      */
     int getDirectDccPacket(LocoNetMessage m) {
-        if (m.getElement(0) != 0xED) {
+        if (m.getElement(0) != LnConstants.OPC_IMM_PACKET) {
             return -1;
         }
         if (m.getElement(1) != 0x0B) {
@@ -544,7 +554,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     progState = 0;
                     // notify user ProgListener
                     stopTimer();
-                    // have to send this in a little while to 
+                    // have to send this in a little while to
                     // allow command station time to execute
                     javax.swing.Timer timer = new javax.swing.Timer(postProgDelay, new java.awt.event.ActionListener() {
                         @Override
@@ -590,13 +600,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     protected void respondToAddrRequest(LocoNetMessage m, int i) {
         // is called any time a LocoNet message is received.  Note that we do _NOT_ know why a given message happens!
-        
+
         // if this is OPC_SL_RD_DATA
         if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
             // yes, see if request exists
             // note that the appropriate _slots[] entry has already been updated
             // to reflect the content of the LocoNet message, so _slots[i]
-            // has the locomotive address of this request 
+            // has the locomotive address of this request
             int addr = _slots[i].locoAddr();
             log.debug("LOCO_ADR resp is slot {} for addr {}", i, addr); // NOI18N
             SlotListener l = mLocoAddrHash.get(Integer.valueOf(addr));
@@ -675,6 +685,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         }
     }
 
+    ProgrammingMode csOpSwProgrammingMode = new ProgrammingMode(
+            "LOCONETCSOPSWMODE",
+            Bundle.getMessage("LOCONETCSOPSWMODE"));
+
     // members for handling the programmer interface
     /**
      * Types implemented here.
@@ -686,6 +700,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         ret.add(ProgrammingMode.DIRECTBYTEMODE);
         ret.add(ProgrammingMode.REGISTERMODE);
         ret.add(ProgrammingMode.ADDRESSMODE);
+        ret.add(csOpSwProgrammingMode);
+
         return ret;
     }
 
@@ -758,11 +774,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     @Override
     synchronized protected void timeout() {
         log.debug("timeout fires in state {}", progState); // NOI18N
-        
+
         if (progState != 0) {
             // we're programming, time to stop
             log.debug("timeout while programming"); // NOI18N
-            
+
             // perhaps no communications present? Fail back to end of programming
             progState = 0;
             // and send the notification; error code depends on state
@@ -793,6 +809,37 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mServiceMode = false;
         doWrite(CV, val, p, 0x67);  // ops mode byte write, with feedback
     }
+
+    @Override
+    public void writeCV(String cvNum, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        log.debug("writeCV(string): cvNum={}, value={}", cvNum, val);
+        if (getMode().equals(csOpSwProgrammingMode)) {
+            log.debug("cvOpSw mode write!");
+            //handle Command Station OpSw programming here
+            String[] parts = cvNum.split("\\.");
+            if ((parts[0].equals("csOpSw")) && (parts.length==2)) {
+                if (csOpSwAccessor == null) {
+                    csOpSwAccessor = new csOpSwAccess(adaptermemo, p);
+                } else {
+                    csOpSwAccessor.setProgrammerListener(p);
+                }
+                // perform the CsOpSwMode read access
+                log.debug("going to try the opsw access");
+                csOpSwAccessor.writeCsOpSw(cvNum, val, p);
+                return;
+
+            } else {
+                log.warn("rejecting the cs opsw access account unsupported CV name format");
+                // unsupported format in "cv" name.  Signal an error.
+                p.programmingOpReply(1, ProgListener.SequenceError);
+                return;
+
+            }
+        } else {
+            writeCV(Integer.parseInt(cvNum), val, p);
+        }
+    }
+
 
     @Override
     public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -846,6 +893,28 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         lopsa = 0;
         hopsa = 0;
         mServiceMode = true;
+        if (getMode().equals(csOpSwProgrammingMode)) {
+            log.debug("cvOpSw mode!");
+            //handle Command Station OpSw programming here
+            String[] parts = CVname.split("\\.");
+            if ((parts[0].equals("csOpSw")) && (parts.length==2)) {
+                if (csOpSwAccessor == null) {
+                    csOpSwAccessor = new csOpSwAccess(adaptermemo, p);
+                } else {
+                    csOpSwAccessor.setProgrammerListener(p);
+                }
+                // perform the CsOpSwMode read access
+                log.debug("going to try the opsw access");
+                csOpSwAccessor.readCsOpSw(CVname, p);
+                return;
+            } else {
+                log.warn("rejecting the cs opsw access account unsupported CV name format");
+                // unsupported format in "cv" name.  Signal an error.
+                p.programmingOpReply(1, ProgListener.SequenceError);
+                return;
+            }
+        }
+
         // parse the programming command
         int pcmd = 0x03;       // LPE imples 0x00, but 0x03 is observed
         if (getMode().equals(ProgrammingMode.PAGEMODE)) {
@@ -884,6 +953,37 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     int hopsa; // high address for CV read/write
     int lopsa; // low address for CV read/write
+
+    csOpSwAccess csOpSwAccessor;
+    @Override
+    public void readCV(String cvNum, jmri.ProgListener p) throws jmri.ProgrammerException {
+        log.debug("readCV(string): cvNum={}", cvNum);
+        if (getMode().equals(csOpSwProgrammingMode)) {
+            log.debug("cvOpSw mode!");
+            //handle Command Station OpSw programming here
+            String[] parts = cvNum.split("\\.");
+            if ((parts[0].equals("csOpSw")) && (parts.length==2)) {
+                if (csOpSwAccessor == null) {
+                    csOpSwAccessor = new csOpSwAccess(adaptermemo, p);
+                } else {
+                    csOpSwAccessor.setProgrammerListener(p);
+                }
+                // perform the CsOpSwMode read access
+                log.debug("going to try the opsw access");
+                csOpSwAccessor.readCsOpSw(cvNum, p);
+                return;
+
+            } else {
+                log.warn("rejecting the cs opsw access account unsupported CV name format");
+                // unsupported format in "cv" name.  Signal an error.
+                p.programmingOpReply(1, ProgListener.SequenceError);
+                return;
+
+            }
+        } else {
+            readCV(Integer.parseInt(cvNum), p);
+        }
+    }
 
     /**
      * Invoked by LnOpsModeProgrammer to start an ops-mode read operation.
@@ -944,7 +1044,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
-                
+
             log.info("programmer already in use by {}", _usingProgrammer); // NOI18N
 
             throw new jmri.ProgrammerException("programmer in use"); // NOI18N
@@ -1032,7 +1132,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (!mServiceMode) {
             delay = 100;  // value in ops mode
         }
-        
+
         // delay and run on GUI thread
         javax.swing.Timer timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
             @Override

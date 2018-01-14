@@ -42,7 +42,7 @@
 
       <p>Note that you must also install the
       <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java Development Kit</a>
-      (not included with Eclipse) to build JMRI with Eclipse.</a>
+      (not included with Eclipse) to build JMRI with Eclipse.
 
       <p>If using versions of Eclipse older than "Mars", the
       <a href="http://www.eclipse.org/m2e/">M2Eclipse</a> plugin must be

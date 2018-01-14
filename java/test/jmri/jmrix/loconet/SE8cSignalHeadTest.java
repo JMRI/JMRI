@@ -24,7 +24,7 @@ public class SE8cSignalHeadTest {
         JUnitUtil.setUp();
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
+        new LocoNetSystemConnectionMemo(lnis,slotmanager);
         jmri.InstanceManager.setDefault(LnTrafficController.class,lnis);
     }
 

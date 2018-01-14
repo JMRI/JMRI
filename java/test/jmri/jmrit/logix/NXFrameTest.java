@@ -3,7 +3,6 @@ package jmri.jmrit.logix;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
-import java.util.Locale;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
@@ -141,7 +140,7 @@ public class NXFrameTest {
         Warrant warrant = tableFrame.getModel().getWarrantAt(0);
         Assert.assertNotNull("warrant", warrant);
         Assert.assertNotNull("warrant.getBlockOrders(", warrant.getBlockOrders());
-        List<BlockOrder> orders = warrant.getBlockOrders();
+        warrant.getBlockOrders();
 /*        if (orders.size()!=7) {
             System.out.println();
             System.out.println(warrant.getSystemName()+" " +warrant.getUserName());

@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>5</revnumber>
+      <date>2018-01-02</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>French translation</revremark>
+    </revision>
+    <revision>
       <revnumber>4</revnumber>
       <date>2016-10-23</date>
       <authorinitials>PS</authorinitials>
@@ -54,25 +60,28 @@
   <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" tooltip="'2' bit. Sets the Speed Step for motor, also may affect some light settings" default="1">
     <enumVal>
           <enumChoice choice="14 speed step format">
-            <choice xml:lang="it">Formato 14 step</choice>
-            <choice xml:lang="de">14 Fahrstufen Modus</choice>
             <choice xml:lang="cs">Režim 14 rychlostních kroků</choice>
+            <choice xml:lang="de">14 Fahrstufen Modus</choice>
+            <choice xml:lang="fr">Format 14 Pas de vitesse</choice>
+            <choice xml:lang="it">Formato 14 step</choice>
           </enumChoice>
             <enumChoice choice="28/128 speed step format">
             <choice>28/128 speed step format(recommended)</choice>
-            <choice xml:lang="it">Formato 28 o 128 step (raccomandato)</choice>
-            <choice xml:lang="de">28/128 Fahrstufen Modus (empfohlen)</choice>
             <choice xml:lang="cs">Režim 28/128 rychlostních kroků</choice>
+            <choice xml:lang="de">28/128 Fahrstufen Modus (empfohlen)</choice>
+            <choice xml:lang="fr">Format 28/128 Pas de vitesse (recommandé)</choice>
+            <choice xml:lang="it">Formato 28 o 128 step (raccomandato)</choice>
           </enumChoice>
         </enumVal>
     <label>Speed Steps</label>
-    <label xml:lang="fr">Pas de vitesse</label>
-    <label xml:lang="de">Fahrstufen</label>
-    <label xml:lang="it">Step Velocità</label>
-       <tooltip>Sets the Speed Step for motor, also may affect some light settings</tooltip>
-       <tooltip xml:lang="it">Seleziona Step Velocità motore, potrebbe avere effetti sulle luci</tooltip>
-       <tooltip xml:lang="de">Setzt den Fahrstufenmodus und hat Auswirkung auf einige Lichteffekte</tooltip>
     <label xml:lang="cs">Rychlostních kroků</label>
+    <label xml:lang="de">Fahrstufen</label>
+    <label xml:lang="fr">Pas de vitesse</label>
+    <label xml:lang="it">Step Velocità</label>
+    <tooltip>Sets the Speed Step for motor, also may affect some light settings</tooltip>
     <tooltip xml:lang="cs">Nastaví režim rychlostních kroků, může mít také vliv na některé efekty světel</tooltip>
+    <tooltip xml:lang="de">Setzt den Fahrstufenmodus und hat Auswirkung auf einige Lichteffekte</tooltip>
+    <tooltip xml:lang="fr">Règle les Pas de vitesse pour le moteur; peut aussi influencer certains réglages de lumières</tooltip>
+    <tooltip xml:lang="it">Seleziona Step Velocità motore, potrebbe avere effetti sulle luci</tooltip>
   </variable>
 </variables>

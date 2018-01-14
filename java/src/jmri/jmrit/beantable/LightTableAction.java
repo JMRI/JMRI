@@ -173,7 +173,7 @@ public class LightTableAction extends AbstractTableAction {
                     return true;
                 }
                 if (col == INTENSITYCOL) {
-                    return ((Light) getBySystemName((String) getValueAt(row, SYSNAMECOL))).isIntensityVariable();
+                    return ((Light) getValueAt(row, SYSNAMECOL)).isIntensityVariable();
                 }
                 if (col == ENABLECOL) {
                     return true;
@@ -215,9 +215,9 @@ public class LightTableAction extends AbstractTableAction {
                     case EDITCOL:
                         return Bundle.getMessage("ButtonEdit");
                     case INTENSITYCOL:
-                        return ((Light) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getTargetIntensity();
+                        return ((Light) getValueAt(row, SYSNAMECOL)).getTargetIntensity();
                     case ENABLECOL:
-                        return ((Light) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getEnabled();
+                        return ((Light) getValueAt(row, SYSNAMECOL)).getEnabled();
                     default:
                         return super.getValueAt(row, col);
                 }
@@ -240,7 +240,7 @@ public class LightTableAction extends AbstractTableAction {
                             public void run() {
                                 // set up to edit
                                 addPressed(null);
-                                fixedSystemName.setText((String) getValueAt(row, SYSNAMECOL));
+                                fixedSystemName.setText(((Light) getValueAt(row, SYSNAMECOL)).getSystemName());
                                 editPressed(); // don't really want to stop Light w/o user action
                             }
                         }
@@ -250,7 +250,7 @@ public class LightTableAction extends AbstractTableAction {
                     case INTENSITYCOL:
                         // alternate
                         try {
-                            Light l = (Light) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+                            Light l = (Light) getValueAt(row, SYSNAMECOL);
                             double intensity = ((Double) value);
                             if (intensity < 0) {
                                 intensity = 0;
@@ -266,13 +266,13 @@ public class LightTableAction extends AbstractTableAction {
                         break;
                     case ENABLECOL:
                         // alternate
-                        Light l = (Light) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+                        Light l = (Light) getValueAt(row, SYSNAMECOL);
                         boolean v = l.getEnabled();
                         l.setEnabled(!v);
                         break;
                     case VALUECOL:
                         if (_graphicState) { // respond to clicking on ImageIconRenderer CellEditor
-                            Light ll = (Light) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+                            Light ll = (Light) getValueAt(row, SYSNAMECOL);
                             clickOn(ll);
                             fireTableRowsUpdated(row, row);
                             break;

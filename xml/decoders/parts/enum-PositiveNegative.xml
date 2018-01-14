@@ -3,13 +3,15 @@
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="positive">
-            <choice>positive</choice>
-    <choice xml:lang="it">positivo</choice>
+    <choice>positive</choice>
     <choice xml:lang="cs">kladný</choice>
+    <choice xml:lang="fr">positif</choice>
+    <choice xml:lang="it">positivo</choice>
   </enumChoice>
   <enumChoice choice="negative">
-            <choice>negative</choice>
     <choice xml:lang="it">negativo</choice>
+    <choice xml:lang="fr">négatif</choice>
     <choice xml:lang="cs">záporný</choice>
+    <choice>negative</choice>
   </enumChoice>
 </enumVal>

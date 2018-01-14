@@ -31,7 +31,6 @@
     <div id="mainContent">
       <h1>JMRI: Adding A New System</h1>
 
-      <div class="para">
         <p>This page describes the steps to add a new data-type,
         e.g. Powerline devices, to JMRI.</p>
 
@@ -55,7 +54,6 @@
         <a href="SystemStructure.shtml">intended system connection structure</a>
         which is documented on
         <a href="SystemStructure.shtml">another page</a>.
-      </div>
 
         <p>We list the files that are modified and created in the
         order they were done in this case; other orders may also
@@ -268,7 +266,7 @@
 
           </dl>
             <h3>Complete the documentation</h3>
-          </dl>
+          <dl>
 
           <dt>Create The Help Tree</dt>
 
@@ -405,7 +403,8 @@ also needs some parts copied over.
           information and reload it, respectively. C/MRI uses this
           to store its node information.</li>
         </ul>
-      </div><!--#include virtual="/Footer" -->
+
+    <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

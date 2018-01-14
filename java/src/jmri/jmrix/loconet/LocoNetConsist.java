@@ -312,6 +312,11 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                     + " With Direction Normal " // NOI18N
                     + directionNormal + ".");
         }
+        if(consistList.size()<=1 && LocoAddress.equals(consistAddress)){
+          // there is only one address in this consist, no reason to link.
+          notifyConsistListeners(LocoAddress,ConsistListener.OPERATION_SUCCESS);
+          return;
+        }
         throttleManager.requestThrottle(LocoAddress, this);
         // skip right to stage 2, we do not need to status edit. 
         consistRequestState = LINKSTAGETWOSTATE;
@@ -329,6 +334,11 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                     + consistAddress.toString()
                     + ".");
         }
+        if(consistList.size()==1 && LocoAddress.equals(consistAddress)){
+          // there is only one address in this consist, no reason to link.
+          notifyConsistListeners(LocoAddress,ConsistListener.OPERATION_SUCCESS);
+          return;
+        }
         slotManager.slotFromLocoAddress(LocoAddress.getNumber(), this);
         consistRequestState = UNLINKSTAGEONESTATE;
     }
@@ -345,6 +355,13 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             msg.setElement(1, follow.getSlot());
             msg.setElement(2, lead.getSlot());
             trafficController.sendLocoNetMessage(msg);
+        } else {
+          // lead == follow
+          // this is an error, notify the consist listeners.
+          follow.removeSlotListener(this);
+          notifyConsistListeners(new DccLocoAddress(follow.locoAddr(),
+                throttleManager.canBeLongAddress(follow.locoAddr())),
+                ConsistListener.CONSIST_ERROR);
         }
         consistRequestState = IDLESTATE;
         if (needToWrite.size() != 0) {
@@ -364,6 +381,13 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             msg.setElement(1, follow.getSlot());
             msg.setElement(2, lead.getSlot());
             trafficController.sendLocoNetMessage(msg);
+        } else {
+          // lead == follow
+          // this is an error, notify the consist listeners.
+          follow.removeSlotListener(this);
+          notifyConsistListeners(new DccLocoAddress(follow.locoAddr(),
+                throttleManager.canBeLongAddress(follow.locoAddr())),
+                ConsistListener.CONSIST_ERROR | ConsistListener.DELETE_ERROR );
         }
         consistRequestState = IDLESTATE;
         if (needToWrite.size() != 0) {

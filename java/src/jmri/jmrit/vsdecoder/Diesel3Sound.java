@@ -199,7 +199,7 @@ class Diesel3Sound extends EngineSound {
 
         //log.debug("Diesel EngineSound: " + e.getAttribute("name").getValue());
         _soundName = this.getName() + ":LoopSound";
-        log.debug("Diesel3: name: " + this.getName() + " soundName " + _soundName);
+        log.debug("get name: " + this.getName() + " soundName " + _soundName + " name: " + name);
         notch_sounds = new HashMap<Integer, D3Notch>();
         String in = e.getChildText("idle-notch");
         Integer idle_notch = null;
@@ -229,7 +229,7 @@ class Diesel3Sound extends EngineSound {
                 //AudioBuffer b = D3Notch.getBuffer(vf, fn, "Engine_n" + i + "_" + j, "Engine_" + i + "_" + j);
                 //log.debug("Buffer created: " + b + " name: " + b.getSystemName());
                 //sb.addLoopBuffer(b);
-                List<AudioBuffer> l = D3Notch.getBufferList(vf, fn, "Engine_n" + i + "_" + j, "Engine_" + i + "_" + j);
+                List<AudioBuffer> l = D3Notch.getBufferList(vf, fn, "n" + i + "_" + j, i + "_" + j);
                 log.debug("Buffers Created: ");
                 for (AudioBuffer b : l) {
                     log.debug("\tSubBuffer: " + b.getSystemName());
@@ -237,7 +237,7 @@ class Diesel3Sound extends EngineSound {
                 sb.addLoopBuffers(l);
                 j++;
             }
-     //log.debug("Notch: " + nn + " File: " + fn);
+            //log.debug("Notch: " + nn + " File: " + fn);
 
             // Gain is broken, for the moment.  Buffers don't have gain. Sources do.
             //_sound.setGain(setXMLGain(el));
@@ -247,12 +247,12 @@ class Diesel3Sound extends EngineSound {
             sb.setAccelLimit(el.getChildText("accel-limit"));
             sb.setDecelLimit(el.getChildText("decel-limit"));
             if (el.getChildText("accel-file") != null) {
-                sb.setAccelBuffer(D3Notch.getBuffer(vf, el.getChildText("accel-file"), "Engine_na" + i, "Engine_na" + i));
+                sb.setAccelBuffer(D3Notch.getBuffer(vf, el.getChildText("accel-file"), name + "_na" + i, "_na" + i));
             } else {
                 sb.setAccelBuffer(null);
             }
             if (el.getChildText("decel-file") != null) {
-                sb.setDecelBuffer(D3Notch.getBuffer(vf, el.getChildText("decel-file"), "Engine_nd" + i, "Engine_nd" + i));
+                sb.setDecelBuffer(D3Notch.getBuffer(vf, el.getChildText("decel-file"), name + "_nd" + i, "_nd" + i));
             } else {
                 sb.setDecelBuffer(null);
             }
@@ -266,13 +266,13 @@ class Diesel3Sound extends EngineSound {
         if (el != null) {
             fn = el.getChild("file").getValue();
             //log.debug("Start sound: " + fn);
-            start_buffer = D3Notch.getBuffer(vf, fn, "Engine_start", "Engine_Start");
+            start_buffer = D3Notch.getBuffer(vf, fn, name + "_start", name + "_Start");
         }
         el = e.getChild("shutdown-sound");
         if (el != null) {
             fn = el.getChild("file").getValue();
             //log.debug("Shutdown sound: " + fn);
-            stop_buffer = D3Notch.getBuffer(vf, fn, "Engine_shutdown", "Engine_Shutdown");
+            stop_buffer = D3Notch.getBuffer(vf, fn, name + "_shutdown", name + "_Shutdown");
         }
 
         // Handle "grandfathering the idle notch indication
@@ -506,7 +506,7 @@ class Diesel3Sound extends EngineSound {
             AudioBuffer buf = null;
             AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
             try {
-                buf = (AudioBuffer) am.provideAudio(VSDSound.BufSysNamePrefix + filename);
+                buf = (AudioBuffer) am.provideAudio(VSDSound.BufSysNamePrefix + sname);
                 buf.setUserName(VSDSound.BufUserNamePrefix + uname);
                 java.io.InputStream ins = vf.getInputStream(filename);
                 if (ins != null) {
