@@ -18,7 +18,7 @@ import jmri.InstanceManager;
 public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public MrcSystemConnectionMemo() {
-        super("MR", "MRC"); //IN18N
+        super("M", "MRC"); //IN18N
         register(); // registers general type
         InstanceManager.store(this, MrcSystemConnectionMemo.class); // also register as specific type
 
