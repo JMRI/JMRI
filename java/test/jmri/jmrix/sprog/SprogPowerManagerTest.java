@@ -8,9 +8,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogPowerManager
- * </P>
+ * Tests for SprogPowerManager.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
