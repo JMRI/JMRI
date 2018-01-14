@@ -18,12 +18,21 @@ public class SprogReply extends AbstractMRReply {
     // Longest boot reply is 256bytes each preceded by DLE + 2xSTX + ETX
     static public final int maxSize = 515;
     private boolean _isBoot = false;
+    protected int _id = -1;
 
     // create a new one
     public SprogReply() {
         super();
     }
 
+    public void setId(int id) {
+        _id = id;
+    }
+    
+    public int getId() {
+        return _id;
+    }
+    
     // no need to do anything
     @Override
     protected int skipPrefix(int index) {
@@ -50,6 +59,7 @@ public class SprogReply extends AbstractMRReply {
         for (int i = 0; i < _nDataChars; i++) {
             _dataChars[i] = m._dataChars[i];
         }
+        _id = m._id;
     }
 
     /**

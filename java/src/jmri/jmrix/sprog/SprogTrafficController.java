@@ -29,7 +29,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     private boolean waitingForReply = false;
     SprogListener lastSender = null;
     private SprogState sprogState = SprogState.NORMAL;
-
+    private int lastId;
 
     public SprogTrafficController(SprogSystemConnectionMemo adaptermemo) {
        memo = adaptermemo;
@@ -149,7 +149,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         log.debug("notifyReply starts last sender: {}", lastSender);
         for (SprogListener listener : this.getCopyOfListeners()) {
             try {
-                //if is message don't send it back to the originator!
+            //if is message don't send it back to the originator!
                 // skip forwarding to the last sender for now, we'll get them later
                 if (lastSender != listener) {
                     log.debug("Notify listener: {} {}", listener, r.toString());
@@ -160,6 +160,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                 log.warn("notify: During dispatch to {}\nException {}", listener, e.toString());
             }
         }
+        
         // forward to the last listener who sent a message
         // this is done _second_ so monitoring can have already stored the reply
         // before a response is sent
@@ -171,6 +172,8 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     /**
      * Forward a preformatted message to the interface.
+     * 
+     * @param m The message to be forwarded
      */
     public void sendSprogMessage(SprogMessage m) {
         // stream to port in single write, as that's needed by serial
@@ -209,12 +212,11 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         log.debug("Setting waitingForReply");
         waitingForReply = true;
 
-        if (log.isDebugEnabled()) {
-            log.debug("sendSprogMessage message: [{}]", m.toString(isSIIBootMode()));
-        }
+        log.debug("sendSprogMessage message: [{}] id: {} from {}", m.toString(isSIIBootMode()), m.getId(), replyTo);
         // remember who sent this
-        log.debug("Updating last sender");
+        log.debug("Updating last sender {}", replyTo.getClass());
         lastSender = replyTo;
+        lastId = m.getId();
         // notify all _other_ listeners
         notifyMessage(m, replyTo);
         this.sendSprogMessage(m);
@@ -343,7 +345,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                 this.reply.setElement(i, char1);
 
             } catch (Exception e) {
-                log.warn("Exception in DATA_AVAILABLE state: " + e);
+                log.warn("Exception in DATA_AVAILABLE state: {}", e);
             }
             if (endReply(this.reply)) {
                 sendreply();
@@ -357,21 +359,19 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
      */
     private void sendreply() {
         //send the reply
-        synchronized (this) {
-            log.debug("Clearing waitingForReply");
-            waitingForReply = false;
-            notify();
-        }
         if (log.isDebugEnabled()) {
             log.debug("dispatch reply of length {}", this.reply.getNumDataElements());
         }
         {
             final SprogReply thisReply = this.reply;
             final SprogListener thisLastSender = this.lastSender;
+            final int thisLastId = this.lastId;
             if (unsolicited) {
                 log.debug("Unsolicited Reply");
                 thisReply.setUnsolicited();
             }
+            // Insert the id
+            thisReply.setId(thisLastId);
             final SprogTrafficController thisTC = this;
             // return a notification via the queue to ensure end
             Runnable r = new Runnable() {
@@ -381,13 +381,21 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
                 @Override
                 public void run() {
-                    log.debug("Delayed notify starts {}", replyForLater.toString());
+                    log.debug("Delayed notify starts [{}]", replyForLater.toString());
                     myTC.notifyReply(replyForLater, lastSenderForLater);
                 }
             };
             javax.swing.SwingUtilities.invokeLater(r);
         }
 
+        // Do this after reply is despatched to avoid this.reply and .lastSender
+        // being overwritten by a new reply
+        synchronized (this) {
+            log.debug("Clearing waitingForReply");
+            waitingForReply = false;
+            notify();
+        }
+        
         //Create a new reply, ready to be filled
         this.reply = new SprogReply();
     }
