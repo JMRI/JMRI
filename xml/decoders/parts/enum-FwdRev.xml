@@ -8,6 +8,7 @@
     <choice xml:lang="fr">avant</choice>
     <choice xml:lang="de">Vorwärts</choice>
     <choice xml:lang="cs">vpřed</choice>
+	<choice xml:lang="da">Forlæns</choice>
   </enumChoice>
   <enumChoice choice="reverse">
     <choice>reverse</choice>
@@ -15,5 +16,6 @@
     <choice xml:lang="fr">arrière</choice>
     <choice xml:lang="de">Rückwärts</choice>
     <choice xml:lang="cs">vzad</choice>
+	<choice xml:lang="da">Baglæns</choice>
   </enumChoice>
 </enumVal>

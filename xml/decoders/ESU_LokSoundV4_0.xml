@@ -60,6 +60,8 @@
     <version author="Dave Heap" version="19" lastUpdated="20170819"/>
     <!-- ver20 added German translation for functionlabels-->
     <version author="Ronald Kuhn" version="20" lastUpdated="20171217"/>
+    <!-- ver21 added Dynamic Brake deceleration rate -->
+    <version author="Dave Heap" version="21" lastUpdated="20180102"/>
     <decoder>
         <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554493,33554503,33554538">

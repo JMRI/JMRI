@@ -15,7 +15,6 @@ import javax.annotation.CheckReturnValue;
 import javax.swing.ComboBoxEditor;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JComboBox;
-import javax.swing.JComboBox.KeySelectionManager;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
@@ -64,7 +63,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         //fires when drop down list item is selected
         addItemListener((ItemEvent event) -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
-                JmriBeanComboBox cb = (JmriBeanComboBox) event.getSource();
                 validateText();
             }
         });

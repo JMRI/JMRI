@@ -269,8 +269,8 @@ public class TrainPrintUtilities {
             log.debug("Close failed");
         }
         out.close();
-        // open editor
-        openDesktopEditor(buildReport);
+        // open the file
+        TrainUtilities.openDesktop(buildReport);
     }
 
     /*
@@ -333,33 +333,6 @@ public class TrainPrintUtilities {
         } else {
             log.debug("ERROR first characters of build report not valid (" + line + ")");
             return "ERROR " + line; // NOI18N
-        }
-    }
-
-    /**
-     * This method uses Desktop which is supported in Java 1.6.
-     * @param file The File to be opened using an editor.
-     */
-    public static void openDesktopEditor(File file) {
-        if (!java.awt.Desktop.isDesktopSupported()) {
-            log.warn("desktop not supported");
-            return;
-        }
-        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-        if (desktop.isSupported(java.awt.Desktop.Action.EDIT)) {
-            try {
-                desktop.edit(file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else if (desktop.isSupported(java.awt.Desktop.Action.OPEN)) {
-            try {
-                desktop.open(file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            log.warn("desktop edit or open not supported");
         }
     }
 

@@ -410,8 +410,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                             xmtRunnable.notify();
                         }
                     } else {
-                        log.error("reply complete in unexpected state: "
-                                + mCurrentState + " was " + msg.toString());
+                        unexpectedReplyStateError(mCurrentState,msg.toString());
                     }
                 }
             }

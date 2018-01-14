@@ -2,13 +2,12 @@ package jmri.jmrix.sprog;
 
 import jmri.ProgrammingMode;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Encode a message to an SPROG command station.
- * <P>
+ * <p>
  * The {@link SprogReply} class handles the response from the command station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001

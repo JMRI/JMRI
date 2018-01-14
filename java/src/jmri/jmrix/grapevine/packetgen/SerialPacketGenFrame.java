@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialReply;
-import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.util.StringUtil;
 

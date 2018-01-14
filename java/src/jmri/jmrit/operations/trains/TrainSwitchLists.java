@@ -458,7 +458,7 @@ public class TrainSwitchLists extends TrainCommon {
             return;
         }
         if (isPreview && Setup.isManifestEditorEnabled()) {
-            TrainPrintUtilities.openDesktopEditor(buildFile);
+            TrainUtilities.openDesktop(buildFile);
         } else {
             TrainPrintUtilities.printReport(buildFile, location.getName(), isPreview, Setup.getFontName(), false,
                     FileUtil.getExternalFilename(Setup.getManifestLogoURL()), location.getDefaultPrinterName(), Setup

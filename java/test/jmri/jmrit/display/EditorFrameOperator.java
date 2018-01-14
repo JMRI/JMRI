@@ -2,13 +2,8 @@ package jmri.jmrit.display;
 
 import javax.swing.JFrame;
 import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JComponentOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
-import org.netbeans.jemmy.operators.WindowOperator;
-import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
 

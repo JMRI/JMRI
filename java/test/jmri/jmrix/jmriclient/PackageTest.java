@@ -19,7 +19,6 @@ import org.junit.runners.Suite;
         BundleTest.class,
         jmri.jmrix.jmriclient.networkdriver.PackageTest.class,
         jmri.jmrix.jmriclient.configurexml.PackageTest.class,
-        jmri.jmrix.jmriclient.json.PackageTest.class,
         jmri.jmrix.jmriclient.swing.PackageTest.class,
         JMRIClientPortControllerTest.class,
         JMRIClientConnectionTypeListTest.class,

@@ -301,7 +301,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
 
     @Test
     public void testSerialOutput() {
-        SerialTrafficController c = (SerialTrafficController) tc;
         SerialNode a = new SerialNode();
         SerialNode g = new SerialNode(5, SerialNode.NODE2002V1);
         Assert.assertTrue("must Send", g.mustSend());

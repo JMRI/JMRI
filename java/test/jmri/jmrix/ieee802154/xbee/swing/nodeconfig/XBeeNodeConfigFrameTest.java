@@ -3,7 +3,6 @@ package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import jmri.jmrix.ieee802154.xbee.XBeeInterfaceScaffold;
-import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import jmri.util.JUnitUtil;
 import org.junit.After;

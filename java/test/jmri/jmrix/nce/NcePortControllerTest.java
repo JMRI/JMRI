@@ -17,7 +17,7 @@ public class NcePortControllerTest extends jmri.jmrix.AbstractSerialPortControll
     public void setUp(){
        JUnitUtil.setUp();
        NceSystemConnectionMemo memo = new NceSystemConnectionMemo();
-       NceTrafficController tc = new NceTrafficController(){
+       new NceTrafficController(){
           @Override
           public void sendNceMessage(NceMessage m,NceListener reply) {
           }

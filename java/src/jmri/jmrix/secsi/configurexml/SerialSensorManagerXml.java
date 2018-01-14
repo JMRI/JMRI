@@ -1,7 +1,6 @@
 package jmri.jmrix.secsi.configurexml;
 
 import jmri.configurexml.JmriConfigureXmlException;
-import jmri.jmrix.secsi.SerialSensorManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

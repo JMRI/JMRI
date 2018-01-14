@@ -2700,6 +2700,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -2711,6 +2712,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @After
     public void tearDown() throws Exception {
+        ((XNetThrottle)instance).throttleDispose();
         JUnitUtil.tearDown();
     }
 
