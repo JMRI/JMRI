@@ -88,30 +88,41 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     /**
      * Send a DCC packet to the rails. This implements the CommandStation
-     * interface.
-     *
-     * @param packet  Byte array representing the packet, including the
-     *                error-correction byte.  The error-correction byte
-     *                need not be correct as it is not propagated as part
-     *                of the LocoNet message.  The length of packet
-     *                determines the number of bytes to be sent in the NMRA
-     *                packet.  The command station computes and
-     *                fills-in the error-correction byte as the last byte of the
-     *                packet.  When packet includes fewer than 6 bytes, the
-     *                LocoNet message will encode the remaining bytes as 0.
-     * @param repeats Number of times to repeat the transmission.  repeats
-     *                must be in the range {0...7}
+     * interface.  This mechanism can pass any valid NMRA packet of up to 
+     * 6 data bytes (including the error-check byte).
+     * 
+     * When available, these messages are forwarded to LocoNet using a 
+     * "throttledTransmitter".  This decreases the speed with which these 
+     * messages are sent, resulting in lower throughput, but fewer 
+     * rejections by the command station on account of "buffer-overflow".
+     * 
+     * @param packet - the data bytes of the raw NMRA packet to be sent.  The
+     *          "error check" byte must be included, even though the LocoNet
+     *          message will not include that byte; the command station 
+     *          will re-create the error byte from the bytes encoded in 
+     *          the LocoNet message.  LocoNet is unable to propagate packets
+     *          longer than 6 bytes (including the error-check byte).
+     * 
+     * @param sendCount - the total number of times the packet is to be
+     *          sent on the DCC track signal (not LocoNet!).  Valid range is 
+     *          between 1 and 8.  sendCount will be forced to this range if it
+     *          is outside of this range.
      */
     @Override
-    public void sendPacket(byte[] packet, int repeats) {
-        if (repeats > 7) {
-            log.error("Too many repeats!"); // NOI18N
+    public void sendPacket(byte[] packet, int sendCount) {
+        if (sendCount > 8) {
+            log.warn("Ops Mode Accessory Packet 'Send count' reduced from {} to 8.", sendCount); // NOI18N
+            sendCount = 8;
+        }
+        if (sendCount < 1) {
+            log.warn("Ops Mode Accessory Packet 'Send count' of {} is illegal and is forced to 1.", sendCount); // NOI18N
+            sendCount = 1;
         }
         if (packet.length <= 1) {
             log.error("Invalid DCC packet length: " + packet.length); // NOI18N
         }
         if (packet.length > 6) {
-            log.error("Only 6-byte packets accepted: " + packet.length); // NOI18N
+            log.error("DCC packet length is too great: {} bytes were passed; ignoring the request. " + packet.length); // NOI18N
         }
 
         LocoNetMessage m = new LocoNetMessage(11);
@@ -121,7 +132,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // the incoming packet includes a check byte that's not included in LocoNet packet
         int length = packet.length - 1;
 
-        m.setElement(3, (repeats & 0x7) + 16 * (length & 0x7));
+        m.setElement(3, ((sendCount - 1) & 0x7) + 16 * (length & 0x7));
 
         int highBits = 0;
         if (length >= 1 && ((packet[0] & 0x80) != 0)) {
