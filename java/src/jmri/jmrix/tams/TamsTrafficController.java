@@ -58,7 +58,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     @Override
     public String getSystemPrefix() {
         if (adaptermemo == null) {
-            return "TM";
+            return "T";
         }
         return adaptermemo.getSystemPrefix();
     }

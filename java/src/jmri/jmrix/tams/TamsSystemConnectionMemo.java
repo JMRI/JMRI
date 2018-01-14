@@ -19,7 +19,7 @@ import jmri.InstanceManager;
 public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public TamsSystemConnectionMemo(TamsTrafficController et) {
-        super("TM", "Tams");
+        super("T", "Tams");
         this.et = et;
         et.setAdapterMemo(this);
         register();
@@ -29,7 +29,7 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     public TamsSystemConnectionMemo() {
-        super("TM", "Tams");
+        super("T", "Tams");
         register(); // registers general type
         InstanceManager.store(this, TamsSystemConnectionMemo.class); // also register as specific type
         //Needs to be implemented
