@@ -89,6 +89,7 @@ class EcosSimulatorServer extends JmriServer {
 
         String header;
         String body = "";
+        String status = "OK";
         String command;
         int id = 0;
         String[] options = new String[0];
@@ -105,14 +106,13 @@ class EcosSimulatorServer extends JmriServer {
         }
         log.debug("Replying to cmd: \"{}\", id: {}, options: {}", command, id, options);
         switch (command) {
-            case "request":
-                switch (id) {
-                    case 1: // power or EcoS Status
-                        header = String.format("<REPLY request(1, %s)>", String.join(", ", options));
-                        break;
-                    default:
-                        header = null;
-                }
+            case "create":
+                // fall through with incorrect response to ensure response is sent
+                // TODO: respond with quasi-legitimate response
+            case "delete":
+                // respond OK even if control has not been requested
+                // TODO: respond with NERROR_NOCONTROL if control not requested, OK if control held
+                header = String.format("<REPLY %s(%d, %s)>", command, id, String.join(", ", options));
                 break;
             case "get":
                 switch (id) {
@@ -133,6 +133,18 @@ class EcosSimulatorServer extends JmriServer {
                         header = null;
                 }
                 break;
+            case "queryObjects":
+                // fall through with incorrect response to ensure response is sent
+                // TODO: respond with quasi-legitimate response
+            case "release":
+            case "request":
+                // handle "release" and "request" as if no error occured for now
+                // certain combinations of id and options may produce an error
+                // in a real system
+                // TODO: if requesting control, and allowed, retain control to
+                // make other response more legitimate
+                header = String.format("<REPLY %s(%d, %s)>", command, id, String.join(", ", options));
+                break;
             case "set":
                 switch (id) {
                     case 1: // power or EcoS Status
@@ -144,6 +156,7 @@ class EcosSimulatorServer extends JmriServer {
                 }
                 break;
             default:
+                log.error("Unexpected command \"{}\" received in \"{}\"", command, msg);
                 header = null;
         }
         // Do not respond if header is null
@@ -151,11 +164,11 @@ class EcosSimulatorServer extends JmriServer {
             return null;
         }
         if (body.isEmpty()) {
-            log.debug("Reply is:\n{}\n<END 0 (OK)>", header);
-            return String.format("%s%n<END 0 (OK)>", header);
+            log.debug("Reply is:\n{}\n<END 0 ({})>", header, status);
+            return String.format("%s%n<END 0 (%s)>", header, status);
         }
-        log.debug("Reply is:\n{}\n{}\n<END 0 (OK)>", header, body);
-        return String.format("%s%n%s%n<END 0 (OK)>", header, body);
+        log.debug("Reply is:\n{}\n{}\n<END 0 ({})>", header, body, status);
+        return String.format("%s%n%s%n<END 0 (%s)>", header, body, status);
     }
 
 }
