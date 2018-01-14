@@ -478,7 +478,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
                         Bundle.getMessage("COMBOBOX_TEXT_OPSW" + number + "_CLOSED")};
         comboBox[n] = new JComboBox<>(s);
         comboBox[n].setSelectedIndex(getIndexForDefault(n));
-        // size all combos to match the widest one
+        // size all combos to match the widest one (and a little bit more)
         comboBox[n].setPreferredSize(new JLabel("XXXXXXX" + Bundle.getMessage("COMBOBOX_TEXT_OPSW36_THROWN")).getPreferredSize());
         // layout
         gc.gridx = 1;
@@ -516,7 +516,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
                         Bundle.getMessage("COMBOBOX_TEXT_OPSW" + number + "_CLOSED_OPSW" + number2 + "_CLOSED")
                 });
         // default choice = 0 so already set
-        // size all combos to match the widest one
+        // size all combos to match the widest one (and a little bit more)
         comboBox[n].setPreferredSize(new JLabel("XXXXXXX" + Bundle.getMessage("COMBOBOX_TEXT_OPSW36_THROWN")).getPreferredSize());
         // layout
         gc.gridx = 1;
