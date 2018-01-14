@@ -13,7 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Server that simulates an EcoS device.
+ * Server that simulates an EcoS device. Note that this simulator assumes the
+ * EcoS client will only send valid messages.
  *
  * @author Randall Wood Copyright 2018
  */
@@ -107,8 +108,8 @@ class EcosSimulatorServer extends JmriServer {
         log.debug("Replying to cmd: \"{}\", id: {}, options: {}", command, id, options);
         switch (command) {
             case "create":
-                // fall through with incorrect response to ensure response is sent
-                // TODO: respond with quasi-legitimate response
+            // fall through with incorrect response to ensure response is sent
+            // TODO: respond with quasi-legitimate response
             case "delete":
                 // respond OK even if control has not been requested
                 // TODO: respond with NERROR_NOCONTROL if control not requested, OK if control held
@@ -134,8 +135,8 @@ class EcosSimulatorServer extends JmriServer {
                 }
                 break;
             case "queryObjects":
-                // fall through with incorrect response to ensure response is sent
-                // TODO: respond with quasi-legitimate response
+            // fall through with incorrect response to ensure response is sent
+            // TODO: respond with quasi-legitimate response
             case "release":
             case "request":
                 // handle "release" and "request" as if no error occured for now
@@ -148,8 +149,9 @@ class EcosSimulatorServer extends JmriServer {
             case "set":
                 switch (id) {
                     case 1: // power or EcoS Status
-                        trackPowerState = msg.contains("go") ? PowerManager.ON : PowerManager.OFF;
-                        header = String.format("<REPLY set(1,%s", trackPowerState == PowerManager.ON ? " go)" : " stop)");
+                        // setting ID 1 to anything other "go" is treated as if setting to "stop"
+                        trackPowerState = options[0].equals("go") ? PowerManager.ON : PowerManager.OFF;
+                        header = String.format("<REPLY set(1, %s)", trackPowerState == PowerManager.ON ? "go" : "stop");
                         break;
                     default:
                         header = null;
