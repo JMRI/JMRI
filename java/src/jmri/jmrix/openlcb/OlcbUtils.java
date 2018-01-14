@@ -17,6 +17,7 @@ public final class OlcbUtils {
     public static final String PROPERTY_IS_CONSUMER = "IsConsumer";
     public static final String PROPERTY_QUERY_AT_STARTUP = "QueryAtStartup";
     public static final String PROPERTY_LISTEN = "ListenStateMessages";
+    public static final String PROPERTY_LISTEN_INVALID = "ListenInvalidStateMessages";
 
     /**
      * Updates existing flags based on a boolean property.
@@ -63,6 +64,8 @@ public final class OlcbUtils {
                 .QUERY_AT_STARTUP);
         ret = updateBooleanProperty(ret, parent, PROPERTY_LISTEN, BitProducerConsumer
                 .LISTEN_EVENT_IDENTIFIED);
+        ret = updateBooleanProperty(ret, parent, PROPERTY_LISTEN_INVALID, BitProducerConsumer
+                .LISTEN_INVALID_STATE);
         return ret;
     }
 }
