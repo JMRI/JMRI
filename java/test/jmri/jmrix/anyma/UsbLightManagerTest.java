@@ -26,12 +26,12 @@ public class UsbLightManagerTest extends AbstractLightMgrTestBase {
     }
 
     public String getSystemName(int i) {
-        return "DXL" + i;
+        return "DL" + i;
     }
 
     @Test
     public void testAsAbstractFactory() {
-        String systemName = "DXL21";
+        String systemName = "DL21";
         String userName = "My Name";
         Light tl = l.newLight(systemName, userName);
 

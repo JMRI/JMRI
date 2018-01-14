@@ -70,7 +70,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
                     public void actionPerformed(ActionEvent e) {
                         if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
                             JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
-                            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+                            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                         }
                     }
                 });
@@ -79,7 +79,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
                     public void focusLost(FocusEvent e) {
                         if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
                             JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
-                            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+                            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                         }
                     }
 
@@ -296,7 +296,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         }
 
         if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
             NUMOPTIONS = NUMOPTIONS + 2;
         }
