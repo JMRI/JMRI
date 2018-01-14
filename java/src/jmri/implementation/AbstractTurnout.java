@@ -820,15 +820,31 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             int mode = ((Integer) evt.getNewValue()).intValue();
             Sensor s = (Sensor) evt.getSource();
             if ((mode == Sensor.ACTIVE) && (s == getSecondSensor())) {
-                newKnownState(CLOSED);
+                if(getFirstSensor().getKnownState()==Sensor.INACTIVE) {
+                   newKnownState(CLOSED);
+                } else {
+                   newKnownState(INCONSISTENT);
+                }
+            } else if ((mode == Sensor.INACTIVE) && (s == getSecondSensor())) {
+                if(getFirstSensor().getKnownState()==Sensor.ACTIVE) {
+                   newKnownState(THROWN);
+                } else {
+                   newKnownState(INCONSISTENT);
+                }
             } else if ((mode == Sensor.ACTIVE) && (s == getFirstSensor())) {
-                newKnownState(THROWN);
-            } else if (!(((getFirstSensor().getKnownState() == Sensor.ACTIVE) && (getSecondSensor()
-                    .getKnownState() == Sensor.INACTIVE)) || ((getFirstSensor()
-                    .getKnownState() == Sensor.INACTIVE) && (getSecondSensor()
-                    .getKnownState() == Sensor.ACTIVE)))) // INCONSISTENT if sensor has transitioned to an inconsistent state
-            {
-                newKnownState(INCONSISTENT);
+                if(getSecondSensor().getKnownState()==Sensor.INACTIVE) {
+                   newKnownState(THROWN);
+                } else {
+                   newKnownState(INCONSISTENT);
+                }
+            } else if ((mode == Sensor.INACTIVE) && (s == getFirstSensor())) {
+                if(getSecondSensor().getKnownState()==Sensor.ACTIVE) {
+                   newKnownState(CLOSED);
+                } else {
+                   newKnownState(INCONSISTENT);
+                }
+            } else {
+                   newKnownState(UNKNOWN);
             }
             // end TWOSENSOR block
         } else // don't need to do anything

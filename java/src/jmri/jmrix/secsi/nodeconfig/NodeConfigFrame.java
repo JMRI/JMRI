@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import jmri.jmrix.secsi.SerialNode;
 import jmri.jmrix.secsi.SerialSensorManager;
-import jmri.jmrix.secsi.SerialTrafficController;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

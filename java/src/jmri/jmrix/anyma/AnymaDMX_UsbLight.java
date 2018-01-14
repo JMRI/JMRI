@@ -1,7 +1,5 @@
 package jmri.jmrix.anyma;
 
-import static jmri.Light.OFF;
-
 import jmri.implementation.AbstractVariableLight;
 import jmri.util.MathUtil;
 import org.slf4j.Logger;

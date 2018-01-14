@@ -237,7 +237,6 @@ public class SensorTableAction extends AbstractTableAction {
         // Add some entry pattern checking, before assembling sName and handing it to the sensorManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameSensor"));
         String errorMessage = null;
-        String lastSuccessfulAddress = Bundle.getMessage("NONE");
         for (int x = 0; x < numberOfSensors; x++) {
             try {
                 curAddress = InstanceManager.sensorManagerInstance().getNextValidAddress(curAddress, sensorPrefix);
@@ -257,7 +256,6 @@ public class SensorTableAction extends AbstractTableAction {
                 break;
             }
 
-            lastSuccessfulAddress = curAddress;
             // Compose the proposed system name from parts:
             sName = sensorPrefix + InstanceManager.sensorManagerInstance().typeLetter() + curAddress;
             Sensor s = null;

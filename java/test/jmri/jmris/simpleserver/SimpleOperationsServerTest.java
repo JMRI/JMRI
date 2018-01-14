@@ -111,7 +111,7 @@ public class SimpleOperationsServerTest {
     // test sending the full status of a train.
     @Test
     public void testTrainPropertyChangeListener() {
-        SimpleOperationsServer a = new SimpleOperationsServer(input, output);
+        new SimpleOperationsServer(input, output);
         // Building a train causes the property change listener to send
         // full status of the train.
         new jmri.jmrit.operations.trains.TrainBuilder().build(jmri.jmrit.operations.trains.TrainManager.instance().getTrainById("1"));

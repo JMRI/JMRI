@@ -30,8 +30,6 @@ public class Z21XNetSimulatorAdapter {
 
     public Z21XNetSimulatorAdapter() {
        csStatus = csNormalMode;
-       int locoCount = 0;
-       int locoPosition = 0;
        locoData = new Z21SimulatorLocoData[20];
     }
 

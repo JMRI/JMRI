@@ -20,8 +20,6 @@ import org.junit.Test;
  */
 public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
-    private GpioProvider myprovider = null;
-
     @Override
     public String getSystemName(int i) {
         return "PIS" + i;
@@ -117,7 +115,6 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
     @After
     public void tearDown() {
        jmri.util.JUnitUtil.resetInstanceManager();
-       myprovider = null;
        apps.tests.Log4JFixture.tearDown();
     }
 

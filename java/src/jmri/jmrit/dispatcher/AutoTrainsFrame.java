@@ -217,7 +217,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             return;
         }
         if (_throttles.get(index) != null) {
-            jmri.InstanceManager.throttleManagerInstance().removeListener((jmri.DccLocoAddress) _throttles.get(index).getLocoAddress(), _throttleListeners.get(index));
+            jmri.InstanceManager.throttleManagerInstance().removeListener(_throttles.get(index).getLocoAddress(), _throttleListeners.get(index));
         }
     }
 

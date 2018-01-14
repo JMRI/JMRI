@@ -1,9 +1,7 @@
 package jmri.jmrix.roco.z21;
 
-import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
-import jmri.jmrix.lenz.XNetThrottleTest;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -393,6 +391,11 @@ public class Z21XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo.setThrottleManager(new Z21XNetThrottleManager(memo)); 
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,memo.getThrottleManager());
         instance = new Z21XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
 
 }

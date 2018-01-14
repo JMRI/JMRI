@@ -3,7 +3,6 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;

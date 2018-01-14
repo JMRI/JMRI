@@ -408,13 +408,15 @@ public class Ib1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new Ib1ThrottleManager(memo));
-        instance = new Ib1Throttle(new LocoNetSystemConnectionMemo(lnis,slotmanager),new LocoNetSlot(5));
+        memo.setThrottleManager(new Ib1ThrottleManager(memo));
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,memo.getThrottleManager());
+        instance = new Ib1Throttle(memo,new LocoNetSlot(5));
     }
 
     @After
     @Override
     public void tearDown() {
+        ((Ib1ThrottleManager)jmri.InstanceManager.getDefault(jmri.ThrottleManager.class)).dispose();
         JUnitUtil.tearDown();
     }
 
