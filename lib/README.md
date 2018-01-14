@@ -82,7 +82,7 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - from http://www.slf4j.org
 
 ##### openlcb.jar
-- 0.7.15 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.15/openlcb-0.7.15.jar or the maven central repository.
+- 0.7.17 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.17/openlcb-0.7.17.jar or the maven central repository.
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
