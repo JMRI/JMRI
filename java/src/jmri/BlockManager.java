@@ -216,6 +216,20 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
     }
 
     /**
+     * {@inheritDoc}
+     * 
+     * Forces upper case and trims leading and trailing whitespace.
+     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
+     */
+    @CheckReturnValue
+    @Override
+    public @Nonnull
+    String normalizeSystemName(@Nonnull String inputName) {
+        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
+        return inputName.toUpperCase().trim();
+    }
+
+    /**
      * @return the default BlockManager instance
      * @deprecated since 4.9.1; use
      * {@link InstanceManager#getDefault(Class)} instead
