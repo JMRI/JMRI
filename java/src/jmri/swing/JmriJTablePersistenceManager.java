@@ -87,7 +87,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                 if (sorter != null) {
                     sorter.addRowSorterListener(listener);
                 }
-                Enumeration<TableColumn> e = table.getColumnModel().getColumns();
+                Enumeration<TableColumn> e = this.getColumns(table.getColumnModel());
                 while (e.hasMoreElements()) {
                     TableColumn column = e.nextElement();
                     column.addPropertyChangeListener(listener);
@@ -113,7 +113,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         if (sorter != null) {
             sorter.removeRowSorterListener(listener);
         }
-        Enumeration<TableColumn> e = table.getColumnModel().getColumns();
+        Enumeration<TableColumn> e = this.getColumns(table.getColumnModel());
         while (e.hasMoreElements()) {
             TableColumn column = e.nextElement();
             column.removePropertyChangeListener(listener);
@@ -134,7 +134,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         Objects.requireNonNull(model, "table " + table.getName() + " has a null columnModel");
         RowSorter<? extends TableModel> sorter = table.getRowSorter();
         boolean isXModel = model instanceof XTableColumnModel;
-        Enumeration<TableColumn> e = model.getColumns();
+        Enumeration<TableColumn> e = this.getColumns(table.getColumnModel());
         while (e.hasMoreElements()) {
             TableColumn column = e.nextElement();
             String name = column.getHeaderValue().toString();
@@ -170,12 +170,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         Objects.requireNonNull(model, "table " + table.getName() + " has a null columnModel");
         RowSorter<? extends TableModel> sorter = table.getRowSorter();
         boolean isXModel = model instanceof XTableColumnModel;
-        Enumeration<TableColumn> e;
-        if (isXModel) {
-            e = ((XTableColumnModel) model).getColumns(false);
-        } else {
-            e = model.getColumns();
-        }
+        Enumeration<TableColumn> e = this.getColumns(table.getColumnModel());
         while (e.hasMoreElements()) {
             TableColumn column = e.nextElement();
             if (column.getIdentifier() == null) {
@@ -207,11 +202,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
             }
         }
         // configure columns
-        if (isXModel) {
-            e = ((XTableColumnModel) model).getColumns(false);
-        } else {
-            e = model.getColumns();
-        }
+        e = this.getColumns(table.getColumnModel());
         while (e.hasMoreElements()) {
             TableColumn column = e.nextElement();
             String name = column.getIdentifier().toString();
@@ -459,6 +450,19 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                 this.dirty = true;
             }
         }
+    }
+
+    /**
+     * Get all columns in the column model for the table.
+     *
+     * @param model the column model to get columns from
+     * @return an enumeration of the columns
+     */
+    private Enumeration<TableColumn> getColumns(TableColumnModel model) {
+        if (model instanceof XTableColumnModel) {
+            return ((XTableColumnModel) model).getColumns(false);
+        }
+        return model.getColumns();
     }
 
     public final static class TableColumnPreferences {
