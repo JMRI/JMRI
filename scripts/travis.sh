@@ -14,9 +14,9 @@ export MAVEN_OPTS=-Xmx1536m
 if [[ "${HEADLESS}" == "true" ]] ; then
     # compile with ECJ for warnings or errors
     mvn antrun:run -Danttarget=tests-warnings
-    # run FindBugs only on headless, failing build if bugs are found
-    # FindBugs configuration is in pom.xml
-    mvn clean test -U -P travis-findbugs --batch-mode
+    # run SpotBugs only on headless, failing build if bugs are found
+    # SpotBugs configuration is in pom.xml
+    mvn clean test -U -P travis-spotbugs --batch-mode
     # run headless tests
     mvn test -U -P travis-headless --batch-mode \
         -Dsurefire.printSummary=${PRINT_SUMMARY} \

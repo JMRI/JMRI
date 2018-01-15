@@ -126,7 +126,8 @@
   <indexitem text="&#201;vitement " target="package.jmri.jmrit.operations.Operations_Sidings"/>
 
  </indexitem>
- <indexitem text="FindBugs " target="html.doc.Technical.FindBugs"/>
+ <indexitem text="SpotBugs " target="html.doc.Technical.SpotBugs"/>
+ <indexitem text="FindBugs " target="html.doc.Technical.SpotBugs"/>
 
  <indexitem text="Glossaire " target="glossary.index"/>
 
