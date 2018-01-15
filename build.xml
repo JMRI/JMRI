@@ -39,8 +39,8 @@
     <!--    cp.append=                                                                   -->
     <!--    # paths to prepend to the classpath                                          -->
     <!--    cp.prepend=                                                                  -->
-    <!--    # The directory where Findbugs is installed                                  -->
-    <!--    findbugs.home=                                                               -->
+    <!--    # The directory where SpotBugs is installed                                  -->
+    <!--    spotbugs.home=                                                               -->
     <!--    # You can specify a DecoderPro/PanelPro config file at runtime               -->
     <!--    # with e.g. "ant -Dantargline=DecoderProFile.xml decoderpro"                 -->
     <!--    antargline=DecoderProFile.xml                                                -->
@@ -237,12 +237,31 @@
     <path id="compile.class.path">
         <pathelement path="${runtime.class.jars}"/>
         <pathelement location="${libdir}/AppleJavaExtensions.jar"/> <!-- build with Mac OS X-specific support -->
-        <pathelement location="${libdir}/annotations.jar"/> <!-- findbugs build-time only-->
-        <pathelement location="${libdir}/jsr305.jar"/>      <!-- findbugs build-time only-->
         <pathelement location="${libdir}/junit-4.12.jar"/>
         <pathelement location="${libdir}/hamcrest-core-1.3.jar"/>
         <pathelement location="${libdir}/jfcunit.jar"/>
         <pathelement path="${i18n.class.jars}"/>            <!-- i18n test -->
+        <!-- SpotBugs annotations -->
+        <pathelement location="${libdir}/jcip-annotations-1.0.jar"/>
+        <pathelement location="${libdir}/jsr305.jar"/>
+        <pathelement location="${libdir}/spotbugs-annotations-3.1.1.jar"/>
+        <!-- ServiceProvider annotations -->
+        <pathelement location="${libdir}/org-openide-util-lookup-RELEASE82.jar"/>
+    </path>
+
+    <!-- path to run regular executables -->
+    <path id="project.class.path">
+        <pathelement path="${cp.prepend}"/>   <!-- prepended by user -->
+        <pathelement location="${jartarget}"/>
+        <path        refid="runtime.class.path"/>
+        <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
+        <pathelement path="${cp.append}"/>    <!-- appended by user -->
+    </path>
+
+    <!-- path to run tests -->
+    <path id="test.class.path">
+        <pathelement location="${jartarget}"/>
+        <path refid="compile.class.path"/>
         <!-- powermock and it's dependencies -->
         <pathelement location="${libdir}/mockito-core-2.0.42-beta.jar"/>
         <pathelement location="${libdir}/powermock-mockito2-1.6.5-full.jar"/>
@@ -253,7 +272,6 @@
         <pathelement location="${libdir}/byte-buddy-1.2.1.jar"/>
         <pathelement location="${libdir}/jemmy-2.3.1.1-RELEASE802.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
-        <pathelement location="${libdir}/org-openide-util-lookup-RELEASE82.jar"/>
         <!-- cucumber and it's dependencies -->
         <pathelement location="${libdir}/cucumber-core-2.0.1.jar"/>
         <pathelement location="${libdir}/cucumber-java-2.0.1.jar"/>
@@ -269,21 +287,7 @@
         <!-- Selenium and it's dependencies -->
         <pathelement location="${libdir}/selenium-server-standalone-3.6.0.jar"/>
         <pathelement location="${libdir}/webdrivermanager-2.0.1.jar"/>
-    </path>
-
-    <!-- path to run regular executables -->
-    <path id="project.class.path">
-        <pathelement path="${cp.prepend}"/>   <!-- prepended by user -->
-        <pathelement location="${jartarget}"/>
-        <path        refid="runtime.class.path"/>
-        <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
-        <pathelement path="${cp.append}"/>    <!-- appended by user -->
-    </path>
-
-    <!-- path to run tests -->
-    <path id="test.class.path">
-        <pathelement location="${jartarget}"/>
-        <path   refid="compile.class.path"/>
+        <!-- include JMRI classes last -->
         <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
         <pathelement location="${testtarget}"/> <!-- test resources in classpath that collide with stock resources -->
     </path>
@@ -441,6 +445,8 @@
             <fileset dir="${tempdir}"/>
             <fileset file="findbugs.html"/>
             <fileset file="findbugs.xml"/>
+            <fileset file="spotbugs.html"/>
+            <fileset file="spotbugs.xml"/>
             <fileset file="junit-results.xml"/>
             <fileset file="cucumber-results.xml"/>
             <fileset file="jmri-fb.html"/>
@@ -1342,6 +1348,9 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore'"/>
+            <sysproperty key="wdm.forceCache" value="true"/>
+            <!-- wdm.targetPath specifies the locaion of the web drivers on appveyor. -->
+            <sysproperty key="wdm.targetPath" value="C:\Tools\WebDriver"/> 
 
             <classpath refid="test.class.path"/>
 
@@ -1644,7 +1653,7 @@
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                        <br>Site hosted by:
                        <a href="http://sourceforge.net/projects/jmri">
-                       <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads"/></a>
+                       <img src="https://sourceforge.net/sflogo.php?type=13&group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
                 ]]>
             </bottom>
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
@@ -1711,7 +1720,7 @@
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                        <br>Site hosted by:
                        <a href="http://sourceforge.net/projects/jmri">
-                       <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads"/></a>
+                       <img src="https://sourceforge.net/sflogo.php?type=13&group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
                 ]]>
             </bottom>
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
@@ -1792,7 +1801,7 @@
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                        <br>Site hosted by:
                        <a href="http://sourceforge.net/projects/jmri">
-                       <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads"/></a>
+                       <img src="https://sourceforge.net/sflogo.php?type=13&group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
                 ]]>
             </bottom>
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
@@ -1872,41 +1881,25 @@
 
     <target name="dist"
             description="create a distribution jar file without tests"
-            depends="clean, init, debug, jar"/>
+            depends="clean, init, debug, jar">
+    </target>
 
     <target name="dist-debug"
             description="create a distribution jar file including tests"
-            depends="clean, init, debug, jar"/>
-
-    <taskdef name="findbugs"
-             classname="edu.umd.cs.findbugs.anttask.FindBugsTask"
-             onerror="ignore"
-             classpath="${findbugs.home}/lib/findbugs.jar"/>
-
-    <target name="findbugs" depends="dist" description="generate FindBugs report. Specify FindBugs install with local.properties file or &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; on command line." >
-        <findbugs home="${findbugs.home}"
-                  output="html"
-                  outputFile="${jartarget}/findbugs.html"
-                  jvmargs="-Xmx1536m"
-                  timeout="12000000"
-                  excludeFilter=".findbugs.xml"
-
-                  effort="max"
-                  reportLevel="low"
-                  >
-            <sourcePath path="${source}/"/>
-            <class location="${jartarget}/jmri.jar"/>
-            <auxClasspath refid="compile.class.path" />
-        </findbugs>
+            depends="clean, init, debug, jar">
     </target>
 
-    <target name="findbugs-ci" depends="dist" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
-        <findbugs home="${findbugs.home}"
-                  output="xml:withMessages"
-                  outputFile="findbugs.xml"
+    <taskdef resource="edu/umd/cs/findbugs/anttask/tasks.properties"
+             onerror="ignore"
+             classpath="${spotbugs.home}/lib/spotbugs-ant.jar"/>
+
+    <target name="spotbugs" depends="dist" description="generate SpotBugs report. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
+        <spotbugs home="${spotbugs.home}"
+                  output="html"
+                  outputFile="${jartarget}/spotbugs.html"
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
-                  excludeFilter=".findbugs.xml"
+                  excludeFilter=".spotbugs.xml"
 
                   effort="max"
                   reportLevel="low"
@@ -1914,7 +1907,24 @@
             <sourcePath path="${source}/"/>
             <class location="${jartarget}/jmri.jar"/>
             <auxClasspath refid="compile.class.path" />
-        </findbugs>
+        </spotbugs>
+    </target>
+
+    <target name="spotbugs-ci" depends="dist" description="generate SpotBugs report. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
+        <spotbugs home="${spotbugs.home}"
+                  output="xml:withMessages"
+                  outputFile="spotbugs.xml"
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".spotbugs.xml"
+
+                  effort="max"
+                  reportLevel="low"
+                  >
+            <sourcePath path="${source}/"/>
+            <class location="${jartarget}/jmri.jar"/>
+            <auxClasspath refid="compile.class.path" />
+        </spotbugs>
     </target>
 
     <!--  Start for checker framework -->
@@ -2338,7 +2348,7 @@
         <fail unless="remote.platform.user">Must set remote.platform.user (your username on the remote device) local.properties</fail>
         <fail unless="remote.jmri.dir">Must set remote.jmri.dir (path to JMRI install directory) local.properties</fail>
     </target>
-    
+
     <target name="-ask-password" unless="remote.platform.password">
         <input message="Password ${remote.platform.user}@${remote.platform.host}:" addproperty="remote.platform.password">
             <handler type="secure"/>
@@ -2350,20 +2360,20 @@
             <echo message="run with passwd"/>
             <scp file="./jmri.jar" todir="${remote.platform.user}@${remote.platform.host}:${remote.jmri.dir}" port="${remote.platform.port}" password="${remote.platform.password}" trust="true"> </scp>
             <sshexec host="${remote.platform.host}" port="${remote.platform.port}" username="${remote.platform.user}" password="${remote.platform.password}" trust="true" usepty="true"
-                command="export DISPLAY=:0; cd '${remote.jmri.dir}'; ${remote.jmri.app} "/>
+                     command="export DISPLAY=:0; cd '${remote.jmri.dir}'; ${remote.jmri.app} "/>
         </sequential>
     </target>
 
     <target name="decoderpro-remote"
-        description="build and run DecoderPro on remote target"
-        depends="-init-remote-platform-properties">
+            description="build and run DecoderPro on remote target"
+            depends="-init-remote-platform-properties">
         <property name="remote.jmri.app" value="${remote.jmri.dir}/DecoderPro"/>
         <antcall target="-run-remote-passwd"/>
     </target>
 
     <target name="panelpro-remote"
-        description="build and run PanelPro app on remote target"
-        depends="-init-remote-platform-properties">
+            description="build and run PanelPro app on remote target"
+            depends="-init-remote-platform-properties">
         <property name="remote.jmri.app" value="${remote.jmri.dir}/PanelPro"/>
         <antcall target="-run-remote-passwd"/>
     </target>

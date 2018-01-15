@@ -44,7 +44,7 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
         log.debug("*    updateAdapter()");
         if ((adapter.getSystemConnectionMemo() != null)
                 && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
     }

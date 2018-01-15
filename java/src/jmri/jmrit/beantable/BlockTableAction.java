@@ -37,6 +37,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import jmri.Block;
+import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -984,7 +985,7 @@ public class BlockTableAction extends AbstractTableAction {
         if (user.equals("")) {
             user = null;
         }
-        String sName = sysName.getText().trim().toUpperCase(); // N11N
+        String sName = InstanceManager.getDefault(BlockManager.class).normalizeSystemName(sysName.getText()); // N11N
         // initial check for empty entry
         if (sName.length() < 1 && !_autoSystemName.isSelected()) {
             statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));

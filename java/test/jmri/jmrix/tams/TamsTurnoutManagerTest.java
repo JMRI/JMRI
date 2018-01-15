@@ -40,13 +40,13 @@ public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     @Override
     public String getSystemName(int n) {
-        return "TMT" + n;
+        return "TT" + n;
     }
 
     @Test
     public void testAsAbstractFactory() {
         // ask for a Turnout, and check type
-        Turnout o = l.newTurnout("TMT21", "my name");
+        Turnout o = l.newTurnout("TT21", "my name");
 
         if (log.isDebugEnabled()) {
             log.debug("received turnout value " + o);
@@ -55,13 +55,13 @@ public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("TMT21"));
+            log.debug("by system name: " + l.getBySystemName("TT21"));
         }
         if (log.isDebugEnabled()) {
             log.debug("by user name:   " + l.getByUserName("my name"));
         }
 
-        Assert.assertTrue(null != l.getBySystemName("TMT21"));
+        Assert.assertTrue(null != l.getBySystemName("TT21"));
         Assert.assertTrue(null != l.getByUserName("my name"));
 
     }

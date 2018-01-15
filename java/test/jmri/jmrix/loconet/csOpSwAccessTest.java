@@ -2,9 +2,7 @@ package jmri.jmrix.loconet;
 
 import jmri.ProgListenerScaffold;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
@@ -24,17 +22,6 @@ public class csOpSwAccessTest {
     SlotManager sm;
     LocoNetSystemConnectionMemo memo;
     ProgListenerScaffold pl;
-
-    public csOpSwAccessTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
 
     @Before
     public void setUp() {
@@ -1495,10 +1482,4 @@ public class csOpSwAccessTest {
         jmri.util.JUnitAppender.assertWarnMessage("Cannot perform Cs OpSw access: parts.length=2, parts[]=[csOpSw, 129], val=1");
      }
      
-// Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SlotManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
 }

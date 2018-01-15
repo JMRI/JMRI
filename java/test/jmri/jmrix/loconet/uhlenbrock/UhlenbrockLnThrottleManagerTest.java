@@ -7,27 +7,21 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class UhlenbrockLnThrottleManagerTest {
-
-    @Test
-    public void testCTor() {
-        LnTrafficController lnis = new LocoNetInterfaceScaffold();
-        UhlenbrockSlotManager slotmanager = new UhlenbrockSlotManager(lnis);
-        UhlenbrockSystemConnectionMemo memo = new UhlenbrockSystemConnectionMemo(lnis,slotmanager);
-        UhlenbrockLnThrottleManager t = new UhlenbrockLnThrottleManager(memo);
-        Assert.assertNotNull("exists",t);
-    }
+public class UhlenbrockLnThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        LnTrafficController lnis = new LocoNetInterfaceScaffold();
+        UhlenbrockSlotManager slotmanager = new UhlenbrockSlotManager(lnis);
+        UhlenbrockSystemConnectionMemo memo = new UhlenbrockSystemConnectionMemo(lnis,slotmanager);
+        tm = new UhlenbrockLnThrottleManager(memo);
     }
 
     @After
