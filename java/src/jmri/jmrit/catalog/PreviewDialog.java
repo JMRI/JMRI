@@ -280,7 +280,7 @@ public class PreviewDialog extends JDialog {
         c.gridx = 0;
         _cnt = 0;       // number of images displayed in this panel
         int cnt = 0;    // total number of images in directory
-        if (_currentDir.listFiles() != null) { // prevent findbugs NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE
+        if (_currentDir.listFiles() != null) { // prevent spotbugs NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE
             File[] files = _currentDir.listFiles(); // all files, filtered below
             int nCols = 1;
             int nRows = 1;

@@ -28,7 +28,7 @@ public abstract class LnTrafficController implements LocoNetInterface {
     }
 
     @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // FindBugs wants this package protected, but we're removing it when multi-connection
+    // SpotBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     static protected LnTrafficController self = null;
 
