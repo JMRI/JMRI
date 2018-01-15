@@ -133,10 +133,10 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
         loadCheckBox.setEnabled(enabled);
         loadAnyCheckBox.setEnabled(enabled);
         loadAnyStagingCheckBox.setEnabled(enabled);
-        blockCarsCheckBox.setEnabled(!_track.isAddCustomLoadsEnabled() && !_track.isAddCustomLoadsAnySpurEnabled()
+        blockCarsCheckBox.setEnabled(_track != null && !_track.isAddCustomLoadsEnabled() && !_track.isAddCustomLoadsAnySpurEnabled()
                 && !_track.isAddCustomLoadsAnyStagingTrackEnabled() && enabled);
         // show ship loads
-        pShipLoadOption.setVisible(_track.isAddCustomLoadsEnabled()
+        pShipLoadOption.setVisible(_track == null || _track.isAddCustomLoadsEnabled()
                 || _track.isAddCustomLoadsAnySpurEnabled() || _track.isAddCustomLoadsAnyStagingTrackEnabled()
                 || !_track.getShipLoadOption().equals(Track.ALL_LOADS));
         super.enableButtons(enabled);
