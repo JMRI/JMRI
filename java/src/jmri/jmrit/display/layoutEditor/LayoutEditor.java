@@ -9727,9 +9727,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //setup for drawing sideline ties
         int tieLength = ltdo.getSideTieLength();
-        if (tieLength > 0) {
-            int tieWidth = ltdo.getSideTieWidth();
-            int tieGap = ltdo.getSideTieGap();
+        int tieWidth = ltdo.getSideTieWidth();
+        int tieGap = ltdo.getSideTieGap();
+        if ((tieLength > 0) && (tieWidth > 0) && (tieGap > 0)) {
             g2.setStroke(new BasicStroke(tieLength,
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
                     new float[]{tieWidth, tieGap}, 0));
@@ -9739,9 +9739,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //setup for drawing mainline ties
         tieLength = ltdo.getMainTieLength();
-        if (tieLength > 0) {
-            int tieWidth = ltdo.getMainTieWidth();
-            int tieGap = ltdo.getMainTieGap();
+        tieWidth = ltdo.getMainTieWidth();
+        tieGap = ltdo.getMainTieGap();
+        if ((tieLength > 0) && (tieWidth > 0) && (tieGap > 0)) {
             g2.setStroke(new BasicStroke(tieLength,
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
                     new float[]{tieWidth, tieGap}, 0));
