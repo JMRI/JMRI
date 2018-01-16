@@ -3,6 +3,21 @@ package jmri.jmrix.openlcb.configurexml;
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
 import jmri.jmrix.openlcb.OlcbSignalMast;
+import jmri.jmrix.openlcb.OlcbSystemConnectionMemo;
+
+import org.openlcb.AbstractConnection;
+import org.openlcb.Connection;
+import org.openlcb.EventID;
+import org.openlcb.EventState;
+import org.openlcb.Message;
+import org.openlcb.NodeID;
+import org.openlcb.OlcbInterface;
+import org.openlcb.ProducerConsumerEventReportMessage;
+import org.openlcb.IdentifyConsumersMessage;
+import org.openlcb.ConsumerIdentifiedMessage;
+import org.openlcb.IdentifyProducersMessage;
+import org.openlcb.ProducerIdentifiedMessage;
+import org.openlcb.IdentifyEventsMessage;
 
 import org.jdom2.Element;
 
@@ -37,8 +52,6 @@ public class OlcbSignalMastXmlTest {
         t.setOutputForAppearance("Permissive", "1.2.3.4.5.6.7.12");
         t.setOutputForAppearance("Stop", "1.2.3.4.5.6.7.13");
         
-        JUnitAppender.assertErrorMessage("No OpenLCB connection found for system prefix \"M\", so mast \"MF$olm:AAR-1946:PL-1-high-abs(1)\" will not function");
-        
         OlcbSignalMastXml x = new OlcbSignalMastXml();
         
         Element e = x.store(t);
@@ -54,6 +67,16 @@ public class OlcbSignalMastXmlTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+
+        Connection connection = new AbstractConnection() {
+            @Override
+            public void put(Message msg, Connection sender) {
+            }
+        };
+
+        OlcbSystemConnectionMemo memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
+        memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
+        memo.setInterface(new OlcbInterface(new NodeID(new byte[]{1, 0, 0, 0, 0, 0}), connection));
     }
 
     @After
