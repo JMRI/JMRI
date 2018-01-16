@@ -904,6 +904,40 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     // ============ End NX Pair Delete Methods ============
 
+    /**
+     * Create a list of sensors that have the layout block as either
+     * facing or protecting.
+     * Called by {@link LayoutTrackEditors#hasNxSensorPairs}.
+     * @since 4.11.2
+     * @param layoutBlock The layout block to be checked.
+     * @return the a list of sensors affected by the layout block or an empty list.
+     */
+    public List<String> layoutBlockSensors(@Nonnull LayoutBlock layoutBlock) {
+        log.debug("layoutBlockSensors: {}", layoutBlock.getDisplayName());
+        List<String> blockSensors = new ArrayList<>();
+        nxpair.forEach((pdSrc, src) -> {
+            Sensor sBean = pdSrc.getSensor();
+            for (LayoutBlock sProtect : pdSrc.getProtecting()) {
+                if (layoutBlock == pdSrc.getFacing() || layoutBlock == sProtect) {
+                    log.debug("  Source = '{}', Facing = '{}', Protecting = '{}'         ",
+                            sBean.getDisplayName(), pdSrc.getFacing().getDisplayName(), sProtect.getDisplayName());
+                    blockSensors.add(sBean.getDisplayName());
+                }
+            }
+            LayoutEditor sPanel = pdSrc.getPanel();
+            for (PointDetails pdDest : src.getDestinationPoints()) {
+                Sensor dBean = pdDest.getSensor();
+                for (LayoutBlock dProtect : pdDest.getProtecting()) {
+                    if (layoutBlock == pdDest.getFacing() || layoutBlock == dProtect) {
+                        log.debug("    Destination = '{}', Facing = '{}', Protecting = '{}'     ",
+                                dBean.getDisplayName(), pdDest.getFacing().getDisplayName(), dProtect.getDisplayName());
+                        blockSensors.add(dBean.getDisplayName());
+                    }
+                }
+            }
+        });
+        return blockSensors;
+    }
 
     public boolean isDestinationValid(Object source, Object dest, LayoutEditor panel) {
         if (nxpair.containsKey(getPointDetails(source, panel))) {
