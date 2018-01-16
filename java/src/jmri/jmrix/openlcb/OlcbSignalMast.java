@@ -116,8 +116,6 @@ public class OlcbSignalMast extends AbstractSignalMast {
             if (systemMemo == null) {
                 log.error("No OpenLCB connection found for system prefix \"" + systemPrefix + "\", so mast \""+systemName+"\" will not function");
             }
-            node = ((OlcbInterface)systemMemo.get(OlcbInterface.class)).getNodeId();
-            connection = ((OlcbInterface)systemMemo.get(OlcbInterface.class)).getOutputConnection();
         }
         String system = parts[1];
         String mast = parts[2];
@@ -132,17 +130,21 @@ public class OlcbSignalMast extends AbstractSignalMast {
         configureSignalSystemDefinition(system);
         configureAspectTable(system, mast);
 
-        litMachine = new StateMachine<Boolean>(connection, node, Boolean.TRUE);
-        heldMachine = new StateMachine<Boolean>(connection, node, Boolean.FALSE);
-        aspectMachine = new StateMachine<String>(connection, node, getAspect());
+        if (systemMemo != null) { // initialization that requires a connection, normally present
+            node = ((OlcbInterface)systemMemo.get(OlcbInterface.class)).getNodeId();
+            connection = ((OlcbInterface)systemMemo.get(OlcbInterface.class)).getOutputConnection();
+ 
+            litMachine = new StateMachine<Boolean>(connection, node, Boolean.TRUE);
+            heldMachine = new StateMachine<Boolean>(connection, node, Boolean.FALSE);
+            aspectMachine = new StateMachine<String>(connection, node, getAspect());
         
-        ((OlcbInterface)systemMemo.get(OlcbInterface.class)).registerMessageListener(new MessageDecoder(){
-            public void put(Message msg, Connection sender) {
-                handleMessage(msg);
-            }
-        });
-        
-        
+            ((OlcbInterface)systemMemo.get(OlcbInterface.class)).registerMessageListener(new MessageDecoder(){
+                public void put(Message msg, Connection sender) {
+                    handleMessage(msg);
+                }
+            });
+
+        }   
     }
 
     int mastNumber; // used to tell them apart
