@@ -43,6 +43,8 @@ public class PositionablePopupUtil {
     protected PositionablePopupUtil _self;
     protected PositionablePropertiesUtil _propertiesUtil;
 
+    private Color defaultBorderColor;
+
     protected final int LABEL = 1;
     protected final int TEXTFIELD = 2;
     protected final int JCOMPONENT = 3;
