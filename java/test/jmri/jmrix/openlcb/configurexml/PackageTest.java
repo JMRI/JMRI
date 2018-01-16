@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     OlcbSensorManagerXmlTest.class,
+    OlcbSignalMastXmlTest.class,
     OlcbTurnoutManagerXmlTest.class
 })
 /**
