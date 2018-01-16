@@ -43,14 +43,14 @@
         <profile>
             <id>travis-headless</id>
             <properties>
-                <findbugs.skip>true</findbugs.skip>
+                <spotbugs.skip>true</spotbugs.skip>
                 <java.awt.headless>true</java.awt.headless>
             </properties>
         </profile>
         <profile>
             <id>travis-coverage</id>
             <properties>
-                <findbugs.skip>true</findbugs.skip>
+                <spotbugs.skip>true</spotbugs.skip>
             </properties>
             <build>
                 <plugins>
@@ -108,7 +108,7 @@
             </build>
         </profile>
         <profile>
-            <id>travis-findbugs</id>
+            <id>travis-spotbugs</id>
             <build>
                 <plugins>
                     <!-- prevent surefire (maven default test harness) from running tests -->
@@ -121,9 +121,9 @@
                         </configuration>
                     </plugin>
                     <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>findbugs-maven-plugin</artifactId>
-                        <version>3.0.4</version>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs-maven-plugin</artifactId>
+                        <version>3.1.1</version>
                         <!-- configured to fail on High priority bugs during test phase -->
                         <executions>
                             <execution>
@@ -133,7 +133,7 @@
                                     <goal>check</goal>
                                 </goals>
                                 <configuration>
-                                    <excludeFilterFile>.findbugs.xml</excludeFilterFile>
+                                    <excludeFilterFile>.spotbugs.xml</excludeFilterFile>
                                     <effort>Max</effort>
                                     <threshold>High</threshold>
                                     <maxHeap>1536</maxHeap>
@@ -261,12 +261,12 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.4</version>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>3.1.1</version>
                 <!-- configured to fail on High priority bugs -->
                 <configuration>
-                    <excludeFilterFile>.findbugs.xml</excludeFilterFile>
+                    <excludeFilterFile>.spotbugs.xml</excludeFilterFile>
                     <effort>Max</effort>
                     <threshold>High</threshold>
                     <maxHeap>1536</maxHeap>
@@ -876,20 +876,23 @@
             <artifactId>usb4java-javax</artifactId>
             <version>1.2.0</version>
         </dependency>
+        <!-- SpotBugs annotations -->
         <dependency>
             <groupId>net.jcip</groupId>
             <artifactId>jcip-annotations</artifactId>
             <version>1.0</version>
         </dependency>
+        <!-- SpotBugs annotations (SpotBugs does not include JSR 305) -->
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
             <version>3.0.1</version>
         </dependency>
+        <!-- SpotBugs annotations -->
         <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>findbugs-annotations</artifactId>
-            <version>3.0.1</version>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-annotations</artifactId>
+            <version>3.1.1</version>
         </dependency>
         <!--
         <dependency>

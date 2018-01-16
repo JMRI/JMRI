@@ -94,13 +94,10 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
             loadCheckBox.setSelected(_track.isAddCustomLoadsEnabled());
             loadAnyCheckBox.setSelected(_track.isAddCustomLoadsAnySpurEnabled());
             loadAnyStagingCheckBox.setSelected(_track.isAddCustomLoadsAnyStagingTrackEnabled());
-            pShipLoadOption.setVisible(loadCheckBox.isSelected()
-                    || loadAnyCheckBox.isSelected() || loadAnyStagingCheckBox.isSelected()); // show which loads this track can ship
             blockCarsCheckBox.setSelected(_track.isBlockCarsEnabled());
             if (loadCheckBox.isSelected() || loadAnyCheckBox.isSelected()
                     || loadAnyStagingCheckBox.isSelected()) {
                 blockCarsCheckBox.setSelected(false);
-                blockCarsCheckBox.setEnabled(false);
             }
         }
 
@@ -136,14 +133,12 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
         loadCheckBox.setEnabled(enabled);
         loadAnyCheckBox.setEnabled(enabled);
         loadAnyStagingCheckBox.setEnabled(enabled);
-        if (!loadCheckBox.isSelected() && !loadAnyCheckBox.isSelected()
-                && !loadAnyStagingCheckBox.isSelected() && enabled) {
-            blockCarsCheckBox.setEnabled(true);
-            pShipLoadOption.setVisible(false);
-        } else {
-            blockCarsCheckBox.setEnabled(false);
-            pShipLoadOption.setVisible(true);
-        }
+        blockCarsCheckBox.setEnabled(_track != null && !_track.isAddCustomLoadsEnabled() && !_track.isAddCustomLoadsAnySpurEnabled()
+                && !_track.isAddCustomLoadsAnyStagingTrackEnabled() && enabled);
+        // show ship loads
+        pShipLoadOption.setVisible(_track == null || _track.isAddCustomLoadsEnabled()
+                || _track.isAddCustomLoadsAnySpurEnabled() || _track.isAddCustomLoadsAnyStagingTrackEnabled()
+                || !_track.getShipLoadOption().equals(Track.ALL_LOADS));
         super.enableButtons(enabled);
     }
     
@@ -221,6 +216,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
             }
         } else if (ae.getSource() == loadAnyStagingCheckBox) {
             if (loadAnyStagingCheckBox.isSelected()) {
+                blockCarsCheckBox.setSelected(false);
                 blockCarsCheckBox.setEnabled(false);
             } else if (!loadCheckBox.isSelected() && !loadAnyCheckBox.isSelected()) {
                 blockCarsCheckBox.setEnabled(true);

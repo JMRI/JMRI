@@ -224,11 +224,11 @@ public class MemoryTableAction extends AbstractTableAction {
             }
         }
 
-        String user = userName.getText().trim(); // N11N
+        String user = jmri.NamedBean.normalizeUserName(userName.getText());
         if (user.equals("")) {
             user = null;
         }
-        String sName = sysName.getText().trim().toUpperCase(); // N11N
+        String sName = jmri.InstanceManager.memoryManagerInstance().normalizeSystemName(sysName.getText());
         // initial check for empty entry
         if (sName.length() < 1 && !autoSystemName.isSelected()) {
             statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));
@@ -247,13 +247,13 @@ public class MemoryTableAction extends AbstractTableAction {
 
             if (x != 0) {
                 if (user != null) {
-                    b = new StringBuilder(userName.getText().trim()); // N11N
+                    b = new StringBuilder(jmri.NamedBean.normalizeUserName(userName.getText())); // N11N
                     b.append(":");
                     b.append(Integer.toString(x));
                     user = b.toString(); // add :x to user name starting with 2nd item
                 }
                 if (!autoSystemName.isSelected()) {
-                    b = new StringBuilder(sysName.getText().trim()); // N11N
+                    b = new StringBuilder(jmri.InstanceManager.memoryManagerInstance().normalizeSystemName(sysName.getText()));
                     b.append(":");
                     b.append(Integer.toString(x));
                     sName = b.toString();
