@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 public class EasyDccConsist extends jmri.implementation.DccConsist implements EasyDccListener {
 
     private EasyDccSystemConnectionMemo _memo = null;
-    private EasyDccTrafficController trafficController = null;
 
     // Initialize a consist for the specific address.
     // The Default consist type is an advanced consist

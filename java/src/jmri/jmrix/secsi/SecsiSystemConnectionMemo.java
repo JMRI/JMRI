@@ -28,8 +28,6 @@ public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
         log.debug("Created SecsiSystemConnectionMemo");
     }
 
-    private jmri.jmrix.swing.ComponentFactory cf = null;
-
     private SerialTrafficController tc = null;
 
     /**

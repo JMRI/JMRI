@@ -17,8 +17,6 @@ import org.slf4j.LoggerFactory;
  */
 public class OakTreeSystemConnectionMemo extends SystemConnectionMemo {
 
-    private jmri.jmrix.swing.ComponentFactory cf = null;
-
     public OakTreeSystemConnectionMemo() {
         this("O", SerialConnectionTypeList.OAK);
 

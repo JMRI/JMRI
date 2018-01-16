@@ -17,8 +17,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MapleSystemConnectionMemo extends SystemConnectionMemo {
 
-    private jmri.jmrix.swing.ComponentFactory cf = null;
-
     public MapleSystemConnectionMemo() {
         this("K", SerialConnectionTypeList.MAPLE);
     }
