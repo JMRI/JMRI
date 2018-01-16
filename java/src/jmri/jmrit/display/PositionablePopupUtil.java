@@ -43,9 +43,6 @@ public class PositionablePopupUtil {
     protected PositionablePopupUtil _self;
     protected PositionablePropertiesUtil _propertiesUtil;
 
-    private Color defaultForeground;
-    private Color defaultBorderColor;
-
     protected final int LABEL = 1;
     protected final int TEXTFIELD = 2;
     protected final int JCOMPONENT = 3;
@@ -61,8 +58,7 @@ public class PositionablePopupUtil {
         }
         _textComponent = textComp;
         _self = this;
-        defaultForeground = _textComponent.getForeground();
-//        defaultBackground = _textComponent.getBackground();
+
         defaultBorderColor = _parent.getBackground();
         _propertiesUtil = new PositionablePropertiesUtil(_parent);
     }

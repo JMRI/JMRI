@@ -29,7 +29,7 @@ public class OakTreeSystemConnectionMemo extends SystemConnectionMemo {
         InstanceManager.store(this, OakTreeSystemConnectionMemo.class); // also register as specific type
 
         // create and register the ComponentFactory
-        InstanceManager.store(cf = new jmri.jmrix.oaktree.swing.OakTreeComponentFactory(this),
+        InstanceManager.store(new jmri.jmrix.oaktree.swing.OakTreeComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
 
         log.debug("Created OakTreeSystemConnectionMemo");

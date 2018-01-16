@@ -28,7 +28,7 @@ public class MapleSystemConnectionMemo extends SystemConnectionMemo {
         InstanceManager.store(this, MapleSystemConnectionMemo.class); // also register as specific type
 
         // create and register the ComponentFactory
-        InstanceManager.store(cf = new jmri.jmrix.maple.swing.MapleComponentFactory(this),
+        InstanceManager.store(new jmri.jmrix.maple.swing.MapleComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
 
         log.debug("Created MapleSystemConnectionMemo");
