@@ -236,8 +236,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 reply.setParity();
                 break;
             case XNetConstants.LOCO_OPER_REQ:
-                lastLocoAddressHigh = m.getElement(2);
-                lastLocoAddressLow = m.getElement(3);
                 switch (m.getElement(1)) {
                     case XNetConstants.LOCO_SPEED_14:
                         currentSpeedStepMode = XNetConstants.LOCO_SPEED_14;
