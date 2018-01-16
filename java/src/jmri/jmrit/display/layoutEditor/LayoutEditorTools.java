@@ -2666,7 +2666,7 @@ public class LayoutEditorTools {
                     xovers.add(layoutTurnout);
                 }
             }
-            JComboBox<LayoutTurnout> jcb = new JComboBox<>(xovers.toArray(new LayoutTurnout[xovers.size()]()));
+            JComboBox<LayoutTurnout> jcb = new JComboBox<>(xovers.toArray(new LayoutTurnout[xovers.size()]));
             jcb.setEditable(true);
             JOptionPane.showMessageDialog(layoutEditor, jcb,
                     Bundle.getMessage("MakeLabel",
