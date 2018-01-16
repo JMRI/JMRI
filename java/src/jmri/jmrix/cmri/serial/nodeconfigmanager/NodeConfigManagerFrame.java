@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * 
  * Frames for a table view to manage CMRInet node configuration management. c2
  * Created a table view for node configuration operations. Add, Edit, Delete and
  * Update are executed from the NodeTableManager. This class was derived from
