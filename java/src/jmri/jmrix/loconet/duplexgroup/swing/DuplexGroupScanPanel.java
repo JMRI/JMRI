@@ -56,7 +56,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
     int previousGroupChannel;
 //    Dimension channelTextSize;
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -169,7 +169,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -177,7 +177,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         return "package.jmri.jmrix.loconet.DuplexGroupSetup.DuplexGroupScanPanel"; // NOI18N
     } // NOI18N
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -185,7 +185,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         return rb.getString("Title");
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -604,7 +604,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
             int channelIndex;
             java.awt.Graphics2D g2;
             if (g instanceof java.awt.Graphics2D) {
-                g2 = (java.awt.Graphics2D) g; 
+                g2 = (java.awt.Graphics2D) g;
             } else {
                 log.error("paint() cannot cast object g to Graphics2D.  Aborting paint().");
                 return;

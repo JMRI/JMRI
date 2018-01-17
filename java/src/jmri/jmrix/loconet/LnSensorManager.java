@@ -95,7 +95,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
     volatile LnSensorUpdateThread thread;
-    
+
     /**
      * Requests status updates from all layout sensors.
      */

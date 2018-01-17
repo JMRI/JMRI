@@ -30,7 +30,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         idBox = new javax.swing.JComboBox<String>(IDValues);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -74,7 +74,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         });
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -82,7 +82,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         return "package.jmri.jmrix.loconet.locoid.LocoIdFrame"; // NOI18N
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -90,7 +90,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         return getTitle(Bundle.getMessage("MenuItemSetID"));
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -201,7 +201,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         t.addLocoNetListener(~0, this);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
