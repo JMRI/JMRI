@@ -66,9 +66,13 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
             }
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows "
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
+                log.debug(" port flow control shows " // NOI18N
+                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
+
+                // log events
+                setPortEventLogging(activeSerialPort);
             }
+
             opened = true;
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
