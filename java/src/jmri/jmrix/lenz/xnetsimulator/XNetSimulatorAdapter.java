@@ -44,8 +44,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private final static int CS_NORMAL_MODE = 0x00;
 
     // information about the last throttle command(s).
-    private int lastLocoAddressHigh = 0;
-    private int lastLocoAddressLow = 0;
     private int currentSpeedStepMode = XNetConstants.LOCO_SPEED_128;
     private int currentSpeedStep = 0;
     private int functionGroup1 = 0;
@@ -238,8 +236,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 reply.setParity();
                 break;
             case XNetConstants.LOCO_OPER_REQ:
-                lastLocoAddressHigh = m.getElement(2);
-                lastLocoAddressLow = m.getElement(3);
                 switch (m.getElement(1)) {
                     case XNetConstants.LOCO_SPEED_14:
                         currentSpeedStepMode = XNetConstants.LOCO_SPEED_14;

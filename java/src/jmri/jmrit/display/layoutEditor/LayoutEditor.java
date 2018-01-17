@@ -3045,22 +3045,20 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                     jbcb = (JmriBeanComboBox) SwingUtilities.getUnwrappedParent(jbcb);
                 }
 
-                if (jbcb instanceof JmriBeanComboBox) {
-                    String ttt = jbcb.getToolTipText();
-                    if (ttt != null) {
-                        //change the name of the preference based on the tool tip text
-                        ddldoPrefName = String.format("%s.%s", ddldoPrefName, ttt);
-                        //try to get the preference
-                        ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
-                        if (ddldoProp != null) { //if we found it...
-                            ddldoPref = ddldoProp.toString(); //get it's (string value
-                        } else { //otherwise...
-                            //save it in the users preferences
-                            prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
-                        }
+                String ttt = jbcb.getToolTipText();
+                if (ttt != null) {
+                    //change the name of the preference based on the tool tip text
+                    ddldoPrefName = String.format("%s.%s", ddldoPrefName, ttt);
+                    //try to get the preference
+                    ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
+                    if (ddldoProp != null) { //if we found it...
+                        ddldoPref = ddldoProp.toString(); //get it's (string value
+                    } else { //otherwise...
+                        //save it in the users preferences
+                        prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
                     }
                 }
-
+     
                 //now set the combo box display order
                 if (ddldoPref.equals("DISPLAYNAME")) {
                     jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.DISPLAYNAME);

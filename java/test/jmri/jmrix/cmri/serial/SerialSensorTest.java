@@ -48,7 +48,7 @@ public class SerialSensorTest {
     @Test
     public void testSystemSpecificComparisonOfSpecificFormats() {
         // test by putting into a tree set, then extracting and checking order
-        java.util.TreeSet<Sensor> set = new java.util.TreeSet(new jmri.util.NamedBeanComparator());
+        java.util.TreeSet<Sensor> set = new java.util.TreeSet<>(new jmri.util.NamedBeanComparator());
         
         set.add(new SerialSensor("CS3B4"));
         set.add(new SerialSensor("CS3003"));

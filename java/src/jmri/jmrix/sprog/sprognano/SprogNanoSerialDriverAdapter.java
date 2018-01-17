@@ -34,6 +34,6 @@ public class SprogNanoSerialDriverAdapter
     static public SprogNanoSerialDriverAdapter instance() {
         return null;
     }
-    private final static Logger log = LoggerFactory.getLogger(SprogNanoSerialDriverAdapter.class);
+    // private final static Logger log = LoggerFactory.getLogger(SprogNanoSerialDriverAdapter.class);
 
 }
