@@ -22,13 +22,12 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: SPROG Console</h1>The SPROG Console window provides
+      <h1>JMRI: SPROG Console</h1>
+      <p>The SPROG Console window provides
       a way to monitor and control SPROG operation from a single
-      place.
+      place.</p>
 
-      <p>This is the
-      package/jmri/jmrix/sprog/console/SprogConsoleFrame page. 
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

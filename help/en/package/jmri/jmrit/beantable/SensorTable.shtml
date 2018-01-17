@@ -9,7 +9,7 @@
   <title>JMRI: Sensor Table Help</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Sensor Table">
   <!--#include virtual="/Style" -->
 </head>
@@ -114,8 +114,8 @@
       time, after the timer has finished it will check to see if
       the Sensor is in the same state as it was before it restarted
       the process. If not, the process is re-started again until
-      the state is the same before and after the timer is run. 
-      <!--#include virtual="/Footer" --></p>
+      the state is the same before and after the timer is run.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -1,19 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- Updated by Blorec Herv&#233;  2017-01-05-->
 
-<!--  $Id$ -->
-
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Route Documentation</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
   <!-- Style -->
@@ -32,11 +26,10 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+        
+<h1> JMRI: Documentation Itin&#233;raires </h1>
 
-
-<H1> JMRI: Documentation Itin&#233;raires </H1>
-
-<h2>Que sont les Itin&#233;raires? </H2>
+<h2>Que sont les Itin&#233;raires? </h2>
 
 <p> Les Itin&#233;raires sont des collections d'appareils de voie et/ou de capteurs dont les &#233;tats peuvent &#234;tre
  d&#233;t&#233;rmin&#233;s tous &#224; la fois. Aussi, quand un Itin&#233;raire est d&#233;clench&#233;, un son peut &#234;tre jou&#233;,
@@ -74,6 +67,7 @@ Il contient les colonnes suivantes:
 	<li>Commentaire ( option, double clic pour &#233;diter )</li>
 	<li>Activ&#233; ( case &#224; cocher )</li>
 	<li>Verrouill&#233; ( case &#224; cocher )</li>
+    </ul>
 
 <h3>Commandes du Tableau Itin&#233;raires</h3>
 <p> En bas du tableau il y a le bouton  <a href="../../package/jmri/jmrit/beantable/RouteAddEdit.shtml"><b>Ajouter...</b></a>.
@@ -87,62 +81,61 @@ contient tous les capteurs n&#233;cessaires. Ensuite, s&#233;lectionnez <b>Outil
 et cliquez sur le bouton <b> Ajouter ...</b> au bas du tableau pour
 faire appara&#238;tre la fen&#234;tre Ajouter/Modifier l'Itin&#233;raire. </p>
 
-<a name="addroute"> <H3> Pour ajouter un nouvel Itin&#233;raire: </H3> </a>
+<a name="addroute"> <h3> Ajouter un nouvel Itin&#233;raire </h3> </a>
 
 <ol>
-<p> <li> Entrez un nom  syst&#232;me, telles que "IR100' - tout
+<li> Entrez un nom  syst&#232;me, telles que "IR100' - tout
 Nom court peut &#234;tre utilis&#233; &#224; condition qu'il soit diff&#233;rent du nom syst&#232;me 
-d'autres itin&#233;raires. </p>
-<p> Par convention, les noms syst&#232;mes commencent g&#233;n&#233;ralement par "IR" pour Internal Route
-. </P>
-</Li>
-<p> <li> Entrez un nom utilisateur. Toute cha&#238;ne de caract&#232;res qui est diff&#233;rente
+d'autres itin&#233;raires. <br>
+Par convention, les noms syst&#232;mes commencent g&#233;n&#233;ralement par "IR" pour Internal Route
+.
+</li>
+<li> Entrez un nom utilisateur. Toute cha&#238;ne de caract&#232;res qui est diff&#233;rente
 du nom utilisateur d'autres itin&#233;raires sera accept&#233;e, mais il est
-sage d'utiliser une cha&#238;ne qui d&#233;crit l'utilisation pr&#233;vue de l'Itin&#233;raire. </p>
+sage d'utiliser une cha&#238;ne qui d&#233;crit l'utilisation pr&#233;vue de l'Itin&#233;raire.
 <p> Notez qu'avant la version 1.5.6 de JMRI, il y avait un bug qui
 vous a emp&#234;ch&#233; d'avoir plus d'un nom utilisateur vide. Dans les
  versions les plus r&#233;centes, vous pouvez avoir autant d'Itin&#233;raires avec des noms d'utilisateur vide
 que vous le souhaitez; ils doivent &#234;tre r&#233;f&#233;renc&#233;s via leurs noms syst&#232;me,
 bien s&#251;r. </p>
-</Li>
-<p> <li> S&#233;lectionnez les aiguillages devant &#234;tre inclus dans le nouvel
+</li>
+<li> S&#233;lectionnez les aiguillages devant &#234;tre inclus dans le nouvel
 itin&#233;raire dans la liste de tous les aiguillages d&#233;finis, en cliquant sur la
 case dans la colonne <b>Inclure</b>. Pour chaque aiguillage inclus,
 utilisez la liste d&#233;roulante dans la colonne <b>Fixer &#201;tat</b>  pour s&#233;lectionner si
 l'aiguillage inclus doit d'&#234;tre "Fix&#233; Direct", "Fix&#233; D&#233;vi&#233;" ou
 " Les deux" lorsque l'Itin&#233;raire est "Fix&#233;". Ne vous inqui&#233;tez pas si tout n'est pas
-parfait. Il est facile de modifier ces informations ult&#233;rieurement. </P>
+parfait. Il est facile de modifier ces informations ult&#233;rieurement.
 <p> Notez que la fen&#234;tre  Ajouter/Modifier Itin&#233;raire vous permet d'afficher
 "Tous" les Aiguillages et Capteurs ou Les Aiguillages et Capteurs "inclus". C'est
  uniquement pour votre convenance pour v&#233;rifier que tous les aiguillages d&#233;sir&#233;s
 et/ou les capteurs ont &#233;t&#233; inclus; elle n'affecte pas les entr&#233;es 
 d'informations.</p>
-</Li>
-<p> <li> De m&#234;me, s&#233;lectionnez les capteurs &#224; inclure dans le nouvel
+</li>
+<li> De m&#234;me, s&#233;lectionnez les capteurs &#224; inclure dans le nouvel
 Itin&#233;raire dans la liste de tous les capteurs d&#233;finis, en cliquant sur le
 case dans la colonne <b>Inclure</b> . Pour chaque capteur inclus,
 utilisez la liste d&#233;roulante dans la colonne <b>Fixer &#201;tat </b>  pour s&#233;lectionner si
 ce capteur doit &#234;tre "Fix&#233; Actif", "Fix&#233; Inactif" ou "Les deux" 
-lorsque l'itin&#233;raire est "fix&#233;".</P>
-</Li>
-<p> <li> Si vous voulez que l'Itin&#233;raire joue un son lorsque il se d&#233;clenche,
+lorsque l'itin&#233;raire est "fix&#233;".
+</li>
+<li> Si vous voulez que l'Itin&#233;raire joue un son lorsque il se d&#233;clenche,
 entrez le nom de fichier d'un fichier son dans la zone de texte suivante "Jouer fichier son"
 . En cliquant <b>fixer</b> pour faire appara&#238;tre une s&#233;lection de fichiers
  pour aider &#224; localiser le fichier. Une fois le fichier localis&#233;, cliquer sur 
 son nom dans la bo&#238;te de dialogue le copieras, avec le chemin complet, dans
-la zone de texte. </p>
-</Li>
-<li>
-<p> De m&#234;me, si vous voulez un script &#224; ex&#233;cuter lorsque l'Itin&#233;raire
+la zone de texte.
+</li>
+<li>De m&#234;me, si vous voulez un script &#224; ex&#233;cuter lorsque l'Itin&#233;raire
 d&#233;clenche, entrez son nom de fichier dans la zone de texte sur la droite. Le bouton'
 <b>Fixer</b>  peut &#234;tre utilis&#233; comme ci-dessus pour l'aider &#224; entrer 
-les informations sur le fichier script. </p>
-</Li>
-<p> <li> Si vous voulez que le r&#233;glage de l'Itin&#233;raire soit contr&#244;l&#233;
+les informations sur le fichier script.
+</li>
+<li> Si vous voulez que le r&#233;glage de l'Itin&#233;raire soit contr&#244;l&#233;
 par une ou plusieurs capteurs d'entr&#233;e, entrez leurs noms (nom syst&#232;me ou nom utilisateur)
 et s&#233;lectionner &#224; quel genre de logique ils ob&#233;issent. Les Choix logique sont d&#233;crits dans
-<A  HREF="#sensorlogic">d&#233;tails ci-dessous </a>.</P>
-<P> Lorsque vous enregistrez vos Itin&#233;raires et les restaurez en utilisant un fichier de configuration,
+<a  href="#sensorlogic">d&#233;tails ci-dessous </a>.
+<p> Lorsque vous enregistrez vos Itin&#233;raires et les restaurez en utilisant un fichier de configuration,
 le nom du capteur que vous entrez ici est utilis&#233; pour recr&#233;er l'itin&#233;raire.
 Un nom syst&#232;me sera toujours associ&#233; avec le capteur de la m&#234;me entr&#233;e.
 Un nom utilisateur peut &#234;tre d&#233;plac&#233; &#224; une autre entr&#233;e en changeant les entr&#233;es
@@ -152,14 +145,14 @@ ce nom utilisateur avec un nom syst&#232;me diff&#233;rent, ce qui rend la rec&#
 facile. Cependant les noms utilisateurs entr&#233;s ici doivent exister, si vous changez le
 nom utilisateur du capteur de "Occupation East OS" &#224; "Occupation Orient", l'itin&#233;raire
 ne se charge pas correctement jusqu'&#224; ce que vous le modifiez pour utiliser le nouveau nom.
-</P>
-</Li>
-<p> <li> &#201;galement optionnel, si vous souhaitez activer 
+</p>
+</li>
+<li> &#201;galement optionnel, si vous souhaitez activer
 l'Itin&#233;raire lorsqu'un aiguillage particulier change d'&#233;tat, saisissez un
 nom d'aiguillage (nom syst&#232;me ou nom utilisateur) et s&#233;lectionnez la logique &#224; laquelle il
 ob&#233;ira. Les choix de logique sont expliqu&#233;s en d&#233;tail
-<A HREF="#turnoutlogic"> ci-dessous </a>.</P>
-<P> Lorsque vous enregistrez et restaurez vos Itin&#233;raires en utilisant un fichier de configuration,
+<A HREF="#turnoutlogic"> ci-dessous </a>.
+<p> Lorsque vous enregistrez et restaurez vos Itin&#233;raires en utilisant un fichier de configuration,
 le nom de l'aiguillage que vous indiquez ici est utilis&#233; pour recr&#233;er l'itin&#233;raire.
 Un nom syst&#232;me sera toujours associ&#233; au m&#234;me aiguillage.
 Un nom utilisateur peut &#234;tre d&#233;plac&#233; vers un autre aiguillage en changeant les entr&#233;es
@@ -169,36 +162,32 @@ ce nom utilisateur avec un nom de syst&#232;me diff&#233;rent, ce qui rend le re
 facile. Les noms utilisateurs entr&#233;s ici doivent exister cependant, si vous changez le
 nom utilisateur de l'aiguillage de partir "Track Set 5" &#224; "Set Trk 5", l'itin&#233;raire
 ne se charge pas correctement jusqu'&#224; ce que vous modifiez pour utiliser le nouveau nom.
-</P>
-
- </Li>
+</p>
+</li>
  <li>
- <p> L'entr&#233;e "Ajouter retard de" est normalement laiss&#233; &#224; "0". Quand un
+ L'entr&#233;e "Ajouter retard de" est normalement laiss&#233; &#224; "0". Quand un
  Itin&#233;raire commande ensembles ses aiguillages, il attend 250 millisecondes entre chaque
  commande d'aiguillage. Si ce n'est pas assez de temps entre chaque
  commande pour votre type de contr&#244;le d'aiguillage, vous pouvez augmenter
- le temps entre les commandes en ajoutant un retard (en millisecondes).
- </P>
-<p><li>Cliquez sur <b>Ajouter Itin&#233;raire</b> au
+ le temps entre les commandes en ajoutant un retard (en millisecondes).</li>
+<li>Cliquez sur <b>Ajouter Itin&#233;raire</b> au
 le bas de la fen&#234;tre. Si tout va bien, un message
 indiquant "Nouvel Itin&#233;raire Ajout&#233; ..." sera affich&#233; dans la bo&#238;te de notes
 pr&#232;s du bas de la fen&#234;tre. S'il ya des probl&#232;mes avec quoi que ce soit,
 un message d'erreur s'affiche dans la bo&#238;te de notes; vous devez alors
-corriger l'erreur et cliquez sur <b>Ajouter Itin&#233;raire</b> &#224; nouveau.</p></li>
-</Ol>
+corriger l'erreur et cliquez sur <b>Ajouter Itin&#233;raire</b> &#224; nouveau.</li>
+</ol>
 
 <h3>Pour modifier un Itin&#233;raire existant</h3>
-
 <ol>
- 
-<li>Modifier un itin&#233;raire existant peut &#234;tre d&#233;marr&#233; suivant l'une des deux fa&#231;ons suivantes:
+Modifier un itin&#233;raire existant peut &#234;tre d&#233;marr&#233; suivant l'une des deux fa&#231;ons suivantes:
 <ul>
 <li>Cliquez sur <b>Modifier un Itin&#233;raire</b> dans le Tableau Itin&#233;raire.</li>
 <li> Entrez le nom  syst&#232;me de l'Itin&#233;raire &#224; &#233;diter dans la fen&#234;tre 
 Ajouter/Modifier et cliquez sur le bouton <b>Modifier Itin&#233;raire</b> au 
 bas de la fen&#234;tre Ajouter/modifier Itin&#233;raire. Ce doit &#234;tre le m&#234;me
 que le nom syst&#232;me indiqu&#233; dans le Tableau Itin&#233;raire. </li>
-</Ul>
+</ul>
 Le bouton <b>Ajouter Itin&#233;raire</b> et <b>Modifier Itin&#233;raire</b>  dans la fen&#234;tre
 Ajouter/Modifier va changer pour
 <b>Mise &#224; Jour Itin&#233;raire</b> et <b>Annuler Itin&#233;raire</b>.</li>
@@ -217,8 +206,7 @@ Itin&#233;raire</b> &#224; nouveau.</li>
 itin&#233;raire s&#233;lectionn&#233;. Si la fen&#234;tre  Ajouter/Editer Itin&#233;raire est rejet&#233;e (ferm&#233;e)
  dans le mode &#233;dition, <b>Annuler</b> est automatiquement s&#233;lectionn&#233;, et aucune
 modification n'est apport&#233;e &#224; l'Itin&#233;raire s&#233;lectionn&#233;.</li>
-</Ol>
-
+</ol>
 
 <h3>Configurer (d&#233;clencher) un Itin&#233;raire: </h3>
 
@@ -356,9 +344,10 @@ change, que ce soit de direct &#224; partir d&#233;vi&#233; ou d&#233;vi&#233; &
 d&#233;clench&#233;. Tous les "v&#233;to" des capteurs et des "v&#233;to" d'aiguillage, s'il y en a
  un, doivent &#234;tre dans leur &#233;tat non-v&#233;to_et_ au moins l'un des capteurs ou un des aiguillage de
 d&#233;clenchement doit voir le Changement appropri&#233; pour que l'Itin&#233;raire soit fix&#233;
- </p>  
+ </p>
 
-    
-<!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

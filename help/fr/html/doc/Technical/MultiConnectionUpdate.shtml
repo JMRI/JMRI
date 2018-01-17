@@ -159,7 +159,8 @@ avec les serial/network refactoring
       aux gens de r&eacute;initialiser leurs
       pr&eacute;f&eacute;rences pour les actions de
       d&eacute;marrage , boutons, etc Nous n'allons pas les faire
-      migrer pour pour eux. <!--#include virtual="/Footer" --></p>
+      migrer pour pour eux.</p>
+        <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

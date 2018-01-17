@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,9 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Setup Fast Clock</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Setup Fast Clock">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -231,7 +228,8 @@
       mechanism. More information on the DateFormat mechanism used
       for this is available <a href=
       "http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html">
-      here</a>. <!--#include virtual="/Footer" --></p>
+      here</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

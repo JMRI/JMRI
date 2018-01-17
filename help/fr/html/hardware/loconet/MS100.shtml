@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
 <!-- Translated  by Blorec Herv&#233; le 2013-09-14-->
 
 <html lang="fr">
@@ -10,9 +9,7 @@
 
   <title>JMRI Hardware Guide: Connecting an MS100 to
   LocoNet&reg;</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
   <!-- Style -->
