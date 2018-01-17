@@ -94,6 +94,7 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
             Turnout turn = getTurnoutManager().getTurnout(t);
             if (turn != null) {
                ((JMRIClientTurnout)(turn)).requestUpdateFromLayout();
+            }
         }); 
         getSensorManager().getSystemNameList().forEach((s) -> {
             Sensor sen = getSensorManager().getSensor(s);
