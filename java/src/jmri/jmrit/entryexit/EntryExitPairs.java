@@ -907,7 +907,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     /**
      * Create a list of sensors that have the layout block as either
      * facing or protecting.
-     * Called by {@link LayoutTrackEditors#hasNxSensorPairs}.
+     * Called by {@link jmri.jmrit.display.layoutEditor.LayoutTrackEditors#hasNxSensorPairs}.
      * @since 4.11.2
      * @param layoutBlock The layout block to be checked.
      * @return the a list of sensors affected by the layout block or an empty list.

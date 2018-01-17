@@ -95,7 +95,7 @@ public class LayoutTrackEditors {
     /**
      * Create a list of NX sensors that refer to the current layout block.
      * This is used to disable block selection in the edit dialog.
-     * The list is built by {@link EntryExitPairs#layoutBlockSensors}.
+     * The list is built by {@link jmri.jmrit.entryexit.EntryExitPairs#layoutBlockSensors}.
      * @since 4.11.2
      * @param loBlk The current layout block.
      * @return true if sensors are affected.
