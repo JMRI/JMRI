@@ -423,7 +423,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         }
         JLabel label = new JLabel(Bundle.getMessage("LabelX", number)); // NOI18N
         label.setHorizontalAlignment(SwingConstants.RIGHT);
-        label.setPreferredSize(new JLabel("XXXXXXXXXXXXXXXXXX").getPreferredSize());
+        label.setPreferredSize(new JLabel("XXXXXXXXXXXXXXXXXX").getPreferredSize()); // NOI18N
         // layout
         gc.gridx = 0;
         gc.weightx = 0.5;
@@ -450,7 +450,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         }
         JLabel label = new JLabel(Bundle.getMessage("LabelXY", number, number2)); // NOI18N
         label.setHorizontalAlignment(SwingConstants.RIGHT);
-        label.setPreferredSize(new JLabel("XXXXXXXXXXXXXXXXXX").getPreferredSize());
+        label.setPreferredSize(new JLabel("XXXXXXXXXXXXXXXXXX").getPreferredSize()); // NOI18N
         // layout
         gc.gridx = 0;
         gc.weightx = 0.5;
@@ -479,7 +479,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         comboBox[n] = new JComboBox<>(s);
         comboBox[n].setSelectedIndex(getIndexForDefault(n));
         // size all combos to match the widest one (and a little bit more)
-        comboBox[n].setPreferredSize(new JLabel("XXXXXXX" + Bundle.getMessage("COMBOBOX_TEXT_OPSW36_THROWN")).getPreferredSize());
+        comboBox[n].setPreferredSize(new JLabel("XXXXXXX" + Bundle.getMessage("COMBOBOX_TEXT_OPSW36_THROWN")).getPreferredSize()); // NOI18N
         // layout
         gc.gridx = 1;
         gc.weightx = 1.0;
@@ -502,11 +502,11 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     private JComboBox getComboBox(int n, int n2) {
         String number = Integer.toString(n);
         if (number.length() == 1) {
-            number = "0" + number;
+            number = "0" + number; // NOI18N
         }
         String number2 = Integer.toString(n2);
         if (number2.length() == 1) {
-            number2 = "0" + number2;
+            number2 = "0" + number2; // NOI18N
         }
 
         comboBox[n] = new JComboBox<>(
@@ -517,7 +517,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
                 });
         // default choice = 0 so already set
         // size all combos to match the widest one (and a little bit more)
-        comboBox[n].setPreferredSize(new JLabel("XXXXXXX" + Bundle.getMessage("COMBOBOX_TEXT_OPSW36_THROWN")).getPreferredSize());
+        comboBox[n].setPreferredSize(new JLabel("XXXXXXX" + Bundle.getMessage("COMBOBOX_TEXT_OPSW36_THROWN")).getPreferredSize()); // NOI18N
         // layout
         gc.gridx = 1;
         gc.weightx = 1.0;
