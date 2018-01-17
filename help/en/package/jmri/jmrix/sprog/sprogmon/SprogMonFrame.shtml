@@ -6,9 +6,9 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Send SPROG Command</title>
+  <title>JMRI: SPROG Monitor</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Send SPROG command packet">
+  <meta name="keywords" content="JMRI help Send SPROG message monitor">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -25,12 +25,14 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Send SPROG Command</h1>
+      <h1>JMRI: SPROG Command Monitor</h1>
+      <p>The SPROG Command Monitor window provides
+      a way to monitor SPROG commands sent and received.</p>
 
-      <img src="../images/SprogSendTool.png" width="228" height="94">
+      <img src="../images/SprogMonTool.png" width="693" height="191">
 
       <p>This is the
-      help/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame help page.</p>
+      package/jmri/jmrix/sprog/console/SprogConsoleFrame page.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

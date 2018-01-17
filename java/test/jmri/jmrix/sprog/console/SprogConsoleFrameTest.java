@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test simple functioning of SprogConsoleFrame 
+ * Test simple functioning of SprogConsoleFrame.
  *
  * @author	Paul Bender Copyright (C) 2016
  */
@@ -30,4 +30,5 @@ public class SprogConsoleFrameTest {
 
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
+
 }
