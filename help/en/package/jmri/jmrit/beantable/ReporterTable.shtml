@@ -9,7 +9,7 @@
   <title>JMRI: Reporter Table Help</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI Help Reporter Table">
   <!--#include virtual="/Style" -->
 </head>
@@ -32,8 +32,7 @@
       <a href="../../../../html/tools/Reporters.shtml">main
       Reporter Help page</a>.</p>
 
-      <p>This is the package/jmri/jmrit/beantable/ReporterTable
-      Help page <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

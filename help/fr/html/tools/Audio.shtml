@@ -5,9 +5,7 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright Me 2008 -->
-  <!-- $Id$ -->
-  <!-- UpDated by Blorec Herv&#233; 2013-09-20-->
+  <!-- Updated by Blorec Herv&#233; 2013-09-20-->
 
   <title>JMRI: Audio</title><!-- Style -->
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -248,8 +246,8 @@
  $ sudo apt-get install libopenal-dev 
 </pre>
 
-      <p>Pour Ubuntu 12-04, logith&egrave;que ---&gt;OpenAl. 
-      <!--#include virtual="/Footer" --></p>
+      <p>Pour Ubuntu 12-04, logith&egrave;que ---&gt;OpenAl.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

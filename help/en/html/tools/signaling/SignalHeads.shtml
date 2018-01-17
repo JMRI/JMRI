@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Signal Heads Documentation</title>
-  <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+  <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="Date.Modified" content="20161218">
   <meta name="keywords" content=
   "turnout model railroad JMRI decoderpro panelpro"><!-- Style -->
@@ -133,7 +133,8 @@
       <a href="../../apps/PanelPro/Panels.shtml">Panels pages</a>.
 
       <p>Back to the <a href="index.shtml#tools">Signaling main
-      help page</a>. <!--#include virtual="/Footer" --></p>
+      help page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

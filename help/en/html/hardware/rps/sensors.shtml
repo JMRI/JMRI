@@ -91,12 +91,13 @@ Transmitter is present in that area, and "INACTIVE" otherwise.
       <h3>JMRI Help</h3>Back to the <a href="index.shtml">Main RPS
       Help</a> page.
 
-      <h3>Third Party info</h3>More information is available on the
+      <h3>Third Party info</h3>
+      <p>More information is available on the
       <a href=
       "http://www.proto87.com/model-trains-DCC-decoders.html">RPS
-      Web Site</a>.
+          Web Site</a>.</p>
 
-      <p><!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
