@@ -79,7 +79,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     @Test
     public void testSystemSpecificComparisonOfSpecificFormats() {
         // test by putting into a tree set, then extracting and checking order
-        java.util.TreeSet<Turnout> set = new java.util.TreeSet(new jmri.util.NamedBeanComparator());
+        java.util.TreeSet<Turnout> set = new java.util.TreeSet<>(new jmri.util.NamedBeanComparator());
         
         set.add(new SerialTurnout("CT3B4",    "to3004", memo));
         set.add(new SerialTurnout("CT3003",    "to3003", memo));
