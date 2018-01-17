@@ -238,8 +238,6 @@ public class Z21XNetSimulatorAdapter {
                 reply = emergencyStopReply();
                 break;
             case XNetConstants.EMERGENCY_STOP:
-                reply = okReply();
-                break;
             case XNetConstants.EMERGENCY_STOP_XNETV1V2:
                 reply = okReply();
                 break;
