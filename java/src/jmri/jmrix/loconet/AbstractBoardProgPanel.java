@@ -504,7 +504,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
 
     /**
      * Provides a mechanism to write several OpSw values in a sequence. The
-     * sequence is defined by the {@link nextState(int)} method.
+     * sequence is defined by the {@link #nextState(int)} method.
      */
     public void writeAll() {
         // check the address

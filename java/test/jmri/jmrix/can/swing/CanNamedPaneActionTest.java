@@ -17,7 +17,7 @@ import org.junit.Test;
  */
 public class CanNamedPaneActionTest {
 
-    private TrafficController tc = null;
+    // private TrafficController tc = null;
     private CanSystemConnectionMemo m = null;
 
     @Test
@@ -33,14 +33,14 @@ public class CanNamedPaneActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new TestTrafficController();
+        // tc = new TestTrafficController();
         m = new CanSystemConnectionMemo();
         m.setSystemPrefix("ABC");
     }
 
     @After
     public void tearDown() {
-        tc = null;
+        // tc = null;
         JUnitUtil.tearDown();
     }
 

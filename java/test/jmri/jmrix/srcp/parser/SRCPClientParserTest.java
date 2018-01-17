@@ -245,7 +245,7 @@ public class SRCPClientParserTest {
     public void testSMCVBITInfoResponse() throws ParseException {
         String code = "12345678910 100 INFO 0 SM 1234 CVBIT 2 0 1\n\r";
         SRCPClientParser p = new SRCPClientParser(new StringReader(code));
-        SRCPClientVisitor v = new SRCPClientVisitor();
+        new SRCPClientVisitor();
         p.commandresponse();
     }
 
@@ -253,7 +253,7 @@ public class SRCPClientParserTest {
     public void testSMREGInfoResponse() throws ParseException {
         String code = "12345678910 100 INFO 0 SM 1234 REG 2 28\n\r";
         SRCPClientParser p = new SRCPClientParser(new StringReader(code));
-        SRCPClientVisitor v = new SRCPClientVisitor();
+        new SRCPClientVisitor();
         p.commandresponse();
     }
 

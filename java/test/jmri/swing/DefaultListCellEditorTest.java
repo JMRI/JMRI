@@ -23,7 +23,7 @@ public class DefaultListCellEditorTest {
 
     @Test
     public void testCTorComboBox() {
-        DefaultListCellEditor t = new DefaultListCellEditor(new JComboBox());
+        DefaultListCellEditor t = new DefaultListCellEditor(new JComboBox<String>());
         Assert.assertNotNull("exists",t);
     }
 

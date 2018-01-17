@@ -16,8 +16,7 @@ import org.junit.Test;
  */
 public class PacketGenFrameTest {
 
-
-    private IEEE802154TrafficController tc = null;
+    // private IEEE802154TrafficController tc = null;
 
     @Test
     public void testCtor() {
@@ -29,22 +28,24 @@ public class PacketGenFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new IEEE802154TrafficController() {
-            @Override
-            public void setInstance() {
-            }
-            @Override
-            protected jmri.jmrix.AbstractMRReply newReply() {
-                return null;
-            }
-            @Override
-            public jmri.jmrix.ieee802154.IEEE802154Node newNode() {
-                return null;
-            }
-        };
+//         tc = new IEEE802154TrafficController() {
+//             @Override
+//             public void setInstance() {
+//             }
+//             @Override
+//             protected jmri.jmrix.AbstractMRReply newReply() {
+//                 return null;
+//             }
+//             @Override
+//             public jmri.jmrix.ieee802154.IEEE802154Node newNode() {
+//                 return null;
+//             }
+//         };
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
+    public void tearDown() {
+        JUnitUtil.tearDown();
+        // tc = null;
     }
 }

@@ -767,7 +767,6 @@ public class SlotManagerTest {
 
     @Test
     public void testSendPacket() {
-        ProgListener p2 = null;
         byte msg[] = jmri.NmraPacket.accDecPktOpsMode(1, 4, 53);
         slotmanager.sendPacket(msg, 1);
         Assert.assertEquals("nmra packet 1",
