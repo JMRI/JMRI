@@ -275,7 +275,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     protected JPanel provideAddressing() {
         return this.provideAddressing(boardTypeName);
     }
-    
+
     /**
      * Creates a JPanel to allow the user to specify a board address and to
      * read and write the device.  The "read" and "write" buttons have text which
