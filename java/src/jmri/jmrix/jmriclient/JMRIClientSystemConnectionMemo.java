@@ -9,6 +9,7 @@ import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.Turnout;
 import jmri.TurnoutManager;
 
 /**
