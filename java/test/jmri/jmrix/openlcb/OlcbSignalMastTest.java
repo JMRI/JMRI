@@ -157,7 +157,7 @@ public class OlcbSignalMastTest {
         Assert.assertEquals("none sent", 0, messages.size());
     }
 
-    enum States2 { A, B };
+    enum States2 { A, B }
     @Test
     public void testStateMachine2Setup() {
         

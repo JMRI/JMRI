@@ -21,7 +21,7 @@ public class NetMessageTest {
            }
            @Override
            public void setParity(){
-           };
+           }
         };
         Assert.assertNotNull("exists",t);
     }
