@@ -69,8 +69,10 @@ public class DuplexGroupTabbedPanel extends LnPanel {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 tmr.stop();
-                ((JmriJFrame) thisone.getRootPane().getParent()).setPreferredSize(null);
-                ((JmriJFrame) thisone.getRootPane().getParent()).pack();
+                if ((thisone.getRootPane().getParent()) instanceof JmriJFrame) {
+                    ((JmriJFrame) (thisone.getRootPane().getParent())).setPreferredSize(null);
+                    ((JmriJFrame) (thisone.getRootPane().getParent())).pack();
+                }                    
             }
         });
         // need to trigger first delay to get first channel to be scanned

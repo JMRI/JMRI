@@ -830,7 +830,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             String[] parts = cvNum.split("\\.");
             if ((parts[0].equals("csOpSw")) && (parts.length==2)) {
                 if (csOpSwAccessor == null) {
-                    csOpSwAccessor = new csOpSwAccess(adaptermemo, p);
+                    csOpSwAccessor = new CsOpSwAccess(adaptermemo, p);
                 } else {
                     csOpSwAccessor.setProgrammerListener(p);
                 }
@@ -910,7 +910,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             String[] parts = CVname.split("\\.");
             if ((parts[0].equals("csOpSw")) && (parts.length==2)) {
                 if (csOpSwAccessor == null) {
-                    csOpSwAccessor = new csOpSwAccess(adaptermemo, p);
+                    csOpSwAccessor = new CsOpSwAccess(adaptermemo, p);
                 } else {
                     csOpSwAccessor.setProgrammerListener(p);
                 }
@@ -965,7 +965,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     int hopsa; // high address for CV read/write
     int lopsa; // low address for CV read/write
 
-    csOpSwAccess csOpSwAccessor;
+    CsOpSwAccess csOpSwAccessor;
     @Override
     public void readCV(String cvNum, jmri.ProgListener p) throws jmri.ProgrammerException {
         log.debug("readCV(string): cvNum={}", cvNum);
@@ -975,7 +975,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             String[] parts = cvNum.split("\\.");
             if ((parts[0].equals("csOpSw")) && (parts.length==2)) {
                 if (csOpSwAccessor == null) {
-                    csOpSwAccessor = new csOpSwAccess(adaptermemo, p);
+                    csOpSwAccessor = new CsOpSwAccess(adaptermemo, p);
                 } else {
                     csOpSwAccessor.setProgrammerListener(p);
                 }

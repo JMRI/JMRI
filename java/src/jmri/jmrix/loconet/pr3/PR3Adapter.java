@@ -168,7 +168,12 @@ public class PR3Adapter extends LocoBufferAdapter {
 
     @Override
     public PR3SystemConnectionMemo getSystemConnectionMemo() {
-        return (PR3SystemConnectionMemo) super.getSystemConnectionMemo();
+        if (super.getSystemConnectionMemo() instanceof PR3SystemConnectionMemo) {
+            return (PR3SystemConnectionMemo) super.getSystemConnectionMemo();
+        } else {
+            log.error("Cannot cast the system connection memo to a PR3SystemConnection Memo.");
+            return null;
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(PR3Adapter.class);

@@ -59,7 +59,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         if(requestOutstanding) {
            try {
               // queue this request for later.
-              requestList.put(new throttleRequest(address,control));
+              requestList.put(new ThrottleRequest(address,control));
            } catch(InterruptedException ie){
               log.error("Interrupted while trying to store throttle request");
               requestOutstanding = false;
@@ -78,7 +78,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         } else if(requestList.size() != 0 ){
            requestOutstanding = true;
            try {
-              throttleRequest tr = requestList.take();
+              ThrottleRequest tr = requestList.take();
               processThrottleSetupRequest(tr.getAddress(),tr.getControl());
            } catch(InterruptedException ie){
               log.error("Interrupted while trying to process process throttle request");
@@ -140,7 +140,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     Hashtable<Integer, Thread> waitingForNotification = new Hashtable<Integer, Thread>(5);
     
     Hashtable<Integer, LocoNetSlot> slotForAddress;
-    LinkedBlockingQueue<throttleRequest> requestList;
+    LinkedBlockingQueue<ThrottleRequest> requestList;
     boolean requestOutstanding = false;
 
     /**
@@ -426,7 +426,11 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     public void stealThrottleRequest(LocoAddress address, ThrottleListener l, boolean steal){
        log.debug("stealThrottleRequest() invoked for address {}, with steal boolean = {}",address.getNumber(),steal);
        if (steal == false) {
-            failedThrottleRequest((DccLocoAddress) address, "User chose not to 'steal' the throttle.");
+           if (address instanceof DccLocoAddress) {
+                failedThrottleRequest((DccLocoAddress) address, "User chose not to 'steal' the throttle.");
+           } else {
+               log.error("cannot cast address to DccLocoAddress.");
+           }
        } else {
            log.warn("user agreed to steal address {}, but no code is in-place to handle the 'steal' (yet)",address.getNumber());
         commitToAcquireThrottle(slotForAddress.get(address.getNumber()));
@@ -438,11 +442,11 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * internal class for holding throttleListener/LocoAddress pairs for 
      * outstanding requests.
      */
-    protected class throttleRequest{
+    protected static class ThrottleRequest{
          private LocoAddress la = null;
          private boolean tc = false;
          
-         throttleRequest(LocoAddress l,boolean control){
+         ThrottleRequest(LocoAddress l,boolean control){
              la = l;
              tc = control;
          }
