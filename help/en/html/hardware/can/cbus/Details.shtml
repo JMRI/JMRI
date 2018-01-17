@@ -56,7 +56,8 @@
       page</a></p>
 
       <p>Also read JMRI's <a href="../index.shtml">general CAN
-      support</a> <!--#include virtual="/Footer" --></p>
+      support</a></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

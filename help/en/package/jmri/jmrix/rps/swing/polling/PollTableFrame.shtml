@@ -25,11 +25,11 @@
       <h1>JMRI: RPS Polling Control</h1><a href=
       "../../../../../../html/hardware/rps/images/PollControl.gif"><img src="../../../../../../html/hardware/rps/images/PollControl.gif"
       height="80" width="300" alt="RPS Receiver Control window"
-      align="right"></a><br>
-      The RPS Polling Control window is where you tell the <a href=
+      align="right"></a>
+      <p>The RPS Polling Control window is where you tell the <a href=
       "../../../../../../html/hardware/rps/index.shtml">RPS
       system</a> which of your locomotives have RPS transmitters
-      installed, and how often to talk to them.
+      installed, and how often to talk to them.</p>
 
       <p>When you open the window, you should see your entire
       <a href=
@@ -98,7 +98,8 @@
 
       <p>To save the values so they'll be automatically used when
       the program is next started, click "Store New Default
-      Values". <!--#include virtual="/Footer" --></p>
+      Values".</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

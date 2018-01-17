@@ -151,9 +151,9 @@
 
       <p>The JMRI applications themselves use a more powerful
       "profile" mechanism that's inherited from the apps.Apps and
-      apps.AppsBase classes. 
-
-      <!--#include virtual="/Footer" --></p>
+      apps.AppsBase classes.
+      </p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -5,7 +5,7 @@
 <head>
 
   <title>JMRI Hardware Support - Connecting to a Digitrax PR4</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "Digitrax Chief DCS Command Station PR4 MS-100 LocoBuffer java model railroad JMRI install windows">
   <!-- Style -->

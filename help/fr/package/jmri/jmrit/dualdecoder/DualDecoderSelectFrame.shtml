@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!--  $Id$ -->
   <!-- UpDated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-02-->
 
   <title>JMRI: Multi-Decoder Control</title><!-- Style -->
@@ -132,7 +131,8 @@
       Si vous utilisez la programmation mode ops (programmation sur
       la voie principale), vous aurez &eacute;galement besoin de
       sp&eacute;cifier l'adresse de la locomotive en cours de
-      programmation. <!--#include virtual="/Footer" --></p>
+      programmation.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>
