@@ -327,7 +327,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
                 default:
                     return String.class;
             }
-        };
+        }
 	public boolean isCellEditable(int r,int c)
         {
             switch (c)

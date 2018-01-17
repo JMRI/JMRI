@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!--  $Id$ -->
 
 <html>
 <head>
@@ -10,7 +9,7 @@
   <title>JMRI: Send CAN Frame</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help send loconet packets">
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -141,8 +140,8 @@
       et appuyer sur "&eacute;crire".</p>
 
       <p>"Envoyer Confirmation" envoie la confirmation de tous les
-      datagrammes que vous recevez en r&eacute;ponse. 
-      <!--#include virtual="/Footer" --></p>
+      datagrammes que vous recevez en r&eacute;ponse.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

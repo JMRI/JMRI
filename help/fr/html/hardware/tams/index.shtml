@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright ($Author$) 2008 -->
-  <!-- $Id$ -->
   <!-- translated by Herv&#233; Blorec 2013-09-19 -->
 
   <title>JMRI: TAMs Master Control Support</title><!-- Style -->
@@ -82,7 +81,8 @@
       <p>Le Support pour TAMS MC &eacute;tait d'abord disponible
       sur la version <a href=
       "http://jmri.org/releasenotes/jmri2.99.7.shtml">JMRI
-      2.99.7</a>. <!--#include virtual="/Footer" --></p>
+      2.99.7</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

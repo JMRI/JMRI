@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!--Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-06 -->
 <html lang="fr">
 <head>
@@ -7,7 +6,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Int&eacute;gration Continue</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code Continuous Integration jenkins CVS">
   <!-- Style -->
@@ -109,16 +108,16 @@ montrant l'&#233;tat des constructions fait apr&#232;s chaque s&#233;rie de soum
 Les constructions r&#233;ussies sont suivies par les constructions d'installateurs via la 
 t&#226;che <a href="http://jmri.tagadab.com/jenkins/view/All/job/Development/job/Packages">Paquets<a>
 
-<li>La page <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/">FindBugs</a>
-montrant l'&#233;tat du test le plus extensif
-<a href="FindBugs.shtml">FindBugs</a> fait p&#233;riodiquement.Il y a aussi les pages des 
+        <li>La page <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/">SpotBugs</a>
+            montrant l'&#233;tat du test le plus extensif
+<a href="FindBugs.shtml">SpotBugs</a> fait p&#233;riodiquement.Il y a aussi les pages des
 <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/changes">Plus r&#233;cents changements<a> et le
 <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/lastBuild/">Les r&#233;sultats les plus r&#233;cents<a>.
 <p>
 
-Pour avoir plus d'informations sur l'usage de FindBugs par JMRI, voir la
-<a href="FindBugs.shtml">page s&#233;par&#233;e FindBugs</a>
-</ul
+    Pour avoir plus d'informations sur l'usage de SpotBugs par JMRI, voir la
+    <a href="FindBugs.shtml">page s&#233;par&#233;e SpotBugs</a>
+    </ul
 
 <h3>Int&#233;gration avec NetBeans</h3>
 <p>Si vous d&#233;veloppez dans un environnement <a href="NetBeans.shtml">NetBeans 7.0</a> ,

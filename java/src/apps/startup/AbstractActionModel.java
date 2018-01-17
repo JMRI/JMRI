@@ -117,7 +117,13 @@ public abstract class AbstractActionModel implements StartupModel {
                     log.warn("Connection \"{}\" does not exist and cannot be assigned to action {}\nThis warning can be silenced by configuring the connection associated with the startup action.", this.getSystemPrefix(), className);
                 }
             }
-            this.performAction(action);
+            jmri.util.ThreadingUtil.runOnLayout(() -> {
+                try {
+                 this.performAction(action);
+                } catch (JmriException ex) {
+                    log.error("Error while performing startup action for class: {}", className, ex);
+               }
+            });
         } catch (ClassNotFoundException ex) {
             log.error("Could not find specified class: {}", className);
         } catch (IllegalAccessException ex) {

@@ -1815,7 +1815,9 @@ public class LightTableAction extends AbstractTableAction {
                     if (t == null) {
                         // not user name, try system name
                         t = InstanceManager.turnoutManagerInstance().
-                                getBySystemName(turnoutName.toUpperCase());
+                                getBySystemName(
+                                    InstanceManager.getDefault(jmri.TurnoutManager.class).normalizeSystemName(turnoutName)
+                                );
                         if (t != null) {
                             // update turnout system name in case it changed
                             turnoutName = t.getSystemName();

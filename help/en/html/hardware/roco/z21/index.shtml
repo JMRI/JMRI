@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - Roco z21/Z21</title>
-  <meta content="Paul Bender, Egbert Broerse" name="Author">
+  <meta name="author" content="Paul Bender, Egbert Broerse">
   <meta name="keywords" content=
   "Fleischmann Roco z21/Z21 java model railroad JMRI install">
   <!-- Style -->
@@ -28,7 +28,7 @@
     <div id="mainContent">
       <h1>Hardware Support: Fleischmann/Roco z21/Z21</h1>
 
-      <p>The Roco z21/Z21 is a command stations with support for
+      <p>The Roco z21/Z21 is a command station with support for
       LocoNet, R-Bus and XPressNet devices and it includes a built
       in Ethernet port. The device is also sold under the
       Fleischmann name.</p>
@@ -98,7 +98,7 @@
             <p>The White z21 does not include a seperate
             programming track output. It is unclear as to whether
             or not reading decoder values in service mode is
-            possible..</p>
+            possible.</p>
           </dd>
 
           <dt class="left">Black Z21</dt>
@@ -203,7 +203,8 @@
       <h3>Credits</h3>
 
       <p>Thanks to Paul Bender and others for implementing Z21
-      Support.</p>
+      Support in JMRI.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
