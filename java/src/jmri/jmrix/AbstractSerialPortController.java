@@ -107,8 +107,13 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param dtr        set DTR active if true
      */
     protected void configureLeadsAndFlowControl(SerialPort serialPort, int flow, boolean rts, boolean dtr) {
+        // (Jan 2018) PJC seems to mix termios and ioctl access, so it's not clear
+        // what's preserved and what's not. Experimentally, it seems necessary
+        // to write the control leads, set flow control, and then write the control 
+        // leads again.
         serialPort.setRTS(rts);
         serialPort.setDTR(dtr);
+
         try {
             if (flow != purejavacomm.SerialPort.FLOWCONTROL_NONE) {
                 serialPort.setFlowControlMode(flow);
@@ -116,10 +121,9 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         } catch (purejavacomm.UnsupportedCommOperationException e) {
             log.warn("Could not set flow control, ignoring");
         }
-        if (flow == purejavacomm.SerialPort.FLOWCONTROL_NONE) {
-            serialPort.setRTS(rts);  // not connected in some serial ports and adapters
-            serialPort.setDTR(dtr);
-        }
+
+        serialPort.setRTS(rts);
+        serialPort.setDTR(dtr);
     }
 
     /**
