@@ -55,7 +55,7 @@
 
         <li><a href="#xmltools">Using NetBeans XML tools</a></li>
 
-        <li><a href="#findbugs">Running SpotBugs</a></li>
+        <li><a href="#SpotBugs">Running SpotBugs</a></li>
 
         <li><a href="#compileIndividualFile">NetBeans and compiling
         individual files</a></li>
@@ -404,7 +404,7 @@
           JMRI branches, whichever branch you add the catalog from,
           that branch's schema is what is used.</p>
 
-          <h2><a id="findbugs" name="findbugs">Running
+          <h2><a id="spotbugs" name="spotbugs">Running
                   SpotBugs</a></h2>
 
           <p>The SpotBugs tool is a static code analysis tool which

@@ -50,7 +50,7 @@
                                                      "ContinuousIntegration.shtml">continuous integration
       process</a>. You can see the results of the most recent build
       online <a href=
-      "https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/lastBuild/">
+      "https://jmri.ci.cloudbees.com/job/Development/job/SpotBugs/lastBuild/">
       here</a>.</p>
 
       <p>If SpotBugs is finding a false positive, a bug that's not
