@@ -203,6 +203,10 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
                     log.debug("Could not notifyOnOverrunError: " + e); // NOI18N
                 }
 
+                activeSerialPort.notifyOnCarrierDetect(true);
+                activeSerialPort.notifyOnCTS(true);
+                activeSerialPort.notifyOnDSR(true);
+
             }
 
             opened = true;
@@ -302,9 +306,11 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         }
         configureLeadsAndFlowControl(activeSerialPort, flow);
         
-        log.debug("Found flow control " + activeSerialPort.getFlowControlMode() // NOI18N
-                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT // NOI18N
-                + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN); // NOI18N
+        log.info("LocoBuffer (serial) adapter"
+                +(activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
+                +activeSerialPort.getFlowControlMode()
+                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
+                + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN);
     }
 
     @Override
