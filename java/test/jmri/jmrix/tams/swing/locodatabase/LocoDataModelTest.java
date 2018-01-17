@@ -38,6 +38,6 @@ public class LocoDataModelTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoDataModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocoDataModelTest.class.getName());
 
 }

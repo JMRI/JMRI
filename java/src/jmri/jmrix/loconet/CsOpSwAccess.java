@@ -291,7 +291,7 @@ public class CsOpSwAccess implements LocoNetListener {
             sendFinalProgrammerReply(-1, ProgListener.NotImplemented);
             return new LocoNetMessage(new int[] {LnConstants.OPC_GPBUSY, 0x0});
         }
-        int messageByte;
+
         log.debug("updateOpSwVal: OpSw{} = {}", cmdStnOpSwNum, cmdStnOpSwVal);
         changeOpSwBytes(cmdStnOpSwNum, cmdStnOpSwVal);
         LocoNetMessage m = new LocoNetMessage(14);

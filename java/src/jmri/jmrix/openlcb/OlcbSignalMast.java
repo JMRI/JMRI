@@ -334,7 +334,6 @@ public class OlcbSignalMast extends AbstractSignalMast {
             Set<Map.Entry<EventID,T>> set = eventToState.entrySet();
             for (Map.Entry<EventID,T> entry : set) {
                 EventID event = entry.getKey();
-                T value = entry.getValue();
                 connection.put(
                     new ConsumerIdentifiedMessage(node, event, getEventState(event)),
                     null);

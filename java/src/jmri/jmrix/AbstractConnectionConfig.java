@@ -59,7 +59,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     protected JCheckBox showAdvanced = new JCheckBox(Bundle.getMessage("AdditionalConnectionSettings"));
     protected JLabel systemPrefixLabel = new JLabel(Bundle.getMessage("ConnectionPrefix"));
     protected JLabel connectionNameLabel = new JLabel(Bundle.getMessage("ConnectionName"));
-    protected JFormattedTextField systemPrefixField;;
+    protected JFormattedTextField systemPrefixField;
     protected JTextField connectionNameField = new JTextField(15);
 
     protected JPanel _details = null;

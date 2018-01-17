@@ -47,7 +47,6 @@ public class RailDriverMenuItem extends JMenuItem
 
     private HidServices hidServices = null;
 
-    private UsbDevice usbDevice = null;
     private HidDevice hidDevice = null;
 
     public RailDriverMenuItem(String name) {
@@ -204,7 +203,7 @@ public class RailDriverMenuItem extends JMenuItem
                                 if (buff_old[i] != buff_new[i]) {
                                     if (i < 7) {    // analog values
                                         // convert to unsigned int
-                                        int vInt = 0xFF & (int) buff_new[i];
+                                        int vInt = 0xFF & buff_new[i];
                                         // convert to double (0.0 thru 1.0)
                                         double vDouble = (256 - vInt) / 256.D;
                                         if (i == 1) {   // throttle
@@ -440,7 +439,7 @@ public class RailDriverMenuItem extends JMenuItem
         }
 
         try {
-            int ret = hidDevice.write(message, message.length, (byte) reportID);
+            int ret = hidDevice.write(message, message.length, reportID);
             if (ret >= 0) {
                 log.debug("hidDevice.write returned: " + ret);
             } else {
@@ -587,7 +586,7 @@ public class RailDriverMenuItem extends JMenuItem
                         double throttle_max = 0.7D;
                         double v = MathUtil.pin(value, throttle_min, throttle_max);
                         // compute fraction (0.0 to 1.0)
-                        double fraction = (v - throttle_min) / ((double) throttle_max - throttle_min);
+                        double fraction = (v - throttle_min) / (throttle_max - throttle_min);
                         // convert fraction to slider setting
                         int setting = (int) (fraction * (slider.getMaximum() - slider.getMinimum()));
                         slider.setValue(setting);
