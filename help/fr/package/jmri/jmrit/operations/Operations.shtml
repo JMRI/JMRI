@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-04-->
+<!-- Updated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-04-->
 
 <html lang="fr">
 <head>
@@ -9,9 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>Operations</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Dan Boudreau" name="Author">
+  <meta name="author" content="Dan Boudreau">
   <meta name="keywords" content=
   "JMRI Help Operations Setup Settings Cars Engines Locomotives Trains itin&eacute;raires Locations Schedules">
   <!-- Style -->
@@ -25,9 +22,7 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 
   <title>Operations</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Dan Boudreau" name="Author">
+  <meta name="author" content="Dan Boudreau">
   <meta name="keywords" content=
   "JMRI Help Operations Setup Settings Cars Engines Locomotives Trains itin&eacute;raires Locations Schedules">
   <meta http-equiv="Content-Type" content=

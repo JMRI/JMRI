@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Herv&#233; Blorec  2013-10-10 -->
+<!-- Updated by Herv&#233; Blorec  2013-10-10 -->
 
 <html lang="fr">
 <head>
@@ -7,7 +7,7 @@
       JMRI: Adding/Editing Audio objects
  </title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-    <meta content="Matt Harris" name="Author">
+    <meta name="author" content="Matt Harris">
     <meta name="keywords" content="JMRI help Audio Add Edit">
 
 <!--#include virtual="/Style" -->

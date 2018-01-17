@@ -390,7 +390,8 @@
       you'd refer to a LocoNet Turnout as LT13; a LocoNet sensor as
       LS21, etc. See the page on <a href=
       "../../doc/Technical/Names.shtml">Names &amp; Naming</a> for
-      more information. <!--#include virtual="/Footer" --></p>
+      more information.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

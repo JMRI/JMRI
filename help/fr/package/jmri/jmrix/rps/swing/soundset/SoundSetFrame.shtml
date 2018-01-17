@@ -1,13 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 
-<html lang="en">
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
-  <!-- Translated  by Blorec Hervé le 2011-10-27-->
+  <!-- Translated  by Blorec Herv&eacute; le 2011-10-27-->
 
   <title>JMRI: RPS Sound Speed Control</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -94,7 +93,8 @@
       d'exp&Atilde;&copy;rience avec cet outil, nous allons
       probablement faire que cette fonction fonctionne
       automatiquement, sans avoir besoin de la
-      fen&Atilde;&ordf;tre. <!--#include virtual="/Footer" --></p>
+      fen&Atilde;&ordf;tre.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

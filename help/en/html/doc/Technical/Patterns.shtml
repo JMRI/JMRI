@@ -141,7 +141,7 @@
       </dl>
 
       <p>
-      Classes provide SPI also have to be registered with the system so they can be found.
+      Classes that provide SPI also have to be registered with the system so they can be found.
       JMRI does this with entries
       inside files in the <code>target/classes/META-INF/services/</code> directory.
       These entries are created automatically during the JMRI build process from 

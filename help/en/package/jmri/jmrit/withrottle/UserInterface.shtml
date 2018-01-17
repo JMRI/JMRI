@@ -5,8 +5,6 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2009 -->
-  <!-- $Id$ -->
 
   <title>JMRI: WiFi Throttle</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -133,8 +131,7 @@
       when built with a WiFi device, but controlled by a throttle
       from the DCC manufacturer of your system.</p>
 
-      <p>This is the package/jmri/jmrit/withrottle/UserInterface
-      help page <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

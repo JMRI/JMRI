@@ -9,12 +9,10 @@
   <title>Throttle Menus</title>
   <meta name="keywords" content=
   "JMRI decoderpro dcc nmra throttle throttlepro" />
-  <meta name="Description" content=
+  <meta name="description" content=
   "Throttle documentation for JMRI project" />
-  <meta name="Author" content="Lionel Jeanson" />
-  <meta name="Language" content="EN" />
-  <meta name="Robots" content="Index, Follow" />
-  <meta name="Revisit-After" content="7 Days" /><!-- Style -->
+  <meta name="author" content="Lionel Jeanson" />
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii" />
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -134,8 +132,8 @@
       <h3>Get all current throttle components in bounds</h3>
 
       <p>Make sure that all inner windows of the current Throttle
-      are inside the Throttle Window bounds. 
-      <!--#include virtual="/Footer" --></p>
+      are inside the Throttle Window bounds.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
