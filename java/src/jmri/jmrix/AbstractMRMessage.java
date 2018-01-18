@@ -58,7 +58,11 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     }
 
     public int getOpCode() {
-        return _dataChars[0];
+        try {
+            return _dataChars[0];
+        } catch(ArrayIndexOutOfBoundsException e) {
+            return 0;
+        }
     }
 
     public String getOpCodeHex() {
@@ -80,7 +84,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
 
     /**
      * Is a reply expected to this message?
-     * <P>
+     * <p>
      * By default, a reply is expected to every message; either a reply or a
      * timeout is needed before the next message can be sent.
      * <p>
@@ -104,11 +108,11 @@ abstract public class AbstractMRMessage extends AbstractMessage {
 
     /**
      * Minimum timeout that's acceptable.
-     * <P>
+     * <p>
      * Also used as default for normal operations. Don't shorten this "to make
      * recovery faster", as sometimes <i>internal</i> delays can slow processing
      * down.
-     * <P>
+     * <p>
      * Units are milliseconds.
      */
     static protected final int SHORT_TIMEOUT = 2000;

@@ -1,19 +1,12 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.Color;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionListener;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,10 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import jmri.NamedBean;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.ReporterIcon;
 import jmri.jmrit.picker.PickListModel;
-import jmri.util.JmriJFrame;
 import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +26,7 @@ public class ReporterItemPanel extends TableItemPanel {
 
     ReporterIcon _reporter;
 
-    public ReporterItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel<jmri.Reporter> model, Editor editor) {
+    public ReporterItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.Reporter> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
 
@@ -61,10 +54,8 @@ public class ReporterItemPanel extends TableItemPanel {
      */
     @Override
     protected void initIconFamiliesPanel() {
-        boolean initialize = false;
         if (_iconFamilyPanel == null) {
             log.debug("new _iconFamilyPanel created");
-            initialize = true;
             _iconFamilyPanel = new JPanel();
             _iconFamilyPanel.setOpaque(true);
             _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
@@ -82,7 +73,7 @@ public class ReporterItemPanel extends TableItemPanel {
             //_iconFamilyPanel.add(_iconPanel); // On Reporter, no icon family to choose
         }
         if (_backgrounds != null) {
-            _dragIconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
+            _dragIconPanel.setImage(_backgrounds[_paletteFrame.getPreviewBg()]); // pick up shared setting
         } else {
             log.debug("ReporterItemPanel - no value for previewBgSet");
         }
@@ -98,9 +89,8 @@ public class ReporterItemPanel extends TableItemPanel {
         initIconFamiliesPanel();
         add(_iconFamilyPanel);
         // add a SetBackground combo
-        // TODO add indirect updating of panel upon display via previewBgSet
         if (bgBoxPanel == null) {
-            bgBoxPanel = makeBgButtonPanel(_dragIconPanel, null, _backgrounds);
+            bgBoxPanel = makeBgButtonPanel(_dragIconPanel, null, _backgrounds, _paletteFrame);
             add(bgBoxPanel);
         }
     }

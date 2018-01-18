@@ -168,4 +168,5 @@ public class PositionableIcon extends PositionableLabel {
         }
         return clone;
     }
+
 }

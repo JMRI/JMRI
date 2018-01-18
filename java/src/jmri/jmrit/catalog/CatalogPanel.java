@@ -55,13 +55,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Create a JPanel containing trees of resources to replace default icons. The
- * panel also displays image files files contained in a node of a tree. Drag and
+ * panel also displays image files contained in a node of a tree. Drag and
  * Drop is implemented to drag a display of an icon to the display of an icon
  * that may be added to the panel.
  * <p>
- * This panel is used in the Icon Editors and also in the ImageIndex Editor.
+ * This panel is used in the Icon Editors and also in the {@link ImageIndexEditor}.
  *
  * @author Pete Cressman Copyright 2009
+ * @author Egbert Broerse Copyright 2017
  */
 public class CatalogPanel extends JPanel implements MouseListener {
 
@@ -73,8 +74,14 @@ public class CatalogPanel extends JPanel implements MouseListener {
     static Color _grayColor = new Color(235, 235, 235);
     static Color _darkGrayColor = new Color(150, 150, 150);
     protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor};
+    /**
+     * Active base color for Preview background, read from active Panel where available.
+     */
     protected Color _currentBackground = _grayColor;
-    protected BufferedImage[] _backgrounds; // array of Image backgrounds
+    /**
+     * Array of BufferedImage backgrounds loaded as background image in Preview.
+     */
+    protected BufferedImage[] _backgrounds;
 
     JLabel _previewLabel = new JLabel(" ");
     protected ImagePanel _preview;
@@ -86,10 +93,19 @@ public class CatalogPanel extends JPanel implements MouseListener {
     DefaultTreeModel _model;
     ArrayList<CatalogTree> _branchModel = new ArrayList<>();
 
+    /**
+     * Constructor
+     */
     public CatalogPanel() {
         _model = new DefaultTreeModel(new CatalogTreeNode("mainRoot"));
     }
 
+    /**
+     * Ctor for a named icon catalog split pane. Make sure both properties keys exist.
+     *
+     * @param label1 properties key to be used as the label for the icon tree
+     * @param label2 properties key to be used as the instruction
+     */
     public CatalogPanel(String label1, String label2) {
         super(true);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -225,7 +241,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
     }
 
     /**
-     * Clones the node and adds to parent.
+     * Clone the node and adds to parent.
      */
     @SuppressWarnings("unchecked")
     private void addNode(CatalogTreeNode parent, CatalogTreeNode n) {
@@ -400,17 +416,19 @@ public class CatalogPanel extends JPanel implements MouseListener {
         previewPanel.add(js);
 
         // create array of backgrounds
-        _backgrounds = new BufferedImage[4];
-        for (int i = 0; i <= 2; i++) {
-            _backgrounds[i] = DrawSquares.getImage(500, 500, 15, colorChoice[i], colorChoice[i]);
+        if (_backgrounds == null) {
+            _backgrounds = new BufferedImage[4];
+            for (int i = 0; i <= 2; i++) {
+                _backgrounds[i] = DrawSquares.getImage(300, 400, 10, colorChoice[i], colorChoice[i]);
+            }
+            _backgrounds[3] = DrawSquares.getImage(300, 400, 10, Color.white, _grayColor);
         }
-        _backgrounds[3] = DrawSquares.getImage(500, 500, 15, Color.white, _grayColor);
-
         return previewPanel;
     }
 
     /**
      * Create panel element containing a "View on:" drop down list.
+     * Employs a normal JComboBox, no Panel Background option.
      * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
      *
      * @return the JPanel with label and drop down
@@ -636,7 +654,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
      *
      * @param z             double
      * @param decimalPlaces number of decimal places
-     * @return String
+     * @return String       a formatted number
      */
     public static String printDbl(double z, int decimalPlaces) {
         if (Double.isNaN(z) || decimalPlaces > 8) {
@@ -741,9 +759,9 @@ public class CatalogPanel extends JPanel implements MouseListener {
     }
 
     /**
-     * Return the icon selected in the preview panel Save this code in case
-     * there is a need to use an alternative icon changing method rather than
-     * DnD.
+     * Return the icon selected in the preview panel.
+     * Save this code in case there is a need to use an alternative icon
+     * changing method rather than DnD.
      *
      * public NamedIcon getSelectedIcon() { if (_selectedImage != null) { JLabel
      * l = (JLabel)_selectedImage.getComponent(0); // deselect
@@ -879,9 +897,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
             } catch (IOException | UnsupportedFlavorException ex) {
                 log.warn("unable to drag and drop", ex);
             }
-            if (log.isDebugEnabled()) {
-                log.debug("DropJTree.drop REJECTED!");
-            }
+            log.debug("DropJTree.drop REJECTED!");
             e.rejectDrop();
         }
     }

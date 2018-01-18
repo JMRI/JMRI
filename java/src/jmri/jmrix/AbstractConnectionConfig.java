@@ -9,6 +9,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 
@@ -24,6 +25,28 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
      * subclass setInstance() will fill the adapter member.
      */
     public AbstractConnectionConfig() {
+        try {
+            // systemPrefixField = new JFormattedTextField(new jmri.util.swing.RegexFormatter("[A-Za-z]\\d*"));
+            systemPrefixField = new JFormattedTextField(new SystemPrefixFormatter());
+            
+            systemPrefixField.setPreferredSize(new JTextField("P123").getPreferredSize());
+            systemPrefixField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
+        } catch (java.util.regex.PatternSyntaxException e) {
+            log.error("unexpected parse exception during setup", e);
+        }
+    }
+
+    static public class SystemPrefixFormatter extends javax.swing.text.DefaultFormatter {
+        public Object stringToValue(String text) throws java.text.ParseException {
+            try {
+                if (jmri.Manager.getSystemPrefixLength(text)!= text.length()) {
+                    throw new java.text.ParseException("Pattern did not match", 0);
+                }
+            } catch (jmri.NamedBean.BadSystemNameException e) {
+                throw new java.text.ParseException("Pattern did not match", 0);
+            }
+            return text;
+        }
     }
 
     abstract protected void checkInitDone();
@@ -36,7 +59,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     protected JCheckBox showAdvanced = new JCheckBox(Bundle.getMessage("AdditionalConnectionSettings"));
     protected JLabel systemPrefixLabel = new JLabel(Bundle.getMessage("ConnectionPrefix"));
     protected JLabel connectionNameLabel = new JLabel(Bundle.getMessage("ConnectionName"));
-    protected JTextField systemPrefixField = new JTextField(10);
+    protected JFormattedTextField systemPrefixField;
     protected JTextField connectionNameField = new JTextField(15);
 
     protected JPanel _details = null;
@@ -223,4 +246,5 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
         }
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractThrottle.class);
 }

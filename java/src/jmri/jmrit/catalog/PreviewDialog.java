@@ -2,7 +2,6 @@ package jmri.jmrit.catalog;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -38,10 +37,11 @@ import org.slf4j.LoggerFactory;
  * <p>
  * PreviewDialog is not modal to allow dragNdrop of icons from it to catalog panels and
  * functioning of the catalog panels without dismissing this dialog.
- * Component is used in @link{jmri.jmrit.catalog.DirectorySearcher}, acessed
- * from @link{jmri.jmrit.catalog.ImageIndexEditor} File menu items.
+ * Component is used in {@link jmri.jmrit.catalog.DirectorySearcher}, accessed
+ * from {@link jmri.jmrit.catalog.ImageIndexEditor} File menu items.
  *
  * @author Pete Cressman Copyright 2009
+ * @author Egbert Broerse Copyright 2017
  */
 public class PreviewDialog extends JDialog {
 
@@ -49,8 +49,10 @@ public class PreviewDialog extends JDialog {
     static Color _grayColor = new Color(235, 235, 235);
     static Color _darkGrayColor = new Color(150, 150, 150);
     protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor};
-    protected Color _currentBackground = _grayColor;
-    protected BufferedImage[] _backgrounds; // array of Image backgrounds
+    /**
+     * Active base color for Preview background, copied from active Panel where available.
+     */
+    protected BufferedImage[] _backgrounds;
 
     JLabel _previewLabel = new JLabel();
     protected ImagePanel _preview;
@@ -64,6 +66,13 @@ public class PreviewDialog extends JDialog {
     String[] _filter;   // file extensions of types to display
     ActionListener _lookAction;
 
+    /**
+     *
+     * @param frame     JFrame on screen to center this dialog over
+     * @param title     title for the frame
+     * @param dir       starting icon file directory
+     * @param filter    file patterns to display in icon tree
+     */
     protected PreviewDialog(Frame frame, String title, File dir, String[] filter) {
         super(frame, Bundle.getMessage(title), false);
         _currentDir = dir;
@@ -164,9 +173,10 @@ public class PreviewDialog extends JDialog {
     /**
      * Set up a display panel to display icons.
      * Includes a "View on:" drop down list.
+     * Employs a normal JComboBox, no Panel Background option.
      * @see jmri.jmrit.catalog.CatalogPanel#makeButtonPanel()
      *
-     * @return the JPanel with preview pane and background color drop down
+     * @return a JPanel with preview pane and background color drop down
      */
     private JPanel setupPanel() {
         JPanel previewPanel = new JPanel();
@@ -183,12 +193,14 @@ public class PreviewDialog extends JDialog {
         previewPanel.add(js);
 
         // create array of backgrounds
-        _backgrounds = new BufferedImage[4];
-        for (int i = 0; i <= 2; i++) {
-            _backgrounds[i] = DrawSquares.getImage(500, 500, 15, colorChoice[i], colorChoice[i]);
+        if (_backgrounds == null) {
+            _backgrounds = new BufferedImage[4];
+            for (int i = 0; i <= 2; i++) {
+                _backgrounds[i] = DrawSquares.getImage(300, 400, 10, colorChoice[i], colorChoice[i]);
+            }
+            _backgrounds[3] = DrawSquares.getImage(300, 400, 10, Color.white, _grayColor);
         }
-        _backgrounds[3] = DrawSquares.getImage(500, 500, 15, Color.white, _grayColor);
-
+        // create background selection combo box
         JComboBox<String> bgColorBox = new JComboBox<>();
         bgColorBox.addItem(Bundle.getMessage("White"));
         bgColorBox.addItem(Bundle.getMessage("LightGray"));
@@ -203,6 +215,7 @@ public class PreviewDialog extends JDialog {
             // _preview.repaint(); // force redraw
             _preview.invalidate();
         });
+
         JPanel pp = new JPanel();
         pp.setLayout(new FlowLayout(FlowLayout.CENTER));
         pp.add(new JLabel(Bundle.getMessage("setBackground")));
@@ -243,9 +256,10 @@ public class PreviewDialog extends JDialog {
     boolean _noMemory = false;
 
     /**
-     * Displays (thumbnails if image is large) of the current directory. Number
-     * of images displayed may be restricted due to memory constraints. Returns
-     * true if memory limits displaying all the images
+     * Display (thumbnails if image is large) of the current directory. Number
+     * of images displayed may be restricted due to memory constraints.
+     *
+     * @return true if memory limits displaying all the images
      */
     private boolean setIcons(int startNum) {
         Thread.UncaughtExceptionHandler exceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
@@ -266,7 +280,7 @@ public class PreviewDialog extends JDialog {
         c.gridx = 0;
         _cnt = 0;       // number of images displayed in this panel
         int cnt = 0;    // total number of images in directory
-        if (_currentDir.listFiles() != null) { // prevent findbugs NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE
+        if (_currentDir.listFiles() != null) { // prevent spotbugs NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE
             File[] files = _currentDir.listFiles(); // all files, filtered below
             int nCols = 1;
             int nRows = 1;

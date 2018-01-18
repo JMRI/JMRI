@@ -8,9 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogSystemConnectionMemo
- * </P>
+ * Tests for SprogSystemConnectionMemo.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class SprogSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
@@ -55,7 +54,6 @@ public class SprogSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
    }
 
 
-
     // The minimal setup for log4J
     @Override
     @Before
@@ -69,6 +67,5 @@ public class SprogSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

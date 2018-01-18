@@ -14,6 +14,7 @@ import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.TableItemPanel;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.picker.PickListModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

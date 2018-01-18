@@ -18,20 +18,23 @@
   <version author="Michael Mosher" version="3" lastUpdated="20130220"/>
   <version author="Michael Mosher" version="4" lastUpdated="20130703"/>
   <version author="Alain Le Marchand" version="5" lastUpdated="20140530"/>
-  <version author="Alain Le Marchand" version="6" lastUpdated="20140622"/>      
-  <!-- This file contains the Tsunami definitions for Walthers OEM diesel locomotives                           -->
+  <version author="Alain Le Marchand" version="6" lastUpdated="20140622"/>
+  <version author="Alain Le Marchand" version="7" lastUpdated="20180103"/>
+  <!-- This file contains the Tsunami definitions for Walthers OEM diesel locomotives                     -->
   <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file.                                    -->
   <!-- version 2	make more use of external includes                                                      -->
   <!-- version 3	Add F7, GP60, & SD9 models                                                              -->
   <!-- version 4	Add U28B/U30B models                                                                    -->
   <!-- version 5	Added Function Groups 2/3 exchange from Dave Heap (initially introduced for Genesis)    -->
-  <!-- version 3	Add Budd Metroliner, E7A, GP20, GP30, SD7, SD45, U28B/U30B GN,MILW,NYC                  -->
+  <!-- version 6	Add Budd Metroliner, E7A, GP20, GP30, SD7, SD45, U28B/U30B GN,MILW,NYC                  -->
   <!--                  Function labels are a guess based on decoder config (missing Walthers documentation)    -->
+  <!-- version 7  Specific UserID with tooltip indicating version number,
+                  from SoundTraxx Product Identification guide Rev.B                                      -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
-                For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc. 
+                For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
                 FX5 or FX6 are either physical or logical outputs (for TSU-750) used for "Rule 17 mode"         -->
-<!-- 		For Diesel decoders output "9" is reserved (not used).  Associated bit is skipped -->	  
+<!-- 		For Diesel decoders output "9" is reserved (not used).  Associated bit is skipped -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Diesel Walthers OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Walthers Proto2000 Tsunami diesel decoders">
@@ -74,9 +77,9 @@
           <functionlabel num="9" lockable="true">Brake Squeal</functionlabel>
           <functionlabel num="10" lockable="true">Coupler</functionlabel>
           <functionlabel num="11" lockable="true">Interior Lights</functionlabel>
-          <functionlabel num="12" lockable="true">Compressor/RPM-</functionlabel>        
+          <functionlabel num="12" lockable="true">Compressor/RPM-</functionlabel>
         </functionlabels>
-      </model>             
+      </model>
       <model model="E7A" numOuts="4" numFns="14" connector="other" productID="E7A" comment="Diesel Prime Mover Dual EMD567">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
@@ -99,9 +102,9 @@
         <output name="Coupler"/>
         <functionlabels>
           <functionlabel num="5" lockable="true">Mars Light</functionlabel>
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>      
-        </functionlabels>         
-      </model>      
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
+        </functionlabels>
+      </model>
       <model model="E8" numOuts="4" numFns="14" connector="other" productID="E8" comment="Diesel Prime Mover Dual EMD567">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
@@ -124,8 +127,8 @@
         <output name="Coupler"/>
         <functionlabels>
           <functionlabel num="5" lockable="true">Mars Light</functionlabel>
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>      
-        </functionlabels>          
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
+        </functionlabels>
       </model>
       <model model="F7 El Capitan" numOuts="4" numFns="14" connector="other" productID="F7" comment="Diesel Prime Mover EMD567 Non-Turbo">
         <versionCV lowVersionID="64"/>
@@ -149,8 +152,8 @@
         <output name="Coupler"/>
         <functionlabels>
           <functionlabel num="5" lockable="true">Mars Light</functionlabel>
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>      
-        </functionlabels>          
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
+        </functionlabels>
       </model>
       <model model="GP20" numOuts="4" numFns="14" connector="other" productID="GP20" comment="Diesel Prime Mover EMD567 Turbo">
         <versionCV lowVersionID="64"/>
@@ -174,8 +177,8 @@
         <output name="Coupler"/>
         <functionlabels>
           <functionlabel num="5" lockable="true">Gyralite</functionlabel>
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>                  
-        </functionlabels>          
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
+        </functionlabels>
       </model>
       <model model="GP30 Chessie" numOuts="4" numFns="14" connector="other" productID="GP30CO" comment="C&amp;O - Diesel Prime Mover EMD567 Turbo">
         <versionCV lowVersionID="64"/>
@@ -198,7 +201,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
         <functionlabels>
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>      
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
         </functionlabels>
       </model>
       <model model="GP30 ATSF" numOuts="4" numFns="14" connector="other" productID="GP30SF" comment="Santa Fe, Reading - Diesel Prime Mover EMD567 Turbo">
@@ -223,8 +226,8 @@
         <output name="Coupler"/>
         <functionlabels>
           <functionlabel num="5" lockable="true">Strobe</functionlabel>
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>      
-        </functionlabels>          
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
+        </functionlabels>
       </model>
       <model model="GP30 MILW" numOuts="4" numFns="14" connector="other" productID="GP30MIL" comment="Milwaukee Road - Diesel Prime Mover EMD567 Turbo">
         <versionCV lowVersionID="64"/>
@@ -248,7 +251,7 @@
         <output name="Coupler"/>
         <functionlabels>
           <functionlabel num="5" lockable="true">Strobe</functionlabel>
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>      
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
         </functionlabels>
       </model>
       <model model="GP60" numOuts="4" numFns="14" connector="other" productID="GP60" comment="Diesel Prime Mover EMD710 Turbo">
@@ -272,7 +275,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
         <functionlabels>
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>      
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
         </functionlabels>
       </model>
       <model model="SD7 BLE" numOuts="4" numFns="14" connector="other" productID="SD7BLE" comment="B&amp;LE - Diesel Prime Move EMD 567 Non-Turbo">
@@ -296,7 +299,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
         <functionlabels>
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>      
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
         </functionlabels>
       </model>
       <model model="SD7 CNW" numOuts="4" numFns="14" connector="other" productID="SD7CNW" comment="C&amp;NW - Diesel Prime Move EMD 567 Non-Turbo">
@@ -320,7 +323,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
         <functionlabels>
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>      
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
         </functionlabels>
       </model>
       <model model="SD9 BNSF" numOuts="4" numFns="14" connector="other" productID="SD9BNSF" comment="BNSF - Diesel Prime Move EMD 567 Non-Turbo">
@@ -344,7 +347,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
         <functionlabels>
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>      
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
         </functionlabels>
       </model>
       <model model="SD9 SOU" numOuts="4" numFns="14" connector="other" productID="SD9SOU" comment="Southern - Diesel Prime Mover EMD567 Non-Turbo">
@@ -368,7 +371,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
         <functionlabels>
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>      
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
         </functionlabels>
       </model>
       <model model="SD9 SP" numOuts="4" numFns="14" connector="other" productID="SD9SP" comment="Southern Pacific - Diesel Prime Mover EMD567 Non-Turbo">
@@ -392,7 +395,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
         <functionlabels>
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>      
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
         </functionlabels>
       </model>
       <model model="SD9 CR" numOuts="4" numFns="14" connector="other" productID="SD9SP" comment="Conrail - Diesel Prime Mover EMD567 Non-Turbo">
@@ -416,7 +419,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
         <functionlabels>
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>      
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
         </functionlabels>
       </model>
       <model model="SD45" numOuts="4" numFns="14" connector="other" productID="SD45" comment="D&amp;RGW, EL - Diesel Prime Mover EMD645 Turbo">
@@ -440,8 +443,8 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
         <functionlabels>
-          <functionlabel num="5" lockable="true">Mars Light</functionlabel>            
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>      
+          <functionlabel num="5" lockable="true">Mars Light</functionlabel>
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
         </functionlabels>
       </model>
       <model model="U28B/U30B" numOuts="4" numFns="14" connector="other" productID="U28B" comment="CB&amp;Q, Conrail, L&amp;N - Diesel Prime Mover GE FDL-16">
@@ -465,8 +468,8 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
         <functionlabels>
-          <functionlabel num="5" lockable="true">Gyralite</functionlabel>            
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>      
+          <functionlabel num="5" lockable="true">Gyralite</functionlabel>
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
         </functionlabels>
       </model>
       <model model="U28B/U30B GN" numOuts="4" numFns="14" connector="other" productID="U28BGN" comment="GN, MILW, NYC - Diesel Prime Mover GE FDL-16">
@@ -490,10 +493,10 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
         <functionlabels>
-          <functionlabel num="5" lockable="true">Rotary beacon</functionlabel>            
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>      
+          <functionlabel num="5" lockable="true">Rotary beacon</functionlabel>
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
         </functionlabels>
-      </model>      
+      </model>
       <model model="U28B/U30B WP" numOuts="4" numFns="14" connector="other" productID="U28BWP" comment="Western Pacific - Diesel Prime Mover GE FDL-16">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
@@ -515,8 +518,8 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
         <functionlabels>
-          <functionlabel num="5" lockable="true">Gyralite</functionlabel>             
-          <functionlabel num="6" lockable="true"># Boards</functionlabel>      
+          <functionlabel num="5" lockable="true">Gyralite</functionlabel>
+          <functionlabel num="6" lockable="true"># Boards</functionlabel>
         </functionlabels>
       </model>
       <functionlabels>
@@ -594,11 +597,11 @@
       <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="1" tooltip="Check to enable function F5 when the unit is operating in analog power mode" include="Metro,E7A,E8,F7,GP30MIL,GP30SF,GP60,SD9BNSF,SD45,U28BGN">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F5</label>
-      </variable>      
+      </variable>
       <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="1" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F6</label>
-      </variable>      
+      </variable>
       <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0" tooltip="Check to enable function F7 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F7</label>
@@ -630,7 +633,7 @@
       <variable item="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX" default="1" tooltip="Check to enable function F11 when the unit is operating in analog power mode" include="Metro">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F11</label>
-      </variable>      
+      </variable>
       <variable item="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX" default="0" tooltip="Check to enable function F12 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F12</label>
@@ -892,7 +895,7 @@
       <variable item="F3 controls output 9" CV="37" mask="XXVXXXXX" default="0" include="Metro,SD7BLE,SD7CNW,SD9SOU,U28BGN">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 9</label>
-      </variable>       
+      </variable>
       <variable item="F3 controls output 10" CV="37" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Fans(+)</label>
@@ -920,7 +923,7 @@
       <variable item="F4 controls output 7" CV="38" mask="XXXXVXXX" default="0" include="Metro">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Dynamics</label>
-      </variable>      
+      </variable>
       <variable item="F4 controls output 8" CV="38" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Short Horn</label>
@@ -928,7 +931,7 @@
       <variable item="F4 controls output 9" CV="38" mask="XXVXXXXX" default="0" include="Metro,SD7BLE,SD7CNW,SD9SOU,U28BGN">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 9</label>
-      </variable>      
+      </variable>
       <variable item="F4 controls output 10" CV="38" mask="XVXXXXXX" default="0" exclude="Metro">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Fans(+)</label>
@@ -936,7 +939,7 @@
       <variable item="F4 controls output 10" CV="38" mask="XVXXXXXX" default="1" include="Metro">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Fans(+)</label>
-      </variable>      
+      </variable>
       <variable item="F4 controls output 11" CV="38" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Dimming</label>
@@ -947,7 +950,7 @@
           <variableref>Function Group 2 and 3 Exchange</variableref>
           <relation>eq</relation>
           <value>0</value>
-        </qualifier>      
+        </qualifier>
           <!-- begin normal function group 2 -->
             <variable item="F5 controls output 6" CV="39" mask="XXXXXXXV" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -960,7 +963,7 @@
             <variable item="F5 controls output 3" CV="39" mask="XXXXXXVX" minOut="1" default="0" include="Metro">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output FX5</label>
-            </variable>            
+            </variable>
             <variable item="F5 controls output 4" CV="39" mask="XXXXXVXX" minOut="2" default="0" exclude="Metro">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output FX6</label>
@@ -968,7 +971,7 @@
             <variable item="F5 controls output 4" CV="39" mask="XXXXXVXX" minOut="2" default="1" include="Metro">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output FX6</label>
-            </variable>            
+            </variable>
             <variable item="F5 controls output 7" CV="39" mask="XXXXVXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output Dynamics</label>
@@ -984,7 +987,7 @@
             <variable item="F5 controls output 9" CV="39" mask="XXVXXXXX" default="1" include="SD7BLE,SD7CNW,SD9SOU,U28BGN">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output 9</label>
-            </variable>                     
+            </variable>
             <variable item="F5 controls output 10" CV="39" mask="XVXXXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output Fans(+)</label>
@@ -1004,7 +1007,7 @@
             <variable item="F6 controls output 3" CV="40" mask="XXXXXXVX" minOut="1" default="1" include="Metro">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output FX5</label>
-            </variable>            
+            </variable>
             <variable item="F6 controls output 4" CV="40" mask="XXXXXVXX" minOut="2" default="1" exclude="Metro">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output FX6</label>
@@ -1012,7 +1015,7 @@
             <variable item="F6 controls output 4" CV="40" mask="XXXXXVXX" minOut="2" default="0" include="Metro">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output FX6</label>
-            </variable>            
+            </variable>
             <variable item="F6 controls output 7" CV="40" mask="XXXXVXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output Dynamics</label>
@@ -1024,7 +1027,7 @@
             <variable item="F6 controls output 9" CV="40" mask="XXVXXXXX" default="0" include="Metro,SD7BLE,SD7CNW,SD9SOU,U28BGN">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output 9</label>
-            </variable>            
+            </variable>
             <variable item="F6 controls output 10" CV="40" mask="XVXXXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output Fans(+)</label>
@@ -1048,7 +1051,7 @@
             <variable item="F7 controls output 10" CV="41" mask="XXXXVXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F7 controls output Fans(+)</label>
-            </variable>            
+            </variable>
             <variable item="F7 controls output 11" CV="41" mask="XXXVXXXX" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F7 controls output Dimming</label>
@@ -1076,7 +1079,7 @@
             <variable item="F8 controls output 9" CV="42" mask="XXXXXVXX" default="0" include="Metro,SD7BLE,SD7CNW,SD9SOU,U28BGN">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output 9</label>
-            </variable>            
+            </variable>
             <variable item="F8 controls output 10" CV="42" mask="XXXXVXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output Fans(+)</label>
@@ -1098,7 +1101,7 @@
                 <label>F8 controls output Brakes</label>
             </variable>
             <!-- end normal function group 2 -->
-            <!-- begin normal function group 3 -->    
+            <!-- begin normal function group 3 -->
             <variable item="F9 controls output 7" CV="43" mask="XXXXXXXV" default="0" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output Dynamics</label>
@@ -1110,7 +1113,7 @@
             <variable item="F9 controls output 9" CV="43" mask="XXXXXVXX" default="0" minFn="9" include="Metro,SD7BLE,SD7CNW,SD9SOU,U28BGN">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output 9</label>
-            </variable>            
+            </variable>
             <variable item="F9 controls output 10" CV="43" mask="XXXXVXXX" default="0" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output Fans(+)</label>
@@ -1138,7 +1141,7 @@
             <variable item="F10 controls output 9" CV="44" mask="XXXXXXVX" default="0" minFn="10" include="Metro,SD7BLE,SD7CNW,SD9SOU,U28BGN">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output 9</label>
-            </variable>            
+            </variable>
             <variable item="F10 controls output 10" CV="44" mask="XXXXXVXX" default="0" minFn="10">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output Fans(+)</label>
@@ -1174,7 +1177,7 @@
             <variable item="F11 controls output 9" CV="45" mask="XXXXXXVX" default="0" minFn="11" include="SD7BLE,SD7CNW,SD9SOU,U28BGN">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F11 controls output 9</label>
-            </variable>                      
+            </variable>
             <variable item="F11 controls output 10" CV="45" mask="XXXXXVXX" default="0" minFn="11">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F11 controls output Fans(+)</label>
@@ -1206,7 +1209,7 @@
             <variable item="F12 controls output 9" CV="46" mask="XXXXXXVX" default="0" minFn="12" include="Metro,SD7BLE,SD7CNW,SD9SOU,U28BGN">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output 9</label>
-            </variable>            
+            </variable>
             <variable item="F12 controls output 10" CV="46" mask="XXXXXVXX" default="0" minFn="12">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output Fans(+)</label>
@@ -1226,7 +1229,7 @@
             <variable item="F12 controls output 13" CV="46" mask="XXVXXXXX" default="1" minFn="12" include="Metro">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output Comp(-)</label>
-            </variable>            
+            </variable>
             <variable item="F12 controls output 14" CV="46" mask="XVXXXXXX" default="0" minFn="12">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output Brakes</label>
@@ -1255,7 +1258,7 @@
             <variable item="F9 controls output 3(alt)" CV="39" mask="XXXXXXVX" minOut="1" default="0" include="Metro">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output FX5</label>
-            </variable>            
+            </variable>
             <variable item="F9 controls output 4(alt)" CV="39" mask="XXXXXVXX" minOut="2" default="0" exclude="Metro">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output FX6</label>
@@ -1263,7 +1266,7 @@
             <variable item="F9 controls output 4(alt)" CV="39" mask="XXXXXVXX" minOut="2" default="1" include="Metro">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output FX6</label>
-            </variable>            
+            </variable>
             <variable item="F9 controls output 7(alt)" CV="39" mask="XXXXVXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output Dynamics</label>
@@ -1279,7 +1282,7 @@
             <variable item="F9 controls output 9(alt)" CV="39" mask="XXVXXXXX" default="1" include="SD7BLE,SD7CNW,SD9SOU,U28BGN">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output 9</label>
-            </variable>                         
+            </variable>
             <variable item="F9 controls output 10(alt)" CV="39" mask="XVXXXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output Fans(+)</label>
@@ -1299,7 +1302,7 @@
             <variable item="F10 controls output 3(alt)" CV="40" mask="XXXXXXVX" minOut="1" default="1" include="Metro">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output FX5</label>
-            </variable>            
+            </variable>
             <variable item="F10 controls output 4(alt)" CV="40" mask="XXXXXVXX" minOut="2" default="1" exclude="Metro">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output FX6</label>
@@ -1307,7 +1310,7 @@
             <variable item="F10 controls output 4(alt)" CV="40" mask="XXXXXVXX" minOut="2" default="0" include="Metro">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output FX6</label>
-            </variable>            
+            </variable>
             <variable item="F10 controls output 7(alt)" CV="40" mask="XXXXVXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output Dynamics</label>
@@ -1319,7 +1322,7 @@
             <variable item="F10 controls output 9(alt)" CV="40" mask="XXVXXXXX" default="0" include="Metro,SD7BLE,SD7CNW,SD9SOU,U28BGN">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output 9</label>
-            </variable>            
+            </variable>
             <variable item="F10 controls output 10(alt)" CV="40" mask="XVXXXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output Fans(+)</label>
@@ -1339,7 +1342,7 @@
             <variable item="F11 controls output 9(alt)" CV="41" mask="XXXXXVXX" default="0" include="Metro,SD7BLE,SD7CNW,SD9SOU,U28BGN">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F11 controls output 9</label>
-            </variable>            
+            </variable>
             <variable item="F11 controls output 10(alt)" CV="41" mask="XXXXVXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F11 controls output Fans(+)</label>
@@ -1371,7 +1374,7 @@
             <variable item="F12 controls output 9(alt)" CV="42" mask="XXXXXVXX" default="0" include="Metro,SD7BLE,SD7CNW,SD9SOU,U28BGN">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output 9</label>
-            </variable>            
+            </variable>
             <variable item="F12 controls output 10(alt)" CV="42" mask="XXXXVXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output Fans(+)</label>
@@ -1393,7 +1396,7 @@
                 <label>F12 controls output Brakes</label>
             </variable>
           <!-- end exchanged function group 2 -->
-          <!-- begin exchanged function group 3 -->   
+          <!-- begin exchanged function group 3 -->
             <variable item="F5 controls output 7(alt)" CV="43" mask="XXXXXXXV" default="0" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output Dynamics</label>
@@ -1405,7 +1408,7 @@
             <variable item="F5 controls output 9(alt)" CV="43" mask="XXXXXVXX" default="0" minFn="9" include="Metro,SD7BLE,SD7CNW,SD9SOU,U28BGN">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output 9</label>
-            </variable>            
+            </variable>
             <variable item="F5 controls output 10(alt)" CV="43" mask="XXXXVXXX" default="0" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output Fans(+)</label>
@@ -1433,7 +1436,7 @@
             <variable item="F6 controls output 9(alt)" CV="44" mask="XXXXXXVX" default="0" minFn="10" include="Metro,SD7BLE,SD7CNW,SD9SOU,U28BGN">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output 9</label>
-            </variable>            
+            </variable>
             <variable item="F6 controls output 10(alt)" CV="44" mask="XXXXXVXX" default="0" minFn="10">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output Fans(+)</label>
@@ -1469,7 +1472,7 @@
             <variable item="F7 controls output 9(alt)" CV="45" mask="XXXXXXVX" default="0" minFn="11" include="SD7BLE,SD7CNW,SD9SOU,U28BGN">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F7 controls output 9</label>
-            </variable>                          
+            </variable>
             <variable item="F7 controls output 10(alt)" CV="45" mask="XXXXXVXX" default="0" minFn="11">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F7 controls output Fans(+)</label>
@@ -1501,7 +1504,7 @@
             <variable item="F8 controls output 9(alt)" CV="46" mask="XXXXXXVX" default="0" minFn="12" include="Metro,SD7BLE,SD7CNW,SD9SOU,U28BGN">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output 9</label>
-            </variable>            
+            </variable>
             <variable item="F8 controls output 10(alt)" CV="46" mask="XXXXXVXX" default="0" minFn="12">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output Fans(+)</label>
@@ -1521,7 +1524,7 @@
             <variable item="F8 controls output 13(alt)" CV="46" mask="XXVXXXXX" default="1" minFn="12" include="Metro">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output Comp(-)</label>
-            </variable>            
+            </variable>
             <variable item="F8 controls output 14(alt)" CV="46" mask="XVXXXXXX" default="0" minFn="12">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output Brakes</label>
@@ -1532,7 +1535,7 @@
             </variable>
           <!-- end exchanged function group 3 -->
       </variables>
-      <!-- end exchangeable function groups -->   
+      <!-- end exchangeable function groups -->
       <variable CV="47" mask="XVVVVVVV" item="Sound Option 11" default="0" tooltip="Value of 0 = Disabled.  See command station instructions for value to enable this feature.">
         <decVal/>
         <label>Analog Horn Control (0-255)</label>
@@ -1569,7 +1572,7 @@
       <variable item="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXVVVV" default="0" tooltip="Determines the effect generated from the backup light" include="Metro">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>Backup Light F0(r) Effect Selection</label>
-      </variable>      
+      </variable>
       <variable item="Backup Light F0(r) Phase Selection" CV="50" mask="XXXVXXXX" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>Backup Light F0(r) Phase Selection</label>
@@ -1609,7 +1612,7 @@
       <variable item="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="7" minOut="3" tooltip="Determines the effect generated from the FX5 light output" include="U28BGN">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX5 Effect Selection</label>
-      </variable>           
+      </variable>
       <variable item="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="15" minOut="3" tooltip="Determines the effect generated from the FX5 light output" include="SD9BNSF">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX5 Effect Selection</label>
@@ -1641,7 +1644,7 @@
       <variable item="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="2" minOut="4" tooltip="Determines the effect generated from the FX6 light output" include="Metro">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX6 Effect Selection</label>
-      </variable>      
+      </variable>
       <variable item="FX6 Phase Selection" CV="52" mask="XXXVXXXX" minOut="4" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>FX6 Phase Selection</label>
@@ -1661,7 +1664,7 @@
       <variable item="FX6 Light Type" CV="52" mask="VXXXXXXX" default="1" minOut="4" tooltip="Provides special compensation for lighting effect contrast when using LEDs" include="Metro">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX6 Light Type</label>
-      </variable>      
+      </variable>
       <variable item="FX5B Effect Selection" CV="53" mask="XXXXVVVV" default="0" minOut="3" tooltip="Determines the second effect associated with the FX5B light output" exclude="GP20,U28BWP">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX5B Effect Selection</label>
@@ -1705,7 +1708,7 @@
       <variable item="FX6B Phase Selection" CV="54" mask="XXXVXXXX" default="0" minOut="4" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>FX6B Phase Selection</label>
-      </variable>    
+      </variable>
       <variable item="FX6B Grade Crossing Logic" CV="54" mask="XXVXXXXX" default="0" minOut="4" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6B Grade Crossing Logic</label>
@@ -1733,7 +1736,7 @@
       <variable item="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" minOut="4" default="0" tooltip="Used to configure the directionality of FX5A function output" include="E7A,E8,SD45">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX5 Reverse Directional Control</label>
-      </variable>      
+      </variable>
       <variable item="FX5B Forward Directional Control" CV="57" mask="XXXXXVXX" minOut="4" default="1" tooltip="Used to configure the directionality of FX5B function output">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX5B Forward Directional Control</label>
@@ -1753,7 +1756,7 @@
       <variable item="FX6 Reverse Directional Control" CV="57" mask="XXVXXXXX" minOut="4" default="0" tooltip="Used to configure the directionality of FX6A function output" include="Metro">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX6 Reverse Directional Control</label>
-      </variable>      
+      </variable>
       <variable item="FX6B Forward Directional Control" CV="57" mask="XVXXXXXX" minOut="4" default="1" tooltip="Used to configure the directionality of FX6B function output">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX6B Forward Directional Control</label>
@@ -1781,7 +1784,7 @@
         <decVal max="15"/>
         <label>Hyperlight Flash Rate (0-15)</label>
         <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
-      </variable>      
+      </variable>
       <variable item="Grade Crossing Hold Time (0-15)" CV="60" mask="XXXXVVVV" default="4" comment="0-15 seconds" tooltip="Sets the time (in seconds) an effect will stay on after the horn button is released">
         <decVal max="15"/>
         <label>Grade Crossing Hold Time (0-15)</label>
@@ -1796,7 +1799,7 @@
         <decVal max="127"/>
         <label>F11 Braking Rate (0-127)</label>
         <comment>Additional braking when Fll activated (combined with CV4)</comment>
-      </variable>      
+      </variable>
       <variable CV="61" mask="VXXXXXXX" item="Advanced Group 1 Option 7" default="0" tooltip="Determines whether value is added to or subtracted from loco baseline braking rate">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumBraking.xml"/>
         <label>F11 Braking Sign</label>
@@ -1812,7 +1815,7 @@
       <variable CV="63" item="Radio Power Conversion" default="40" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move" include="Metro">
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
-      </variable>      
+      </variable>
       <variable CV="64" item="Zero-1 Power Conversion" default="180" tooltip="Sets the maximum average voltage applied to the motor when operating in analog mode">
         <decVal/>
         <label>Analog Mode Max Motor Voltage (0-255)</label>
@@ -1829,7 +1832,7 @@
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUuserId.xml"/>
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 2" default="1" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function" exclude="Metro">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Air Compressor Enable</label>
@@ -1837,7 +1840,7 @@
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 2" default="0" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function" include="Metro">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Air Compressor Enable</label>
-      </variable>      
+      </variable>
       <variable CV="112" mask="XXXXXXVX" item="Sound Option 3" default="1" tooltip="If using manual engine notching, set to Automatic as [RPM+] will be using this function" exclude="Metro">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Radiator Fan Enable</label>
@@ -1845,7 +1848,7 @@
       <variable CV="112" mask="XXXXXXVX" item="Sound Option 3" default="0" tooltip="If using manual engine notching, set to Automatic as [RPM+] will be using this function" include="Metro">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Radiator Fan Enable</label>
-      </variable>      
+      </variable>
       <variable CV="113" item="Sound Group 3 Option 3" default="0" tooltip="&lt;html&gt;When loco has stopped and all functions are turned off, sound effects will turn&lt;br&gt;     off automatically after timeout period has elapsed.  Set to zero to disable.&lt;/html&gt;">
         <decVal/>
         <label>Quiet Mode Timeout Period</label>
@@ -1857,7 +1860,7 @@
       <variable CV="114" item="Sound Group 3 Option 2" default="3" tooltip="Controls the speed at which the bell rings (higher no. = slower rate" include="GP20">
         <decVal max="15"/>
         <label>Bell Ring Rate</label>
-      </variable>      
+      </variable>
       <!-- Airhorn Selection follows -->
      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" tooltip="Selects which airhorn to use" include="Metro">
         <enumVal>
@@ -1878,7 +1881,7 @@
           </enumChoice>
         </enumVal>
         <label>Airhorn Select</label>
-      </variable>      
+      </variable>
      <variable CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn" include="Metro">
         <enumVal>
           <enumChoice choice="Short Horn">
@@ -1915,7 +1918,7 @@
           </enumChoice>
           <enumChoice choice="Nathan M3">
             <choice>Nathan M3</choice>
-          </enumChoice>          
+          </enumChoice>
         </enumVal>
         <label>Airhorn Select</label>
       </variable>
@@ -1935,10 +1938,10 @@
           </enumChoice>
           <enumChoice choice="Nathan M3">
             <choice>Nathan M3</choice>
-          </enumChoice>          
+          </enumChoice>
         </enumVal>
         <label>Alternate Airhorn Select</label>
-      </variable>               
+      </variable>
       <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" tooltip="Selects which airhorn to use" include="E8">
         <enumVal>
           <enumChoice choice="Nathan M3">
@@ -2042,19 +2045,19 @@
           </enumChoice>
           <enumChoice choice="Leslie S3L+S2M">
             <choice>Leslie S3L+S2M</choice>
-          </enumChoice>          
+          </enumChoice>
           <enumChoice choice="Leslie S2M+A200">
             <choice>Leslie S2M+A200</choice>
           </enumChoice>
           <enumChoice choice="Leslie S3L">
             <choice>Leslie S3L</choice>
-          </enumChoice>           
+          </enumChoice>
           <enumChoice choice="Leslie S2M">
             <choice>Leslie S2M</choice>
           </enumChoice>
           <enumChoice choice="Nathan M5">
             <choice>Nathan M5</choice>
-          </enumChoice>          
+          </enumChoice>
         </enumVal>
         <label>Airhorn Select</label>
       </variable>
@@ -2065,19 +2068,19 @@
           </enumChoice>
           <enumChoice choice="Leslie S3L+S2M">
             <choice>Leslie S3L+S2M</choice>
-          </enumChoice>          
+          </enumChoice>
           <enumChoice choice="Leslie S2M+A200">
             <choice>Leslie S2M+A200</choice>
           </enumChoice>
           <enumChoice choice="Leslie S3L">
             <choice>Leslie S3L</choice>
-          </enumChoice>           
+          </enumChoice>
           <enumChoice choice="Leslie S2M">
             <choice>Leslie S2M</choice>
           </enumChoice>
           <enumChoice choice="Nathan M5">
             <choice>Nathan M5</choice>
-          </enumChoice>          
+          </enumChoice>
         </enumVal>
         <label>Airhorn Select</label>
       </variable>
@@ -2088,22 +2091,22 @@
           </enumChoice>
           <enumChoice choice="Leslie S3L+S2M">
             <choice>Leslie S3L+S2M</choice>
-          </enumChoice>          
+          </enumChoice>
           <enumChoice choice="Leslie S2M+A200">
             <choice>Leslie S2M+A200</choice>
           </enumChoice>
           <enumChoice choice="Leslie S3L">
             <choice>Leslie S3L</choice>
-          </enumChoice>           
+          </enumChoice>
           <enumChoice choice="Leslie S2M">
             <choice>Leslie S2M</choice>
           </enumChoice>
           <enumChoice choice="Nathan M5">
             <choice>Nathan M5</choice>
-          </enumChoice>          
+          </enumChoice>
         </enumVal>
         <label>Airhorn Select</label>
-      </variable>      
+      </variable>
       <variable CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn" include="GP30MIL,GP30SF,GP30CO">
         <enumVal>
           <enumChoice choice="Short Horn">
@@ -2111,22 +2114,22 @@
           </enumChoice>
           <enumChoice choice="Leslie S3L+S2M">
             <choice>Leslie S3L+S2M</choice>
-          </enumChoice>          
+          </enumChoice>
           <enumChoice choice="Leslie S2M+A200">
             <choice>Leslie S2M+A200</choice>
           </enumChoice>
           <enumChoice choice="Leslie S3L">
             <choice>Leslie S3L</choice>
-          </enumChoice>           
+          </enumChoice>
           <enumChoice choice="Leslie S2M">
             <choice>Leslie S2M</choice>
           </enumChoice>
           <enumChoice choice="Nathan M5">
             <choice>Nathan M5</choice>
-          </enumChoice>          
+          </enumChoice>
         </enumVal>
         <label>Alternate Airhorn Select</label>
-      </variable>                                     
+      </variable>
       <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" tooltip="Selects which airhorn to use" include="GP60">
         <enumVal>
           <enumChoice choice="Leslie S3L">
@@ -2159,7 +2162,7 @@
           </enumChoice>
           <enumChoice choice="Leslie A200+S3L">
             <choice>Leslie A200+S3L</choice>
-          </enumChoice>                   
+          </enumChoice>
           <enumChoice choice="Leslie A200+S5T">
             <choice>Leslie A200+S5T</choice>
           </enumChoice>
@@ -2179,7 +2182,7 @@
           </enumChoice>
           <enumChoice choice="Leslie A200+S3L">
             <choice>Leslie A200+S3L</choice>
-          </enumChoice>                   
+          </enumChoice>
           <enumChoice choice="Leslie A200+S5T">
             <choice>Leslie A200+S5T</choice>
           </enumChoice>
@@ -2199,7 +2202,7 @@
           </enumChoice>
           <enumChoice choice="Leslie A200+S3L">
             <choice>Leslie A200+S3L</choice>
-          </enumChoice>                   
+          </enumChoice>
           <enumChoice choice="Leslie A200+S5T">
             <choice>Leslie A200+S5T</choice>
           </enumChoice>
@@ -2208,7 +2211,7 @@
           </enumChoice>
         </enumVal>
         <label>Alternate Airhorn Select</label>
-      </variable>                        
+      </variable>
       <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="2" tooltip="Selects which airhorn to use" include="SD9BNSF">
         <enumVal>
           <enumChoice choice="Leslie S3L">
@@ -2292,7 +2295,7 @@
           </enumChoice>
         </enumVal>
         <label>Alternate Airhorn Select</label>
-      </variable>                 
+      </variable>
       <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" tooltip="Selects which airhorn to use" include="U28B">
         <enumVal>
           <enumChoice choice="Leslie S3L">
@@ -2332,7 +2335,7 @@
           </enumChoice>
         </enumVal>
         <label>Airhorn Select</label>
-      </variable>      
+      </variable>
       <variable CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn" include="U28B,U28BWP">
         <enumVal>
           <enumChoice choice="Short Horn">
@@ -2392,7 +2395,7 @@
           </enumChoice>
         </enumVal>
         <label>Alternate Airhorn Select</label>
-      </variable>      
+      </variable>
       <variable CV="116" mask="XXVXXXXX" item="Sound Option 1" default="1" tooltip="&lt;html&gt;Determines whether prime mover will start up automatically or manually&lt;br&gt;     Note: This feature is not available in all decoders&lt;/html&gt;">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumStart.xml"/>
         <label>Auto Engine Start Enable</label>
@@ -2408,7 +2411,7 @@
       <variable CV="116" mask="XXXXVVVV" item="Sound Option 6" default="7" tooltip="Controls how the engine RPMs interact with the speed step setting of the throttle" exclude="Metro">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumNotch.xml"/>
         <label>Engine Notch Rate</label>
-      </variable>      
+      </variable>
       <variable CV="116" mask="XXXXVVVV" item="Sound Option 6" default="0" tooltip="Controls how the engine RPMs interact with the speed step setting of the throttle" include="Metro">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumNotch.xml"/>
         <label>Engine Notch Rate</label>
@@ -2421,7 +2424,7 @@
       <variable CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="225" tooltip="Sets the overall volume of all sound channels" include="Metro">
         <decVal/>
         <label>Master Volume Control</label>
-      </variable>      
+      </variable>
       <variable CV="129" mask="VVVVVVVV" item="Sound Setting 13" default="225" tooltip="Sets the volume of the airhorn">
         <decVal/>
         <label>Airhorn Volume</label>
@@ -2445,11 +2448,11 @@
       <variable CV="132" mask="VVVVVVVV" item="Sound Setting 23" default="64" tooltip="Sets the volume of the air compressor" include="Metro">
         <decVal/>
         <label>Air Compressor Volume</label>
-      </variable>      
+      </variable>
       <variable CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="150" tooltip="Sets the volume of the pantograph" include="Metro">
         <decVal/>
         <label>Pantograph Volume</label>
-      </variable>      
+      </variable>
       <variable CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="92" tooltip="Sets the volume of the dynamic brakes" include="E7A,E8,F7,GP30MIL,GP30SF,GP30CO,SD45">
         <decVal/>
         <label>Dynamic Brake Volume</label>
@@ -2465,7 +2468,7 @@
       <variable CV="134" mask="VVVVVVVV" item="Sound Setting 17" default="64" tooltip="Sets the volume of the radiator fans" include="Metro">
         <decVal/>
         <label>Radiator Fans Volume</label>
-      </variable>      
+      </variable>
       <variable CV="137" mask="VVVVVVVV" item="Sound Setting 27" default="128" tooltip="Sets the volume of the couplers coupling" exclude="Metro">
         <decVal/>
         <label>Coupler Volume</label>
@@ -2473,7 +2476,7 @@
       <variable CV="137" mask="VVVVVVVV" item="Sound Setting 27" default="50" tooltip="Sets the volume of the couplers coupling" include="Metro">
         <decVal/>
         <label>Coupler Volume</label>
-      </variable>      
+      </variable>
       <variable CV="139" mask="VVVVVVVV" item="Sound Setting 25" default="128" tooltip="Sets the volume of the brakes squealing" exclude="Metro">
         <decVal/>
         <label>Brake Squeal Volume</label>
@@ -2481,7 +2484,7 @@
       <variable CV="139" mask="VVVVVVVV" item="Sound Setting 25" default="64" tooltip="Sets the volume of the brakes squealing" include="Metro">
         <decVal/>
         <label>Brake Squeal Volume</label>
-      </variable>      
+      </variable>
       <variable CV="140" mask="VVVVVVVV" item="Sound Setting 26" default="64" tooltip="Sets the volume of the brakes releasing" exclude="Metro">
         <decVal/>
         <label>Brake Release Volume</label>
@@ -2489,7 +2492,7 @@
       <variable CV="140" mask="VVVVVVVV" item="Sound Setting 26" default="100" tooltip="Sets the volume of the brakes releasing" include="Metro">
         <decVal/>
         <label>Brake Release Volume</label>
-      </variable>      
+      </variable>
       <variable CV="143" mask="VVVVVVVV" item="Sound Setting 24" default="80" tooltip="Sets the volume of the air reservoir poppet valve releasing" exclude="Metro">
         <decVal/>
         <label>Air Tank Poppet Valve Volume</label>
@@ -2497,7 +2500,7 @@
       <variable CV="152" mask="VVVVVVVV" item="Sound Setting 24" default="50" tooltip="Sets the volume of the door opening/closing" include="Metro">
         <decVal/>
         <label>Door Open/Close Volume</label>
-      </variable>    
+      </variable>
       <!-- The following sounds CVs (currently) don't map to generic -->
       <!-- names, e.g. in the Comprehensive.xml programmer, so they  -->
       <!-- appear on pane definitions in this file -->
@@ -2522,7 +2525,7 @@
       <variable item="125 Hz Cut/Boost" CV="155" mask="VVVVVVVV" default="0" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" include="Metro">
         <decVal/>
         <label>125 Hz Cut/Boost</label>
-      </variable>      
+      </variable>
       <variable item="125 Hz Cut/Boost" CV="155" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" exclude="Metro">
         <decVal/>
         <label>125 Hz Cut/Boost</label>
@@ -2530,7 +2533,7 @@
       <variable item="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="150" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" include="Metro,GP20,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,U28B,U28BGN,U28BWP">
         <decVal/>
         <label>250 Hz Cut/Boost</label>
-      </variable>      
+      </variable>
       <variable item="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" include="GP30MIL,GP30SF,GP30CO,E7A,E8,F7,SD45">
         <decVal/>
         <label>250 Hz Cut/Boost</label>
@@ -2546,7 +2549,7 @@
       <variable item="1K Hz Cut/Boost" CV="158" mask="VVVVVVVV" default="75" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" include="Metro">
         <decVal/>
         <label>1K Hz Cut/Boost</label>
-      </variable>      
+      </variable>
       <variable item="1K Hz Cut/Boost" CV="158" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" include="GP30MIL,GP30SF,GP30CO,E7A,E8,F7,SD45">
         <decVal/>
         <label>1K Hz Cut/Boost</label>
@@ -2558,7 +2561,7 @@
       <variable item="2K Hz Cut/Boost" CV="159" mask="VVVVVVVV" default="150" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" include="Metro">
         <decVal/>
         <label>2K Hz Cut/Boost</label>
-      </variable>      
+      </variable>
       <variable item="2K Hz Cut/Boost" CV="159" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)" include="GP30MIL,GP30SF,GP30CO,E7A,E8,F7,SD45">
         <decVal/>
         <label>2K Hz Cut/Boost</label>

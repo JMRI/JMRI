@@ -147,9 +147,8 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     public BlockBossLogic(String name) {
         super(name + Bundle.getMessage("_BlockBossLogic"));
         this.name = name;
-        if (log.isTraceEnabled()) {
-            log.trace("Create BBL " + name);
-        }
+        log.trace("Create BBL {}", name);
+
         jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).addVetoableChangeListener(this);
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
@@ -172,7 +171,6 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     public NamedBeanHandle<SignalHead> getDrivenSignalNamedBean() {
-        if (driveSignal == null) return null;
         return driveSignal;
     }
 
@@ -748,9 +746,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      */
     @Override
     public void setOutput() {
-        if (log.isTraceEnabled()) {
-            log.trace("setOutput for " + name);
-        }
+
+        log.trace("setOutput for {}", name);
+
         // make sure init is complete
         if ((outputs == null) || (outputs[0] == null)) {
             return;
@@ -759,9 +757,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         // if "hold" is true, must show red
         if (getHold()) {
             ((SignalHead) outputs[0]).setAppearance(SignalHead.RED);
-            if (log.isDebugEnabled()) {
-                log.debug("setOutput red due to held for " + name);
-            }
+            log.debug("setOutput red due to held for {}", name);
             return;
         }
 
@@ -1189,6 +1185,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      * @param signal name of the signal head object
      * @return never null
      */
+    @Nonnull
     public static BlockBossLogic getStoppedObject(String signal) {
         return getStoppedObject(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signal));
     }
@@ -1200,11 +1197,12 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      * @param sh signal head object
      * @return never null
      */
-    public static BlockBossLogic getStoppedObject(SignalHead sh) {
+    @Nonnull
+    public static BlockBossLogic getStoppedObject(@Nonnull SignalHead sh) {
         BlockBossLogic b = null;
 
         for (BlockBossLogic bbl : bblList) {
-            if (bbl.getDrivenSignalNamedBean().getBean() == sh) {
+            if (bbl.getDrivenSignalNamedBean()!=null && bbl.getDrivenSignalNamedBean().getBean() == sh) {
                 b = bbl;
                 break;
             }
@@ -1252,7 +1250,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     @Nonnull
     public static BlockBossLogic getExisting(@Nonnull SignalHead sh) {
         for (BlockBossLogic bbl : bblList) {
-            if (bbl.getDrivenSignalNamedBean().getBean() == sh) {
+            if (bbl.getDrivenSignalNamedBean()!=null && bbl.getDrivenSignalNamedBean().getBean() == sh) {
                 return bbl;
             }
         }
@@ -1269,7 +1267,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             boolean found = false;
 
             if (nb instanceof SignalHead) {
-                if (getDrivenSignalNamedBean().getBean().equals(nb)) {
+                if (getDrivenSignalNamedBean()!=null && nb.equals(getDrivenSignalNamedBean().getBean())) {
                     message.append("<br><b>" + Bundle.getMessage("InUseThisSslWillBeDeleted") + "</b>");
                     throw new java.beans.PropertyVetoException(message.toString(), evt);
                 }
@@ -1327,7 +1325,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // NOI18N
             if (nb instanceof SignalHead) {
-                if (getDrivenSignalNamedBean().getBean().equals(nb)) {
+                if (getDrivenSignalNamedBean()!=null && nb.equals(getDrivenSignalNamedBean().getBean())) {
                     stop();
                     bblList.remove(this);
                 }

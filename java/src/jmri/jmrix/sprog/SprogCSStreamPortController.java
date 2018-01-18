@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * communications port
  * <p>
  * NOTE: This currently only supports the SPROG Command Station interfaces.
- * <p>
  *
  * @author	Paul Bender Copyright (C) 2014
  */
@@ -39,7 +38,6 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
         rcvNotice = new Thread(new RcvCheck(input, control));
         rcvNotice.setName("SPROG rcvCheck thread");
         rcvNotice.start();
-
     }
 
     /**

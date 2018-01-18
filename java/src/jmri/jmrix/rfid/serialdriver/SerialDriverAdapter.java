@@ -117,75 +117,9 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
                 // report additional status
                 log.debug(" port flow control shows " // NOI18N
                         + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("Setup SerialPortEventListener for debugging"); // NOI18N
-                // arrange to notify later
-                activeSerialPort.addEventListener(new SerialPortEventListener() {
-                    @Override
-                    public void serialEvent(SerialPortEvent e) {
-                        int type = e.getEventType();
-                        switch (type) {
-                            case SerialPortEvent.DATA_AVAILABLE:
-                                log.info("SerialEvent: DATA_AVAILABLE is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                                log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.CTS:
-                                log.info("SerialEvent: CTS is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.DSR:
-                                log.info("SerialEvent: DSR is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.RI:
-                                log.info("SerialEvent: RI is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.CD:
-                                log.info("SerialEvent: CD is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.OE:
-                                log.info("SerialEvent: OE (overrun error) is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.PE:
-                                log.info("SerialEvent: PE (parity error) is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.FE:
-                                log.info("SerialEvent: FE (framing error) is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.BI:
-                                log.info("SerialEvent: BI (break interrupt) is " + e.getNewValue()); // NOI18N
-                                return;
-                            default:
-                                log.info("SerialEvent of unknown type: " + type + " value: " + e.getNewValue()); // NOI18N
-                        }
-                    }
-                }
-                );
-                try {
-                    activeSerialPort.notifyOnFramingError(true);
-                } catch (Exception e) {
-                    log.debug("Could not notifyOnFramingError: " + e); // NOI18N
-                }
 
-                try {
-                    activeSerialPort.notifyOnBreakInterrupt(true);
-                } catch (Exception e) {
-                    log.debug("Could not notifyOnBreakInterrupt: " + e); // NOI18N
-                }
-
-                try {
-                    activeSerialPort.notifyOnParityError(true);
-                } catch (Exception e) {
-                    log.debug("Could not notifyOnParityError: " + e); // NOI18N
-                }
-
-                try {
-                    activeSerialPort.notifyOnOverrunError(true);
-                } catch (Exception e) {
-                    log.debug("Could not notifyOnOverrunError: " + e); // NOI18N
-                }
-
+                // log events
+                setPortEventLogging(activeSerialPort);
             }
 
             opened = true;
@@ -193,10 +127,6 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex); // NOI18N
-            ex.printStackTrace();
-            return "Unexpected error while opening port " + portName + ": " + ex; // NOI18N
-        } catch (TooManyListenersException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex); // NOI18N
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex; // NOI18N

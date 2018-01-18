@@ -24,6 +24,7 @@
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element name="turnoutsignalmast" type="TurnoutSignalMastType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="dccsignalmast" type="DccSignalMastType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="olcbsignalmast" type="OlcbSignalMastType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="matrixsignalmast" type="MatrixSignalMastType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="signalmast" type="SignalMastType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="virtualsignalmast" type="SignalMastType" minOccurs="0" maxOccurs="unbounded" />
@@ -274,6 +275,76 @@
           <xs:attribute name="defines"  use="required">
             <xs:annotation>
               <xs:documentation>Specifies which appearance the turnout drives</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="disabledAspects" minOccurs="0" maxOccurs="1" >
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="disabledAspect" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="userName" type="userNameType">
+      <xs:annotation>
+        <xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="class" type="classType" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="OlcbSignalMastType">
+    <xs:annotation>
+      <xs:documentation>
+        Define the XML structure for storing the contents of one OpenLCB Based Signal Mast implementation.
+      </xs:documentation>
+      <xs:appinfo>
+        <jmri:usingclass configurexml="true">jmri.implementation.configurexml.OlcbSignalMastXml</jmri:usingclass>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="properties" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="property" type="SignalMastPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="lit" minOccurs="1" maxOccurs="1">
+        <xs:complexType>
+          <xs:annotation>
+            <xs:documentation>Specifies eventsIDs to set lit and not lit</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+            <xs:element name="lit" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="notlit" type="xs:string" minOccurs="1" maxOccurs="1"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="held" minOccurs="1" maxOccurs="1">
+        <xs:complexType>
+          <xs:annotation>
+            <xs:documentation>Specifies eventsIDs to set held and not held</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+            <xs:element name="held" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="notheld" type="xs:string" minOccurs="1" maxOccurs="1"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="aspect" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="event" type="xs:string"/>
+          </xs:sequence>
+          <xs:attribute name="defines"  use="required">
+            <xs:annotation>
+              <xs:documentation>Specifies which appearance corresponds to this EventID</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:complexType>

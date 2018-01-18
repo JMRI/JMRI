@@ -24,7 +24,7 @@ public class GrapevineSystemConnectionMemoTest extends jmri.jmrix.SystemConnecti
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       SerialTrafficController tc = new SerialTrafficControlScaffold();
+       new SerialTrafficControlScaffold();
        scm = new GrapevineSystemConnectionMemo();
     }
 

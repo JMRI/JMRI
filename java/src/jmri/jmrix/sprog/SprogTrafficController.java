@@ -52,6 +52,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         }
         if (!cmdListeners.contains(l)) {
             cmdListeners.addElement(l);
+            log.debug("SprogListener added to {} tc", memo.getUserName());
         }
     }
 
@@ -79,9 +80,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             // serial Sprogs, but I have no way of testing:
             // getController().setHandshake(0);
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Setting sprogState {}", s);
-        }
+        log.debug("Setting sprogState {}", s);
     }
 
     public boolean isNormalMode() {
@@ -127,7 +126,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     protected synchronized void notifyReply(SprogReply r) {
         for (SprogListener listener : this.getCopyOfListeners()) {
             try {
-                // if is message don't send it back to the originator!
+                // don't send message back to the originator!
                 // skip forwarding to the last sender for now, we'll get them later
                 if (lastSender != listener) {
                     listener.notifyReply(r);
@@ -157,7 +156,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                 }
 
             } catch (Exception e) {
-                log.warn("notify: During dispatch to {}\nException {}", listener, e.toString());
+                log.warn("notify: During dispatch to {}\nException: {}", listener, e.toString());
             }
         }
         // forward to the last listener who sent a message
@@ -177,12 +176,13 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         try {
             if (ostream != null) {
                 ostream.write(m.getFormattedMessage(sprogState));
+                log.debug("sendSprogMessage written to ostream");
             } else {
                 // no stream connected
                 log.warn("sendMessage: no connection established");
             }
         } catch (Exception e) {
-            log.warn("sendMessage: Exception: {}", e.toString());
+            log.warn("sendMessage: Exception: ", e);
         }
     }
 
@@ -329,15 +329,15 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     /**
      * Handle an incoming reply.
      */
-    void handleOneIncomingReply() {
-        // we get here if data has been received
-        //fill the current reply with any data received
+    public void handleOneIncomingReply() {
+        // we get here if data has been received and this method is explicitly invoked
+        // fill the current reply with any data received
         int replyCurrentSize = this.reply.getNumDataElements();
         int i;
         for (i = replyCurrentSize; i < SprogReply.maxSize - replyCurrentSize; i++) {
             try {
                 if (istream.available() == 0) {
-                    break; //nothing waiting to be read
+                    break; // nothing waiting to be read
                 }
                 byte char1 = istream.readByte();
                 this.reply.setElement(i, char1);

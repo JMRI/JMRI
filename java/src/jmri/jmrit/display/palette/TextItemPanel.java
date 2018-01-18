@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * ItemPanel for text labels.
+ * @see ItemPanel palette class diagram
  */
 public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
 
@@ -162,8 +163,8 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             _decorator.setAttributes(l);
             PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
             l.setPopupUtility(util.clone(l, l.getTextComponent()));
-//            l.setFont(util.getFont().deriveFont(util.getFontStyle()));
-            if (util.hasBackground()) {     //unrotated
+            // l.setFont(util.getFont().deriveFont(util.getFontStyle()));
+            if (util.hasBackground()) { // unrotated
                 l.setOpaque(true);
             }
             l.setLevel(this.getDisplayLevel());

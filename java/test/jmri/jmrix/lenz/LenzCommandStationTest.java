@@ -66,7 +66,7 @@ public class LenzCommandStationTest extends TestCase {
         r.setElement(3, 0x00);
         r.setElement(4, 0x74);
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertEquals((float)0x36, c.getCommandStationSoftwareVersionBCD(), 0.0);
+        Assert.assertEquals(0x36, c.getCommandStationSoftwareVersionBCD(), 0.0);
         // test a version that is not BCD
         r.setElement(0, 0x63);
         r.setElement(1, 0x21);
@@ -74,7 +74,7 @@ public class LenzCommandStationTest extends TestCase {
         r.setElement(3, 0x00);
         r.setElement(4, 0xCF);
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertEquals((float)0x8D, c.getCommandStationSoftwareVersionBCD(), 0.0);
+        Assert.assertEquals(0x8D, c.getCommandStationSoftwareVersionBCD(), 0.0);
     }
 
     public void testType() {

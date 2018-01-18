@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
   <title>JMRI: Building with Eclipse</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Eclipse">
   <!--#include virtual="/Style" -->
 </head><!--#include virtual="/Header" -->
@@ -42,7 +42,7 @@
 
       <p>Note that you must also install the
       <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java Development Kit</a>
-      (not included with Eclipse) to build JMRI with Eclipse.</a>
+      (not included with Eclipse) to build JMRI with Eclipse.
 
       <p>If using versions of Eclipse older than "Mars", the
       <a href="http://www.eclipse.org/m2e/">M2Eclipse</a> plugin must be

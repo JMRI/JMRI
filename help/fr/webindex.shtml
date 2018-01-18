@@ -391,8 +391,8 @@
 </li>
  
 <li>
-<a href="html/doc/Technical/FindBugs.shtml">FindBugs </a>
-<ul></ul>
+    <a href="html/doc/Technical/FindBugs.shtml">SpotBugs </a>
+    <ul></ul>
 </li>
 
  
@@ -1092,13 +1092,7 @@
 
  
 <li>
-<a href="html/apps/SignalPro/index.shtml">SignalPro </a>
-<ul></ul>
-</li>
-
- 
-<li>
-<a href="">Signaux LDT </a>
+    <a href="">Signaux LDT </a>
 <ul></ul>
 </li>
 

@@ -195,6 +195,8 @@ public class SimulatorAdapter extends NcePortController implements
 
     /**
      * Get an array of valid baud rates.
+     *
+     * @return null
      */
     @Override
     public String[] validBaudRates() {

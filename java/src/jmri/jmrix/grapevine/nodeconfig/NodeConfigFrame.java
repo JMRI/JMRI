@@ -15,7 +15,6 @@ import javax.swing.border.Border;
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialNode;
 import jmri.jmrix.grapevine.SerialSensorManager;
-import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

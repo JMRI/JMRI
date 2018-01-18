@@ -1518,7 +1518,7 @@ public class LayoutEditorTools {
      */
     public boolean initializeBlockBossLogic(@Nonnull String signalHeadName) {
         logic = BlockBossLogic.getStoppedObject(signalHeadName);
-        //TODO: Findbugs says this test isn't necessary - dead code strip
+        //TODO: SpotBugs says this test isn't necessary - dead code strip
 //        if (logic == null) {
 //            log.error("Trouble creating BlockBossLogic for '" + signalHeadName + "'.");
 //            return false;
@@ -2666,7 +2666,7 @@ public class LayoutEditorTools {
                     xovers.add(layoutTurnout);
                 }
             }
-            JComboBox<LayoutTurnout> jcb = new JComboBox(xovers.toArray());
+            JComboBox<LayoutTurnout> jcb = new JComboBox<>(xovers.toArray(new LayoutTurnout[xovers.size()]));
             jcb.setEditable(true);
             JOptionPane.showMessageDialog(layoutEditor, jcb,
                     Bundle.getMessage("MakeLabel",
@@ -5796,7 +5796,7 @@ public class LayoutEditorTools {
         String sensorName = "IS" + namer;
         String logixName = "IX" + namer;
         try {
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+            InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         } catch (IllegalArgumentException ex) {
             log.error("Trouble creating sensor " + sensorName + " while setting up Logix.");
             return "";
@@ -13471,7 +13471,7 @@ public class LayoutEditorTools {
         String logixName = "IX_LAYOUTSLIP:" + slip.ident;
         String sensorName = "IS:" + logixName + "C" + number;
         try {
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+            InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         } catch (IllegalArgumentException ex) {
             log.error("Trouble creating sensor " + sensorName + " while setting up Logix.");
             return "";
@@ -13660,7 +13660,7 @@ public class LayoutEditorTools {
         } else if (linkType == LayoutTurnout.THROAT_TO_THROAT) {
             String text = Bundle.getMessage("ThroatToThroat") + " (";
             text += Bundle.getMessage("BeanNameTurnout") + ", " + Bundle.getMessage("BeanNameRoute");
-            text += ", " + Bundle.getMessage("Signal") + ":)";
+            text += ", " + Bundle.getMessage("BeanNameSignalHead") + ":)";
             JMenuItem jmi = inMenu.add(text);
             jmi.setEnabled(false);
             inMenu.add(new JSeparator());

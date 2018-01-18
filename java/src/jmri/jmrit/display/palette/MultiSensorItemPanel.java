@@ -1,12 +1,10 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,11 +23,10 @@ import javax.swing.table.TableColumn;
 import jmri.NamedBean;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MultiSensorIcon;
 import jmri.jmrit.picker.PickListModel;
-import jmri.util.JmriJFrame;
-import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +36,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
     MultiSensorSelectionModel _selectionModel;
     boolean _upDown = false;
 
-    public MultiSensorItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
+    public MultiSensorItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, model, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragSelection"));
     }

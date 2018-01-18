@@ -344,7 +344,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * Maintain a list of conditionals that refer to a particular conditional.
      * @since 4.7.4
      */
-    private HashMap<String, ArrayList<String>> conditionalWhereUsed = new HashMap<>();
+    private final HashMap<String, ArrayList<String>> conditionalWhereUsed = new HashMap<>();
 
     /**
      * Return a copy of the entire map.  Used by
@@ -420,7 +420,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
         }
 
         if (conditionalWhereUsed.containsKey(target)) {
-            ArrayList refList = conditionalWhereUsed.get(target);
+            ArrayList<?> refList = conditionalWhereUsed.get(target);
             refList.remove(reference);
             if (refList.size() == 0) {
                 conditionalWhereUsed.remove(target);

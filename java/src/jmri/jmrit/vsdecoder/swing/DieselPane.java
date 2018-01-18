@@ -76,7 +76,7 @@ public class DieselPane extends EnginePane {
     }
 
     /**
-     * Build teh GUI components
+     * Build the GUI components
      */
     @Override
     public void initComponents() {

@@ -1,16 +1,10 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.Color;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,13 +18,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import jmri.NamedBean;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MemoryComboIcon;
 import jmri.jmrit.display.MemoryIcon;
 import jmri.jmrit.display.MemoryInputIcon;
 import jmri.jmrit.display.MemorySpinnerIcon;
 import jmri.jmrit.picker.PickListModel;
-import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +35,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
     }
     JSpinner _spinner;
 
-    public MemoryItemPanel(ItemPalette parentFrame, String type, String family, PickListModel<jmri.Memory> model, Editor editor) {
+    public MemoryItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.Memory> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
 
@@ -51,7 +45,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
             add(initTablePanel(_model, _editor));
             initIconFamiliesPanel();
             add(_iconFamilyPanel);
-            add(makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds));
+            add(makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds, _paletteFrame));
             _initialized = true;
         }
     }

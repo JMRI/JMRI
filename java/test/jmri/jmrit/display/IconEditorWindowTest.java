@@ -172,7 +172,7 @@ public class IconEditorWindowTest {
             _panel.repaint();
         });
 
-        java.awt.Point location = new java.awt.Point(x + icon.getSize().width / 2,
+        new java.awt.Point(x + icon.getSize().width / 2,
                 y + icon.getSize().height / 2);
 
         Assert.assertEquals("initial state", Sensor.UNKNOWN, turnout.getState());
@@ -216,7 +216,7 @@ public class IconEditorWindowTest {
         icon.setLocation(x, y);
         _panel.repaint();
 
-        java.awt.Point location = new java.awt.Point(x + icon.getSize().width / 2,
+        new java.awt.Point(x + icon.getSize().width / 2,
                 y + icon.getSize().height / 2);
 
         Assert.assertEquals("initial state", Light.OFF, light.getState());
@@ -262,7 +262,7 @@ public class IconEditorWindowTest {
         icon.setLocation(x, y);
         _panel.repaint();
 
-        java.awt.Point location = new java.awt.Point(x + icon.getSize().width / 2,
+        new java.awt.Point(x + icon.getSize().width / 2,
                 y + icon.getSize().height / 2);
 
         int[] states = signalHead.getValidStates();

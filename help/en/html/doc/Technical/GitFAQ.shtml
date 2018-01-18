@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Git FAQ</title>
-  <meta content="Bob Jacobsen" name="Author">
+    <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Git FAQ">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -231,7 +231,7 @@
 </pre>                
                 <p>or</p>
 <pre style="font-family: monospace;">                
-                $ git pull https://github.com/JMRI/JMRI.git</code><br>
+                $ git pull https://github.com/JMRI/JMRI.git<br>
 </pre>
                 </li>
 

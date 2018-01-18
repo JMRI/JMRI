@@ -41,6 +41,6 @@ public class PiSprogOneCSSerialDriverAdapter
     static public PiSprogOneCSSerialDriverAdapter instance() {
         return null;
     }
-    private final static Logger log = LoggerFactory.getLogger(PiSprogOneCSSerialDriverAdapter.class);
+    // private final static Logger log = LoggerFactory.getLogger(PiSprogOneCSSerialDriverAdapter.class);
 
 }

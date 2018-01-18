@@ -25,6 +25,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.23.0
+; - Add JVM option 'Djogamp.gluegen.UseTempJarCache=false'
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.0
 ; - Support Java 9
 ; -------------------------------------------------------------------------
@@ -143,7 +146,7 @@
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
 !define COPYRIGHT  "(C) 1997-2017 JMRI Community" ; Copyright string
-!define VER        "0.1.22.0"                     ; Launcher version
+!define VER        "0.1.23.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -412,6 +415,7 @@ Section "Main"
   StrCpy $OPTIONS "$JMRIOPTIONS $JVMOPTIONS -noverify"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
+  StrCpy $OPTIONS "$OPTIONS -Djogamp.gluegen.UseTempJarCache=false"
   StrCpy $OPTIONS "$OPTIONS -Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"
   StrCpy $OPTIONS "$OPTIONS -Dswing.defaultlaf=com.sun.java.swing.plaf.windows.WindowsLookAndFeel"
   StrCmp ${ARCH_64BIT} $x64JRE x64Libs x86Libs

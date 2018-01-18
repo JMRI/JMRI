@@ -1,14 +1,14 @@
-/**
- * Stands in for the SprogTrafficController class
- *
- * @author	Bob Jacobsen
- */
 package jmri.jmrix.sprog;
 
 import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Stands in for the SprogTrafficController class
+ *
+ * @author	Bob Jacobsen
+ */
 public class SprogTrafficControlScaffold extends SprogTrafficController {
 
     public SprogTrafficControlScaffold(SprogSystemConnectionMemo memo) {
@@ -38,6 +38,7 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
     }
 
     // test control member functions
+
     /**
      * forward a message to the listeners, e.g. test receipt
      */

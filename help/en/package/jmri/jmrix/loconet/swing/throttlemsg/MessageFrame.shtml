@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
 
   <title>JMRI: Send Throttle Message</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -24,12 +23,11 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: Send Throttle Message</h1>JMRI has a limited
-      ability to send messages to a hand-held throttle.
+      <h1>JMRI: Send Throttle Message</h1>
+      <p>JMRI has a limited
+      ability to send messages to a hand-held throttle.</p>
 
-      <p>This is the
-      jmri.jmrix.loconet.swing.throttlemsg.MessageFrame help page. 
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

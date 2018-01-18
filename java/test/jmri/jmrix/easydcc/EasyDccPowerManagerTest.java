@@ -89,6 +89,7 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
     // The minimal setup for log4J
     @After 
     public void tearDown() {
+        controller.terminateThreads();
         JUnitUtil.tearDown();
     }
 

@@ -10,8 +10,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -19,7 +17,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CanNamedPaneActionTest {
 
-    private TrafficController tc = null;
+    // private TrafficController tc = null;
     private CanSystemConnectionMemo m = null;
 
     @Test
@@ -35,14 +33,14 @@ public class CanNamedPaneActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new TestTrafficController();
+        // tc = new TestTrafficController();
         m = new CanSystemConnectionMemo();
         m.setSystemPrefix("ABC");
     }
 
     @After
     public void tearDown() {
-        tc = null;
+        // tc = null;
         JUnitUtil.tearDown();
     }
 

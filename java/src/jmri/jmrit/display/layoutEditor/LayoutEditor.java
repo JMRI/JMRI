@@ -1168,9 +1168,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
             // make sure that the layoutEditorComponent is in the _targetPanel components
             List componentList = Arrays.asList(_targetPanel.getComponents());
-            if (!componentList.contains((Component) layoutEditorComponent)) {
+            if (!componentList.contains(layoutEditorComponent)) {
                 try {
-                    Component c = (Component) layoutEditorComponent;
+                    Component c = layoutEditorComponent;
                     _targetPanel.remove(c);
                     _targetPanel.add(c, Integer.valueOf(3));
                     _targetPanel.moveToFront(c);
@@ -3045,22 +3045,20 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                     jbcb = (JmriBeanComboBox) SwingUtilities.getUnwrappedParent(jbcb);
                 }
 
-                if (jbcb instanceof JmriBeanComboBox) {
-                    String ttt = jbcb.getToolTipText();
-                    if (ttt != null) {
-                        //change the name of the preference based on the tool tip text
-                        ddldoPrefName = String.format("%s.%s", ddldoPrefName, ttt);
-                        //try to get the preference
-                        ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
-                        if (ddldoProp != null) { //if we found it...
-                            ddldoPref = ddldoProp.toString(); //get it's (string value
-                        } else { //otherwise...
-                            //save it in the users preferences
-                            prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
-                        }
+                String ttt = jbcb.getToolTipText();
+                if (ttt != null) {
+                    //change the name of the preference based on the tool tip text
+                    ddldoPrefName = String.format("%s.%s", ddldoPrefName, ttt);
+                    //try to get the preference
+                    ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
+                    if (ddldoProp != null) { //if we found it...
+                        ddldoPref = ddldoProp.toString(); //get it's (string value
+                    } else { //otherwise...
+                        //save it in the users preferences
+                        prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
                     }
                 }
-
+     
                 //now set the combo box display order
                 if (ddldoPref.equals("DISPLAYNAME")) {
                     jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
@@ -5194,7 +5192,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     private boolean checkControls(boolean useRectangles) {
         Optional<LayoutTrack> opt = layoutTrackList.stream().filter(o -> {
-            LayoutTrack layoutTrack = (LayoutTrack) o;
+            LayoutTrack layoutTrack = o;
             selectedPointType = layoutTrack.findHitPointType(dLoc, useRectangles);
             if (!LayoutTrack.isControlHitType(selectedPointType)) {
                 selectedPointType = LayoutTrack.NONE;
@@ -5247,7 +5245,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         foundObject = null;
         foundPointType = LayoutTrack.NONE;
         Optional<LayoutTrack> opt = layoutTrackList.stream().filter(o -> {
-            LayoutTrack layoutTrack = (LayoutTrack) o;
+            LayoutTrack layoutTrack = o;
             if ((layoutTrack != avoid) && (layoutTrack != selectedObject)) {
                 foundPointType = layoutTrack.findHitPointType(loc, false, requireUnconnected);
             }
@@ -5426,7 +5424,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     public static Point2D getCoords(@Nonnull LayoutTrack o, int connectionType) {
         Point2D result = MathUtil.zeroPoint2D;
         if (o != null) {
-            result = ((LayoutTrack) o).getCoordsForConnectionType(connectionType);
+            result = o.getCoordsForConnectionType(connectionType);
         } else {
             log.error("Null connection point of type {}", connectionType);
         }
@@ -5696,7 +5694,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                     ((LayoutTurntable) foundObject).showRayPopUp(event, foundPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
                 }
             } else if (LayoutTrack.isPopupHitType(foundPointType)) {
-                ((LayoutTrack) foundObject).showPopup(event);
+                foundObject.showPopup(event);
             } else {
                 log.warn("Unknown foundPointType:" + foundPointType);
             }
@@ -5897,7 +5895,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                     case LayoutTrack.SLIP_LEFT:
                     case LayoutTrack.SLIP_RIGHT:
                     case LayoutTrack.TURNTABLE_CENTER: {
-                        amendSelectionGroup((LayoutTrack) foundObject);
+                        amendSelectionGroup(foundObject);
                         break;
                     }
 
@@ -5988,7 +5986,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 case LayoutTrack.SLIP_B:
                 case LayoutTrack.SLIP_C:
                 case LayoutTrack.SLIP_D: {
-                    LayoutTrack lt = (LayoutTrack) foundObject;
+                    LayoutTrack lt = foundObject;
                     try {
                         if (lt.getConnection(foundPointType) == null) {
                             lt.setConnection(foundPointType, t, LayoutTrack.TRACK);
@@ -6928,8 +6926,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         String name = finder.uniqueName("T", numTrackSegments++);
 
         //create object
-        newTrack = new TrackSegment(name, (LayoutTrack) beginObject, beginPointType,
-                (LayoutTrack) foundObject, foundPointType, dashedLine.isSelected(),
+        newTrack = new TrackSegment(name, beginObject, beginPointType,
+                foundObject, foundPointType, dashedLine.isSelected(),
                 mainlineTrack.isSelected(), this);
 
         layoutTrackList.add(newTrack);

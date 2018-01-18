@@ -1,6 +1,5 @@
 package jmri.jmrix;
 
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -25,6 +24,11 @@ abstract public class SystemConnectionMemoTestBase {
        Assert.assertTrue("Memo Provides Consist Manager",scm.provides(jmri.ConsistManager.class));
     }
 
+    @Test
+    public void testGetAndSetPrefix() {
+       scm.setSystemPrefix("A2");
+       Assert.assertEquals("System Prefix after set","A2",scm.getSystemPrefix());
+    }
 
     // The minimal setup for log4J
     @Before

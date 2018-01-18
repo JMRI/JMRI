@@ -7,7 +7,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -127,7 +126,7 @@ abstract public class PositionableTestBase{
     @Test
     public void testClone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Positionable p2 = p.deepClone();
+        p.deepClone();
 
         // this next line is consistently failing (on all object types).  
         // It should pass.

@@ -102,7 +102,10 @@
         </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:token">
-      <xs:minLength value="2"/>
+        <!-- "[A-Z]([0-9]*)[A-Z].*" is more correct, but fails lots of short signal head names -->
+        <!-- type letter pattern can also be constrained: ABCHLMOPRSTX but also Y? -->
+        <!-- the following is "at least two characters" -->
+             <xs:pattern value="..*"/>
     </xs:restriction>
   </xs:simpleType>
   
@@ -259,7 +262,7 @@
     </xs:annotation>
     <xs:restriction base="xs:normalizedString">
         <!-- accepts, but should not, the greater than and less than characters in file names -->
-      <xs:pattern value="((program:|preference:|settings:|home:|profile:|file:|[a-zA-Z]:|/)(/|\\|[^\\/?*:;{}]+)+|https?://.+/?.*)"/>
+      <xs:pattern value="((resource:|program:|preference:|settings:|home:|profile:|file:|scripts:|[a-zA-Z]:|/)(/|\\|[^\\/?*:;{}]+)+|https?://.+/?.*)"/>
     </xs:restriction>
   </xs:simpleType>
 

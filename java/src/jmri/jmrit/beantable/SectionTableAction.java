@@ -190,7 +190,7 @@ public class SectionTableAction extends AbstractTableAction {
 
                         @Override
                         public void run() {
-                            String sName = (String) getValueAt(row, SYSNAMECOL);
+                            String sName = ((Section) getValueAt(row, SYSNAMECOL)).getSystemName();
                             editPressed(sName);
                         }
                     }
@@ -717,7 +717,7 @@ public class SectionTableAction extends AbstractTableAction {
         }
 
         // attempt to create the new Section
-        String sName = sysName.getText().trim().toUpperCase(); // N11N
+        String sName = InstanceManager.getDefault(jmri.SectionManager.class).normalizeSystemName(sysName.getText()); // N11N
         try {
             if (_autoSystemName.isSelected()) {
                 curSection = sectionManager.createNewSection(uName);

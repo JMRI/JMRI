@@ -35,7 +35,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2011
  *
  */
