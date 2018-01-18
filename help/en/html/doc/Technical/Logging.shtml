@@ -8,7 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: How to Use the Logging Facilities</title>
-  <meta name="Author" content="Bob Jacobsen">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI log4j logging log">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->

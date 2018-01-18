@@ -5,14 +5,12 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2009 -->
 
   <title>JMRI: Entry/Exit Tools</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta name="Date.Modified" content="20140515">
-  <meta name="Author" content="Kevin Dickerson, Egbert Broerse">
+  <meta name="author" content="Kevin Dickerson, Egbert Broerse">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"

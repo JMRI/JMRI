@@ -25,18 +25,20 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Dispatcher</h1><a name="contents" id="contents"></a>
+      <h1>JMRI: DispatcherPro</h1>
 
+      <a name="contents" id="contents"></a>
       <h2>Contents</h2>
 
-      <p>This document describes <b>Dispatcher</b>, and how to use
-      Dispatcher to help with dispatching and running trains on
-      layouts with PanelPro panels. The document is divided into
-      sections; click below to jump to the named section.
-      Underlined items are links to sections of this document or to
+      <p>This document describes the JMRI <b>Dispatcher</b> tools,
+      and how they can help with dispatching and running trains
+      on layouts with PanelPro panels.<br>
+      The text is divided into sections. Underlined items in the
+      table of contents link to sections of this document or to
       other help files.</p>
 
-      <ul>
+      <div class="toc">
+        <ul>
         <li><a href="#intro">Introduction to Dispatcher</a></li>
 
         <li><a href="#glossary">Glossary of Terms</a></li>
@@ -64,15 +66,16 @@
 
         <li><a href="./NewTrain.shtml">Activate New Train
         Window</a></li>
-      </ul>
+        </ul>
+      </div>
 
       <a name="intro" id="intro"></a>
       <h2>Introduction to Dispatcher</h2>
 
       <p><b>Dispatcher</b> provides functions and organizes
       information relating to dispatching trains on a model
-      railroad layout. It's main function is allocation of sections
-      of track to various trains running around the layout.
+      railroad layout. It's main function is the allocation of
+      sections of track to various trains running around the layout.
       Dispatcher is not designed to completely replace a human
       dispatcher during a session of running trains, but it should
       make the dispatching job easier and more fun. Dispatcher is
@@ -86,7 +89,7 @@
       <b>Blocks</b>, and that Blocks along the mainline be
       organized into <b><a href=
       "../beantable/SectionTable.shtml">Sections</a></b>. It also
-      requires that Sections be used to define routes, called
+      requires that Sections be used to define itineraries, called
       <b><a href=
       "../beantable/TransitTable.shtml">Transits</a></b>, that
       describe paths that trains will follow when active on the
@@ -94,7 +97,7 @@
       can be monitored individually. <b>Sections</b> are groups of
       one or more Blocks that are <i>allocated</i> as a unit by the
       dispatcher using <b>Dispatcher</b> functions. <b>Blocks</b>
-      are usually defined to facilitate signaling on a layout.
+      are usually defined to support signaling on a layout.
       Simplest use of Dispatcher does not require that block
       detection hardware or signals be installed on the physical
       layout, or even that the physical layout be divided into
@@ -104,20 +107,24 @@
       if hardware signals are present on the layout, and signal
       logic uses Section direction sensors.</p>
 
-      <p>Functionality provided by Dispatcher includes: support for
-      train start up and termination, information to allow easy set
-      up of meets at passing sidings, automation of some dispatcher
-      functions, set up of automatic running of trains, support for
-      starting trains according to a fast clock, support for
-      linking signals to allocation via simple APB signaling
-      support, optional automatic setting of turnouts when a
-      section of track is allocated, and finally automatic running
-      of trains along with manually run trains. Initial versions of
-      these functions are included in the current version of
-      Dispatcher; enhancements will follow in future releases of
-      JMRI.</p>
+      <p>Functionality provided by Dispatcher includes:</p>
+      <ul>
+        <li>support for train start up and termination</li>
+        <li>information to allow easy set up of meets at passing
+        sidings</li>
+        <li>automation of some dispatcher functions, set up of
+        automatic running of trains</li>
+        <li>support for starting trains according to a fast clock</li>
+        <li>support for linking signals to allocation via
+        simple APB signaling support</li>
+        <li>optional automatic setting of turnouts when a section
+        of track is allocated</li>
+        <li>automatic running of trains along with</li>
+        <li>manually run trains.
+      </ul>
+      <p>Enhancements will follow in future releases of JMRI.</p>
 
-      <p>Central to <b>Dispatcher</b> is an <b>Active Train</b>,
+      <p>Central to <b>Dispatcher</b> is the <b>Active Train</b>,
       which carries the information needed to run a train around
       the layout. Basically, an <b>Active Train</b> is created by
       the dispatcher by linking a <b>Transit</b> and a
@@ -347,8 +354,9 @@
       initiated when a train is in a Section of the Transit.
       Actions are set up when Transits are created or edited in the
       <b><a href="../beantable/TransitTable.shtml">Transit
-      Table</a></b>.</p><a name="window" id="window"></a>
+      Table</a></b>.</p>
 
+      <a name="window" id="window"></a>
       <h2>The Dispatcher Window</h2>
 
       <p>The <b>Dispatcher</b> window is opened when
@@ -372,7 +380,7 @@
       <img src="images/DispatcherWindow.jpg" height="586" width="802">
 
       <p>In the example above, three Active Trains have been
-      created:
+      created:</p>
         <ol>
         <li>The top Active Train, GTW 6418, has been allocated a
         Section and is RUNNING in AUTOMATIC mode.</li>
@@ -383,7 +391,7 @@
         <li>The third Active Train, Amtrak 139, is scheduled to start
         at 8:35 on the fast clock, and will run in AUTOMATIC mode.</li>
         </ol>
-      Allocation Requests
+      <p>Allocation Requests
       have been entered for the next Sections needed by two of the
       Active Trains. The requested Sections are FREE and
       UNOCCUPIED, so the dispatcher could allocate either of them
@@ -999,7 +1007,7 @@
       </ul>
 
       <p>Note: Overall ramping rates can be adjusted in Dispatcher
-      Options.</p>
+      <a href="Options.shtml">Options</a>.</p>
 
       <p>When traversing the layout, an Auto Active Train changes
       speed in response to the signals it passes. If the next
@@ -1102,7 +1110,8 @@
           displayed, but must show up in the submenu of Panels/Show
           Panel. If multiple Layout Editor panels are present,
           Dispatcher will use the Layout Editor panel selected in
-          Dispatcher Options. The Layout Editor panel acts
+          Dispatcher <a href="Options.shtml">Options</a>.
+          The Layout Editor panel acts
           as a connectivity database, supplying connectivity
           information as needed to Dispatcher or the Auto Active
           Train's <i>virtual engineer</i>.</p>
@@ -1201,6 +1210,14 @@
       starts and speeds, the signalling should also be flawless,
       including all blocks, turnouts and direction indicators
       needed.</p>
+
+      <h2>More on Dispatcher</h2>
+      <ul>
+      <li><a href="./Options.shtml">Dispatcher Options</a></li>
+      <li><a href="./NewTrain.shtml">Activate New Train</a>
+      Window</li>
+      </ul>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

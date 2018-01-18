@@ -36,8 +36,9 @@
       etc. in a Git repository hosted on <a href=
       "https://github.com/JMRI">GitHub.com</a>. The <a href=
       "WebSite.shtml">JMRI web site</a> is in a similar repository.
-      <a name="view" id="view"></a></p>
+      </p>
 
+      <a name="view" id="view"></a>
       <h2>Viewing the Code Online</h2>
 
       <p>You can <a href="https://github.com/JMRI/JMRI">browse the
@@ -143,7 +144,7 @@
         desired:<br>
         <a href="images/GhDtCloneDialog.png"><img src=
         "images/GhDtCloneDialog.png" alt=
-        "Clone dialog in GitHub Desktop Mac" height="279" width=
+        "Clone dialog in GitHub Desktop Mac" height="184" width=
         "267"></a><br>
         and click "Clone".</li>
 
