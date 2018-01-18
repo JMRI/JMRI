@@ -140,6 +140,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             public void actionPerformed(ActionEvent e) { cancelPressed(e); }
         };
         ActionListener okListener = new ActionListener() {
+            /** {@inheritDoc} */
             @Override
             public void actionPerformed(ActionEvent a) {
                 addToTable();
@@ -259,6 +260,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         return _model.getBeanAt(row);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
         return new IconDragJLabel(flavor, map, icon);
@@ -273,6 +275,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             iMap = map;
         }
         
+        /** {@inheritDoc} */
         @Override
         protected boolean okToDrag() {
             NamedBean bean = getDeviceNamedBean();
@@ -284,6 +287,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             return true;
         }
 
+        /** {@inheritDoc} */
         @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {

@@ -63,7 +63,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2010
  * @author Egbert Broerse 2017
  */
-public class SignalGroupTableAction extends AbstractTableAction implements PropertyChangeListener {
+public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> implements PropertyChangeListener {
 
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
@@ -110,7 +110,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<SignalGroup>() {
             static public final int COMMENTCOL = 2;
             static public final int DELETECOL = 3;
             static public final int ENABLECOL = 4;
@@ -195,14 +195,14 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
             @Override
             public Object getValueAt(int row, int col) {
-                NamedBean b;
+                SignalGroup b;
                 if (col == EDITCOL) {
                     return Bundle.getMessage("ButtonEdit");
                 } else if (col == ENABLECOL) {
                     return Boolean.valueOf(((SignalGroup) getValueAt(row, SYSNAMECOL)).getEnabled());
                     //return true;
                 } else if (col == COMMENTCOL) {
-                    b = (NamedBean) getValueAt(row, SYSNAMECOL);
+                    b = (SignalGroup) getValueAt(row, SYSNAMECOL);
                     return (b != null) ? b.getComment() : null;
                 } else if (col == DELETECOL) //
                 {
@@ -272,7 +272,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
              * it.
              */
             @Override
-            void doDelete(NamedBean bean) {
+            void doDelete(SignalGroup bean) {
                 //((SignalGroup)bean).deActivateSignalGroup();
                 super.doDelete(bean);
             }
@@ -288,17 +288,17 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             }
 
             @Override
-            public Manager getManager() {
+            public SignalGroupManager getManager() {
                 return InstanceManager.getDefault(SignalGroupManager.class);
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public SignalGroup getBySystemName(String name) {
                 return InstanceManager.getDefault(SignalGroupManager.class).getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public SignalGroup getByUserName(String name) {
                 return InstanceManager.getDefault(SignalGroupManager.class).getByUserName(name);
             }
 
@@ -318,7 +318,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             }
 
             @Override
-            public void clickOn(NamedBean t) { // mute action
+            public void clickOn(SignalGroup t) { // mute action
                 //((SignalGroup)t).setSignalGroup();
             }
 

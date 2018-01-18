@@ -41,6 +41,7 @@ import jmri.Logix;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Route;
+import jmri.RouteManager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.implementation.DefaultConditionalAction;
@@ -64,7 +65,7 @@ import org.slf4j.LoggerFactory;
  * @author Egbert Broerse Copyright (C) 2016
  *
  */
-public class RouteTableAction extends AbstractTableAction {
+public class RouteTableAction extends AbstractTableAction<Route> {
 
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
@@ -114,7 +115,7 @@ public class RouteTableAction extends AbstractTableAction {
             Bundle.getMessage("OnConditionChange")
         };
 
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Route>() {
             static public final int ENABLECOL = NUMCOLUMN;
             static public final int LOCKCOL = ENABLECOL + 1;
             static public final int SETCOL = ENABLECOL + 2;
@@ -222,7 +223,7 @@ public class RouteTableAction extends AbstractTableAction {
                         if (((String) value).equals("")) {
                             value = null;
                         } else {
-                            NamedBean nB = getByUserName((String) value);
+                            Route nB = getByUserName((String) value);
                             if (nB != null) {
                                 log.error("User Name is not unique " + value);
                                 String msg;
@@ -233,7 +234,7 @@ public class RouteTableAction extends AbstractTableAction {
                                 return;
                             }
                         }
-                        NamedBean nBean = getBySystemName(sysNameList.get(row));
+                        Route nBean = getBySystemName(sysNameList.get(row));
                         nBean.setUserName((String) value);
                         fireTableRowsUpdated(row, row);
                         break;
@@ -291,8 +292,8 @@ public class RouteTableAction extends AbstractTableAction {
              * Deactivate the Route, then use the superclass to delete it.
              */
             @Override
-            void doDelete(NamedBean bean) {
-                ((Route) bean).deActivateRoute();
+            void doDelete(Route bean) {
+                bean.deActivateRoute();
                 super.doDelete(bean);
             }
 
@@ -310,18 +311,18 @@ public class RouteTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
-                return jmri.InstanceManager.getDefault(jmri.RouteManager.class);
+            public RouteManager getManager() {
+                return jmri.InstanceManager.getDefault(RouteManager.class);
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
-                return jmri.InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(name);
+            public Route getBySystemName(String name) {
+                return jmri.InstanceManager.getDefault(RouteManager.class).getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
-                return jmri.InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(name);
+            public Route getByUserName(String name) {
+                return jmri.InstanceManager.getDefault(RouteManager.class).getByUserName(name);
             }
 
             @Override
@@ -330,8 +331,8 @@ public class RouteTableAction extends AbstractTableAction {
             }
 
             @Override
-            public void clickOn(NamedBean t) {
-                ((Route) t).setRoute();
+            public void clickOn(Route t) {
+                t.setRoute();
             }
 
             @Override
