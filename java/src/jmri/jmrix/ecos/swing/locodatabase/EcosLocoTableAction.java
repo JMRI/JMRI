@@ -110,7 +110,7 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
 
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel<NamedBean>() { // this is a hack to get this to compile, as EcosLocoAddress is itself a NamedBean
+        m = new BeanTableDataModel<NamedBean>() { // this is a hack to get this to compile, as EcosLocoAddress is itself not a NamedBean
 
             //We have to set a manager first off, but this gets replaced.
             @Override
