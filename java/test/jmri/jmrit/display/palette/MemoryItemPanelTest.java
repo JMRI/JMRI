@@ -22,7 +22,7 @@ public class MemoryItemPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel tableModel = PickListModel.memoryPickModelInstance(); // N11N
+        PickListModel<jmri.Memory> tableModel = PickListModel.memoryPickModelInstance(); // N11N
         Editor editor = new EditorScaffold();
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             ip = ItemPalette.getDefault("test palette", editor);
