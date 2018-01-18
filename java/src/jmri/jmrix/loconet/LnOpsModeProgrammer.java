@@ -279,9 +279,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
                 ProgListener temp = p;
                 p = null;
-                if (temp != null) {
-                    temp.programmingOpReply(val, code);
-                }
+                temp.programmingOpReply(val, code);
 
                 return;
             }
@@ -299,9 +297,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
             ProgListener temp = p;
             p = null;
-            if (temp != null) {
-                temp.programmingOpReply(val, code);
-            }
+            temp.programmingOpReply(val, code);
 
 
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
@@ -340,9 +336,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
                 }
                 ProgListener temp = p;
                 p = null;
-                if (temp != null) {
-                    temp.programmingOpReply(val, code);
-                }
+                temp.programmingOpReply(val, code);
             }
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             // see if reply to LNSV 1 or LNSV2 request
