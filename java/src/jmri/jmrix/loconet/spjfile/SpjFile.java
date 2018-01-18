@@ -363,7 +363,7 @@ public class SpjFile {
         // associated with this header is found
         int recordStart;
 
-        // Offset in overall buffer where the data part of the 
+        // Offset in overall buffer where the data part of the
         // record associated with this header is found
         int dataStart;
 
@@ -672,7 +672,7 @@ public class SpjFile {
         /**
          * Read a 2-byte integer, handling little-endian-ness of SPJ files
          */
-        @SuppressWarnings("unused")
+        @Deprecated
         private int readInt2(InputStream s) throws java.io.IOException {
             int i1 = s.read() & 0xFF;
             int i2 = s.read() & 0xFF;

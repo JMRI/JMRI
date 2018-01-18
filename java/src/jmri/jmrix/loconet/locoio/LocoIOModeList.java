@@ -73,7 +73,7 @@ public class LocoIOModeList {
         }
     }
 
-    @SuppressWarnings("unused")
+    @Deprecated
     private void test() {
         /**
          * This should go into a JUnit test
