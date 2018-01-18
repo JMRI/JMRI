@@ -10,7 +10,7 @@
   "license": "GPL-2.0",
   "dependencies": {
     "angular": "1.6.8",
-    "angular-patternfly": "4.14.0",
+    "angular-patternfly": "4.14.4",
     "angular-resource": "1.6.8",
     "angular-route": "1.6.8",
     "angular-translate": "2.17.0",
