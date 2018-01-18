@@ -102,7 +102,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
              */
             @Override
             void extras() {
-                addToFrame(null);
+                addToFrame(this);
             }
         };
         setTitle();
