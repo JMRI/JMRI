@@ -29,7 +29,7 @@ public class PackageTest extends TestCase {
         suite.addTest(EngineLengthsTest.suite());
         suite.addTest(EngineTypesTest.suite());
         suite.addTest(EngineModelsTest.suite());
-        suite.addTest(NceConsistEnginesTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceConsistEnginesTest.class));
         suite.addTest(EngineManagerTest.suite());
         suite.addTest(XmlTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
