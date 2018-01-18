@@ -26,12 +26,12 @@
 
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
     <h1>JMRI: Entry/Exit (NX) Routing Documentation</h1>
 
-    <p>Note:  References to <strong>turnout</strong> include all types including
-    slips and cross-overs.</p>
+    <p>Note:  References to <strong>turnout</strong> in this documentation
+    include all types, including slips and cross-overs.</p>
     
     <h2>Overview</h2>
     <p>NX Routing builds a dynamic valid path between two
@@ -41,7 +41,7 @@
     defined by the placement of Sensors at various Block
     boundaries. When two Sensors are activated and a clear and
     valid route is found between them, then the Turnouts in the
-    route will automatically be set accordingly.  If the path between
+    route will automatically be set accordingly. If the path between
     the two sensors was created with the type set to <strong>Full Interlock</strong>,
     then the blocks will be reserved and will display a different track
     color.</p>
@@ -52,11 +52,13 @@
     already occupied and there is a valid alternative path, then
     this will be taken.</p>
 
-    <p>The two sensors are referred to as a <strong>NX Pair</strong>.  <em>It is
-    also possible to define a NX pair where the destination sensor is on another
+    <p>The two sensors are referred to as an <strong>NX Pair</strong>.<br>
+    <em>It is
+    also possible to define an NX pair where the destination sensor is on another
     panel. This requires that the panels are linked using <strong>Edge
     Connectors</strong>.</em><span class="since">since 4.11.1</span></p>
 
+    <a name="nxtypes" id="nxtypes"></a>
     <h3>Entry/Exit Types</h3>
     <p>There are three different types of Entry/Exit pairs that can be
     configured.</p>
@@ -175,9 +177,10 @@
     </div>
 
     <p><strong>Auto Generate Entry-Exit Pairs</strong>
-    will discover all the valid Entry Exit pairs on the layout. Using the
+    will discover all the valid Entry Exit pairs on the Layout Editor layout. Using the
     combo boxes it is also possible to manually add in additional Entry Exit
-    pairs. In all cases when the <strong>From</strong> Sensor is set active
+    pairs.<br>
+    In all cases when the <strong>From</strong> Sensor is set active
     followed by the <b>To</b> Sensor, the route will be set between those two
     points and the two Sensors will return back to the "Inactive" state. If the
     <strong>Both Way</strong> option is ticked, then it is possible to activate
@@ -246,8 +249,8 @@
 
     <p>Once a route has been stacked, the system will check every 10 seconds to
     see if it is possible to set-up that NX route. Multiple NX routes can be
-    stacked, and they are checked in the order which they were stacked. A NX
-    route cannot be stacked more than once. To cancel a NX route, select it in
+    stacked, and they are checked in the order which they were stacked. An NX
+    route cannot be stacked more than once. To cancel an NX route, select it in
     the table and click on the "Cancel" button at the bottom.</p>
 
     <h3>Route Stacking &mdash; Conflicts</h3>
@@ -280,9 +283,9 @@
       </li>
       <li>Actions<span class="since">since 4.11.1</span>
         <ul>
-          <li>Set NX Pair Enabled &mdash; Enable a NX Pair.  When enabled, it can
+          <li>Set NX Pair Enabled &mdash; Enable an NX Pair.  When enabled, it can
           used to create a route.</li>
-          <li>Set NX Pair Disabled &mdash; Disable a NX Pair.  This will prevent
+          <li>Set NX Pair Disabled &mdash; Disable an NX Pair.  This will prevent
           the use of the pair to create a route.</li>
           <li>Set NX Pair Segment Active / Inactive &mdash; If the route is not
           active, create the route, otherwise clear down, cancel or stack the
@@ -290,6 +293,7 @@
         </ul>
       </li>
     </ul>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
