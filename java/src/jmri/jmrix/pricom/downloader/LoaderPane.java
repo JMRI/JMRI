@@ -20,9 +20,6 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
 import purejavacomm.*;
 
 /**
@@ -418,7 +415,7 @@ public class LoaderPane extends javax.swing.JPanel {
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers 
+            // filter out line printers
             if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
             {
                 portNameVector.addElement(id.getName());
@@ -489,8 +486,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
             //opened = true;
         } catch (NoSuchPortException | UnsupportedCommOperationException | IOException | RuntimeException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
         return null; // indicates OK return

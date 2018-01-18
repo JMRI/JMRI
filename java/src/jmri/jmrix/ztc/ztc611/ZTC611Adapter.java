@@ -15,8 +15,6 @@ import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
 import purejavacomm.SerialPort;
-import purejavacomm.SerialPortEvent;
-import purejavacomm.SerialPortEventListener;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
@@ -90,12 +88,10 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("IO exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("IO exception while opening port {}", portName, ex);
             return "IO Exception while opening port " + portName + ": " + ex;
         } catch (UnsupportedCommOperationException ucex) {
-            log.error("unsupported Comm Operation exception while opening port " + portName + " trace follows: " + ucex);
-            ucex.printStackTrace();
+            log.error("unsupported Comm Operation exception while opening port {}", portName, ucex);
             return "Unsupported Comm Exception while opening port " + portName + ": " + ucex;
         }
 
