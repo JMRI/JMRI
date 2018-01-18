@@ -669,16 +669,6 @@ public class SpjFile {
             return index;
         }
 
-        /**
-         * Read a 2-byte integer, handling little-endian-ness of SPJ files
-         */
-        @Deprecated
-        private int readInt2(InputStream s) throws java.io.IOException {
-            int i1 = s.read() & 0xFF;
-            int i2 = s.read() & 0xFF;
-            return i1 + (i2 << 8);
-        }
-
         public String typeAsString() {
             if (type == -1) {
                 return " initial "; // NOI18N
