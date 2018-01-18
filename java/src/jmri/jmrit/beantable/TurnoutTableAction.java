@@ -166,7 +166,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
         // create the data model object that drives the table
         // note that this is a class creation, and very long
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Turnout>() {
 
             @Override
             public int getColumnCount() {
@@ -568,17 +568,17 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
+            public Manager<Turnout> getManager() {
                 return turnManager;
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public Turnout getBySystemName(String name) {
                 return turnManager.getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public Turnout getByUserName(String name) {
                 return InstanceManager.getDefault(TurnoutManager.class).getByUserName(name);
             }
 
@@ -588,12 +588,12 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
 
             @Override
-            public void clickOn(NamedBean t) {
-                int state = ((Turnout) t).getCommandedState();
+            public void clickOn(Turnout t) {
+                int state = t.getCommandedState();
                 if (state == Turnout.CLOSED) {
-                    ((Turnout) t).setCommandedState(Turnout.THROWN);
+                    t.setCommandedState(Turnout.THROWN);
                 } else {
-                    ((Turnout) t).setCommandedState(Turnout.CLOSED);
+                    t.setCommandedState(Turnout.CLOSED);
                 }
             }
 

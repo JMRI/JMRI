@@ -260,7 +260,7 @@ public class AudioTableAction extends AbstractTableAction {
     /**
      * Define abstract AudioTableDataModel
      */
-    abstract public class AudioTableDataModel extends BeanTableDataModel implements PropertyChangeListener {
+    abstract public class AudioTableDataModel extends BeanTableDataModel<Audio> implements PropertyChangeListener {
 
         char subType;
 
@@ -420,7 +420,7 @@ public class AudioTableAction extends AbstractTableAction {
         }
 
         @Override
-        protected void clickOn(NamedBean t) {
+        protected void clickOn(Audio t) {
             // Do nothing
         }
 

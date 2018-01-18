@@ -67,7 +67,7 @@ public class ReporterTableAction extends AbstractTableAction {
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Reporter>() {
             public static final int LASTREPORTCOL = NUMCOLUMN;
 
             @Override
@@ -81,17 +81,17 @@ public class ReporterTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
+            public ReporterManager getManager() {
                 return reportManager;
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public Reporter getBySystemName(String name) {
                 return reportManager.getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public Reporter getByUserName(String name) {
                 return reportManager.getByUserName(name);
             }
 
@@ -101,7 +101,7 @@ public class ReporterTableAction extends AbstractTableAction {
             }
 
             @Override
-            public void clickOn(NamedBean t) {
+            public void clickOn(Reporter t) {
                 // don't do anything on click; not used in this class, because
                 // we override setValueAt
             }
@@ -109,7 +109,7 @@ public class ReporterTableAction extends AbstractTableAction {
             @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col == VALUECOL) {
-                    Reporter t = (Reporter) getBySystemName(sysNameList.get(row));
+                    Reporter t = getBySystemName(sysNameList.get(row));
                     t.setReport(value);
                     fireTableRowsUpdated(row, row);
                 }
@@ -158,7 +158,7 @@ public class ReporterTableAction extends AbstractTableAction {
             @Override
             public Object getValueAt(int row, int col) {
                 if (col == LASTREPORTCOL) {
-                    Reporter t = (Reporter) getBySystemName(sysNameList.get(row));
+                    Reporter t = getBySystemName(sysNameList.get(row));
                     return t.getLastReport();
                 }
                 return super.getValueAt(row, col);

@@ -100,7 +100,7 @@ public class TransitTableAction extends AbstractTableAction {
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Transit>() {
 
             static public final int EDITCOL = NUMCOLUMN;
             static public final int DUPLICATECOL = EDITCOL + 1;
@@ -120,17 +120,17 @@ public class TransitTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
+            public TransitManager getManager() {
                 return InstanceManager.getDefault(jmri.TransitManager.class);
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public Transit getBySystemName(String name) {
                 return InstanceManager.getDefault(jmri.TransitManager.class).getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public Transit getByUserName(String name) {
                 return InstanceManager.getDefault(jmri.TransitManager.class).getByUserName(name);
             }
 
@@ -140,7 +140,7 @@ public class TransitTableAction extends AbstractTableAction {
             }
 
             @Override
-            public void clickOn(NamedBean t) {
+            public void clickOn(Transit t) {
             }
 
             @Override
@@ -156,7 +156,7 @@ public class TransitTableAction extends AbstractTableAction {
                         log.debug("row is greater than name list");
                         return "";
                     }
-                    Transit z = (Transit) getBySystemName(sysNameList.get(row));
+                    Transit z = getBySystemName(sysNameList.get(row));
                     if (z == null) {
                         return "";
                     } else {

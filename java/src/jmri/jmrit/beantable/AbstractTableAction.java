@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
 import jmri.Manager;
+import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
-abstract public class AbstractTableAction extends AbstractAction {
+abstract public class AbstractTableAction<E extends NamedBean> extends AbstractAction {
 
     public AbstractTableAction(String actionName) {
         super(actionName);
@@ -27,7 +28,7 @@ abstract public class AbstractTableAction extends AbstractAction {
         super(actionName);
     }
 
-    protected BeanTableDataModel m;
+    protected BeanTableDataModel<E> m;
 
     /**
      * Create the JTable DataModel, along with the changes for the specific

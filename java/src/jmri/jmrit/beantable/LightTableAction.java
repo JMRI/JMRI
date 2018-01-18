@@ -104,7 +104,7 @@ public class LightTableAction extends AbstractTableAction {
         // load graphic state column display preference
         _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
 
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Light>() {
             static public final int ENABLECOL = NUMCOLUMN;
             static public final int INTENSITYCOL = ENABLECOL + 1;
             static public final int EDITCOL = INTENSITYCOL + 1;
@@ -290,8 +290,8 @@ public class LightTableAction extends AbstractTableAction {
              * Deactivate the light, then use the superclass to delete it.
              */
             @Override
-            void doDelete(NamedBean bean) {
-                ((Light) bean).deactivateLight();
+            void doDelete(Light bean) {
+                bean.deactivateLight();
                 super.doDelete(bean);
             }
 
@@ -302,17 +302,17 @@ public class LightTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
+            public LightManager getManager() {
                 return lightManager;
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public Light getBySystemName(String name) {
                 return lightManager.getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public Light getByUserName(String name) {
                 return InstanceManager.getDefault(LightManager.class).getByUserName(name);
             }
 
@@ -322,8 +322,8 @@ public class LightTableAction extends AbstractTableAction {
             }
 
             @Override
-            public void clickOn(NamedBean t) {
-                int oldState = ((Light) t).getState();
+            public void clickOn(Light t) {
+                int oldState = t.getState();
                 int newState;
                 switch (oldState) {
                     case Light.ON:
@@ -337,7 +337,7 @@ public class LightTableAction extends AbstractTableAction {
                         log.warn("Unexpected Light state {} becomes OFF", oldState);
                         break;
                 }
-                ((Light) t).setState(newState);
+                t.setState(newState);
             }
 
             @Override
