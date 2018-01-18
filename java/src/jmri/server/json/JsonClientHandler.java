@@ -138,6 +138,7 @@ public class JsonClientHandler {
             if (type.equals(LIST)) {
                 String list = root.path(LIST).asText();
                 if (this.services.get(list) != null) {
+                    log.debug("Processing list {} with {}", list, data);
                     for (JsonSocketService service : this.services.get(list)) {
                         service.onList(list, data, this.connection.getLocale());
                     }
