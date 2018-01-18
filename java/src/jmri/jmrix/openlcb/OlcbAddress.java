@@ -7,6 +7,7 @@ import jmri.jmrix.can.CanReply;
 import org.openlcb.EventID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.annotation.Nonnull;
 
 /**
  * Utilities for handling OpenLCB event messages as addresses.
@@ -40,6 +41,20 @@ public class OlcbAddress {
 
     static final int NODEFACTOR = 100000;
 
+    /** 
+     * Construct from OlcbEvent
+     *
+     */
+    public OlcbAddress(EventID e) {
+        byte[] contents = e.getContents();
+        aFrame = new int[contents.length];
+        int i = 0;
+        for (byte b : contents) {
+            aFrame[i++] = b;
+        }
+        aString = toCanonicalString();
+    }
+    
     /**
      * Construct from string without leading system or type letters
      * @param s hex coded string of address
@@ -107,6 +122,22 @@ public class OlcbAddress {
         return ret;
     }
 
+    public int compare(@Nonnull OlcbAddress opp) {
+        // if neither matched, just do a lexical sort
+        if (!match && !opp.match) return aString.compareTo(opp.aString);
+        
+        // match sorts before non-matched
+        if (match && !opp.match) return -1;
+        if (!match && opp.match) return +1;
+        
+        // usual case: comparing on content
+        for (int i = 0; i < Math.min(aFrame.length, opp.aFrame.length); i++) {
+            if (aFrame[i] != opp.aFrame[i]) return Integer.signum(aFrame[i] - opp.aFrame[i]);
+        }
+        // check for different length (shorter sorts first)
+        return Integer.signum(aFrame.length - opp.aFrame.length);
+    }
+    
     public CanMessage makeMessage() {
         CanMessage c = new CanMessage(aFrame, 0x195B4000);
         c.setExtended(true);

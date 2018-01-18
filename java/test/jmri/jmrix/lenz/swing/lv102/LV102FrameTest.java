@@ -20,8 +20,7 @@ public class LV102FrameTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // infrastructure objects
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        new XNetInterfaceScaffold(new LenzCommandStation());
 
         LV102Frame f = new LV102Frame();
         Assert.assertNotNull(f);

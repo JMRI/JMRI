@@ -4,7 +4,7 @@
  <title>
       JMRI: Configure Acela Nodes
  </title>
-    <meta content="Bob Jacobsen" name="Author">
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI help configure grapevine node">
 
 <!-- Style -->

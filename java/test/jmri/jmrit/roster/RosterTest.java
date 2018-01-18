@@ -200,7 +200,7 @@ public class RosterTest {
 
         // create a file in "temp"
         File rosterDir = folder.newFolder();
-        File backupDir = folder.newFolder();
+        folder.newFolder();
         FileUtil.createDirectory(rosterDir);
         File f = new File(rosterDir, "roster.xml");
 

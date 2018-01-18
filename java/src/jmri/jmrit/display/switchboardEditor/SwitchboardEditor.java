@@ -142,8 +142,6 @@ public class SwitchboardEditor extends Editor {
     private JScrollPane editToolBarScroll = null;
     private JPanel editToolBarContainer = null;
     private Color defaultTextColor = Color.BLACK;
-    // option menu items not in Editor
-    private boolean showHelpBar = true;
     private boolean _hideUnconnected = false;
     //saved state of options when panel was loaded or created
     private boolean savedEditMode = true; // TODO store/load accordingly
@@ -232,7 +230,7 @@ public class SwitchboardEditor extends Editor {
         beanSetupPane.setLayout(new FlowLayout(FlowLayout.TRAILING));
         JLabel beanTypeTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanTypeLabel")));
         beanSetupPane.add(beanTypeTitle);
-        beanTypeList = new JComboBox(beanTypeStrings);
+        beanTypeList = new JComboBox<>(beanTypeStrings);
         beanTypeList.setSelectedIndex(0); // select Turnout in comboBox
         beanTypeList.setActionCommand(LAYER_COMMAND);
         beanTypeList.addActionListener(this);
@@ -2011,9 +2009,6 @@ public class SwitchboardEditor extends Editor {
         }
         repaint();
     }
-
-    // ********************* Mouse Methods ***********************
-    private long _clickTime;
 
     @Override
     public void mousePressed(MouseEvent event) {

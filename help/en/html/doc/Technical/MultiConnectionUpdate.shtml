@@ -5,8 +5,6 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2009 -->
-  <!-- $Id$ -->
 
   <title>JMRI: Multi-connection Update</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -132,7 +130,8 @@ the serial/network refactoring.
       "https://github.com/JMRI/JMRI/issues/1383#issuecomment-226808327">
       this GitHub discussion</a> and associated PR for information
       on making startup actions work with more than one connection
-      of the same type. <!--#include virtual="/Footer" --></p>
+      of the same type.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

@@ -189,7 +189,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     JComboBox<String> outputType;
 
     JLabel delayTimeLabel;
-    JComboBox delayTime;
+    JComboBox<String> delayTime;
 
     JLabel outputStatesLabel;
     JComboBox<String> outputStates;
@@ -381,6 +381,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE", justification = "Cannot catch an exception without grabbing the exception, but we don't do anything with the exception details.")
     protected int nextState(int state) {
         if (isWritingResetOpSw) {
             if ((state == 7) && (opsw[7] == true)) {
@@ -2369,7 +2370,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 opswsPanel.add(innerPanel);
                 opswsPanel.add(new JSeparator());
                 opswThrown[i].addItemListener(event -> {
-                    if (event.getSource().getClass().equals(JRadioButtonWithInteger.class)) {
+                    if (event.getSource().getClass() == JRadioButtonWithInteger.class) {
                         JRadioButtonWithInteger source = ((JRadioButtonWithInteger) (event.getSource()));
                         int ind = source.index;
                         boolean st = (event.getStateChange() == ItemEvent.DESELECTED);
@@ -2667,6 +2668,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         updateBasicOpSwTab();
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE", justification = "Cannot catch an exception without grabbing the exception, but we don't do anything with the exception details.")
     private void updateGuiFromOpSws49_64() {
         Integer readValue;
         boolean isUsed = true;
@@ -2815,6 +2817,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE", justification = "Cannot catch an exception without grabbing the exception, but we don't do anything with the exception details.")
     void updateGuiFromOpSws33_48() {
         Integer readValue;
         boolean isUsed = true;

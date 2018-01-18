@@ -189,10 +189,10 @@
       until after restarting the program</p>
 
       <p><a href=
-      "../../../../../jython/JmriDemo.py">JmriDemo.py</a></p>
+            "../../../../../jython/PanelPro.py">PanelPro.py</a></p>
 
-      <p>Python code to start a JmriDemo app, complete with menu
-      bar (probably obsolete at this point, the usual method now is
+      <p>Python code to start a PanelPro app, complete with menu
+          bar (probably obsolete at this point, the usual method now is
       to start DecoderPro or PanelPro and then run Python scripts
       from within it; left as an example of the approach)</p>
 
@@ -269,13 +269,7 @@
       invoke a dialog.</p>
 
       <p><a href=
-      "../../../../../jython/PacketPro.py">PacketPro.py</a></p>
-
-      <p>start the PacketPro Java application, including main
-      menu</p>
-
-      <p><a href=
-      "../../../../../jython/ParallelPortTest.py">ParallelPortTest.py</a></p>
+            "../../../../../jython/ParallelPortTest.py">ParallelPortTest.py</a></p>
 
       <p>Try to send some bytes to a parallel port</p>
 

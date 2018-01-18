@@ -170,7 +170,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
                 programmingOpReply(val, ProgListener.UnknownError);
                 return;
         }
-        InstanceManager.getDefault(CommandStation.class).sendPacket(b, 1); // send packet
+        InstanceManager.getDefault(CommandStation.class).sendPacket(b, 2); // send two packets
 
         // set up a delayed completion reply
         new Thread(new Runnable() {

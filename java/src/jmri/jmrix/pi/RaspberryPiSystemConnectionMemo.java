@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
    public RaspberryPiSystemConnectionMemo(){
-     super("PI","RaspberryPi");
+     super("P","RaspberryPi");
      register(); // registers general type
      InstanceManager.store(this,RaspberryPiSystemConnectionMemo.class); // also register as specific type
      if(log.isDebugEnabled()) log.debug("Created RaspberryPiSystemConnectionMemo");

@@ -6,7 +6,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -15,9 +14,6 @@ import org.junit.Test;
  * @author	Dave Duchamp Copyright 2004
   */
 public class SerialAddressTest {
-
-    private InputBits ibits = null;
-    private OutputBits obits = null;
 
     @Test
     public void testValidateSystemNameFormat() {
@@ -203,8 +199,8 @@ public class SerialAddressTest {
         SerialTrafficControlScaffold tc = new SerialTrafficControlScaffold();
         memo = new MapleSystemConnectionMemo("K", "Maple");
         memo.setTrafficController(tc);
-        ibits = new InputBits(tc);
-        obits = new OutputBits(tc);
+        new InputBits(tc);
+        new OutputBits(tc);
         new SerialNode(4, 0,tc);
         new SerialNode(10, 0,tc);
         new SerialNode(99, 0,tc);

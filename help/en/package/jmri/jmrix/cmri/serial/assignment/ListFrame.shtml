@@ -5,8 +5,6 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
 
   <title>JMRI: Connector Pin Assignments</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -24,11 +22,10 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h2>JMRI: Connector Pin Assignments</h2>This tool lets you
-      check the pin assignments for your C/MRI nodes.
+      <h2>JMRI: Connector Pin Assignments</h2>
+      <p>This tool lets you check the pin assignments for your C/MRI nodes.</p>
 
-      <p>This is the C/MRI cmri.serial.assignment.AssignmentFrame
-      help page. <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

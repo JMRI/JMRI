@@ -1,19 +1,12 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.Color;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionListener;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -61,10 +54,8 @@ public class ReporterItemPanel extends TableItemPanel {
      */
     @Override
     protected void initIconFamiliesPanel() {
-        boolean initialize = false;
         if (_iconFamilyPanel == null) {
             log.debug("new _iconFamilyPanel created");
-            initialize = true;
             _iconFamilyPanel = new JPanel();
             _iconFamilyPanel.setOpaque(true);
             _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));

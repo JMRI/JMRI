@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private Z21XPressNetTunnel _xnettunnel = null;
+    private Z21LocoNetTunnel _loconettunnel = null;
 
     public Z21SystemConnectionMemo() {
         this("Z", "Z21");
@@ -100,6 +101,10 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             // delegate to the XPressNet tunnel.
             return _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);
         }
+        if (_loconettunnel!=null) {
+            // delegate to the LocoNet tunnel.
+            return _loconettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);
+        }
         return super.provides(type); // nothing, by default
     }
 
@@ -118,9 +123,13 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if(T.equals(jmri.MultiMeter.class)){
             return (T) getMultiMeter();
         }
-        if (_xnettunnel!=null) {
+        if (_xnettunnel!=null && _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(T) ) {
             // delegate to the XPressNet tunnel.
             return _xnettunnel.getStreamPortController().getSystemConnectionMemo().get(T);
+        }
+        if (_loconettunnel!=null && _loconettunnel.getStreamPortController().getSystemConnectionMemo().provides(T) ) {
+            // delegate to the LocoNet tunnel.
+            return _loconettunnel.getStreamPortController().getSystemConnectionMemo().get(T);
         }
         return null; // nothing, by default
     }
@@ -139,6 +148,10 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         // set the broadcast flags so we get messages we may want to hear
         z21CommandStation.setXPressNetMessagesFlag(true);
         z21CommandStation.setXPressNetLocomotiveMessagesFlag(true);
+        z21CommandStation.setLocoNetMessagesFlag(true);
+        z21CommandStation.setLocoNetLocomotiveMessagesFlag(true);
+        z21CommandStation.setLocoNetTurnoutMessagesFlag(true);
+        z21CommandStation.setLocoNetOccupancyMessagesFlag(true);
 
         // and forward the flags to the command station.
         _tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(
@@ -146,6 +159,9 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         // add an XpressNet Tunnel.
         _xnettunnel = new Z21XPressNetTunnel(this);
+
+        // add an LocoNet Tunnel.
+        _loconettunnel = new Z21LocoNetTunnel(this);
 
         // set up the Reporter Manager
         if(_rm==null){

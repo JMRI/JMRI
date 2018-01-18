@@ -31,7 +31,6 @@ import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.palette.InitEventListener;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
@@ -551,7 +550,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Background"));
         _tabIndex.put("Background", iconPanel);
 
-        iconPanel = new TextItemPanel((ItemPalette) palette, "Text", editor);
+        iconPanel = new TextItemPanel(palette, "Text", editor);
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Text"));
         _tabIndex.put("Text", iconPanel);
 

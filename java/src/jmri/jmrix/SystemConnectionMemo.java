@@ -177,8 +177,9 @@ abstract public class SystemConnectionMemo extends Bean {
      * @return The manager or null
      */
     @OverridingMethodsMustInvokeSuper
+    @SuppressWarnings("unchecked") // dynamic checking done on cast of getConsistManager
     public <T> T get(Class<?> T) {
-        if (T.equals(jmri.ConsistManager.class)) {
+        if (T.equals(ConsistManager.class)) {
             return (T) getConsistManager();
         } else {
             return null; // nothing, by default

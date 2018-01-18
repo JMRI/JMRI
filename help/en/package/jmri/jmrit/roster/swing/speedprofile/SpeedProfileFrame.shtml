@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,9 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Power Control</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Kevin Dickerson" name="Author">
+  <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content="JMRI help Roster Speed Profiling">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -100,7 +97,8 @@
       profile in the Roster. The "Clear Profile" radio button
       overwrites any existing speed profile.</p>
 
-      <h3>Testing</h3>Having completed the profiling, it is
+      <h3>Testing</h3>
+      <p>Having completed the profiling, it is
       possible to test the profile out. Place the loco in the
       starting section again facing forward toward the timed
       section, ideally some distance away from it. Enter in a
@@ -109,18 +107,19 @@
       will set the loco off running at the given speed step, then
       it will attempt to gradually stop the loco before it reaches
       the far end. Results will vary especially at the higher speed
-      steps, where you will more likely experience an over run.
+      steps, where you will more likely experience an over run.</p>
 
-      <h3>Viewing</h3>The table displayed by the View button shows
+      <h3>Viewing</h3>
+      <p>The table displayed by the View button shows
       the speeds attained by the loco for each throttle step in
       both directions. The default speeds are in millimeters per
       second of the layout track speed. These values can be
       converted to scale speeds by selecting either of the "Miles
       per Hour" or "Kilometers per Hour" radio buttons on the
       Warrants panel of Preferences. The Factor column is the ratio
-      of track speed (mm/sec) to throttle setting (0.0 to 1.0).
+      of track speed (mm/sec) to throttle setting (0.0 to 1.0).</p>
 
-      <p><!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

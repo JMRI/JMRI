@@ -94,13 +94,13 @@ public class Train implements java.beans.PropertyChangeListener {
     protected String _builtEndYear = NONE; // built end year
     protected String _loadOption = ALL_LOADS;// train load restrictions
     protected String _ownerOption = ALL_OWNERS;// train owner name restrictions
-    protected List<String> _buildScripts = new ArrayList<String>(); // list of script pathnames to run before train is
+    protected List<String> _buildScripts = new ArrayList<>(); // list of script pathnames to run before train is
     // built
-    protected List<String> _afterBuildScripts = new ArrayList<String>(); // list of script pathnames to run after train
+    protected List<String> _afterBuildScripts = new ArrayList<>(); // list of script pathnames to run after train
     // is built
-    protected List<String> _moveScripts = new ArrayList<String>(); // list of script pathnames to run when train is
+    protected List<String> _moveScripts = new ArrayList<>(); // list of script pathnames to run when train is
     // moved
-    protected List<String> _terminationScripts = new ArrayList<String>(); // list of script pathnames to run when train
+    protected List<String> _terminationScripts = new ArrayList<>(); // list of script pathnames to run when train
     // is terminated
     protected String _railroadName = NONE; // optional railroad name for this train
     protected String _logoURL = NONE; // optional manifest logo for this train
@@ -938,7 +938,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return true;
     }
 
-    List<String> _skipLocationsList = new ArrayList<String>();
+    List<String> _skipLocationsList = new ArrayList<>();
 
     protected String[] getTrainSkipsLocations() {
         String[] locationIds = new String[_skipLocationsList.size()];
@@ -989,7 +989,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return _skipLocationsList.contains(locationId);
     }
 
-    List<String> _typeList = new ArrayList<String>();
+    List<String> _typeList = new ArrayList<>();
 
     /**
      * Get's the type names of rolling stock this train will service
@@ -1005,7 +1005,7 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     protected String[] getCarTypeNames() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         for (String type : _typeList) {
             if (InstanceManager.getDefault(CarTypes.class).containsName(type)) {
                 list.add(type);
@@ -1019,7 +1019,7 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     protected String[] getLocoTypeNames() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         for (String type : _typeList) {
             if (InstanceManager.getDefault(EngineTypes.class).containsName(type)) {
                 list.add(type);
@@ -1122,7 +1122,7 @@ public class Train implements java.beans.PropertyChangeListener {
         setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, old, option);
     }
 
-    List<String> _roadList = new ArrayList<String>();
+    List<String> _roadList = new ArrayList<>();
 
     protected void setRoadNames(String[] roads) {
         if (roads.length == 0) {
@@ -1255,7 +1255,7 @@ public class Train implements java.beans.PropertyChangeListener {
         setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, old, option);
     }
 
-    List<String> _loadList = new ArrayList<String>();
+    List<String> _loadList = new ArrayList<>();
 
     protected void setLoadNames(String[] loads) {
         if (loads.length == 0) {
@@ -1375,7 +1375,7 @@ public class Train implements java.beans.PropertyChangeListener {
         setDirtyAndFirePropertyChange(OWNERS_CHANGED_PROPERTY, old, option);
     }
 
-    List<String> _ownerList = new ArrayList<String>();
+    List<String> _ownerList = new ArrayList<>();
 
     protected void setOwnerNames(String[] owners) {
         if (owners.length == 0) {
@@ -1551,7 +1551,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return false;
     }
 
-    private boolean debugFlag = false;
+    private final boolean debugFlag = false;
 
     /**
      * Determines if this train will service this car. Note this code doesn't
@@ -3050,7 +3050,7 @@ public class Train implements java.beans.PropertyChangeListener {
             return false;
         }
         if (isPreview && Setup.isManifestEditorEnabled()) {
-            TrainPrintUtilities.openDesktopEditor(file);
+            TrainUtilities.openDesktop(file);
             return true;
         }
         String logoURL = Setup.NONE;
@@ -3305,7 +3305,7 @@ public class Train implements java.beans.PropertyChangeListener {
         }
     }
 
-    private boolean animation = true; // when true use animation for icon moves
+    private final boolean animation = true; // when true use animation for icon moves
     TrainIconAnimation _ta;
 
     /*

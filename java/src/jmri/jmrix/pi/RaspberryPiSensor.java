@@ -110,13 +110,6 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
     }
 
     /**
-     * @return the com.pi4j.io.gpio.PinPullResistance for this input pin.
-     */
-    private PinPullResistance getPullState(){
-       return pull;
-    }
-
-    /**
      * Set the Pull resistance on the pin.
      *
      * @param pr The new PinPullResistance value to set.

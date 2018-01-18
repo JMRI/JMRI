@@ -5,20 +5,15 @@ import java.io.*;
 
 import org.apache.commons.io.*;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 import org.junit.rules.Timeout;
-import jmri.util.junit.rules.RetryRule;
-
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
-import jmri.util.JUnitUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,14 +47,14 @@ public class SoundProTest {
             SoundPro.main(new String[]{"SoundPro"});
             log.debug("started LocoNetSim");
 
-            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("SoundPro") != null;},"window up");
+            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("SoundPro") != null;}, "window up");
         
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("SoundPro version") != null;}, "first Info line seen");
 
             // maybe have it run a script to indicate that it's really up?
             
             // now clean up frames, depending on what's actually left
-                // SoundPro
+            // SoundPro
         } finally {
             // wait for threads, etc
             jmri.util.JUnitUtil.releaseThread(this, 5000);
@@ -80,10 +75,9 @@ public class SoundProTest {
             SoundPro.main(new String[]{"SoundPro"});
             log.debug("started EasyDccSim");
 
-            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("SoundPro") != null;},"window up");
+            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("SoundPro") != null;}, "window up");
 
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("SoundPro version") != null;}, "first Info line seen");
-
 
             // SoundPro
         } finally {
@@ -104,11 +98,36 @@ public class SoundProTest {
 
             // launch!
             SoundPro.main(new String[]{"SoundPro"});
-            log.debug("started TmcccSim");
-            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("SoundPro") != null;},"window up");
+            log.debug("started TmccSim");
+
+            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("SoundPro") != null;}, "window up");
 
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("SoundPro version") != null;}, "first Info line seen");
 
+            // SoundPro
+        } finally {
+            // wait for threads, etc
+            jmri.util.JUnitUtil.releaseThread(this, 5000);
+        }
+    }
+
+    @Test
+    public void testLaunchSprog() throws IOException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        try {
+            // create a custom profile
+            File tempFolder = folder.newFolder();
+            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/Sprog_Simulator"), tempFolder);
+            System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
+
+            // launch!
+            SoundPro.main(new String[]{"SoundPro"});
+            log.debug("started SprogSim");
+
+            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("SoundPro") != null;}, "window up");
+
+            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("SoundPro version") != null;}, "first Info line seen");
 
             // SoundPro
         } finally {
@@ -130,15 +149,14 @@ public class SoundProTest {
             // launch!
             SoundPro.main(new String[]{"SoundPro"});
 
-            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("SoundPro") != null;},"window up");
+            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("SoundPro") != null;}, "window up");
         
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("SoundPro version") != null;}, "first Info line seen");
-
 
             // maybe have it run a script to indicate that it's really up?
             
             // now clean up frames, depending on what's actually left
-                // SoundPro
+            // SoundPro
         } finally {
             // wait for threads, etc
             jmri.util.JUnitUtil.releaseThread(this, 5000);

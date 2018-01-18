@@ -300,7 +300,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     private void setRegex() {
-        Matcher m;
         switch(myMessage.charAt(0)) {
             case DCCppConstants.THROTTLE_CMD:
                 myRegex = DCCppConstants.THROTTLE_CMD_REGEX; break;
@@ -309,37 +308,37 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             case DCCppConstants.ACCESSORY_CMD:
                 myRegex = DCCppConstants.ACCESSORY_CMD_REGEX; break;
             case DCCppConstants.TURNOUT_CMD:
-                if ((m = match(myMessage.toString(), DCCppConstants.TURNOUT_ADD_REGEX, "ctor")) != null) {
+                if ((match(myMessage.toString(), DCCppConstants.TURNOUT_ADD_REGEX, "ctor")) != null) {
                 myRegex = DCCppConstants.TURNOUT_ADD_REGEX;
-                } else if ((m = match(myMessage.toString(), DCCppConstants.TURNOUT_DELETE_REGEX, "ctor")) != null) {
+                } else if ((match(myMessage.toString(), DCCppConstants.TURNOUT_DELETE_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.TURNOUT_DELETE_REGEX;
-                } else if ((m = match(myMessage.toString(), DCCppConstants.TURNOUT_LIST_REGEX, "ctor")) != null) {
+                } else if ((match(myMessage.toString(), DCCppConstants.TURNOUT_LIST_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.TURNOUT_LIST_REGEX;
-                } else if ((m = match(myMessage.toString(), DCCppConstants.TURNOUT_CMD_REGEX, "ctor")) != null) {
+                } else if ((match(myMessage.toString(), DCCppConstants.TURNOUT_CMD_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.TURNOUT_CMD_REGEX;
                 } else {
                     myRegex = "";
                 }
                 break;
             case DCCppConstants.SENSOR_CMD:
-                if ((m = match(myMessage.toString(), DCCppConstants.SENSOR_ADD_REGEX, "ctor")) != null) {
+                if ((match(myMessage.toString(), DCCppConstants.SENSOR_ADD_REGEX, "ctor")) != null) {
                 myRegex = DCCppConstants.SENSOR_ADD_REGEX;
-                } else if ((m = match(myMessage.toString(), DCCppConstants.SENSOR_DELETE_REGEX, "ctor")) != null) {
+                } else if ((match(myMessage.toString(), DCCppConstants.SENSOR_DELETE_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.SENSOR_DELETE_REGEX;
-                } else if ((m = match(myMessage.toString(), DCCppConstants.SENSOR_LIST_REGEX, "ctor")) != null) {
+                } else if ((match(myMessage.toString(), DCCppConstants.SENSOR_LIST_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.SENSOR_LIST_REGEX;
                 } else {
                     myRegex = "";
                 }
                 break;
             case DCCppConstants.OUTPUT_CMD:
-                if ((m = match(myMessage.toString(), DCCppConstants.OUTPUT_ADD_REGEX, "ctor")) != null) {
+                if ((match(myMessage.toString(), DCCppConstants.OUTPUT_ADD_REGEX, "ctor")) != null) {
                 myRegex = DCCppConstants.OUTPUT_ADD_REGEX;
-                } else if ((m = match(myMessage.toString(), DCCppConstants.OUTPUT_DELETE_REGEX, "ctor")) != null) {
+                } else if ((match(myMessage.toString(), DCCppConstants.OUTPUT_DELETE_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.OUTPUT_DELETE_REGEX;
-                } else if ((m = match(myMessage.toString(), DCCppConstants.OUTPUT_LIST_REGEX, "ctor")) != null) {
+                } else if ((match(myMessage.toString(), DCCppConstants.OUTPUT_LIST_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.OUTPUT_LIST_REGEX;
-                } else if ((m = match(myMessage.toString(), DCCppConstants.OUTPUT_CMD_REGEX, "ctor")) != null) {
+                } else if ((match(myMessage.toString(), DCCppConstants.OUTPUT_CMD_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.OUTPUT_CMD_REGEX;
                 } else {
                     myRegex = "";

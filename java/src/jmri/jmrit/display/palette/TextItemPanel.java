@@ -32,7 +32,7 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
     DecoratorPanel _decorator;
 
     public TextItemPanel(ItemPalette parentFrame, String type, Editor editor) {
-        super((ItemPalette) parentFrame, type, editor);
+        super(parentFrame, type, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragText"));
     }
 

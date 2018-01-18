@@ -5,7 +5,6 @@ import java.util.List;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.jmrix.ecos.utilities.GetEcosObjectNumber;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

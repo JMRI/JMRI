@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
   <!-- Translated  by Blorec Hervé le 2011-10-27-->
 
   <title>JMRI: RPS Debugger</title><!-- Style -->
@@ -88,8 +87,8 @@
       l'exportation CSV ...". S&Atilde;&copy;lectionnez ce choix de
       menu pour arr&Atilde;&ordf;ter l'enregistrement et assurer
       que les derni&Atilde;&uml;res lignes ont
-      &Atilde;&copy;t&Atilde;&copy; &Atilde;&copy;crites. 
-      <!--#include virtual="/Footer" --></p>
+      &Atilde;&copy;t&Atilde;&copy; &Atilde;&copy;crites.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

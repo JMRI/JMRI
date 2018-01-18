@@ -7,9 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogOpsModeProgrammer
- * </P>
+ * Tests for SprogOpsModeProgrammer.
+ *
  * @author Paul Bender Copyright (C) 2017
  */
 public class SprogOpsModeProgrammerTest {
@@ -40,6 +39,5 @@ public class SprogOpsModeProgrammerTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

@@ -1,7 +1,5 @@
 package jmri.jmrit.entryexit;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -262,5 +260,5 @@ public class Source {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Source.class);
+    // private final static Logger log = LoggerFactory.getLogger(Source.class);
 }

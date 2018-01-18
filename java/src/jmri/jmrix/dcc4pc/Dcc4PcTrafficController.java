@@ -132,7 +132,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
      */
     @Deprecated
     @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // FindBugs wants this package protected, but we're removing it when multi-connection
+    // SpotBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected Dcc4PcTrafficController self = null;
 
@@ -490,8 +490,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                 }
                 default: {
                     replyInDispatch = false;
-                    log.error("reply complete in unexpected state: "
-                            + mCurrentState + " was " + msg.toString());
+                    unexpectedReplyStateError(mCurrentState,msg.toString());
                 }
             }
             // Unsolicited message

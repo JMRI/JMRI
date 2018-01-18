@@ -12,7 +12,7 @@ import org.junit.Test;
  */
 public class SerialSensorTest {
 
-    private OakTreeSystemConnectionMemo _memo = null;
+    //private OakTreeSystemConnectionMemo _memo = null;
 
     @Test
     public void testCTor() {
@@ -31,12 +31,11 @@ public class SerialSensorTest {
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
-        _memo = new OakTreeSystemConnectionMemo("O", "Oaktree");
+        //_memo = new OakTreeSystemConnectionMemo("O", "Oaktree");
     }
 
     @After
     public void tearDown() {
-
         JUnitUtil.tearDown();
     }
 

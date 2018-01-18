@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
   <!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14 -->
 
   <title>JMRI: ECoS User Preferences</title><!-- Style -->
@@ -102,8 +101,8 @@
       Si JMRI re&ccedil;oit une notification indiquant que
       l'aiguillage ou que l'accessoire a &eacute;t&eacute;
       retir&eacute; de l'Ecos, ce param&egrave;tre d&eacute;termine
-      comment JMRI devrait r&eacute;agir. 
-      <!--#include virtual="/Footer" --></p>
+      comment JMRI devrait r&eacute;agir.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

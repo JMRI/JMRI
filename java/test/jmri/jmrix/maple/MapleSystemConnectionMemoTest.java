@@ -30,7 +30,7 @@ public class MapleSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       SerialTrafficController tc = new SerialTrafficController() {
+       new SerialTrafficController() {
           @Override
           public void sendSerialMessage(SerialMessage m, SerialListener reply) {
           }

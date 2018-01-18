@@ -6,7 +6,6 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -286,8 +285,7 @@ abstract public class AbstractCanTrafficController
                                     + mCurrentState + " was " + msg.toString());
                         }
                     } else {
-                        log.error("reply complete in unexpected state: "
-                                + mCurrentState + " was " + msg.toString());
+                        unexpectedReplyStateError(mCurrentState,msg.toString());
                     }
                 }
             }

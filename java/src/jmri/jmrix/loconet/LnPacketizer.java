@@ -287,7 +287,7 @@ public class LnPacketizer extends LnTrafficController {
                     // return a notification via the queue to ensure end
                     Runnable r = new Runnable() {
                         LocoNetMessage msgForLater = thisMsg;
-                        LnPacketizer myTC = thisTC;
+                        LnTrafficController myTC = thisTC;
 
                         @Override
                         public void run() {
@@ -320,14 +320,14 @@ public class LnPacketizer extends LnTrafficController {
      * looking for input messages in character form on the stream connected to
      * the LnPortController via <code>connectPort</code>.
      */
-    class RcvHandler implements Runnable {
+    protected class RcvHandler implements Runnable {
 
         /**
          * Remember the LnPacketizer object
          */
-        LnPacketizer trafficController;
+        LnTrafficController trafficController;
 
-        public RcvHandler(LnPacketizer lt) {
+        public RcvHandler(LnTrafficController lt) {
             trafficController = lt;
         }
 
@@ -421,11 +421,11 @@ public class LnPacketizer extends LnTrafficController {
                             log.debug("queue message for notification: {}", msg.toString());
                         }
                         final LocoNetMessage thisMsg = msg;
-                        final LnPacketizer thisTC = trafficController;
+                        final LnTrafficController thisTC = trafficController;
                         // return a notification via the queue to ensure end
                         Runnable r = new Runnable() {
                             LocoNetMessage msgForLater = thisMsg;
-                            LnPacketizer myTC = thisTC;
+                            LnTrafficController myTC = thisTC;
 
                             @Override
                             public void run() {

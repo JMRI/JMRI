@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.TooManyListenersException;
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppSerialPortController;
@@ -19,8 +18,6 @@ import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
 import purejavacomm.SerialPort;
-import purejavacomm.SerialPortEvent;
-import purejavacomm.SerialPortEventListener;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
@@ -89,113 +86,11 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
             }
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows "
-                          + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
-            }
-            // arrange to notify later
-            activeSerialPort.addEventListener(new SerialPortEventListener() {
-                    @Override
-                    public void serialEvent(SerialPortEvent e) {
-                        int type = e.getEventType();
-                        switch (type) {
-                        case SerialPortEvent.DATA_AVAILABLE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
-                            }
-                            return;
-                        case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue());
-                            }
-                            setOutputBufferEmpty(true);
-                            return;
-                        case SerialPortEvent.CTS:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: CTS is " + e.getNewValue());
-                            }
-                            return;
-                        case SerialPortEvent.DSR:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: DSR is " + e.getNewValue());
-                            }
-                            return;
-                        case SerialPortEvent.RI:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: RI is " + e.getNewValue());
-                            }
-                            return;
-                        case SerialPortEvent.CD:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: CD is " + e.getNewValue());
-                            }
-                            return;
-                        case SerialPortEvent.OE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: OE (overrun error) is " + e.getNewValue());
-                            }
-                            return;
-                        case SerialPortEvent.PE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: PE (parity error) is " + e.getNewValue());
-                            }
-                            return;
-                        case SerialPortEvent.FE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: FE (framing error) is " + e.getNewValue());
-                            }
-                            return;
-                        case SerialPortEvent.BI:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: BI (break interrupt) is " + e.getNewValue());
-                            }
-                            return;
-                        default:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent of unknown type: " + type + " value: " + e.getNewValue());
-                            }
-                            return;
-                        }
-                    }
-                }
-                );
-            try {
-                activeSerialPort.notifyOnFramingError(true);
-            } catch (Exception e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Could not notifyOnFramingError: " + e);
-                }
-            }
+                log.debug(" port flow control shows " // NOI18N
+                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
 
-            try {
-                activeSerialPort.notifyOnBreakInterrupt(true);
-            } catch (Exception e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Could not notifyOnBreakInterrupt: " + e);
-                }
-            }
-
-            try {
-                activeSerialPort.notifyOnParityError(true);
-            } catch (Exception e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Could not notifyOnParityError: " + e);
-                }
-            }
-
-            try {
-                activeSerialPort.notifyOnOutputEmpty(true);
-            } catch (Exception e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Could not notifyOnOutputEmpty: " + e);
-                }
-            }
-
-            try {
-                activeSerialPort.notifyOnOverrunError(true);
-            } catch (Exception e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Could not notifyOnOverrunError: " + e);
-                }
+                // log events
+                setPortEventLogging(activeSerialPort);
             }
 
             opened = true;
@@ -203,7 +98,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         } catch (NoSuchPortException p) {
 
             return handlePortNotFound(p, portName, log);
-        } catch (IOException | TooManyListenersException ex) {
+        } catch (IOException ex) {
             log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }

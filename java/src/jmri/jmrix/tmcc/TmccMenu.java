@@ -1,6 +1,5 @@
 package jmri.jmrix.tmcc;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**

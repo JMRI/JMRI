@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>3</revnumber>
+      <date>2018-01-02</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>French translation</revremark>
+    </revision>
+    <revision>
       <revnumber>2</revnumber>
       <date>2016-10-23</date>
       <authorinitials>PS</authorinitials>
@@ -42,10 +48,12 @@
   <variable item="Consist Function" CV="21" mask="XXXXXXXV" tooltip="Selects the address accessory functions will respond .Least bit default=0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Functions Respond to Address</label>
+        <label xml:lang="cs">Funkce reaguje na adrese</label>
+        <label xml:lang="fr">Fonctions répondront à l'adresse</label>
         <label xml:lang="it">Indirizzo valido per le Funzioni</label>
         <tooltip>Selects the address accessory functions will respond to</tooltip>
-        <tooltip xml:lang="it">Seleziona l'indirizzo a cui rispondono le Funzioni</tooltip>
-        <label xml:lang="cs">Funkce reaguje na adrese</label>
         <tooltip xml:lang="cs">Vyberte adresu na které bude reagovat funkce</tooltip>
+        <tooltip xml:lang="fr">Sélectionne l'adresse à laquelle les fonctions répondront</tooltip>
+        <tooltip xml:lang="it">Seleziona l'indirizzo a cui rispondono le Funzioni</tooltip>
       </variable>
 </variables>
