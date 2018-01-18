@@ -54,7 +54,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _table.getSelectionModel().addListSelectionListener(this);
             _showIconsButton.setEnabled(false);
             _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
-            initIconFamiliesPanel();
+//            initIconFamiliesPanel();
             add(_iconFamilyPanel, 1);
         }
     }
