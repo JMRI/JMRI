@@ -252,12 +252,12 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     abstract protected Manager<T> getManager();
 
-    protected void setManager(Manager<T> man) {
+    protected void setManager(@Nonnull Manager<T> man) {
     }
 
-    abstract protected T getBySystemName(String name);
+    abstract protected T getBySystemName(@Nonnull String name);
 
-    abstract protected T getByUserName(String name);
+    abstract protected T getByUserName(@Nonnull String name);
 
     abstract protected void clickOn(T t);
 

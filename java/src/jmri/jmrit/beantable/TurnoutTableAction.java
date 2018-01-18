@@ -70,7 +70,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003, 2004, 2007
  * @author Egbert Broerse Copyright (C) 2017
  */
-public class TurnoutTableAction extends AbstractTableAction {
+public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
     /**
      * Create an action with a specific title.
@@ -131,8 +131,9 @@ public class TurnoutTableAction extends AbstractTableAction {
     // for icon state col
     protected boolean _graphicState = false; // updated from prefs
 
+    /** {@inheritDoc} */
     @Override
-    public void setManager(Manager man) {
+    public void setManager(@Nonnull Manager<Turnout> man) {
         turnManager = (TurnoutManager) man;
     }
 
@@ -936,11 +937,13 @@ public class TurnoutTableAction extends AbstractTableAction {
         m.fireTableDataChanged();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleTurnoutTable"));
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.TurnoutTable";
@@ -962,6 +965,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     jmri.UserPreferencesManager p;
     String connectionChoice = "";
 
+    /** {@inheritDoc} */
     @Override
     protected void addPressed(ActionEvent e) {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -1819,17 +1823,20 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     private boolean noWarn = false;
 
+    /** {@inheritDoc} */
     @Override
     protected String getClassName() {
         return TurnoutTableAction.class.getName();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setMessagePreferencesDetails() {
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
         super.setMessagePreferencesDetails();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleTurnoutTable");

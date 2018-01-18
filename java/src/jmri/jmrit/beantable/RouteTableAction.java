@@ -65,7 +65,7 @@ import org.slf4j.LoggerFactory;
  * @author Egbert Broerse Copyright (C) 2016
  *
  */
-public class RouteTableAction extends AbstractTableAction {
+public class RouteTableAction extends AbstractTableAction<Route> {
 
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 

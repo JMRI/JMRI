@@ -54,7 +54,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003, 2008
  * @author Egbert Broerse Copyright (C) 2017
  */
-public class BlockTableAction extends AbstractTableAction {
+public class BlockTableAction extends AbstractTableAction<Block> {
 
     /**
      * Create an action with a specific title.

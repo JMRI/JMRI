@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2009
  */
-public class SensorTableAction extends AbstractTableAction {
+public class SensorTableAction extends AbstractTableAction<Sensor> {
 
     /**
      * Create an action with a specific title.
@@ -65,8 +65,8 @@ public class SensorTableAction extends AbstractTableAction {
 
     /** {@inheritDoc} */
     @Override
-    @SuppressFBWarnings("BC_UNCONFIRMED_CAST") // AbstractTableTabAction responsible for getting this right;
-    public void setManager(@Nonnull Manager senManager) {
+    public void setManager(@Nonnull Manager<Sensor> s) {
+        senManager = (SensorManager)s;
         if (m != null) {
             m.setManager(senManager);
         }

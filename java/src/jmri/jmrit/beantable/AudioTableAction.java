@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Matthew Harris copyright (c) 2009
  */
-public class AudioTableAction extends AbstractTableAction {
+public class AudioTableAction extends AbstractTableAction<Audio> {
 
     AudioTableDataModel listeners;
     AudioTableDataModel buffers;

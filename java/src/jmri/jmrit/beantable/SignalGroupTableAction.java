@@ -63,7 +63,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2010
  * @author Egbert Broerse 2017
  */
-public class SignalGroupTableAction extends AbstractTableAction implements PropertyChangeListener {
+public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> implements PropertyChangeListener {
 
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 

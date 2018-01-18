@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
-public class MemoryTableAction extends AbstractTableAction {
+public class MemoryTableAction extends AbstractTableAction<Memory> {
 
     /**
      * Create an action with a specific title.

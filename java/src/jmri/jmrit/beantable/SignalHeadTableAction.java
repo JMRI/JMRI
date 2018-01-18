@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
  * @author Petr Koud'a Copyright (C) 2007
  * @author Egbert Broerse Copyright (C) 2016
  */
-public class SignalHeadTableAction extends AbstractTableAction {
+public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
     /**
      * Create an action with a specific title.

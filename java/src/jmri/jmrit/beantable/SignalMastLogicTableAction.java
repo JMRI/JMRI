@@ -30,7 +30,7 @@ import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SignalMastLogicTableAction extends AbstractTableAction {
+public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLogic> {
 
     /**
      * Create an action with a specific title.

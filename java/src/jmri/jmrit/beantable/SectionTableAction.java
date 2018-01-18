@@ -62,7 +62,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2008, 2011
  * @author GT 2009
  */
-public class SectionTableAction extends AbstractTableAction {
+public class SectionTableAction extends AbstractTableAction<Section> {
 
     /**
      * Create an action with a specific title.

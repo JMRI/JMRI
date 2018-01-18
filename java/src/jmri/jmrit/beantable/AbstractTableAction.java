@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import javax.annotation.Nonnull;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -85,7 +86,7 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
         return m;
     }
 
-    public void setFrame(BeanTableFrame frame) {
+    public void setFrame(@Nonnull BeanTableFrame frame) {
         f = frame;
     }
 
@@ -99,7 +100,7 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
      *
      * @param f the Frame to add to
      */
-    public void addToFrame(BeanTableFrame f) {
+    public void addToFrame(@Nonnull BeanTableFrame f) {
     }
 
     /**
@@ -118,7 +119,7 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
      *
      * @param man Manager for this table tab
      */
-    protected void setManager(Manager man) {
+    protected void setManager(@Nonnull Manager<E> man) {
     }
 
     /**
