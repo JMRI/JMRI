@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - EasyDCC</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "EasyDCC CVP Products java model railroad JMRI install windows">
   <!-- Style -->
@@ -99,7 +99,7 @@
         <li>Select "EasyDCC via Serial" as the System Connection.
         You can then select the proper serial port from the
         drop-down list under Settings.</li>
-        <li>Accept the suggested Connection Name and prefix,
+        <li>Accept the suggested Connection Prefix and Name,
         or replace it with a more fitting one. Make sure it is unique.</li>
         <li>Under Additional Connection Settings, the baud rate box
         will be fixed at 9,600 baud.</li>

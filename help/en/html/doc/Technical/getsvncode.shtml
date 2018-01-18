@@ -9,7 +9,7 @@
 
   <title>JMRI: Getting the OLD SVN Code - no longer
   supported</title>
-  <meta content="Bob Jacobsen" name="Author">
+    <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code SVN download">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->

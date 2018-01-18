@@ -40,7 +40,7 @@
       the value stored in the given Variable.<br>
       Change or enter e new value for (the contents of) the variable an click [Write].</p>
 
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

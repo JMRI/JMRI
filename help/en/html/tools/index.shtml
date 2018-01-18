@@ -617,8 +617,8 @@
         power to control your layout anyway you'd like.
 
         <p>Run your own scripts or scripts shared by other JMRI
-        user from the Panels &gt; Run Script... menu. 
-        <!--#include virtual="/Footer" --></p>
+        user from the Panels &gt; Run Script... menu.</p>
+        <!--#include virtual="/Footer" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
   </div><!-- closes #container -->

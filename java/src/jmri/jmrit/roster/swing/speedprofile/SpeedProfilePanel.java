@@ -827,17 +827,17 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         for (Integer i : speeds.keySet()) {
             rosterSpeedProfile.setSpeed(i, speeds.get(i).getForwardSpeed(), speeds.get(i).getReverseSpeed());
         }
-        if (tmpRe != null) {
-            RosterSpeedProfile speedProfile = tmpRe.getSpeedProfile();
-            if (speedProfile != null) {
-                if (table != null) {
-                    table.dispose();
-                }
-                table = new SpeedProfileTable(speedProfile, tmpRe.getId());
-                table.setVisible(true);
-                return;
+
+        RosterSpeedProfile speedProfile = tmpRe.getSpeedProfile();
+        if (speedProfile != null) {
+            if (table != null) {
+                table.dispose();
             }
+            table = new SpeedProfileTable(speedProfile, tmpRe.getId());
+            table.setVisible(true);
+            return;
         }
+
         JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNoSpeedProfile"));
         setButtonStates(true);
     }

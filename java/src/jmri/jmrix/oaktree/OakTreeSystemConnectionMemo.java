@@ -17,8 +17,6 @@ import org.slf4j.LoggerFactory;
  */
 public class OakTreeSystemConnectionMemo extends SystemConnectionMemo {
 
-    private jmri.jmrix.swing.ComponentFactory cf = null;
-
     public OakTreeSystemConnectionMemo() {
         this("O", SerialConnectionTypeList.OAK);
 
@@ -31,7 +29,7 @@ public class OakTreeSystemConnectionMemo extends SystemConnectionMemo {
         InstanceManager.store(this, OakTreeSystemConnectionMemo.class); // also register as specific type
 
         // create and register the ComponentFactory
-        InstanceManager.store(cf = new jmri.jmrix.oaktree.swing.OakTreeComponentFactory(this),
+        InstanceManager.store(new jmri.jmrix.oaktree.swing.OakTreeComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
 
         log.debug("Created OakTreeSystemConnectionMemo");

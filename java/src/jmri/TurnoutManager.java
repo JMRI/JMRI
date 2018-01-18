@@ -257,9 +257,9 @@ public interface TurnoutManager extends Manager<Turnout> {
      */
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
-    public void setDefaultClosedSpeed(String speed) throws JmriException;
+    public void setDefaultClosedSpeed(@Nonnull String speed) throws JmriException;
 
-    public void setDefaultThrownSpeed(String speed) throws JmriException;
+    public void setDefaultThrownSpeed(@Nonnull String speed) throws JmriException;
 
     public String getDefaultThrownSpeed();
 

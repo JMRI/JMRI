@@ -58,7 +58,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     public String openPort(String portName, String appName) {
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
-            log.debug("tempPipeI created {}", tempPipeI != null);
+            log.debug("tempPipeI created");
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
             log.debug("inpipe created {}", inpipe != null);
@@ -290,6 +290,11 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
                 log.debug("Read_Sprog_Version detected");
                 String replyString = "\nSPROG II Ver 4.3\n";
                 reply = new SprogReply(replyString);
+                break;
+
+            case 'M':
+                log.debug("Mode Word detected");
+                reply = new SprogReply("P>M=h800\n"); // default mode reply
                 break;
 
             case 'S':

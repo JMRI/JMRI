@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/panelfile-2-9-6.xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <olcbsignalmast class="jmri.jmrix.openlcb.configurexml.OlcbSignalMastXml" userName="Olcb Mast 1">
+      <systemName>MF$olm:NS-2008:CLS-3-3-hi(1)</systemName>
+      <userName>Sample 1</userName>
+      <lit>
+        <lit>1.2.3.4.1.6.7.1</lit>
+        <notlit>1.2.3.4.1.6.7.2</notlit>
+      </lit>
+      <held>
+        <held>1.2.3.4.11.6.7.1</held>
+        <notheld>1.2.3.4.11.6.7.2</notheld>
+      </held>
+      <aspect defines="Clear">
+        <event>1.2.3.4.5.6.7.1</event>
+      </aspect>
+      <aspect defines="Approach Limited">
+        <event>1.2.3.4.5.6.7.2</event>
+      </aspect>
+      <aspect defines="Limited Clear">
+        <event>1.2.3.4.5.6.7.3</event>
+      </aspect>
+      <aspect defines="Approach Medium">
+        <event>1.2.3.4.5.6.7.4</event>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <event>1.2.3.4.5.6.7.5</event>
+      </aspect>
+      <aspect defines="Medium Clear">
+        <event>1.2.3.4.5.6.7.6</event>
+      </aspect>
+      <aspect defines="Approach Slow">
+        <event>1.2.3.4.5.6.7.7</event>
+      </aspect>
+      <aspect defines="Approach">
+        <event>1.2.3.4.5.6.7.8</event>
+      </aspect>
+      <aspect defines="Medium Approach">
+        <event>1.2.3.4.5.6.7.9</event>
+      </aspect>
+      <aspect defines="Restricting">
+        <event>1.2.3.4.5.6.7.A</event>
+      </aspect>
+      <aspect defines="Stop Signal">
+        <event>1.2.3.4.5.6.7.1B</event>
+      </aspect>
+    </olcbsignalmast>
+    <olcbsignalmast class="jmri.jmrix.openlcb.configurexml.OlcbSignalMastXml" userName="Olcb Mast 1">
+      <systemName>MF$olm:NS-2008:CLS-3-3-hi(1A)</systemName>
+      <userName>Sample 1 echo</userName>
+      <lit>
+        <lit>1.2.3.4.1.6.7.1</lit>
+        <notlit>1.2.3.4.1.6.7.2</notlit>
+      </lit>
+      <held>
+        <held>1.2.3.4.11.6.7.1</held>
+        <notheld>1.2.3.4.11.6.7.2</notheld>
+      </held>
+      <aspect defines="Clear">
+        <event>1.2.3.4.5.6.7.1</event>
+      </aspect>
+      <aspect defines="Approach Limited">
+        <event>1.2.3.4.5.6.7.2</event>
+      </aspect>
+      <aspect defines="Limited Clear">
+        <event>1.2.3.4.5.6.7.3</event>
+      </aspect>
+      <aspect defines="Approach Medium">
+        <event>1.2.3.4.5.6.7.4</event>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <event>1.2.3.4.5.6.7.5</event>
+      </aspect>
+      <aspect defines="Medium Clear">
+        <event>1.2.3.4.5.6.7.6</event>
+      </aspect>
+      <aspect defines="Approach Slow">
+        <event>1.2.3.4.5.6.7.7</event>
+      </aspect>
+      <aspect defines="Approach">
+        <event>1.2.3.4.5.6.7.8</event>
+      </aspect>
+      <aspect defines="Medium Approach">
+        <event>1.2.3.4.5.6.7.9</event>
+      </aspect>
+      <aspect defines="Restricting">
+        <event>1.2.3.4.5.6.7.A</event>
+      </aspect>
+      <aspect defines="Stop Signal">
+        <event>1.2.3.4.5.6.7.1B</event>
+      </aspect>
+    </olcbsignalmast>
+    <olcbsignalmast class="jmri.jmrix.openlcb.configurexml.OlcbSignalMastXml" userName="Olcb Mast 2">
+      <systemName>MF$olm:NS-2008:CLS-3-3-hi(10)</systemName>
+      <userName>Sample 2</userName>
+      <lit>
+        <lit>1.2.3.4.1.7.7.1</lit>
+        <notlit>1.2.3.4.1.7.7.2</notlit>
+      </lit>
+      <held>
+        <held>1.2.3.4.12.6.7.1</held>
+        <notheld>1.2.3.4.12.6.7.2</notheld>
+      </held>
+      <aspect defines="Clear">
+        <event>1.5.3.4.5.6.7.1</event>
+      </aspect>
+      <aspect defines="Approach Limited">
+        <event>1.5.3.4.5.6.7.2</event>
+      </aspect>
+      <aspect defines="Limited Clear">
+        <event>1.2.5.4.5.6.7.3</event>
+      </aspect>
+      <aspect defines="Approach Medium">
+        <event>1.2.5.4.5.6.7.4</event>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <event>1.2.3.5.5.6.7.5</event>
+      </aspect>
+      <aspect defines="Medium Clear">
+        <event>1.2.3.5.5.6.7.6</event>
+      </aspect>
+      <aspect defines="Approach Slow">
+        <event>1.2.3.6.5.6.7.7</event>
+      </aspect>
+      <aspect defines="Approach">
+        <event>1.2.3.4.6.6.7.8</event>
+      </aspect>
+      <aspect defines="Medium Approach">
+        <event>1.2.3.4.6.6.7.9</event>
+      </aspect>
+      <aspect defines="Restricting">
+        <event>1.2.3.4.6.6.7.A</event>
+      </aspect>
+      <aspect defines="Stop Signal">
+        <event>1.2.3.4.6.6.7.1B</event>
+      </aspect>
+    </olcbsignalmast>
+  </signalmasts>
+</layout-config>
+
