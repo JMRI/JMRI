@@ -29,8 +29,8 @@ import jmri.jmrix.swing.ComponentFactory;
 public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private RfidTrafficController rt;
-    private RfidSensorManager sensorManager;
-    private RfidReporterManager reporterManager;
+    protected RfidSensorManager sensorManager;
+    protected RfidReporterManager reporterManager;
     private RfidProtocol protocol;
 
     public RfidSystemConnectionMemo(RfidTrafficController rt) {

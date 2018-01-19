@@ -15,14 +15,6 @@ import org.junit.Test;
 public class Z21SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
     @Test
-    @Ignore("Not Ready Yet")
-    public void testConfigureManagers(){
-        Z21SystemConnectionMemo a = (Z21SystemConnectionMemo)scm;
-        a.configureManagers();
-        Assert.assertNotNull(a);
-    }
-
-    @Test
     public void testProvidesReporterManager() {
         Z21SystemConnectionMemo a = (Z21SystemConnectionMemo)scm;
         Assert.assertTrue(a.provides(jmri.ReporterManager.class));
@@ -69,6 +61,7 @@ public class Z21SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
         Z21SystemConnectionMemo memo = new Z21SystemConnectionMemo();
         memo.setTrafficController(tc);
         memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
+        //memo.configureManagers();
         scm = memo;
     }
 

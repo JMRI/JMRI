@@ -96,9 +96,11 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
 
     /*
      * Provides access to the Turnout Manager for this particular connection.
-     * NOTE: Turnout manager defaults to NULL
      */
     public TurnoutManager getTurnoutManager() {
+        if (turnoutManager == null) {
+            turnoutManager = new XpaTurnoutManager(this);
+        }
         return turnoutManager;
     }
 
