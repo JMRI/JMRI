@@ -181,7 +181,6 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
            case PULLUPCOL:
               return Bundle.getMessage("SensorPullUp");
            case FORGETCOL:
-               // @todo check if this works without specific qualification of the class name
               return Bundle.getMessage("StateForgetHeader");
            case QUERYCOL:
               return Bundle.getMessage("StateQueryHeader");
