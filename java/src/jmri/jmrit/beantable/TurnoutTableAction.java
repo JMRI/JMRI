@@ -154,8 +154,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     static public final int DIVERGCOL = STRAIGHTCOL + 1;
     static public final int FORGETCOL = DIVERGCOL + 1;
     static public final int QUERYCOL = FORGETCOL + 1;
-    static public final int AUTHCOL = QUERYCOL + 1;
-    static public final int LISTENCOL = AUTHCOL + 1;
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
@@ -177,7 +175,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
             @Override
             public int getColumnCount() {
-                return LISTENCOL + 1;
+                return QUERYCOL + getPropertyColumnCount() + 1;
             }
 
             @Override
@@ -210,10 +208,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return Bundle.getMessage("StateForgetHeader");
                 } else if (col == QUERYCOL) {
                     return Bundle.getMessage("StateQueryHeader");
-                } else if (col == AUTHCOL) {
-                    return Bundle.getMessage("OlcbStateAuthHeader");
-                } else if (col == LISTENCOL) {
-                    return Bundle.getMessage("OlcbStateListenHeader");
                 } else if (col == EDITCOL) {
                     return "";
                 } else {
@@ -253,10 +247,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return JButton.class;
                 } else if (col == QUERYCOL) {
                     return JButton.class;
-                } else if (col == AUTHCOL) {
-                    return Boolean.class;
-                } else if (col == LISTENCOL) {
-                    return Boolean.class;
                 } else if (col == VALUECOL && _graphicState) {
                     return JLabel.class; // use an image to show turnout state
                 } else {
@@ -298,12 +288,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                     case QUERYCOL:
                         return new JButton(Bundle.getMessage("StateQueryButton")).getPreferredSize()
                                 .width;
-                    case AUTHCOL:
-                        return new JTextField(Bundle.getMessage("OlcbStateAuthHeader").length())
-                                .getPreferredSize().width;
-                    case LISTENCOL:
-                        return new JTextField(Bundle.getMessage("OlcbStateListenHeader").length())
-                                .getPreferredSize().width;
                     default:
                         super.getPreferredWidth(col);
                 }
@@ -348,10 +332,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return true;
                 } else if (col == QUERYCOL) {
                     return true;
-                } else if (col == AUTHCOL) {
-                    return (t instanceof OlcbTurnout);
-                } else if (col == LISTENCOL) {
-                    return (t instanceof OlcbTurnout);
                 } else {
                     return super.isCellEditable(row, col);
                 }
@@ -484,16 +464,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return Bundle.getMessage("StateForgetButton");
                 } else if (col == QUERYCOL) {
                     return Bundle.getMessage("StateQueryButton");
-                } else if (col == AUTHCOL) {
-                    if (t instanceof OlcbTurnout) {
-                        return ((OlcbTurnout) t).isAuthoritative();
-                    }
-                    return Boolean.FALSE;
-                } else if (col == LISTENCOL) {
-                    if (t instanceof OlcbTurnout) {
-                        return ((OlcbTurnout) t).isListeningToStateMessages();
-                    }
-                    return Boolean.FALSE;
                 }
                 return super.getValueAt(row, col);
             }
@@ -604,16 +574,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                 } else if (col == QUERYCOL) {
                     t.setCommandedState(Turnout.UNKNOWN);
                     t.requestUpdateFromLayout();
-                } else if (col == AUTHCOL) {
-                    boolean b = ((Boolean) value).booleanValue();
-                    if (t instanceof OlcbTurnout) {
-                        ((OlcbTurnout) t).setAuthoritative(b);
-                    }
-                } else if (col == LISTENCOL) {
-                    boolean b = ((Boolean) value).booleanValue();
-                    if (t instanceof OlcbTurnout) {
-                        ((OlcbTurnout) t).setListeningToStateMessages(b);
-                    }
                 } else if (col == VALUECOL && _graphicState) { // respond to clicking on ImageIconRenderer CellEditor
                     clickOn(t);
                     fireTableRowsUpdated(row, row);
@@ -704,17 +664,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                 columnModel.setColumnVisible(column, false);
                 column = columnModel.getColumnByModelIndex(QUERYCOL);
                 columnModel.setColumnVisible(column, false);
-                column = columnModel.getColumnByModelIndex(AUTHCOL);
-                columnModel.setColumnVisible(column, false);
-                EnablingCheckboxRenderer r = new EnablingCheckboxRenderer();
-                r.setToolTipText(Bundle.getMessage("OlcbStateAuthToolTip"));
-                column.setCellRenderer(r);
-
-                column = columnModel.getColumnByModelIndex(LISTENCOL);
-                columnModel.setColumnVisible(column, false);
-                r = new EnablingCheckboxRenderer();
-                r.setToolTipText(Bundle.getMessage("OlcbStateListenToolTip"));
-                column.setCellRenderer(r);
 
                 super.configureTable(table);
             }
@@ -1633,10 +1582,8 @@ public class TurnoutTableAction extends AbstractTableAction {
         columnModel.setColumnVisible(column, showState);
         column = columnModel.getColumnByModelIndex(QUERYCOL);
         columnModel.setColumnVisible(column, showState);
-        column = columnModel.getColumnByModelIndex(AUTHCOL);
-        columnModel.setColumnVisible(column, showOpenLCB);
-        column = columnModel.getColumnByModelIndex(LISTENCOL);
-        columnModel.setColumnVisible(column, showOpenLCB);
+        // @TODO instead of making this flipped by showState, it should be set by a separate action.
+        getTableDataModel().setPropertyColumnsVisible(table, showState);
     }
     /**
      * Insert a table specific Operations menu. Account for the Window and Help

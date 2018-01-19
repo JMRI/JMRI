@@ -68,4 +68,13 @@ public final class OlcbUtils {
                 .LISTEN_INVALID_STATE);
         return ret;
     }
+
+    /**
+     * Tests whether a given NamedBead is an OpenLCB implementation.
+     * @param b named bean object (e.g. Turnout object or Sensor object).
+     * @return true if it is an Olcb implementation.
+     */
+    static boolean isOlcbBean(NamedBean b) {
+        return b.getClass().getName().contains("Olcb");
+    }
 }

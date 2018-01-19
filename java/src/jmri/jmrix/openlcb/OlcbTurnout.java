@@ -46,8 +46,8 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
     EventTable.EventTableEntryHolder thrownEventTableEntryHolder = null;
     EventTable.EventTableEntryHolder closedEventTableEntryHolder = null;
 
-    private static final boolean DEFAULT_IS_AUTHORITATIVE = true;
-    private static final boolean DEFAULT_LISTEN = true;
+    static final boolean DEFAULT_IS_AUTHORITATIVE = true;
+    static final boolean DEFAULT_LISTEN = true;
     private static final String[] validFeedbackNames = {"MONITORING", "ONESENSOR", "TWOSENSOR",
             "DIRECT"};
     private static final int[] validFeedbackModes = {MONITORING, ONESENSOR, TWOSENSOR, DIRECT};

@@ -8,6 +8,7 @@ import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -16,6 +17,8 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.NamedBeanPropertyDescriptor;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -247,6 +250,15 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         }
         firePropertyChange("length", null, _tsys.size());
         // listen for name and state changes to forward
+    }
+
+    /**
+     * By default there are no custom properties.
+     * @return empty list
+     */
+    @Override
+    public List<NamedBeanPropertyDescriptor> getKnownBeanProperties() {
+        return new LinkedList<>();
     }
 
     /**
