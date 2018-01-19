@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
 <!-- Translated  by Blorec Hervé le 2011-10-30-->
 
 <html lang="fr">
@@ -9,9 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: SDF Sound File Editor</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI help Digitrax SDF Sound File Editor"><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -287,7 +284,8 @@
       &Atilde;&ordf;tre l'outil pour d&Atilde;&copy;butant, et il
       nous faut un texte beaucoup plus explicatif sur chaque
       fen&Atilde;&ordf;tre afin que les gens sachent ce que font
-      les options. <!--#include virtual="/Footer" --></p>
+      les options.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

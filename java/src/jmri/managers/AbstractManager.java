@@ -41,7 +41,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     public AbstractManager() {
         registerSelf();
     }
-
+    
     /**
      * By default, register this manager to store as configuration information.
      * Override to change that.
@@ -270,26 +270,31 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * @param e the event
      */
     @Override
+    @SuppressWarnings("unchecked") // The cast of getSource() to E can't be checked due to type erasure, but we catch errors
     @OverridingMethodsMustInvokeSuper
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("UserName")) {
             String old = (String) e.getOldValue();  // previous user name
             String now = (String) e.getNewValue();  // current user name
-            E t = (E) e.getSource();
-            if (old != null) {
-                _tuser.remove(old); // remove old name for this bean
-            }
-            if (now != null) {
-                // was there previously a bean with the new name?
-                if (_tuser.get(now) != null && _tuser.get(now) != t) {
-                    // If so, clear. Note that this is not a "move" operation
-                    _tuser.get(now).setUserName(null);
+            try { // really should always succeed
+                E t = (E) e.getSource();
+                if (old != null) {
+                    _tuser.remove(old); // remove old name for this bean
                 }
+                if (now != null) {
+                    // was there previously a bean with the new name?
+                    if (_tuser.get(now) != null && _tuser.get(now) != t) {
+                        // If so, clear. Note that this is not a "move" operation
+                        _tuser.get(now).setUserName(null);
+                    }
 
-                _tuser.put(now, t); // put new name for this bean
+                    _tuser.put(now, t); // put new name for this bean
+                }
+            } catch (ClassCastException ex) {
+                log.error("Received event of wrong type {}", e.getSource().getClass().getName(), ex);
             }
 
-            //called DisplayListName, as DisplayName might get used at some point by a NamedBean
+            // called DisplayListName, as DisplayName might get used at some point by a NamedBean
             firePropertyChange("DisplayListName", old, now); //IN18N
         }
     }

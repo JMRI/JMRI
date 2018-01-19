@@ -214,6 +214,7 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
     int _number;   // loconet Reporter number
 
     @SuppressWarnings("unused")
+    @Deprecated
     private boolean myAddress(int a1, int a2) {
         // the "+ 1" in the following converts to throttle-visible numbering
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1) == _number;

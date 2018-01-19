@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003, 2009
  * @author Egbert Broerse Copyright (C) 2017
  */
-public class SensorTableDataModel extends BeanTableDataModel {
+public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
 
     static public final int INVERTCOL = NUMCOLUMN;
     static public final int EDITCOL = INVERTCOL + 1;
@@ -78,6 +78,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getValue(String name) {
         Sensor sen = senManager.getBySystemName(name);
@@ -115,48 +116,55 @@ public class SensorTableDataModel extends BeanTableDataModel {
         updateNameList();
     }
 
+    /** {@inheritDoc} */
     @Override
-    protected Manager getManager() {
+    protected Manager<Sensor> getManager() {
         if (senManager == null) {
             senManager = InstanceManager.sensorManagerInstance();
         }
         return senManager;
     }
 
+    /** {@inheritDoc} */
     @Override
-    protected NamedBean getBySystemName(String name) {
+    protected Sensor getBySystemName(String name) {
         return senManager.getBySystemName(name);
     }
 
+    /** {@inheritDoc} */
     @Override
-    protected NamedBean getByUserName(String name) {
+    protected Sensor getByUserName(String name) {
         return InstanceManager.getDefault(SensorManager.class).getByUserName(name);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String getMasterClassName() {
         return getClassName();
     }
 
+    /** {@inheritDoc} */
     @Override
-    protected void clickOn(NamedBean t) {
+    protected void clickOn(Sensor t) {
         try {
-            int state = ((Sensor) t).getKnownState();
+            int state = t.getKnownState();
             if (state == Sensor.INACTIVE) {
-                ((Sensor) t).setKnownState(Sensor.ACTIVE);
+                t.setKnownState(Sensor.ACTIVE);
             } else {
-                ((Sensor) t).setKnownState(Sensor.INACTIVE);
+                t.setKnownState(Sensor.INACTIVE);
             }
         } catch (JmriException e) {
             log.warn("Error setting state: " + e);
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getColumnCount() {
         return QUERYCOL + getPropertyColumnCount() + 1;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getColumnName(int col) {
         switch(col) {
@@ -182,6 +190,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public Class<?> getColumnClass(int col) {
         switch(col) {
@@ -202,14 +211,17 @@ public class SensorTableDataModel extends BeanTableDataModel {
            case QUERYCOL:
                return JButton.class;
            case VALUECOL:
-              if (_graphicState) {
-                   return JLabel.class; // use an image to show sensor state
-              }
+               if (_graphicState) {
+                    return JLabel.class; // use an image to show sensor state
+               } else {
+                    return super.getColumnClass(col);
+               }
            default:
               return super.getColumnClass(col);
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getPreferredWidth(int col) {
         if (col == INVERTCOL) {
@@ -232,6 +244,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isCellEditable(int row, int col) {
         String name = sysNameList.get(row);
@@ -266,6 +279,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         return super.isCellEditable(row, col);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object getValueAt(int row, int col) {
         if (row >= sysNameList.size()) {
@@ -309,6 +323,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setValueAt(Object value, int row, int col) {
         if (row >= sysNameList.size()) {
@@ -375,11 +390,13 @@ public class SensorTableDataModel extends BeanTableDataModel {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String getBeanType() {
         return Bundle.getMessage("BeanNameSensor");
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
         if ((e.getPropertyName().indexOf("inverted") >= 0) || (e.getPropertyName().indexOf("GlobalTimer") >= 0)
@@ -432,6 +449,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         protected ImageIcon offIcon;
         protected int iconHeight = -1;
 
+        /** {@inheritDoc} */
         @Override
         public Component getTableCellRendererComponent(
                 JTable table, Object value, boolean isSelected,
@@ -444,6 +462,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
             return updateLabel((String) value, row);
         }
 
+        /** {@inheritDoc} */
         @Override
         public Component getTableCellEditorComponent(
                 JTable table, Object value, boolean isSelected,
@@ -495,6 +514,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
             return label;
         }
 
+        /** {@inheritDoc} */
         @Override
         public Object getCellEditorValue() {
             log.debug("getCellEditorValue, me = {})", this.toString());
@@ -525,6 +545,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
 
     } // end of ImageIconRenderer class
 
+    /** {@inheritDoc} */
     @Override
     public void configureTable(JTable table) {
         this.table = table;

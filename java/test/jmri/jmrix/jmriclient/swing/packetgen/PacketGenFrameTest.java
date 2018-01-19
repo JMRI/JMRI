@@ -17,7 +17,7 @@ import org.junit.Test;
 public class PacketGenFrameTest {
 
 
-    private JMRIClientTrafficController tc = null;
+    // private JMRIClientTrafficController tc = null;
 
     @Test
     public void testCtor() {
@@ -29,10 +29,12 @@ public class PacketGenFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new JMRIClientTrafficController();
+        // tc = new JMRIClientTrafficController();
     } 
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
+    public void tearDown() {
+        JUnitUtil.tearDown();
+        // tc = null;
     }
 }

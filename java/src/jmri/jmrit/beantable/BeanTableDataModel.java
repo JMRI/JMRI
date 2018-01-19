@@ -64,7 +64,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2006
  */
-abstract public class BeanTableDataModel extends AbstractTableModel implements PropertyChangeListener {
+abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTableModel implements PropertyChangeListener {
 
     static public final int SYSNAMECOL = 0;
     static public final int USERNAMECOL = 1;
@@ -101,7 +101,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         if (sysNameList != null) {
             for (int i = 0; i < sysNameList.size(); i++) {
                 // if object has been deleted, it's not here; ignore it
-                NamedBean b = getBySystemName(sysNameList.get(i));
+                T b = getBySystemName(sysNameList.get(i));
                 if (b != null) {
                     b.removePropertyChangeListener(this);
                 }
@@ -114,6 +114,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
@@ -125,12 +126,9 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             // a value changed.  Find it, to avoid complete redraw
             if (e.getSource() instanceof NamedBean) {
                 String name = ((NamedBean) e.getSource()).getSystemName();
-                if (log.isDebugEnabled()) {
-                    log.debug("Update cell " + sysNameList.indexOf(name) + ","
-                            + VALUECOL + " for " + name);
-                }
-                // since we can add columns, the entire row is marked as updated
                 int row = sysNameList.indexOf(name);
+                log.debug("Update cell {},{} for {}", row, VALUECOL, name);
+                // since we can add columns, the entire row is marked as updated
                 try {
                     fireTableRowsUpdated(row, row);
                 } catch (Exception ex) {
@@ -156,16 +154,19 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                 || e.getPropertyName().contains("UserName");
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getRowCount() {
         return sysNameList.size();
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getColumnCount() {
         return NUMCOLUMN;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getColumnName(int col) {
         switch (col) {
@@ -188,11 +189,12 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case SYSNAMECOL:
-                return NamedBean.class;
+                return NamedBean.class; // can't get class of T
             case USERNAMECOL:
             case COMMENTCOL:
                 return String.class;
@@ -208,6 +210,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isCellEditable(int row, int col) {
         String uname;
@@ -217,7 +220,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             case DELETECOL:
                 return true;
             case USERNAMECOL:
-                NamedBean b = getBySystemName(sysNameList.get(row));
+                T b = getBySystemName(sysNameList.get(row));
                 uname = b.getUserName();
                 if ((uname == null) || uname.equals("")) {
                     return true;
@@ -232,9 +235,10 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object getValueAt(int row, int col) {
-        NamedBean b;
+        T b;
         switch (col) {
             case SYSNAMECOL:  // slot number
                 return getBySystemName(sysNameList.get(row));
@@ -286,16 +290,16 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
 
     abstract public String getValue(String systemName);
 
-    abstract protected Manager getManager();
+    abstract protected Manager<T> getManager();
 
-    protected void setManager(Manager man) {
+    protected void setManager(@Nonnull Manager<T> man) {
     }
 
-    abstract protected NamedBean getBySystemName(String name);
+    abstract protected T getBySystemName(@Nonnull String name);
 
-    abstract protected NamedBean getByUserName(String name);
+    abstract protected T getByUserName(@Nonnull String name);
 
-    abstract protected void clickOn(NamedBean t);
+    abstract protected void clickOn(T t);
 
     public int getDisplayDeleteMsg() {
         return InstanceManager.getDefault(UserPreferencesManager.class).getMultipleChoiceOption(getMasterClassName(), "deleteInUse");
@@ -307,6 +311,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
 
     abstract protected String getMasterClassName();
 
+    /** {@inheritDoc} */
     @Override
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
@@ -316,7 +321,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                 if (((String) value).equals("")) {
                     value = null;
                 } else {
-                    NamedBean nB = getByUserName((String) value);
+                    T nB = getByUserName((String) value);
                     if (nB != null) {
                         log.error("User name is not unique {}", value);
                         String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
@@ -326,7 +331,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                         return;
                     }
                 }
-                NamedBean nBean = getBySystemName(sysNameList.get(row));
+                T nBean = getBySystemName(sysNameList.get(row));
                 nBean.setUserName((String) value);
                 if (nbMan.inUse(sysNameList.get(row), nBean)) {
                     String msg = Bundle.getMessage("UpdateToUserName", new Object[]{getBeanType(), value, sysNameList.get(row)});
@@ -352,7 +357,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                 break;
             case VALUECOL:
                 // button fired, swap state
-                NamedBean t = getBySystemName(sysNameList.get(row));
+                T t = getBySystemName(sysNameList.get(row));
                 clickOn(t);
                 break;
             case DELETECOL:
@@ -370,9 +375,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     }
 
     protected void deleteBean(int row, int col) {
-        final NamedBean t = getBySystemName(sysNameList.get(row));
-        //int count = t.getNumPropertyChangeListeners()-1; // one is this table
-        DeleteBeanWorker worker = new DeleteBeanWorker(t);
+        DeleteBeanWorker worker = new DeleteBeanWorker(getBySystemName(sysNameList.get(row)));
         worker.execute();
     }
 
@@ -384,7 +387,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      *
      * @param bean NamedBean to delete
      */
-    void doDelete(NamedBean bean) {
+    void doDelete(T bean) {
         try {
             getManager().deleteBean(bean, "DoDelete");
         } catch (PropertyVetoException e) {
@@ -471,7 +474,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         getManager().removePropertyChangeListener(this);
         if (sysNameList != null) {
             for (int i = 0; i < sysNameList.size(); i++) {
-                NamedBean b = getBySystemName(sysNameList.get(i));
+                T b = getBySystemName(sysNameList.get(i));
                 if (b != null) {
                     b.removePropertyChangeListener(this);
                 }
@@ -689,14 +692,14 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     }
 
     public void copyName(int row, int column) {
-        NamedBean nBean = getBySystemName(sysNameList.get(row));
+        T nBean = getBySystemName(sysNameList.get(row));
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         StringSelection name = new StringSelection(nBean.getUserName());
         clipboard.setContents(name, null);
     }
 
     public void renameBean(int row, int column) {
-        NamedBean nBean = getBySystemName(sysNameList.get(row));
+        T nBean = getBySystemName(sysNameList.get(row));
         String oldName = nBean.getUserName();
         JTextField _newName = new JTextField(20);
         _newName.setText(oldName);
@@ -715,7 +718,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             //name not changed.
             return;
         } else {
-            NamedBean nB = getByUserName(value);
+            T nB = getByUserName(value);
             if (nB != null) {
                 log.error("User name is not unique {}", value);
                 String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
@@ -758,7 +761,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     }
 
     public void removeName(int row, int column) {
-        NamedBean nBean = getBySystemName(sysNameList.get(row));
+        T nBean = getBySystemName(sysNameList.get(row));
         String msg = Bundle.getMessage("UpdateToSystemName", new Object[]{getBeanType()});
         int optionPane = JOptionPane.showConfirmDialog(null,
                 msg, Bundle.getMessage("UpdateToSystemNameTitle"),
@@ -771,9 +774,9 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     }
 
     public void moveBean(int row, int column) {
-        final NamedBean t = getBySystemName(sysNameList.get(row));
+        final T t = getBySystemName(sysNameList.get(row));
         String currentName = t.getUserName();
-        NamedBean oldNameBean = getBySystemName(sysNameList.get(row));
+        T oldNameBean = getBySystemName(sysNameList.get(row));
 
         if ((currentName == null) || currentName.equals("")) {
             JOptionPane.showMessageDialog(null, "Can not move an empty UserName");
@@ -783,7 +786,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         JComboBox<String> box = new JComboBox<>();
         List<String> nameList = getManager().getSystemNameList();
         for (int i = 0; i < nameList.size(); i++) {
-            NamedBean nb = getBySystemName(nameList.get(i));
+            T nb = getBySystemName(nameList.get(i));
             //Only add items that do not have a username assigned.
             if (nb.getDisplayName().equals(nameList.get(i))) {
                 box.addItem(nameList.get(i));
@@ -799,7 +802,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             return;
         }
         String entry = (String) box.getSelectedItem();
-        NamedBean newNameBean = getBySystemName(entry);
+        T newNameBean = getBySystemName(entry);
         if (oldNameBean != newNameBean) {
             oldNameBean.setUserName("");
             newNameBean.setUserName(currentName);
@@ -893,12 +896,13 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
 
     class DeleteBeanWorker extends SwingWorker<Void, Void> {
 
-        NamedBean t;
+        T t;
 
-        public DeleteBeanWorker(NamedBean bean) {
+        public DeleteBeanWorker(T bean) {
             t = bean;
         }
 
+        /** {@inheritDoc} */
         @Override
         public Void doInBackground() {
             StringBuilder message = new StringBuilder();
@@ -1007,6 +1011,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         }
 
         /**
+         * {@inheritDoc}
          * Minimal implementation to catch and log errors
          */
         @Override
@@ -1021,6 +1026,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
 
     class PopupListener extends MouseAdapter {
 
+        /** {@inheritDoc} */
         @Override
         public void mousePressed(MouseEvent e) {
             if (e.isPopupTrigger()) {
@@ -1028,6 +1034,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             }
         }
 
+        /** {@inheritDoc} */
         @Override
         public void mouseReleased(MouseEvent e) {
             if (e.isPopupTrigger()) {
@@ -1044,6 +1051,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             this.row = row;
         }
 
+        /** {@inheritDoc} */
         @Override
         public void actionPerformed(ActionEvent e) {
             deleteBean(row, 0);
@@ -1059,6 +1067,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             table = tbl;
         }
 
+        /** {@inheritDoc} */
         @Override
         public void mousePressed(MouseEvent e) {
             if (e.isPopupTrigger()) {
@@ -1066,6 +1075,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             }
         }
 
+        /** {@inheritDoc} */
         @Override
         public void mouseReleased(MouseEvent e) {
             if (e.isPopupTrigger()) {
@@ -1073,6 +1083,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             }
         }
 
+        /** {@inheritDoc} */
         @Override
         public void mouseClicked(MouseEvent e) {
             if (e.isPopupTrigger()) {

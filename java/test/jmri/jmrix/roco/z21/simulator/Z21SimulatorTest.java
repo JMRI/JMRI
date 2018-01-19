@@ -50,6 +50,9 @@ public class Z21SimulatorTest {
         }
         // create a new simulator.
         a = new Z21SimulatorAdapter();
+        
+        // shouldn't the 'host' variable be used here?
+        
         // connect the port
         try {
            a.connect();

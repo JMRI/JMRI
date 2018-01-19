@@ -284,16 +284,27 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - from <http://developer.apple.com/library/mac/samplecode/AppleJavaExtensions/>
 - Used for building only, not at runtime
 
-##### annotations.jar, jsr305.jar
-- From Findbugs 3.0.0 from http://findbugs.sourceforge.net
+## SpotBugs static analysis
+
+##### jcip-annotations-1.0.jar
+- From Java Concurrency In Practice (http://jcip.net)
+- Only needed at compile/build time, not runtime
+- http://repo1.maven.org/maven2/net/jcip/jcip-annotations/1.0/
+
+##### jsr305.jar
+- From FindBugs 3.0.0 from http://findbugs.sourceforge.net
 - Only needed at compile/build time, not runtime
 
+##### spotbugs-annotations-3.1.1.jar
+- From SpotBugs 3.1.1
+- Only needed at compile/build time, not runtime
+- http://repo1.maven.org/maven2/com/github/spotbugs/spotbugs-annotations/3.1.1/
 
 ## Older, no longer present:
 
-##### crimson.jar
+##### crimson.jar    
 - version 1.1.3
-- from <http://xml.apache.org/crimson/>
+- from http://xml.apache.org/crimson/
 - No longer used as of JMRI 2.7.6
 
 ##### MRJAdaper.jar

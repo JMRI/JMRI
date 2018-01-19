@@ -1,5 +1,3 @@
-// SerialFilterFrame.java
-
 package jmri.jmrix.cmri.serial.serialmon;
 
 import java.awt.*;
@@ -424,7 +422,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
                 default:
                     return Boolean.class;
             }
-        };
+        }
 	public boolean isCellEditable(int r,int c) {
            if(c!=NODEADDR_COLUMN) return true;
            else return false;
@@ -468,8 +466,6 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
 
     private String[] nodeEnableColumnsNames = {"Node","Monitor"};
 
-    private final static Logger log = LoggerFactory.getLogger(SerialFilterFrame.class);
+    // private final static Logger log = LoggerFactory.getLogger(SerialFilterFrame.class);
 
 }
-
-/* @(#)SerialFilterFrame.java */

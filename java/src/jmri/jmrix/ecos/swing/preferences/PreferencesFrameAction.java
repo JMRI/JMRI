@@ -26,8 +26,7 @@ public class PreferencesFrameAction extends AbstractAction {
         try {
             f.initComponents(adaptermemo);
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
-            ex.printStackTrace();
+            log.error("Exception: ", ex);
         }
         f.setVisible(true);
     }

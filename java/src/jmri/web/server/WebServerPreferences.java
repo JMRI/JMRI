@@ -441,15 +441,6 @@ public class WebServerPreferences extends PreferencesBean {
     }
 
     /**
-     * @return the railroadName
-     * @deprecated since 4.9.1; use {@link #getRailroadName()} instead
-     */
-    @Deprecated
-    public String getRailRoadName() {
-        return this.getRailroadName();
-    }
-
-    /**
      * Set the railroad name.
      *
      * @param railroadName the railroadName to set
@@ -464,16 +455,6 @@ public class WebServerPreferences extends PreferencesBean {
             }
             this.firePropertyChange(RAILROAD_NAME, old, this.railroadName);
         }
-    }
-
-    /**
-     * @param railroadName the railroadName to set
-     * @deprecated since 4.9.1; use {@link #setRailroadName(java.lang.String)}
-     * instead
-     */
-    @Deprecated
-    public void setRailRoadName(String railroadName) {
-        this.setRailroadName(railroadName);
     }
 
     /**

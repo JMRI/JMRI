@@ -9,6 +9,7 @@ import org.junit.runners.Suite;
         OlcbAddressTest.class,
         OpenLcbLocoAddressTest.class,
         OlcbSensorManagerTest.class,
+        OlcbSignalMastTest.class,
         OlcbProgrammerTest.class,
         OlcbProgrammerManagerTest.class,
         OlcbSensorTest.class,

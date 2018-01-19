@@ -87,7 +87,7 @@ public class DefaultSignalAppearanceMapTest {
 
         SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:two-searchlight:h1:h2") {
             @Override
-            void configureAspectTable(String signalSystemName, String aspectMapName) {
+            protected void configureAspectTable(String signalSystemName, String aspectMapName) {
                 map = new DefaultSignalAppearanceMap("sys", "user");
             }
         };

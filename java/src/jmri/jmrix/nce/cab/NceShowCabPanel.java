@@ -431,7 +431,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             try {
                 Thread.sleep(FIRST_TIME_SLEEP); // wait for panel to display
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.error("Thread unexpectedly interrupted", e);
             }
         }
 
@@ -454,7 +454,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             try {
                 Thread.sleep(FIRST_TIME_SLEEP); // wait for panel to display
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.error("Thread unexpectedly interrupted", e);
             }
         }
 
@@ -480,7 +480,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             try {
                 Thread.sleep(FIRST_TIME_SLEEP); // wait for panel to display
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.error("Thread unexpectedly interrupted", e);
             }
         }
 
@@ -794,7 +794,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             try {
                 Thread.sleep(FIRST_TIME_SLEEP); // wait for panel to display
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.error("Thread unexpectedly interrupted", e);
             }
         }
 

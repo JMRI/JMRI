@@ -8,8 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>Jython access to JMRI tools</title>
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content=
+  <meta name="author" content="Bob Jacobsen">  <meta name="keywords" content=
   "JMRI technical code Python Jython scripting">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -377,8 +376,8 @@ name space:
       or ^C the program.
 
       <p>It would be good to understand what's preventing the
-      program from stopping when it gets the ^D. 
-      <!--#include virtual="/Footer" --></p>
+      program from stopping when it gets the <pre>^D</pre>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

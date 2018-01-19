@@ -4,10 +4,10 @@
 
 <html lang="fr">
 <head>
-    <TITLE>
+    <title>
  	JMRI: Xml Schema Examples
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    </title>
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code xml schema usage">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->

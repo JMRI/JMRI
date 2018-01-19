@@ -7,9 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogCommandStation
- * </P>
+ * Tests for SprogCommandStation.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class SprogCommandStationTest {
@@ -32,6 +31,5 @@ public class SprogCommandStationTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

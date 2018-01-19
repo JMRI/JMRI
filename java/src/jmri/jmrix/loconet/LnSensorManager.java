@@ -88,14 +88,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         }
     }
 
-    @SuppressWarnings("unused")
-    private int address(int a1, int a2) {
-        // the "+ 1" in the following converts to throttle-visible numbering
-        return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1);
-    }
-
     volatile LnSensorUpdateThread thread;
-    
+
     /**
      * Requests status updates from all layout sensors.
      */

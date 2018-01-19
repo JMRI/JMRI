@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2009
  */
-public class SensorTableAction extends AbstractTableAction {
+public class SensorTableAction extends AbstractTableAction<Sensor> {
 
     /**
      * Create an action with a specific title.
@@ -63,10 +63,10 @@ public class SensorTableAction extends AbstractTableAction {
 
     protected SensorManager senManager = InstanceManager.sensorManagerInstance();
 
+    /** {@inheritDoc} */
     @Override
-    @SuppressFBWarnings("BC_UNCONFIRMED_CAST") // AbstractTableTabAction responsible for getting this right;
-    public void setManager(@Nonnull Manager man) {
-        senManager = (SensorManager) man;
+    public void setManager(@Nonnull Manager<Sensor> s) {
+        senManager = (SensorManager)s;
         if (m != null) {
             m.setManager(senManager);
         }
@@ -81,11 +81,13 @@ public class SensorTableAction extends AbstractTableAction {
         m = new jmri.jmrit.beantable.sensor.SensorTableDataModel(senManager);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleSensorTable"));
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.SensorTable";
@@ -109,6 +111,7 @@ public class SensorTableAction extends AbstractTableAction {
     jmri.UserPreferencesManager p;
     String connectionChoice = "";
 
+    /** {@inheritDoc} */
     @Override
     protected void addPressed(ActionEvent e) {
         p = InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -507,6 +510,7 @@ public class SensorTableAction extends AbstractTableAction {
     JCheckBox showPullUpBox = new JCheckBox(Bundle.getMessage("SensorPullUpCheckBox"));
     JCheckBox showStateBox = new JCheckBox(Bundle.getMessage("ShowState"));
 
+    /** {@inheritDoc} */
     @Override
     public void addToFrame(BeanTableFrame f) {
         f.addToBottomBox(showDebounceBox, this.getClass().getName());
@@ -537,6 +541,7 @@ public class SensorTableAction extends AbstractTableAction {
         showStateChanged();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void addToPanel(AbstractTableTabAction f) {
         String systemPrefix = ConnectionNameFromSystemName.getConnectionName(senManager.getSystemPrefix());
@@ -571,6 +576,7 @@ public class SensorTableAction extends AbstractTableAction {
         showStateChanged();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setMessagePreferencesDetails() {
         InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
@@ -665,6 +671,7 @@ public class SensorTableAction extends AbstractTableAction {
             // set default background color for invalid field data
             Color mark = Color.orange;
 
+            /** {@inheritDoc} */
             @Override
             public boolean shouldYieldFocus(javax.swing.JComponent input) {
                 if (input.getClass() == CheckedTextField.class) {
@@ -683,6 +690,7 @@ public class SensorTableAction extends AbstractTableAction {
                 }
             }
 
+            /** {@inheritDoc} */
             @Override
             public boolean verify(javax.swing.JComponent input) {
                 if (input.getClass() == CheckedTextField.class) {
@@ -692,6 +700,7 @@ public class SensorTableAction extends AbstractTableAction {
                 }
             }
 
+            /** {@inheritDoc} */
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 JTextField source = (JTextField) e.getSource();
@@ -701,11 +710,13 @@ public class SensorTableAction extends AbstractTableAction {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String getClassName() {
         return SensorTableAction.class.getName();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleSensorTable");

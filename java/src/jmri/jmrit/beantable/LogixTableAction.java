@@ -90,7 +90,7 @@ import org.slf4j.LoggerFactory;
  * @author Matthew Harris copyright (c) 2009
  * @author Dave Sand copyright (c) 2017
  */
-public class LogixTableAction extends AbstractTableAction {
+public class LogixTableAction extends AbstractTableAction<Logix> {
 
     /**
      * Constructor to create a LogixManager instance.
@@ -127,7 +127,7 @@ public class LogixTableAction extends AbstractTableAction {
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Logix>() {
             // overlay the state column with the edit column
             static public final int ENABLECOL = VALUECOL;
             static public final int EDITCOL = DELETECOL;
@@ -235,11 +235,10 @@ public class LogixTableAction extends AbstractTableAction {
              * @param bean of the Logix to delete
              */
             @Override
-            void doDelete(NamedBean bean) {
-                Logix l = (Logix) bean;
-                l.deActivateLogix();
+            void doDelete(Logix bean) {
+                bean.deActivateLogix();
                 // delete the Logix and all its Conditionals
-                _logixManager.deleteLogix(l);
+                _logixManager.deleteLogix(bean);
             }
 
             @Override
@@ -251,18 +250,18 @@ public class LogixTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
+            public Manager<Logix> getManager() {
                 return InstanceManager.getDefault(jmri.LogixManager.class);
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public Logix getBySystemName(String name) {
                 return InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(
                         name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public Logix getByUserName(String name) {
                 return InstanceManager.getDefault(jmri.LogixManager.class).getByUserName(
                         name);
             }
@@ -300,7 +299,7 @@ public class LogixTableAction extends AbstractTableAction {
 
             // Not needed - here for interface compatibility
             @Override
-            public void clickOn(NamedBean t) {
+            public void clickOn(Logix t) {
             }
 
             @Override
@@ -1089,7 +1088,7 @@ public class LogixTableAction extends AbstractTableAction {
      * @return false if name has length &lt; 1 after displaying a dialog
      */
     boolean checkLogixSysName() {
-        String sName = _systemName.getText().toUpperCase().trim();
+        String sName = InstanceManager.getDefault(LogixManager.class).normalizeSystemName(_systemName.getText());
         if ((sName.length() < 1)) {
             // Entered system name is blank or too short
             javax.swing.JOptionPane.showMessageDialog(addLogixFrame,

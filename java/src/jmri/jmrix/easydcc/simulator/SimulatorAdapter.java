@@ -50,7 +50,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
     public String openPort(String portName, String appName) {
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
-            log.debug("tempPipeI created {}", tempPipeI != null);
+            log.debug("tempPipeI created");
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
             log.debug("inpipe created {}", inpipe != null);

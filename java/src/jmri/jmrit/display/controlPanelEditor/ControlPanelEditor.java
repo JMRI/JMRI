@@ -1194,8 +1194,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     ///////////////// Handle mouse events ////////////////
-
     private long _mouseDownTime = 0;
+
     @Override
     public void mousePressed(MouseEvent event) {
         _mouseDownTime = System.currentTimeMillis();
@@ -1264,7 +1264,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
             if (isEditable()) {
                 _shapeDrawer.doMouseReleased(selection, event, this);
-                
+
                 if (!_circuitBuilder.doMouseReleased(selection, _dragging)) {
                     if (selection != null) {
                         if (!_dragging) {
@@ -1462,7 +1462,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (g instanceof Graphics2D) {
                 Graphics2D g2d = (Graphics2D) g;
                 g2d.setStroke(new java.awt.BasicStroke(2.0f));
-                
+
             }
             g.setColor(new Color(150, 150, 255));
             for (Positionable p : _secondSelectionGroup) {
@@ -1807,7 +1807,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             _namedIconDataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);
             _positionableListDataFlavor = new DataFlavor(List.class, "JComponentList");
         } catch (ClassNotFoundException cnfe) {
-            cnfe.printStackTrace();
+            log.error("Unable to find class supporting {}", ImageIndexEditor.IconDataFlavorMime, cnfe);
         }
         new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
     }

@@ -9,6 +9,7 @@ import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.Turnout;
 import jmri.TurnoutManager;
 
 /**
@@ -91,7 +92,10 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     public void requestAllStatus() {
 
         getTurnoutManager().getSystemNameList().forEach((t) -> {
-           ((JMRIClientTurnout)(getTurnoutManager().getTurnout(t))).requestUpdateFromLayout();
+            Turnout turn = getTurnoutManager().getTurnout(t);
+            if (turn != null) {
+               ((JMRIClientTurnout)(turn)).requestUpdateFromLayout();
+            }
         }); 
         getSensorManager().getSystemNameList().forEach((s) -> {
             Sensor sen = getSensorManager().getSensor(s);
