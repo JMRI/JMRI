@@ -88,23 +88,23 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     /**
      * Send a DCC packet to the rails. This implements the CommandStation
-     * interface.  This mechanism can pass any valid NMRA packet of up to 
+     * interface.  This mechanism can pass any valid NMRA packet of up to
      * 6 data bytes (including the error-check byte).
-     * 
-     * When available, these messages are forwarded to LocoNet using a 
-     * "throttledTransmitter".  This decreases the speed with which these 
-     * messages are sent, resulting in lower throughput, but fewer 
+     *
+     * When available, these messages are forwarded to LocoNet using a
+     * "throttledTransmitter".  This decreases the speed with which these
+     * messages are sent, resulting in lower throughput, but fewer
      * rejections by the command station on account of "buffer-overflow".
-     * 
+     *
      * @param packet - the data bytes of the raw NMRA packet to be sent.  The
      *          "error check" byte must be included, even though the LocoNet
-     *          message will not include that byte; the command station 
-     *          will re-create the error byte from the bytes encoded in 
+     *          message will not include that byte; the command station
+     *          will re-create the error byte from the bytes encoded in
      *          the LocoNet message.  LocoNet is unable to propagate packets
      *          longer than 6 bytes (including the error-check byte).
-     * 
+     *
      * @param sendCount - the total number of times the packet is to be
-     *          sent on the DCC track signal (not LocoNet!).  Valid range is 
+     *          sent on the DCC track signal (not LocoNet!).  Valid range is
      *          between 1 and 8.  sendCount will be forced to this range if it
      *          is outside of this range.
      */
@@ -830,7 +830,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             String[] parts = cvNum.split("\\.");
             if ((parts[0].equals("csOpSw")) && (parts.length==2)) {
                 if (csOpSwAccessor == null) {
-                    csOpSwAccessor = new csOpSwAccess(adaptermemo, p);
+                    csOpSwAccessor = new CsOpSwAccess(adaptermemo, p);
                 } else {
                     csOpSwAccessor.setProgrammerListener(p);
                 }
@@ -910,7 +910,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             String[] parts = CVname.split("\\.");
             if ((parts[0].equals("csOpSw")) && (parts.length==2)) {
                 if (csOpSwAccessor == null) {
-                    csOpSwAccessor = new csOpSwAccess(adaptermemo, p);
+                    csOpSwAccessor = new CsOpSwAccess(adaptermemo, p);
                 } else {
                     csOpSwAccessor.setProgrammerListener(p);
                 }
@@ -965,7 +965,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     int hopsa; // high address for CV read/write
     int lopsa; // low address for CV read/write
 
-    csOpSwAccess csOpSwAccessor;
+    CsOpSwAccess csOpSwAccessor;
     @Override
     public void readCV(String cvNum, jmri.ProgListener p) throws jmri.ProgrammerException {
         log.debug("readCV(string): cvNum={}", cvNum);
@@ -975,7 +975,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             String[] parts = cvNum.split("\\.");
             if ((parts[0].equals("csOpSw")) && (parts.length==2)) {
                 if (csOpSwAccessor == null) {
-                    csOpSwAccessor = new csOpSwAccess(adaptermemo, p);
+                    csOpSwAccessor = new CsOpSwAccess(adaptermemo, p);
                 } else {
                     csOpSwAccessor.setProgrammerListener(p);
                 }

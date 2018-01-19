@@ -38,14 +38,7 @@ public class TamsNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
             return null;
         }
 
-        try {
-            ((TamsPanelInterface) p).initComponents(memo);
-            return p;
-        } catch (Exception ex) {
-            log.warn("could not init pane class: " + paneClass + " due to:" + ex);
-            ex.printStackTrace();
-        }
-
+        ((TamsPanelInterface) p).initComponents(memo);
         return p;
     }
 

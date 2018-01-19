@@ -11,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -53,6 +54,7 @@ import jmri.jmrix.ecos.EcosPreferences;
 import jmri.jmrix.ecos.EcosReply;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -732,7 +734,7 @@ public class EcosLocoToRoster implements EcosListener {
             }
         });
 
-//      Mouselistener for doubleclick activation of proprammer   
+//      Mouselistener for doubleclick activation of proprammer
         dTree.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
@@ -740,7 +742,7 @@ public class EcosLocoToRoster implements EcosListener {
                 //if (_statusLabel != null) _statusLabel.setText("StateIdle");
                 dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
 
-                /* check for both double click and that it's a decoder 
+                /* check for both double click and that it's a decoder
                  that is being clicked on.  If it's just a Family, the programmer
                  button is enabled by the TreeSelectionListener, but we don't
                  want to automatically open a programmer so a user has the opportunity
@@ -944,10 +946,8 @@ public class EcosLocoToRoster implements EcosListener {
 
             readConfig(programmerRoot, r);
 
-        } catch (Exception e) {
-            log.error("exception reading programmer file: " + filename);
-            // provide traceback too
-            e.printStackTrace();
+        } catch (IOException | JDOMException e) {
+            log.error("exception reading programmer file: {}", filename, e);
         }
     }
 

@@ -778,7 +778,7 @@ public class SlotManagerTest {
         Assert.assertEquals("nmra packet 2",
                 "ED 0B 7F 51 07 00 50 6C 03 35 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        
+
         msg= jmri.NmraPacket.accDecPktOpsMode(256, 4, 53);
         slotmanager.sendPacket(msg, 3);
         Assert.assertEquals("nmra packet 3",
@@ -796,7 +796,7 @@ public class SlotManagerTest {
         Assert.assertEquals("nmra packet 5",
                 "ED 0B 7F 54 0F 01 70 6C 00 35 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        
+
         msg = jmri.NmraPacket.accDecPktOpsMode(1, 10, 0);
         slotmanager.sendPacket(msg, 6);
         Assert.assertEquals("nmra packet 6",

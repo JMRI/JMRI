@@ -18,7 +18,7 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
 
     private int ROW_HEIGHT;
 
-    PickListModel _model;
+    PickListModel<T> _model;
 
     JPanel _addPanel;
     JPanel _cantAddPanel;
@@ -27,7 +27,7 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
     JTable _table;
     JScrollPane _scroll;
 
-    public PickSinglePanel(PickListModel model) {
+    public PickSinglePanel(PickListModel<T> model) {
         _model = model;
         _table = _model.makePickTable();
         _table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -68,9 +68,9 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
         
         String beanName = sysname;
         if (col == 1 && username != null) beanName = username;
-        jmri.NamedBean bean = _model.addBean(sysname, username);
+        T bean = _model.addBean(sysname, username);
         return InstanceManager.getDefault(NamedBeanHandleManager.class)
-                        .getNamedBeanHandle(beanName, (T)bean);
+                        .getNamedBeanHandle(beanName, bean);
     }
     
     public JTable getTable() { return _table; }
@@ -116,7 +116,7 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
             if (uname != null && uname.trim().length() == 0) {
                 uname = null;
             }
-            jmri.NamedBean bean = _model.addBean(sysname, uname);
+            T bean = _model.addBean(sysname, uname);
             if (bean != null) {
                 int setRow = _model.getIndexOf(bean);
                 _model.getTable().setRowSelectionInterval(setRow, setRow);

@@ -92,8 +92,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (UnsupportedCommOperationException | IOException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -123,7 +122,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         m.setTranslated(true);
         tc.sendCanMessage(m, null);
 
-        // do central protocol-specific configuration    
+        // do central protocol-specific configuration
         this.getSystemConnectionMemo().setProtocol(getOptionState(option1Name));
 
         this.getSystemConnectionMemo().configureManagers();
