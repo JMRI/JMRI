@@ -70,7 +70,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003, 2004, 2007
  * @author Egbert Broerse Copyright (C) 2017
  */
-public class TurnoutTableAction extends AbstractTableAction {
+public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
     /**
      * Create an action with a specific title.
@@ -131,8 +131,9 @@ public class TurnoutTableAction extends AbstractTableAction {
     // for icon state col
     protected boolean _graphicState = false; // updated from prefs
 
+    /** {@inheritDoc} */
     @Override
-    public void setManager(Manager man) {
+    public void setManager(@Nonnull Manager<Turnout> man) {
         turnManager = (TurnoutManager) man;
     }
 
@@ -166,7 +167,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
         // create the data model object that drives the table
         // note that this is a class creation, and very long
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Turnout>() {
 
             @Override
             public int getColumnCount() {
@@ -568,17 +569,17 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
+            public Manager<Turnout> getManager() {
                 return turnManager;
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public Turnout getBySystemName(String name) {
                 return turnManager.getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public Turnout getByUserName(String name) {
                 return InstanceManager.getDefault(TurnoutManager.class).getByUserName(name);
             }
 
@@ -588,12 +589,12 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
 
             @Override
-            public void clickOn(NamedBean t) {
-                int state = ((Turnout) t).getCommandedState();
+            public void clickOn(Turnout t) {
+                int state = t.getCommandedState();
                 if (state == Turnout.CLOSED) {
-                    ((Turnout) t).setCommandedState(Turnout.THROWN);
+                    t.setCommandedState(Turnout.THROWN);
                 } else {
-                    ((Turnout) t).setCommandedState(Turnout.CLOSED);
+                    t.setCommandedState(Turnout.CLOSED);
                 }
             }
 
@@ -936,11 +937,13 @@ public class TurnoutTableAction extends AbstractTableAction {
         m.fireTableDataChanged();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleTurnoutTable"));
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.TurnoutTable";
@@ -962,6 +965,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     jmri.UserPreferencesManager p;
     String connectionChoice = "";
 
+    /** {@inheritDoc} */
     @Override
     protected void addPressed(ActionEvent e) {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -1819,17 +1823,20 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     private boolean noWarn = false;
 
+    /** {@inheritDoc} */
     @Override
     protected String getClassName() {
         return TurnoutTableAction.class.getName();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setMessagePreferencesDetails() {
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
         super.setMessagePreferencesDetails();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleTurnoutTable");

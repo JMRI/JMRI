@@ -77,6 +77,10 @@ public class OlcbAddressTest extends TestCase {
         assertTrue(new OlcbAddress("1.34.5.0.9A.B.E.0").match(c));
     }
 
+    public void testEventAccess() {
+        assertEquals(new OlcbAddress("x0102030405060708"), new OlcbAddress(new org.openlcb.EventID("1.2.3.4.5.6.7.8")) );
+    }
+    
     public void testEqualsOK() {
         assertTrue((new OlcbAddress("1.34.5.0.9A.B.E.0")).equals(new OlcbAddress("x013405009A0B0E00")));
         assertTrue((new OlcbAddress("x013405009A0B0E00")).equals(new OlcbAddress("1.34.5.0.9A.B.E.0")));

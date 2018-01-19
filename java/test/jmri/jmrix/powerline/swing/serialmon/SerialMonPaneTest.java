@@ -12,14 +12,13 @@ import org.junit.Before;
  */
 public class SerialMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
-
-    private SerialTrafficControlScaffold tc = null;
+    // private SerialTrafficControlScaffold tc = null;
 
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new SerialTrafficControlScaffold();
+        // tc = new SerialTrafficControlScaffold();
         // pane for AbstractMonPaneTestBase, panel for JmriPanel
         panel = pane = new SerialMonPane();
         title="Powerline_: Communication Monitor";
@@ -27,6 +26,8 @@ public class SerialMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Override
     @After
-    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
+    public void tearDown() {
+        JUnitUtil.tearDown();
+        // tc = null;
     }
 }

@@ -171,8 +171,26 @@ public class SRCPClientVisitorTest {
 
     // valid Service Mode (SM) responses
     @Test
-    public void testSMInfoResponse() throws ParseException {
+    public void testSMCVInfoResponse() throws ParseException {
         String code = "12345678910 100 INFO 0 SM 1234 CV 2 28\n\r";
+        SRCPClientParser p = new SRCPClientParser(new StringReader(code));
+        SRCPClientVisitor v = new SRCPClientVisitor();
+        SimpleNode e = p.commandresponse();
+        e.jjtAccept(v, memo);
+    }
+
+    @Test
+    public void testSMCVBITInfoResponse() throws ParseException {
+        String code = "12345678910 100 INFO 0 SM 1234 CVBIT 2 0 1\n\r";
+        SRCPClientParser p = new SRCPClientParser(new StringReader(code));
+        SRCPClientVisitor v = new SRCPClientVisitor();
+        SimpleNode e = p.commandresponse();
+        e.jjtAccept(v, memo);
+    }
+
+    @Test
+    public void testSMREGInfoResponse() throws ParseException {
+        String code = "12345678910 100 INFO 0 SM 1234 REG 2 28\n\r";
         SRCPClientParser p = new SRCPClientParser(new StringReader(code));
         SRCPClientVisitor v = new SRCPClientVisitor();
         SimpleNode e = p.commandresponse();

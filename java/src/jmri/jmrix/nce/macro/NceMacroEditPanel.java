@@ -416,7 +416,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     // Previous, Next, Get, Save, Restore & Backup buttons
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 
-        // if we're searching ignore user 
+        // if we're searching ignore user
         if (macroSearchInc || macroSearchDec) {
             return;
         }
@@ -486,7 +486,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     // One of the ten accessory command buttons pressed
     public void buttonActionCmdPerformed(java.awt.event.ActionEvent ae) {
 
-        // if we're searching ignore user 
+        // if we're searching ignore user
         if (macroSearchInc || macroSearchDec) {
             return;
         }
@@ -538,7 +538,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     // One of ten Delete buttons pressed
     public void buttonActionDeletePerformed(java.awt.event.ActionEvent ae) {
 
-        // if we're searching ignore user 
+        // if we're searching ignore user
         if (macroSearchInc || macroSearchDec) {
             return;
         }
@@ -607,7 +607,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                 deleteButton10.setText(DELETE);
                 deleteButton10.setToolTipText(Bundle.getMessage("toolTipRemoveMacroLink"));
 
-                // user wants to delete a accessory address or a link 
+                // user wants to delete a accessory address or a link
             } else {
                 updateAccyDelPerformed(accyTextField10, cmdButton10, textAccy10,
                         deleteButton10);
@@ -626,9 +626,9 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         initAccyFields();
         if (firstTime) {
             try {
-                Thread.sleep(firstTimeSleep); // wait for panel to display 
+                Thread.sleep(firstTimeSleep); // wait for panel to display
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.error("Thread unexpectedly interrupted", e);
             }
         }
 
@@ -675,9 +675,9 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     private boolean saveMacro() {
         if (firstTime) {
             try {
-                Thread.sleep(firstTimeSleep); // wait for panel to display 
+                Thread.sleep(firstTimeSleep); // wait for panel to display
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.error("Thread unexpectedly interrupted", e);
             }
         }
 
@@ -1138,11 +1138,11 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             int lowerByteH = (((accyNum ^ 0x0700) & 0x0700) >> 4);// 3 MSB 1s complement
             int lowerByteL = ((accyNum & 0x3) << 1);        // 2 LSB
             int lowerByte = (lowerByteH + lowerByteL + 0x88);
-            if (cmdButton.getText().equals(CLOSED)) // adjust for turnout command 
+            if (cmdButton.getText().equals(CLOSED)) // adjust for turnout command
             {
                 lowerByte++;
             }
-            if (cmdButton.getText().equals(CLOSED_NCE)) // adjust for turnout command 
+            if (cmdButton.getText().equals(CLOSED_NCE)) // adjust for turnout command
             {
                 lowerByte++;
             }
@@ -1203,7 +1203,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             linkAccessory10(accyAddr & 0xFF);
             accyAddr = -accyAddr;
 
-            // must be an accessory address 
+            // must be an accessory address
         } else {
             accyAddrL = (accyAddrL << 2) & 0xFC;   // accessory address bits 7 - 2
             int accyLSB = b[1];
@@ -1481,7 +1481,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         tc.sendNceMessage(m, this);
     }
 
-    // USB Read N bytes of NCE cab memory 
+    // USB Read N bytes of NCE cab memory
     private void readUsbMemoryN(int num) {
         switch (num) {
             case 1:
@@ -1516,7 +1516,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         tc.sendNceMessage(m, this);
     }
 
-    // Reads 16 bytes of NCE memory 
+    // Reads 16 bytes of NCE memory
     private void readSerialMemory16(int nceCabAddr) {
         replyLen = NceMessage.REPLY_16;   // Expect 16 byte response
         waiting++;
@@ -1525,7 +1525,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         tc.sendNceMessage(m, this);
     }
 
-    // Write N bytes of NCE memory 
+    // Write N bytes of NCE memory
     private void writeSerialMemoryN(int nceMacroAddr, byte[] x, int len) {
         replyLen = NceMessage.REPLY_1;   // Expect 1 byte response
         waiting++;
@@ -1537,7 +1537,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         tc.sendNceMessage(m, this);
     }
 
-    // Write 4 bytes of NCE memory 
+    // Write 4 bytes of NCE memory
     private void writeSerialMemory4(int nceMacroAddr, byte[] x) {
         replyLen = NceMessage.REPLY_1;   // Expect 1 byte response
         waiting++;

@@ -30,13 +30,11 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2017
+ * @author Klaus Killinger Copyright (C) 2017, 2018
  */
 
 // Usage:
 // Steam1Sound() : constructor
-// play() : plays short horn pop
-// loop() : starts extended sustain horn
 // stop() : ends extended sustain horn (plays end sound)
 // Suppressing "unused" warnings throughout. There are a dozen
 // methods, ctors and values that aren't used and don't have
@@ -59,6 +57,7 @@ class Steam1Sound extends EngineSound {
     private float exponent;
     private int decel_trigger_rpms;
     private SoundBite idle_sound;
+    private SoundBite boiling_sound;
     private SoundBite brake_sound;
     private SoundBite pre_arrival_sound;
 
@@ -341,6 +340,20 @@ class Steam1Sound extends EngineSound {
             idle_sound.setFadeTimes(500, 500);
             trigger_sounds.put("idle", idle_sound);
             log.debug("trigger sound idle: {}", trigger_sounds.get("idle"));
+        }
+
+        // Get the boiling sound.
+        el = e.getChild("boiling-sound");
+        if (el != null) {
+            fn = el.getChild("sound-file").getValue();
+            log.debug("boiling-sound: {}", fn);
+            boiling_sound = new SoundBite(vf, fn, name + "_boiling", name + "_Boiling");
+            boiling_sound.setGain(setXMLGain(el)); // Handle gain
+            log.debug("boiling-sound gain: {}", boiling_sound.getGain());
+            boiling_sound.setLooped(true);
+            boiling_sound.setFadeTimes(500, 500);
+            trigger_sounds.put("boiling", boiling_sound);
+            log.debug("trigger boiling-sound: {}", trigger_sounds.get("boiling"));
         }
 
         // Get the brake sound.
@@ -734,6 +747,22 @@ class Steam1Sound extends EngineSound {
             }
         }
 
+        public void startboilingSound() {
+            if (_parent.trigger_sounds.containsKey("boiling")) {
+                _parent.trigger_sounds.get("boiling").setLooped(true);
+                _parent.trigger_sounds.get("boiling").play();
+                log.debug("boiling sound playing");
+            }
+        }
+
+        private void stopboilingSound() {
+            if (_parent.trigger_sounds.containsKey("boiling")) {
+                _parent.trigger_sounds.get("boiling").setLooped(false);
+                _parent.trigger_sounds.get("boiling").fadeOut();
+                log.debug("boiling sound stopped.");
+            }
+        }
+
         private void stopAutoCoasting() {
             if (is_auto_coasting) {
                 is_auto_coasting = false;
@@ -753,6 +782,7 @@ class Steam1Sound extends EngineSound {
             setupAccDec(); // Setup acceleration and deceleration factors.
             helper_index = -1; // Prepare helper buffer start. Index will be incremented before first use.
             setWait(0);
+            startboilingSound();
             startIdling();
         }
 
@@ -765,6 +795,7 @@ class Steam1Sound extends EngineSound {
             is_dying = true;
             stopBraking();
             stopAutoCoasting();
+            stopboilingSound();
             stopIdling();
         }
 
@@ -1020,7 +1051,7 @@ class Steam1Sound extends EngineSound {
             //  chuff interval will be calculated based on revolutions per minute (revpm)
             //  note: interval time includes the sound duration!
             //  chuffInterval = time in msec per revolution of the driver wheel: 
-            //      60,000 msec / revpm / number of cylinders / number of driver wheels (here always 2)
+            //      60,000 msec / revpm / number of cylinders / 2 (because cylinders are double-acting)
             return (int) Math.round(60000.0 / revpm / _num_cylinders / 2.0);
         }
 

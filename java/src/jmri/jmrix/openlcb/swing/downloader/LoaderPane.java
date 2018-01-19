@@ -25,13 +25,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Pane for downloading firmware files files to OpenLCB devices which
- * support firmware updates according to the Firmware Upgrade Protocol.
- *<p>
+ * Pane for downloading firmware files files to OpenLCB devices which support
+ * firmware updates according to the Firmware Upgrade Protocol.
+ * <p>
  *
- * @author Bob Jacobsen Copyright (C) 2005, 2015 (from the LocoNet version by B. Milhaupt Copyright (C) 2013, 2014)
- *          David R Harris (C) 2016
- *          Balazs Racz (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2005, 2015 (from the LocoNet version by B.
+ * Milhaupt Copyright (C) 2013, 2014) David R Harris (C) 2016 Balazs Racz (C)
+ * 2016
  */
 public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         implements ActionListener, jmri.jmrix.can.swing.CanPanelInterface {
@@ -48,7 +48,9 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     LoaderClient loaderClient;
     NodeID nid;
 
-    public String getTitle(String menuTitle) { return Bundle.getMessage("TitleLoader"); }
+    public String getTitle(String menuTitle) {
+        return Bundle.getMessage("TitleLoader");
+    }
 
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
@@ -64,7 +66,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         loadButton.setText("Load");
         loadButton.setToolTipText("Start Load Process");
         JPanel p;
-        
+
         p = new JPanel();
         p.setLayout(new FlowLayout());
         p.add(new JLabel("Target Node ID: "));
@@ -74,21 +76,22 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         p = new JPanel();
         p.setLayout(new FlowLayout());
         p.add(new JLabel("Address Space: "));
-        p.add(spaceField = new JTextField(""+0xEF));
+        p.add(spaceField = new JTextField("" + 0xEF));
         selectorPane.add(p);
         spaceField.setToolTipText("The decimal number of the address space, e.g. 239");
 
         p = new JPanel();
-        p.setLayout(new FlowLayout());        
+        p.setLayout(new FlowLayout());
         p.add(lockNode = new JCheckBox("Lock Node"));
         selectorPane.add(p);
-        
+
         // Verify not an option
         verifyButton.setVisible(false);
     }
 
     @Override
-    protected void addChooserFilters(JFileChooser chooser) {}
+    protected void addChooserFilters(JFileChooser chooser) {
+    }
 
     @Override
     public void doRead(JFileChooser chooser) {
@@ -115,14 +118,14 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     protected void addOptionsPanel() {
         selectorPane = new JPanel();
         selectorPane.setLayout(new BoxLayout(selectorPane, BoxLayout.Y_AXIS));
-            
+
         add(selectorPane);
     }
 
     @Override
-    protected void handleOptionsInFileContent(MemoryContents inputContent){
+    protected void handleOptionsInFileContent(MemoryContents inputContent) {
     }
-            
+
     @Override
     protected void doLoad() {
         super.doLoad();
@@ -131,14 +134,15 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
         Integer ispace = Integer.valueOf(spaceField.getText());
         long addr = 0;
-        loaderClient.doLoad(nid,destNodeID(),ispace,addr,fdata, new LoaderStatusReporter() {
+        loaderClient.doLoad(nid, destNodeID(), ispace, addr, fdata, new LoaderStatusReporter() {
             @Override
             public void onProgress(float percent) {
                 updateGUI(Math.round(percent));
             }
+
             @Override
             public void onDone(int errorCode, String errorString) {
-                if(errorCode==0) {
+                if (errorCode == 0) {
                     updateGUI(100); //draw bar to 100%
                     if (errorString.isEmpty()) {
                         status.setText(Bundle.getMessage("StatusDownloadOk"));
@@ -147,8 +151,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                     }
                     setOperationAborted(false);
                 } else {
-                    String msg = Bundle.getMessage("StatusDownloadFailed", Integer.toHexString
-                            (errorCode), errorString);
+                    String msg = Bundle.getMessage("StatusDownloadFailed", Integer.toHexString(errorCode), errorString);
                     status.setText(msg);
                     setOperationAborted(true);
                     log.info(msg);
@@ -157,6 +160,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             }
         });
     }
+
     void updateGUI(final int value) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -172,47 +176,39 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     /**
      * Get NodeID from the GUI
+     *
      * @return selected node id
      */
     NodeID destNodeID() {
         return (NodeID) nodeSelector.getSelectedItem();
     }
-    
+
     @Override
     protected void setDefaultFieldValues() {
         // currently, doesn't do anything, as just loading raw hex files.
         log.debug("setDefaultFieldValues leaves fields unchanged");
     }
-    
+
     byte[] fdata;
+
     public void readFile(String filename) {
         File file = new File(filename);
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(file);
-            
+        try (FileInputStream fis = new FileInputStream(file)) {
+
             System.out.println("Total file size to read (in bytes) : "
-                               + fis.available());
+                    + fis.available());
             fdata = new byte[fis.available()];
             int i = 0;
             int content;
             while ((content = fis.read()) != -1) {
-                fdata[i++] = (byte)content;
+                fdata[i++] = (byte) content;
             }
-            
+
         } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fis != null)
-                    fis.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+            log.error("Unable to read {}", filename, e);
         }
     }
 
-            
     /**
      * Checks the values in the GUI text boxes to determine if any are invalid.
      * Intended for use immediately after reading a firmware file for the
@@ -220,7 +216,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
      * intended for use immediately before a "verify" or "download" operation to
      * check that the user has not changed any of the GUI text values to ones
      * that are unsupported.
-     *
+     * <p>
      * Note that this method cannot guarantee that the values are suitable for
      * the hardware being updated and/or for the particular firmware information
      * which was read from the firmware file.
@@ -231,7 +227,6 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     protected boolean parametersAreValid() {
         return true;
     }
-            
 
     /**
      * Nested class to create one of these using old-style defaults

@@ -44,7 +44,11 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
         // The PR2 has only one slot, hence
         // doesn't require an interaction with the command
         // station to allocate slot, so immediately trigger the callback.
-        activeAddress = (DccLocoAddress) address;
+        if (address instanceof DccLocoAddress) {
+            activeAddress = (DccLocoAddress) address;
+        } else {
+            log.error("cannot cast the passed address to DccLocoAddress.");
+        }
         log.debug("new Pr2Throttle for " + activeAddress);
         notifyThrottleKnown(new Pr2Throttle((LocoNetSystemConnectionMemo) adapterMemo, activeAddress), activeAddress);
     }

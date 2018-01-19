@@ -465,8 +465,8 @@
 
       <p>For more advanced information on the content of the files,
       please see the <a href="CreateDecoderAdvanced.shtml">Advanced
-      Decoder Definitions</a> page.
-      <!--#include virtual="/Footer" --></p>
+      Decoder Definitions</a> page.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

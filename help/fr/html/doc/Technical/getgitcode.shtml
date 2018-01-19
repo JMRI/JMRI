@@ -4,7 +4,7 @@
  <!-- Translated by Herv&#233; BLOREC<bzh56420@yahoo.fr> on 2016-08-24 -->   <title>
  	JMRI: Getting the Code
     </title>
-    <meta content="Bob Jacobsen" name="Author">
+	<meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code Git download">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -17,13 +17,11 @@
     <!--#include virtual="/Style" -->
 </head>
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+<body>
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
 
-<div id="mainContent">
-	    <!-- ------------- -->
-	    <!-- Page Contents --> <!-- Required -->
-	    <!-- ------------- -->
+	<div id="mainContent">
 
   <h1>JMRI: Obtention du Code</h1>
 

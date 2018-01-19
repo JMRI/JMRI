@@ -230,7 +230,7 @@ public class SwitchboardEditor extends Editor {
         beanSetupPane.setLayout(new FlowLayout(FlowLayout.TRAILING));
         JLabel beanTypeTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanTypeLabel")));
         beanSetupPane.add(beanTypeTitle);
-        beanTypeList = new JComboBox(beanTypeStrings);
+        beanTypeList = new JComboBox<>(beanTypeStrings);
         beanTypeList.setSelectedIndex(0); // select Turnout in comboBox
         beanTypeList.setActionCommand(LAYER_COMMAND);
         beanTypeList.addActionListener(this);

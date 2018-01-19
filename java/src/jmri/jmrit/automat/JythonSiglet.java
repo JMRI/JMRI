@@ -112,8 +112,7 @@ public class JythonSiglet extends Siglet {
             // execute the handle routine in the jython
             exec.invoke(interp, new Object[]{"setOutput()"});
         } catch (Exception e) {
-            log.error("Exception invoking jython command: " + e);
-            e.printStackTrace();
+            log.error("Exception invoking jython command:", e);
         }
     }
 

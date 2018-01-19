@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for SprogConnectionTypeList
+ * Tests for SprogConnectionTypeList.
  *
  * @author Paul Bender Copyright (C) 2016
  */

@@ -49,7 +49,7 @@ public class SerialLightTest {
     @Test
     public void testSystemSpecificComparisonOfSpecificFormats() {
         // test by putting into a tree set, then extracting and checking order
-        java.util.TreeSet<Light> set = new java.util.TreeSet(new jmri.util.NamedBeanComparator());
+        java.util.TreeSet<Light> set = new java.util.TreeSet<>(new jmri.util.NamedBeanComparator());
         
         set.add(new SerialLight("CL3B4",    "to3004", memo));
         set.add(new SerialLight("CL3003",    "to3003", memo));

@@ -56,6 +56,7 @@ public class MatrixSignalMastXml
         Element outps = new Element("outputs");
         int i = 1;
         for (String _output : outputs) {
+            log.debug("   handling {}", _output);
             String key = ("output" + i);
             Element outp = new Element("output");
             outp.setAttribute("matrixCol", key);
