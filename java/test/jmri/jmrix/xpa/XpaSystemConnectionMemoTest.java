@@ -44,7 +44,10 @@ public class XpaSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        scm = new XpaSystemConnectionMemo();
+        XpaTrafficController tc = new XpaTrafficControlScaffold();
+        XpaSystemConnectionMemo memo = new XpaSystemConnectionMemo();
+        memo.setXpaTrafficController(tc);
+        scm = memo;
     }
 
     @Override
