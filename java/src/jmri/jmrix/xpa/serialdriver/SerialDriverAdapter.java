@@ -92,8 +92,7 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "IO Exception while opening port " + portName + ": " + ex;
         }
 

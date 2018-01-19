@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
  * @author Petr Koud'a Copyright (C) 2007
  * @author Egbert Broerse Copyright (C) 2016
  */
-public class SignalHeadTableAction extends AbstractTableAction {
+public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
     /**
      * Create an action with a specific title.
@@ -84,7 +84,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<SignalHead>() {
             static public final int LITCOL = NUMCOLUMN;
             static public final int HELDCOL = LITCOL + 1;
             static public final int EDITCOL = HELDCOL + 1;
@@ -260,17 +260,17 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
-                return InstanceManager.getDefault(jmri.SignalHeadManager.class);
+            public SignalHeadManager getManager() {
+                return InstanceManager.getDefault(SignalHeadManager.class);
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public SignalHead getBySystemName(String name) {
                 return InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public SignalHead getByUserName(String name) {
                 return InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(name);
             }
 
@@ -285,10 +285,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
             // no longer used since 4.7.1, but have to override
             @Deprecated
             @Override
-            public void clickOn(NamedBean t) {
-                int oldState = ((SignalHead) t).getAppearance();
+            public void clickOn(SignalHead t) {
+                int oldState = t.getAppearance();
                 int newState = 99;
-                int[] stateList = ((SignalHead) t).getValidStates();
+                int[] stateList = t.getValidStates();
                 for (int i = 0; i < stateList.length; i++) {
                     if (oldState == stateList[i]) {
                         if (i < stateList.length - 1) {
@@ -310,7 +310,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     }
                 }
                 log.debug("was " + oldState + " becomes " + newState);
-                ((SignalHead) t).setAppearance(newState);
+                t.setAppearance(newState);
             }
 
             /**
@@ -1213,7 +1213,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 } else {
                     if (!sName.substring(i, i+1).equals("H")) ok = false;
                 }
-            } catch (jmri.NamedBean.BadSystemNameException e) {
+            } catch (NamedBean.BadSystemNameException e) {
                 ok = false;
             }
             if (!ok) {
@@ -1228,7 +1228,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         // return true if signal head does not exist
         if (s == null) {
             //Need to check that the Systemname doesn't already exists as a UserName
-            NamedBean nB = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(sName);
+            SignalHead nB = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(sName);
             if (nB != null) {
                 log.error("System name is not unique " + sName + " It already exists as a User name");
                 String msg = Bundle.getMessage("WarningSystemNameAsUser", new Object[]{("" + sName)});

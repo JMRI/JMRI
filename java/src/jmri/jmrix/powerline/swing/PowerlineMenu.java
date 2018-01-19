@@ -1,5 +1,6 @@
 package jmri.jmrix.powerline.swing;
 
+import javax.annotation.Nonnull;
 import javax.swing.JMenu;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 
@@ -18,14 +19,8 @@ public class PowerlineMenu extends JMenu {
      * @param memo Connection details memo
      */
     // Need to Sort out the Powerline server menu items;
-    public PowerlineMenu(SerialSystemConnectionMemo memo) {
+    public PowerlineMenu(@Nonnull SerialSystemConnectionMemo memo) {
         super();
-
-        // memo can not be null!
-        if (memo == null) {
-            new Exception().printStackTrace();
-            return;
-        }
 
         setText(memo.getUserName());
 
