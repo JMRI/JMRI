@@ -3,16 +3,12 @@ package jmri.jmrit.beantable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.List;
-
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
 import jmri.Manager;
-import jmri.NamedBeanPropertyDescriptor;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
