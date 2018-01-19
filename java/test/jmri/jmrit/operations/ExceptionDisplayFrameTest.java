@@ -18,6 +18,7 @@ public class ExceptionDisplayFrameTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ExceptionContext ec = new ExceptionContext(new Exception("Test"), "Test", "Test");
         ExceptionDisplayFrame dialog = new ExceptionDisplayFrame(ec, null);
         Assert.assertNotNull("exists", dialog);
