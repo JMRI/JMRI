@@ -42,7 +42,6 @@ public class RailDriverMenuItem extends JMenuItem
 
     private static final short VENDOR_ID = 0x05F3;
     private static final short PRODUCT_ID = 0x00D2;
-    private static final int PACKET_LENGTH = 64;
     public static final String SERIAL_NUMBER = null;
 
     private HidServices hidServices = null;

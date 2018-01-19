@@ -25,7 +25,15 @@ public class ConcentratorSystemConnectionMemoTest extends jmri.jmrix.SystemConne
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        scm =new ConcentratorSystemConnectionMemo();
+        ConcentratorSystemConnectionMemo memo = new ConcentratorSystemConnectionMemo();
+        ConcentratorTrafficController tc = new ConcentratorTrafficController(memo,"A-H"){
+           @Override
+           public void sendInitString(){
+           }
+        };
+        memo.setRfidTrafficController(tc);
+        memo.configureManagers(null,null);
+        scm = memo;
     }
 
     @Override

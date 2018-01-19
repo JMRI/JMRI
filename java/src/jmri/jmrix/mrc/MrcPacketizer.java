@@ -431,9 +431,9 @@ public class MrcPacketizer extends MrcTrafficController {
                         // check for message-blocking error
                         int b = readByteProtected(istream) & 0xFF;
                         msg.setElement(i, b);
-                        log.trace("char {} is: ", i, Integer.toHexString(b));
+                        log.trace("char {} is: {}", i, Integer.toHexString(b));
                     }
-                    /*Slight trade off with this we may see any transmitted message go out prior to the 
+                    /*Slight trade off with this we may see any transmitted message go out prior to the
                      poll message being passed to the monitor. */
                     if (pollForUs) {
                         synchronized (xmtHandler) {
@@ -443,12 +443,12 @@ public class MrcPacketizer extends MrcTrafficController {
 
                     if ((msg.getMessageClass() & MrcInterface.POLL) != MrcInterface.POLL && msg.getNumDataElements() > 6) {
                         if (!msg.validCheckSum()) {
-                            log.warn("Ignore Mrc packet with bad checksum: {0}", msg.toString()); //IN18N
+                            log.warn("Ignore Mrc packet with bad checksum: {}", msg); //IN18N
                             throw new MrcMessageException();
                         } else {
                             for (int i = 1; i < msg.getNumDataElements(); i += 2) {
                                 if (msg.getElement(i) != 0x00) {
-                                    log.warn("Ignore Mrc packet with bad bit: {0}", msg.toString()); //IN18N
+                                    log.warn("Ignore Mrc packet with bad bit: {}", msg); //IN18N
                                     throw new MrcMessageException();
                                 }
                             }
@@ -486,8 +486,7 @@ public class MrcPacketizer extends MrcTrafficController {
                 } // normally, we don't catch RuntimeException, but in this
                 // permanently running loop it seems wise.
                 catch (RuntimeException e) {
-                    log.warn("Unknown Exception: {0}", e);  //IN18N
-                    e.printStackTrace();
+                    log.warn("Unknown Exception", e);  //IN18N
                 }
             } // end of permanent loop
         }
@@ -537,7 +536,7 @@ public class MrcPacketizer extends MrcTrafficController {
                 try {
                     if (m.getMessageClass() != MrcInterface.POLL) {
                         mCurrentState = WAITFORCMDRECEIVED;
-                        /* We set the current state before transmitting the message otherwise 
+                        /* We set the current state before transmitting the message otherwise
                          the reply to the message may be received before the state is set
                          and the message will timeout and be retransmitted */
                         if (!m.isReplyExpected()) {
@@ -587,7 +586,7 @@ public class MrcPacketizer extends MrcTrafficController {
                                 }
                             }
                         } else {
-                            log.warn("Message missed {0} polls for message {1}", consecutiveMissedPolls, m.toString()); //IN18N
+                            log.warn("Message missed {} polls for message {}", consecutiveMissedPolls, m); //IN18N
                             consecutiveMissedPolls = 0;
                         }
                     } else if (mCurrentState == DOUBLELOCOCONTROL && m.getRetries() >= 0) {
@@ -607,7 +606,7 @@ public class MrcPacketizer extends MrcTrafficController {
                         consecutiveMissedPolls = 0;
                     }
                 } catch (java.io.IOException e) {
-                    log.warn("sendMrcMessage: IOException: {1}", e.toString()); //IN18N
+                    log.warn("sendMrcMessage: IOException: {}", e); //IN18N
                 }
             }
         }

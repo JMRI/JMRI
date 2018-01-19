@@ -54,7 +54,7 @@
 			<li><a href="Logging.shtml">Logging &amp; Error Handling</a>
 			<li><a href="JUnit.shtml">Unit testing with JUnit</a>
 			<li><a href="Javadoc.shtml">Documentation with Javadoc and UML</a>
-			<li><a href="FindBugs.shtml">Run the SpotBugs static analysis tool</a>
+			<li><a href="SpotBugs.shtml">Run the SpotBugs static analysis tool</a>
 			<li><a href="Help.shtml">Providing help with JavaHelp</a>
 			<li><a href="FileNames.shtml">Portable Filename Method</a>
 			<li><a href="XmlPersistance.shtml">XML Persistance</a>

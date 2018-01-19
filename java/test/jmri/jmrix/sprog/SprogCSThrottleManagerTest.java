@@ -7,9 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogCSThrottleManager
- * </P>
+ * Tests for SprogCSThrottleManager.
+ *
  * @author Paul Bender Copyright (C) 2017
  */
 public class SprogCSThrottleManagerTest {
@@ -40,6 +39,5 @@ public class SprogCSThrottleManagerTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

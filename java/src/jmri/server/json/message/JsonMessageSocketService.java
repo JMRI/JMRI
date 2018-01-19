@@ -75,6 +75,7 @@ public class JsonMessageSocketService extends JsonSocketService {
                         }
                         break;
                 }
+                break;  // break inside gets to here, then this goes out
             default:
                 // ignore anything else
                 break;

@@ -16,7 +16,7 @@ import jmri.ProgrammingMode;
  *
  * @author given
  */
-public class csOpSwAccessTest {
+public class CsOpSwAccessTest {
 
     LocoNetInterfaceScaffold lnis;
     SlotManager sm;
@@ -42,7 +42,7 @@ public class csOpSwAccessTest {
     @Test
     public void testCommandStationRead1() throws ProgrammerException {
 
-        csOpSwAccess csosa = new csOpSwAccess(memo,pl);
+        CsOpSwAccess csosa = new CsOpSwAccess(memo,pl);
 
         Assert.assertNotNull("checkMemo", memo);
         Assert.assertNotNull("checkTc", memo.getLnTrafficController());
@@ -290,7 +290,7 @@ public class csOpSwAccessTest {
 
     @Test
     public void testCommandStationReadTimeout() throws ProgrammerException {
-        csOpSwAccess csosa = new csOpSwAccess(memo,pl);
+        CsOpSwAccess csosa = new CsOpSwAccess(memo,pl);
         csosa.readCsOpSw("csOpSw.14", pl);
 
         // should have written
@@ -306,7 +306,7 @@ public class csOpSwAccessTest {
 
     @Test
     public void testCommandStationRead2() throws ProgrammerException {
-        csOpSwAccess csosa = new csOpSwAccess(memo,pl);
+        CsOpSwAccess csosa = new CsOpSwAccess(memo,pl);
 
         // attempt a command station opsw access
         csosa.readCsOpSw("csOpSw.01", pl);
@@ -920,7 +920,7 @@ public class csOpSwAccessTest {
 
     @Test
     public void testCommandStationReadOutOfBounds1() throws ProgrammerException {
-        csOpSwAccess csosa = new csOpSwAccess(memo,pl);
+        CsOpSwAccess csosa = new CsOpSwAccess(memo,pl);
 
         // attempt a command station opsw access
         csosa.readCsOpSw("csOpSw.01", pl);
@@ -984,7 +984,7 @@ public class csOpSwAccessTest {
 
     @Test
     public void testCommandStationWriteOutOfBounds1() throws ProgrammerException {
-        csOpSwAccess csosa = new csOpSwAccess(memo,pl);
+        CsOpSwAccess csosa = new CsOpSwAccess(memo,pl);
 
         // attempt an out-of-range command station opsw access
         csosa.writeCsOpSw("csOpSw.0", 1, pl);
@@ -1035,7 +1035,7 @@ public class csOpSwAccessTest {
 
      @Test
      public void testCmdStnOpSwWrite() throws ProgrammerException {
-        csOpSwAccess csosa = new csOpSwAccess(memo,pl);
+        CsOpSwAccess csosa = new CsOpSwAccess(memo,pl);
 
         csosa.writeCsOpSw("csOpSw.5", 1, pl);
 
@@ -1249,15 +1249,15 @@ public class csOpSwAccessTest {
 @Test
      public void testCmdStnExtendedOpSwWrite() throws ProgrammerException {
         int obIndex=0;
-        csOpSwAccess csosa = new csOpSwAccess(memo,pl);
+        CsOpSwAccess csosa = new CsOpSwAccess(memo,pl);
 
         Assert.assertEquals("Are no outbound messages so far", 0, lnis.transmittedMsgCount);
 
-        Assert.assertEquals("Correct state is idle",csOpSwAccess.cmdStnOpSwStateType.IDLE, csosa.getState());
+        Assert.assertEquals("Correct state is idle",CsOpSwAccess.CmdStnOpSwStateType.IDLE, csosa.getState());
         csosa.writeCsOpSw("csOpSw.65", 0, pl);
 
         // should have sent read reqiest
-        Assert.assertEquals("Correct state is QUERY",csOpSwAccess.cmdStnOpSwStateType.QUERY, csosa.getState());
+        Assert.assertEquals("Correct state is QUERY",CsOpSwAccess.CmdStnOpSwStateType.QUERY, csosa.getState());
         Assert.assertEquals("one message sent", 1, obIndex = lnis.outbound.size());
         Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
 
@@ -1286,7 +1286,7 @@ public class csOpSwAccessTest {
         Assert.assertEquals("sent byte 0", 0xbb, lnis.outbound.get(obIndex).getElement(0) & 0xFF);
         Assert.assertEquals("sent byte 1", 0x7e, lnis.outbound.get(obIndex).getElement(1) & 0xFF);
         Assert.assertEquals("sent byte 2", 0x00, lnis.outbound.get(obIndex).getElement(2) & 0xFF);
-        Assert.assertEquals("Correct state is QUERY_ENHANCED",csOpSwAccess.cmdStnOpSwStateType.QUERY_ENHANCED, csosa.getState());
+        Assert.assertEquals("Correct state is QUERY_ENHANCED",CsOpSwAccess.CmdStnOpSwStateType.QUERY_ENHANCED, csosa.getState());
 
         // check echo of sent message has no effect
         m = lnis.outbound.get(1);

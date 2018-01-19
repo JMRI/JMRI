@@ -34,8 +34,7 @@ public class SignallingFrameAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());  // NOI18N
-            ex.printStackTrace();
+            log.error("Exception: ", ex);
         }
         f.setVisible(true);
     }

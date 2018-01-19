@@ -7,16 +7,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogCSTurnout
- * </P>
+ * Tests for SprogCSTurnout.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class SprogCSTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
     private SprogTrafficControlScaffold stcs = null;
     private SprogSystemConnectionMemo m = null;
-
 
     @Override
     public int numListeners() {
@@ -66,6 +64,5 @@ public class SprogCSTurnoutTest extends jmri.implementation.AbstractTurnoutTestB
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

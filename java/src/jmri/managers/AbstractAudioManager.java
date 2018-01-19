@@ -1,8 +1,9 @@
 package jmri.managers;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import java.util.Objects;
+
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
@@ -35,7 +36,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
     }
 
     @Override
-    public Audio provideAudio(String name) throws AudioException {
+    public Audio provideAudio(@Nonnull String name) throws AudioException {
         Audio t = getAudio(name);
         if (t != null) {
             return t;
@@ -48,7 +49,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
     }
 
     @Override
-    public Audio getAudio(String name) {
+    public Audio getAudio(@Nonnull String name) {
         Audio t = getByUserName(name);
         if (t != null) {
             return t;
@@ -58,7 +59,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
     }
 
     @Override
-    public Audio getBySystemName(String key) {
+    public Audio getBySystemName(@Nonnull String key) {
         //return _tsys.get(key);
         Audio rv =  _tsys.get(key);
         if (rv == null) {
@@ -80,25 +81,12 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
         return (rv);
     }
 
-    @SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", justification="defensive programming check of @Nonnull argument")
-    private void checkSystemName(@Nonnull String systemName, @CheckForNull String userName) {
-        if (systemName == null) {
-            log.error("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-            throw new IllegalArgumentException("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-        }
-    }
-
     @Override
-    public Audio newAudio(String systemName, String userName) throws AudioException {
-        if (log.isDebugEnabled()) {
-            log.debug("new Audio:"
-                    + ((systemName == null) ? "null" : systemName) // NOI18N
-                    + ";" + ((userName == null) ? "null" : userName)); // NOI18N
-        }
-        checkSystemName(systemName, userName);
+    public Audio newAudio(@Nonnull String systemName, String userName) throws AudioException {
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "+ ((userName == null) ? "null" : userName));  // NOI18N
 
+        log.debug("new Audio: {}; {}", systemName, userName); // NOI18N
+ 
         // is system name in correct format?
         if ((!systemName.startsWith("" + getSystemPrefix() + typeLetter() + Audio.BUFFER))
                 && (!systemName.startsWith("" + getSystemPrefix() + typeLetter() + Audio.SOURCE))
@@ -119,7 +107,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
             if (getBySystemName(systemName) != s) {
                 log.error("inconsistent user (" + userName + ") and system name (" + systemName + ") results; userName related to (" + s.getSystemName() + ")");
             }
-            log.debug("Found existing Audio (" + s.getSystemName() + "). Returning existing (1).");
+            log.debug("Found existing Audio ({}). Returning existing (1).", s.getSystemName());  // NOI18N
             return s;
         }
         if ((s = getBySystemName(systemName)) != null) {
@@ -129,11 +117,11 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
                 log.warn("Found audio via system name (" + systemName
                         + ") with non-null user name (" + userName + ")"); // NOI18N
             }
-            log.debug("Found existing Audio (" + s.getSystemName() + "). Returning existing (2).");
+            log.debug("Found existing Audio ({}). Returning existing (2).", s.getSystemName());
             return s;
         }
 
-        log.debug("Existing audio not found. Creating new. (" + systemName + ")");
+        log.debug("Existing audio not found. Creating new. ({})", systemName);  // NOI18N
         // doesn't exist, make a new one
         s = createNewAudio(systemName, userName);
 
@@ -142,7 +130,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
             register(s);
         } else {
             // must have failed to create
-            throw new IllegalArgumentException("can't create audio with System Name \""+systemName+"\"");
+            throw new IllegalArgumentException("can't create audio with System Name \""+systemName+"\"");  // NOI18N
         }
 
         return s;
@@ -157,11 +145,12 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
      * @return never null
      * @throws AudioException if error occurs during creation
      */
-    abstract protected Audio createNewAudio(String systemName, String userName) throws AudioException;
+    abstract protected Audio createNewAudio(@Nonnull String systemName, String userName) throws AudioException;
 
     @Override
+    @Nonnull 
     public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameAudio");
+        return Bundle.getMessage("BeanNameAudio");  // NOI18N
     }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioManager.class);
