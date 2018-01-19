@@ -351,6 +351,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 return null;
         }
     }
+
     public int getPreferredWidth(int col) {
         switch (col) {
             case SLOTCOLUMN:
@@ -651,5 +652,5 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     }
 
     private final static Logger log = LoggerFactory.getLogger(SlotMonDataModel.class);
-    
+
 }

@@ -102,8 +102,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
         // Add a listener to be able to process the button clicks.
         slotTable.addMouseListener(new JTableButtonMouseListener(slotTable));
-        
-        
+
         // add listener object so checkboxes function
         showUnusedCheckBox.addActionListener((ActionEvent e) -> {
             filter();
@@ -218,11 +217,11 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
                     jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
         }
     }
-    
+
     /**
-     * 
+     *
      * To process mouse clicks in the table area.
-     * 
+     *
      */
     private class JTableButtonMouseListener extends MouseAdapter {
         private final JTable table;
@@ -244,16 +243,16 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         }
     }
     /**
-     * 
+     *
      * This is used as the value may come to us as a button and not a string.
      *
      */
     public class MyButtonRenderer extends JButton implements TableCellRenderer {
-        
+
         public MyButtonRenderer() {
           setOpaque(true);
         }
-         
+
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                          boolean isSelected, boolean hasFocus, int row, int column) {
