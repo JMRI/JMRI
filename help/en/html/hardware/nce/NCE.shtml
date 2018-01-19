@@ -59,8 +59,9 @@
     <li>NCE USB Interface via a USB cable</li>
   </ul>They are shown in the JMRI Preferences Connection pane as
   NCE, NCE via network, and NCE USB Interface,
-  respectively.<a name="limitations" id="limitations"></a>
+  respectively.
 
+  <a name="limitations" id="limitations"></a>
   <h2>Limitations</h2>
 
   <p>A very small number of early (pre-2002) NCE Power Pro

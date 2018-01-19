@@ -251,8 +251,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                 } // normally, we don't catch the unnamed Exception, but in this
                 // permanently running loop it seems wise.
                 catch (RuntimeException e) {
-                    log.warn("run: unexpected Exception: " + e);
-                    e.printStackTrace();
+                    log.warn("run: unexpected Exception", e);
                 }
             } // end of permanent loop
         }

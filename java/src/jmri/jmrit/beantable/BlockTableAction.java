@@ -54,7 +54,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003, 2008
  * @author Egbert Broerse Copyright (C) 2017
  */
-public class BlockTableAction extends AbstractTableAction {
+public class BlockTableAction extends AbstractTableAction<Block> {
 
     /**
      * Create an action with a specific title.
@@ -115,7 +115,7 @@ public class BlockTableAction extends AbstractTableAction {
         // load graphic state column display preference
         _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
 
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Block>() {
             static public final int EDITCOL = NUMCOLUMN;
             static public final int DIRECTIONCOL = EDITCOL + 1;
             static public final int LENGTHCOL = DIRECTIONCOL + 1;
@@ -147,17 +147,17 @@ public class BlockTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
+            public Manager<Block> getManager() {
                 return InstanceManager.getDefault(jmri.BlockManager.class);
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public Block getBySystemName(String name) {
                 return InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public Block getByUserName(String name) {
                 return InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(name);
             }
 
@@ -167,7 +167,7 @@ public class BlockTableAction extends AbstractTableAction {
             }
 
             @Override
-            public void clickOn(NamedBean t) {
+            public void clickOn(Block t) {
                 // don't do anything on click; not used in this class, because
                 // we override setValueAt
             }
@@ -185,7 +185,7 @@ public class BlockTableAction extends AbstractTableAction {
                     log.debug("requested getValueAt(\"" + row + "\"), row outside of range");
                     return "Error table size";
                 }
-                Block b = (Block) getBySystemName(sysNameList.get(row));
+                Block b = getBySystemName(sysNameList.get(row));
                 if (b == null) {
                     log.debug("requested getValueAt(\"" + row + "\"), Block doesn't exist");
                     return "(no Block)";
@@ -259,7 +259,7 @@ public class BlockTableAction extends AbstractTableAction {
             @Override
             public void setValueAt(Object value, int row, int col) {
                 // no setting of block state from table
-                Block b = (Block) getBySystemName(sysNameList.get(row));
+                Block b = getBySystemName(sysNameList.get(row));
                 if (col == VALUECOL) {
                     b.setValue(value);
                     fireTableRowsUpdated(row, row);

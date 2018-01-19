@@ -276,7 +276,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     protected JPanel provideAddressing() {
         return this.provideAddressing(boardTypeName);
     }
-    
+
     /**
      * Creates a JPanel to allow the user to specify a board address and to
      * read and write the device.  The "read" and "write" buttons have text which
@@ -504,7 +504,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
 
     /**
      * Provides a mechanism to write several OpSw values in a sequence. The
-     * sequence is defined by the {@link nextState(int)} method.
+     * sequence is defined by the {@link #nextState(int)} method.
      */
     public void writeAll() {
         // check the address

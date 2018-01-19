@@ -724,8 +724,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             try {
                 decodeDCCPacket(dcc_Data);
             } catch (Exception ex) {
-                log.error(ex.toString());
-                ex.printStackTrace();
+                log.error(ex.toString(), ex);
             }
 
             if (packetType == 0x02) {

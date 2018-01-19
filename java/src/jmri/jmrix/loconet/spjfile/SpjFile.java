@@ -363,7 +363,7 @@ public class SpjFile {
         // associated with this header is found
         int recordStart;
 
-        // Offset in overall buffer where the data part of the 
+        // Offset in overall buffer where the data part of the
         // record associated with this header is found
         int dataStart;
 
@@ -667,16 +667,6 @@ public class SpjFile {
             buffer[index++] = (byte) ((i >> 16) & 0xFF);
             buffer[index++] = (byte) ((i >> 24) & 0xFF);
             return index;
-        }
-
-        /**
-         * Read a 2-byte integer, handling little-endian-ness of SPJ files
-         */
-        @SuppressWarnings("unused")
-        private int readInt2(InputStream s) throws java.io.IOException {
-            int i1 = s.read() & 0xFF;
-            int i2 = s.read() & 0xFF;
-            return i1 + (i2 << 8);
         }
 
         public String typeAsString() {
