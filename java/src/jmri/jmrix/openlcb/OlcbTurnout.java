@@ -175,6 +175,15 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
         }
     }
 
+    @Override
+    public void setProperty(String key, Object value) {
+        Object old = getProperty(key);
+        super.setProperty(key, value);
+        if (old != null && value.equals(old)) return;
+        if (pc == null) return;
+        finishLoad();
+    }
+
     /**
      * Handle a request to change state by sending CBUS events.
      *

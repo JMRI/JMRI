@@ -1,7 +1,10 @@
 package jmri.jmrix.openlcb;
 
 import jmri.JmriException;
+import jmri.NamedBean;
+import jmri.NamedBeanPropertyDescriptor;
 import jmri.Sensor;
+import jmri.jmrix.BooleanPropertyDescriptor;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -11,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Manage the OpenLCB-specific Sensor implementation.
@@ -31,6 +35,36 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public String getSystemPrefix() {
         return prefix;
+    }
+
+    @Override
+    public List<NamedBeanPropertyDescriptor> getKnownBeanProperties() {
+        List<NamedBeanPropertyDescriptor> l = new ArrayList<>();
+        l.add(new BooleanPropertyDescriptor(OlcbUtils.PROPERTY_IS_AUTHORITATIVE, OlcbTurnout
+                .DEFAULT_IS_AUTHORITATIVE) {
+            @Override
+            public String getColumnHeaderText() {
+                return Bundle.getMessage("OlcbStateAuthHeader");
+            }
+
+            @Override
+            public boolean isEditable(NamedBean bean) {
+                return OlcbUtils.isOlcbBean(bean);
+            }
+        });
+        l.add(new BooleanPropertyDescriptor(OlcbUtils.PROPERTY_LISTEN, OlcbTurnout
+                .DEFAULT_LISTEN) {
+            @Override
+            public String getColumnHeaderText() {
+                return Bundle.getMessage("OlcbStateListenHeader");
+            }
+
+            @Override
+            public boolean isEditable(NamedBean bean) {
+                return OlcbUtils.isOlcbBean(bean);
+            }
+        });
+        return l;
     }
 
     // to free resources when no longer used

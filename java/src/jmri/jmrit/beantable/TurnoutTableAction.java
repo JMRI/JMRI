@@ -57,8 +57,6 @@ import jmri.TurnoutOperationManager;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
-import jmri.jmrix.openlcb.OlcbTurnout;
-import jmri.managers.AbstractProxyManager;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriBeanComboBox;
@@ -1410,20 +1408,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     JCheckBox showStateBox = new JCheckBox(Bundle.getMessage("ShowState"));
 
     /**
-     * @return true if this manager is an OpenLCB manager or it is a proxy manager with an OpenLCB manager inside.
-     */
-    private boolean isOpenLCBManager() {
-        if (turnManager.getClass().getName().contains("Olcb")) return true;
-        if (turnManager instanceof AbstractProxyManager) {
-            List<Manager> l = ((AbstractProxyManager) turnManager).getManagerList();
-            for (Manager m : l) {
-                if (m.getClass().getName().contains("Olcb")) return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Add the check boxes to show/hide extra columns to the Turnout table
      * frame.
      * <p>
@@ -1575,7 +1559,6 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     public void showStateChanged() {
         boolean showState = showStateBox.isSelected();
-        boolean showOpenLCB = showState && isOpenLCBManager();
         XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
 
         TableColumn column = columnModel.getColumnByModelIndex(FORGETCOL);

@@ -11,7 +11,6 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractCellEditor;
@@ -30,12 +29,7 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.Turnout;
 import jmri.jmrit.beantable.BeanTableDataModel;
-import jmri.jmrit.beantable.EnablingCheckboxRenderer;
-import jmri.jmrix.openlcb.OlcbSensor;
-import jmri.jmrix.openlcb.OlcbTurnout;
-import jmri.managers.AbstractProxyManager;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,8 +50,6 @@ public class SensorTableDataModel extends BeanTableDataModel {
     static public final int PULLUPCOL = INACTIVEDELAY + 1;
     static public final int FORGETCOL = PULLUPCOL + 1;
     static public final int QUERYCOL = FORGETCOL + 1;
-    static public final int AUTHCOL = QUERYCOL + 1;
-    static public final int LISTENCOL = AUTHCOL + 1;
 
     SensorManager senManager = null;
     // for icon state col
@@ -162,7 +154,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
 
     @Override
     public int getColumnCount() {
-        return LISTENCOL + 1;
+        return QUERYCOL + getPropertyColumnCount() + 1;
     }
 
     @Override
@@ -185,10 +177,6 @@ public class SensorTableDataModel extends BeanTableDataModel {
               return Bundle.getMessage("StateForgetHeader");
            case QUERYCOL:
               return Bundle.getMessage("StateQueryHeader");
-           case AUTHCOL:
-              return Bundle.getMessage("OlcbStateAuthHeader");
-           case LISTENCOL:
-              return Bundle.getMessage("OlcbStateListenHeader");
            default:
               return super.getColumnName(col);
         }
@@ -213,10 +201,6 @@ public class SensorTableDataModel extends BeanTableDataModel {
                return JButton.class;
            case QUERYCOL:
                return JButton.class;
-           case AUTHCOL:
-               return Boolean.class;
-           case LISTENCOL:
-               return Boolean.class;
            case VALUECOL:
               if (_graphicState) {
                    return JLabel.class; // use an image to show sensor state
@@ -243,14 +227,6 @@ public class SensorTableDataModel extends BeanTableDataModel {
             return new JButton(Bundle.getMessage("StateQueryButton"))
                     .getPreferredSize()
                     .width;
-        } else if (col == AUTHCOL) {
-            return new JTextField(Bundle.getMessage("OlcbStateAuthHeader")
-                    .length())
-                    .getPreferredSize().width;
-        } else if (col == LISTENCOL) {
-            return new JTextField(Bundle.getMessage("OlcbStateListenHeader")
-                    .length())
-                    .getPreferredSize().width;
         } else {
             return super.getPreferredWidth(col);
         }
@@ -286,12 +262,6 @@ public class SensorTableDataModel extends BeanTableDataModel {
         }
         if (col == QUERYCOL) {
             return true;
-        }
-        if (col == AUTHCOL) {
-            return (sen instanceof OlcbSensor);
-        }
-        if (col == LISTENCOL) {
-            return (sen instanceof OlcbSensor);
         }
         return super.isCellEditable(row, col);
     }
@@ -334,16 +304,6 @@ public class SensorTableDataModel extends BeanTableDataModel {
             return Bundle.getMessage("StateForgetButton");
         } else if (col == QUERYCOL) {
             return Bundle.getMessage("StateQueryButton");
-        } else if (col == AUTHCOL) {
-            if (s instanceof OlcbSensor) {
-                return ((OlcbSensor) s).isAuthoritative();
-            }
-            return Boolean.FALSE;
-        } else if (col == LISTENCOL) {
-            if (s instanceof OlcbSensor) {
-                return ((OlcbSensor) s).isListeningToStateMessages();
-            }
-            return Boolean.FALSE;
         } else {
             return super.getValueAt(row, col);
         }
@@ -407,16 +367,6 @@ public class SensorTableDataModel extends BeanTableDataModel {
                 log.warn("Failed to set state to UNKNOWN: ", e);
             }
             s.requestUpdateFromLayout();
-        } else if (col == AUTHCOL) {
-            boolean b = ((Boolean) value).booleanValue();
-            if (s instanceof OlcbSensor) {
-                ((OlcbSensor) s).setAuthoritative(b);
-            }
-        } else if (col == LISTENCOL) {
-            boolean b = ((Boolean) value).booleanValue();
-            if (s instanceof OlcbSensor) {
-                ((OlcbSensor) s).setListeningToStateMessages(b);
-            }
         } else if (col == VALUECOL && _graphicState) { // respond to clicking on ImageIconRenderer CellEditor
             clickOn(s);
             fireTableRowsUpdated(row, row);
@@ -582,19 +532,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         showPullUp(false);
         this.table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         this.table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
-
-        XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
-        TableColumn column = columnModel.getColumnByModelIndex(AUTHCOL);
-        EnablingCheckboxRenderer r = new EnablingCheckboxRenderer();
-        r.setToolTipText(Bundle.getMessage("OlcbStateAuthToolTip"));
-        column.setCellRenderer(r);
-        column = columnModel.getColumnByModelIndex(LISTENCOL);
-        r = new EnablingCheckboxRenderer();
-        r.setToolTipText(Bundle.getMessage("OlcbStateListenToolTip"));
-        column.setCellRenderer(r);
-
         showState(false);
-
         super.configureTable(table);
     }
 
@@ -622,33 +560,14 @@ public class SensorTableDataModel extends BeanTableDataModel {
         columnModel.setColumnVisible(column, show);
     }
 
-    /**
-     * @return true if this manager is an OpenLCB manager or it is a proxy manager with an OpenLCB manager inside.
-     */
-    private boolean isOpenLCBManager() {
-        if (getManager().getClass().getName().contains("Olcb")) return true;
-        if (senManager instanceof AbstractProxyManager) {
-            List<Manager> l = ((AbstractProxyManager) senManager).getManagerList();
-            for (Manager m : l) {
-                if (m.getClass().getName().contains("Olcb")) return true;
-            }
-        }
-        return false;
-    }
-
     public void showState(boolean show) {
-        boolean isOpenLCB = isOpenLCBManager();
-        log.warn("Show sensor state: show = " + Boolean.toString(show) + " isopenlcb = " +
-                Boolean.toString(isOpenLCB));
         XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
         TableColumn column = columnModel.getColumnByModelIndex(FORGETCOL);
         columnModel.setColumnVisible(column, show);
         column = columnModel.getColumnByModelIndex(QUERYCOL);
         columnModel.setColumnVisible(column, show);
-        column = columnModel.getColumnByModelIndex(AUTHCOL);
-        columnModel.setColumnVisible(column, isOpenLCB && show);
-        column = columnModel.getColumnByModelIndex(LISTENCOL);
-        columnModel.setColumnVisible(column, isOpenLCB && show);
+        // @TODO instead of making this flipped by showState, it should be set by a separate action.
+        setPropertyColumnsVisible(table, show);
     }
 
     protected String getClassName() {

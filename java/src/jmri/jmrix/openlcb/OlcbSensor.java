@@ -214,6 +214,15 @@ public class OlcbSensor extends AbstractSensor {
         return DEFAULT_IS_AUTHORITATIVE;
     }
 
+    @Override
+    public void setProperty(String key, Object value) {
+        Object old = getProperty(key);
+        super.setProperty(key, value);
+        if (old != null && value.equals(old)) return;
+        if (pc == null) return;
+        finishLoad();
+    }
+
     /**
      * @return whether this producer/consumer is always listening to state declaration messages.
      */
