@@ -280,9 +280,9 @@ public class TabbedPreferences extends AppConfigBase {
         return restartRequired;
     }
 
-    void selection(String View) {
+    void selection(String view) {
         CardLayout cl = (CardLayout) (detailpanel.getLayout());
-        cl.show(detailpanel, View);
+        cl.show(detailpanel, view);
     }
 
     public void addPreferencesPanel(PreferencesPanel panel) {
