@@ -1,7 +1,10 @@
 package jmri.jmrix.loconet.slotmon;
 
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -9,13 +12,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.swing.JmriJTablePersistenceManager;
-import jmri.util.table.ButtonRenderer;
 
 /**
  * Frame providing a command station slot manager.
@@ -97,6 +100,9 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         // install a button renderer & editor in the "ESTOP" column for stopping a loco
         setColumnToHoldEStopButton(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.ESTOPCOLUMN));
 
+        // Add a listener to be able to process the button clicks.
+        slotTable.addMouseListener(new JTableButtonMouseListener(slotTable));
+
         // add listener object so checkboxes function
         showUnusedCheckBox.addActionListener((ActionEvent e) -> {
             filter();
@@ -143,23 +149,23 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
     void setColumnToHoldButton(JTable slotTable, int column) {
         TableColumnModel tcm = slotTable.getColumnModel();
         // install the button renderers & editors in this column
-        ButtonRenderer buttonRenderer = new ButtonRenderer();
+        MyButtonRenderer buttonRenderer = new MyButtonRenderer();
         tcm.getColumn(column).setCellRenderer(buttonRenderer);
         // ensure the table rows, columns have enough room for buttons
-        slotTable.setRowHeight(new JButton("  " + slotModel.getValueAt(1, column)).getPreferredSize().height);
+        slotTable.setRowHeight(new JButton(Bundle.getMessage("ButtonRelease") + "  ").getPreferredSize().height);
         slotTable.getColumnModel().getColumn(column)
-                .setPreferredWidth(new JButton("  " + slotModel.getValueAt(1, column)).getPreferredSize().width);
+                .setPreferredWidth(new JButton(Bundle.getMessage("ButtonRelease") + "  ").getPreferredSize().width);
     }
 
     void setColumnToHoldEStopButton(JTable slotTable, int column) {
         TableColumnModel tcm = slotTable.getColumnModel();
         // install the button renderers & editors in this column
-        ButtonRenderer buttonRenderer = new ButtonRenderer();
+        MyButtonRenderer buttonRenderer = new MyButtonRenderer();
         tcm.getColumn(column).setCellRenderer(buttonRenderer);
         // ensure the table rows, columns have enough room for buttons
-        slotTable.setRowHeight(new JButton("  " + slotModel.getValueAt(1, column)).getPreferredSize().height);
+        slotTable.setRowHeight(new JButton(Bundle.getMessage("ButtonEstop") + "  ").getPreferredSize().height);
         slotTable.getColumnModel().getColumn(column)
-                .setPreferredWidth(new JButton("  " + slotModel.getValueAt(1, column)).getPreferredSize().width);
+                .setPreferredWidth(new JButton(Bundle.getMessage("ButtonEstop") + "  ").getPreferredSize().width);
     }
 
     @Override
@@ -211,5 +217,50 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
                     jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
         }
     }
+
+    /**
+     *
+     * To process mouse clicks in the table area.
+     *
+     */
+    private class JTableButtonMouseListener extends MouseAdapter {
+        private final JTable table;
+        public JTableButtonMouseListener(JTable table) {
+            this.table = table;
+        }
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            int column = table.getColumnModel().getColumnIndexAtX(e.getX());
+            int row = e.getY() / table.getRowHeight();
+            if (row < table.getRowCount() && row >= 0 && column < table.getColumnCount() && column >= 0) {
+                Object value = table.getValueAt(row, column);
+                if (value instanceof JButton) {
+                    ((JButton) value).doClick();
+                } else {
+                    super.mouseClicked(e);
+                }
+            }
+        }
+    }
+    /**
+     *
+     * This is used as the value may come to us as a button and not a string.
+     *
+     */
+    public class MyButtonRenderer extends JButton implements TableCellRenderer {
+
+        public MyButtonRenderer() {
+          setOpaque(true);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                         boolean isSelected, boolean hasFocus, int row, int column) {
+          setText( (value  instanceof JButton) ? ((JButton) value).getText() : value.toString() );
+          return this;
+        }
+      }
+
+
 
 }

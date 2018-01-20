@@ -1,5 +1,7 @@
 package jmri.jmrix.loconet.slotmon;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -186,7 +188,35 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case SLOTCOLUMN:  // slot number
                 return row;
             case ESTOPCOLUMN:
-                return Bundle.getMessage("ButtonEstop"); // will be name of button in default GUI
+                final JButton estopButton = new JButton(Bundle.getMessage("ButtonEstop"));
+                estopButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent arg0) {
+                        log.debug("Start estop in slot {}", row);
+                        if ((s.consistStatus() == LnConstants.CONSIST_SUB)
+                                || (s.consistStatus() == LnConstants.CONSIST_MID)) {
+                            Object[] options = {Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")};
+                            int result
+                                    = JOptionPane.showOptionDialog(null,
+                                            Bundle.getMessage("SlotEstopWarning"),
+                                            Bundle.getMessage("WarningTitle"),
+                                            JOptionPane.DEFAULT_OPTION,
+                                            JOptionPane.WARNING_MESSAGE,
+                                            null, options, options[1]);
+                            if (result == 1) {
+                                return;
+                            }
+                        }
+                        LocoNetMessage msg = new LocoNetMessage(4);
+                        msg.setOpCode(LnConstants.OPC_LOCO_SPD);
+                        msg.setElement(1, s.getSlot());
+                        msg.setElement(2, 1);       // 1 here is estop
+                        memo.getLnTrafficController().sendLocoNetMessage(msg);
+                        fireTableRowsUpdated(row, row);
+                    }
+                });
+                return estopButton;
+                //return Bundle.getMessage("ButtonEstop"); // will be name of button in default GUI
             case ADDRCOLUMN:
                 return s.locoAddr();
             case SPDCOLUMN:
@@ -251,7 +281,46 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                         return Bundle.getMessage("StateError");
                 }
             case DISPCOLUMN:
-                return Bundle.getMessage("ButtonRelease"); // will be name of button in default GUI
+                final JButton releaseButton = new JButton(Bundle.getMessage("ButtonRelease"));
+                releaseButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent arg0) {
+                        log.debug("Start freeing slot {}", row);
+                        if (s.slotStatus() != LnConstants.LOCO_FREE) {
+                            if (s.consistStatus() != LnConstants.CONSIST_NO) {
+                                // Freeing a member takes it out of the consist
+                                // entirely (i.e., while the slot is LOCO_FREE, it
+                                // still reads the former consist information, but
+                                // the next time that loco is selected, it comes
+                                // back as CONSIST_NO).  Freeing the CONSIST_TOP
+                                // will kill the entire consist.
+                                Object[] options = {"OK", "Cancel"};
+                                int result = JOptionPane.showOptionDialog(null,
+                                        "Freeing a consist member will destroy the consist.\n\nAre you sure you want to do that?",
+                                        "Warning",
+                                        JOptionPane.DEFAULT_OPTION,
+                                        JOptionPane.WARNING_MESSAGE,
+                                        null, options, options[1]);
+                                if (result == 1) {
+                                    return;
+                                }
+                            }
+                            //set speed stop
+                            LocoNetMessage msg = new LocoNetMessage(4);
+                            msg.setOpCode(LnConstants.OPC_LOCO_SPD);
+                            msg.setElement(1, s.getSlot());
+                            msg.setElement(2, 0);
+                            memo.getLnTrafficController().sendLocoNetMessage(msg);
+                            // send status to free
+                            memo.getLnTrafficController().sendLocoNetMessage(
+                                    s.writeStatus(LnConstants.LOCO_FREE));
+                        } else {
+                            log.debug("Slot not in use");
+                        }
+                        fireTableRowsUpdated(row, row);
+                    }
+                });
+                return releaseButton;
             case DIRCOLUMN:
                 return s.isForward() ? Bundle.getMessage("DirColForward") : Bundle.getMessage("DirColReverse");
             case F0COLUMN:
@@ -299,7 +368,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case CONSCOLUMN:
                 return new JTextField(4).getPreferredSize().width;
             case DIRCOLUMN:
-                return new JLabel(Bundle.getMessage("DirectionCol")).getPreferredSize().width;
+                return new JLabel("  " + Bundle.getMessage("DirectionCol")).getPreferredSize().width;
             case DISPCOLUMN:
                 return new JButton(Bundle.getMessage("ButtonRelease")).getPreferredSize().width;
             case THROTCOLUMN:
