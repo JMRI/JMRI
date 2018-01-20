@@ -38,7 +38,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     private boolean outputBufferEmpty = true;
     private boolean checkBuffer = true;
     private boolean trackPowerState = false;
-    private SprogMode operatingMode = SprogMode.OPS;
+    private SprogMode operatingMode = SprogMode.SERVICE;
 
     // Simulator responses
     String SPR_OK = "OK";
@@ -46,7 +46,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     String SPR_PR = "\nP> "; // prompt
 
     public SimulatorAdapter() {
-        super(new SprogSystemConnectionMemo(SprogMode.OPS)); // uses default user name, start as OPS mode, may set to SERVICE from connection
+        super(new SprogSystemConnectionMemo(SprogMode.SERVICE)); // use default user name; start as SERVICE mode, may set to OPS from connection
         setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
         this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogSimulatorTitle"));
         // create the traffic controller
@@ -125,11 +125,11 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         }
 
         if (getOptionState("OperatingMode") != null && getOptionState("OperatingMode").equals(Bundle.getMessage("SprogProgrammerTitle"))) {
-            this.getSystemConnectionMemo().setSprogMode(SprogMode.SERVICE);
             operatingMode = SprogMode.SERVICE;
         } else { // default, also used after Locale change
-            this.getSystemConnectionMemo().setSprogMode(SprogMode.OPS);
+            operatingMode = SprogMode.OPS;
         }
+        this.getSystemConnectionMemo().setSprogMode(operatingMode);
 
         // start the simulator
         sourceThread = new Thread(this);
