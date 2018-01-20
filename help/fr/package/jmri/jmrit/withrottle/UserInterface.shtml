@@ -144,9 +144,7 @@
       r&eacute;gulateur du fabricant de votre syst&egrave;me
       DCC.</p>
 
-      <p>Ceci est la page d'aide
-      help/en/package/jmri/jmrit/withrottle/UserInterface 
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

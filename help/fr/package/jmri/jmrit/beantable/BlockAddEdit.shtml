@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- translated by Herv&#233; Blorec le 2012/01/02-->
 
 <html lang="fr">
@@ -9,9 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Block Add/Edit Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Block Table">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -43,9 +40,7 @@
       "../../../../html/doc/Technical/Names.shtml">Noms</a> " pour
       plus d'informations.</p>
 
-      <p>C'est la page d'aide
-      package/jmri/jmrit/beantable/BlockAddEdit<br>
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

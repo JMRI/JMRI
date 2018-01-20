@@ -250,8 +250,8 @@
       
       <p>NamedBean and addressing as part of the Manager's role.
       <p>The role of NamedBeanHandle and the NamedBeanHandleManager.
-      
-      <!--#include virtual="/Footer" --></p>
+      </p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

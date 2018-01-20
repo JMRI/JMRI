@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Setup Support - Raspberry Pi GPIO</title>
-  <meta content="Paul Bender" name="Author">
+  <meta name="author" content="Paul Bender">
   <meta name="keywords" content=
   "Raspberry Pi GPIO Configuration Information for JMRI">
   <!-- Style -->
@@ -183,8 +183,8 @@
       <h3>Third Party info</h3>
 
       <p>The <a href="http://pi4j.com/">Pi4J website</a> provides
-      model specific Java I/O information. 
-      <!--#include virtual="/Footer" --></p>
+      model specific Java I/O information.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

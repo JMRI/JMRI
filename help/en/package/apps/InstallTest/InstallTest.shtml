@@ -35,8 +35,8 @@
       can move on to configuring and running DecoderPro, PanelPro,
       etc.</p>
 
-      <p>This is the apps.InstallTest.InstallTest.shtml help page 
-      <!--#include virtual="/Footer" --></p>
+      <p>This is the apps.InstallTest.InstallTest.shtml help page</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

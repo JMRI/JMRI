@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - Signals with C/MRI</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "Bruce Chubb C/MRI Computer interface java model railroad JMRI signals">
   <!-- Style -->
@@ -90,7 +90,8 @@
       yellow signals on those outputs.</p>
 
       <p>Back to the <a href="CMRI.shtml">C/MRI Hardware Support
-      Help page</a>. <!--#include virtual="/Footer" --></p>
+      Help page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

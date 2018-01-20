@@ -151,8 +151,8 @@
 
       <p>As yet, we've received no reports or success or failure
       from people using an LI101 with a USB to serial adapter. More
-      information would be greatly appreciated. 
-      <!--#include virtual="/Footer" --></p>
+      information would be greatly appreciated.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -30,8 +30,6 @@
 
       <img src="../images/SprogConsoleTool.png" width="759" height="389">
 
-      <p>This is the
-      package/jmri/jmrix/sprog/console/SprogConsoleFrame page.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

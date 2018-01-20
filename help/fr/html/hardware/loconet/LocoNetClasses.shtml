@@ -3,7 +3,7 @@
 <html lang="fr">
 <<head>
     <title>JMRI Support - LocoNet&reg; Implementation</title>
-    <meta content="Bob Jacobsen" name="Author">
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI LocoNet technical implementation">
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
     <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -212,7 +212,7 @@ LocoNet; qui a un PIC en elle qui g&#232;re tout cela correctement.
 La classe MS100Action (paquet jmrix.loconet.ms100) d&#233;marre une connexion LocoNet
 via un MS100. Une fois d&#233;clench&#233;, il cr&#233;e un objet MS100Frame visible.
 <P>
-Ã€ son tour, le MS100Frame cr&#233;e un objet MS100Adapter,
+À son tour, le MS100Frame cr&#233;e un objet MS100Adapter,
 montre ensuite les ports de communication disponibles , permettant &#224; l'utilisateur d'en choisir un.
 L'objet MS100Adapter met en oeuvre l'interface LnPortController, de sorte
 qu'il peut &#233;ventuellement connecter un LnTrafficController &#224; un port s&#233;rie et MS100.

@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: NX Warrant Help</title>
-  <meta content="Pete Cressman" name="author">
+  <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI NX Warrant Help">
   <!-- Style -->
   <meta http-equiv="content-type" content=
@@ -292,7 +292,7 @@
       of the <b>Throttle Setting/Speed Factor</b> is used when no speed 
       profile is available.</p> 
 
-      <p><!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

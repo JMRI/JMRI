@@ -280,6 +280,8 @@ public class SimpleSensorServerTest {
             a.parseStatus("SENSOR IS1\n");
             // nothing has changed the sensor, so it should be unknown.
             Assert.assertEquals("parse blank check","SENSOR IS1 UNKNOWN\n",sb.toString());
+            // verify the sensor exists, it should have been created with provideSensor.
+            Assert.assertNotNull(jmri.InstanceManager.getDefault(jmri.SensorManager.class).getSensor("IS1"));
         } catch(jmri.JmriException | java.io.IOException ioe){
             Assert.fail("Exception parsing ACTIVE Status");
         }
