@@ -38,8 +38,6 @@ import java.util.List;
  * object (such as <tt>System.out</tt>) into the full constructor. A
  * <tt>null</tt>
  * value will result in no extra debugging information being output.
- *
- *
  * <p>
  * I'm releasing this code into the Public Domain. Enjoy.
  * </p>
