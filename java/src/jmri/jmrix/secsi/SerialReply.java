@@ -31,8 +31,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
      * Is reply to poll message
      */
     public int getAddr() {
-        log.error("getAddr should not be called");
-        new Exception().printStackTrace();
+        log.error("getAddr should not be called", new Exception());
         return getElement(0);
     }
 

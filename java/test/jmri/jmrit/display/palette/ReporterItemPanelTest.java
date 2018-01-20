@@ -21,7 +21,7 @@ public class ReporterItemPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel tableModel = PickListModel.reporterPickModelInstance(); // N11N
+        PickListModel<jmri.Reporter> tableModel = PickListModel.reporterPickModelInstance(); // N11N
         DisplayFrame df = new DisplayFrame("Reporter Item Panel Test");
         Editor editor = new EditorScaffold();
         ReporterItemPanel t = new ReporterItemPanel(df,"IR01","",tableModel,editor);

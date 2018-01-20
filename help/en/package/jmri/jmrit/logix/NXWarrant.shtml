@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: NX Warrant Help</title>
-  <meta content="Pete Cressman" name="author">
+  <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI NX Warrant Help">
   <!-- Style -->
   <meta http-equiv="content-type" content=
@@ -25,25 +25,27 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>NXWarrants</h1>An NXWarrant is a computer generated
+      <h1>NXWarrants</h1>
+      An NXWarrant is a computer generated
       warrant. Rather than recording speed changes and other
       locomotive commands from a throttle where the recording notes
       the elapsed time between commands, an algorithm generates the
       speed changes and elapsed times for a smooth start up and
-      slow down to a stop. To review information about warrants see
-      <a href="Warrant.shtml">About Warrants</a>. In is necessary to
-      know the block path lengths and the engine's speed characteristics
-      in order to determine correct time and position for where the
-      speed changes should occur.
+      slow down to a stop. To review information about Warrants see
+      <a href="Warrant.shtml">About Warrants</a>.<br>
+      In is necessary to know the Block Path lengths and the engine's
+      speed characteristics in order to determine correct time and
+      position for where the speed changes should occur.
       A speed profile for the selected engine/consist
       to provide track speeds is desirable.  Lacking a speed profile,
       the <i>Throttle Factor</i> and <i>Layout Scale</i> are used
       for a rough estimate of track speed. If block lengths are not  
       specified, you will be prompted to provide a length.
       <a href="SpeedChanges.shtml">When Warrant Speeds Are Modified</a>
-      has details about how warrants modify recorded speeds.
+      profides more details about how Warrants modify recorded speeds.
 
-      <h2>Launching an NXWarrant</h2>After selecting the menu item
+      <h2>Launching an NXWarrant</h2>
+      After selecting the menu item
       <b>Create NX Warrant</b> from the <b>Warrants</b> menu of the
       Control Panel Editor, or by clicking on the <b>Create NX
       Warrant</b> button in the <b>Warrant List</b> window, the
@@ -138,9 +140,9 @@
       warrant.  The table is comprised of the Roster Speed Profile
       merged with any speed measurements that have been made during
       the current session.  If the table is empty, the values for
-      Throttle Factor and Layout Scale in Warrant Preferences are
-      used in the calculations. (Note, this was the only way it was
-      done prior to Release 4.9.2.)</p>
+      Throttle Factor and Layout Scale in <a href="#prefs">Warrant
+      Preferences</a> are used in the calculations. (Note, this was
+      the only way it was done prior to Release 4.9.2.)</p>
 
       <p>Next set values for the maximum speed the train should achieve
       when track conditions are at a <i>Clear</i> aspect.
@@ -180,11 +182,11 @@
         entering the approach block.</li>
       </ul>
 
-      Lastly, there some options for running.
+      Lastly, there are some options for running.
       <ul>
-        <li>The checkbox <b>EStop at Destination Block</b> to make 
-        an emergency stop the train upon entering the last 
-        block. <i>Rarely Needed.</i></li>
+        <li>The checkbox <b>EStop at Destination Block</b> to have the
+        train make an emergency stop upon entering the last block.
+        <i>Rarely Needed.</i></li>
 
         <li>The checkbox <b>Halt Start at Origin Block</b> will 
         allocate and
@@ -205,7 +207,7 @@
       operator must acquire the throttle and drive the train.
 
       <ul>
-        <li>Radio buttons <b>Run Auto</b> for an automated warrant.
+        <li>Radio buttons <b>Run Auto</b> for an automated warrant
         and <b>Run Manual</b> to dispatch a route for a manual
         operator</li>
       </ul>
@@ -240,7 +242,8 @@
 
       <p>The warrant's block synchronization adjusts the 
       elapsed times so event time are relative to the entry
-      of the block. <b>Note!</b> if the route includes a
+      of the block.<br>
+      <b>Note!</b> if the route includes a
       <i>Dark</i> block, i.e. no occupancy detection, it is 
       important it's block length is known since in this case,
       synchronization cannot be done.</p>
@@ -267,12 +270,24 @@
       the step intervals for time and throttle setting 
       specified in Warrant Preferences. These are the values
       that give a prototypical look when changing speeds for 
-      signal aspects and starting and stopping. The warrants panel at
-      <i>Edit-&gt;Preferences-&gt;Warrants</i> is where this and
-      other warrant parameters can be edited.</p>
+      signal aspects and starting and stopping. The Warrants pane
+      at <i>Edit-&gt;Preferences-&gt;Warrants</i> is where this and
+      other Warrant parameters can be set.</p>
 
-      <h4>Warrant Preferences Settings</h4>
-      <b>Ramp Step time</b> and <b>Ramp Step Throttle Incr</b>
+      <a href="images/WarrantsPrefs.png"><img
+      src="images/WarrantsPrefs.png" align="right" width="471"
+      height="196" hspace="0" vspace="0" alt="Warrants Preferences
+      pane in in JMRI 4.10"></a>
+      <a name="prefs" id="prefs"></a>
+      <h2>Warrant Preferences</h2>
+      <p>Setting <b>Layout Scale</b> of your layout should is
+      needed so conversion to scale speeds is correct.</p>
+      <p>The default search depth (<b>Max. Number of Blocks in
+      Route</b>) as mentioned above when looking for routes can
+      be set next.</p>
+      <p>The value of the <b>Throttle Setting/Speed Factor</b>
+      is used when no speed profile is available.</p>
+      <b>Ramp Step time increment</b> and <b>Ramp Step Throttle Increment</b>
       regulate the smoothness and prototypical look of speed changes.
       For locos with no momentum, short times and smaller throttle
       increments make smoother ramps. For locomotives/consists 
@@ -284,15 +299,7 @@
       Observe how trains behave starting up and stopping with  
       NXWarrants and adjust accordingly.
 
-      <p>Warrant Preferences is where the <b>Layout Scale</b> of your layout
-      should be set.  This is needed so conversion to scale speeds
-      is correct. The default for the search depth (<b>Max Num 
-      Blocks in Route</b>) as mentioned
-      above when looking for routes can be set here also. The value
-      of the <b>Throttle Setting/Speed Factor</b> is used when no speed 
-      profile is available.</p> 
-
-      <p><!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

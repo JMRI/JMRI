@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; 2016-08-14-->
+<!-- Updated by Blorec Herv&#233; 2016-08-14-->
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Patterns and Structure</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code patterns structure">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -25,17 +24,16 @@
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
+</head>
 
-
+<body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <!-- -------- -->
-	    <!--  Teaser  --> <!-- Optional -->
-	    <!-- -------- -->
-
-<H1>JMRI: Mod&#232;les et Organisation</H1>
+		<h1>JMRI: Mod&#232;les et Organisation</h1>
 <p>
 JMRI a grandi et &#233;volu&#233; avec le temps, et
 vous ne pouvez pas toujours voir les structures et les 
@@ -85,7 +83,7 @@ Il est donc facile de compiler une version sans code de test,
 d'appliquer des outils diff&#233;rents pour les deux types de code, etc
 
 <p>
-Dans le code source lui-m&#234;me, nous s&#233;parons plusieurs types. 
+	Dans le code source lui-m&#234;me, nous s&#233;parons plusieurs types.</p>
 
 <dl>
 <dt>Le paquet jmri
@@ -148,17 +146,17 @@ Dans le code source lui-m&#234;me, nous s&#233;parons plusieurs types.
 		classe jmri.foo.FooBundle, s&#233;par&#233; des 
 		propri&#233;t&#233;s du fichier lui m&#234;me. Cela r&#233;duit 
 		beaucoup le temps de chargement!    
-		<p>
+		<br>
 		Notez qu'il existe &#233;galement quelques 
 		regroupements de ressources qui sont utilis&#233;s &#224; d'autres fins, 
-		indiqu&#233;s dans leurs commentaires en t&#234;te.
-		</dl>
-		Le script outil de d&#233;veloppement "checkdepends.csh" 
+	indiqu&#233;s dans leurs commentaires en t&#234;te.</dd>
+</dl>
+
+		<p>Le script outil de d&#233;veloppement "checkdepends.csh"
 		est destin&#233; &#224; v&#233;rifier certaines des d&#233;pendances par inadvertance,
-		mais nous sommes loin de l'effacer.
+		mais nous sommes loin de l'effacer.</p>
 
-<!--#include virtual="/Footer" -->
-
+	<!--#include virtual="/Footer" -->
 	</div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>

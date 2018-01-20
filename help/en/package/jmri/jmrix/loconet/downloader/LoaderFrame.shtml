@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -10,8 +9,8 @@
   <title>JMRI: Digitrax Downloader</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
-  <meta content="B. Milhaupt" name="Author">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="author" content="B. Milhaupt">
   <meta name="keywords" content="JMRI help digitrax downloader">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=

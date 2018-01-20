@@ -787,13 +787,9 @@ abstract public class PaneProgFrame extends JmriJFrame
             readConfig(programmerRoot, r);
 
         } catch (org.jdom2.JDOMException e) {
-            log.error("exception parsing programmer file: " + filename, e);
-            // provide traceback too
-            e.printStackTrace();
+            log.error("exception parsing programmer file: {}", filename, e);
         } catch (java.io.IOException e) {
-            log.error("exception reading programmer file: " + filename, e);
-            // provide traceback too
-            e.printStackTrace();
+            log.error("exception reading programmer file: {}", filename, e);
         }
     }
 

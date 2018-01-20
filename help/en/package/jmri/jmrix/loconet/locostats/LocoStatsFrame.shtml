@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,9 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: LocoNet Statistics</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help digitrax downloader">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -28,10 +25,11 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>LocoNet Statistics</h1>Advanced LocoNet interfaces like
+      <h1>LocoNet Statistics</h1>
+      <p>Advanced LocoNet interfaces like
       the LocoBuffer series from RR-CirKits or the PRn series from
       DIgitrax collect statistics on the operation of the attached
-      LocoNet. This window displays those.
+      LocoNet. This window displays those.</p>
 
       <p>The "Update" button requests information from the
       interface for display.</p>
@@ -105,13 +103,12 @@
 
         <dd>The status bits from an interface in MS100 (LocoNet
         adapter) mode.</dd>
-      </dl>Some of these are displayed when the interface is acting
+      </dl>
+      <p>Some of these are displayed when the interface is acting
       as a programmer (PR2 mode), and others when it's acting as an
-      interface (MS100 mode).
+      interface (MS100 mode).</p>
 
-      <p>This is the
-      help/jmri/jmrix/loconet/locostats/LocoStatsFrame help page 
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

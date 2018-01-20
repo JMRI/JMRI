@@ -253,8 +253,8 @@
       version of a file, perhaps to fix a problem, will overwrite
       your copy; the replacement is based on the file's date). More
       information about the <a href="../../setup/Files.shtml">JMRI
-      Configuration Files</a> 
-      <!--#include virtual="/Footer" --></p>
+      Configuration Files</a></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

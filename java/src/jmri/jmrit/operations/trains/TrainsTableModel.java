@@ -121,7 +121,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
     
     // Train frame table column widths (13), starts with id column and ends with edit
-    private int[] _tableColumnWidths = {50, 50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 90, 70};
+    private final int[] _tableColumnWidths = {50, 50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 90, 70};
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
@@ -489,7 +489,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     private static Hashtable<String, TrainConductorFrame> _trainConductorHashTable =
-            new Hashtable<String, TrainConductorFrame>();
+            new Hashtable<>();
 
     private void launchConductor(Train train) {
         // use invokeLater so new window appears on top

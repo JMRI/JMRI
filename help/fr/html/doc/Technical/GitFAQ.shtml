@@ -4,17 +4,8 @@
     <title>
  	JMRI: Git FAQ
     </title>
-
-    <meta content="Bob Jacobsen" name="Author">
+	<meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code Git FAQ">
-<!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-15 -->
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -553,7 +544,7 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 	      </blockquote>
 	      
 	      <li>Allez &#225; votre r&#233;pertoire sur GitHub et d&#233;marrez le processus &quot;pull request&quot;.
-		<li>Sur le second &#233;cran, commutez la branche Ã  comparer dans votre r&#233;pertoire depuis
+		<li>Sur le second &#233;cran, commutez la branche à comparer dans votre r&#233;pertoire depuis
 		&quot;<strong>master</strong>&quot; vers &quot;<strong>patch-NNNN</strong>&quot;. Puis le reste du Pull Request se passe comme avant..
 		<li>&#201;ventuellement, un maintenancier JMRI peut manipuler et fusionner le pull request, qui 
 		mettra le patch des changements sur la branche master dans le r&#233;f&#233;rentiel.

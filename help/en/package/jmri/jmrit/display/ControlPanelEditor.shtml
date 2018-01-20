@@ -27,8 +27,17 @@
     <div id="mainContent">
       <h1>The Control Panel Editor</h1>
 
-      <h2>Quick Reference Guide for Mouse</h2>When in edit mode,
-      the following keystroke patterns are available:
+      <p><b>Control Panel Editor</b> (CPE) is simply an alternative
+      view and controller with exactly the same content data as
+      <b>Panel Editor</b> (PE). Storage and loading can be done
+      from either editor. You may change the view and control
+      of your Panel whenever and as often as you please (explained
+      below). The editor used to store the panel will
+      be the editor used at the next load of your Panel.</p>
+
+      <h2>Quick Reference for using the Mouse</h2>
+      When in edit mode, the following keystroke patterns are
+      available:
 
       <ul>
         <li>Click(left) - Select and Drag top item</li>
@@ -51,18 +60,12 @@
         changes for bottom item</li>
 
         <li>Control-Shift-Click(right) - Select and Popup item
-        property changes of selected item from stack</li>
-      </ul>Note: For Control-Shift-Click, keep holding the Control
-      and Shift keys down through the entire process of selecting
-      the item and the subsequent drag or popup on that item.
-
-      <p><b>Control Panel Editor</b> (CPE) is simply an alternative
-      view and controller with exactly the same content data as
-      <b>Panel Editor</b> (PE). You may change the view and control
-      of your Panel whenever and as often as you please. Storage
-      and loading can be done from either editor. The editor used
-      to store the panel will be the editor used at the next
-      load.</p>
+        property changes of selected item from stack<br>
+        Note: For Control-Shift-Click, keep holding the Control
+        and Shift keys down through the entire process of selecting
+        the item and the subsequent drag or popup on that item.
+        </li>
+      </ul>
 
       <h2>Changing the View between Editors</h2>In either editor,
       when in edit mode, the last item in the <b>File</b> menu is
@@ -78,8 +81,8 @@
       <b>Options</b>, <b>Zoom</b>, <b>Add Items</b>, <b>Circuit
       Builder</b> and <b>Draw Shapes</b>.
 
-      <h2>Control Panel Editor Menus</h2>When in Edit mode, the
-      following menus are displayed.
+      <h2>Control Panel Editor Menus</h2>
+      When in Edit mode, the following menus are displayed:
 
       <h3>File Menu</h3>
       The <b>File</b> menu changes its items
@@ -211,11 +214,11 @@
       accelerator key, Control T.</p>
 
       <h3>Warrants</h3>The items under this menu are help files for
-      defining Occupancy Blocks and using the them to define
-      Warrants. When two or more Occupancy Blocks are defined
-      additional menu items for defining Warrants will appear.
+      defining Occupancy Blocks and using them to define
+      Warrants. When two or more Occupancy Blocks are defined,
+      additional menu items for defining and using Warrants will appear.
       These menu items are described in <a href=
-      "../logix/Warrant.shtml">Warrants</a>. .
+      "../logix/Warrant.shtml">Warrants</a>.
 
       <h3>Circuit Builder</h3>
       <p>This menu appears when two or more Occupancy Blocks are

@@ -713,8 +713,9 @@
           could result in a storm of turnout command retries on
           LocoNet.</p>
         </li>
-      </ul><a name="SeeAlso" id="SeeAlso"></a>
+      </ul>
 
+      <a name="SeeAlso" id="SeeAlso"></a>
       <h2>Documentation</h2>
 
       <h3>JMRI Help</h3>

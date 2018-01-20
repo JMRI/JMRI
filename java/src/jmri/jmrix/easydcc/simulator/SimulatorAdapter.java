@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-//import jmri.jmrix.easydcc.EasyDccCommandStation;
 import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccPortController; // no special xSimulatorController
 import jmri.jmrix.easydcc.EasyDccReply;
@@ -18,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * Provide access to a simulated EasyDCC system.
  * <p>
  * Currently, the EasyDCC SimulatorAdapter reacts to commands sent from the user interface
- * with messages an appropriate reply message.
+ * with an appropriate reply message.
  * Based on jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter / DCCppSimulatorAdapter 2017
  * <p>
  * NOTE: Some material in this file was modified from other portions of the
@@ -51,7 +50,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
     public String openPort(String portName, String appName) {
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
-            log.debug("tempPipeI created {}", tempPipeI != null);
+            log.debug("tempPipeI created");
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
             log.debug("inpipe created {}", inpipe != null);
@@ -150,8 +149,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
     }
 
     /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed.
+     * Get an array of valid baud rates.
      *
      * @return null
      */
@@ -193,7 +191,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
                 } else {
                     buf.append("null message buffer");
                 }
-//                log.debug(buf.toString());
+                // log.debug(buf.toString()); // generates a lot of traffic
             }
             if (m != null) {
                 r = generateReply(m);
@@ -246,8 +244,8 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
 
             case 'X': // eXit programming
             case 'S': // Send packet
-            case 'D': // Deque packet
-            case 'Q': // Que packet
+            case 'D': // Dequeue packet
+            case 'Q': // Queue packet
             case 'F': // display memory
             case 'C': // program loCo
                 reply.setElement(i++, EDC_OPS); // capital O for Operation

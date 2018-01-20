@@ -37,7 +37,7 @@
 
 <p>Additional sensors for boards above address 5 can be added using the sensor table, only the first sensor on the board needs to be entered, as the remainder on that board will automatically be populated when it is discovered.</p>
 
-<p>The system name of a sensor is made up in the format of DPS1:01, where "DP" is the system name for Dcc4Pc, "S" means sensor, "1" is the board address, and "01" is the port on that board.</p>
+<p>The system name of a sensor is made up in the format of DS1:01, where "D" is the system name for Dcc4Pc, "S" means sensor, "1" is the board address, and "01" is the port on that board.</p>
 
       <h3>Reporters</h3>
       <p>Reporters are automatically created when sensors are added as the two are tide together, there is no requirement to manually create these.

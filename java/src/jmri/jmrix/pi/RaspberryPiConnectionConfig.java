@@ -57,7 +57,7 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
             systemPrefixField.addActionListener((ActionEvent e) -> {
                 if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
                     JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
-                    systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+                    systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                 }
             });
             systemPrefixField.addFocusListener(new FocusListener() {
@@ -65,7 +65,7 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
                 public void focusLost(FocusEvent e) {
                     if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
                         JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
-                        systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+                        systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
                 }
 
@@ -101,7 +101,7 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
     @Override
     public void updateAdapter() {
         if (adapter.getSystemConnectionMemo() != null && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
 
@@ -117,7 +117,7 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
         setInstance();
         if (!init) {
             if (adapter.getSystemConnectionMemo() != null) {
-                systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+                systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                 connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                 NUMOPTIONS = NUMOPTIONS + 2;
             }

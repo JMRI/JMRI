@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Warrant Table Help</title>
-  <meta content="Pete Cressman" name="author">
+  <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Warrant Table">
   <!-- Style -->
   <meta http-equiv="content-type" content=
@@ -156,19 +156,22 @@
         messages to the file.</li>
       </ul>
 
-      <h2>Other Warrant List Features</h2>The following items are
-      at the bottom of the window:
+      <h2>Other Warrant List Features</h2>
+      The following items are at the bottom of the window:
+      <ul>
+        <li>The <b>Create NXWarrant</b> button Opens a window to
+        create an <a href="NXWarrant.shtml">NX (eNtry/eXit) Warrant</a>.
+        </li>
 
-      <p>The <b>Create NXWarrant</b> button 0pens a window to
-      create an eNtry/eXit warrant.</p>
+        <li>The <b>Stop all Trains</b> button causes all running
+        warrants to halt their trains.</li>
 
-      <p>The <b>Stop all Trains</b> button causes all running
-      warrants to halt their trains.</p>
+        <li>The <b>Status</b> field contains the last 20 messages from
+        warrants. Click in the field to display them.</li>
+      </ul>
 
-      <p>The <b>Status</b> field contains the last 20 messages from
-      warrants. Click in the field to display them.</p>
-
-      <h2>Running Automated Trains</h2>The throttle 
+      <h2>Running Automated Trains</h2>
+      The throttle
       commands recorded in a warrant are played back to run the
       train, but additional control of the train can be 
       done through the choices provided by the <b>Control/Status</b>
@@ -217,15 +220,16 @@
       is occupied. <a href="SpeedChanges.shtml">When Warrant Speeds Are Modified</a>
       has details about how warrants modify recorded speeds.</p>
 
-      <h3>When the Starting block is Unoccupied</h3>If a warrant is
+      <h3>When the Starting block is Unoccupied</h3>
+      <p>If a warrant is
       started and the starting block is not occupied, the warrant
       will wait until the block is occupied. When occupation occurs
       the warrant will set to the "Halt" and wait for the user to
       set the "Resume" control. Note it is vital that the correct
       train occupies the starting block. The address specified in
-      the warrant, is the train that will begin moving.
+      the warrant, is the train that will begin moving.</p>
       
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

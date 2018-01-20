@@ -1,23 +1,23 @@
 package apps;
 
-/** 
- * Check how FindBugs and annotations interact.  
+/**
+ * Check how SpotBugs (formally FindBugs) and annotations interact.
  * <p>
- * Note: This deliberately causes FindBugs warnings!  Do not remove or annotate them!
+ * Note: This deliberately causes SpotBugs warnings!  Do not remove or annotate them!
  *       Instead, when past its useful point, just comment out the body of the
  *       class so as to leave the code examples present.
  * <p>
- * Tests Nonnull, Nullable and CheckForNull from both 
+ * Tests Nonnull, Nullable and CheckForNull from both
  * javax.annotation and edu.umd.cs.findbugs.annotations
  * packages.
  * <p>
- * Comments indicate observed (and unobserved) warnings from FindBugs 3.0.1
+ * Comments indicate observed (and unobserved) warnings from SpotBugs 3.0.1
  * <p>
  * This has no main() because it's not expected to run:  It will certainly
- * throw a NullPointerException right away.  The idea is for FindBugs to 
+ * throw a NullPointerException right away.  The idea is for SpotBugs to
  * find those in static analysis
  * <p>
- * Types are explicitly qualified (instead of using 'import') to make it 
+ * Types are explicitly qualified (instead of using 'import') to make it
  * completely clear which is being used at each point.  That makes this the
  * code less readable, so it's not recommended for general use.
  * <p>
@@ -25,18 +25,18 @@ package apps;
  * <li>The javax.annotation and edu.umd.cs.findbugs.annotations versions work the same
  *          (So we should use the javax.annotation ones as they're the future standard)
  * <li>Nullable doesn't detect the errors that CheckForNull does flag
- * <li>Parameter passing isn't always being checked by FindBugs
+ * <li>Parameter passing isn't always being checked by SpotBugs
  * </ul>
  * @see apps.CheckerFrameworkCheck
  * @author Bob Jacobsen 2016
  */
 public class FindBugsCheck {
-    
+
     void test() { // something that has to be executed on an object
         System.out.println("test "+this.getClass());
     }
 
-/* //  commenting out the rest of the file to avoid FindBugs counting the deliberate warnings
+/* //  commenting out the rest of the file to avoid SpotBugs counting the deliberate warnings
 
 
     public FindBugsCheck noAnnotationReturn() {
@@ -50,8 +50,8 @@ public class FindBugsCheck {
 
         noAnnotationParm(this);
         noAnnotationParm(null); // (NP_NULL_PARAM_DEREF_ALL_TARGETS_DANGEROUS) Null passed for non-null parameter of noAnnotationParm(FindBugsCheck)
-                                // That one's interesting, because FindBugs has apparently decided on its own that this the parameter shouldn't be null
-        
+                                // That one's interesting, because SpotBugs has apparently decided on its own that this the parameter shouldn't be null
+
         noAnnotationParm(noAnnotationReturn());
         noAnnotationParm(jaNonnullReturn());
         noAnnotationParm(jaNullableReturn()); // should be flagged?
@@ -59,7 +59,7 @@ public class FindBugsCheck {
     }
 
     // Test Nonnull
-    
+
     Nonnull public FindBugsCheck jaNonnullReturn() {
         return null; // (NP_NONNULL_RETURN_VIOLATION) may return null, but is declared @Nonnull
     }
@@ -71,7 +71,7 @@ public class FindBugsCheck {
 
         jaNonNullParm(this);
         jaNonNullParm(null);  // (NP_NONNULL_PARAM_VIOLATION) Null passed for non-null parameter
-        
+
         jaNonNullParm(noAnnotationReturn());
         jaNonNullParm(jaNonnullReturn());
         jaNonNullParm(jaNullableReturn()); // should be flagged?
@@ -88,8 +88,8 @@ public class FindBugsCheck {
         fbNonnullReturn().test();
 
         fbNonNullParm(this);
-        fbNonNullParm(null); // (NP_NONNULL_PARAM_VIOLATION) Null passed for non-null parameter  
-        
+        fbNonNullParm(null); // (NP_NONNULL_PARAM_VIOLATION) Null passed for non-null parameter
+
         fbNonNullParm(noAnnotationReturn());
         fbNonNullParm(fbNonnullReturn());
         fbNonNullParm(fbNullableReturn()); // should be flagged?
@@ -98,7 +98,7 @@ public class FindBugsCheck {
 
 
     // Test Nullable
-    
+
     Nullable public FindBugsCheck jaNullableReturn() {
         return null;
     }
@@ -110,7 +110,7 @@ public class FindBugsCheck {
 
         jaNullableParm(this);
         jaNullableParm(null);
-        
+
         jaNullableParm(noAnnotationReturn());
         jaNullableParm(jaNonnullReturn());
         jaNullableParm(jaNullableReturn());
@@ -128,7 +128,7 @@ public class FindBugsCheck {
 
         fbNullableParm(this);
         fbNullableParm(null);
-        
+
         fbNullableParm(noAnnotationReturn());
         fbNullableParm(fbNonnullReturn());
         fbNullableParm(fbNullableReturn());
@@ -149,13 +149,13 @@ public class FindBugsCheck {
 
         jaCheckForNullParm(this);
         jaCheckForNullParm(null);
-        
+
         jaCheckForNullParm(noAnnotationReturn());
         jaCheckForNullParm(jaNonnullReturn());
         jaCheckForNullParm(jaNullableReturn());
         jaCheckForNullParm(jaCheckForNullReturn());
     }
-    
+
     @CheckForNull public FindBugsCheck fbCheckForNullReturn() {
         return null;
     }
@@ -167,7 +167,7 @@ public class FindBugsCheck {
 
         fbCheckForNullParm(this);
         fbCheckForNullParm(null);
-        
+
         fbCheckForNullParm(noAnnotationReturn());
         fbCheckForNullParm(fbNonnullReturn());
         fbCheckForNullParm(fbNullableReturn());

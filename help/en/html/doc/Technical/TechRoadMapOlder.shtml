@@ -8,7 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Technology Road Map History</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code road map">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -429,7 +429,7 @@
         <li>Start using <a href=
         "https://jcp.org/en/jsr/detail?id=305">JSR 305
         annotations</a> <a href=
-        "https://code.google.com/p/findbugs/">via Findbugs</a> to
+           "http://spotbugs.github.io">via SpotBugs</a> to
         strengthen the code checking (see <a href=
         "https://today.java.net/pub/a/today/2008/09/11/jsr-305-annotations.html">
         this</a> and <a href=

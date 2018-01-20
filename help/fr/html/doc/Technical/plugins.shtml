@@ -8,7 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Plug-in mechanisms</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code plugins extension plug-in"><!-- Style -->
   <meta http-equiv="content-type" content=
@@ -28,7 +28,8 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: M&eacute;canismes Plug-in</h1>L'objectif initial du
+      <h1>JMRI: M&eacute;canismes Plug-in</h1>
+        L'objectif initial du
       projet &eacute;tait de produire une biblioth&egrave;que que
       les gens pourraient utiliser pour cr&eacute;er leurs propres
       applications. Bien que certaines personnes l'aient fait,
@@ -131,7 +132,8 @@ articles, ajouter des boutons sur le panneau principal, etc
       "http://jmri.org/jython/ReporterFontControl.py">ReporterFontControl.py</a>
       est un exemple encore plus avanc&eacute;s qui modifie
       l'apparence des &eacute;l&eacute;ments sur les &eacute;crans
-      du panneau. <!--#include virtual="/Footer" --></p>
+      du panneau.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

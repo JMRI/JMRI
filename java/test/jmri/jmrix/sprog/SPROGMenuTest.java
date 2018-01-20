@@ -9,12 +9,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test simple functioning of SPROGMenu
+ * Test simple functioning of SPROGMenu.
  *
  * @author	Paul Bender Copyright (C) 2016
  */
 public class SPROGMenuTest {
-
 
     @Test
     public void testCtor() {
@@ -34,4 +33,5 @@ public class SPROGMenuTest {
 
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
+
 }
