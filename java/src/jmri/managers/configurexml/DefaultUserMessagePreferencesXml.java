@@ -175,7 +175,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     String strTableName = table.getAttribute("name").getValue();
                     // if this table is already persisted, do not try to persist it again
                     // this can happen if profile preferences have only been partly migrated
-                    if (!jtpm.isPersisting(strTableName)) {
+                    if (!jtpm.isPersistenceDataRetained(strTableName)) {
                         List<Element> columnList = table.getChildren("column");
                         for (Element column : columnList) {
                             String strColumnName = column.getAttribute("name").getValue();

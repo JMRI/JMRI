@@ -11,8 +11,10 @@ import jmri.profile.Profile;
 import jmri.swing.JmriJTablePersistenceManager.TableColumnPreferences;
 import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -24,6 +26,14 @@ import org.junit.Test;
  * @author Randall Wood (C) 2016
  */
 public class JmriJTablePersistenceManagerTest {
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
 
     @Before
     public void setUp() {
@@ -235,14 +245,21 @@ public class JmriJTablePersistenceManagerTest {
      * Test of cacheState method, of class JmriJTablePersistenceManager.
      */
     @Test
-    @Ignore
     public void testCacheState() {
-        System.out.println("cacheState");
-        JTable table = null;
-        JmriJTablePersistenceManager instance = new JmriJTablePersistenceManager();
+        JTable table = testTable("test");
+        JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
+        Assert.assertFalse("Not persisting table", instance.isPersisting(table));
+        Assert.assertFalse("Clean manager", instance.isDirty());
         instance.cacheState(table);
-        // TODO review the generated test code and remove the default call to fail.
-        Assert.fail("The test case is a prototype.");
+        Assert.assertFalse("Persisting table", instance.isPersisting(table));
+        Assert.assertTrue("Dirty manager", instance.isDirty());
+        Assert.assertEquals("Column c1 is default width", table.getColumnModel().getColumn(1).getWidth(), instance.getColumnsMap(table.getName()).get("c1").getWidth());
+        table.getColumnModel().getColumn(1).setPreferredWidth(100);
+        Assert.assertNotEquals("Column c1 width not persisted width",
+                table.getColumnModel().getColumn(1).getPreferredWidth(),
+                instance.getColumnsMap(table.getName()).get("c1").getWidth());
+        instance.cacheState(table);
+        Assert.assertEquals("Column c1 is 100 width", table.getColumnModel().getColumn(1).getPreferredWidth(), instance.getColumnsMap(table.getName()).get("c1").getWidth());
     }
 
     /**
@@ -339,9 +356,9 @@ public class JmriJTablePersistenceManagerTest {
         JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
         Map<String, TableColumnPreferences> map = instance.getColumnsMap(table.getName());
         Assert.assertNull("No columns persisted", map);
-        Assert.assertFalse(instance.isPersisting(table));
+        Assert.assertFalse(instance.isPersistenceDataRetained(table));
         instance.setPersistedState(table.getName(), column, order, width, sort, hidden);
-        Assert.assertTrue(instance.isPersisting(table));
+        Assert.assertTrue(instance.isPersistenceDataRetained(table));
         map = instance.getColumnsMap(table.getName());
         Assert.assertNotNull("Columns persisted", map);
         Assert.assertEquals("Persisting 1 column", 1, map.size());
@@ -430,6 +447,85 @@ public class JmriJTablePersistenceManagerTest {
     }
 
     /**
+     * Test of setTableColumnPreferences method, of class JmriJTablePersistenceManager.
+     */
+    @Test
+    @Ignore
+    public void testSetTableColumnPreferences() {
+        System.out.println("setTableColumnPreferences");
+        String table = "";
+        String column = "";
+        int order = 0;
+        int width = 0;
+        SortOrder sort = null;
+        boolean hidden = false;
+        JmriJTablePersistenceManager instance = new JmriJTablePersistenceManager();
+        instance.setTableColumnPreferences(table, column, order, width, sort, hidden);
+        // TODO review the generated test code and remove the default call to fail.
+        Assert.fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isPersistenceDataRetained method, of class JmriJTablePersistenceManager.
+     */
+    @Test
+    public void testIsPersistenceDataRetained_JTable() {
+        JTable table = testTable("test");
+        JmriJTablePersistenceManager instance = new JmriJTablePersistenceManager();
+        Assert.assertFalse("Not persisting, not retaining table", instance.isPersistenceDataRetained(table));
+        instance.persist(table);
+        Assert.assertTrue("Persisting", instance.isPersistenceDataRetained(table));
+        instance.stopPersisting(table);
+        Assert.assertTrue("Not Persisting, retaining table", instance.isPersistenceDataRetained(table));
+    }
+
+    /**
+     * Test of isPersistenceDataRetained method, of class JmriJTablePersistenceManager.
+     */
+    @Test
+    public void testIsPersistenceDataRetained_String() {
+        JTable table = testTable("test");
+        JmriJTablePersistenceManager instance = new JmriJTablePersistenceManager();
+        Assert.assertFalse("Not persisting, not retaining table", instance.isPersistenceDataRetained(table.getName()));
+        instance.persist(table);
+        Assert.assertTrue("Persisting", instance.isPersistenceDataRetained(table.getName()));
+        instance.stopPersisting(table);
+        Assert.assertTrue("Not Persisting, retaining table", instance.isPersistenceDataRetained(table.getName()));
+    }
+
+    /**
+     * Test of isPersisting method, of class JmriJTablePersistenceManager.
+     */
+    @Test
+    public void testIsPersisting_JTable() {
+        JTable table = testTable("test");
+        JmriJTablePersistenceManager instance = new JmriJTablePersistenceManager();
+        Assert.assertFalse("Not persisting", instance.isPersisting(table));
+        instance.persist(table);
+        Assert.assertTrue("Persist", instance.isPersisting(table));
+        instance.stopPersisting(table);
+        Assert.assertFalse("Not persisting", instance.isPersisting(table));
+        instance.persist(table);
+        Assert.assertTrue("Persist", instance.isPersisting(table));
+    }
+
+    /**
+     * Test of isPersisting method, of class JmriJTablePersistenceManager.
+     */
+    @Test
+    public void testIsPersisting_String() {
+        JTable table = testTable("test");
+        JmriJTablePersistenceManager instance = new JmriJTablePersistenceManager();
+        Assert.assertFalse("Not persisting", instance.isPersisting(table.getName()));
+        instance.persist(table);
+        Assert.assertTrue("Persist", instance.isPersisting(table.getName()));
+        instance.stopPersisting(table);
+        Assert.assertFalse("Not persisting", instance.isPersisting(table.getName()));
+        instance.persist(table);
+        Assert.assertTrue("Persist", instance.isPersisting(table.getName()));
+    }
+
+    /**
      * Create a simple table with some columns and rows. Use only defaults for
      * all other values.
      *
@@ -456,11 +552,11 @@ public class JmriJTablePersistenceManagerTest {
             super.setDirty(state);
         }
 
-        public JTableListener getListener(JTable table) {
+        public JmriJTablePersistenceManager.JTableListener getListener(JTable table) {
             return this.listeners.get(table.getName());
         }
 
-        public JTableListener getListener(String name) {
+        public JmriJTablePersistenceManager.JTableListener getListener(String name) {
             return this.listeners.get(name);
         }
 

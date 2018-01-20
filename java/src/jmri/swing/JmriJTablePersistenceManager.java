@@ -426,6 +426,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
      * @throws NullPointerException if either name is null
      */
     protected void setPersistedState(@Nonnull String table, @Nonnull String column, int order, int width, SortOrder sort, boolean hidden) {
+        log.warn("calling setPersistedState for {} with {} {} {} {} {}", table, column, order, width, sort, hidden);
         Objects.requireNonNull(table, "table name must be nonnull");
         Objects.requireNonNull(column, "column name must be nonnull");
         if (!this.columns.containsKey(table)) {
@@ -437,6 +438,18 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
     }
 
     @Override
+    public boolean isPersistenceDataRetained(JTable table) {
+        Objects.requireNonNull(table, "Table must be non-null");
+        return this.isPersistenceDataRetained(table.getName());
+    }
+
+    @Override
+    public boolean isPersistenceDataRetained(String name) {
+        Objects.requireNonNull(name, "Table name must be non-null");
+        return this.columns.containsKey(name);
+    }
+
+    @Override
     public boolean isPersisting(JTable table) {
         Objects.requireNonNull(table, "Table must be non-null");
         return this.isPersisting(table.getName());
@@ -445,7 +458,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
     @Override
     public boolean isPersisting(String name) {
         Objects.requireNonNull(name, "Table name must be non-null");
-        return this.columns.containsKey(name);
+        return this.listeners.containsKey(name);
     }
 
     @Override

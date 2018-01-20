@@ -150,4 +150,20 @@ public interface JTablePersistenceManager {
      * @return true if the table is being persisted; false otherwise
      */
     public boolean isPersisting(@Nonnull String name);
+
+    /**
+     * Determine if persistence data is being held for a table.
+     *
+     * @param table the table to check against
+     * @return true if the table has persistence data; false otherwise
+     */
+    public boolean isPersistenceDataRetained(@Nonnull JTable table);
+
+    /**
+     * Determine if persistence data is being held for a table.
+     *
+     * @param name the name of the table to check against
+     * @return true if the table has persistence data; false otherwise
+     */
+    public boolean isPersistenceDataRetained(@Nonnull String name);
 }
