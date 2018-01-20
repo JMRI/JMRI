@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.swing.JTable;
 import javax.swing.SortOrder;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import jmri.profile.Profile;
 import jmri.swing.JmriJTablePersistenceManager.TableColumnPreferences;
@@ -450,19 +451,24 @@ public class JmriJTablePersistenceManagerTest {
      * Test of setTableColumnPreferences method, of class JmriJTablePersistenceManager.
      */
     @Test
-    @Ignore
     public void testSetTableColumnPreferences() {
-        System.out.println("setTableColumnPreferences");
-        String table = "";
-        String column = "";
-        int order = 0;
-        int width = 0;
-        SortOrder sort = null;
-        boolean hidden = false;
-        JmriJTablePersistenceManager instance = new JmriJTablePersistenceManager();
-        instance.setTableColumnPreferences(table, column, order, width, sort, hidden);
-        // TODO review the generated test code and remove the default call to fail.
-        Assert.fail("The test case is a prototype.");
+        JTable table = testTable("test");
+        JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
+        Assert.assertFalse("Not persisting table", instance.isPersisting(table));
+        Assert.assertFalse("Clean manager", instance.isDirty());
+        TableColumn c0 = table.getColumnModel().getColumn(0);
+        TableColumn c1 = table.getColumnModel().getColumn(1);
+        instance.setTableColumnPreferences(table.getName(), c0.getHeaderValue().toString(), 0, c0.getPreferredWidth(), SortOrder.UNSORTED, false);
+        instance.setTableColumnPreferences(table.getName(), c1.getHeaderValue().toString(), 0, c1.getPreferredWidth(), SortOrder.UNSORTED, false);
+        Assert.assertFalse("Persisting table", instance.isPersisting(table));
+        Assert.assertTrue("Dirty manager", instance.isDirty());
+        Assert.assertEquals("Column c1 is default width", c1.getWidth(), instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
+        c1.setPreferredWidth(100);
+        Assert.assertNotEquals("Column c1 width not persisted width",
+                c1.getPreferredWidth(),
+                instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
+        instance.setTableColumnPreferences(table.getName(), c1.getHeaderValue().toString(), 0, c1.getPreferredWidth(), SortOrder.UNSORTED, false);
+        Assert.assertEquals("Column c1 is 100 width", c1.getPreferredWidth(), instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
     }
 
     /**

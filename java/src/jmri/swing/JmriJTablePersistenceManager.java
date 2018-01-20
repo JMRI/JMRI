@@ -429,7 +429,6 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
      * @throws NullPointerException if either name is null
      */
     protected void setPersistedState(@Nonnull String table, @Nonnull String column, int order, int width, SortOrder sort, boolean hidden) {
-        log.warn("calling setPersistedState for {} with {} {} {} {} {}", table, column, order, width, sort, hidden);
         Objects.requireNonNull(table, "table name must be nonnull");
         Objects.requireNonNull(column, "column name must be nonnull");
         if (!this.columns.containsKey(table)) {
