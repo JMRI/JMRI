@@ -267,14 +267,32 @@ public class JmriJTablePersistenceManagerTest {
      * Test of resetState method, of class JmriJTablePersistenceManager.
      */
     @Test
-    @Ignore
     public void testResetState() {
-        System.out.println("resetState");
-        JTable table = null;
-        JmriJTablePersistenceManager instance = new JmriJTablePersistenceManager();
+        JTable table = testTable("test");
+        JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
+        Assert.assertFalse("Not persisting table", instance.isPersisting(table));
+        Assert.assertFalse("Clean manager", instance.isDirty());
+        TableColumn c0 = table.getColumnModel().getColumn(0);
+        TableColumn c1 = table.getColumnModel().getColumn(1);
+        c0.setPreferredWidth(75);
+        c1.setPreferredWidth(75);
+        // set widths to other than table's widths for test
+        instance.setPersistedState(table.getName(), c0.getHeaderValue().toString(), 0, 50, SortOrder.UNSORTED, false);
+        instance.setPersistedState(table.getName(), c1.getHeaderValue().toString(), 0, 100, SortOrder.UNSORTED, false);
+        Assert.assertFalse("Persisting table", instance.isPersisting(table));
+        instance.setDirty(false);
+        Assert.assertFalse("Clean manager", instance.isDirty());
+        Assert.assertEquals("State for column c0 is narrow", 50, instance.getColumnsMap(table.getName()).get("c0").getPreferredWidth());
+        Assert.assertEquals("State for column c1 is wide", 100, instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
+        Assert.assertNotEquals("Column c0 width not persisted width",
+                table.getColumnModel().getColumn(0).getPreferredWidth(),
+                instance.getColumnsMap(table.getName()).get("c0").getPreferredWidth());
+        Assert.assertNotEquals("Column c1 width not persisted width",
+                table.getColumnModel().getColumn(1).getPreferredWidth(),
+                instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
         instance.resetState(table);
-        // TODO review the generated test code and remove the default call to fail.
-        Assert.fail("The test case is a prototype.");
+        Assert.assertEquals("Column c0 is 50 width", 50, c0.getPreferredWidth());
+        Assert.assertEquals("Column c1 is 100 width", 100, c1.getPreferredWidth());
     }
 
     /**
@@ -448,7 +466,8 @@ public class JmriJTablePersistenceManagerTest {
     }
 
     /**
-     * Test of setTableColumnPreferences method, of class JmriJTablePersistenceManager.
+     * Test of setTableColumnPreferences method, of class
+     * JmriJTablePersistenceManager.
      */
     @Test
     public void testSetTableColumnPreferences() {
@@ -472,7 +491,8 @@ public class JmriJTablePersistenceManagerTest {
     }
 
     /**
-     * Test of isPersistenceDataRetained method, of class JmriJTablePersistenceManager.
+     * Test of isPersistenceDataRetained method, of class
+     * JmriJTablePersistenceManager.
      */
     @Test
     public void testIsPersistenceDataRetained_JTable() {
@@ -486,7 +506,8 @@ public class JmriJTablePersistenceManagerTest {
     }
 
     /**
-     * Test of isPersistenceDataRetained method, of class JmriJTablePersistenceManager.
+     * Test of isPersistenceDataRetained method, of class
+     * JmriJTablePersistenceManager.
      */
     @Test
     public void testIsPersistenceDataRetained_String() {
@@ -568,6 +589,11 @@ public class JmriJTablePersistenceManagerTest {
 
         public Map<String, TableColumnPreferences> getColumnsMap(String table) {
             return this.columns.get(table);
+        }
+
+        @Override
+        public void setPersistedState(String table, String column, int order, int width, SortOrder sort, boolean hidden) {
+            super.setPersistedState(table, column, order, width, sort, hidden);
         }
     }
 }
