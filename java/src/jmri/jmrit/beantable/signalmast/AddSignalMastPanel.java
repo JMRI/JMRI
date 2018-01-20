@@ -332,17 +332,6 @@ public class AddSignalMastPanel extends JPanel {
         repaint();
     }
     
-    Set<String> disabledAspects = new TreeSet<>();
-    public void enableAspect(String aspect) {
-        disabledAspects.remove(aspect);
-    }
-    public void disableAspect(String aspect) {
-        disabledAspects.add(aspect);
-    }
-    public boolean isDisabledAspect(String aspect) {
-        return disabledAspects.contains(aspect);
-    }
-
     /**
      * Called when an already-initialized AddSignalMastPanel is being
      * displayed again, right before it's set visible.
