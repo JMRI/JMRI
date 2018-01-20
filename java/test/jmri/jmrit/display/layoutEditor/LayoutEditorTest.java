@@ -224,15 +224,15 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     public void testGetSidelineTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 2.
-        Assert.assertEquals("side track width", 2, le.getSideTrackWidth());
+        Assert.assertEquals("side track width", 2, le.getSidelineTrackWidth());
     }
 
     @Test
     public void testSetSideTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        le.setSideTrackWidth(10);
-        Assert.assertEquals("Side track width after set", 10, le.getSideTrackWidth());
+        le.setSidelineTrackWidth(10);
+        Assert.assertEquals("Side track width after set", 10, le.getSidelineTrackWidth());
     }
 
     @Test
@@ -348,7 +348,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     public void testGetTurnoutDrawUnselectedLeg() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to true
-        Assert.assertTrue("getTurnoutDrawUnselectedLeg", le.getTurnoutDrawUnselectedLeg());
+        Assert.assertTrue("getTurnoutDrawUnselectedLeg", le.isTurnoutDrawUnselectedLeg());
     }
 
     @Test
@@ -356,7 +356,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to true, so set to false.
         le.setTurnoutDrawUnselectedLeg(false);
-        Assert.assertFalse("getTurnoutDrawUnselectedLeg after set", le.getTurnoutDrawUnselectedLeg());
+        Assert.assertFalse("getTurnoutDrawUnselectedLeg after set", le.isTurnoutDrawUnselectedLeg());
     }
 
     @Test

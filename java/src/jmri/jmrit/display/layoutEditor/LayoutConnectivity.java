@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor panel. Allowed values (using Path object definitions) are:
  * Path.NORTH (up on panel) Path.SOUTH (down on panel) Path.EAST (right on
  * panel) Path.WEST (left on panel) and points in between: Path.NORTH +
- * Path.EAST Path.NORTH_WEST, Path.SOUTH_EAST Path.SOUTH +
- * Path.WEST
+ * Path.EAST Path.NORTH_WEST, Path.SOUTH_EAST Path.SOUTH + Path.WEST
  * <P>
  * The connected object in the first block is usually a track segment. This
  * track segment is connected to an object in the second block. The connection
@@ -42,6 +41,7 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor panels.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007-2008
+ * @author George Warner Copyright (C) 2017
  */
 public class LayoutConnectivity {
 
@@ -231,5 +231,6 @@ public class LayoutConnectivity {
         return hash;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class);
+    private final static Logger log
+            = LoggerFactory.getLogger(LayoutConnectivity.class);
 }   // class LayoutConnectivity
