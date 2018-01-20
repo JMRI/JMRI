@@ -7493,13 +7493,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     protected boolean remove(@Nonnull Object s) {
         boolean found = false;
 
-        if (sensorImage.contains(s)) {
-            sensorImage.remove(s);
-            found = true;
-        }
-        if (sensorList.contains(s)) {
-            sensorList.remove(s);
-            found = true;
+        if (sensorImage.contains(s) || sensorList.contains(s)) {
+            if (removeNxSensor((SensorIcon) s)) {
+                sensorImage.remove(s);
+                sensorList.remove(s);
+                found = true;
+            } else {
+                return false;
+            }
         }
         if (backgroundImage.contains(s)) {
             backgroundImage.remove(s);
@@ -7567,75 +7568,71 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         LayoutSlip ls;
         boolean found = false;
         StringBuilder sb = new StringBuilder();
-
-        sb.append("This ");
+        String msgKey = "DeleteReference";  // NOI18N
+        String beanKey = "None";  // NOI18N
+        String beanValue = sm.getDisplayName();
 
         if (sm instanceof SignalMast) {
-            sb.append("Signal Mast"); //TODO I18N using Bundle.getMessage("BeanNameSignalMast");
-            sb.append(" is linked to the following items<br> do you want to remove those references");
-
-            if (InstanceManager.getDefault(SignalMastLogicManager.class
-            ).isSignalMastUsed((SignalMast) sm)) {
+            beanKey = "BeanNameSignalMast";  // NOI18N
+            if (InstanceManager.getDefault(SignalMastLogicManager.class)
+                    .isSignalMastUsed((SignalMast) sm)) {
                 SignalMastLogic sml
                         = InstanceManager.getDefault(SignalMastLogicManager.class
                         ).getSignalMastLogic((SignalMast) sm);
-
-                //SignalMastLogic sml =
-                //InstanceManager.getDefault(SignalMastLogicManager.class).getSignalMastLogic((SignalMast)sm);
                 if ((sml != null) && sml.useLayoutEditor(sml.getDestinationList().get(0))) {
-                    sb.append(" and any SignalMast Logic associated with it");
+                    msgKey = "DeleteSmlReference";  // NOI18N
                 }
             }
         } else if (sm instanceof Sensor) {
-            sb.append("Sensor"); //TODO I18N using Bundle.getMessage("BeanNameSensor");
-            sb.append(" is linked to the following items<br> do you want to remove those references");
+            beanKey = "BeanNameSensor";  // NOI18N
         } else if (sm instanceof SignalHead) {
-            sb.append("SignalHead"); //TODO I18N using Bundle.getMessage("BeanNameSignalHead");
-            sb.append(" is linked to the following items<br> do you want to remove those references");
+            beanKey = "BeanNameSignalHead";  // NOI18N
+        }
+        if (!beanKey.equals("None")) {  // NOI18N
+            sb.append(Bundle.getMessage(msgKey, Bundle.getMessage(beanKey), beanValue));
         }
 
         if ((pw = finder.findPositionablePointByWestBoundBean(sm)) != null) {
-            sb.append("<br>Point of ");
-            TrackSegment t = pw.getConnect1();
-
-            if (t != null) {
-                sb.append(t.getBlockName()).append(" and ");
-            }
-            t = pw.getConnect2();
-
-            if (t != null) {
-                sb.append(t.getBlockName());
+            TrackSegment t1 = pw.getConnect1();
+            TrackSegment t2 = pw.getConnect2();
+            if (t1 != null) {
+                if (t2 != null) {
+                    sb.append(Bundle.getMessage("DeleteAtPoint1", t1.getBlockName()));  // NOI18N
+                    sb.append(Bundle.getMessage("DeleteAtPoint2", t2.getBlockName()));  // NOI18N
+                } else {
+                    sb.append(Bundle.getMessage("DeleteAtPoint1", t1.getBlockName()));  // NOI18N
+                }
             }
             found = true;
         }
 
         if ((pe = finder.findPositionablePointByEastBoundBean(sm)) != null) {
-            sb.append("<br>Point of ");
-            TrackSegment t = pe.getConnect1();
+            TrackSegment t1 = pe.getConnect1();
+            TrackSegment t2 = pe.getConnect2();
 
-            if (t != null) {
-                sb.append(t.getBlockName()).append(" and ");
-            }
-            t = pe.getConnect2();
-
-            if (t != null) {
-                sb.append(t.getBlockName());
+            if (t1 != null) {
+                if (t2 != null) {
+                    sb.append(Bundle.getMessage("DeleteAtPoint1", t1.getBlockName()));  // NOI18N
+                    sb.append(Bundle.getMessage("DeleteAtPoint2", t2.getBlockName()));  // NOI18N
+                } else {
+                    sb.append(Bundle.getMessage("DeleteAtPoint1", t1.getBlockName()));  // NOI18N
+                }
             }
             found = true;
         }
 
         if ((lt = finder.findLayoutTurnoutByBean(sm)) != null) {
-            sb.append("<br>Turnout ").append(lt.getTurnoutName()); //I18N using Bundle.getMessage("BeanNameTurnout");
+            sb.append(Bundle.getMessage("DeleteAtOther", Bundle.getMessage("BeanNameTurnout"), lt.getTurnoutName()));   // NOI18N
             found = true;
         }
 
         if ((lx = finder.findLevelXingByBean(sm)) != null) {
-            sb.append("<br>Level Crossing ").append(lx.getId());
+            sb.append(Bundle.getMessage("DeleteAtOther", Bundle.getMessage("LevelCrossing"), lx.getId()));   // NOI18N
             found = true;
         }
 
         if ((ls = finder.findLayoutSlipByBean(sm)) != null) {
-            sb.append("<br>Slip ").append(ls.getTurnoutName());
+            sb.append(Bundle.getMessage("DeleteAtOther", Bundle.getMessage("Slip"), ls.getTurnoutName()));   // NOI18N
             found = true;
         }
 
@@ -7670,6 +7667,32 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
         return true;
     } //removeSignalMast
+
+    private boolean removeNxSensor(@Nonnull SensorIcon si) {
+        Sensor sn = si.getSensor();
+        String usage = findBeanUsage(sn);
+
+        if (usage != null) {
+            usage = String.format("<html>%s</html>", usage);
+            int selectedValue = JOptionPane.showOptionDialog(this,
+                    usage, Bundle.getMessage("WarningTitle"),
+                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                    new Object[]{Bundle.getMessage("ButtonYes"),
+                        Bundle.getMessage("ButtonNo"),
+                        Bundle.getMessage("ButtonCancel")},
+                    Bundle.getMessage("ButtonYes"));
+
+            if (selectedValue == 1) {
+                return true; //return leaving the references in place but allow the icon to be deleted.
+            }
+
+            if (selectedValue == 2) {
+                return false; //do not delete the item
+            }
+            return getLETools().removeSensorAssignment(sn);
+        }
+        return true;
+    } //removeNxSensor
 
     private void removeBeanRefs(@Nonnull NamedBean sm) {
         PositionablePoint pe;
