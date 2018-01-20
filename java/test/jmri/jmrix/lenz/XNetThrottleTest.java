@@ -2147,7 +2147,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     // without assertions, so post initilization tests can be
     // performed.
     protected void initThrottle(XNetThrottle t,int n){
-        // before we send anyt commands, make sure the software version is
+        // before we send any commands, make sure the software version is
         // set to version 3.6.
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         while (n == tc.outbound.size()) {
@@ -2260,9 +2260,11 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         tc = new XNetInterfaceScaffold(new LenzCommandStation());
         memo = new XNetSystemConnectionMemo(tc);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,memo.getThrottleManager());
-        instance = new XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
+        // uncommenting the next two lines causes the base throttle tests to hang.
         //int n = tc.outbound.size();
-        //initThrottle((XNetThrottle)instance,n);
+        //initThrottleV35(t,n);
+        instance=t;
     }
 
     @After
