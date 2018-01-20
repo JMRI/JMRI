@@ -396,7 +396,10 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
      * @param sort   how the column is sorted
      * @param hidden true if column is hidden
      * @throws NullPointerException if either name is null
-     * @deprecated since 4.5.2
+     * @deprecated since 4.5.2; not to be removed; used by
+     * {@link jmri.managers.configurexml.DefaultUserMessagePreferencesXml} to
+     * allow tabled preferences from JMRI 4.4 and earlier to be read when a user
+     * is upgrading to a newer version; not be used elsewhere
      */
     @Deprecated
     public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden) {
