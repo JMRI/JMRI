@@ -113,7 +113,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         // connect to the traffic controller
         this.getSystemConnectionMemo().getSprogTrafficController().connectPort(this);
 
-        this.getSystemConnectionMemo().configureCommandStation(); // for OPS mode
+        this.getSystemConnectionMemo().configureCommandStation(); // only if in OPS mode, memo will take care of that
         this.getSystemConnectionMemo().configureManagers();
 
         if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals(Bundle.getMessage("PowerStateOn"))) {
