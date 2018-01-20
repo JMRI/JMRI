@@ -552,7 +552,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         showPullUp(false);
         this.table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         this.table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
-        showState(false);
+        showStateForgetAndQuery(false);
         super.configureTable(table);
     }
 
@@ -580,13 +580,13 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         columnModel.setColumnVisible(column, show);
     }
 
-    public void showState(boolean show) {
+    public void showStateForgetAndQuery(boolean show) {
         XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
         TableColumn column = columnModel.getColumnByModelIndex(FORGETCOL);
         columnModel.setColumnVisible(column, show);
         column = columnModel.getColumnByModelIndex(QUERYCOL);
         columnModel.setColumnVisible(column, show);
-        // @TODO instead of making this flipped by showState, it should be set by a separate action.
+        // @TODO instead of making this flipped by showStateForgetAndQuery, it should be set by a separate action.
         setPropertyColumnsVisible(table, show);
     }
 

@@ -647,7 +647,6 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
     }
 
-
     protected void showPopup(MouseEvent e) {
         JTable source = (JTable) e.getSource();
         int row = source.rowAtPoint(e.getPoint());

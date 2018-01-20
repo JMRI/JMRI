@@ -1409,7 +1409,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     JCheckBox showLockBox = new JCheckBox(Bundle.getMessage("ShowLockInfo"));
     JCheckBox showTurnoutSpeedBox = new JCheckBox(Bundle.getMessage("ShowTurnoutSpeedDetails"));
     JCheckBox doAutomationBox = new JCheckBox(Bundle.getMessage("AutomaticRetry"));
-    JCheckBox showStateBox = new JCheckBox(Bundle.getMessage("ShowState"));
+    JCheckBox showStateForgetAndQueryBox = new JCheckBox(Bundle.getMessage("ShowStateForgetAndQuery"));
 
     /**
      * Add the check boxes to show/hide extra columns to the Turnout table
@@ -1455,15 +1455,15 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 showTurnoutSpeedChanged();
             }
         });
-        f.addToBottomBox(showStateBox, this.getClass().getName());
-        showStateBox.setToolTipText(Bundle.getMessage("StateBoxToolTip"));
-        showStateBox.addActionListener(new ActionListener() {
+        f.addToBottomBox(showStateForgetAndQueryBox, this.getClass().getName());
+        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateBoxToolTip"));
+        showStateForgetAndQueryBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showStateChanged();
+                showStateForgetAndQueryChanged();
             }
         });
-        showStateChanged();
+        showStateForgetAndQueryChanged();
     }
 
     /**
@@ -1514,15 +1514,15 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 showTurnoutSpeedChanged();
             }
         });
-        f.addToBottomBox(showStateBox, systemPrefix);
-        showStateBox.setToolTipText(Bundle.getMessage("StateBoxToolTip"));
-        showStateBox.addActionListener(new ActionListener() {
+        f.addToBottomBox(showStateForgetAndQueryBox, systemPrefix);
+        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateBoxToolTip"));
+        showStateForgetAndQueryBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showStateChanged();
+                showStateForgetAndQueryChanged();
             }
         });
-        showStateChanged();
+        showStateForgetAndQueryChanged();
     }
 
     void showFeedbackChanged() {
@@ -1561,16 +1561,16 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         columnModel.setColumnVisible(column, showTurnoutSpeed);
     }
 
-    public void showStateChanged() {
-        boolean showState = showStateBox.isSelected();
+    public void showStateForgetAndQueryChanged() {
+        boolean showStateForgetAndQuery = showStateForgetAndQueryBox.isSelected();
         XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
 
         TableColumn column = columnModel.getColumnByModelIndex(FORGETCOL);
-        columnModel.setColumnVisible(column, showState);
+        columnModel.setColumnVisible(column, showStateForgetAndQuery);
         column = columnModel.getColumnByModelIndex(QUERYCOL);
-        columnModel.setColumnVisible(column, showState);
-        // @TODO instead of making this flipped by showState, it should be set by a separate action.
-        getTableDataModel().setPropertyColumnsVisible(table, showState);
+        columnModel.setColumnVisible(column, showStateForgetAndQuery);
+        // @TODO instead of making this flipped by showStateForgetAndQuery, it should be set by a separate action.
+        getTableDataModel().setPropertyColumnsVisible(table, showStateForgetAndQuery);
     }
     /**
      * Insert a table specific Operations menu. Account for the Window and Help

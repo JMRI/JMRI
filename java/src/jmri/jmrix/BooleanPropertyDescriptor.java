@@ -1,11 +1,10 @@
 package jmri.jmrix;
 
-import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
 
 /**
  * Implementation of NamedBeanPropertyDescriptor for true/false properties.
- * Created by bracz on 1/19/18.
+ * @author Balazs Racz Copyright (C) 2018
  */
 
 public abstract class BooleanPropertyDescriptor extends NamedBeanPropertyDescriptor {

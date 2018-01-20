@@ -4,15 +4,18 @@ package jmri;
  * Describes metadata about a given property key for a NamedBean. This metadata is used by the
  * BeanTable actions to display and edit the properties in question.
  *
- * Created by bracz on 1/19/18.
+ * @author Balazs Racz Copyright (C) 2018
  */
 
 public abstract class NamedBeanPropertyDescriptor {
-    /// Key of the property, to be used in the setProperty and getProperty functions.
+    /**
+     * Key of the property, to be used in the setProperty and getProperty functions on the
+     * NamedBean.
+     */
     public final String propertyKey;
-    /// Class for the property values. Currently supported are Boolean and String.
+    /** Class for the property values. */
     public final Class valueClass;
-    /// What should be displayed when a given Bean does not have this property set.
+    /** What should be displayed when a given Bean does not have this property set. */
     public final Object defaultValue;
 
     protected NamedBeanPropertyDescriptor(String propertyKey, Class valueClass, Object defaultValue) {

@@ -18,7 +18,7 @@ import org.openlcb.can.CanInterface;
 import org.openlcb.can.GridConnect;
 
 /**
- * Created by bracz on 11/7/16.
+ * @author Balazs Racz Copyright (C) 2016
  */
 
 public class OlcbTestInterface {

@@ -501,14 +501,14 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         a.showPullUp(showPullUpBox.isSelected());
     }
 
-    void showStateChanged() {
+    void showStateForgetAndQueryChanged() {
         jmri.jmrit.beantable.sensor.SensorTableDataModel a = (jmri.jmrit.beantable.sensor.SensorTableDataModel) m;
-        a.showState(showStateBox.isSelected());
+        a.showStateForgetAndQuery(showStateForgetAndQueryBox.isSelected());
     }
 
     JCheckBox showDebounceBox = new JCheckBox(Bundle.getMessage("SensorDebounceCheckBox"));
     JCheckBox showPullUpBox = new JCheckBox(Bundle.getMessage("SensorPullUpCheckBox"));
-    JCheckBox showStateBox = new JCheckBox(Bundle.getMessage("ShowState"));
+    JCheckBox showStateForgetAndQueryBox = new JCheckBox(Bundle.getMessage("ShowStateForgetAndQuery"));
 
     /** {@inheritDoc} */
     @Override
@@ -530,15 +530,15 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             }
         });
         showPullUpBox.setVisible(true);
-        f.addToBottomBox(showStateBox, this.getClass().getName());
-        showStateBox.setToolTipText(Bundle.getMessage("StateBoxToolTip"));
-        showStateBox.addActionListener(new ActionListener() {
+        f.addToBottomBox(showStateForgetAndQueryBox, this.getClass().getName());
+        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateBoxToolTip"));
+        showStateForgetAndQueryBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                showStateChanged();
+                showStateForgetAndQueryChanged();
             }
         });
-        showStateChanged();
+        showStateForgetAndQueryChanged();
     }
 
     /** {@inheritDoc} */
@@ -565,15 +565,15 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                 showPullUpChanged();
             }
         });
-        f.addToBottomBox(showStateBox, systemPrefix);
-        showStateBox.setToolTipText(Bundle.getMessage("StateBoxToolTip"));
-        showStateBox.addActionListener(new ActionListener() {
+        f.addToBottomBox(showStateForgetAndQueryBox, systemPrefix);
+        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateBoxToolTip"));
+        showStateForgetAndQueryBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                showStateChanged();
+                showStateForgetAndQueryChanged();
             }
         });
-        showStateChanged();
+        showStateForgetAndQueryChanged();
     }
 
     /** {@inheritDoc} */
