@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
  * TrackSegments may be hidden when the panel is not in EditMode.
  *
  * @author Dave Duchamp Copyright (p) 2004-2009
- * @author George Warner Copyright (c) 2017
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class TrackSegment extends LayoutTrack {
 

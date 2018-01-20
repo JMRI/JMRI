@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * the user for the most part.
  *
  * @author Dave Duchamp Copyright (C) 2007
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements jmri.InstanceManagerAutoDefault {
 

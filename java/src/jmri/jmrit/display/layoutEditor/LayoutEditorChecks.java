@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 /**
  * A collection of tools to check various things on the layout editor panel.
  *
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutEditorChecks {
 

@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 /**
  * RailDriver support
  * <p>
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class RailDriverMenuItem extends JMenuItem
         implements HidServicesListener, PropertyChangeListener {

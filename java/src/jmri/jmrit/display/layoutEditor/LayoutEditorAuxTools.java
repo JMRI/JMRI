@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * directly from LayoutEditor or LayoutEditor specific modules.
  * <P>
  * @author Dave Duchamp Copyright (c) 2008
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutEditorAuxTools {
     // constants

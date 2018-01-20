@@ -51,7 +51,7 @@ import org.slf4j.LoggerFactory;
  * Editors for all layout track objects (PositionablePoint, TrackSegment,
  * LayoutTurnout, LayoutSlip, LevelXing and LayoutTurntable)
  *
- * @author George Warner Copyright (c) 2017
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutTrackEditors {
 

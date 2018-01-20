@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * manipulates files conforming to the block_value DTD.
  *
  * @author Dave Duchamp Copyright (C) 2008
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class BlockValueFile extends XmlFile {
 

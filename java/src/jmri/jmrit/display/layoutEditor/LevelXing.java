@@ -67,7 +67,7 @@ import org.slf4j.LoggerFactory;
  * placed here by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LevelXing extends LayoutTrack {
 

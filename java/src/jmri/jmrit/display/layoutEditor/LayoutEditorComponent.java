@@ -15,7 +15,7 @@ import jmri.util.MathUtil;
  * into the component layers hierarchy so that objects can be drawn
  * in front of or behind layout editor objects.
  *
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017-2018
 */
 
 class LayoutEditorComponent extends JComponent {

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * This module handles saving and loading LayoutTrackDrawingOptions for a
  * LayoutEditor.
  *
- * @author George Warner Copyright (c) 2017
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutTrackDrawingOptionsXml extends AbstractXmlAdapter {
 

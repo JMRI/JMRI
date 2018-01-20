@@ -22,7 +22,7 @@ import jmri.util.MathUtil;
  * TrackSegment, LayoutTurnout, LayoutSlip, LevelXing and LayoutTurntable)
  *
  * @author Dave Duchamp Copyright (C) 2009
- * @author George Warner Copyright (c) 2017
+ * @author George Warner Copyright (c) 2017-2018
  */
 public abstract class LayoutTrack {
 

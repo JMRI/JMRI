@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * method.
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class ConnectivityUtil {
 
