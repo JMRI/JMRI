@@ -267,10 +267,8 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
             case 'C':
             case 'V':
-                log.debug("Read CV detected");
-                if (operatingMode == SprogMode.SERVICE) {
-                    reply = new SprogReply("= " + msg.toString().substring(2) + "\n"); // echo CV value (hex)
-                }
+                log.debug("Read/Write CV detected");
+                reply = new SprogReply("= " + msg.toString().substring(2) + "\n"); // echo CV value (hex)
                 break;
 
             case 'O':
@@ -280,16 +278,12 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
             case 'A':
                 log.debug("Address (open Throttle) command detected");
-                if (operatingMode == SprogMode.OPS) {
-                    reply = new SprogReply(msg.toString().substring(2) + "\n"); // echo address (decimal)
-                }
+                reply = new SprogReply(msg.toString().substring(2) + "\n"); // echo address (decimal)
                 break;
 
             case '>':
                 log.debug("Set speed (Throttle) command detected");
-                if (operatingMode == SprogMode.OPS) {
-                    reply = new SprogReply(msg.toString().substring(1) + "\n"); // echo speed (decimal)
-                }
+                reply = new SprogReply(msg.toString().substring(1) + "\n"); // echo speed (decimal)
                 break;
 
             case '+':
