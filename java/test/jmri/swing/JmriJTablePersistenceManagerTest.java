@@ -253,13 +253,13 @@ public class JmriJTablePersistenceManagerTest {
         instance.cacheState(table);
         Assert.assertFalse("Persisting table", instance.isPersisting(table));
         Assert.assertTrue("Dirty manager", instance.isDirty());
-        Assert.assertEquals("Column c1 is default width", table.getColumnModel().getColumn(1).getWidth(), instance.getColumnsMap(table.getName()).get("c1").getWidth());
+        Assert.assertEquals("Column c1 is default width", table.getColumnModel().getColumn(1).getWidth(), instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
         table.getColumnModel().getColumn(1).setPreferredWidth(100);
         Assert.assertNotEquals("Column c1 width not persisted width",
                 table.getColumnModel().getColumn(1).getPreferredWidth(),
-                instance.getColumnsMap(table.getName()).get("c1").getWidth());
+                instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
         instance.cacheState(table);
-        Assert.assertEquals("Column c1 is 100 width", table.getColumnModel().getColumn(1).getPreferredWidth(), instance.getColumnsMap(table.getName()).get("c1").getWidth());
+        Assert.assertEquals("Column c1 is 100 width", table.getColumnModel().getColumn(1).getPreferredWidth(), instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
     }
 
     /**
@@ -367,7 +367,7 @@ public class JmriJTablePersistenceManagerTest {
         Assert.assertFalse("Column c1 is visible", prefs.getHidden());
         Assert.assertNull("Column c1 is not sorted", prefs.getSort());
         Assert.assertEquals("Column c1 is first", order, prefs.getOrder());
-        Assert.assertEquals("Column c1 is 0 width", width, prefs.getWidth());
+        Assert.assertEquals("Column c1 is 0 width", width, prefs.getPreferredWidth());
         order = 1;
         width = 1;
         instance.setPersistedState(table.getName(), column, order, width, sort, hidden);
@@ -376,7 +376,7 @@ public class JmriJTablePersistenceManagerTest {
         Assert.assertFalse("Column c1 is visible", prefs.getHidden());
         Assert.assertNull("Column c1 is not sorted", prefs.getSort());
         Assert.assertEquals("Column c1 is first", order, prefs.getOrder());
-        Assert.assertEquals("Column c1 is 0 width", width, prefs.getWidth());
+        Assert.assertEquals("Column c1 is 0 width", width, prefs.getPreferredWidth());
     }
 
     /**

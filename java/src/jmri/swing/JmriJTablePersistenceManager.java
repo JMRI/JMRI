@@ -42,7 +42,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Default implementation of {@link JTablePersistenceManager}.
+ * Default implementation of {@link JTablePersistenceManager}. The column
+ * preferredWidth retained for a column is the
+ * {@link TableColumn#getPreferredWidth()}, since this preferredWidth is
+ * available before the table column is rendered by Swing.
  *
  * @author Randall Wood Copyright (C) 2016
  */
@@ -208,7 +211,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
             String name = column.getIdentifier().toString();
             TableColumnPreferences preferences = this.columns.get(table.getName()).get(name);
             if (preferences != null) {
-                column.setPreferredWidth(preferences.getWidth());
+                column.setPreferredWidth(preferences.getPreferredWidth());
                 if (isXModel) {
                     ((XTableColumnModel) model).setColumnVisible(column, !preferences.getHidden());
                 }
@@ -342,8 +345,8 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                     if (column.getValue().getOrder() != -1) {
                         columnElement.setAttribute("order", Integer.toString(column.getValue().getOrder()));
                     }
-                    if (column.getValue().getWidth() != -1) {
-                        columnElement.setAttribute("width", Integer.toString(column.getValue().getWidth()));
+                    if (column.getValue().getPreferredWidth() != -1) {
+                        columnElement.setAttribute("width", Integer.toString(column.getValue().getPreferredWidth()));
                     }
                     columnElement.setAttribute("hidden", Boolean.toString(column.getValue().getHidden()));
                     return columnElement;
@@ -392,7 +395,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
      * @param table  the table name
      * @param column the column name
      * @param order  order of the column
-     * @param width  column width
+     * @param width  column preferredWidth
      * @param sort   how the column is sorted
      * @param hidden true if column is hidden
      * @throws NullPointerException if either name is null
@@ -420,7 +423,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
      * @param table  the table name
      * @param column the column name
      * @param order  order of the column
-     * @param width  column width
+     * @param width  column preferredWidth
      * @param sort   how the column is sorted
      * @param hidden true if column is hidden
      * @throws NullPointerException if either name is null
@@ -493,16 +496,19 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         return model.getColumns();
     }
 
+    /**
+     * Handler for individual column preferences.
+     */
     public final static class TableColumnPreferences {
 
         int order;
-        int width;
+        int preferredWidth;
         SortOrder sort;
         boolean hidden;
 
-        public TableColumnPreferences(int order, int width, SortOrder sort, boolean hidden) {
+        public TableColumnPreferences(int order, int preferredWidth, SortOrder sort, boolean hidden) {
             this.order = order;
-            this.width = width;
+            this.preferredWidth = preferredWidth;
             this.sort = sort;
             this.hidden = hidden;
         }
@@ -511,8 +517,8 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
             return this.order;
         }
 
-        public int getWidth() {
-            return this.width;
+        public int getPreferredWidth() {
+            return this.preferredWidth;
         }
 
         public SortOrder getSort() {
