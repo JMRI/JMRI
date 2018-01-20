@@ -156,19 +156,22 @@
         messages to the file.</li>
       </ul>
 
-      <h2>Other Warrant List Features</h2>The following items are
-      at the bottom of the window:
+      <h2>Other Warrant List Features</h2>
+      The following items are at the bottom of the window:
+      <ul>
+        <li>The <b>Create NXWarrant</b> button Opens a window to
+        create an <a href="NXWarrant.shtml">NX (eNtry/eXit) Warrant</a>.
+        </li>
 
-      <p>The <b>Create NXWarrant</b> button 0pens a window to
-      create an eNtry/eXit warrant.</p>
+        <li>The <b>Stop all Trains</b> button causes all running
+        warrants to halt their trains.</li>
 
-      <p>The <b>Stop all Trains</b> button causes all running
-      warrants to halt their trains.</p>
+        <li>The <b>Status</b> field contains the last 20 messages from
+        warrants. Click in the field to display them.</li>
+      </ul>
 
-      <p>The <b>Status</b> field contains the last 20 messages from
-      warrants. Click in the field to display them.</p>
-
-      <h2>Running Automated Trains</h2>The throttle 
+      <h2>Running Automated Trains</h2>
+      The throttle
       commands recorded in a warrant are played back to run the
       train, but additional control of the train can be 
       done through the choices provided by the <b>Control/Status</b>
