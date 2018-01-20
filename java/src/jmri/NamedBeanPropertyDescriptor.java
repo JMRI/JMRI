@@ -7,20 +7,17 @@ package jmri;
  * @author Balazs Racz Copyright (C) 2018
  */
 
-public abstract class NamedBeanPropertyDescriptor {
+public abstract class NamedBeanPropertyDescriptor<E> {
     /**
      * Key of the property, to be used in the setProperty and getProperty functions on the
      * NamedBean.
      */
     public final String propertyKey;
-    /** Class for the property values. */
-    public final Class valueClass;
     /** What should be displayed when a given Bean does not have this property set. */
-    public final Object defaultValue;
+    public final E defaultValue;
 
-    protected NamedBeanPropertyDescriptor(String propertyKey, Class valueClass, Object defaultValue) {
+    protected NamedBeanPropertyDescriptor(String propertyKey, E defaultValue) {
         this.propertyKey = propertyKey;
-        this.valueClass = valueClass;
         this.defaultValue = defaultValue;
     }
 
@@ -43,12 +40,17 @@ public abstract class NamedBeanPropertyDescriptor {
      * @param value the typed object for the property value
      * @return string representation to save.
      */
-    public abstract String renderProperty(Object value);
+    public abstract String renderProperty(E value);
 
     /**
      * Parses the saved representation of this property.
      * @param value the saved representation of this property
      * @return object of class valueClass of this property.
      */
-    public abstract Object parseProperty(String value);
+    public abstract E parseProperty(String value);
+
+    /** Class for the property values. */
+    public Class getValueClass() {
+        return defaultValue.getClass();
+    }
 }

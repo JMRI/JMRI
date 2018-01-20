@@ -7,18 +7,18 @@ import jmri.NamedBeanPropertyDescriptor;
  * @author Balazs Racz Copyright (C) 2018
  */
 
-public abstract class BooleanPropertyDescriptor extends NamedBeanPropertyDescriptor {
+public abstract class BooleanPropertyDescriptor extends NamedBeanPropertyDescriptor<Boolean> {
     public BooleanPropertyDescriptor(String key, boolean defVal) {
-        super(key, Boolean.class, Boolean.valueOf(defVal));
+        super(key, defVal);
     }
 
     @Override
-    public String renderProperty(Object value) {
+    public String renderProperty(Boolean value) {
         return  value.toString();
     }
 
     @Override
-    public Object parseProperty(String value) {
+    public Boolean parseProperty(String value) {
         return Boolean.parseBoolean(value);
     }
 }

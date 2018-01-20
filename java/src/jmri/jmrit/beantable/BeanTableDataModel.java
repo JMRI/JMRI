@@ -206,7 +206,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 if (desc == null) {
                     return null;
                 }
-                return desc.valueClass;
+                return desc.getValueClass();
         }
     }
 
