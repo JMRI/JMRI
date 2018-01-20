@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * Train file utilities
  *
  * @author Daniel Boudreau (C) 2010
- * 
+ *
  *
  */
 public class TrainUtilities {
@@ -32,7 +32,7 @@ public class TrainUtilities {
         try {
             desktop.open(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("unable to open {} in desktop application", file, e);
         }
     }
 

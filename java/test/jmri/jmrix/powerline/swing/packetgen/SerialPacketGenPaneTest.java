@@ -12,14 +12,13 @@ import org.junit.Before;
  */
 public class SerialPacketGenPaneTest extends jmri.util.swing.JmriPanelTest {
 
-
-    private SerialTrafficControlScaffold tc = null;
+    // private SerialTrafficControlScaffold tc = null;
 
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new SerialTrafficControlScaffold();
+        // tc = new SerialTrafficControlScaffold();
         panel = new SerialPacketGenPane();
         title = "Powerline_: Command Generator";
         helpTarget="package.jmri.jmrix.powerline.swing.packetgen.PowerlinePacketGenPane";
@@ -27,6 +26,8 @@ public class SerialPacketGenPaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Override
     @After
-    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
+    public void tearDown() {
+        JUnitUtil.tearDown();
+        // tc = null;
     }
 }

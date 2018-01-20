@@ -21,6 +21,7 @@ public class MrcSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
         jmri.jmrix.mrc.MrcInterfaceScaffold tc = new jmri.jmrix.mrc.MrcInterfaceScaffold();
         memo.setMrcTrafficController(tc);
         jmri.InstanceManager.store(memo, jmri.jmrix.mrc.MrcSystemConnectionMemo.class);
+        memo.configureManagers();
     }
 
     @After

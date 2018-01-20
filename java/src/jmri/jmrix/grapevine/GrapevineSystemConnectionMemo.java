@@ -16,8 +16,6 @@ import jmri.SensorManager;
  */
 public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
 
-    private jmri.jmrix.swing.ComponentFactory cf = null;
-
     public GrapevineSystemConnectionMemo() {
         super("G", "Grapevine");
 
@@ -25,7 +23,7 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
         InstanceManager.store(this, GrapevineSystemConnectionMemo.class); // also register as specific type
 
         // create and register the ComponentFactory
-        InstanceManager.store(cf = new jmri.jmrix.grapevine.swing.GrapevineComponentFactory(this),
+        InstanceManager.store(new jmri.jmrix.grapevine.swing.GrapevineComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
 
         log.debug("Created GrapevineSystemConnectionMemo");

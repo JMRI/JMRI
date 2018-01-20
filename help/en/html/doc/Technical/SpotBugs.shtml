@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Static Analysis with SpotBugs</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code bugs">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -50,7 +50,7 @@
                                                      "ContinuousIntegration.shtml">continuous integration
       process</a>. You can see the results of the most recent build
       online <a href=
-      "https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/lastBuild/">
+      "https://jmri.ci.cloudbees.com/job/Development/job/SpotBugs/lastBuild/">
       here</a>.</p>
 
       <p>If SpotBugs is finding a false positive, a bug that's not

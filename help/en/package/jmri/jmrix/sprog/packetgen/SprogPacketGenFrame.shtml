@@ -6,10 +6,10 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Send SPROG message</title>
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content=
-  "JMRI help Send SPROG message packet"><!-- Style -->
+  <title>JMRI: Send SPROG Command</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help Send SPROG command packet">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -25,8 +25,12 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Send SPROG Message</h1>This is the
-      help/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame help page
+      <h1>Send SPROG Command</h1>
+
+      <img src="../images/SprogSendTool.png" width="228" height="94">
+
+      <p>This is the
+      help/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame help page.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

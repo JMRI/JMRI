@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
     <title>Using the NetBeans Swing GUI Builder </title>
-        <meta content="Bob Jacobsen" name="Author">
+		<meta name="author" content="Bob Jacobsen">
         <meta name="keywords" content="JMRI technical code NetBeans">
 
         <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->

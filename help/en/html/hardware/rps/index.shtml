@@ -281,7 +281,8 @@
 
       <p>More information on the <a href=
       "http://www.proto87.com/model-trains-DCC-decoders.html">RPS
-      Web Site</a>. <!--#include virtual="/Footer" --></p>
+      Web Site</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

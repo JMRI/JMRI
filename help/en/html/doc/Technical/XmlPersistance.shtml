@@ -10,7 +10,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: XML Persistance</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code xml persistance">
   <!--#include virtual="/Style" -->
@@ -169,8 +169,8 @@
       <p>For example, layout information is stored in XML files as
       a "layout-config" element, whose contents are then defined
       via a schema file. These files are kept in the <a href=
-      "http://jmri.org/xml/schema">xml/schema</a> directory. 
-      <!--#include virtual="/Footer" --></p>
+      "http://jmri.org/xml/schema">xml/schema</a> directory.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

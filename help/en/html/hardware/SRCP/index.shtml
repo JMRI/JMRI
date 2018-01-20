@@ -92,8 +92,8 @@
       <a href="http://srcpd.sourceforge.net/srcp/srcp-084.html">document for
       version 0.8.4 of the protocol</a>. The overview page has links to
       some sample implementations.
-      
-        <!--#include virtual="/Footer" --></p>
+      </p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

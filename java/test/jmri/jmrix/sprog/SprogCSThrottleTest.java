@@ -7,9 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogCSThrottle
- * </P>
+ * Tests for SprogCSThrottle.
+ *
  * @author Paul Bender Copyright (C) 2017
  */
 public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
@@ -361,7 +360,6 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
 
-
     // The minimal setup for log4J
     @Before
     @Override
@@ -384,6 +382,5 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

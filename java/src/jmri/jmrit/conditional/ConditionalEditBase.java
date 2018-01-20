@@ -149,7 +149,6 @@ public class ConditionalEditBase {
     JTabbedPane _pickTabPane = null;        // The tabbed panel for the pick table
     PickFrame _pickTables;
 
-    PickSinglePanel _pickSingle = null;     // used to build the JFrame, content copied from the table type pick object.
     JFrame _pickSingleFrame = null;
     PickSingleListener _pickListener = null;
 
@@ -352,40 +351,42 @@ public class ConditionalEditBase {
             }
         }
 
+        PickSinglePanel _pickSingle;
+        
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:      // 1
-                _pickSingle = new PickSinglePanel(PickListModel.sensorPickModelInstance());
+                _pickSingle = new PickSinglePanel<Sensor>(PickListModel.sensorPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_TURNOUT:     // 2
-                _pickSingle = new PickSinglePanel(PickListModel.turnoutPickModelInstance());
+                _pickSingle = new PickSinglePanel<Turnout>(PickListModel.turnoutPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_LIGHT:       // 3
-                _pickSingle = new PickSinglePanel(PickListModel.lightPickModelInstance());
+                _pickSingle = new PickSinglePanel<Light>(PickListModel.lightPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_SIGNALHEAD:  // 4
-                _pickSingle = new PickSinglePanel(PickListModel.signalHeadPickModelInstance());
+                _pickSingle = new PickSinglePanel<SignalHead>(PickListModel.signalHeadPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:  // 5
-                _pickSingle = new PickSinglePanel(PickListModel.signalMastPickModelInstance());
+                _pickSingle = new PickSinglePanel<SignalMast>(PickListModel.signalMastPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_MEMORY:      // 6
-                _pickSingle = new PickSinglePanel(PickListModel.memoryPickModelInstance());
+                _pickSingle = new PickSinglePanel<Memory>(PickListModel.memoryPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_LOGIX:      // 7 -- can be either Logix or Conditional
                 if (!actionType) {
                     // State Variable
                     return;
                 }
-                _pickSingle = new PickSinglePanel(PickListModel.logixPickModelInstance());
+                _pickSingle = new PickSinglePanel<Logix>(PickListModel.logixPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_WARRANT:     // 8
-                _pickSingle = new PickSinglePanel(PickListModel.warrantPickModelInstance());
+                _pickSingle = new PickSinglePanel<Warrant>(PickListModel.warrantPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_OBLOCK:      // 10
-                _pickSingle = new PickSinglePanel(PickListModel.oBlockPickModelInstance());
+                _pickSingle = new PickSinglePanel<OBlock>(PickListModel.oBlockPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_ENTRYEXIT:   // 11
-                _pickSingle = new PickSinglePanel(PickListModel.entryExitPickModelInstance());
+                _pickSingle = new PickSinglePanel<jmri.jmrit.entryexit.DestinationPoints>(PickListModel.entryExitPickModelInstance());
                 break;
             default:
                 return;             // Skip any other items.
@@ -416,7 +417,6 @@ public class ConditionalEditBase {
             _pickSingleFrame = null;
             _pickListener = null;
             _pickTable = null;
-            _pickSingle = null;
         }
     }
 

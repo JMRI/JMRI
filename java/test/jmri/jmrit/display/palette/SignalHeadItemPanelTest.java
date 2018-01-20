@@ -21,7 +21,7 @@ public class SignalHeadItemPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel tableModel = PickListModel.signalHeadPickModelInstance(); // N11N
+        PickListModel<jmri.SignalHead> tableModel = PickListModel.signalHeadPickModelInstance(); // N11N
         DisplayFrame df = new DisplayFrame("SignalHead Item Panel Test");
         Editor editor = new EditorScaffold();
         SignalHeadItemPanel t = new SignalHeadItemPanel(df,"IH01","",tableModel,editor);
