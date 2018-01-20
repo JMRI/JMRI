@@ -15,7 +15,8 @@ import org.junit.runners.Suite;
     AddSignalMastJFrameTest.class,
     SignalMastRepeaterJFrameTest.class,
     SignalMastRepeaterPanelTest.class,
-    SignalMastTableDataModelTest.class
+    SignalMastTableDataModelTest.class,
+    SignalMastAddPaneTest.class
 })
 public class PackageTest {
 }
