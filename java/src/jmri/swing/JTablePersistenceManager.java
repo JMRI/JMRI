@@ -134,4 +134,20 @@ public interface JTablePersistenceManager {
      * @return true if saving persistence data is paused; false otherwise.
      */
     public boolean isPaused();
+
+    /**
+     * Determine if a table is being persisted.
+     *
+     * @param table the table to check against
+     * @return true if the table is being persisted; false otherwise
+     */
+    public boolean isPersisting(@Nonnull JTable table);
+
+    /**
+     * Determine if a table is being persisted by name.
+     *
+     * @param name the name of the table to check against
+     * @return true if the table is being persisted; false otherwise
+     */
+    public boolean isPersisting(@Nonnull String name);
 }

@@ -434,6 +434,18 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
     }
 
     @Override
+    public boolean isPersisting(JTable table) {
+        Objects.requireNonNull(table, "Table must be non-null");
+        return this.isPersisting(table.getName());
+    }
+
+    @Override
+    public boolean isPersisting(String name) {
+        Objects.requireNonNull(name, "Table name must be non-null");
+        return this.columns.containsKey(name);
+    }
+
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("name")) { // NOI18N
             String oldName = (String) evt.getOldValue();
