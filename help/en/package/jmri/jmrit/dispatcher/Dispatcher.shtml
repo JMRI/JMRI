@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Dispatcher Help</title>
+  <title>JMRI: DispatcherPro Help</title>
   <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Dispatcher">
   <!-- Style -->
@@ -72,9 +72,9 @@
       <a name="intro" id="intro"></a>
       <h2>Introduction to Dispatcher</h2>
 
-      <p><b>Dispatcher</b> provides functions and organizes
+      <p>JMRI <b>Dispatcher</b> provides functions and organizes
       information relating to dispatching trains on a model
-      railroad layout. It's main function is the allocation of
+      railroad layout. Its main function is the allocation of
       sections of track to various trains running around the layout.
       Dispatcher is not designed to completely replace a human
       dispatcher during a session of running trains, but it should
@@ -85,12 +85,16 @@
       look or feel <i>prototypical</i>. It was simply designed to
       be functional for dispatching a model railroad layout.</p>
 
+      <!-- image by Egbert Broerse @silverailscolo 2018 -->
+      <img src="images/DispatcherTerms.png" width="842" height="137"
+      alt="Dispatcher Sections Transits Concept Track Diagram">
+
       <p>Dispatcher requires that a layout be divided into
       <b>Blocks</b>, and that Blocks along the mainline be
       organized into <b><a href=
-      "../beantable/SectionTable.shtml">Sections</a></b>. It also
-      requires that Sections be used to define itineraries, called
-      <b><a href=
+      "../beantable/SectionTable.shtml">Sections</a></b>.<br>
+      It also requires that Sections be used to define itineraries,
+      called <b><a href=
       "../beantable/TransitTable.shtml">Transits</a></b>, that
       describe paths that trains will follow when active on the
       layout. <b>Blocks</b> are portions of track whose occupancy
@@ -109,24 +113,24 @@
 
       <p>Functionality provided by Dispatcher includes:</p>
       <ul>
-        <li>support for train start up and termination</li>
-        <li>information to allow easy set up of meets at passing
+        <li>Support for train start up and termination</li>
+        <li>Information to allow easy set up of meets at passing
         sidings</li>
-        <li>automation of some dispatcher functions, set up of
-        automatic running of trains</li>
-        <li>support for starting trains according to a fast clock</li>
-        <li>support for linking signals to allocation via
+        <li>Automation of some dispatcher functions</li>
+        <li>Set up of automatic running of trains</li>
+        <li>Support for starting trains according to a Fast Clock</li>
+        <li>Support for linking signals to allocation via
         simple APB signaling support</li>
-        <li>optional automatic setting of turnouts when a section
+        <li>Optional automatic setting of turnouts when a section
         of track is allocated</li>
-        <li>automatic running of trains along with</li>
-        <li>manually run trains.
+        <li>Fully automatic running of trains, along with manually
+        run trains.</li>
       </ul>
-      <p>Enhancements will follow in future releases of JMRI.</p>
 
-      <p>Central to <b>Dispatcher</b> is the <b>Active Train</b>,
-      which carries the information needed to run a train around
-      the layout. Basically, an <b>Active Train</b> is created by
+      <p>Central to <b>Dispatcher</b> is the concept of an
+      <b>Active Train</b>, which carries the information needed
+      to run a train around part of the layout.<br>
+      Basically, an <b>Active Train</b> is created by
       the dispatcher by linking a <b>Transit</b> and a
       <b>Train</b>. The <b><a href=
       "../beantable/TransitTable.shtml">Transit</a></b> provides a
@@ -148,7 +152,7 @@
       the location of the Active Train when it is terminated after
       it completes its transit of the layout. Other options are
       entered, like train priority and type, a request to start the
-      train at a specified fast clock time, and a request to run
+      train at a specified Fast Clock time, and a request to run
       the Active Train automatically.</p>
 
       <p>All Active Trains are displayed in a table in the
@@ -174,12 +178,13 @@
       releases.</p>
 
       <p>Many of the terms in this introduction to Dispatcher may
-      be new to users. Some were created specifically for use with
-      Dispatcher. Please briefly review the <b>Glossary of
-      Terms</b> which follows, and come back to it as needed when
-      reading the remainder of this documentation. Note that
-      "<i>Dispatcher</i>" refers to the Dispatcher software, and
-      "<i>the dispatcher</i>" refers to the person running the
+      be new to users. Some terms and settings were created
+      specifically for use with Dispatcher. Please briefly review
+      the <b>Glossary of Terms</b> which follows, and come back to
+      it as needed when reading the remainder of this documentation.
+      <br>Note that in this document
+      "<i>Dispatcher</i>" refers to the JMRI Dispatcher software,
+      and "<i>the dispatcher</i>" refers to the person running the
       Dispatcher software.</p>
 
       <a name="glossary" id="glossary"></a>

@@ -30,7 +30,7 @@
 
     <h1>JMRI: Entry/Exit (NX) Routing Documentation</h1>
 
-    <p>Note:  References to <strong>turnout</strong> in this documentation
+    <p>Note:  References to "<strong>turnout</strong>" in this documentation
     include all types, including slips and cross-overs.</p>
     
     <h2>Overview</h2>
@@ -107,7 +107,7 @@
     <p>For the second and third types, if the signal mast logic has already been 
     created, temporary signal mast logic will not be created.</p>
 
-    <h2>How to setup for Entry Exit Routing</h2>
+    <h2>How to set up for Entry Exit Routing</h2>
 
     Entry/Exit routing requires a representation of the layout using Layout
     Editor panels.  If desired, multiple panels can be used that are linked 
@@ -211,11 +211,11 @@
     <p>Normally with the NX interlock, a route will be up by selecting the
     Entry/Exit sensors along a path, so for example to get from location A to
     D, A-B would be selected, then B-C and finally C-D. However the system will
-    allow the full route to be setup by selecting A and D. The system will then
-    go through and find the best valid path and setup each individual interlock
-    along the path. <strong>Note: </strong>If an extended route is cleared or
-    cancelled, each segment will need to be cancelled or cleared by responding
-    to the prompt.</p>
+    allow the full route to be set up by selecting A and D. The system will then
+    go through and find the best valid path and set up each individual interlock
+    along the path.<br>
+    <strong>Note: </strong>If an extended route is cleared or cancelled, each
+    segment will need to be cancelled or cleared by responding to the prompt.</p>
 
     <h3>Route Stacking &mdash; Following</h3>
 
