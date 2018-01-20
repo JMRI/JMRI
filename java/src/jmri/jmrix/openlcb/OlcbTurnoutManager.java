@@ -7,7 +7,7 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.Turnout;
-import jmri.jmrix.BooleanPropertyDescriptor;
+import jmri.BooleanPropertyDescriptor;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.AbstractTurnoutManager;
 import org.openlcb.OlcbInterface;

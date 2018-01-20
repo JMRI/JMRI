@@ -1,4 +1,4 @@
-package jmri.jmrix;
+package jmri;
 
 import jmri.NamedBeanPropertyDescriptor;
 

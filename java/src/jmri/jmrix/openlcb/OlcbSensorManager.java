@@ -4,7 +4,7 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.Sensor;
-import jmri.jmrix.BooleanPropertyDescriptor;
+import jmri.BooleanPropertyDescriptor;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
