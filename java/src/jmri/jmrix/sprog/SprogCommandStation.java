@@ -105,7 +105,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * we set the reply status for the message just sent.
      * 
      * @param m       The message to be sent
-     * @param ignore  Is the reply to be ignored?
      */
     protected void sendMessage(SprogMessage m) {
         // Limit to one message in flight from the command station
