@@ -120,11 +120,18 @@
       attempt to initialize Log4J using a "<a href=
       "https://github.com/JMRI/JMRI/blob/master/default.lcf">default.lcf</a>"
       logging control file. JMRI contains a version of the
-      default.lcf file with extensive comments. (This file needs to
-      be in the "Program Directory", which can be found by
+      default.lcf file with extensive comments.
+      (When running <a href="JUnit.shtml">JUnit tests</a>, a similar 
+       "<a href="https://github.com/JMRI/JMRI/blob/master/tests.lcf">tests.lcf</a>"
+       file is used.)
+      Although JMRI  distributes the default.lcf file
+      in the "Program Directory", 
+      it's better if you put your own version in 
+      the "Preferences Directory, which can be found by
       selecting the "Locations" item in the main help menu) The
       rest of this section describes the contents of a logging
       control file using the contents of default.lcf as an example.
+      As
 
       <p>The line:</p>
       <pre>
