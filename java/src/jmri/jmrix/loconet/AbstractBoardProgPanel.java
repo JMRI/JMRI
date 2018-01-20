@@ -350,7 +350,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
 
     /**
      * Provides a mechanism to read several OpSw values in a sequence. The
-     * sequence is defined by the nextState method.
+     * sequence is defined by the {@link #nextState(int)} method.
      */
     public void readAll() {
         // check the address
@@ -504,7 +504,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
 
     /**
      * Provides a mechanism to write several OpSw values in a sequence. The
-     * sequence is defined by the {@link nextState(int)} method.
+     * sequence is defined by the {@link #nextState(int)} method.
      */
     public void writeAll() {
         // check the address
@@ -573,7 +573,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     /**
      * Processes incoming LocoNet message m for OpSw responses to read and write
      * operation messages, and automatically advances to the next OpSw operation
-     * as directed by nextState().
+     * as directed by {@link #nextState(int)}.
      *
      *@param m - incoming LocoNet message
      */
