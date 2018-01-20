@@ -74,6 +74,12 @@
       JMRI on Mac OS X.</p>
 
       <p><a href=
+                    "../../../../../jython/AutoDispatcher2.py">AutoDispatcher2.py</a></p>
+
+      <p>This script provides full layout automation, using connectivity info
+      provided by Layout Editor panels.</p>
+
+      <p><a href=
       "../../../../../jython/AutoLayoutPowerOff.py">AutoLayoutPowerOff.py</a></p>
 
       <p>This script turns off power to the layout automatically
