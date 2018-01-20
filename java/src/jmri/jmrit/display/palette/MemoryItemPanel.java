@@ -116,7 +116,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         c.gridy = 1;
         _writeMem = new MemoryInputIcon(5, _editor);
         panel.add(makeDragIcon(_writeMem, Type.READWRITE), c);
-        
+
         _spinner = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
         JTextField field = ((JSpinner.DefaultEditor) _spinner.getEditor()).getTextField();
         field.setColumns(2);
@@ -125,13 +125,13 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         _spinner.addChangeListener(this);
         c.gridy = 2;
         panel.add(_spinner, c);
-        
+
         c.gridy = 3;
         c.anchor = java.awt.GridBagConstraints.NORTH;
         label = new JLabel(Bundle.getMessage("NumColsLabel"));
         label.setOpaque(false);
         panel.add(label, c);
-        
+
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.CENTER;
@@ -174,7 +174,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
             comp.setOpaque(false);
             comp.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         } catch (java.lang.ClassNotFoundException cnfe) {
-            cnfe.printStackTrace();
+            log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
             comp = new JPanel();
         }
         panel.add(comp);
@@ -248,7 +248,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
             super(flavor, comp);
             _memType = type;
         }
-        
+
         @Override
         protected boolean okToDrag() {
             NamedBean bean = getDeviceNamedBean();
@@ -312,17 +312,17 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
                     default:
                         // fall through
                         break;
-                    }
-                } else if (DataFlavor.stringFlavor.equals(flavor)) {
-                    StringBuilder sb = new StringBuilder(_itemType);
-                    sb.append(" icons for \"");
-                    sb.append(bean.getDisplayName());
-                    sb.append("\"");
-                    return  sb.toString();
                 }
-                return null;
+            } else if (DataFlavor.stringFlavor.equals(flavor)) {
+                StringBuilder sb = new StringBuilder(_itemType);
+                sb.append(" icons for \"");
+                sb.append(bean.getDisplayName());
+                sb.append("\"");
+                return sb.toString();
             }
+            return null;
         }
+    }
 
     private final static Logger log = LoggerFactory.getLogger(MemoryItemPanel.class);
 

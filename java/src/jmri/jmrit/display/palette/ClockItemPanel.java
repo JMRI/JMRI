@@ -68,7 +68,7 @@ public class ClockItemPanel extends IconItemPanel {
                 label.setName(borderName);
                 panel.add(label);
             } catch (java.lang.ClassNotFoundException cnfe) {
-                cnfe.printStackTrace();
+                log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
             }
             _iconPanel.add(panel);
         }
@@ -104,7 +104,7 @@ public class ClockItemPanel extends IconItemPanel {
                 c.setOpaque(false);
                 c.update();
                 c.setLevel(Editor.CLOCK);
-                return c;                
+                return c;
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
                 StringBuilder sb = new StringBuilder(_itemType);
                 sb.append(" icon \"");

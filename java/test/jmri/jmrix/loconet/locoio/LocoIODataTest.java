@@ -14,7 +14,7 @@ public class LocoIODataTest {
 
     // infrastructure objects, populated by setUp;
     private jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis;
-    private jmri.jmrix.loconet.SlotManager slotmanager;
+    // private jmri.jmrix.loconet.SlotManager slotmanager;
     // private jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo;
 
     @Test
@@ -29,7 +29,7 @@ public class LocoIODataTest {
         JUnitUtil.setUp();
         // prepare an interface
         lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
-        slotmanager = new jmri.jmrix.loconet.SlotManager(lnis);
+        // slotmanager = new jmri.jmrix.loconet.SlotManager(lnis);
         // memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo(lnis,slotmanager);
     }
 

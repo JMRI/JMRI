@@ -31,6 +31,12 @@
             <authorinitials>ALM</authorinitials>
             <revremark>Initial version created from SoundTraxx_Eco_Steam version 4</revremark>
         </revision>
+        <revision>
+            <revnumber>1.1</revnumber>
+            <date>2018-01-17</date>
+            <authorinitials>ALM</authorinitials>
+            <revremark>Fix after clarification with SoundTraxx - Bell sounds remains available though disabled.</revremark>
+        </revision>
     </revhistory>
     <version author="Alain Le Marchand" version="1" lastUpdated="20180105"/>
     <!-- Specific Econami UK information as per http://soundtraxxuk.com/ web site -->
@@ -767,7 +773,7 @@
                 </enumVal>
                 <label>Shunt Whistle Select</label>
             </variable>
-            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" default="0" readOnly="yes">
+            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Bell 1: slow</choice>
@@ -855,6 +861,7 @@
                 <tooltip>&lt;html&gt;Bell NOT USED in Econami UK versions.
                          &lt;br&gt;The Shunt Whistle (F1 by default)
                          &lt;br&gt;is enabled in place of the bell in UK decoders.
+                         &lt;br&gt;Bell remains available however to be remapped to another function key.
                          &lt;/html&gt;</tooltip>
             </variable>
             <variable CV="123" mask="XXXXXVVV" item="Sound Option 1" default="0" tooltip="Select one of five exhaust chuffs sound effects">

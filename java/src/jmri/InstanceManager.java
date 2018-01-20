@@ -9,10 +9,10 @@ import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Map;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ServiceLoader;
 import javax.annotation.CheckForNull;
@@ -267,7 +267,8 @@ public final class InstanceManager {
             synchronized (type) {
 
                 // example of tracing where something is being initialized
-                //if (type == jmri.implementation.SignalSpeedMap.class) new Exception("jmri.implementation.SignalSpeedMap init").printStackTrace();
+                // log.error("jmri.implementation.SignalSpeedMap init", new Exception());
+
                 if (traceFileActive) {
                     traceFilePrint("Start initialization: " + type.toString());
                     traceFileIndent++;

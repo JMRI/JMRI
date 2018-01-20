@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.TooManyListenersException;
 import jmri.jmrix.rfid.RfidPortController;
 import jmri.jmrix.rfid.RfidProtocol;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
@@ -18,8 +17,8 @@ import jmri.jmrix.rfid.merg.concentrator.ConcentratorSensorManager;
 import jmri.jmrix.rfid.merg.concentrator.ConcentratorTrafficController;
 import jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol;
 import jmri.jmrix.rfid.protocol.em18.Em18RfidProtocol;
-import jmri.jmrix.rfid.protocol.olimex.OlimexRfidProtocol;
 import jmri.jmrix.rfid.protocol.olimex.OlimexRfid1356mifareProtocol;
+import jmri.jmrix.rfid.protocol.olimex.OlimexRfidProtocol;
 import jmri.jmrix.rfid.protocol.parallax.ParallaxRfidProtocol;
 import jmri.jmrix.rfid.protocol.seeedstudio.SeeedStudioRfidProtocol;
 import org.slf4j.Logger;
@@ -28,8 +27,6 @@ import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
 import purejavacomm.SerialPort;
-import purejavacomm.SerialPortEvent;
-import purejavacomm.SerialPortEventListener;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
@@ -60,7 +57,6 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     }
 
     @Override
-    @SuppressWarnings("CallToPrintStackTrace")
     public String openPort(String portName, String appName) {
         try {
             // get and open the primary port
@@ -127,8 +123,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex); // NOI18N
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex; // NOI18N
         }
 

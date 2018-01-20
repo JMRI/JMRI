@@ -91,7 +91,7 @@ public class RestoreFilesAction extends AbstractAction {
             ExceptionContext context = new ExceptionContext(ex,
                     Bundle.getMessage("RestoreDialog.restore.files"),
                     Bundle.getMessage("RestoreDialog.makeSure"));
-            new ExceptionDisplayFrame(context);
+            new ExceptionDisplayFrame(context, null).setVisible(true);
         }
     }
 

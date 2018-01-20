@@ -547,8 +547,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                     src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                     point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                 } catch (RuntimeException ex) {
-                    log.error("An error occurred while setting the route");  // NOI18N
-                    ex.printStackTrace();
+                    log.error("An error occurred while setting the route", ex);  // NOI18N
                     src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                     point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                     if (manager.useDifferentColorWhenSetting()) {
@@ -875,12 +874,11 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                             } else {
                                 routeDetails.get(i - 1).getBlock().goingInactive();
                             }
-                        } catch (java.lang.NullPointerException e) {
-                            log.error("error in clear route b " + e);  // NOI18N
-                            e.printStackTrace();
-                        } catch (JmriException e) {
-                            log.error("error in clear route b " + e);  // NOI18N
+                        } catch (NullPointerException | JmriException e) {
+                            log.error("error in clear route b ", e);  // NOI18N
                         }
+                        // NOI18N
+
                     }
                     try {
                         if (log.isDebugEnabled()) {
