@@ -531,7 +531,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         });
         showPullUpBox.setVisible(true);
         f.addToBottomBox(showStateForgetAndQueryBox, this.getClass().getName());
-        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateBoxToolTip"));
+        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateForgetAndQueryBoxToolTip"));
         showStateForgetAndQueryBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -566,7 +566,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             }
         });
         f.addToBottomBox(showStateForgetAndQueryBox, systemPrefix);
-        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateBoxToolTip"));
+        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateForgetAndQueryBoxToolTip"));
         showStateForgetAndQueryBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {

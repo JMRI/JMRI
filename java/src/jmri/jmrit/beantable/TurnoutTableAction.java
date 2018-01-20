@@ -1456,7 +1456,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             }
         });
         f.addToBottomBox(showStateForgetAndQueryBox, this.getClass().getName());
-        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateBoxToolTip"));
+        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateForgetAndQueryBoxToolTip"));
         showStateForgetAndQueryBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -1515,7 +1515,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             }
         });
         f.addToBottomBox(showStateForgetAndQueryBox, systemPrefix);
-        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateBoxToolTip"));
+        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateForgetAndQueryBoxToolTip"));
         showStateForgetAndQueryBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -1569,8 +1569,6 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         columnModel.setColumnVisible(column, showStateForgetAndQuery);
         column = columnModel.getColumnByModelIndex(QUERYCOL);
         columnModel.setColumnVisible(column, showStateForgetAndQuery);
-        // @TODO instead of making this flipped by showStateForgetAndQuery, it should be set by a separate action.
-        getTableDataModel().setPropertyColumnsVisible(table, showStateForgetAndQuery);
     }
     /**
      * Insert a table specific Operations menu. Account for the Window and Help

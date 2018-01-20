@@ -586,8 +586,6 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         columnModel.setColumnVisible(column, show);
         column = columnModel.getColumnByModelIndex(QUERYCOL);
         columnModel.setColumnVisible(column, show);
-        // @TODO instead of making this flipped by showStateForgetAndQuery, it should be set by a separate action.
-        setPropertyColumnsVisible(table, show);
     }
 
     protected String getClassName() {
