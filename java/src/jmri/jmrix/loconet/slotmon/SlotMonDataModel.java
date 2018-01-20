@@ -157,6 +157,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
+            case ESTOPCOLUMN:
+            case DISPCOLUMN:
             case F0COLUMN:
             case F1COLUMN:
             case F2COLUMN:
@@ -166,8 +168,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F6COLUMN:
             case F7COLUMN:
             case F8COLUMN:
-                // system slots to be marked Read only
-                return (row < 120);
+                // only loco slots (1-120 incl) to be marked writeable only, system slot are read only
+                return (row > 0 & row < 121);
             default:
                 return false;
         }
@@ -468,10 +470,21 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                             return;
                         }
                     }
+                    // set speed zero
+                    msg = new LocoNetMessage(4);
+                    msg.setOpCode(LnConstants.OPC_LOCO_SPD);
+                    msg.setElement(1, s.getSlot());
+                    msg.setElement(2, 0);
+                    memo.getLnTrafficController().sendLocoNetMessage(msg);
+                    // Delay here allows command station time to xmit on the rails.
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        log.error("Unexpected Interupted during sleep,: continuing", ex);
+                    }
                     // send status to free
                     memo.getLnTrafficController().sendLocoNetMessage(
-                            s.writeStatus(LnConstants.LOCO_FREE
-                            ));
+                            s.writeStatus(LnConstants.LOCO_FREE));
                 } else {
                     log.debug("Slot not in use");
                 }
