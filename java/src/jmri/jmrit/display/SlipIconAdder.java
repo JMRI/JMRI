@@ -315,7 +315,8 @@ public class SlipIconAdder extends IconAdder {
             try {
                 rowPanel.add(Box.createRigidArea(dim));
                 cnt++;
-            } catch (NullPointerException npe) { /* never */
+            } catch (NullPointerException npe) {
+                /* never */
 
             }
         }
@@ -485,7 +486,7 @@ public class SlipIconAdder extends IconAdder {
             try {
                 dataFlavor = new DataFlavor(NamedBeanFlavorMime);
             } catch (ClassNotFoundException cnfe) {
-                cnfe.printStackTrace();
+                log.error("Unable to find class supporting {}", NamedBeanFlavorMime, cnfe);
             }
         }
 
@@ -639,10 +640,9 @@ public class SlipIconAdder extends IconAdder {
             try {
                 dataFlavor = new DataFlavor(NamedBeanFlavorMime);
             } catch (ClassNotFoundException cnfe) {
-                cnfe.printStackTrace();
+                log.error("Unable to find class supporting {}", NamedBeanFlavorMime, cnfe);
             }
             new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
-            //if (log.isDebugEnabled()) log.debug("DropPanel ctor");
         }
 
         /** {@inheritDoc} */

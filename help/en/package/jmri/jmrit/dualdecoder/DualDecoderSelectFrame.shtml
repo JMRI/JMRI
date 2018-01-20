@@ -6,8 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-
-  <title>JMRI: Multi-Decoder Control</title><!-- Style -->
+  <title>JMRI: Multi-Decoder Control</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -20,10 +20,11 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
+
     <div id="mainContent">
-      <h2>JMRI: Multi-Decoder Control</h2>Originally, DCC did not
+      <h2>JMRI: Multi-Decoder Control</h2>
+      Originally, DCC did not
       provide a convenient way to program configuration values
       (CVs) when you have more than one decoder installed in a
       locomotive. For example, if you have separate decoders to
@@ -106,8 +107,9 @@
       programming mode in use. If you're using ops-mode programming
       (programming on the main), you wil also need to specify the
       address of the locomotive being programmed.</p>
+
       <!--#include virtual="/Footer" -->
-    </div>
+    </div><!-- closes #mainContent-->
   </div>
 </body>
 </html>

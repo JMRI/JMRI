@@ -31,6 +31,12 @@
             <authorinitials>ALM</authorinitials>
             <revremark>Initial version created from SoundTraxx_Eco_Diesel version 4</revremark>
         </revision>
+        <revision>
+            <revnumber>1.1</revnumber>
+            <date>2018-01-17</date>
+            <authorinitials>ALM</authorinitials>
+            <revremark>Fix after clarification with SoundTraxx - no CV1.301/429, but CV1.300/428 are used for Hi-Low effect, no short airhorm. Bell sounds remains available though disabled.</revremark>
+        </revision>
     </revhistory>
     <version author="Alain Le Marchand" version="1" lastUpdated="20180103"/>
     <!-- Specific Econami UK information as per http://soundtraxxuk.com/ web site -->
@@ -627,7 +633,7 @@
                 <label>Rear facing Airhorn Select</label>
                 <tooltip>Selects which airhorn to use when in reverse direction</tooltip>
             </variable>
-            <variable CV="122" mask="XXXVVVVV" item="Sound Option 8" default="0" readOnly="yes">
+            <variable CV="122" mask="XXXVVVVV" item="Sound Option 8" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>EMD: slow</choice>
@@ -697,9 +703,10 @@
                     </enumChoice>
                 </enumVal>
                 <label>Bell select</label>
-                <tooltip>&lt;html&gt;Bell NOT USED in Econami UK versions.
+                <tooltip>&lt;html&gt;Bell disabled in Econami UK versions.
                          &lt;br&gt;The High-tone Airhorn (F1 by default)
                          &lt;br&gt;is enabled in place of the bell in UK decoders.
+                         &lt;br&gt;Bell remains available however to be remapped to another function key.
                          &lt;/html&gt;</tooltip>
             </variable>
             <variable CV="123" mask="XXVVVVVV" item="Sound Option 5" default="0" tooltip="Select one of six prime mover sound effects">
@@ -785,7 +792,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>RPM-</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
-            </variable>  
+            </variable>
             <variable CV="1.287" item="Extended Function Map Two Shorts Signal" default="255">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>Two Shorts Signal</label>
@@ -806,14 +813,8 @@
                 <label>Dynamic Brake</label>
                 <tooltip>&lt;html&gt;Mapping function keys F0-F28 to any of the decoder's effects&lt;br&gt;Not used for UK decoders&lt;/html&gt;</tooltip>
             </variable>
-            <!-- not used in UK decoders, replace by High-Low Airhorn effect
+            <!-- Short Airhorm not used in UK decoders, replaced by High-Low Airhorn effect -->
             <variable CV="1.300" item="Extended Function Map Short Airhorn" default="3">
-                <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-                <label>Short Airhorn</label>
-                <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
-            </variable>
-            -->
-            <variable CV="1.301" item="Extended Function Map Short Airhorn" default="3">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>High-Low Airhorn effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
@@ -883,7 +884,7 @@
             <variable CV="1.414" mask="XXXVXXXX" item="RPM- Automatic Effects - ESTP" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
-            </variable>          
+            </variable>
             <variable CV="1.415" mask="XXXXXXXV" item="Two Shorts Signal Automatic Effects - FWDD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
@@ -964,7 +965,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>&lt;html&gt;Sets the status of automatic effects when in emergency stop&lt;br&gt;Not used for UK decoders&lt;/html&gt;</tooltip>
             </variable>
-            <!-- not used in UK decoders, replace by High-Low Airhorn effect
+            <!-- Short Airhorm not used in UK decoders, replaced by High-Low Airhorn effect -->
             <variable CV="1.428" mask="XXXXXXXV" item="Short Airhorn Automatic Effects - FWDD" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
@@ -982,27 +983,6 @@
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
             <variable CV="1.428" mask="XXXVXXXX" item="Short Airhorn Automatic Effects - ESTP" default="0">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
-                <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
-            </variable>
-            -->
-            <variable CV="1.429" mask="XXXXXXXV" item="Short Airhorn Automatic Effects - FWDD" default="0">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
-                <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
-            </variable>
-            <variable CV="1.429" mask="XXXXXXVX" item="Short Airhorn Automatic Effects - REVD" default="0">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
-                <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
-            </variable>
-            <variable CV="1.429" mask="XXXXXVXX" item="Short Airhorn Automatic Effects - FWDS" default="0">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
-                <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
-            </variable>
-            <variable CV="1.429" mask="XXXXVXXX" item="Short Airhorn Automatic Effects - REVS" default="0">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
-                <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
-            </variable>
-            <variable CV="1.429" mask="XXXVXXXX" item="Short Airhorn Automatic Effects - ESTP" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>

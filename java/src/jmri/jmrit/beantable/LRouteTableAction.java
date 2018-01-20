@@ -61,7 +61,7 @@ import org.slf4j.LoggerFactory;
  * @author Egbert Broerse i18n 2016
  *
  */
-public class LRouteTableAction extends AbstractTableAction {
+public class LRouteTableAction extends AbstractTableAction<Logix> {
 
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LRouteTableBundle");
 
@@ -97,7 +97,7 @@ public class LRouteTableAction extends AbstractTableAction {
         m = new LBeanTableDataModel();
     }
 
-    class LBeanTableDataModel extends BeanTableDataModel {
+    class LBeanTableDataModel extends BeanTableDataModel<Logix> {
 
         // overlay the state column with the edit column
         static public final int ENABLECOL = VALUECOL;
@@ -232,12 +232,11 @@ public class LRouteTableAction extends AbstractTableAction {
          * Deactivate the Logix and remove its conditionals.
          */
         @Override
-        void doDelete(NamedBean bean) {
-            if (bean != null) {
-                Logix l = (Logix) bean;
-                l.deActivateLogix();
+        void doDelete(Logix logix) {
+            if (logix != null) {
+                logix.deActivateLogix();
                 // delete the Logix and all its Conditionals
-                _logixManager.deleteLogix(l);
+                _logixManager.deleteLogix(logix);
             }
         }
 
@@ -251,17 +250,17 @@ public class LRouteTableAction extends AbstractTableAction {
         }
 
         @Override
-        public Manager getManager() {
+        public Manager<Logix> getManager() {
             return _logixManager;
         }
 
         @Override
-        public NamedBean getBySystemName(String name) {
+        public Logix getBySystemName(String name) {
             return _logixManager.getBySystemName(name);
         }
 
         @Override
-        public NamedBean getByUserName(String name) {
+        public Logix getByUserName(String name) {
             return _logixManager.getByUserName(name);
         }
 
@@ -282,7 +281,7 @@ public class LRouteTableAction extends AbstractTableAction {
 
         // Not needed - here for interface compatibility
         @Override
-        public void clickOn(NamedBean t) {
+        public void clickOn(Logix t) {
         }
 
         @Override

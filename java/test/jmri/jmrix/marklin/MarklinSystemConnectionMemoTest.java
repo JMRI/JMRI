@@ -33,7 +33,9 @@ public class MarklinSystemConnectionMemoTest extends jmri.jmrix.SystemConnection
     public void setUp() {
         JUnitUtil.setUp();
         MarklinTrafficController tc = new MarklinTrafficController();
-        scm = new MarklinSystemConnectionMemo(tc);
+        MarklinSystemConnectionMemo memo = new MarklinSystemConnectionMemo(tc);
+        memo.configureManagers();
+        scm = memo;
     }
 
     @Override

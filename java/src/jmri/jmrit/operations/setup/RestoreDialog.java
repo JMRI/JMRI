@@ -233,7 +233,7 @@ public class RestoreDialog extends JDialog {
         catch (IOException ex) {
             ExceptionContext context = new ExceptionContext(ex, Bundle.getMessage("RestoreDialog.restoring")
                     + " " + setName, "Hint about checking valid names, etc."); // NOI18N
-            new ExceptionDisplayFrame(context);
+            new ExceptionDisplayFrame(context, this).setVisible(true);
 
         } catch (Exception ex) {
             log.error("Doing restore from " + setName, ex);
@@ -241,7 +241,7 @@ public class RestoreDialog extends JDialog {
             UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
                     Bundle.getMessage("RestoreDialog.restoring") + " " + setName);
 
-            new ExceptionDisplayFrame(context);
+            new ExceptionDisplayFrame(context, this).setVisible(true);
         }
     }
 

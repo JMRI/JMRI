@@ -24,12 +24,14 @@ public class OakTreeSystemConnectionMemoTest extends jmri.jmrix.SystemConnection
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       new SerialTrafficController(){
+       OakTreeSystemConnectionMemo memo = new OakTreeSystemConnectionMemo();
+       memo.setTrafficController(new SerialTrafficController(){
           @Override
           public void sendSerialMessage(SerialMessage m, SerialListener reply) {
           }
-       };
-       scm = new OakTreeSystemConnectionMemo();
+       });
+       memo.configureManagers();
+       scm = memo;
     }
 
     @Override

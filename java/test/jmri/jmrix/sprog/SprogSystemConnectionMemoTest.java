@@ -42,15 +42,15 @@ public class SprogSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
    @Override
    @Test
    public void testProvidesConsistManager(){
+        SprogSystemConnectionMemo memo = new SprogSystemConnectionMemo();
        // by default, does not.
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
-       SprogSystemConnectionMemo m = (SprogSystemConnectionMemo)scm;
+       Assert.assertFalse("Provides ConsistManager",memo.provides(jmri.ConsistManager.class));
        // In service mode, does not.
-       m.setSprogMode(SprogMode.SERVICE);
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+       memo.setSprogMode(SprogMode.SERVICE);
+       Assert.assertFalse("Provides ConsistManager",memo.provides(jmri.ConsistManager.class));
        // In ops mode, does.
-       m.setSprogMode(SprogMode.OPS);
-       Assert.assertTrue("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+       memo.setSprogMode(SprogMode.OPS);
+       Assert.assertTrue("Provides ConsistManager",memo.provides(jmri.ConsistManager.class));
    }
 
 
@@ -60,6 +60,11 @@ public class SprogSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
     public void setUp() {
         JUnitUtil.setUp();
         scm = new SprogSystemConnectionMemo();
+        SprogSystemConnectionMemo memo = new SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
+        SprogTrafficController stcs = new SprogTrafficControlScaffold(memo);
+        memo.setSprogTrafficController(stcs);
+        memo.configureManagers();
+        scm = memo;
     }
 
     @Override

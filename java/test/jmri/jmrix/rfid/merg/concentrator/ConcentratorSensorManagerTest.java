@@ -14,25 +14,19 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class ConcentratorSensorManagerTest {
+public class ConcentratorSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     ConcentratorTrafficController tc = null;
 
+    @Override
+    public String getSystemName(int i) {
+        return "RS" + i;
+    }
+
+
     @Test
     public void testCtor() {
-        ConcentratorSensorManager c = new ConcentratorSensorManager(tc,"R"){
-            @Override
-            protected Sensor createNewSensor(String systemName, String userName){
-               return null;
-            }
-            @Override
-            public void message(jmri.jmrix.rfid.RfidMessage m){}
-
-            @Override
-            public void reply(jmri.jmrix.rfid.RfidReply m){}
-
-        };
-        Assert.assertNotNull(c);
+        Assert.assertNotNull(l);
     }
 
     // The minimal setup for log4J
@@ -43,6 +37,14 @@ public class ConcentratorSensorManagerTest {
            @Override
            public void sendInitString(){
            }
+        };
+        l = new ConcentratorSensorManager(tc,"R"){
+            @Override
+            public void message(jmri.jmrix.rfid.RfidMessage m){}
+
+            @Override
+            public void reply(jmri.jmrix.rfid.RfidReply m){}
+
         };
     }
 
