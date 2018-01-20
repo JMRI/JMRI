@@ -16,6 +16,7 @@ public class SprogCSThrottleManagerTest {
 
     private SprogTrafficControlScaffold stcs = null;
     private SprogCSThrottleManager op = null;
+    private SprogSystemConnectionMemo m = null;
 
     @Test
     public void testCtor(){
@@ -29,15 +30,17 @@ public class SprogCSThrottleManagerTest {
         // prepare an interface
         jmri.util.JUnitUtil.resetInstanceManager();
 
-        SprogSystemConnectionMemo m = new SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
+        m = new SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
+        m.configureCommandStation();
 
         op = new SprogCSThrottleManager(m);
     }
 
     @After
     public void tearDown() {
+        m.getSlotThread().interrupt();
         JUnitUtil.tearDown();
     }
 

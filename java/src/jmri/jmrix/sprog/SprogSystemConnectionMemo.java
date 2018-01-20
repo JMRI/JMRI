@@ -134,6 +134,10 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private Thread slotThread;
 
+    public Thread getSlotThread() {
+        return slotThread;
+    }
+    
     /**
      * Configure the programming manager and "command station" objects.
      */

@@ -62,7 +62,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     private boolean waitingForReply = false;
     private boolean replyAvailable = false;
     private boolean sendSprogAddress = false;
-    private long time, packetDelay;
+    private long time, timeNow, packetDelay;
     final static int MAX_PACKET_DELAY = 25;
     private int lastId;
     
@@ -401,11 +401,13 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * 
      */
     public void run() {
-        log.debug("Slot thread starts");
+        boolean running;
         time = System.currentTimeMillis();
+        log.debug("Slot thread starts at time {}", time);
         // Send a decoder idle packet to prompt a reply from hardware and set things running
         sendPacket(jmri.NmraPacket.idlePacket(), SprogConstants.S_REPEATS);
-        while(true) {
+        running = true;
+        while(running) {
             try {
                 synchronized(lock) {
                    lock.wait(1000);
@@ -413,54 +415,57 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             } catch (InterruptedException e) {
                log.debug("Slot thread interrupted");
                // We'll loop around if there's no reply available yet
+               running = false;
             }
-            log.debug("Slot thread wakes");
+            log.debug("Slot thread wakes at time {}", System.currentTimeMillis());
             
-            // If we need to change the SPROGs default address, do that immediately.
-            // Reply to that will 
-            if (sendSprogAddress) {
-                sendMessage(new SprogMessage("A " + currentSprogAddress + " 0"));
-                replyAvailable = false;
-                sendSprogAddress = false;
-            } else if (replyAvailable) {
-                if (reply.isUnsolicited() && reply.isOverload()) {
-                    log.error("Overload");
+            if (running) {
+                // If we need to change the SPROGs default address, do that immediately.
+                // Reply to that will 
+                if (sendSprogAddress) {
+                    sendMessage(new SprogMessage("A " + currentSprogAddress + " 0"));
+                    replyAvailable = false;
+                    sendSprogAddress = false;
+                } else if (replyAvailable) {
+                    if (reply.isUnsolicited() && reply.isOverload()) {
+                        log.error("Overload");
 
-                    // *** turn power off
-                }
-
-                // Get next packet to send
-                byte[] p;
-                log.debug("Get next packet to send");
-                SprogSlot s = sendNow.poll();
-                if (s != null) {
-                    // New throttle action to be sent immediately
-                    p = s.getPayload();
-                    log.debug("Packet from immediate send queue");
-                } else {
-                    // Or take the next one from the stack
-                    p = getNextPacket();
-                    if (p != null) {
-                        log.debug("Packet from stack");
+                        // *** turn power off
                     }
-                }
-                replyAvailable = false;
-                if (p != null) {
-                    // Send the packet
-                    sendPacket(p, SprogConstants.S_REPEATS);
-                    log.debug("Packet sent");
+
+                    // Get next packet to send
+                    byte[] p;
+                    SprogSlot s = sendNow.poll();
+                    if (s != null) {
+                        // New throttle action to be sent immediately
+                        p = s.getPayload();
+                        log.debug("Packet from immediate send queue");
+                    } else {
+                        // Or take the next one from the stack
+                        p = getNextPacket();
+                        if (p != null) {
+                            log.debug("Packet from stack");
+                        }
+                    }
+                    replyAvailable = false;
+                    if (p != null) {
+                        // Send the packet
+                        sendPacket(p, SprogConstants.S_REPEATS);
+                        log.debug("Packet sent");
+                    } else {
+                        // Send a decoder idle packet to prompt a reply from hardware and keep things running
+                        sendPacket(jmri.NmraPacket.idlePacket(), SprogConstants.S_REPEATS);
+                    }
+                    timeNow = System.currentTimeMillis();
+                    packetDelay = timeNow - time;
+                    time = timeNow;
+                    // Useful for debug if packets are being delayed
+                    if (packetDelay > MAX_PACKET_DELAY) {
+                        log.warn("Packet delay was {} ms time now {}", packetDelay, time);
+                    }
                 } else {
-                    // Send a decoder idle packet to prompt a reply from hardware and keep things running
-                    sendPacket(jmri.NmraPacket.idlePacket(), SprogConstants.S_REPEATS);
+                    log.warn("Slot thread wait timeout");
                 }
-                packetDelay = System.currentTimeMillis() - time;
-                // Useful for debug if packets are being delayed
-                if (packetDelay > MAX_PACKET_DELAY) {
-                    log.warn("Packet delay was {} ms", packetDelay);
-                }
-                time = System.currentTimeMillis();
-            } else {
-                log.warn("Slot thread wait timeout");
             }
         }
     }

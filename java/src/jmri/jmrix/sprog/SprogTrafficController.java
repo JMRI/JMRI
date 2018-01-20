@@ -26,7 +26,7 @@ import purejavacomm.SerialPortEventListener;
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener {
 
     private SprogReply reply = new SprogReply();
-    private boolean waitingForReply = false;
+    protected boolean waitingForReply = false;
     SprogListener lastSender = null;
     private SprogState sprogState = SprogState.NORMAL;
     private int lastId;
@@ -214,7 +214,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
         log.debug("sendSprogMessage message: [{}] id: {} from {}", m.toString(isSIIBootMode()), m.getId(), replyTo);
         // remember who sent this
-        log.debug("Updating last sender {}", replyTo.getClass());
+        log.debug("Updating last sender {}");
         lastSender = replyTo;
         lastId = m.getId();
         // notify all _other_ listeners
