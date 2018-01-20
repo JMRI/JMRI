@@ -206,6 +206,18 @@
     <p>Select <strong>No</strong> to terminate the delete process,
     <strong>Yes</strong> to finish the delete process.</p>
 
+    <h4>Block Name Changes</h4>
+    <p>Sensor assignments define Entry/Exit locations within the layout block
+    structure.  If an Entry/Exit pair contains references to the block, the
+    block name cannot be renamed or removed.  The block selection field in the
+    <strong>Edit Track</strong> dialog will be disabled.  A dialog box will
+    be displayed showing the affected sensors.</p>
+
+    <div style="margin-left: 1em">
+    <img src="images/EntryExitSensorList.png"
+    height="199" width="685" alt="NX Sensor List">
+    </div>
+
     <h3>Generating Entry Exit Pairs</h3>
     <p>To access the <strong>Add Entry Exit Points</strong> panel, select
     <strong>Entry Exit</strong> from the Layout Editor <strong>Tools</strong>
