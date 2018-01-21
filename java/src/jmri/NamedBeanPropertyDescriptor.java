@@ -35,7 +35,9 @@ public abstract class NamedBeanPropertyDescriptor<E> {
      */
     public abstract boolean isEditable(NamedBean bean);
 
-    /** @return Class for the property values. This class is used to */
+    /** @return Class for the property values. This class is used to find a matching Renderer for
+     the BeanTable column to display and edit the value of this property. For example returning
+     Boolean.class will show a checkbox.  */
     public Class getValueClass() {
         return defaultValue.getClass();
     }
