@@ -93,6 +93,7 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
         apps.tests.Log4JFixture.setUp();
         SprogSystemConnectionMemo m = new SprogSystemConnectionMemo();
         stc = new SprogTrafficControlScaffold(m);
+        stc.setTestReplies(true);
         m.setSprogTrafficController(stc);  // constructor calls getSprogTrafficController.
         p = new SprogPowerManager(m);
     }
