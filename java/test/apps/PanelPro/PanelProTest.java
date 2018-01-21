@@ -7,10 +7,13 @@ import org.apache.commons.io.*;
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 import org.junit.rules.Timeout;
+import jmri.InstanceManager;
+import jmri.managers.DefaultShutDownManager;
 import jmri.util.junit.rules.RetryRule;
 
 import jmri.util.JUnitUtil;
@@ -62,6 +65,10 @@ public class PanelProTest {
 
             // now clean up frames, depending on what's actually left
             // PanelPro
+
+            // gracefully shutdown, but don't exit
+            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+
         } finally {
             // wait for threads, etc
             jmri.util.JUnitUtil.releaseThread(this, 5000);
@@ -88,7 +95,12 @@ public class PanelProTest {
 
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("Main initialization done") != null;}, "last Info line seen");
 
+            // now clean up frames, depending on what's actually left
             // PanelPro
+
+            // gracefully shutdown, but don't exit
+            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+
         } finally {
             // wait for threads, etc
             jmri.util.JUnitUtil.releaseThread(this, 5000);
@@ -115,7 +127,12 @@ public class PanelProTest {
 
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("Main initialization done") != null;}, "last Info line seen");
 
+            // now clean up frames, depending on what's actually left
             // PanelPro
+
+            // gracefully shutdown, but don't exit
+            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+
         } finally {
             // wait for threads, etc
             jmri.util.JUnitUtil.releaseThread(this, 5000);
@@ -123,6 +140,7 @@ public class PanelProTest {
     }
 
     @Test
+    @Ignore
     public void testLaunchSprog() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -142,7 +160,12 @@ public class PanelProTest {
 
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("Main initialization done") != null;}, "last Info line seen");
 
+            // now clean up frames, depending on what's actually left
             // PanelPro
+
+            // gracefully shutdown, but don't exit
+            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+
         } finally {
             // wait for threads, etc
             jmri.util.JUnitUtil.releaseThread(this, 5000);
@@ -172,6 +195,10 @@ public class PanelProTest {
 
             // now clean up frames, depending on what's actually left
             // PanelPro
+
+            // gracefully shutdown, but don't exit
+            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+
         } finally {
             // wait for threads, etc
             jmri.util.JUnitUtil.releaseThread(this, 5000);
