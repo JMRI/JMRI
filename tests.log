@@ -1,0 +1,4 @@
+27,882 [main] ERROR jmrix.AbstractThrottle.notifyPropertyChangeListener() - notifyPropertyChangeListener without change
+27,903 [main] WARN  jmrix.AbstractThrottle.dispose() - Dispose called without knowing the original throttle listener
+28,101 [main] WARN  jmrix.AbstractThrottle.release() - Release called without knowing the original throttle listener
+28,393 [main] WARN  jmrix.AbstractThrottle.dispatch() - dispatch called without knowing the original throttle listener
