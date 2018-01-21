@@ -3,6 +3,7 @@ package jmri.jmrix.loconet.pr3;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
+import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 
 /**
  *
@@ -15,8 +16,13 @@ public class PR3SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-        scm = new PR3SystemConnectionMemo();
+       JUnitUtil.setUp();
+       LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+       PR3SystemConnectionMemo memo = new PR3SystemConnectionMemo();
+       memo.setLnTrafficController(lnis);
+       memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false);
+       memo.configureManagers();
+       scm = memo;
     }
 
     @Override
