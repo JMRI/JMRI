@@ -395,7 +395,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     private int statusDue = 0;
     @Override
     /**
-     * The run() method will only be called (from SprogSystemconnecionMemo 
+     * The run() method will only be called (from SprogSystemConnectionMemo
      * ConfigureCommandStation()) if the connected SPROG is in Command station mode.
      * 
      */
@@ -458,9 +458,9 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                     timeNow = System.currentTimeMillis();
                     packetDelay = timeNow - time;
                     time = timeNow;
-                    // Useful for debug if packets are being delayed
+                    // Useful for debug if packets are being delayed; Set to trace level to be able to debug other stuff
                     if (packetDelay > MAX_PACKET_DELAY) {
-                        log.warn("Packet delay was {} ms time now {}", packetDelay, time);
+                        log.trace("Packet delay was {} ms time now {}", packetDelay, time);
                     }
                 } else {
                     log.warn("Slot thread wait timeout");
