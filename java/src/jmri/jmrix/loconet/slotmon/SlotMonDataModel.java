@@ -470,18 +470,6 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                             return;
                         }
                     }
-                    // set speed zero
-                    msg = new LocoNetMessage(4);
-                    msg.setOpCode(LnConstants.OPC_LOCO_SPD);
-                    msg.setElement(1, s.getSlot());
-                    msg.setElement(2, 0);
-                    memo.getLnTrafficController().sendLocoNetMessage(msg);
-                    // Delay here allows command station time to xmit on the rails.
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException ex) {
-                        log.error("Unexpected Interupted during sleep,: continuing", ex);
-                    }
                     // send status to free
                     memo.getLnTrafficController().sendLocoNetMessage(
                             s.writeStatus(LnConstants.LOCO_FREE));
