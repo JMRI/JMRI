@@ -31,17 +31,16 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Use of Swing</h1>
-      (Note: This page describes a toolkit for creating
+      <h1>JMRI Code: Use of Swing</h1>
+      <b>Note:</b> This page describes a toolkit for creating
       JMRI's GUI that's been slowly developed as part of JMRI.
       Please use this if you're creating new JMRI user interfaces.
       Note that there are proposals to move JMRI to other, non-specific
       toolkits in this area. Before you do work to extend or improve
       this toolkit itself, please ask on jmri-developers about that status
-      of that work.)
+      of that work.
       
-      <p>
-      We use Java Swing for our GUI
+      <p>We use Java Swing for our GUI
       development. It's a lot more powerful than the original AWT,
       and the price is right. In particular, we try to use the
       "Bean format" of setting and getting members, call-backs to
@@ -73,14 +72,14 @@
       JmriNamedPanel action with just the name of the JmriPanel
       class, which in turn can be done with various automated
       tools. Don't create JmriJFrame or JFrame subclasses with
-      lots of specific function
-      <p>This pattern lets us write a tool panel just once, and
+      lots of specific function<br>
+      This pattern lets us write a tool panel just once, and
       then use it in lots of various places, embedded into windows
       in several ways. It also greatly reduces the number of
       classes that need to be loaded at startup time, because there
       are not separate *Action and *Frame classes, and JmriPanel
       subclasses don't have to be loaded just because they are
-      listed in a menu.</p>
+      listed in a menu.
       </ul>
 
       <a id="life" name="life"/>

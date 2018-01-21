@@ -23,14 +23,15 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: XML Schema Usage</h1>JMRI uses XML for a number of
+      <h1>JMRI: XML Schema Usage</h1>
+      <p>JMRI uses XML for a number of
       purposes: to hold decoder definitions, for its <a href=
       "XmlPersistance.shtml">persistance system</a> for
       configuration and panel information, and to create parts of
       the web site from other files. This page describes how we
       specify the content of those files using <a href=
       "http://www.w3schools.com/schema/schema_intro.asp">XML
-      schema</a>.
+          schema</a>.</p>
 
       <p>For examples (not a tutorial!) on the structure of our
       schema, see the <a href="XmlSchemaExamples.shtml">examples
@@ -596,7 +597,9 @@ browser. For an example of that, click on this link to the
       &lt;/xs:documentation&gt;&lt;/xs:annotation&gt;
     &lt;/xs:element&gt;
 </code>
-</pre><!--#include virtual="/Footer" -->
+</pre>
+
+        <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
