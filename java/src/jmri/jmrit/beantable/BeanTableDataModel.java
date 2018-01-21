@@ -260,11 +260,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                     return null;
                 }
                 b = getBySystemName(sysNameList.get(row));
-                String s = (String)b.getProperty(desc.propertyKey);
-                if (s == null) {
+                Object value = b.getProperty(desc.propertyKey);
+                if (value == null) {
                     return desc.defaultValue;
                 }
-                return desc.parseProperty(s);
+                return value;
         }
     }
 
@@ -370,7 +370,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                     break;
                 }
                 NamedBean b = getBySystemName(sysNameList.get(row));
-                b.setProperty(desc.propertyKey, desc.renderProperty(value));
+                b.setProperty(desc.propertyKey, value);
         }
     }
 

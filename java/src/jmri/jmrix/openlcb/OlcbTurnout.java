@@ -259,7 +259,7 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
      */
     public void setAuthoritative(boolean authoritative) {
         boolean recreate = (authoritative != isAuthoritative()) && (pc != null);
-        setProperty(OlcbUtils.PROPERTY_IS_AUTHORITATIVE, Boolean.toString(authoritative));
+        setProperty(OlcbUtils.PROPERTY_IS_AUTHORITATIVE, authoritative);
         if (recreate) {
             finishLoad();
         }
@@ -269,9 +269,9 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
      * @return whether this producer/consumer is enabled to return state to the layout upon queries.
      */
     public boolean isAuthoritative() {
-        String value = (String) getProperty(OlcbUtils.PROPERTY_IS_AUTHORITATIVE);
+        Boolean value = (Boolean) getProperty(OlcbUtils.PROPERTY_IS_AUTHORITATIVE);
         if (value != null) {
-            return Boolean.parseBoolean(value);
+            return value;
         }
         return DEFAULT_IS_AUTHORITATIVE;
     }
@@ -280,9 +280,9 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
      * @return whether this producer/consumer is always listening to state declaration messages.
      */
     public boolean isListeningToStateMessages() {
-        String value = (String) getProperty(OlcbUtils.PROPERTY_LISTEN);
+        Boolean value = (Boolean) getProperty(OlcbUtils.PROPERTY_LISTEN);
         if (value != null) {
-            return Boolean.parseBoolean(value);
+            return value;
         }
         return DEFAULT_LISTEN;
     }
@@ -296,7 +296,7 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
      */
     public void setListeningToStateMessages(boolean listen) {
         boolean recreate = (listen != isListeningToStateMessages()) && (pc != null);
-        setProperty(OlcbUtils.PROPERTY_LISTEN, Boolean.toString(listen));
+        setProperty(OlcbUtils.PROPERTY_LISTEN, listen);
         if (recreate) {
             finishLoad();
         }

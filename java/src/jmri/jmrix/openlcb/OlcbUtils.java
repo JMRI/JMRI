@@ -31,9 +31,14 @@ public final class OlcbUtils {
      */
     private static int updateBooleanProperty(int flags, NamedBean parent, String propertyKey, int
             flagValue) {
-        String propValue = (String) parent.getProperty(propertyKey);
+        Object propValue = parent.getProperty(propertyKey);
         if (propValue == null) return flags;
-        boolean prop = Boolean.getBoolean(propValue);
+        if (!(propValue instanceof Boolean)) {
+            boolean v = Boolean.valueOf((String)propValue);
+            parent.setProperty(propertyKey, v);
+            propValue = v;
+        }
+        boolean prop = (Boolean)propValue;
         if (flagValue < 0) {
             prop = !prop;
             flagValue = -flagValue;

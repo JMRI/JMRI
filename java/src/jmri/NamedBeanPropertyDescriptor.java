@@ -35,21 +35,7 @@ public abstract class NamedBeanPropertyDescriptor<E> {
      */
     public abstract boolean isEditable(NamedBean bean);
 
-    /**
-     * Creates the stored representation of this property.
-     * @param value the typed object for the property value
-     * @return string representation to save.
-     */
-    public abstract String renderProperty(E value);
-
-    /**
-     * Parses the saved representation of this property.
-     * @param value the saved representation of this property
-     * @return object of class valueClass of this property.
-     */
-    public abstract E parseProperty(String value);
-
-    /** Class for the property values. */
+    /** @return Class for the property values. This class is used to */
     public Class getValueClass() {
         return defaultValue.getClass();
     }

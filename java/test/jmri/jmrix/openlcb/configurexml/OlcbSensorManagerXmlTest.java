@@ -3,6 +3,7 @@ package jmri.jmrix.openlcb.configurexml;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.jmrix.can.CanMessage;
+import jmri.jmrix.openlcb.OlcbSensor;
 import jmri.jmrix.openlcb.OlcbSensorManager;
 import jmri.jmrix.openlcb.OlcbTestInterface;
 import jmri.jmrix.openlcb.OlcbUtils;
@@ -38,7 +39,7 @@ public class OlcbSensorManagerXmlTest {
         OlcbSensorManager mgr = t.configurationManager.getSensorManager();
         OlcbSensorManagerXml xmlmgr = new OlcbSensorManagerXml();
 
-        Sensor s = mgr.newSensor("MS1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", "sen1");
+        OlcbSensor s = (OlcbSensor)mgr.newSensor("MS1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", "sen1");
         t.flush();
         CanMessage expected = new CanMessage(new byte[]{1,2,3,4,5,6,7,8}, 0x198F4C4C);
         expected.setExtended(true);
@@ -58,8 +59,8 @@ public class OlcbSensorManagerXmlTest {
         Assert.assertEquals(expected, t.tc.rcvMessage);
         t.tc.rcvMessage = null;
 
-        s.setProperty(OlcbUtils.PROPERTY_QUERY_AT_STARTUP, Boolean.FALSE.toString());
-        s.setProperty(OlcbUtils.PROPERTY_IS_AUTHORITATIVE, Boolean.FALSE.toString());
+        s.setProperty(OlcbUtils.PROPERTY_QUERY_AT_STARTUP, false);
+        s.setAuthoritative(false);
         Assert.assertEquals(1, mgr.getSystemNameList().size());
 
         Element stored = xmlmgr.store(mgr);
@@ -75,7 +76,7 @@ public class OlcbSensorManagerXmlTest {
 
         Sensor s2 = mgr.getBySystemName("MS1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9");
         Assert.assertNotNull(s2);
-        Assert.assertEquals(Boolean.FALSE.toString(), s2.getProperty(OlcbUtils.PROPERTY_QUERY_AT_STARTUP));
+        Assert.assertEquals(false, s2.getProperty(OlcbUtils.PROPERTY_QUERY_AT_STARTUP));
         Assert.assertNull(s2.getProperty(OlcbUtils.PROPERTY_IS_CONSUMER));
 
         t.flush();
