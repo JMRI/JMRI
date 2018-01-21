@@ -179,6 +179,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return true;
         }
         if (type.equals(jmri.ThrottleManager.class)) {
+            log.debug("SPROG provides throttle. sprogMode: {}", sprogMode);
             return true;
         }
         if (type.equals(jmri.TurnoutManager.class)) {

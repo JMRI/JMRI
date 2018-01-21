@@ -46,7 +46,8 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     String SPR_PR = "\nP> "; // prompt
 
     public SimulatorAdapter() {
-        super(new SprogSystemConnectionMemo(SprogMode.SERVICE)); // use default user name; start as SERVICE mode, may set to OPS from connection
+        super(new SprogSystemConnectionMemo(SprogMode.SERVICE)); // use default user name
+        // starts as SERVICE mode (Programmer); may be set to OPS (Command Station) from connection option
         setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
         this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogSimulatorTitle"));
         // create the traffic controller
@@ -113,8 +114,14 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         // connect to the traffic controller
         this.getSystemConnectionMemo().getSprogTrafficController().connectPort(this);
 
-        this.getSystemConnectionMemo().configureCommandStation(); // only if in OPS mode, memo will take care of that
-        this.getSystemConnectionMemo().configureManagers();
+        if (getOptionState("OperatingMode") != null && getOptionState("OperatingMode").equals(Bundle.getMessage("SprogProgrammerTitle"))) {
+            operatingMode = SprogMode.SERVICE;
+        } else { // default, also used after Locale change
+            operatingMode = SprogMode.OPS;
+        }
+        this.getSystemConnectionMemo().setSprogMode(operatingMode); // first update mode in memo
+        this.getSystemConnectionMemo().configureCommandStation();   // CS only if in OPS mode, memo will take care of that
+        this.getSystemConnectionMemo().configureManagers();         // wait for mode to be correct
 
         if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals(Bundle.getMessage("PowerStateOn"))) {
             try {
@@ -123,13 +130,6 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
                 log.error(e.toString());
             }
         }
-
-        if (getOptionState("OperatingMode") != null && getOptionState("OperatingMode").equals(Bundle.getMessage("SprogProgrammerTitle"))) {
-            operatingMode = SprogMode.SERVICE;
-        } else { // default, also used after Locale change
-            operatingMode = SprogMode.OPS;
-        }
-        this.getSystemConnectionMemo().setSprogMode(operatingMode);
 
         // start the simulator
         sourceThread = new Thread(this);
