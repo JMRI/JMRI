@@ -7,10 +7,13 @@ import org.apache.commons.io.*;
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 import org.junit.rules.Timeout;
+import jmri.InstanceManager;
+import jmri.managers.DefaultShutDownManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
@@ -55,6 +58,10 @@ public class SoundProTest {
             
             // now clean up frames, depending on what's actually left
             // SoundPro
+
+            // gracefully shutdown, but don't exit
+            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+            
         } finally {
             // wait for threads, etc
             jmri.util.JUnitUtil.releaseThread(this, 5000);
@@ -79,6 +86,10 @@ public class SoundProTest {
 
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("SoundPro version") != null;}, "first Info line seen");
 
+            // gracefully shutdown, but don't exit
+            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+            
+            // now clean up frames, depending on what's actually left
             // SoundPro
         } finally {
             // wait for threads, etc
@@ -104,6 +115,10 @@ public class SoundProTest {
 
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("SoundPro version") != null;}, "first Info line seen");
 
+            // gracefully shutdown, but don't exit
+            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+            
+            // now clean up frames, depending on what's actually left
             // SoundPro
         } finally {
             // wait for threads, etc
@@ -112,6 +127,7 @@ public class SoundProTest {
     }
 
     @Test
+    @Ignore
     public void testLaunchSprog() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -129,6 +145,10 @@ public class SoundProTest {
 
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("SoundPro version") != null;}, "first Info line seen");
 
+            // gracefully shutdown, but don't exit
+            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+            
+            // now clean up frames, depending on what's actually left
             // SoundPro
         } finally {
             // wait for threads, etc
@@ -154,6 +174,9 @@ public class SoundProTest {
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("SoundPro version") != null;}, "first Info line seen");
 
             // maybe have it run a script to indicate that it's really up?
+            
+            // gracefully shutdown, but don't exit
+            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
             
             // now clean up frames, depending on what's actually left
             // SoundPro

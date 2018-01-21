@@ -2,8 +2,10 @@ package jmri.jmrit.operations;
 
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.util.Objects;
+import javax.annotation.Nullable;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -26,7 +28,7 @@ import javax.swing.border.EmptyBorder;
  */
 public class ExceptionDisplayFrame extends JDialog {
 
-    private final ExceptionContext context;
+    private final transient ExceptionContext context;
 
     // This needs MAJOR clean-up to better organize the controls and their
     // hierarchy.
@@ -71,10 +73,12 @@ public class ExceptionDisplayFrame extends JDialog {
     /**
      * Create the frame.
      *
-     * @param context The ExceptionContext.
+     * @param context the ExceptionContext
+     * @param owner   the associated window, or none if null
      *
      */
-    public ExceptionDisplayFrame(ExceptionContext context) {
+    public ExceptionDisplayFrame(ExceptionContext context, @Nullable Window owner) {
+        super(owner, context.getTitle(), ModalityType.DOCUMENT_MODAL);
         Objects.requireNonNull(context, "ExceptionContext argument passed to ErrorDisplayFrame constructor cannot be null."); // NOI18N
         this.context = context;
 
@@ -84,19 +88,15 @@ public class ExceptionDisplayFrame extends JDialog {
     /**
      * Constructor that takes just an Exception and defaults everything else.
      *
-     * @param ex The Exception.
+     * @param ex    the Exception
+     * @param owner the associated window, or none if null
      *
      */
-    public ExceptionDisplayFrame(Exception ex) {
-        this.context = new ExceptionContext(ex, "Operation unavailable", // NOI18N
-                "Hint unavailable"); // NOI18N
-
-        initComponents();
+    public ExceptionDisplayFrame(Exception ex, @Nullable Window owner) {
+        this(new ExceptionContext(ex, "Operation unavailable", "Hint unavailable"), owner); // NOI18N
     }
 
     private void initComponents() {
-        setTitle(context.getTitle());
-
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -232,9 +232,7 @@ public class ExceptionDisplayFrame extends JDialog {
 
         pack();
 
-        setModalityType(ModalityType.DOCUMENT_MODAL);
         setModal(true);
-        setLocationRelativeTo(null);
-        setVisible(true);
+        setLocationRelativeTo(getOwner());
     }
 }
