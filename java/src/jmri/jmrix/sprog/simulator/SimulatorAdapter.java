@@ -38,7 +38,6 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     private boolean outputBufferEmpty = true;
     private boolean checkBuffer = true;
     private boolean trackPowerState = false;
-    private SprogMode operatingMode = SprogMode.OPS;
 
     // Simulator responses
     String SPR_OK = "OK";
@@ -46,17 +45,12 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     String SPR_PR = "\nP> "; // prompt
 
     public SimulatorAdapter() {
-        super(new SprogSystemConnectionMemo(SprogMode.OPS)); // uses default user name, start as OPS mode, may set to SERVICE from connection
+        super(new SprogSystemConnectionMemo(SprogMode.SERVICE)); // uses default user name, start as SERVICE mode, not OPS
         setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
         this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogSimulatorTitle"));
         // create the traffic controller
         control = new SprogTrafficController(this.getSystemConnectionMemo());
         this.getSystemConnectionMemo().setSprogTrafficController(control);
-
-        options.put("OperatingMode", // NOI18N
-                new Option(Bundle.getMessage("MakeLabel", Bundle.getMessage("SprogSimOption")), // NOI18N
-                        new String[]{Bundle.getMessage("SprogProgrammerTitle"),
-                                Bundle.getMessage("SprogCSTitle")}, true));
     }
 
     @Override
@@ -122,13 +116,6 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
             } catch (jmri.JmriException e) {
                 log.error(e.toString());
             }
-        }
-
-        if (getOptionState("OperatingMode") != null && getOptionState("OperatingMode").equals(Bundle.getMessage("SprogProgrammerTitle"))) {
-            this.getSystemConnectionMemo().setSprogMode(SprogMode.SERVICE);
-            operatingMode = SprogMode.SERVICE;
-        } else { // default, also used after Locale change
-            this.getSystemConnectionMemo().setSprogMode(SprogMode.OPS);
         }
 
         // start the simulator
