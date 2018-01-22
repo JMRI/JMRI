@@ -32,8 +32,9 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Recommended Practices</h1>This is page of
-      miscellaneous info and pointers for JMRI developers.
+      <h1>JMRI Code: Recommended Practices</h1>
+      <p>This page contains miscellaneous info and pointers for JMRI
+      developers.</p>
 
       <h2>Class Library Preferences</h2>
 

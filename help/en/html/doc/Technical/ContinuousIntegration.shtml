@@ -31,10 +31,10 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Continuous Integration</h1>"Continuous Integration"
-      is the process of rebuilding a system every time it changes,
-      so that you rapidly learn of new problems and are motivated
-      to remove existing ones.
+      <h1>JMRI Code: Continuous Integration</h1>
+      <p>"Continuous Integration" is the process of rebuilding a
+      system every time it changes, so that you rapidly learn of
+      new problems and are motivated to remove existing ones.</p>
 
       <p>The core of our system is a series of <a href=
       "#jenkins">Jenkins</a> jobs that routinely build the code,

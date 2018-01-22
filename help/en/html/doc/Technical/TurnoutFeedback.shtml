@@ -28,7 +28,9 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: Turnout Feedback</h1>Model railroaders want
+
+      <h1>JMRI: Turnout Feedback</h1>
+      Model railroaders want
       different things when it comes to knowing the status of the
       turnouts on their layout. Some are quite happy to say "I told
       it to move, that's good enough for me". These people don't
@@ -300,6 +302,7 @@
       another program; a handheld throttle) changes the turnout
       state, JMRI will accept that and change its internal state
       for the turnout.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

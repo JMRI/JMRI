@@ -20,7 +20,7 @@
       <h1>JMRI: Viewing XML Files</h1>
       <p>JMRI stores various information in XML files. Although
       they're a text format that is basically human-readable,
-      it's a complicated format.</p>
+      it's a complicated, structured format.</p>
 
       <p>To make this information easier to read, print and understand, most
       JMRI XML files can be displayed in a web browser. A technique
@@ -89,8 +89,10 @@
           <img src="images/Webstartxml.png" height="286" width="410"></a>
         Finally, click on any needed directory names to get to
         your file, then click on your file.</li>
-      </ul>You can then use your browser to view, print, save, etc.
-      as desired.
+      </ul>
+      <p>You can then use your browser to view, print, save, etc.
+      as desired.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

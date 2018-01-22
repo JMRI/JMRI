@@ -116,6 +116,9 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                 }
             } catch (InterruptedException e) {
                 log.debug("waitingForReply interrupted");
+                // Save the interrupted status for anyone who may be interested
+                Thread.currentThread().interrupt();
+                return;
             }
             if (waitingForReply) {
                 log.warn("Timeout Waiting for reply");
@@ -395,18 +398,16 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     private int statusDue = 0;
     @Override
     /**
-     * The run() method will only be called (from SprogSystemconnecionMemo 
+     * The run() method will only be called (from SprogSystemConnectionMemo
      * ConfigureCommandStation()) if the connected SPROG is in Command station mode.
      * 
      */
     public void run() {
-        boolean running;
         time = System.currentTimeMillis();
         log.debug("Slot thread starts at time {}", time);
         // Send a decoder idle packet to prompt a reply from hardware and set things running
         sendPacket(jmri.NmraPacket.idlePacket(), SprogConstants.S_REPEATS);
-        running = true;
-        while(running) {
+        while(true) {
             try {
                 synchronized(lock) {
                    lock.wait(1000);
@@ -414,57 +415,57 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             } catch (InterruptedException e) {
                log.debug("Slot thread interrupted");
                // We'll loop around if there's no reply available yet
-               running = false;
+               // Save the interrupted status for anyone who may be interested
+               Thread.currentThread().interrupt();
+               // and exit
+               return;
             }
             log.debug("Slot thread wakes at time {}", System.currentTimeMillis());
             
-            if (running) {
-                // If we need to change the SPROGs default address, do that immediately.
-                // Reply to that will 
-                if (sendSprogAddress) {
-                    sendMessage(new SprogMessage("A " + currentSprogAddress + " 0"));
-                    replyAvailable = false;
-                    sendSprogAddress = false;
-                } else if (replyAvailable) {
-                    if (reply.isUnsolicited() && reply.isOverload()) {
-                        log.error("Overload");
+            // If we need to change the SPROGs default address, do that immediately.
+            // Reply to that will 
+            if (sendSprogAddress) {
+                sendMessage(new SprogMessage("A " + currentSprogAddress + " 0"));
+                replyAvailable = false;
+                sendSprogAddress = false;
+            } else if (replyAvailable) {
+                if (reply.isUnsolicited() && reply.isOverload()) {
+                    log.error("Overload");
 
-                        // *** turn power off
-                    }
-
-                    // Get next packet to send
-                    byte[] p;
-                    SprogSlot s = sendNow.poll();
-                    if (s != null) {
-                        // New throttle action to be sent immediately
-                        p = s.getPayload();
-                        log.debug("Packet from immediate send queue");
-                    } else {
-                        // Or take the next one from the stack
-                        p = getNextPacket();
-                        if (p != null) {
-                            log.debug("Packet from stack");
-                        }
-                    }
-                    replyAvailable = false;
-                    if (p != null) {
-                        // Send the packet
-                        sendPacket(p, SprogConstants.S_REPEATS);
-                        log.debug("Packet sent");
-                    } else {
-                        // Send a decoder idle packet to prompt a reply from hardware and keep things running
-                        sendPacket(jmri.NmraPacket.idlePacket(), SprogConstants.S_REPEATS);
-                    }
-                    timeNow = System.currentTimeMillis();
-                    packetDelay = timeNow - time;
-                    time = timeNow;
-                    // Useful for debug if packets are being delayed
-                    if (packetDelay > MAX_PACKET_DELAY) {
-                        log.warn("Packet delay was {} ms time now {}", packetDelay, time);
-                    }
-                } else {
-                    log.warn("Slot thread wait timeout");
+                    // *** turn power off
                 }
+
+                // Get next packet to send
+                byte[] p;
+                SprogSlot s = sendNow.poll();
+                if (s != null) {
+                    // New throttle action to be sent immediately
+                    p = s.getPayload();
+                    log.debug("Packet from immediate send queue");
+                } else {
+                    // Or take the next one from the stack
+                    p = getNextPacket();
+                    if (p != null) {
+                    }
+                }
+                replyAvailable = false;
+                if (p != null) {
+                    // Send the packet
+                    sendPacket(p, SprogConstants.S_REPEATS);
+                    log.debug("Packet sent");
+                } else {
+                    // Send a decoder idle packet to prompt a reply from hardware and keep things running
+                    sendPacket(jmri.NmraPacket.idlePacket(), SprogConstants.S_REPEATS);
+                }
+                timeNow = System.currentTimeMillis();
+                packetDelay = timeNow - time;
+                time = timeNow;
+                // Useful for debug if packets are being delayed; Set to trace level to be able to debug other stuff
+                if (packetDelay > MAX_PACKET_DELAY) {
+                    log.warn("Packet delay was {} ms time now {}", packetDelay, time);
+                }
+            } else {
+                log.warn("Slot thread wait timeout");
             }
         }
     }
