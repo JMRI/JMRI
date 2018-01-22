@@ -24,25 +24,29 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
     }
 
     LinkedHashMap<String, JCheckBox> disabledAspects = new LinkedHashMap<>(10);
+    JPanel disabledAspectsPanel = new JPanel();
 
-    public VirtualSignalMastAddPane() {
-//         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
-//         mastType = mastType.substring(11, mastType.indexOf(".xml"));
-//         DefaultSignalAppearanceMap sigMap = DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
-//         Enumeration<String> aspects = sigMap.getAspects();
-//         disabledAspects = new LinkedHashMap<>(10);
-
-        JPanel disabledAspectsPanel = new JPanel();
-//         while (aspects.hasMoreElements()) {
-//             String aspect = aspects.nextElement();
-//             JCheckBox disabled = new JCheckBox(aspect);
-//             disabledAspects.put(aspect, disabled);
-//         }
+    /** {@inheritDoc} */
+    @Override
+    public void setAspectNames(@Nonnull Enumeration<String> aspects) {
+        // update immediately
+        disabledAspects = new LinkedHashMap<>(10);
+        disabledAspectsPanel.removeAll();
+        while (aspects.hasMoreElements()) {
+            String aspect = aspects.nextElement();
+            JCheckBox disabled = new JCheckBox(aspect);
+            disabledAspects.put(aspect, disabled);
+        }
         disabledAspectsPanel.setLayout(new jmri.util.javaworld.GridLayout2(disabledAspects.size() + 1, 1));
         for (String aspect : disabledAspects.keySet()) {
             disabledAspectsPanel.add(disabledAspects.get(aspect));
         }
 
+        disabledAspectsPanel.revalidate();
+    }
+
+    public VirtualSignalMastAddPane() {
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         TitledBorder disableborder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
         disableborder.setTitle(Bundle.getMessage("DisableAspectsLabel"));
         JScrollPane disabledAspectsScroll = new JScrollPane(disabledAspectsPanel);

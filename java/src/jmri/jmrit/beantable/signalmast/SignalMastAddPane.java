@@ -28,6 +28,14 @@ import jmri.spi.JmriServiceProviderInterface;
 public abstract class SignalMastAddPane extends JPanel implements JmriServiceProviderInterface {
 
     /**
+     * Provide a new list of aspects in the signal system.
+     * Must be done at startup before the pane is shown.
+     * May be done later, to update to a new system.
+     * //+ should be abstract
+     */
+    public void setAspectNames(@Nonnull Enumeration<String> aspects) {}
+
+    /**
      * @return Human-prefered name for type of signal mast, in local language
      */
     @Nonnull abstract public String getPaneName();

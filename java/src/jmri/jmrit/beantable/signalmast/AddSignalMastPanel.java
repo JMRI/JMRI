@@ -35,26 +35,29 @@ public class AddSignalMastPanel extends JPanel {
 
     // connection to preferences
     jmri.UserPreferencesManager prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-    String systemSelectionCombo = this.getClass().getName() + ".SignallingSystemSelected";
-    String mastSelectionCombo = this.getClass().getName() + ".SignallingMastSelected"; // N11N
-    String driverSelectionCombo = this.getClass().getName() + ".SignallingDriverSelected";
+    String systemSelectionCombo = this.getClass().getName() + ".SignallingSystemSelected"; // NOI18N
+    String mastSelectionCombo = this.getClass().getName() + ".SignallingMastSelected"; // NOI18N
+    String driverSelectionCombo = this.getClass().getName() + ".SignallingDriverSelected"; // NOI18N
     
     // head matter
     JTextField userName = new JTextField(20); // N11N
     JComboBox<String> sigSysBox = new JComboBox<>();  // the basic signal system
-    JComboBox<String> mastBox = new JComboBox<>(new String[]{Bundle.getMessage("MastEmpty")}); // the mast within the system
+    JComboBox<String> mastBox = new JComboBox<>(new String[]{Bundle.getMessage("MastEmpty")}); // the mast within the system NOI18N
     JComboBox<String> signalMastDriver;   // the specific SignalMast class type
     JCheckBox allowUnLit = new JCheckBox();
+
+    List<SignalMastAddPane> panes = new ArrayList<>();
 
     // center pane, which holds the specific display
     JPanel centerPanel = new JPanel();
     CardLayout cl = new CardLayout();
-
+    SignalMastAddPane currentPane;
+    
     // rest of structure
     JPanel signalHeadPanel = new JPanel();
-    JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
-    JButton apply = new JButton(Bundle.getMessage("ButtonApply"));
-    JButton create = new JButton(Bundle.getMessage("ButtonCreate"));
+    JButton cancel = new JButton(Bundle.getMessage("ButtonCancel")); // NOI18N
+    JButton apply = new JButton(Bundle.getMessage("ButtonApply")); // NOI18N
+    JButton create = new JButton(Bundle.getMessage("ButtonCreate")); // NOI18N
 
     /**
      * Constructor providing a blank panel to configure a new signal mast after
@@ -65,7 +68,6 @@ public class AddSignalMastPanel extends JPanel {
      */
     public AddSignalMastPanel() {
         // get the list of possible signal types (as shown by panes)
-        List<SignalMastAddPane> panes = new ArrayList<>();
         { // scoping for temporary variables
             java.util.ServiceLoader.load(SignalMastAddPane.class).forEach((pane) -> {
                  if (pane.isAvailable()) {
@@ -92,19 +94,19 @@ public class AddSignalMastPanel extends JPanel {
         p.add(l);
         p.add(userName);
 
-        l = new JLabel(Bundle.getMessage("SigSys") + ": ");
+        l = new JLabel(Bundle.getMessage("SigSys") + ": "); // NOI18N
         p.add(l);
         p.add(sigSysBox);
 
-        l = new JLabel(Bundle.getMessage("MastType") + ": ");
+        l = new JLabel(Bundle.getMessage("MastType") + ": "); // NOI18N
         p.add(l);
         p.add(mastBox);
 
-        l = new JLabel(Bundle.getMessage("DriverType") + ": ");
+        l = new JLabel(Bundle.getMessage("DriverType") + ": "); // NOI18N
         p.add(l);
         p.add(signalMastDriver);
 
-        l = new JLabel(Bundle.getMessage("AllowUnLitLabel") + ": ");
+        l = new JLabel(Bundle.getMessage("AllowUnLitLabel") + ": "); // NOI18N
         p.add(l);
         p.add(allowUnLit);
 
@@ -118,10 +120,10 @@ public class AddSignalMastPanel extends JPanel {
         add(centerPanel);
         signalMastDriver.addItemListener(new ItemListener(){
             public void itemStateChanged(ItemEvent evt) {
-                    cl.show(centerPanel, (String)evt.getItem());
+                    selection((String)evt.getItem());
                 }
         });
-
+        
         // button region
         JPanel buttonHolder = new JPanel();
         buttonHolder.setLayout(new FlowLayout(FlowLayout.TRAILING));
@@ -177,6 +179,9 @@ public class AddSignalMastPanel extends JPanel {
         //+    }
         //+});
 
+        // default to 1st pane
+        currentPane = panes.get(0);
+        
         // load the list of signal systems
         SignalSystemManager man = InstanceManager.getDefault(SignalSystemManager.class);
         String[] names = man.getSystemNameArray();
@@ -188,7 +193,10 @@ public class AddSignalMastPanel extends JPanel {
         }
 
         loadMastDefinitions();
-        updateSelectedDriver();
+
+        // select the 1st one  //+ should be load from preference
+        selection(panes.get(0).getPaneName());  // there has to be at least one, so we can do the update
+
         //+ updateHeads();
         //+ refreshHeadComboBox();
         sigSysBox.addItemListener(new ItemListener() {
@@ -206,6 +214,17 @@ public class AddSignalMastPanel extends JPanel {
      * Select a particular signal implementation to display
      */
     void selection(String view) {
+        // find the new pane
+        for (SignalMastAddPane pane : panes) {
+            if (pane.getPaneName().equals(view)) {
+                currentPane = pane;
+            }
+        }
+        
+        // update that selected pane before display
+        updateSelectedDriver();
+        
+        // and show
         cl.show(centerPanel, view);
     }
 
@@ -322,6 +341,11 @@ public class AddSignalMastPanel extends JPanel {
      */
     protected void updateSelectedDriver() {
         //+ have to do whatever updates are needed to show the display
+        //+ this is redundant computation to find the mast info??
+        String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
+        mastType = mastType.substring(11, mastType.indexOf(".xml"));
+        DefaultSignalAppearanceMap sigMap = DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
+        currentPane.setAspectNames(sigMap.getAspects());
         
         //+ updateUnLit();
         validate();
