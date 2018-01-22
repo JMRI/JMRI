@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;
@@ -47,6 +48,8 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
     static public final int ACTIVEDELAY = USEGLOBALDELAY + 1;
     static public final int INACTIVEDELAY = ACTIVEDELAY + 1;
     static public final int PULLUPCOL = INACTIVEDELAY + 1;
+    static public final int FORGETCOL = PULLUPCOL + 1;
+    static public final int QUERYCOL = FORGETCOL + 1;
 
     SensorManager senManager = null;
     // for icon state col
@@ -158,7 +161,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
     /** {@inheritDoc} */
     @Override
     public int getColumnCount() {
-        return PULLUPCOL + 1;
+        return QUERYCOL + getPropertyColumnCount() + 1;
     }
 
     /** {@inheritDoc} */
@@ -177,6 +180,10 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
               return Bundle.getMessage("SensorInActiveDebounce");
            case PULLUPCOL:
               return Bundle.getMessage("SensorPullUp");
+           case FORGETCOL:
+              return Bundle.getMessage("StateForgetHeader");
+           case QUERYCOL:
+              return Bundle.getMessage("StateQueryHeader");
            default:
               return super.getColumnName(col);
         }
@@ -198,6 +205,10 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
               return String.class;
            case PULLUPCOL:
               return JComboBox.class;
+           case FORGETCOL:
+               return JButton.class;
+           case QUERYCOL:
+               return JButton.class;
            case VALUECOL:
                if (_graphicState) {
                     return JLabel.class; // use an image to show sensor state
@@ -220,6 +231,13 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         }
         if (col == EDITCOL) {
             return new JTextField(7).getPreferredSize().width;
+        } else if (col == FORGETCOL) {
+            return new JButton(Bundle.getMessage("StateForgetButton"))
+                    .getPreferredSize().width;
+        } else if (col == QUERYCOL) {
+            return new JButton(Bundle.getMessage("StateQueryButton"))
+                    .getPreferredSize()
+                    .width;
         } else {
             return super.getPreferredWidth(col);
         }
@@ -248,8 +266,14 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 return true;
             }
         }
-        if(col == PULLUPCOL){
-            return(senManager.isPullResistanceConfigurable());
+        if (col == PULLUPCOL) {
+            return (senManager.isPullResistanceConfigurable());
+        }
+        if (col == FORGETCOL) {
+            return true;
+        }
+        if (col == QUERYCOL) {
+            return true;
         }
         return super.isCellEditable(row, col);
     }
@@ -289,6 +313,10 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 }
             });
             return c;
+        } else if (col == FORGETCOL) {
+            return Bundle.getMessage("StateForgetButton");
+        } else if (col == QUERYCOL) {
+            return Bundle.getMessage("StateQueryButton");
         } else {
             return super.getValueAt(row, col);
         }
@@ -340,6 +368,19 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         } else if (col == PULLUPCOL) {
             JComboBox<Sensor.PullResistance> cb = (JComboBox<Sensor.PullResistance>) value;
             s.setPullResistance((Sensor.PullResistance)cb.getSelectedItem());
+        } else if (col == FORGETCOL) {
+            try {
+                s.setKnownState(Sensor.UNKNOWN);
+            } catch (JmriException e) {
+                log.warn("Failed to set state to UNKNOWN: ", e);
+            }
+        } else if (col == QUERYCOL) {
+            try {
+                s.setKnownState(Sensor.UNKNOWN);
+            } catch (JmriException e) {
+                log.warn("Failed to set state to UNKNOWN: ", e);
+            }
+            s.requestUpdateFromLayout();
         } else if (col == VALUECOL && _graphicState) { // respond to clicking on ImageIconRenderer CellEditor
             clickOn(s);
             fireTableRowsUpdated(row, row);
@@ -511,6 +552,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         showPullUp(false);
         this.table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         this.table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+        showStateForgetAndQuery(false);
         super.configureTable(table);
     }
 
@@ -535,6 +577,14 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
     public void showPullUp(boolean show) {
         XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
         TableColumn column = columnModel.getColumnByModelIndex(PULLUPCOL);
+        columnModel.setColumnVisible(column, show);
+    }
+
+    public void showStateForgetAndQuery(boolean show) {
+        XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
+        TableColumn column = columnModel.getColumnByModelIndex(FORGETCOL);
+        columnModel.setColumnVisible(column, show);
+        column = columnModel.getColumnByModelIndex(QUERYCOL);
         columnModel.setColumnVisible(column, show);
     }
 

@@ -31,7 +31,9 @@
 	<div id="mainContent">
 	    <h1>JMRI: Web Site</h1>
 
-This page discusses technical aspects behind the JMRI web site.
+        <p>This page discusses technical aspects behind the JMRI web site
+        at <a href="http://jmri.org">jmri.org</a> and also providing
+        parts of the help system in JMRI.</p>
 <p>
 If you just want to know how to make a small change to a web or
 help page, please see the
