@@ -23,15 +23,13 @@
 
     <div id="mainContent">
 
-      <h1>JMRI: Getting the Code</h1>
+      <h1>JMRI Code: Getting the Code</h1>
 
       <h2>Background</h2>
 
       <p>"<a href="https://git-scm.com">Git</a>" is a powerful,
       free system for managing code as it's worked-on by a
-      distributed group. Like <a href="getsvncode.shtml">SVN</a>
-      before it, and <a href="getcvscode.shtml">CVS</a> before
-      that, it allows a group like JMRI to cooperate effectively.
+      distributed group. It allows a group like JMRI to cooperate effectively.
       We keep the JMRI code, help files, sample scripts, XML files,
       etc. in a Git repository hosted on <a href=
       "https://github.com/JMRI">GitHub.com</a>. The <a href=
@@ -251,15 +249,14 @@ into it.
 
       <h2>Access to Old Releases</h2>
 
-      <p>The best way to retrieve the source for releases 4.1.2 and
+        <p>The best way to retrieve the source for releases 4.1.2 and
       earlier is from the <a href="getsvncode.shtml">SVN
-      Repository</a>. Please see those instructions for
-      details.</p>
+      Repository</a> (see the link for details.</p>
 
       <p>The best way to retrieve the source for releases 2.12 and
       earlier is from the <a href="getcvscode.shtml">CVS
-      Repository</a>. Please see those instructions for
-      details.</p><!--#include virtual="/Footer" -->
+      Repository</a> (see the link for details.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

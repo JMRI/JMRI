@@ -19,7 +19,7 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Technical Info</h1>
+      <h1>JMRI: Technical Information</h1>
 
       <p>You don't need to work with your own copy of the JMRI
       source code, compilers, etc if you just want to run the
@@ -28,9 +28,10 @@
       play with the code, or get a copy of the program that
       contains updates since the last downloadable version was
       published, this section of the web site will help you get
-      started. <a id="moreinfo" name="moreinfo"></a></p>
+      started.</p>
 
-      <h2>Technical background info on the JMRI project</h2>
+      <a id="moreinfo" name="moreinfo"></a>
+      <h2>Technical background on the JMRI project</h2>
 
       <p>JMRI is intended as a jumping-off point for hobbyists who
       want to control their layouts from a computer without having
@@ -264,8 +265,9 @@
         This includes decoder definition files: You are welcome to
         use them, including reformatting their content to another
         form, but you must give JMRI credit for their content.</li>
-      </ul>If you have any questions about this, please <a href=
-      "mailto:jmri@pacbell.net">contact us</a> directly.
+      </ul>
+      <p>If you have any questions about this, please <a href=
+      "mailto:jmri@pacbell.net">contact us</a> directly.</p>
 
       <h2>JMRI Code Visualization</h2>
       <p>To show how much work goes into making JMRI run and
@@ -275,7 +277,7 @@
       It shows the relative size of the code in each file and the
       structure in which the files are stored.
       </p>
-      <p>A couple of years ago, Dennis Miller created a <a href=
+      <p>In 2009, Dennis Miller created a <a href=
       "/community/codeswarm.shtml">Code Swarm of JMRI
       development</a> from its inception up to January 2009. A Code
       Swarm is a fascinating and dynamic visual representation of

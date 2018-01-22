@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -31,14 +30,14 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: CVS FAQ</h1>This is a list of Frequently Asked
-      Questions for CVS, particularly regarding how we use it with
-      JMRI.
+      <h1>JMRI Code: CVS FAQ</h1>
+      <p>This is a list of Frequently Asked Questions for CVS,
+      particularly regarding how we use it with JMRI.</p>
 
-      <p><em>Note: JMRI code is not maintained in CVS any more. To
-      get the current code, please see the pages on the <a href=
-      "getgitcode.shtml">accessing the code via the Git
-      repository.</a></em></p>
+      <p class="important">Note: JMRI code is not maintained in CVS any more. To
+      get the current code, please see the help pages on <a href=
+      "getgitcode.shtml">Accessing the code via the Git
+      repository.</a></p>
 
       <p>See also the <a href="index.shtml">Technical index</a> for
       more information on maintaining JMRI code. <a name="cvstool"

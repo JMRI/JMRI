@@ -18,12 +18,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide access to a simulated SPROG system.
  * <p>
- * Currently, the SPROG SimulatorAdapter reacts to commands sent from the user interface
+ * Can be loaded as either a Programmer or Command Station.
+ * The SPROG SimulatorAdapter reacts to commands sent from the user interface
  * with an appropriate reply message.
- * Based on jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter / DCCppSimulatorAdapter 2017
  * <p>
- * NOTE: Some material in this file was modified from other portions of the
- * support infrastructure.
+ * Based on jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter / DCCppSimulatorAdapter 2017
  *
  * @author Paul Bender, Copyright (C) 2009-2010
  * @author Mark Underwood, Copyright (C) 2015
@@ -39,6 +38,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     private boolean outputBufferEmpty = true;
     private boolean checkBuffer = true;
     private boolean trackPowerState = false;
+    private SprogMode operatingMode = SprogMode.OPS;
 
     // Simulator responses
     String SPR_OK = "OK";
@@ -46,12 +46,17 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     String SPR_PR = "\nP> "; // prompt
 
     public SimulatorAdapter() {
-        super(new SprogSystemConnectionMemo(SprogMode.SERVICE)); // uses default user name, suppose SERVICE mode, not OPS
+        super(new SprogSystemConnectionMemo(SprogMode.OPS)); // uses default user name, start as OPS mode, may set to SERVICE from connection
         setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
         this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogSimulatorTitle"));
         // create the traffic controller
         control = new SprogTrafficController(this.getSystemConnectionMemo());
         this.getSystemConnectionMemo().setSprogTrafficController(control);
+
+        options.put("OperatingMode", // NOI18N
+                new Option(Bundle.getMessage("MakeLabel", Bundle.getMessage("SprogSimOption")), // NOI18N
+                        new String[]{Bundle.getMessage("SprogProgrammerTitle"),
+                                Bundle.getMessage("SprogCSTitle")}, true));
     }
 
     @Override
@@ -117,6 +122,13 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
             } catch (jmri.JmriException e) {
                 log.error(e.toString());
             }
+        }
+
+        if (getOptionState("OperatingMode") != null && getOptionState("OperatingMode").equals(Bundle.getMessage("SprogProgrammerTitle"))) {
+            this.getSystemConnectionMemo().setSprogMode(SprogMode.SERVICE);
+            operatingMode = SprogMode.SERVICE;
+        } else { // default, also used after Locale change
+            this.getSystemConnectionMemo().setSprogMode(SprogMode.OPS);
         }
 
         // start the simulator
@@ -219,7 +231,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
      */
     private SprogMessage readMessage() {
         SprogMessage msg = null;
-//        log.debug("Simulator reading message");
+        // log.debug("Simulator reading message");
         try {
             if (inpipe != null && inpipe.available() > 0) {
                 msg = loadChars();
@@ -255,7 +267,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
             case 'C':
             case 'V':
-                log.debug("Read CV detected");
+                log.debug("Read/Write CV detected");
                 reply = new SprogReply("= " + msg.toString().substring(2) + "\n"); // echo CV value (hex)
                 break;
 

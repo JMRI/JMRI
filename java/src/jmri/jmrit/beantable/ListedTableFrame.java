@@ -16,6 +16,7 @@ import java.util.Vector;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
@@ -395,6 +396,17 @@ public class ListedTableFrame extends BeanTableFrame {
                 addButton.addActionListener((ActionEvent e) -> {
                     tableAction.addPressed(e);
                 });
+            }
+            if (dataModel.getPropertyColumnCount() > 0) {
+                final JCheckBox propertyVisible = new JCheckBox(Bundle.getMessage
+                        ("ShowSystemSpecificProperties"));
+                propertyVisible.setToolTipText(Bundle.getMessage
+                        ("ShowSystemSpecificPropertiesToolTip"));
+                addToBottomBox(propertyVisible);
+                propertyVisible.addActionListener((ActionEvent e) -> {
+                    dataModel.setPropertyColumnsVisible(dataTable, propertyVisible.isSelected());
+                });
+                dataModel.setPropertyColumnsVisible(dataTable, false);
             }
             dataModel.persistTable(dataTable);
         }

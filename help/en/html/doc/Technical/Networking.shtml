@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -31,10 +30,11 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Network Access</h1>This page describes various
+      <h1>JMRI Code: Network Access</h1>
+      <p>This page describes various
       forms of network access available in JMRI. More capabilities
       are added all the time, so please check with the user group
-      for up-to-date information.
+      for up-to-date information.</p>
 
       <h2>Methods of Network Access</h2>JMRI interacts with
       networks in two basic forms: downstream connections and
@@ -228,7 +228,7 @@
       page for more information on Zeroconf/Bonjour/"DNS Service
       Discovery" networking.</p>
 
-      <p>See also "man dns-sd" for more information on the dns-sd
+      <p>Search "man dns-sd" for more information on the dns-sd
       debugging command-line tool.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
