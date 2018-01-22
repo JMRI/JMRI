@@ -29,6 +29,12 @@ public class OakTreeSystemConnectionMemoTest extends jmri.jmrix.SystemConnection
           @Override
           public void sendSerialMessage(SerialMessage m, SerialListener reply) {
           }
+          @Override
+          public void transmitLoop(){
+          }
+          @Override
+          public void receiveLoop(){
+          }
        });
        memo.configureManagers();
        scm = memo;
