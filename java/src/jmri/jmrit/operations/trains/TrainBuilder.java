@@ -341,7 +341,7 @@ public class TrainBuilder extends TrainCommon {
         log.debug("Done building train ({})", _train.getName());
     }
     
-    /*
+    /**
      * show train build options in detailed mode
      */
     private void showTrainBuildOptions() {
@@ -455,6 +455,12 @@ public class TrainBuilder extends TrainCommon {
         addLine(_buildReport, ONE, BLANK_LINE); // add line
     }
     
+    /**
+     * Show and initialize the train's route.  Determines the number of car 
+     * moves requested for this train.  Also adjust the number of car moves
+     * if the random car moves option was selected.
+     * @throws BuildFailedException
+     */
     private void showAndInitializeTrainRoute() throws BuildFailedException {
         int requestedCarMoves = 0; // how many cars were asked to be moved
         // TODO: DAB control minimal build by each train
@@ -492,7 +498,7 @@ public class TrainBuilder extends TrainCommon {
                         new Object[]{rl.getId(), rl.getName(), rl.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase()}));
                 rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves for this location
             } else {
-                // we're going to use this location, so initialize the location
+                // we're going to use this location, so initialize the route location
                 rl.setCarMoves(0); // clear the number of moves
                 requestedCarMoves += rl.getMaxCarMoves(); // add up the total number of car moves requested
                 // show the type of moves allowed at this location
@@ -568,6 +574,14 @@ public class TrainBuilder extends TrainCommon {
         _train.setNumberCarsRequested(requestedCarMoves); // save number of car moves requested
     }
 
+    /**
+     * Show how many engines are required for this train, and if a certain road
+     * name for the engine is requested. Show if there are any engine changes in
+     * the route, or if helper engines are needed. There can be up to 2 engine
+     * changes or helper requests. Show if caboose or FRED is needed for train,
+     * and if there's a road name requested. There can be up to 2 caboose
+     * changes in the route.
+     */
     private void showTrainRequirements() {
         addLine(_buildReport, ONE, BLANK_LINE); // add line
         addLine(_buildReport, ONE, Bundle.getMessage("TrainRequirements"));
@@ -627,8 +641,12 @@ public class TrainBuilder extends TrainCommon {
         addLine(_buildReport, ONE, BLANK_LINE); // add line
     }
     
-    /*
-     * figures out if train terminates into staging, if so loads the termination track in staging
+    /**
+     * Figures out if the train terminates into staging, and if true, sets the
+     * termination track. Note if the train is returning back to the same track
+     * in staging _terminateStageTrack is null, and is loaded later when the
+     * departure track is determined. 
+     * @throws BuildFailedException
      */
     private void determineIfTrainTerminatesIntoStaging() throws BuildFailedException {
         // does train terminate into staging?
@@ -675,6 +693,15 @@ public class TrainBuilder extends TrainCommon {
         }
     }
     
+
+    /**
+     * Figures out if the train is departing staging, and if true, sets the
+     * departure track. Also sets the arrival track if the train is returning to
+     * the same departure track in staging. This routine also sets up the engine
+     * swaps in the train's route. 
+     * @throws NumberFormatException
+     * @throws BuildFailedException
+     */
     private void determineIfTrainDepartsStagingAndLoadEngines() throws NumberFormatException, BuildFailedException {
         // allow up to two engine and caboose swaps in the train's route
         RouteLocation engineTerminatesFirstLeg = _train.getTrainTerminatesRouteLocation();   
@@ -804,9 +831,14 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildDoneAssingEnginesTrain"),
                     new Object[]{_train.getName()}));
         }
-        
     }
     
+    /**
+     * Adds and removes cabooses or car with FRED in the train's route. Up to 2
+     * caboose changes.
+     * 
+     * @throws BuildFailedException
+     */
     private void addCabooseOrFredToTrain() throws BuildFailedException {
         // allow up to two caboose swaps in the train's route
         RouteLocation cabooseOrFredTerminatesFirstLeg = _train.getTrainTerminatesRouteLocation();
@@ -891,7 +923,7 @@ public class TrainBuilder extends TrainCommon {
     /**
      * Ask which staging track the train is to terminate on.
      *
-     * @return The arrival track selected by the user.
+     * @return The termination track selected by the user.
      */
     private Track promptToStagingDialog() {
         List<Track> tracksIn = _terminateLocation.getTrackByNameList(null);
@@ -930,11 +962,22 @@ public class TrainBuilder extends TrainCommon {
         return getEngines(numberOfEngines, model, road, rl, rld, false);
     }
 
+ 
     /**
-     * Get the engines for this train. If departing from staging
-     * engines must come from that track.
-     *
+     * Get the engines for this train at a route location. If departing from
+     * staging engines must come from that track. Finds the required number of
+     * engines in a consist, or if the option to build from single locos, builds
+     * a consist for the user. When true, engines successfully added to train
+     * for the leg requested.
+     * 
+     * @param numberOfEngines Number of engines to assign to the train for this leg
+     * @param model Optional model name for the engines
+     * @param road Optional road name for the engines
+     * @param rl Departure route location for the engines
+     * @param rld Destination route location for the engines
+     * @param useBunit True if B unit engine is allowed
      * @return true if correct number of engines found.
+     * @throws BuildFailedException
      */
     private boolean getEngines(int numberOfEngines, String model, String road, RouteLocation rl, RouteLocation rld,
             boolean useBunit) throws BuildFailedException {
@@ -1184,6 +1227,14 @@ public class TrainBuilder extends TrainCommon {
         return false;
     }
 
+    /**
+     * Sets the destination track for an engine
+     * @param engine
+     * @param rl Departure route location
+     * @param rld Destination route location
+     * @param terminateTrack Staging track if there's one
+     * @return true if destination track found and set
+     */
     private boolean setLocoDestination(Engine engine, RouteLocation rl, RouteLocation rld, Track terminateTrack) {
         // is there a staging track?
         if (terminateTrack != null) {
@@ -1313,7 +1364,7 @@ public class TrainBuilder extends TrainCommon {
                 // car with FRED departing staging must leave with train
                 if (car.getTrack() == departTrack) {
                     foundCarWithFred = false;
-                    if (checkCarForDestinationAndTrack(car, rl, rld)) {
+                    if (checkAndAddCarForDestinationAndTrack(car, rl, rld)) {
                         if (car.getTrain() == _train) {
                             foundCarWithFred = true;
                         }
@@ -1341,7 +1392,7 @@ public class TrainBuilder extends TrainCommon {
                         _carIndex--;
                         continue;
                     }
-                    if (checkCarForDestinationAndTrack(car, rl, rld)) {
+                    if (checkAndAddCarForDestinationAndTrack(car, rl, rld)) {
                         if (car.getTrain() == _train) {
                             foundCarWithFred = true;
                         }
@@ -1417,7 +1468,7 @@ public class TrainBuilder extends TrainCommon {
                 // car departing staging must leave with train
                 if (car.getTrack() == departTrack) {
                     foundCaboose = false;
-                    if (checkCarForDestinationAndTrack(car, rl, rld)) {
+                    if (checkAndAddCarForDestinationAndTrack(car, rl, rld)) {
                         if (car.getTrain() == _train) {
                             foundCaboose = true;
                         }
@@ -1445,7 +1496,7 @@ public class TrainBuilder extends TrainCommon {
                     if (leadEngine != null && car.getRoadName().equals(leadEngine.getRoadName())) {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCabooseRoadMatches"),
                                 new Object[]{car.toString(), car.getRoadName(), leadEngine.toString()}));
-                        if (checkCarForDestinationAndTrack(car, rl, rld)) {
+                        if (checkAndAddCarForDestinationAndTrack(car, rl, rld)) {
                             if (car.getTrain() == _train) {
                                 foundCaboose = true;
                             }
@@ -1475,7 +1526,7 @@ public class TrainBuilder extends TrainCommon {
                                     .equals(TrainCommon.splitString(leadEngine.getRoadName()))) {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCabooseRoadMatches"),
                                 new Object[]{car.toString(), car.getRoadName(), leadEngine.toString()}));
-                        if (checkCarForDestinationAndTrack(car, rl, rld)) {
+                        if (checkAndAddCarForDestinationAndTrack(car, rl, rld)) {
                             if (car.getTrain() == _train) {
                                 foundCaboose = true;
                                 break;
@@ -1499,7 +1550,7 @@ public class TrainBuilder extends TrainCommon {
                     }
                     // okay, we found a caboose at the departure location
                     cabooseAtDeparture = true;
-                    if (checkCarForDestinationAndTrack(car, rl, rld)) {
+                    if (checkAndAddCarForDestinationAndTrack(car, rl, rld)) {
                         if (car.getTrain() == _train) {
                             foundCaboose = true;
                             break;
@@ -1528,8 +1579,8 @@ public class TrainBuilder extends TrainCommon {
 
     /**
      * Removes the remaining cabooses and cars with FRED from consideration.
-     * Also saves a car's final destination in case of train reset.
-     *
+     * Also saves a car's final destination in case of train reset. 
+     * @throws BuildFailedException
      */
     private void removeCaboosesAndCarsWithFredAndSaveFinalDestination() throws BuildFailedException {
         addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
@@ -1557,6 +1608,7 @@ public class TrainBuilder extends TrainCommon {
      * Remove unwanted cars from the car list. Remove cars that don't have a
      * track assignment, and check that the car can be serviced by this train.
      * Lists all cars available to train by location.
+     * @throws BuildFailedException
      */
     private void removeAndListCars() throws BuildFailedException {
         addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
@@ -1917,6 +1969,7 @@ public class TrainBuilder extends TrainCommon {
      * checks to see if the kernel has a lead car and the lead car is in
      * service.
      *
+     * @throws BuildFailedException
      */
     private void checkKernel(Car car) throws BuildFailedException {
         boolean foundLeadCar = false;
@@ -1946,6 +1999,7 @@ public class TrainBuilder extends TrainCommon {
      * correct number of set outs. The destination must accept all cars in the
      * pick up block.
      *
+     * @throws BuildFailedException
      */
     private void blockCarsFromStaging() throws BuildFailedException {
         if (_departStageTrack == null || !_departStageTrack.isBlockCarsEnabled()) {
@@ -1980,6 +2034,7 @@ public class TrainBuilder extends TrainCommon {
     /**
      * Blocks cars out of staging by assigning the largest blocks of cars to
      * locations requesting the most moves.
+     * @throws BuildFailedException
      */
     private void blockByLocationMoves() throws BuildFailedException {
         List<RouteLocation> routeList = _train.getRoute().getLocationsBySequenceList();
@@ -2083,7 +2138,8 @@ public class TrainBuilder extends TrainCommon {
     }
 
     /**
-     * Returns the routeLocation with the most available moves.
+     * Returns the routeLocation with the most available moves.  Used for blocking
+     * a train out of staging.
      *
      * @param routeList The route for this train.
      * @param blockId Where these cars were originally picked up from.
@@ -2119,6 +2175,7 @@ public class TrainBuilder extends TrainCommon {
      * @param percent How much of the available moves should be used in this
      *            pass.
      * @param firstPass True if first pass, ignore cars in staging.
+     * @throws BuildFailedException
      */
     private void placeCars(int percent, boolean firstPass) throws BuildFailedException {
         addLine(_buildReport, THREE, BLANK_LINE); // add line when in normal report mode
@@ -2279,6 +2336,7 @@ public class TrainBuilder extends TrainCommon {
      * @param routeIndex Where in the route to add cars to this train.
      * @param isSecondPass When true this is the second time we've looked at
      *            these cars. Used to perform local moves.
+     * @throws BuildFailedException
      */
     private void findDestinationsForCarsFromLocation(RouteLocation rl, int routeIndex, boolean isSecondPass)
             throws BuildFailedException {
@@ -2496,6 +2554,7 @@ public class TrainBuilder extends TrainCommon {
     /**
      * Checks to see if all cars on a staging track have been given a
      * destination. Throws exception if there's a car without a destination.
+     * @throws BuildFailedException
      */
     private void checkDepartureForStaging(int percent) throws BuildFailedException {
         if (percent != 100 || _departStageTrack == null) {
@@ -2537,10 +2596,11 @@ public class TrainBuilder extends TrainCommon {
     }
 
     /**
-     *
+     * Adds an engine to the train.
+     * @param engine the engine being added to the train
      * @param rl where in the train's route to pick up the engine
      * @param rld where in the train's route to set out the engine
-     * @param track destination track for this engine
+     * @param track the destination track for this engine
      */
     private void addEngineToTrain(Engine engine, RouteLocation rl, RouteLocation rld, Track track) {
         _leadEngine = engine; // needed in case there's a engine change in the train's route
@@ -2573,12 +2633,12 @@ public class TrainBuilder extends TrainCommon {
     }
 
     /**
-     * Add car to train
+     * Add car to train, and adjust train length and weight
      *
-     * @param car The car!
-     * @param rl the planned origin for this car
-     * @param rld the planned destination for this car
-     * @param track the final destination for car
+     * @param car the car being added to the train
+     * @param rl the departure route location for this car
+     * @param rld the destination route location for this car
+     * @param track the destination track for this car
      *
      */
     private void addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track) {
@@ -2666,6 +2726,12 @@ public class TrainBuilder extends TrainCommon {
         }
     }
 
+    /**
+     * Determine if rolling stock can be picked up based on train direction at the route location.
+     * @param rs The rolling stock
+     * @param rl The rolling stock's route location
+     * @return
+     */
     private boolean checkPickUpTrainDirection(RollingStock rs, RouteLocation rl) {
         // check that car or engine is located on a track
         if (rs.getTrack() == null) {
@@ -2691,6 +2757,11 @@ public class TrainBuilder extends TrainCommon {
         return false;
     }
 
+    /**
+     * Used to report a problem picking up the rolling stock due to train direction.
+     * @param rl The route location
+     * @return true if there isn't a problem
+     */
     private boolean checkPickUpTrainDirection(RouteLocation rl) {
         // ignore local switcher direction
         if (_train.isLocalSwitcher()) {
@@ -2709,9 +2780,9 @@ public class TrainBuilder extends TrainCommon {
      * Checks to see if train length would be exceeded if this car was added to
      * the train.
      *
-     * @param car the car
-     * @param rl the planned origin for this car
-     * @param rld the planned destination for this car
+     * @param car the car in question
+     * @param rl the departure route location for this car
+     * @param rld the destination route location for this car
      * @return true if car can be added to train
      */
     private boolean checkTrainLength(Car car, RouteLocation rl, RouteLocation rld) {
@@ -3221,6 +3292,7 @@ public class TrainBuilder extends TrainCommon {
      * @param car the car with the load
      * @return true if there's a schedule that can be routed to for this car and
      *         load
+     * @throws BuildFailedException
      */
     private boolean findFinalDestinationForCarLoad(Car car) throws BuildFailedException {
         boolean routeToSpurFound = false;
@@ -3430,6 +3502,7 @@ public class TrainBuilder extends TrainCommon {
      * schedule and load car if possible.
      *
      * @param car the car
+     * @throws BuildFailedException
      */
     private boolean generateCarLoadFromStaging(Car car) throws BuildFailedException {
         if (car.getTrack() == null ||
@@ -3544,6 +3617,7 @@ public class TrainBuilder extends TrainCommon {
      * load.
      *
      * @param car the car
+     * @throws BuildFailedException
      */
     private boolean generateCarLoadStagingToStaging(Car car) throws BuildFailedException {
         if (car.getTrack() == null ||
@@ -3629,6 +3703,7 @@ public class TrainBuilder extends TrainCommon {
      * @param car the car.
      * @param track the car's destination track that has the schedule.
      * @return ScheduleItem si if match found, null otherwise.
+     * @throws BuildFailedException
      */
     private ScheduleItem getScheduleItem(Car car, Track track) throws BuildFailedException {
         if (track.getSchedule() == null) {
@@ -3835,7 +3910,19 @@ public class TrainBuilder extends TrainCommon {
         addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
     }
 
-    private boolean checkCarForDestinationAndTrack(Car car, RouteLocation rl, RouteLocation rld)
+    /**
+     * Determine if caboose or car with FRED was given a destination and track.
+     * Used when car is departing staging, tries to add car to train. Need to
+     * check if there's been a train assignment.
+     * 
+     * @param car the car in question
+     * @param rl car's current route location
+     * @param rld car's destination route location
+     * @return true if car has a destination. Need to check if there's been a
+     *         train assignment.
+     * @throws BuildFailedException
+     */
+    private boolean checkAndAddCarForDestinationAndTrack(Car car, RouteLocation rl, RouteLocation rld)
             throws BuildFailedException {
         int index;
         for (index = 0; index < _routeList.size(); index++) {
@@ -3851,7 +3938,7 @@ public class TrainBuilder extends TrainCommon {
      *
      * @param rl the car's route location
      * @param routeIndex where in the route the car pick up is
-     * @return true if car has a destination.
+     * @return true if car has a destination. Need to check if car has a train assignment.
      * @throws BuildFailedException if destination was staging and can't place
      *             car there
      */
@@ -4076,7 +4163,7 @@ public class TrainBuilder extends TrainCommon {
     }
 
     /**
-     * Find a destination for the car at a specified location.
+     * Find a destination and track for a car at a route location.
      *
      * @param car the car!
      * @param rl The car's route location
@@ -4741,6 +4828,7 @@ public class TrainBuilder extends TrainCommon {
      * formula HPT x 12 / % Grade = Speed, is used to determine the horsepower
      * required. Speed is fixed at 36 MPH. For example a 1% grade requires a
      * minimum of 3 HPT.
+     * @throws BuildFailedException
      */
     private void checkEngineHP() throws BuildFailedException {
         if (!_train.getNumberEngines().equals(Train.AUTO_HPT) ||
@@ -4815,9 +4903,12 @@ public class TrainBuilder extends TrainCommon {
         }
     }
 
-    /*
+    /**
      * Removes engine from train and attempts to replace it with one that meets
-     * the HP requirements of the train.
+     * the HP requirements of the train. 
+     * @param hpNeeded How much hp is needed
+     * @param leadEngine The lead engine for this leg
+     * @throws BuildFailedException
      */
     private void findNewEngine(int hpNeeded, Engine leadEngine) throws BuildFailedException {
         // save lead engine's rl, and rld
@@ -4852,6 +4943,10 @@ public class TrainBuilder extends TrainCommon {
         }
     }
 
+    /**
+     * Remove rolling stock from train
+     * @param rs the rolling stock to be removed
+     */
     private void removeRollingStockFromTrain(RollingStock rs) {
         // adjust train length and weight for each location that the rolling stock is in the train
         boolean inTrain = false;
@@ -4876,6 +4971,7 @@ public class TrainBuilder extends TrainCommon {
      * MPH. The formula HPT x 12 / % Grade = Speed, is used to determine the
      * horsepower needed. For example a 1% grade requires a minimum of 3 HPT.
      *
+     * @throws BuildFailedException
      */
     private void checkNumnberOfEnginesNeeded() throws BuildFailedException {
         if (_reqNumEngines == 0 || !_train.isBuildConsistEnabled() || Setup.getHorsePowerPerTon() == 0) {
@@ -4955,6 +5051,15 @@ public class TrainBuilder extends TrainCommon {
         addLine(_buildReport, THREE, BLANK_LINE);
     }
 
+    /**
+     * Adds locos to the train if needed.
+     * @param hpAvailable the engine hp already assigned to the train for this leg
+     * @param extraHpNeeded the additional hp needed
+     * @param rlNeedHp where in the route the additional hp is needed
+     * @param rl the start of the leg
+     * @param rld the end of the leg
+     * @throws BuildFailedException
+     */
     private void addLocos(int hpAvailable, int extraHpNeeded, RouteLocation rlNeedHp, RouteLocation rl,
             RouteLocation rld) throws BuildFailedException {
         if (rlNeedHp == null) {
