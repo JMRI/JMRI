@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 
 /**
  * Test simple functioning of SerialMonAction
@@ -18,14 +19,14 @@ public class SerialMonActionTest {
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialMonAction action = new SerialMonAction("Maple test Action");
+        SerialMonAction action = new SerialMonAction("Maple test Action",new MapleSystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialMonAction action = new SerialMonAction(); 
+        SerialMonAction action = new SerialMonAction(new MapleSystemConnectionMemo()); 
         Assert.assertNotNull("exists", action);
     }
 

@@ -17,7 +17,7 @@ public class XpaPortControllerTest extends jmri.jmrix.AbstractSerialPortControll
     public void setUp(){
        JUnitUtil.setUp();
        XpaSystemConnectionMemo memo = new XpaSystemConnectionMemo();
-       XpaTrafficController tc = new XpaTrafficController();
+       new XpaTrafficController();
        apc = new XpaPortController(memo){
             @Override
             public boolean status(){

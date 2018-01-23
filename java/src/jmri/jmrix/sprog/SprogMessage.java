@@ -2,13 +2,12 @@ package jmri.jmrix.sprog;
 
 import jmri.ProgrammingMode;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Encode a message to an SPROG command station.
- * <P>
+ * <p>
  * The {@link SprogReply} class handles the response from the command station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
@@ -31,6 +30,27 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
     // Longest boot message is 256bytes each preceded by DLE + 2xSTX + ETX
     public static final int MAXSIZE = 515;
 
+    private static int msgId = 0;
+    protected int _id = -1;
+    
+    /**
+     * Get next message id
+     * 
+     * For modules that need to match their own message/reply pairs in strict sequence, e.g., 
+     * SprogCommandStation, return a unique message id. The id wraps at a suitably large
+     * value.
+     * 
+     * @return the message id
+     */
+    protected synchronized int newMsgId() {
+        msgId = (msgId+1)%65536;
+        return msgId;
+    }
+    
+    public int getId() {
+        return _id;
+    }
+    
     // create a new one
     public SprogMessage(int i) {
         if (i < 1) {
@@ -38,6 +58,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         }
         _nDataChars = i;
         _dataChars = new int[i];
+        _id = newMsgId();
     }
 
     /**
@@ -65,7 +86,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
                 this.setElement(i++, s.charAt(1));
             }
         }
-
+        _id = newMsgId();
     }
 
     // from String
@@ -75,6 +96,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         for (int i = 0; i < _nDataChars; i++) {
             _dataChars[i] = s.charAt(i);
         }
+        _id = newMsgId();
     }
 
     // copy one
@@ -89,6 +111,8 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         for (int i = 0; i < _nDataChars; i++) {
             _dataChars[i] = m._dataChars[i];
         }
+        // Copy has a unique id
+        _id = newMsgId();
     }
 
     @Override

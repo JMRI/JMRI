@@ -442,7 +442,7 @@ public class TrainSwitchLists extends TrainCommon {
             newLine(fileOut, MessageFormat.format(Bundle.getMessage("ErrorIllegalArgument"), new Object[]{
                     Bundle.getMessage("TitleSwitchListText"), e.getLocalizedMessage()}));
             newLine(fileOut, messageFormatText);
-            e.printStackTrace();
+            log.error("Illegal argument", e);
         }
 
         // Are there any cars that need to be found?
@@ -458,7 +458,7 @@ public class TrainSwitchLists extends TrainCommon {
             return;
         }
         if (isPreview && Setup.isManifestEditorEnabled()) {
-            TrainPrintUtilities.openDesktopEditor(buildFile);
+            TrainUtilities.openDesktop(buildFile);
         } else {
             TrainPrintUtilities.printReport(buildFile, location.getName(), isPreview, Setup.getFontName(), false,
                     FileUtil.getExternalFilename(Setup.getManifestLogoURL()), location.getDefaultPrinterName(), Setup

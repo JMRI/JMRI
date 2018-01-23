@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
-public class MemoryTableAction extends AbstractTableAction {
+public class MemoryTableAction extends AbstractTableAction<Memory> {
 
     /**
      * Create an action with a specific title.
@@ -55,7 +55,7 @@ public class MemoryTableAction extends AbstractTableAction {
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Memory>() {
 
             @Override
             public String getValue(String name) {
@@ -72,17 +72,17 @@ public class MemoryTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
+            public Manager<Memory> getManager() {
                 return InstanceManager.memoryManagerInstance();
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public Memory getBySystemName(String name) {
                 return InstanceManager.memoryManagerInstance().getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public Memory getByUserName(String name) {
                 return InstanceManager.memoryManagerInstance().getByUserName(name);
             }
 
@@ -92,7 +92,7 @@ public class MemoryTableAction extends AbstractTableAction {
             }
 
             @Override
-            public void clickOn(NamedBean t) {
+            public void clickOn(Memory t) {
                 // don't do anything on click; not used in this class, because
                 // we override setValueAt
             }
@@ -100,7 +100,7 @@ public class MemoryTableAction extends AbstractTableAction {
             @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col == VALUECOL) {
-                    Memory t = (Memory) getBySystemName(sysNameList.get(row));
+                    Memory t = getBySystemName(sysNameList.get(row));
                     t.setValue(value);
                     fireTableRowsUpdated(row, row);
                 } else {
@@ -224,11 +224,11 @@ public class MemoryTableAction extends AbstractTableAction {
             }
         }
 
-        String user = userName.getText().trim(); // N11N
+        String user = NamedBean.normalizeUserName(userName.getText());
         if (user.equals("")) {
             user = null;
         }
-        String sName = sysName.getText().trim().toUpperCase(); // N11N
+        String sName = jmri.InstanceManager.memoryManagerInstance().normalizeSystemName(sysName.getText());
         // initial check for empty entry
         if (sName.length() < 1 && !autoSystemName.isSelected()) {
             statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));
@@ -247,13 +247,13 @@ public class MemoryTableAction extends AbstractTableAction {
 
             if (x != 0) {
                 if (user != null) {
-                    b = new StringBuilder(userName.getText().trim()); // N11N
+                    b = new StringBuilder(NamedBean.normalizeUserName(userName.getText())); // N11N
                     b.append(":");
                     b.append(Integer.toString(x));
                     user = b.toString(); // add :x to user name starting with 2nd item
                 }
                 if (!autoSystemName.isSelected()) {
-                    b = new StringBuilder(sysName.getText().trim()); // N11N
+                    b = new StringBuilder(jmri.InstanceManager.memoryManagerInstance().normalizeSystemName(sysName.getText()));
                     b.append(":");
                     b.append(Integer.toString(x));
                     sName = b.toString();

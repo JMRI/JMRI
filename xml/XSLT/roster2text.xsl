@@ -50,7 +50,8 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <P/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 <P/><A href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</A>
 <P/>Site hosted by: <BR/>
-<A href="http://sourceforge.net"><IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"/> </A> 
+    <a href="http://sourceforge.net/projects/jmri">
+    <img src="https://sourceforge.net/sflogo.php?type=13&amp;group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
 
 	</body>
 </html>

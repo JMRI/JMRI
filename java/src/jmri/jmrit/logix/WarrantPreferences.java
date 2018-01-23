@@ -131,8 +131,6 @@ public class WarrantPreferences extends AbstractPreferencesManager {
 
     public enum Shutdown {NO_MERGE, PROMPT, MERGE_ALL}
     private Shutdown _shutdown = Shutdown.PROMPT;     // choice for handling session RosterSpeedProfiles
-    private float _mf = 0.8f;    // momentum factor (guess) for speed change
-
     /**
      * Get the default instance.
      *
@@ -298,7 +296,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             try {
                 speed = Float.valueOf(list.get(i).getText());
             } catch (NumberFormatException nfe) {
-                log.error("Speed names has invalid content for {} = ", name, list.get(i).getText());
+                log.error("Speed names has invalid content for {} = {}", name, list.get(i).getText());
             }
             log.debug("Add {}, {} to AspectSpeed Table", name, speed);
             map.put(name, speed);
@@ -666,7 +664,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     public float getThrottleIncrement() {
         return _throttleIncr;
     }
-    
+
     /**
      * Set the throttle increment.
      *

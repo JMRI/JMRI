@@ -67,7 +67,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008, 2010, 2011
  */
-public class TransitTableAction extends AbstractTableAction {
+public class TransitTableAction extends AbstractTableAction<Transit> {
 
     /**
      * Create an action with a specific title.
@@ -100,7 +100,7 @@ public class TransitTableAction extends AbstractTableAction {
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Transit>() {
 
             static public final int EDITCOL = NUMCOLUMN;
             static public final int DUPLICATECOL = EDITCOL + 1;
@@ -120,17 +120,17 @@ public class TransitTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
+            public TransitManager getManager() {
                 return InstanceManager.getDefault(jmri.TransitManager.class);
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public Transit getBySystemName(String name) {
                 return InstanceManager.getDefault(jmri.TransitManager.class).getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public Transit getByUserName(String name) {
                 return InstanceManager.getDefault(jmri.TransitManager.class).getByUserName(name);
             }
 
@@ -140,7 +140,7 @@ public class TransitTableAction extends AbstractTableAction {
             }
 
             @Override
-            public void clickOn(NamedBean t) {
+            public void clickOn(Transit t) {
             }
 
             @Override
@@ -156,7 +156,7 @@ public class TransitTableAction extends AbstractTableAction {
                         log.debug("row is greater than name list");
                         return "";
                     }
-                    Transit z = (Transit) getBySystemName(sysNameList.get(row));
+                    Transit z = getBySystemName(sysNameList.get(row));
                     if (z == null) {
                         return "";
                     } else {
@@ -190,7 +190,7 @@ public class TransitTableAction extends AbstractTableAction {
 
                         @Override
                         public void run() {
-                            String sName = (String) getValueAt(row, SYSNAMECOL);
+                            String sName = ((Transit) getValueAt(row, SYSNAMECOL)).getSystemName();
                             editPressed(sName);
                         }
                     }
@@ -208,7 +208,7 @@ public class TransitTableAction extends AbstractTableAction {
 
                         @Override
                         public void run() {
-                            String sName = (String) getValueAt(row, SYSNAMECOL);
+                            String sName = ((Transit) getValueAt(row, SYSNAMECOL)).getSystemName();
                             duplicatePressed(sName);
                         }
                     }
@@ -770,12 +770,19 @@ public class TransitTableAction extends AbstractTableAction {
                 curSequenceNum--;
                 curSection = sectionList.get(j - 1);
                 curSectionDirection = direction[j - 1];
+                // delete alternate if present
                 int k = j - 2;
                 while ((k >= 0) && alternate[k]) {
                     k--;
                 }
-                prevSection = sectionList.get(k);
-                prevSectionDirection = direction[k];
+                // After this delete we need the new previous section, if there is one.
+                if (k < 0) {
+                    // There is no previous section
+                    prevSection = null;
+                } else {
+                    prevSection = sectionList.get(k);
+                    prevSectionDirection = direction[k];
+                }
             }
             sectionList.remove(j);
             initializeSectionCombos();
@@ -1250,7 +1257,7 @@ public class TransitTableAction extends AbstractTableAction {
         if (_autoSystemName.isSelected()) {
             curTransit = transitManager.createNewTransit(uName);
         } else {
-            String sName = sysName.getText().toUpperCase();
+            String sName = InstanceManager.getDefault(jmri.TransitManager.class).normalizeSystemName(sysName.getText());
             curTransit = transitManager.createNewTransit(sName, uName);
         }
         if (curTransit == null) {
@@ -2235,7 +2242,7 @@ public class TransitTableAction extends AbstractTableAction {
                 whatStringField.setText(tWhatString); // re-enter normalized value in display field
                 break;
             case TransitSectionAction.LOCOFUNCTION:
-                tWhatData1 = (Integer) whatMinuteSpinner1.getValue();
+                tWhatData1 = (Integer) locoFunctionSpinner.getValue();
                 tWhatString = "On"; // NOI18N
                 if (offButton.isSelected()) {
                     tWhatString = "Off"; // NOI18N

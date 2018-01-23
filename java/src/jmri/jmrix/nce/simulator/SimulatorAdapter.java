@@ -164,8 +164,6 @@ public class SimulatorAdapter extends NcePortController implements
 
         this.getSystemConnectionMemo().configureManagers();
 
-        jmri.jmrix.nce.ActiveFlag.setActive();
-
         // start the simulator
         sourceThread = new Thread(this);
         sourceThread.setName("Nce Simulator");
@@ -197,6 +195,8 @@ public class SimulatorAdapter extends NcePortController implements
 
     /**
      * Get an array of valid baud rates.
+     *
+     * @return null
      */
     @Override
     public String[] validBaudRates() {

@@ -1,8 +1,6 @@
 package jmri.jmrix.grapevine;
 
 import jmri.Light;
-import jmri.jmrix.AbstractMRListener;
-import jmri.jmrix.AbstractMRMessage;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -21,25 +19,20 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
+    private GrapevineSystemConnectionMemo memo = null; 
+
     @Before
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
 
         // replace the SerialTrafficController
-        SerialTrafficController t = new SerialTrafficController() {
-            SerialTrafficController test() {
-                setInstance();
-                return this;
-            }
-
-            @Override
-            synchronized protected void sendMessage(AbstractMRMessage m, AbstractMRListener reply) {
-            }
-        }.test();
+        SerialTrafficController t = new SerialTrafficControlScaffold();
+        memo = new GrapevineSystemConnectionMemo();
+        memo.setTrafficController(t);
         t.registerNode(new SerialNode(1, SerialNode.NODE2002V6));
         // create and register the manager object
-        l = new SerialLightManager();
+        l = new SerialLightManager(memo);
         jmri.InstanceManager.setLightManager(l);
     }
 

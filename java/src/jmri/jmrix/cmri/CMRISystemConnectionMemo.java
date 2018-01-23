@@ -2,14 +2,21 @@ package jmri.jmrix.cmri;
 
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
+import javax.annotation.CheckReturnValue;
 import jmri.InstanceManager;
 import jmri.Light;
+import jmri.Manager.NameValidity;
 import jmri.Sensor;
 import jmri.Turnout;
-import jmri.Manager.NameValidity;
 import jmri.jmrix.AbstractNode;
 import jmri.jmrix.SystemConnectionMemo;
-import jmri.jmrix.cmri.serial.*;
+import jmri.jmrix.cmri.serial.SerialLightManager;
+import jmri.jmrix.cmri.serial.SerialNode;
+import jmri.jmrix.cmri.serial.SerialSensorManager;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
+import jmri.jmrix.cmri.serial.SerialTurnoutManager;
+import jmri.jmrix.cmri.swing.CMRIComponentFactory;
+import jmri.jmrix.swing.ComponentFactory;
 
 /**
  * Minimal SystemConnectionMemo for C/MRI systems.
@@ -29,28 +36,30 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         InstanceManager.store(this, CMRISystemConnectionMemo.class); // also register as specific type
 
         // create and register the ComponentFactory for the GUI
-        InstanceManager.store(cf = new jmri.jmrix.cmri.swing.CMRIComponentFactory(this),
-                jmri.jmrix.swing.ComponentFactory.class);
+        cf = new CMRIComponentFactory(this);
+        InstanceManager.store(cf, ComponentFactory.class);
 
         log.debug("Created CMRISystemConnectionMemo");
     }
 
     private SerialTrafficController tc = null;
-    jmri.jmrix.swing.ComponentFactory cf = null;
+    ComponentFactory cf = null;
 
     /**
      * Set the traffic controller instance associated with this connection memo.
      *
      * @param s jmri.jmrix.cmri.serial.SerialTrafficController object to use.
      */
-    public void setTrafficController(SerialTrafficController s){
+    public void setTrafficController(SerialTrafficController s) {
         tc = s;
     }
 
     /**
      * Get the traffic controller instance associated with this connection memo.
+     *
+     * @return the traffic controller, created if needed
      */
-    public SerialTrafficController getTrafficController(){
+    public SerialTrafficController getTrafficController() {
         if (tc == null) {
             setTrafficController(new SerialTrafficController());
             log.debug("Auto create of SerialTrafficController for initial configuration");
@@ -59,9 +68,11 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to the user name for a valid system name.
+     * Get the user name for a valid system name.
      *
-     * @return "" (null string) if the system name is not valid or does not exist
+     * @param systemName the system name
+     * @return "" (null string) if the system name is not valid or does not
+     *         exist
      */
     public String getUserNameFromSystemName(String systemName) {
         int offset = checkSystemPrefix(systemName);
@@ -72,44 +83,41 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             // not a valid system name for C/MRI
             return "";
         }
-        if (systemName.charAt(offset) == 'S') {
-            Sensor s = null;
-            s = InstanceManager.sensorManagerInstance().getBySystemName(systemName);
-            if (s != null) {
-                return s.getUserName();
-            } else {
-                return "";
-            }
-        } else if (systemName.charAt(offset) == 'T') {
-            Turnout t = null;
-            t = InstanceManager.turnoutManagerInstance().getBySystemName(systemName);
-            if (t != null) {
-                return t.getUserName();
-            } else {
-                return "";
-            }
-        } else if (systemName.charAt(offset) == 'L') {
-            Light lgt = null;
-            lgt = InstanceManager.lightManagerInstance().getBySystemName(systemName);
-            if (lgt != null) {
-                return lgt.getUserName();
-            } else {
-                return "";
-            }
+        switch (systemName.charAt(offset)) {
+            case 'S':
+                Sensor s = InstanceManager.sensorManagerInstance().getBySystemName(systemName);
+                if (s != null) {
+                    return s.getUserName();
+                } else {
+                    return "";
+                }
+            case 'T':
+                Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(systemName);
+                if (t != null) {
+                    return t.getUserName();
+                } else {
+                    return "";
+                }
+            case 'L':
+                Light lgt = InstanceManager.lightManagerInstance().getBySystemName(systemName);
+                if (lgt != null) {
+                    return lgt.getUserName();
+                } else {
+                    return "";
+                }
+            default:
+                break;
         }
         // not any known sensor, light, or turnout
         return "";
     }
 
     /**
-     * Public static method to parse a C/MRI system name and return the bit
-     * number. Notes:
-     * <ul>
-     * <li>Bits are numbered from 1.</li>
-     * <li>Does not check whether that node is defined on current system.</li>
-     * </ul>
+     * Get the bit number from a C/MRI system name. Bits are numbered from 1.
+     * Does not check whether that node is defined on current system.
      *
-     * @return 0 if an error is found.
+     * @param systemName the system name
+     * @return 0 if an error is found
      */
     public int getBitFromSystemName(String systemName) {
         int offset = checkSystemPrefix(systemName);
@@ -128,13 +136,13 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
                 k = i + 1;
             }
         }
-        int n = 0; // bit number
+        int n; // bit number
         if (k == 0) {
             // here if 'B' not found, name must be CLnnxxx format
             int num;
             try {
-                num = Integer.valueOf(systemName.substring(offset + 1)).intValue();
-            } catch (Exception e) {
+                num = Integer.parseInt(systemName.substring(offset + 1));
+            } catch (NumberFormatException e) {
                 log.warn("invalid character in number field of system name: {}", systemName);
                 return 0;
             }
@@ -146,8 +154,8 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             }
         } else { // k = position of "B" char in name
             try {
-                n = Integer.parseInt(systemName.substring(k)); // why use a different formula than 13 lines up?
-            } catch (Exception e) {
+                n = Integer.parseInt(systemName.substring(k));
+            } catch (NumberFormatException e) {
                 log.warn("invalid character in bit number field of CMRI system name: {}", systemName);
                 return 0;
             }
@@ -156,11 +164,11 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to check and skip the System Prefix
-     * string on a system name.
+     * Check and skip the System Prefix string on a system name.
      *
+     * @param systemName the system name
      * @return offset of the 1st character past the prefix, or -1 if not valid
-     * for this connection
+     *         for this connection
      */
     public int checkSystemPrefix(String systemName) {
         if (!systemName.startsWith(getSystemPrefix())) {
@@ -170,11 +178,14 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to test if a C/MRI output bit is free for assignment.
-     * Test is not performed if the node address or bit number is invalid.
+     * Test if a C/MRI output bit is free for assignment. Test is not performed
+     * if the node address or bit number is invalid.
      *
+     * @param nAddress the node address
+     * @param bitNum   the output bit number
      * @return "" (empty string) if the specified output bit is free for
-     * assignment, else returns the system name of the conflicting assignment.
+     *         assignment, else returns the system name of the conflicting
+     *         assignment.
      */
     public String isOutputBitFree(int nAddress, int bitNum) {
         if ((nAddress < 0) || (nAddress > 127)) {
@@ -185,15 +196,12 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             log.warn("invalid bit number in free bit test");
             return "";
         }
-        Turnout t = null;
-        String sysName = "";
-        sysName = makeSystemName("T", nAddress, bitNum);
-        t = InstanceManager.turnoutManagerInstance().getBySystemName(sysName);
+        String sysName = makeSystemName("T", nAddress, bitNum);
+        Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(sysName);
         if (t != null) {
             return sysName;
         }
-        String altName = "";
-        altName = convertSystemNameToAlternate(sysName);
+        String altName = convertSystemNameToAlternate(sysName);
         t = InstanceManager.turnoutManagerInstance().getBySystemName(altName);
         if (t != null) {
             return altName;
@@ -207,19 +215,16 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
                 }
             } else {
                 altName = convertSystemNameToAlternate(sysName);
-                if (altName != null) {
-                    t = InstanceManager.turnoutManagerInstance().getBySystemName(altName);
-                    if (t != null) {
-                        if (t.getNumberOutputBits() == 2) {
-                            return altName;
-                        }
+                t = InstanceManager.turnoutManagerInstance().getBySystemName(altName);
+                if (t != null) {
+                    if (t.getNumberOutputBits() == 2) {
+                        return altName;
                     }
                 }
             }
         }
-        Light lgt = null;
         sysName = makeSystemName("L", nAddress, bitNum);
-        lgt = InstanceManager.lightManagerInstance().getBySystemName(sysName);
+        Light lgt = InstanceManager.lightManagerInstance().getBySystemName(sysName);
         if (lgt != null) {
             return sysName;
         }
@@ -233,13 +238,15 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to normalize a C/MRI system name.
+     * Normalize a C/MRI system name.
      * <P>
      * This routine is used to ensure that each system name is uniquely linked
      * to one C/MRI bit, by removing extra zeros inserted by the user.
      *
-     * @return "" (empty string) if the supplied system name does not have a valid format.
-     * Otherwise a normalized name is returned in the same format as the input name.
+     * @param systemName the system name
+     * @return "" (empty string) if the supplied system name does not have a
+     *         valid format. Otherwise a normalized name is returned in the same
+     *         format as the input name.
      */
     public String normalizeSystemName(String systemName) {
         int offset = checkSystemPrefix(systemName);
@@ -251,7 +258,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             // No point in normalizing if a valid system name format is not present
             return "";
         }
-        String nName = "";
+        String nName;
         String s = "";
         int k = 0;
         boolean noB = true;
@@ -263,12 +270,12 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             }
         }
         if (noB) {
-            int num = Integer.valueOf(systemName.substring(offset+1)).intValue();
+            int num = Integer.parseInt(systemName.substring(offset + 1));
             int nAddress = num / 1000;
             int bitNum = num - (nAddress * 1000);
             nName = systemName.substring(0, offset + 1) + Integer.toString((nAddress * 1000) + bitNum);
         } else {
-            int nAddress = Integer.valueOf(s).intValue();
+            int nAddress = Integer.parseInt(s);
             int bitNum = Integer.parseInt(systemName.substring(k, systemName.length()));
             nName = systemName.substring(0, offset + 1) + Integer.toString(nAddress) + "B" + Integer.toString(bitNum);
         }
@@ -276,11 +283,12 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to convert one format C/MRI system name to the
-     * alternate format.
+     * Convert one format C/MRI system name to the alternate format.
      *
-     * @return "" (empty string) if the supplied system name does not have a valid
-     * format, or if there is no representation in the alternate naming scheme
+     * @param systemName the system name
+     * @return "" (empty string) if the supplied system name does not have a
+     *         valid format, or if there is no representation in the alternate
+     *         naming scheme
      */
     public String convertSystemNameToAlternate(String systemName) {
         int offset = checkSystemPrefix(systemName);
@@ -292,7 +300,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             // No point in trying if a valid system name format is not present
             return "";
         }
-        String altName = "";
+        String altName;
         String s = "";
         int k = 0;
         boolean noB = true;
@@ -304,12 +312,12 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             }
         }
         if (noB) {
-            int num = Integer.valueOf(systemName.substring(offset + 1)).intValue();
+            int num = Integer.parseInt(systemName.substring(offset + 1));
             int nAddress = num / 1000;
             int bitNum = num - (nAddress * 1000);
             altName = systemName.substring(0, offset + 1) + Integer.toString(nAddress) + "B" + Integer.toString(bitNum);
         } else {
-            int nAddress = Integer.valueOf(s).intValue();
+            int nAddress = Integer.parseInt(s);
             int bitNum = Integer.parseInt(systemName.substring(k, systemName.length()));
             if (bitNum > 999) {
                 // bit number is out-of-range for a CLnnnxxx address
@@ -321,9 +329,11 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to validate system name format.
-     * Does not check whether that node is defined on current system.
+     * Validate system name format. Does not check whether that node is defined
+     * on current system.
      *
+     * @param systemName the system name
+     * @param type       the device type
      * @return enum indicating current validity, which might be just as a prefix
      */
     public NameValidity validSystemNameFormat(String systemName, char type) {
@@ -350,8 +360,8 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             // This is a CLnnnxxx pattern address
             int num;
             try {
-                num = Integer.valueOf(systemName.substring(offset+1)).intValue();
-            } catch (Exception e) {
+                num = Integer.parseInt(systemName.substring(offset + 1));
+            } catch (NumberFormatException e) {
                 log.debug("invalid character in number field of CMRI system name: {}", systemName);
                 return NameValidity.INVALID;
             }
@@ -376,8 +386,8 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             }
             int num;
             try {
-                num = Integer.valueOf(s).intValue();
-            } catch (Exception e) {
+                num = Integer.parseInt(s);
+            } catch (NumberFormatException e) {
                 log.debug("invalid character in node address field of CMRI system name: {}", systemName);
                 return NameValidity.INVALID;
             }
@@ -387,7 +397,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             }
             try {
                 num = Integer.parseInt(systemName.substring(k));
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 log.debug("invalid character in bit number field of CMRI system name: {}", systemName);
                 return NameValidity.INVALID;
             }
@@ -404,12 +414,14 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to test if a C/MRI input bit is free for assignment.
-     * Test is not performed if the node address is invalid or bit number is
-     * greater than 2048.
+     * Test if a C/MRI input bit is free for assignment. Test is not performed
+     * if the node address is invalid or bit number is greater than 2048.
      *
+     * @param nAddress the address to test
+     * @param bitNum   the bit number to tests
      * @return "" (empty string) if the specified input bit is free for
-     * assignment, else returns the system name of the conflicting assignment.
+     *         assignment, else returns the system name of the conflicting
+     *         assignment.
      */
     public String isInputBitFree(int nAddress, int bitNum) {
         if ((nAddress < 0) || (nAddress > 127)) {
@@ -420,15 +432,12 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             log.warn("invalid bit number in free bit test");
             return "";
         }
-        Sensor s = null;
-        String sysName = "";
-        sysName = makeSystemName("S", nAddress, bitNum);
-        s = InstanceManager.sensorManagerInstance().getBySystemName(sysName);
+        String sysName = makeSystemName("S", nAddress, bitNum);
+        Sensor s = InstanceManager.sensorManagerInstance().getBySystemName(sysName);
         if (s != null) {
             return sysName;
         }
-        String altName = "";
-        altName = convertSystemNameToAlternate(sysName);
+        String altName = convertSystemNameToAlternate(sysName);
         s = InstanceManager.sensorManagerInstance().getBySystemName(altName);
         if (s != null) {
             return altName;
@@ -438,17 +447,20 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to construct a C/MRI system name from type
-     * character, node address, and bit number.
+     * Construct a C/MRI system name from type character, node address, and bit
+     * number.
      * <p>
      * If the supplied character is not valid, or the node address is out of the
      * 0 - 127 range, or the bit number is out of the 1 - 2048 range, an error
      * message is logged and the null string "" is returned.
      *
-     * @return a system name in the CLnnnxxx, CTnnnxxx, or CSnnnxxx
-     * format if the bit number is 1 - 999. If the bit number is 1000 - 2048,
-     * the system name is returned in the CLnnnBxxxx, CTnnnBxxxx, or CSnnnBxxxx
-     * format. The returned name is normalized.
+     * @param type     the device type
+     * @param nAddress the address to use
+     * @param bitNum   the bit number to assign
+     * @return a system name in the CLnnnxxx, CTnnnxxx, or CSnnnxxx format if
+     *         the bit number is 1 - 999. If the bit number is 1000 - 2048, the
+     *         system name is returned in the CLnnnBxxxx, CTnnnBxxxx, or
+     *         CSnnnBxxxx format. The returned name is normalized.
      */
     public String makeSystemName(String type, int nAddress, int bitNum) {
         String nName = "";
@@ -473,10 +485,12 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to parse a C/MRI system name and return the Serial
-     * Node.
+     * Get the serial node from a C/MRI system name.
      *
-     * @return 'null' if invalid systemName format or if the node is not found
+     * @param systemName the system name
+     * @param tc         the controller for the node
+     * @return the node or null if invalid systemName format or if the node is
+     *         not found
      */
     public AbstractNode getNodeFromSystemName(String systemName, SerialTrafficController tc) {
         // get the node address
@@ -489,11 +503,14 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to validate C/MRI system name for configuration.
-     * Does validate node number and system prefix.
+     * Validate C/MRI system name for configuration. Validates node number and
+     * system prefix.
      *
-     * @return 'true' if system name has a valid meaning in current configuration,
-     * else returns 'false'.
+     * @param systemName the system name to check
+     * @param type       the device type
+     * @param tc         the controller for the device
+     * @return true if system name has a valid meaning in current configuration;
+     *         otherwise false
      */
     public boolean validSystemNameConfig(String systemName, char type, SerialTrafficController tc) {
         if (validSystemNameFormat(systemName, type) != NameValidity.VALID) {
@@ -525,12 +542,12 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to parse a C/MRI system name and return the Serial
-     * Node Address
+     * Get the serial node address from a C/MRI system name.
      * <p>
-     * Nodes are numbered from 0 - 127. Does not check
-     * whether that node is defined on current system.
+     * Nodes are numbered from 0 - 127. Does not check whether that node is
+     * defined on current system.
      *
+     * @param systemName the name containing the node
      * @return '-1' if invalid systemName format or if the node is not found.
      */
     public int getNodeAddressFromSystemName(String systemName) {
@@ -552,7 +569,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         }
         int ua;
         if (noB) {
-            int num = Integer.valueOf(systemName.substring(offset + 1)).intValue();
+            int num = Integer.parseInt(systemName.substring(offset + 1));
             if (num > 0) {
                 ua = num / 1000;
             } else {
@@ -566,13 +583,56 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             } else {
                 try {
                     ua = Integer.parseInt(s);
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     log.warn("invalid character in CMRI system name: {}", systemName);
                     return -1;
                 }
             }
         }
         return ua;
+    }
+
+    /**
+     * See {@link jmri.NamedBean#compareSystemNameSuffix} for background.
+     * 
+     * This is a common implementation for C/MRI Lights, Sensors and Turnouts
+     * of the comparison method.
+     */
+    @CheckReturnValue
+    public static int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2) {
+        
+        // extract node numbers and bit numbers
+        int node1 = 0, node2 = 0, bit1, bit2;
+        int t; // a temporary
+        
+        t = suffix1.indexOf("B");
+        if (t < 0) t = suffix1.indexOf(":");
+        if (t >= 0) {
+            // alt format
+            bit1 = Integer.parseInt(suffix1.substring(t+1));
+            if (t>0) node1 = Integer.parseInt(suffix1.substring(0, t));
+        } else {
+            // std format
+            int len = suffix1.length();
+            bit1 = Integer.parseInt(suffix1.substring(Math.max(0, len-3)));
+            if (len>3) node1 = Integer.parseInt(suffix1.substring(0, len-3));
+        }
+        
+        t = suffix2.indexOf("B");
+        if (t < 0) t = suffix2.indexOf(":");
+        if (t >= 0) {
+            // alt format
+            bit2 = Integer.parseInt(suffix2.substring(t+1));
+            if (t>0) node2 = Integer.parseInt(suffix2.substring(0, t));
+        } else {
+            // std format
+            int len = suffix2.length();
+            bit2 = Integer.parseInt(suffix2.substring(Math.max(0, len-3)));
+            if (len>3) node2 = Integer.parseInt(suffix2.substring(0, len-3));
+        }
+        
+        if (node1 != node2 ) return Integer.signum(node1-node2);
+        return Integer.signum(bit1-bit2);
     }
 
     @Override
@@ -585,9 +645,8 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             return true;
         } else if (type.equals(jmri.LightManager.class)) {
             return true;
-        } else {
-            return false; // nothing, by default
         }
+        return false; // nothing, by default
     }
 
     @SuppressWarnings("unchecked")
@@ -609,21 +668,17 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Configure the common managers for CMRI connections. This puts the
-     * common manager config in one place.
+     * Configure the common managers for CMRI connections. This puts the common
+     * manager config in one place.
      */
     public void configureManagers() {
-        InstanceManager.setSensorManager(
-                getSensorManager());
+        InstanceManager.setSensorManager(getSensorManager());
         getTrafficController().setSensorManager(getSensorManager());
 
-        InstanceManager.setTurnoutManager(
-                getTurnoutManager());
+        InstanceManager.setTurnoutManager(getTurnoutManager());
 
-        InstanceManager.setLightManager(
-                getLightManager());
+        InstanceManager.setLightManager(getLightManager());
     }
-
 
     protected SerialTurnoutManager turnoutManager;
 
@@ -670,16 +725,16 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     public void dispose() {
         InstanceManager.deregister(this, CMRISystemConnectionMemo.class);
         if (cf != null) {
-            InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
+            InstanceManager.deregister(cf, ComponentFactory.class);
         }
         if (turnoutManager != null) {
-            InstanceManager.deregister(turnoutManager, jmri.jmrix.cmri.serial.SerialTurnoutManager.class);
+            InstanceManager.deregister(turnoutManager, SerialTurnoutManager.class);
         }
         if (lightManager != null) {
-            InstanceManager.deregister(lightManager, jmri.jmrix.cmri.serial.SerialLightManager.class);
+            InstanceManager.deregister(lightManager, SerialLightManager.class);
         }
         if (sensorManager != null) {
-            InstanceManager.deregister(sensorManager, jmri.jmrix.cmri.serial.SerialSensorManager.class);
+            InstanceManager.deregister(sensorManager, SerialSensorManager.class);
         }
         super.dispose();
     }

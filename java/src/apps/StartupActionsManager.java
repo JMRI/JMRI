@@ -22,6 +22,7 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.server.web.app.WebAppManager;
 import jmri.spi.PreferencesManager;
+import jmri.swing.JmriJTablePersistenceManager;
 import jmri.util.jdom.JDOMUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
@@ -145,6 +146,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
         requires.add(GuiLafPreferencesManager.class);
         requires.add(WarrantPreferences.class);
         requires.add(WebAppManager.class);
+        requires.add(JmriJTablePersistenceManager.class);
         return requires;
     }
 

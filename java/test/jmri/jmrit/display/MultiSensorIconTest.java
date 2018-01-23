@@ -2,7 +2,6 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -13,23 +12,21 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class MultiSensorIconTest {
+public class MultiSensorIconTest extends PositionableTestBase {
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Editor ef = new EditorScaffold();
-        MultiSensorIcon iti = new MultiSensorIcon(ef);
-        Assert.assertNotNull("MultiSensorIcon Constructor",iti);
+        Assert.assertNotNull("MultiSensorIcon Constructor",p);
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+           editor = new EditorScaffold();
+           p = new MultiSensorIcon(editor);
+        }
     }
-
-    @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
-
 
 }

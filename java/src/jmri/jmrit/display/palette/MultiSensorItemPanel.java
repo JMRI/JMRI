@@ -23,10 +23,10 @@ import javax.swing.table.TableColumn;
 import jmri.NamedBean;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MultiSensorIcon;
 import jmri.jmrit.picker.PickListModel;
-import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +36,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
     MultiSensorSelectionModel _selectionModel;
     boolean _upDown = false;
 
-    public MultiSensorItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
+    public MultiSensorItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, model, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragSelection"));
     }
@@ -95,10 +95,10 @@ public class MultiSensorItemPanel extends TableItemPanel {
     public void clearSelections() {
         _selectionModel.clearSelection();
         int size = 6;
-//        if (_family!=null) {
-//            HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
-//            size = map.size();
-//        }
+        // if (_family!=null) {
+        //     HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
+        //     size = map.size();
+        // }
         if (_currentIconMap != null) {
             size = _currentIconMap.size();
         }
@@ -113,8 +113,11 @@ public class MultiSensorItemPanel extends TableItemPanel {
     @Override
     protected void initIconFamiliesPanel() {
         super.initIconFamiliesPanel();
-        makeMultiSensorPanel();
-        _iconFamilyPanel.add(_multiSensorPanel);
+        if (_multiSensorPanel == null) {
+            makeMultiSensorPanel();
+            _iconFamilyPanel.add(_multiSensorPanel); // Panel containing up-dn, le-ri radio buttons
+        }
+        updateBackgrounds(); // create array of backgrounds
     }
 
     private void makeMultiSensorPanel() {
@@ -148,11 +151,10 @@ public class MultiSensorItemPanel extends TableItemPanel {
     @Override
     protected void setFamily(String family) {
         super.setFamily(family);
-        if (_multiSensorPanel != null) {
-            _iconFamilyPanel.remove(_multiSensorPanel);
+        if (_multiSensorPanel == null) {
+            makeMultiSensorPanel();
+            _iconFamilyPanel.add(_multiSensorPanel);
         }
-        makeMultiSensorPanel();
-        _iconFamilyPanel.add(_multiSensorPanel);
         _iconFamilyPanel.repaint();
         updateFamiliesPanel();
         setSelections();
@@ -232,8 +234,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
 
         protected ArrayList<NamedBean> getSelections() {
             if (log.isDebugEnabled()) {
-                log.debug("getSelections: size= " + _selections.size()
-                        + ", _nextPosition= " + _nextPosition);
+                log.debug("getSelections: size = {}, _nextPosition = {}", _selections.size(), _nextPosition);
             }
             return _selections;
         }
@@ -270,23 +271,17 @@ public class MultiSensorItemPanel extends TableItemPanel {
         public boolean isSelectedIndex(int index) {
             for (int i = 0; i < _positions.length; i++) {
                 if (_positions[i] == index) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("isSelectedIndex(" + index + ") returned true");
-                    }
+                    log.debug("isSelectedIndex({}) returned true", index);
                     return true;
                 }
             }
-            if (log.isDebugEnabled()) {
-                log.debug("isSelectedIndex(" + index + ") returned false");
-            }
+            log.debug("isSelectedIndex({}) returned false", index);
             return false;
         }
 
         @Override
         public void clearSelection() {
-            if (log.isDebugEnabled()) {
-                log.debug("clearSelection()");
-            }
+            log.debug("clearSelection()");
             for (int i = 0; i < _positions.length; i++) {
                 if (_positions[i] >= 0) {
                     _tableModel.setValueAt(null, _positions[i], PickListModel.POSITION_COL);
@@ -301,10 +296,8 @@ public class MultiSensorItemPanel extends TableItemPanel {
 
         @Override
         public void addSelectionInterval(int index0, int index1) {
-            if (log.isDebugEnabled()) {
-                log.debug("addSelectionInterval(" + index0 + ", " + index1 + ") - stubbed");
-            }
-//            super.addSelectionInterval(index0, index1);
+            log.debug("addSelectionInterval({}), {}) - stubbed", index0, index1);
+            // super.addSelectionInterval(index0, index1);
         }
 
         @Override
@@ -316,7 +309,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
                 return;
             }
             if (log.isDebugEnabled()) {
-                log.debug("setSelectionInterval(" + row + ", " + index1 + ")");
+                log.debug("setSelectionInterval({}, {})", row, index1);
             }
             NamedBean bean = _tableModel.getBeanAt(row);
             String position = (String) _tableModel.getValueAt(row, PickListModel.POSITION_COL);
@@ -412,4 +405,5 @@ public class MultiSensorItemPanel extends TableItemPanel {
     }
 
     private final static Logger log = LoggerFactory.getLogger(MultiSensorItemPanel.class);
+
 }

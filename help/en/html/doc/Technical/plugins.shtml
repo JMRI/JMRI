@@ -1,14 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI Plug-in mechanisms</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <title>JMRI: Plug-in mechanisms</title>
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code plugins extension plug-in">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -24,13 +23,14 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI Plug-in mechanisms</h1>
+      <h1>JMRI Code: Plug-in mechanisms</h1>
 
       <p>The original goal of the JMRI project was to produce a library upon
-        which people could use to build their own applications. Although some
-        people do that, more use the existing applications such as DecoderPro
-        and PanelPro. We want to make this more flexible by providing a way to
-        extend those programs without having to rebuild them from scratch.
+      which people could use to build their own applications. Although some
+      people do that, more use the existing applications such as DecoderPro
+      and PanelPro.<br>
+      We want to make this more flexible by providing a way to
+      extend those programs without having to rebuild them from scratch.
       </p>
       <p>There are three supported mechanisms that can be used to plug
         additional capabilities into JMRI:

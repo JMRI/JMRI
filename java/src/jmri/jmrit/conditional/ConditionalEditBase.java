@@ -2,8 +2,8 @@ package jmri.jmrit.conditional;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
@@ -149,7 +149,6 @@ public class ConditionalEditBase {
     JTabbedPane _pickTabPane = null;        // The tabbed panel for the pick table
     PickFrame _pickTables;
 
-    PickSinglePanel _pickSingle = null;     // used to build the JFrame, content copied from the table type pick object.
     JFrame _pickSingleFrame = null;
     PickSingleListener _pickListener = null;
 
@@ -282,6 +281,10 @@ public class ConditionalEditBase {
                 nameBox = new JmriBeanComboBox(
                         InstanceManager.getDefault(EntryExitPairs.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                 break;
+            case Conditional.ITEM_TYPE_OTHER:   // 14
+                nameBox = new JmriBeanComboBox(
+                        InstanceManager.getDefault(jmri.RouteManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                break;
             default:
                 return null;             // Skip any other items.
         }
@@ -298,7 +301,7 @@ public class ConditionalEditBase {
      *
      * @since 4.7.3
      */
-    static class NameBoxListener implements ItemListener {
+    static class NameBoxListener implements ActionListener {
 
         /**
          * @param textField The target field object when an entry is selected
@@ -310,9 +313,8 @@ public class ConditionalEditBase {
         JTextField saveTextField;
 
         @Override
-        public void itemStateChanged(ItemEvent e) {
-            // Get the combo box, the display name and the new state
-            int newState = e.getStateChange();
+        public void actionPerformed(ActionEvent e) {
+            // Get the combo box and display name
             Object src = e.getSource();
             if (!(src instanceof JmriBeanComboBox)) {
                 return;
@@ -320,12 +322,10 @@ public class ConditionalEditBase {
             JmriBeanComboBox srcBox = (JmriBeanComboBox) src;
             String newName = srcBox.getSelectedDisplayName();
 
-            if (newState == ItemEvent.SELECTED) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Name ComboBox Item Event: new name = '{}'", newName);  // NOI18N
-                }
-                saveTextField.setText(newName);
+            if (log.isDebugEnabled()) {
+                log.debug("NameBoxListener: new name = '{}'", newName);  // NOI18N
             }
+            saveTextField.setText(newName);
         }
     }
 
@@ -351,40 +351,42 @@ public class ConditionalEditBase {
             }
         }
 
+        PickSinglePanel _pickSingle;
+        
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:      // 1
-                _pickSingle = new PickSinglePanel(PickListModel.sensorPickModelInstance());
+                _pickSingle = new PickSinglePanel<Sensor>(PickListModel.sensorPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_TURNOUT:     // 2
-                _pickSingle = new PickSinglePanel(PickListModel.turnoutPickModelInstance());
+                _pickSingle = new PickSinglePanel<Turnout>(PickListModel.turnoutPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_LIGHT:       // 3
-                _pickSingle = new PickSinglePanel(PickListModel.lightPickModelInstance());
+                _pickSingle = new PickSinglePanel<Light>(PickListModel.lightPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_SIGNALHEAD:  // 4
-                _pickSingle = new PickSinglePanel(PickListModel.signalHeadPickModelInstance());
+                _pickSingle = new PickSinglePanel<SignalHead>(PickListModel.signalHeadPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:  // 5
-                _pickSingle = new PickSinglePanel(PickListModel.signalMastPickModelInstance());
+                _pickSingle = new PickSinglePanel<SignalMast>(PickListModel.signalMastPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_MEMORY:      // 6
-                _pickSingle = new PickSinglePanel(PickListModel.memoryPickModelInstance());
+                _pickSingle = new PickSinglePanel<Memory>(PickListModel.memoryPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_LOGIX:      // 7 -- can be either Logix or Conditional
                 if (!actionType) {
                     // State Variable
                     return;
                 }
-                _pickSingle = new PickSinglePanel(PickListModel.logixPickModelInstance());
+                _pickSingle = new PickSinglePanel<Logix>(PickListModel.logixPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_WARRANT:     // 8
-                _pickSingle = new PickSinglePanel(PickListModel.warrantPickModelInstance());
+                _pickSingle = new PickSinglePanel<Warrant>(PickListModel.warrantPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_OBLOCK:      // 10
-                _pickSingle = new PickSinglePanel(PickListModel.oBlockPickModelInstance());
+                _pickSingle = new PickSinglePanel<OBlock>(PickListModel.oBlockPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_ENTRYEXIT:   // 11
-                _pickSingle = new PickSinglePanel(PickListModel.entryExitPickModelInstance());
+                _pickSingle = new PickSinglePanel<jmri.jmrit.entryexit.DestinationPoints>(PickListModel.entryExitPickModelInstance());
                 break;
             default:
                 return;             // Skip any other items.
@@ -415,7 +417,6 @@ public class ConditionalEditBase {
             _pickSingleFrame = null;
             _pickListener = null;
             _pickTable = null;
-            _pickSingle = null;
         }
     }
 
@@ -1230,7 +1231,7 @@ public class ConditionalEditBase {
             if (name.length() > 0) {
                 nb = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(name);
                 if (nb != null) {
-                    return nb.getSystemName();
+                    return name;
                 }
             }
         }

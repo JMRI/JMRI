@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>3</revnumber>
+      <date>2018-01-02</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>French translation</revremark>
+    </revision>
+    <revision>
       <revnumber>2</revnumber>
       <date>2016-10-23</date>
       <authorinitials>PS</authorinitials>
@@ -42,8 +48,8 @@
   <variable CV="29" mask="XXXXVXXX" item="Advanced Ack">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Advanced Decoder Acknowledgement</label>
-        <label xml:lang="fr">Advanced Decoder Acknowledgement(fr)</label>
-        <label xml:lang="it">Riconoscimento Decoder Avanzato</label>
         <label xml:lang="cs">Pokročilé potvrzování dekodérem</label>
+        <label xml:lang="fr">Accusé de Réception Avancé du décodeur</label>
+        <label xml:lang="it">Riconoscimento Decoder Avanzato</label>
       </variable>
 </variables>

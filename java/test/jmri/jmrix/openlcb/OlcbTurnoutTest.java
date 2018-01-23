@@ -1,12 +1,9 @@
 package jmri.jmrix.openlcb;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import jmri.util.JUnitUtil;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.regex.Pattern;
 import jmri.Turnout;
 import jmri.jmrix.can.CanMessage;
@@ -15,7 +12,9 @@ import jmri.util.MockPropertyChangeListener;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
 import org.junit.Assert;
+import org.mockito.Mockito;
 import org.openlcb.EventID;
 import org.openlcb.implementations.EventTable;
 import org.slf4j.Logger;
@@ -34,7 +33,7 @@ public class OlcbTurnoutTest extends TestCase {
     private static final String KNOWN_STATE = "KnownState";
     public void testIncomingChange() {
         Assert.assertNotNull("exists", t);
-        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.finishLoad();
 
         // message for Active and Inactive
@@ -71,7 +70,7 @@ public class OlcbTurnoutTest extends TestCase {
 
     public void testLocalChange() throws jmri.JmriException {
         // load dummy TrafficController
-        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.finishLoad();
 
         s.addPropertyChangeListener(l);
@@ -108,7 +107,7 @@ public class OlcbTurnoutTest extends TestCase {
     }
 
     public void testDirectFeedback() throws jmri.JmriException {
-        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.setFeedbackMode(Turnout.DIRECT);
         s.finishLoad();
 
@@ -155,12 +154,46 @@ public class OlcbTurnoutTest extends TestCase {
         verifyNoMoreInteractions(l.m);
     }
 
+    public void testAuthoritative() throws jmri.JmriException {
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.setFeedbackMode(Turnout.MONITORING);
+        s.finishLoad();
+
+        s.setState(Turnout.THROWN);
+        t.flush();
+
+        // message for Active and Inactive
+        CanMessage qActive = new CanMessage(new int[]{1, 2, 3, 4, 5, 6, 7, 8},
+                0x19914123
+        );
+        qActive.setExtended(true);
+        t.sendMessage(qActive);
+        t.flush();
+
+        CanMessage expected = new CanMessage(new int[]{1, 2, 3, 4, 5, 6, 7, 8},
+                0x19544c4c);
+        expected.setExtended(true);
+        Assert.assertEquals(expected, t.tc.rcvMessage);
+        t.tc.rcvMessage = null;
+
+        s.setAuthoritative(false);
+        s.setState(Turnout.CLOSED);
+        t.flush();
+
+        t.sendMessage(qActive);
+        t.flush();
+        expected = new CanMessage(new int[]{1, 2, 3, 4, 5, 6, 7, 8},
+                0x19547c4c);
+        expected.setExtended(true);
+        Assert.assertEquals(expected, t.tc.rcvMessage);
+    }
+
     public void testLoopback() throws jmri.JmriException {
         // Two turnouts behaving in opposite ways. One will be used to generate an event and the
         // other will be observed to make sure it catches it.
-        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.finishLoad();
-        OlcbTurnout r = new OlcbTurnout("MT", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.8", t.iface);
+        OlcbTurnout r = new OlcbTurnout("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.8", t.iface);
         r.finishLoad();
 
         r.addPropertyChangeListener(l);
@@ -180,8 +213,80 @@ public class OlcbTurnoutTest extends TestCase {
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
     }
 
+    public void testForgetState() {
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.setProperty(OlcbUtils.PROPERTY_LISTEN, Boolean.FALSE.toString());
+        s.finishLoad();
+
+        t.sendMessageAndExpectResponse(":X19914123N0102030405060708;",
+                ":X19547C4CN0102030405060708;");
+
+        Assert.assertEquals(Turnout.MONITORING, s.getFeedbackMode());
+        s.setState(Turnout.THROWN);
+        t.flush();
+        Assert.assertEquals(Turnout.THROWN, s.getCommandedState());
+        Assert.assertEquals(Turnout.THROWN, s.getKnownState());
+        t.assertSentMessage(":X195B4c4cN0102030405060708;");
+
+        s.addPropertyChangeListener(l);
+
+        t.sendMessageAndExpectResponse(":X19914123N0102030405060708;",
+                ":X19544C4CN0102030405060708;");
+        // Getting a state notify will not change state now.
+        t.sendMessage(":X19544123N0102030405060709;");
+        Mockito.verifyZeroInteractions(l.m);
+        Mockito.reset(l.m);
+        assertEquals(Turnout.THROWN, s.getKnownState());
+
+        // Resets the turnout to unknown state
+        s.setState(Turnout.UNKNOWN);
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.UNKNOWN);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.UNKNOWN);
+        verifyNoMoreInteractions(l.m);
+        Mockito.reset(l.m);
+        t.assertNoSentMessages();
+
+        // state is reported as unknown to the bus
+        t.sendMessageAndExpectResponse(":X19914123N0102030405060708;",
+                ":X19547C4CN0102030405060708;");
+        // getting a state notify will change state
+        t.sendMessage(":X19544123N0102030405060709;");
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.CLOSED);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.CLOSED);
+        verifyNoMoreInteractions(l.m);
+        Mockito.reset(l.m);
+        assertEquals(Turnout.CLOSED, s.getKnownState());
+
+        // state is reported as known (thrown==invalid)
+        t.sendMessageAndExpectResponse(":X19914123N0102030405060708;",
+                ":X19545C4CN0102030405060708;");
+
+        // getting a state notify will not change state
+        t.sendMessage(":X19544123N0102030405060708;");
+        Mockito.verifyZeroInteractions(l.m);
+        Mockito.reset(l.m);
+        assertEquals(Turnout.CLOSED, s.getKnownState());
+    }
+
+    public void testQueryState() {
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.finishLoad();
+
+        t.tc.rcvMessage = null;
+        s.requestUpdateFromLayout();
+        t.flush();
+        t.assertSentMessage(":X198F4C4CN0102030405060708;");
+
+        s.setFeedbackMode(Turnout.DIRECT);
+        t.flush();
+        t.tc.rcvMessage = null;
+        s.requestUpdateFromLayout();
+        t.flush();
+        t.assertNoSentMessages();
+    }
+
     public void testEventTable() {
-        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.finishLoad();
 
         EventTable.EventTableEntry[] elist = t.iface.getEventTable()
@@ -207,7 +312,7 @@ public class OlcbTurnoutTest extends TestCase {
 
     public void testNameFormatXlower() {
         // load dummy TrafficController
-        OlcbTurnout s = new OlcbTurnout("MT", "x0501010114FF2000;x0501010114FF2001", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "x0501010114FF2000;x0501010114FF2001", t.iface);
         s.finishLoad();
         Assert.assertNotNull("to exists", s);
 
@@ -237,7 +342,7 @@ public class OlcbTurnoutTest extends TestCase {
 
     public void testNameFormatXupper() {
         // load dummy TrafficController
-        OlcbTurnout s = new OlcbTurnout("MT", "X0501010114FF2000;X0501010114FF2001", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2001", t.iface);
         s.finishLoad();
         Assert.assertNotNull("to exists", s);
 
@@ -263,6 +368,24 @@ public class OlcbTurnoutTest extends TestCase {
         t.sendMessage(mInactive);
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
 
+    }
+
+    public void testSystemSpecificComparisonOfSpecificFormats() {
+
+        // test by putting into a tree set, then extracting and checking order
+        java.util.TreeSet<Turnout> set = new java.util.TreeSet<>(new jmri.util.NamedBeanComparator());
+        
+        set.add(new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface));
+        set.add(new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2011", t.iface));
+        set.add(new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2001", t.iface));
+        set.add(new OlcbTurnout("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", t.iface));
+        
+        java.util.Iterator<Turnout> it = set.iterator();
+        
+        Assert.assertEquals("MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", it.next().getSystemName());
+        Assert.assertEquals("MT1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", it.next().getSystemName());
+        Assert.assertEquals("MTX0501010114FF2000;X0501010114FF2001", it.next().getSystemName());
+        Assert.assertEquals("MTX0501010114FF2000;X0501010114FF2011", it.next().getSystemName());
     }
 
     // from here down is testing infrastructure

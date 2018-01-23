@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrix.grapevine.SerialMessage;
-import jmri.jmrix.grapevine.SerialTrafficController;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 
 /**
  * Frame lets user renumber a Grapevine node
@@ -18,11 +18,14 @@ import jmri.jmrix.grapevine.SerialTrafficController;
  */
 public class RenumberFrame extends jmri.util.JmriJFrame {
 
+    private GrapevineSystemConnectionMemo memo = null;
+
     /**
      * Constructor method
      */
-    public RenumberFrame() {
+    public RenumberFrame(GrapevineSystemConnectionMemo _memo) {
         super();
+        memo = _memo;
     }
 
     JTextField from;
@@ -84,7 +87,7 @@ public class RenumberFrame extends jmri.util.JmriJFrame {
         m.setElement(2, 0x80 + (f & 0x7F));
         m.setElement(3, 0x60);
         m.setParity();
-        SerialTrafficController.instance().sendSerialMessage(m, null);
+        memo.getTrafficController().sendSerialMessage(m, null);
     }
 
 }

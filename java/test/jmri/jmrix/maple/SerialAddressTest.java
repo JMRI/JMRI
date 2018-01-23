@@ -6,7 +6,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -59,14 +58,8 @@ public class SerialAddressTest {
         JUnitAppender.assertWarnMessage("invalid character in number field of system name: KL29O9");
     }
 
-    SerialNode d = new SerialNode(4, 0);
-    SerialNode c = new SerialNode(10, 0);
-    SerialNode b = new SerialNode(99, 0);
-
     @Test
     public void testValidSystemNameConfig() {
-        //InputBits ibit = new InputBits();
-        //OutputBits obit = new OutputBits();
         InputBits.setNumInputBits(40);
         OutputBits.setNumOutputBits(201);
         Assert.assertTrue("valid config KL47", SerialAddress.validSystemNameConfig("KL47", 'L', memo));
@@ -115,12 +108,10 @@ public class SerialAddressTest {
         Assert.assertEquals("make KS1000", "KS1000", SerialAddress.makeSystemName("S", 1000, "K"));
     }
 
-    SerialNode n = new SerialNode(18, 0);
-
     @Test
     public void testIsOutputBitFree() {
         // create a new turnout
-        jmri.TurnoutManager tMgr = jmri.InstanceManager.turnoutManagerInstance();
+        jmri.TurnoutManager tMgr = memo.getTurnoutManager();
         jmri.Turnout t1 = tMgr.newTurnout("KT034", "userT34");
         // check that turnout was created correctly including normalizing system name
         Assert.assertEquals("create KT34 check 1", "KT34", t1.getSystemName());
@@ -129,7 +120,7 @@ public class SerialAddressTest {
         // check that turnout was created correctly
         Assert.assertEquals("create KT32 check 1", "KT32", t2.getSystemName());
         // create two new lights  
-        jmri.LightManager lMgr = jmri.InstanceManager.lightManagerInstance();
+        jmri.LightManager lMgr = memo.getLightManager();
         jmri.Light lgt1 = lMgr.newLight("KL36", "userL36");
         jmri.Light lgt2 = lMgr.newLight("KL037", "userL37");
         // check that the lights were created as expected
@@ -147,7 +138,7 @@ public class SerialAddressTest {
 
     @Test
     public void testIsInputBitFree() {
-        jmri.SensorManager sMgr = jmri.InstanceManager.sensorManagerInstance();
+        jmri.SensorManager sMgr = memo.getSensorManager();
         // create 4 new sensors
         jmri.Sensor s1 = sMgr.newSensor("KS16", "userS16");
         jmri.Sensor s2 = sMgr.newSensor("KS014", "userS14");
@@ -172,18 +163,18 @@ public class SerialAddressTest {
 
     @Test
     public void testGetUserNameFromSystemName() {
-        jmri.SensorManager sMgr = jmri.InstanceManager.sensorManagerInstance();
+        jmri.SensorManager sMgr = memo.getSensorManager();
         // create 4 new sensors
         sMgr.newSensor("KS16", "userS16");
         sMgr.newSensor("KS014", "userS14");
         sMgr.newSensor("KS17", "userS17");
         sMgr.newSensor("KS12", "userS12");
 
-        jmri.LightManager lMgr = jmri.InstanceManager.lightManagerInstance();
+        jmri.LightManager lMgr = memo.getLightManager();
         lMgr.newLight("KL36", "userL36");
         lMgr.newLight("KL037", "userL37");
 
-        jmri.TurnoutManager tMgr = jmri.InstanceManager.turnoutManagerInstance();
+        jmri.TurnoutManager tMgr = memo.getTurnoutManager();
         tMgr.newTurnout("KT32", "userT32");
         tMgr.newTurnout("KT34", "userT34");
 
@@ -203,32 +194,38 @@ public class SerialAddressTest {
 
     @Before
     public void setUp() {
-        // log4j
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // create and register the manager objects
-        InputBits.mInstance = null;
-        InputBits.instance();
+        SerialTrafficControlScaffold tc = new SerialTrafficControlScaffold();
+        memo = new MapleSystemConnectionMemo("K", "Maple");
+        memo.setTrafficController(tc);
+        new InputBits(tc);
+        new OutputBits(tc);
+        new SerialNode(4, 0,tc);
+        new SerialNode(10, 0,tc);
+        new SerialNode(99, 0,tc);
+        new SerialNode(18, 0,tc);
 
-        jmri.util.JUnitUtil.resetInstanceManager();
-
-        memo = new MapleSystemConnectionMemo();
-
-        jmri.TurnoutManager l = new SerialTurnoutManager(memo) {
+        SerialTurnoutManager l = new SerialTurnoutManager(memo) {
             @Override
             public void notifyTurnoutCreationError(String conflict, int bitNum) {
             }
         };
         jmri.InstanceManager.setTurnoutManager(l);
 
-        jmri.LightManager lgt = new SerialLightManager(memo) {
+        memo.setTurnoutManager(l);
+
+        SerialLightManager lgt = new SerialLightManager(memo) {
             @Override
             public void notifyLightCreationError(String conflict, int bitNum) {
             }
         };
         jmri.InstanceManager.setLightManager(lgt);
+        memo.setLightManager(lgt);
 
-        jmri.SensorManager s = new SerialSensorManager(memo);
+        SerialSensorManager s = new SerialSensorManager(memo);
         jmri.InstanceManager.setSensorManager(s);
+        memo.setSensorManager(s);
     }
 
     private MapleSystemConnectionMemo memo = null;
@@ -237,10 +234,6 @@ public class SerialAddressTest {
     @After
     public void tearDown() {
         memo = null;
-        d = null;
-        c = null;
-        b = null;
-        n = null;
         JUnitUtil.tearDown();
     }
 

@@ -4,22 +4,26 @@
 <enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Off">
     <choice>Off</choice>
-    <choice xml:lang="it">Off</choice>
     <choice xml:lang="cs">Zhasnuto</choice>
+    <choice xml:lang="fr">Éteint</choice>
+    <choice xml:lang="it">Off</choice>
   </enumChoice>
   <enumChoice choice="Dim">
     <choice>Dim</choice>
-    <choice xml:lang="it">Smorzato</choice>
     <choice xml:lang="cs">Tlumené</choice>
+    <choice xml:lang="fr">Atténué</choice>
+    <choice xml:lang="it">Smorzato</choice>
   </enumChoice>
   <enumChoice choice="Bright">
     <choice>Bright</choice>
-    <choice xml:lang="it">Luminoso</choice>
     <choice xml:lang="cs">Jasný</choice>
+    <choice xml:lang="fr">Lumineux</choice>
+    <choice xml:lang="it">Luminoso</choice>
   </enumChoice>
   <enumChoice choice="Strobe">
     <choice>Strobe</choice>
-    <choice xml:lang="it">Strobo</choice>
     <choice xml:lang="cs">Stroboskopický</choice>
+    <choice xml:lang="fr">Stroboscopique</choice>
+    <choice xml:lang="it">Strobo</choice>
   </enumChoice>
 </enumVal>

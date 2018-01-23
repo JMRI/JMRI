@@ -633,7 +633,7 @@ public class Automation implements java.beans.PropertyChangeListener {
                             wait(250);
                         } catch (InterruptedException e) {
                             // TODO Auto-generated catch block
-                            e.printStackTrace();
+                            log.error("Thread interrupeted while waiting", e);
                         }
                     }
                 }

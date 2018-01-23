@@ -6,12 +6,8 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
-import jmri.util.ThreadingUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.swing.SwingUtilities;
 
 /**
  * Abstract base for TrafficControllers in a CANbus based Message/Reply
@@ -154,15 +150,15 @@ abstract public class AbstractCanTrafficController
     }
 
     /*
-     * enterProgMode() and enterNormalMode() return any message that 
+     * enterProgMode() and enterNormalMode() return any message that
      * needs to be returned to the command station to change modes.
-     * 
+     *
      * If no message is needed, you may return null.
-     * 
-     * If the programmerIdle() function returns true, enterNormalMode() is 
-     * called after a timeout while in IDLESTATE durring programing to 
-     * return the system to normal mode.  
-     * 
+     *
+     * If the programmerIdle() function returns true, enterNormalMode() is
+     * called after a timeout while in IDLESTATE durring programing to
+     * return the system to normal mode.
+     *
      */
     @Override
     protected AbstractMRMessage enterProgMode() {
@@ -289,8 +285,7 @@ abstract public class AbstractCanTrafficController
                                     + mCurrentState + " was " + msg.toString());
                         }
                     } else {
-                        log.error("reply complete in unexpected state: "
-                                + mCurrentState + " was " + msg.toString());
+                        unexpectedReplyStateError(mCurrentState,msg.toString());
                     }
                 }
             }

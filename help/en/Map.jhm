@@ -1762,6 +1762,8 @@
 
 <mapID target="html.web.Operations" url="html/web/Operations.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_AddLogo" url="package/jmri/jmrit/operations/Operations.shtml#AddLogo"/>
+
 <mapID target="package.jmri.jmrit.display.LayoutEditor_finish" url="package/jmri/jmrit/display/LayoutEditor.shtml#finish"/>
 
 <mapID target="html.tools.signaling.index_signaling" url="html/tools/signaling/index.shtml#signaling"/>
@@ -1998,7 +2000,7 @@
 
 <mapID target="html.hardware.sprog.SPROG_documentation" url="html/hardware/sprog/SPROG.shtml#documentation"/>
 
-<mapID target="html.doc.Technical.FindBugs" url="html/doc/Technical/FindBugs.shtml"/>
+<mapID target="html.doc.Technical.SpotBugs" url="html/doc/Technical/FindBugs.shtml"/>
 
 <mapID target="manual.DecoderPro.Basic_Start" url="manual/DecoderPro/Basic_Start.shtml"/>
 
@@ -2047,6 +2049,8 @@
 <mapID target="html.hardware.marklin.index" url="html/hardware/marklin/index.shtml"/>
 
 <mapID target="package.jmri.jmrit.withrottle.UserInterface" url="package/jmri/jmrit/withrottle/UserInterface.shtml"/>
+
+<mapID target="html.hardware.loconet.Addressing_boards" url="html/hardware/loconet/Addressing.shtml#boards"/>
 
 <mapID target="package.jmri.jmrix.secsi.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/secsi/nodeconfig/NodeConfigFrame.shtml"/>
 
@@ -3168,6 +3172,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_TrainsModify_PreviewTop" url="manual/JMRI_OPS_UsersGuide/Ops_TrainsModify.shtml#PreviewTop"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_OperationFiles" url="package/jmri/jmrit/operations/Operations.shtml#OperationFiles"/>
+
 <mapID target="package.jmri.jmrit.beantable.BlockEdit" url="package/jmri/jmrit/beantable/BlockEdit.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_Pools" url="package/jmri/jmrit/operations/Operations.shtml#Pools"/>
@@ -3217,6 +3223,8 @@
 <mapID target="package.jmri.jmrit.operations.Operations_Yards" url="package/jmri/jmrit/operations/Operations.shtml#Yards"/>
 
 <mapID target="html.hardware.loconet.Digitrax" url="html/hardware/loconet/Digitrax.shtml"/>
+
+<mapID target="html.doc.Technical.I8N_classkeysreport" url="html/doc/Technical/I8N.shtml#classkeysreport"/>
 
 <mapID target="html.hardware.loconet.Digitrax_alternatives" url="html/hardware/loconet/Digitrax.shtml#alternatives"/>
 
@@ -3777,6 +3785,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Trains_BuildOptions_Top" url="manual/JMRI_OPS_UsersGuide/Ops_Trains_BuildOptions.shtml#Top"/>
 
 <mapID target="html.hardware.loconet.StandaloneLocoNet_pseudoground" url="html/hardware/loconet/StandaloneLocoNet.shtml#pseudoground"/>
+
+<mapID target="html.doc.Technical.I8N_bundlekeysreport" url="html/doc/Technical/I8N.shtml#bundlekeysreport"/>
 
 <mapID target="manual.DecoderPro3.Main_OakTreeSystems" url="manual/DecoderPro3/Main_OakTreeSystems.shtml"/>
 

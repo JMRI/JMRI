@@ -62,7 +62,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2008, 2011
  * @author GT 2009
  */
-public class SectionTableAction extends AbstractTableAction {
+public class SectionTableAction extends AbstractTableAction<Section> {
 
     /**
      * Create an action with a specific title.
@@ -94,7 +94,7 @@ public class SectionTableAction extends AbstractTableAction {
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Section>() {
 
             static public final int BEGINBLOCKCOL = NUMCOLUMN;
             static public final int ENDBLOCKCOL = BEGINBLOCKCOL + 1;
@@ -106,17 +106,17 @@ public class SectionTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
+            public Manager<Section> getManager() {
                 return jmri.InstanceManager.getDefault(jmri.SectionManager.class);
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public Section getBySystemName(String name) {
                 return jmri.InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public Section getByUserName(String name) {
                 return jmri.InstanceManager.getDefault(jmri.SectionManager.class).getByUserName(name);
             }
 
@@ -126,7 +126,7 @@ public class SectionTableAction extends AbstractTableAction {
             }
 
             @Override
-            public void clickOn(NamedBean t) {
+            public void clickOn(Section t) {
             }
 
             @Override
@@ -142,19 +142,19 @@ public class SectionTableAction extends AbstractTableAction {
                     return "";
                 }
                 if (col == BEGINBLOCKCOL) {
-                    Section z = (Section) getBySystemName(sysNameList.get(row));
+                    Section z = getBySystemName(sysNameList.get(row));
                     if (z != null) {
                         return z.getBeginBlockName();
                     }
                     return "  ";
                 } else if (col == ENDBLOCKCOL) {
-                    Section z = (Section) getBySystemName(sysNameList.get(row));
+                    Section z = getBySystemName(sysNameList.get(row));
                     if (z != null) {
                         return z.getEndBlockName();
                     }
                     return "  ";
                 } else if (col == VALUECOL) {
-                    Section z = (Section) getBySystemName(sysNameList.get(row));
+                    Section z = getBySystemName(sysNameList.get(row));
                     if (z == null) {
                         return "";
                     } else {
@@ -190,7 +190,7 @@ public class SectionTableAction extends AbstractTableAction {
 
                         @Override
                         public void run() {
-                            String sName = (String) getValueAt(row, SYSNAMECOL);
+                            String sName = ((Section) getValueAt(row, SYSNAMECOL)).getSystemName();
                             editPressed(sName);
                         }
                     }
@@ -717,7 +717,7 @@ public class SectionTableAction extends AbstractTableAction {
         }
 
         // attempt to create the new Section
-        String sName = sysName.getText().trim().toUpperCase(); // N11N
+        String sName = InstanceManager.getDefault(jmri.SectionManager.class).normalizeSystemName(sysName.getText()); // N11N
         try {
             if (_autoSystemName.isSelected()) {
                 curSection = sectionManager.createNewSection(uName);

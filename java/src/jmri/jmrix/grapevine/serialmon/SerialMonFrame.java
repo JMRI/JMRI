@@ -3,7 +3,7 @@ package jmri.jmrix.grapevine.serialmon;
 import jmri.jmrix.grapevine.SerialListener;
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialReply;
-import jmri.jmrix.grapevine.SerialTrafficController;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,8 +14,11 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
-    public SerialMonFrame() {
+    private GrapevineSystemConnectionMemo memo = null;
+
+    public SerialMonFrame(GrapevineSystemConnectionMemo _memo) {
         super();
+        memo = _memo;
     }
 
     @Override
@@ -26,7 +29,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     @Override
     protected void init() {
         // connect to TrafficController
-        SerialTrafficController.instance().addSerialListener(this);
+        memo.getTrafficController().addSerialListener(this);
     }
 
     /**
@@ -38,7 +41,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     @Override
     public void dispose() {
-        SerialTrafficController.instance().removeSerialListener(this);
+        memo.getTrafficController().removeSerialListener(this);
         super.dispose();
     }
 

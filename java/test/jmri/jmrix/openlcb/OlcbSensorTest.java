@@ -1,17 +1,26 @@
 package jmri.jmrix.openlcb;
 
 import java.util.regex.Pattern;
+
+import jmri.JmriException;
 import jmri.Sensor;
+import jmri.Turnout;
 import jmri.jmrix.can.CanMessage;
 import jmri.util.JUnitUtil;
+import jmri.util.MockPropertyChangeListener;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.mockito.Mockito;
 import org.openlcb.EventID;
 import org.openlcb.implementations.EventTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensor class.
@@ -20,10 +29,13 @@ import org.slf4j.LoggerFactory;
  */
 public class OlcbSensorTest extends TestCase {
     private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class);
+    protected MockPropertyChangeListener l = new MockPropertyChangeListener();
+    private static final String KNOWN_STATE = "KnownState";
 
     public void testIncomingChange() {
         Assert.assertNotNull("exists", t);
-        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.finishLoad();
 
         // message for Active and Inactive
         CanMessage mActive = new CanMessage(
@@ -53,7 +65,8 @@ public class OlcbSensorTest extends TestCase {
         Assert.assertNotNull("exists", t);
         t.tc.rcvMessage = null;
 
-        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.finishLoad();
         t.flush();
 
         assertNotNull(t.tc.rcvMessage);
@@ -88,7 +101,8 @@ public class OlcbSensorTest extends TestCase {
 
     public void testMomentarySensor() throws Exception {
         Assert.assertNotNull("exists", t);
-        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8", t.iface);
+        OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8", t.iface);
+        s.finishLoad();
 
         // message for Active and Inactive
         CanMessage mActive = new CanMessage(
@@ -125,7 +139,8 @@ public class OlcbSensorTest extends TestCase {
     }
 
     public void testLocalChange() throws jmri.JmriException {
-        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.finishLoad();
         t.waitForStartup();
 
         t.tc.rcvMessage = null;
@@ -150,8 +165,103 @@ public class OlcbSensorTest extends TestCase {
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
     }
 
+    public void testAuthoritative() throws jmri.JmriException {
+        OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.finishLoad();
+
+        s.setState(Sensor.ACTIVE);
+        t.flush();
+
+        // message for Active and Inactive
+        CanMessage qActive = new CanMessage(new int[]{1, 2, 3, 4, 5, 6, 7, 8},
+                0x19914123
+        );
+        qActive.setExtended(true);
+        t.sendMessage(qActive);
+        t.flush();
+
+        CanMessage expected = new CanMessage(new int[]{1, 2, 3, 4, 5, 6, 7, 8},
+                0x19544c4c);
+        expected.setExtended(true);
+        Assert.assertEquals(expected, t.tc.rcvMessage);
+        t.tc.rcvMessage = null;
+
+        s.setAuthoritative(false);
+        s.setState(Sensor.INACTIVE);
+        t.flush();
+
+        t.sendMessage(qActive);
+        t.flush();
+        expected = new CanMessage(new int[]{1, 2, 3, 4, 5, 6, 7, 8},
+                0x19547c4c);
+        expected.setExtended(true);
+        Assert.assertEquals(expected, t.tc.rcvMessage);
+    }
+    
+    public void testForgetState() throws JmriException {
+        OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.setProperty(OlcbUtils.PROPERTY_LISTEN, Boolean.FALSE.toString());
+        s.finishLoad();
+
+        t.sendMessageAndExpectResponse(":X19914123N0102030405060708;",
+                ":X19547C4CN0102030405060708;");
+
+        s.setKnownState(Sensor.ACTIVE);
+        t.flush();
+        Assert.assertEquals(Sensor.ACTIVE, s.getKnownState());
+        t.assertSentMessage(":X195B4c4cN0102030405060708;");
+
+        s.addPropertyChangeListener(l);
+
+        t.sendMessageAndExpectResponse(":X19914123N0102030405060708;",
+                ":X19544C4CN0102030405060708;");
+        // Getting a state notify will not change state now.
+        t.sendMessage(":X19544123N0102030405060709;");
+        Mockito.verifyZeroInteractions(l.m);
+        Mockito.reset(l.m);
+        assertEquals(Sensor.ACTIVE, s.getKnownState());
+
+        // Resets the turnout to unknown state
+        s.setState(Sensor.UNKNOWN);
+        verify(l.m).onChange(KNOWN_STATE, Sensor.UNKNOWN);
+        verifyNoMoreInteractions(l.m);
+        Mockito.reset(l.m);
+        t.assertNoSentMessages();
+
+        // state is reported as unknown to the bus
+        t.sendMessageAndExpectResponse(":X19914123N0102030405060708;",
+                ":X19547C4CN0102030405060708;");
+        // getting a state notify will change state
+        t.sendMessage(":X19544123N0102030405060709;");
+        verify(l.m).onChange(KNOWN_STATE, Sensor.INACTIVE);
+        verifyNoMoreInteractions(l.m);
+        Mockito.reset(l.m);
+        assertEquals(Sensor.INACTIVE, s.getKnownState());
+
+        // state is reported as known (thrown==invalid)
+        t.sendMessageAndExpectResponse(":X19914123N0102030405060708;",
+                ":X19545C4CN0102030405060708;");
+
+        // getting a state notify will not change state
+        t.sendMessage(":X19544123N0102030405060708;");
+        Mockito.verifyZeroInteractions(l.m);
+        Mockito.reset(l.m);
+        assertEquals(Sensor.INACTIVE, s.getKnownState());
+    }
+
+    public void testQueryState() {
+        OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.finishLoad();
+
+        t.tc.rcvMessage = null;
+        s.requestUpdateFromLayout();
+        t.flush();
+        t.assertSentMessage(":X198F4C4CN0102030405060708;");
+    }
+
     public void testEventTable() {
-        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.finishLoad();
 
         EventTable.EventTableEntry[] elist = t.iface.getEventTable()
                 .getEventInfo(new EventID("1.2.3.4.5.6.7.8")).getAllEntries();
@@ -172,6 +282,24 @@ public class OlcbSensorTest extends TestCase {
 
         Assert.assertEquals(1, elist.length);
         Assert.assertEquals("Sensor MyInput Inactive", elist[0].getDescription());
+    }
+
+    public void testSystemSpecificComparisonOfSpecificFormats() {
+
+        // test by putting into a tree set, then extracting and checking order
+        java.util.TreeSet<Sensor> set = new java.util.TreeSet<>(new jmri.util.NamedBeanComparator());
+        
+        set.add(new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface));
+        set.add(new OlcbSensor("M", "X0501010114FF2000;X0501010114FF2011", t.iface));
+        set.add(new OlcbSensor("M", "X0501010114FF2000;X0501010114FF2001", t.iface));
+        set.add(new OlcbSensor("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", t.iface));
+        
+        java.util.Iterator<Sensor> it = set.iterator();
+        
+        Assert.assertEquals("MS1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", it.next().getSystemName());
+        Assert.assertEquals("MS1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", it.next().getSystemName());
+        Assert.assertEquals("MSX0501010114FF2000;X0501010114FF2001", it.next().getSystemName());
+        Assert.assertEquals("MSX0501010114FF2000;X0501010114FF2011", it.next().getSystemName());
     }
 
     OlcbTestInterface t;

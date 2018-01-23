@@ -16,6 +16,8 @@ import org.junit.Assert;
   */
 public class SerialAddressTest extends TestCase {
 
+    private SerialTrafficControlScaffold tcis = null;
+
     public void testValidateSystemNameFormat() {
         Assert.assertTrue("valid format - VL2", NameValidity.VALID == SerialAddress.validSystemNameFormat("VL2", 'L'));
         Assert.assertTrue("valid format - VL0B2", NameValidity.VALID == SerialAddress.validSystemNameFormat("VL0B2", 'L'));
@@ -99,70 +101,70 @@ public class SerialAddressTest extends TestCase {
     }
 
     public void testGetNodeFromSystemName() {
-        SerialNode d = new SerialNode(14, SerialNode.DAUGHTER);
-        SerialNode c = new SerialNode(17, SerialNode.DAUGHTER);
-        SerialNode b = new SerialNode(127, SerialNode.DAUGHTER);
-        Assert.assertEquals("node of VL14007", d, SerialAddress.getNodeFromSystemName("VL14007"));
-        Assert.assertEquals("node of VL14B7", d, SerialAddress.getNodeFromSystemName("VL14B7"));
-        Assert.assertEquals("node of VL127007", b, SerialAddress.getNodeFromSystemName("VL127007"));
-        Assert.assertEquals("node of VL127B7", b, SerialAddress.getNodeFromSystemName("VL127B7"));
-        Assert.assertEquals("node of VL17007", c, SerialAddress.getNodeFromSystemName("VL17007"));
-        Assert.assertEquals("node of VL17B7", c, SerialAddress.getNodeFromSystemName("VL17B7"));
-        Assert.assertEquals("node of VL11007", null, SerialAddress.getNodeFromSystemName("VL11007"));
-        Assert.assertEquals("node of VL11B7", null, SerialAddress.getNodeFromSystemName("VL11B7"));
+        SerialNode d = new SerialNode(14, SerialNode.DAUGHTER,tcis);
+        SerialNode c = new SerialNode(17, SerialNode.DAUGHTER,tcis);
+        SerialNode b = new SerialNode(127, SerialNode.DAUGHTER,tcis);
+        Assert.assertEquals("node of VL14007", d, SerialAddress.getNodeFromSystemName("VL14007",tcis));
+        Assert.assertEquals("node of VL14B7", d, SerialAddress.getNodeFromSystemName("VL14B7",tcis));
+        Assert.assertEquals("node of VL127007", b, SerialAddress.getNodeFromSystemName("VL127007",tcis));
+        Assert.assertEquals("node of VL127B7", b, SerialAddress.getNodeFromSystemName("VL127B7",tcis));
+        Assert.assertEquals("node of VL17007", c, SerialAddress.getNodeFromSystemName("VL17007",tcis));
+        Assert.assertEquals("node of VL17B7", c, SerialAddress.getNodeFromSystemName("VL17B7",tcis));
+        Assert.assertEquals("node of VL11007", null, SerialAddress.getNodeFromSystemName("VL11007",tcis));
+        Assert.assertEquals("node of VL11B7", null, SerialAddress.getNodeFromSystemName("VL11B7",tcis));
     }
 
     public void testValidSystemNameConfig() {
-        SerialNode d = new SerialNode(4, SerialNode.DAUGHTER);
-        SerialNode c = new SerialNode(10, SerialNode.DAUGHTER);
+        SerialNode d = new SerialNode(4, SerialNode.DAUGHTER,tcis);
+        SerialNode c = new SerialNode(10, SerialNode.DAUGHTER,tcis);
         Assert.assertNotNull("exists", d);
         Assert.assertNotNull("exists", c);
-        Assert.assertTrue("valid config VL4007", SerialAddress.validSystemNameConfig("VL4007", 'L'));
-        Assert.assertTrue("valid config VL4B7", SerialAddress.validSystemNameConfig("VL4B7", 'L'));
-        Assert.assertTrue("valid config VS10007", SerialAddress.validSystemNameConfig("VS10007", 'S'));
-        Assert.assertTrue("valid config VS10B7", SerialAddress.validSystemNameConfig("VS10B7", 'S'));
-        Assert.assertTrue("valid config VL10032", SerialAddress.validSystemNameConfig("VL10032", 'L'));
-        Assert.assertTrue("valid config VL10B32", SerialAddress.validSystemNameConfig("VL10B32", 'L'));
+        Assert.assertTrue("valid config VL4007", SerialAddress.validSystemNameConfig("VL4007", 'L',tcis));
+        Assert.assertTrue("valid config VL4B7", SerialAddress.validSystemNameConfig("VL4B7", 'L',tcis));
+        Assert.assertTrue("valid config VS10007", SerialAddress.validSystemNameConfig("VS10007", 'S',tcis));
+        Assert.assertTrue("valid config VS10B7", SerialAddress.validSystemNameConfig("VS10B7", 'S',tcis));
+        Assert.assertTrue("valid config VL10032", SerialAddress.validSystemNameConfig("VL10032", 'L',tcis));
+        Assert.assertTrue("valid config VL10B32", SerialAddress.validSystemNameConfig("VL10B32", 'L',tcis));
 
-        Assert.assertTrue("invalid config VL10033", !SerialAddress.validSystemNameConfig("VL10033", 'L'));
+        Assert.assertTrue("invalid config VL10033", !SerialAddress.validSystemNameConfig("VL10033", 'L',tcis));
         JUnitAppender.assertWarnMessage("VL10033 invalid; bad bit number");
 
-        Assert.assertTrue("invalid config VL10B33", !SerialAddress.validSystemNameConfig("VL10B33", 'L'));
+        Assert.assertTrue("invalid config VL10B33", !SerialAddress.validSystemNameConfig("VL10B33", 'L',tcis));
         JUnitAppender.assertWarnMessage("bit number field out of range in system name: VL10B33");
         JUnitAppender.assertWarnMessage("VL10B33 invalid; bad format");
 
-        Assert.assertTrue("valid config VS10016", SerialAddress.validSystemNameConfig("VS10016", 'S'));
-        Assert.assertTrue("valid config VS10B16", SerialAddress.validSystemNameConfig("VS10B16", 'S'));
+        Assert.assertTrue("valid config VS10016", SerialAddress.validSystemNameConfig("VS10016", 'S',tcis));
+        Assert.assertTrue("valid config VS10B16", SerialAddress.validSystemNameConfig("VS10B16", 'S',tcis));
 
-        Assert.assertTrue("invalid config VS10017", !SerialAddress.validSystemNameConfig("VS10017", 'S'));
+        Assert.assertTrue("invalid config VS10017", !SerialAddress.validSystemNameConfig("VS10017", 'S',tcis));
         JUnitAppender.assertWarnMessage("VS10017 invalid; bad bit number");
 
-        Assert.assertTrue("invalid config VS10B17", !SerialAddress.validSystemNameConfig("VS10B17", 'S'));
+        Assert.assertTrue("invalid config VS10B17", !SerialAddress.validSystemNameConfig("VS10B17", 'S',tcis));
         JUnitAppender.assertWarnMessage("VS10B17 invalid; bad bit number");
 
-        Assert.assertTrue("valid config VT4016", SerialAddress.validSystemNameConfig("VT4016", 'T'));
-        Assert.assertTrue("valid config VT4B16", SerialAddress.validSystemNameConfig("VT4B16", 'T'));
+        Assert.assertTrue("valid config VT4016", SerialAddress.validSystemNameConfig("VT4016", 'T',tcis));
+        Assert.assertTrue("valid config VT4B16", SerialAddress.validSystemNameConfig("VT4B16", 'T',tcis));
 
-        Assert.assertTrue("invalid config VT4117", !SerialAddress.validSystemNameConfig("VT4117", 'T'));
+        Assert.assertTrue("invalid config VT4117", !SerialAddress.validSystemNameConfig("VT4117", 'T',tcis));
         JUnitAppender.assertWarnMessage("VT4117 invalid; bad bit number");
 
-        Assert.assertTrue("invalid config VT4B117", !SerialAddress.validSystemNameConfig("VT4B117", 'T'));
+        Assert.assertTrue("invalid config VT4B117", !SerialAddress.validSystemNameConfig("VT4B117", 'T',tcis));
         JUnitAppender.assertWarnMessage("bit number field out of range in system name: VT4B117");
         JUnitAppender.assertWarnMessage("VT4B117 invalid; bad format");
 
-        Assert.assertTrue("valid config VS4008", SerialAddress.validSystemNameConfig("VS4008", 'S'));
-        Assert.assertTrue("valid config VS4B8", SerialAddress.validSystemNameConfig("VS4B8", 'S'));
+        Assert.assertTrue("valid config VS4008", SerialAddress.validSystemNameConfig("VS4008", 'S',tcis));
+        Assert.assertTrue("valid config VS4B8", SerialAddress.validSystemNameConfig("VS4B8", 'S',tcis));
 
-        Assert.assertTrue("invalid config VS4017", !SerialAddress.validSystemNameConfig("VS4017", 'S'));
+        Assert.assertTrue("invalid config VS4017", !SerialAddress.validSystemNameConfig("VS4017", 'S',tcis));
         JUnitAppender.assertWarnMessage("VS4017 invalid; bad bit number");
 
-        Assert.assertTrue("invalid config VS4B19", !SerialAddress.validSystemNameConfig("VS4B19", 'S'));
+        Assert.assertTrue("invalid config VS4B19", !SerialAddress.validSystemNameConfig("VS4B19", 'S',tcis));
         JUnitAppender.assertWarnMessage("VS4B19 invalid; bad bit number");
 
-        Assert.assertTrue("invalid config VL11007", !SerialAddress.validSystemNameConfig("VL11007", 'L'));
+        Assert.assertTrue("invalid config VL11007", !SerialAddress.validSystemNameConfig("VL11007", 'L',tcis));
         JUnitAppender.assertWarnMessage("VL11007 invalid; no such node");
 
-        Assert.assertTrue("invalid config VL11B7", !SerialAddress.validSystemNameConfig("VL11B7", 'L'));
+        Assert.assertTrue("invalid config VL11B7", !SerialAddress.validSystemNameConfig("VL11B7", 'L',tcis));
         JUnitAppender.assertWarnMessage("VL11B7 invalid; no such node");
 
     }
@@ -214,6 +216,7 @@ public class SerialAddressTest extends TestCase {
     @Override
     protected void setUp() {
         JUnitUtil.setUp();
+        tcis = new SerialTrafficControlScaffold();
     }
 
     @Override

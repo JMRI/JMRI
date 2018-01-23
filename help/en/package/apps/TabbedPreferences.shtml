@@ -24,8 +24,9 @@
   <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
-    <p id="mainContent">
-      <h1>JMRI: Preferences Pane</h1>The Preferences pane is where
+    <div id="mainContent">
+      <h1>JMRI: Preferences Pane</h1>
+      The Preferences pane is where
       you configure the basic operation of your JMRI application.
 
       <p>The screen is split into two sections: on the left hand

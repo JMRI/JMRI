@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Vector;
 import jmri.BasicRosterEntry;
 import jmri.CommandStation;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -418,7 +419,7 @@ abstract public class AbstractThrottle implements DccThrottle {
             log.debug("No listeners so will call the dispose in the InstanceManger with an empty throttleListenr null value");
             InstanceManager.throttleManagerInstance().disposeThrottle(this, new ThrottleListener() {
                 @Override
-                public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+                public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 }
 
                 @Override
@@ -426,7 +427,7 @@ abstract public class AbstractThrottle implements DccThrottle {
                 }
     
                 @Override
-                public void notifyStealThrottleRequired(DccLocoAddress address){
+                public void notifyStealThrottleRequired(LocoAddress address){
                     // this is an automatically stealing impelementation.
                     InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
                 }

@@ -9,6 +9,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -20,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
@@ -32,6 +36,7 @@ import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.*;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -60,11 +65,11 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     public AddEntryExitPairPanel(LayoutEditor panel) {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
+        // combo boxes selection panel
         JPanel top = new JPanel();
-        top.setLayout(new GridLayout(6, 2));
-
-        top.add(new JLabel(Bundle.getMessage("SelectPanel")));  // NOI18N
+        top.setBorder(BorderFactory.createEtchedBorder());
+        top.setLayout(new GridLayout(4, 2));
+        top.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SelectPanel")), SwingConstants.RIGHT));  // NOI18N
         top.add(selectPanel);
         selectPanel.removeAllItems();
         panels = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
@@ -75,7 +80,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             selectPanel.setSelectedItem(panel.getLayoutName());
         }
 
-        top.add(new JLabel(Bundle.getMessage("FromLocation")));  // NOI18N
+        top.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("FromLocation")), SwingConstants.RIGHT));  // NOI18N
         top.add(fromPoint);
         ActionListener selectPanelListener = (ActionEvent e) -> {
             selectPointsFromPanel();
@@ -84,13 +89,17 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         selectPointsFromPanel();
         selectPanel.addActionListener(selectPanelListener);
 
-        top.add(new JLabel(Bundle.getMessage("ToLocation")));  // NOI18N
+        top.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ToLocation")), SwingConstants.RIGHT));  // NOI18N
         top.add(toPoint);
-        top.add(new JLabel(Bundle.getMessage("NXType")));  // NOI18N
+
+        JComboBoxUtil.setupComboBoxMaxRows(fromPoint);
+        JComboBoxUtil.setupComboBoxMaxRows(toPoint);
+
+        top.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("NXType")), SwingConstants.RIGHT));  // NOI18N
         top.add(typeBox);
         add(top);
 
-        //add(top);
+        // button panel
         JPanel p = new JPanel();
         JButton ok = new JButton(Bundle.getMessage("AddPair"));  // NOI18N
         p.add(ok);
@@ -198,6 +207,9 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     }
 
     List<ValidPoints> validPoints = new ArrayList<>();
+    boolean doFromCombo;
+    SortedSet<String> fromSet = new TreeSet<>();
+    SortedSet<String> toSet = new TreeSet<>();
 
     private void selectPointsFromPanel() {
         if (selectPanel.getSelectedIndex() == -1) {
@@ -207,8 +219,32 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             return;
         }
         panel = panels.get(selectPanel.getSelectedIndex());
+        fromSet.clear();
+        toSet.clear();
+        doFromCombo = true;
+        selectPoints(panel);
+
+        // Do other panels if any
+        doFromCombo = false;
+        panels = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+        for (int i = 0; i < panels.size(); i++) {
+            if (panels.get(i) != panel) {
+                selectPoints(panels.get(i));
+            }
+        }
+
+        // Update the combo boxes
         fromPoint.removeAllItems();
+        fromSet.forEach((ent) -> {
+            fromPoint.addItem(ent);
+        });
         toPoint.removeAllItems();
+        toSet.forEach((ent) -> {
+            toPoint.addItem(ent);
+        });
+    }
+
+    private void selectPoints(LayoutEditor panel) {
         for (PositionablePoint pp : panel.getPositionablePoints()) {
             addPointToCombo(pp.getWestBoundSignalMastName(), pp.getWestBoundSensorName());
             addPointToCombo(pp.getEastBoundSignalMastName(), pp.getEastBoundSensorName());
@@ -244,8 +280,10 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                 description = sensorName + " (" + signalMastName + ")";
             }
             validPoints.add(new ValidPoints(source, description));
-            fromPoint.addItem(description);
-            toPoint.addItem(description);
+            if (doFromCombo) {
+                fromSet.add(description);
+            }
+            toSet.add(description);
         }
     }
 
@@ -614,7 +652,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             JPanel p1 = new JPanel();
             //clearEntry.addActionListener(clearEntryListener);
             clearEntry.setToolTipText(Bundle.getMessage("ReselectionTip"));  // NOI18N
-            p1.add(new JLabel(Bundle.getMessage("Reselection")));  // NOI18N
+            p1.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Reselection"))));  // NOI18N
             p1.add(clearEntry);
             optionsPane.add(p1);
             JPanel p2 = new JPanel();
@@ -629,7 +667,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             };
 
             settingTrackColorBox.addActionListener(settingTrackColorListener);
-            p2.add(new JLabel(Bundle.getMessage("RouteSetColour")));  // NOI18N
+            p2.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("RouteSetColour"))));  // NOI18N
             p2.add(settingTrackColorBox);
             optionsPane.add(p2);
             durationSetting.setText("" + nxPairs.getSettingTimer());
@@ -639,7 +677,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                 durationSetting.setEnabled(false);
             }
             JPanel p3 = new JPanel();
-            p3.add(new JLabel(Bundle.getMessage("SettingDuration")));  // NOI18N
+            p3.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SettingDuration"))));  // NOI18N
             p3.add(durationSetting);
             optionsPane.add(p3);
 

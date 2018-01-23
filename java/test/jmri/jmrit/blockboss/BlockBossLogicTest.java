@@ -180,6 +180,49 @@ public class BlockBossLogicTest extends TestCase {
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "missing signal is green, show yellow");  // wait and test
     }
 
+    // check for basic not-fail if no signal name was set
+    public void testSimpleBlockNoSignal() throws jmri.JmriException {
+
+        try { 
+            p = new BlockBossLogic(null);
+        } catch (java.lang.IllegalArgumentException e) {
+            // this is expected
+        }
+        jmri.util.JUnitAppender.assertWarnMessage("Signal Head \"null\" was not found");
+    }
+
+    Thread testThread = null;
+    boolean forceInterrupt = false;
+
+    // test interruption
+    public void testInterrupt() throws jmri.JmriException {
+        s1.setState(Sensor.INACTIVE);
+        
+        forceInterrupt = false;
+        p = new BlockBossLogic("IH1") {
+            public void setOutput() {
+                testThread = this.thread;
+                if (forceInterrupt) {
+                    testThread.interrupt(); // force an interrupt of the SSL thread
+                }
+                super.setOutput();
+            }
+        };
+        p.setMode(BlockBossLogic.SINGLEBLOCK);
+        p.setSensor1("1");
+        p.setLimitSpeed1(true);
+
+        startLogic(p);
+
+        JUnitUtil.waitFor(()->{return p.isRunning();}, "is running");
+                
+        forceInterrupt = true;
+        s1.setState(Sensor.ACTIVE);
+        
+        JUnitUtil.waitFor(()->{return !p.isRunning();}, "is stopped");
+    }
+
+
     // check that user names were preserved
     public void testUserNamesRetained() {
         BlockBossLogic p = new BlockBossLogic("IH1");

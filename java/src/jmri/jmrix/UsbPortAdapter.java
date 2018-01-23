@@ -4,11 +4,12 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.usb.UsbControlIrp;
 import javax.usb.UsbDevice;
 import javax.usb.UsbDisconnectedException;
 import javax.usb.UsbException;
-import jmri.util.USBUtil;
+import jmri.util.usb.UsbUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +22,7 @@ public class UsbPortAdapter extends AbstractPortController {
 
     private Short vendorID = 0;
     private Short productID = 0;
+    private String serialNumber = null;
     protected UsbDevice usbDevice = null;
 
     public UsbPortAdapter(SystemConnectionMemo memo) {
@@ -43,14 +45,60 @@ public class UsbPortAdapter extends AbstractPortController {
         productID = value;
     }
 
+    /**
+     * Get the device serial number.
+     *
+     * @return the serial number or null if there is no serial number
+     */
+    public String getSerialNumber() {
+        if (serialNumber != null && serialNumber.trim().isEmpty()) {
+            serialNumber = null;
+        }
+        return serialNumber;
+    }
+
+    /**
+     * Set the device serial number.
+     *
+     * @param serialNumber the serial number; if null, empty, or only containing
+     *                     whitespace, sets property to null
+     */
+    public void setSerialNumber(String serialNumber) {
+        if (serialNumber == null || serialNumber.trim().isEmpty()) {
+            this.serialNumber = null;
+        } else {
+            this.serialNumber = serialNumber;
+        }
+    }
+
     public UsbDevice getUsbDevice() {
         if (usbDevice == null) {
-            String errorString = openPort(port, null);
-            if (errorString != null) {
-                log.error(errorString);
+            log.debug("Getting device at {}", port);
+            String error = openPort(port, serialNumber);
+            if (error != null) {
+                log.error(error);
             }
         }
         return usbDevice;
+    }
+
+    public String openPort(String portName, String serialNumber) {
+        usbDevice = UsbUtil.getMatchingDevice(vendorID, productID, serialNumber, portName);
+        if (usbDevice == null) {
+            List< UsbDevice> usbDevices = UsbUtil.getMatchingDevices(vendorID, productID, serialNumber);
+            if (usbDevices.size() == 1) {
+                usbDevice = usbDevices.get(0);
+            } else {
+                // search for device with same vendor/product ID, but possibly different serial number
+                usbDevices = UsbUtil.getMatchingDevices(vendorID, productID, null);
+                if (usbDevices.size() == 1) {
+                    usbDevice = usbDevices.get(0);
+                } else {
+                    return String.format("Single USB device with vendor id %s and product id %s not found.", vendorID, productID);
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -58,7 +106,7 @@ public class UsbPortAdapter extends AbstractPortController {
      */
     @Override
     public void connect() throws java.io.IOException {
-        log.debug("*	connect()");
+        log.debug("connect()");
     }
 
     /**
@@ -66,7 +114,7 @@ public class UsbPortAdapter extends AbstractPortController {
      */
     @Override
     public DataInputStream getInputStream() {
-        log.debug("*	getInputStream()");
+        log.debug("getInputStream()");
         return null;
     }
 
@@ -75,7 +123,7 @@ public class UsbPortAdapter extends AbstractPortController {
      */
     @Override
     public DataOutputStream getOutputStream() {
-        log.debug("*	getOutputStream()");
+        log.debug("getOutputStream()");
         return null;
     }
 
@@ -84,7 +132,7 @@ public class UsbPortAdapter extends AbstractPortController {
      */
     @Override
     public void recover() {
-        log.debug("*	recover()");
+        log.debug("recover()");
     }
 
     /**
@@ -92,46 +140,34 @@ public class UsbPortAdapter extends AbstractPortController {
      */
     @Override
     public void configure() {
-        log.debug("*	configure()");
+        log.debug("configure()");
     }
 
     /**
-     * {@inheritDoc}
+     * Get the list of USB locations with devices matching a single
+     * vendor/product ID combination. These are "portNames" to match the calling
+     * API.
+     *
+     * @return the list of locations with matching devices; this is an empty
+     *         list if there are no matches
      */
+    @Nonnull
     public List<String> getPortNames() {
-        log.debug("*	getPortNames()");
+        log.debug("getPortNames()");
 
         List<String> results = new ArrayList<>();
-        List<UsbDevice> usbDevices = USBUtil.getMatchingDevices(vendorID, productID);
-        for (UsbDevice usbDevice : usbDevices) {
-            results.add(USBUtil.getLocationID(usbDevice));
-        }
+        List<UsbDevice> usbDevices = UsbUtil.getMatchingDevices(vendorID, productID, null);
+        usbDevices.forEach((device) -> {
+            results.add(UsbUtil.getLocation(device));
+        });
 
         return results;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public String openPort(String portName, String appName) {
-        String result = null;   // assume success (optimist!)
-
-        log.debug("*	openPort('{}','{}')", portName, appName);
-        usbDevice = USBUtil.getMatchingDevice(vendorID, productID, portName);
-        if (usbDevice == null) {
-            result = String.format(
-                    "USB device at location ID %s not found.", portName);
-        }
-        return result;
-    }
-
     private String port = null;
 
-    /**
-     * {@inheritDoc}
-     */
     public void setPort(String s) {
-        log.debug("*	setPort('{}')", s);
+        log.debug("setPort('{}')", s);
         port = s;
     }
 
@@ -140,17 +176,18 @@ public class UsbPortAdapter extends AbstractPortController {
      */
     @Override
     public String getCurrentPortName() {
-        log.debug("*	getCurrentPortName()");
+        log.debug("getCurrentPortName()");
         return port;
     }
 
     /**
      * send USB control transfer
+     *
      * @param requestType the request type
-     * @param request the request
-     * @param value the value
-     * @param index the index
-     * @param data the data
+     * @param request     the request
+     * @param value       the value
+     * @param index       the index
+     * @param data        the data
      * @return true if successful sent
      */
     public boolean sendControlTransfer(int requestType, int request, int value, int index, byte[] data) {
@@ -166,16 +203,16 @@ public class UsbPortAdapter extends AbstractPortController {
                 usbControlIrp.setData(data);
                 usbControlIrp.setLength(data.length);
 
-                //log.debug("sendControlTransfer,  requestType: {}, request: {}, value: {}, index: {}, data: {}", requestType, request, value, index, getByteString(data));
+                //log.trace("sendControlTransfer,  requestType: {}, request: {}, value: {}, index: {}, data: {}", requestType, request, value, index, getByteString(data));
                 usbDevice.syncSubmit(usbControlIrp);
                 result = true; // it's good!
             } catch (IllegalArgumentException | UsbException | UsbDisconnectedException e) {
-                //log.error("Exception " + e);
-                //e.printStackTrace();
+                log.error("Exception transferring control", e);
             }
         }
         return result;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UsbPortAdapter.class);
+    private final static Logger log = LoggerFactory.getLogger(UsbPortAdapter.class
+    );
 }

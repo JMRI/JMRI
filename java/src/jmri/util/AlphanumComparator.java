@@ -44,7 +44,7 @@ import java.util.Comparator;
  * 0001 is seem as larger than 1 because it's the longer number. A
  * version that does not compare leading zeros is forthcoming.
  */
-public final class AlphanumComparator implements Comparator<String> {
+public class AlphanumComparator implements Comparator<String> {
 
     private final boolean isDigit(char ch) {
         return (('0' <= ch) && (ch <= '9'));
@@ -53,18 +53,42 @@ public final class AlphanumComparator implements Comparator<String> {
     // Length of string is passed in for improved efficiency (only need to calculate it once)
     private final String getChunk(String s, int slength, int marker) {
         StringBuilder chunk = new StringBuilder();
+        int markstart = marker;
         char c = s.charAt(marker);
-        chunk.append(c);
         boolean startIsDigit = isDigit(c);
+        if (c == '0') {
+            // strip leading zeros - cases:
+            //    This is or isn't the only leading zero
+            //    There are or aren't more digits after the run of zeros
+            while (marker+1 < slength && s.charAt(marker+1) == '0') {
+                marker++; // skip that zero
+            }
+            // now what's the next character?
+            if (marker+1 >= slength) {
+                // nothing more, continue with that single zero
+            } else if (isDigit(s.charAt(marker+1))) {
+                // number, drop the leading zero
+                marker++;
+                c = s.charAt(marker);
+            } else {
+                // is letter, let the zero go
+            }
+        }
+        chunk.append(c);
         while (++marker < slength) {
             c = s.charAt(marker);
             if (isDigit(c) != startIsDigit)
                 break;
             chunk.append(c);
         }
+
+        skip = marker - markstart;
         return chunk.toString();
     }
 
+    // internal temporary used to efficiently return how many characters were skipped
+    int skip;
+    
     @Override
     public int compare(String s1, String s2) {
         int length1 = s1.length();
@@ -74,10 +98,10 @@ public final class AlphanumComparator implements Comparator<String> {
         int marker1 = 0, marker2 = 0;
         while (marker1 < length1 && marker2 < length2) {
             String chunk1 = getChunk(s1, length1, marker1);
-            marker1 += chunk1.length();
+            marker1 += skip;
 
             String chunk2 = getChunk(s2, length2, marker2);
-            marker2 += chunk2.length();
+            marker2 += skip;
 
             // If both chunks contain numeric characters, sort them numerically
             if (isDigit(chunk1.charAt(0)) && isDigit(chunk2.charAt(0))) {
@@ -101,6 +125,9 @@ public final class AlphanumComparator implements Comparator<String> {
                 break;
             }
         }
-        return result;
+        if (result == 0 && marker1 == length1 && marker2 < length2) return -1;
+        if (result == 0 && marker1 < length1 && marker2 == length2) return +1;
+        
+        return Integer.signum(result);  // limit to -1, 0, 1
     }
 }

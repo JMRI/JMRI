@@ -1,6 +1,6 @@
 package jmri.jmrix.loconet;
 
-import java.util.ArrayList;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.Hashtable;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
@@ -32,6 +32,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         super(memo);
         this.slotManager = memo.getSlotManager();//slotManager;
         this.tc = memo.getLnTrafficController();
+        requestList = new LinkedBlockingQueue<>();
         slotForAddress = new Hashtable<>();
     }
 
@@ -55,7 +56,40 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         log.debug("requestThrottleSetup: address {}, control {}", address, control);
+        if(requestOutstanding) {
+           try {
+              // queue this request for later.
+              requestList.put(new ThrottleRequest(address,control));
+           } catch(InterruptedException ie){
+              log.error("Interrupted while trying to store throttle request");
+              requestOutstanding = false;
+              return;
+           }
+        } else {
+           // handle this now
+           requestOutstanding = true;
+           processThrottleSetupRequest(address, control);
+        }
+     }
 
+     protected void processQueuedThrottleSetupRequest(){
+        if(requestOutstanding) {
+           return;
+        } else if(requestList.size() != 0 ){
+           requestOutstanding = true;
+           try {
+              ThrottleRequest tr = requestList.take();
+              processThrottleSetupRequest(tr.getAddress(),tr.getControl());
+           } catch(InterruptedException ie){
+              log.error("Interrupted while trying to process process throttle request");
+              requestOutstanding = false;
+              return;
+           }
+        }
+     }
+
+
+     private void processThrottleSetupRequest(LocoAddress address, boolean control) {
         slotManager.slotFromLocoAddress(address.getNumber(), this);  //first try
 
         class RetrySetup implements Runnable {  //setup for retries and failure check
@@ -88,11 +122,13 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 }
                 log.error("No response to slot request for {} after {} attempts.", address, attempts - 1); // NOI18N
                 failedThrottleRequest(address, "Failed to get response from command station");
+                requestOutstanding = false;
+                processQueuedThrottleSetupRequest();
             }
         }
-        
+
         retrySetupThread = new Thread(
-                new RetrySetup(new DccLocoAddress(address.getNumber(), 
+                new RetrySetup(new DccLocoAddress(address.getNumber(),
                         isLongAddress(address.getNumber())), this));
         retrySetupThread.setName("LnThrottleManager RetrySetup "+address);
         retrySetupThread.start();
@@ -100,10 +136,12 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     }
 
     volatile Thread retrySetupThread;
-    
+
     Hashtable<Integer, Thread> waitingForNotification = new Hashtable<Integer, Thread>(5);
-    
+
     Hashtable<Integer, LocoNetSlot> slotForAddress;
+    LinkedBlockingQueue<ThrottleRequest> requestList;
+    boolean requestOutstanding = false;
 
     /**
      * LocoNet does have a Dispatch function
@@ -135,41 +173,29 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     @Override
     public void notifyChangedSlot(LocoNetSlot s) {
         log.debug("notifyChangedSlot - slot {}, slotStatus {}", s.getSlot(), Integer.toHexString(s.slotStatus()));
-        // This is invoked only if the SlotManager knows that the LnThrottleManager is 
+        // This is invoked only if the SlotManager knows that the LnThrottleManager is
         // interested in the address associated with this slot.
-                
+
         // need to check to see if the slot is in a suitable state for creating a throttle.
         if (s.slotStatus() == LnConstants.LOCO_IN_USE) {
-            // loco is already in-use or is consist-mid or consist-sub 
+            // loco is already in-use or is consist-mid or consist-sub
             log.warn("slot {} address {} is  already in-use.",
                     s.getSlot(), s.locoAddr());
             // is the throttle ID the same as for this JMRI instance?  If not, do not accept the slot.
             if (s.id() != throttleID) {
                 // notify the LnThrottleManager about failure of acquisition.
                 // NEED TO TRIGGER THE NEW "STEAL REQUIRED" FUNCITONALITY HERE
-                //note: throttle listener expects to have "callback" method notifyStealThrottleRequired 
+                //note: throttle listener expects to have "callback" method notifyStealThrottleRequired
                 //invoked if a "steal" is required.  Make that happen as part of the "acquisition" process
                 slotForAddress.put(s.locoAddr(),s);
                 notifyStealRequest(s.locoAddr());
                 return;
             }
         }
-        if ((s.consistStatus() == LnConstants.CONSIST_MID) ||
-                (s.consistStatus() == LnConstants.CONSIST_SUB)) {
-            // cannot acquire loco account is consist-mid or consist-sub 
-            log.warn("slot {} address {} cannot be acquired for loco control account already in-use, consist-mid or consist-sub.",
-                    s.getSlot(), s.locoAddr());
-            // notify the LnThrottleManager about failure of acquisition.
-            notifyRefused(s.locoAddr(), "Locomotive burried in a consist cannot be acquired.");
-            return;
-        }
         commitToAcquireThrottle(s);
     }
 
     private void commitToAcquireThrottle(LocoNetSlot s) {
-                tc.sendLocoNetMessage(s.writeThrottleID(throttleID));
-        log.debug("Attempting to update slot with this JMRI instance's throttle id ({})", throttleID);
-
         // haven't identified a particular reason to refuse throttle acquisition at this time...
         DccThrottle throttle = createThrottle((LocoNetSystemConnectionMemo) adapterMemo, s);
         s.notifySlotListeners();    // make sure other listeners for this slot know about what's going on!
@@ -183,18 +209,20 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         else {
             log.debug("LnThrottleManager.notifyChangedSlot() - ignoring slot notification for slot {}, address {} account not attempting to acquire that address", s.getSlot(), s.locoAddr() );
         }
+        requestOutstanding = false;
+        processQueuedThrottleSetupRequest();
     }
-    
+
     public void notifyRefused(int address, String cause) {
         //end the waiting thread since we got a failure response
         if (waitingForNotification.containsKey(address)) {
             waitingForNotification.get(address).interrupt();
             waitingForNotification.remove(address);
             // notify the throttle - in some other thread!
-            
-            class InformRejection implements Runnable {  
+
+            class InformRejection implements Runnable {
                 // inform the throttle from a new thread, so that
-                // the modal dialog box doesn't block other LocoNet 
+                // the modal dialog box doesn't block other LocoNet
                 // message handling
 
                 int address;
@@ -206,21 +234,18 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 }
 
                 public void run() {
-                    
+
                     log.debug("New thread launched to inform throttle user of failure to acquire loco {} - {}", address, cause);
                     failedThrottleRequest(new DccLocoAddress(address, isLongAddress(address)), cause);
                 }
             }
             Thread thr = new Thread(new InformRejection( address, cause));
             thr.start();
-
-            
-            
-            
         }
-        
+        requestOutstanding = false;
+        processQueuedThrottleSetupRequest();
     }
-    
+
 
     DccThrottle createThrottle(LocoNetSystemConnectionMemo memo, LocoNetSlot s) {
         log.debug("createThrottle: slot {}", s.getSlot());
@@ -323,7 +348,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      *                address.
      * @param l       The ThrottleListener cancelling request for a throttle.
      */
-    
+
     @Override
     public void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l) {
         super.cancelThrottleRequest(address, isLong, l);
@@ -335,6 +360,11 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     }
 
     protected int throttleID = 0x0171;
+
+    public int getThrottleID(){
+        return throttleID;
+    }
+
     /**
      * Dispose of this manager, typically for testing
      */
@@ -348,60 +378,87 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             }
         }
     }
-    
+
     /**
-     * Inform the requesting throttle object (not the connection-specific throttle 
-     * implementation!)  that the address is in-use and the throttle user may 
-     * either choose to "steal" the address, or quit the acquisition process.  
-     * The LocoNet acquisition process "retry" timer is stopped as part of this 
+     * Inform the requesting throttle object (not the connection-specific throttle
+     * implementation!)  that the address is in-use and the throttle user may
+     * either choose to "steal" the address, or quit the acquisition process.
+     * The LocoNet acquisition process "retry" timer is stopped as part of this
      * process, since a positive response has been received from the command station
      * and since user intervention is required.
      *
-     * Reminder: for LocoNet throttles which are not using "expanded slot" 
+     * Reminder: for LocoNet throttles which are not using "expanded slot"
      * functionality, "steal" really means "share".  For those LocoNet throttles
-     * which are using "expanded slots", "steal" really means take control and 
+     * which are using "expanded slots", "steal" really means take control and
      * let the command station issue a "StealZap" LocoNet message to the other throttle.
      *
-     * @param locoAddr address of DCC loco or consist   
+     * @param locoAddr address of DCC loco or consist
      */
     public void notifyStealRequest(int locoAddr) {
         // need to find the "throttleListener" associated with the request for locoAddr, and
-        // send that "throttleListener" a notification that the command station needs 
+        // send that "throttleListener" a notification that the command station needs
         // permission to "steal" the loco address.
         if (waitingForNotification.containsKey(locoAddr)) {
             waitingForNotification.get(locoAddr).interrupt();
             waitingForNotification.remove(locoAddr);
 
             notifyStealRequest(new DccLocoAddress(locoAddr, isLongAddress(locoAddr)));
-        }   
+        }
     }
 
     /**
      * Perform the actual "Steal" of the requested throttle.
      * <p>
-     * This is a call-back, as a result of the throttle user's agreement to 
+     * This is a call-back, as a result of the throttle user's agreement to
      * "steal" the locomotive.
      * <p>
-     * Reminder: for LocoNet throttles which are not using "expanded slot" 
+     * Reminder: for LocoNet throttles which are not using "expanded slot"
      * functionality, "steal" really means "share".  For those LocoNet throttles
-     * which are using "expanded slots", "steal" really means "force any other 
+     * which are using "expanded slots", "steal" really means "force any other
      * throttle running that address to drop the loco".
      * <p>
-     * @param address desired DccLocoAddress 
+     * @param address desired DccLocoAddress
      * @param l  ThrottleListener requesting the throttle steal occur.
      * @param steal true if the request should continue, false otherwise.
      * @since 4.9.2
      */
     @Override
-    public void stealThrottleRequest(DccLocoAddress address, ThrottleListener l, boolean steal){
+    public void stealThrottleRequest(LocoAddress address, ThrottleListener l, boolean steal){
        log.debug("stealThrottleRequest() invoked for address {}, with steal boolean = {}",address.getNumber(),steal);
        if (steal == false) {
-            failedThrottleRequest(address, "User chose not to 'steal' the throttle.");
+           if (address instanceof DccLocoAddress) {
+                failedThrottleRequest((DccLocoAddress) address, "User chose not to 'steal' the throttle.");
+           } else {
+               log.error("cannot cast address to DccLocoAddress.");
+           }
        } else {
            log.warn("user agreed to steal address {}, but no code is in-place to handle the 'steal' (yet)",address.getNumber());
         commitToAcquireThrottle(slotForAddress.get(address.getNumber()));
        }
-    }   
+    }
+
+
+    /*
+     * internal class for holding throttleListener/LocoAddress pairs for
+     * outstanding requests.
+     */
+    protected static class ThrottleRequest{
+         private LocoAddress la = null;
+         private boolean tc = false;
+
+         ThrottleRequest(LocoAddress l,boolean control){
+             la = l;
+             tc = control;
+         }
+
+         public boolean getControl(){
+            return tc;
+         }
+         public LocoAddress getAddress(){
+            return la;
+         }
+
+    }
 
     private final static Logger log = LoggerFactory.getLogger(LnThrottleManager.class);
 }

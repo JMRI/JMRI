@@ -1,6 +1,5 @@
 package jmri.jmrix.dcc4pc;
 
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -30,6 +29,12 @@ public class Dcc4PcSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionM
        Dcc4PcTrafficController tc = new Dcc4PcTrafficController(){
           @Override
           public void sendDcc4PcMessage(Dcc4PcMessage m,Dcc4PcListener reply) {
+          }
+          @Override
+          public void transmitLoop(){
+          }
+          @Override
+          public void receiveLoop(){
           }
        };
        scm = new Dcc4PcSystemConnectionMemo(tc);

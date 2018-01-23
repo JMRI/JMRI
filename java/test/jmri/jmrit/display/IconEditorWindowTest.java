@@ -19,6 +19,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
+import org.junit.rules.Timeout;
+import jmri.util.junit.rules.RetryRule;
 import org.junit.runner.Description;
 import org.netbeans.jemmy.operators.JComponentOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -42,6 +44,12 @@ public class IconEditorWindowTest {
             }
         }
     };
+
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     Editor _editor = null;
     JComponent _panel;
@@ -164,7 +172,7 @@ public class IconEditorWindowTest {
             _panel.repaint();
         });
 
-        java.awt.Point location = new java.awt.Point(x + icon.getSize().width / 2,
+        new java.awt.Point(x + icon.getSize().width / 2,
                 y + icon.getSize().height / 2);
 
         Assert.assertEquals("initial state", Sensor.UNKNOWN, turnout.getState());
@@ -208,7 +216,7 @@ public class IconEditorWindowTest {
         icon.setLocation(x, y);
         _panel.repaint();
 
-        java.awt.Point location = new java.awt.Point(x + icon.getSize().width / 2,
+        new java.awt.Point(x + icon.getSize().width / 2,
                 y + icon.getSize().height / 2);
 
         Assert.assertEquals("initial state", Light.OFF, light.getState());
@@ -254,7 +262,7 @@ public class IconEditorWindowTest {
         icon.setLocation(x, y);
         _panel.repaint();
 
-        java.awt.Point location = new java.awt.Point(x + icon.getSize().width / 2,
+        new java.awt.Point(x + icon.getSize().width / 2,
                 y + icon.getSize().height / 2);
 
         int[] states = signalHead.getValidStates();

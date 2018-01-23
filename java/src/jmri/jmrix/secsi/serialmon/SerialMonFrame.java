@@ -3,7 +3,7 @@ package jmri.jmrix.secsi.serialmon;
 import jmri.jmrix.secsi.SerialListener;
 import jmri.jmrix.secsi.SerialMessage;
 import jmri.jmrix.secsi.SerialReply;
-import jmri.jmrix.secsi.SerialTrafficController;
+import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 
 /**
  * Frame displaying (and logging) serial command messages
@@ -12,8 +12,11 @@ import jmri.jmrix.secsi.SerialTrafficController;
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
-    public SerialMonFrame() {
+    private SecsiSystemConnectionMemo memo = null;
+
+    public SerialMonFrame(SecsiSystemConnectionMemo _memo) {
         super();
+        memo = _memo;
     }
 
     @Override
@@ -24,7 +27,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     @Override
     protected void init() {
         // connect to TrafficController
-        SerialTrafficController.instance().addSerialListener(this);
+        memo.getTrafficController().addSerialListener(this);
     }
 
     /**
@@ -36,7 +39,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     @Override
     public void dispose() {
-        SerialTrafficController.instance().removeSerialListener(this);
+        memo.getTrafficController().removeSerialListener(this);
         super.dispose();
     }
 

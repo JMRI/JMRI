@@ -77,15 +77,15 @@ public class Car extends RollingStock {
 
     public Car copy() {
         Car car = new Car();
-        car.setBuilt(_built);
-        car.setColor(_color);
-        car.setLength(_length);
-        car.setLoadName(_loadName);
-        car.setReturnWhenEmptyLoadName(_rweLoadName);
-        car.setNumber(_number);
-        car.setOwner(_owner);
-        car.setRoadName(_road);
-        car.setTypeName(_type);
+        car.setBuilt(getBuilt());
+        car.setColor(getColor());
+        car.setLength(getLength());
+        car.setLoadName(getLoadName());
+        car.setReturnWhenEmptyLoadName(getReturnWhenEmptyLoadName());
+        car.setNumber(getNumber());
+        car.setOwner(getOwner());
+        car.setRoadName(getRoadName());
+        car.setTypeName(getTypeName());
         car.loaded = true;
         return car;
     }
@@ -177,7 +177,7 @@ public class Car extends RollingStock {
      * @return The car's load priority.
      */
     public String getLoadPriority() {
-        return (carLoads.getPriority(_type, _loadName));
+        return (carLoads.getPriority(getTypeName(), getLoadName()));
     }
 
     /**
@@ -186,7 +186,7 @@ public class Car extends RollingStock {
      * @return type empty or type load
      */
     public String getLoadType() {
-        return (carLoads.getLoadType(_type, _loadName));
+        return (carLoads.getLoadType(getTypeName(), getLoadName()));
     }
 
     public String getPickupComment() {

@@ -16,7 +16,7 @@ public class SerialLightManagerTest {
 
     @Test
     public void testCTor() {
-        SerialLightManager t = new SerialLightManager();
+        SerialLightManager t = new SerialLightManager(memo);
         Assert.assertNotNull("exists", t);
     }
 
@@ -32,6 +32,10 @@ public class SerialLightManagerTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        SerialTrafficController t = new SerialTrafficControlScaffold();
+        memo = new OakTreeSystemConnectionMemo("O", "Oak Tree");
+        memo.setTrafficController(t);
+        t.registerNode(new SerialNode(0, SerialNode.IO48, memo));
     }
 
     @After

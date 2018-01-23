@@ -3,6 +3,7 @@ package jmri.jmrix.grapevine.configurexml;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.jmrix.grapevine.SerialSignalHead;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
@@ -16,7 +17,10 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
+    private GrapevineSystemConnectionMemo memo = null;
+
     public SerialSignalHeadXml() {
+       memo = InstanceManager.getDefault(GrapevineSystemConnectionMemo.class);
     }
 
     /**
@@ -47,9 +51,9 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         Attribute a = shared.getAttribute("userName");
         SignalHead h;
         if (a == null) {
-            h = new SerialSignalHead(sys);
+            h = new SerialSignalHead(sys,memo);
         } else {
-            h = new SerialSignalHead(sys, a.getValue());
+            h = new SerialSignalHead(sys, a.getValue(),memo);
         }
 
         loadCommon(h, shared);

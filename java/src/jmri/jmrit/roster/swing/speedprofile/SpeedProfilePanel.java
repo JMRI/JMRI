@@ -588,14 +588,14 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     }
 
     @Override
-    public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
+    public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
         JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorFailThrottleRequest"));
         log.error("Throttle request failed for " + address + " because " + reason);
         setButtonStates(true);
     }
 
     @Override
-    public void notifyStealThrottleRequired(jmri.DccLocoAddress address){
+    public void notifyStealThrottleRequired(jmri.LocoAddress address){
         // this is an automatically stealing impelementation.
         InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }
@@ -827,17 +827,17 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         for (Integer i : speeds.keySet()) {
             rosterSpeedProfile.setSpeed(i, speeds.get(i).getForwardSpeed(), speeds.get(i).getReverseSpeed());
         }
-        if (tmpRe != null) {
-            RosterSpeedProfile speedProfile = tmpRe.getSpeedProfile();
-            if (speedProfile != null) {
-                if (table != null) {
-                    table.dispose();
-                }
-                table = new SpeedProfileTable(speedProfile, tmpRe.getId());
-                table.setVisible(true);
-                return;
+
+        RosterSpeedProfile speedProfile = tmpRe.getSpeedProfile();
+        if (speedProfile != null) {
+            if (table != null) {
+                table.dispose();
             }
+            table = new SpeedProfileTable(speedProfile, tmpRe.getId());
+            table.setVisible(true);
+            return;
         }
+
         JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNoSpeedProfile"));
         setButtonStates(true);
     }

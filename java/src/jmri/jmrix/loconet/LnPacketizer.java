@@ -215,7 +215,7 @@ public class LnPacketizer extends LnTrafficController {
                             opCode = byte2;
                             throw new LocoNetMessageException();
                         }
-                        int len=2;  
+                        int len=2;
                         // Decide length
                         switch ((opCode & 0x60) >> 5) {
                             case 0:
@@ -256,7 +256,7 @@ public class LnPacketizer extends LnTrafficController {
                         for (int i = 2; i < len; i++) {
                             // check for message-blocking error
                             int b = readByteProtected(istream) & 0xFF;
-                            log.trace("char {} is: ", i, Integer.toHexString(b)); // NOI18N
+                            log.trace("char {} is: {}", i, Integer.toHexString(b)); // NOI18N
                             if ((b & 0x80) != 0) {
                                 log.warn("LocoNet message with opCode: " // NOI18N
                                         + Integer.toHexString(opCode)
@@ -287,7 +287,7 @@ public class LnPacketizer extends LnTrafficController {
                     // return a notification via the queue to ensure end
                     Runnable r = new Runnable() {
                         LocoNetMessage msgForLater = thisMsg;
-                        LnPacketizer myTC = thisTC;
+                        LnTrafficController myTC = thisTC;
 
                         @Override
                         public void run() {
@@ -302,8 +302,7 @@ public class LnPacketizer extends LnTrafficController {
                 // just let it ride for now
             } catch (java.io.EOFException e) {
                 // posted from idle port when enableReceiveTimeout used
-                log.debug("EOFException, is LocoNet serial I/O using timeouts?");
-                e.printStackTrace();
+                log.error("EOFException, is LocoNet serial I/O using timeouts?", e);
             } catch (java.io.IOException e) {
                 // fired when write-end of HexFile reaches end
                 log.debug("IOException, should only happen with HexFIle: " + e);
@@ -321,14 +320,14 @@ public class LnPacketizer extends LnTrafficController {
      * looking for input messages in character form on the stream connected to
      * the LnPortController via <code>connectPort</code>.
      */
-    class RcvHandler implements Runnable {
+    protected class RcvHandler implements Runnable {
 
         /**
          * Remember the LnPacketizer object
          */
-        LnPacketizer trafficController;
+        LnTrafficController trafficController;
 
-        public RcvHandler(LnPacketizer lt) {
+        public RcvHandler(LnTrafficController lt) {
             trafficController = lt;
         }
 
@@ -392,7 +391,7 @@ public class LnPacketizer extends LnTrafficController {
                             for (int i = 2; i < len; i++) {
                                 // check for message-blocking error
                                 int b = readByteProtected(istream) & 0xFF;
-                                log.trace("char {} is: ", i, Integer.toHexString(b)); // NOI18N
+                                log.trace("char {} is: {}", i, Integer.toHexString(b)); // NOI18N
                                 if ((b & 0x80) != 0) {
                                     log.warn("LocoNet message with opCode: " // NOI18N
                                             + Integer.toHexString(opCode)
@@ -422,11 +421,11 @@ public class LnPacketizer extends LnTrafficController {
                             log.debug("queue message for notification: {}", msg.toString());
                         }
                         final LocoNetMessage thisMsg = msg;
-                        final LnPacketizer thisTC = trafficController;
+                        final LnTrafficController thisTC = trafficController;
                         // return a notification via the queue to ensure end
                         Runnable r = new Runnable() {
                             LocoNetMessage msgForLater = thisMsg;
-                            LnPacketizer myTC = thisTC;
+                            LnTrafficController myTC = thisTC;
 
                             @Override
                             public void run() {

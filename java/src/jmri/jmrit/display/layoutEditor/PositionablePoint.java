@@ -1,16 +1,12 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
-
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -701,8 +697,8 @@ public class PositionablePoint extends LayoutTrack {
                 result = false;
             }
         } else {
-                log.error("Already connected to {}", newTrack.getName());
-                result = false;
+            log.error("Already connected to {}", newTrack.getName());
+            result = false;
         }
         return result;
     }   // replaceTrackConnection
@@ -1256,7 +1252,7 @@ public class PositionablePoint extends LayoutTrack {
         }
         int ourDir = getConnect1Dir();
         linkPointsBox.setEnabled(true);
-        LayoutEditor le = (LayoutEditor) editorCombo.getItemAt(
+        LayoutEditor le = editorCombo.getItemAt(
                 editorCombo.getSelectedIndex()).item();
         for (PositionablePoint p : le.getPositionablePoints()) {
             if (p.getType() == EDGE_CONNECTOR) {
@@ -1397,68 +1393,12 @@ public class PositionablePoint extends LayoutTrack {
         return result;
     }
 
-    /**
-     * draw this PositionablePoint
-     *
-     * @param g2 the graphics port to draw to
+    /*
+     * {@inheritDoc}
      */
     @Override
     protected void draw(Graphics2D g2) {
-        if (getType() != ANCHOR) {
-            Point2D pt = getCoordsCenter();
-            boolean mainline = false;
-            Point2D ep1 = pt, ep2 = pt;
-
-            if (getConnect1() != null) {
-                mainline = getConnect1().isMainline();
-                ep1 = getConnect1().getCentreSeg();
-            }
-            if (getType() == ANCHOR) {
-                if (getConnect2() != null) {
-                    mainline |= getConnect2().isMainline();
-                    ep2 = getConnect2().getCentreSeg();
-                }
-            }
-
-            double trackWidth = Math.min(layoutEditor.setTrackStrokeWidth(g2, mainline), 3.0);
-            Stroke drawingStroke = new BasicStroke((float) trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
-            //Stroke drawingStroke1 = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
-            trackWidth *= 2.0;
-
-            if (!ep1.equals(ep2)) {
-                setColorForTrackBlock(g2, getConnect1().getLayoutBlock());
-                double angleRAD = (Math.PI / 2.0) - MathUtil.computeAngleRAD(ep1, ep2);
-                Point2D p1, p2, p3, p4;
-                if (getType() == END_BUMPER) {
-                    // draw a cross tie
-                    p1 = new Point2D.Double(0.0, -trackWidth);
-                    p2 = new Point2D.Double(0.0, +trackWidth);
-
-                    p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
-                    p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
-                    g2.setStroke(drawingStroke);
-                    g2.draw(new Line2D.Double(p1, p2));
-                } else if (getType() == EDGE_CONNECTOR) {
-                    // draw an X
-                    p1 = new Point2D.Double(-trackWidth, -trackWidth);
-                    p2 = new Point2D.Double(-trackWidth, +trackWidth);
-                    p3 = new Point2D.Double(+trackWidth, +trackWidth);
-                    p4 = new Point2D.Double(+trackWidth, -trackWidth);
-
-                    p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
-                    p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
-                    p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), pt);
-                    p4 = MathUtil.add(MathUtil.rotateRAD(p4, angleRAD), pt);
-
-                    g2.setStroke(drawingStroke);
-                    g2.draw(new Line2D.Double(p1, p3));
-                    g2.draw(new Line2D.Double(p2, p4));
-                }
-            }
-            // this is to force setTrackStrokeWidth's mainline local to toggle
-            // so next time it's called it will "do the right thing"...
-            layoutEditor.setTrackStrokeWidth(g2, !mainline);
-        }   // if (getType() != ANCHOR)
+        // nothing to see here... move along...
     }   // draw
 
     /**
@@ -1472,10 +1412,8 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
-    /**
-     * draw this PositionablePoint's edit controls
-     *
-     * @param g2 the graphics port to draw to
+    /*
+     * {@inheritDoc}
      */
     @Override
     protected void drawEditControls(Graphics2D g2) {
@@ -1774,7 +1712,7 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
-   /**
+    /**
      * {@inheritDoc}
      */
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {

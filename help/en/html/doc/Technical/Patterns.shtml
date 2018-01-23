@@ -27,7 +27,7 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Patterns and Organization</h1>
+      <h1>JMRI Code: Patterns and Organization</h1>
 
       <p>JMRI has grown and evolved with time, and you can't always
       see the currently-preferred structure and patterns by looking
@@ -98,14 +98,10 @@
 
       <a id="SPI" name="SPI"></a>
       <h2>Service Providers</h2>
-      Java provides a capability, using a 
-      "Service Provider Interface", 
-      that allows us to reduce the complexity of our
-      code by having the code itself discover what pieces
-      are available and need to be installed. 
-      For background on this, see the 
-      tutorial
-      sections on
+      Java provides a capability, using a "Service Provider Interface",
+      that allows us to reduce the complexity of our code by having the
+      code itself discover what pieces are available and need to be installed.<br>
+      For background on this, see the tutorial sections on
       "<a href="https://docs.oracle.com/javase/tutorial/ext/basics/spi.html">Creating Extensible Applications</a>"
       and
       "<a href="https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">Introduction to the Service Provider Interfaces</a>".
@@ -115,8 +111,7 @@
       <pre><code>
       @ServiceProvider(service = PreferencesManager.class)
       </code></pre> 
-      the 
-      JMRI Preferences System
+      the JMRI Preferences System
       automatically will discover that the class uses the preferences
       and should be hooked up.  This means that we don't have to 
       modify the Preferences classes to look up each new class using them, 
@@ -141,13 +136,13 @@
       </dl>
 
       <p>
-      Classes provide SPI also have to be registered with the system so they can be found.
+      Classes that provide SPI also have to be registered with the system so they can be found.
       JMRI does this with entries
       inside files in the <code>target/classes/META-INF/services/</code> directory.
       These entries are created automatically during the JMRI build process from 
       the annotations in the source files.
       JMRI then packages those into the appropriate level of <code>jmri.jar</code> file, 
-      where they will eventually be found and acted on.
+      where they will eventually be found and acted on.</p>
       
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

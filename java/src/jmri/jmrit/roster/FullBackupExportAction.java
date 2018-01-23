@@ -14,6 +14,8 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Offer an easy mechanism to save the entire roster contents from one instance
@@ -27,7 +29,6 @@ public class FullBackupExportAction
         extends JmriAbstractAction {
 
     // parent component for GUI
-
     public FullBackupExportAction(String s, WindowInterface wi) {
         super(s, wi);
     }
@@ -51,28 +52,25 @@ public class FullBackupExportAction
     public void actionPerformed(ActionEvent e) {
         Roster roster = Roster.getDefault();
 
-        ZipOutputStream zipper = null;
+        String roster_filename_extension = "roster";
 
-        try {
-            String roster_filename_extension = "roster";
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "JMRI full roster files", roster_filename_extension);
+        chooser.setFileFilter(filter);
 
-            JFileChooser chooser = new JFileChooser();
-            FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                    "JMRI full roster files", roster_filename_extension);
-            chooser.setFileFilter(filter);
+        int returnVal = chooser.showSaveDialog(_parent);
+        if (returnVal != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
 
-            int returnVal = chooser.showSaveDialog(_parent);
-            if (returnVal != JFileChooser.APPROVE_OPTION) {
-                return;
-            }
+        String filename = chooser.getSelectedFile().getAbsolutePath();
 
-            String filename = chooser.getSelectedFile().getAbsolutePath();
+        if (!filename.endsWith(roster_filename_extension)) {
+            filename = filename.concat(roster_filename_extension);
+        }
 
-            if (!filename.endsWith(roster_filename_extension)) {
-                filename = filename.concat(roster_filename_extension);
-            }
-
-            zipper = new ZipOutputStream(new FileOutputStream(filename));
+        try (ZipOutputStream zipper = new ZipOutputStream(new FileOutputStream(filename))) {
 
             // create a zip file roster entry for each entry in the main roster
             for (RosterEntry entry : roster.getAllEntries()) {
@@ -87,25 +85,16 @@ public class FullBackupExportAction
             zipper.close();
 
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            log.error("Unable to find file {}", filename, ex);
         } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (zipper != null) {
-
-                try {
-                    zipper.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
+            log.error("Unable to write to {}", filename, ex);
         }
 
     }
 
     /**
      * Copy a file to an entry in a zip file.
-     *
+     * <p>
      * The basename of the source file will be used in the zip file, placed in
      * the directory of the zip file specified by dirname. If dirname is null,
      * the file will be placed in the root level of the zip file.
@@ -153,4 +142,6 @@ public class FullBackupExportAction
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
+
+    private final static Logger log = LoggerFactory.getLogger(FullBackupExportAction.class);
 }

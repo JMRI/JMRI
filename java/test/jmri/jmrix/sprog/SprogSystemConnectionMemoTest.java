@@ -8,9 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogSystemConnectionMemo
- * </P>
+ * Tests for SprogSystemConnectionMemo.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class SprogSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
@@ -27,7 +26,7 @@ public class SprogSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
        SprogSystemConnectionMemo m = (SprogSystemConnectionMemo)scm;
        SprogTrafficController tc = new SprogTrafficControlScaffold(m);
        m.setSprogTrafficController(tc);
-       Assert.assertEquals("Traffic Controller",tc,m.getSprogTrafficController());
+       Assert.assertEquals("Traffic Controller", tc, m.getSprogTrafficController());
    }
 
    @Test
@@ -43,17 +42,16 @@ public class SprogSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
    @Override
    @Test
    public void testProvidesConsistManager(){
-       // by default, does not.
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
-       SprogSystemConnectionMemo m = (SprogSystemConnectionMemo)scm;
+        SprogSystemConnectionMemo memo = new SprogSystemConnectionMemo();
+       // by default, does.
+       Assert.assertTrue("Provides ConsistManager", memo.provides(jmri.ConsistManager.class));
        // In service mode, does not.
-       m.setSprogMode(SprogMode.SERVICE);
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+       memo.setSprogMode(SprogMode.SERVICE);
+       Assert.assertFalse("Provides ConsistManager", memo.provides(jmri.ConsistManager.class));
        // In ops mode, does.
-       m.setSprogMode(SprogMode.OPS);
-       Assert.assertTrue("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+       memo.setSprogMode(SprogMode.OPS);
+       Assert.assertTrue("Provides ConsistManager", memo.provides(jmri.ConsistManager.class));
    }
-
 
 
     // The minimal setup for log4J
@@ -62,6 +60,11 @@ public class SprogSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
     public void setUp() {
         JUnitUtil.setUp();
         scm = new SprogSystemConnectionMemo();
+        SprogSystemConnectionMemo memo = new SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
+        SprogTrafficController stcs = new SprogTrafficControlScaffold(memo);
+        memo.setSprogTrafficController(stcs);
+        memo.configureManagers();
+        scm = memo;
     }
 
     @Override
@@ -69,6 +72,5 @@ public class SprogSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

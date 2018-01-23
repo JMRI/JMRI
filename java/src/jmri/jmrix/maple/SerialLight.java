@@ -70,9 +70,9 @@ public class SerialLight extends AbstractLight {
     @Override
     protected void doNewState(int oldState, int newState) {
         if (newState == ON) {
-            OutputBits.instance().setOutputBit(mBit, false);
+            _memo.getTrafficController().outputBits().setOutputBit(mBit, false);
         } else if (newState == OFF) {
-            OutputBits.instance().setOutputBit(mBit, true);
+            _memo.getTrafficController().outputBits().setOutputBit(mBit, true);
         } else {
             log.warn("illegal state requested for Light: {}", getSystemName());
         }

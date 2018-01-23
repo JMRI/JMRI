@@ -96,8 +96,7 @@ public class UsbDriverAdapter extends NcePortController {
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (UnsupportedCommOperationException | IOException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -202,8 +201,6 @@ public class UsbDriverAdapter extends NcePortController {
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
-
-        jmri.jmrix.nce.ActiveFlag.setActive();
     }
 
     // base class methods for the NcePortController interface

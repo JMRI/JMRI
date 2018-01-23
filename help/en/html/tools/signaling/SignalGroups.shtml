@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,12 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Signal Groups Documentation</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="Date.Modified" content="20150125">
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="keywords" content=
   "model railroad JMRI decoderpro panelpro signal"><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -162,7 +156,8 @@
       pages</a>.</p>
 
       <p>Back to the <a href="index.shtml#tools">Signaling main
-      help page</a>. <!--#include virtual="/Footer" --></p>
+      help page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

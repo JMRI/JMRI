@@ -40,7 +40,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers 
+            // filter out line printers
             if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
             {
                 portNameVector.addElement(id.getName());
@@ -116,8 +116,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (UnsupportedCommOperationException | IOException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -129,15 +128,10 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
      */
     @Override
     public void configure() {
+        TrafficController tc = new TrafficController();
+        ((jmri.jmrix.direct.DirectSystemConnectionMemo)getSystemConnectionMemo()).setTrafficController(tc);
         // connect to the traffic controller
-        TrafficController.instance().connectPort(this);
-
-        // initialize any managers this protocol provides
-        jmri.InstanceManager.setCommandStation(TrafficController.instance());
-
-        // mention as available
-        jmri.jmrix.direct.ActiveFlag.setActive();
-
+        tc.connectPort(this);
     }
 
     // base class methods for the PortController interface

@@ -1,6 +1,5 @@
 package jmri.jmrix.maple;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
@@ -24,8 +23,8 @@ public class MapleMenu extends JMenu {
             setText(Bundle.getMessage("MenuMaple"));
         }
 
-        add(new jmri.jmrix.maple.serialmon.SerialMonAction(Bundle.getMessage("MenuItemCommandMonitor"))); // TODO more memo, cf CMRI
-        add(new jmri.jmrix.maple.packetgen.SerialPacketGenAction(Bundle.getMessage("MenuItemSendCommand")));
+        add(new jmri.jmrix.maple.serialmon.SerialMonAction(Bundle.getMessage("MenuItemCommandMonitor"),memo));
+        add(new jmri.jmrix.maple.packetgen.SerialPacketGenAction(Bundle.getMessage("MenuItemSendCommand"),memo));
         add(new javax.swing.JSeparator());
         if (memo != null) {
             add(new jmri.jmrix.maple.nodeconfig.NodeConfigAction(memo));

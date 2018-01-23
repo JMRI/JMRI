@@ -123,6 +123,11 @@ public class PositionableIcon extends PositionableLabel {
     }
 
     @Override
+    public double getScale() {
+        return _scale;
+    }
+
+    @Override
     public int getDegrees() {
         if (_text) {
             return super.getDegrees();
@@ -163,4 +168,5 @@ public class PositionableIcon extends PositionableLabel {
         }
         return clone;
     }
+
 }

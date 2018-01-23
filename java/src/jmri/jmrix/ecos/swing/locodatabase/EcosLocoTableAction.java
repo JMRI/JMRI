@@ -39,12 +39,11 @@ import jmri.jmrix.ecos.EcosMessage;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.jmrix.ecos.utilities.EcosLocoToRoster;
 import jmri.jmrix.ecos.utilities.RemoveObjectFromEcos;
-import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EcosLocoTableAction extends AbstractTableAction {
+public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
 
     /**
      * Create an action with a specific title.
@@ -111,7 +110,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
 
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<NamedBean>() { // this is a hack to get this to compile, as EcosLocoAddress is itself not a NamedBean
 
             //We have to set a manager first off, but this gets replaced.
             @Override
@@ -231,21 +230,9 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 }
             }
 
-            /**
-             * {@inheritDoc }
-             */
             @Override
-            @Deprecated
-            public JTable makeJTable(TableSorter sorter) {
-                return this.makeJTable((TableModel) sorter);
-            }
-
-            @Override
-            public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter sorter) {
-                JTable table = this.makeJTable(model);
-                table.setName(name);
-                table.setRowSorter(sorter);
-                return table;
+            public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
+                return this.configureJTable(name, this.makeJTable(model), sorter);
             }
 
             private JTable makeJTable(@Nonnull TableModel model) {

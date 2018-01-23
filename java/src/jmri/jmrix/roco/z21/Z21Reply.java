@@ -97,6 +97,12 @@ public class Z21Reply extends AbstractMRReply {
                return Bundle.getMessage("Z21ReplyStringVersion",java.lang.Integer.toHexString(hwversion), swversion);
            case 0x0040:
                return Bundle.getMessage("Z21XpressNetTunnelReply", getXNetReply().toMonitorString());
+           case 0x00A0:
+               return Bundle.getMessage("Z21LocoNetRxReply", getLocoNetMessage().toString());
+           case 0x00A1:
+               return Bundle.getMessage("Z21LocoNetTxReply", getLocoNetMessage().toString());
+           case 0x00A2:
+               return Bundle.getMessage("Z21LocoNetLanReply", getLocoNetMessage().toString());
            default:
         }
 
@@ -155,7 +161,7 @@ public class Z21Reply extends AbstractMRReply {
      */
     jmri.DccLocoAddress getRailComLocoAddress(int n){
          int offset = 4+(n*13);
-         int address = ((0xff&getElement(offset))<<8)+(0xff&(getElement(offset+1)));
+         int address = ((0xff&getElement(offset+1))<<8)+(0xff&(getElement(offset)));
          return new jmri.DccLocoAddress(address,address>=100);
     }
 
@@ -167,10 +173,10 @@ public class Z21Reply extends AbstractMRReply {
      */
     int getRailComRcvCount(int n){
          int offset = 6+(n*13); // +2 to get past the address.
-         int rcvcount = ((0xff&getElement(offset))<<24) +
-                       ((0xff&(getElement(offset+1))<<16) + 
-                       ((0xff&getElement(offset+2))<<8) + 
-                       (0xff&(getElement(offset+3))));
+         int rcvcount = ((0xff&getElement(offset+3))<<24) +
+                       ((0xff&(getElement(offset+2))<<16) + 
+                       ((0xff&getElement(offset+1))<<8) + 
+                       (0xff&(getElement(offset))));
          return rcvcount;
     }
 
@@ -182,10 +188,10 @@ public class Z21Reply extends AbstractMRReply {
      */
     int getRailComErrCount(int n){
          int offset = 10+(n*13); // +6 to get past the address and rcv count.
-         int errorcount = ((0xff&getElement(offset))<<24) +
-                       ((0xff&(getElement(offset+1))<<16) + 
-                       ((0xff&getElement(offset+2))<<8) + 
-                       (0xff&(getElement(offset+3))));
+         int errorcount = ((0xff&getElement(offset+3))<<24) +
+                       ((0xff&(getElement(offset+2))<<16) + 
+                       ((0xff&getElement(offset+1))<<8) + 
+                       (0xff&(getElement(offset))));
          return errorcount;
     }
 
@@ -222,4 +228,137 @@ public class Z21Reply extends AbstractMRReply {
          return (0xff&(getElement(offset)));
     }
 
+    // handle System data replies
+    boolean isSystemDataChangedReply(){
+        return (getOpCode() == 0x0085);
+    }
+
+    /**
+     * Get the Main Track Current from the SystemStateDataChanged 
+     * message.
+     *
+     * @return the current in mA.
+     */
+    int getSystemDataMainCurrent(){
+         if(!isSystemDataChangedReply()){
+            throw new IllegalArgumentException("Wrong Reply Type");
+         }
+         int offset = 4; //skip the headers
+         int current = ((0xff&getElement(offset+1))<<8) +
+                       (0xff&(getElement(offset)));
+         return current;
+    }
+
+    /**
+     * Get the Programming Track Current from the SystemStateDataChanged 
+     * message.
+     *
+     * @return the current in mA.
+     */
+    int getSystemDataProgCurrent(){
+         if(!isSystemDataChangedReply()){
+            throw new IllegalArgumentException("Wrong Reply Type");
+         }
+         int offset = 6; //skip the headers
+         int current = ((0xff&getElement(offset+1))<<8) +
+                       (0xff&(getElement(offset)));
+         return current;
+    }
+
+    /**
+     * Get the Filtered Main Track Current from the SystemStateDataChanged 
+     * message.
+     *
+     * @return the current in mA.
+     */
+    int getSystemDataFilteredMainCurrent(){
+         if(!isSystemDataChangedReply()){
+            throw new IllegalArgumentException("Wrong Reply Type");
+         }
+         int offset = 8; //skip the headers
+         int current = ((0xff&getElement(offset+1))<<8) +
+                       (0xff&(getElement(offset)));
+         return current;
+    }
+
+    /**
+     * Get the Temperature from the SystemStateDataChanged 
+     * message.
+     *
+     * @return the current in degrees C.
+     */
+    int getSystemDataTemperature(){
+         if(!isSystemDataChangedReply()){
+            throw new IllegalArgumentException("Wrong Reply Type");
+         }
+         int offset = 10; //skip the headers
+         int current = ((0xff&getElement(offset+1))<<8) +
+                       (0xff&(getElement(offset)));
+         return current;
+    }
+
+    /**
+     * Get the Supply Voltage from the SystemStateDataChanged 
+     * message.
+     *
+     * @return the current in mV.
+     */
+    int getSystemDataSupplyVoltage(){
+         if(!isSystemDataChangedReply()){
+            throw new IllegalArgumentException("Wrong Reply Type");
+         }
+         int offset = 12; //skip the headers
+         int current = ((0xff&getElement(offset+1))<<8) +
+                       (0xff&(getElement(offset)));
+         return current;
+    }
+
+    /**
+     * Get the VCC (and track) Voltage from the SystemStateDataChanged 
+     * message.
+     *
+     * @return the current in mV.
+     */
+    int getSystemDataVCCVoltage(){
+         if(!isSystemDataChangedReply()){
+            throw new IllegalArgumentException("Wrong Reply Type");
+         }
+         int offset = 14; //skip the headers
+         int current = ((0xff&getElement(offset+1))<<8) +
+                       (0xff&(getElement(offset)));
+         return current;
+    }
+
+    // handle LocoNet replies tunneled in Z21 messages
+    boolean isLocoNetTunnelMessage() {
+        switch (getOpCode()){
+          case 0xA0: // LAN_LOCONET_Z21_RX
+          case 0xA1: // LAN_LOCONET_Z21_TX
+          case 0xA2: // LAN_LOCONET_FROM_LAN
+             return true;
+          default:
+             return false;
+        }
+    }
+
+    boolean isLocoNetDispatchMessage() {
+       return (getOpCode() == 0xA3);
+    }
+
+    boolean isLocoNetDetectorMessage() {
+       return (getOpCode() == 0xA4);
+    }
+
+    jmri.jmrix.loconet.LocoNetMessage getLocoNetMessage() {
+        jmri.jmrix.loconet.LocoNetMessage lnr = null;
+        if (isLocoNetTunnelMessage()) {
+            int i = 4;
+            lnr = new jmri.jmrix.loconet.LocoNetMessage(getLength()-4);
+            for (; i < getLength(); i++) {
+                lnr.setElement(i - 4, getElement(i));
+            }
+        }
+        return lnr;
+    }
+   
 }

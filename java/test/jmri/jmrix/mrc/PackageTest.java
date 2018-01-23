@@ -29,7 +29,8 @@ import org.junit.runners.Suite;
    MrcThrottleManagerTest.class,
    MrcTrafficListenerFilterTest.class,
    MrcTurnoutManagerTest.class,
-   MrcTurnoutTest.class
+   MrcTurnoutTest.class,
+   MrcClockControlTest.class
 })
 
 /**

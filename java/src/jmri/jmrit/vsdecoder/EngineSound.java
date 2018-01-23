@@ -134,7 +134,7 @@ class EngineSound extends VSDSound {
         if (notch < 1) {
             notch = 1;
         }
-        log.warn("Throttle: " + throttle + " Notch: " + notch);
+        log.debug("Throttle: " + throttle + " Notch: " + notch);
         return (notch);
 
     }

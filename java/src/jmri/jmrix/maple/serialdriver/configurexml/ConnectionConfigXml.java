@@ -5,7 +5,7 @@ import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.maple.InputBits;
 import jmri.jmrix.maple.OutputBits;
 import jmri.jmrix.maple.SerialNode;
-import jmri.jmrix.maple.SerialTrafficController;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.jmrix.maple.serialdriver.ConnectionConfig;
 import jmri.jmrix.maple.serialdriver.SerialDriverAdapter;
 import org.jdom2.Element;
@@ -38,7 +38,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      */
     @Override
     protected void extendElement(Element e) {
-        SerialNode node = (SerialNode) SerialTrafficController.instance().getNode(0);
+        SerialNode node = (SerialNode) ((MapleSystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().getNode(0);
         int index = 1;
         while (node != null) {
             // add node as an element
@@ -53,7 +53,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 //            n.addContent(makeParameter("pulsewidth", ""+node.getPulseWidth()));
 
             // look for the next node
-            node = (SerialNode) SerialTrafficController.instance().getNode(index);
+            node = (SerialNode) ((MapleSystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().getNode(index);
             index++;
         }
     }
@@ -67,7 +67,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     @Override
     protected void getInstance() {
-        adapter = SerialDriverAdapter.instance();
+        if(adapter == null ) {
+           adapter = new SerialDriverAdapter();
+        }
     }
 
     @Override
@@ -86,7 +88,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 //   }
 
             // create node (they register themselves)
-            SerialNode node = new SerialNode(addr, 0);
+            SerialNode node = new SerialNode(addr, 0, ((MapleSystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController());
             InputBits.setTimeoutTime(delay);
             InputBits.setNumInputBits(numinput);
             OutputBits.setSendDelay(senddelay);
@@ -94,7 +96,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 //   node.setPulseWidth(pulseWidth);
 
             // Trigger initialization of this Node to reflect these parameters
-            SerialTrafficController.instance().initializeSerialNode(node);
+            ((MapleSystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().initializeSerialNode(node);
         }
     }
 
@@ -120,6 +122,11 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     @Override
     protected void register() {
         this.register(new ConnectionConfig(adapter));
+    }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
     }
 
 }

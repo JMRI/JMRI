@@ -90,6 +90,7 @@ import jmri.util.swing.FontComboUtil;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.SliderSnap;
 import jmri.util.swing.WindowInterface;
+import jmri.util.usb.RailDriverMenuItem;
 import jmri.web.server.WebServerAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -639,6 +640,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         d.add(new jmri.jmrix.libusb.UsbViewAction());
 
         d.add(new JSeparator());
+
+        d.add(new RailDriverMenuItem());
+
         try {
             d.add(new RunJythonScript(Bundle.getMessage("MenuRailDriverThrottle"), new File(FileUtil.findURL("jython/RailDriver.py").toURI())));
         } catch (URISyntaxException | NullPointerException ex) {

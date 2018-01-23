@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003, 2009
  * @author Egbert Broerse Copyright (C) 2016
  */
-public class SignalMastTableDataModel extends BeanTableDataModel {
+public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
 
     static public final int EDITMASTCOL = NUMCOLUMN;
     static public final int EDITLOGICCOL = EDITMASTCOL + 1;
@@ -121,17 +121,17 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     }
 
     @Override
-    protected Manager getManager() {
+    protected Manager<SignalMast> getManager() {
         return InstanceManager.getDefault(jmri.SignalMastManager.class);
     }
 
     @Override
-    protected NamedBean getBySystemName(String name) {
+    protected SignalMast getBySystemName(String name) {
         return InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
     }
 
     @Override
-    protected NamedBean getByUserName(String name) {
+    protected SignalMast getByUserName(String name) {
         return InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName(name);
     }
 
@@ -141,7 +141,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     }
 
     @Override
-    protected void clickOn(NamedBean t) {
+    protected void clickOn(SignalMast t) {
     }
 
     @Override
@@ -233,7 +233,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
             @Override
             public void run() {
-                SignallingSourceAction action = new SignallingSourceAction(Bundle.getMessage("TitleSignalMastLogicTable"), (SignalMast) getBySystemName(sysNameList.get(row)));
+                SignallingSourceAction action = new SignallingSourceAction(Bundle.getMessage("TitleSignalMastLogicTable"), getBySystemName(sysNameList.get(row)));
                 action.actionPerformed(null);
             }
         }
@@ -252,7 +252,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
             @Override
             public void run() {
-                AddSignalMastJFrame editFrame = new jmri.jmrit.beantable.signalmast.AddSignalMastJFrame((SignalMast) getBySystemName(sysNameList.get(row)));
+                AddSignalMastJFrame editFrame = new jmri.jmrit.beantable.signalmast.AddSignalMastJFrame(getBySystemName(sysNameList.get(row)));
                 editFrame.setVisible(true);
             }
         }
@@ -502,8 +502,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         Vector<String> comboaspects = boxMap.get(this.getValueAt(row, SYSNAMECOL));
         if (comboaspects == null) {
             // create a new one with right aspects
-            Vector<String> v = InstanceManager.getDefault(jmri.SignalMastManager.class)
-                    .getSignalMast((String) this.getValueAt(row, SYSNAMECOL)).getValidAspects();
+            Vector<String> v = ((SignalMast)this.getValueAt(row, SYSNAMECOL)).getValidAspects();
             comboaspects = v;
             boxMap.put(this.getValueAt(row, SYSNAMECOL), comboaspects);
         }

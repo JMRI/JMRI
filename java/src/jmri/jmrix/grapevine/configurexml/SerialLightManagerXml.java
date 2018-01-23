@@ -1,6 +1,5 @@
 package jmri.jmrix.grapevine.configurexml;
 
-import jmri.jmrix.grapevine.SerialLightManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +32,6 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        // create the master object
-        SerialLightManager.instance();
         // load individual lights
         return loadLights(shared);
     }
