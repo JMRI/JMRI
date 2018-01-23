@@ -40,11 +40,11 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Jan-18 Re-written again due to threading issues. Previous changes removed
  * activity from the slot thread, which could result in loading the swing thread
- * to the extent that he gui becomes very slow to respond. 
+ * to the extent that the gui becomes very slow to respond.
  * Moved status message generation to the slot monitor.</P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @author Andrew Crosland (C) 2006 ported to SPROG, 2012, 2016
+ * @author Andrew Crosland (C) 2006 ported to SPROG, 2012, 2016, 2018
  */
 public class SprogCommandStation implements CommandStation, SprogListener, Runnable {
 
@@ -99,8 +99,8 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     /**
-     * Send the SprogMessage to the hardware
-     * 
+     * Send the SprogMessage to the hardware.
+     * <p>
      * sendSprogMessage will block until the message can be sent. When it returns
      * we set the reply status for the message just sent.
      * 
@@ -131,17 +131,17 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
     
     /**
-     * Return contents of Queue slot i
+     * Return contents of Queue slot i.
      *
-     * @param i int
-     * @return SprogSlot
+     * @param i int of slot requested
+     * @return SprogSlot slot i
      */
     public SprogSlot slot(int i) {
         return slots.get(i);
     }
 
     /**
-     * Clear all slots
+     * Clear all slots.
      */
     @SuppressWarnings("unused")
     private void clearAllSlots() {
@@ -168,7 +168,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     /**
-     * Find a queue entry matching the address
+     * Find a queue entry matching the address.
      *
      * @param a int
      * @return the slot or null if the address is not in the queue
@@ -256,7 +256,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             s.setAccessoryPacket(address, closed, SprogConstants.S_REPEATS);
             notifySlotListeners(s);
         }
-
     }
 
     public void function0Through4Packet(DccLocoAddress address,
@@ -336,7 +335,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     /**
-     * Send emergency stop to all slots
+     * Send emergency stop to all slots.
      */
     public void estopAll() {
         slots.stream().filter((s) -> ((s.getRepeat() == -1)
@@ -347,7 +346,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     /**
-     * Send emergency stop to a slot
+     * Send emergency stop to a slot.
      *
      * @param s SprogSlot to eStop
      */
@@ -358,7 +357,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     /**
-     * method to find the existing SlotManager object, if need be creating one
+     * Method to find the existing SlotManager object, if need be creating one.
      *
      * @return the SlotManager object
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
@@ -398,8 +397,8 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     private int statusDue = 0;
     @Override
     /**
-     * The run() method will only be called (from SprogSystemconnecionMemo 
-     * ConfigureCommandStation()) if the connected SPROG is in Command station mode.
+     * The run() method will only be called (from SprogSystemConnectionMemo
+     * ConfigureCommandStation()) if the connected SPROG is in Command Station mode.
      * 
      */
     public void run() {
@@ -461,9 +460,9 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                 timeNow = System.currentTimeMillis();
                 packetDelay = timeNow - time;
                 time = timeNow;
-                // Useful for debug if packets are being delayed
+                // Useful for debug if packets are being delayed; Set to trace level to be able to debug other stuff
                 if (packetDelay > MAX_PACKET_DELAY) {
-                    log.warn("Packet delay was {} ms time now {}", packetDelay, time);
+                    log.trace("Packet delay was {} ms time now {}", packetDelay, time);
                 }
             } else {
                 log.warn("Slot thread wait timeout");
@@ -472,9 +471,9 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     /**
-     * Get the next packet to be transmitted. returns null if no packet
+     * Get the next packet to be transmitted.
      *
-     * @return byte[]
+     * @return byte[] null if no packet
      */
     private byte[] getNextPacket() {
         SprogSlot s;
@@ -514,9 +513,10 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
 
     /**
      * Handle replies.
-     * 
+     * <p>
      * Handle replies from the hardware, ignoring those that were not sent from
      * the command station.
+     *
      * @param m The SprogReply to be handled
      */
     @Override
@@ -542,7 +542,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     /**
-     * Provide a count of the slots in use
+     * Provide a count of the slots in use.
      * 
      * @return the number of slots in use
      */
@@ -572,7 +572,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     SprogSystemConnectionMemo adaptermemo;
 
     /**
-     * Get user name
+     * Get user name.
      * 
      * @return the user name
      */
@@ -585,7 +585,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     /**
-     * Get system prefix
+     * Get system prefix.
      * 
      * @return the system prefix
      */
@@ -599,4 +599,5 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(SprogCommandStation.class);
+
 }
