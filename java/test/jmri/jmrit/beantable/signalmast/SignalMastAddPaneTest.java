@@ -15,13 +15,13 @@ public class SignalMastAddPaneTest {
 
     @Test
     public void testLoad() {
-        // ground these in a single test, as the services can only be loaded once.
+        // group these in a single test, as the services can only be loaded once.
         Assert.assertNotNull(SignalMastAddPane.getInstancesCollection());
         Assert.assertNotNull(SignalMastAddPane.getInstancesMap());
-        Assert.assertTrue(SignalMastAddPane.getInstancesMap().size() > 0); // found something
-        Assert.assertEquals(SignalMastAddPane.getInstancesMap().size(), SignalMastAddPane.getInstancesCollection().size());
+        Assert.assertTrue(SignalMastAddPane.getInstancesMap().size() > 0); // found at least one service
+        Assert.assertEquals(SignalMastAddPane.getInstancesMap().size(), SignalMastAddPane.getInstancesCollection().size()); // same size
         
-        // check map sorted order, lookup
+        // check map is in sorted order; also check lookup works
         Map<String, SignalMastAddPane> map = SignalMastAddPane.getInstancesMap();
         Collection<SignalMastAddPane> collection = SignalMastAddPane.getInstancesCollection();
         String last = "";
@@ -31,11 +31,25 @@ public class SignalMastAddPaneTest {
             last = name;
         }
 
-        // check collection sorted order
+        // check collection in in sorted order
         last = "";
         for (SignalMastAddPane pane : collection) {
             Assert.assertTrue(pane.getPaneName().compareTo(last) > 0);  // no identical ones
             last = pane.getPaneName();
+        }
+        
+        // partial check that results are unmodifiable
+        try {
+            SignalMastAddPane.getInstancesMap().put("Foo", null);
+            Assert.fail("Should have thrown");
+        } catch (java.lang.UnsupportedOperationException e) {
+            // this is a pass
+        }
+        try {
+            SignalMastAddPane.getInstancesCollection().add(null);
+            Assert.fail("Should have thrown");
+        } catch (java.lang.UnsupportedOperationException e) {
+            // this is a pass
         }
     }
 
@@ -43,9 +57,6 @@ public class SignalMastAddPaneTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
-        JUnitUtil.initInternalSensorManager();
     }
 
     @After
