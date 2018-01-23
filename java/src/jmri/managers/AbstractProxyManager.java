@@ -7,6 +7,7 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.NamedBeanPropertyDescriptor;
 import jmri.util.NamedBeanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -322,6 +323,16 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
     public void deregister(E s) {
         String systemName = s.getSystemName();
         getMgr(match(systemName)).deregister(s);
+    }
+
+    @Nonnull
+    @Override
+    public List<NamedBeanPropertyDescriptor> getKnownBeanProperties() {
+        List<NamedBeanPropertyDescriptor> l = new ArrayList<>();
+        for (int i = 0; i < nMgrs(); i++) {
+            l.addAll(getMgr(i).getKnownBeanProperties());
+        }
+        return l;
     }
 
     @Override

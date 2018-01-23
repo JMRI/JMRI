@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -29,7 +28,7 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Adding A New System</h1>
+      <h1>JMRI Code: Adding A New System</h1>
 
         <p>This page describes the steps to add a new data-type,
         e.g. Powerline devices, to JMRI.</p>

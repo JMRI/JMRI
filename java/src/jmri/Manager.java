@@ -2,6 +2,7 @@ package jmri;
 
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
+import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
@@ -155,6 +156,16 @@ public interface Manager<E extends NamedBean> {
     @CheckReturnValue
     @CheckForNull
     public E getNamedBean(@Nonnull String name);
+
+    /**
+     * Return the descriptors for the system-specific properties of the NamedBeans that are kept
+     * in this manager.
+     * @return list of known properties, or empty list if there are none.
+     */
+    @Nonnull
+    default public List<NamedBeanPropertyDescriptor> getKnownBeanProperties() {
+        return new LinkedList<>();
+    }
 
     /**
      * At a minimum, subclasses must notify of changes to the list of available

@@ -342,6 +342,18 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     @Override
+    public void requestUpdateFromLayout() {
+        if (_activeFeedbackType == ONESENSOR || _activeFeedbackType == TWOSENSOR) {
+            Sensor s1 = getFirstSensor();
+            if (s1 != null) s1.requestUpdateFromLayout();
+        }
+        if (_activeFeedbackType == TWOSENSOR) {
+            Sensor s2 = getSecondSensor();
+            if (s2 != null) s2.requestUpdateFromLayout();
+        }
+    }
+
+    @Override
     public void setInverted(boolean inverted) {
         boolean oldInverted = _inverted;
         _inverted = inverted;

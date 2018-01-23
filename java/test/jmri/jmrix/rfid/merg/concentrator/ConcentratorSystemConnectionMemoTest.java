@@ -30,6 +30,12 @@ public class ConcentratorSystemConnectionMemoTest extends jmri.jmrix.SystemConne
            @Override
            public void sendInitString(){
            }
+           @Override
+           public void transmitLoop(){
+           }
+           @Override
+           public void receiveLoop(){
+           }
         };
         memo.setRfidTrafficController(tc);
         memo.configureManagers(null,null);

@@ -53,8 +53,6 @@ import org.slf4j.LoggerFactory;
  * <tt>null</tt>
  * value will result in no extra debugging information being output.
  * <p>
- * <p>
- * <p>
  * I'm releasing this code into the Public Domain. Enjoy.
  * </p>
  * <p>

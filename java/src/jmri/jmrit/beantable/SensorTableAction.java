@@ -501,8 +501,14 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         a.showPullUp(showPullUpBox.isSelected());
     }
 
+    void showStateForgetAndQueryChanged() {
+        jmri.jmrit.beantable.sensor.SensorTableDataModel a = (jmri.jmrit.beantable.sensor.SensorTableDataModel) m;
+        a.showStateForgetAndQuery(showStateForgetAndQueryBox.isSelected());
+    }
+
     JCheckBox showDebounceBox = new JCheckBox(Bundle.getMessage("SensorDebounceCheckBox"));
     JCheckBox showPullUpBox = new JCheckBox(Bundle.getMessage("SensorPullUpCheckBox"));
+    JCheckBox showStateForgetAndQueryBox = new JCheckBox(Bundle.getMessage("ShowStateForgetAndQuery"));
 
     /** {@inheritDoc} */
     @Override
@@ -524,6 +530,15 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             }
         });
         showPullUpBox.setVisible(true);
+        f.addToBottomBox(showStateForgetAndQueryBox, this.getClass().getName());
+        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateForgetAndQueryBoxToolTip"));
+        showStateForgetAndQueryBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                showStateForgetAndQueryChanged();
+            }
+        });
+        showStateForgetAndQueryChanged();
     }
 
     /** {@inheritDoc} */
@@ -550,6 +565,15 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                 showPullUpChanged();
             }
         });
+        f.addToBottomBox(showStateForgetAndQueryBox, systemPrefix);
+        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateForgetAndQueryBoxToolTip"));
+        showStateForgetAndQueryBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                showStateForgetAndQueryChanged();
+            }
+        });
+        showStateForgetAndQueryChanged();
     }
 
     /** {@inheritDoc} */

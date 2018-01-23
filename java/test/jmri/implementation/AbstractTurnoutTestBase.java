@@ -1,14 +1,23 @@
 package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
-import jmri.util.JUnitUtil;
+
 import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.Sensor;
+import jmri.util.JUnitUtil;
 import jmri.Turnout;
 import jmri.Sensor;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 /**
  * Abstract base class for Turnout tests in specific jmrix.* packages
@@ -105,6 +114,43 @@ public abstract class AbstractTurnoutTestBase {
         Assert.assertEquals("commanded state 2", Turnout.THROWN, t.getState());
         Assert.assertEquals("commanded state 3", "Thrown", t.describeState(t.getState()));
         checkThrownMsgSent();
+    }
+
+    @Test
+    public void testRequestUpdate() throws JmriException {
+        final Sensor s1m = mock(Sensor.class);
+        final Sensor s2m = mock(Sensor.class);
+        Sensor s1 = new AbstractSensor("IS1", "username1") {
+            @Override
+            public void requestUpdateFromLayout() {
+                s1m.requestUpdateFromLayout();
+            }
+        };
+        Sensor s2 = new AbstractSensor("IS2", "username2") {
+            @Override
+            public void requestUpdateFromLayout() {
+                s2m.requestUpdateFromLayout();
+            }
+        };
+        InstanceManager.sensorManagerInstance().register(s1);
+        InstanceManager.sensorManagerInstance().register(s2);
+
+        t.provideFirstFeedbackSensor("IS1");
+        t.setFeedbackMode(Turnout.ONESENSOR);
+
+        verifyZeroInteractions(s1m);
+        t.requestUpdateFromLayout();
+        verify(s1m).requestUpdateFromLayout();
+        Mockito.reset(s1m);
+
+        t.provideSecondFeedbackSensor("IS2");
+        t.setFeedbackMode(Turnout.TWOSENSOR);
+
+        verifyZeroInteractions(s1m);
+        verifyZeroInteractions(s2m);
+        t.requestUpdateFromLayout();
+        verify(s1m).requestUpdateFromLayout();
+        verify(s2m).requestUpdateFromLayout();
     }
 
     @Test
