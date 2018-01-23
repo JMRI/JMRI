@@ -446,6 +446,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                     // Or take the next one from the stack
                     p = getNextPacket();
                     if (p != null) {
+                        log.debug("Packet from stack");
                     }
                 }
                 replyAvailable = false;
@@ -462,7 +463,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                 time = timeNow;
                 // Useful for debug if packets are being delayed; Set to trace level to be able to debug other stuff
                 if (packetDelay > MAX_PACKET_DELAY) {
-                    log.warn("Packet delay was {} ms time now {}", packetDelay, time);
+                    log.trace("Packet delay was {} ms time now {}", packetDelay, time);
                 }
             } else {
                 log.warn("Slot thread wait timeout");
