@@ -4169,6 +4169,7 @@ public class TrainBuilder extends TrainCommon {
      * @param rl The car's route location
      * @param rld The car's route destination
      * @return true if successful.
+     * @throws BuildFailedException
      */
     private boolean findDestinationAndTrack(Car car, RouteLocation rl, RouteLocation rld) throws BuildFailedException {
         int index;
@@ -4193,6 +4194,7 @@ public class TrainBuilder extends TrainCommon {
      *            destination for this car.
      * @param routeEnd Where to stop looking for a destination.
      * @return true if successful, car has destination, track and a train.
+     * @throws BuildFailedException
      */
     private boolean findDestinationAndTrack(Car car, RouteLocation rl, int routeIndex, int routeEnd)
             throws BuildFailedException {
