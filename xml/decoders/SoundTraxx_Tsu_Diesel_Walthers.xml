@@ -19,16 +19,19 @@
   <version author="Michael Mosher" version="4" lastUpdated="20130703"/>
   <version author="Alain Le Marchand" version="5" lastUpdated="20140530"/>
   <version author="Alain Le Marchand" version="6" lastUpdated="20140622"/>      
-  <version author="Michael Mosher" version="7" lastUpdated="20180123"/>
+  <version author="Alain Le Marchand" version="7" lastUpdated="20180103"/>
+  <version author="Michael Mosher" version="8" lastUpdated="20180123"/>
   <!-- This file contains the Tsunami definitions for Walthers OEM diesel locomotives                           -->
   <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file.                                    -->
   <!-- version 2	make more use of external includes                                                      -->
   <!-- version 3	Add F7, GP60, & SD9 models                                                              -->
   <!-- version 4	Add U28B/U30B models                                                                    -->
   <!-- version 5	Added Function Groups 2/3 exchange from Dave Heap (initially introduced for Genesis)    -->
-  <!-- version 3	Add Budd Metroliner, E7A, GP20, GP30, SD7, SD45, U28B/U30B GN,MILW,NYC                  -->
+  <!-- version 6	Add Budd Metroliner, E7A, GP20, GP30, SD7, SD45, U28B/U30B GN,MILW,NYC                  -->
   <!--                  Function labels are a guess based on decoder config (missing Walthers documentation)    -->
-  <!-- version 7	Add GP35 model                                                                    -->
+  <!-- version 7  Specific UserID with tooltip indicating version number,
+                  from SoundTraxx Product Identification guide Rev.B                                      -->
+  <!-- version 8	Add GP35 model                                                                    -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc. 
@@ -1885,7 +1888,7 @@
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUuserId.xml"/>
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 2" default="1" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function" exclude="Metro">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Air Compressor Enable</label>
