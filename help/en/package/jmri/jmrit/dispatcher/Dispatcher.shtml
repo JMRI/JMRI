@@ -89,7 +89,7 @@
 
       <!-- image by Egbert Broerse @silverailscolo 2018 -->
       <img src="images/DispatcherPanelClinic.png" width="806" height="323"
-           alt="Dispatcher Panel Example">
+      alt="Dispatcher Panel Example">
 
       <br>Note that in this document "<i>Dispatcher</i>" refers to
       the JMRI Dispatcher software, and "<i>the dispatcher</i>"
