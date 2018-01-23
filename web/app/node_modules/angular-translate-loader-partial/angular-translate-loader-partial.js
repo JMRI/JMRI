@@ -1,5 +1,5 @@
 /*!
- * angular-translate - v2.15.2 - 2017-06-22
+ * angular-translate - v2.17.0 - 2017-12-21
  * 
  * Copyright (c) 2017 The angular-translate team, Pascal Precht; Licensed MIT
  */
@@ -43,12 +43,13 @@ function $translatePartialLoader() {
    * @description
    * Represents Part object to add and set parts at runtime.
    */
-  function Part(name, priority) {
+  function Part(name, priority, urlTemplate) {
     this.name = name;
     this.isActive = true;
     this.tables = {};
     this.priority = priority || 0;
     this.langPromises = {};
+    this.urlTemplate = urlTemplate;
   }
 
   /**
@@ -84,7 +85,7 @@ function $translatePartialLoader() {
       return $http(
         angular.extend({
             method : 'GET',
-            url : self.parseUrl(urlTemplate, lang)
+            url : self.parseUrl(self.urlTemplate || urlTemplate, lang)
           },
           $httpOptions)
       );
@@ -204,13 +205,13 @@ function $translatePartialLoader() {
    * of the wrong type. Please, note that the `name` param has to be a
    * non-empty **string**.
    */
-  this.addPart = function (name, priority) {
+  this.addPart = function (name, priority, urlTemplate) {
     if (!isStringValid(name)) {
       throw new TypeError('Couldn\'t add part, part name has to be a string!');
     }
 
     if (!hasPart(name)) {
-      parts[name] = new Part(name, priority);
+      parts[name] = new Part(name, priority, urlTemplate);
     }
     parts[name].isActive = true;
 
@@ -319,8 +320,8 @@ function $translatePartialLoader() {
    *
    * @throws {TypeError}
    */
-  this.$get = ['$rootScope', '$injector', '$q', '$http',
-    function ($rootScope, $injector, $q, $http) {
+  this.$get = ['$rootScope', '$injector', '$q', '$http', '$log',
+    function ($rootScope, $injector, $q, $http, $log) {
 
       /**
        * @ngdoc event
@@ -361,11 +362,34 @@ function $translatePartialLoader() {
           loaders.push(
             part.getTable(options.key, $q, $http, options.$http, options.urlTemplate, errorHandler)
           );
-          part.urlTemplate = options.urlTemplate;
+          part.urlTemplate = part.urlTemplate || options.urlTemplate;
+        });
+
+        // workaround for #1781
+        var structureHasBeenChangedWhileLoading = false;
+        var dirtyCheckEventCloser = $rootScope.$on('$translatePartialLoaderStructureChanged', function () {
+          structureHasBeenChangedWhileLoading = true;
         });
 
         return $q.all(loaders)
           .then(function () {
+            dirtyCheckEventCloser();
+            if (structureHasBeenChangedWhileLoading) {
+              if (!options.__retries) {
+                // the part structure has been changed while loading (the origin ones)
+                // this can happen if an addPart/removePart has been invoked right after a $translate.use(lang)
+                // TODO maybe we can optimize this with the actual list of missing parts
+                options.__retries = (options.__retries || 0) + 1;
+                return service(options);
+              } else {
+                // the part structure has been changed again while loading (retried one)
+                // because this could an infinite loop, this will not load another one again
+                $log.warn('The partial loader has detected a multiple structure change (with addPort/removePart) ' +
+                  'while loading translations. You should consider using promises of $translate.use(lang) and ' +
+                  '$translate.refresh(). Also parts should be added/removed right before an explicit refresh ' +
+                  'if possible.');
+              }
+            }
             var table = {};
             prioritizedParts = getPrioritizedParts();
             angular.forEach(prioritizedParts, function (part) {
@@ -373,6 +397,7 @@ function $translatePartialLoader() {
             });
             return table;
           }, function () {
+            dirtyCheckEventCloser();
             return $q.reject(options.key);
           });
       };
@@ -400,13 +425,13 @@ function $translatePartialLoader() {
        * @throws {TypeError} The method could throw a **TypeError** if you pass the param of the wrong
        * type. Please, note that the `name` param has to be a non-empty **string**.
        */
-      service.addPart = function (name, priority) {
+      service.addPart = function (name, priority, urlTemplate) {
         if (!isStringValid(name)) {
           throw new TypeError('Couldn\'t add part, first arg has to be a string');
         }
 
         if (!hasPart(name)) {
-          parts[name] = new Part(name, priority);
+          parts[name] = new Part(name, priority, urlTemplate);
           $rootScope.$emit('$translatePartialLoaderStructureChanged', name);
         } else if (!parts[name].isActive) {
           parts[name].isActive = true;

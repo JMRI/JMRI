@@ -31,7 +31,7 @@
 # hierarchy.  See the end of the file for examples of how to
 # control this at a finer level.
 
-log4j.rootCategory= INFO, A1, T, R
+log4j.rootCategory= INFO, A1, T, R, JSON
 
 # A1 is set to be a ConsoleAppender which outputs to System.err.
 log4j.appender.A1=org.apache.log4j.ConsoleAppender
@@ -84,6 +84,14 @@ log4j.appender.T.layout=org.apache.log4j.PatternLayout
 log4j.appender.T.layout.ConversionPattern=%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n
 log4j.appender.T.MaxFileSize=1000KB
 log4j.appender.T.MaxBackupIndex=2
+
+# JSON is set to output to a single JSON file per application instance
+# This is used by the send logs to web client capabilities
+log4j.appender.JSON=org.apache.log4j.FileAppender
+log4j.appender.JSON.File=${jmri.log.path}session.json
+log4j.appender.JSON.Append=false
+log4j.appender.JSON.encoding=UTF-8
+log4j.appender.JSON.layout=jmri.util.logging.LogstashLog4jJsonLayout
 
 # Default Jetty server to only logging WARN since it can be verbose at points
 log4j.category.org.eclipse.jetty=WARN

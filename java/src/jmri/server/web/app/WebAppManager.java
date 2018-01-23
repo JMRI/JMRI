@@ -108,7 +108,7 @@ public class WebAppManager extends AbstractPreferencesManager {
         this.manifests.getOrDefault(profile, new ArrayList<>()).clear();
     }
 
-    private List<WebManifest> getManifests(Profile profile) {
+    synchronized private List<WebManifest> getManifests(Profile profile) {
         if (!this.manifests.containsKey(profile)) {
             this.manifests.put(profile, new ArrayList<>());
         }
@@ -120,7 +120,7 @@ public class WebAppManager extends AbstractPreferencesManager {
         return this.manifests.get(profile);
     }
 
-    public String getScriptTags(Profile profile) {
+    synchronized public String getScriptTags(Profile profile) {
         StringBuilder tags = new StringBuilder();
         List<String> scripts = new ArrayList<>();
         this.getManifests(profile).forEach((manifest) -> {

@@ -87,7 +87,7 @@ public class JsonServer extends JmriServer implements InstanceManagerAutoDefault
 
     @Override
     public void stop() {
-        log.info("Stopping JSON Server.");
+        log.info("Stopping JSON Server");
         super.stop();
     }
 

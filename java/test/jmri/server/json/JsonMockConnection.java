@@ -7,7 +7,7 @@ import org.eclipse.jetty.websocket.api.Session;
 /**
  * JsonConnection that retains sent messages for unit testing.
  *
- * @author Randall Wood
+ * @author Randall Wood Copyright 2016
  */
 public class JsonMockConnection extends JsonConnection {
 

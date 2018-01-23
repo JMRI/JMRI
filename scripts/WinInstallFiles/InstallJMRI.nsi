@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.14
+; - Remove outmoded Apache Commons IO libraries
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.13
 ; - Remove outmoded SLF4J libraries
 ; -------------------------------------------------------------------------
@@ -484,6 +487,9 @@ SectionGroup "JMRI Core Files" SEC_CORE
 
     ; -- Delete old vecmath.jar files as of JMRI 4.5.1
     Delete "$OUTDIR\lib\vecmath.jar"
+
+    ; -- Delete libraries outdated as of JMRI 4.11.1
+    Delete "$OUTDIR\lib\commons-io-1.3.1.jar"
 
     ; -- Delete old logging libraries
     Delete "$OUTDIR\lib\slf4j-api-1.7.13.jar"

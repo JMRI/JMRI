@@ -37,3 +37,4 @@ web/app/node_modules/lodash/lodash.min.js
 web/app/node_modules/moment/min/moment-with-locales.min.js
 web/app/app/**
 web/app/short-detector/**
+web/app/logs/**

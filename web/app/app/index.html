@@ -31,16 +31,16 @@
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle nav-item-iconic" id="navbar-menu-power" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <span data-translate-attr="{ title: 'POWER.POWER' }" class="fa fa-power-off" ></span>
-                                <span class="carat fa {{defaultPowerState| powerTriState}} small"></span>
+                                <span data-translate-attr="{ title: 'POWER.POWER' }" class="fa fa-bolt" ></span>
+                                <span class="carat {{defaultPowerState| powerTriState}} small"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbar-menu-power">
-                                <li ng-repeat="pm in power| orderBy:'name'"><a ng-click="setPower(pm.name, pm.state)"><span class="fa fa-fw {{pm.state| powerTriState}}"></span> {{pm.name}}<span ng-show="pm.default === true"> <span data-translate>POWER.DEFAULT</span></span></a></li>
+                                <li ng-repeat="pm in power| orderBy:'name'"><a ng-click="setPower(pm.name, pm.state)"><span class="{{pm.state| powerTriState}}"></span> {{pm.name}}<span ng-show="pm.default === true"> <span data-translate>POWER.DEFAULT</span></span></a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle nav-item-iconic" id="navbar-menu-help" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <span data-translate-attr="{ title: 'HELP.HELP' }" class="fa pficon-help"></span>
+                                <span data-translate-attr="{ title: 'HELP.HELP' }" class="pficon pficon-help"></span>
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbar-menu-help">

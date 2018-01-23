@@ -33,7 +33,7 @@ public class JsonWebSocket {
         log.debug("Opening connection");
         try {
             this.connection = new JsonConnection(sn);
-            sn.setIdleTimeout((long) (JsonServerPreferences.getDefault().getHeartbeatInterval() * 1.1));
+            sn.setIdleTimeout((long) (InstanceManager.getDefault(JsonServerPreferences.class).getHeartbeatInterval() * 1.1));
             this.handler = new JsonClientHandler(this.connection);
             this.shutDownTask = new QuietShutDownTask("Close open web socket") { // NOI18N
                 @Override
@@ -43,7 +43,13 @@ public class JsonWebSocket {
                     } catch (IOException e) {
                         log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
                     }
-                    JsonWebSocket.this.getConnection().getSession().close();
+                    try {
+                        JsonWebSocket.this.getConnection().getSession().close();
+                    } catch (Exception e) {
+                        // really want an org.eclipse.jetty.io.EofException here
+                        // but the compiler thinks its never thrown in try statement
+                        log.warn("Unable to cleanly close socket.\nError was {}", e.getMessage());
+                    }
                     return true;
                 }
             };

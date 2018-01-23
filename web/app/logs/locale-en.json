@@ -1,0 +1,5 @@
+{
+  "LOGS":{
+    "ERROR_NOTIFICATION": "Error Occurred at {{dts}}"
+  }
+}

@@ -6,6 +6,7 @@ import static jmri.server.json.JSON.TYPE;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Throw an exception, but include an HTTP error code.
@@ -29,7 +30,11 @@ public class JsonException extends Exception {
     public static final String MESSAGE = "message"; // NOI18N
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    private int code = 500;
+    private int code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+
+    public JsonException(Throwable t) {
+        super(t);
+    }
 
     public JsonException(int i, String s, Throwable t) {
         super(s, t);
@@ -37,7 +42,7 @@ public class JsonException extends Exception {
     }
 
     public JsonException(int i, Throwable t) {
-        super(t);
+        this(t);
         this.code = i;
     }
 

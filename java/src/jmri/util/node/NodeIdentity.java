@@ -29,14 +29,14 @@ import org.slf4j.LoggerFactory;
  * exist, the identity is created by taking the MAC address of the first
  * {@link java.net.InetAddress} and prepending it with "jmri-". and removing all
  * colons from the address.
- *
+ * <p>
  * If a stored identity is found, the identity is replaced if none of the
  * InetAddresses for the host match the MAC address in the identity and
  * regenerated.
- *
+ * <p>
  * A list of former identities is retained to aid in migrating from the former
  * identity to the new identity.
- *
+ * <p>
  * If the MAC address of the localhost cannot be read, fall back on using the
  * hostname or IP address. If no local IP address is available, fall back on
  * using the railroad name.
@@ -144,7 +144,7 @@ public class NodeIdentity {
 
     /**
      * Get a node identity from the current hardware.
-     *
+     * <p>
      */
     synchronized private void getIdentity(boolean save) {
         try {

@@ -165,6 +165,11 @@ public class JsonServerPreferences extends Bean {
                 || this.getPort() != this.asLoadedPort);
     }
 
+    /**
+     * Get the heartbeat interval for determining if connection is alive.
+     *
+     * @return the interval in milliseconds
+     */
     public int getHeartbeatInterval() {
         return this.heartbeatInterval;
     }

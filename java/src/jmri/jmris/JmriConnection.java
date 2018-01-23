@@ -3,7 +3,14 @@ package jmri.jmris;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import jmri.InstanceManager;
+import jmri.jmris.json.JsonServerPreferences;
 import org.eclipse.jetty.websocket.api.Session;
+import org.eclipse.jetty.websocket.api.StatusCode;
 import org.eclipse.jetty.websocket.api.WebSocketException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,30 +85,26 @@ public class JmriConnection {
     public void sendMessage(String message) throws IOException {
         if (this.dataOutputStream != null) {
             this.dataOutputStream.writeBytes(message);
-        } else if (this.session != null) {
-            if (this.session.isOpen()) {
-                try {
-                    this.session.getRemote().sendString(message);
-                } catch (WebSocketException ex) {
-                    log.debug("Exception sending message", ex);
-                    // A WebSocketException is most likely a broken socket,
-                    // so rethrow it as an IOException
-                    if (ex.getMessage() == null) {
-                        // provide a generic message if ex has no message
-                        throw new IOException("Exception sending message", ex);
-                    }
-                    throw new IOException(ex);
-                } catch (IOException ex) {
-                    if (ex.getMessage() == null) {
-                        // provide a generic message if ex has no message
-                        throw new IOException("Exception sending message", ex);
-                    }
-                    throw ex; // rethrow if complete
+        } else if (this.session != null && this.session.isOpen()) {
+            Future<Void> future = null;
+            try {
+                future = this.session.getRemote().sendStringByFuture(message);
+                future.get(InstanceManager.getDefault(JsonServerPreferences.class).getHeartbeatInterval(), TimeUnit.MILLISECONDS);
+            } catch (WebSocketException ex) {
+                log.debug("Exception sending message", ex);
+                // A WebSocketException is most likely a broken socket,
+                // so rethrow it as an IOException
+                throw new IOException("Unable to send message", ex);
+            } catch (InterruptedException | ExecutionException | TimeoutException ex) {
+                // include only first 75 characters of message in log unless debugging
+                String logMessage = (log.isDebugEnabled() || message.length() <= 75)
+                        ? message
+                        : message.substring(0, 75 - 1);
+                log.error("Exception \"{}\" sending {}", ex.getMessage(), logMessage, ex);
+                if (future != null) {
+                    future.cancel(true);
                 }
-            } else {
-                // immediately thrown an IOException to trigger closing
-                // actions up the call chain
-                throw new IOException("Will not send message on non-open session");
+                JmriConnection.this.getSession().close(StatusCode.NO_CODE, ex.getMessage());
             }
         }
     }

@@ -21,8 +21,8 @@ import jmri.server.json.JsonConnection;
  */
 public class JsonMessageClientManager implements InstanceManagerAutoDefault {
 
-    ObjectMapper mapper = null;
-    HashMap<String, JsonConnection> clients = new HashMap<>();
+    private ObjectMapper mapper = null;
+    private final HashMap<String, JsonConnection> clients = new HashMap<>();
 
     /**
      * Subscribe to the message service.

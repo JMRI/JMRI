@@ -1,5 +1,7 @@
 package jmri.server.json.consist;
 
+import java.io.DataOutputStream;
+import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -8,21 +10,13 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JsonConsistSocketServiceTest {
 
     @Test
     public void testCTor() {
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-                    // null output string drops characters
-                    // could be replaced by one that checks for specific outputs
-                    @Override
-                    public void write(int b) throws java.io.IOException {
-                    }
-                });
-        jmri.server.json.JsonMockConnection mc = new jmri.server.json.JsonMockConnection(output);
+        JsonMockConnection mc = new JsonMockConnection((DataOutputStream) null);
         JsonConsistSocketService t = new JsonConsistSocketService(mc);
         Assert.assertNotNull("exists",t);
     }

@@ -26,7 +26,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * <p>
  * The current implementation only handles the 9,600 baud rate, and does not use
  * any other options at configuration time.
- *
+ * <p>
  * Updated January 2010 for gnu io (RXTX) - Andrew Berridge.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
@@ -186,7 +186,8 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     InputStream serialStream = null;
 
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
+     * multi-system support structure
      */
     @Deprecated
     static public SerialDriverAdapter instance() {

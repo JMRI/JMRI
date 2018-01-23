@@ -234,14 +234,14 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
             // make it possible to override anything under settings: with an identical path under preference: or profile:
             log.debug("Setting up handler chain for {}", urlPattern);
             ResourceHandler preferenceHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.SETTINGS, FileUtil.PREFERENCES)));
-            ResourceHandler projectHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.PROGRAM, FileUtil.PROFILE)));
+            ResourceHandler projectHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.SETTINGS, FileUtil.PROFILE)));
             ResourceHandler settingsHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath));
             handlers.setHandlers(new Handler[]{preferenceHandler, projectHandler, settingsHandler, new DefaultHandler()});
         } else if (filePath.startsWith(FileUtil.PROFILE) && !filePath.equals(FileUtil.PROFILE)) {
             // make it possible to override anything under profile: with an identical path under preference:
             log.debug("Setting up handler chain for {}", urlPattern);
-            ResourceHandler preferenceHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.SETTINGS, FileUtil.PREFERENCES)));
-            ResourceHandler projectHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.PROGRAM, FileUtil.PROFILE)));
+            ResourceHandler preferenceHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.PROFILE, FileUtil.PREFERENCES)));
+            ResourceHandler projectHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath));
             handlers.setHandlers(new Handler[]{preferenceHandler, projectHandler, new DefaultHandler()});
         } else if (FileUtil.isPortableFilename(filePath)) {
             log.debug("Setting up handler chain for {}", urlPattern);
