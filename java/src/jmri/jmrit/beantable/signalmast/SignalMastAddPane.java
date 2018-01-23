@@ -46,4 +46,42 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
      */
     public boolean isAvailable() { return true; }
 
+    /**
+     * Get all available instances as an {@link Collections#unmodifiableMap}
+     * between the (localized) name and the pane. Note that this is a SortedMap in 
+     * name order.
+     */
+    static Map<String, SignalMastAddPane> getInstancesMap() {
+        if (instanceMap == null) loadInstances();
+        return Collections.unmodifiableMap(instanceMap);
+    }
+    
+    /**
+     * Get all available instances as an {@link Collections#unmodifiableCollection}
+     * between the (localized) name and the pane. 
+     */
+    static Collection<SignalMastAddPane> getInstancesCollection() {
+        if (instanceMap == null) loadInstances();
+        return Collections.unmodifiableCollection(instanceMap.values());
+    }
+    
+    /**
+     * Load all the available instances. Note this only runs
+     * once; there's no reloading once the program is running.
+     */
+    static void loadInstances() {
+        if (instanceMap != null) return;
+        
+        instanceMap = new TreeMap<>();  // sorted map, in string order on key
+        
+        java.util.ServiceLoader.load(SignalMastAddPane.class).forEach((pane) -> {
+             if (pane.isAvailable()) {
+                instanceMap.put(pane.getPaneName(), pane);
+            }
+        });
+
+    }
+    
+    static Map<String, SignalMastAddPane> instanceMap = null;
+    
 }

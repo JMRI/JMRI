@@ -2,6 +2,7 @@ package jmri.jmrit.beantable.signalmast;
 
 import jmri.implementation.SignalSystemTestUtil;
 import jmri.util.JUnitUtil;
+import java.util.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,7 +14,19 @@ import org.junit.Test;
 public class SignalMastAddPaneTest {
 
     @Test
-    public void testNothing() {
+    public void testLoad() {
+    
+        Assert.assertNotNull(SignalMastAddPane.getInstancesCollection());
+        Assert.assertNotNull(SignalMastAddPane.getInstancesMap());
+        Assert.assertTrue(SignalMastAddPane.getInstancesMap().size() > 0); // found something
+        
+        // check sorted order
+        Map<String, SignalMastAddPane> map = SignalMastAddPane.getInstancesMap();
+        String last = "";
+        for (String name : map.keySet()) {
+            Assert.assertTrue(name.compareTo(last) > 0);  // no identical ones
+            last = name;
+        }
     }
 
     @Before
