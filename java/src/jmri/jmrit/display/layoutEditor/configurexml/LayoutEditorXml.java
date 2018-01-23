@@ -81,7 +81,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("mainlinetrackwidth", "" + p.getMainlineTrackWidth());
         panel.setAttribute("xscale", Float.toString((float) p.getXScale()));
         panel.setAttribute("yscale", Float.toString((float) p.getYScale()));
-        panel.setAttribute("sidetrackwidth", "" + p.getSideTrackWidth());
+        panel.setAttribute("sidetrackwidth", "" + p.getSidelineTrackWidth());
         panel.setAttribute("defaulttrackcolor", p.getDefaultTrackColor());
         panel.setAttribute("defaultoccupiedtrackcolor", p.getDefaultOccupiedTrackColor());
         panel.setAttribute("defaultalternativetrackcolor", p.getDefaultAlternativeTrackColor());
@@ -294,7 +294,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         // create the objects
         panel.setMainlineTrackWidth(mainlinetrackwidth);
-        panel.setSideTrackWidth(sidetrackwidth);
+        panel.setSidelineTrackWidth(sidetrackwidth);
         panel.setXScale(xScale);
         panel.setYScale(yScale);
 

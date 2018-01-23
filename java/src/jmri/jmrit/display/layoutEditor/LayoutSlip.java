@@ -558,12 +558,12 @@ public class LayoutSlip extends LayoutTurnout {
 
             if (useRectangles) {
                 // calculate turnout's left control rectangle
-                Rectangle2D leftRectangle = layoutEditor.trackControlRectAt(leftCenter);
+                Rectangle2D leftRectangle = layoutEditor.trackControlCircleRectAt(leftCenter);
                 if (leftRectangle.contains(hitPoint)) {
                     //point is in this turnout's left control rectangle
                     result = SLIP_LEFT;
                 }
-                Rectangle2D rightRectangle = layoutEditor.trackControlRectAt(rightCenter);
+                Rectangle2D rightRectangle = layoutEditor.trackControlCircleRectAt(rightCenter);
                 if (rightRectangle.contains(hitPoint)) {
                     //point is in this turnout's right control rectangle
                     result = SLIP_RIGHT;

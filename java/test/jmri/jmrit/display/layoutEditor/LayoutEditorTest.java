@@ -224,15 +224,15 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     public void testGetSidelineTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 2.
-        Assert.assertEquals("side track width", 2, le.getSideTrackWidth());
+        Assert.assertEquals("side track width", 2, le.getSidelineTrackWidth());
     }
 
     @Test
-    public void testSetSideTrackWidth() {
+    public void testSetSidelineTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        le.setSideTrackWidth(10);
-        Assert.assertEquals("Side track width after set", 10, le.getSideTrackWidth());
+        le.setSidelineTrackWidth(10);
+        Assert.assertEquals("Side track width after set", 10, le.getSidelineTrackWidth());
     }
 
     @Test

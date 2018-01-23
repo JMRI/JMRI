@@ -670,7 +670,7 @@ public class TrackSegment extends LayoutTrack {
             //note: optimization here: instead of creating rectangles for all the
             // points to check below, we create a rectangle for the test point
             // and test if the points below are in that rectangle instead.
-            Rectangle2D r = layoutEditor.trackControlRectAt(hitPoint);
+            Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
             Point2D p, minPoint = MathUtil.zeroPoint2D;
 
             double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
@@ -1954,6 +1954,7 @@ public class TrackSegment extends LayoutTrack {
      * Called when the user changes the angle dynamically in edit mode
      * by dragging the centre of the cirle.
      */
+    //NOTE: AFAICT this isn't called from anywhere
     protected void reCalculateTrackSegmentAngle(double x, double y) {
         if (!isBezier()) {
             double pt2x;
@@ -3743,6 +3744,7 @@ public class TrackSegment extends LayoutTrack {
         List<Set<String>> TrackNameSets = null;
         Set<String> TrackNameSet = null;
         if (blockName != null) {
+            TrackNameSet = null;    // assume not found (pessimist!)
             TrackNameSets = blockNamesToTrackNameSetsMap.get(blockName);
             if (TrackNameSets != null) { // (#1)
                 for (Set<String> checkTrackNameSet : TrackNameSets) {
