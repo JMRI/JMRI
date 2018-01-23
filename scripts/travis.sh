@@ -18,7 +18,7 @@ if [[ "${HEADLESS}" == "true" ]] ; then
     # SpotBugs configuration is in pom.xml
     mvn clean test -U -P travis-spotbugs --batch-mode
     # run headless tests
-    mvn test -U -P travis-headless --batch-mode \
+    mvn test javadoc:javadoc  -U -P travis-headless --batch-mode \
         -Dsurefire.printSummary=${PRINT_SUMMARY} \
         -Dsurefire.runOrder=${RUN_ORDER} \
         -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
@@ -26,7 +26,7 @@ if [[ "${HEADLESS}" == "true" ]] ; then
         -Dcucumber.options="--tags 'not @Ignore' --tags 'not @firefox'"
 else
     # run full GUI test suite and fail on coverage issues
-    mvn javadoc:javadoc verify -U -P travis-coverage --batch-mode \
+    mvn verify -U -P travis-coverage --batch-mode \
         -Dsurefire.printSummary=${PRINT_SUMMARY} \
         -Dsurefire.runOrder=${RUN_ORDER} \
         -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
