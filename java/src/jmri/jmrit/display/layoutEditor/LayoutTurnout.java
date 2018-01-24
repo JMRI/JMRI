@@ -1780,10 +1780,10 @@ public class LayoutTurnout extends LayoutTrack {
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
-            Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
         Point2D p, minPoint = MathUtil.zeroPoint2D;
 
-            double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
         double distance, minDistance = POSITIVE_INFINITY;
 
         // check center coordinates
@@ -1792,56 +1792,56 @@ public class LayoutTurnout extends LayoutTrack {
         if (distance < minDistance) {
             minDistance = distance;
             minPoint = p;
-                    result = TURNOUT_CENTER;
-                }
+            result = TURNOUT_CENTER;
+        }
 
-            //check the A connection point
-                if (!requireUnconnected || (getConnectA() == null)) {
+        //check the A connection point
+        if (!requireUnconnected || (getConnectA() == null)) {
             p = getCoordsA();
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                        result = TURNOUT_A;
-                    }
-                }
+                result = TURNOUT_A;
+            }
+        }
 
-            //check the B connection point
-                if (!requireUnconnected || (getConnectB() == null)) {
+        //check the B connection point
+        if (!requireUnconnected || (getConnectB() == null)) {
             p = getCoordsB();
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                        result = TURNOUT_B;
-                    }
-                }
+                result = TURNOUT_B;
+            }
+        }
 
-            //check the C connection point
+        //check the C connection point
         if (!requireUnconnected || (getConnectB() == null)) {
             p = getCoordsC();
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                        result = TURNOUT_C;
-                    }
-                }
+                result = TURNOUT_C;
+            }
+        }
 
-            //check the D connection point
-                if ((getTurnoutType() == DOUBLE_XOVER)
-                        || (getTurnoutType() == LH_XOVER)
-                        || (getTurnoutType() == RH_XOVER)) {
-                    if (!requireUnconnected || (getConnectD() == null)) {
+        //check the D connection point
+        if ((getTurnoutType() == DOUBLE_XOVER)
+                || (getTurnoutType() == LH_XOVER)
+                || (getTurnoutType() == RH_XOVER)) {
+            if (!requireUnconnected || (getConnectD() == null)) {
                 p = getCoordsD();
                 distance = MathUtil.distance(p, hitPoint);
                 if (distance < minDistance) {
                     minDistance = distance;
                     minPoint = p;
-                            result = TURNOUT_D;
-                        }
-                    }
+                    result = TURNOUT_D;
                 }
+            }
+        }
         if ((useRectangles && !r.contains(minPoint))
                 || (!useRectangles && (minDistance > circleRadius))) {
             result = NONE;
@@ -2585,68 +2585,68 @@ public class LayoutTurnout extends LayoutTrack {
                     popup.add(ssaa);
                 }
             }
-                if (!getBlockName().isEmpty()) {
-                    final String[] boundaryBetween = getBlockBoundaries();
-                    boolean blockBoundaries = false;
+            if (!getBlockName().isEmpty()) {
+                final String[] boundaryBetween = getBlockBoundaries();
+                boolean blockBoundaries = false;
                 for (int i = 0; i < 4; i++) {
-                        if (boundaryBetween[i] != null) {
-                            blockBoundaries = true;
+                    if (boundaryBetween[i] != null) {
+                        blockBoundaries = true;
 
-                        }
                     }
-
-                    if (blockBoundaries) {
-                        popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                layoutEditor.getLETools().setSignalMastsAtTurnoutFromMenu(LayoutTurnout.this,
-                                        boundaryBetween);
-                            }
-                        });
-                        popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                layoutEditor.getLETools().setSensorsAtTurnoutFromMenu(
-                                        LayoutTurnout.this,
-                                        boundaryBetween,
-                                        layoutEditor.sensorIconEditor,
-                                        layoutEditor.sensorFrame);
-                            }
-                        });
                 }
 
-                        if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
-                            Map<String, LayoutBlock> map = new HashMap<>();
-                            if (!getBlockName().isEmpty()) {
-                                map.put(getBlockName(), getLayoutBlock());
-                            }
-                            if (!getBlockBName().isEmpty()) {
-                                map.put(getBlockBName(), getLayoutBlockB());
-                            }
-                            if (!getBlockCName().isEmpty()) {
-                                map.put(getBlockCName(), getLayoutBlockC());
-                            }
-                            if (!getBlockDName().isEmpty()) {
-                                map.put(getBlockDName(), getLayoutBlockD());
-                            }
+                if (blockBoundaries) {
+                    popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            layoutEditor.getLETools().setSignalMastsAtTurnoutFromMenu(LayoutTurnout.this,
+                                    boundaryBetween);
+                        }
+                    });
+                    popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            layoutEditor.getLETools().setSensorsAtTurnoutFromMenu(
+                                    LayoutTurnout.this,
+                                    boundaryBetween,
+                                    layoutEditor.sensorIconEditor,
+                                    layoutEditor.sensorFrame);
+                        }
+                    });
+                }
+
+                if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
+                    Map<String, LayoutBlock> map = new HashMap<>();
+                    if (!getBlockName().isEmpty()) {
+                        map.put(getBlockName(), getLayoutBlock());
+                    }
+                    if (!getBlockBName().isEmpty()) {
+                        map.put(getBlockBName(), getLayoutBlockB());
+                    }
+                    if (!getBlockCName().isEmpty()) {
+                        map.put(getBlockCName(), getLayoutBlockC());
+                    }
+                    if (!getBlockDName().isEmpty()) {
+                        map.put(getBlockDName(), getLayoutBlockD());
+                    }
                     if (blockBoundaries) {
-                            if (map.size() == 1) {
-                                popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
-                                    @Override
-                                    public void actionPerformed(ActionEvent e) {
-                                        AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
-                                        routeTableAction.actionPerformed(e);
-                                    }
-                                });
-                            } else if (map.size() > 1) {
-                                JMenu viewRouting = new JMenu(Bundle.getMessage("ViewBlockRouting"));
-                                for (Map.Entry<String, LayoutBlock> entry : map.entrySet()) {
-                                    String blockName = entry.getKey();
-                                    LayoutBlock layoutBlock = entry.getValue();
-                                viewRouting.add(new AbstractActionImpl(getBlockBName(), blockName, layoutBlock));
+                        if (map.size() == 1) {
+                            popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
+                                    routeTableAction.actionPerformed(e);
                                 }
-                                popup.add(viewRouting);
+                            });
+                        } else if (map.size() > 1) {
+                            JMenu viewRouting = new JMenu(Bundle.getMessage("ViewBlockRouting"));
+                            for (Map.Entry<String, LayoutBlock> entry : map.entrySet()) {
+                                String blockName = entry.getKey();
+                                LayoutBlock layoutBlock = entry.getValue();
+                                viewRouting.add(new AbstractActionImpl(getBlockBName(), blockName, layoutBlock));
                             }
+                            popup.add(viewRouting);
+                        }
                     }   // if (blockBoundaries)
                 }   // .isAdvancedRoutingEnabled()
             }   // getBlockName().isEmpty()
@@ -3072,12 +3072,12 @@ public class LayoutTurnout extends LayoutTrack {
         Point2D pDF = MathUtil.midPoint(pDM, pM);
 
         int state = UNKNOWN;
-                if (layoutEditor.isAnimating()) {
+        if (layoutEditor.isAnimating()) {
             Turnout to = getTurnout();
             if (to != null) {
-                    state = to.getKnownState();
-                }
-                }
+                state = to.getKnownState();
+            }
+        }
 
         int type = getTurnoutType();
         if (type == DOUBLE_XOVER) {
@@ -3169,7 +3169,7 @@ public class LayoutTurnout extends LayoutTrack {
                     g2.draw(new Line2D.Double(pCDM, pD));
                 }
                 if (isBlock && drawUnselectedLeg) {
-                if (getTurnoutType() == RH_XOVER) {
+                    if (getTurnoutType() == RH_XOVER) {
                         if (isMain == mainlineA) {
                             g2.setColor(colorA);
                             g2.draw(new Line2D.Double(pAF, pM));
@@ -3187,11 +3187,11 @@ public class LayoutTurnout extends LayoutTrack {
                             g2.setColor(colorD);
                             g2.draw(new Line2D.Double(pDF, pM));
                         }
+                    }
                 }
-                }
-                }
+            }
             if (!isBlock || (state != Turnout.CLOSED)) { // unknown or diverting path - crossed over
-                    if (getTurnoutType() == RH_XOVER) {
+                if (getTurnoutType() == RH_XOVER) {
                     if (isMain == mainlineA) {
                         g2.setColor(colorA);
                         g2.draw(new Line2D.Double(pA, pABM));
@@ -3318,7 +3318,7 @@ public class LayoutTurnout extends LayoutTrack {
         Point2D vDisF = MathUtil.normalize(MathUtil.add(vAM, vCM), hypotF);
         if (type == WYE_TURNOUT) {
             vDisF = MathUtil.normalize(vAM, hypotF);
-                    }
+        }
         Point2D pF = MathUtil.add(pM, vDisF);
 
         Point2D pFR = MathUtil.add(pF, MathUtil.multiply(vBMo, 2.0));
@@ -3347,7 +3347,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (to != null) {
                 state = to.getKnownState();
             }
-                    }
+        }
 
         switch (type) {
             case RH_TURNOUT: {
@@ -3383,7 +3383,7 @@ public class LayoutTurnout extends LayoutTrack {
                         path.quadTo(pML.getX(), pML.getY(), pFPL.getX(), pFPL.getY());
                         g2.draw(path);
                     }
-                    }
+                }
                 break;
             }   // case RH_TURNOUT
 
@@ -3419,7 +3419,7 @@ public class LayoutTurnout extends LayoutTrack {
                         path.quadTo(pMR.getX(), pMR.getY(), pFPR.getX(), pFPR.getY());
                         g2.draw(path);
                     }
-                    }
+                }
                 break;
             }   // case LH_TURNOUT
 
@@ -3466,7 +3466,7 @@ public class LayoutTurnout extends LayoutTrack {
                         path.quadTo(pML.getX(), pML.getY(), pF.getX(), pF.getY());
                         g2.draw(path);
                     }
-                    }
+                }
                 break;
             }   // case WYE_TURNOUT
 
@@ -3693,7 +3693,7 @@ public class LayoutTurnout extends LayoutTrack {
                         path.quadTo(pDMR.getX(), pDMR.getY(), pDFS.getX(), pDFS.getY());
                         g2.draw(path);
                     }
-                    }
+                }
                 break;
             }   // case DOUBLE_XOVER
 
@@ -3818,7 +3818,7 @@ public class LayoutTurnout extends LayoutTrack {
                 if (isMain == mainlineD) {
                     g2.draw(new Line2D.Double(pCDR, pDR));
                     g2.draw(new Line2D.Double(pCDF, pDL));
-                    }
+                }
                 break;
             }   // case RH_XOVER
 
@@ -3950,14 +3950,14 @@ public class LayoutTurnout extends LayoutTrack {
             case DOUBLE_SLIP: {
                 log.error("slips should be being drawn by LayoutSlip sub-class");
                 break;
-                            }
+            }
             default: {
                 // this should never happen... but...
                 log.error("Unknown turnout type: " + type);
                 break;
-                        }
-                            }
-                        }
+            }
+        }
+    }
 
     /**
      * {@inheritDoc}
