@@ -296,19 +296,8 @@ public class LnPacketizer extends LnTrafficController {
                         if (log.isDebugEnabled()) { // avoid String building if not needed
                             log.debug("queue message for notification: {}", msg.toString());
                         }
-                        final LocoNetMessage thisMsg = msg;
-                        final LnTrafficController thisTC = trafficController;
-                        // return a notification via the queue to ensure end
-                        Runnable r = new Runnable() {
-                            LocoNetMessage msgForLater = thisMsg;
-                            LnTrafficController myTC = thisTC;
-
-                            @Override
-                            public void run() {
-                                myTC.notify(msgForLater);
-                            }
-                        };
-                        javax.swing.SwingUtilities.invokeLater(r);
+                        
+                        jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));
                     }
 
                     // done with this one
@@ -330,6 +319,23 @@ public class LnPacketizer extends LnTrafficController {
                     log.warn("run: unexpected Exception: " + e); // NOI18N
                 }
             } // end of permanent loop
+        }
+    }
+    
+    /**
+     * Captive class to notify of one message
+     */
+    class RcvMemo implements jmri.util.ThreadingUtil.ThreadAction {
+        public RcvMemo(LocoNetMessage msg, LnTrafficController trafficController) {
+            thisMsg = msg;
+            thisTC = trafficController;
+        }
+        LocoNetMessage thisMsg;
+        LnTrafficController thisTC;
+        /** {@inheritdoc} */
+        @Override
+        public void run() {
+            thisTC.notify(thisMsg);
         }
     }
 
