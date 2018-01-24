@@ -13,6 +13,7 @@ spotbugs.xml
 spotbugs.html
 jacoco.exec
 coveragereport
+tests.log
 
 # runtime artifacts
 messages.log*
