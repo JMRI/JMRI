@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
@@ -529,6 +530,24 @@ public class LayoutTurntable extends LayoutTrack {
                     }
                     jmi = rayPopup.add(info);
                     jmi.setEnabled(false);
+
+                    rayPopup.add(new JSeparator(JSeparator.HORIZONTAL));
+
+                    JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
+                    cbmi.setSelected(rt.isDisabled());
+                    rayPopup.add(cbmi);
+                    cbmi.addActionListener((java.awt.event.ActionEvent e2) -> {
+                        JCheckBoxMenuItem o = (JCheckBoxMenuItem) e2.getSource();
+                        rt.setDisabled(o.isSelected());
+                    });
+
+                    cbmi = new JCheckBoxMenuItem(Bundle.getMessage("DisabledWhenOccupied"));
+                    cbmi.setSelected(rt.isDisabledWhenOccupied());
+                    rayPopup.add(cbmi);
+                    cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                        JCheckBoxMenuItem o = (JCheckBoxMenuItem) e3.getSource();
+                        rt.setDisableWhenOccupied(o.isSelected());
+                    });
                 }
                 rayPopup.show(e.getComponent(), e.getX(), e.getY());
                 break;
@@ -614,6 +633,9 @@ public class LayoutTurntable extends LayoutTrack {
             rayAngle = MathUtil.wrapPM360(angle);
             connect = null;
             connectionIndex = index;
+
+            disabled = false;
+            disableWhenOccupied = false;
         }
 
         // persistant instance variables
@@ -621,7 +643,36 @@ public class LayoutTurntable extends LayoutTrack {
         private TrackSegment connect = null;
         private int connectionIndex = -1;
 
+        private boolean disabled = false;
+        private boolean disableWhenOccupied = false;
+
         // accessor routines
+        public void setDisabled(boolean state) {
+            if (disabled != state) {
+                disabled = state;
+                if (layoutEditor != null) {
+                    layoutEditor.redrawPanel();
+                }
+            }
+        }
+
+        public boolean isDisabled() {
+            return disabled;
+        }
+
+        public void setDisableWhenOccupied(boolean state) {
+            if (disableWhenOccupied != state) {
+                disableWhenOccupied = state;
+                if (layoutEditor != null) {
+                    layoutEditor.redrawPanel();
+                }
+            }
+        }
+
+        public boolean isDisabledWhenOccupied() {
+            return disableWhenOccupied;
+        }
+
         public TrackSegment getConnect() {
             return connect;
         }
@@ -640,6 +691,23 @@ public class LayoutTurntable extends LayoutTrack {
 
         public int getConnectionIndex() {
             return connectionIndex;
+        }
+
+        /**
+         * is this ray occupied?
+         *
+         * @return true if occupied
+         */
+        private boolean isOccupied() {
+            boolean result = false; // assume not
+            if (connect != null) {  // does it have a connection? (yes)
+                LayoutBlock lb = connect.getLayoutBlock();
+                if (lb != null) {   // does the connection have a block? (yes)
+                    // is the block occupied?
+                    result = (lb.getOccupancy() == LayoutBlock.OCCUPIED);
+                }
+            }
+            return result;
         }
 
         // initialization instance variable (used when loading a LayoutEditor)
@@ -683,7 +751,11 @@ public class LayoutTurntable extends LayoutTrack {
 
         public void setPosition() {
             if (namedTurnout != null) {
-                getTurnout().setCommandedState(turnoutState);
+                if (disableWhenOccupied && isOccupied()) {
+                    log.debug("Turntable ray track Block is Occupied");
+                } else {
+                    getTurnout().setCommandedState(turnoutState);
+                }
             }
         }
 
@@ -775,8 +847,11 @@ public class LayoutTurntable extends LayoutTrack {
             // draw control circles at all but current position ray tracks
             for (int j = 0; j < getNumberRays(); j++) {
                 if (getPosition() != j) {
-                    Point2D pt = getRayCoordsOrdered(j);
-                    g2.draw(layoutEditor.trackControlCircleAt(pt));
+                    RayTrack rt = rayList.get(j);
+                    if (!rt.isDisabled() && !(rt.isDisabledWhenOccupied() && rt.isOccupied())) {
+                        Point2D pt = getRayCoordsOrdered(j);
+                        g2.draw(layoutEditor.trackControlCircleAt(pt));
+                    }
                 }
             }
         }
