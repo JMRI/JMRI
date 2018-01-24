@@ -30,6 +30,12 @@ public class Dcc4PcSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionM
           @Override
           public void sendDcc4PcMessage(Dcc4PcMessage m,Dcc4PcListener reply) {
           }
+          @Override
+          public void transmitLoop(){
+          }
+          @Override
+          public void receiveLoop(){
+          }
        };
        scm = new Dcc4PcSystemConnectionMemo(tc);
     }

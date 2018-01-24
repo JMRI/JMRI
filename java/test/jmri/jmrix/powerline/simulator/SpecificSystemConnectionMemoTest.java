@@ -33,6 +33,12 @@ public class SpecificSystemConnectionMemoTest extends jmri.jmrix.SystemConnectio
           @Override
           public void sendSerialMessage(SerialMessage m,SerialListener reply) {
           }
+          @Override
+          public void transmitLoop(){
+          }
+          @Override
+          public void receiveLoop(){
+          }
        });
        memo.configureManagers();
        scm = memo;

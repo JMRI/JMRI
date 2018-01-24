@@ -31,6 +31,12 @@ public class RfidSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
            @Override
            public void sendInitString(){
            }
+           @Override
+           public void transmitLoop(){
+           }
+           @Override
+           public void receiveLoop(){
+           }
         };
         memo.setRfidTrafficController(tc);
         RfidSensorManager s = new RfidSensorManager("R"){
