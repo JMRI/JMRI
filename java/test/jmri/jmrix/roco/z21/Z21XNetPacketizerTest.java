@@ -31,6 +31,7 @@ public class Z21XNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest {
     @After
     @Override
     public void tearDown() {
+        tc.terminateThreads();
         tc=null;
         JUnitUtil.tearDown();
     }

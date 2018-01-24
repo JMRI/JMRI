@@ -872,6 +872,9 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             temp.removePropertyChangeListener(this);
         }
         _secondNamedSensor = null;
+        if(timer!=null){
+           timer.cancel();
+        }
         super.dispose();
     }
 

@@ -26,7 +26,7 @@ final public class XBeeIOStream extends AbstractPortController {
     private DataOutputStream pout = null; // for output to other classes
     private DataInputStream pin = null; // for input from other classes
     // internal ends of the pipes
-    private DataOutputStream outpipe = null;  // data from xbee written hear
+    private DataOutputStream outpipe = null;  // data from xbee written here
     // ends up in pin.
     private DataInputStream inpipe = null; // data read from this pipe is
     // sent to the XBee.
@@ -62,7 +62,7 @@ final public class XBeeIOStream extends AbstractPortController {
 
         // start the receive thread
         sinkThread = new Thread(new ReceiveThread(remoteXBee, tc, outpipe));
-        sourceThread.setName("xbee.XBeeIOStream Receive thread");
+        sinkThread.setName("xbee.XBeeIOStream Receive thread");
         sinkThread.start();
 
     }
@@ -113,8 +113,16 @@ final public class XBeeIOStream extends AbstractPortController {
 
     @Override
     public void dispose() {
+        sourceThread.interrupt();
         sourceThread=null;
+        sinkThread.interrupt();
         sinkThread=null;
+        try {
+           outpipe.close();
+           inpipe.close();
+        } catch (java.io.IOException ioe){
+           log.debug("IO Exception closing port durring dispose call");
+        }
         super.dispose();
     }
 
@@ -170,6 +178,10 @@ final public class XBeeIOStream extends AbstractPortController {
                   log.error("Timeout sending stream data to node {}.",node);
                 } catch(XBeeException xbe){
                   log.error("Exception sending stream data to node {}.",node);
+                } catch(NullPointerException npe) {
+                  if(Thread.currentThread().interrupted()){
+                     return;
+                  }
                 }
             }
         }

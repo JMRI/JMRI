@@ -12,6 +12,8 @@ import org.junit.Test;
  */
 public class Dcc4PcBoardManagerTest {
 
+    Dcc4PcSensorManager tm = null;
+
     @Test
     public void testCTor() {
         Dcc4PcTrafficController tc = new Dcc4PcTrafficController(){
@@ -21,7 +23,7 @@ public class Dcc4PcBoardManagerTest {
         };
         Dcc4PcSystemConnectionMemo memo = new Dcc4PcSystemConnectionMemo(tc);
 
-        Dcc4PcSensorManager tm = new Dcc4PcSensorManager(tc,memo);
+        tm = new Dcc4PcSensorManager(tc,memo);
         Dcc4PcBoardManager t = new Dcc4PcBoardManager(tc,tm);
         Assert.assertNotNull("exists",t);
     }
@@ -34,6 +36,7 @@ public class Dcc4PcBoardManagerTest {
 
     @After
     public void tearDown() {
+        tm.dispose();
         JUnitUtil.tearDown();
     }
 
