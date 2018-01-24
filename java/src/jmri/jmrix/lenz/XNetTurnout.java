@@ -251,7 +251,11 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     /**
      * Request an update on status by sending an XpressNet message.
      */
+    @Override
     public void requestUpdateFromLayout() {
+        // This will handle ONESENSOR and TWOSENSOR feedback modes.
+        super.requestUpdateFromLayout();
+
         // To do this, we send an XpressNet Accessory Decoder Information
         // Request.
         // The generated message works for Feedback modules and turnouts

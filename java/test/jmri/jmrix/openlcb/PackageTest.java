@@ -16,6 +16,7 @@ import org.junit.runners.Suite;
         OlcbSystemConnectionMemoTest.class,
         OlcbTurnoutManagerTest.class,
         OlcbTurnoutTest.class,
+        OlcbTurnoutInheritedTest.class,
         OlcbThrottleTest.class,
         OlcbThrottleManagerTest.class,
         BundleTest.class,

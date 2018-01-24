@@ -32,14 +32,17 @@
 
 <div id="mainContent">
 
-<h1>JMRI: Subversion FAQ</h1>
+<h1>JMRI Code: Subversion FAQ</h1>
+
+    <p class="important">JMRI has migrated from Subversion (SVN)
+    to Git in September 2015. For our current Version Control FAQ,
+    please see the <a href="GitFAQ.shtml">Git FAQ</a>.</p>
 
   <p>This is a list of Frequently Asked Questions for Subversion,
-particularly regarding how we use it with JMRI.</p>
+particularly regarding how we used it with JMRI up until 2015.</p>
 
   <p>See also the <a href="index.shtml">Technical index</a>
 for more information on maintaining JMRI code.</p>
-
 
 <h3>SVN Properties</h3>
 

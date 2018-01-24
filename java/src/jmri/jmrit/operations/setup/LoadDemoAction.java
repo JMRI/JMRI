@@ -61,7 +61,7 @@ public class LoadDemoAction extends AbstractAction {
         } catch (IOException ex) {
             ExceptionContext context = new ExceptionContext(ex, Bundle.getMessage("LoadingDemoFiles"),
                     Bundle.getMessage("LoadingDemoMakeSure"));
-            new ExceptionDisplayFrame(context);
+            new ExceptionDisplayFrame(context, null).setVisible(true);
         }
     }
 }
