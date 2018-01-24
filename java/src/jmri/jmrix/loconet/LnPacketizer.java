@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001, 2018
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -47,6 +47,7 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     // The methods to implement the LocoNetInterface
+    /** {@inheritDoc} */
     @Override
     public boolean status() {
         return (ostream != null && istream != null);
@@ -332,7 +333,7 @@ public class LnPacketizer extends LnTrafficController {
         }
         LocoNetMessage thisMsg;
         LnTrafficController thisTC;
-        /** {@inheritdoc} */
+        /** {@inheritDoc} */
         @Override
         public void run() {
             thisTC.notify(thisMsg);
@@ -344,6 +345,7 @@ public class LnPacketizer extends LnTrafficController {
      */
     class XmtHandler implements Runnable {
 
+        /** {@inheritDoc} */
         @Override
         public void run() {
 
@@ -416,6 +418,7 @@ public class LnPacketizer extends LnTrafficController {
         LocoNetMessage msgForLater;
         LnPacketizer myTc;
 
+        /** {@inheritDoc} */
         @Override
         public void run() {
             myTc.notify(msgForLater);
@@ -427,10 +430,8 @@ public class LnPacketizer extends LnTrafficController {
      */
     public void startThreads() {
         int priority = Thread.currentThread().getPriority();
-        log.debug("startThreads current priority = " + priority // NOI18N
-                + " max available = " + Thread.MAX_PRIORITY // NOI18N
-                + " default = " + Thread.NORM_PRIORITY // NOI18N
-                + " min available = " + Thread.MIN_PRIORITY); // NOI18N
+        log.debug("startThreads current priority = {} max available = {} default = {} min available = {}", // NOI18N
+                    priority, Thread.MAX_PRIORITY, Thread.NORM_PRIORITY, Thread.MIN_PRIORITY);
 
         // make sure that the xmt priority is no lower than the current priority
         int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
@@ -439,7 +440,7 @@ public class LnPacketizer extends LnTrafficController {
             xmtHandler = new XmtHandler();
         }
         Thread xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
-        log.debug("Xmt thread starts at priority " + xmtpriority); // NOI18N
+        log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
         xmtThread.start();
