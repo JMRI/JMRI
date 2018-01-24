@@ -17,10 +17,8 @@ if [[ "${HEADLESS}" == "true" ]] ; then
     # run SpotBugs only on headless, failing build if bugs are found
     # SpotBugs configuration is in pom.xml
     mvn clean test -U -P travis-spotbugs --batch-mode
-    # run javadoc only on headless
-    mvn javadoc:javadoc  --batch-mode
-    # run headless tests
-    mvn test -U -P travis-headless --batch-mode \
+    # run javadoc, headless tests
+    mvn javadoc:javadoc test -U -P travis-headless --batch-mode \
         -Dsurefire.printSummary=${PRINT_SUMMARY} \
         -Dsurefire.runOrder=${RUN_ORDER} \
         -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
