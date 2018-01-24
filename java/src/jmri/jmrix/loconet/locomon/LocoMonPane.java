@@ -92,7 +92,7 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         nextLine(formatted, raw);
 
         // include loconet monitoring in session.log if TRACE enabled
-        log.trace(formatted.substring(0, formatted.length() - 1));  // remove trailing newline
+        if (log.isTraceEnabled()) log.trace(formatted.substring(0, formatted.length() - 1));  // remove trailing newline
 
     }
 
