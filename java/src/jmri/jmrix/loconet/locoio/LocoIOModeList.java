@@ -221,5 +221,5 @@ public class LocoIOModeList {
         return valuesToAddress(lim.getOpCode(), sv, v1, v2);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoIOModeList.class);
+    // private final static Logger log = LoggerFactory.getLogger(LocoIOModeList.class);
 }

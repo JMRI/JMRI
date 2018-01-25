@@ -259,7 +259,7 @@ First JMRI 4.11.2 files are available in the usual way at:
 
 http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.11.2
 
-Feedback appreciated. I would like to release this later today or tomorrow morning. 
+Feedback appreciated. I would like to release this later today or tomorrow morning if the files are OK.
 
 - *Wait for some replies* before proceeding
 
