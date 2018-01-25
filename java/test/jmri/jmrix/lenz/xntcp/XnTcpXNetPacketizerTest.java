@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz.xntcp;
 
+import jmri.jmrix.lenz.XNetPortControllerScaffold;
 import jmri.jmrix.lenz.XNetListenerScaffold;
 import jmri.jmrix.lenz.XNetMessage;
 import org.junit.Assert;
@@ -155,6 +156,11 @@ public class XnTcpXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest 
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
         };
+        try {
+           port = new XNetPortControllerScaffold();
+        } catch (Exception e) {
+           Assert.fail("Error creating test port");
+        }
     }
 
 }
