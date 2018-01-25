@@ -623,6 +623,13 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
             log.trace("Got columnSelectionChanged for {} ({} -> {})", this.table.getName(), e.getFirstIndex(), e.getLastIndex());
         }
 
+        protected void cancelDelay() {
+            if (this.delay != null) {
+                this.delay.cancel();
+                this.delay = null;
+            }
+        }
+
         /**
          * Saves the state after a 1/2 second delay. Every time the listener
          * triggers this method any pending save is canceled and a new delay is
@@ -632,10 +639,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
          * is not subject to this timer.
          */
         private void saveState() {
-            if (delay != null) {
-                delay.cancel();
-                delay = null;
-            }
+            cancelDelay();
             delay = new Timer();
             delay.schedule(new TimerTask() {
                 @Override
@@ -644,6 +648,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                     if (!JTableListener.this.manager.isPaused() && JTableListener.this.manager.isDirty()) {
                         JTableListener.this.manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
                     }
+                    JTableListener.this.cancelDelay();
                 }
             }, 500); // milliseconds
         }
