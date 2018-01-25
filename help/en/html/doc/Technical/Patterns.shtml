@@ -152,7 +152,7 @@
       <p>Adding a system-specific property requires using a generic API,
       because the code in the <code>jmrit.beantable</code>
       package <a href="IntroStructure.shtml">cannot depend</a> on the
-      jmrix.system-specifc packages. All NamedBeans have
+      jmrix.system-specific packages. All NamedBeans have
       a <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#setProperty-java.lang.String-java.lang.Object-">setProperty</a>
       and
       <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#getProperty-java.lang.String-">getProperty</a>
