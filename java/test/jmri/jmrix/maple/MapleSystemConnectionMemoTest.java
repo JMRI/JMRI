@@ -35,6 +35,12 @@ public class MapleSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
           @Override
           public void sendSerialMessage(SerialMessage m, SerialListener reply) {
           }
+          @Override
+          public void transmitLoop(){
+          }
+          @Override
+          public void receiveLoop(){
+          }
        });
        memo.configureManagers();
        scm = memo;

@@ -282,7 +282,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         
         appendLine(addressingPanel);  // add read/write buttons, address
         
-        comboBox = new JComboBox[48];
+        comboBox = new JComboBox[48];  // can't use JComboBox<String>[48] as you can't have an array of type-erased types
         
         JPanel frame1 = new JPanel();
         frame1.setLayout(new BoxLayout(frame1, BoxLayout.PAGE_AXIS));

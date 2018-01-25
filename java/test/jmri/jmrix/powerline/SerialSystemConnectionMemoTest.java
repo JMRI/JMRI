@@ -29,6 +29,12 @@ public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionM
           @Override
           public void sendSerialMessage(SerialMessage m,SerialListener reply) {
           }
+          @Override
+          public void transmitLoop(){
+          }
+          @Override
+          public void receiveLoop(){
+          }
        });
        memo.setSerialAddress(new SerialAddress(memo));
        memo.setTurnoutManager(new SerialTurnoutManager(memo.getTrafficController()));
