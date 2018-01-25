@@ -1286,7 +1286,7 @@
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
       <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
-      
+
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="train" type="xs:string"></xs:attribute>
       <xs:attribute name="trainName" type="xs:string"></xs:attribute>
@@ -1469,6 +1469,8 @@
             <xs:attribute name="index" type="xs:string"></xs:attribute>
             <xs:attribute name="turnout" type="beanNameType"></xs:attribute>
             <xs:attribute name="turnoutstate" type="xs:string"></xs:attribute><!-- THROWN/CLOSED -->
+            <xs:attribute name="disabled" type="yesNoType"></xs:attribute>
+            <xs:attribute name="disableWhenOccupied" type="yesNoType"></xs:attribute>
           </xs:complexType>
         </xs:element>
       </xs:sequence>
