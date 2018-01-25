@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI Hardware Support - Digirails/Digikeijs</title>
+  <title>JMRI Hardware Support - Digikeijs (Digirails)</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -23,7 +23,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Hardware Support: Digirails/Digikeijs</h1><a name=
+      <h1>Hardware Support: Digikeijs (Digirails)</h1><a name=
       "hardware" id="hardware"></a>
 
       <h2>Supported Hardware</h2>
@@ -31,9 +31,9 @@
       <h3>Command Station</h3>
 
       <p>JMRI can connect to a Digirails DR5000 Digicentral command
-      station via a network connection.</p><a name="limitations"
-      id="limitations"></a>
+      station via a network connection.</p>
 
+      <a name="limitations" id="limitations"></a>
       <h2>Limitations</h2>
 
       <p>Please report your results.</p><a name="connecting" id=
@@ -94,8 +94,9 @@
       <h3>Turnouts</h3>
 
       <p>The Digirails DR4018 decoder can drive turnouts with
-      several protocols.<br></p><a name="dr4018" id="dr4018"></a>
+      several protocols.<br></p>
 
+      <a name="dr4018" id="dr4018"></a>
       <h3>Signals</h3>
 
       <p>The Digirails DR4018 decoder can be configured for
@@ -115,14 +116,17 @@
         <li>None</li>
       </ul>
 
-      <h3>Third Party info</h3>For more information on how to
-      connect and use a DR5000, refer to the following:
+      <h3>Third Party info</h3>
+      <p>For more information on how to
+      connect and use a DR5000, refer to the following:</p>
 
       <ul>
         <li><a href=
         "http://www.digikeijs.com/dr5000-dcc-multi-bus-centrale.html">
         Digirails DR5000 documentation</a></li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
