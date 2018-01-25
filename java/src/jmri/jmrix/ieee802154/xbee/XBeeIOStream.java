@@ -118,6 +118,8 @@ final public class XBeeIOStream extends AbstractPortController {
         sinkThread.interrupt();
         sinkThread=null;
         try {
+           pin.close();
+           pout.close();
            outpipe.close();
            inpipe.close();
         } catch (java.io.IOException ioe){
