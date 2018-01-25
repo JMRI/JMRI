@@ -1,6 +1,9 @@
 package jmri.swing;
 
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -8,16 +11,24 @@ import javax.swing.JTable;
 import javax.swing.SortOrder;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
+import jmri.profile.NullProfile;
 import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
 import jmri.swing.JmriJTablePersistenceManager.TableColumnPreferences;
+import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
+import jmri.util.node.NodeIdentity;
+import jmri.util.prefs.InitializationException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * Tests the {@link jmri.swing.JmriJTablePersistenceManager}. Some tests use a
@@ -28,6 +39,9 @@ import org.junit.Test;
  */
 public class JmriJTablePersistenceManagerTest {
 
+    @Rule
+    public TemporaryFolder profileFolder = new TemporaryFolder();
+
     @BeforeClass
     public static void setUpClass() throws Exception {
     }
@@ -37,8 +51,9 @@ public class JmriJTablePersistenceManagerTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager(new NullProfile(profileFolder.newFolder(Profile.PROFILE)));
     }
 
     @After
@@ -325,14 +340,73 @@ public class JmriJTablePersistenceManagerTest {
      * Test of initialize method, of class JmriJTablePersistenceManager.
      */
     @Test
-    @Ignore
-    public void testInitialize() throws Exception {
-        System.out.println("initialize");
-        Profile profile = null;
-        JmriJTablePersistenceManager instance = new JmriJTablePersistenceManager();
-        instance.initialize(profile);
-        // TODO review the generated test code and remove the default call to fail.
-        Assert.fail("The test case is a prototype.");
+    public void testInitialize_EmptyProfile() {
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        Assume.assumeNotNull("Profile is not null", profile);
+        JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
+        try {
+            instance.initialize(profile);
+        } catch (InitializationException ex) {
+            Assert.fail("Unable to initialize due to " + ex.getMessage());
+        }
+        Assert.assertEquals("No tables persisted", 0, instance.columns.size());
+        Assert.assertEquals("No tables listened to", 0, instance.listeners.size());
+        Assert.assertEquals("No tables sorted", 0, instance.sortKeys.size());
+    }
+
+    /**
+     * Test of initialize method, of class JmriJTablePersistenceManager.
+     *
+     * @throws java.net.URISyntaxException if test resource URL cannot be
+     *                                     converted to URI
+     * @throws java.io.IOException         if unable to access test resource as
+     *                                     file
+     */
+    @Test
+    public void testInitialize_ExistingProfile() throws URISyntaxException, IOException {
+        String name1 = "Test1";
+        String name2 = "Test2";
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        Assume.assumeNotNull(profile);
+        // copy preferences into profile
+        File source = new File(ClassLoader.getSystemResource("jmri/swing/JmriJTablePersistenceManagerTest-user-interface.xml").toURI());
+        File target = new File(new File(new File(profile.getPath(), Profile.PROFILE), NodeIdentity.identity()), Profile.UI_CONFIG);
+        FileUtil.createDirectory(target.getParentFile());
+        FileUtil.copy(source, target);
+        JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
+        try {
+            instance.initialize(profile);
+        } catch (InitializationException ex) {
+            Assert.fail("Unable to initialize due to " + ex.getMessage());
+        }
+        // verify collections
+        Assert.assertEquals("Two tables persisted", 2, instance.columns.size());
+        Assert.assertEquals("No tables listened to", 0, instance.listeners.size());
+        Assert.assertEquals("Two tables sorted", 2, instance.sortKeys.size());
+        // verify table Test1
+        Assert.assertTrue("Has data for Test1", instance.isPersistenceDataRetained(name1));
+        Assert.assertEquals("Test1 has two columns", 2, instance.getColumnsMap(name1).size());
+        Assert.assertNotNull("Test1 is sorted", instance.sortKeys.get(name1));
+        Assert.assertEquals("Test1/c0 is the first column", 0, instance.getColumnsMap(name1).get("c0").getOrder());
+        Assert.assertEquals("Test1/c0 is 100 px wide", 100, instance.getColumnsMap(name1).get("c0").getPreferredWidth());
+        Assert.assertFalse("Test1/c0 is visible", instance.getColumnsMap(name1).get("c0").getHidden());
+        Assert.assertEquals("Test1/c0 is unsorted", SortOrder.UNSORTED, instance.getColumnsMap(name1).get("c0").getSort());
+        Assert.assertEquals("Test1/c1 is the second column", 1, instance.getColumnsMap(name1).get("c1").getOrder());
+        Assert.assertEquals("Test1/c1 is 50 px wide", 50, instance.getColumnsMap(name1).get("c1").getPreferredWidth());
+        Assert.assertFalse("Test1/c1 is visible", instance.getColumnsMap(name1).get("c1").getHidden());
+        Assert.assertEquals("Test1/c1 is sorted ascending", SortOrder.ASCENDING, instance.getColumnsMap(name1).get("c1").getSort());
+        // verify table Test2
+        Assert.assertTrue("Has data for Test2", instance.isPersistenceDataRetained(name2));
+        Assert.assertEquals("Test2 has two columns", 2, instance.getColumnsMap(name2).size());
+        Assert.assertNotNull("Test2 is sorted", instance.sortKeys.get(name2));
+        Assert.assertEquals("Test2/c0 is the second column", 1, instance.getColumnsMap(name2).get("c0").getOrder());
+        Assert.assertEquals("Test2/c0 is 75 px wide", 75, instance.getColumnsMap(name2).get("c0").getPreferredWidth());
+        Assert.assertFalse("Test2/c0 is visible", instance.getColumnsMap(name2).get("c0").getHidden());
+        Assert.assertEquals("Test2/c0 is unsorted", SortOrder.UNSORTED, instance.getColumnsMap(name2).get("c0").getSort());
+        Assert.assertEquals("Test2/c1 is the first column", 0, instance.getColumnsMap(name2).get("c1").getOrder());
+        Assert.assertEquals("Test2/c1 is 50 px wide", 50, instance.getColumnsMap(name2).get("c1").getPreferredWidth());
+        Assert.assertTrue("Test2/c1 is hidden", instance.getColumnsMap(name2).get("c1").getHidden());
+        Assert.assertEquals("Test2/c1 is sorted descending", SortOrder.DESCENDING, instance.getColumnsMap(name2).get("c1").getSort());
     }
 
     /**
@@ -453,6 +527,7 @@ public class JmriJTablePersistenceManagerTest {
      * Test of getDirty method, of class JmriJTablePersistenceManager.
      */
     @Test
+    @SuppressWarnings("deprecation")
     public void testGetDirty() {
         JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
         JTable test = testTable("test");
@@ -470,6 +545,7 @@ public class JmriJTablePersistenceManagerTest {
      * JmriJTablePersistenceManager.
      */
     @Test
+    @SuppressWarnings("deprecation")
     public void testSetTableColumnPreferences() {
         JTable table = testTable("test");
         JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
