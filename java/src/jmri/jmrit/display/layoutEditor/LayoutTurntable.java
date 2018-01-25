@@ -181,7 +181,7 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * get the connection for the ray at the index in the rayList
      *
-     * @param index the index in the rayList
+     * @param i the index in the rayList
      * @return the connection for the ray at that index in the rayList
      */
     public TrackSegment getRayConnectOrdered(int i) {
@@ -529,7 +529,7 @@ public class LayoutTurntable extends LayoutTrack {
      * <p>
      * Defaults to false (not mainline) if connecting track segment is missing.
      * <p>
-     * @param index the index
+     * @param i the index
      * @return true if connecting track segment is mainline
      */
     public boolean isMainlineOrdered(int i) {
