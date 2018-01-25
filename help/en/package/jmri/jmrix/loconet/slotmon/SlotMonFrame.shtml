@@ -131,9 +131,8 @@
         <dd>The current function settings. A check mark indicates
         a function is On.</dd>
 
-        <dt>package/jmri/jmrix/loconet/slotmon/</dt>
-        <!--#include virtual="/Footer" -->
       </dl>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>
