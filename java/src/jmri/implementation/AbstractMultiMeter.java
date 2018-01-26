@@ -29,7 +29,7 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
 
     protected void initTimer() {
         intervalTask = new UpdateTask();
-        intervalTimer = new Timer();
+        intervalTimer = new Timer("MultiMeter Update Timer");
         // At some point this will be dynamic intervals...
         log.debug("Starting Meter Timer");
         intervalTimer.scheduleAtFixedRate(intervalTask,
@@ -148,6 +148,15 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
     @Deprecated
     public PropertyChangeListener[] getDataUpdateListeners() {
         return this.getPropertyChangeListeners(CURRENT);
+    }
+
+    /**
+     * @{inheritDoc}
+     */
+    public void dispose(){
+        intervalTimer.cancel();
+        intervalTask = null;
+        intervalTimer = null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMultiMeter.class);

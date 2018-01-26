@@ -599,7 +599,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                 delay.cancel();
                 delay = null;
             }
-            delay = new Timer();
+            delay = new Timer("Table Persistance Manager Delay Timer");
             delay.schedule(new TimerTask() {
                 @Override
                 public void run() {

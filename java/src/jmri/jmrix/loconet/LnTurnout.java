@@ -384,7 +384,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     }
 
     static final int METERINTERVAL = 100;  // msec wait before closed
-    static java.util.Timer meterTimer = new java.util.Timer(true);
+    static java.util.Timer meterTimer = new java.util.Timer("LocoNet Turnout Meter Timer",true);
 
     static final int CONSISTENCYTIMER = 3000; // msec wait for command to take effect
     static java.util.Timer consistencyTimer = new java.util.Timer();

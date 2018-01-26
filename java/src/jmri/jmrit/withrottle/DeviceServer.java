@@ -447,7 +447,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         log.debug("starting heartbeat EKG for '{}' with interval: {}", getName(), pulseInterval);
         isUsingHeartbeat = true;
         stopEKGCount = 0;
-        ekg = new Timer();
+        ekg = new Timer("Withrottle hearbeat");
         TimerTask task = new TimerTask() {
             @Override
             public void run() {  //  Drops on second pass
