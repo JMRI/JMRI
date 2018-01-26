@@ -28,13 +28,13 @@ development and release operations:
 
 On macOS, most of these changes can be affected with:
 ```
-find . -type f -exec gsed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
+find . -type f -not -path './.git/*' -exec gsed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
 ```
 (you may need to install gsed using [Homebrew](http://brew.sh))
 
 On Linux, these same changes can be affected with:
 ```
-find . -type f -exec sed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
+find . -type f -not -path './.git/*' -exec sed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
 ```
 
 Note that Windows installers don't necessarily remove existing library versions.
@@ -111,11 +111,11 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - version 2.0.5
 - from <jdom.org>
 
-##### jackson-annotations-2.8.5.jar, jackson-core-2.8.5.jar, jackson-databind-2.8.5.jar
+##### jackson-annotations-2.8.11.jar, jackson-core-2.8.11.jar, jackson-databind-2.8.11.jar
 - JSON processing library com.fasterxml.jackson
-- version 2.8.5
+- version 2.8.11
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
-- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.8.5
+- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.8.11
 
 bluecove-2.1.1-SNAPSHOT.jar
 lib/bluecove-bluez-2.1.1-SNAPSHOT.jar

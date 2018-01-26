@@ -28,6 +28,12 @@ public class TmccSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
           @Override
           public void sendSerialMessage(SerialMessage m, SerialListener reply) {
           }
+          @Override
+          public void transmitLoop(){
+          }
+          @Override
+          public void receiveLoop(){
+          }
        };
        scm = memo;
     }

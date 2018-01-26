@@ -16,9 +16,12 @@ abstract public class SystemConnectionMemoTestBase {
     protected SystemConnectionMemo scm = null;
 
     public void getTest(Class t){
-       Assume.assumeTrue(scm.provides(t));
-       // if the manager reports providing the class, make sure it exists.
-       Assert.assertNotNull("Provides Class " + t.getName() ,scm.get(t));
+       if(scm.provides(t)){
+          // if the manager reports providing the class, make sure it exists.
+          Assert.assertNotNull("Provides Class " + t.getName() ,scm.get(t));
+       } else {
+          Assert.assertNull("Provides Class " + t.getName() ,scm.get(t));
+       }
     }
  
     @Test
