@@ -194,16 +194,17 @@
       and how Warrants make gradual changes of speed.
 	    
       <h3>Warrant Types</h3>
-      <p>There are three types of Warrants:</p>
+      <p>There are three types of Warrants available:</p>
       <ul>
         <li>A <b>Recorded Script Warrant</b>, where throttle commands 
         are recorded from a throttle you use to drive a train over
         preselected route. The Warrant then replicates all the
         commands when played back. To create a Recorded Script
         Warrant, select the <b>Warrants-&gt;Tables-&gt;Create New Warrant</b>
-        menu item.</li>
+        menu item and select 'Prototypical' or 'Add Speeds' as Warrant
+        type.</li>
 
-        <li>An <b>NX Warrant</b>, (eNtry/eXit) where throttle commands
+        <li>An <b>NX Warrant</b> (eNtry/eXit), where throttle commands
         are generated automatically to move a train between Blocks
         chosen by you "on the fly". A dialog allows you to choose
         start and destination distances and to set the maximum 
@@ -212,12 +213,13 @@
         menu item. More on <a href="NXWarrant.shtml">NX Warrants</a></li>
 
         <li>A <b>Fast Reacting</b> Warrant. This type does not follow
-        the usual rules used by Warrants, but reacts to signals
+        the usual Warrant rules, but reacts to signals
         when entering their approach block with an immediate speed
         change. The throttle settings are a fixed proportion of the
-        Aspect Speed Names in Warrant Preferences. To create such a
-        Warrant, select the <b>Warrants-&gt;Tables-&gt;Create New Warrant</b>
-        menu item.</li>
+        Aspect Speed Names in Warrant Preferences. This type of warrant
+        is better suited to smaller layouts. To create this type
+        of Warrant, select the <b>Warrants-&gt;Tables-&gt;Create New Warrant</b>
+        menu item and select 'Fast Reacting' as Warrant type.</li>
       </ul>
 
       <h2>Creating a Warrant</h2>

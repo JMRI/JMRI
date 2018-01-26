@@ -590,7 +590,7 @@
         corresponding to the above, 
         300 to 1000 milliseconds would be appropriate.</li>
       </ul>
-      <p>You should experiment by watching how NXWarrants start and end
+      <p>You should experiment by watching how NX Warrants start and end
        or by issuing "Stop" and "Resume" commands to a recorded
       warrant.</p>
        

@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: SPROG II Update Tool</title><!-- Style -->
+  <title>JMRI: SPROG Version Tool</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -22,9 +22,11 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: SPROG II Update Tool</h1>
-      <p>The SPROG II Update Tool lets you load new firmware
-      into an SPROG II.</p>
+      <h1>JMRI: SPROG Version Tool</h1>
+      <p>The SPROG Version Tool displays the version reply from the SPROG.<br>
+      Example:</p>
+
+      <img src="../images/SprogVersionTool.png" width="344" height="168">
 
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
