@@ -28,6 +28,11 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
     }
 
     protected void initTimer() {
+        if(intervalTimer!=null) {
+           intervalTimer.cancel();
+           intervalTask = null;
+           intervalTimer = null;
+        }
         intervalTask = new UpdateTask();
         intervalTimer = new Timer("MultiMeter Update Timer");
         // At some point this will be dynamic intervals...
@@ -154,9 +159,11 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
      * @{inheritDoc}
      */
     public void dispose(){
-        intervalTimer.cancel();
-        intervalTask = null;
-        intervalTimer = null;
+        if(intervalTimer!=null) {
+           intervalTimer.cancel();
+           intervalTask = null;
+           intervalTimer = null;
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMultiMeter.class);
