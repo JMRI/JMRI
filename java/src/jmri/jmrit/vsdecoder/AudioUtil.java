@@ -165,7 +165,7 @@ public class AudioUtil {
             try {
                 AudioBuffer buf = (AudioBuffer) jmri.InstanceManager.getDefault(jmri.AudioManager.class).provideAudio(prefix + "_sbuf" + i);
                 i++;
-                if (buf.getLength() > 0) {
+                if (buf.getState() == Audio.STATE_LOADED) {
                     log.debug("provideAudio found already-built buffer:{} ... skipping load.", buf.getSystemName());
                 } else {
                     buf.loadBuffer(b.data, b.format, b.frequency);
