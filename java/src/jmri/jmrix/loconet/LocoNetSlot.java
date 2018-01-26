@@ -310,14 +310,29 @@ public class LocoNetSlot {
                 return;
             }
             case LnConstants.OPC_LOCO_DIRF: {
-                // set direction, functions in slot - first, clear bits
-                dirf &= ~(LnConstants.DIRF_DIR | LnConstants.DIRF_F0
-                        | LnConstants.DIRF_F1 | LnConstants.DIRF_F2
-                        | LnConstants.DIRF_F3 | LnConstants.DIRF_F4);
-                // and set them as masked
-                dirf += ((LnConstants.DIRF_DIR | LnConstants.DIRF_F0
-                        | LnConstants.DIRF_F1 | LnConstants.DIRF_F2
-                        | LnConstants.DIRF_F3 | LnConstants.DIRF_F4) & l.getElement(2));
+                // When slot is consist-mid or consist-sub, this LocoNet Opcode 
+                // can only change the functions; direction cannot be changed.
+                if (((stat & LnConstants.CONSIST_MASK) == LnConstants.CONSIST_MID) ||
+                        ((stat & LnConstants.CONSIST_MASK) == LnConstants.CONSIST_SUB)) {
+                    // set functions in slot - first, clear bits, preserving DIRF_DIR bit
+                    dirf &= LnConstants.DIRF_DIR | (~(LnConstants.DIRF_F0
+                            | LnConstants.DIRF_F1 | LnConstants.DIRF_F2
+                            | LnConstants.DIRF_F3 | LnConstants.DIRF_F4));
+                    // and set the function bits from the LocoNet message
+                    dirf += ((LnConstants.DIRF_F0
+                            | LnConstants.DIRF_F1 | LnConstants.DIRF_F2
+                            | LnConstants.DIRF_F3 | LnConstants.DIRF_F4) & l.getElement(2));
+                } else {
+                    // set direction, functions in slot - first, clear bits
+                    dirf &= ~(LnConstants.DIRF_DIR | LnConstants.DIRF_F0
+                            | LnConstants.DIRF_F1 | LnConstants.DIRF_F2
+                            | LnConstants.DIRF_F3 | LnConstants.DIRF_F4);
+                    // and set them as masked
+                    dirf += ((LnConstants.DIRF_DIR | LnConstants.DIRF_F0
+                            | LnConstants.DIRF_F1 | LnConstants.DIRF_F2
+                            | LnConstants.DIRF_F3 | LnConstants.DIRF_F4) & l.getElement(2));
+                    
+                }
                 notifySlotListeners();
                 lastUpdateTime = System.currentTimeMillis();
                 return;
@@ -330,10 +345,36 @@ public class LocoNetSlot {
                 return;
             }
             case LnConstants.OPC_LOCO_SPD: {
-                // set speed
-                spd = l.getElement(2);
-                notifySlotListeners();
-                lastUpdateTime = System.currentTimeMillis();
+                // This opcode has no effect on the slot's speed setting if the
+                // slot is mid-consist or sub-consist.
+                if (((stat & LnConstants.CONSIST_MASK) != LnConstants.CONSIST_MID) &&
+                        ((stat & LnConstants.CONSIST_MASK) != LnConstants.CONSIST_SUB)) {
+                    
+                    spd = l.getElement(2);
+                    notifySlotListeners();
+                    lastUpdateTime = System.currentTimeMillis();
+                } else {
+                    log.info("Ignoring speed change for slot {} marked as consist-mid or consist-sub.", slot);
+                }
+                return;
+            }
+            case LnConstants.OPC_CONSIST_FUNC: {
+                // This opcode can be sent to a slot which is marked as mid-consist 
+                // or sub-consist.  Do not pay attention to this message if the
+                // slot is not mid-consist or sub-consist.
+                if (((stat & LnConstants.CONSIST_MASK) == LnConstants.CONSIST_MID) ||
+                        ((stat & LnConstants.CONSIST_MASK) == LnConstants.CONSIST_SUB)) {
+                    // set functions in slot - first, clear bits, preserving DIRF_DIR bit
+                    dirf &= LnConstants.DIRF_DIR | (~(LnConstants.DIRF_F0
+                            | LnConstants.DIRF_F1 | LnConstants.DIRF_F2
+                            | LnConstants.DIRF_F3 | LnConstants.DIRF_F4));
+                    // and set the function bits from the LocoNet message
+                    dirf += ((LnConstants.DIRF_F0
+                            | LnConstants.DIRF_F1 | LnConstants.DIRF_F2
+                            | LnConstants.DIRF_F3 | LnConstants.DIRF_F4) & l.getElement(2));
+                    notifySlotListeners();
+                    lastUpdateTime = System.currentTimeMillis();
+                }
                 return;
             }
             default: {
