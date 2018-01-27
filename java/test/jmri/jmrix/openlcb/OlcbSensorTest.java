@@ -117,11 +117,7 @@ public class OlcbSensorTest extends TestCase {
         t.sendMessage(mActive);
         Assert.assertTrue(s.getKnownState() == Sensor.ACTIVE);
 
-        // wait for twice timeout to make sure
-        try {
-            Thread.sleep(2 * OlcbSensor.ON_TIME);
-        } catch (Exception e) {
-        }
+        JUnitUtil.waitFor( ()->{ return(s.getKnownState() != Sensor.ACTIVE); });
 
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
 
@@ -129,11 +125,7 @@ public class OlcbSensorTest extends TestCase {
         s.setKnownState(Sensor.ACTIVE);
         Assert.assertTrue(s.getKnownState() == Sensor.ACTIVE);
 
-        // wait for twice timeout to make sure
-        try {
-            Thread.sleep(2 * OlcbSensor.ON_TIME);
-        } catch (Exception e) {
-        }
+        JUnitUtil.waitFor( ()->{ return(s.getKnownState() != Sensor.ACTIVE); });
 
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
     }
