@@ -20,6 +20,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @RunWith(PowerMockRunner.class)
 public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
+        
+    private XBeeTrafficController tc = null;
 
     @Override
     public String getSystemName(int i) {
@@ -56,7 +58,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     @Override
     public void setUp() {
         //apps.tests.Log4JFixture.setUp();
-        XBeeTrafficController tc = new XBeeInterfaceScaffold();
+        tc = new XBeeInterfaceScaffold();
         XBeeConnectionMemo m = new XBeeConnectionMemo();
         m.setSystemPrefix("ABC");
         tc.setAdapterMemo(m);
@@ -66,6 +68,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
     @After
     public void tearDown() {
+        ((XBeeInterfaceScaffold)tc).dispose();
         //apps.tests.Log4JFixture.tearDown();
     }
 

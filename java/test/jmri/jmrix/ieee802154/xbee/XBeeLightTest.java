@@ -53,6 +53,7 @@ public class XBeeLightTest {
 
     @After
     public void tearDown() {
+        ((XBeeInterfaceScaffold)tc).dispose();
     }
 
 }

@@ -28,12 +28,14 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
 
     private XBeeDevice localDevice;
     private RemoteXBeeDevice remoteDevice1;
+    private XBeeAdapter a;
+
     public XBeeInterfaceScaffold() {
         super();
 
         // setup the mock XBee Connection.
         // Mock the local device.
-        XBeeAdapter a = PowerMockito.mock((XBeeAdapter.class));
+        a = PowerMockito.mock((XBeeAdapter.class));
         Mockito.when(a.isOpen()).thenReturn(true);
         localDevice = new XBeeDevice(a);
 
@@ -125,6 +127,7 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
     public void dispose(){
           localDevice=null;
           remoteDevice1=null;
+          a = null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeInterfaceScaffold.class);

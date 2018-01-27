@@ -90,6 +90,7 @@ public class XBeeTurnoutTest {
 
     @After
     public void tearDown() {
+        ((XBeeInterfaceScaffold)tc).dispose();
         //apps.tests.Log4JFixture.tearDown();
     }
 

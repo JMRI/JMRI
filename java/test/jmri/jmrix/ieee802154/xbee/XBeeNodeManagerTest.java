@@ -41,8 +41,9 @@ public class XBeeNodeManagerTest {
 
     @After
     public void tearDown() {
-        //apps.tests.Log4JFixture.tearDown();
+        ((XBeeInterfaceScaffold)tc).dispose();
         tc = null;
+        //apps.tests.Log4JFixture.tearDown();
     }
 
 

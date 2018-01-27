@@ -22,6 +22,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @RunWith(PowerMockRunner.class)
 public class XBeeConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+        
+    private XBeeConnectionMemo memo = null;
 
     @Override
     @Test
@@ -50,7 +52,7 @@ public class XBeeConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestB
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        XBeeConnectionMemo memo = new XBeeConnectionMemo();
+        memo = new XBeeConnectionMemo();
         memo.setTrafficController(new XBeeInterfaceScaffold());
         memo.configureManagers();
         scm = memo;
@@ -58,6 +60,7 @@ public class XBeeConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestB
 
     @After
     public void tearDown() {
+        ((XBeeInterfaceScaffold)memo.getTrafficController()).dispose();
     }
 
 }

@@ -65,7 +65,7 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.resetInstanceManager();
-        XBeeTrafficController tc = new XBeeInterfaceScaffold();
+        tc = new XBeeInterfaceScaffold();
         XBeeConnectionMemo m = new XBeeConnectionMemo();
         m.setSystemPrefix("ABC");
         tc.setAdapterMemo(m);
@@ -75,6 +75,7 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     @After
     public void tearDown() {
+        ((XBeeInterfaceScaffold)tc).dispose();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 

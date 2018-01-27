@@ -192,6 +192,7 @@ public class XBeeNodeTest{
 
     @After
     public void tearDown() {
+        ((XBeeInterfaceScaffold)tc).dispose();
         tc=null;
     }
 

@@ -23,6 +23,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @RunWith(PowerMockRunner.class)
 public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
+    private XBeeTrafficController tc = null;
+
     @Override
     public String getSystemName(int i) {
         return "ABCS2:" + i;
@@ -79,7 +81,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         jmri.util.JUnitUtil.resetInstanceManager();
 
         // setup the mock XBee Connection.
-        XBeeTrafficController tc = new XBeeInterfaceScaffold();
+        tc = new XBeeInterfaceScaffold();
 
         XBeeConnectionMemo m = new XBeeConnectionMemo();
         m.setSystemPrefix("ABC");
@@ -97,7 +99,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     @After
     public void tearDown() {
-        //l.dispose();
+        ((XBeeInterfaceScaffold)tc).dispose();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 

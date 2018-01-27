@@ -15,6 +15,8 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2017	
  */
 public class PacketGenActionTest {
+        
+    private XBeeConnectionMemo memo = null;
 
     @Test
     public void testCTor() {
@@ -38,30 +40,27 @@ public class PacketGenActionTest {
 
     @Test
     public void testStringMemoCTor() {
-        new XBeeInterfaceScaffold();
-        XBeeConnectionMemo m = new XBeeConnectionMemo();
-
-        PacketGenAction t = new PacketGenAction("Test Action",m);
+        PacketGenAction t = new PacketGenAction("Test Action",memo);
         Assert.assertNotNull("exists",t);
     }
 
     @Test
     public void testMemoCTor() {
-        new XBeeInterfaceScaffold();
-        XBeeConnectionMemo m = new XBeeConnectionMemo();
-
-        PacketGenAction t = new PacketGenAction(m);
+        PacketGenAction t = new PacketGenAction(memo);
         Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
+        memo = new XBeeConnectionMemo();
+        memo.setTrafficController(new XBeeInterfaceScaffold());
         JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
+        ((XBeeInterfaceScaffold)memo.getTrafficController()).dispose();
         JUnitUtil.tearDown();
     }
 
