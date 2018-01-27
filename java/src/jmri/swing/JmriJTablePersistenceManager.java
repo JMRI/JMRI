@@ -604,7 +604,9 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                     if (!JTableListener.this.manager.isPaused() && JTableListener.this.manager.isDirty()) {
                         JTableListener.this.manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
                     }
-              }); // milliseconds
+              });
+            delay.setInitialDelay(500); // milliseconds
+            delay.setRepeats(false);
             delay.start();
         }
     }
