@@ -1527,6 +1527,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         }
         if (statusTask != null) {
             statusTask.cancel();
+            statusTask = null;
         }
         statusTask = new java.util.TimerTask() {
             @Override
@@ -1548,6 +1549,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         }
         if (statusTask != null) {
             statusTask.cancel();
+            statusTask = null;
         }
     }
 

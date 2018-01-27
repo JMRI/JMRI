@@ -346,6 +346,8 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
     @Override
     public void dispose() {
+        meterTimer.cancel();
+        consistencyTimer.cancel();
         this.controller.removeLocoNetListener(~0, this);
         super.dispose();
     }
@@ -387,7 +389,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     static java.util.Timer meterTimer = new java.util.Timer("LocoNet Turnout Meter Timer",true);
 
     static final int CONSISTENCYTIMER = 3000; // msec wait for command to take effect
-    static java.util.Timer consistencyTimer = new java.util.Timer();
+    static java.util.Timer consistencyTimer = new java.util.Timer("LocoNet Turnout Consistency Timer");
     int noConsistencyTimersRunning = 0;
 
     private final static Logger log = LoggerFactory.getLogger(LnTurnout.class);
