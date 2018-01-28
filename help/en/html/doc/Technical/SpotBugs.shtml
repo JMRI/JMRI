@@ -30,7 +30,8 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-        <h1>JMRI: Static Analysis with SpotBugs</h1>SpotBugs is a
+        <h1>JMRI Code: Static Analysis with SpotBugs</h1>
+        SpotBugs is a
         tool that can examine code to find possible problems. It does
       a "static analysis", looking through the code to find certain
       "known bad ideas": Things that are likely to cause
@@ -50,7 +51,7 @@
                                                      "ContinuousIntegration.shtml">continuous integration
       process</a>. You can see the results of the most recent build
       online <a href=
-      "https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/lastBuild/">
+      "https://jmri.ci.cloudbees.com/job/Development/job/SpotBugs/lastBuild/">
       here</a>.</p>
 
       <p>If SpotBugs is finding a false positive, a bug that's not
@@ -367,7 +368,8 @@ ant spotbugs
 
       <p>If you are checking code in to the JMRI repository, please
       check the CI server and make sure that your changes do not
-      introduce new errors.</p><!--#include virtual="/Footer" -->
+      introduce new errors.</p>
+       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

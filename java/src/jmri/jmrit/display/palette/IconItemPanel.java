@@ -179,7 +179,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
                 int width = Math.max(100, panel.getPreferredSize().width);
                 panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
             } catch (java.lang.ClassNotFoundException cnfe) {
-                cnfe.printStackTrace();
+                log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
             }
             iPanel.add(panel);
         }

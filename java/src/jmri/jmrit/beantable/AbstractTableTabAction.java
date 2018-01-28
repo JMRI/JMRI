@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -213,6 +214,18 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
                     tableAction.addPressed(e);
                 });
             }
+            if (dataModel.getPropertyColumnCount() > 0) {
+                final JCheckBox propertyVisible = new JCheckBox(Bundle.getMessage
+                        ("ShowSystemSpecificProperties"));
+                propertyVisible.setToolTipText(Bundle.getMessage
+                        ("ShowSystemSpecificPropertiesToolTip"));
+                addToBottomBox(propertyVisible);
+                propertyVisible.addActionListener((ActionEvent e) -> {
+                    dataModel.setPropertyColumnsVisible(dataTable, propertyVisible.isSelected());
+                });
+                dataModel.setPropertyColumnsVisible(dataTable, false);
+            }
+
         }
 
         void addPanelModel() {

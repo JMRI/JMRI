@@ -215,13 +215,9 @@ public class MultiSensorIconAdder extends IconAdder {
             dim = panel.getPreferredSize();
         }
         while ((cnt % 3) != 0) {
-            try {
-                rowPanel.add(Box.createRigidArea(dim));
-                cnt++;
-            } catch (NullPointerException npe) {
-                /* never */
-
-            }
+            java.util.Objects.requireNonNull(rowPanel, "should not have found rowPanel null here");    
+            rowPanel.add(Box.createRigidArea(dim));
+            cnt++;
         }
         if (rowPanel != null) {
             _iconPanel.add(rowPanel);

@@ -18,8 +18,8 @@ public class PickSinglePanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel tableModel = PickListModel.sensorPickModelInstance(); // N11N
-        PickSinglePanel panel = new PickSinglePanel<Sensor>(tableModel);
+        PickListModel<Sensor> tableModel = PickListModel.sensorPickModelInstance(); // N11N
+        PickSinglePanel<Sensor> panel = new PickSinglePanel<Sensor>(tableModel);
         Assert.assertNotNull("exists",panel);
     }
 

@@ -7,9 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogProgrammerManager
- * </P>
+ * Tests for SprogProgrammerManager.
+ *
  * @author Paul Bender Copyright (C) 2017
  */
 public class SprogProgrammerManagerTest {

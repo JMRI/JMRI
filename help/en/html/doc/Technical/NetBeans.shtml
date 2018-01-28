@@ -33,8 +33,9 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Building with NetBeans</h1>
+      <h1>JMRI Code: Building with NetBeans</h1>
 
+    <div class="toc">
       <ul>
         <li><a href="#intro">Introduction</a></li>
 
@@ -55,13 +56,14 @@
 
         <li><a href="#xmltools">Using NetBeans XML tools</a></li>
 
-        <li><a href="#findbugs">Running SpotBugs</a></li>
+        <li><a href="#SpotBugs">Running SpotBugs</a></li>
 
         <li><a href="#compileIndividualFile">NetBeans and compiling
         individual files</a></li>
 
         <li><a href="#patch">Making a Patch File</a></li>
       </ul><a href="#SeeAlso">See Also</a>
+    </div>
 
       <h2><a id="intro" name="intro">Introduction</a></h2>
 
@@ -404,7 +406,7 @@
           JMRI branches, whichever branch you add the catalog from,
           that branch's schema is what is used.</p>
 
-          <h2><a id="findbugs" name="findbugs">Running
+          <h2><a id="spotbugs" name="spotbugs">Running
                   SpotBugs</a></h2>
 
           <p>The SpotBugs tool is a static code analysis tool which
@@ -518,8 +520,9 @@
             <li>After it finishes calculating the diffs, the file
             you selected will contain the patches, along with an
             information header.</li>
-          </ul><!--#include virtual="/Footer" -->
+          </ul>
 
+        <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

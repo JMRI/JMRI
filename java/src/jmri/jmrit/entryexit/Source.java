@@ -260,5 +260,5 @@ public class Source {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Source.class);
+    // private final static Logger log = LoggerFactory.getLogger(Source.class);
 }

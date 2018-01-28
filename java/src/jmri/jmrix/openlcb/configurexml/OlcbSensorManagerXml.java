@@ -1,6 +1,9 @@
 package jmri.jmrix.openlcb.configurexml;
 
+import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
+import jmri.jmrix.openlcb.OlcbConfigurationManager;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,12 +36,23 @@ public class OlcbSensorManagerXml extends jmri.managers.configurexml.AbstractSen
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         boolean result = true;
-        // create the master object
-        //OlcbSensorManager mgr = OlcbSensorManager.instance();
+        // We tell the Sensor managers that we will be loading Sensors from XML and they should
+        // expect additional property set sequences. This is somewhat tricky in the face of
+        // possibly multiple OpenLCB buses registered.
+        for (OlcbConfigurationManager cfg : InstanceManager.getList(OlcbConfigurationManager
+                .class)) {
+            cfg.getSensorManager().startLoad();
+        }
+
         // load individual sensors
         result = loadSensors(shared);
-        // Request the status of these sensors from the layout, if appropriate.
-        //mgr.updateAll();
+
+        // Notifies OpenLCB Sensor managers that the loading of XML is complete.
+        for (OlcbConfigurationManager cfg : InstanceManager.getList(OlcbConfigurationManager
+                .class)) {
+            cfg.getSensorManager().finishLoad();
+        }
+        
         return result;
     }
 
