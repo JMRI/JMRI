@@ -70,6 +70,16 @@ public class AbstractThrottleTest {
      * Test of setSpeedSetting method, of class AbstractThrottle.
      */
     @Test
+    public void testSetSpeedSettingAgain() {
+        float speed = 1.0F;
+        instance.setSpeedSetting(speed);
+        Assert.assertEquals(speed, instance.getSpeedSetting(), 0.0);
+    }
+
+    /**
+     * Test of setSpeedSetting method, of class AbstractThrottle.
+     */
+    @Test
     public void testSetSpeedSetting() {
         float speed = 1.0F;
         instance.setSpeedSetting(speed);
