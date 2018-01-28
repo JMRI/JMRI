@@ -7,10 +7,13 @@ import org.apache.commons.io.*;
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 import org.junit.rules.Timeout;
+import jmri.InstanceManager;
+import jmri.managers.DefaultShutDownManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
@@ -55,6 +58,10 @@ public class DispatcherProTest {
             
             // now clean up frames, depending on what's actually left
             // DispatcherPro
+
+            // gracefully shutdown, but don't exit
+            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+
         } finally {
             // wait for threads, etc
             jmri.util.JUnitUtil.releaseThread(this, 5000);
@@ -79,7 +86,12 @@ public class DispatcherProTest {
 
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("DispatcherPro version") != null;}, "first Info line seen");
 
+            // now clean up frames, depending on what's actually left
             // DispatcherPro
+
+            // gracefully shutdown, but don't exit
+            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+
         } finally {
             // wait for threads, etc
             jmri.util.JUnitUtil.releaseThread(this, 5000);
@@ -104,7 +116,12 @@ public class DispatcherProTest {
 
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("DispatcherPro version") != null;}, "first Info line seen");
 
+            // now clean up frames, depending on what's actually left
             // DispatcherPro
+
+            // gracefully shutdown, but don't exit
+            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+
         } finally {
             // wait for threads, etc
             jmri.util.JUnitUtil.releaseThread(this, 5000);
@@ -158,6 +175,10 @@ public class DispatcherProTest {
             
             // now clean up frames, depending on what's actually left
             // DispatcherPro
+
+            // gracefully shutdown, but don't exit
+            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+
         } finally {
             // wait for threads, etc
             jmri.util.JUnitUtil.releaseThread(this, 5000);

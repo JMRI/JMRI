@@ -97,11 +97,9 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
 
     /*
      * Provides access to the Throttle Manager for this particular connection.
+     * NOTE: Throttle Manager defaults to null
      */
     public ThrottleManager getThrottleManager() {
-        if (throttleManager == null) {
-            throttleManager = new SRCPThrottleManager(this);
-        }
         return throttleManager;
 
     }

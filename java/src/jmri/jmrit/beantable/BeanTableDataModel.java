@@ -48,6 +48,7 @@ import jmri.JmriException;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandleManager;
+import jmri.NamedBeanPropertyDescriptor;
 import jmri.UserPreferencesManager;
 import jmri.swing.JTablePersistenceManager;
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -74,11 +75,25 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     protected List<String> sysNameList = null;
     boolean noWarnDelete = false;
     NamedBeanHandleManager nbMan = InstanceManager.getDefault(NamedBeanHandleManager.class);
+    protected List<NamedBeanPropertyDescriptor> propertyColumns;
 
     public BeanTableDataModel() {
         super();
         getManager().addPropertyChangeListener(this);
+        propertyColumns = new ArrayList<NamedBeanPropertyDescriptor>(getManager().getKnownBeanProperties());
         updateNameList();
+    }
+
+    protected int getPropertyColumnCount() {
+        return propertyColumns.size();
+    }
+
+    protected NamedBeanPropertyDescriptor getPropertyColumnDescriptor(int column) {
+        int totalCount = getColumnCount();
+        int propertyCount = propertyColumns.size();
+        int tgt = column - (totalCount - propertyCount);
+        if (tgt < 0) return null;
+        return propertyColumns.get(tgt);
     }
 
     protected synchronized void updateNameList() {
@@ -166,7 +181,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             case DELETECOL:
                 return "";
             default:
-                return "unknown";
+                NamedBeanPropertyDescriptor desc = getPropertyColumnDescriptor(col);
+                if (desc == null) {
+                    return "unknown";
+                }
+                return desc.getColumnHeaderText();
         }
     }
 
@@ -183,7 +202,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             case DELETECOL:
                 return JButton.class;
             default:
-                return null;
+                NamedBeanPropertyDescriptor desc = getPropertyColumnDescriptor(col);
+                if (desc == null) {
+                    return null;
+                }
+                return desc.getValueClass();
         }
     }
 
@@ -204,7 +227,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 }
             //$FALL-THROUGH$
             default:
-                return false;
+                NamedBeanPropertyDescriptor desc = getPropertyColumnDescriptor(col);
+                if (desc == null) {
+                    return false;
+                }
+                return desc.isEditable(getBySystemName(sysNameList.get(row)));
         }
     }
 
@@ -227,8 +254,17 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             case DELETECOL:  //
                 return Bundle.getMessage("ButtonDelete");
             default:
-                log.error("internal state inconsistent with table requst for {} {}", row, col);
-                return null;
+                NamedBeanPropertyDescriptor desc = getPropertyColumnDescriptor(col);
+                if (desc == null) {
+                    log.error("internal state inconsistent with table requst for {} {}", row, col);
+                    return null;
+                }
+                b = getBySystemName(sysNameList.get(row));
+                Object value = b.getProperty(desc.propertyKey);
+                if (value == null) {
+                    return desc.defaultValue;
+                }
+                return value;
         }
     }
 
@@ -243,8 +279,12 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             case DELETECOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
                 return new JTextField(22).getPreferredSize().width;
             default:
-                log.warn("Unexpected column in getPreferredWidth: {}", col);
-                return new JTextField(8).getPreferredSize().width;
+                NamedBeanPropertyDescriptor desc = getPropertyColumnDescriptor(col);
+                if (desc == null || desc.getColumnHeaderText() == null) {
+                    log.warn("Unexpected column in getPreferredWidth: {}", col);
+                    return new JTextField(8).getPreferredSize().width;
+                }
+                return new JTextField(desc.getColumnHeaderText()).getPreferredSize().width;
         }
     }
 
@@ -325,7 +365,12 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 deleteBean(row, col);
                 break;
             default:
-                break;
+                NamedBeanPropertyDescriptor desc = getPropertyColumnDescriptor(col);
+                if (desc == null) {
+                    break;
+                }
+                NamedBean b = getBySystemName(sysNameList.get(row));
+                b.setProperty(desc.propertyKey, value);
         }
     }
 
@@ -360,6 +405,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * @param table {@link JTable} to configure
      */
     public void configureTable(JTable table) {
+        // Property columns will be invisible at start.
+        setPropertyColumnsVisible(table, false);
+
         // allow reordering of the columns
         table.getTableHeader().setReorderingAllowed(true);
 
@@ -585,6 +633,19 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     abstract protected String getBeanType();/*{
      return "Bean";
      }*/
+
+    /**
+     * Updates the visibility settings of the property columns.
+     * @param table the JTable object for the current display.
+     * @param visible true to make the proeprty columns visible, false to hide.
+     */
+    public void setPropertyColumnsVisible(JTable table, boolean visible) {
+        XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
+        for (int i = getColumnCount() - 1; i >= getColumnCount() - getPropertyColumnCount(); --i) {
+            TableColumn column = columnModel.getColumnByModelIndex(i);
+            columnModel.setColumnVisible(column, visible);
+        }
+    }
 
     protected void showPopup(MouseEvent e) {
         JTable source = (JTable) e.getSource();
