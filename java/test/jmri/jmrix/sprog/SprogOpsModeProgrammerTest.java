@@ -15,6 +15,7 @@ public class SprogOpsModeProgrammerTest {
 
     private SprogTrafficControlScaffold stcs = null;
     private SprogOpsModeProgrammer op = null;
+    private SprogSystemConnectionMemo m = null;
 
     @Test
     public void testCtor(){
@@ -28,15 +29,17 @@ public class SprogOpsModeProgrammerTest {
         // prepare an interface
         jmri.util.JUnitUtil.resetInstanceManager();
 
-        SprogSystemConnectionMemo m = new SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
+        m = new SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
+        m.configureCommandStation();
 
         op = new SprogOpsModeProgrammer(2,false,m);
     }
 
     @After
     public void tearDown() {
+        m.getSlotThread().interrupt();
         JUnitUtil.tearDown();
     }
 

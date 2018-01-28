@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-<title>JMRI: Prorail Wikipedia signals for Netherlands</title>
+<title>JMRI: Prorail Signals for Netherlands</title>
 
 <!-- Style -->
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
@@ -27,7 +27,7 @@ JMRI: Netherlands Prorail 1955 Signaling Definition
 This directory contains signaling definitions originally worked out following five minutes of study of the Netherlands (Dutch) signals page on Wikipedia. This set is named <strong>ProRail 1954</strong> in JMRI but it is officially referenced as "1955".<br>
 In version 2 information on Rule numbers and additional Indications were added, based on the official Dutch 'Regeling Spoorverkeer' (Railroad Regulation) Annex 4.
 <p>
-Remarks:
+    Remarks:</p>
     <ul>
         <li>Dwarf signal icons are named -D.</li>
         <li>Flashing icons are named -RF/-YF/-GF (F for Flashing).</li>
@@ -37,9 +37,9 @@ Remarks:
         <li>Although there was no official Stop For Engineering aspect in the 1955 Rules, a Flashing Red indication has been added.<br>
             Since 2000 this is in use indicating Track Out of Service (<em>Buiten Dienst</em>), protecting railroad workers.</li>
     </ul>
-</p>
 
-<p>
+    <p></p>
+
         <table class="table table-bordered table-hover table-condensed">
             <thead><tr><th title="Field #1" align="left">Rule #</th>
                 <th title="Field #2">High</th>
@@ -162,7 +162,6 @@ Remarks:
                 <td align="center"></td>
             </tr>
             </tbody></table>
-</p>
 
 <p>Sources:</p>
     <ul>

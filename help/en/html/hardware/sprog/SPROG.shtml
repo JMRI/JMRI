@@ -55,7 +55,7 @@
       <p>Note that there are several different versions of the
       SPROG hardware, and even more versions of the SPROG
       software.<br>
-      The following SPROG models operate with the curent version of JMRI:</p>
+      The following SPROG models operate with the current version of JMRI:</p>
       <ul>
         <li>SPROG II</li>
         <li>SPROG II USB</li>
@@ -151,10 +151,13 @@
             selected the wrong SPROG System Connection.</p>
             </li>
 
-            <li>For Command Station operation, select one of the "... Command Station" choices.</li>
+            <li>For Command Station operation, select one of the "... Command Station"
+            choices.</li>
 
-            <li>To use JMRI without a physical SPROG connected, select SPROG Simulator.
-            The Simulator will mimic basic Command Station operation.</li>
+            <li>To use JMRI without a physical SPROG connected, select "SPROG Simulator".
+            The Simulator will mimic basic operation as either a Programmer (default)
+            or a Command Station. You can set the mode under Additional Connection
+            Settings.</li>
           </ul>
         </li>
 
@@ -236,6 +239,10 @@
       <h4><a href=
       "../../../package/jmri/jmrix/sprog/console/SprogConsoleFrame.shtml">
       SPROG Console</a></h4>
+
+      <h4><a href=
+      "../../../package/jmri/jmrix/sprog/update/SprogVersionFrame.shtml">
+      SPROG Firmware Version</a></h4>
 
       <a name="update" id="update"></a>
       <h4>Firmware Update</h4>

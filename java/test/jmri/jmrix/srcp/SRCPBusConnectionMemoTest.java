@@ -25,6 +25,12 @@ public class SRCPBusConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTe
             @Override
             public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
             }
+            @Override
+            public void transmitLoop(){
+            }
+            @Override
+            public void receiveLoop(){
+            }
         }, "A", 1);
     }
 

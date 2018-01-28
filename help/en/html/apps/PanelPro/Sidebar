@@ -61,11 +61,12 @@ layout.
   <ul>
     <li><dfn><a href="../../tools/signaling/index.shtml">Signaling</a></dfn>
     <li><dfn><a href="../../tools/EntryExit.shtml">Entry Exit (NX)</a></dfn>
+    <li><dfn><a href="../../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a></dfn>
     <li><dfn><a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dfn>
     <li><dfn><a href="../../tools/Routes.shtml">Routes</a></dfn>
     <li><dfn><a href="../../tools/fastclock/index.shtml">Fast Clocks</a></dfn>
     <li><dfn><a href="../../tools/scripting/index.shtml">Scripting</a></dfn>
-    <li><a href="../../doc/Technical/TurnoutFeedback.shtml">Turnout Feedback</a>
+    <li><dfn><a href="../../doc/Technical/TurnoutFeedback.shtml">Turnout Feedback</a></dfn>
   </ul>
 </dd>
 

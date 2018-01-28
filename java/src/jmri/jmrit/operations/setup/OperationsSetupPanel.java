@@ -4,6 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -475,10 +476,10 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
             AutoBackup backup = new AutoBackup();
             try {
                 backup.autoBackup();
-            } catch (Exception ex) {
+            } catch (IOException ex) {
                 UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
                         "Auto backup before changing Car types"); // NOI18N
-                new ExceptionDisplayFrame(context);
+                new ExceptionDisplayFrame(context, null).setVisible(true);
             }
 
             if (typeDesc.isSelected()) {
@@ -567,7 +568,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
                     .getMessage("ChangeRailroadName"), new Object[]{
                             InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), Setup.getRailroadName()}), Bundle
                     .getMessage("ChangeJMRIRailroadName"), JOptionPane.YES_NO_OPTION);
-            if (results == JOptionPane.OK_OPTION) {               
+            if (results == JOptionPane.OK_OPTION) {
                 InstanceManager.getDefault(WebServerPreferences.class).setRailroadName(Setup.getRailroadName());
                 InstanceManager.getDefault(WebServerPreferences.class).save();
             }
