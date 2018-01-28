@@ -200,8 +200,8 @@
       see <a href="../logix/Warrant.shtml">Warrants</a>.</p>
 
       <p>Also see the <a href="../logix/WarrantTable.shtml">Warrant
-      Table help</a> for details on creating and editing Warrants. 
-      <!--#include virtual="/Footer" --></p>
+      Table help</a> for details on creating and editing Warrants.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

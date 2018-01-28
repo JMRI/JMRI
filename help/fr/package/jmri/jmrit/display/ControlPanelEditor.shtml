@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-22 -->
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-22 -->
 
 <html>
 <head>
@@ -9,12 +8,10 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Control Panel Editor Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; ccharset=iso-8859-1">
-  <meta content="Pete Cressman" name="Author">
+  <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Panel Editor">
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+          "text/html; ccharset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"

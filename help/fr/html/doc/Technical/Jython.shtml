@@ -1,11 +1,10 @@
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
-<!--  $Id$ -->
- <!--UpDated by Herv&#233; Blorec  2016-08-05 -->
+ <!--Updated by Herv&#233; Blorec  2016-08-05 -->
 <html lang="fr">
 <head>
    <title>Acc&#232;s de Jython</title>
 
-    <META content="Bob Jacobsen" name="Author">
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code CVS FAQ">
 
 <!-- Style -->

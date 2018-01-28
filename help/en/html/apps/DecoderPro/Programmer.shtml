@@ -394,7 +394,7 @@
         </li>
       </ol>
 
-      <p><!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- close #mainContent -->
   </div><!-- close #mBody -->
 </body>

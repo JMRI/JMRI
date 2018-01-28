@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!--  $Id$ -->
-<!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01-->
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01-->
 
 <html lang="fr">
 <head>
@@ -11,7 +10,7 @@
   <title>JMRI: Set Signals at Crossover Help</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Dave Duchamp" name="Author">
+  <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Layout Editor panel">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=

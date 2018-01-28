@@ -10,8 +10,8 @@
   <title>JMRI: OpenLCB Firmware Downloader</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
-  <meta content="B. Milhaupt" name="Author">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="author" content="B. Milhaupt">
   <meta name="keywords" content="JMRI help digitrax downloader">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
