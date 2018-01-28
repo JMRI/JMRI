@@ -423,34 +423,51 @@
     <target name="realclean"
             description="remove all non-respository files from a build"
             depends="clean">
-        <delete includeEmptyDirs="true" quiet="true">
-            <fileset dir="lib/cachedir"/>
-            <fileset dir="${coveragetarget}"/>
+        <delete dir="target"/>
+        <delete dir="dist"/>
+        <delete dir="temp"/>
+        <delete dir="lib/cachedir"/>
+        <delete dir="${coveragetarget}"/>
+        <delete includeEmptyDirs="true" quiet="true" verbose="true">
+            <!-- .gitignore build artifacts -->
+            <fileset file="jmri.jar"/>
+            <fileset dir="java/docs"/>
+            <!-- .gitignore test artifacts -->
+            <fileset dir="." includes="junit*.properties"/>
+            <!-- .gitignore transient artifacts -->
+            <fileset file=".ant-targets-build.xml"/>
             <fileset file=".run.sh"/>
+            <fileset dir="." includes="hs_err_pid*.log"/>
         </delete>
     </target>
 
     <target name="clean"
             description="remove compilation results to force rebuild">
-        <delete includeEmptyDirs="true" quiet="true">
+        <delete dir="${doctarget}"/>
+        <delete dir="${maventarget}"/>
+        <delete dir="${javadir}/classes"/>
+        <delete dir="${javadir}/test-classes"/>
+        <delete dir="${dist}"/>
+        <delete dir="${genjavasrcdir}"/>
+        <delete dir="${tempdir}"/>
+        <delete includeEmptyDirs="true" quiet="true"  verbose="true">
             <fileset file="log.txt"/>
             <fileset file="${jartarget}/jmri.jar"/>
-            <fileset dir="${doctarget}"/>
-            <fileset dir="${maventarget}"/>
-            <fileset dir="${javadir}/classes"/>
-            <fileset dir="${javadir}/test-classes"/>
-            <fileset dir="${dist}"/>
-            <fileset dir="${genjavasrcdir}"/>
             <fileset file="${javadir}/manifest"/>
-            <fileset dir="${tempdir}"/>
+            <!-- .gitignore test artifacts -->
+            <fileset file="junit-results.xml"/>
             <fileset file="findbugs.html"/>
             <fileset file="findbugs.xml"/>
             <fileset file="spotbugs.html"/>
             <fileset file="spotbugs.xml"/>
-            <fileset file="junit-results.xml"/>
-            <fileset file="cucumber-results.xml"/>
-            <fileset file="jmri-fb.html"/>
             <fileset file="jacoco.exec"/>
+            <fileset file="jmri-fb.html"/>
+            <fileset file="coveragereport"/>
+            <fileset file="tests.log"/>
+            <fileset file="cucumber-results.xml"/>
+            <!-- .gitignore runtime artifacts -->
+            <fileset file="messages.log"/>
+            <fileset file="session.log"/>
         </delete>
         <ant dir="xml/XSLT" target="clean" inheritAll="false"  />
     </target>
