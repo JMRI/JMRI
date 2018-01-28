@@ -339,10 +339,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     protected void throttleDispose() {
         active = false;
         stopStatusTimer();
-        if(statusTimer!=null){
-           statusTimer.cancel();
-           statusTimer=null;
-        }
         finishRecord();
     }
 
