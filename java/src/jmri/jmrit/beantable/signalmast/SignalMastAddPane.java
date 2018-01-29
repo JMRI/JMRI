@@ -46,11 +46,11 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
 
     /**
      * Load this pane with information from a mast
-     * @param mast the SignalMast to display
-     * @return true is this pane can handle that mast type
+     * @param mast the SignalMast to display or null to reset a previous one
+     * @return true is this pane can handle that mast type; false if can't, or mast was null
      * //+ should be abstract
      */
-    public boolean setMast(@Nonnull SignalMast mast) { return false; }
+    public boolean setMast(SignalMast mast) { return false; }
     
     /**
      * Create and register a mast from the given information.

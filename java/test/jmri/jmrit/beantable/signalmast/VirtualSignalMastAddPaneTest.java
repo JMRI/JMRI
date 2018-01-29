@@ -23,6 +23,7 @@ public class VirtualSignalMastAddPaneTest {
         VirtualSignalMastAddPane vp = new VirtualSignalMastAddPane();
         MatrixSignalMast m1 = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
         
+        Assert.assertFalse(vp.setMast(null));
         Assert.assertTrue(vp.setMast(s1));
         Assert.assertFalse(vp.setMast(m1));
         

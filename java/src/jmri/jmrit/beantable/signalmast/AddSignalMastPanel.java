@@ -401,7 +401,7 @@ public class AddSignalMastPanel extends JPanel {
         }
         
         // ask top-most pane to make a signal
-        currentPane.createMast("","","");
+        currentPane.createMast(sigsysname,mastname,user);
     }
 
     /**

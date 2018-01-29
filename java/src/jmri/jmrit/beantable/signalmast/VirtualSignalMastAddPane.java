@@ -34,6 +34,8 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
 
     LinkedHashMap<String, JCheckBox> disabledAspects = new LinkedHashMap<>(10);
     JPanel disabledAspectsPanel = new JPanel();
+    
+    VirtualSignalMast currentMast = null;
 
     /** {@inheritDoc} */
     @Override
@@ -75,10 +77,16 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
 
     /** {@inheritDoc} */
     @Override
-    public boolean setMast(@Nonnull SignalMast mast) { 
+    public boolean setMast(SignalMast mast) { 
+        if (mast == null) { 
+            currentMast = null; 
+            return false; 
+        }
+        
         if (! (mast instanceof jmri.implementation.VirtualSignalMast) ) return false;
 
-        List<String> disabled = ((VirtualSignalMast) mast).getDisabledAspects();
+        currentMast = (VirtualSignalMast) mast;
+        List<String> disabled = currentMast.getDisabledAspects();
         if (disabled != null) {
             for (String aspect : disabled) {
                 if (disabledAspects.containsKey(aspect)) {
@@ -95,25 +103,27 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
     /** {@inheritDoc} */
     @Override
     public void createMast(@Nonnull String sigsysname, @Nonnull String mastname, @Nonnull String username) {
-        // create a mast
-        String name = "IF$vsm:"
-                + sigsysname
-                + ":" + mastname.substring(11, mastname.length() - 4);
-        name += "($" + (paddedNumber.format(VirtualSignalMast.getLastRef() + 1)) + ")";
-        VirtualSignalMast virtMast = new VirtualSignalMast(name);
-        if (!username.equals("")) {
-            virtMast.setUserName(username);
+        if (currentMast == null) {
+            // create a mast
+            String name = "IF$vsm:"
+                    + sigsysname
+                    + ":" + mastname.substring(11, mastname.length() - 4);
+            name += "($" + (paddedNumber.format(VirtualSignalMast.getLastRef() + 1)) + ")";
+            currentMast = new VirtualSignalMast(name);
+            if (!username.equals("")) {
+                currentMast.setUserName(username);
+            }
+            InstanceManager.getDefault(jmri.SignalMastManager.class).register(currentMast);
         }
-        InstanceManager.getDefault(jmri.SignalMastManager.class).register(virtMast);
-
+        
         // load a new or existing mast
         for (String aspect : disabledAspects.keySet()) {
             if (disabledAspects.get(aspect).isSelected()) {
-                virtMast.setAspectDisabled(aspect);
+                currentMast.setAspectDisabled(aspect);
             } else {
-                virtMast.setAspectEnabled(aspect);
+                currentMast.setAspectEnabled(aspect);
             }
         }
-        virtMast.setAllowUnLit(allowUnLit.isSelected());
+        currentMast.setAllowUnLit(allowUnLit.isSelected());
     }
 }
