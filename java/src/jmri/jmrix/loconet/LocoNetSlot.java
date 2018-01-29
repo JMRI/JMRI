@@ -442,21 +442,19 @@ public class LocoNetSlot {
     }
 
     /**
-     * Create LocoNet message which releases this slot
+     * Create a LocoNet OPC_SLOT_STAT1 message which releases this slot to the 
+     * "Common" state
      * 
-     * Note that the invoking method ought to invoke the slot's NotifySlotListeners 
-     * method to inform any other interested parties that the slot status has changed.
+     * The invoking method must send the returned LocoNet message to LocoNet in
+     * order to have a useful effect.  
      * 
-     * @return LocoNet message which "releases" the slot
+     * Upon receipt of the echo of the transmitted OPC_SLOT_STAT1 message, the 
+     * LocoNetSlot object will notify its listeners.
+     * 
+     * @return LocoNet message which "releases" the slot to the "Common" state
     */
     public LocoNetMessage releaseSlot() {
-        LocoNetMessage l = new LocoNetMessage(4);
-        l.setOpCode(LnConstants.OPC_SLOT_STAT1);
-        l.setElement(1, slot);
-        // set slot status to "Idle" - valid address in slot, but it's not refreshed on the track signal.
-        stat = stat & (~LnConstants.STAT1_SL_ACTIVE) | LnConstants.STAT1_SL_BUSY;
-        l.setElement(2, stat);
-        return l;
+        return writeStatus(LnConstants.LOCO_COMMON);
     }
 
     public LocoNetMessage writeSlot() {
