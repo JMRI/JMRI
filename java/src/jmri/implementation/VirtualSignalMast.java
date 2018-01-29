@@ -78,7 +78,7 @@ public class VirtualSignalMast extends AbstractSignalMast {
         return lastRef;
     }
 
-    static int lastRef = 0;
+    protected static int lastRef = 0;
 
     private final static Logger log = LoggerFactory.getLogger(VirtualSignalMast.class);
 }
