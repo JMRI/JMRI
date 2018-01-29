@@ -145,18 +145,18 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         Assert.assertEquals("set speed to one eighth",
                 "A0 11 1A 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        int count = lnis.outbound.size();
 
         throttle.dispatch(throtListen);
-        Assert.assertEquals("got two more messages account dispatch", count+2, lnis.outbound.size());
 
         Assert.assertEquals("slot is set to 'common' status",
                 "B5 11 10 00",
-                lnis.outbound.elementAt(count).toString());
+                lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
+
+        JUnitUtil.waitFor(()->{return 5 < lnis.outbound.size();},"didn't get the 6th LocoNet message");
 
         Assert.assertEquals("Expect the slot to be dispatched",
                 "BA 11 00 00",
-                lnis.outbound.elementAt(count+1).toString());
+                lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
 
     LocoNetInterfaceScaffold lnis;
