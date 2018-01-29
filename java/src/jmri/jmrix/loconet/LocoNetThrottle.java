@@ -708,7 +708,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
             jmri.util.ThreadingUtil.runOnLayoutDelayed( ()-> {
                 // and dispatch to slot 0
-                    log.warn("dispatchThrottle is dispatching slot {}", tSlot);
+                    log.debug("dispatchThrottle is dispatching slot {}", tSlot);
                     network.sendLocoNetMessage(tSlot.dispatchSlot());
                 },
                 150);
