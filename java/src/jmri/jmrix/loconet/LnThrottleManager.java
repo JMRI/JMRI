@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see SlotManager
  * @author Bob Jacobsen Copyright (C) 2001
+ * @author B. Milhaupt, Copyright (C) 2018
  */
 public class LnThrottleManager extends AbstractThrottleManager implements ThrottleManager, SlotListener {
 

@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author Paul Bender Copyright (C) 2017
+ * @author B. Milhaupt, Copyright (C) 2018
  */
 public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
