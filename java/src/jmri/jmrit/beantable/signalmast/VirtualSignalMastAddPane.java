@@ -98,7 +98,6 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
         List<String> disabled = currentMast.getDisabledAspects();
         if (disabled != null) {
             for (String aspect : disabled) {
-                System.err.println("try "+aspect+" "+disabledAspects.containsKey(aspect));
                 if (disabledAspects.containsKey(aspect)) {
                     disabledAspects.get(aspect).setSelected(true);
                 }

@@ -132,8 +132,8 @@ public class AddSignalMastPanel extends JPanel {
         cancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //+ cancelPressed(e);
-            } // Cancel button on add new mast pane
+                cancelPressed();
+            } // Cancel button
         });
         cancel.setVisible(true);
         buttonHolder.add(create);
@@ -188,7 +188,7 @@ public class AddSignalMastPanel extends JPanel {
 
         loadMastDefinitions();
 
-        // select the 1st one  //+ should be load from preference
+        // select the 1st one  //+ should be load from preference - see directly above
         selection(panes.get(0).getPaneName());  // there has to be at least one, so we can do the update
 
         //+ updateHeads();
@@ -233,6 +233,10 @@ public class AddSignalMastPanel extends JPanel {
     public AddSignalMastPanel(SignalMast mast) {
         this(); // calls the above method to build the base for an edit panel
 
+        // switch buttons
+        apply.setVisible(true);
+        create.setVisible(false);
+        
         //+ inEditMode = true;
         this.mast = mast;
         
@@ -438,13 +442,27 @@ public class AddSignalMastPanel extends JPanel {
      * displayed again, right before it's set visible.
      */
     public void refresh() {
-        //+
+        // add new cards (new panes)
+        centerPanel.removeAll();
+        for (SignalMastAddPane pane : panes) {
+            centerPanel.add(pane, pane.getPaneName()); // assumes names are systemwide-unique
+        }
+        
+        // select pane to match current combobox
+        selection(signalMastDriver.getItemAt(signalMastDriver.getSelectedIndex()));
+    }
+
+    /**
+     * Respond to the Cancel button.
+     */
+    void cancelPressed() {
+        clearPanel();
     }
 
     /**
      * Close and dispose() panel.
      * <p>
-     * Called at end of okPressed() and from Cancel Add or Edit mode
+     * Called at end of okPressed() and from Cancel
      */
     void clearPanel() {
         ((jmri.util.JmriJFrame) getTopLevelAncestor()).dispose();
