@@ -44,7 +44,6 @@ public class AddSignalMastPanel extends JPanel {
     JComboBox<String> sigSysBox = new JComboBox<>();  // the basic signal system
     JComboBox<String> mastBox = new JComboBox<>(new String[]{Bundle.getMessage("MastEmpty")}); // the mast within the system NOI18N
     JComboBox<String> signalMastDriver;   // the specific SignalMast class type
-    JCheckBox allowUnLit = new JCheckBox();
 
     List<SignalMastAddPane> panes = new ArrayList<>();
 
@@ -106,10 +105,6 @@ public class AddSignalMastPanel extends JPanel {
         p.add(l);
         p.add(signalMastDriver);
 
-        l = new JLabel(Bundle.getMessage("AllowUnLitLabel") + ": "); // NOI18N
-        p.add(l);
-        p.add(allowUnLit);
-
         add(p);
 
         // central region
@@ -140,7 +135,7 @@ public class AddSignalMastPanel extends JPanel {
         create.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //+ okPressed(e);
+                okPressed();
             } // Create button on add new mast pane
         });
         create.setVisible(true);
@@ -148,7 +143,7 @@ public class AddSignalMastPanel extends JPanel {
         apply.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //+ okPressed(e);
+                okPressed();
             } // Apply button on Edit existing mast pane
         });
         apply.setVisible(false);
@@ -164,12 +159,6 @@ public class AddSignalMastPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //+ updateSelectedDriver();
-            }
-        });
-        allowUnLit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //+ updateUnLit();
             }
         });
         //+ includeUsed.addActionListener(new ActionListener() {
@@ -347,7 +336,6 @@ public class AddSignalMastPanel extends JPanel {
         DefaultSignalAppearanceMap sigMap = DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         currentPane.setAspectNames(sigMap.getAspects());
         
-        //+ updateUnLit();
         validate();
         if (getTopLevelAncestor() != null) {
             ((jmri.util.JmriJFrame) getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame) getTopLevelAncestor()).getPreferredSize());
@@ -355,7 +343,67 @@ public class AddSignalMastPanel extends JPanel {
         }
         repaint();
     }
-    
+
+    /**
+     * Check of user name done when creating new SignalMast.
+     * In case of error, it looks a message and (if not headless) shows a dialog.
+     * @ return true if OK to proceed
+     */
+    boolean checkUserName(String nam) {
+        if (!((nam == null) || (nam.equals("")))) {
+            // user name provided, check if that name already exists
+            NamedBean nB = InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName(nam);
+            if (nB != null) {
+                log.error("User Name \"{}\" is already in use", nam);
+                if (!GraphicsEnvironment.isHeadless()) {
+                    String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + nam)});
+                    JOptionPane.showMessageDialog(null, msg,
+                            Bundle.getMessage("WarningTitle"),
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                return false;
+            }
+            // Check to ensure that the username doesn't exist as a systemname.
+            nB = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(nam);
+            if (nB != null) {
+                log.error("User Name \"{}\" already exists as a System name", nam);
+                if (!GraphicsEnvironment.isHeadless()) {
+                    String msg = Bundle.getMessage("WarningUserNameAsSystem", new Object[]{("" + nam)});
+                    JOptionPane.showMessageDialog(null, msg,
+                            Bundle.getMessage("WarningTitle"),
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Store user input for a signal mast definition in new or existing mast
+     * object.
+     * <p>
+     * Invoked from Apply/Create button.
+     */
+    void okPressed() {
+        // get and validate entered global information 
+        String mastname = mastNames.get(mastBox.getSelectedIndex()).getName();
+        String user = NamedBean.normalizeUserName(userName.getText());
+        if (!GraphicsEnvironment.isHeadless()) {
+            if (user.equals("")) {
+                int i = JOptionPane.showConfirmDialog(null, "No Username has been defined, this may cause issues when editing the mast later.\nAre you sure that you want to continue?",
+                        "No UserName Given",
+                        JOptionPane.YES_NO_OPTION);
+                if (i != 0) {
+                    return;
+                }
+            }
+        }
+        
+        // ask top-most pane to make a signal
+        currentPane.createMast("","","");
+    }
+
     /**
      * Called when an already-initialized AddSignalMastPanel is being
      * displayed again, right before it's set visible.
