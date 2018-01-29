@@ -48,18 +48,11 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
             }
         };
-        int oldOutBoundSize = lnis.outbound.size();
-        log.warn("oldOutBoundSize = {}", oldOutBoundSize);        
-
         tm.requestThrottle(1203, throtListen);
-        oldOutBoundSize = lnis.outbound.size();
-        log.warn("oldOutBoundSize = {}", oldOutBoundSize);        
 
         Assert.assertEquals("address request message",
                 "BF 09 33 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        oldOutBoundSize = lnis.outbound.size();
-        log.warn("oldOutBoundSize = {}", oldOutBoundSize);        
 
         LocoNetMessage cmdStationReply = new LocoNetMessage(new int[] {
                 0xe7, 0x0e, 0x11, 0x00, 0x33, 0x0, 0x0, 0x7, 0x0, 0x09, 0x0, 0x0, 0x0, 0x53});
@@ -68,9 +61,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 "BA 11 11 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
-        oldOutBoundSize = lnis.outbound.size();
-        log.warn("oldOutBoundSize = {}", oldOutBoundSize);        
-
         cmdStationReply = new LocoNetMessage(new int[] {
                 0xe7, 0x0e, 0x11, 0x30, 0x33, 0x0, 0x0, 0x7, 0x0, 0x09, 0x0, 0x0, 0x0, 0x00});
         lnis.sendTestMessage(cmdStationReply);
@@ -78,19 +68,26 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 "EF 0E 11 30 33 00 00 07 00 09 00 71 02 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         
-        oldOutBoundSize = lnis.outbound.size();
-        log.warn("oldOutBoundSize = {}", oldOutBoundSize);        
-        
         cmdStationReply = new LocoNetMessage(new int[] {
                 0xb4, 0x6f, 0x7f, 0x5B});
         lnis.sendTestMessage(cmdStationReply);
 
-        log.warn("oldOutBoundSize = {}", oldOutBoundSize);        
-        Assert.assertEquals("write Throttle ID",
-                "B4 6F 7F 5B",
+        Assert.assertNotNull("have created a throttle", throttle);
+        Assert.assertEquals("is LnThrottle", throttle.getClass(), jmri.jmrix.loconet.LocoNetThrottle.class);
+        Assert.assertEquals("throttleId is set", ((jmri.jmrix.loconet.LocoNetThrottle) throttle).slot.id(),0x171);
+        jmri.util.JUnitAppender.assertErrorMessage("created a throttle");
+        
+        throttle.setSpeedSetting(0.125f);
+
+        Assert.assertEquals("set speed to one eighth",
+                "A0 11 1A 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         
-        Assert.assertNotNull("have created a throttle", throttle);
+        throttle.dispatch(throtListen);
+        
+        Assert.assertEquals("slot is set to 'common' status",
+                "B5 11 10 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
     
     LocoNetInterfaceScaffold lnis;
