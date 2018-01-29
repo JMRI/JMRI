@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
+import jmri.*;
 import jmri.spi.JmriServiceProviderInterface;
 
 /**
@@ -20,10 +21,18 @@ import jmri.spi.JmriServiceProviderInterface;
  * General design documentation is available on the 
  * <a href="http://jmri.org/help/en/html/doc/Technical/SystemStructure.shtml">Structure of External System Connections page</a>.
  *
+ * The general sequence is:
+ * <ul>
+ * <li>Find one or more object of this type that have {@link #isAvailable()} true.
+ * <li>Invoke {@link #setAspectNames()} from the selected signal system
+ * <li>If you're showing a mast that exists, invoke {@link #setMast()} to load the contents
+ * <li>To eventually create a mast from the entered data, invoke {@link #createMast()}
+ * </ul>
+ * 
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2018
- * @see JmrixConfigPane
  * @see java.util.ServiceLoader
- * @since 4.11.2
+ * @see AddSignalMastPanel
+ * @since 4.11.3
  */
 public abstract class SignalMastAddPane extends JPanel implements JmriServiceProviderInterface {
 
@@ -35,6 +44,20 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
      */
     public void setAspectNames(@Nonnull Enumeration<String> aspects) {}
 
+    /**
+     * Load this pane with information from a mast
+     * @param mast the SignalMast to display
+     * @return true is this pane can handle that mast type
+     * //+ should be abstract
+     */
+    public boolean setMast(@Nonnull SignalMast mast) { return false; }
+    
+    /**
+     * Create and register a mast from the given information.
+     * //+ should be abstract
+     */
+    public void createMast(@Nonnull String sigsysname, @Nonnull String mastname, @Nonnull String username) {}
+    
     /**
      * @return Human-prefered name for type of signal mast, in local language
      */
