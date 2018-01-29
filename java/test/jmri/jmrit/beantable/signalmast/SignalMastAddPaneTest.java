@@ -16,14 +16,14 @@ public class SignalMastAddPaneTest {
     @Test
     public void testLoad() {
         // group these in a single test, as the services can only be loaded once.
-        Assert.assertNotNull(SignalMastAddPane.getInstancesCollection());
-        Assert.assertNotNull(SignalMastAddPane.getInstancesMap());
-        Assert.assertTrue(SignalMastAddPane.getInstancesMap().size() > 0); // found at least one service
-        Assert.assertEquals(SignalMastAddPane.getInstancesMap().size(), SignalMastAddPane.getInstancesCollection().size()); // same size
+        Assert.assertNotNull(SignalMastAddPane.SignalMastAddPaneProvider.getInstancesCollection());
+        Assert.assertNotNull(SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap());
+        Assert.assertTrue(SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap().size() > 0); // found at least one service
+        Assert.assertEquals(SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap().size(), SignalMastAddPane.SignalMastAddPaneProvider.getInstancesCollection().size()); // same size
         
         // check map is in sorted order; also check lookup works
-        Map<String, SignalMastAddPane> map = SignalMastAddPane.getInstancesMap();
-        Collection<SignalMastAddPane> collection = SignalMastAddPane.getInstancesCollection();
+        Map<String, SignalMastAddPane.SignalMastAddPaneProvider> map = SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap();
+        Collection<SignalMastAddPane.SignalMastAddPaneProvider> collection = SignalMastAddPane.SignalMastAddPaneProvider.getInstancesCollection();
         String last = "";
         for (String name : map.keySet()) {
             Assert.assertTrue(name.compareTo(last) > 0);  // no identical ones
@@ -33,20 +33,20 @@ public class SignalMastAddPaneTest {
 
         // check collection in in sorted order
         last = "";
-        for (SignalMastAddPane pane : collection) {
+        for (SignalMastAddPane.SignalMastAddPaneProvider pane : collection) {
             Assert.assertTrue(pane.getPaneName().compareTo(last) > 0);  // no identical ones
             last = pane.getPaneName();
         }
         
         // partial check that results are unmodifiable
         try {
-            SignalMastAddPane.getInstancesMap().put("Foo", null);
+            SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap().put("Foo", null);
             Assert.fail("Should have thrown");
         } catch (java.lang.UnsupportedOperationException e) {
             // this is a pass
         }
         try {
-            SignalMastAddPane.getInstancesCollection().add(null);
+            SignalMastAddPane.SignalMastAddPaneProvider.getInstancesCollection().add(null);
             Assert.fail("Should have thrown");
         } catch (java.lang.UnsupportedOperationException e) {
             // this is a pass

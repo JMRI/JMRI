@@ -12,10 +12,10 @@ import org.openide.util.lookup.ServiceProvider;
 /**
  * A pane for configuring MatrixSignalMast objects
  * <P>
+ * @see jmri.jmrit.beantable.signalmast.SignalMastAddPane
  * @author Bob Jacobsen Copyright (C) 2018
  * @since 4.11.2
  */
-@ServiceProvider(service = SignalMastAddPane.class)
 public class DccSignalMastAddPane extends SignalMastAddPane {
 
     /** {@inheritDoc} */
@@ -71,6 +71,20 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
             return false;
         }
         return true;
+    }
+
+    @ServiceProvider(service = SignalMastAddPane.SignalMastAddPaneProvider.class)
+    static public class SignalMastAddPaneProvider extends SignalMastAddPane.SignalMastAddPaneProvider {
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull public String getPaneName() {
+            return Bundle.getMessage("DCCMast");
+        }
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull public SignalMastAddPane getNewPane() {
+            return new DccSignalMastAddPane();
+        }
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DccSignalMastAddPane.class);

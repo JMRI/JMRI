@@ -70,19 +70,21 @@ public class AddSignalMastPanel extends JPanel {
      */
     public AddSignalMastPanel() {
         // get the list of possible signal types (as shown by panes)
-        { // scoping for temporary variables
-            java.util.ServiceLoader.load(SignalMastAddPane.class).forEach((pane) -> {
-                 if (pane.isAvailable()) {
-                    panes.add(pane);
+        SignalMastAddPane.SignalMastAddPaneProvider.getInstancesCollection().forEach(
+            (provider)-> {
+                if (provider.isAvailable()) {
+                    panes.add(provider.getNewPane());
                 }
-            });
+            }
+        );
+        
+        { // scoping for temporary variables
 
             String[] mastNames = new String[panes.size()];
             int i = 0;
             for (SignalMastAddPane pane : panes) {
                 mastNames[i++] = pane.getPaneName();
             }
-        
             signalMastDriver = new JComboBox<>(mastNames);
         }
 

@@ -18,10 +18,10 @@ import org.openide.util.lookup.ServiceProvider;
 /**
  * A pane for configuring VirtualSignalMast objects
  * <P>
+ * @see jmri.jmrit.beantable.signalmast.SignalMastAddPane
  * @author Bob Jacobsen Copyright (C) 2018
  * @since 4.11.2
  */
-@ServiceProvider(service = SignalMastAddPane.class)
 public class VirtualSignalMastAddPane extends SignalMastAddPane {
 
     /** {@inheritDoc} */
@@ -134,6 +134,20 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
             }
         }
         currentMast.setAllowUnLit(allowUnLit.isSelected());
+    }
+
+    @ServiceProvider(service = SignalMastAddPane.SignalMastAddPaneProvider.class)
+    static public class SignalMastAddPaneProvider extends SignalMastAddPane.SignalMastAddPaneProvider {
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull public String getPaneName() {
+            return Bundle.getMessage("VirtualMast");
+        }
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull public SignalMastAddPane getNewPane() {
+            return new VirtualSignalMastAddPane();
+        }
     }
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddSignalMastPanel.class);
