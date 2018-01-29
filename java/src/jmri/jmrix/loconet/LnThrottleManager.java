@@ -309,6 +309,9 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             tc.sendLocoNetMessage(
                     tSlot.writeStatus(LnConstants.LOCO_COMMON));
 
+            // TODO: there really needs to be a delay between making the slot "common"
+            // and sending the "dispatch" request.
+
             // and dispatch to slot 0
             tc.sendLocoNetMessage(tSlot.dispatchSlot());
         }
