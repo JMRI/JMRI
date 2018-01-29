@@ -85,6 +85,8 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         throttle.release(throtListen);
 
+        JUnitUtil.waitFor(()->{return 4 < lnis.outbound.size();},"didn't get the 6th LocoNet message");
+
         Assert.assertEquals("slot is set to 'common' status",
                 "B5 11 10 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());

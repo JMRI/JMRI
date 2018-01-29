@@ -345,25 +345,46 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             setSpeedSetting(0); // stop the loco (if it is not already stopped).
             log.debug("Stopping loco address {} slot {} during dispose", slot.locoAddr(), slot.getSlot());
             if (slot.slotStatus() != LnConstants.LOCO_COMMON) {
-                log.debug("sending a 'make slot common' message for slot {}", slot);
-                network.sendLocoNetMessage(slot.releaseSlot());  // a blind release, since the slot listener is being removed, we cannot get any reply message.
+                jmri.util.ThreadingUtil.runOnLayoutDelayed( ()-> {
+                    // make the slot common, after a little wait
+                    log.debug("dispatchThrottle is dispatching slot {}", slot);
+                    network.sendLocoNetMessage(slot.releaseSlot());
+                    // can remove the slot listener at any time; any further messages 
+                    // aren't needed.
+                    slot.removeSlotListener(this);
+                    // stop timeout
+                    if (mRefreshTimer != null) {
+                        mRefreshTimer.stop();
+                        log.debug("Stopped refresh timer for slot {} address {} as part of throttleDispose", slot.getSlot(), slot.locoAddr());
+                    mRefreshTimer = null;
+                    }
+
+                    slot = null;
+                    network = null;
+
+                    finishRecord();
+                    isDisposing = false;
+
+                    },
+                    150);
+            } else {
+                // can remove the slot listener at any time; any further messages 
+                // aren't needed.
+                slot.removeSlotListener(this);
+                // stop timeout
+                if (mRefreshTimer != null) {
+                    mRefreshTimer.stop();
+                    log.debug("Stopped refresh timer for slot {} address {} as part of throttleDispose", slot.getSlot(), slot.locoAddr());
+                mRefreshTimer = null;
+                }
+
+                slot = null;
+                network = null;
+
+                finishRecord();
+                isDisposing = false;
             }
-            slot.removeSlotListener(this);
-            //slot.notifySlotListeners();
         }
-
-        // stop timeout
-        if (mRefreshTimer != null) {
-            mRefreshTimer.stop();
-            log.debug("Stopped refresh timer for slot {} address {} as part of throttleDispose", slot.getSlot(), slot.locoAddr());
-        mRefreshTimer = null;
-        }
-
-        slot = null;
-        network = null;
-
-        finishRecord();
-        isDisposing = false;
     }
 
     javax.swing.Timer mRefreshTimer = null;
