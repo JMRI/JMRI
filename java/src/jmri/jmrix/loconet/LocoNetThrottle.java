@@ -706,13 +706,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                         tSlot.writeStatus(LnConstants.LOCO_COMMON));
             }
 
-            // TODO: there really needs to be a delay between making the slot "common"
-            // and sending the "dispatch" request.
-
-            // and dispatch to slot 0
-            log.debug("dispatchThrottle is dispatching slot {}",
-                    tSlot);
-            network.sendLocoNetMessage(tSlot.dispatchSlot());
+            jmri.util.ThreadingUtil.runOnLayoutDelayed( ()-> {
+                // and dispatch to slot 0
+                    log.warn("dispatchThrottle is dispatching slot {}", tSlot);
+                    network.sendLocoNetMessage(tSlot.dispatchSlot());
+                },
+                150);
         }
     }
 
