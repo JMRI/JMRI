@@ -32,7 +32,7 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
 
     JCheckBox allowUnLit = new JCheckBox();
 
-    LinkedHashMap<String, JCheckBox> disabledAspects = new LinkedHashMap<>(10);
+    LinkedHashMap<String, JCheckBox> disabledAspects = new LinkedHashMap<>(14);
     JPanel disabledAspectsPanel = new JPanel();
     
     VirtualSignalMast currentMast = null;
@@ -77,25 +77,34 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
 
     /** {@inheritDoc} */
     @Override
-    public boolean setMast(SignalMast mast) { 
+    public boolean canHandleMast(@Nonnull SignalMast mast) {
+        return mast instanceof jmri.implementation.VirtualSignalMast;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setMast(SignalMast mast) { 
         if (mast == null) { 
             currentMast = null; 
-            return false; 
+            return; 
         }
         
-        if (! (mast instanceof jmri.implementation.VirtualSignalMast) ) return false;
+        if (! (mast instanceof jmri.implementation.VirtualSignalMast) ) {
+            log.error("mast was wrong type: {} {}", mast.getSystemName(), mast.getClass().getName());
+            return;
+        }
 
         currentMast = (VirtualSignalMast) mast;
         List<String> disabled = currentMast.getDisabledAspects();
         if (disabled != null) {
             for (String aspect : disabled) {
+                System.err.println("try "+aspect+" "+disabledAspects.containsKey(aspect));
                 if (disabledAspects.containsKey(aspect)) {
                     disabledAspects.get(aspect).setSelected(true);
                 }
             }
+            //+ do we need to clear non-disabled aspects?
         }
-         
-        return true;
     }
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
@@ -126,4 +135,6 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
         }
         currentMast.setAllowUnLit(allowUnLit.isSelected());
     }
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddSignalMastPanel.class);
 }

@@ -23,21 +23,28 @@ public class VirtualSignalMastAddPaneTest {
 
         VirtualSignalMastAddPane vp = new VirtualSignalMastAddPane();
         
-        Assert.assertFalse(vp.setMast(null));
-        Assert.assertTrue(vp.setMast(s1));
-        Assert.assertFalse(vp.setMast(m1));
+        Assert.assertFalse(vp.canHandleMast(null));
+        Assert.assertTrue(vp.canHandleMast(s1));
+        Assert.assertFalse(vp.canHandleMast(m1));
         
+        vp.setMast(null);
+        vp.setMast(s1);
+        vp.setMast(m1);
+        JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");
+
     }
 
     @Test
     public void testCreateMast() {
         VirtualSignalMastAddPane vp = new VirtualSignalMastAddPane();
-
+        new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)", "no user name"){
+            { lastRef = 4; } // reset references - this leads to $0005 below, just in case anybody else has created one
+        };
+        
         vp.createMast("AAR-1946", "appearance-PL-2-high.xml", "user name");
                 
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name"));
-        System.err.println("ref "+InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name").getSystemName());
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName("IF$vsm:AAR-1946:PL-2-high($0001)"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName("IF$vsm:AAR-1946:PL-2-high($0005)"));
         
     }
 

@@ -58,6 +58,9 @@ public class AddSignalMastPanel extends JPanel {
     JButton apply = new JButton(Bundle.getMessage("ButtonApply")); // NOI18N
     JButton create = new JButton(Bundle.getMessage("ButtonCreate")); // NOI18N
 
+    // current
+    SignalMast mast;
+    
     /**
      * Constructor providing a blank panel to configure a new signal mast after
      * pressing 'Add...' on the Signal Mast Table.
@@ -227,6 +230,28 @@ public class AddSignalMastPanel extends JPanel {
      */
     public AddSignalMastPanel(SignalMast mast) {
         this(); // calls the above method to build the base for an edit panel
+
+        //+ inEditMode = true;
+        this.mast = mast;
+        
+        // can't change some things from original settings
+        sigSysBox.setEnabled(false);
+        mastBox.setEnabled(false);
+        signalMastDriver.setEnabled(false);
+        userName.setText(mast.getUserName());
+        userName.setEnabled(false);
+        sigSysBox.setSelectedItem(mast.getSignalSystem().getUserName());
+        
+        // select and show
+        for (SignalMastAddPane pane : panes) {
+            if (pane.canHandleMast(mast)) {
+                currentPane = pane;
+                selection(pane.getPaneName());
+                pane.setMast(mast);
+                break;
+            }
+        }
+        
     }
 
     // signal system definition variables
@@ -402,6 +427,8 @@ public class AddSignalMastPanel extends JPanel {
         
         // ask top-most pane to make a signal
         currentPane.createMast(sigsysname,mastname,user);
+        
+        clearPanel();
     }
 
     /**
@@ -411,6 +438,17 @@ public class AddSignalMastPanel extends JPanel {
     public void refresh() {
         //+
     }
-    
+
+    /**
+     * Close and dispose() panel.
+     * <p>
+     * Called at end of okPressed() and from Cancel Add or Edit mode
+     */
+    void clearPanel() {
+        ((jmri.util.JmriJFrame) getTopLevelAncestor()).dispose();
+        userName.setText(""); // clear user name
+    }
+
+
     private final static Logger log = LoggerFactory.getLogger(AddSignalMastPanel.class);
 }

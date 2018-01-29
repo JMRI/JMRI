@@ -45,12 +45,21 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
     public void setAspectNames(@Nonnull Enumeration<String> aspects) {}
 
     /**
-     * Load this pane with information from a mast
-     * @param mast the SignalMast to display or null to reset a previous one
-     * @return true is this pane can handle that mast type; false if can't, or mast was null
+     * Can this pane edit a specific mast object, i.e. an object of its type?
+     * @param mast the SignalMast to possibly display
+     * @return true if this pane can handle that mast type; false if can't
      * //+ should be abstract
      */
-    public boolean setMast(SignalMast mast) { return false; }
+    public boolean canHandleMast(@Nonnull SignalMast mast) { return false; }
+
+    /**
+     * Load this pane with information from a mast.
+     * Do not invoke this is {@link #canHandleMast()} on that mast returns false.
+     *
+     * @param mast the SignalMast to display or null to reset a previous setting
+     * //+ should be abstract
+     */
+    public void setMast(SignalMast mast) {}
     
     /**
      * Create and register a mast from the given information.
