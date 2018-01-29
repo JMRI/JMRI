@@ -83,7 +83,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 "A0 11 1A 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         
-        throttle.dispatch(throtListen);
+        throttle.release(throtListen);
         
         Assert.assertEquals("slot is set to 'common' status",
                 "B5 11 10 00",
