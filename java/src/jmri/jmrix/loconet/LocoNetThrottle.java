@@ -9,6 +9,7 @@ import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.ThrottleListener;
 
 /**
  * An implementation of DccThrottle via AbstractThrottle with code specific to a
@@ -338,24 +339,26 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         log.debug("throttleDispose - disposing of throttle (and setting slot = null)");
         isDisposing = true;
 
-        // stop timeout
-        if (mRefreshTimer != null) {
-            mRefreshTimer.stop();
-            log.debug("Stopped refresh timer for slot {} address {} as part of throttleDispose", slot.getSlot(), slot.locoAddr());
-        }
-
         // release connections
         if (slot != null) {
             // TODO: stopping a slot upon release is a SUBTRACTIVE change - is it justified?
             setSpeedSetting(0); // stop the loco (if it is not already stopped).
             log.debug("Stopping loco address {} slot {} during dispose", slot.locoAddr(), slot.getSlot());
-            network.sendLocoNetMessage(slot.releaseSlot());  // a blind release, since the slot listener is being removed, we cannot get any reply message.
+            if (slot.slotStatus() != LnConstants.LOCO_COMMON) {
+                log.debug("sending a 'make slot common' message for slot {}", slot);
+                network.sendLocoNetMessage(slot.releaseSlot());  // a blind release, since the slot listener is being removed, we cannot get any reply message.
+            }
             slot.removeSlotListener(this);
-            slot.notifySlotListeners();
-            log.debug("Releasing loco address {} slot {} during dispose", slot.locoAddr(), slot.getSlot());
+            //slot.notifySlotListeners();
         }
 
+        // stop timeout
+        if (mRefreshTimer != null) {
+            mRefreshTimer.stop();
+            log.debug("Stopped refresh timer for slot {} address {} as part of throttleDispose", slot.getSlot(), slot.locoAddr());
         mRefreshTimer = null;
+        }
+
         slot = null;
         network = null;
 
@@ -688,6 +691,31 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         log.debug("getLocoAddress replying address {} for slot not in-use or for sub-consisted slot or for null slot", address);
         return new DccLocoAddress(address, LnThrottleManager.isLongAddress(address));
     }
+
+    public void dispatchThrottle(DccThrottle t, ThrottleListener l) {
+        log.debug("dispatchThrottle - throttle {}", t.getLocoAddress());
+        // set status to common
+        if (t instanceof LocoNetThrottle){
+            LocoNetThrottle lnt = (LocoNetThrottle) t;
+            LocoNetSlot tSlot = lnt.getLocoNetSlot();
+            if (tSlot.slotStatus() != LnConstants.LOCO_COMMON) {
+                log.debug("dispatchThrottle is writing slot {} status to {}",
+                        tSlot,
+                        LnConstants.LOCO_COMMON);
+                network.sendLocoNetMessage(
+                        tSlot.writeStatus(LnConstants.LOCO_COMMON));
+            }
+
+            // TODO: there really needs to be a delay between making the slot "common"
+            // and sending the "dispatch" request.
+
+            // and dispatch to slot 0
+            log.debug("dispatchThrottle is dispatching slot {}",
+                    tSlot);
+            network.sendLocoNetMessage(tSlot.dispatchSlot());
+        }
+    }
+
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(LocoNetThrottle.class);
