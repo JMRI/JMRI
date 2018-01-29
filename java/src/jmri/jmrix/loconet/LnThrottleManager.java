@@ -302,33 +302,15 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     public void dispatchThrottle(DccThrottle t, ThrottleListener l) {
         log.debug("dispatchThrottle - throttle {}", t.getLocoAddress());
         // set status to common
-        if (t instanceof LocoNetThrottle){
-            LocoNetThrottle lnt = (LocoNetThrottle) t;
-            LocoNetSlot tSlot = lnt.getLocoNetSlot();
-
-            tc.sendLocoNetMessage(
-                    tSlot.writeStatus(LnConstants.LOCO_COMMON));
-
-            // TODO: there really needs to be a delay between making the slot "common"
-            // and sending the "dispatch" request.
-
-            // and dispatch to slot 0
-            tc.sendLocoNetMessage(tSlot.dispatchSlot());
+        if (t instanceof LocoNetThrottle) {
+            ((LocoNetThrottle) t).dispatchThrottle(t, l);
         }
-        super.releaseThrottle(t, l);
+        // super.releaseThrottle(t, l);
     }
 
     @Override
     public void releaseThrottle(DccThrottle t, ThrottleListener l) {
         log.debug("releaseThrottle - throttle {}", t.getLocoAddress());
-        if (t instanceof LocoNetThrottle) {
-            LocoNetThrottle lnt = (LocoNetThrottle) t;
-            LocoNetSlot tSlot = lnt.getLocoNetSlot();
-            if (tSlot != null) {
-                tc.sendLocoNetMessage(
-                        tSlot.writeStatus(LnConstants.LOCO_COMMON));
-            }
-        }
         super.releaseThrottle(t, l);
     }
 
