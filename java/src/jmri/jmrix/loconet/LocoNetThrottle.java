@@ -366,7 +366,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                     isDisposing = false;
 
                     },
-                    150);
+                    16);
             } else {
                 // can remove the slot listener at any time; any further messages 
                 // aren't needed.
@@ -732,7 +732,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                     log.debug("dispatchThrottle is dispatching slot {}", tSlot);
                     network.sendLocoNetMessage(tSlot.dispatchSlot());
                 },
-                150);
+                32);
         }
     }
 
