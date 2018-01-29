@@ -330,7 +330,9 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     /**
-     * Dispose when finished with this object. After this, further usage of this
+     * Dispose the LocoNetThrottle when finished with this object. 
+     * 
+     * After this, further usage of this
      * Throttle object will result in a JmriException.
      */
     @Override
@@ -389,6 +391,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
     javax.swing.Timer mRefreshTimer = null;
 
+    /**
+     * Starts the "refresh" timer.  The "refresh" timer determines
+     * when to send a new LocoNet message to "refresh" the slot's speed
+     * setting, so that the slot does not get "purged".
+     * 
+     */
     protected void startRefresh() {
         mRefreshTimer = new javax.swing.Timer(50000, new java.awt.event.ActionListener() {
             @Override
@@ -418,11 +426,14 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     /**
-     * get notified when underlying slot acquisition process fails
+     * Get notified when underlying slot acquisition process fails.  Slot acquisition
+     * failure is handled by @link LnThrottleManager, so no code is required here.
+     * 
+     * @param addr Locomotive address
+     * @param s reason the acquisition failed
      */
     public void notifyRefused(int addr, String s) {
         // don't do anything here; is handled by LnThrottleManager.
-        return;
     }
 
 
