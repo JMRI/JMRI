@@ -366,8 +366,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     /**
      * Dispose the LocoNetThrottle when finished with this object. 
      * 
-     * After this, further usage of this
-     * Throttle object will result in a JmriException.
+     * After this is executed, further use of this Throttle object will 
+     * result in a JmriException.
      */
     @Override
     protected void throttleDispose() {
@@ -375,51 +375,31 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         log.debug("throttleDispose - disposing of throttle (and setting slot = null)");
         isDisposing = true;
 
-        // release connections
+        // Release throttle connections
         if (slot != null) {
-            // TODO: stopping a slot upon release is a SUBTRACTIVE change - is it justified?
-            setSpeedSetting(0); // stop the loco (if it is not already stopped).
-            log.debug("Stopping loco address {} slot {} during dispose", slot.locoAddr(), slot.getSlot());
             if (slot.slotStatus() != LnConstants.LOCO_COMMON) {
-                jmri.util.ThreadingUtil.runOnLayoutDelayed( ()-> {
-                    // make the slot common, after a little wait
-                    log.debug("dispatchThrottle is dispatching slot {}", slot);
-                    network.sendLocoNetMessage(slot.releaseSlot());
-                    // can remove the slot listener at any time; any further messages 
-                    // aren't needed.
-                    slot.removeSlotListener(this);
-                    // stop timeout
-                    if (mRefreshTimer != null) {
-                        mRefreshTimer.stop();
-                        log.debug("Stopped refresh timer for slot {} address {} as part of throttleDispose", slot.getSlot(), slot.locoAddr());
-                    mRefreshTimer = null;
-                    }
-
-                    slot = null;
-                    network = null;
-
-                    finishRecord();
-                    isDisposing = false;
-
-                    },
-                    16);
-            } else {
-                // can remove the slot listener at any time; any further messages 
-                // aren't needed.
-                slot.removeSlotListener(this);
-                // stop timeout
-                if (mRefreshTimer != null) {
-                    mRefreshTimer.stop();
-                    log.debug("Stopped refresh timer for slot {} address {} as part of throttleDispose", slot.getSlot(), slot.locoAddr());
-                mRefreshTimer = null;
-                }
-
-                slot = null;
-                network = null;
-
-                finishRecord();
-                isDisposing = false;
+                // Digitrax throttles do not set the slot speed to zero, so do 
+                // not do so here.
+                
+                // Make the slot common, after a little wait
+                log.debug("dispatchThrottle is dispatching slot {}", slot);
+                network.sendLocoNetMessage(slot.releaseSlot());
             }
+            // Can remove the slot listener at any time; any further messages 
+            // aren't needed.
+            slot.removeSlotListener(this);
+            // Stop the throttle speed refresh timer
+            if (mRefreshTimer != null) {
+                mRefreshTimer.stop();
+                log.debug("Stopped refresh timer for slot {} address {} as part of throttleDispose", slot.getSlot(), slot.locoAddr());
+            mRefreshTimer = null;
+            }
+
+            slot = null;
+            network = null;
+
+            finishRecord();
+            isDisposing = false;
         }
     }
 
