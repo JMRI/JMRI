@@ -97,7 +97,7 @@ public class ActivateTrainFrame {
     private JCheckBox loadAtStartupBox = new JCheckBox(Bundle.getMessage("LoadAtStartup"));
     private JRadioButton allocateBySafeRadioButton = new JRadioButton(Bundle.getMessage("ToSafeSections"));
     private JRadioButton allocateAllTheWayRadioButton = new JRadioButton(Bundle.getMessage("AsFarAsPos"));
-    private JRadioButton allocateNumberOfBlocks = new JRadioButton(Bundle.getMessage("NumberOfBlocks"));
+    private JRadioButton allocateNumberOfBlocks = new JRadioButton(Bundle.getMessage("NumberOfBlocks") + ":");
     private ButtonGroup allocateMethodButtonGroup = new ButtonGroup();
     private JSpinner allocateCustomSpinner = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
     private JCheckBox terminateWhenDoneBox = new JCheckBox(Bundle.getMessage("TerminateWhenDone"));
@@ -272,15 +272,17 @@ public class ActivateTrainFrame {
             destinationBlockBox.setToolTipText(Bundle.getMessage("DestinationBlockBoxHint"));
             initiatePane.add(p4);
             JPanel p4b = new JPanel();
-            p4b.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AllocateMethodLabel") + ":"));
+            p4b.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AllocateMethodLabel")));
             p4b.setLayout(new FlowLayout());
 //            p4b.add(allocateMethodLabel);
             allocateMethodButtonGroup.add(allocateAllTheWayRadioButton);
             allocateMethodButtonGroup.add(allocateBySafeRadioButton);
             allocateMethodButtonGroup.add(allocateNumberOfBlocks);
             p4b.add(allocateAllTheWayRadioButton);
+            allocateAllTheWayRadioButton.setToolTipText(Bundle.getMessage("AllocateAllTheWayBoxHint"));
             p4b.add(allocateBySafeRadioButton);
             p4b.add(allocateNumberOfBlocks);
+            allocateNumberOfBlocks.setToolTipText(Bundle.getMessage("AllocateMethodBoxHint"));
             allocateAllTheWayRadioButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -300,6 +302,7 @@ public class ActivateTrainFrame {
                 }
             });
             p4b.add(allocateCustomSpinner);
+            allocateCustomSpinner.setToolTipText(Bundle.getMessage("AllocateMethodBoxHint"));
             initiatePane.add(p4b);
             JPanel p6 = new JPanel();
             p6.setLayout(new FlowLayout());
