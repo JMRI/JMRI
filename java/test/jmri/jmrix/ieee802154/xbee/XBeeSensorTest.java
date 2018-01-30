@@ -95,8 +95,7 @@ public class XBeeSensorTest {
 
     @After
     public void tearDown() {
-        //apps.tests.Log4JFixture.tearDown();
-        ((XBeeInterfaceScaffold)tc).dispose();
+        tc.terminate();
     }
 
 }

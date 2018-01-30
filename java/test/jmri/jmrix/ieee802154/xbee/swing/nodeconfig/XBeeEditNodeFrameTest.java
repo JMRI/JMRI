@@ -45,7 +45,6 @@ public class XBeeEditNodeFrameTest {
 
     @After
     public void tearDown() {
-        ((XBeeInterfaceScaffold)tc).dispose();
         tc = null;
         JUnitUtil.resetInstanceManager();
     }

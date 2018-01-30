@@ -57,7 +57,6 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     @Before
     @Override
     public void setUp() {
-        //apps.tests.Log4JFixture.setUp();
         tc = new XBeeInterfaceScaffold();
         XBeeConnectionMemo m = new XBeeConnectionMemo();
         m.setSystemPrefix("ABC");
@@ -68,8 +67,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
     @After
     public void tearDown() {
-        ((XBeeInterfaceScaffold)tc).dispose();
-        //apps.tests.Log4JFixture.tearDown();
+        tc.terminate();
     }
 
     /**

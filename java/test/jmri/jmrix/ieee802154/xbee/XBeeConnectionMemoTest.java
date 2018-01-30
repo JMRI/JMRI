@@ -60,7 +60,7 @@ public class XBeeConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestB
 
     @After
     public void tearDown() {
-        ((XBeeInterfaceScaffold)memo.getTrafficController()).dispose();
+        ((XBeeInterfaceScaffold)memo.getTrafficController()).terminate();
     }
 
 }

@@ -99,7 +99,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     @After
     public void tearDown() {
-        ((XBeeInterfaceScaffold)tc).dispose();
+        tc.terminate();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 

@@ -54,17 +54,6 @@ public class XBeeIOStreamTest {
        Assert.assertFalse(a.getDisabled());
    }
 
-   @Before
-   public void testInit(){
-       a = new XBeeIOStream(node,tc);
-   } 
-
-   @After
-   public void testCleanup(){
-       a.dispose();
-       a=null;
-   }
-
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -73,11 +62,14 @@ public class XBeeIOStreamTest {
         byte uad[] = {(byte) 0x00, (byte) 0x02};
         node = (XBeeNode) tc.getNodeFromAddress(uad);
         Assume.assumeNotNull(tc,node);
+        a = new XBeeIOStream(node,tc);
     }
 
     @After
     public void tearDown() {
-        tc.dispose();
+        a.dispose();
+        a=null;
+        tc.terminate();
         tc = null;
         node = null;
     }

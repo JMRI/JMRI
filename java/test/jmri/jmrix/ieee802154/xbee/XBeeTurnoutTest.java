@@ -80,7 +80,6 @@ public class XBeeTurnoutTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        //apps.tests.Log4JFixture.setUp();
         tc = new XBeeInterfaceScaffold();
         memo = new XBeeConnectionMemo();
         memo.setSystemPrefix("ABC");
@@ -90,8 +89,7 @@ public class XBeeTurnoutTest {
 
     @After
     public void tearDown() {
-        ((XBeeInterfaceScaffold)tc).dispose();
-        //apps.tests.Log4JFixture.tearDown();
+        tc.terminate();
     }
 
 }

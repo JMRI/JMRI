@@ -75,7 +75,7 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     @After
     public void tearDown() {
-        ((XBeeInterfaceScaffold)tc).dispose();
+        tc.terminate();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 

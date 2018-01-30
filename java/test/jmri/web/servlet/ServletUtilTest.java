@@ -44,7 +44,7 @@ public class ServletUtilTest {
 
     @Test
     public void testSetNonCachingHeaders() {
-        HttpServletResponse response = PowerMockito.mock(HttpServletResponse.class);
+        HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
         ServletUtil instance = new ServletUtil();
         Date now = instance.setNonCachingHeaders(response);
         Mockito.verify(response).setDateHeader("Date", now.getTime());
