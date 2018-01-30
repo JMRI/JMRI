@@ -34,7 +34,6 @@ final public class XBeeIOStream extends AbstractPortController {
     private Thread sinkThread;  // thread reading from the remote xbee
 
     private RemoteXBeeDevice remoteXBee;
-    @SuppressWarnings("unused")
     private XBeeTrafficController xtc;
 
     public XBeeIOStream(XBeeNode node, XBeeTrafficController tc) {
@@ -52,16 +51,15 @@ final public class XBeeIOStream extends AbstractPortController {
             return;
         }
 
-
         xtc = tc;
 
         // start the transmit thread
-        sourceThread = new Thread(new TransmitThread(remoteXBee, tc, inpipe));
+        sourceThread = new Thread(new TransmitThread(remoteXBee, xtc, inpipe));
         sourceThread.setName("xbee.XBeeIOStream Transmit thread");
         sourceThread.start();
 
         // start the receive thread
-        sinkThread = new Thread(new ReceiveThread(remoteXBee, tc, outpipe));
+        sinkThread = new Thread(new ReceiveThread(remoteXBee, xtc, outpipe));
         sinkThread.setName("xbee.XBeeIOStream Receive thread");
         sinkThread.start();
 
@@ -113,10 +111,14 @@ final public class XBeeIOStream extends AbstractPortController {
 
     @Override
     public void dispose() {
-        sourceThread.interrupt();
-        sourceThread=null;
-        sinkThread.interrupt();
-        sinkThread=null;
+        if(sourceThread!=null) {
+           sourceThread.interrupt();
+           sourceThread=null;
+        }
+        if(sinkThread!=null) {
+           sinkThread.interrupt();
+           sinkThread=null;
+        }
         try {
            pin.close();
            pout.close();
