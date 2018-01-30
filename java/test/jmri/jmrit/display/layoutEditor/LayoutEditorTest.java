@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
+import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.ColorUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -11,7 +12,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.jmrit.display.EditorFrameOperator;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
@@ -268,7 +268,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     @Test
     public void testGetDefaultTrackColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("Default Track Color",ColorUtil.ColorBlack, le.getDefaultTrackColor());
+        Assert.assertEquals("Default Track Color",ColorUtil.ColorDarkGray, le.getDefaultTrackColor());
     }
 
     @Test
