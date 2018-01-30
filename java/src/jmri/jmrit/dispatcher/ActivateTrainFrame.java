@@ -1298,7 +1298,7 @@ public class ActivateTrainFrame {
         pa2a.setLayout(new FlowLayout());
         pa2a.add(stopBySpeedProfile);
         pa2a.add(stopBySpeedProfileCheckBox);
-        stopBySpeedProfileCheckBox.setToolTipText(Bundle.getMessage("StopBySpeedProfileHint"));
+        stopBySpeedProfileCheckBox.setToolTipText(Bundle.getMessage("UseSpeedProfileHint")); // reuse identical hint for Stop
         pa2a.add(stopBySpeedProfileAdjustLabel);
         stopBySpeedProfileAdjustSpinner.setModel(new SpinnerNumberModel( Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
         stopBySpeedProfileAdjustSpinner.setEditor(new JSpinner.NumberEditor(stopBySpeedProfileAdjustSpinner, "# %"));
