@@ -298,7 +298,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setXScale(xScale);
         panel.setYScale(yScale);
 
-        String defaultColor = ColorUtil.ColorBlack;
+        String defaultColor = ColorUtil.ColorDarkGray;
         if ((a = shared.getAttribute("defaulttrackcolor")) != null) {
             defaultColor = a.getValue();
         }
