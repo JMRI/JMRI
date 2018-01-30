@@ -269,6 +269,7 @@
         <pathelement location="${libdir}/powermock-api-mockito-common-1.7.0RC4.jar"/>
         <pathelement location="${libdir}/powermock-api-support-common-1.7.0RC4.jar"/>
         <pathelement location="${libdir}/powermock-core-1.7.0RC4.jar"/>
+        <pathelement location="${libdir}/powermock-reflect-1.7.0RC4.jar"/>
         <pathelement location="${libdir}/powermock-module-junit4-1.7.0RC4.jar"/>
         <pathelement location="${libdir}/powermock-module-junit4-common-1.7.0RC4.jar"/>
         <pathelement location="${libdir}/cglib-nodep-2.2.2.jar"/>
