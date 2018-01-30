@@ -52,17 +52,6 @@ final public class XBeeIOStream extends AbstractPortController {
         }
 
         xtc = tc;
-
-        // start the transmit thread
-        sourceThread = new Thread(new TransmitThread(remoteXBee, xtc, inpipe));
-        sourceThread.setName("xbee.XBeeIOStream Transmit thread");
-        sourceThread.start();
-
-        // start the receive thread
-        sinkThread = new Thread(new ReceiveThread(remoteXBee, xtc, outpipe));
-        sinkThread.setName("xbee.XBeeIOStream Receive thread");
-        sinkThread.start();
-
     }
 
     // routines defined as abstract in AbstractPortController
@@ -88,6 +77,16 @@ final public class XBeeIOStream extends AbstractPortController {
 
     @Override
     public void configure() {
+        // start the transmit thread
+        sourceThread = new Thread(new TransmitThread(remoteXBee, xtc, inpipe));
+        sourceThread.setName("xbee.XBeeIOStream Transmit thread");
+        sourceThread.start();
+
+        // start the receive thread
+        sinkThread = new Thread(new ReceiveThread(remoteXBee, xtc, outpipe));
+        sinkThread.setName("xbee.XBeeIOStream Receive thread");
+        sinkThread.start();
+
     }
 
     @Override
