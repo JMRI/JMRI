@@ -540,7 +540,8 @@
         <li>Georg Kautzsch, who provided a decoder definition for
         the Uhlenbrock 67800 servo decoder.</li>
 
-        <li>Klaus Killinger, who improved the sound support</li>
+        <li>Klaus Killinger<!-- klk32003 -->, who improved the sound support
+            and has provided multiple sound projects</li>
 
         <li>Scott Kitts, who helped debug the new communications
         library for Mac OS X</li>
@@ -778,8 +779,9 @@
         "R"></a></li>
 
         <li>Balazs Racz, who fixed a bug in startup and improved
-        our tech documentation, and updated the OpenLCB support to
-        their version 0.7</li>
+        our tech documentation, updated the OpenLCB support to
+        their version 0.7, and added support for bean properties
+        to the Tables</li>
 
         <li>Steve Rawlinson, who fixed a bug in Layout Blocks and
         generously provides the <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Packages/">Jenkins server</a>
