@@ -23,8 +23,8 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h2>JMRI: System Properties</h2>This page lists the system
-      properties that JMRI uses.
+      <h1>JMRI Code: System Properties</h1>
+      <p>This page lists the system properties that JMRI uses.</p>
 
       <h3>Operating System Properties</h3>
 
@@ -109,7 +109,9 @@
         <dt>org.jmri.Apps.(key)</dt>
 
         <dt>org.jmri.Apps.configFilename</dt>
-      </dl><!--#include virtual="/Footer" -->
+      </dl>
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

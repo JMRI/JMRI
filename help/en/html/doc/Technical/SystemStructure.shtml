@@ -28,7 +28,7 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Structure of External System Connections</h1>
+      <h1>JMRI Code: Structure of External System Connections</h1>
 
       <p>This page is about how JMRI connects to external systems, e.g.
       DCC systems.
@@ -420,7 +420,7 @@
 
       <h2>Configuration Process</h2>
 
-      See <a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/JmrixConfigPane.html">jmrix.JmrixConfigPane Javadoc</a>
+      See <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/JmrixConfigPane.html">jmrix.JmrixConfigPane Javadoc</a>
       for links to configuration elements.
       (Is there another place that the configuration process and preferences support is described? If so, it should
       be linked from here.)
@@ -444,7 +444,8 @@ jmri.jmrix.loconet.LnConnectionTypeList
       <p>
       The contents of the
       <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/loconet/LnConnectionTypeList.java"><code>jmri.jmrix.loconet.LnConnectionTypeList</code></a>, an instance of
-      <A href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/ConnectionTypeList.html"><code>jmri.jmrix.ConnectionTypeList</code></a>
+      <A href="http://jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionTypeList.html"><code>jmri.jmrix
+          .ConnectionTypeList</code></a>
       then provides the contents for the second-level JComboBox of specific connection
       types, each corresponding (generally) to a specific
       <code>ConnectionConfig</code> implementation that can configure a specific connection type.
@@ -486,7 +487,7 @@ jmri.jmrix.loconet.LnConnectionTypeList
       sets changes to those values directly into the ConnectionConfig/PortAdapter
       without asking them to act further via e.g. configure().
 
-      <h3>Updating A Connection Mode</h3>
+      <h3>Updating a Connection Mode</h3>
 
       Changing the mode JComboBox in <code>JmrixConfigPane</code>
       first clears the existing contents of the <code>details</code>
@@ -494,7 +495,7 @@ jmri.jmrix.loconet.LnConnectionTypeList
       then calls the <code>JmrixConfigPane.selection()</code>
       method to refill it.
 
-      <h3>Deleting a connection</h3>
+      <h3>Deleting a Connection</h3>
 
       <h2>Misc</h2>
 
@@ -505,8 +506,6 @@ jmri.jmrix.loconet.LnConnectionTypeList
       <li>The <code><a href="http://www.jmri.org/JavaDoc/doc/jmri/swing/ConnectionLabel.html">jmri.swing.ConnectionLabel</a></code> class
       is a Swing JLabel that listens to a single connection and displays its status.  We use those on the main
       splash screen, but they can also be used in other places.</li>
-
-
       </ul>
 
       <!--#include virtual="/Footer" -->

@@ -714,12 +714,12 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 if (null != _previousValue) {
                     setValue(_previousValue);
                     if (infoMessageCount < maxInfoMessages) {
-                        log.info("Sensor ACTIVE came out of nowhere, no neighbors active for block {}. Restoring previous value.", getDisplayName());
+                        log.debug("Sensor ACTIVE came out of nowhere, no neighbors active for block {}. Restoring previous value.", getDisplayName());
                         infoMessageCount++;
                     }
                 } else {
                     if (infoMessageCount < maxInfoMessages) {
-                        log.info("Sensor ACTIVE came out of nowhere, no neighbors active for block {}. Value not set.", getDisplayName());
+                        log.debug("Sensor ACTIVE came out of nowhere, no neighbors active for block {}. Value not set.", getDisplayName());
                         infoMessageCount++;
                     }
                 }

@@ -30,8 +30,6 @@ public class Z21XNetSimulatorAdapter {
 
     public Z21XNetSimulatorAdapter() {
        csStatus = csNormalMode;
-       int locoCount = 0;
-       int locoPosition = 0;
        locoData = new Z21SimulatorLocoData[20];
     }
 
@@ -240,8 +238,6 @@ public class Z21XNetSimulatorAdapter {
                 reply = emergencyStopReply();
                 break;
             case XNetConstants.EMERGENCY_STOP:
-                reply = okReply();
-                break;
             case XNetConstants.EMERGENCY_STOP_XNETV1V2:
                 reply = okReply();
                 break;

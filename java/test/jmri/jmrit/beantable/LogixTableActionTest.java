@@ -203,10 +203,10 @@ public class LogixTableActionTest extends AbstractTableActionBase {
         jmri.util.JUnitUtil.initLogixManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
 
-        Logix x1 = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX101", "Logix 101");  // NOI18N
-        Logix x2 = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX102", "Logix 102");  // NOI18N
-        Logix x3 = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX103", "Logix 103");  // NOI18N
-        Logix x4 = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX104", "Logix 104");  // NOI18N
+        InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX101", "Logix 101");
+        InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX102", "Logix 102");
+        InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX103", "Logix 103");
+        InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX104", "Logix 104");
 
         a = new LogixTableAction();
     }

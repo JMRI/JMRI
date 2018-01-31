@@ -35,6 +35,6 @@ public class AddRosterEntryToEcosTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddRosterEntryToEcosTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AddRosterEntryToEcosTest.class.getName());
 
 }

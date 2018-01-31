@@ -18,7 +18,7 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Building with IntelliJ IDEA</h1>
+      <h1>JMRI Code: Building with IntelliJ IDEA</h1>
 
       <p>IntelliJ IDEA Community Edition (available from <a href=
       "https://www.jetbrains.com/idea/">www.jetbrains.com/idea/</a>)
@@ -69,7 +69,7 @@
         In the upper right hand corner of the page you will find a
         button labeled "Fork". Press the "Fork" button to create
         your own repository of the JMRI source. (see <a href=
-        "getgitcode.shtml#get">Get the Code</a>).</li>
+        "getgitcode.shtml#get">Getting the Code</a>).</li>
       </ol>
 
       <p>After downloading and running the installer for your OS,
@@ -403,18 +403,30 @@
         "Repository" -&gt; "Pull..." from the context menu:<br>
         <a href="images/IntelliJ/IjGitPullMenu.png"><img src=
         "images/IntelliJ/IjGitPullMenu.png" width="408" height=
-        "117" alt="IntelliJ Pull"></a></li>
+        "117" alt="IntelliJ Pull"></a><br>
+        or from the VCS menu select "Git" -> "Pull..."</li>
 
-        <li>You may be asked to confirm the origin of your remote
-        repo, in our case "JMRI/JMRI":<br>
+        <li>You may be asked first to confirm the origin of your
+        remote repo, in our case "JMRI/JMRI":<br>
         <a href="images/IntelliJ/IjGitRemoteConfig.png"><img src=
         "images/IntelliJ/IjGitRemoteConfig.png" width="203" height=
         "74" alt="IntelliJ Pull options"></a></li>
 
-        <li>Select the appropriate remote Branch to merge from the
-        list (you might also Pull an extra Branch to switch to
-        later), click "Pull" and answer how you would like to
-        combine the new data into the existing local repo:<br>
+        <li>The Pull Changes dialog opens:<br>
+        <a href="images/IntelliJ/IjPullDialog.png"><img src=
+        "images/IntelliJ/IjPullDialog.png" width="313" height=
+        "197" alt="IntelliJ Pull dialog"></a><br>
+
+        [1] Select a remote repository (depending
+        on the way you want to manage that, either your own repo
+        or JMRI's as in the example).<br>
+        [2] From the displayed list, select the appropriate Branch
+        to merge (you might also Pull an extra Branch to switch to
+        later).<br>
+        If what you expect is not in the list, click the Refres
+        button [3].</li>
+        <li>To conclude, click "Pull" and answer how you would like
+        to combine the new data into the existing local repo:<br>
         <a href="images/IntelliJ/IjPullOptionsdialog.png"><img src=
         "images/IntelliJ/IjPullOptionsdialog.png" width="256"
         height="107" alt="IntelliJ Pull options"></a></li>
@@ -561,13 +573,16 @@
       <p>On macOS, when you run into this error, usually when starting IntelliJ for the
       first time after a system update:<br>
       <a href="images/IntelliJ/IjXcodeGitProblem1.png">
-        <img src="images/IntelliJ/IjXcodeGitProblem1.png" width="373" height="110" alt="IntelliJ Git error"></a><br>
-      quit the program and start the Apple Xcode application.<br>
-      By this you be asked to agree with the licence agreement, and that will reenable
-      the Git installation to be used inside IntelliJ too.<br>
-      <a href="images/IntelliJ/IjXcode1.png">
-        <img src="images/IntelliJ/IjXcode1.png" width="223" height="111" alt="IntelliJ Git error"></a>
-      </p>
+        <img src="images/IntelliJ/IjXcodeGitProblem1.png" width="373" height="110" alt="IntelliJ Git error"></a></p>
+      <ol>
+        <li>Quit and restart IntelliJ</li>
+        <li>If that does not fix it, quit IntelliJ and start the Apple Xcode application.<br>
+        By this you be asked to agree with the licence agreement, and that will reenable
+        the Git installation to be used inside IntelliJ too.<br>
+        <a href="images/IntelliJ/IjXcode1.png">
+          <img src="images/IntelliJ/IjXcode1.png" width="223" height="111" alt="IntelliJ Git error"></a>
+        </li>
+      </ol>
 
       <h4>Reset HEAD</h4>
 
@@ -632,7 +647,7 @@
       choosing "Properties". Open the "Properties" tab, click the
       + (Add) sign at lower left and enter "test.includes"
       in the Name column and the path to your test under Value,
-      starting with <code>jmri.</code> as shown:<br>
+      starting with either <code>apps.</code> or <code>jmri.</code> as shown:<br>
       <a href="images/IntelliJ/IjAntProps.png"><img src="images/IntelliJ/IjAntProps.png" width="318" height="174"
       alt="IntelliJ Ant Property"></a>
       </p>

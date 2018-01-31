@@ -40,6 +40,6 @@ public class FileDropEventTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FileDropEventTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(FileDropEventTest.class.getName());
 
 }

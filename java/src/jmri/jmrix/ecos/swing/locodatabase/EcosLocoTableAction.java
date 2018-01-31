@@ -43,7 +43,7 @@ import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EcosLocoTableAction extends AbstractTableAction {
+public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
 
     /**
      * Create an action with a specific title.
@@ -110,7 +110,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
 
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<NamedBean>() { // this is a hack to get this to compile, as EcosLocoAddress is itself not a NamedBean
 
             //We have to set a manager first off, but this gets replaced.
             @Override

@@ -16,8 +16,9 @@ public class TamsSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       TamsTrafficController tc = new TamsInterfaceScaffold();
-       scm = new TamsSystemConnectionMemo();
+       TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(new TamsInterfaceScaffold());
+       memo.configureManagers();
+       scm = memo;
     }
 
     @Override

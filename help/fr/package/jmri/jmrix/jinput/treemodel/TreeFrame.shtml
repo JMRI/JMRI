@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
   <!-- Translated  by Blorec Hervé le 2011-11-1-->
 
   <title>JMRI: USB Input Control</title><!-- Style -->
@@ -89,7 +88,8 @@
       r&Atilde;&copy;tablie apr&Atilde;&uml;s vous ayez
       quitt&Atilde;&copy; et red&Atilde;&copy;marr&Atilde;&copy;ez
       le programme. Ce sera ajout&Atilde;&copy; dans la prochaine
-      Version JMRI. <!--#include virtual="/Footer" --></p>
+      Version JMRI.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

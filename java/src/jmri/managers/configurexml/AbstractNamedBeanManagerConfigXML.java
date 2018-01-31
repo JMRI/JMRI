@@ -206,18 +206,18 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param m    Manager used to check name for validity and existence
      * @return the requested NamedBean or null if name was null
      */
-    public <T extends NamedBean> T checkedNamedBeanReference(String name, @Nonnull T type, @Nonnull Manager m) {
+    public <T extends NamedBean> T checkedNamedBeanReference(String name, @Nonnull T type, @Nonnull Manager<T> m) {
         if (name == null) {
             return null;
         }
         if (name.equals("")) {
             return null;
         }
-        NamedBean nb = m.getNamedBean(name);
+        T nb = m.getNamedBean(name);
         if (nb == null) {
             return null;
         }
-        return (T) nb;
+        return nb;
     }
 
     /**
@@ -234,18 +234,18 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param m    Manager used to check name for validity and existence
      * @return a handle for the requested NamedBean or null
      */
-    public <T extends NamedBean> NamedBeanHandle<T> checkedNamedBeanHandle(String name, @Nonnull T type, @Nonnull Manager m) {
+    public <T extends NamedBean> NamedBeanHandle<T> checkedNamedBeanHandle(String name, @Nonnull T type, @Nonnull Manager<T> m) {
         if (name == null) {
             return null;
         }
         if (name.equals("")) {
             return null;
         }
-        NamedBean nb = m.getNamedBean(name);
+        T nb = m.getNamedBean(name);
         if (nb == null) {
             return null;
         }
-        return InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, (T) nb);
+        return InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, nb);
     }
 
     /**

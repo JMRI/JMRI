@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -29,18 +34,24 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
+
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.SignalGroup;
+import jmri.SignalGroupManager;
 import jmri.SignalHead;
+import jmri.SignalHeadManager;
 import jmri.SignalMast;
+import jmri.SignalMastManager;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.AlphanumComparator;
+import jmri.util.StringUtil;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +63,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2010
  * @author Egbert Broerse 2017
  */
-public class SignalGroupTableAction extends AbstractTableAction implements PropertyChangeListener {
+public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> implements PropertyChangeListener {
 
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
@@ -67,7 +78,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     public SignalGroupTableAction(String s) {
         super(s);
         // disable ourself if there is no primary SignalGroup manager available
-        if (jmri.InstanceManager.getNullableDefault(jmri.SignalGroupManager.class) == null) {
+        if (InstanceManager.getNullableDefault(SignalGroupManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -99,7 +110,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<SignalGroup>() {
             static public final int COMMENTCOL = 2;
             static public final int DELETECOL = 3;
             static public final int ENABLECOL = 4;
@@ -184,14 +195,14 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
             @Override
             public Object getValueAt(int row, int col) {
-                NamedBean b;
+                SignalGroup b;
                 if (col == EDITCOL) {
                     return Bundle.getMessage("ButtonEdit");
                 } else if (col == ENABLECOL) {
                     return Boolean.valueOf(((SignalGroup) getValueAt(row, SYSNAMECOL)).getEnabled());
                     //return true;
                 } else if (col == COMMENTCOL) {
-                    b = (NamedBean) getValueAt(row, SYSNAMECOL);
+                    b = (SignalGroup) getValueAt(row, SYSNAMECOL);
                     return (b != null) ? b.getComment() : null;
                 } else if (col == DELETECOL) //
                 {
@@ -261,7 +272,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
              * it.
              */
             @Override
-            void doDelete(NamedBean bean) {
+            void doDelete(SignalGroup bean) {
                 //((SignalGroup)bean).deActivateSignalGroup();
                 super.doDelete(bean);
             }
@@ -277,18 +288,18 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             }
 
             @Override
-            public Manager getManager() {
-                return jmri.InstanceManager.getDefault(jmri.SignalGroupManager.class);
+            public SignalGroupManager getManager() {
+                return InstanceManager.getDefault(SignalGroupManager.class);
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
-                return jmri.InstanceManager.getDefault(jmri.SignalGroupManager.class).getBySystemName(name);
+            public SignalGroup getBySystemName(String name) {
+                return InstanceManager.getDefault(SignalGroupManager.class).getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
-                return jmri.InstanceManager.getDefault(jmri.SignalGroupManager.class).getByUserName(name);
+            public SignalGroup getByUserName(String name) {
+                return InstanceManager.getDefault(SignalGroupManager.class).getByUserName(name);
             }
 
             @Override
@@ -307,7 +318,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             }
 
             @Override
-            public void clickOn(NamedBean t) { // mute action
+            public void clickOn(SignalGroup t) { // mute action
                 //((SignalGroup)t).setSignalGroup();
             }
 
@@ -346,7 +357,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      */
     int signalStateFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();
-        int result = jmri.util.StringUtil.getStateFromName(mode, signalStatesValues, signalStates);
+        int result = StringUtil.getStateFromName(mode, signalStatesValues, signalStates);
 
         if (result < 0) {
             log.warn("unexpected mode string in signalState Aspect: " + mode);
@@ -363,7 +374,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      * @param box  in which to enter mode
      */
     void setSignalStateBox(int mode, JComboBox<String> box) {
-        String result = jmri.util.StringUtil.getNameFromState(mode, signalStatesValues, signalStates);
+        String result = StringUtil.getNameFromState(mode, signalStatesValues, signalStates);
         box.setSelectedItem(result);
     }
 
@@ -429,7 +440,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         inEditMode = true;
         _mastAspectsList = null;
 
-        jmri.SignalHeadManager shm = InstanceManager.getDefault(jmri.SignalHeadManager.class);
+        SignalHeadManager shm = InstanceManager.getDefault(SignalHeadManager.class);
         List<String> systemNameList = shm.getSystemNameList();
         _signalHeadsList = new ArrayList<SignalGroupSignalHead>(systemNameList.size());
         // create list of all available Single Output Signal Heads to choose from
@@ -456,7 +467,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         // Set up Add/Edit Signal Group window
         if (addFrame == null) { // if it's not yet present, create addFrame
 
-            mainSignalComboBox = new JmriBeanComboBox(jmri.InstanceManager.getDefault(jmri.SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+            mainSignalComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
             mainSignalComboBox.setFirstItemBlank(true); // causes NPE when user selects that 1st line, so do not respond to result null
             addFrame = new JmriJFrame(Bundle.getMessage("AddSignalGroup"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalGroupAddEdit", true);
@@ -772,7 +783,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      */
     boolean checkNewNamesOK() {
         // Get system name and user name from Add Signal Group pane
-        String sName = _systemName.getText().toUpperCase().trim(); // N11N
+        String sName = InstanceManager.getDefault(SignalGroupManager.class).normalizeSystemName(_systemName.getText());
         // seems field _systemName is not properly filled in when editing an existing mast
         // so prevent it from being called (in line 900)
         String uName = _userName.getText(); // may be empty // N11N
@@ -787,7 +798,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         SignalGroup g = null;
         // check if a SignalGroup with the same user name exists
         if (!uName.equals("")) {
-            g = jmri.InstanceManager.getDefault(jmri.SignalGroupManager.class).getByUserName(uName);
+            g = InstanceManager.getDefault(SignalGroupManager.class).getByUserName(uName);
             if (g != null) {
                 // SignalGroup with this user name already exists
                 JOptionPane.showMessageDialog(null,
@@ -800,7 +811,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             }
         }
         // check if a SignalGroup with this system name already exists
-        g = jmri.InstanceManager.getDefault(jmri.SignalGroupManager.class).getBySystemName(sName);
+        g = InstanceManager.getDefault(SignalGroupManager.class).getBySystemName(sName);
         if (g != null) {
             // SignalGroup already exists
             JOptionPane.showMessageDialog(null,
@@ -839,7 +850,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      */
     SignalGroup checkNamesOK() {
         // Get system name and user name
-        String sName = _systemName.getText().toUpperCase();
+        String sName = InstanceManager.getDefault(SignalGroupManager.class).normalizeSystemName(_systemName.getText());
         String uName = _userName.getText();
         if (sName.length() == 0) {
             JOptionPane.showMessageDialog(null,
@@ -850,7 +861,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             return null;
         }
         try {
-            SignalGroup g = jmri.InstanceManager.getDefault(jmri.SignalGroupManager.class).provideSignalGroup(sName, uName);
+            SignalGroup g = InstanceManager.getDefault(SignalGroupManager.class).provideSignalGroup(sName, uName);
             return g;
         } catch (IllegalArgumentException ex) {
             // should never get here
@@ -912,7 +923,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      * the comboBox and store them in a table on the addFrame using _AspectModel
      */
     void setValidSignalMastAspects() {
-        jmri.SignalMast sm = (SignalMast) mainSignalComboBox.getSelectedBean();
+        SignalMast sm = (SignalMast) mainSignalComboBox.getSelectedBean();
         if (sm == null) {
             log.debug("Null picked in mainSignal comboBox. Probably line 1 or no masts in system");
             return;
@@ -956,8 +967,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      */
     void editPressed(ActionEvent e) {
         // identify the Signal Group with this name if it already exists
-        String sName = _systemName.getText().toUpperCase(); // is already filled in from the Signal Group table by addPressed()
-        SignalGroup g = jmri.InstanceManager.getDefault(jmri.SignalGroupManager.class).getBySystemName(sName);
+        String sName = InstanceManager.getDefault(SignalGroupManager.class).normalizeSystemName(_systemName.getText()); // is already filled in from the Signal Group table by addPressed()
+        SignalGroup g = InstanceManager.getDefault(SignalGroupManager.class).getBySystemName(sName);
         if (g == null) {
             // Signal Group does not exist, so cannot be edited
             return;
@@ -968,7 +979,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         curSignalGroup = g;
         log.debug("curSignalGroup was set");
 
-        jmri.SignalMast sm = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(g.getSignalMastName());
+        SignalMast sm = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(g.getSignalMastName());
         if (sm != null) {
             java.util.Vector<String> aspects = sm.getValidAspects();
             _mastAspectsList = new ArrayList<SignalMastAspect>(aspects.size());
@@ -1032,7 +1043,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      * @param e the event heard
      */
     void deletePressed(ActionEvent e) {
-        InstanceManager.getDefault(jmri.SignalGroupManager.class).deleteSignalGroup(curSignalGroup);
+        InstanceManager.getDefault(SignalGroupManager.class).deleteSignalGroup(curSignalGroup);
         curSignalGroup = null;
         log.debug("DeletePressed; curSignalGroup set to null");
         finishUpdate();
@@ -1151,7 +1162,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
 
         public void dispose() {
-            InstanceManager.getDefault(jmri.SignalMastManager.class).removePropertyChangeListener(this);
+            InstanceManager.getDefault(SignalMastManager.class).removePropertyChangeListener(this);
         }
 
         @Override
@@ -1295,7 +1306,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     class SignalGroupSignalHeadModel extends SignalGroupOutputModel {
 
         SignalGroupSignalHeadModel() {
-            InstanceManager.getDefault(jmri.SignalHeadManager.class).addPropertyChangeListener(this);
+            InstanceManager.getDefault(SignalHeadManager.class).addPropertyChangeListener(this);
         }
 
         @Override
@@ -1405,7 +1416,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
          * @return bean object of the head
          */
         public SignalHead getBean(int r) {
-            return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead((String) getValueAt(r, SNAME_COLUMN));
+            return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead((String) getValueAt(r, SNAME_COLUMN));
         }
 
         /**
@@ -1461,7 +1472,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
          * Remove listener from Signal Head in group. Called on Delete.
          */
         public void dispose() {
-            InstanceManager.getDefault(jmri.SignalHeadManager.class).removePropertyChangeListener(this);
+            InstanceManager.getDefault(SignalHeadManager.class).removePropertyChangeListener(this);
         }
     }
 
@@ -1551,10 +1562,10 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
          */
         SignalGroupSignalHead(String sysName, String userName) {
             _included = false;
-            SignalHead anySigHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(sysName);
+            SignalHead anySigHead = InstanceManager.getDefault(SignalHeadManager.class).getBySystemName(sysName);
             if (anySigHead != null) {
                 if (anySigHead.getClass().getName().contains("SingleTurnoutSignalHead")) {
-                    jmri.implementation.SingleTurnoutSignalHead oneSigHead = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(sysName);
+                    jmri.implementation.SingleTurnoutSignalHead oneSigHead = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.getDefault(SignalHeadManager.class).getBySystemName(sysName);
                     if (oneSigHead != null) {
                         _onState = oneSigHead.getOnAppearance();
                         _offState = oneSigHead.getOffAppearance();

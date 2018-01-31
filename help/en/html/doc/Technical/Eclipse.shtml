@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
   <title>JMRI: Building with Eclipse</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Eclipse">
   <!--#include virtual="/Style" -->
 </head><!--#include virtual="/Header" -->
@@ -14,7 +14,7 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Building with Eclipse</h1>
+      <h1>JMRI Code: Building with Eclipse</h1>
 
       <p>Eclipse (available at <a href=
       "http://www.eclipse.org">www.eclipse.org</a>) can be used for working with
@@ -217,7 +217,7 @@
 
       <h2>Compiler Errors and Warnings</h2>
 
-      As of 10/18/2017 there's roughly 4300 warnings being reported by the Eclipse. You can ignore these for now.
+      As of 10/18/2017 roughly 4300 warnings were being reported by the Eclipse. You can ignore these for now.
 
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

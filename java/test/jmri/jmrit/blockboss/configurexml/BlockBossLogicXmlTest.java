@@ -48,7 +48,7 @@ public class BlockBossLogicXmlTest {
                     }
                 }
         );
-        Sensor is1 = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("IS1");
+        InstanceManager.getDefault(jmri.SensorManager.class).getSensor("IS1");
         
         Element el = new Element("signalelements")
                 .setAttribute("class", "jmri.jmrit.blockboss.configurexml.BlockBossLogicXml")
@@ -79,7 +79,7 @@ public class BlockBossLogicXmlTest {
                     }
                 }
         );
-        Sensor is1 = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("IS1");
+        InstanceManager.getDefault(jmri.SensorManager.class).getSensor("IS1");
         
         Element el = new Element("signalelements")
                 .setAttribute("class", "jmri.jmrit.blockboss.configurexml.BlockBossLogicXml")
@@ -112,7 +112,7 @@ public class BlockBossLogicXmlTest {
                     }
                 }
         );
-        Sensor is1 = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("IS1");
+        InstanceManager.getDefault(jmri.SensorManager.class).getSensor("IS1");
         
         Element el = new Element("signalelements")
                 .setAttribute("class", "jmri.jmrit.blockboss.configurexml.BlockBossLogicXml")
