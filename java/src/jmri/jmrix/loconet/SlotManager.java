@@ -1237,7 +1237,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
 
     /**
-     * Performa a CV Read
+     * Perform a CV Read
      * <p>
      * @param CV the CV number
      * @param p programmer
@@ -1283,6 +1283,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param val value to be used
      * @param cvnum CV number
      * @param write true if write, else false
+     * @return a LocoNet message containing a programming task start operation
      */
     protected LocoNetMessage progTaskStart(int pcmd, int val, int cvnum, boolean write) {
 
@@ -1474,6 +1475,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     /**
      * Provide a snapshot of the slots in use
+     * <p>
+     * Note that the count of "in-use" slots may be somewhat misleading,
+     * as slots in the "common" state can be controlled and are occupying
+     * a slot in a meaningful way.
+     * <p>
+     * @return the count of in-use LocoNet slots
      */
     public int getInUseCount() {
         int result = 0;
