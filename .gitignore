@@ -9,8 +9,14 @@ junit-results.xml
 junit*.properties
 findbugs.xml
 findbugs.html
+spotbugs.xml
+spotbugs.html
 jacoco.exec
+jmri-fb.html
+
 coveragereport
+tests.log
+cucumber-results.xml
 
 # runtime artifacts
 messages.log*
@@ -33,6 +39,7 @@ session.log
 /xml/XSLT/xml
 /xml/XSLT/pages
 .run.sh
+hs_err_pid*.log
 
 # private / per-user configuration files
 /nbproject/private
@@ -52,5 +59,4 @@ RemoteSystemsTempFiles
 # OS junk files
 [Tt]humbs.db
 *.DS_Store
-/jmri-fb.html
-cucumber-results.xml
+

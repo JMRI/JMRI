@@ -8,9 +8,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogPowerManager
- * </P>
+ * Tests for SprogPowerManager.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
@@ -94,6 +93,7 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
         apps.tests.Log4JFixture.setUp();
         SprogSystemConnectionMemo m = new SprogSystemConnectionMemo();
         stc = new SprogTrafficControlScaffold(m);
+        stc.setTestReplies(true);
         m.setSprogTrafficController(stc);  // constructor calls getSprogTrafficController.
         p = new SprogPowerManager(m);
     }

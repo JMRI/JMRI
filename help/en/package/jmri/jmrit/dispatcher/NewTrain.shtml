@@ -6,10 +6,10 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Activate New Train Help</title>
+  <title>JMRI: Dispatcher Activate New Train Help</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Dave Duchamp" name="Author">
+  <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Dispatcher New Train">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -27,7 +27,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Dispatcher: Activate New Train</h1>
+      <h1>JMRI Dispatcher: Activate New Train</h1>
 
       <h2>Introduction</h2>
 
@@ -52,13 +52,14 @@
         Trains.</li>
 
         <li><b>Trains from Trains</b> - Dispatcher will list all
-        trains available from Operations that are not in Active
-        Trains.</li>
+        trains available from <a href=
+        "../operations/Operations.shtml#Trains">Operations</a>
+        that are not already in any Dispatcher Active Trains.</li>
 
         <li><b>Trains from User Entry</b> - Dispatcher will replace
         the train selection box in the Activate New Train window
-        with two entry fields allowing the user to enter a train
-        name and a dcc Address.</li>
+        with two entry fields allowing the user to enter a Train
+        name and a loco Address.</li>
       </ul>
 
       <p>Dispatcher's train source is set by selecting one of the

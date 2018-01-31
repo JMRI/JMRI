@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: CVS FAQ</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code CVS FAQ">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -31,14 +30,14 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: CVS FAQ</h1>This is a list of Frequently Asked
-      Questions for CVS, particularly regarding how we use it with
-      JMRI.
+      <h1>JMRI Code: CVS FAQ</h1>
+      <p>This is a list of Frequently Asked Questions for CVS,
+      particularly regarding how we use it with JMRI.</p>
 
-      <p><em>Note: JMRI code is not maintained in CVS any more. To
-      get the current code, please see the pages on the <a href=
-      "getgitcode.shtml">accessing the code via the Git
-      repository.</a></em></p>
+      <p class="important">Note: JMRI code is not maintained in CVS any more. To
+      get the current code, please see the help pages on <a href=
+      "getgitcode.shtml">Accessing the code via the Git
+      repository.</a></p>
 
       <p>See also the <a href="index.shtml">Technical index</a> for
       more information on maintaining JMRI code. <a name="cvstool"
@@ -194,8 +193,8 @@ you should then be up-to-date with your own changes still present.
       effectively lock the file. The checked-out version of the
       file is write-protected so you can't edit it without noticing
       the problem, and changes can't be checked back into CVS
-      unless the file watch is turned off. 
-      <!--#include virtual="/Footer" --></p>
+      unless the file watch is turned off.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

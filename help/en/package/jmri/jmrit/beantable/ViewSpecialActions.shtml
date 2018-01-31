@@ -9,7 +9,7 @@
   <title>JMRI: Transit - Actions</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI help Transit Special Actions">
   <!--#include virtual="/Style" -->
@@ -37,7 +37,7 @@
       <b><a href=
       "../dispatcher/Dispatcher.shtml">Dispatcher</a></b> by a
       <i>virtual engineer</i>. If running Trains in automatic mode
-      is of interest read on. If your trains will only be run
+      is of interest, please read on. If your trains will only be run
       manually with a human engineer, <b>Actions</b> aren't
       used.</p>
 
@@ -73,12 +73,15 @@
       An Action is initiated when the Train enters the Section with
       the Action request. To decide <i>when</i> to perform the
       Action after the Section is entered, the program looks at the
-      <b><i>when</i></b> event.</p>
+      <b><i>When</i></b> event.</p>
 
+      <img src="images/AddEditAction.png" width="322" height="247">
+
+      <a id="when" name="when"></a>
       <h3>When to take action?</h3>
+
       <p>Available <b><i><a href=
       "AddEditAction.shtml#when">When</a></i></b> event choices are:</p>
-
       <ul>
         <li><b>On Section Entry</b></li>
         <li><b>On Section Exit</b></li>
@@ -87,24 +90,22 @@
         <li><b>On Train Stop</b></li>
         <li><b>On Train Start</b></li>
         <li><b>On Sensor ACTIVE</b></li>
-        <li><b>On Sensor INACTIVE</b><br>
-      <img src="images/AddEditAction.png" height="309" width="460">
-        </li>
+        <li><b>On Sensor INACTIVE</b></li>
       </ul>
 
-      <p>An Optional Delay may be set for each <b><i>When</i></b>
-      event, specified in milliseconds.
-      If the Optional Delay time is set to zero (the default),
+      <p>Optionally a <b>Delay</b> may be set for each
+      <b><i>When</i></b> event, specified in milliseconds.
+      If the Delay time is set to zero (the default),
       the action will be performed immediately after the
-      <b><i>when</i></b> event occurs. If a delay time is
+      <b><i>When</i></b> event occurs. If a Delay time is
       specified, the program will wait for the specified time in
-      fast clock minutes after the <b><i>when</i></b> event occurs
+      fast clock minutes after the <b><i>When</i></b> event occurs
       before performing the action.</p>
 
       <a id="what" name="what"></a>
       <h3>What action to perform?</h3>
 
-      <p>Available <b><i>what</i></b> actions are:</p>
+      <p>Available <b><i>What</i></b> actions are:</p>
 
       <ul>
         <li><b>Pause Train</b> - Stop the Train for a specified
@@ -242,7 +243,7 @@
       "images/ViewSpecialActions.png" height="340" width="771">
 
       <p>For all Actions that have been created, the
-      <b><i>when</i></b> event and the <b><i>what</i></b> action
+      <b><i>When</i></b> event and the <b><i>What</i></b> action
       are described in the <b>When</b> and <b>Action Requested</b>
       columns respectively.<br>
       To add a new Action, click <b>Add New Action...</b> to

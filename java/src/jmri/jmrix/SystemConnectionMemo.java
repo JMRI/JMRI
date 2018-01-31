@@ -147,10 +147,14 @@ abstract public class SystemConnectionMemo extends Bean {
     }
 
     /**
-     * Does this connection provide a manager of this type?
+     * Check if this connection provides a specific manager type. This method
+     * <strong>must</strong> return false if a manager for the specific type is
+     * not provided, and <strong>must</strong> return true if a manager for the
+     * specific type is provided.
      *
      * @param c The class type for the manager to be provided
      * @return true if the specified manager is provided
+     * @see #get(java.lang.Class)
      */
     @OverridingMethodsMustInvokeSuper
     public boolean provides(Class<?> c) {
@@ -170,15 +174,20 @@ abstract public class SystemConnectionMemo extends Bean {
     }
 
     /**
-     * get a manager of this type
+     * Get a manager for a specific type. This method <strong>must</strong>
+     * return a non-null value if {@link #provides(java.lang.Class)} is true for
+     * the type, and <strong>must</strong> return null if provides() is false
+     * for the type.
      *
      * @param <T> Type of manager to get
      * @param T   Type of manager to get
-     * @return The manager or null
+     * @return The manager or null if provides() is false for T
+     * @see #provides(java.lang.Class)
      */
     @OverridingMethodsMustInvokeSuper
+    @SuppressWarnings("unchecked") // dynamic checking done on cast of getConsistManager
     public <T> T get(Class<?> T) {
-        if (T.equals(jmri.ConsistManager.class)) {
+        if (T.equals(ConsistManager.class)) {
             return (T) getConsistManager();
         } else {
             return null; // nothing, by default

@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <!-- Copyright Bob Jacobsen 2004, 2007, 2008 -->
@@ -10,7 +9,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: XML Persistance</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code xml persistance">
   <!--#include virtual="/Style" -->
@@ -21,7 +20,7 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: XML Persistance</h1>
+      <h1>JMRI Code: XML Persistance</h1>
 
       <p>JMRI uses XML for persisting internal structures,
       especially when storing the preferences and panel files.</p>
@@ -48,9 +47,9 @@
       it comes from a C++ background and the developer keeps
       wishing for templates and mixin classes. But it works!</p>
 
-      <h3>Example</h3>A LightManager knows about Lights.
-
-      <p>There are lots of concrete classes implementing the Light
+      <h3>Example</h3>
+      <p>A LightManager knows about Lights.<br>
+      There are lots of concrete classes implementing the Light
       interface:</p>
 
       <ul>
@@ -97,11 +96,11 @@
       persistance classes for the individual objects in addition to
       the manager.</p>
 
-      <h3>Added More Information To A Class</h3>If you want to
+      <h3>Adding More Information to a Class</h3>
+      <p>If you want to
       store more state information, find the persisting class and
-      add code to it to create and read attributes or elements.
-
-      <p>Perhaps the easiest way to do this is to create a sample
+      add code to it to create and read attributes or elements.<br>
+      Perhaps the easiest way to do this is to create a sample
       panel file with the objects you want to store in it:</p>
       <pre>
   &lt;sensors class="jmri.jmrix.cmri.serial.configurexml.SerialSensorManagerXml" /&gt;
@@ -162,15 +161,16 @@
       </ul>
       
       <h2><a id="schema" name="schema">Schema
-      Management</a></h2>JMRI controls
-      XML semantics using <a href="XmlSchema.shtml">XML
-      Schema</a>.
+      Management</a></h2>
+      <p>JMRI controls XML semantics using <a href="XmlSchema.shtml">XML
+      Schema</a>.</p>
 
       <p>For example, layout information is stored in XML files as
       a "layout-config" element, whose contents are then defined
       via a schema file. These files are kept in the <a href=
-      "http://jmri.org/xml/schema">xml/schema</a> directory. 
-      <!--#include virtual="/Footer" --></p>
+      "http://jmri.org/xml/schema">xml/schema</a> directory.</p>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- Updated by Blorec Herv&#233; le 2016-08-01--> 
+<!-- Updated by Blorec Herv&#233; le 2016-08-01-->
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Introduction &agrave; la Structure</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code">
   <!-- Style -->
   <meta http-equiv="content-type" content=
@@ -139,8 +138,8 @@ semblable du mod&#232;le. </ul>
       qui repr&eacute;sente quelque chose sur le r&eacute;seau,
       vous faite une demande au TurnoutManager. Il s'agit
       &eacute;galement d'une interface, avec une
-      impl&eacute;mentation semblable du mod&egrave;le. 
-      <!--#include virtual="/Footer" --></p>
+      impl&eacute;mentation semblable du mod&egrave;le.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

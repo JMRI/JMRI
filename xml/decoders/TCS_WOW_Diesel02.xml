@@ -19,6 +19,8 @@
 	<!-- V3 fix version ID for 501 model -->
 	<version author="Michael Mosher" version="4" lastUpdated="20170317"/>
 	<!-- update factory resets -->
+	<version author="Michael Mosher" version="5" lastUpdated="20180124"/>
+	<!-- update bell to same sound option as steam so it shows up on sound pane-->
 	<decoder>
 		<family name="WOW Diesel Sound Set 2" mfg="Train Control Systems" >
 			<model model="WOW Diesel 101 SS2" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="9pin"
@@ -1628,7 +1630,7 @@
 				</enumVal>
 				<label>Primemover type</label>
 			</variable>
-			<variable item="Sound Option 5" CV="T2CV.4.23" default="0" tooltip="Rotate bell function will change this setting">
+			<variable item="Sound Option 6" CV="T2CV.4.23" default="0" tooltip="Rotate bell function will change this setting">
 				<enumVal>
 					<enumChoice choice="Electric E-Bell"/>
 					<enumChoice choice="Fairbanks Morse"/>

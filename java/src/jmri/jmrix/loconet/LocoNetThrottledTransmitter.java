@@ -41,7 +41,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
     /**
      * Request that server thread cease operation, no more messages can be sent.
      * Note that this returns before the thread is known to be done if it still
-     * has work pending.  If you need to be sure it's done, check and wait on 
+     * has work pending.  If you need to be sure it's done, check and wait on
      * !running.
      */
     public void dispose() {
@@ -142,8 +142,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
                     // and go round again
                 } catch (Exception e) {
                     // just report error and continue
-                    log.error("Exception in ServiceThread: " + e);
-                    e.printStackTrace();
+                    log.error("Exception in ServiceThread: ", e);
                 }
             }
             running = false;

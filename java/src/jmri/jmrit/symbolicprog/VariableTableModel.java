@@ -752,18 +752,17 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if (log.isDebugEnabled()) {
             log.debug("prop changed " + e.getPropertyName()
                     + " new value: " + e.getNewValue()
-                    + (e.getPropertyName().equals("State") ? (" (" + VariableValue.stateNameFromValue(((Integer) e.getNewValue()).intValue()) + ") ") : " ")
+                    + (e.getPropertyName().equals("State") ? (" (" + VariableValue.stateNameFromValue(((Integer) e.getNewValue())) + ") ") : " ")
                     + " Source " + e.getSource());
         }
         if (e.getNewValue() == null) {
-            log.error("new value of " + e.getPropertyName() + " should not be null!");
-            (new Exception()).printStackTrace();
+            log.error("new value of {} should not be null!", e.getPropertyName(), new Exception());
         }
         // set dirty only if edited or read
         if (e.getPropertyName().equals("State")
-                && ((Integer) e.getNewValue()).intValue() == CvValue.READ
+                && ((Integer) e.getNewValue()) == CvValue.READ
                 || e.getPropertyName().equals("State")
-                && ((Integer) e.getNewValue()).intValue() == CvValue.EDITED) {
+                && ((Integer) e.getNewValue()) == CvValue.EDITED) {
             setFileDirty(true);
 
         }

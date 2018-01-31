@@ -72,13 +72,13 @@ public class XBeeNode extends IEEE802154Node {
     public XBeeNode(RemoteXBeeDevice rxd) throws TimeoutException, XBeeException {
         super(DefaultPanID, rxd.get16BitAddress().getValue(), rxd.get64BitAddress().getValue());
         identifier = rxd.getNodeID();
-       
+
         try{
            setPANAddress(rxd.getPANID());
         } catch (TimeoutException t) {
           // we dont need the PAN ID for communicaiton,so just continue.
         }
- 
+
         if (log.isDebugEnabled()) {
             log.debug("Created new node from RemoteXBeeDevice: {}",
                     rxd.toString() );
@@ -351,18 +351,8 @@ public class XBeeNode extends IEEE802154Node {
             java.lang.reflect.Constructor<?> ctor = T.getConstructor(java.io.DataInputStream.class, java.io.DataOutputStream.class, String.class);
             connectedController = (jmri.jmrix.AbstractStreamPortController) ctor.newInstance(getIOStream().getInputStream(), getIOStream().getOutputStream(), "XBee Node " + getPreferedName());
             connectedController.configure();
-        } catch (java.lang.InstantiationException ie) {
-            log.error("Unable to construct Stream Port Controller for node.");
-            ie.printStackTrace();
-        } catch (java.lang.NoSuchMethodException nsm) {
-            log.error("Unable to construct Stream Port Controller for node.");
-            nsm.printStackTrace();
-        } catch (java.lang.IllegalAccessException iae) {
-            log.error("Unable to construct Stream Port Controller for node.");
-            iae.printStackTrace();
-        } catch (java.lang.reflect.InvocationTargetException ite) {
-            log.error("Unable to construct Stream Port Controller for node.");
-            ite.printStackTrace();
+        } catch (java.lang.InstantiationException | java.lang.NoSuchMethodException | java.lang.IllegalAccessException | java.lang.reflect.InvocationTargetException ex) {
+            log.error("Unable to construct Stream Port Controller for node.", ex);
         }
     }
 
@@ -470,7 +460,7 @@ public class XBeeNode extends IEEE802154Node {
             default:
                 log.warn("Unhandled pin value: {}", pin);
                 break;
-              
+
           }
           device.setParameter("PR",PRValue);
           device.applyChanges();  // force the XBee to start using the new value.
@@ -482,7 +472,7 @@ public class XBeeNode extends IEEE802154Node {
     }
 
    /**
-    * Package protected method to check to see if the PR parameter indicates 
+    * Package protected method to check to see if the PR parameter indicates
     * the specified pin has the pull-up resistor enabled.
     *
     * @param pin the pin number
@@ -499,9 +489,9 @@ public class XBeeNode extends IEEE802154Node {
        byte prbyte;
        try {
           readLock.lock();
-          if(PRValue == null){ 
+          if(PRValue == null){
              PRValue = device.getParameter("PR");
-          } 
+          }
           prbyte = PRValue[0];
        } finally {
           readLock.unlock();
@@ -564,7 +554,7 @@ public class XBeeNode extends IEEE802154Node {
               retval = jmri.Sensor.PullResistance.PULL_OFF;
            }
            break;
-       default: 
+       default:
           retval = jmri.Sensor.PullResistance.PULL_OFF;
        }
        return retval;

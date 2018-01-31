@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2009
  */
-public class SensorTableAction extends AbstractTableAction {
+public class SensorTableAction extends AbstractTableAction<Sensor> {
 
     /**
      * Create an action with a specific title.
@@ -63,10 +63,10 @@ public class SensorTableAction extends AbstractTableAction {
 
     protected SensorManager senManager = InstanceManager.sensorManagerInstance();
 
+    /** {@inheritDoc} */
     @Override
-    @SuppressFBWarnings("BC_UNCONFIRMED_CAST") // AbstractTableTabAction responsible for getting this right;
-    public void setManager(@Nonnull Manager man) {
-        senManager = (SensorManager) man;
+    public void setManager(@Nonnull Manager<Sensor> s) {
+        senManager = (SensorManager)s;
         if (m != null) {
             m.setManager(senManager);
         }
@@ -81,11 +81,13 @@ public class SensorTableAction extends AbstractTableAction {
         m = new jmri.jmrit.beantable.sensor.SensorTableDataModel(senManager);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleSensorTable"));
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.SensorTable";
@@ -109,6 +111,7 @@ public class SensorTableAction extends AbstractTableAction {
     jmri.UserPreferencesManager p;
     String connectionChoice = "";
 
+    /** {@inheritDoc} */
     @Override
     protected void addPressed(ActionEvent e) {
         p = InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -237,7 +240,6 @@ public class SensorTableAction extends AbstractTableAction {
         // Add some entry pattern checking, before assembling sName and handing it to the sensorManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameSensor"));
         String errorMessage = null;
-        String lastSuccessfulAddress = Bundle.getMessage("NONE");
         for (int x = 0; x < numberOfSensors; x++) {
             try {
                 curAddress = InstanceManager.sensorManagerInstance().getNextValidAddress(curAddress, sensorPrefix);
@@ -257,7 +259,6 @@ public class SensorTableAction extends AbstractTableAction {
                 break;
             }
 
-            lastSuccessfulAddress = curAddress;
             // Compose the proposed system name from parts:
             sName = sensorPrefix + InstanceManager.sensorManagerInstance().typeLetter() + curAddress;
             Sensor s = null;
@@ -500,9 +501,16 @@ public class SensorTableAction extends AbstractTableAction {
         a.showPullUp(showPullUpBox.isSelected());
     }
 
+    void showStateForgetAndQueryChanged() {
+        jmri.jmrit.beantable.sensor.SensorTableDataModel a = (jmri.jmrit.beantable.sensor.SensorTableDataModel) m;
+        a.showStateForgetAndQuery(showStateForgetAndQueryBox.isSelected());
+    }
+
     JCheckBox showDebounceBox = new JCheckBox(Bundle.getMessage("SensorDebounceCheckBox"));
     JCheckBox showPullUpBox = new JCheckBox(Bundle.getMessage("SensorPullUpCheckBox"));
+    JCheckBox showStateForgetAndQueryBox = new JCheckBox(Bundle.getMessage("ShowStateForgetAndQuery"));
 
+    /** {@inheritDoc} */
     @Override
     public void addToFrame(BeanTableFrame f) {
         f.addToBottomBox(showDebounceBox, this.getClass().getName());
@@ -522,8 +530,18 @@ public class SensorTableAction extends AbstractTableAction {
             }
         });
         showPullUpBox.setVisible(true);
+        f.addToBottomBox(showStateForgetAndQueryBox, this.getClass().getName());
+        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateForgetAndQueryBoxToolTip"));
+        showStateForgetAndQueryBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                showStateForgetAndQueryChanged();
+            }
+        });
+        showStateForgetAndQueryChanged();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void addToPanel(AbstractTableTabAction f) {
         String systemPrefix = ConnectionNameFromSystemName.getConnectionName(senManager.getSystemPrefix());
@@ -547,8 +565,18 @@ public class SensorTableAction extends AbstractTableAction {
                 showPullUpChanged();
             }
         });
+        f.addToBottomBox(showStateForgetAndQueryBox, systemPrefix);
+        showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateForgetAndQueryBoxToolTip"));
+        showStateForgetAndQueryBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                showStateForgetAndQueryChanged();
+            }
+        });
+        showStateForgetAndQueryChanged();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setMessagePreferencesDetails() {
         InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
@@ -643,6 +671,7 @@ public class SensorTableAction extends AbstractTableAction {
             // set default background color for invalid field data
             Color mark = Color.orange;
 
+            /** {@inheritDoc} */
             @Override
             public boolean shouldYieldFocus(javax.swing.JComponent input) {
                 if (input.getClass() == CheckedTextField.class) {
@@ -661,6 +690,7 @@ public class SensorTableAction extends AbstractTableAction {
                 }
             }
 
+            /** {@inheritDoc} */
             @Override
             public boolean verify(javax.swing.JComponent input) {
                 if (input.getClass() == CheckedTextField.class) {
@@ -670,6 +700,7 @@ public class SensorTableAction extends AbstractTableAction {
                 }
             }
 
+            /** {@inheritDoc} */
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 JTextField source = (JTextField) e.getSource();
@@ -679,11 +710,13 @@ public class SensorTableAction extends AbstractTableAction {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String getClassName() {
         return SensorTableAction.class.getName();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleSensorTable");

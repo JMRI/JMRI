@@ -17,7 +17,7 @@ public class DCCppTurnoutReplyCacheTest {
         // infrastructure objects
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
 
-        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
+        new DCCppSystemConnectionMemo(tc);
 
         DCCppTurnoutReplyCache t = new DCCppTurnoutReplyCache(tc);
         Assert.assertNotNull("exists",t);

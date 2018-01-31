@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright ($Author$) 2008 -->
-  <!-- $Id$ -->
   <!-- Translated  by Blorec Hervé le 2011-11-1-->
 
   <title>JMRI: CBUS Event Capture Tool</title><!-- Style -->
@@ -26,13 +25,13 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>JMRI: Outil de capture
-      d'&Atilde;&copy;v&Atilde;&copy;nement CBUS</h1>CBUS <a href=
+      d'&eacute;v&eacute;nement CBUS</h1>CBUS <a href=
       "../../../../../../../html/hardware/can/images/ConfigTool.jpg">
       <img src=
       "../../../../../../../html/hardware/can/images/ConfigTool.jpg"
       width="363" height="336" alt="Ecran Config Tool" align=
       "right"></a><br>
-      L'outil de capture de l'&Atilde;&copy;v&Atilde;&copy;nement
+      L'outil de capture de l'&eacute;v&eacute;nement
       CBUS peut simplifier la configuration de JMRI pour bien
       travailler avec votre installation <a href=
       "../../../../../../../html/hardware/can/cbus/index.html">CBUS</a>
@@ -41,11 +40,11 @@
       <p>Pour <a href=
       "../../../../../../../html/hardware/can/cbus/index.html">configurer
       les capteurs et les aiguillages JMRI</a> , vous avez besoin
-      d'identifier les &Atilde;&copy;v&Atilde;&copy;nements
-      associ&Atilde;&copy;s CBUS. Il y a plusieurs
+      d'identifier les &eacute;v&eacute;nements
+      associ&eacute;s CBUS. Il y a plusieurs
       fa&Atilde;&sect;ons de le faire. Le reste de cette page passe
       par des alternatives, en utilisant la configuration d'un
-      capteur comme un exemple. Des m&Atilde;&copy;thodes
+      capteur comme un exemple. Des m&eacute;thodes
       similaires travaillent pour les branchements.</p>
 
       <h3>Fournir l'ID
@@ -107,16 +106,16 @@
       bo&Atilde;&reg;tes, vous pouvez capturer une
       s&Atilde;&copy;rie de messages.</p>
 
-      <p>Une fois que vous avez captur&Atilde;&copy;
-      l'&Atilde;&copy;v&Atilde;&copy;nement que vous souhaitez,
+      <p>Une fois que vous avez captur&eacute;
+      l'&eacute;v&eacute;nement que vous souhaitez,
       vous pouvez le copier et coller dans les cases de la partie
-      inf&Atilde;&copy;rieure de la fen&Atilde;&ordf;tre. Si votre
+      inf&eacute;rieure de la fen&ecirc;tre. Si votre
       ordinateur le permet, vous pouvez aussi simplement faire
-      glisser et d&Atilde;&copy;poser la valeur dans le champ
+      glisser et d&eacute;poser la valeur dans le champ
       inf&Atilde;&copy;rieur.</p>
 
       <h3>Autres Outils</h3>Une fois que vous avez
-      cr&Atilde;&copy;&Atilde;&copy; un capteur ou un aiguillage,
+      cr&eacute;&eacute; un capteur ou un aiguillage,
       vous pouvez utiliser la <a href=
       "../../../../../jmrit/beantable/SensorTable.shtml">Table
       Capteur</a> ou <a href=
@@ -124,9 +123,10 @@
       Aiguillage</a> pour ajuster les d&Atilde;&copy;tails.
 
       <p>l' <a href="../console/CbusConsoleFrame.shtml">console
-      CBUS</a> peut vous aider &Atilde;  comprendre quels
-      &Atilde;&copy;v&Atilde;&copy;nements sont survenus sur votre
-      R&Atilde;&copy;seau. <!--#include virtual="/Footer" --></p>
+      CBUS</a> peut vous aider &aacute; comprendre quels
+      &eacute;v&eacute;nements sont survenus sur votre
+      R&eacute;seau.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

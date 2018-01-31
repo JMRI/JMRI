@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -9,7 +8,7 @@
 
   <title>JMRI: Getting the OLD SVN Code - no longer
   supported</title>
-  <meta content="Bob Jacobsen" name="Author">
+    <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code SVN download">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -24,25 +23,22 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <!-- ============= -->
-      <!-- Page Contents --><!-- Required -->
-      <!-- ============= -->
 
-      <h1>JMRI: Getting the old SVN Code</h1>
+      <h1>JMRI Code: Getting the OLD SVN Code (archived)</h1>
 
       <h2>This page is kept for historical purposes only!</h2>
 
-      <p><em>JMRI has migrated away from <a href=
+      <p class="important">JMRI has migrated away from <a href=
       "getcvscode.shtml">CVS</a> for version control to SVN in July
       2011, and on to Git in September 2015. For access to the
       current JMRI source code, please see the <a href=
-      "getgitcode.shtml">Git repository</a> information.</em></p>
+      "getgitcode.shtml">Git repository</a> information.</p>
 
       <p>JMRI release 4.1.1 (and earlier) were made from SVN, and
       to access that source code, you should use the detailed
       instructions below.</p>
 
-      <h2>Quickstart</h2>
+      <h2>Quick Start</h2>
 
       <p>You can download the JMRI source code from Subversion
       using:</p>
@@ -122,7 +118,8 @@
       <p>The best way to retrieve the source for releases 2.12 and
       earlier is from the <a href="getcvscode.shtml">CVS
       Repository</a>. Please see those instructions for
-      details.</p><!--#include virtual="/Footer" -->
+      details.</p>
+        <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

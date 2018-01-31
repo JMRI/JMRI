@@ -24,9 +24,15 @@ public class TmccSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
     public void setUp(){
        JUnitUtil.setUp();
        TmccSystemConnectionMemo memo = new TmccSystemConnectionMemo();
-       SerialTrafficController tc = new SerialTrafficController(memo) {
+       new SerialTrafficController(memo) {
           @Override
           public void sendSerialMessage(SerialMessage m, SerialListener reply) {
+          }
+          @Override
+          public void transmitLoop(){
+          }
+          @Override
+          public void receiveLoop(){
           }
        };
        scm = memo;

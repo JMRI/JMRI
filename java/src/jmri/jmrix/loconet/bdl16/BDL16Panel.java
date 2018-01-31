@@ -1,10 +1,16 @@
 package jmri.jmrix.loconet.bdl16;
 
 import java.util.Collections;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.BorderFactory;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -13,14 +19,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Panel displaying and programming a BDL16x configuration.
- * <P>
+ * <p>
  * The read and write require a sequence of operations, which we handle with a
  * state variable.
- * <P>
+ * <p>
  * Programming of the BDL16x is done via configuration messages, so the BDL16x
  * should not be put into programming mode via the built-in pushbutton while
  * this tool is in use.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -32,8 +38,8 @@ import org.slf4j.LoggerFactory;
 public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     /**
-     * BDL16x Configuration Tool
-     * 
+     * BDL16x Configuration Tool.
+     * <p>
      * Use this constructor when the Unit Address is unknown.
      */
     public BDL16Panel() {
@@ -47,23 +53,22 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     JComboBox<String> comboBox[];
     
     /**
-     * BDL16x Programming tool
-     * 
+     * BDL16x Programming tool.
+     * <p>
      * Use this constructor when the Unit Address is known.
      * 
-     * @param boardNum - integer for the initial Unit Address
-     * @param readOnInit - True to trigger automatic read of the board
+     * @param boardNum    integer for the initial Unit Address
+     * @param readOnInit  True to trigger automatic read of the board
      */
     public BDL16Panel(int boardNum, boolean readOnInit) {
         super(boardNum, readOnInit);
         setTypeWord(0x71);  // configure BDL16x message type
                 origAccessBoardNum = boardNum;
         boardNumsEntryValue.add(boardNum);
-
     }
 
     /**
-     * Gets the URL for the HTML help for this tool
+     * Get the URL for the HTML help for this tool.
      * 
      * @return URL
      */
@@ -73,7 +78,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     /**
-     * Get the name of the tool for use in the title of the window
+     * Get the name of the tool for use in the title of the window.
      * 
      * @return String containing text for the title of the window
      */
@@ -83,9 +88,9 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     /**
-     * Copy from the GUI to the opsw array.
+     * Copy from the GUI to the OpSw array.
      * <p>
-     * Used before write operations start
+     * Used before write operations start.
      */
     @Override
     protected void copyToOpsw() {
@@ -119,7 +124,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     /**
-     * Update the GUI elements
+     * Update the GUI elements.
      */
     @Override
     protected void updateDisplay() {
@@ -153,10 +158,10 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     /**
-     * Determine the next OpSw to be accessed
+     * Determine the next OpSw to be accessed.
      * 
-     * @param state - most-recently accessed OpSw
-     * @return  - next OpSw to be accessed
+     * @param state  most-recently accessed OpSw
+     * @return       next OpSw to be accessed
      */
     @Override
     protected int nextState(int state) {
@@ -210,9 +215,9 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
     
     /**
-     * Initialize LocoNet connection for use by the tool
+     * Initialize LocoNet connection for use by the tool.
      * 
-     * @param memo - LocoNet Connection
+     * @param memo  the LocoNet Connection
      */
     @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
@@ -225,9 +230,12 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         m.setElement(4, 0);
         memo.getLnTrafficController().sendLocoNetMessage(m);
     }
-    
+
+    private GridBagConstraints gc = new GridBagConstraints();
+    private GridBagLayout gl = new GridBagLayout();
+
     /**
-     * Initialize the GUI elements for use by the tool
+     * Initialize the GUI elements for use by the tool.
      */
     @Override
     public void initComponents() {
@@ -274,144 +282,215 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         
         appendLine(addressingPanel);  // add read/write buttons, address
         
-        comboBox = new JComboBox[48];
+        comboBox = new JComboBox[48];  // can't use JComboBox<String>[48] as you can't have an array of type-erased types
         
-        JPanel allBoardsOptions = new JPanel();
-        allBoardsOptions.setLayout(new BoxLayout(allBoardsOptions, BoxLayout.Y_AXIS));
-        javax.swing.border.TitledBorder allBoardsTitleBorder;
-        javax.swing.border.Border blackline;
-        blackline = javax.swing.BorderFactory.createLineBorder(java.awt.Color.black);
-        allBoardsTitleBorder = javax.swing.BorderFactory.createTitledBorder(blackline,
+        JPanel frame1 = new JPanel();
+        frame1.setLayout(new BoxLayout(frame1, BoxLayout.PAGE_AXIS));
+
+        TitledBorder allBoardsTitleBorder;
+        Border blackline;
+        blackline = BorderFactory.createLineBorder(java.awt.Color.black);
+        allBoardsTitleBorder = BorderFactory.createTitledBorder(blackline,
                 Bundle.getMessage("TitledBorderLabelAllBoards"));
-        allBoardsOptions.setBorder(allBoardsTitleBorder);
-        
-        JPanel jp = new JPanel();
-        getComboBox(1, jp);       
-        allBoardsOptions.add(jp);
-        
-        jp = new JPanel();
-        getComboBox(9, jp);
-        allBoardsOptions.add(jp);
+        frame1.setBorder(allBoardsTitleBorder);
 
-        jp = new JPanel();
-        getComboBox(10, jp);
-        allBoardsOptions.add(jp);
+        JPanel allBoardsOptions = new JPanel();
+        allBoardsOptions.setLayout(gl);
+        // configure GridBagConstraints
+        gc.ipadx = 15;
+        gc.ipady = 20;
+        gc.gridy = 0;
 
-        jp = new JPanel();
-        getComboBox(11, jp);
-        allBoardsOptions.add(jp);
+        allBoardsOptions.add(getLabel(1));
+        allBoardsOptions.add(getComboBox(1));
+        gc.gridy++;
 
-        jp = new JPanel();
-        getComboBox(12, jp);
-        allBoardsOptions.add(jp);
+        allBoardsOptions.add(getLabel(9));
+        allBoardsOptions.add(getComboBox(9));
+        gc.gridy++;
 
-        jp = new JPanel();
-        getComboBox(13, jp);
-        allBoardsOptions.add(jp);
+        allBoardsOptions.add(getLabel(10));
+        allBoardsOptions.add(getComboBox(10));
+        gc.gridy++;
 
-        jp = new JPanel();
-        getComboBox(19, jp);
-        allBoardsOptions.add(jp);
+        allBoardsOptions.add(getLabel(11));
+        allBoardsOptions.add(getComboBox(11));
+        gc.gridy++;
 
-        jp = new JPanel();
-        getComboBox(25, jp);
-        allBoardsOptions.add(jp);
+        allBoardsOptions.add(getLabel(12));
+        allBoardsOptions.add(getComboBox(12));
+        gc.gridy++;
 
-        jp = new JPanel();
-        getComboBox(26, jp);
-        allBoardsOptions.add(jp);
+        allBoardsOptions.add(getLabel(13));
+        allBoardsOptions.add(getComboBox(13));
+        gc.gridy++;
 
-        jp = new JPanel();
-        getComboBox(40, jp);
-        allBoardsOptions.add(jp);
+        allBoardsOptions.add(getLabel(19));
+        allBoardsOptions.add(getComboBox(19));
+        gc.gridy++;
 
-        appendLine(allBoardsOptions);
-        
-        JPanel bdl162Bdl168BoardsOptions = new JPanel();
-        bdl162Bdl168BoardsOptions.setLayout(new BoxLayout(bdl162Bdl168BoardsOptions, BoxLayout.Y_AXIS));
-        javax.swing.border.TitledBorder bdl162Bdl168BoardsTitleBorder;
-        bdl162Bdl168BoardsTitleBorder = javax.swing.BorderFactory.createTitledBorder(blackline,
+        allBoardsOptions.add(getLabel(25));
+        allBoardsOptions.add(getComboBox(25));
+        gc.gridy++;
+
+        allBoardsOptions.add(getLabel(26));
+        allBoardsOptions.add(getComboBox(26));
+        gc.gridy++;
+
+        allBoardsOptions.add(getLabel(40));
+        allBoardsOptions.add(getComboBox(40));
+
+        frame1.add(allBoardsOptions);
+
+        JPanel frame2 = new JPanel();
+        frame2.setLayout(new BoxLayout(frame2, BoxLayout.PAGE_AXIS));
+        TitledBorder bdl162Bdl168BoardsTitleBorder;
+        bdl162Bdl168BoardsTitleBorder = BorderFactory.createTitledBorder(blackline,
                 Bundle.getMessage("TitledBorderLabelBdl162Bdl168Boards"));
-        bdl162Bdl168BoardsOptions.setBorder(bdl162Bdl168BoardsTitleBorder);
-        
-        jp = new JPanel();
-        getComboBox(3, jp);
-        bdl162Bdl168BoardsOptions.add(jp);
+        frame2.setBorder(bdl162Bdl168BoardsTitleBorder);
 
-        jp = new JPanel();
-        getComboBox(5, jp);
-        bdl162Bdl168BoardsOptions.add(jp);
+        JPanel bdl162Bdl168BoardsOptions = new JPanel();
+        bdl162Bdl168BoardsOptions.setLayout(gl);
+        gc.gridy = 0;
 
-        jp = new JPanel();
-        getComboBox(6, jp);
-        bdl162Bdl168BoardsOptions.add(jp);
+        bdl162Bdl168BoardsOptions.add(getLabel(3));
+        bdl162Bdl168BoardsOptions.add(getComboBox(3));
+        gc.gridy++;
 
-        jp = new JPanel();
-        getComboBox(7, jp);
-        bdl162Bdl168BoardsOptions.add(jp);
+        bdl162Bdl168BoardsOptions.add(getLabel(5));
+        bdl162Bdl168BoardsOptions.add(getComboBox(5));
+        gc.gridy++;
 
-        jp = new JPanel();
-        getComboBox(36, jp);
-        bdl162Bdl168BoardsOptions.add(jp);
-        
-        jp = new JPanel();
-        getComboBox(37,38, jp);
-        bdl162Bdl168BoardsOptions.add(jp);
+        bdl162Bdl168BoardsOptions.add(getLabel(6));
+        bdl162Bdl168BoardsOptions.add(getComboBox(6));
+        gc.gridy++;
 
-        jp = new JPanel();
-        getComboBox(42, jp);
-        bdl162Bdl168BoardsOptions.add(jp);
-        
-        appendLine(bdl162Bdl168BoardsOptions);
+        bdl162Bdl168BoardsOptions.add(getLabel(7));
+        bdl162Bdl168BoardsOptions.add(getComboBox(7));
+        gc.gridy++;
+
+        bdl162Bdl168BoardsOptions.add(getLabel(36));
+        bdl162Bdl168BoardsOptions.add(getComboBox(36));
+
+        frame2.add(bdl162Bdl168BoardsOptions);
+        frame1.add(frame2);
+
+        JPanel frame3 = new JPanel();
+        frame3.setLayout(new BoxLayout(frame3, BoxLayout.PAGE_AXIS));
+
+        TitledBorder bdl168SpecificTitleBorder;
+        bdl168SpecificTitleBorder = BorderFactory.createTitledBorder(blackline,
+                Bundle.getMessage("TitledBorderLabelBdl168Only"));
+        frame3.setBorder(bdl168SpecificTitleBorder);
 
         JPanel bdl168SpecificOptions = new JPanel();
-        bdl168SpecificOptions.setLayout(new BoxLayout(bdl168SpecificOptions, BoxLayout.Y_AXIS));
-        javax.swing.border.TitledBorder bdl168SpecificTitleBorder;
-        bdl168SpecificTitleBorder = javax.swing.BorderFactory.createTitledBorder(blackline,
-                Bundle.getMessage("TitledBorderLabelBdl168Only"));
-        bdl168SpecificOptions.setBorder(bdl168SpecificTitleBorder);
+        bdl168SpecificOptions.setLayout(gl);
+        gc.gridy = 0;
 
-        jp = new JPanel();
-        getComboBox(39, jp);
-        bdl168SpecificOptions.add(jp);
+        bdl168SpecificOptions.add(getLabel(37, 38));
+        bdl168SpecificOptions.add(getComboBox(37, 38));
+        gc.gridy++;
 
-        jp = new JPanel();
-        getComboBox(43, 44, jp);
-        bdl168SpecificOptions.add(jp);
+        bdl168SpecificOptions.add(getLabel(42));
+        bdl168SpecificOptions.add(getComboBox(42));
+        gc.gridy++;
 
-        appendLine(bdl168SpecificOptions);
+        bdl168SpecificOptions.add(getLabel(39));
+        bdl168SpecificOptions.add(getComboBox(39));
+        gc.gridy++;
 
+        bdl168SpecificOptions.add(getLabel(43, 44));
+        bdl168SpecificOptions.add(getComboBox(43, 44));
+
+        frame3.add(bdl168SpecificOptions);
+        frame2.add(frame3);
+
+        appendLine(frame1);
         appendLine(provideStatusLine());
         setStatus(Bundle.getMessage("STATUS_TEXT_BOARD_MODE"));
-
     }
 
     /**
-     * Create a JComboBox with two possible values
-     * 
+     * Create a JLabel for an OpSw.
+     *
+     * @param n   OpSw number
+     * @param jp  the JPanel into which the Label is placed
+     */
+    private JLabel getLabel(int n) {
+        String number = Integer.toString(n);
+        if (number.length() == 1) {
+            number = "0" + number;
+        }
+        JLabel label = new JLabel(Bundle.getMessage("LabelX", number)); // NOI18N
+        label.setHorizontalAlignment(SwingConstants.RIGHT);
+        label.setPreferredSize(new JLabel("XXXXXXXXXXXXXXXXXX").getPreferredSize()); // NOI18N
+        // layout
+        gc.gridx = 0;
+        gc.weightx = 0.5;
+        gc.anchor = GridBagConstraints.EAST;
+        gl.setConstraints(label, gc);
+        return label;
+    }
+
+    /**
+     * Create a JLabel for an OpSw.
+     *
+     * @param n first OpSw number
+     * @param n2 second OpSw number
+     * @param jp the JPanel into which the Label is placed
+     */
+    private JLabel getLabel(int n, int n2) {
+        String number = Integer.toString(n);
+        if (number.length() == 1) {
+            number = "0" + number;
+        }
+        String number2 = Integer.toString(n2);
+        if (number2.length() == 1) {
+            number2 = "0" + number2;
+        }
+        JLabel label = new JLabel(Bundle.getMessage("LabelXY", number, number2)); // NOI18N
+        label.setHorizontalAlignment(SwingConstants.RIGHT);
+        label.setPreferredSize(new JLabel("XXXXXXXXXXXXXXXXXX").getPreferredSize()); // NOI18N
+        // layout
+        gc.gridx = 0;
+        gc.weightx = 0.5;
+        gc.anchor = GridBagConstraints.EAST;
+        gl.setConstraints(label, gc);
+        return label;
+    }
+
+    /**
+     * Create a JComboBox with two possible values.
+     * <p>
      * For a given OpSw number, create a JComboBox containing the appropriate 
      * strings from the bundle.  Sets the initial value based on the OpSw's 
      * reported default value.
      * 
-     * @param n OpSw number
-     * @param jp the JPanel into which the JComboBox is placed
+     * @param n   OpSw number
+     * @param jp  the JPanel into which the JComboBox is placed
      */
-    private void getComboBox(int n, JPanel jp) {
+    private JComboBox getComboBox(int n) {
         String number = Integer.toString(n);
         if (number.length() == 1) {
-            number = "0"+number;
+            number = "0" + number;
         }
-        jp.add(new JLabel("OpSw"+number+": ")); // NOI18N
-        String[] s = new String[] {Bundle.getMessage("COMBOBOX_TEXT_OPSW"+number+"_THROWN"), 
-                        Bundle.getMessage("COMBOBOX_TEXT_OPSW"+number+"_CLOSED")};
+        String[] s = new String[] {Bundle.getMessage("COMBOBOX_TEXT_OPSW" + number + "_THROWN"),
+                        Bundle.getMessage("COMBOBOX_TEXT_OPSW" + number + "_CLOSED")};
         comboBox[n] = new JComboBox<>(s);
         comboBox[n].setSelectedIndex(getIndexForDefault(n));
-        jp.add(comboBox[n]);
+        // size all combos to match the widest one (and a little bit more)
+        comboBox[n].setPreferredSize(new JLabel("XXXXXXX" + Bundle.getMessage("COMBOBOX_TEXT_OPSW36_THROWN")).getPreferredSize()); // NOI18N
+        // layout
+        gc.gridx = 1;
+        gc.weightx = 1.0;
+        gc.anchor = GridBagConstraints.WEST;
+        gl.setConstraints(comboBox[n], gc);
+        return comboBox[n];
     }
 
     /**
-     * Create a JComboBox with four possible values
-     * 
+     * Create a JComboBox with four possible values.
+     * <p>
      * For two given OpSw numbers, create a JComboBox containing the appropriate 
      * strings from the bundle.  Sets the initial value based on the OpSws' 
      * reported default value.
@@ -420,32 +499,39 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
      * @param n2 second OpSw number
      * @param jp the JPanel into which the JComboBox is placed
      */
-    private void getComboBox(int n, int n2, JPanel jp) {
+    private JComboBox getComboBox(int n, int n2) {
         String number = Integer.toString(n);
         if (number.length() == 1) {
-            number = "0"+number;
+            number = "0" + number; // NOI18N
         }
         String number2 = Integer.toString(n2);
         if (number2.length() == 1) {
-            number2 = "0"+number2;
+            number2 = "0" + number2; // NOI18N
         }
-        
-        jp.add(new JLabel("OpSw"+number+" and OpSw"+number2+": ")); // NOI18N
+
         comboBox[n] = new JComboBox<>(
-                new String[] {Bundle.getMessage("COMBOBOX_TEXT_OPSW"+number+"_THROWN_OPSW"+number2+"_THROWN"), 
-                        Bundle.getMessage("COMBOBOX_TEXT_OPSW"+number+"_CLOSED_OPSW"+number2+"_THROWN"),
-                        Bundle.getMessage("COMBOBOX_TEXT_OPSW"+number+"_THROWN_OPSW"+number2+"_CLOSED"),
-                        Bundle.getMessage("COMBOBOX_TEXT_OPSW"+number+"_CLOSED_OPSW"+number2+"_CLOSED")
+                new String[] {Bundle.getMessage("COMBOBOX_TEXT_OPSW" + number + "_THROWN_OPSW" + number2 + "_THROWN"),
+                        Bundle.getMessage("COMBOBOX_TEXT_OPSW" + number + "_CLOSED_OPSW" + number2 + "_THROWN"),
+                        Bundle.getMessage("COMBOBOX_TEXT_OPSW" + number + "_THROWN_OPSW" + number2 + "_CLOSED"),
+                        Bundle.getMessage("COMBOBOX_TEXT_OPSW" + number + "_CLOSED_OPSW" + number2 + "_CLOSED")
                 });
-        jp.add(comboBox[n]);
+        // default choice = 0 so already set
+        // size all combos to match the widest one (and a little bit more)
+        comboBox[n].setPreferredSize(new JLabel("XXXXXXX" + Bundle.getMessage("COMBOBOX_TEXT_OPSW36_THROWN")).getPreferredSize()); // NOI18N
+        // layout
+        gc.gridx = 1;
+        gc.weightx = 1.0;
+        gc.anchor = GridBagConstraints.WEST;
+        gl.setConstraints(comboBox[n], gc);
+        return comboBox[n];
     }
 
     /**
      * Determine the JComboBox index which corresponds to the default value 
-     * for a given OpSw
+     * for a given OpSw.
      * 
-     * @param n OpSw number
-     * @return JComboBox index
+     * @param   n OpSw number
+     * @return  JComboBox index of default choice
      */
     private int getIndexForDefault(int n) {
         switch (n) {
@@ -461,18 +547,18 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     /**
      * Already know of this board (unit address)?
      * 
-     * @param id - Unit address to be checked against list
-     * @return true if the unit address is already in the list
+     * @param id  Unit address to be checked against list
+     * @return    True if the unit address is already in the list
      */
     private boolean alreadyKnowThisBoardId(Integer id) {
         return (boardNumsEntryValue.contains(id));
     }
 
     /**
-     * Add a board to the list of unit addresses if not already there
+     * Add a board to the list of unit addresses if not already there.
      * 
-     * @param id a unit address to be added
-     * @return index into the boardNumsEntryValue list of entry for unit address "id"
+     * @param   id a unit address to be added
+     * @return  index into the boardNumsEntryValue list of entry for unit address "id"
      */
     private Integer addBoardIdToList(Integer id) {
         boardNumsEntryValue.add(boardNumsEntryValue.size(), id);
@@ -489,17 +575,16 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     /**
-     * Select a device based on an index into the list of unit addresses
+     * Select a device based on an index into the list of unit addresses.
      * 
      * @param index into the list of addresses
-     * 
      */
     private void selectBoardIdByIndex(Integer index) {
         addressComboBox.setSelectedIndex(index);
     }
 
     /**
-     * Read all OpSws, based on the selected unit address in the JComboBox
+     * Read all OpSws, based on the selected unit address in the JComboBox.
      */
     @Override
     public void readAll() {
@@ -515,7 +600,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     /**
-     * Interpret incoming LocoNet messages
+     * Interpret incoming LocoNet messages.
      * 
      * @param m LocoNet message to be interpreted
      */

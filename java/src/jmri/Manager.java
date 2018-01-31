@@ -2,6 +2,7 @@ package jmri;
 
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
+import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
@@ -157,6 +158,16 @@ public interface Manager<E extends NamedBean> {
     public E getNamedBean(@Nonnull String name);
 
     /**
+     * Return the descriptors for the system-specific properties of the NamedBeans that are kept
+     * in this manager.
+     * @return list of known properties, or empty list if there are none.
+     */
+    @Nonnull
+    default public List<NamedBeanPropertyDescriptor> getKnownBeanProperties() {
+        return new LinkedList<>();
+    }
+
+    /**
      * At a minimum, subclasses must notify of changes to the list of available
      * NamedBeans; they may have other properties that will also notify.
      *
@@ -304,6 +315,7 @@ public interface Manager<E extends NamedBean> {
     static public
     int getSystemPrefixLength(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
         if (inputName.isEmpty()) throw new NamedBean.BadSystemNameException();
+        if (! Character.isLetter(inputName.charAt(0))) throw new NamedBean.BadSystemNameException();
     
         // As a very special case, check for legacy prefixs - to be removed
         // This is also quite a bit slower than the tuned implementation below
@@ -355,7 +367,7 @@ public interface Manager<E extends NamedBean> {
     static final java.util.TreeSet<String> legacyPrefixes 
         = new java.util.TreeSet<>(java.util.Arrays.asList(
             new String[]{
-                "DX", "DCCPP", "DP", "json", "MR", "MC", "PI", "TM" 
+                "DX", "DCCPP", "DP", "MR", "MC", "PI", "TM" 
             }));
 
     /**
@@ -372,9 +384,9 @@ public interface Manager<E extends NamedBean> {
     @CheckReturnValue
     public static int startsWithLegacySystemPrefix(@Nonnull String prefix) {
         // implementation replies on legacy suffix length properties to gain a bit of speed...
+        if (prefix.length()<2) return -1;
         if (legacyPrefixes.contains(prefix.substring(0,2))) return 2;
         else if (prefix.startsWith("DCCPP"))  return 5;
-        else if (prefix.startsWith("json"))  return 5;
         else return -1;
     }
 

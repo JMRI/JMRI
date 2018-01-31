@@ -153,7 +153,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         userColumn.setMinWidth(90);
         userColumn.setMaxWidth(250);
         userColumn.setResizable(true);
-        TableColumn commentColumn = assignmentColumnModel.getColumn(AssignmentTableModel.COMMENT_COLUMN);
+        assignmentColumnModel.getColumn(AssignmentTableModel.COMMENT_COLUMN);
         userColumn.setMinWidth(90);
         userColumn.setMaxWidth(250);
         userColumn.setResizable(true);
@@ -300,11 +300,11 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         // set up a page title
         String head;
         if (inputSelected) {
-            head = "CMRInet " + Bundle.getMessage("AssignmentPanelInputName") + " - "
-                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeNum;
+            head = Bundle.getMessage("Connection") +" "+ _memo.getUserName() + "  "+ Bundle.getMessage("AssignmentPanelInputName") + " "
+                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeNum + "  ";
         } else {
-            head = "CMRInet " + Bundle.getMessage("AssignmentPanelOutputName") + " - "
-                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeNum;
+            head = Bundle.getMessage("Connection") +" "+ _memo.getUserName() + "  " + Bundle.getMessage("AssignmentPanelOutputName") + " "
+                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeNum + "  ";
         }
         // initialize a printer writer
         HardcopyWriter writer = null;

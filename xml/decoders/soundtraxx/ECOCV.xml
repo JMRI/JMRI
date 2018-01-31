@@ -377,7 +377,7 @@
     <variable item="Bell-On Set Point" CV="193" mask="XVVVVVVV" default="1" include="300,301,302,303,304,305,306,307"> <!-- for UK decoders -->
         <decVal max="127"/>
         <label>Auto-Bell On Set Point</label>
-        <tooltip>&lt;html&gt;Specifies the throttle speed step where the automatic bell will first turn on&lt;br&gt;Not used for UK decoders&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Specifies the throttle speed step where the automatic bell will first turn on&lt;br&gt;Bell disabled by default for UK decoders&lt;/html&gt;</tooltip>
     </variable>
     <variable item="Bell-Off Set Point" CV="194" mask="VVVVVVVV" default="15" exclude="300,301,302,303,304,305,306,307"> <!-- Exclude UK decoders -->
         <decVal max="255"/>
@@ -387,7 +387,7 @@
     <variable item="Bell-Off Set Point" CV="194" mask="VVVVVVVV" default="15" include="300,301,302,303,304,305,306,307"> <!-- for UK decoders -->
         <decVal max="255"/>
         <label>Auto-Bell On Time</label>
-        <tooltip>&lt;html&gt;Set the duration in seconds that elapses from the time the bell sound effect is automatically turned on to the time it is turned off&lt;br&gt;Not used for UK decoders&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Set the duration in seconds that elapses from the time the bell sound effect is automatically turned on to the time it is turned off&lt;br&gt;Bell disabled by default for UK decoders&lt;/html&gt;</tooltip>
     </variable>
     <variable item="Sound Option 13" CV="195" mask="VVVVVVVV" default="5" tooltip="Not included in Econami software releases prior to version 1.3">
         <enumVal>
@@ -454,7 +454,7 @@
     <variable item="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXXVX" default="0" include="300,301,302,303,304,305,306,307"> <!-- for UK decoders -->
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Bell Enable (Analog Mode)</label>
-        <tooltip>&lt;html&gt;Enables the Automatic Bell in Analog Mode&lt;br&gt;Not used for UK decoders&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Enables the Automatic Bell in Analog Mode&lt;br&gt;Bell disabled by default for UK decoders&lt;/html&gt;</tooltip>
     </variable>
     <variable item="Automatic Brake Squeal Enable (Analog Mode)" CV="197" mask="XXXXXVXX" default="0" tooltip="Enables the Automatic Brake Squeal in Analog Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -468,7 +468,7 @@
     <variable item="Automatic Bell Enable" CV="198" mask="XXXXXXVX" default="0" include="300,301,302,303,304,305,306,307"> <!-- for UK decoders -->
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Bell Enable</label>
-        <tooltip>&lt;html&gt;Enables the Automatic Bell in Digital Mode&lt;br&gt;Not used for UK decoders&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Enables the Automatic Bell in Digital Mode&lt;br&gt;Bell disabled by default for UK decoders&lt;/html&gt;</tooltip>
     </variable>
     <variable item="Automatic Brake Squeal Enable" CV="198" mask="XXXXXVXX" default="0" tooltip="Enables the Automatic Brake Squeal in Digital Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>

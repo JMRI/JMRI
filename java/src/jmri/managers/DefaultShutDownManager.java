@@ -135,7 +135,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      * @return false if shutdown or restart failed
      */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
-    protected boolean shutdown(int status, boolean exit) {
+    public boolean shutdown(int status, boolean exit) {
         if (!shuttingDown) {
             Date start = new Date();
             log.debug("Shutting down with {} tasks", this.tasks.size());

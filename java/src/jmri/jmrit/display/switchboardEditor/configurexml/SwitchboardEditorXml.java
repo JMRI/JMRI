@@ -239,9 +239,8 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
                     | jmri.configurexml.JmriConfigureXmlException
                     | RuntimeException e) {
-                log.error("Exception while loading " + item.getName() + ":" + e);
+                log.error("Exception while loading {}", item.getName(), e);
                 result = false;
-                e.printStackTrace();
             }
         }
         panel.disposeLoadData();     // dispose of url correction data

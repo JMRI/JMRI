@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Technology Road Map</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code road map">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -31,7 +30,8 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Technology Road Map</h1>This page is the road map
+      <h1>JMRI: Technology Road Map</h1>
+      This page is the road map
       for JMRI's future develpoment, including changes to our use
       of Java technologies. It is maintained and updated through
       continuing discussion on the <a href=
@@ -281,10 +281,12 @@
         <li>The default output formatting is different, requiring
         minor changes in e.g. the XmlFile class output
         routines.</li>
-      </ul>In addition, JDOM 2 uses generics in it's input
+      </ul>
+      <p>In addition, JDOM 2 uses generics in its input
       parameters and return values. This means you can remove (now
       redundant) casts in many places. Jenkins will warn about
-      those. <!--#include virtual="/Footer" -->
+      those.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -3,7 +3,7 @@
     <hr class="hide">
 
 	<div id="side"> <!-- Block of text on left side of page -->
-	    <div style="text-align: center">Software documentation</div>
+	    <div style="text-align: center">Code documentation</div>
 	    <dl>
 
 		<dt><h3>Development tools</h3></dt>
@@ -33,7 +33,7 @@
 			<li><a href="Swing.shtml">Swing Structure</a>
 			<li><a href="SystemStructure.shtml">External Connection Structure</a>
 			<li><a href="AppPreferences.shtml">Application Preferences</a>
-			<li><a href="Threads.shtml">Threads</a>
+			<li><a href="Threads.shtml">Threading</a>
 			<li><a href="XmlUsage.shtml">Use of XML</a>
 			<li><a href="WebSite.shtml">Web Site</a>
 			
@@ -54,7 +54,7 @@
 			<li><a href="Logging.shtml">Logging &amp; Error Handling</a>
 			<li><a href="JUnit.shtml">Unit testing with JUnit</a>
 			<li><a href="Javadoc.shtml">Documentation with Javadoc and UML</a>
-			<li><a href="FindBugs.shtml">Run the FindBugs static analysis tool</a>
+			<li><a href="SpotBugs.shtml">Run the SpotBugs static analysis tool</a>
 			<li><a href="Help.shtml">Providing help with JavaHelp</a>
 			<li><a href="FileNames.shtml">Portable Filename Method</a>
 			<li><a href="XmlPersistance.shtml">XML Persistance</a>

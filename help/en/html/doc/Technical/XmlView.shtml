@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Viewing JMRI XML Files</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code xml usage">
   <!--#include virtual="/Style" -->
 </head><!--#include virtual="/Header" -->
@@ -20,7 +20,7 @@
       <h1>JMRI: Viewing XML Files</h1>
       <p>JMRI stores various information in XML files. Although
       they're a text format that is basically human-readable,
-      it's a complicated format.</p>
+      it's a complicated, structured format.</p>
 
       <p>To make this information easier to read, print and understand, most
       JMRI XML files can be displayed in a web browser. A technique
@@ -47,7 +47,7 @@
       right, while Firefox seems to work properly on some platforms
       and not on others. (There might also be options that affect
       whether it works. Here's some
-      <a href="http://jmri.sourceforge.net/xml/XSLT/README">technical
+      <a href="http://jmri.org/xml/XSLT/README">technical
       background</a>)</p>
 
       <p>If none of the browsers available to you can display the
@@ -89,8 +89,10 @@
           <img src="images/Webstartxml.png" height="286" width="410"></a>
         Finally, click on any needed directory names to get to
         your file, then click on your file.</li>
-      </ul>You can then use your browser to view, print, save, etc.
-      as desired.
+      </ul>
+      <p>You can then use your browser to view, print, save, etc.
+      as desired.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

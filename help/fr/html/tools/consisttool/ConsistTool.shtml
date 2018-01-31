@@ -5,7 +5,7 @@
   <title>
  	JMRI: Consisting Tool
   </title>
-  <meta content="Paul Bender" name="Author">
+  <meta name="author" content="Paul Bender">
   <meta name="keywords"
         content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
 
@@ -244,7 +244,7 @@
 	<image src=images/ConsistTool.jpg alt="Blank Consit Tool">
 	<p>
 	sur la rang&#233;e sup&#233;rieure sont utilis&#233;s pour choisir entre un Couplage Avanc&#233; 
-	( D&#233;codeur Assist&#233; )  et une Centrale de Commande Ã  Couplage AssistÃ©. 
+	( D&#233;codeur Assist&#233; )  et une Centrale de Commande à Couplage Assisté. 
 	Si les Centrales de Commande  &#224; Couplage Assist&#233; ne sont pas
 	prises en charge par l'outil de votre syst&#232;me, ces s&#233;lections seront
 	gris&#233;es.

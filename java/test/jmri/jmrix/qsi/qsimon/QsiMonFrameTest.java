@@ -62,8 +62,7 @@ public class QsiMonFrameTest {
     @Test
     public void testWrite() {
 
-        // infrastructure objects
-        QsiInterfaceScaffold t = new QsiInterfaceScaffold();
+        new QsiInterfaceScaffold();
     }
 
     // service internal class to handle transmit/receive for tests

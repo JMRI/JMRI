@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Configure Digitrax Command Station</title>
-  <meta name="Author" content="Bob Jacobsen">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI help configure Digitrax command station"><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -29,7 +29,7 @@
       
       <p>Recent JMRI versions support configuration of the Command Station
           "Operation Switches" (OpSws) via a "roster" entry.  See the JMRI 
-          <a href="../../../html/hardware/loconet/CommandStationConfig.shtml">
+          <a href="../../../../../html/hardware/loconet/CommandStationConfig.shtml">
           Digitrax Command Station Configuration</a> page for details.  The
           new "roster" entry-based method is preferred over the tool described
           below.</p>
@@ -46,9 +46,7 @@
       <p>To configure DB's and DCS's set as Boosters, you need to
       follow the original Digitrax instructions.</p>
 
-      <p>This is the
-      help/en/package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
