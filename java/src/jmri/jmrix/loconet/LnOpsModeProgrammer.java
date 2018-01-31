@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.Programmer
  * @author Bob Jacobsen Copyright (C) 2002
+ * @author B. Milhaupt, Copyright (C) 2018
  */
 public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener {
 
