@@ -813,7 +813,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Return a list of ProgrammingModes supported by this interface
      * Types implemented here.
      * <p>
-     * @return a List<ProgrammingMode> object containing the supported
+     * @return a List of ProgrammingMode objects containing the supported
      *          programming modes.
      */
 
@@ -945,7 +945,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param p programmer
      * @param addr address of decoder
      * @param longAddr true if the address is a long address
-     * @throws jmri.ProgrammerException
+     * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     public void writeCVOpsMode(int CV, int val, jmri.ProgListener p,
             int addr, boolean longAddr) throws jmri.ProgrammerException {
@@ -961,7 +961,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param cvNum number
      * @param val to write to the CV
      * @param p programmer
-     * @throws jmri.ProgrammerException
+     * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     @Override
     public void writeCV(String cvNum, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -997,10 +997,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Write a CV via the Service Mode programmer
      * <p>
-     * @param cvNum number
+     * @param CV number
      * @param val to write to the CV
      * @param p programmer
-     * @throws jmri.ProgrammerException
+     * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     @Override
     public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -1026,11 +1026,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Perform a write a CV via the Service Mode programmer
      * <p>
-     * @param cvNum number
+     * @param CV number
      * @param val to write to the CV
      * @param p programmer
      * @param pcmd programming command
-     * @throws jmri.ProgrammerException
+     * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     public void doWrite(int CV, int val, jmri.ProgListener p, int pcmd) throws jmri.ProgrammerException {
         log.debug("writeCV: {}", CV); // NOI18N
@@ -1051,12 +1051,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Confirm a CV via the OpsMode programmer
      * <p>
-     * @param cvName a String containing the CV name
+     * @param CVname a String containing the CV name
      * @param val expected value
      * @param p programmer
      * @param addr address of loco to write to
      * @param longAddr true if addr is a long address
-     * @throws jmri.ProgrammerException
+     * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     public void confirmCVOpsMode(String CVname, int val, jmri.ProgListener p,
             int addr, boolean longAddr) throws jmri.ProgrammerException {
@@ -1070,10 +1070,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Confirm a CV via the Service Mode programmer
      * <p>
-     * @param cvName a String containing the CV name
+     * @param CVname a String containing the CV name
      * @param val expected value
      * @param p programmer
-     * @throws jmri.ProgrammerException
+     * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     @Override
     public void confirmCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -1122,11 +1122,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Perform a confirm operation of a CV via the Service Mode programmer
      * <p>
-     * @param cvName the CV number
+     * @param CV the CV number
      * @param val expected value
      * @param p programmer
      * @param pcmd programming command
-     * @throws jmri.ProgrammerException
+     * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     public void doConfirm(int CV, int val, ProgListener p,
             int pcmd) throws jmri.ProgrammerException {
@@ -1158,7 +1158,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * <p>
      * @param cvNum a String containing the CV number
      * @param p programmer
-     * @throws jmri.ProgrammerException
+     * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     @Override
     public void readCV(String cvNum, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -1197,6 +1197,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param p        Who to notify on complete
      * @param addr     Address of the locomotive
      * @param longAddr true if a long address, false if short address
+     * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     public void readCVOpsMode(int CV, jmri.ProgListener p, int addr, boolean longAddr) throws jmri.ProgrammerException {
         lopsa = addr & 0x7f;
@@ -1209,9 +1210,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Read a CV via the OpsMode programmer
      * <p>
-     * @param cvNum the CV number
+     * @param CV the CV number
      * @param p programmer
-     * @throws jmri.ProgrammerException
+     * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     @Override
     public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -1241,7 +1242,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param cvNum the CV number
      * @param p programmer
      * @param progByte programming command
-     * @throws jmri.ProgrammerException
+     * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     void doRead(int CV, jmri.ProgListener p, int progByte) throws jmri.ProgrammerException {
 

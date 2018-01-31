@@ -454,7 +454,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     /**
      * Get notified when underlying slot information changes
      * 
-     * @param the slot which was changed
+     * @param pSlot the slot which was changed
      */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
