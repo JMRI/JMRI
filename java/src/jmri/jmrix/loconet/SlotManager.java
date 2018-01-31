@@ -1239,7 +1239,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Performa a CV Read
      * <p>
-     * @param cvNum the CV number
+     * @param CV the CV number
      * @param p programmer
      * @param progByte programming command
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
