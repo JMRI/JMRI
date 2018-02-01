@@ -5,11 +5,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
-import org.powermock.core.classloader.annotations.MockPolicy;
-import org.powermock.modules.junit4.PowerMockRunner;
-@MockPolicy(Slf4jMockPolicy.class)
 
 /**
  * XBeeLightManagerTest.java
@@ -18,7 +13,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-@RunWith(PowerMockRunner.class)
 public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
         
     private XBeeTrafficController tc = null;
@@ -57,6 +51,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     @Before
     @Override
     public void setUp() {
+        jmri.util.JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
         XBeeConnectionMemo m = new XBeeConnectionMemo();
         m.setSystemPrefix("ABC");
@@ -68,6 +63,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     @After
     public void tearDown() {
         tc.terminate();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     /**

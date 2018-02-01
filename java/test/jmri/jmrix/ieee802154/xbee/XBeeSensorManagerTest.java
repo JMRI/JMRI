@@ -7,11 +7,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
-import org.powermock.core.classloader.annotations.MockPolicy;
-import org.powermock.modules.junit4.PowerMockRunner;
-@MockPolicy(Slf4jMockPolicy.class)
 
 /**
  * XBeeSensorManagerTest.java
@@ -20,7 +15,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-@RunWith(PowerMockRunner.class)
 public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     private XBeeTrafficController tc = null;
@@ -78,7 +72,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Override
     @Before 
     public void setUp() {
-        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.setUp();
 
         // setup the mock XBee Connection.
         tc = new XBeeInterfaceScaffold();
@@ -100,7 +94,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @After
     public void tearDown() {
         tc.terminate();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }
