@@ -10,10 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
-import org.powermock.core.classloader.annotations.MockPolicy;
-import org.powermock.modules.junit4.PowerMockRunner;
-@MockPolicy(Slf4jMockPolicy.class)
+import org.mockito.junit.MockitoJUnitRunner;
 
 /**
  * XBeeNodeTest.java
@@ -22,7 +19,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-@RunWith(PowerMockRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class XBeeNodeTest{
 
     private XBeeTrafficController tc = null;
@@ -85,7 +82,6 @@ public class XBeeNodeTest{
     public void testGetPreferedNameAsUserAddress() {
         // Mock the remote device.
         RemoteXBeeDevice rd = Mockito.mock(RemoteXBeeDevice.class);
-        Mockito.when(rd.getXBeeProtocol()).thenReturn(XBeeProtocol.UNKNOWN);
         Mockito.when(rd.getNodeID()).thenReturn("");
         Mockito.when(rd.get64BitAddress()).thenReturn(new XBee64BitAddress("0013A20040A04D2D"));
         Mockito.when(rd.get16BitAddress()).thenReturn(new XBee16BitAddress("6D97"));
@@ -102,7 +98,6 @@ public class XBeeNodeTest{
     public void testGetPreferedNameAsGlobalAddress() {
         // Mock the remote device.
         RemoteXBeeDevice rd = Mockito.mock(RemoteXBeeDevice.class);
-        Mockito.when(rd.getXBeeProtocol()).thenReturn(XBeeProtocol.UNKNOWN);
         Mockito.when(rd.getNodeID()).thenReturn("");
         Mockito.when(rd.get64BitAddress()).thenReturn(new XBee64BitAddress("0013A20040A04D2D"));
         Mockito.when(rd.get16BitAddress()).thenReturn(new XBee16BitAddress("FFFE"));
@@ -119,7 +114,6 @@ public class XBeeNodeTest{
     public void testGetPreferedNameAsNodeIdentifier() {
         // Mock the remote device.
         RemoteXBeeDevice rd = Mockito.mock(RemoteXBeeDevice.class);
-        Mockito.when(rd.getXBeeProtocol()).thenReturn(XBeeProtocol.UNKNOWN);
         Mockito.when(rd.getNodeID()).thenReturn("Hello World");
         Mockito.when(rd.get64BitAddress()).thenReturn(new XBee64BitAddress("0013A20040A04D2D"));
         Mockito.when(rd.get16BitAddress()).thenReturn(new XBee16BitAddress("FFFF"));
@@ -137,7 +131,6 @@ public class XBeeNodeTest{
     public void testGetPreferedTransmitUserAddress() {
         // Mock the remote device.
         RemoteXBeeDevice rd = Mockito.mock(RemoteXBeeDevice.class);
-        Mockito.when(rd.getXBeeProtocol()).thenReturn(XBeeProtocol.UNKNOWN);
         Mockito.when(rd.getNodeID()).thenReturn("");
         Mockito.when(rd.get64BitAddress()).thenReturn(new XBee64BitAddress("0013A20040A04D2D"));
         Mockito.when(rd.get16BitAddress()).thenReturn(new XBee16BitAddress("6D97"));
@@ -154,7 +147,6 @@ public class XBeeNodeTest{
     public void testGetPreferedTransmitGlobalAddress() {
         // Mock the remote device.
         RemoteXBeeDevice rd = Mockito.mock(RemoteXBeeDevice.class);
-        Mockito.when(rd.getXBeeProtocol()).thenReturn(XBeeProtocol.UNKNOWN);
         Mockito.when(rd.getNodeID()).thenReturn("");
         Mockito.when(rd.get64BitAddress()).thenReturn(new XBee64BitAddress("0013A20040A04D2D"));
         Mockito.when(rd.get16BitAddress()).thenReturn(new XBee16BitAddress("FFFF"));
@@ -171,7 +163,6 @@ public class XBeeNodeTest{
     public void testGetPreferedTransmitGlobalAddressWithMaskRequired() {
         // Mock the remote device.
         RemoteXBeeDevice rd = Mockito.mock(RemoteXBeeDevice.class);
-        Mockito.when(rd.getXBeeProtocol()).thenReturn(XBeeProtocol.UNKNOWN);
         Mockito.when(rd.getNodeID()).thenReturn("");
         Mockito.when(rd.get64BitAddress()).thenReturn(new XBee64BitAddress("0013A20040A04D2D"));
         Mockito.when(rd.get16BitAddress()).thenReturn(new XBee16BitAddress("FFFF"));

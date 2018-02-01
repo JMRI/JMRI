@@ -7,12 +7,10 @@ import com.digi.xbee.api.models.XBee64BitAddress;
 import com.digi.xbee.api.models.XBeeProtocol;
 import java.util.Vector;
 import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
-import org.powermock.core.classloader.annotations.MockPolicy;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-@MockPolicy(Slf4jMockPolicy.class)
 
 /**
  * XBeeInterfaceScaffold.java
@@ -27,21 +25,27 @@ import org.slf4j.LoggerFactory;
 public class XBeeInterfaceScaffold extends XBeeTrafficController {
 
     private XBeeDevice localDevice;
-    private RemoteXBeeDevice remoteDevice1;
+    @Mock private RemoteXBeeDevice remoteDevice1;
     private XBeeAdapter a;
 
     public XBeeInterfaceScaffold() {
         super();
+        MockitoAnnotations.initMocks(this);
 
-        // setup the mock XBe:e Connection.
-        // Mock the local device.
-        a = Mockito.mock((XBeeAdapter.class));
-        Mockito.when(a.isOpen()).thenReturn(true);
+        // setup the mock XBee Connection.
+        a= new XBeeAdapter(){
+           @Override
+           public boolean isOpen(){
+              return true;
+           }
+           @Override
+           public void close(){
+           }
+        };  
+        // Create the local device.
         localDevice = new XBeeDevice(a);
 
         // Mock the remote device 1.
-        remoteDevice1 = Mockito.mock(RemoteXBeeDevice.class);
-        Mockito.when(remoteDevice1.getXBeeProtocol()).thenReturn(XBeeProtocol.UNKNOWN);
         Mockito.when(remoteDevice1.getNodeID()).thenReturn("Node 1");
         Mockito.when(remoteDevice1.get64BitAddress()).thenReturn(new XBee64BitAddress("0013A20040A04D2D"));
         Mockito.when(remoteDevice1.get16BitAddress()).thenReturn(new XBee16BitAddress("0002"));

@@ -9,17 +9,11 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
-import org.powermock.core.classloader.annotations.MockPolicy;
-import org.powermock.modules.junit4.PowerMockRunner;
-@MockPolicy(Slf4jMockPolicy.class)
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-@RunWith(PowerMockRunner.class)
 public class PacketGenActionTest {
         
     private XBeeConnectionMemo memo = null;
@@ -51,7 +45,7 @@ public class PacketGenActionTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.resetInstanceManager(); 
+        JUnitUtil.setUp(); 
         memo = new XBeeConnectionMemo();
         memo.setTrafficController(new XBeeInterfaceScaffold());
         InstanceManager.store(memo,XBeeConnectionMemo.class);
@@ -59,7 +53,7 @@ public class PacketGenActionTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager(); 
+        JUnitUtil.tearDown(); 
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PacketGenActionTest.class);

@@ -6,10 +6,6 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
-import org.powermock.core.classloader.annotations.MockPolicy;
-import org.powermock.modules.junit4.PowerMockRunner;
-@MockPolicy(Slf4jMockPolicy.class)
 
 /**
  * <P>
@@ -17,7 +13,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * </P>
  * @author Paul Bender Copyright (C) 2016
  */
-@RunWith(PowerMockRunner.class)
 public class XBeeIOStreamTest {
 
    private static XBeeInterfaceScaffold tc = null; // set in setUp.
@@ -56,7 +51,7 @@ public class XBeeIOStreamTest {
 
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
         tc.setAdapterMemo(new XBeeConnectionMemo());
         byte uad[] = {(byte) 0x00, (byte) 0x02};
@@ -72,6 +67,7 @@ public class XBeeIOStreamTest {
         tc.terminate();
         tc = null;
         node = null;
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

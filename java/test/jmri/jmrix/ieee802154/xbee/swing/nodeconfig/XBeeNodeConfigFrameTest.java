@@ -48,7 +48,7 @@ public class XBeeNodeConfigFrameTest {
 
     @Before
     public void setUp() {
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
         m = new XBeeConnectionMemo();
         m.setSystemPrefix("ABC");
@@ -58,6 +58,6 @@ public class XBeeNodeConfigFrameTest {
     @After
     public void tearDown() {        
         tc = null;
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
     }
 }

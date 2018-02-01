@@ -5,11 +5,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
-import org.powermock.core.classloader.annotations.MockPolicy;
-import org.powermock.modules.junit4.PowerMockRunner;
-@MockPolicy(Slf4jMockPolicy.class)
 
 /**
  * XBeeTurnoutManagerTest.java
@@ -19,14 +14,13 @@ import org.powermock.modules.junit4.PowerMockRunner;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-@RunWith(PowerMockRunner.class)
 public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     XBeeTrafficController tc = null;
 
     @Override
     public String getSystemName(int i){
-       return "ABCT2:" +i;
+       return "AT2:" +i;
     }
 
     @Test
@@ -38,23 +32,16 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Test
     public void testDefaultSystemName() {
         // create
-        Turnout t = l.provideTurnout("ABCT2:" + getNumToTest1());
+        Turnout t = l.provideTurnout("AT2:" + getNumToTest1());
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Override
-    @Test(expected=IllegalArgumentException.class)
-    public void testProvideFailure() {
-        l.provideTurnout("");
-    }
-
-
-    @Override
     @Test
     public void testUpperLower() {
-        Turnout t = l.provideTurnout("ABCT2:" + getNumToTest2());
+        Turnout t = l.provideTurnout("AT2:" + getNumToTest2());
 
         Assert.assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
     }
@@ -64,19 +51,19 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Override
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
         XBeeConnectionMemo m = new XBeeConnectionMemo();
-        m.setSystemPrefix("ABC");
+        m.setSystemPrefix("A");
         tc.setAdapterMemo(m);
-        l = new XBeeTurnoutManager(tc, "ABC");
+        l = new XBeeTurnoutManager(tc, "A");
         m.setTurnoutManager(l);
     }
 
     @After
     public void tearDown() {
         tc.terminate();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }
