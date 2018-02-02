@@ -190,15 +190,24 @@
         signals</dd>
 
         <dt><a href=
-        "../../../../../xml/signals/B&amp;O-1957/index.shtml">B&amp;O-1957</a></dt>
+        "../../../../../xml/signals/B&O-1957/index.shtml">B&amp;O-1957</a></dt>
 
         <dd>1957 B&amp;O<br>
         (<i>Incomplete, not finished as of JMRI 3.10.</i>)</dd>
 
         <dt><a href=
-        "../../../../../xml/signals/B&amp;O-2009/index.shtml">B&amp;O-2009</a></dt>
+        "../../../../../xml/signals/B&O-1980/index.shtml">B&amp;O-1980</a></dt>
+        <dd>1980 B&amp;O Corridor Color Position Light and semaphore signals</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/B&O-2009/index.shtml">B&amp;O-2009</a></dt>
 
         <dd>2009 B&amp;O (CSX)</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/B&O-Semaphore/index.shtml">B&amp;O-Semaphore</a></dt>
+
+        <dd>1969 B&amp;O Semaphore masts only (works with B&amp;O-2009 CPL)</dd>
 
         <dt><a href=
         "../../../../../xml/signals/BN-1989/index.shtml">BN-1989</a></dt>
@@ -229,10 +238,12 @@
         <dt><a href=
         "../../../../../xml/signals/CSX-1998/index.shtml">CSX-1998</a></dt>
 
-        <dd>CSX Transportation Signal Rules - 281-298, January
-        1998<br>
-        (<i>Some errors in aspect mapping, not finished as of JMRI
-        3.10.</i>)</dd>
+        <dd>CSX Transportation Signal Rules - 281-298, January 1998</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/CSX-2014-Chessie/index.shtml">CSX-2014-Chessie</a></dt>
+
+        <dd>CSX 2014 rule book (former Chessie rules)</dd>
 
         <dt><a href=
         "../../../../../xml/signals/DB-HV-1969/index.shtml">DB HV
@@ -269,6 +280,11 @@
         (NORAC)</dd>
 
         <dt><a href=
+        "../../../../../xml/signals/NW-1981/index.shtml">NW-1981</a></dt>
+
+        <dd>Norfolk and Western 1981 rule book</dd>
+
+        <dt><a href=
         "../../../../../xml/signals/NYCS-1937/index.shtml">NYCS-1937</a></dt>
 
         <dd>New York Central System 1937 rule book<br>
@@ -301,6 +317,10 @@
         3.10.</i>)</dd>
 
         <dt><a href=
+        "../../../../../xml/signals/SOU-1981/index.shtml">SOU-1981</a></dt>
+        <dd>1981 N&amp;W - Southern Railway</dd>
+
+        <dt><a href=
         "../../../../../xml/signals/SPTCO-1930/index.shtml">SPTCO-1930</a></dt>
 
         <dd>Southern Pacific Railway and Transportation Company
@@ -313,9 +333,19 @@
         1960 rule book</dd>
 
         <dt><a href=
+        "../../../../../xml/signals/SPTCO-1969/index.shtml">SPTCO-1969</a></dt>
+        <dd>Southern Pacific Railway and Transportation Company
+          1969 rule book</dd>
+
+        <dt><a href=
         "../../../../../xml/signals/UP-2008/index.shtml">UP-2008</a></dt>
 
-        <dd>Union Pacific Railroad 2008 rule book<br></dd>
+        <dd>Union Pacific Railroad 2008 rule book</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/WM-1980/index.shtml">WM-1980</a></dt>
+        <dd>Western Maryland Railroad 1973-1980</dd>
+
       </dl>
 
       <p>The most current list of Aspect Signal Systems supported

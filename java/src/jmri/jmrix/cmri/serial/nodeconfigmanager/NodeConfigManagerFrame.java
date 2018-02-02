@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * 
  * Frames for a table view to manage CMRInet node configuration management. c2
  * Created a table view for node configuration operations. Add, Edit, Delete and
  * Update are executed from the NodeTableManager. This class was derived from
@@ -25,7 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004
  * @author	Dave Duchamp Copyright (C) 2004
- * @author	Chuck Catania Copyright (C) 2013, 2014, 2015, 2016, 2017
+ * @author	Chuck Catania Copyright (C) 2013, 2014, 2015, 2016, 2017, 2018
  */
 public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
@@ -325,12 +326,6 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
      * Handle the done button click.
      */
     public void doneButtonActionPerformed() {
-        if (changedNode) {
-            JOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("Reminder1") + "\n" + Bundle.getMessage("Reminder2"),
-                    Bundle.getMessage("ReminderTitle"),
-                    JOptionPane.INFORMATION_MESSAGE);
-        }
         changedNode = false;
         setVisible(false);
         dispose();
@@ -1331,7 +1326,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         // reset text displays after succefully adding node
         resetNotes();
         changedNode = true;
-
+        log.info("changedNode = "+changedNode);
         // provide user feedback
         statusText1.setText(Bundle.getMessage("FeedBackAdd") + " " + Integer.toString(nodeAddress));
         statusText2.setVisible(false);
@@ -1672,9 +1667,16 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             nodeAddrField.setVisible(false);
             nodeAddrStatic.setVisible(false);
         }
+        if (changedNode) {
+            JOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("Reminder1") + "\n" + Bundle.getMessage("Reminder2"),
+                    Bundle.getMessage("ReminderTitle"),
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+        changedNode = false;
 
         setVisible(false);
-        dispose();
+        dispose();        
     }
 
     /**

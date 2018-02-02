@@ -9,6 +9,10 @@ import org.junit.Before;
 import org.junit.Test;
 import java.util.List;
 
+/**
+ * @author B. Milhaupt, Copyright (C) 2018
+ */
+
 public class SlotManagerTest {
 
     /**
