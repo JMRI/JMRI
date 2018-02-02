@@ -1,7 +1,13 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.RemoteXBeeDevice;
-import com.digi.xbee.api.XBeeDevice;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
+import com.digi.xbee.api.io.IOLine;
+import com.digi.xbee.api.io.IOValue;
+import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
+import com.digi.xbee.api.exceptions.TimeoutException;
 import jmri.Sensor;
 import org.junit.After;
 import org.junit.Assert;
@@ -86,9 +92,17 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         byte uad[] = {(byte) 0x00, (byte) 0x02};
         byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         XBeeNode node = new XBeeNode(pan,uad,gad);
-        node.setXBee(((XBeeInterfaceScaffold)tc).getRemoteDevice1());
+        RemoteXBeeDevice rd = new RemoteXBeeDevice(tc.getXBee(),
+             new XBee64BitAddress("0013A20040A04D2D"),
+             new XBee16BitAddress("0002"),
+             "Node 1"){
+            @Override
+            public IOValue getDIOValue(IOLine l) throws InterfaceNotOpenException,TimeoutException,XBeeException {
+               return IOValue.LOW;
+            }
+        };
+        node.setXBee(rd);
         tc.registerNode(node);
-
     }
 
     @After

@@ -1,5 +1,8 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -54,9 +57,16 @@ public class XBeeIOStreamTest {
         jmri.util.JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
         tc.setAdapterMemo(new XBeeConnectionMemo());
+        byte pan[] = {(byte) 0x00, (byte) 0x42};
         byte uad[] = {(byte) 0x00, (byte) 0x02};
-        node = (XBeeNode) tc.getNodeFromAddress(uad);
-        Assume.assumeNotNull(tc,node);
+        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        node = new XBeeNode(pan,uad,gad);
+        RemoteXBeeDevice rd = new RemoteXBeeDevice(tc.getXBee(),
+             new XBee64BitAddress("0013A20040A04D2D"),
+             new XBee16BitAddress("0002"),
+             "Node 1");
+        node.setXBee(rd);
+        tc.registerNode(node);
         a = new XBeeIOStream(node,tc);
     }
 
