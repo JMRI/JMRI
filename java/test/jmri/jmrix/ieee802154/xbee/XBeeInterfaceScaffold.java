@@ -109,7 +109,6 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
              localDevice.close();
           }
           localDevice=null;
-          remoteDevice1=null;
           a = null;
     }
 
