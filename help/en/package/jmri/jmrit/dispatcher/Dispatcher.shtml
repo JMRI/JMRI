@@ -73,6 +73,7 @@
       <a name="intro" id="intro"></a>
       <h2>Introduction to Dispatcher</h2>
 
+      <span class="since">since 2.3.5</span>
       <p>JMRI <b>Dispatcher</b> provides functions and organizes
       information relating to dispatching trains on a model
       railroad layout. Its main function is the allocation of
@@ -850,7 +851,7 @@
           Section has been used by its train. The Use Status column
           shows either <i>Not Entered</i>, <i>Entered</i>, or
           <i>Exited</i>. The Use Status of the Allocated Section
-          changes as the the occupancy of the Allocated Section
+          changes as the occupancy of the Allocated Section
           changes. An Active Train is assumed to be done with an
           Allocated Section if its Use Status is <i>Exited</i>. The
           <b>Auto Release</b> option looks for Allocated Sections
@@ -987,7 +988,8 @@
         </li>
       </ul>
 
-      <p>Support is provided for <b>RAMPING</b> the speed of an
+      <p><span class="since">since 4.3.7</span>Support is provided
+      for <b>RAMPING</b> the speed of an
       Auto Active Train when changing from its current speed to a
       new speed. This option is controlled by selecting a Ramp Rate
       for each Auto Active Train when it is created. The best Ramp
@@ -1164,9 +1166,10 @@
           Sections should be signaled on the Layout Editor panel.
           Portions of the layout that are not in Sections in
           Transits only need those signals that are necessary to
-          allow setup of signal logic, either SSL (Simple Signal
+          allow set-up of signal logic, either SSL (Simple Signal
           Logic) or SML (Signal Mast Logic) for signals in Sections
-          of the Transit. Use of the Layout Editor tools to
+          of the Transit. <span class="since">since 3.3.5</span>
+          Use of the Layout Editor tools to
           configure signals on the Layout Editor panel is required
           (this is how Layout Editor knows which signals apply to
           which turnout, block boundary, etc.). Use of these tools
@@ -1228,8 +1231,8 @@
       must have been solved. <b>A train should run flawlessly in
       manual mode, before automatic running is attempted.</b></p>
 
-      <p>Because Auto Active Trains use JMRI signalling for stops,
-      starts and speeds, the signalling should also be flawless,
+      <p>Because Auto Active Trains use JMRI signaling for stops,
+      starts and speeds, the signaling should also be flawless,
       including all blocks, turnouts and direction indicators
       needed.</p>
 
@@ -1240,7 +1243,13 @@
         pane</li>
         <li>JMRI <a href=
         "../../../../html/tools/automation/index.shtml">Automation
-          in General</a></li>
+        in General</a></li>
+        <li>For a step-by-step guide to Dispatcher, check out the
+        <a href="http://jmri.org/community/clinics/">clinic</a>
+        presentation by Dave Duchamp on <a href=
+        "http://jmri.org/community/clinics/NMRA2012/index.shtml">Running
+        Trains with JMRI's Dispatcher</a>.
+        </li>
       </ul>
 
       <!--#include virtual="/Footer" -->
