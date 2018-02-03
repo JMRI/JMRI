@@ -54,7 +54,6 @@ public class OlcbTurnoutTest extends TestCase {
       
         JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
         Assert.assertEquals("called twice",2,l.getCallCount());
-        Assert.assertEquals("called twice",2,l.getCallCount());
         Assert.assertTrue(s.getCommandedState() == Turnout.THROWN);
 
         l.resetPropertyChanged();
