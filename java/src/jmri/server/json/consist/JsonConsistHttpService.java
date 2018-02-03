@@ -54,7 +54,7 @@ public class JsonConsistHttpService extends JsonHttpService {
      * Change the properties and locomotives of a consist.
      *
      * This method takes as input the JSON representation of a consist as
-     * provided by {@link #getConsist(Locale, jmri.DccLocoAddress) }.
+     * provided by {@link #getConsist(Locale, jmri.LocoAddress) }.
      *
      * If present in the JSON, this method sets the following consist
      * properties:
@@ -85,7 +85,7 @@ public class JsonConsistHttpService extends JsonHttpService {
         if (!this.manager.isConsistManager()) {
             throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
         }
-        DccLocoAddress address;
+        LocoAddress address;
         if (data.path(ADDRESS).canConvertToInt()) {
             address = new DccLocoAddress(data.path(ADDRESS).asInt(), data.path(IS_LONG_ADDRESS).asBoolean(false));
         } else {
@@ -102,7 +102,7 @@ public class JsonConsistHttpService extends JsonHttpService {
             consist.setConsistType(data.path(TYPE).asInt());
         }
         if (data.path(ENGINES).isArray()) {
-            ArrayList<DccLocoAddress> engines = new ArrayList<>();
+            ArrayList<LocoAddress> engines = new ArrayList<>();
             // add every engine
             for (JsonNode engine : data.path(ENGINES)) {
                 DccLocoAddress engineAddress = new DccLocoAddress(engine.path(ADDRESS).asInt(), engine.path(IS_LONG_ADDRESS).asBoolean());
@@ -131,7 +131,7 @@ public class JsonConsistHttpService extends JsonHttpService {
         if (!this.manager.isConsistManager()) {
             throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
         }
-        DccLocoAddress address;
+        LocoAddress address;
         if (data.path(ADDRESS).canConvertToInt()) {
             address = new DccLocoAddress(data.path(ADDRESS).asInt(), data.path(IS_LONG_ADDRESS).asBoolean(false));
         } else {
@@ -159,7 +159,7 @@ public class JsonConsistHttpService extends JsonHttpService {
         }
         ArrayNode root = mapper.createArrayNode();
         for (LocoAddress address : this.manager.getConsistList()) {
-            root.add(getConsist(locale, (DccLocoAddress) address));
+            root.add(getConsist(locale, address));
         }
         return root;
     }
