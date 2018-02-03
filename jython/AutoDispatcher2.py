@@ -788,7 +788,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
 
         # Get consists from JMRI
         # Any consist must be defined before starting AutoDispatcher
-        consistMan = InstanceManager.consistManagerInstance()
+        consistMan = InstanceManager.getDefault(jmri.ConsistManager)
         consists = consistMan.getConsistList()
         # Any consist?
         if len(consists) == 0 :
