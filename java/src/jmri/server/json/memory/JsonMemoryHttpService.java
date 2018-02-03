@@ -33,7 +33,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService {
         ObjectNode data = this.getNamedBean(memory, name, type, locale);
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, MEMORY);
-        root.put(DATA, data);
+        root.set(DATA, data);
         if (memory != null) {
             if (memory.getValue() == null) {
                 data.putNull(VALUE);

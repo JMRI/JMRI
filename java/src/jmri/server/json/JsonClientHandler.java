@@ -31,22 +31,20 @@ public class JsonClientHandler {
      */
     public static final String HELLO_MSG = "{\"" + JSON.TYPE + "\":\"" + JSON.HELLO + "\"}";
     private final JsonConnection connection;
-    private final HashMap<String, HashSet<JsonSocketService>> services = new HashMap<>();
+    private final HashMap<String, HashSet<JsonSocketService<?>>> services = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(JsonClientHandler.class);
 
     public JsonClientHandler(JsonConnection connection) {
         this.connection = connection;
-        for (JsonServiceFactory factory : ServiceLoader.load(JsonServiceFactory.class)) {
+        for (JsonServiceFactory<?, ?> factory : ServiceLoader.load(JsonServiceFactory.class)) {
             for (String type : factory.getTypes()) {
-                JsonSocketService service = factory.getSocketService(connection);
-                if (service != null) {
-                    HashSet<JsonSocketService> set = this.services.get(type);
-                    if (set == null) {
-                        this.services.put(type, new HashSet<>());
-                        set = this.services.get(type);
-                    }
-                    set.add(service);
+                JsonSocketService<?> service = factory.getSocketService(connection);
+                HashSet<JsonSocketService<?>> set = this.services.get(type);
+                if (set == null) {
+                    this.services.put(type, new HashSet<>());
+                    set = this.services.get(type);
                 }
+                set.add(service);
             }
         }
     }
@@ -109,13 +107,14 @@ public class JsonClientHandler {
      */
     public void onMessage(JsonNode root) throws IOException {
         try {
-            String method;
+            String method = root.path(METHOD).asText();
             String type = root.path(TYPE).asText();
             if (root.path(TYPE).isMissingNode() && root.path(LIST).isValueNode()) {
-                type = LIST;
+                type = root.path(LIST).asText();
+                method = LIST;
             }
             JsonNode data = root.path(DATA);
-            if ((type.equals(HELLO) || type.equals(PING) || type.equals(GOODBYE) || type.equals(LIST))
+            if ((type.equals(HELLO) || type.equals(PING) || type.equals(GOODBYE) || method.equals(LIST))
                     && data.isMissingNode()) {
                 // these messages are not required to have a data payload,
                 // so create one if the message did not contain one to avoid
@@ -124,7 +123,8 @@ public class JsonClientHandler {
             }
             if (data.isMissingNode() && root.path(METHOD).isValueNode()
                     && JSON.GET.equals(root.path(METHOD).asText())) {
-                // create an empty data node for get requests, if only to contain the method
+                // create an empty data node for get requests to avoid special
+                // casing later
                 data = this.connection.getObjectMapper().createObjectNode();
             }
             if (data.isMissingNode()) {
@@ -140,16 +140,15 @@ public class JsonClientHandler {
                 method = data.path(METHOD).asText(JSON.POST);
             }
             log.debug("Processing {} with {}", type, data);
-            if (type.equals(LIST)) {
-                String list = root.path(LIST).asText();
-                if (this.services.get(list) != null) {
-                    for (JsonSocketService service : this.services.get(list)) {
-                        service.onList(list, data, this.connection.getLocale());
+            if (method.equals(LIST)) {
+                if (this.services.get(type) != null) {
+                    for (JsonSocketService<?> service : this.services.get(type)) {
+                        service.onList(type, data, this.connection.getLocale());
                     }
                     return;
                 } else {
-                    log.warn("Requested list type '{}' unknown.", list);
-                    this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", list));
+                    log.warn("Requested list type '{}' unknown.", type);
+                    this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
                     return;
                 }
             } else if (!data.isMissingNode()) {
@@ -160,7 +159,7 @@ public class JsonClientHandler {
                     }
                 }
                 if (this.services.get(type) != null) {
-                    for (JsonSocketService service : this.services.get(type)) {
+                    for (JsonSocketService<?> service : this.services.get(type)) {
                         service.onMessage(type, data, method, this.connection.getLocale());
                     }
                 } else {

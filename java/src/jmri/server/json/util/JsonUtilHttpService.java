@@ -15,10 +15,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.awt.Container;
+import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Locale;
+import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletResponse;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -54,10 +56,11 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+    // use @Nullable to override @Nonnull specified in superclass
+    public JsonNode doGet(String type, @Nullable String name, Locale locale) throws JsonException {
         switch (type) {
             case JSON.HELLO:
-                return this.getHello(locale, JsonServerPreferences.getDefault().getHeartbeatInterval());
+                return this.getHello(locale, InstanceManager.getDefault(JsonServerPreferences.class).getHeartbeatInterval());
             case JSON.METADATA:
                 if (name == null) {
                     return this.getMetadata(locale);
@@ -237,7 +240,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         NodeIdentity.formerIdentities().stream().forEach((node) -> {
             nodes.add(node);
         });
-        data.put(JSON.FORMER_NODES, nodes);
+        data.set(JSON.FORMER_NODES, nodes);
         return root;
     }
 
@@ -245,7 +248,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         if (editor.getAllowInFrameServlet()) {
             Container container = editor.getTargetPanel().getTopLevelAncestor();
             if (container instanceof JmriJFrame) {
-                String title = ((JmriJFrame) container).getTitle();
+                String title = ((Frame) container).getTitle();
                 if (!title.isEmpty() && !Arrays.asList(InstanceManager.getDefault(WebServerPreferences.class).getDisallowedFrames()).contains(title)) {
                     String type = PANEL;
                     String name = "Panel";

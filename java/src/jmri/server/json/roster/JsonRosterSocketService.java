@@ -144,11 +144,11 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
             try {
                 try {
                     if (evt.getPropertyName().equals(Roster.ADD)) {
-                        root.putObject(DATA).put(ADD, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getNewValue()));
+                        root.putObject(DATA).set(ADD, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getNewValue()));
                         ((PropertyChangeProvider) evt.getNewValue()).addPropertyChangeListener(rosterEntryListener);
                         connection.sendMessage(root);
                     } else if (evt.getPropertyName().equals(Roster.REMOVE)) {
-                        root.putObject(DATA).put(REMOVE, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getOldValue()));
+                        root.putObject(DATA).set(REMOVE, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getOldValue()));
                         connection.sendMessage(root);
                     } else if (!evt.getPropertyName().equals(Roster.SAVED)
                             && !evt.getPropertyName().equals(Roster.ROSTER_GROUP_ADDED)
