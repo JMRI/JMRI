@@ -4,7 +4,6 @@ import static jmri.server.json.JSON.ADD;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.DELETE;
 import static jmri.server.json.JSON.GET;
-import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.POST;
 import static jmri.server.json.JSON.PUT;
@@ -61,8 +60,7 @@ public class JsonRosterSocketService extends JsonSocketService {
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        String method = data.path(METHOD).asText();
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
         switch (method) {
             case DELETE:
                 throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage("DeleteNotAllowed", type));

@@ -1,6 +1,5 @@
 package jmri.server.json.turnout;
 
-import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
 import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
@@ -31,7 +30,7 @@ public class JsonTurnoutSocketService extends JsonSocketService {
 
     private final JsonTurnoutHttpService service;
     private final HashMap<String, TurnoutListener> turnoutListeners = new HashMap<>();
-    private final TurnoutsListener turnoutsListener = new TurnoutsListener();   
+    private final TurnoutsListener turnoutsListener = new TurnoutsListener();
     private Locale locale;
     private final static Logger log = LoggerFactory.getLogger(JsonTurnoutSocketService.class);
 
@@ -42,10 +41,10 @@ public class JsonTurnoutSocketService extends JsonSocketService {
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
         this.locale = locale;
         String name = data.path(NAME).asText();
-        if (data.path(METHOD).asText().equals(PUT)) {
+        if (method.equals(PUT)) {
             this.connection.sendMessage(this.service.doPut(type, name, data, locale));
         } else {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
@@ -68,7 +67,7 @@ public class JsonTurnoutSocketService extends JsonSocketService {
 
         InstanceManager.getDefault(TurnoutManager.class).addPropertyChangeListener(turnoutsListener); //add parent listener
         addListenersToChildren();
-        
+
     }
 
     private void addListenersToChildren() {
@@ -108,7 +107,7 @@ public class JsonTurnoutSocketService extends JsonSocketService {
             if (evt.getPropertyName().equals("KnownState")  //only send changes for values which are sent
                     || evt.getPropertyName().equals("inverted")
                     || evt.getPropertyName().equals("UserName")
-                    || evt.getPropertyName().equals("Comment")) { 
+                    || evt.getPropertyName().equals("Comment")) {
                 try {
                     try {
                         connection.sendMessage(service.doGet(TURNOUT, this.turnout.getSystemName(), locale));
@@ -131,9 +130,9 @@ public class JsonTurnoutSocketService extends JsonSocketService {
             try {
                 try {
                  // send the new list
-                    connection.sendMessage(service.doGetList(TURNOUTS, locale)); 
+                    connection.sendMessage(service.doGetList(TURNOUTS, locale));
                     //child added or removed, reset listeners
-                    if (evt.getPropertyName().equals("length")) { // NOI18N 
+                    if (evt.getPropertyName().equals("length")) { // NOI18N
                         addListenersToChildren();
                     }
                 } catch (JsonException ex) {

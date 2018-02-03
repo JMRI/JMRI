@@ -30,7 +30,7 @@ public class JsonTimeSocketService extends JsonSocketService implements Property
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
         if (!this.listening) {
             Timebase manager = InstanceManager.getDefault(Timebase.class);
             manager.addMinuteChangeListener(this);

@@ -29,7 +29,7 @@ public class JsonMessageSocketService extends JsonSocketService {
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
         switch (type) {
             case JSON.HELLO:
                 if (!data.path(CLIENT).isMissingNode()) {
@@ -40,7 +40,7 @@ public class JsonMessageSocketService extends JsonSocketService {
                 }
                 break;
             case JsonMessage.CLIENT:
-                switch (data.path(JSON.METHOD).asText()) {
+                switch (method) {
                     case JSON.DELETE:
                         // remove client id
                         if (!data.path(CLIENT).isMissingNode()) {

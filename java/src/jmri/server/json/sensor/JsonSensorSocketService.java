@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * JSON Socket service for {@link jmri.Sensor}s.
- * 
+ *
  * @author Randall Wood
  */
 public class JsonSensorSocketService extends JsonSocketService {
@@ -40,10 +40,10 @@ public class JsonSensorSocketService extends JsonSocketService {
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
         this.locale = locale;
         String name = data.path(JSON.NAME).asText();
-        if (data.path(JSON.METHOD).asText().equals(JSON.PUT)) {
+        if (method.equals(JSON.PUT)) {
             this.connection.sendMessage(this.service.doPut(type, name, data, locale));
         } else {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
@@ -122,9 +122,9 @@ public class JsonSensorSocketService extends JsonSocketService {
             try {
                 try {
                  // send the new list
-                    connection.sendMessage(service.doGetList(SENSORS, locale)); 
+                    connection.sendMessage(service.doGetList(SENSORS, locale));
                     //child added or removed, reset listeners
-                    if (evt.getPropertyName().equals("length")) { // NOI18N 
+                    if (evt.getPropertyName().equals("length")) { // NOI18N
                         addListenersToChildren();
                     }
                 } catch (JsonException ex) {

@@ -11,7 +11,6 @@ import static jmri.server.json.JSON.TYPE;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -110,6 +109,7 @@ public class JsonClientHandler {
      */
     public void onMessage(JsonNode root) throws IOException {
         try {
+            String method;
             String type = root.path(TYPE).asText();
             if (root.path(TYPE).isMissingNode() && root.path(LIST).isValueNode()) {
                 type = LIST;
@@ -131,8 +131,11 @@ public class JsonClientHandler {
                 this.sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));
                 return;
             }
-            if (root.path(METHOD).isValueNode() && data.path(METHOD).isMissingNode()) {
-                ((ObjectNode) data).put(METHOD, root.path(METHOD).asText());
+            if (root.path(METHOD).isValueNode()) {
+                method = root.path(METHOD).asText(JSON.GET);
+            } else {
+                // at one point, we used method within data, so check there also
+                method = data.path(METHOD).asText(JSON.POST);
             }
             log.debug("Processing {} with {}", type, data);
             if (type.equals(LIST)) {
@@ -156,7 +159,7 @@ public class JsonClientHandler {
                 }
                 if (this.services.get(type) != null) {
                     for (JsonSocketService service : this.services.get(type)) {
-                        service.onMessage(type, data, this.connection.getLocale());
+                        service.onMessage(type, data, method, this.connection.getLocale());
                     }
                 } else {
                     log.warn("Requested type '{}' unknown.", type);

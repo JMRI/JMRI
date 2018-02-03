@@ -37,7 +37,7 @@ public class JsonOperationsSocketService extends JsonSocketService {
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
         this.locale = locale;
         String id = data.path(JSON.ID).asText(); // Operations uses ID attribute instead of name attribute
         switch (type) {

@@ -27,7 +27,7 @@ public class JsonUtilSocketService extends JsonSocketService {
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
         String name = data.path(JSON.NAME).asText();
         switch (type) {
             case JSON.LOCALE:
@@ -40,7 +40,7 @@ public class JsonUtilSocketService extends JsonSocketService {
                 this.connection.sendMessage(this.connection.getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE));
                 break;
             case JSON.RAILROAD:
-                this.connection.sendMessage(this.service.doPost(type, name, data, locale));
+                this.connection.sendMessage(this.service.doGet(type, name, locale));
                 this.rrNameListener = (PropertyChangeEvent evt) -> {
                     try {
                         try {

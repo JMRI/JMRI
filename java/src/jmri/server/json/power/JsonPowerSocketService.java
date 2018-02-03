@@ -30,7 +30,7 @@ public class JsonPowerSocketService extends JsonSocketService implements Propert
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
         if (!this.listening) {
             InstanceManager.getList(PowerManager.class).forEach((manager) -> {
                 manager.addPropertyChangeListener(this);

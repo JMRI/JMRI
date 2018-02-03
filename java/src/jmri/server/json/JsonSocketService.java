@@ -26,6 +26,7 @@ public abstract class JsonSocketService {
      *               correctly.
      * @param data   JSON data. The contents of this will depend on the
      *               implementing service.
+     * @param method The HTTP method to handle in this message.
      * @param locale The locale of the client, which may be different than the
      *               locale of the JMRI server.
      * @throws java.io.IOException Thrown if the service cannot send a response.
@@ -38,7 +39,7 @@ public abstract class JsonSocketService {
      * @throws JsonException       Thrown if the service needs to pass an error
      *                             message back to the client.
      */
-    public abstract void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException;
+    public abstract void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException;
 
     /**
      * Handle a request for a list of objects.

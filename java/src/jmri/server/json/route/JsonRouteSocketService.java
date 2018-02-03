@@ -42,10 +42,10 @@ public class JsonRouteSocketService extends JsonSocketService {
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
         this.locale = locale;
         String name = data.path(JSON.NAME).asText();
-        if (data.path(JSON.METHOD).asText().equals(JSON.PUT)) {
+        if (method.equals(JSON.PUT)) {
             this.connection.sendMessage(this.service.doPut(type, name, data, locale));
         } else {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
@@ -109,7 +109,7 @@ public class JsonRouteSocketService extends JsonSocketService {
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in RouteListener for '{}' '{}' ('{}'=>'{}')", this.route.getSystemName(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());            
+            log.debug("in RouteListener for '{}' '{}' ('{}'=>'{}')", this.route.getSystemName(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
             try {
                 try {
                     getConnection().sendMessage(service.doGet(ROUTE, this.route.getSystemName(), locale));
@@ -135,9 +135,9 @@ public class JsonRouteSocketService extends JsonSocketService {
             try {
                 try {
                  // send the new list
-                    connection.sendMessage(service.doGetList(ROUTES, locale)); 
+                    connection.sendMessage(service.doGetList(ROUTES, locale));
                     //child added or removed, reset listeners
-                    if (evt.getPropertyName().equals("length")) { // NOI18N 
+                    if (evt.getPropertyName().equals("length")) { // NOI18N
                         addListenersToChildren();
                     }
                 } catch (JsonException ex) {

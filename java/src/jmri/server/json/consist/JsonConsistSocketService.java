@@ -6,9 +6,9 @@ import java.util.HashSet;
 import java.util.Locale;
 import jmri.ConsistListListener;
 import jmri.ConsistListener;
-import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.JmriException;
+import jmri.LocoAddress;
 import jmri.jmrit.consisttool.ConsistFile;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 public class JsonConsistSocketService extends JsonSocketService {
 
     private final JsonConsistHttpService service;
-    private final HashSet<DccLocoAddress> consists = new HashSet<>();
+    private final HashSet<LocoAddress> consists = new HashSet<>();
     private Locale locale;
     private final JsonConsistListener consistListener = new JsonConsistListener();
     private final JsonConsistListListener consistListListener = new JsonConsistListListener();
@@ -37,14 +37,14 @@ public class JsonConsistSocketService extends JsonSocketService {
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
         this.locale = locale;
         if (JsonConsist.CONSISTS.equals(type)) {
             this.connection.sendMessage(this.service.doGetList(type, locale));
         } else {
             DccLocoAddress address = new DccLocoAddress(data.path(JSON.ADDRESS).asInt(), data.path(JSON.IS_LONG_ADDRESS).asBoolean());
             String name = address.getNumber() + (address.isLongAddress() ? "L" : "");
-            if (data.path(JSON.METHOD).asText().equals(JSON.PUT)) {
+            if (method.equals(JSON.PUT)) {
                 this.connection.sendMessage(this.service.doPut(type, name, data, locale));
             } else {
                 this.connection.sendMessage(this.service.doPost(type, name, data, locale));
@@ -77,7 +77,7 @@ public class JsonConsistSocketService extends JsonSocketService {
         public void consistReply(LocoAddress locoaddress, int status) {
             try {
                 try {
-                    connection.sendMessage(service.getConsist(locale, (DccLocoAddress) locoaddress));
+                    connection.sendMessage(service.getConsist(locale, locoaddress));
                 } catch (JsonException ex) {
                     connection.sendMessage(ex.getJsonMessage());
                 }
@@ -90,7 +90,7 @@ public class JsonConsistSocketService extends JsonSocketService {
                 (new ConsistFile()).writeFile(service.manager.getConsistList());
             } catch (IOException ex) {
                 // this IO execption caused by unable to write file
-                log.error("Unable to write consist file \"{}\": {}", ConsistFile.defaultConsistFilename(), ex);
+                log.error("Unable to write consist file \"{}\"", ConsistFile.defaultConsistFilename(), ex);
             }
         }
     }
@@ -113,7 +113,7 @@ public class JsonConsistSocketService extends JsonSocketService {
                 (new ConsistFile()).writeFile(service.manager.getConsistList());
             } catch (IOException ex) {
                 // this IO execption caused by unable to write file
-                log.error("Unable to write consist file \"{}\": {}", ConsistFile.defaultConsistFilename(), ex);
+                log.error("Unable to write consist file \"{}\"", ConsistFile.defaultConsistFilename(), ex);
             }
         }
     }
