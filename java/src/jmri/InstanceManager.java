@@ -617,38 +617,9 @@ public final class InstanceManager {
     }
 
     /* ****************************************************************************
-     *         Deprecated Accessors - removed from JMRI itself
-     *
-     *             Remove these in or after JMRI 4.8.1
-     *                 (Check scripts first)
-     * ****************************************************************************/
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default consist manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public ConsistManager consistManagerInstance() {
-        return getDefault(ConsistManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default configure manager. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public ConfigureManager configureManagerInstance() {
-        return getDefault(ConfigureManager.class);
-    }
-
-
-    /* ****************************************************************************
      *                   Old Style Setters - To be migrated
      *
-     *                   Migrate JMRI uses of these, then move to next category
+     *                   Migrate away the JMRI uses of these.
      * ****************************************************************************/
     /**
      * @param p clock control to make default
