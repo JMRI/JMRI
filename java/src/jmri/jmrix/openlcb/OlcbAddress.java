@@ -21,9 +21,12 @@ import javax.annotation.Nonnull;
  * not 123
  * <dt>Full 8 byte ID as pairs separated by "."
  * </dl>
- *
+ * Note: the {@link #check()} routine does a full, expensive
+ * validity check of the name.  All other operations 
+ * assume correctness, diagnose some invalid-format strings, but 
+ * may appear to successfully handle other invalid forms.
  * <P>
- * @author Bob Jacobsen Copyright (C) 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2008, 2010, 2018
  */
 public class OlcbAddress {
 
