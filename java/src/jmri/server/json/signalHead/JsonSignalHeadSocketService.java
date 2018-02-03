@@ -22,20 +22,17 @@ import jmri.server.json.JsonSocketService;
  *
  * @author Randall Wood (C) 2016
  */
-public class JsonSignalHeadSocketService extends JsonSocketService {
+public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHeadHttpService> {
 
-    private final JsonSignalHeadHttpService service;
     private final HashMap<String, SignalHeadListener> signalHeads = new HashMap<>();
-    private Locale locale;
 
     public JsonSignalHeadSocketService(JsonConnection connection) {
-        super(connection);
-        this.service = new JsonSignalHeadHttpService(connection.getObjectMapper());
+        super(connection, new JsonSignalHeadHttpService(connection.getObjectMapper()));
     }
 
     @Override
     public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+        this.setLocale(locale);
         String name = data.path(NAME).asText();
         if (method.equals(PUT)) {
             this.connection.sendMessage(this.service.doPut(type, name, data, locale));
@@ -54,7 +51,7 @@ public class JsonSignalHeadSocketService extends JsonSocketService {
 
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+        this.setLocale(locale);
         this.connection.sendMessage(this.service.doGetList(type, locale));
     }
 
@@ -79,7 +76,7 @@ public class JsonSignalHeadSocketService extends JsonSocketService {
             if (e.getPropertyName().equals("Appearance") || e.getPropertyName().equals("Held")) {
                 try {
                     try {
-                        connection.sendMessage(service.doGet(SIGNAL_HEAD, this.signalHead.getSystemName(), locale));
+                        connection.sendMessage(service.doGet(SIGNAL_HEAD, this.signalHead.getSystemName(), getLocale()));
                     } catch (JsonException ex) {
                         connection.sendMessage(ex.getJsonMessage());
                     }

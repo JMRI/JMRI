@@ -5,6 +5,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.Locale;
+import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
@@ -16,14 +17,13 @@ import jmri.web.server.WebServerPreferences;
  *
  * @author Randall Wood
  */
-public class JsonUtilSocketService extends JsonSocketService {
+public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService> {
 
-    private final JsonUtilHttpService service;
     private PropertyChangeListener rrNameListener;
+    private WebServerPreferences webServerPreferences = InstanceManager.getDefault(WebServerPreferences.class);
 
     public JsonUtilSocketService(JsonConnection connection) {
-        super(connection);
-        this.service = new JsonUtilHttpService(connection.getObjectMapper());
+        super(connection, new JsonUtilHttpService(connection.getObjectMapper()));
     }
 
     @Override
@@ -49,10 +49,10 @@ public class JsonUtilSocketService extends JsonSocketService {
                             this.connection.sendMessage(ex.getJsonMessage());
                         }
                     } catch (IOException ex) {
-                        WebServerPreferences.getDefault().removePropertyChangeListener(this.rrNameListener);
+                        webServerPreferences.removePropertyChangeListener(this.rrNameListener);
                     }
                 };
-                WebServerPreferences.getDefault().addPropertyChangeListener(this.rrNameListener);
+                webServerPreferences.addPropertyChangeListener(this.rrNameListener);
                 break;
             default:
                 this.connection.sendMessage(this.service.doPost(type, name, data, locale));
@@ -67,7 +67,7 @@ public class JsonUtilSocketService extends JsonSocketService {
 
     @Override
     public void onClose() {
-        WebServerPreferences.getDefault().removePropertyChangeListener(this.rrNameListener);
+        webServerPreferences.removePropertyChangeListener(this.rrNameListener);
     }
 
 }

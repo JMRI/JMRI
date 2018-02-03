@@ -19,12 +19,12 @@ import jmri.server.json.JsonSocketService;
  *
  * @author Randall Wood Copyright 2017
  */
-public class JsonMessageSocketService extends JsonSocketService {
+public class JsonMessageSocketService extends JsonSocketService<JsonMessageHttpService> {
 
     private JsonMessageClientManager messageClientManager = null;
 
     public JsonMessageSocketService(JsonConnection connection) {
-        super(connection);
+        super(connection, new JsonMessageHttpService(connection.getObjectMapper()));
         messageClientManager = InstanceManager.getDefault(JsonMessageClientManager.class);
     }
 

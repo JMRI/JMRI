@@ -21,24 +21,21 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood Copyright (C) 2016
  */
-public class JsonConsistSocketService extends JsonSocketService {
+public class JsonConsistSocketService extends JsonSocketService<JsonConsistHttpService> {
 
-    private final JsonConsistHttpService service;
     private final HashSet<LocoAddress> consists = new HashSet<>();
-    private Locale locale;
     private final JsonConsistListener consistListener = new JsonConsistListener();
     private final JsonConsistListListener consistListListener = new JsonConsistListListener();
     private final static Logger log = LoggerFactory.getLogger(JsonConsistSocketService.class);
 
     public JsonConsistSocketService(JsonConnection connection) {
-        super(connection);
-        this.service = new JsonConsistHttpService(connection.getObjectMapper());
+        super(connection, new JsonConsistHttpService(connection.getObjectMapper()));
         this.service.manager.addConsistListListener(this.consistListListener);
     }
 
     @Override
     public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+        this.setLocale(locale);
         if (JsonConsist.CONSISTS.equals(type)) {
             this.connection.sendMessage(this.service.doGetList(type, locale));
         } else {
@@ -58,7 +55,7 @@ public class JsonConsistSocketService extends JsonSocketService {
 
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+        this.setLocale(locale);
         this.connection.sendMessage(this.service.doGetList(type, locale));
     }
 
@@ -77,7 +74,7 @@ public class JsonConsistSocketService extends JsonSocketService {
         public void consistReply(LocoAddress locoaddress, int status) {
             try {
                 try {
-                    connection.sendMessage(service.getConsist(locale, locoaddress));
+                    connection.sendMessage(service.getConsist(getLocale(), locoaddress));
                 } catch (JsonException ex) {
                     connection.sendMessage(ex.getJsonMessage());
                 }
@@ -101,7 +98,7 @@ public class JsonConsistSocketService extends JsonSocketService {
         public void notifyConsistListChanged() {
             try {
                 try {
-                    connection.sendMessage(service.doGetList(JsonConsist.CONSISTS, locale));
+                    connection.sendMessage(service.doGetList(JsonConsist.CONSISTS, getLocale()));
                 } catch (JsonException ex) {
                     connection.sendMessage(ex.getJsonMessage());
                 }

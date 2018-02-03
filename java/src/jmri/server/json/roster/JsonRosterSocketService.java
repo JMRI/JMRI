@@ -33,18 +33,16 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood Copyright (C) 2014, 2016
  */
-public class JsonRosterSocketService extends JsonSocketService {
+public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpService> {
 
     private final static Logger log = LoggerFactory.getLogger(JsonRosterSocketService.class);
     private final JsonRosterListener rosterListener = new JsonRosterListener();
     private final JsonRosterEntryListener rosterEntryListener = new JsonRosterEntryListener();
     private final JsonRosterGroupsListener rosterGroupsListener = new JsonRosterGroupsListener();
-    private final JsonRosterHttpService service;
     private boolean listening = false;
 
     public JsonRosterSocketService(JsonConnection connection) {
-        super(connection);
-        this.service = new JsonRosterHttpService(connection.getObjectMapper());
+        super(connection, new JsonRosterHttpService(connection.getObjectMapper()));
     }
 
     public void listen() {

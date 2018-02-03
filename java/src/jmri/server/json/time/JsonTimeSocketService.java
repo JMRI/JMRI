@@ -19,14 +19,12 @@ import jmri.server.json.JsonSocketService;
  *
  * @author Randall Wood
  */
-public class JsonTimeSocketService extends JsonSocketService implements PropertyChangeListener {
+public class JsonTimeSocketService extends JsonSocketService<JsonTimeHttpService> implements PropertyChangeListener {
 
     private boolean listening = false;
-    private final JsonTimeHttpService service;
 
     public JsonTimeSocketService(JsonConnection connection) {
-        super(connection);
-        this.service = new JsonTimeHttpService(connection.getObjectMapper());
+        super(connection, new JsonTimeHttpService(connection.getObjectMapper()));
     }
 
     @Override

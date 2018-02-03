@@ -22,20 +22,17 @@ import jmri.server.json.JsonSocketService;
  *
  * @author Randall Wood
  */
-public class JsonMemorySocketService extends JsonSocketService {
+public class JsonMemorySocketService extends JsonSocketService<JsonMemoryHttpService> {
 
-    private final JsonMemoryHttpService service;
     private final HashMap<String, MemoryListener> memories = new HashMap<>();
-    private Locale locale;
 
     public JsonMemorySocketService(JsonConnection connection) {
-        super(connection);
-        this.service = new JsonMemoryHttpService(connection.getObjectMapper());
+        super(connection,new JsonMemoryHttpService(connection.getObjectMapper()));
     }
 
     @Override
     public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+        this.setLocale(locale);
         String name = data.path(NAME).asText();
         if (method.equals(PUT)) {
             this.connection.sendMessage(this.service.doPut(type, name, data, locale));
@@ -54,7 +51,7 @@ public class JsonMemorySocketService extends JsonSocketService {
 
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+        this.setLocale(locale);
         this.connection.sendMessage(this.service.doGetList(type, locale));
     }
 
@@ -80,7 +77,7 @@ public class JsonMemorySocketService extends JsonSocketService {
             if (e.getPropertyName().equals("value")) {
                 try {
                     try {
-                        connection.sendMessage(service.doGet(MEMORY, this.memory.getSystemName(), locale));
+                        connection.sendMessage(service.doGet(MEMORY, this.memory.getSystemName(), getLocale()));
                     } catch (JsonException ex) {
                         connection.sendMessage(ex.getJsonMessage());
                     }
