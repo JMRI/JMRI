@@ -215,8 +215,8 @@ public class JsonUtil {
                 data.put(JsonOperations.LEAD_ENGINE, train.getLeadEngine().toString());
             }
             data.put(JsonOperations.CABOOSE, train.getCabooseRoadAndNumber());
-        } catch (NullPointerException e) {
-            log.error("Unable to get train id [{}].", id);
+        } catch (NullPointerException ex) {
+            log.error("Unable to get train id [{}].", id, ex);
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", JsonOperations.TRAIN, id));
         }
         return root;
