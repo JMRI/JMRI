@@ -132,9 +132,11 @@ public class JsonClientHandler {
                 return;
             }
             if (root.path(METHOD).isValueNode()) {
+                // if method is specified, use it, setting it to "get" if not explicitly null
                 method = root.path(METHOD).asText(JSON.GET);
             } else {
                 // at one point, we used method within data, so check there also
+                // if method was not specified, set it to "post"
                 method = data.path(METHOD).asText(JSON.POST);
             }
             log.debug("Processing {} with {}", type, data);
