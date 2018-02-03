@@ -577,7 +577,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     }
 
     public static String getWebServerPort() {
-        return Integer.toString(WebServerPreferences.getDefault().getPort());
+        return Integer.toString(InstanceManager.getDefault(WebServerPreferences.class).getPort());
     }
 
     /**
