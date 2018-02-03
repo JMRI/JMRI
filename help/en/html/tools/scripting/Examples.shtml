@@ -75,7 +75,18 @@
       JMRI on Mac OS X.</p>
 
       <p><a href=
-                    "../../../../../jython/AutoDispatcher2.py">AutoDispatcher2.py</a></p>
+      "../../../../../jython/AutoActiveTrains_Simulator.py">AutoActiveTrains_Simulator.py</a>
+      </p>
+
+      <p>Simulator for <a href=
+      "../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>
+      AutoActiveTrains.
+      While auto train(s) are "moving", repeatedly activates "next" allocated block,
+      and deactivate "last" occupied Block. Waits for debounce time plus a bit to
+      allow signals, etc. to respond.</p>
+
+      <p><a href=
+      "../../../../../jython/AutoDispatcher2.py">AutoDispatcher2.py</a></p>
 
       <p>This script provides full layout automation, using connectivity info
       provided by Layout Editor panels.</p>

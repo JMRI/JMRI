@@ -1241,6 +1241,9 @@
         <li><a href="Options.shtml">Dispatcher Options</a></li>
         <li>The <a href="NewTrain.shtml">Activate New Train</a>
         pane</li>
+        <li>Simulate AutoActiveTrains using the <a href=
+        "../../../../html/tools/scripting/Examples.shtml">AutoActiveTrains
+        Simulator</a> script</li>
         <li>JMRI <a href=
         "../../../../html/tools/automation/index.shtml">Automation
         in General</a></li>
