@@ -13,7 +13,7 @@ import static org.mockito.Mockito.mock;
 
 public class MockPropertyChangeListener implements PropertyChangeListener {
     public interface MockInterface {
-        void onChange(String property, Object newValue);
+        public void onChange(String property, Object newValue);
     }
 
     public MockInterface m;
