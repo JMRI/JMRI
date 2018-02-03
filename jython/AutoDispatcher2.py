@@ -160,7 +160,7 @@ class FastListener(java.beans.PropertyChangeListener):
   fastTime = 0
 
   def propertyChange(self, event):
-    time = InstanceManager.timebaseInstance().getTime()
+    time = InstanceManager.getDefault(jmri.Timebase).getTime()
     FastListener.fastTime = time.getHours() * 60 + time.getMinutes()
     return
 
@@ -211,7 +211,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
     powerMonitor = None
     
     # Fast Clock
-    fastBase = InstanceManager.timebaseInstance()
+    fastBase = InstanceManager.getDefault(jmri.Timebase)
     fastListener = FastListener()
 
     # Status variables

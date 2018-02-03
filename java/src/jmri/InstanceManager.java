@@ -81,15 +81,6 @@ public final class InstanceManager {
     private final HashMap<Class<?>, StateHolder> initState = new HashMap<>();
 
     /**
-     *
-     * @deprecated since 4.5.4 use
-     * {@code InstanceManager.getDefaultsPropertyName(ConsistManager.class)}
-     * instead.
-     */
-    @Deprecated
-    public static final String CONSIST_MANAGER = "consistmanager"; // NOI18N
-
-    /**
      * Store an object of a particular type for later retrieval via
      * {@link #getDefault} or {@link #getList}.
      *
@@ -516,7 +507,7 @@ public final class InstanceManager {
      *                      Please don't create any more of these
      * ****************************************************************************/
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * May eventually be deprecated, use @{link #getDefault} directly.
      *
      * @return the default light manager. May not be the only instance.
      */
@@ -525,7 +516,7 @@ public final class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * May eventually be deprecated, use @{link #getDefault} directly.
      *
      * @return the default memory manager. May not be the only instance.
      */
@@ -534,7 +525,7 @@ public final class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * May eventually be deprecated, use @{link #getDefault} directly.
      *
      * @return the default sensor manager. May not be the only instance.
      */
@@ -543,7 +534,7 @@ public final class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * May eventually be deprecated, use @{link #getDefault} directly.
      *
      * @return the default turnout manager. May not be the only instance.
      */
@@ -552,7 +543,7 @@ public final class InstanceManager {
     }
 
     /**
-     * Will eventually be deprecated, use @{link #getDefault} directly.
+     * May eventually be deprecated, use @{link #getDefault} directly.
      *
      * @return the default throttle manager. May not be the only instance.
      */
@@ -653,16 +644,6 @@ public final class InstanceManager {
         return getDefault(ConfigureManager.class);
     }
 
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default Timebase. May not be the only instance.
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public Timebase timebaseInstance() {
-        return getDefault(Timebase.class);
-    }
 
     /* ****************************************************************************
      *                   Old Style Setters - To be migrated
@@ -739,7 +720,7 @@ public final class InstanceManager {
     //
     static public void setConsistManager(ConsistManager p) {
         store(p, ConsistManager.class);
-        getDefault().pcs.firePropertyChange(CONSIST_MANAGER, null, null);
+        getDefault().pcs.firePropertyChange("consistmanager", null, null);
     }
 
     // Needs to have proxy manager converted to work
@@ -798,6 +779,7 @@ public final class InstanceManager {
     }
 
     /* *************************************************************************** */
+
     /**
      * Default constructor for the InstanceManager.
      */
