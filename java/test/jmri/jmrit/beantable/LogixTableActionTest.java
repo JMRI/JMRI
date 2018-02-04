@@ -188,12 +188,14 @@ public class LogixTableActionTest extends AbstractTableActionBase {
     }
 
     void createModalDialogOperatorThread(String dialogTitle, String buttonText) {
-        new Thread(() -> {
+        Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
             jbo.pushNoBlock();
-        }).start();
+        });
+        t.setName(dialogTitle + " Close Dialog Thread");
+        t.start();
     }
 
     @Before
