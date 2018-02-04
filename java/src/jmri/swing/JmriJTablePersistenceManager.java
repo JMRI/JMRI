@@ -95,9 +95,6 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                 while (e.hasMoreElements()) {
                     TableColumn column = e.nextElement();
                     column.addPropertyChangeListener(listener);
-                    if (column.getIdentifier() == null) {
-                        column.setIdentifier(column.getHeaderValue().toString());
-                    }
                     Object columnId = column.getIdentifier();
                     if (columnId == null || columnId.toString().isEmpty()) {
                         log.warn("Columns in table {} have empty or null identities; saving table state will not be reliable.", table.getName());
@@ -186,12 +183,6 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         RowSorter<? extends TableModel> sorter = table.getRowSorter();
         boolean isXModel = model instanceof XTableColumnModel;
         Enumeration<TableColumn> e = this.getColumns(table.getColumnModel());
-        while (e.hasMoreElements()) {
-            TableColumn column = e.nextElement();
-            if (column.getIdentifier() == null) {
-                column.setIdentifier(column.getHeaderValue().toString());
-            }
-        }
         Map<Integer, String> indexes = new HashMap<>();
         if (this.columns.get(table.getName()) == null) {
             this.columns.put(table.getName(), new HashMap<>());
