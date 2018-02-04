@@ -27,9 +27,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
-import jmri.InstanceManager;
 import jmri.CommandStation;
-import jmri.Manager;
+import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.SignalHead;
@@ -282,35 +281,8 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 return getClassName();
             }
 
-            // no longer used since 4.7.1, but have to override
-            @Deprecated
             @Override
             public void clickOn(SignalHead t) {
-                int oldState = t.getAppearance();
-                int newState = 99;
-                int[] stateList = t.getValidStates();
-                for (int i = 0; i < stateList.length; i++) {
-                    if (oldState == stateList[i]) {
-                        if (i < stateList.length - 1) {
-                            newState = stateList[i + 1];
-                            break;
-                        } else {
-                            newState = stateList[0];
-                            break;
-                        }
-                    }
-                }
-                if (newState == 99) {
-                    if (stateList.length == 0) {
-                        newState = SignalHead.DARK;
-                        log.warn("New signal state not found so setting to Dark " + t.getDisplayName());
-                    } else {
-                        newState = stateList[0];
-                        log.warn("New signal state not found so setting to the first available " + t.getDisplayName());
-                    }
-                }
-                log.debug("was " + oldState + " becomes " + newState);
-                t.setAppearance(newState);
             }
 
             /**
@@ -405,15 +377,12 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                  * @return an appropriate combobox for this signal head
                  */
                 @Override
-                protected JComboBox getEditorBox(int row) {
+                protected JComboBox<String> getEditorBox(int row) {
                     return getAppearanceEditorBox(row);
                 }
 
             }
 
-            // Methods to display VALUECOL (appearance) ComboBox in the Signal Head Table
-            // Derived from the SignalMastJTable class (deprecated since 4.5.5):
-            // All row values are in terms of the Model, not the Table as displayed.
             /**
              * Clear the old appearance comboboxes and force them to be rebuilt.
              * Used with the Single Output Signal Head to capture reconguration.
@@ -436,16 +405,16 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
              * @return A combobox containing the valid appearance names for this
              *         mast
              */
-            public JComboBox getAppearanceEditorBox(int row) {
-                JComboBox editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
+            public JComboBox<String> getAppearanceEditorBox(int row) {
+                JComboBox<String> editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
                 if (editCombo == null) {
                     // create a new one with correct appearances
-                    editCombo = new JComboBox<String>(getRowVector(row));
+                    editCombo = new JComboBox<>(getRowVector(row));
                     editorMap.put(this.getValueAt(row, SYSNAMECOL), editCombo);
                 }
                 return editCombo;
             }
-            Hashtable<Object, JComboBox> editorMap = new Hashtable<Object, JComboBox>();
+            Hashtable<Object, JComboBox<String>> editorMap = new Hashtable<>();
 
             /**
              * returns a list of all the valid appearances that have not been
@@ -1204,7 +1173,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
         } else {
             sName = InstanceManager.getDefault(SignalHeadManager.class).normalizeSystemName(sysName);
-            
+
             boolean ok = true;
             try {
                 int i = jmri.Manager.getSystemPrefixLength(sName);
