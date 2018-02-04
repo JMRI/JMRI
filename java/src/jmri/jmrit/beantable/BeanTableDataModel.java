@@ -63,6 +63,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2006
+ * @param <T> the type of NamedBean supported by this model
  */
 abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTableModel implements PropertyChangeListener {
 
@@ -75,12 +76,12 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     protected List<String> sysNameList = null;
     boolean noWarnDelete = false;
     NamedBeanHandleManager nbMan = InstanceManager.getDefault(NamedBeanHandleManager.class);
-    protected List<NamedBeanPropertyDescriptor> propertyColumns;
+    protected final List<NamedBeanPropertyDescriptor<?>> propertyColumns;
 
     public BeanTableDataModel() {
         super();
         getManager().addPropertyChangeListener(this);
-        propertyColumns = new ArrayList<NamedBeanPropertyDescriptor>(getManager().getKnownBeanProperties());
+        propertyColumns = new ArrayList<>(getManager().getKnownBeanProperties());
         updateNameList();
     }
 
@@ -88,11 +89,13 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         return propertyColumns.size();
     }
 
-    protected NamedBeanPropertyDescriptor getPropertyColumnDescriptor(int column) {
+    protected NamedBeanPropertyDescriptor<?> getPropertyColumnDescriptor(int column) {
         int totalCount = getColumnCount();
         int propertyCount = propertyColumns.size();
         int tgt = column - (totalCount - propertyCount);
-        if (tgt < 0) return null;
+        if (tgt < 0) {
+            return null;
+        }
         return propertyColumns.get(tgt);
     }
 
@@ -114,7 +117,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
@@ -154,19 +159,25 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 || e.getPropertyName().contains("UserName");
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getRowCount() {
         return sysNameList.size();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getColumnCount() {
         return NUMCOLUMN;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getColumnName(int col) {
         switch (col) {
@@ -181,7 +192,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             case DELETECOL:
                 return "";
             default:
-                NamedBeanPropertyDescriptor desc = getPropertyColumnDescriptor(col);
+                NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null) {
                     return "unknown";
                 }
@@ -189,7 +200,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
@@ -202,7 +215,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             case DELETECOL:
                 return JButton.class;
             default:
-                NamedBeanPropertyDescriptor desc = getPropertyColumnDescriptor(col);
+                NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null) {
                     return null;
                 }
@@ -210,7 +223,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isCellEditable(int row, int col) {
         String uname;
@@ -222,12 +237,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             case USERNAMECOL:
                 T b = getBySystemName(sysNameList.get(row));
                 uname = b.getUserName();
-                if ((uname == null) || uname.equals("")) {
-                    return true;
-                }
-            //$FALL-THROUGH$
+                return ((uname == null) || uname.equals(""));
             default:
-                NamedBeanPropertyDescriptor desc = getPropertyColumnDescriptor(col);
+                NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null) {
                     return false;
                 }
@@ -235,7 +247,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Object getValueAt(int row, int col) {
         T b;
@@ -254,7 +268,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             case DELETECOL:  //
                 return Bundle.getMessage("ButtonDelete");
             default:
-                NamedBeanPropertyDescriptor desc = getPropertyColumnDescriptor(col);
+                NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null) {
                     log.error("internal state inconsistent with table requst for {} {}", row, col);
                     return null;
@@ -279,7 +293,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             case DELETECOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
                 return new JTextField(22).getPreferredSize().width;
             default:
-                NamedBeanPropertyDescriptor desc = getPropertyColumnDescriptor(col);
+                NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null || desc.getColumnHeaderText() == null) {
                     log.warn("Unexpected column in getPreferredWidth: {}", col);
                     return new JTextField(8).getPreferredSize().width;
@@ -311,14 +325,16 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     abstract protected String getMasterClassName();
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
             case USERNAMECOL:
                 //Directly changing the username should only be possible if the username was previously null or ""
                 // check to see if user name already exists
-                if (((String) value).equals("")) {
+                if (value.equals("")) {
                     value = null;
                 } else {
                     T nB = getByUserName((String) value);
@@ -365,7 +381,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 deleteBean(row, col);
                 break;
             default:
-                NamedBeanPropertyDescriptor desc = getPropertyColumnDescriptor(col);
+                NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null) {
                     break;
                 }
@@ -636,7 +652,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     /**
      * Updates the visibility settings of the property columns.
-     * @param table the JTable object for the current display.
+     *
+     * @param table   the JTable object for the current display.
      * @param visible true to make the proeprty columns visible, false to hide.
      */
     public void setPropertyColumnsVisible(JTable table, boolean visible) {
@@ -901,7 +918,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             t = bean;
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public Void doInBackground() {
             StringBuilder message = new StringBuilder();
@@ -1010,8 +1029,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
 
         /**
-         * {@inheritDoc}
-         * Minimal implementation to catch and log errors
+         * {@inheritDoc} Minimal implementation to catch and log errors
          */
         @Override
         protected void done() {
@@ -1025,7 +1043,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     class PopupListener extends MouseAdapter {
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void mousePressed(MouseEvent e) {
             if (e.isPopupTrigger()) {
@@ -1033,7 +1053,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             }
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void mouseReleased(MouseEvent e) {
             if (e.isPopupTrigger()) {
@@ -1050,7 +1072,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             this.row = row;
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             deleteBean(row, 0);
@@ -1066,7 +1090,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             table = tbl;
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void mousePressed(MouseEvent e) {
             if (e.isPopupTrigger()) {
@@ -1074,7 +1100,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             }
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void mouseReleased(MouseEvent e) {
             if (e.isPopupTrigger()) {
@@ -1082,7 +1110,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             }
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void mouseClicked(MouseEvent e) {
             if (e.isPopupTrigger()) {
