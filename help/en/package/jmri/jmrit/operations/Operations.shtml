@@ -2154,6 +2154,11 @@
     only place the default empty "E" or default load "L" into the car. See <a href="#Sidings">Spurs</a>
     for how the program deals with the default loads.
    </p>
+   
+   <p>The "Receive" pull down menu will only show the loads that the spur can service for that particular
+   car type. To review which car loads are available see the <a href="#LoadOptions">load
+     options</a> for this spur.
+   </p>
 
    <p>
     You can decide where a car is to be sent after being serviced by the spur/industry. Use the
