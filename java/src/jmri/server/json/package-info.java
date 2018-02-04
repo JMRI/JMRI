@@ -32,7 +32,7 @@
  * a <code>{"type":"pong"}</code> response.</li>
  * <li>a sign off in the form: <code>{"type":"goodbye"}</code> to which an
  * identical response is sent before the connection gets closed.</li></ul>
- * <p>
+ *
  * <h2>Responses</h2>
  * <p>
  * JSON messages sent to the client will be in the form:
