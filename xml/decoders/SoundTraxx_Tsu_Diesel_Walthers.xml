@@ -21,6 +21,7 @@
   <version author="Alain Le Marchand" version="6" lastUpdated="20140622"/>
   <version author="Alain Le Marchand" version="7" lastUpdated="20180103"/>
   <version author="Michael Mosher" version="8" lastUpdated="20180123"/>
+  <version author="Alain Le Marchand" version="8.1" lastUpdated="20180128"/>
   <!-- This file contains the Tsunami definitions for Walthers OEM diesel locomotives                           -->
   <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file.                                    -->
   <!-- version 2	make more use of external includes                                                      -->
@@ -32,6 +33,7 @@
   <!-- version 7  Specific UserID with tooltip indicating version number,
                   from SoundTraxx Product Identification guide Rev.B                                      -->
   <!-- version 8	Add GP35 model                                                                    -->
+  <!-- version 8.1	Minor Airhorm name correction for GP35 model                                                                    -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
@@ -573,7 +575,7 @@
     <label xml:lang="fr">V démarr. (0-255)</label>
     <label xml:lang="de">Anfahrspannung (0-255)</label>
       </variable>
-      <variable CV="3" item="Accel" default="0" include="E8,F7,GP20,GP30CO,GP30SF,GP30MIL,GP35,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,SD45,U28B,U28BGN,U28BWP" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
+      <variable CV="3" item="Accel" default="0" include="E8,F7,GP20,GP30CO,GP30SF,GP30MIL,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,SD45,U28B,U28BGN,U28BWP" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Acceleration Rate (0-255)</label>
         <label xml:lang="it">Accellerazione (0-255)</label>
@@ -587,7 +589,7 @@
         <label xml:lang="fr">Accelération (0-255)</label>
         <label xml:lang="de">Anfahrverzögerung (0-255)</label>
       </variable>
-      <variable CV="4" item="Decel" default="0" include="E8,F7,GP20,GP30CO,GP30SF,GP30MIL,GP35,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,SD45,U28B,U28BGN,U28BWP" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
+      <variable CV="4" item="Decel" default="0" include="E8,F7,GP20,GP30CO,GP30SF,GP30MIL,GP60,SD7BLE,SD7CNW,SD9BNSF,SD9SOU,SD9SP,SD45,U28B,U28BGN,U28BWP" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Braking Rate (0-255)</label>
         <label xml:lang="it">Decellerazione (1-255)</label>
@@ -2195,7 +2197,7 @@
             <choice>Leslie RS3L</choice>
           </enumChoice>
           <enumChoice choice="Nathan P3">
-            <choice>Nathan M5</choice>
+            <choice>Nathan P3</choice>
           </enumChoice>
           <enumChoice choice="Nathan M5">
             <choice>Nathan M5</choice>
@@ -2212,7 +2214,7 @@
             <choice>Leslie RS3L</choice>
           </enumChoice>
           <enumChoice choice="Nathan P3">
-            <choice>Nathan M5</choice>
+            <choice>Nathan P3</choice>
           </enumChoice>
           <enumChoice choice="Nathan M5">
             <choice>Nathan M5</choice>
