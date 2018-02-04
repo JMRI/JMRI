@@ -621,16 +621,6 @@ public final class InstanceManager {
      *
      *                   Migrate away the JMRI uses of these.
      * ****************************************************************************/
-    /**
-     * @param p clock control to make default
-     * @deprecated Since 3.7.1, use
-     * {@link #setDefault(java.lang.Class, java.lang.Object)} directly.
-     */
-    @Deprecated
-    static public void addClockControl(ClockControl p) {
-        store(p, ClockControl.class);
-        setDefault(ClockControl.class, p);
-    }
 
     // Needs to have proxy manager converted to work
     // with current list of managers (and robust default
