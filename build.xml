@@ -182,6 +182,7 @@
         <pathelement location="${libdir}/jna-4.4.0.jar"/>
         <pathelement location="${libdir}/jna-platform-4.4.0.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
+        <pathelement location="${libdir}/commons-text-1.2.jar"/>
         <pathelement location="${libdir}/jakarta-regexp-1.5.jar"/>
         <pathelement location="${libdir}/jackson-core-2.8.11.jar"/>
         <pathelement location="${libdir}/jackson-annotations-2.8.11.jar"/>

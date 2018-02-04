@@ -123,7 +123,10 @@ public class TrainBuilder extends TrainCommon {
         _train.setStatusCode(Train.CODE_BUILDING);
         _train.setBuilt(false);
         _train.setLeadEngine(null);
-
+        
+        // backup the train's previous build report file
+        InstanceManager.getDefault(TrainManagerXml.class).savePreviousBuildStatusFile(_train.getName());
+        
         // create build report file
         File file = InstanceManager.getDefault(TrainManagerXml.class).createTrainBuildReportFile(_train.getName());
         try {
