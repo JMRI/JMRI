@@ -331,14 +331,6 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
             // before we re-add it. (we might just be switching
             // the direction of the locomotive in the consist)
             removeFromAdvancedConsist(LocoAddress);
-            /*while(_state!=IDLESTATE) {
-             try {
-             wait(1000);
-             }
-             } catch (java.lang.InterruptedException e) {
-             Thread.currentThread().interrupt(); // retain if needed later
-             }
-             }*/
         }
         // set the speed of the locomotive to zero, to make sure we have
         // control over it.
@@ -400,36 +392,19 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
             tc.sendXNetMessage(msg, this);
         }
 
-        // We need to make sure the directions are set correctly
-        // In order to do this, we have to pull up both throttles,
-        // and check that the direction of the trailing locomotive
-        // is correct relative to the lead locomotive.
+        // We need to set the speed and direction of both
+        // locomotives to establish control.
         DccLocoAddress address = consistList.get(0);
-        XNetThrottle lead = new XNetThrottle(systemMemo, address, tc);
-
-        XNetThrottle trail = new XNetThrottle(systemMemo, LocoAddress, tc);
-
-        if (directionNormal) {
-            if (log.isDebugEnabled()) {
-                log.debug("DOUBLE HEADER: Set direction of trailing locomotive same as lead locomotive");
-            }
-            trail.setIsForward(lead.getIsForward());
-            sendDirection(lead, lead.getIsForward());
-            sendDirection(trail, lead.getIsForward());
-        } else {
-            if (log.isDebugEnabled()) {
-                log.debug("DOUBLE HEADER: Set direction of trailing locomotive opposite lead locomotive");
-            }
-            trail.setIsForward(!lead.getIsForward());
-            sendDirection(lead, lead.getIsForward());
-            sendDirection(trail, !lead.getIsForward());
-        }
+        Boolean Direction = consistDir.get(address);
+        sendDirection(address, Direction);
+        sendDirection(LocoAddress, directionNormal);
 
         // All we have to do here is create an apropriate XNetMessage, 
         // and send it.
         XNetMessage msg = XNetMessage.getBuildDoubleHeaderMsg(address.getNumber(), LocoAddress.getNumber());
         tc.sendXNetMessage(msg, this);
         _state = ADDREQUESTSENTSTATE;
+
     }
 
     /**
@@ -583,7 +558,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      * For this application, we also set the speed setting to 0, which 
      * also establishes control over the locomotive in the consist.
      *
-     * @param t an XNetThrottle (XpressNet) throttle
+     * @param address the DccLocoAddress of the locomotive.
      * @param isForward the boolean value representing the desired
      * direction
      */
