@@ -16,6 +16,7 @@ import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nonnull;
@@ -442,7 +443,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
         MouseListener popupListener = new PopupListener();
         table.addMouseListener(popupListener);
-
+        setColumnIdentities(table);
         this.persistTable(table);
 
     }
@@ -887,6 +888,38 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent((manager) -> {
             manager.stopPersisting(table); // throws NPE if table name is null
         });
+    }
+
+    /**
+     * Set identities for any columns that need an identity. It is recommended
+     * that all columns get a constant identity to prevent identities from being
+     * subject to changes due to translation.
+     * <p>
+     * The default implementation sets column identities to the String
+     * {@code Column#} where {@code #} is the model index for the column. Note
+     * that if the TableColumnModel is a
+     * {@link jmri.util.swing.XTableColumnModel}, the index includes hidden
+     * columns.
+     *
+     * @param table
+     */
+    protected void setColumnIdentities(JTable table) {
+        Objects.requireNonNull(table.getModel(), "Table must have data model");
+        Objects.requireNonNull(table.getColumnModel(), "Table must have column model");
+        Enumeration<TableColumn> columns;
+        if (table.getColumnModel() instanceof XTableColumnModel) {
+            columns = ((XTableColumnModel) table.getColumnModel()).getColumns(false);
+        } else {
+            columns = table.getColumnModel().getColumns();
+        }
+        int i = 0;
+        while (columns.hasMoreElements()) {
+            TableColumn column = columns.nextElement();
+            if (column.getIdentifier() == null || column.getIdentifier().toString().isEmpty()) {
+                column.setIdentifier(String.format("Column%d", i));
+            }
+            i += 1;
+        }
     }
 
     static class HeaderActionListener implements ActionListener {
