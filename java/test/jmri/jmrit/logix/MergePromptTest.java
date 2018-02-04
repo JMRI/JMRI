@@ -26,16 +26,18 @@ public class MergePromptTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        new Thread(() -> {
+        Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator("Merge Prompt CTor Test");
             jdo.close();
-        }).start();
+        });
+        t.setName("MergePrompt Dialog Close Thread");
+        t.start();
 
-        MergePrompt t = new MergePrompt("Merge Prompt CTor Test",new HashMap<String,Boolean>(),
+        MergePrompt m = new MergePrompt("Merge Prompt CTor Test",new HashMap<String,Boolean>(),
                         new HashMap<String, HashMap<Integer,Boolean>>());
-        Assert.assertNotNull("exists",t);
-        t.dispose();
+        Assert.assertNotNull("exists",m);
+        m.dispose();
     }
 
     // The minimal setup for log4J
