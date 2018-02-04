@@ -15,8 +15,6 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
-import jmri.jmrit.display.palette.InitEventListener;
-import jmri.jmrit.display.palette.ItemPalette;
 import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
@@ -25,7 +23,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JPanels for the various item types that can be added to a Panel - e.g. Sensors,
  * Turnouts, etc.
- * 
+ *
  * Devices such as these have sets of icons to display their various states.
  * Such sets are called a "family" in the code. These devices then may have sets
  * of families to provide the user with a choice of the icon set to use for a
@@ -33,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * These sets/families are defined in an xml file stored as xml/defaultPanelIcons.xml
  * including the icon file paths, to be loaded by an iterator.
  * The subclass FamilyItemPanel.java and its subclasses handles these devices.
- * 
+ *
  * Other devices, e.g. Backgrounds or Memory, may use only one or no icon to
  * display. The subclass IconItemPanel.java and its subclasses handles these
  * devices.
@@ -260,13 +258,14 @@ public abstract class ItemPanel extends JPanel {
      *
      * @param <T> the type of combobox
      */
-    public class BgComboBox<T> extends JComboBox<T> implements InitEventListener {
+    private static class BgComboBox<T> extends JComboBox<T> implements InitEventListener {
 
         /**
          * Store value from parent when changed on another tab.
          *
          * @param choice index of colorBox, to be applied to preview backgrounds
          */
+        @Override
         public void onInitEvent(int choice, int selectedPane) {
             setVisible(false);
             log.debug("InitEvent seen by tab#{} comboBox, was {}, set to {}", selectedPane, this.getSelectedIndex(), choice);
