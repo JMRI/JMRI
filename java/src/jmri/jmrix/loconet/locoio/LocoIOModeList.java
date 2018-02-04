@@ -19,8 +19,8 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoIOModeList {
 
-    private Vector<LocoIOMode> modeList = new Vector<LocoIOMode>();
-    private String[] validmodes;
+    protected Vector<LocoIOMode> modeList = new Vector<LocoIOMode>();
+    protected String[] validmodes;
 
     /**
      * Creates a new instance of LocoIOModeList
@@ -73,65 +73,6 @@ public class LocoIOModeList {
         }
     }
 
-    @SuppressWarnings("unused")
-    private void test() {
-        /**
-         * This should go into a JUnit test
-         */
-        log.debug("Starting test sequence"); // NOI18N
-        for (int i = 0; i <= modeList.size() - 1; i++) {
-            LocoIOMode m = modeList.elementAt(i);
-
-            int haderror = 0;
-            for (i = 1; i <= 2047; i++) {
-                int svA = m.getSV();
-                int v1A = addressToValue1(m, i);
-                int v2A = addressToValue2(m, i);
-
-                log.debug(m.getFullMode() + "=> Address " + Integer.toHexString(i) // NOI18N
-                        + " encodes into " // NOI18N
-                        + LnConstants.OPC_NAME(m.getOpCode()) + " "
-                        + Integer.toHexString(svA) + " "
-                        + Integer.toHexString(v1A) + " "
-                        + Integer.toHexString(v2A));
-
-                LocoIOMode lim = getLocoIOModeFor(svA, v1A, v2A);
-                if (lim == null) {
-                    if (haderror == 0) {
-                        log.error("Testing " + m.getFullMode() + "      ERROR:"); // NOI18N
-                    }
-                    String err
-                            = "    Could Not find mode for Packet: " // NOI18N
-                            + Integer.toHexString(svA) + " "
-                            + Integer.toHexString(v1A) + " "
-                            + Integer.toHexString(v2A) + " <CHK>\n"; // NOI18N
-                    log.error(err);
-                    haderror++;
-                } else {
-                    int decodedaddress = valuesToAddress(lim.getOpCode(), svA, v1A, v2A);
-                    if ((i) != decodedaddress) {
-                        if (haderror == 0) {
-                            log.error("Testing " + m.getFullMode() + "      ERROR:"); // NOI18N
-                        }
-                        String err
-                                = "    Could Not Match Address: (" // NOI18N
-                                + Integer.toHexString(i - 1) + "=>" // NOI18N
-                                + Integer.toHexString(decodedaddress) + ") from " // NOI18N
-                                + LnConstants.OPC_NAME(lim.getOpCode()) + " "
-                                + Integer.toHexString(svA) + " "
-                                + Integer.toHexString(v1A) + " "
-                                + Integer.toHexString(v2A) + "[mask=" + Integer.toHexString(lim.getV2()) + "]\n"; // NOI18N
-                        log.error(err);
-                        haderror++;
-                    }
-                }
-            }
-            if (haderror == 0) {
-                log.debug("Testing " + m.getFullMode() + "      **OK**"); // NOI18N
-            }
-        }
-        log.debug("Finished test sequence\n"); // NOI18N
-    }
 
     protected String[] getValidModes() {
         return validmodes;
@@ -280,5 +221,5 @@ public class LocoIOModeList {
         return valuesToAddress(lim.getOpCode(), sv, v1, v2);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoIOModeList.class);
+    // private final static Logger log = LoggerFactory.getLogger(LocoIOModeList.class);
 }

@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,8 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: 2007 User Poll</title>
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content="JMRI technical code road map">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code user poll">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
   <!-- easily replace the common header/footer code for all the web pages -->
@@ -31,11 +30,12 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: 2007 User Poll</h1>In late May and early June 2007,
-      we ran three polls in the <a href=
+      <h1>JMRI: 2007 User Poll</h1>
+      <p>In late May and early June 2007, we ran three polls in the <a href=
       "http://groups.yahoo.com/group/jmriusers">jmriusers group</a>
       to learn more about what our users are actually using. This
-      page reports the results.
+      page reports the results. Ten years later it would be good to
+      update our view of the user base.</p>
 
       <p>There's likely to be a selection bias in the responses.
       People who are actively involved with JMRI are more likely to
@@ -607,7 +607,9 @@
 
           <td>0.00%</td>
         </tr>
-      </table><!--#include virtual="/Footer" -->
+      </table>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

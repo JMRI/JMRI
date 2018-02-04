@@ -1,8 +1,11 @@
 package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
-import jmri.util.JUnitUtil;
+
 import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.Sensor;
+import jmri.util.JUnitUtil;
 import jmri.Turnout;
 import jmri.Sensor;
 import org.junit.Assert;
@@ -105,6 +108,49 @@ public abstract class AbstractTurnoutTestBase {
         Assert.assertEquals("commanded state 2", Turnout.THROWN, t.getState());
         Assert.assertEquals("commanded state 3", "Thrown", t.describeState(t.getState()));
         checkThrownMsgSent();
+    }
+
+    class TestSensor extends AbstractSensor {
+            public boolean request = false;
+
+            public TestSensor(String sysName,String userName){
+                super(sysName,userName);
+            }
+
+            @Override
+            public void requestUpdateFromLayout(){
+                request = true;
+            }
+
+            boolean getRequest(){
+              return request;
+            }
+
+            void resetRequest(){
+              request=false;
+            }
+    }
+
+    @Test
+    public void testRequestUpdate() throws JmriException {
+        TestSensor s1 = new TestSensor("IS1", "username1");
+        TestSensor s2 = new TestSensor("IS2", "username2");
+        InstanceManager.sensorManagerInstance().register(s1);
+        InstanceManager.sensorManagerInstance().register(s2);
+
+        t.provideFirstFeedbackSensor("IS1");
+        t.setFeedbackMode(Turnout.ONESENSOR);
+
+        t.requestUpdateFromLayout();
+        Assert.assertTrue("update requested, one sensor",s1.getRequest());
+        s1.resetRequest();
+
+        t.provideSecondFeedbackSensor("IS2");
+        t.setFeedbackMode(Turnout.TWOSENSOR);
+
+        t.requestUpdateFromLayout();
+        Assert.assertTrue("update requested, two sensor s1",s1.getRequest());
+        Assert.assertTrue("update requested, two sensor s2",s2.getRequest());
     }
 
     @Test

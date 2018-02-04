@@ -97,7 +97,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                 try {
                     javax.swing.SwingUtilities.invokeAndWait(r);
                 } catch (InterruptedException | InvocationTargetException ex) {
-                    log.error("Unexpected exception in invokeAndWait:{}", ex, ex);
+                    log.error("Unexpected exception in invokeAndWait:", ex);
                 }
                 log.debug("dispatch thread invoked");
 
@@ -302,7 +302,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                     forwardReply(client, r);
                 }
             } catch (Exception ex) {
-                log.warn("notify: During reply dispatch to {}\nException {}", client, ex, ex);
+                log.warn("notify: During reply dispatch to {}", client, ex);
             }
             // forward to the last listener who send a message
             // this is done _second_ so monitoring can have already stored the reply

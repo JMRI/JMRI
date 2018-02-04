@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated  by Blorec Herv&#233;  2013-09-19-->
 
 <html lang="fr">
@@ -24,7 +23,8 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI Guide Mat&eacute;riel: Capteurs RPS</h1><em>S'il
+      <h1>JMRI Guide Mat&eacute;riel: Capteurs RPS</h1>
+      <em>S'il
       vous pla&icirc;t noter que le support de JMRI pour le RPS
       s'am&eacute;liore rapidement. Cette page fait
       r&eacute;f&eacute;rence &agrave; la plus r&eacute;cente
@@ -103,7 +103,8 @@ autrement.
       Site Web RPS</a> .
 
       <p>Voir aussi la <a href="index.shtml">page principale JMRI
-      RPS</a> . <!--#include virtual="/Footer" --></p>
+      RPS</a> .</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

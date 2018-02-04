@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <title>
- 	JMRI: Internationalization
+ 	JMRI: Code Internationalization
     </title>
-    <meta name="Author" content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI technical code I8N internationalization">
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI technical code I18N internationalization">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
     <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -30,12 +30,13 @@
 
 	<div id="mainContent">
 
-	    <h1>JMRI: Internationalization</h1>
+	    <h1>JMRI Code: Internationalization</h1>
 
 <p>
-The JMRI libraries are intended to be usable world-wide.
-To make this possible, they make use of the "internationalization"
-features built into the Java language and libraries. This page discusses how the JMRI libraries handle internationalization.
+The JMRI libraries are intended to be usable world-wide. To make this
+possible, they make use of the "<a href="#dev">internationalization</a>"
+features built into the Java language and libraries.<br>
+This page discusses how the JMRI libraries handle internationalization.
 
 <h2>Use of Locales</h2>
 <p>
@@ -236,7 +237,8 @@ For internationalization to work, you have to do a few things in the code
 you write. Some web references on how to do this:
 <ul>
 <li><a href="http://docs.oracle.com/javase/6/docs/technotes/guides/intl/">Java Internationalization main page</a>
-<li><a href="http://docs.oracle.com/javase/tutorial/i18n/index.html">Sun internationalization tutorial</a>(highly recommended)
+<li><a href="http://docs.oracle.com/javase/tutorial/i18n/index.html">Sun internationalization tutorial</a> (highly
+recommended)
 </ul>
 <strong>Note: Those are Java 6 links.  There are useful advanced features in 
 <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/intl/enhancements.7.html">Java 7</a> and
@@ -330,7 +332,7 @@ If your package does not already have a Bundle class, you can add it by:
     bundle, by convention &quot;jmri/mypackage.Bundle&quot;.
 </ol>
 <li>Create a new <code>Bundle.properties</code> file in your package directory
-    to hold your properties strings.
+    to hold your default properties strings.
 <li>Ideally, you'll add a copy of <code>java/test/jmri/jmrit/BundleTest.java</code> to your
     JUnit test directory to check that your strings are working:<br>
     Copy <code>java/test/jmri/jmrit/BundleTest.java</code> to  <code>java/test/jmri/mypackage/BundleTest.java</code>
@@ -416,7 +418,8 @@ following the ideas of Harry Robinson and Arne Thormodsen
 <a href="http://www.oocities.org/harry_robinson_testing/klingon.htm">paper on this</a> is recommended reading!).
 To use it:
 <ul>
-<li>Make sure your code compiles and builds OK in your <a href="index.shtml#buildyourcopy">IDE</a>.  We'll be modifying the compiled version.
+<li>Make sure your code compiles and builds OK in your <a href="index.shtml#buildyourcopy">IDE</a>.
+We'll be modifying the compiled version.
 <li>Run the "translate.sh" script in your java/ build directory.  This creates new, temporary
 .properties files in the classes/ directory tree. You will have to redo this
 every time the classes/ tree is removed by e.g. "ant clean" or a clean <a href="index.shtml#buildyourcopy">IDE</a> build.
@@ -481,8 +484,9 @@ second word is returned.</p>
 
 <p>Here is a typical output line:</p>
 <pre style="font-family: monospace;">
-   783, Search Type = Local, Key Type = Variable, Key = 'titleId', 	Text = addLogixFrame = new JmriJFrame(rbx.getString(titleId));
-</pre>
+   783, Search Type = Local, Key Type = Variable, Key = 'titleId',<br>
+         Text = addLogixFrame = new JmriJFrame(rbx.getString(titleId));
+</pre><!-- without <br> does not reflow on iPad when viewd online, causing rest of the page to shrink-->
 Field List
 <ul>
     <li>The source code line number</li>
@@ -509,8 +513,7 @@ and assigned the Variable key type.
 <p>When the script is done scanning, it provides an option to export the <strong>entire</strong>
 key list to a CSV file.</p>
 
-<!--#include virtual="/Footer" -->
-
+        <!--#include virtual="/Footer" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>

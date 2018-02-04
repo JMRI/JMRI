@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Integration with CATS</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Java CATS">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -31,17 +30,18 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>Integration with CATS</h1>The Crandic Automated Traffic
-      System (CATS) is a JMRI-based application by Rodney Black for
+      <h1>JMRI Code: Integration with CATS</h1>
+      <p>The Crandic Automated Traffic System (CATS) is a
+      JMRI-based application by Rodney Black for
       controlling and operating a model railroad. There's more
       information on the <a href="http://cats4ctc.org/">CATS web
-      site</a>.
+      site</a>.</p>
 
       <p>JMRI is a library, and CATS is a large, separately
       maintained application that uses the library. As such, CATS
       provides an important reference case for JMRI developers as
       they extend and adapt their code. CATS should continue to
-      work for it's users, with a minimum of extranous effort for
+      work for it's users, with a minimum of extraneous effort for
       the CATS developers, even as JMRI changes!</p>
 
       <h3>Integration for testing</h3>CATS has two package trees,
@@ -123,8 +123,8 @@
       cats.jar or designer.jar files.</p>
 
       <p>Then just execute the appropriate "cats.csh" (Linux, Mac
-      OS X) and "cats.bat" (Windows) script. 
-      <!--#include virtual="/Footer" --></p>
+      OS X) and "cats.bat" (Windows) script.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -83,14 +83,6 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
         return true;
     }
 
-    /**
-     * Remove references to and from this object, so that it can eventually be
-     * garbage-collected.
-     */
-    @Override
-    public void dispose() {
-    }
-
     private final static Logger log = LoggerFactory.getLogger(Z21MultiMeter.class);
 
 }

@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Use of Swing</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code standards recommendation Swing">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -32,17 +31,16 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Use of Swing</h1>
-      (Note: This page describes a toolkit to for creating
+      <h1>JMRI Code: Use of Swing</h1>
+      <b>Note:</b> This page describes a toolkit for creating
       JMRI's GUI that's been slowly developed as part of JMRI.
       Please use this if you're creating new JMRI user interfaces.
       Note that there are proposals to move JMRI to other, non-specific
       toolkits in this area. Before you do work to extend or improve
       this toolkit itself, please ask on jmri-developers about that status
-      of that work.)
+      of that work.
       
-      <p>
-      We use Java Swing for our GUI
+      <p>We use Java Swing for our GUI
       development. It's a lot more powerful than the original AWT,
       and the price is right. In particular, we try to use the
       "Bean format" of setting and getting members, call-backs to
@@ -55,9 +53,9 @@
       this, but we're moving classes in this direction as time
       allows.</p>
 
-      <p>The basic structure is 
+      <p>The basic structure is:
       <ul>
-      <li>try to keep Swing code in packages with <code>swing</code>
+      <li>Keep Swing code in packages with <code>swing</code>
       in the package path.  For example, prefer putting 
       Swing code in <code>jmri.util.swing</code> or a subpackage
       of that, to putting it in <code>jmri.util</code> itself.
@@ -66,8 +64,7 @@
       This pattern is similar to the way that 
       <a href="XmlPersistance.shtml">ConfigureXml code</a> lives in 
       separate <code>.configurexml</code> packages.
-      <li>Prefer
-      to implement graphical tools as
+      <li>Implement graphical tools as
       JmriPanel objects. These are JPanels with enough extra
       structure that the JMRI applications can directly work with them.
       For example, a JmriPanel subclass can be instantiated and
@@ -75,17 +72,17 @@
       JmriNamedPanel action with just the name of the JmriPanel
       class, which in turn can be done with various automated
       tools. Don't create JmriJFrame or JFrame subclasses with
-      lots of specific function
-      <p>This pattern lets us write a tool panel just once, and
+      lots of specific function<br>
+      This pattern lets us write a tool panel just once, and
       then use it in lots of various places, embedded into windows
       in several ways. It also greatly reduces the number of
       classes that need to be loaded at startup time, because there
       are not separate *Action and *Frame classes, and JmriPanel
       subclasses don't have to be loaded just because they are
-      listed in a menu.</p>
+      listed in a menu.
       </ul>
 
-        <a id="life" name="life"/>
+      <a id="life" name="life"/>
       <p>The <a href=
       "http://jmri.org/JavaDoc/doc/jmri/util/swing/package-summary.html">
       jmri.util.swing</a> package contains the support code.</p>
@@ -118,10 +115,10 @@
       <p>
       An example of a fuller form:
       <pre><code>
-      new jmri.util.swing.JmriNamedPaneAction(Bundle.getMessage("MenuItemLogTreeAction"),
-                new jmri.util.swing.sdi.JmriJFrameInterface(),
+      new jmri.util.swing.JmriNamedPaneAction(Bundle.getMessage("MenuItemLogTreeAction"),<br>
+                new jmri.util.swing.sdi.JmriJFrameInterface(),<br>
                 "jmri.jmrit.log.Log4JTreePane");
-      </code></pre>
+      </code></pre><!-- without <br> does not reflow on iPad when viewd online, causing rest of the page to shrink-->
       <ul>
       <li>The first argument is the human-readable name for the action, 
       e.g. what will show in the menu or on the button.  That's internationalized
@@ -189,7 +186,7 @@
       <a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/package-summary.html">jmri.util.swing package Javadocs</a>
       for more information</p>
 
-        <a id="misc" name="misc"/>
+      <a id="misc" name="misc"/>
       <h2>Misc</h2>
       
       (This section needs more organization)
@@ -199,19 +196,21 @@
       <p>Older classes, some still to be moved to jmri.util.swing,
       some are 1.1.8 adapters that should just go away.</p>
 
-      <p>AbstractFrameAction<br>
-      BusyGlassPane<br>
-      FileChooserFilter<br>
-      FontUtil<br>
-      JTableUtil<br>
-      JmriInsets<br>
-      JmriJFrame<br>
-      JmriJFrameAction<br>
-      JmriSpinner<br>
-      MouseInputAdapterInstaller<br>
-      ResizableImagePanel<br>
-      WindowMenu<br>
-      <!--#include virtual="/Footer" --></p>
+      <ul>
+      <li>AbstractFrameAction</li>
+        <li>BusyGlassPane</li>
+        <li>FileChooserFilter</li>
+        <li>FontUtil</li>
+        <li>JTableUtil</li>
+        <li>JmriInsets</li>
+        <li>JmriJFrame</li>
+        <li>JmriJFrameAction</li>
+        <li>JmriSpinner</li>
+        <li>MouseInputAdapterInstaller</li>
+        <li>ResizableImagePanel</li>
+        <li>WindowMenu</li>
+      </ul>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

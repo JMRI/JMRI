@@ -26,7 +26,18 @@ public class StandaloneSystemConnectionMemoTest extends jmri.jmrix.SystemConnect
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        scm=new StandaloneSystemConnectionMemo();
+        StandaloneSystemConnectionMemo memo =new StandaloneSystemConnectionMemo();
+        StandaloneTrafficController tc = new StandaloneTrafficController(memo){
+          @Override
+          public void transmitLoop(){
+          }
+          @Override
+          public void receiveLoop(){
+          }
+        };
+        memo.setRfidTrafficController(tc);
+        memo.configureManagers(null,null);
+        scm=memo;
     }
 
     @Override

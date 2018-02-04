@@ -7,13 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Git FAQ</title>
-  <meta content="Bob Jacobsen" name="Author">
+    <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Git FAQ">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
   <!-- Style -->
   <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
@@ -23,13 +18,14 @@
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
-  <!-- FAQ-Head -->
 
+  <!-- FAQ-Head -->
   <script type="text/javascript">
 /*<![CDATA[*/document.documentElement.className="hasJS";/*]]>*/
   </script>
   <link rel="stylesheet" type="text/css" href="/web/css/faq.css"
-  media="screen"><!-- /FAQ-Head -->
+  media="screen">
+  <!-- /FAQ-Head -->
 </head><!--#include virtual="/Header" -->
 
 <body>
@@ -37,10 +33,10 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Git FAQ</h1>
+      <h1>JMRI Code: Git FAQ</h1>
 
       <p>This is a list of Frequently Asked Questions for Git,
-      particularly regarding how we use it with JMRI.
+      particularly regarding how we use it with JMRI.<br>
       Click on a question to open the answer.</p>
 
       <p>There's a <a href="getgitcode.shtml">separate JMRI Help

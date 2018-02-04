@@ -53,8 +53,8 @@
       directory called "roster". You need to move the "roster.xml"
       file, the "roster" directory, and all it's contents. Read
       more about the <a href="../../setup/Files.shtml">JMRI
-      Configuration Files</a>. 
-      <!--#include virtual="/Footer" --></p>
+      Configuration Files</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- close #mainContent -->
   </div><!-- close #mBody -->
 </body>

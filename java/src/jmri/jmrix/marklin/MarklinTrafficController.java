@@ -134,7 +134,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
      */
     @Deprecated
     @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // FindBugs wants this package protected, but we're removing it when multi-connection
+    // SpotBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected MarklinTrafficController self = null;
 

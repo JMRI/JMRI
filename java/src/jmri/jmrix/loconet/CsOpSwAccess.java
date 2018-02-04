@@ -13,11 +13,11 @@ import jmri.ProgrammerException;
  *
  * @author given
  */
-public class csOpSwAccess implements LocoNetListener {
+public class CsOpSwAccess implements LocoNetListener {
 
     private Timer csOpSwAccessTimer;
     private Timer csOpSwValidTimer;
-    private cmdStnOpSwStateType cmdStnOpSwState;
+    private CmdStnOpSwStateType cmdStnOpSwState;
     private int cmdStnOpSwNum;
     private boolean cmdStnOpSwVal;
     private LocoNetSystemConnectionMemo memo;
@@ -27,14 +27,14 @@ public class csOpSwAccess implements LocoNetListener {
     private boolean haveValidLowBytes;
     private boolean haveValidHighBytes;
 
-    public csOpSwAccess(@Nonnull LocoNetSystemConnectionMemo memo, @Nonnull ProgListener p) {
+    public CsOpSwAccess(@Nonnull LocoNetSystemConnectionMemo memo, @Nonnull ProgListener p) {
         this.memo = memo;
         this.p = p;
         // listen to the LocoNet
         memo.getLnTrafficController().addLocoNetListener(~0, this);
         csOpSwAccessTimer = null;
         csOpSwValidTimer = null;
-        cmdStnOpSwState = cmdStnOpSwStateType.IDLE;
+        cmdStnOpSwState = CmdStnOpSwStateType.IDLE;
         opSwBytes = new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
         haveValidLowBytes = false;
         haveValidHighBytes = false;
@@ -118,32 +118,32 @@ public class csOpSwAccess implements LocoNetListener {
 
     @Override
     public void message(LocoNetMessage m) {
-        if (cmdStnOpSwState == cmdStnOpSwStateType.IDLE) {
+        if (cmdStnOpSwState == CmdStnOpSwStateType.IDLE) {
             return;
         }
         boolean value;
         if ((m.getOpCode() == LnConstants.OPC_SL_RD_DATA) &&
                 (m.getElement(1) == 0x0E) &&
                 ((m.getElement(2) & 0x7E) == 0x7E) &&
-                ((cmdStnOpSwState == cmdStnOpSwStateType.QUERY) ||
-                ((cmdStnOpSwState == cmdStnOpSwStateType.QUERY_ENHANCED)))) {
+                ((cmdStnOpSwState == CmdStnOpSwStateType.QUERY) ||
+                ((cmdStnOpSwState == CmdStnOpSwStateType.QUERY_ENHANCED)))) {
             log.debug("got slot {} read data", m.getElement(2));
             updateStoredOpSwsFromRead(m);
-            if ((cmdStnOpSwState == cmdStnOpSwStateType.QUERY) ||
-                    (cmdStnOpSwState == cmdStnOpSwStateType.QUERY_ENHANCED)) {
+            if ((cmdStnOpSwState == CmdStnOpSwStateType.QUERY) ||
+                    (cmdStnOpSwState == CmdStnOpSwStateType.QUERY_ENHANCED)) {
                 log.debug("got slot {} read data in response to OpSw query", m.getElement(2));
                 if (((m.getElement(7) & 0x40) == 0x40) &&
-                        (cmdStnOpSwState == cmdStnOpSwStateType.QUERY)){
+                        (cmdStnOpSwState == CmdStnOpSwStateType.QUERY)){
                     // attempt to get extended OpSw info
                     csOpSwAccessTimer.restart();
                     LocoNetMessage m2 = new LocoNetMessage(new int[] {0xbb, 0x7e, 0x00, 0x00});
-                    cmdStnOpSwState = cmdStnOpSwStateType.QUERY_ENHANCED;
+                    cmdStnOpSwState = CmdStnOpSwStateType.QUERY_ENHANCED;
                     memo.getLnTrafficController().sendLocoNetMessage(m2);
                     csOpSwAccessTimer.start();
                     return;
                 }
                 csOpSwAccessTimer.stop();
-                cmdStnOpSwState = cmdStnOpSwStateType.HAS_STATE;
+                cmdStnOpSwState = CmdStnOpSwStateType.HAS_STATE;
                 log.debug("starting valid timer");
                 csOpSwValidTimer.start();   // start the "valid data" timer
                 if (doingWrite == true) {
@@ -166,20 +166,20 @@ public class csOpSwAccess implements LocoNetListener {
                         sendFinalProgrammerReply(value?1:0, ProgListener.OK);
                     }
                 }
-            } else if ((cmdStnOpSwState == cmdStnOpSwStateType.QUERY_BEFORE_WRITE) ||
-                    (cmdStnOpSwState == cmdStnOpSwStateType.QUERY_ENHANCED_BEFORE_WRITE)){
+            } else if ((cmdStnOpSwState == CmdStnOpSwStateType.QUERY_BEFORE_WRITE) ||
+                    (cmdStnOpSwState == CmdStnOpSwStateType.QUERY_ENHANCED_BEFORE_WRITE)){
                 if (((m.getElement(7) & 0x40) == 0x40) &&
-                        (cmdStnOpSwState == cmdStnOpSwStateType.QUERY_BEFORE_WRITE)) {
+                        (cmdStnOpSwState == CmdStnOpSwStateType.QUERY_BEFORE_WRITE)) {
                     csOpSwAccessTimer.restart();
                     LocoNetMessage m2 = new LocoNetMessage(new int[] {0xbb, 0x7e, 0x00, 0x00});
-                    cmdStnOpSwState = cmdStnOpSwStateType.QUERY_ENHANCED_BEFORE_WRITE;
+                    cmdStnOpSwState = CmdStnOpSwStateType.QUERY_ENHANCED_BEFORE_WRITE;
                     memo.getLnTrafficController().sendLocoNetMessage(m2);
                     csOpSwAccessTimer.start();
                     return;
                 }
                 log.debug("have received OpSw query before a write; now can process the data modification");
                 csOpSwAccessTimer.stop();
-                cmdStnOpSwState = cmdStnOpSwStateType.WRITE;
+                cmdStnOpSwState = CmdStnOpSwStateType.WRITE;
                 LocoNetMessage m2 = updateOpSwVal(cmdStnOpSwNum, cmdStnOpSwVal);
                 log.debug("performing enhanced opsw write: {}",m2.toString());
                 log.debug("todo; uncomment the send?");
@@ -189,9 +189,9 @@ public class csOpSwAccess implements LocoNetListener {
         } else if ((m.getOpCode() == LnConstants.OPC_LONG_ACK) &&
                 (m.getElement(1) == 0x6f) &&
                 (m.getElement(2) == 0x7f) &&
-                (cmdStnOpSwState == cmdStnOpSwStateType.WRITE)) {
+                (cmdStnOpSwState == CmdStnOpSwStateType.WRITE)) {
             csOpSwAccessTimer.stop();
-            cmdStnOpSwState = cmdStnOpSwStateType.HAS_STATE;
+            cmdStnOpSwState = CmdStnOpSwStateType.HAS_STATE;
             value = extractCmdStnOpSw(cmdStnOpSwNum);
             sendFinalProgrammerReply(value?1:0,ProgListener.OK);
         }
@@ -201,7 +201,7 @@ public class csOpSwAccess implements LocoNetListener {
         log.debug("readCmdStationOpSw: state is {}, have lowvalid {}, have highvalid {}, asking for OpSw{}",
                 cmdStnOpSwState, haveValidLowBytes?"true":"false",
                 haveValidHighBytes?"true":"false", cv);
-        if (cmdStnOpSwState == cmdStnOpSwStateType.HAS_STATE) {
+        if (cmdStnOpSwState == CmdStnOpSwStateType.HAS_STATE) {
             if ((((cv > 0) && (cv < 65) && haveValidLowBytes)) ||
                 (((cv > 64) && (cv < 129) && haveValidHighBytes))) {
                 // can re-use previous state - it has not "expired" due to time since read.
@@ -211,8 +211,8 @@ public class csOpSwAccess implements LocoNetListener {
                 log.warn("Cannot perform Cs OpSw access of OpSw {} account out-of-range for this command station.",cv);
                 sendFinalProgrammerReply(-1,ProgListener.NotImplemented);
             }
-        } else if ((cmdStnOpSwState == cmdStnOpSwStateType.IDLE) ||
-                (cmdStnOpSwState == cmdStnOpSwStateType.HAS_STATE)) {
+        } else if ((cmdStnOpSwState == CmdStnOpSwStateType.IDLE) ||
+                (cmdStnOpSwState == CmdStnOpSwStateType.HAS_STATE)) {
             // do not have valid data or old data has "expired" due to time since read.
             // Need to send a slot 127 (and 126, as appropriate) read to LocoNet
             log.debug("readCmdStationOpSw: attempting to read some CVs");
@@ -233,7 +233,7 @@ public class csOpSwAccess implements LocoNetListener {
     }
 
     public boolean updateCmdStnOpSw(int opSwNum, boolean val) {
-        if (cmdStnOpSwState == cmdStnOpSwStateType.HAS_STATE) {
+        if (cmdStnOpSwState == CmdStnOpSwStateType.HAS_STATE) {
             if (!doingWrite) {
                 log.debug("updateCmdStnOpSw: should already have OpSw values from previous read.");
                 return false;
@@ -244,12 +244,12 @@ public class csOpSwAccess implements LocoNetListener {
                 return true;
             }
         }
-        if (cmdStnOpSwState != cmdStnOpSwStateType.IDLE)  {
+        if (cmdStnOpSwState != CmdStnOpSwStateType.IDLE)  {
             log.debug("updateCmdStnOpSw: cannot query OpSw values from state {}", cmdStnOpSwState);
             return false;
         }
         log.debug("updateCmdStnOpSw: attempting to query the OpSws when state = {}", cmdStnOpSwState);
-        cmdStnOpSwState = cmdStnOpSwStateType.QUERY;
+        cmdStnOpSwState = CmdStnOpSwStateType.QUERY;
         cmdStnOpSwNum = opSwNum;
         cmdStnOpSwVal = val;
         int[] contents = {LnConstants.OPC_RQ_SL_DATA, 0x7F, 0x0, 0x0};
@@ -291,7 +291,7 @@ public class csOpSwAccess implements LocoNetListener {
             sendFinalProgrammerReply(-1, ProgListener.NotImplemented);
             return new LocoNetMessage(new int[] {LnConstants.OPC_GPBUSY, 0x0});
         }
-        int messageByte;
+
         log.debug("updateOpSwVal: OpSw{} = {}", cmdStnOpSwNum, cmdStnOpSwVal);
         changeOpSwBytes(cmdStnOpSwNum, cmdStnOpSwVal);
         LocoNetMessage m = new LocoNetMessage(14);
@@ -314,7 +314,7 @@ public class csOpSwAccess implements LocoNetListener {
     }
 
     private void finishTheWrite() {
-        cmdStnOpSwState = cmdStnOpSwStateType.WRITE;
+        cmdStnOpSwState = CmdStnOpSwStateType.WRITE;
         LocoNetMessage m2 = updateOpSwVal(cmdStnOpSwNum,
                 cmdStnOpSwVal);
         if (m2.getNumDataElements() == 2) {
@@ -339,7 +339,7 @@ public class csOpSwAccess implements LocoNetListener {
 
     }
 
-    enum cmdStnOpSwStateType {
+    enum CmdStnOpSwStateType {
         IDLE,
         QUERY,
         QUERY_ENHANCED,
@@ -368,7 +368,7 @@ public class csOpSwAccess implements LocoNetListener {
                 log.debug("csOpSwValidTimer timed out; invalidating held data!");
                 haveValidLowBytes = false;
                 haveValidHighBytes = false;
-                cmdStnOpSwState = cmdStnOpSwStateType.IDLE;
+                cmdStnOpSwState = CmdStnOpSwStateType.IDLE;
                 });
        csOpSwValidTimer.setRepeats(false);
         }
@@ -418,10 +418,10 @@ public class csOpSwAccess implements LocoNetListener {
     }
     
     // accessor
-    public cmdStnOpSwStateType getState() {
+    public CmdStnOpSwStateType getState() {
         return cmdStnOpSwState;
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(csOpSwAccess.class);
+    private final static Logger log = LoggerFactory.getLogger(CsOpSwAccess.class);
 }

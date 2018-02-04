@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
 import jmri.server.json.operations.JsonUtil;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,8 +56,8 @@ public class JsonManifest extends TrainCommon {
 
     public void build() throws IOException {
         ObjectNode root = this.mapper.createObjectNode();
-        if (!this.train.getTrainRailroadName().equals(Train.NONE)) {
-            root.put(JSON.RAILROAD, StringEscapeUtils.escapeHtml4(this.train.getTrainRailroadName()));
+        if (!this.train.getRailroadName().equals(Train.NONE)) {
+            root.put(JSON.RAILROAD, StringEscapeUtils.escapeHtml4(this.train.getRailroadName()));
         } else {
             root.put(JSON.RAILROAD, StringEscapeUtils.escapeHtml4(Setup.getRailroadName()));
         }

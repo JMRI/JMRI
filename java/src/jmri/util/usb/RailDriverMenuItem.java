@@ -14,8 +14,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
 import javax.usb.UsbDevice;
-import jmri.DccLocoAddress;
-import jmri.InstanceManager;
+import jmri.*;
+import jmri.implementation.AbstractShutDownTask;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.jmrit.throttle.AddressPanel;
@@ -42,12 +42,10 @@ public class RailDriverMenuItem extends JMenuItem
 
     private static final short VENDOR_ID = 0x05F3;
     private static final short PRODUCT_ID = 0x00D2;
-    private static final int PACKET_LENGTH = 64;
     public static final String SERIAL_NUMBER = null;
 
     private HidServices hidServices = null;
 
-    private UsbDevice usbDevice = null;
     private HidDevice hidDevice = null;
 
     public RailDriverMenuItem(String name) {
@@ -62,45 +60,14 @@ public class RailDriverMenuItem extends JMenuItem
         //TODO: remove " (build in)" if/when this replaces Raildriver script
         setText("RailDriver Throttle (built in)");
 
-        try {
-            HidServicesSpecification hidServicesSpecification = new HidServicesSpecification();
-            hidServicesSpecification.setAutoShutdown(true);
-            hidServicesSpecification.setScanInterval(500);
-            hidServicesSpecification.setPauseInterval(5000);
-            hidServicesSpecification.setScanMode(ScanMode.SCAN_AT_FIXED_INTERVAL_WITH_PAUSE_AFTER_WRITE);
-
-            // Get HID services using custom specification
-            hidServices = HidManager.getHidServices(hidServicesSpecification);
-            hidServices.addHidServicesListener(RailDriverMenuItem.this);
-
-            log.debug("Starting HID services.");
-            hidServices.start();
-
-            // Provide a list of attached devices
-            //log.info("Enumerating attached devices...");
-            //for (HidDevice hidDevice : hidServices.getAttachedHidDevices()) {
-            //    log.info(hidDevice.toString());
-            //}
-            //
-            if (!invokeOnMenuOnly) {
-                // Open the device device by Vendor ID, Product ID and serial number
-                HidDevice hidDevice = hidServices.getHidDevice(VENDOR_ID, PRODUCT_ID, SERIAL_NUMBER);
-                if (hidDevice != null) {
-                    log.info("Got RailDriver hidDevice: " + hidDevice);
-                    // Consider overriding dropReportIdZero on Windows
-                    // if you see "The parameter is incorrect"
-                    // HidApi.dropReportIdZero = true;
-                    setupRailDriver(hidDevice);
-                }
-            }
-        } catch (HidException ex) {
-            log.error("HidException: {}", ex);
-        }
-
         addPropertyChangeListener(this);
 
         addActionListener((ActionEvent e) -> {
+            // menu item selected
             log.info("RailDriverMenuItem Action!");
+            
+            setupHidServices();
+            
             // Open the device device by Vendor ID, Product ID and serial number
             HidDevice hidDevice = hidServices.getHidDevice(VENDOR_ID, PRODUCT_ID, SERIAL_NUMBER);
             if (hidDevice != null) {
@@ -123,6 +90,61 @@ public class RailDriverMenuItem extends JMenuItem
     private FunctionPanel functionPanel = null;
     private AddressPanel addressPanel = null;
 
+    protected void setupHidServices() {
+        try {
+            HidServicesSpecification hidServicesSpecification = new HidServicesSpecification();
+            hidServicesSpecification.setAutoShutdown(true);
+            hidServicesSpecification.setScanInterval(500);
+            hidServicesSpecification.setPauseInterval(5000);
+            hidServicesSpecification.setScanMode(ScanMode.SCAN_AT_FIXED_INTERVAL_WITH_PAUSE_AFTER_WRITE);
+
+            // Get HID services using custom specification
+            hidServices = HidManager.getHidServices(hidServicesSpecification);
+            hidServices.addHidServicesListener(RailDriverMenuItem.this);
+
+            // do the services have to be started here?
+            // They currently wait for the action to be triggered
+            // so that they're not starting at ctor time, e.g. in tests
+            
+            // Provide a list of attached devices
+            //log.info("Enumerating attached devices...");
+            //for (HidDevice hidDevice : hidServices.getAttachedHidDevices()) {
+            //    log.info(hidDevice.toString());
+            //}
+            //
+            if (!invokeOnMenuOnly) {
+                // start the HID services
+                InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(sdMgr -> {
+                    // if we're going to start, we have to also stop
+                    sdMgr.register(new AbstractShutDownTask("RailDriverMenuItem shutdown HID"){
+                        public boolean execute() {
+                            System.err.println("stop start");
+                            hidServices.stop();
+                            System.err.println("stop stop");
+                            return true;
+                        }
+                    });
+                    log.debug("Starting HID services.");
+                    System.err.println("start start");
+                    hidServices.start();
+                    System.err.println("start stop");
+                });
+                
+                // Open the device device by Vendor ID, Product ID and serial number
+                HidDevice hidDevice = hidServices.getHidDevice(VENDOR_ID, PRODUCT_ID, SERIAL_NUMBER);
+                if (hidDevice != null) {
+                    log.info("Got RailDriver hidDevice: " + hidDevice);
+                    // Consider overriding dropReportIdZero on Windows
+                    // if you see "The parameter is incorrect"
+                    // HidApi.dropReportIdZero = true;
+                    setupRailDriver(hidDevice);
+                }
+            }
+        } catch (HidException ex) {
+            log.error("HidException: {}", ex);
+        }
+    }
+    
     private void setupRailDriver(HidDevice hidDevice) {
         this.hidDevice = hidDevice;
         if (hidDevice != null) {
@@ -204,7 +226,7 @@ public class RailDriverMenuItem extends JMenuItem
                                 if (buff_old[i] != buff_new[i]) {
                                     if (i < 7) {    // analog values
                                         // convert to unsigned int
-                                        int vInt = 0xFF & (int) buff_new[i];
+                                        int vInt = 0xFF & buff_new[i];
                                         // convert to double (0.0 thru 1.0)
                                         double vDouble = (256 - vInt) / 256.D;
                                         if (i == 1) {   // throttle
@@ -440,7 +462,7 @@ public class RailDriverMenuItem extends JMenuItem
         }
 
         try {
-            int ret = hidDevice.write(message, message.length, (byte) reportID);
+            int ret = hidDevice.write(message, message.length, reportID);
             if (ret >= 0) {
                 log.debug("hidDevice.write returned: " + ret);
             } else {
@@ -587,7 +609,7 @@ public class RailDriverMenuItem extends JMenuItem
                         double throttle_max = 0.7D;
                         double v = MathUtil.pin(value, throttle_min, throttle_max);
                         // compute fraction (0.0 to 1.0)
-                        double fraction = (v - throttle_min) / ((double) throttle_max - throttle_min);
+                        double fraction = (v - throttle_min) / (throttle_max - throttle_min);
                         // convert fraction to slider setting
                         int setting = (int) (fraction * (slider.getMaximum() - slider.getMinimum()));
                         slider.setValue(setting);

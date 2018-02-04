@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2012
  * @since 2.99.4
  */
-public class DefaultRailComManager extends AbstractManager<jmri.IdTag>
+public class DefaultRailComManager extends AbstractManager<RailCom>
         implements RailComManager {
 
     public DefaultRailComManager() {
@@ -125,12 +125,12 @@ public class DefaultRailComManager extends AbstractManager<jmri.IdTag>
 
     @Override
     public RailCom getBySystemName(String name) {
-        return (RailCom) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public RailCom getByUserName(String key) {
-        return (RailCom) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override

@@ -613,7 +613,7 @@
             described above, except that JMRI implements additional
             delay between any switch commands which it sends to
             LocoNet. This should reduce the likelihood that JMRI
-            commands would cause an overflow of the the Digitrax
+            commands would cause an overflow of the Digitrax
             command station switch command buffer, but does not
             have any effect on other LocoNet devices which generate
             LocoNet switch commands. The retry mechanism described
@@ -713,8 +713,9 @@
           could result in a storm of turnout command retries on
           LocoNet.</p>
         </li>
-      </ul><a name="SeeAlso" id="SeeAlso"></a>
+      </ul>
 
+      <a name="SeeAlso" id="SeeAlso"></a>
       <h2>Documentation</h2>
 
       <h3>JMRI Help</h3>

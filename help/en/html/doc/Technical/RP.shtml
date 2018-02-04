@@ -8,7 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Recommended Practices</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code standards recommendation Swing">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -32,8 +32,9 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Recommended Practices</h1>This is page of
-      miscellaneous info and pointers for JMRI developers.
+      <h1>JMRI Code: Recommended Practices</h1>
+      <p>This page contains miscellaneous info and pointers for JMRI
+      developers.</p>
 
       <h2>Class Library Preferences</h2>
 
@@ -51,7 +52,7 @@
         Before JMRI 4.7.5, we used the RXTX and
         SerialIO libraries for this, but these were then removed.</li>
 
-        <li>Take a few moments to learn about the the different
+        <li>Take a few moments to learn about the different
         types of <a href=
         "https://docs.oracle.com/javase/tutorial/collections/intro/">
         Java collections</a> that are available (
@@ -147,10 +148,7 @@
 
     <h2>Exceptions</h2>
     
-    FindBugs
-    will object to
-    <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/lastSuccessfulBuild/findbugsResult/type.-1293684328/">code like this</a>:
-
+    SpotBugs will object to code like this:
 <pre style="font-family: monospace;">
   try {
      // do something here
@@ -158,11 +156,11 @@
   }
 </pre>
 with a 
-<a href="http://findbugs.sourceforge.net/bugDescriptions.html#REC_CATCH_EXCEPTION"><code>REC_CATCH_EXCEPTION</code></a>
+<a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#rec-exception-is-caught-when-exception-is-not-thrown-rec-catch-exception"><code>REC_CATCH_EXCEPTION</code></a>
 and/or a 
-<a href="http://findbugs.sourceforge.net/bugDescriptions.html#DE_MIGHT_IGNORE"><code>DE_MIGHT_IGNORE</code></a>
+<a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#de-method-might-ignore-exception-de-might-ignore"><code>DE_MIGHT_IGNORE</code></a>
 (less often 
-<a href="http://findbugs.sourceforge.net/bugDescriptions.html#DE_MIGHT_DROP"><code>DE_MIGHT_DROP</code></a>).
+<a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#de-method-might-drop-exception-de-might-drop"><code>DE_MIGHT_DROP</code></a>).
 This is an example of two problems:
 <ul>
 <li>Catching <code>Exception</code> instead of more specific types

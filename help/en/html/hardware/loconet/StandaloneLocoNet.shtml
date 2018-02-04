@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - Standalone LocoNet&reg;</title>
-  <meta content="B. Milhaupt" name="Author">
+  <meta name="author" content="B. Milhaupt">
   <meta name="keywords" content=
   "Digitrax LocoNet BDL16 BDL162 BDL168 DS64 PR3 DCS100 DB150 JMRI LocoBuffer-USB LocoBuffer-II LocoBuffer FastClock">
   <!-- Style -->
@@ -639,7 +639,7 @@
 
           <p>The instructions in the BDL16x manual includes a
           section on how to use the BDL168x with a non-Digitrax
-          layout. This section mentions setting one of the the
+          layout. This section mentions setting one of the
           BDL16x boards to act as a LocoNet master by properly
           configuring a BDL16x OpSw. Doing this can set the BDL16x
           board to provide LocoNet Data signal termination, and to

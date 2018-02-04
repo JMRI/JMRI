@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
  <title>JMRI Hardware Support - LocoBuffer-II to LocoNet&reg;</title>
-    <meta content="Bob Jacobsen" name="Author">
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
 
 <!-- Style -->
@@ -46,7 +46,7 @@ La configuration recommand&#233;e pour le LocoBuffer II est:</p>
     <LI>Boot Program Mode off</LI>
     <LI>Alimentation isol&#233;e (<a href="#locoBufferIIPower">voir ci-dessous</a>)</LI>
 </ul>
-<p>La configuration recommandÃ©e de JMRI pour le LocoBuffer-II est:
+<p>La configuration recommandée de JMRI pour le LocoBuffer-II est:
 </p>
 
 <UL>

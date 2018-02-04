@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: XML DTD Usage</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code xml usage">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -23,9 +22,12 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: XML DTD Usage</h1><b>This page describes the usage
-      of XML DTDs in JMRI before version 2.9.4. These DTDs were
-      replaced with XML schema in JMRI 2.9.4.</b>
+      <h1>JMRI: XML DTD Usage</h1>
+
+      <p class="important">This page describes the former usage
+      of XML DTDs in JMRI before version 2.9.4. The use of these
+      DTDs in JMRI was replaced with
+      <a href="XmlSchema.shtml">XML schema</a> in JMRI 2.9.4.</p>
 
       <p>In the JMRI distributions, the DTDs are stored in the
       <a href="/xml/DTD">xml/DTD</a> directory. Note that they are
@@ -86,9 +88,13 @@
           since it can handle HTTP URLs even without an Internet
           connection, it allows us to eventually move forward.
         </li>
-      </ul><b>Starting with JMRI 2.9.4, JMRI uses <a href=
+      </ul>
+
+      <b>Starting with JMRI 2.9.4, JMRI uses <a href=
       "XmlSchema.shtml">XML schema</a> instead of DTDs, and this
-      process is different.</b> <!--#include virtual="/Footer" -->
+      process is different.</b>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

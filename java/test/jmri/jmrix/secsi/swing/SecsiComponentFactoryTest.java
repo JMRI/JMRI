@@ -19,7 +19,7 @@ import org.junit.Test;
 public class SecsiComponentFactoryTest {
 
 
-    private SerialTrafficController tc = null;
+    // private SerialTrafficController tc = null;
     private SecsiSystemConnectionMemo m = null;
  
     @Test
@@ -32,11 +32,13 @@ public class SecsiComponentFactoryTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new SerialTrafficControlScaffold();
+        // tc = new SerialTrafficControlScaffold();
         m = new SecsiSystemConnectionMemo();
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
+    public void tearDown() {
+        JUnitUtil.tearDown();
+        // tc = null;
     }
 }

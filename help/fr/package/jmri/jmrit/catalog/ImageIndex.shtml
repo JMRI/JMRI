@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec le 203-10-15-->
+<!-- Updated by Herv&#233; Blorec le 203-10-15-->
 
 <html lang="fr">
 <head>
@@ -11,7 +10,7 @@
   <title>JMRI: Panel Editor Help</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Pete Cressman" name="Author">
+  <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Index Editor">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=

@@ -251,7 +251,11 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     /**
      * Request an update on status by sending an XpressNet message.
      */
+    @Override
     public void requestUpdateFromLayout() {
+        // This will handle ONESENSOR and TWOSENSOR feedback modes.
+        super.requestUpdateFromLayout();
+
         // To do this, we send an XpressNet Accessory Decoder Information
         // Request.
         // The generated message works for Feedback modules and turnouts
@@ -624,7 +628,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             // messages, add a short delay before sending the
             // first off message.
             if (internalState != OFFSENT) {
-                new java.util.Timer().schedule(new OffTask(this), 30);
+                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> {
+                   tc.sendHighPriorityXNetMessage(msg, this);
+                }, 30);
                 newKnownState(getCommandedState());
                 internalState = OFFSENT;
                 return;
@@ -644,31 +650,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                 getCommandedState() == _mClosed,
                 getCommandedState() == _mThrown,
                 false) );
-    }
-
-    class OffTask extends java.util.TimerTask {
-
-        XNetTurnout t;
-
-        public OffTask(XNetTurnout turnout) {
-            super();
-            t = turnout;
-        }
-
-        @Override
-        public void run() {
-            // We need to tell the turnout to shut off the output.
-            if (log.isDebugEnabled()) {
-                log.debug("Sending off message for turnout " + mNumber + " commanded state= " + getCommandedState());
-                log.debug("Current Thread ID: " + java.lang.Thread.currentThread().getId() + " Thread Name " + java.lang.Thread.currentThread().getName());
-            }
-            synchronized (t) {
-                // Generate the message
-                XNetMessage msg = t.getOffMessage();
-                // Then send the message.
-                tc.sendXNetMessage(msg, t);
-            }
-        }
     }
 
     /**

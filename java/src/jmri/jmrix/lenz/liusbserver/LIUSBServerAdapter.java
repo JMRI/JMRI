@@ -35,9 +35,9 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
 
     private java.util.TimerTask keepAliveTimer; // Timer used to periodically
     // send a message to both
-    // ports to keep the ports 
+    // ports to keep the ports
     // open
-    private static final int keepAliveTimeoutValue = 30000; // Interval 
+    private static final int keepAliveTimeoutValue = 30000; // Interval
     // to send a message
     // Must be < 60s.
 
@@ -155,9 +155,9 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         commThread = new Thread(new Runnable() {
             @Override
             public void run() { // start a new thread
-                // this thread has one task.  It repeatedly reads from the two 
-                // incomming network connections and writes the resulting 
-                // messages from the network ports and writes any data 
+                // this thread has one task.  It repeatedly reads from the two
+                // incomming network connections and writes the resulting
+                // messages from the network ports and writes any data
                 // received to the output pipe.
                 log.debug("Communication Adapter Thread Started");
                 XNetReply r;
@@ -195,9 +195,9 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         bcastThread = new Thread(new Runnable() {
             @Override
             public void run() { // start a new thread
-                // this thread has one task.  It repeatedly reads from the two 
-                // incomming network connections and writes the resulting 
-                // messages from the network ports and writes any data received 
+                // this thread has one task.  It repeatedly reads from the two
+                // incomming network connections and writes the resulting
+                // messages from the network ports and writes any data received
                 // to the output pipe.
                 log.debug("Broadcast Adapter Thread Started");
                 XNetReply r;
@@ -221,8 +221,8 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                         log.debug("Network Adapter Received Reply: "
                                 + r.toString());
                     }
-                    r.setUnsolicited(); // Anything coming through the 
-                    // broadcast port is an 
+                    r.setUnsolicited(); // Anything coming through the
+                    // broadcast port is an
                     // unsolicited message.
                     writeReply(r);
                 }
@@ -402,7 +402,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                         //We need to do something here, because the
                         //communication port drops when another device
                         //puts the command station into service mode.
-                        ex.printStackTrace();
+                        log.error("Communications port dropped", ex);
                     }
                 }
             };
@@ -410,7 +410,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         else {
            keepAliveTimer.cancel();
         }
-        new java.util.Timer().schedule(keepAliveTimer,keepAliveTimeoutValue,keepAliveTimeoutValue);
+        new java.util.Timer("LIUSB Keepalive Timer").schedule(keepAliveTimer,keepAliveTimeoutValue,keepAliveTimeoutValue);
     }
 
     private final static Logger log = LoggerFactory.getLogger(LIUSBServerAdapter.class);
