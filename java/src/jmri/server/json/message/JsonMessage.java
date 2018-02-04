@@ -170,7 +170,7 @@ public class JsonMessage {
         ObjectNode data = root.putObject(JSON.DATA);
         data.put(JsonMessage.MESSAGE, this.getMessage());
         if (this.getContext() != null) {
-            data.put(JsonMessage.CONTEXT, this.getContext());
+            data.set(JsonMessage.CONTEXT, this.getContext());
         } else {
             data.putNull(JsonMessage.CONTEXT);
         }
