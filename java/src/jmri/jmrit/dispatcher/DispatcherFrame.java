@@ -385,7 +385,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             });
             cancelRestartButton.setToolTipText(Bundle.getMessage("CancelRestartButtonHint"));
             p13.add(new JLabel("   "));
-            p13.add(terminateTrainButton = new JButton(Bundle.getMessage("TerminateTrain") + "..."));
+            p13.add(terminateTrainButton = new JButton(Bundle.getMessage("TerminateTrain"))); // immediate if there is only one train
             terminateTrainButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
