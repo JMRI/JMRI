@@ -1,6 +1,7 @@
 package jmri.server.json;
 
 import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.GET;
 import static jmri.server.json.JSON.GOODBYE;
 import static jmri.server.json.JSON.HELLO;
 import static jmri.server.json.JSON.LIST;
@@ -49,12 +50,13 @@ public class JsonClientHandler {
         }
     }
 
-    public void dispose() {
+    public void onClose() {
         services.values().stream().forEach((set) -> {
             set.stream().forEach((service) -> {
                 service.onClose();
             });
         });
+        services.clear();
     }
 
     /**
@@ -107,37 +109,32 @@ public class JsonClientHandler {
      */
     public void onMessage(JsonNode root) throws IOException {
         try {
-            String method = root.path(METHOD).asText();
+            String method = root.path(METHOD).asText(GET);
             String type = root.path(TYPE).asText();
-            if (root.path(TYPE).isMissingNode() && root.path(LIST).isValueNode()) {
+            JsonNode data = root.path(DATA);
+            if ((root.path(TYPE).isMissingNode() || type.equals(LIST))
+                    && root.path(LIST).isValueNode()) {
                 type = root.path(LIST).asText();
                 method = LIST;
             }
-            JsonNode data = root.path(DATA);
-            if ((type.equals(HELLO) || type.equals(PING) || type.equals(GOODBYE) || method.equals(LIST))
-                    && data.isMissingNode()) {
-                // these messages are not required to have a data payload,
-                // so create one if the message did not contain one to avoid
-                // special casing later
-                data = this.connection.getObjectMapper().createObjectNode();
-            }
-            if (data.isMissingNode() && root.path(METHOD).isValueNode()
-                    && JSON.GET.equals(root.path(METHOD).asText())) {
-                // create an empty data node for get requests to avoid special
-                // casing later
-                data = this.connection.getObjectMapper().createObjectNode();
-            }
             if (data.isMissingNode()) {
-                this.sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));
-                return;
+                if ((type.equals(HELLO) || type.equals(PING) || type.equals(GOODBYE))
+                        || (method.equals(LIST) || method.equals(GET))) {
+                    // these messages are not required to have a data payload,
+                    // so create one if the message did not contain one to avoid
+                    // special casing later
+                    data = this.connection.getObjectMapper().createObjectNode();
+                } else {
+                    this.sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));
+                    return;
+                }
             }
-            if (root.path(METHOD).isValueNode()) {
-                // if method is specified, use it, setting it to "get" if not explicitly null
-                method = root.path(METHOD).asText(JSON.GET);
-            } else {
-                // at one point, we used method within data, so check there also
-                // if method was not specified, set it to "post"
-                method = data.path(METHOD).asText(JSON.POST);
+            if (root.path(METHOD).isMissingNode()) { // method not explicitly set
+                if (data.path(METHOD).isValueNode()) {
+                    // at one point, we used method within data, so check there also
+                    // if method was not specified, set it to "post"
+                    method = data.path(METHOD).asText(JSON.POST);
+                }
             }
             log.debug("Processing {} with {}", type, data);
             if (method.equals(LIST)) {
@@ -200,5 +197,9 @@ public class JsonClientHandler {
 
     private void sendErrorMessage(JsonException ex) throws IOException {
         this.connection.sendMessage(ex.getJsonMessage());
+    }
+
+    protected HashMap<String, HashSet<JsonSocketService<?>>> getServices() {
+        return new HashMap<>(this.services);
     }
 }

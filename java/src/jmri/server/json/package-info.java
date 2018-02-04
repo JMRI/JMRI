@@ -8,6 +8,7 @@
  * services:
  * <ul>
  * <li>list requests in the form:
+ * <code>{"type":"<em>type</em>","method":"list"}</code> or
  * <code>{"type":"list","list":"<em>type</em>"}</code> or
  * <code>{"list":"<em>type</em>"}</code>.</li>
  * <li>individual item state requests in the form:
