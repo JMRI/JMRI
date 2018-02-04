@@ -772,6 +772,12 @@
             <type>jar</type>
         </dependency>
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.2</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <!-- when updating, remove from net.ossindex list of ignored -->
             <!-- vulnerabilities elsewhere in this file -->
             <groupId>org.python</groupId>

@@ -120,7 +120,7 @@ public class SampleMinimalProgram {
 
         // start web server
         final int port = 12080;
-        WebServerPreferences.getDefault().setPort(port);
+        InstanceManager.getDefault(WebServerPreferences.class).setPort(port);
         try {
             WebServer.getDefault().start();
         } catch (Exception ex) {
