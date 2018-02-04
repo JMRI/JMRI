@@ -39,7 +39,7 @@ public class JsonLightSocketServiceTest extends TestCase {
             JsonLightSocketService service = new JsonLightSocketService(connection);
             LightManager manager = InstanceManager.getDefault(LightManager.class);
             Light light1 = manager.provideLight("IL1");
-            service.onMessage(JsonLight.LIGHT, message, Locale.ENGLISH);
+            service.onMessage(JsonLight.LIGHT, message, JSON.POST, Locale.ENGLISH);
             // TODO: test that service is listener in LightManager
             Assert.assertEquals(JSON.OFF, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
             light1.setState(Light.ON);
@@ -69,21 +69,21 @@ public class JsonLightSocketServiceTest extends TestCase {
             Light light1 = manager.provideLight("IL1");
             // Light OFF
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.OFF);
-            service.onMessage(JsonLight.LIGHT, message, Locale.ENGLISH);
+            service.onMessage(JsonLight.LIGHT, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Light.OFF, light1.getState());
             // Light ON
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.ON);
-            service.onMessage(JsonLight.LIGHT, message, Locale.ENGLISH);
+            service.onMessage(JsonLight.LIGHT, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Light.ON, light1.getState());
             // Light UNKNOWN - remains ON
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.UNKNOWN);
-            service.onMessage(JsonLight.LIGHT, message, Locale.ENGLISH);
+            service.onMessage(JsonLight.LIGHT, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Light.ON, light1.getState());
             // Light Invalid State
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, 42); // invalid state
             JsonException exception = null;
             try {
-                service.onMessage(JsonLight.LIGHT, message, Locale.ENGLISH);
+                service.onMessage(JsonLight.LIGHT, message, JSON.POST, Locale.ENGLISH);
             } catch (JsonException ex) {
                 exception = ex;
             }
