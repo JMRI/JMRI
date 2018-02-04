@@ -74,12 +74,15 @@
       Block, entry to the Transit from the starting Block must
       result in travel in the Transit's defined direction. This
       window only allows selection of valid starting and stopping
-      Blocks. If an expected Block is not in the starting Block
-      selection box, it may be because of this
-      requirement.</p><a name="loadsave" id="loadsave"></a>
+      Blocks. Initially the first occupied block is selected for
+      you in the combo box.<br>
+      Note: If an expected Block is not in the starting Block
+      selection box, it may be because of this requirement.</p>
 
+      <a name="loadsave" id="loadsave"></a>
       <h2>Saving and Retrieving Active Train Information</h2>
 
+      <span class="since">since 2.5.2</span>
       <p>To facilitate easy set up of Active Trains that are used
       more than once, Dispatcher provides for saving and loading
       train information from disk.</p>

@@ -12,6 +12,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import jmri.web.server.WebServerPreferences;
@@ -186,7 +187,7 @@ public class NodeIdentity {
                 }
             }
         } catch (UnknownHostException ex) {
-            this.identity = WebServerPreferences.getDefault().getRailroadName().replaceAll("[^A-Za-z0-9 ]", "-"); // NOI18N
+            this.identity = InstanceManager.getDefault(WebServerPreferences.class).getRailroadName().replaceAll("[^A-Za-z0-9 ]", "-"); // NOI18N
             log.error("Cannot get host address or name {}", ex.getLocalizedMessage());
             log.error("Using {} as a fallback.", this.identity);
         }

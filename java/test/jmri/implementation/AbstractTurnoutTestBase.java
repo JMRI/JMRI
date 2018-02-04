@@ -12,12 +12,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
 
 /**
  * Abstract base class for Turnout tests in specific jmrix.* packages
@@ -116,41 +110,47 @@ public abstract class AbstractTurnoutTestBase {
         checkThrownMsgSent();
     }
 
+    class TestSensor extends AbstractSensor {
+            public boolean request = false;
+
+            public TestSensor(String sysName,String userName){
+                super(sysName,userName);
+            }
+
+            @Override
+            public void requestUpdateFromLayout(){
+                request = true;
+            }
+
+            boolean getRequest(){
+              return request;
+            }
+
+            void resetRequest(){
+              request=false;
+            }
+    }
+
     @Test
     public void testRequestUpdate() throws JmriException {
-        final Sensor s1m = mock(Sensor.class);
-        final Sensor s2m = mock(Sensor.class);
-        Sensor s1 = new AbstractSensor("IS1", "username1") {
-            @Override
-            public void requestUpdateFromLayout() {
-                s1m.requestUpdateFromLayout();
-            }
-        };
-        Sensor s2 = new AbstractSensor("IS2", "username2") {
-            @Override
-            public void requestUpdateFromLayout() {
-                s2m.requestUpdateFromLayout();
-            }
-        };
+        TestSensor s1 = new TestSensor("IS1", "username1");
+        TestSensor s2 = new TestSensor("IS2", "username2");
         InstanceManager.sensorManagerInstance().register(s1);
         InstanceManager.sensorManagerInstance().register(s2);
 
         t.provideFirstFeedbackSensor("IS1");
         t.setFeedbackMode(Turnout.ONESENSOR);
 
-        verifyZeroInteractions(s1m);
         t.requestUpdateFromLayout();
-        verify(s1m).requestUpdateFromLayout();
-        Mockito.reset(s1m);
+        Assert.assertTrue("update requested, one sensor",s1.getRequest());
+        s1.resetRequest();
 
         t.provideSecondFeedbackSensor("IS2");
         t.setFeedbackMode(Turnout.TWOSENSOR);
 
-        verifyZeroInteractions(s1m);
-        verifyZeroInteractions(s2m);
         t.requestUpdateFromLayout();
-        verify(s1m).requestUpdateFromLayout();
-        verify(s2m).requestUpdateFromLayout();
+        Assert.assertTrue("update requested, two sensor s1",s1.getRequest());
+        Assert.assertTrue("update requested, two sensor s2",s2.getRequest());
     }
 
     @Test

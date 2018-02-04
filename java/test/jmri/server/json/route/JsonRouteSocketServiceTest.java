@@ -48,7 +48,7 @@ public class JsonRouteSocketServiceTest extends TestCase {
             Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
             sensor1.setKnownState(Sensor.UNKNOWN);
             route1.setTurnoutsAlignedSensor(sensor1.getSystemName());
-            service.onMessage(JsonRouteServiceFactory.ROUTE, message, Locale.ENGLISH);
+            service.onMessage(JsonRouteServiceFactory.ROUTE, message, JSON.POST, Locale.ENGLISH);
             // TODO: test that service is listener in RouteManager
             Assert.assertEquals(JSON.UNKNOWN, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
             sensor1.setKnownState(Sensor.ACTIVE);
@@ -87,25 +87,25 @@ public class JsonRouteSocketServiceTest extends TestCase {
             Assert.assertNotNull(route1.getTurnoutsAlgdSensor());
             // Route ACTIVE - becomes ACTIVE
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1").put(JSON.STATE, JSON.ACTIVE);
-            service.onMessage(JsonRouteServiceFactory.ROUTE, message, Locale.ENGLISH);
+            service.onMessage(JsonRouteServiceFactory.ROUTE, message, JSON.POST, Locale.ENGLISH);
             JUnitUtil.waitFor(() -> {
                 return route1.getState() == Sensor.ACTIVE;
             }, "Route to activate");
             Assert.assertEquals(Sensor.ACTIVE, route1.getState());
             // Route INACTIVE - remains ACTIVE
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1").put(JSON.STATE, JSON.INACTIVE);
-            service.onMessage(JsonRouteServiceFactory.ROUTE, message, Locale.ENGLISH);
+            service.onMessage(JsonRouteServiceFactory.ROUTE, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Sensor.ACTIVE, route1.getState());
             // Route UNKNOWN - remains ACTIVE
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1").put(JSON.STATE, JSON.UNKNOWN);
-            service.onMessage(JsonRouteServiceFactory.ROUTE, message, Locale.ENGLISH);
+            service.onMessage(JsonRouteServiceFactory.ROUTE, message, JSON.POST, Locale.ENGLISH);
             JUnitUtil.waitFor(() -> {
                 return route1.getState() == Sensor.ACTIVE;
             }, "Route to activate");
             Assert.assertEquals(Sensor.ACTIVE, route1.getState());
             // Route TOGGLE - remains ACTIVE
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1").put(JSON.STATE, JSON.TOGGLE);
-            service.onMessage(JsonRouteServiceFactory.ROUTE, message, Locale.ENGLISH);
+            service.onMessage(JsonRouteServiceFactory.ROUTE, message, JSON.POST, Locale.ENGLISH);
             JUnitUtil.waitFor(() -> {
                 return route1.getState() == Sensor.ACTIVE;
             }, "Route to activate");
@@ -113,7 +113,7 @@ public class JsonRouteSocketServiceTest extends TestCase {
             // Route TOGGLE - becomes ACTIVE
             sensor1.setKnownState(Sensor.INACTIVE);
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1").put(JSON.STATE, JSON.TOGGLE);
-            service.onMessage(JsonRouteServiceFactory.ROUTE, message, Locale.ENGLISH);
+            service.onMessage(JsonRouteServiceFactory.ROUTE, message, JSON.POST, Locale.ENGLISH);
             JUnitUtil.waitFor(() -> {
                 return route1.getState() == Sensor.ACTIVE;
             }, "Route to activate");
@@ -122,7 +122,7 @@ public class JsonRouteSocketServiceTest extends TestCase {
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1").put(JSON.STATE, 42); // invalid state
             JsonException exception = null;
             try {
-                service.onMessage(JsonRouteServiceFactory.ROUTE, message, Locale.ENGLISH);
+                service.onMessage(JsonRouteServiceFactory.ROUTE, message, JSON.POST, Locale.ENGLISH);
             } catch (JsonException ex) {
                 exception = ex;
             }

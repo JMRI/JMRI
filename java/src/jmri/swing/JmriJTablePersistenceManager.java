@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  * {@link TableColumn#getPreferredWidth()}, since this preferredWidth is
  * available before the table column is rendered by Swing.
  *
- * @author Randall Wood Copyright (C) 2016
+ * @author Randall Wood Copyright (C) 2016, 2018
  */
 @ServiceProvider(service = PreferencesManager.class)
 public class JmriJTablePersistenceManager extends AbstractPreferencesManager implements JTablePersistenceManager, PropertyChangeListener {

@@ -18,9 +18,8 @@ public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        OlcbSystemConnectionMemo m = new OlcbSystemConnectionMemo();
-        m.setTrafficController(new jmri.jmrix.can.TestTrafficController());
-        tm = new OlcbThrottleManager(m,new OlcbConfigurationManager(m));
+        OlcbSystemConnectionMemo m = OlcbTestInterface.createForLegacyTests();
+        tm = new OlcbThrottleManager(m,new OlcbConfigurationManagerScaffold(m));
     }
 
     @After
