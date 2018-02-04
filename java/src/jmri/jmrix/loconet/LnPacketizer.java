@@ -47,7 +47,9 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     // The methods to implement the LocoNetInterface
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return (ostream != null && istream != null);
@@ -73,7 +75,7 @@ public class LnPacketizer extends LnTrafficController {
 
     /**
      * Forward a preformatted LocoNetMessage to the actual interface.
-     *
+     * <p>
      * Checksum is computed and overwritten here, then the message is converted
      * to a byte array and queue for transmission
      *
@@ -169,6 +171,7 @@ public class LnPacketizer extends LnTrafficController {
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
+     *
      * @param istream stream to read from
      * @return buffer of received data
      * @throws java.io.IOException failure during stream read
@@ -203,10 +206,10 @@ public class LnPacketizer extends LnTrafficController {
         }
 
         /**
-         * Handle incoming characters. This is a permanent loop, looking for input
-         * messages in character form on the stream connected to the
-         * LnPortController via <code>connectPort</code>. Terminates with the input
-         * stream breaking out of the try block.
+         * Handle incoming characters. This is a permanent loop, looking for
+         * input messages in character form on the stream connected to the
+         * LnPortController via <code>connectPort</code>. Terminates with the
+         * input stream breaking out of the try block.
          */
         @Override
         public void run() {
@@ -219,15 +222,18 @@ public class LnPacketizer extends LnTrafficController {
                         log.trace("Skipping: {}", Integer.toHexString(opCode)); // NOI18N
                     }
                     // here opCode is OK. Create output message
-                    if (log.isTraceEnabled()) log.trace(" (RcvHandler) Start message with opcode: {}", Integer.toHexString(opCode)); // NOI18N
+                    if (log.isTraceEnabled()) {
+                        log.trace(" (RcvHandler) Start message with opcode: {}", Integer.toHexString(opCode)); // NOI18N
+                    }
                     LocoNetMessage msg = null;
                     while (msg == null) {
                         try {
                             // Capture 2nd byte, always present
                             int byte2 = readByteProtected(istream) & 0xFF;
-                            if (log.isTraceEnabled()) log.trace("Byte2: {}", Integer.toHexString(byte2)); // NOI18N
-                            // Decide length
-                            int len=2;
+                            if (log.isTraceEnabled()) {
+                                log.trace("Byte2: {}", Integer.toHexString(byte2)); // NOI18N
+                            }                            // Decide length
+                            int len = 2;
                             switch ((opCode & 0x60) >> 5) {
                                 case 0:
                                     /* 2 byte message */
@@ -238,13 +244,13 @@ public class LnPacketizer extends LnTrafficController {
                                 case 1:
                                     /* 4 byte message */
 
-                                    len  = 4;
+                                    len = 4;
                                     break;
 
                                 case 2:
                                     /* 6 byte message */
 
-                                    len =6;
+                                    len = 6;
                                     break;
 
                                 case 3:
@@ -268,7 +274,9 @@ public class LnPacketizer extends LnTrafficController {
                             for (int i = 2; i < len; i++) {
                                 // check for message-blocking error
                                 int b = readByteProtected(istream) & 0xFF;
-                                if (log.isTraceEnabled()) log.trace("char {} is: {}", i, Integer.toHexString(b)); // NOI18N
+                                if (log.isTraceEnabled()) {
+                                    log.trace("char {} is: {}", i, Integer.toHexString(b)); // NOI18N
+                                }
                                 if ((b & 0x80) != 0) {
                                     log.warn("LocoNet message with opCode: " // NOI18N
                                             + Integer.toHexString(opCode)
@@ -297,7 +305,7 @@ public class LnPacketizer extends LnTrafficController {
                         if (log.isDebugEnabled()) { // avoid String building if not needed
                             log.debug("queue message for notification: {}", msg.toString());
                         }
-                        
+
                         jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));
                     }
 
@@ -322,18 +330,22 @@ public class LnPacketizer extends LnTrafficController {
             } // end of permanent loop
         }
     }
-    
+
     /**
      * Captive class to notify of one message
      */
-    class RcvMemo implements jmri.util.ThreadingUtil.ThreadAction {
+    private static class RcvMemo implements jmri.util.ThreadingUtil.ThreadAction {
+
         public RcvMemo(LocoNetMessage msg, LnTrafficController trafficController) {
             thisMsg = msg;
             thisTC = trafficController;
         }
         LocoNetMessage thisMsg;
         LnTrafficController thisTC;
-        /** {@inheritDoc} */
+
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void run() {
             thisTC.notify(thisMsg);
@@ -345,7 +357,9 @@ public class LnPacketizer extends LnTrafficController {
      */
     class XmtHandler implements Runnable {
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void run() {
 
@@ -396,6 +410,7 @@ public class LnPacketizer extends LnTrafficController {
     /**
      * When a message is finally transmitted, forward it to listeners if echoing
      * is needed
+     *
      * @param msg message sent
      *
      */
@@ -418,7 +433,9 @@ public class LnPacketizer extends LnTrafficController {
         LocoNetMessage msgForLater;
         LnPacketizer myTc;
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void run() {
             myTc.notify(msgForLater);
@@ -431,7 +448,7 @@ public class LnPacketizer extends LnTrafficController {
     public void startThreads() {
         int priority = Thread.currentThread().getPriority();
         log.debug("startThreads current priority = {} max available = {} default = {} min available = {}", // NOI18N
-                    priority, Thread.MAX_PRIORITY, Thread.NORM_PRIORITY, Thread.MIN_PRIORITY);
+                priority, Thread.MAX_PRIORITY, Thread.NORM_PRIORITY, Thread.MIN_PRIORITY);
 
         // make sure that the xmt priority is no lower than the current priority
         int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
