@@ -97,15 +97,15 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                     column.addPropertyChangeListener(listener);
                     Object columnId = column.getIdentifier();
                     if (columnId == null || columnId.toString().isEmpty()) {
-                        log.warn("Columns in table {} have empty or null identities; saving table state will not be reliable.", table.getName());
+                        log.error("Columns in table {} have empty or null identities; saving table state will not be reliable.", table.getName());
                     } else if (columnIds.contains(columnId)) {
-                        log.warn("Columns in table {} have duplicate identities; saving table state will not be reliable.", table.getName());
+                        log.error("Columns in table {} have duplicate identities; saving table state will not be reliable.", table.getName());
                     } else {
                         columnIds.add(columnId);
                     }
                 }
                 if (table.getColumnModel().getColumnCount() != columnIds.size()) {
-                    log.warn("Saving table state for table {} will not be reliable; please notify the JMRI developers.", table.getName());
+                    log.error("Saving table state for table {} will not be reliable; please notify the JMRI developers.", table.getName());
                 }
             }
         }
