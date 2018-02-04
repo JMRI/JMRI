@@ -91,12 +91,24 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                     sorter.addRowSorterListener(listener);
                 }
                 Enumeration<TableColumn> e = this.getColumns(table.getColumnModel());
+                List<Object> columnIds = new ArrayList<>();
                 while (e.hasMoreElements()) {
                     TableColumn column = e.nextElement();
                     column.addPropertyChangeListener(listener);
                     if (column.getIdentifier() == null) {
                         column.setIdentifier(column.getHeaderValue().toString());
                     }
+                    Object columnId = column.getIdentifier();
+                    if (columnId == null || columnId.toString().isEmpty()) {
+                        log.warn("Columns in table {} have empty or null identities; saving table state will not be reliable.", table.getName());
+                    } else if (columnIds.contains(columnId)) {
+                        log.warn("Columns in table {} have duplicate identities; saving table state will not be reliable.", table.getName());
+                    } else {
+                        columnIds.add(columnId);
+                    }
+                }
+                if (table.getColumnModel().getColumnCount() != columnIds.size()) {
+                    log.warn("Saving table state for table {} will not be reliable; please notify the JMRI developers.", table.getName());
                 }
             }
         }

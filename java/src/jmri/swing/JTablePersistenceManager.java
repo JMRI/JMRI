@@ -33,7 +33,8 @@ import javax.swing.JTable;
  * retained across application restarts.
  * <p>
  * <strong>Note:</strong> A JTable with UI state being persisted must have a
- * unique non-null name.
+ * unique non-null name and columns in the table must also have unique non-null
+ * identifiers.
  *
  * @author Randall Wood Copyright (C) 2016
  */
