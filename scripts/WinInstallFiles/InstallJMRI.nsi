@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.14
+; - Remove insecure Jackson libraries to address CVE-2017-17485
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.13
 ; - Remove outmoded SLF4J libraries
 ; -------------------------------------------------------------------------
@@ -476,6 +479,11 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\jackson-annotations-2.0.6.jar"
     Delete "$OUTDIR\jackson-core-2.0.6.jar"
     Delete "$OUTDIR\jackson-databind-2.0.6.jar"
+
+    ; -- Delete insecure jackson jar files as of JMRI 4.11.3
+    Delete "$OUTDIR\jackson-annotations-2.8.5.jar"
+    Delete "$OUTDIR\jackson-core-2.8.5.jar"
+    Delete "$OUTDIR\jackson-databind-2.8.5.jar"
 
     ; -- Delete old .jar & support files in destination directory
     Delete "$OUTDIR\jh.1.1.2.jar"

@@ -56,6 +56,8 @@ public class XBeeNodeConfigFrameTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
+    public void tearDown() {        
+        tc = null;
+        JUnitUtil.tearDown();
     }
 }

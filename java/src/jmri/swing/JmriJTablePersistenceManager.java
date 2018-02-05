@@ -1,5 +1,6 @@
 package jmri.swing;
 
+import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -10,8 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
+import javax.swing.Timer;
 import javax.annotation.Nonnull;
 import javax.swing.JTable;
 import javax.swing.RowSorter;
@@ -596,19 +596,18 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
          */
         private void saveState() {
             if (delay != null) {
-                delay.cancel();
+                delay.stop();
                 delay = null;
             }
-            delay = new Timer();
-            delay.schedule(new TimerTask() {
-                @Override
-                public void run() {
+            delay = new Timer(500, (ActionEvent evt) -> {
                     JTableListener.this.manager.cacheState(JTableListener.this.table);
                     if (!JTableListener.this.manager.isPaused() && JTableListener.this.manager.isDirty()) {
                         JTableListener.this.manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
                     }
-                }
-            }, 500); // milliseconds
+              });
+            delay.setInitialDelay(500); // milliseconds
+            delay.setRepeats(false);
+            delay.start();
         }
     }
 }

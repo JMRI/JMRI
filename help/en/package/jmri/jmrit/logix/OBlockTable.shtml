@@ -25,7 +25,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>The Occupancy Block Tables</h1>
+      <h1>Warrants: The Occupancy Block Tables</h1>
 
       <h2>Introduction</h2>
       The Occupancy Block (OBlock) Tables were
@@ -223,11 +223,14 @@
         <li><b>Delete</b>: A button to delete the Block. To make
         the deletion permanent, save your configuration file to
         disk</li>
-      </ul>This table is sorted by the System Name of the OBlocks.
-      This means that when a new row is added the entry will jump
+      </ul>
+      <p>This table is initially sorted by the System Name of the
+      OBlocks. This means that when a new row is added the entry will jump
       to its position in the sort. After entering a new OBlock, you
       may find it at the top of the window should you need to do
-      further editing.
+      further editing.<br>
+      <span class="since">since 2.12</span>You can sort the table by
+      clicking on a column header.</p>
 
       <p>Several columns are hidden in the OBlock table. To
       hide/unhide a column, right click in the Header portion of

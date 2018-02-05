@@ -28,6 +28,12 @@ public class StandaloneSystemConnectionMemoTest extends jmri.jmrix.SystemConnect
         JUnitUtil.setUp();
         StandaloneSystemConnectionMemo memo =new StandaloneSystemConnectionMemo();
         StandaloneTrafficController tc = new StandaloneTrafficController(memo){
+          @Override
+          public void transmitLoop(){
+          }
+          @Override
+          public void receiveLoop(){
+          }
         };
         memo.setRfidTrafficController(tc);
         memo.configureManagers(null,null);

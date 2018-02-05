@@ -118,7 +118,7 @@ public class CodeLine {
     
     void startExternalCodeLine() {
         hStartTO.getBean().setCommandedState(Turnout.THROWN);
-        new Timer().schedule(new TimerTask() {
+        new Timer("Codeline Timer").schedule(new TimerTask() {
             @Override
             public void run() {
                 hStartTO.getBean().setCommandedState(Turnout.CLOSED);

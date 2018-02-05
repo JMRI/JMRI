@@ -7,20 +7,16 @@ import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrix.can.CanMessage;
 import jmri.util.JUnitUtil;
-import jmri.util.MockPropertyChangeListener;
+import jmri.util.PropertyChangeListenerScaffold;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.junit.Assert;
-import org.mockito.Mockito;
 import org.openlcb.EventID;
 import org.openlcb.implementations.EventTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensor class.
@@ -29,7 +25,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  */
 public class OlcbSensorTest extends TestCase {
     private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class);
-    protected MockPropertyChangeListener l = new MockPropertyChangeListener();
+    protected PropertyChangeListenerScaffold l; 
     private static final String KNOWN_STATE = "KnownState";
 
     public void testIncomingChange() {
@@ -117,11 +113,7 @@ public class OlcbSensorTest extends TestCase {
         t.sendMessage(mActive);
         Assert.assertTrue(s.getKnownState() == Sensor.ACTIVE);
 
-        // wait for twice timeout to make sure
-        try {
-            Thread.sleep(2 * OlcbSensor.ON_TIME);
-        } catch (Exception e) {
-        }
+        JUnitUtil.waitFor( ()->{ return(s.getKnownState() != Sensor.ACTIVE); });
 
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
 
@@ -129,11 +121,7 @@ public class OlcbSensorTest extends TestCase {
         s.setKnownState(Sensor.ACTIVE);
         Assert.assertTrue(s.getKnownState() == Sensor.ACTIVE);
 
-        // wait for twice timeout to make sure
-        try {
-            Thread.sleep(2 * OlcbSensor.ON_TIME);
-        } catch (Exception e) {
-        }
+        JUnitUtil.waitFor( ()->{ return(s.getKnownState() != Sensor.ACTIVE); });
 
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
     }
@@ -217,15 +205,15 @@ public class OlcbSensorTest extends TestCase {
                 ":X19544C4CN0102030405060708;");
         // Getting a state notify will not change state now.
         t.sendMessage(":X19544123N0102030405060709;");
-        Mockito.verifyZeroInteractions(l.m);
-        Mockito.reset(l.m);
+        assertEquals("no call",0,l.getCallCount());
+        l.resetPropertyChanged();
         assertEquals(Sensor.ACTIVE, s.getKnownState());
 
         // Resets the turnout to unknown state
         s.setState(Sensor.UNKNOWN);
-        verify(l.m).onChange(KNOWN_STATE, Sensor.UNKNOWN);
-        verifyNoMoreInteractions(l.m);
-        Mockito.reset(l.m);
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
+        assertEquals("called once",1,l.getCallCount());
+        l.resetPropertyChanged();
         t.assertNoSentMessages();
 
         // state is reported as unknown to the bus
@@ -233,9 +221,9 @@ public class OlcbSensorTest extends TestCase {
                 ":X19547C4CN0102030405060708;");
         // getting a state notify will change state
         t.sendMessage(":X19544123N0102030405060709;");
-        verify(l.m).onChange(KNOWN_STATE, Sensor.INACTIVE);
-        verifyNoMoreInteractions(l.m);
-        Mockito.reset(l.m);
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
+        assertEquals("called once",1,l.getCallCount());
+        l.resetPropertyChanged();
         assertEquals(Sensor.INACTIVE, s.getKnownState());
 
         // state is reported as known (thrown==invalid)
@@ -244,8 +232,8 @@ public class OlcbSensorTest extends TestCase {
 
         // getting a state notify will not change state
         t.sendMessage(":X19544123N0102030405060708;");
-        Mockito.verifyZeroInteractions(l.m);
-        Mockito.reset(l.m);
+        assertEquals("no call",0,l.getCallCount());
+        l.resetPropertyChanged();
         assertEquals(Sensor.INACTIVE, s.getKnownState());
     }
 
@@ -324,7 +312,8 @@ public class OlcbSensorTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
+        l = new PropertyChangeListenerScaffold();
         // load dummy TrafficController
         t = new OlcbTestInterface();
         t.waitForStartup();

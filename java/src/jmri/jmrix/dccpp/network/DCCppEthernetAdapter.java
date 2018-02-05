@@ -115,7 +115,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         } else {
             keepAliveTimer.cancel();
         }
-        new java.util.Timer().schedule(keepAliveTimer,keepAliveTimeoutValue,keepAliveTimeoutValue);
+        new java.util.Timer("DCC++ Keepalive Timer").schedule(keepAliveTimer,keepAliveTimeoutValue,keepAliveTimeoutValue);
     }
     
     private boolean mDNSConfigure = false;

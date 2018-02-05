@@ -28,8 +28,6 @@
       <h1>JMRI: DispatcherPro</h1>
 
       <a name="contents" id="contents"></a>
-      <h2>Contents</h2>
-
       <p>This document describes the JMRI <b>Dispatcher</b> tools,
       and how they can help with dispatching and running trains
       on layouts with PanelPro panels.<br>
@@ -41,20 +39,23 @@
         <ul>
         <li><a href="#intro">Introduction to Dispatcher</a></li>
 
+        <li><a href="#requirements">Requirements</a></li>
+
         <li><a href="#glossary">Glossary of Terms</a></li>
 
         <li><a href="#transits">Using Transits and Sections in
         Dispatching Active Trains</a></li>
 
         <li><a href="#window">The Dispatcher Window</a></li>
+        <ul>
+          <li><a href="#atrains">The Active Trains Table</a></li>
 
-        <li><a href="#atrains">The Active Trains Table</a></li>
+          <li><a href="#arequests">The Requested Allocations
+          Table</a></li>
 
-        <li><a href="#arequests">The Requested Allocations
-        Table</a></li>
-
-        <li><a href="#allocated">The Allocated Sections
-        Table</a></li>
+          <li><a href="#allocated">The Allocated Sections
+          Table</a></li>
+        </ul>
 
         <li><a href="#automatic">Running Trains
         Automatically</a></li>
@@ -72,6 +73,7 @@
       <a name="intro" id="intro"></a>
       <h2>Introduction to Dispatcher</h2>
 
+      <span class="since">since 2.3.5</span>
       <p>JMRI <b>Dispatcher</b> provides functions and organizes
       information relating to dispatching trains on a model
       railroad layout. Its main function is the allocation of
@@ -79,37 +81,26 @@
       Dispatcher is not designed to completely replace a human
       dispatcher during a session of running trains, but it should
       make the dispatching job easier and more fun. Dispatcher is
-      envisioned to work alongside a panel, constructed in either
+      envisioned to work alongside a Panel, constructed in either
       Layout Editor or Panel Editor, which provides visual feedback
-      of layout status. There was no attempt to make Dispatcher
+      of layout status. An example of a Dispatcher Panel in
+      action is shown next. No attempt was made to make Dispatcher
       look or feel <i>prototypical</i>. It was simply designed to
       be functional for dispatching a model railroad layout.</p>
 
       <!-- image by Egbert Broerse @silverailscolo 2018 -->
-      <img src="images/DispatcherTerms.png" width="842" height="137"
-      alt="Dispatcher Sections Transits Concept Track Diagram">
+      <img src="images/DispatcherPanelClinic.png" width="806" height="323"
+      alt="Dispatcher Panel Example">
 
-      <p>Dispatcher requires that a layout be divided into
-      <b>Blocks</b>, and that Blocks along the mainline be
-      organized into <b><a href=
-      "../beantable/SectionTable.shtml">Sections</a></b>.<br>
-      It also requires that Sections be used to define itineraries,
-      called <b><a href=
-      "../beantable/TransitTable.shtml">Transits</a></b>, that
-      describe paths that trains will follow when active on the
-      layout. <b>Blocks</b> are portions of track whose occupancy
-      can be monitored individually. <b>Sections</b> are groups of
-      one or more Blocks that are <i>allocated</i> as a unit by the
-      dispatcher using <b>Dispatcher</b> functions. <b>Blocks</b>
-      are usually defined to support signaling on a layout.
-      Simplest use of Dispatcher does not require that block
-      detection hardware or signals be installed on the physical
-      layout, or even that the physical layout be divided into
-      blocks. Dispatcher will work if layout blocking is defined in
-      a panel only. However, Dispatcher works best if hardware
-      blocks with block detection are present. It works even better
-      if hardware signals are present on the layout, and signal
-      logic uses Section direction sensors.</p>
+      <br>Note that in this document "<i>Dispatcher</i>" refers to
+      the JMRI Dispatcher software, and "<i>the dispatcher</i>"
+      refers to the person running the Dispatcher software.<br>
+      Many of the terms in this introduction to Dispatcher may
+      be new to users. Some terms and settings were created
+      specifically for use with Dispatcher. Please review
+      the <b><a href="glossary">Glossary of Terms</a></b>, and
+      come back to it as needed when reading the remainder of
+      this documentation.</p>
 
       <p>Functionality provided by Dispatcher includes:</p>
       <ul>
@@ -130,34 +121,36 @@
       <p>Central to <b>Dispatcher</b> is the concept of an
       <b>Active Train</b>, which carries the information needed
       to run a train around part of the layout.<br>
-      Basically, an <b>Active Train</b> is created by
-      the dispatcher by linking a <b>Transit</b> and a
-      <b>Train</b>. The <b><a href=
+      Basically, an <b>Active Train</b> is created by the
+      dispatcher by linking a <b>Transit</b> and a <b>Train</b>.
+      The <b><a href=
       "../beantable/TransitTable.shtml">Transit</a></b> provides a
-      description of the route to be followed by the Train,
+      description of the itinerary to be followed by the Train,
       including which <b><a href=
       "../beantable/SectionTable.shtml">Sections</a></b> need to be
-      allocated along the route, and, when running automatically,
-      any <b><a href=
+      allocated in sequence along the route, and, when running
+      automatically, any <b><a href=
       "../beantable/ViewSpecialActions.shtml">Actions</a></b> that
-      need to be initiated in specific Sections. The <b>Train</b>
-      specifies what is to be run along the route specified by the
-      Transit. Trains can be complete descriptions of all engines
+      need to be initiated in specific Sections.<br>
+      The <b>Train</b> specifies what is to be run along the route
+      defined in the Transit.
+      Trains can be complete descriptions of all engines
       and cars as provided by JMRI <b>Operations</b>, or engines
       selected from the JMRI <b>Roster</b> menu, or simply a train
       name and dcc address entered by the dispatcher.</p>
 
       <p>When creating an Active Train, the dispatcher also
-      specifies where the Active Train is currently located, and
-      the location of the Active Train when it is terminated after
-      it completes its transit of the layout. Other options are
-      entered, like train priority and type, a request to start the
-      train at a specified Fast Clock time, and a request to run
-      the Active Train automatically.</p>
+      specifies where the Active Train is <em>currently</em> located,
+      and the location of the Active Train when it is <em>terminated</em>
+      after it completes its transit of the layout. Other options are
+      entered, like train Priority and Type, a request to start the
+      Active Train at a specified Fast Clock time, and a request to run
+      it Automatically.</p>
 
       <p>All Active Trains are displayed in a table in the
-      <b>Dispatcher Window</b>, along with status information about
-      the Active Train. The Dispatcher Window also contains a table
+      <b><a href="#window">The Dispatcher Window</a></b>, along with
+      status information about the Active Train.
+      The Dispatcher Window also contains a table
       of pending <b>Requested Allocations</b>, a table of currently
       <b>Allocated Sections</b>, and buttons that allow the
       dispatcher to easily allocate Sections, create new Active
@@ -177,15 +170,36 @@
       multiple Active Trains. Enhancements are planned in future
       releases.</p>
 
-      <p>Many of the terms in this introduction to Dispatcher may
-      be new to users. Some terms and settings were created
-      specifically for use with Dispatcher. Please briefly review
-      the <b>Glossary of Terms</b> which follows, and come back to
-      it as needed when reading the remainder of this documentation.
-      <br>Note that in this document
-      "<i>Dispatcher</i>" refers to the JMRI Dispatcher software,
-      and "<i>the dispatcher</i>" refers to the person running the
-      Dispatcher software.</p>
+      <a name="requirements" id="requirements"></a>
+      <h2>Dispatcher Requirements</h2>
+
+      <p>Dispatcher requires that a layout be divided into
+      <b>Blocks</b>, and that Blocks along the mainline be
+      organized into <b><a href=
+      "../beantable/SectionTable.shtml">Sections</a></b>.<br>
+      It also requires that these Sections be used to define
+      itineraries, called <b><a href=
+      "../beantable/TransitTable.shtml">Transits</a></b>, that
+      describe paths that trains will follow when active on the
+      layout.</p>
+
+      <!-- image by Egbert Broerse @silverailscolo 2018 -->
+      <img src="../beantable/images/DispatcherTransit.png" width="842" height="137"
+           alt="Dispatcher Sections Transits Concept Track Diagram">
+
+      <p><b>Blocks</b> are portions of track whose occupancy
+      can be monitored individually. <b>Sections</b> are groups of
+      one or more Blocks that are <i>allocated</i> as a unit by the
+      dispatcher using <b>Dispatcher</b> functions. <b>Blocks</b>
+      are usually defined to support signaling on a layout.
+      Simplest use of Dispatcher does not require that block
+      detection hardware or signals be installed on the physical
+      layout, or even that the physical layout be divided into
+      blocks. Dispatcher will work if layout blocking is defined in
+      a panel only. However, Dispatcher works best if hardware
+      blocks with block detection are present. It works even better
+      if hardware signals are present on the layout, and signal
+      logic uses Section direction sensors.</p>
 
       <a name="glossary" id="glossary"></a>
       <h2>Glossary of Terms</h2>
@@ -197,10 +211,12 @@
         track in a layout. Blocks normally correspond to physical
         blocks on a layout, each wired for occupancy detection.
         However, if the layout track is not subdivided into blocks,
-        dividing a Layout Editor panel into blocks will allow
-        Dispatcher to be used for manually running trains. Hardware
-        occupancy detection is also optional for manual running
-        trains. Automatic running of trains requires hardware blocks
+        dividing a Layout Editor Panel track diagram into Blocks will
+        allow Dispatcher to be used for manually running trains.<br>
+        Hardware occupancy detection is also optional for manual running
+        trains. More on
+        <a href="../beantable/BlockTable.shtml">Blocks</a>.<br>
+        Automatic running of trains requires hardware blocks
         and hardware occupancy detection. For all Dispatcher use,
         blocking of mainline track on a Layout Editor panel is
         required. Dispatcher works best if hardware block occupancy
@@ -216,7 +232,7 @@
         grouped into track sections that are reasonable for a
         dispatcher to allocate. More information is contained in the
         <b><a href="../beantable/SectionTable.shtml">Section
-        Table</a></b> help file, along with instructions on how to
+        Table</a></b> help, along with instructions on how to
         create a Section.</dd>
 
         <dt>Transit</dt>
@@ -229,15 +245,17 @@
         automatically. A detailed description of Transits, how they
         are created, and how they are used is contained in the
         <b><a href="../beantable/TransitTable.shtml">Transit
-        Table</a></b> help file.</dd>
+        Table</a></b> help.</dd>
 
         <dt>Train</dt>
         <dd>An engine (or consist) usually attached to
         a group of cars, that travels around the layout as an entity.
-        For use with Dispatcher, trains may be selected from engines
-        in the JMRI engine roster, may be selected from trains
-        created in JMRI Operations, or train information may be
-        entered manually by the dispatcher.</dd>
+        For use with Dispatcher, Trains may be selected from the list
+        of engines in the JMRI engine Roster, selected from the Trains
+        created in JMRI
+        <a href="../operations/Operations.shtml">Operations</a>, or
+        basic train information may be entered manually by the
+        dispatcher.</dd>
 
         <dt>Active Train</dt>
         <dd>A combination of a Train and a
@@ -249,7 +267,7 @@
         is described in detail <a href="#transits">below</a>.
         <b><a href="#atrains">Active Trains Table</a></b> provides more
         details. Active Trains are created and terminated from the
-        Dispatcher window.</dd>
+        <a href="#window">Dispatcher Window.</a></dd>
 
         <dt>Auto Active Train</dt>
         <dd>An Active Train that is run
@@ -481,7 +499,7 @@
       the <b><a href="Options.shtml">Dispatcher Options</a></b> help.</p>
 
       <a name="atrains" id="atrains"></a>
-      <h2>The Active Trains Table</h2>
+      <h3>The Active Trains Table</h3>
 
       <p>The Active Trains table from the above Dispatcher
       example is repeated below.</p>
@@ -641,7 +659,7 @@
       </ul>
 
       <a name="arequests" id="arequests"></a>
-      <h2>The Requested Allocations Table</h2>
+      <h3>The Requested Allocations Table</h3>
 
       <p>The Requested Allocations Table from the above example
       Dispatcher window is shown below.</p><img src=
@@ -787,7 +805,7 @@
         </li>
       </ul><a name="allocated" id="allocated"></a>
 
-      <h2>The Allocated Sections Table</h2>
+      <h3>The Allocated Sections Table</h3>
 
       <p>The <b>Allocated Sections</b> table displays all Sections
       currently allocated to Active Trains. This table serves two
@@ -833,7 +851,7 @@
           Section has been used by its train. The Use Status column
           shows either <i>Not Entered</i>, <i>Entered</i>, or
           <i>Exited</i>. The Use Status of the Allocated Section
-          changes as the the occupancy of the Allocated Section
+          changes as the occupancy of the Allocated Section
           changes. An Active Train is assumed to be done with an
           Allocated Section if its Use Status is <i>Exited</i>. The
           <b>Auto Release</b> option looks for Allocated Sections
@@ -915,7 +933,7 @@
       dependably</b>.</p>
 
       <a name="automatic" id="automatic"></a>
-      <h2>Running Trains Automatically</h2>
+      <h2>Running Trains Automatically with Dispatcher</h2>
 
       <p>Dispatcher supports running trains around the layout
       automatically, provided the layout meets minimum
@@ -970,7 +988,8 @@
         </li>
       </ul>
 
-      <p>Support is provided for <b>RAMPING</b> the speed of an
+      <p><span class="since">since 4.3.7</span>Support is provided
+      for <b>RAMPING</b> the speed of an
       Auto Active Train when changing from its current speed to a
       new speed. This option is controlled by selecting a Ramp Rate
       for each Auto Active Train when it is created. The best Ramp
@@ -1076,8 +1095,8 @@
       turnouts at the ends of the Section, or portions of a Section
       not normally traversed by the Auto Active Train.</p>
 
-      <a name="require" id="require"></a>
-      <h2>Requirements for Automatic Running</h2>
+      <a name="autorequire" id="autorequire"></a>
+      <h3>Requirements for Automatic Running</h3>
 
       <p>Automatic running of Active Trains requires the layout and
       the train have required hardware and that a fully configured
@@ -1147,9 +1166,10 @@
           Sections should be signaled on the Layout Editor panel.
           Portions of the layout that are not in Sections in
           Transits only need those signals that are necessary to
-          allow setup of signal logic, either SSL (Simple Signal
+          allow set-up of signal logic, either SSL (Simple Signal
           Logic) or SML (Signal Mast Logic) for signals in Sections
-          of the Transit. Use of the Layout Editor tools to
+          of the Transit. <span class="since">since 3.3.5</span>
+          Use of the Layout Editor tools to
           configure signals on the Layout Editor panel is required
           (this is how Layout Editor knows which signals apply to
           which turnout, block boundary, etc.). Use of these tools
@@ -1211,16 +1231,28 @@
       must have been solved. <b>A train should run flawlessly in
       manual mode, before automatic running is attempted.</b></p>
 
-      <p>Because Auto Active Trains use JMRI signalling for stops,
-      starts and speeds, the signalling should also be flawless,
+      <p>Because Auto Active Trains use JMRI signaling for stops,
+      starts and speeds, the signaling should also be flawless,
       including all blocks, turnouts and direction indicators
       needed.</p>
 
-      <h2>More on Dispatcher</h2>
+      <h2>Further Reference</h2>
       <ul>
-      <li><a href="./Options.shtml">Dispatcher Options</a></li>
-      <li><a href="./NewTrain.shtml">Activate New Train</a>
-      Window</li>
+        <li><a href="Options.shtml">Dispatcher Options</a></li>
+        <li>The <a href="NewTrain.shtml">Activate New Train</a>
+        pane</li>
+        <li>Simulate AutoActiveTrains using the <a href=
+        "../../../../html/tools/scripting/Examples.shtml">AutoActiveTrains
+        Simulator</a> script</li>
+        <li>JMRI <a href=
+        "../../../../html/tools/automation/index.shtml">Automation
+        in General</a></li>
+        <li>For a step-by-step guide to Dispatcher, check out the
+        <a href="http://jmri.org/community/clinics/">clinic</a>
+        presentation by Dave Duchamp on <a href=
+        "http://jmri.org/community/clinics/NMRA2012/index.shtml">Running
+        Trains with JMRI's Dispatcher</a>.
+        </li>
       </ul>
 
       <!--#include virtual="/Footer" -->

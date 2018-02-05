@@ -59,7 +59,6 @@
 		    <ul>
 		    <li><dfn><a href="signaling/index.shtml">Signaling</a></dfn>
             <li><dfn><a href="EntryExit.shtml">Entry Exit (NX)</a></dfn>
-            <li><dfn><a href="tools/EntryExit.shtml">Entry Exit (NX)</a></dfn>
             <li><dfn><a href="../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a></dfn>
             <li><dfn><a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dfn>
 		    <li><dfn><a href="Routes.shtml">Routes</a></dfn>
