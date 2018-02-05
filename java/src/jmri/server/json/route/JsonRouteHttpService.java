@@ -32,7 +32,7 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService {
         Route route = InstanceManager.getDefault(RouteManager.class).getRoute(name);
         root.put(JSON.TYPE, ROUTE);
         ObjectNode data = this.getNamedBean(route, name, type, locale); // throws JsonException if route == null
-        root.put(JSON.DATA, data);
+        root.set(JSON.DATA, data);
         if (route != null) {
             switch (route.getState()) {
                 case Sensor.ACTIVE:

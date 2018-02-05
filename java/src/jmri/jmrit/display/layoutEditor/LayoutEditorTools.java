@@ -11453,10 +11453,11 @@ public class LayoutEditorTools {
             if (block2 == null || (block1 == block2)) {
                 // find the 1st positionablePoint that's connect1'ed to block1
                 for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
-                    if ((p.getType() == PositionablePoint.END_BUMPER)
-                            && (p.getConnect1().getLayoutBlock() == block1)) {
-                        boundary = p;
-                        break;
+                    if (p.getType() == PositionablePoint.END_BUMPER) {
+                        if (p.getConnect1() != null && p.getConnect1().getLayoutBlock() == block1) {
+                            boundary = p;
+                            break;
+                        }
                     }
                 }
             }

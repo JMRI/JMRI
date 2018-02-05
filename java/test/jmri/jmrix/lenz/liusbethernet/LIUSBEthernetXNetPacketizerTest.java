@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz.liusbethernet;
 
+import jmri.jmrix.lenz.XNetPortControllerScaffold;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,6 +48,11 @@ public class LIUSBEthernetXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketi
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
         };
+        try {
+           port = new XNetPortControllerScaffold();
+        } catch (Exception e) {
+           Assert.fail("Error creating test port");
+        }
     }
 
 }

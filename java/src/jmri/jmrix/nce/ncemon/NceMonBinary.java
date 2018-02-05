@@ -301,12 +301,6 @@ public class NceMonBinary {
                             new Object[]{m.getElement(1)});
                 }
                 break;
-            case (NceBinaryCommand.USB_MEM_READ_CMD):
-                if (m.getNumDataElements() == 2) {
-                    return MessageFormat.format(Bundle.getMessage("Usb_Mem_Read_Cmd"),
-                            new Object[]{m.getElement(1)});
-                }
-                break;
             default:
                 log.debug("Unhandled command code: {} after pass 1", m.getOpCode() & 0xFF);
                 break;
@@ -328,6 +322,12 @@ public class NceMonBinary {
                 if (m.getNumDataElements() == 3) {
                     return MessageFormat.format(Bundle.getMessage("READ16_CMD"),
                             new Object[]{getAddress(m)});
+                }
+                break;
+            case (NceBinaryCommand.USB_MEM_READ_CMD):
+                if (m.getNumDataElements() == 2) {
+                    return MessageFormat.format(Bundle.getMessage("Usb_Mem_Read_Cmd"),
+                            new Object[]{m.getElement(1)});
                 }
                 break;
             case (NceBinaryCommand.READ_AUI2_CMD):
