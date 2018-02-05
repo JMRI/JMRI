@@ -893,7 +893,7 @@
    mode will not fill every track to capacity which is more prototypical. However, normal mode won't
    swap a set of cars, cars are picked up or set out based on the available track space. Normal mode
    prevents track overloading. In aggressive mode you can "accidentally" create track overloading by
-   the order you build and run your trains or by using the the train reset function.
+   the order you build and run your trains or by using the Train Reset function.
 
    <p>Aggressive builds makes the car's track space available as soon as a car is scheduled for
     a pick up. Therefore there can be instances where a train was to pick up a car to vacate the
@@ -915,7 +915,7 @@
     decide that you don't want to run the first train, and reset the train. Now the original cars on
     still sitting on the track, and you now run and terminate the second train. The program will
     deliver the new cars, while the old cars are still sitting there, which unfortunately will
-    overload the track. You could also overload the the track if you ran the second train before the
+    overload the track. You could also overload the track if you ran the second train before the
     first, the second train would try and deliver cars to the track that still has cars sitting on
     it.</p>
 
@@ -1963,7 +1963,7 @@
    <h4>Show Cars</h4>
    <p>If you only want to see cars for a location or track, select "Show Cars" from the "Tools"
     menu. This tool is also useful when you want to print out cars for a specific location or track.
-    Note that the the export cars tool will only export cars for a location or track, and the delete
+    Note that the Export Cars tool will only export cars for a location or track, and the delete
     cars tool when only showing cars on a track, will only delete those cars.</p>
 
    <a name="LocationReporter" id="LocationReporter"></a>
@@ -2153,6 +2153,11 @@
     any load to be received by the spur/industry. When the "Ship" field is blank, the program will
     only place the default empty "E" or default load "L" into the car. See <a href="#Sidings">Spurs</a>
     for how the program deals with the default loads.
+   </p>
+   
+   <p>The "Receive" pull down menu will only show the loads that the spur can service for that particular
+   car type. To review which car loads are available see the <a href="#LoadOptions">load
+     options</a> for this spur.
    </p>
 
    <p>
@@ -2830,7 +2835,7 @@
 
    <h4>Show Cars</h4>
    <p>This will open a "Cars" window displaying only the cars for the track selected. Note that
-    the the export cars tool will only export cars for the track selected, and the delete cars tool
+    the Export Cars tool will only export cars for the track selected, and the delete cars tool
     will only delete the cars for the track selected.</p>
 
    <a name="LocationsTools" id="LocationsTools"></a>
@@ -3767,7 +3772,7 @@
     <img src="images/Trains.png">
    </p>
 
-   <p>The "Trains" window shows all of your trains. For each train, the there's a checkbox in
+   <p>The "Trains" window shows all of your trains. For each train, there's a checkbox in
     the "Build" column used to select which trains to build, print, and terminate. The buttons on
     the bottom of the page will build, print or terminate the trains selected. You can also modify
     an existing train using the "Edit" button for that train. For each train there's also an action

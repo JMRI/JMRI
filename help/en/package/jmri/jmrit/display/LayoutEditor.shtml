@@ -640,7 +640,7 @@
 
             <li><b>Wide ToolBar</b> - The Top and Bottom tool bars change
              their height and width based on screen size.  If this option
-             is enabled, the the wide version will be used.  This can result
+             is enabled, the wide version will be used.  This can result
              in the toolbar using a horizontal scroll bar.</li>
 
             <li><b>Drop Down Lists Display Order...</b> - Choose which names,

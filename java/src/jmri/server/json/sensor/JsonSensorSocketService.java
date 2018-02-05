@@ -22,28 +22,25 @@ import org.slf4j.LoggerFactory;
 
 /**
  * JSON Socket service for {@link jmri.Sensor}s.
- * 
+ *
  * @author Randall Wood
  */
-public class JsonSensorSocketService extends JsonSocketService {
+public class JsonSensorSocketService extends JsonSocketService<JsonSensorHttpService> {
 
-    private final JsonSensorHttpService service;
     private final HashMap<String, SensorListener> sensorListeners = new HashMap<>();
     private final SensorsListener sensorsListener = new SensorsListener();
-    private Locale locale;
     private final static Logger log = LoggerFactory.getLogger(JsonSensorSocketService.class);
 
 
     public JsonSensorSocketService(JsonConnection connection) {
-        super(connection);
-        this.service = new JsonSensorHttpService(connection.getObjectMapper());
+        super(connection, new JsonSensorHttpService(connection.getObjectMapper()));
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+        this.setLocale(locale);
         String name = data.path(JSON.NAME).asText();
-        if (data.path(JSON.METHOD).asText().equals(JSON.PUT)) {
+        if (method.equals(JSON.PUT)) {
             this.connection.sendMessage(this.service.doPut(type, name, data, locale));
         } else {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
@@ -60,7 +57,7 @@ public class JsonSensorSocketService extends JsonSocketService {
 
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+        this.setLocale(locale);
         this.connection.sendMessage(this.service.doGetList(type, locale));
         log.debug("adding SensorsListener");
         InstanceManager.getDefault(SensorManager.class).addPropertyChangeListener(sensorsListener); //add parent listener
@@ -102,7 +99,7 @@ public class JsonSensorSocketService extends JsonSocketService {
             log.debug("in SensorListener for '{}' '{}' ('{}'=>'{}')", this.sensor.getSystemName(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
             try {
                 try {
-                    connection.sendMessage(service.doGet(SENSOR, this.sensor.getSystemName(), locale));
+                    connection.sendMessage(service.doGet(SENSOR, this.sensor.getSystemName(), getLocale()));
                 } catch (JsonException ex) {
                     connection.sendMessage(ex.getJsonMessage());
                 }
@@ -122,9 +119,9 @@ public class JsonSensorSocketService extends JsonSocketService {
             try {
                 try {
                  // send the new list
-                    connection.sendMessage(service.doGetList(SENSORS, locale)); 
+                    connection.sendMessage(service.doGetList(SENSORS, getLocale()));
                     //child added or removed, reset listeners
-                    if (evt.getPropertyName().equals("length")) { // NOI18N 
+                    if (evt.getPropertyName().equals("length")) { // NOI18N
                         addListenersToChildren();
                     }
                 } catch (JsonException ex) {

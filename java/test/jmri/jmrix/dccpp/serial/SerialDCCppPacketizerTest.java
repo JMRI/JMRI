@@ -28,6 +28,7 @@ public class SerialDCCppPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketizerT
     @After
     @Override
     public void tearDown() {
+        tc.terminateThreads();
         JUnitUtil.tearDown();
     }
 

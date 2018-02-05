@@ -10,7 +10,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood
  */
 @ServiceProvider(service = JsonServiceFactory.class)
-public class JsonTimeServiceFactory implements JsonServiceFactory {
+public class JsonTimeServiceFactory implements JsonServiceFactory<JsonTimeHttpService, JsonTimeSocketService> {
 
     public final static String TIME = "time";
 

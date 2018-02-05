@@ -4,6 +4,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
 import jmri.jmrix.openlcb.OlcbSignalMast;
 import jmri.jmrix.openlcb.OlcbSystemConnectionMemo;
+import jmri.jmrix.openlcb.OlcbTestInterface;
 
 import org.openlcb.AbstractConnection;
 import org.openlcb.Connection;
@@ -74,8 +75,7 @@ public class OlcbSignalMastXmlTest {
             }
         };
 
-        OlcbSystemConnectionMemo memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
-        memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
+        OlcbSystemConnectionMemo memo = OlcbTestInterface.createForLegacyTests();
         memo.setInterface(new OlcbInterface(new NodeID(new byte[]{1, 0, 0, 0, 0, 0}), connection));
     }
 

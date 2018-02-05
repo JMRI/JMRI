@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import jmri.InstanceManager;
 import jmri.web.server.WebServerPreferences;
 
 /**
@@ -29,7 +30,7 @@ public class ConfigServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (!WebServerPreferences.getDefault().allowRemoteConfig()) {
+        if (!InstanceManager.getDefault(WebServerPreferences.class).allowRemoteConfig()) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }

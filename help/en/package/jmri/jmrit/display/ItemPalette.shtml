@@ -32,10 +32,10 @@
       The common method all items use to add an item to a panel is
       "Drag and Drop". Each tab has a bordered panel labeled
       <b>Drag to Panel</b>. Drag the item inside this border over
-      to the panel. In the cases where the icon represents a layout
+      to your Panel. In the cases where the icon represents a layout
       device (e.g. a turnout, a sensor, etc.), you must select a
       row from a table to associate that particular device with the
-      icon - and then drag the icon to the panel.
+      icon - and then drag the icon to the Panel.
 
       <h2>Iconic Items</h2>
       For those items using icons, multiple
@@ -162,17 +162,18 @@
         the text and the attribute options that renders the text.
         Font sizes styles, justification and border attributes can
         be chosen. A color chooser provides custom colors for
-        fonts, background and borders. <b>Note</b> <i>The "Enter
-        key" must be pressed to display the text with its
-        attributes in the Preview Panel.</i> Drag the item in the
-        Preview Panel to the panel.</li>
+        fonts, background and borders.<br>
+        <b>Note</b> <i>The "Enter" key must be pressed to display
+        the text with its attributes in the Preview Panel.</i><br>
+        Drag the item in the Preview Panel to the panel.</li>
 
         <li><b>RPSReporter</b> Drag the "Drag to Panel" icon to the
         panel and setup the RPSReporter from its pop up menu.</li>
 
         <li><b>FastClock</b> Drag the clock to the panel.</li>
 
-        <li><b>Indicator Track</b> Indicator track is intended for
+        <li><b>Indicator Track</b>
+        <span class="since">since 2.12</span> These are intended for
         use when track circuits are configured with OBlocks. Most
         of the items in this tab pertain to their use as
         presentations of OBlocks and their use with warrants.
@@ -182,21 +183,22 @@
         When this is the case only the "Occupied" and "Clear"
         colors can be displayed.</li>
 
-        <li><b>Indicator Turnout</b> The above comment applies to
-        Indicator Turnouts also.</li>
+        <li><b>Indicator Turnout</b> The above comment also applies to
+        Indicator Turnouts.</li>
 
-        <li><b>Portal</b>Portal icons are used in CircuitBuilder to
+        <li><b>Portal</b> Portal icons are used in Circuit Builder to
         define Portals and Paths. On the Control Panel they also
         will display direction arrows along a route when Warrants
         are allocated.</li>
       </ul>
 
-      <h2>More About Indicator Track</h2>Indicator track (i.e. both
-      track segments and turnouts) have colors to display status of
+      <h2>More about Indicator Track</h2>
+      <p>Indicator track (i.e. both track segments and turnouts)
+      have colors to display status of
       the track circuit they represent. When the track circuit is
       configured by an OBlock, and the Portals and Paths it
       contains, the following status states are be displayed by
-      color:
+      color:</p>
 
       <ul>
         <li><b>Clear</b> Indicates ready for use. More precisely,
@@ -249,7 +251,7 @@
       occupied by a warranted train, they show that status by
       color.</p>
 
-      <p>If the paths were created or edited by CircuitBuilder, the
+      <p>If the paths were created or edited by Circuit Builder, the
       above function is done automatically. In the future the above
       "sub"panel will be made read only.</p>
 
@@ -265,16 +267,17 @@
       <b>New Icon Set</b>, <b>Delete Icon Set</b> buttons function
       as described before.</p>
 
-      <h3>Indicator Turnout Tab</h3>This tab has the same functions
-      as the Indicator Track tab with the addition of a turnout
-      table. A turnout must be selected from the Turnout Table to
-      be able to drag an icon to a control panel.
+      <h3>Indicator Turnout Tab</h3>
+      <p>This tab has the same functions as the Indicator Track tab
+      with the addition of a turnout table. A turnout must be
+      selected from the Turnout Table to be able to drag an icon
+      to a control panel.</p>
 
-      <p>A slight variation is there is no <b>Edit Icons</b>
+      <p>A slight variation is that there is no <b>[Edit Icons]</b>
       button. The <b>Add New Icon Set</b> and <b>Delete Icon
-      Set</b>function as described before.</p>.
+      Set</b> buttons function as described before.</p>
 
-      <p>The <b>Show Icons&gt;</b> button displays the icon set in
+      <p>The <b>[Show Icons]</b> button displays the icon set in
       a matrix where the rows show the status icons for each state
       of the turnout - Closed, Thrown, Inconsistent, and Unknown.
       To the right of each row in the matrix is a <b>Edit Icons</b>

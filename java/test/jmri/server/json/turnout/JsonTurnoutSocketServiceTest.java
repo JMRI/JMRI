@@ -40,7 +40,7 @@ public class JsonTurnoutSocketServiceTest extends TestCase {
             TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
             Turnout turnout1 = manager.provideTurnout("IT1");
             turnout1.setCommandedState(Turnout.UNKNOWN);
-            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, Locale.ENGLISH);
+            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, Locale.ENGLISH);
             // TODO: test that service is listener in TurnoutManager
             Assert.assertEquals(JSON.UNKNOWN, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
             turnout1.setCommandedState(Turnout.CLOSED);
@@ -71,21 +71,21 @@ public class JsonTurnoutSocketServiceTest extends TestCase {
             turnout1.setCommandedState(Turnout.UNKNOWN);
             // Turnout CLOSED
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, JSON.CLOSED);
-            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, Locale.ENGLISH);
+            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Turnout.CLOSED, turnout1.getState());
             // Turnout THROWN
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, JSON.THROWN);
-            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, Locale.ENGLISH);
+            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Turnout.THROWN, turnout1.getState());
             // Turnout UNKNOWN - remains THROWN
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, JSON.UNKNOWN);
-            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, Locale.ENGLISH);
+            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Turnout.THROWN, turnout1.getState());
             // Turnout Invalid State
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, 42); // invalid state
             JsonException exception = null;
             try {
-                service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, Locale.ENGLISH);
+                service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, Locale.ENGLISH);
             } catch (JsonException ex) {
                 exception = ex;
             }

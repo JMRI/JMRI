@@ -8,18 +8,16 @@ import static jmri.server.json.operations.JsonOperations.TRAINS;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
-import jmri.server.json.JsonHttpService;
-import jmri.server.json.JsonSocketService;
 import jmri.spi.JsonServiceFactory;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Service factory for the JSON Operations services.
- * 
- * @author Randall Wood (c) 2016
+ *
+ * @author Randall Wood Copyright 2016, 2018
  */
 @ServiceProvider(service = JsonServiceFactory.class)
-public class JsonOperationsServiceFactory implements JsonServiceFactory {
+public class JsonOperationsServiceFactory implements JsonServiceFactory<JsonOperationsHttpService, JsonOperationsSocketService> {
 
     @Override
     public String[] getTypes() {
@@ -27,13 +25,13 @@ public class JsonOperationsServiceFactory implements JsonServiceFactory {
     }
 
     @Override
-    public JsonSocketService getSocketService(JsonConnection connection) {
+    public JsonOperationsSocketService getSocketService(JsonConnection connection) {
         return new JsonOperationsSocketService(connection);
     }
 
     @Override
-    public JsonHttpService getHttpService(ObjectMapper mapper) {
+    public JsonOperationsHttpService getHttpService(ObjectMapper mapper) {
         return new JsonOperationsHttpService(mapper);
     }
-    
+
 }

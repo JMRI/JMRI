@@ -5,6 +5,12 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
+/**
+ * Scaffold for port controller objects.
+ *
+ * @author Paul Bender Copyright (C) 2016
+ */
+
 public class AbstractPortControllerScaffold extends AbstractPortController {
 
     DataOutputStream ostream;  // Traffic controller writes to this
