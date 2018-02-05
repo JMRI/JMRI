@@ -55,7 +55,7 @@ public class EditorFrameOperator extends JFrameOperator {
                   return;
               }
         });
-
+        t.setName("Reminder Dialog Close Thread");
         t.start();
 
         // that pops dialog, find and press Yes - Delete
