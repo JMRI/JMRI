@@ -49,7 +49,7 @@ public class JsonMessageServiceFactoryTest {
     public void testGetHttpService() {
         ObjectMapper mapper = new ObjectMapper();
         JsonMessageServiceFactory instance = new JsonMessageServiceFactory();
-        Assert.assertNull(instance.getHttpService(mapper));
+        Assert.assertNotNull(instance.getHttpService(mapper));
     }
 
 }

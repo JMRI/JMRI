@@ -284,10 +284,37 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * <P>
      * @param speed Number from 0 to 1; less than zero is "emergency stop"
      */
-    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
     public void setSpeedSetting(float speed) {
-        log.debug("setSpeedSetting: sending speed {} to LocoNet slot {}", speed, slot.getSlot());
+        setSpeedSetting(speed, false, false);
+    }
+
+    /**
+     * Set the Speed, ensuring that a Loconet message is sent to update the slot
+     * even if the new speed is effectively the same as the current speed. Note: this
+     * can cause an increase in Loconet traffic.
+     *
+     * @param speed Number from 0 to 1; less than zero is emergency stop
+     */
+    public void setSpeedSettingAgain(float speed) {
+        setSpeedSetting(speed, true, true);
+    }
+
+    /**
+     * Set the speed. No Loconet message is sent if the new speed would
+     * result in a 'duplicate' - ie. a speed setting no different to the one the slot
+     * currently has - unless the boolean paramters indicate it should be.
+     *
+     * @param speed Number from 0 to 1; less than zero is emergency stop
+     * @param allowDuplicates boolean - if true, send a Loconet message no matter what
+     * @param allowDuplicatesOnStop boolean - if true, send a Loconet message if the new speed is
+     *                              'idle' or 'emergency stop', even if that matches the
+     *                              existing speed.
+     *
+     */
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
+        log.debug("setSpeedSetting: called with speed {} for LocoNet slot {}", speed, slot.getSlot());
         if (LnConstants.CONSIST_MID == slot.consistStatus()
                 || LnConstants.CONSIST_SUB == slot.consistStatus()) {
             // Digitrax slots use the same memory location to store the
@@ -304,13 +331,30 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         }
 
         int new_spd = intSpeed(speed);
+
+        // decide whether to send a new loconet message
+        boolean sendLoconetMessage = false;
         if (new_spd != layout_spd) {
+            // the new speed is different - send a message
+            sendLoconetMessage = true;
+        } else if (allowDuplicates) {
+            // calling method wants a new mesage sent regardless
+            sendLoconetMessage = true;
+        } else if (allowDuplicatesOnStop && new_spd <= 1) {
+            // calling method wants a new message sent if the speed is idle or estop, which it is
+            sendLoconetMessage = true;
+        }
+
+        if (sendLoconetMessage) {
+            log.debug("setSpeedSetting: sending speed {} to LocoNet slot {}", speed, slot.getSlot());
             LocoNetMessage msg = new LocoNetMessage(4);
             msg.setOpCode(LnConstants.OPC_LOCO_SPD);
             msg.setElement(1, slot.getSlot());
             log.debug("setSpeedSetting: float speed: " + speed + " LocoNet speed: " + new_spd);
             msg.setElement(2, new_spd);
             network.sendLocoNetMessage(msg);
+        } else {
+            log.debug("setSpeedSetting: not sending LocoNet message to slot {}, new speed == old speed", slot.getSlot());
         }
 
         // reset timeout

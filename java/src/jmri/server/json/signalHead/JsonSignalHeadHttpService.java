@@ -37,7 +37,7 @@ public class JsonSignalHeadHttpService extends JsonNamedBeanHttpService {
         root.put(TYPE, SIGNAL_HEAD);
         SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
         ObjectNode data = this.getNamedBean(signalHead, name, type, locale);
-        root.put(DATA, data);
+        root.set(DATA, data);
         if (signalHead != null) {
             data.put(LIT, signalHead.getLit());
             data.put(APPEARANCE, signalHead.getAppearance());
@@ -61,7 +61,7 @@ public class JsonSignalHeadHttpService extends JsonNamedBeanHttpService {
             if (data.path(STATE).isIntegralNumber()) {
                 int state = data.path(STATE).asInt();
                 if (state == SignalHead.HELD) {
-                    signalHead.setHeld(true);                    
+                    signalHead.setHeld(true);
                 } else {
                     boolean isValid = false;
                     for (int validState : signalHead.getValidStates()) {

@@ -52,8 +52,7 @@
 
       <a href="images/WarrantCreate1.png"><img
       src="images/WarrantCreate1.png" width="639"
-      height="270" hspace="0" vspace="0" alt="Create Warrant
-      pane part 1 in in JMRI 4.10"></a>
+      height="270" alt="Create Warrant pane part 1 in JMRI 4.10"></a>
 
       <h2>Defining a Warrant Route</h2>
       <p>Routes are created using the
@@ -71,11 +70,11 @@
       to take the train to the Destination Block and path - e.g.
         "Arrival Track #1" in the destination block.</p>
 
-      <p>A Warrant route is created by selecting the the block and
+      <p>A Warrant route is created by selecting the block and
       path where the train will begin its trip and the portal by
       which it should leave. Then you select the block, path and
       entry portal where the train should end its trip. Press the
-      <b>Calculate Route</b> button and the the computer will
+      <b>Calculate Route</b> button and the computer will
       determine all the intermediate paths needed to make the
       trip.</p>
 
@@ -118,17 +117,18 @@
             be specified. It is important to specify the Entry
             portal for the destination. This is needed when the
             layout has reversing loops allowing the path to be
-            entered from either end. <i>A common mistake where no
-            route will be found is to specify an <b>entry portal</b> or
-            <b>path</b> that cannot be reached by the direction taken when
-            leaving the origin block.</i>
+            entered from either end.<br>
+            <i>A common mistake where no route will be found is to
+            specify an <b>Entry Portal</b> or <b>Path</b> that
+            cannot be reached by the direction taken when
+            leaving the origin OBlock.</i>
           </div>
 
           <div style="margin-left: 2em">
-            <b>Note:</b> when a path is chosen, only the Portals of
-            that path are shown in the Exit or Entry Portal drop
+            <b>Note:</b> when a Path is chosen, only the Portals of
+            that Path are shown in the Exit or Entry Portal drop
             down menus. Thus, even though the block may have many
-            portals, you will only see at most two portals.
+            Portals, you will only see at most two portals.
           </div>
         </li>
 
@@ -188,23 +188,23 @@
           several ways you can restrict the number of routes
           found.</p>
 
-          <ul>
-            <li>1. Specify a maximum number of blocks to use in a
+          <ol>
+            <li>Specify a maximum number of blocks to use in a
             route by entering a smaller number in the <b>Max Number
             of Blocks in Route</b> box. The computer will only list
             routes with this number or fewer blocks</li>
 
-            <li>2. Specify an intermediate <b>Via Location</b>
+            <li>Specify an intermediate <b>Via Location</b>
             block and path that must be included in the route. The
             computer will calculate the route with this "must
             include" restriction and present you only with routes
             through the specified "Via" block and path.</li>
 
-            <li>3. Specify an <b>Avoid Location</b> block and path
+            <li>Specify an <b>Avoid Location</b> block and path
             that must not be in the route. The computer will not
             list any routes containing this "must avoid" block and
             path</li>
-          </ul>
+          </ol>
 
           <p>Sometimes the dialog message "No Route found from
           "Origin Block', path ..." etc. is displayed. Responding
@@ -343,31 +343,33 @@
            <a href="SpeedChanges.shtml">Warrant Speed Changes</a> has details
            about how warrants modify recorded speeds.</p>
 
-			<h3>Run Parameters</h3>This area has check boxes to modify
-			how the train will operate when running the warrant.
+			<h3>Run Parameters</h3>
+            <p>This area has check boxes to modify how the train will operate
+            when running the Warrant.</p>
 			<ul>
-			<li><b>Clearance to Share Route</b> Normally a track warrant
-			assigns exclusive rights to only one train.  This option allows
-			several trains to share rights to a route, such as train sections 
-			following one another. Multiple "shared warrants" are still
-			subject to ramping speed changes due to signals or rogue
-			occupancy.</li> 
-			<li><b>Don't Ramp Speed Changes</b> Suppress the 
-			ramping calculations. Instead, the warrant makes immediate speed
-			change upon entering the approach block to the block requiring
-			a speed change.</li>
-			<li><b>Use Elapsed Time Only</b> Do not use
-			block detection. <i>Using this option allows Warrants to
-			be run on layouts without block detection.</i> </li>
+                <li><b>Clearance to Share Route</b> - Normally a track warrant
+                assigns exclusive rights to only one train.  This option allows
+                several trains to share rights to a route, such as train sections
+                following one another. Multiple "shared warrants" are still
+                subject to ramping speed changes due to signals or rogue
+                occupancy.</li>
+                <li><b>Don't Ramp Speed Changes</b> - Suppress the
+                ramping calculations. Instead, the Warrant makes immediate speed
+                change upon entering the approach block to the block requiring
+                a speed change. <span class="since">since 4.5.7</span></li>
+                <li><b>Use Elapsed Time Only</b> - Do not use
+                block detection. <i>Using this option allows Warrants to
+                be run on layouts without block detection.</i></li>
 			</ul> 
 			Using the "Don't Ramp" or "Elapsed Time" options are the 
 			only cases where block path lengths and engine speed factors
-			are not necessary. 
+            are <i>not</i> necessary.
 			
-          <h2>Run Mode</h2>After a script is recorded, pressing the
+          <h2>Run Mode</h2>
+          <p>After a script is recorded, pressing the
           <b>AutoRun</b> button in the <b>Test Run Train</b> box will
           send the throttle commands to the train specified in the
-          warrant.
+          warrant.</p>
 
           <div style="margin-left: 2em">
             <b>NOTE:</b>Be sure that the train is located on the
@@ -594,6 +596,7 @@
           at command #14 <b>changes</b> to inactive.</p>
 
           <h3>Automatic Sequencing of Scripts</h3>
+          <span class="since">since 3.11.1</span>
           <p>It is possible to
           start another script from a script. To do this, insert a
           row with the words <b>Run Warrant</b> in the
@@ -713,7 +716,7 @@
           block detects occupancy. However entry into a Dark Block
           can only be recorded when the previous
           occupancy Block shows no occupancy. That is, the elapsed
-          time for entry into a Dark Block is recorded by the the tail
+          time for entry into a Dark Block is recorded by the tail
           of the train entered the dark, not the head.</p>
 
           <h2>Save etc.</h2>

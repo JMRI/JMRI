@@ -31,11 +31,13 @@ public class ExceptionDisplayFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ExceptionContext ec = new ExceptionContext(new Exception("Test"), "Test", "Test");
         JFrame testFrame = new JFrame();
-        new Thread(() -> {
+        Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(ec.getTitle());
             jdo.requestClose();
-        }).start();
+        });
+        t.setName("Exception Dialog Close Thread");
+        t.start();
         ExceptionDisplayFrame dialog = new ExceptionDisplayFrame(ec, testFrame);
         dialog.setName(ec.getTitle());
         Assert.assertNotNull("exists", dialog);

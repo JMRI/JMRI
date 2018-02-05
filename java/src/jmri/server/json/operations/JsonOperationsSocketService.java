@@ -23,22 +23,19 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2016
  */
-public class JsonOperationsSocketService extends JsonSocketService {
+public class JsonOperationsSocketService extends JsonSocketService<JsonOperationsHttpService> {
 
-    private Locale locale;
-    private final JsonOperationsHttpService service;
     private final HashMap<String, TrainListener> trainListeners = new HashMap<>();
     private final TrainsListener trainsListener = new TrainsListener();
     private final static Logger log = LoggerFactory.getLogger(JsonOperationsSocketService.class);
 
     public JsonOperationsSocketService(JsonConnection connection) {
-        super(connection);
-        this.service = new JsonOperationsHttpService(connection.getObjectMapper());
+        super(connection, new JsonOperationsHttpService(connection.getObjectMapper()));
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+        this.setLocale(locale);
         String id = data.path(JSON.ID).asText(); // Operations uses ID attribute instead of name attribute
         switch (type) {
             case TRAIN:
@@ -57,7 +54,7 @@ public class JsonOperationsSocketService extends JsonSocketService {
 
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+        this.setLocale(locale);
         this.connection.sendMessage(this.service.doGetList(type, locale));
         log.debug("adding TrainsListener");
         TrainManager.instance().addPropertyChangeListener(trainsListener); //add parent listener
@@ -96,7 +93,7 @@ public class JsonOperationsSocketService extends JsonSocketService {
             log.debug("in SensorListener for '{}' '{}' ('{}'=>'{}')", this.train.getId(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
             try {
                 try {
-                    connection.sendMessage(service.doGet(TRAIN, this.train.getId(), locale));
+                    connection.sendMessage(service.doGet(TRAIN, this.train.getId(), getLocale()));
                 } catch (JsonException ex) {
                     connection.sendMessage(ex.getJsonMessage());
                 }
@@ -115,7 +112,7 @@ public class JsonOperationsSocketService extends JsonSocketService {
             log.debug("in TrainsListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
             try {
                 try {
-                    connection.sendMessage(service.doGetList(TRAINS, locale));
+                    connection.sendMessage(service.doGetList(TRAINS, getLocale()));
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N
                         addListenersToChildren();

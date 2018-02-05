@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

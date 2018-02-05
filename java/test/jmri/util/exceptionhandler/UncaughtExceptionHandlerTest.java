@@ -25,7 +25,7 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
             Object o = null;
             o.toString();
         });
-
+        t.setName("Uncaught Exception Handler Test Thread");
         t.start();
         jmri.util.JUnitUtil.releaseThread(this);
         JUnitAppender.assertErrorMessage("Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler");
