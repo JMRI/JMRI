@@ -11,7 +11,6 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;

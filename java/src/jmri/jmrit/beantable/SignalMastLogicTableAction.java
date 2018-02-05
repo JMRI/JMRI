@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -21,7 +22,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.SignalMastLogicManager;
@@ -52,7 +52,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
     public void actionPerformed(ActionEvent e) {
         // create the JTable model, with changes for specific NamedBean
         createModel();
-        TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(m);
+        TableRowSorter<BeanTableDataModel<SignalMastLogic>> sorter = new TableRowSorter<>(m);
         JTable dataTable = m.makeJTable(m.getMasterClassName(), m, sorter);
         // create the frame
         f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable) {};
@@ -76,10 +76,10 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
         JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
         int offset = 1;
-        log.debug("setMenuBar number of menu items = " + pos);
+        log.debug("setMenuBar number of menu items = {}", pos);
         for (int i = 0; i <= pos; i++) {
             if (menuBar.getComponent(i) instanceof JMenu) {
-                if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
+                if (((AbstractButton) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
                     offset = -1; // correct for use as part of ListedTableAction where the Help Menu is not yet present
                 }
             }
@@ -158,13 +158,13 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                     }
                 }
                 List<SignalMastLogic> source = getManager().getSignalMastLogicList();
-                signalMastLogicList = new ArrayList<Hashtable<SignalMastLogic, SignalMast>>();
+                signalMastLogicList = new ArrayList<>();
                 for (int i = 0; i < source.size(); i++) {
                     List<SignalMast> destList = source.get(i).getDestinationList();
                     source.get(i).addPropertyChangeListener(this);
                     source.get(i).getSourceMast().addPropertyChangeListener(this);
                     for (int j = 0; j < destList.size(); j++) {
-                        Hashtable<SignalMastLogic, SignalMast> hash = new Hashtable<SignalMastLogic, SignalMast>(1);
+                        Hashtable<SignalMastLogic, SignalMast> hash = new Hashtable<>(1);
                         hash.put(source.get(i), destList.get(j));
                         destList.get(j).addPropertyChangeListener(this);
                         signalMastLogicList.add(hash);
@@ -181,7 +181,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                 // updateNameList();
                 if (e.getPropertyName().equals("length") || e.getPropertyName().equals("updatedDestination") || e.getPropertyName().equals("updatedSource")) {
                     updateNameList();
-                    log.debug("Table changed length to " + signalMastLogicList.size());
+                    log.debug("Table changed length to {}", signalMastLogicList.size());
                     fireTableDataChanged();
                 } else if (e.getSource() instanceof SignalMastLogic) {
                     SignalMastLogic logic = (SignalMastLogic) e.getSource();
@@ -213,7 +213,6 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                 }
             }
 
-            //}
             /**
              * Is this property event announcing a change this table should
              * display?
@@ -223,7 +222,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
              */
             @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-                return ((e.getPropertyName().indexOf("Comment") >= 0) || (e.getPropertyName().indexOf("Enable") >= 0));
+                return ((e.getPropertyName().contains("Comment")) || (e.getPropertyName().contains("Enable")));
             }
 
             @Override
@@ -256,7 +255,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                     // button fired, delete Bean
                     deleteLogic(row, col);
                 } else if (col == ENABLECOL) {
-                    boolean enable = ((Boolean) value).booleanValue();
+                    boolean enable = ((Boolean) value);
                     if (enable) {
                         getLogicFromRow(row).setEnabled(getDestMastFromRow(row));
                     } else {
@@ -547,7 +546,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                             log.error("interrupted while notifying of problem with automaticallyDiscoverSignallingPairs", ex );
                         }
                     }
-                    
+
                     // process complete, update GUI
                     try {
                         javax.swing.SwingUtilities.invokeAndWait(()->{
@@ -555,7 +554,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                             suppressUpdate = false;
                             m.fireTableDataChanged();
                             if (genSect.isSelected()) {
-                                ((jmri.managers.DefaultSignalMastLogicManager) 
+                                ((jmri.managers.DefaultSignalMastLogicManager)
                                     InstanceManager.getDefault(jmri.SignalMastLogicManager.class)).generateSection();
                             }
                         });
