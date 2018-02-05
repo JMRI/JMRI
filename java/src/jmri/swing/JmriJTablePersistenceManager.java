@@ -105,7 +105,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                     }
                 }
                 if (table.getColumnModel().getColumnCount() != columnIds.size()) {
-                    log.error("Saving table state for table {} will not be reliable; please notify the JMRI developers.", table.getName());
+                    log.error("Saving table state for table {} will not be reliable; please notify the JMRI developers.", table.getName(), new Exception());
                 }
             }
         }
