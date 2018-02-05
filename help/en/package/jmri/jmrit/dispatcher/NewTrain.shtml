@@ -159,17 +159,18 @@
         </li>
 
         <li>
-          <a>If <a href="Options.shtml">Dispatcher Options</a> is
+          If <a href="Options.shtml">Dispatcher Options</a> is
           set to <b>Trains from User Entry</b>,
           the following pane is displayed.<br>
           Enter a train name in the <b>Train:</b> field, and set a numeric
           address from 1 to 9999 as the <b>DCC Address</b>.</p><img src=
           "images/NewTrainAltWindow.png" height="593" width="463">
           <p>
-          Any short name that identifies the train may be used
+          Any short name that identifies the train may be used,
           provided the name is not being used by another Active
-          Train. Dcc addresses must be a number in the range 1 -
-          9999. Note: If the train will not be run automatically,
+          Train. DCC addresses must be a number in the range 1 -
+          9999.<br>
+          Note: If the train will not be run automatically,
           the dcc address need not be accurate. This window is
           displayed if <b>Trains from User Entry</b> is selected as
           Dispatcher's train source.</p>
@@ -215,15 +216,39 @@
           to identify the destination Block uniquely.</p>
         </li>
 
+        <li><a name="allocateOptions" id="allocateOptions"></a>
+        Allocation Options <span class="since">since 4.9.5</span>
+        <ul>
         <li>
-          <p>Check <b>Allocate Train As Far As Possible</b> to allow
-          Dispatcher when using Auto Allocation to allocate as far
-          ahead of the train as allowed by other circumstances such as
-          an occupied block. Allocation is limited of course by the
-          <b>Destination location of Train</b> selection. If left unchecked
-          Dispatcher will in using Auto Allocation allocate no more than
-          three sections ahead of the current location of the train.
+          <b>As Far As Pos</b> (Allocate As Far As Possible) -
+          Select to allow Dispatcher, when using Auto Allocation, to
+          allocate as far ahead of the Train as allowed by other
+          circumstances such as an occupied Block. Allocation is
+          of course also limited by the
+          <b>Destination Location of Train</b> selection.
+          </li>
+          <li>
+          <b>To Safe Secs</b> (Allocate by Safe Sections) - Choose
+          this option if you have different trains going through a
+          single Block in both directions.<br>
+          Define Transits and mark as Safe the Sections that form
+          passing places for opposing traffic. If there are Alternative
+          Sections in the Transit, mark those as Safe as well.<br>
+          Note: If you notice that, upon assignment, Turnouts are being
+          set that were already set, you need to select "Trust Known
+          State of Turnouts" in the Dispatcher Options.
+          </li>
+          <li>
+          <b>Number of Sections</b> - When using Auto Allocation, Dispatcher
+          will allocate ahead of the current location of the Train no more
+          than the entered number of Sections set in the Spinner.<br>
+          Because a value of 1 might cause unexpected results, be advised
+          to set it to 2 or higher.
+          </li>
+        </ul>
         </li>
+
+
         <li>
           <p>Check <b>Reset When Done</b> to set up the Active
           Train for continuous running. With continuous running,
@@ -303,8 +328,9 @@
 
           <p><b>Note:</b> Requirements for automatic running are
           not validated until creation of an Active Train is
-          requested. More information about automatic running of
-          Active Trains may be found in the <b><a href=
+          requested.<br>
+          More information about automatic running of Active Trains
+          may be found in the <b><a href=
           "Dispatcher.shtml#automatic">Running Trains
           Automatically</a></b> help page.</p>
         </li>

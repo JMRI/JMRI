@@ -274,15 +274,15 @@ public class ActivateTrainFrame {
             JPanel p4b = new JPanel();
             p4b.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AllocateMethodLabel")));
             p4b.setLayout(new FlowLayout());
-//            p4b.add(allocateMethodLabel);
             allocateMethodButtonGroup.add(allocateAllTheWayRadioButton);
             allocateMethodButtonGroup.add(allocateBySafeRadioButton);
             allocateMethodButtonGroup.add(allocateNumberOfBlocks);
             p4b.add(allocateAllTheWayRadioButton);
-            allocateAllTheWayRadioButton.setToolTipText(Bundle.getMessage("AllocateAllTheWayBoxHint"));
+            allocateAllTheWayRadioButton.setToolTipText(Bundle.getMessage("AllocateAllTheWayHint"));
             p4b.add(allocateBySafeRadioButton);
+            allocateBySafeRadioButton.setToolTipText(Bundle.getMessage("AllocateSafeHint"));
             p4b.add(allocateNumberOfBlocks);
-            allocateNumberOfBlocks.setToolTipText(Bundle.getMessage("AllocateMethodBoxHint"));
+            allocateNumberOfBlocks.setToolTipText(Bundle.getMessage("AllocateMethodHint"));
             allocateAllTheWayRadioButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -302,7 +302,7 @@ public class ActivateTrainFrame {
                 }
             });
             p4b.add(allocateCustomSpinner);
-            allocateCustomSpinner.setToolTipText(Bundle.getMessage("AllocateMethodBoxHint"));
+            allocateCustomSpinner.setToolTipText(Bundle.getMessage("AllocateMethodHint"));
             initiatePane.add(p4b);
             JPanel p6 = new JPanel();
             p6.setLayout(new FlowLayout());
