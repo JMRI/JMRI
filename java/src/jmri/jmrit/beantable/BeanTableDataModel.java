@@ -443,7 +443,6 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
         MouseListener popupListener = new PopupListener();
         table.addMouseListener(popupListener);
-        setColumnIdentities(table);
         this.persistTable(table);
 
     }
@@ -873,6 +872,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      */
     public void persistTable(@Nonnull JTable table) throws NullPointerException {
         InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent((manager) -> {
+            setColumnIdentities(table);
             manager.resetState(table); // throws NPE if table name is null
             manager.persist(table);
         });
