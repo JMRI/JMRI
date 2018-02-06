@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Sets up and processes items in the Dispatcher Options menu.
+ * Set up and processes items in the Dispatcher Options menu.
  *
  * @author Dave Duchamp Copyright (C) 2008
  */
@@ -361,7 +361,7 @@ public class OptionsMenu extends JMenu {
         optionsFrame.setVisible(false);
         optionsFrame.dispose(); // prevent this window from being listed in the Window menu.
         optionsFrame = null;
-        // save options reminder
+        // display save options reminder
         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                 showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveOptions"),
                         OptionsMenu.class.getName(),
@@ -371,10 +371,15 @@ public class OptionsMenu extends JMenu {
 
     private void cancelOptions(ActionEvent e) {
         optionsFrame.setVisible(false);
-        optionsFrame.dispose();  // prevent this window from being listed in the Window menu.
+        optionsFrame.dispose(); // prevent this window from being listed in the Window menu.
         optionsFrame = null;
     }
 
+    /**
+     * Save Dispatcher Option settings from pane to xml file.
+     *
+     * @param e the calling actionevent
+     */
     private void saveRequested(ActionEvent e) {
         try {
             InstanceManager.getDefault(OptionsFile.class).writeDispatcherOptions(dispatcher);
