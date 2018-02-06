@@ -2978,7 +2978,7 @@
 
    <p>To import a file, use the "Tools" menu in the upper left hand corner of the
     Tools-&gt;Operations-&gt;Cars window. Then select "Tools-&gt;Car Roster-&gt;Import from file".
-    Note that the program will only add cars that don't exist in the program's car roster. It the
+    Note that the program will only add cars that don't exist in the program's car roster. If the
     car already exists, the import will be skipped by the program.</p>
 
    <p>
@@ -3450,7 +3450,7 @@
    <p>To import a file, use the "Tools" menu in the upper left hand corner of the
     Tools-&gt;Operations-&gt;Locomotives menu. Select "Tools-&gt;Locomotive Roster-&gt;Import from
     file. Note that the program will only add locomotives that don't exist in the program's
-    locomotive roster. It the locomotive already exists, it will be skipped by the program.</p>
+    locomotive roster. If the locomotive already exists, it will be skipped by the program.</p>
 
    <p>After importing your locomotives, you must save them if you want to keep them as part of
     your roster. Press the "Save" button located at the bottom of the Locomotives window, or select
