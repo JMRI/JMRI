@@ -313,6 +313,13 @@
         "3rd" Sections, any of which might be used to travel between
         the 2nd and 4th Sections. Alternate Sections provide for
         passing tracks and staging yards.</dd>
+
+        <dt>Safe Section</dt>
+        <dd><b>Sections</b> in a <b>Transit</b> where Trains in
+        opposing directions can pass without blocking the other Train,
+        are marked as <b>Safe</b>. This is not a property of a Section
+        itself, but is to be determined during creation of a Transit.
+        Active Trains can then be allocated To Safe Sections.</dd>
       </dl>
 
       <a name="transits" id="transits"></a>
@@ -500,7 +507,7 @@
       <img src="images/ActiveTrainsTable.png" width="962" height="135">
 
       <p>Each row of the <b>Active Trains</b> table corresponds to one
-      Active Train. The columns are as folllows:</p>
+      Active Train. The columns are as follows:</p>
 
       <ul>
         <li>

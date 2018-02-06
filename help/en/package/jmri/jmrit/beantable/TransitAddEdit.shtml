@@ -75,11 +75,20 @@
           must be entered in order. Select the Section you would
           like to begin the Transit in the upper popup menu. At any
           point during Section addition, this popup menu lists only
-          those Sections that are eligible for addition.<br>
-          If applicable, check <b>Section as Safe</b> to add the next
-          Section with the Safe checkbox selected, meaning auto-assigned
-          Trains can safely wait without blocking a Transit for an
-          opposing Train. (for more on Safe see the
+          those Sections that are eligible for addition.</p>
+          <p>If applicable, check <b>Section is Safe</b> to add the next
+          Section with the Safe checkbox selected.<br>
+          Safe Sections allow auto-assigned Trains to safely halt during
+          a Transit without blocking a Transit for an opposing Train.
+          For example:<br>
+          <img src=
+          "images/TransitSafeSections.png" width="1113" height="240"><br>
+          Once Train Amtrak 139 leaves the upper block of the
+          interlocking at Manion, it reaches the next Safe Section.<br>
+          You would set up The transit for this Train as follows:<br>
+          <img src=
+          "images/TransitEditSafe.png" width="670" height="381"><br>(for
+          more on Safe see the
           <a href="../dispatcher/NewTrain.shtml#allocateOptions">Activate
           New Train</a> Help)
           <br>

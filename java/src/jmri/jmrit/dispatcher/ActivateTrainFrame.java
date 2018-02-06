@@ -429,7 +429,7 @@ public class ActivateTrainFrame {
                 }
             });
             cancelButton.setToolTipText(Bundle.getMessage("CancelButtonHint"));
-            p7.add(addNewTrainButton = new JButton(Bundle.getMessage("AddNewTrainButton")));
+            p7.add(addNewTrainButton = new JButton(Bundle.getMessage("ButtonCreate")));
             addNewTrainButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
