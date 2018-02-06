@@ -388,7 +388,8 @@
         </li>
 
         <li>
-        <b>Use Speed Profile</b> - If a locomotive has a speed profile,
+        <b>Use Speed Profile</b> - If a locomotive has a <a href=
+        "../roster/swing/speedprofile/SpeedProfileFrame.shtml">Speed Profile</a>,
         the speed will be set using the Warrant Preferences settings
         and the speed profile. So if the speed calls for "restricted",
         it looks that up in the Warrant Preferences, gets the required
@@ -468,7 +469,7 @@
           value for the maximum length of the train is important
           for deciding if a train will fit in a Section when
           stopping the train (see above). When NOT stopping by
-          speed profile, if the length of the train does not fit
+          Speed Profile, if the length of the train does not fit
           in a Block when stopping it is stopped immediately.
           Otherwise it is stopped as soon as the preceding Block goes
           UNOCCUPIED. Remember this uses <i>debounce timings</i>,
