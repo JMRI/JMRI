@@ -17,7 +17,6 @@ import org.junit.Test;
 public class ManuallySetRouteTest {
 
     @Test
-    @Ignore("needs more setup")
     public void testCTor() {
         LayoutBlock f = new LayoutBlock("test1","Facing Block");
         LayoutBlock p1 = new LayoutBlock("test2","Protecting Block 1");
