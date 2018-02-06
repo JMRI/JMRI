@@ -99,7 +99,7 @@ public class ActivateTrainFrame {
     private JRadioButton allocateAllTheWayRadioButton = new JRadioButton(Bundle.getMessage("AsFarAsPos"));
     private JRadioButton allocateNumberOfBlocks = new JRadioButton(Bundle.getMessage("NumberOfBlocks") + ":");
     private ButtonGroup allocateMethodButtonGroup = new ButtonGroup();
-    private JSpinner allocateCustomSpinner = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
+    private JSpinner allocateCustomSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 100, 1));
     private JCheckBox terminateWhenDoneBox = new JCheckBox(Bundle.getMessage("TerminateWhenDone"));
     private JSpinner prioritySpinner = new JSpinner(new SpinnerNumberModel(5, 0, 100, 1));
     private JCheckBox resetWhenDoneBox = new JCheckBox(Bundle.getMessage("ResetWhenDone"));
@@ -834,6 +834,14 @@ public class ActivateTrainFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         RosterEntry r = trainBoxList.get(trainSelectBox.getSelectedIndex());
+                        // check to see if speed profile exists and is not empty
+                        if (r.getSpeedProfile() == null || r.getSpeedProfile().getProfileSize() < 1) {
+                            // disable profile boxes etc.
+                            setSpeedProfileOptions(false);
+                        } else {
+                            // enable profile boxes
+                            setSpeedProfileOptions(true);
+                        }
                         if (transitsFromSpecificBlock) {
                             //resets the transit box if required
                             transitsFromSpecificBlock = false;
@@ -864,6 +872,19 @@ public class ActivateTrainFrame {
         if (trainBoxList.size() > 0) {
             trainSelectBox.setSelectedIndex(0);
         }
+    }
+
+    /**
+     * Sets the labels and inputs for speed profile running
+     * @param b True if the roster entry has valid speed profile else false
+     */
+    private void setSpeedProfileOptions(boolean b) {
+        useSpeedProfileLabel.setEnabled(b);
+        useSpeedProfileCheckBox.setEnabled(b);
+        stopBySpeedProfileLabel.setEnabled(b);
+        stopBySpeedProfileCheckBox.setEnabled(b);
+        stopBySpeedProfileAdjustLabel.setEnabled(b);
+        stopBySpeedProfileAdjustSpinner.setEnabled(b);
     }
 
     private boolean isTrainFree(String rName) {
@@ -1235,7 +1256,7 @@ public class ActivateTrainFrame {
     private JPanel pa2a = new JPanel();
     private JLabel useSpeedProfileLabel = new JLabel(Bundle.getMessage("UseSpeedProfileLabel"));
     private JCheckBox useSpeedProfileCheckBox = new JCheckBox( );
-    private JLabel stopBySpeedProfile = new JLabel(Bundle.getMessage("StopBySpeedProfileLabel"));
+    private JLabel stopBySpeedProfileLabel = new JLabel(Bundle.getMessage("StopBySpeedProfileLabel"));
     private JCheckBox stopBySpeedProfileCheckBox = new JCheckBox( );
     private JLabel stopBySpeedProfileAdjustLabel = new JLabel(Bundle.getMessage("StopBySpeedProfileAdjustLabel"));
     private JSpinner stopBySpeedProfileAdjustSpinner = new JSpinner();
@@ -1296,7 +1317,7 @@ public class ActivateTrainFrame {
         useSpeedProfileCheckBox.setToolTipText(Bundle.getMessage("UseSpeedProfileHint"));
         initiatePane.add(pa2);
         pa2a.setLayout(new FlowLayout());
-        pa2a.add(stopBySpeedProfile);
+        pa2a.add(stopBySpeedProfileLabel);
         pa2a.add(stopBySpeedProfileCheckBox);
         stopBySpeedProfileCheckBox.setToolTipText(Bundle.getMessage("UseSpeedProfileHint")); // reuse identical hint for Stop
         pa2a.add(stopBySpeedProfileAdjustLabel);
@@ -1385,9 +1406,16 @@ public class ActivateTrainFrame {
         info.setRunInReverse(runInReverseBox.isSelected());
         info.setSoundDecoder(soundDecoderBox.isSelected());
         info.setMaxTrainLength((float) maxTrainLengthSpinner.getValue());
-        info.setUseSpeedProfile(useSpeedProfileCheckBox.isSelected());
-        info.setStopBySpeedProfile(stopBySpeedProfileCheckBox.isSelected());
-        info.setStopBySpeedProfileAdjust((float)stopBySpeedProfileAdjustSpinner.getValue());
+        // Only use speed profile values if enabled
+        if (useSpeedProfileCheckBox.isEnabled()) {
+            info.setUseSpeedProfile(useSpeedProfileCheckBox.isSelected());
+            info.setStopBySpeedProfile(stopBySpeedProfileCheckBox.isSelected());
+            info.setStopBySpeedProfileAdjust((float) stopBySpeedProfileAdjustSpinner.getValue());
+        } else {
+            info.setUseSpeedProfile(false);
+            info.setStopBySpeedProfile(false);
+            info.setStopBySpeedProfileAdjust(100.0f);
+        }
     }
 
     private boolean readAutoRunItems() {
