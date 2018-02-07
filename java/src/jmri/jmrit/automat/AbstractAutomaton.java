@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -935,6 +936,7 @@ public class AbstractAutomaton implements Runnable {
 
     private DccThrottle throttle;
     private boolean failedThrottleRequest = false;
+    private ArrayList<ArrayList> throttleListenerList = new ArrayList<ArrayList>();
 
     /**
      * Obtains a DCC throttle, including waiting for the command station
@@ -1000,7 +1002,14 @@ public class AbstractAutomaton implements Runnable {
         if (throttle == null) {
             log.debug("canceling request for Throttle " + address);
             InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(address, throttleListener);  //kill the pending request
+        } else {
+            // keep the listener so we can release the throttle properly
+            ArrayList throttleAndListenerPair = new ArrayList();
+            throttleAndListenerPair.add(0, throttle);
+            throttleAndListenerPair.add(1, throttleListener);
+            throttleListenerList.add(throttleAndListenerPair);
         }
+
         return throttle;
     }
 
@@ -1070,12 +1079,39 @@ public class AbstractAutomaton implements Runnable {
         if (throttle == null) {
             log.debug("canceling request for Throttle " + re.getId());
             InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(re, throttleListener);  //kill the pending request
+        }else {
+            // keep the listener so we can release the throttle properly
+            ArrayList throttleAndListenerPair = new ArrayList();
+            throttleAndListenerPair.add(0, throttle);
+            throttleAndListenerPair.add(1, throttleListener);
+            throttleListenerList.add(throttleAndListenerPair);
         }
         return throttle;
     }
 
     public DccThrottle getThrottle(BasicRosterEntry re) {
         return getThrottle(re, 30);  //default to 30 seconds
+    }
+
+    /**
+     * Release a throttle previously obtained using getThrottle()
+     *
+     * @param t - the throttle to release
+     */
+    public void releaseThrottle(DccThrottle t) {
+        log.debug("releasing throttle {}", t);
+        // find the listener
+        ThrottleListener tl = null;
+        for(ArrayList l : throttleListenerList) {
+            if (l.get(0) == t) {
+                tl = (ThrottleListener)l.get(1);
+                break;
+            }
+        }
+        if (tl == null) {
+            log.warn("unable to find throttle listener for throttle {}", t);
+        }
+        t.release(tl);
     }
 
     /**
