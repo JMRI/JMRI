@@ -162,12 +162,12 @@ public class XTableColumnModel extends DefaultTableColumnModel {
 
     /**
      * Moves the column from <code>oldIndex</code> to <code>newIndex</code>.
-     * Posts  <code>columnMoved</code> event. Will not move any columns if
+     * Posts <code>columnMoved</code> event. Will not move any columns if
      * <code>oldIndex</code> equals <code>newIndex</code>.
      *
-     * @param	oldIndex	index of column to be moved
-     * @param	newIndex	new index of the column
-     * @exception IllegalArgumentException	if either <code>oldIndex</code> or
+     * @param oldIndex index of column to be moved
+     * @param newIndex new index of the column
+     * @exception IllegalArgumentException if either <code>oldIndex</code> or
      *                                     <code>newIndex</code> are not in [0,
      *                                     getColumnCount() - 1]
      */
@@ -196,8 +196,8 @@ public class XTableColumnModel extends DefaultTableColumnModel {
      * Returns the total number of columns in this model.
      *
      * @param onlyVisible if set only visible columns will be counted
-     * @return	the number of columns in the <code>tableColumns</code> array
-     * @see	#getColumns
+     * @return the number of columns in the <code>tableColumns</code> array
+     * @see #getColumns
      */
     public int getColumnCount(boolean onlyVisible) {
         return getColumnList(onlyVisible).size();
@@ -219,17 +219,17 @@ public class XTableColumnModel extends DefaultTableColumnModel {
      * <code>identifier</code>. Position is the the index in all visible columns
      * if <code>onlyVisible</code> is true or else the index in all columns.
      *
-     * @param	identifier  the identifier object to search for
-     * @param	onlyVisible if set searches only visible columns
+     * @param identifier  the identifier object to search for
+     * @param onlyVisible if set searches only visible columns
      *
-     * @return	the index of the first column whose identifier equals
+     * @return the index of the first column whose identifier equals
      *         <code>identifier</code>
      *
      * @exception IllegalArgumentException if <code>identifier</code> is
      *                                     <code>null</code>, or if no
      *                                     <code>TableColumn</code> has this
      *                                     <code>identifier</code>
-     * @see	#getColumn
+     * @see #getColumn
      */
     public int getColumnIndex(Object identifier, boolean onlyVisible) {
         if (identifier == null) {
@@ -255,12 +255,12 @@ public class XTableColumnModel extends DefaultTableColumnModel {
      * Returns the <code>TableColumn</code> object for the column at
      * <code>columnIndex</code>.
      *
-     * @param	columnIndex	the index of the column desired
-     * @param	onlyVisible	if set columnIndex is meant to be relative to all
+     * @param columnIndex the index of the column desired
+     * @param onlyVisible if set columnIndex is meant to be relative to all
      *                    visible columns only else it is the index in all
      *                    columns
      *
-     * @return	the <code>TableColumn</code> object for the column at
+     * @return the <code>TableColumn</code> object for the column at
      *         <code>columnIndex</code>
      */
     public TableColumn getColumn(int columnIndex, boolean onlyVisible) {
