@@ -405,7 +405,7 @@
 
         <li>
         <p><b>Adjust</b> Set the percentage of the final Block length to be
-        used for stopping when stopping by speed profiles is set. Small
+        used for stopping when stopping By Speed Profiles is set. Small
         values in small Blocks tend to cause the loco to just stop.</p>
         </li>
 

@@ -30,9 +30,12 @@
 
       <p>The Speed Profiling tool is designed to create a profile
       of a loco at various speed steps to help with the automatic
-      running of a loco within JMRI. Primary goal is to help with
-      the principle of getting a loco to stop within a specific
-      distance from a known Throttle setting.</p>
+      running of a loco within JMRI using either
+      <a href="../../../dispatcher/NewTrain.shtml">DispatcherPro</a>
+      or <a href="../../../logix/SpeedChanges.shtml">Warrants</a>.<br>
+      Primary goal is to help getting a loco to
+      stop within a specific distance using a known Throttle setting.
+      </p>
 
       <p>The tool is accessed through the Roster -&gt; Speed Profiling
       menu item.<br>
@@ -41,13 +44,19 @@
       reverse direction. Currently it requires three sensors which
       monitor the occupancy of a section of track. Ideally the
       section of track that the timed runs are performed over
-      should be straight, and a minimum of 1mtr long, the longer
+      should be straight, and a minimum of 1 Meter long; the longer
       the length the better the result. For this profiling to work
-      correctly acceleration/deacceleration should be disabled on
-      the loco decoder.</p><b>Requirements</b>
+      correctly acceleration/deacceleration should be disabled in
+      the loco decoder.</p>
+
+      <a href="SpeedProfilingPane.png"><img
+      src="SpeedProfilingPane.png" align="right" width="410"
+      height="266" alt="Speed Profiling pane in in JMRI 4.12"></a>
+
+      <h3>Settings</h3>
 
       <ul>
-        <li><b>Block Length</b> - This is the length in Millimetres
+        <li><b>Block Length</b> - This is the length in Millimeters
         of the middle section which the timed run will be
         measured.</li>
 
@@ -73,7 +82,7 @@
       </ul>
 
       <p>To profile the loco, fill the above details into the
-      window, place the loco in the starting section facing
+      pane, place the loco in the starting section facing
       forwards towards (but not on) the section of track that the
       timed run will be taken over, then press profile.</p>
 
