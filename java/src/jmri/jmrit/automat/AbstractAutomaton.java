@@ -936,7 +936,7 @@ public class AbstractAutomaton implements Runnable {
 
     private DccThrottle throttle;
     private boolean failedThrottleRequest = false;
-    private ArrayList<ArrayList> throttleListenerList = new ArrayList<ArrayList>();
+    private ArrayList<ThrottleMemo> throttleListenerList = new ArrayList<ThrottleMemo>();
 
     /**
      * Obtains a DCC throttle, including waiting for the command station
@@ -1004,10 +1004,10 @@ public class AbstractAutomaton implements Runnable {
             InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(address, throttleListener);  //kill the pending request
         } else {
             // keep the listener so we can release the throttle properly
-            ArrayList throttleAndListenerPair = new ArrayList();
-            throttleAndListenerPair.add(0, throttle);
-            throttleAndListenerPair.add(1, throttleListener);
-            throttleListenerList.add(throttleAndListenerPair);
+            ThrottleMemo tm = new ThrottleMemo();
+            tm.throttle = throttle;
+            tm.listener = throttleListener;
+            throttleListenerList.add(tm);
         }
 
         return throttle;
@@ -1081,10 +1081,10 @@ public class AbstractAutomaton implements Runnable {
             InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(re, throttleListener);  //kill the pending request
         }else {
             // keep the listener so we can release the throttle properly
-            ArrayList throttleAndListenerPair = new ArrayList();
-            throttleAndListenerPair.add(0, throttle);
-            throttleAndListenerPair.add(1, throttleListener);
-            throttleListenerList.add(throttleAndListenerPair);
+            ThrottleMemo tm = new ThrottleMemo();
+            tm.throttle = throttle;
+            tm.listener = throttleListener;
+            throttleListenerList.add(tm);
         }
         return throttle;
     }
@@ -1102,9 +1102,9 @@ public class AbstractAutomaton implements Runnable {
         log.debug("releasing throttle {}", t);
         // find the listener
         ThrottleListener tl = null;
-        for(ArrayList l : throttleListenerList) {
-            if (l.get(0) == t) {
-                tl = (ThrottleListener)l.get(1);
+        for(ThrottleMemo tm : throttleListenerList) {
+            if (tm.throttle == t) {
+                tl = tm.listener;
                 break;
             }
         }
@@ -1349,4 +1349,11 @@ public class AbstractAutomaton implements Runnable {
     }
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(AbstractAutomaton.class);
+
+    // internal class to match throttles with listeners so we can find
+    // the right listener to release a throttle
+    class ThrottleMemo {
+        DccThrottle throttle;
+        ThrottleListener listener;
+    }
 }
