@@ -50,7 +50,11 @@ public class OlcbConfigurationManagerScaffold extends jmri.jmrix.openlcb.OlcbCon
         // do the connections
         tc = adapterMemo.getTrafficController();
 
-        olcbCanInterface = createOlcbCanInterface(nodeID, tc);
+        olcbCanInterface = new CanInterface(nodeID, frame -> tc.sendCanMessage(convertToCan(frame),null)){
+            @Override
+            public void initialize(){
+            }
+        };
 
         // create JMRI objects
         InstanceManager.setSensorManager(
@@ -68,9 +72,6 @@ public class OlcbConfigurationManagerScaffold extends jmri.jmrix.openlcb.OlcbCon
         if (getProgrammerManager().isGlobalProgrammerAvailable()) {
             jmri.InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
-
-        // start alias acquisition
-        // new StartUpHandler().start();
 
         OlcbInterface iface = getInterface();
         loaderClient = new LoaderClient(iface.getOutputConnection(),
