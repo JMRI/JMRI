@@ -200,7 +200,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
 
         // need to check to see if the slot is in a suitable state for creating a throttle.
         if (s.slotStatus() == LnConstants.LOCO_IN_USE) {
-            // loco is already in-use or is consist-mid or consist-sub
+            // loco is already in-use
             log.warn("slot {} address {} is already in-use.",
                     s.getSlot(), s.locoAddr());
             // is the throttle ID the same as for this JMRI instance?  If not, do not accept the slot.
