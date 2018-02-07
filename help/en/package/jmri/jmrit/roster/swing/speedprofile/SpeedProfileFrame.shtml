@@ -42,15 +42,15 @@
       It works on the principle of timing a loco over a
       known distance at a given speed step, in both the forward and
       reverse direction. Currently it requires three sensors which
-      monitor the occupancy of a section of track. Ideally the
+      monitor the occupancy around a section of track. Ideally the
       section of track that the timed runs are performed over
       should be straight, and a minimum of 1 Meter long; the longer
       the length the better the result. For this profiling to work
-      correctly acceleration/deacceleration should be disabled in
+      correctly, acceleration/deacceleration should be disabled in
       the loco decoder.</p>
 
-      <a href="SpeedProfilingPane.png"><img
-      src="SpeedProfilingPane.png" align="right" width="410"
+      <a href="images/SpeedProfilingPane.png"><img
+      src="images/SpeedProfilingPane.png" align="right" width="410"
       height="266" alt="Speed Profiling pane in in JMRI 4.12"></a>
 
       <h3>Settings</h3>
@@ -84,7 +84,10 @@
       <p>To profile the loco, fill the above details into the
       pane, place the loco in the starting section facing
       forwards towards (but not on) the section of track that the
-      timed run will be taken over, then press profile.</p>
+      timed run will be taken over, then press [Start].</p>
+
+      <img src="images/SpeedProfilingTerms.png" width="354"
+      height="90" alt="Speed Profiling Set-up">
 
       <p>What happens is that the tool will set the loco off
       running in the forward direction at speed step 1, when it
