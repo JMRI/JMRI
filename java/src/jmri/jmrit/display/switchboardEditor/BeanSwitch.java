@@ -593,7 +593,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                         }
                         break;
                     default:
-                    // invert not supported by Lights, so skip
+                    // invert is not supported by Lights, so skip
                 }
             } else {
                 // show option to attach a new bean

@@ -1,6 +1,5 @@
 package jmri.jmrit.display.switchboardEditor;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -10,18 +9,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -39,24 +31,16 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Light;
 import jmri.Manager;
 import jmri.NamedBean;
-import jmri.NamedBeanHandle;
-import jmri.Sensor;
-import jmri.Turnout;
-import jmri.jmrit.beantable.AddNewDevicePanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
@@ -224,7 +208,7 @@ public class SwitchboardEditor extends Editor {
         JLabel beanTypeTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanTypeLabel")));
         beanSetupPane.add(beanTypeTitle);
         beanTypeList = new JComboBox<>(beanTypeStrings);
-        beanTypeList.setSelectedIndex(0); // select Turnout in comboBox
+        beanTypeList.setSelectedIndex(0); // select bean type in comboBox
         beanTypeList.setActionCommand(LAYER_COMMAND);
         beanTypeList.addActionListener(this);
         beanSetupPane.add(beanTypeList);
@@ -710,6 +694,7 @@ public class SwitchboardEditor extends Editor {
     }
 
     // *********************** end Menus ************************
+
     @Override
     public void setAllEditable(boolean edit) {
         if (edit) {
@@ -1242,7 +1227,7 @@ public class SwitchboardEditor extends Editor {
     /**
      * Set up item(s) to be copied by paste.
      * <p>
-     * Not used on switchboards but has to override Editor
+     * Not used on switchboards but has to override Editor.
      */
     @Override
     protected void copyItem(Positionable p) {
@@ -1251,7 +1236,7 @@ public class SwitchboardEditor extends Editor {
     /**
      * Set an object's location when it is created.
      * <p>
-     * Not used on switchboards but has to override Editor
+     * Not used on switchboards but has to override Editor.
      *
      * @param obj object to position
      */
@@ -1266,7 +1251,7 @@ public class SwitchboardEditor extends Editor {
      * Popup items common to all positionable objects are done before and after
      * the items that pertain only to specific Positionable types.
      * <p>
-     * Not used on switchboards but has to override Editor
+     * Not used on switchboards but has to override Editor.
      *
      * @param p     the item on the Panel
      * @param event MouseEvent heard
@@ -1281,4 +1266,5 @@ public class SwitchboardEditor extends Editor {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SwitchboardEditor.class);
+
 }
