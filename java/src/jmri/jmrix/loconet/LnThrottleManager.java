@@ -201,10 +201,10 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         // need to check to see if the slot is in a suitable state for creating a throttle.
         if (s.slotStatus() == LnConstants.LOCO_IN_USE) {
             // loco is already in-use or is consist-mid or consist-sub
-            log.warn("slot {} address {} is  already in-use.",
+            log.warn("slot {} address {} is already in-use.",
                     s.getSlot(), s.locoAddr());
             // is the throttle ID the same as for this JMRI instance?  If not, do not accept the slot.
-            if (s.id() != throttleID) {
+            if ((s.id() != 0) && s.id() != throttleID) {
                 // notify the LnThrottleManager about failure of acquisition.
                 // NEED TO TRIGGER THE NEW "STEAL REQUIRED" FUNCITONALITY HERE
                 //note: throttle listener expects to have "callback" method notifyStealThrottleRequired
@@ -235,6 +235,9 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         }
         else {
             log.debug("LnThrottleManager.notifyChangedSlot() - ignoring slot notification for slot {}, address {} account not attempting to acquire that address", s.getSlot(), s.locoAddr() );
+        }
+        if (slotForAddress.containsKey(s.locoAddr())) {
+            slotForAddress.remove(s.locoAddr());
         }
         requestOutstanding = false;
         processQueuedThrottleSetupRequest();
@@ -275,6 +278,9 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             }
             Thread thr = new Thread(new InformRejection( address, cause));
             thr.start();
+        }
+        if (slotForAddress.containsKey(address)) {
+            slotForAddress.remove(address);
         }
         requestOutstanding = false;
         processQueuedThrottleSetupRequest();
@@ -429,6 +435,9 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             waitingForNotification.get(address.getNumber()).interrupt();
             waitingForNotification.remove(address.getNumber());
         }
+        if (slotForAddress.containsKey(address.getNumber())) {
+            slotForAddress.remove(address.getNumber());
+        }
     }
 
     /**
@@ -447,6 +456,9 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         if (waitingForNotification.containsKey(address)) {
             waitingForNotification.get(address).interrupt();
             waitingForNotification.remove(address);
+        }
+        if (slotForAddress.containsKey(address)) {
+            slotForAddress.remove(address);
         }
     }
 
@@ -520,17 +532,17 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      */
     @Override
     public void stealThrottleRequest(LocoAddress address, ThrottleListener l, boolean steal){
-       log.debug("stealThrottleRequest() invoked for address {}, with steal boolean = {}",address.getNumber(),steal);
-       if (steal == false) {
-           if (address instanceof DccLocoAddress) {
+        log.debug("stealThrottleRequest() invoked for address {}, with steal boolean = {}",address.getNumber(),steal);
+        if (steal == false) {
+            if (address instanceof DccLocoAddress) {
                 failedThrottleRequest((DccLocoAddress) address, "User chose not to 'steal' the throttle.");
-           } else {
-               log.error("cannot cast address to DccLocoAddress.");
-           }
-       } else {
+            } else {
+                log.error("cannot cast address to DccLocoAddress.");
+            }
+        } else {
            log.warn("user agreed to steal address {}, but no code is in-place to handle the 'steal' (yet)",address.getNumber());
-        commitToAcquireThrottle(slotForAddress.get(address.getNumber()));
-       }
+            commitToAcquireThrottle(slotForAddress.get(address.getNumber()));
+        }
     }
 
     /*
