@@ -901,7 +901,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * {@link jmri.util.swing.XTableColumnModel}, the index includes hidden
      * columns.
      *
-     * @param table
+     * @param table the table to set identities for
      */
     protected void setColumnIdentities(JTable table) {
         Objects.requireNonNull(table.getModel(), "Table must have data model");
