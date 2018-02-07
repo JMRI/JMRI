@@ -256,11 +256,13 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                         }
                     }
                     if (traininfo.getAttribute("usespeedprofile") != null) {
+                        tInfo.setUseSpeedProfile(false);
                         if (traininfo.getAttribute("usespeedprofile").getValue().equals("yes")) {
                             tInfo.setUseSpeedProfile(true);
                         }
                     }
                     if (traininfo.getAttribute("stopbyspeedprofile") != null) {
+                        tInfo.setStopBySpeedProfile(false);
                         if (traininfo.getAttribute("stopbyspeedprofile").getValue().equals("yes")) {
                             tInfo.setStopBySpeedProfile(true);
                         }
