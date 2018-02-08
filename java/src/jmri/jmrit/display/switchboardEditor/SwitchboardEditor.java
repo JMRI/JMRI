@@ -72,7 +72,7 @@ import org.slf4j.LoggerFactory;
  * unconnected switch.
  *
  * @author Pete Cressman Copyright (c) 2009, 2010, 2011
- * @author Egbert Broerse Copyright (c) 2017
+ * @author Egbert Broerse Copyright (c) 2017, 2018
  *
  */
 public class SwitchboardEditor extends Editor {
@@ -92,10 +92,11 @@ public class SwitchboardEditor extends Editor {
     ImageIcon iconNext = new ImageIcon("resources/icons/misc/gui3/LafRightArrow_m.gif");
     private final JLabel next = new JLabel(iconNext);
     private int rangeMin = 1;
-    private int rangeMax = 32;
+    private int rangeMax = 24;
     private int _range = rangeMax - rangeMin;
-    JSpinner minSpinner = new JSpinner(new SpinnerNumberModel(rangeMin, rangeMin, rangeMax, 1));
-    JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(rangeMax, rangeMin, rangeMax, 1));
+    private JSpinner minSpinner = new JSpinner(new SpinnerNumberModel(rangeMin, rangeMin, rangeMax, 1));
+    private JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(rangeMax, rangeMin, rangeMax, 1));
+    private JCheckBox hideUnconnected = new JCheckBox(Bundle.getMessage("CheckBoxHideUnconnected"));
     private TargetPane switchboardLayeredPane; // JLayeredPane
     static final String TURNOUT = Bundle.getMessage("BeanNameTurnout");
     static final String SENSOR = Bundle.getMessage("BeanNameSensor");
@@ -113,16 +114,20 @@ public class SwitchboardEditor extends Editor {
     private JComboBox<String> switchShapeList;
     private final List<String> beanManuPrefixes = new ArrayList<>();
     private JComboBox<String> beanManuNames;
+    private TitledBorder border;
+    private String interact = Bundle.getMessage("SwitchboardInteractHint");
+    private String noInteract = Bundle.getMessage("SwitchboardNoInteractHint");
 
-    // toolbar (from LE)
+    // editor items (adapted from LayoutEditor toolbar)
     private JPanel editToolBarPanel = null;
     private JScrollPane editToolBarScroll = null;
-    private JPanel editToolBarContainer = null;
+    private JPanel editorContainer = null;
     private Color defaultTextColor = Color.BLACK;
     private boolean _hideUnconnected = false;
-    //saved state of options when panel was loaded or created
-    private boolean savedEditMode = true; // TODO store/load accordingly
-    private boolean savedControlLayout = true; // TODO add menu option to turn this off
+    private JTextArea help2 = new JTextArea(Bundle.getMessage("Help2"));
+    // saved state of options when panel was loaded or created
+    private transient boolean savedEditMode = true;
+    private transient boolean savedControlLayout = true; // menu option to turn this off
     private int height = 100;
     private final int width = 100;
 
@@ -134,7 +139,7 @@ public class SwitchboardEditor extends Editor {
     private final JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
     private final JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
 
-    //Action commands
+    // Action commands
     private static String LAYER_COMMAND = "layer";
     private static String MANU_COMMAND = "manufacturer";
     private static String SWITCHTYPE_COMMAND = "switchshape";
@@ -169,17 +174,17 @@ public class SwitchboardEditor extends Editor {
     /**
      * Initialize the newly created SwitchBoard.
      *
-     * @param name name of the switchboard frame
+     * @param name the title of the switchboard content frame
      */
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
     @Override
     protected void init(String name) {
-        //setVisible(false);
         Container contentPane = getContentPane(); // Editor
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        setVisible(false); // start with Editor window hidden
 
         // make menus
-        setGlobalSetsLocalFlag(false);
-        setUseGlobalFlag(false);
+        setUseGlobalFlag(true); // allways true for a SwitchBoard
         _menuBar = new JMenuBar();
         makeOptionMenu();
         //makeEditMenu();
@@ -188,21 +193,21 @@ public class SwitchboardEditor extends Editor {
         setJMenuBar(_menuBar);
         addHelpMenu("package.jmri.jmrit.display.SwitchboardEditor", true);
 
-        //super.setTargetPanel(null, makeFrame(name)); // original CPE version
-        switchboardLayeredPane = new TargetPane(); //extends JLayeredPane();
+        switchboardLayeredPane = new TargetPane(); // extends JLayeredPane();
         switchboardLayeredPane.setPreferredSize(new Dimension(300, 310));
-        switchboardLayeredPane.setBorder(BorderFactory.createTitledBorder(
+        border = BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(defaultTextColor),
-                Bundle.getMessage("SwitchboardBanner"),
+                "temp",
                 TitledBorder.LEADING,
                 TitledBorder.ABOVE_BOTTOM,
                 getFont(),
-                defaultTextColor));
+                defaultTextColor);
+        switchboardLayeredPane.setBorder(border);
         // create contrast with background, should also specify border style
         // specify title for turnout, sensor, light, mixed? (wait for the Editor to be created)
         switchboardLayeredPane.addMouseMotionListener(this);
 
-        //Add control pane and layered pane to this JPanel
+        // add control pane and layered pane to this JPanel
         JPanel beanSetupPane = new JPanel();
         beanSetupPane.setLayout(new FlowLayout(FlowLayout.TRAILING));
         JLabel beanTypeTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanTypeLabel")));
@@ -213,7 +218,7 @@ public class SwitchboardEditor extends Editor {
         beanTypeList.addActionListener(this);
         beanSetupPane.add(beanTypeList);
 
-        //Add connection selection comboBox
+        // add connection selection comboBox
         beanTypeChar = getSwitchType().charAt(0); // translate from selectedIndex to char
         log.debug("beanTypeChar set to [{}]", beanTypeChar);
         JLabel beanManuTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ConnectionLabel")));
@@ -221,7 +226,7 @@ public class SwitchboardEditor extends Editor {
         beanManuNames = new JComboBox<>();
         if (getManager(beanTypeChar) instanceof jmri.managers.AbstractProxyManager) { // from abstractTableTabAction
             jmri.managers.AbstractProxyManager proxy = (jmri.managers.AbstractProxyManager) getManager(beanTypeChar);
-            List<jmri.Manager> managerList = proxy.getManagerList();
+            List<jmri.Manager<?>> managerList = proxy.getManagerList(); // picks up all managers to fetch
             for (int x = 0; x < managerList.size(); x++) {
                 String manuPrefix = managerList.get(x).getSystemPrefix();
                 log.debug("Prefix = [{}]", manuPrefix);
@@ -258,18 +263,20 @@ public class SwitchboardEditor extends Editor {
         switchShapePane.add(columns);
         add(switchShapePane);
 
-        JCheckBox hideUnconnected = new JCheckBox(Bundle.getMessage("CheckBoxHideUnconnected"));
+        // checkbox on panel
         hideUnconnected.setSelected(hideUnconnected());
+        log.debug("hideUnconectedBox set to {}", hideUnconnected.isSelected());
         hideUnconnected.addActionListener((ActionEvent event) -> {
             setHideUnconnected(hideUnconnected.isSelected());
+            hideUnconnectedBox.setSelected(hideUnconnected()); // also (un)check the box on the menu
+            help2.setVisible(!hideUnconnected()); // and show/hide instruction line
         });
         add(hideUnconnected);
 
-        // Next, add the buttons to the layered pane.
-        switchboardLayeredPane.setLayout(new GridLayout(java.lang.Math.max(2, _range % ((Integer) columns.getValue())), (Integer) columns.getValue()));
-        // vertical (at least 2 rows), horizontal
+        switchboardLayeredPane.setLayout(new GridLayout(3, 8)); // initial layout params
         // TODO do some calculation from JPanel size, icon size and determine optimal cols/rows
-        addSwitchRange((Integer) minSpinner.getValue(), (Integer) maxSpinner.getValue(),
+        // Add at least 1 switch to pane to create switchList:
+        addSwitchRange(1, 24,
                 beanTypeList.getSelectedIndex(),
                 beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
                 switchShapeList.getSelectedIndex());
@@ -277,7 +284,7 @@ public class SwitchboardEditor extends Editor {
         // provide a JLayeredPane to place the switches on
         super.setTargetPanel(switchboardLayeredPane, makeFrame(name));
         super.getTargetFrame().setSize(550, 330); // width x height
-        // To do: Add component listener to handle frame resizing event
+        // TODO: Add component listener to handle frame resizing event
 
         // set scrollbar initial state
         setScroll(SCROLL_NONE);
@@ -302,10 +309,9 @@ public class SwitchboardEditor extends Editor {
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
         contentPane.add(updatePanel);
 
-        setupToolBar(); //re-layout all the toolbar items
-        updatePressed(); // refresh default Switchboard
+        setupEditorPane(); // re-layout all the toolbar items
+        updatePressed();   // refresh default Switchboard, updates all buttons
         pack();
-        setVisible(true);
 
         // TODO choose your own icons
 //        class makeCatalog extends SwingWorker<CatalogPanel, Object> {
@@ -323,9 +329,17 @@ public class SwitchboardEditor extends Editor {
      * Create a new set of switches after removing the current array.
      * <p>
      * Called by Update button click and automatically after loading a panel
-     * from XML.
+     * from XML (with all saved options set).
      */
     public void updatePressed() {
+        log.debug("update _hideUnconnected = {}", _hideUnconnected);
+        if (_hideUnconnected && !hideUnconnected.isSelected()){
+            hideUnconnected.setSelected(true);
+        }
+        log.debug("update _editable = {}", _editable);
+        setVisible(_editable); // show/hide editor
+        log.debug("update _controlLayout = {}", allControlling());
+
         for (int i = switchlist.size() - 1; i >= 0; i--) {
             // deleting items starting from 0 will result in skipping the even numbered items
             switchboardLayeredPane.remove(i);
@@ -333,6 +347,7 @@ public class SwitchboardEditor extends Editor {
         switchlist.clear(); // reset list
         log.debug("switchlist cleared, size is now: {}", switchlist.size());
         switchboardLayeredPane.setSize(300, 300);
+
         // update selected address range
         _range = (Integer) minSpinner.getValue() - (Integer) maxSpinner.getValue();
         switchboardLayeredPane.setLayout(new GridLayout(_range % ((Integer) columns.getValue()),
@@ -342,14 +357,12 @@ public class SwitchboardEditor extends Editor {
                 beanTypeList.getSelectedIndex(),
                 beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
                 switchShapeList.getSelectedIndex());
-        //log.debug("bgcolor: {}", getBackgroundColor().toString() );
-        switchboardLayeredPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(defaultTextColor),
-                beanManuNames.getSelectedItem().toString() + " " + beanTypeList.getSelectedItem().toString() + " - " + Bundle.getMessage("SwitchboardBanner"),
-                TitledBorder.LEADING,
-                TitledBorder.ABOVE_BOTTOM,
-                getFont(), defaultTextColor));
+        // update the title on the switchboard to match (no) layout control
+        border.setTitle(beanManuNames.getSelectedItem().toString() + " "
+                + beanTypeList.getSelectedItem().toString() + " - "
+                + (allControlling() ? interact : noInteract));
         pack();
-        repaint();
+        switchboardLayeredPane.repaint();
     }
 
     /**
@@ -370,15 +383,15 @@ public class SwitchboardEditor extends Editor {
      *                    showing the name or (to do) a graphic image
      */
     private void addSwitchRange(int rangeMin, int rangeMax, int beanType, String manuPrefix, int switchShape) {
-        log.debug("hideUnconnected = {}", hideUnconnected());
+        log.debug("_hideUnconnected = {}", hideUnconnected());
         String name;
         BeanSwitch _switch;
         NamedBean nb;
         String _manu = manuPrefix; // cannot use All group as in Tables
         String _insert = "";
         if (_manu.startsWith("M")) {
-            _insert = "+";
-        } // create CANbus.MERG On event
+            _insert = "+"; // for CANbus.MERG On event
+        }
         for (int i = rangeMin; i <= rangeMax; i++) {
             switch (beanType) {
                 case 0:
@@ -397,22 +410,19 @@ public class SwitchboardEditor extends Editor {
                     log.error("addSwitchRange: cannot parse bean name. manuPrefix = {}; i = {}", manuPrefix, i);
                     return;
             }
+            if (nb == null && hideUnconnected()) {
+                continue; // skip i
+            }
             _switch = new BeanSwitch(i, nb, name, switchShape, this); // add button instance i
-            log.debug("Added switch {} ({})", i, name);
             if (nb == null) {
                 _switch.setEnabled(false); // not connected
-                if (!hideUnconnected()) {
-                    switchboardLayeredPane.add(_switch); // or setVisible(false)
-                    switchlist.add(name); // add to total number of switches on JLayeredPane
-                } else {
-                    // do nothing
-                }
             } else {
                 // set switch to display current bean state
                 _switch.displayState(nb.getState());
-                switchboardLayeredPane.add(_switch);
-                switchlist.add(name); // add to total number of switches on JLayeredPane
             }
+            switchboardLayeredPane.add(_switch);
+            switchlist.add(name); // add to total number of switches on JLayeredPane
+            log.debug("Added switch {}", name);
         }
     }
 
@@ -470,14 +480,14 @@ public class SwitchboardEditor extends Editor {
         return controls;
     }
 
-    private void setupToolBar() {
-        //Initial setup for both horizontal and vertical
+    private void setupEditorPane() {
+        // Initial setup for both horizontal and vertical
         Container contentPane = getContentPane();
 
         //remove these (if present) so we can add them back (without duplicates)
-        if (editToolBarContainer != null) {
-            editToolBarContainer.setVisible(false);
-            contentPane.remove(editToolBarContainer);
+        if (editorContainer != null) {
+            editorContainer.setVisible(false);
+            contentPane.remove(editorContainer);
         }
 
 //        if (helpBarPanel != null) {
@@ -491,20 +501,21 @@ public class SwitchboardEditor extends Editor {
         TitledBorder TitleBorder = BorderFactory.createTitledBorder(Bundle.getMessage("SwitchboardHelpTitle"));
         innerBorderPanel.setBorder(TitleBorder);
         innerBorderPanel.add(new JTextArea(Bundle.getMessage("Help1")));
+        // help2 explains: dimmed icons = unconnected
+        innerBorderPanel.add(help2);
         if (!hideUnconnected()) {
-            innerBorderPanel.add(new JTextArea(Bundle.getMessage("Help2")));
-            // TODO hide this panel when hideUnconnected() is set to false from menu or checkbox
+            help2.setVisible(false); // hide this panel when hideUnconnected() is set to false from menu or checkbox
         }
         contentPane.add(innerBorderPanel);
         //Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
 
         editToolBarScroll = new JScrollPane(editToolBarPanel);
         height = 60; //editToolBarScroll.getPreferredSize().height;
-        editToolBarContainer = new JPanel();
-        editToolBarContainer.setLayout(new BoxLayout(editToolBarContainer, BoxLayout.PAGE_AXIS));
-        editToolBarContainer.add(editToolBarScroll);
-        editToolBarContainer.setMinimumSize(new Dimension(width, height));
-        editToolBarContainer.setPreferredSize(new Dimension(width, height));
+        editorContainer = new JPanel();
+        editorContainer.setLayout(new BoxLayout(editorContainer, BoxLayout.PAGE_AXIS));
+        editorContainer.add(editToolBarScroll);
+        editorContainer.setMinimumSize(new Dimension(width, height));
+        editorContainer.setPreferredSize(new Dimension(width, height));
 
 //        helpBarPanel = new JPanel();
 //        helpBarPanel.add(helpBar);
@@ -530,12 +541,20 @@ public class SwitchboardEditor extends Editor {
         _optionMenu.add(controllingBox);
         controllingBox.addActionListener((ActionEvent event) -> {
             setAllControlling(controllingBox.isSelected());
+            // update the title on the switchboard to match (no) layout control
+            border.setTitle(beanManuNames.getSelectedItem().toString() + " "
+                    + beanTypeList.getSelectedItem().toString() + " - "
+                    + (allControlling() ? interact : noInteract));
+            switchboardLayeredPane.repaint();
+            log.debug("border title updated");
         });
         controllingBox.setSelected(allControlling());
         // hideUnconnected item
         _optionMenu.add(hideUnconnectedBox);
         hideUnconnectedBox.addActionListener((ActionEvent event) -> {
             setHideUnconnected(hideUnconnectedBox.isSelected());
+            hideUnconnected.setSelected(hideUnconnected()); // also (un)check the box on the editor
+            help2.setVisible(!hideUnconnected()); // and show/hide instruction line
         });
         hideUnconnectedBox.setSelected(hideUnconnected());
         // show tooltip item
@@ -569,7 +588,7 @@ public class SwitchboardEditor extends Editor {
         scrollVertical.addActionListener((ActionEvent event) -> {
             setScroll(SCROLL_VERTICAL);
         });
-        //add background color menu item
+        // add background color menu item
         JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor", "..."));
         _optionMenu.add(backgroundColorMenuItem);
 
@@ -592,13 +611,11 @@ public class SwitchboardEditor extends Editor {
                defaultBackgroundColor = desiredColor;
                setBackgroundColor(desiredColor);
                setDirty(true);
-               repaint();
+               switchboardLayeredPane.repaint();
            }
         });
 
-
-        //add text color menu item
-
+        // add text color menu item
         JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor", "..."));
         _optionMenu.add(textColorMenuItem);
 
@@ -620,7 +637,7 @@ public class SwitchboardEditor extends Editor {
                }
                defaultTextColor = desiredColor;
                setDirty(true);
-               repaint();
+               switchboardLayeredPane.repaint();
             }
         });
 
@@ -697,6 +714,7 @@ public class SwitchboardEditor extends Editor {
 
     @Override
     public void setAllEditable(boolean edit) {
+        log.debug("_editable set to {}", edit);
         if (edit) {
             if (_editorMenu != null) {
                 _menuBar.remove(_editorMenu);
@@ -711,6 +729,7 @@ public class SwitchboardEditor extends Editor {
             } else {
                 _menuBar.add(_fileMenu, 0);
             }
+            log.debug("added File and Options menubar");
             //contentPane.SetUpdateButtonEnabled(false);
         } else {
             if (_fileMenu != null) {
@@ -725,6 +744,7 @@ public class SwitchboardEditor extends Editor {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         setAllEditable(true);
+                        log.debug("SwitchBoard Editor Open Editor menu called");
                     }
                 });
             }
@@ -732,7 +752,7 @@ public class SwitchboardEditor extends Editor {
             //contentPane.SetUpdateButtonEnabled(true);
         }
         super.setAllEditable(edit);
-        setTitle();
+        super.setTitle();
         _menuBar.revalidate();
     }
 
@@ -749,11 +769,8 @@ public class SwitchboardEditor extends Editor {
         if (name == null || name.length() == 0) {
             name = Bundle.getMessage("SwitchboardDefaultName", "");
         }
-        if (isEditable()) {
-            super.setTitle(name + " " + Bundle.getMessage("LabelEditor"));
-        } else {
-            super.setTitle(name);
-        }
+        super.setTitle(name + " " + Bundle.getMessage("LabelEditor"));
+        super.getTargetFrame().setTitle(name);
     }
 
     /**
@@ -764,6 +781,7 @@ public class SwitchboardEditor extends Editor {
      */
     public void setHideUnconnected(boolean state) {
         _hideUnconnected = state;
+        // TODO update checkbox and menu
         //if (!state) {
         // TODO hide Help2
         //}
@@ -780,7 +798,6 @@ public class SwitchboardEditor extends Editor {
         setDirty(false);
         savedEditMode = isEditable();
         savedControlLayout = allControlling();
-        //savedShowHelpBar = showHelpBar;
     }
 
     /**
@@ -877,7 +894,6 @@ public class SwitchboardEditor extends Editor {
      */
     public void setSwitchType(String prefix) {
         typePrefix = prefix;
-//        String type;
         switch (typePrefix) {
             case "L":
                 type = LIGHT;
@@ -1075,12 +1091,9 @@ public class SwitchboardEditor extends Editor {
             case KeyEvent.VK_D:
             case KeyEvent.VK_DELETE:
             case KeyEvent.VK_MINUS:
-                //_shapeDrawer.delete();
-                break;
             case KeyEvent.VK_A:
             case KeyEvent.VK_INSERT:
             case KeyEvent.VK_PLUS:
-                //_shapeDrawer.add(e.isShiftDown());
                 break;
             default:
                 return;
@@ -1129,7 +1142,7 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * Handle close of editor window.
+     * Handle close of Editor window.
      * <p>
      * Overload/override method in JmriJFrame parent, which by default is
      * permanently closing the window. Here, we just want to make it invisible,
@@ -1141,22 +1154,36 @@ public class SwitchboardEditor extends Editor {
         setAllEditable(false);
     }
 
-    // ************* implementation of Abstract Editor methods **********
     /**
-     * The target window has been requested to close, don't delete it at this
+     * Handle opening of Editor window.
+     * <p>
+     * Overload/override method in JmriJFrame parent to reset _menuBar.
+     */
+    @Override
+    public void windowOpened(java.awt.event.WindowEvent e) {
+        _menuBar.revalidate();
+    }
+
+    // ************* implementation of Abstract Editor methods **********
+
+    /**
+     * The target window has been requested to close. Don't delete it at this
      * time. Deletion must be accomplished via the Delete this panel menu item.
      */
     @Override
     protected void targetWindowClosingEvent(java.awt.event.WindowEvent e) {
-        targetWindowClosing(true);
+        boolean save = (isDirty() || (savedEditMode != isEditable())
+                || (savedControlLayout != allControlling()));
+        targetWindowClosing(save);
     }
 
     /**
      * Create sequence of panels, etc. for layout: JFrame contains its
      * ContentPane which contains a JPanel with BoxLayout (p1) which contains a
      * JScollPane (js) which contains the targetPane.
+     * Note this is a private menuBar, looking identical to the Editor's _menuBar
      *
-     * @param name name for the Switchboard
+     * @param name title for the Switchboard
      */
     public JmriJFrame makeFrame(String name) {
         JmriJFrame targetFrame = new JmriJFrame(name);
@@ -1169,6 +1196,8 @@ public class SwitchboardEditor extends Editor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(true);
+                setAllEditable(true);
+                log.debug("SwitchBoard Open Editor menu called");
             }
         });
         targetFrame.setJMenuBar(menuBar);

@@ -48,10 +48,6 @@ import org.slf4j.LoggerFactory;
  */
 public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListener, ActionListener {
 
-    //protected HashMap<Integer, NamedIcon> _iconStateMap; // state int to icon
-    //protected HashMap<String, Integer> _name2stateMap;   // name to state
-    protected HashMap<Integer, String> _state2nameMap;     // state to name
-
     private JButton beanButton;
     //private final boolean connected = false;
     private int _shape;
@@ -62,7 +58,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     protected boolean _text;
     protected boolean _icon = false;
     protected boolean _control = false;
-    //protected NamedIcon _namedIcon;
+    protected String _state;
+    protected String stateClosed = Bundle.getMessage("StateClosedShort");
+    protected String stateThrown = Bundle.getMessage("StateThrownShort");
 
     // the associated Bean object
     private NamedBean _bname;
@@ -332,19 +330,39 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     }
 
     /**
-     * Get text to display on this switch in Web Server panel when attached
+     * Get text to display on this switch on Switchboard and in Web Server panel when attached
      * object is Inactive.
      *
-     * @return text to show on inactive state (used on all types of objects)
+     * @return text to show on inactive state (differs per type of objects)
      */
     public String getInactiveText() {
-        return _label + ": -";
-        // TODO in this and the next 3 methods:
-        // use an extra switch(beanTypeChar) to create bean specific abbreviations (and fetch those from DisplayBundle)
+        // fetch bean specific abbreviation
+        switch (beanTypeChar) {
+            case 'T':
+                _state = stateThrown; // +
+                break;
+            default: // Light, Sensor
+                _state = "-";         // 1 char abbreviation for StateOff not clear
+        }
+        return _label + ": " + _state;
     }
 
+    /**
+     * Get text to display on this switch on Switchboard and in Web Server panel when attached
+     * object is Active.
+     *
+     * @return text to show on active state (differs per type of objects)
+     */
     public String getActiveText() {
-        return _label + ": +";
+        // fetch bean specific abbreviation
+        switch (beanTypeChar) {
+            case 'T':
+                _state = stateClosed; // +
+                break;
+            default: // Light, Sensor
+                _state = "+";         // 1 char abbreviation for StateOff not clear
+        }
+        return _label + ": " + _state;
     }
 
     /**
@@ -358,12 +376,12 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     }
 
     public String getInconsistentText() {
-        return _label + ": x";
+        return _label + ": X";
     }
 
     /**
-     * Get text to display as switch tooltip in Web Server panel. used in
-     * jmri.jmrit.display.switchboardEditor.configureXml.SwitchboardEditor.BeanSwitchXml#store(Object)
+     * Get text to display as switch tooltip in Web Server panel.
+     * Used in jmri.jmrit.display.switchboardEditor.configureXml.BeanSwitchXml#store(Object)
      *
      * @return switch tooltip text
      */
@@ -372,6 +390,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     }
 
     // ******************* Display ***************************
+
     @Override
     public void actionPerformed(ActionEvent e) {
         //updateBean();
@@ -393,23 +412,37 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      * @param state integer representing the new state e.g. Turnout.CLOSED
      */
     public void displayState(int state) {
+        String switchLabel;
         log.debug("heard change");
         if (getNamedBean() == null) {
             log.debug("Display state {}, disconnected", state);
         } else {
             // display abbreviated name of state instead of state index
-            log.debug("bean: {} state: {}", _label, state); //getNameString() + " displayState " + _state2nameMap.get(state));
+            switch (state) {
+                case 2:
+                    switchLabel = getActiveText();
+                    break;
+                case 4:
+                    switchLabel = getInactiveText();
+                    break;
+                case 1:
+                    switchLabel = getUnknownText();
+                    break;
+                default:
+                    switchLabel = getInconsistentText();
+                    log.warn("invalid char in Switchboard Button \"{}\". ERROR state shown.", _label);
+            }
+            log.debug("Switch label {} state: {} ", switchLabel, state);
             if (isText() && !isIcon()) { // to allow text buttons on web switchboard. TODO add graphic switches on web
-                beanButton.setText(_label + ": " + state); //_state2nameMap.get(state));
+                beanButton.setText(switchLabel);
             }
             if (isIcon() && beanIcon != null && beanKey != null && beanSymbol != null) {
-                log.debug("set icon to {}", state);
                 beanIcon.showSwitchIcon(state);
-                beanIcon.setLabel(_label + ": " + state);
+                beanIcon.setLabel(switchLabel);
                 beanKey.showSwitchIcon(state);
-                beanKey.setLabel(_label + ": " + state);
+                beanKey.setLabel(switchLabel);
                 beanSymbol.showSwitchIcon(state);
-                beanSymbol.setLabel(_label + ": " + state);
+                beanSymbol.setLabel(switchLabel);
             }
         }
     }
@@ -457,8 +490,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("property change: " + _label + " " + e.getPropertyName() + " is now: "
-                    + e.getNewValue());
+            log.debug("property change: {} {} is now: {}", _label, e.getPropertyName(), e.getNewValue());
         }
         // when there's feedback, transition through inconsistent icon for better animation
         if (getTristate()
@@ -494,10 +526,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 log.debug("User Name changed to {}", newUserName);
             }
         }
-    }
-
-    public String getStateName(int state) {
-        return _state2nameMap.get(state);
     }
 
     public void mousePressed(MouseEvent e) {
@@ -762,45 +790,48 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     }
 
     /**
-     * Change the state of attached turnout, light or sensor on the layout.
+     * Change the state of attached Turnout, Light or Sensor on the layout
+     * unless menu option Panel Items Control Layout is set to off.
      */
     void alternateOnClick() {
-        switch (beanTypeChar) {
-            case 'T':
-                log.debug("T clicked");
-                if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) // if clear known state, set to opposite
-                {
-                    getTurnout().setCommandedState(jmri.Turnout.THROWN);
-                } else if (getTurnout().getKnownState() == jmri.Turnout.THROWN) {
-                    getTurnout().setCommandedState(jmri.Turnout.CLOSED);
-                } else if (getTurnout().getCommandedState() == jmri.Turnout.CLOSED) {
-                    getTurnout().setCommandedState(jmri.Turnout.THROWN);  // otherwise, set to opposite of current commanded state if known
-                } else {
-                    getTurnout().setCommandedState(jmri.Turnout.CLOSED);  // just force Closed
-                }
-                break;
-            case 'L': // Light
-                log.debug("L clicked");
-                if (getLight().getState() == jmri.Light.OFF) {
-                    getLight().setState(jmri.Light.ON);
-                } else {
-                    getLight().setState(jmri.Light.OFF);
-                }
-                break;
-            case 'S': // Sensor
-                log.debug("S clicked");
-                try {
-                    if (getSensor().getKnownState() == jmri.Sensor.INACTIVE) {
-                        getSensor().setKnownState(jmri.Sensor.ACTIVE);
+        if (_editor.allControlling()) {
+            switch (beanTypeChar) {
+                case 'T': // Turnout
+                    log.debug("T clicked");
+                    if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) // if clear known state, set to opposite
+                    {
+                        getTurnout().setCommandedState(jmri.Turnout.THROWN);
+                    } else if (getTurnout().getKnownState() == jmri.Turnout.THROWN) {
+                        getTurnout().setCommandedState(jmri.Turnout.CLOSED);
+                    } else if (getTurnout().getCommandedState() == jmri.Turnout.CLOSED) {
+                        getTurnout().setCommandedState(jmri.Turnout.THROWN);  // otherwise, set to opposite of current commanded state if known
                     } else {
-                        getSensor().setKnownState(jmri.Sensor.INACTIVE);
+                        getTurnout().setCommandedState(jmri.Turnout.CLOSED);  // just force Closed
                     }
-                } catch (jmri.JmriException reason) {
-                    log.warn("Exception flipping sensor: {}", (Object) reason);
-                }
-                break;
-            default:
-                log.error("invalid char in Switchboard Button \"{}\". State not set.", _label);
+                    break;
+                case 'L': // Light
+                    log.debug("L clicked");
+                    if (getLight().getState() == jmri.Light.OFF) {
+                        getLight().setState(jmri.Light.ON);
+                    } else {
+                        getLight().setState(jmri.Light.OFF);
+                    }
+                    break;
+                case 'S': // Sensor
+                    log.debug("S clicked");
+                    try {
+                        if (getSensor().getKnownState() == jmri.Sensor.INACTIVE) {
+                            getSensor().setKnownState(jmri.Sensor.ACTIVE);
+                        } else {
+                            getSensor().setKnownState(jmri.Sensor.INACTIVE);
+                        }
+                    } catch (jmri.JmriException reason) {
+                        log.warn("Exception flipping sensor: {}", (Object) reason);
+                    }
+                    break;
+                default:
+                    log.error("invalid char in Switchboard Button \"{}\". State not set.", _label);
+            }
         }
     }
 
@@ -914,9 +945,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     log.warn("failed to update switch to state of {}", sName);
                 } else {
                     _editor.updatePressed();
-//                    _editor.getSwitch(sName).setNamedBean(nb);
-//                    _editor.getSwitch(sName).displayState(nb.getState());
-//                    _editor.getSwitch(sName).setEnabled(true);
                 }
             } catch (NullPointerException npe) {
                 handleCreateException(sName);
@@ -981,10 +1009,10 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             if (image1 != null && image2 != null) {
                 switch (stateIndex) {
                     case 4:
-                        image = image1;
+                        image = image2; // on/Thrown
                         break;
                     default:
-                        image = image2; // off, also for connected & unknown
+                        image = image1; // off, also for connected & unknown
                         break;
                 }
                 this.repaint();

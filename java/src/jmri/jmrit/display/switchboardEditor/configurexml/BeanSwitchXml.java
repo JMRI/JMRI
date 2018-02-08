@@ -18,8 +18,8 @@ public class BeanSwitchXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Default implementation for storing the contents of a BeanSwitch. Used the
-     * display Switchboard switches in JMRI web server.
+     * Default implementation for storing the contents of a BeanSwitch.
+     * Used to display Switchboard switches in JMRI web server.
      *
      * @param o Object to store, of type BeanSwitch
      * @return Element containing the complete info
