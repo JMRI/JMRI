@@ -1042,7 +1042,6 @@ public class AbstractAutomaton implements Runnable {
         if (tl == null) {
             log.warn("unable to find throttle listener for throttle {}", t);
         }
-        log.info("got it: {}", tl);
         t.release(tl);
     }
 
