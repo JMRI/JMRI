@@ -161,7 +161,7 @@ public class XTableColumnModel extends DefaultTableColumnModel {
     }
 
     /**
-     * Moves the column from {@code oldIndex to {@code newIndex}.
+     * Moves the column from {@code oldIndex} to {@code newIndex}.
      * Posts {@code columnMoved} event. Will not move any columns if
      * {@code oldIndex} equals {@code newIndex}.
      *
