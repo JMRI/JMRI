@@ -100,7 +100,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                     if (columnId == null || columnId.toString().isEmpty()) {
                         log.error("Columns in table {} have empty or null identities; saving table state will not be reliable.", table.getName());
                     } else if (columnIds.contains(columnId)) {
-                        log.error("Columns in table {} have duplicate identities; saving table state will not be reliable.", table.getName());
+                        log.error("Columns in table {} share the identity \"{}\"; saving table state will not be reliable.", table.getName(), columnId);
                     } else {
                         columnIds.add(columnId);
                     }
