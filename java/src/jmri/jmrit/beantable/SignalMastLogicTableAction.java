@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.SignalMast;
@@ -27,6 +28,7 @@ import jmri.SignalMastLogic;
 import jmri.SignalMastLogicManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +57,8 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
         TableRowSorter<BeanTableDataModel<SignalMastLogic>> sorter = new TableRowSorter<>(m);
         JTable dataTable = m.makeJTable(m.getMasterClassName(), m, sorter);
         // create the frame
-        f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable) {};
+        f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable) {
+        };
         setMenuBar(f);
         setTitle();
         addToFrame(f);
@@ -64,10 +67,11 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
     }
 
     /**
-     * Insert a table specific Tools menu.
-     * Account for the Window and Help menus, which are already added to the menu bar
-     * as part of the creation of the JFrame, by adding the Tools menu 2 places earlier
-     * unless the table is part of the ListedTableFrame, that adds the Help menu later on.
+     * Insert a table specific Tools menu. Account for the Window and Help
+     * menus, which are already added to the menu bar as part of the creation of
+     * the JFrame, by adding the Tools menu 2 places earlier unless the table is
+     * part of the ListedTableFrame, that adds the Help menu later on.
+     *
      * @param f the JFrame of this table
      */
     @Override
@@ -349,29 +353,22 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                 return null;
             }
 
-            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
-                                justification="better to keep cases in column order rather than to combine")
             @Override
             public int getPreferredWidth(int col) {
                 switch (col) {
                     case SOURCECOL:
+                    case DESTCOL:
+                    case DESTAPPCOL:
+                    case SOURCEAPPCOL:
                         return new JTextField(10).getPreferredSize().width;
                     case COMCOL:
                         return 75;
-                    case DESTCOL:
-                        return new JTextField(10).getPreferredSize().width;
                     case EDITLOGICCOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
                         return new JTextField(6).getPreferredSize().width;
                     case DELCOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
-                        return new JTextField(5).getPreferredSize().width;
-                    case DESTAPPCOL:
-                        return new JTextField(10).getPreferredSize().width;
-                    case SOURCEAPPCOL:
-                        return new JTextField(10).getPreferredSize().width;
                     case ENABLECOL:
                         return new JTextField(5).getPreferredSize().width;
                     default:
-                        //log.warn("Unexpected column in getPreferredWidth: "+col);
                         return new JTextField(8).getPreferredSize().width;
                 }
             }
@@ -473,6 +470,36 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
             protected void showPopup(MouseEvent e) {
 
             }
+
+            @Override
+            protected void setColumnIdentities(JTable table) {
+                super.setColumnIdentities(table);
+                Enumeration<TableColumn> columns;
+                if (table.getColumnModel() instanceof XTableColumnModel) {
+                    columns = ((XTableColumnModel) table.getColumnModel()).getColumns(false);
+                } else {
+                    columns = table.getColumnModel().getColumns();
+                }
+                while (columns.hasMoreElements()) {
+                    TableColumn column = columns.nextElement();
+                    switch (column.getModelIndex()) {
+                        case SOURCEAPPCOL:
+                            column.setIdentifier("SrcAspect");
+                            break;
+                        case DESTAPPCOL:
+                            column.setIdentifier("DstAspect");
+                            break;
+                        case DELCOL:
+                            column.setIdentifier("Delete");
+                            break;
+                        case EDITLOGICCOL:
+                            column.setIdentifier("Edit");
+                            break;
+                        default:
+                        // use existing value
+                    }
+                }
+            }
         };
     }
 
@@ -535,33 +562,32 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                     } catch (jmri.JmriException e) {
                         // Notify of problem
                         try {
-                            javax.swing.SwingUtilities.invokeAndWait(()->{
+                            javax.swing.SwingUtilities.invokeAndWait(() -> {
                                 InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removePropertyChangeListener(propertyGenerateListener);
                                 JOptionPane.showMessageDialog(null, e.toString());
                                 signalMastLogicFrame.setVisible(false);
                             });
                         } catch (java.lang.reflect.InvocationTargetException ex) {
-                            log.error("failed to notify of problem with automaticallyDiscoverSignallingPairs", ex );
+                            log.error("failed to notify of problem with automaticallyDiscoverSignallingPairs", ex);
                         } catch (InterruptedException ex) {
-                            log.error("interrupted while notifying of problem with automaticallyDiscoverSignallingPairs", ex );
+                            log.error("interrupted while notifying of problem with automaticallyDiscoverSignallingPairs", ex);
                         }
                     }
 
                     // process complete, update GUI
                     try {
-                        javax.swing.SwingUtilities.invokeAndWait(()->{
+                        javax.swing.SwingUtilities.invokeAndWait(() -> {
                             m.updateNameList();
                             suppressUpdate = false;
                             m.fireTableDataChanged();
                             if (genSect.isSelected()) {
-                                ((jmri.managers.DefaultSignalMastLogicManager)
-                                    InstanceManager.getDefault(jmri.SignalMastLogicManager.class)).generateSection();
+                                ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.getDefault(jmri.SignalMastLogicManager.class)).generateSection();
                             }
                         });
                     } catch (java.lang.reflect.InvocationTargetException ex) {
-                        log.error("failed to update at end of automaticallyDiscoverSignallingPairs", ex );
+                        log.error("failed to update at end of automaticallyDiscoverSignallingPairs", ex);
                     } catch (InterruptedException ex) {
-                        log.error("interrupted during update at end of automaticallyDiscoverSignallingPairs", ex );
+                        log.error("interrupted during update at end of automaticallyDiscoverSignallingPairs", ex);
                     }
                 }
             };

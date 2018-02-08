@@ -15,6 +15,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
@@ -49,8 +50,8 @@ import javax.swing.table.TableModel;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
-import jmri.Turnout;
 import jmri.Sensor;
+import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
@@ -61,7 +62,6 @@ import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.XTableColumnModel;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -125,14 +125,16 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     String pushbutText = "Pushbutton only";
     String noneText = "None";
 
-    private java.util.Vector<String> speedListClosed = new java.util.Vector<String>();
-    private java.util.Vector<String> speedListThrown = new java.util.Vector<String>();
+    private java.util.Vector<String> speedListClosed = new java.util.Vector<>();
+    private java.util.Vector<String> speedListThrown = new java.util.Vector<>();
     protected TurnoutManager turnManager = InstanceManager.turnoutManagerInstance();
     protected JTable table;
     // for icon state col
     protected boolean _graphicState = false; // updated from prefs
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setManager(@Nonnull Manager<Turnout> man) {
         turnManager = (TurnoutManager) man;
@@ -285,8 +287,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     case FORGETCOL:
                         return new JButton(Bundle.getMessage("StateForgetButton")).getPreferredSize().width;
                     case QUERYCOL:
-                        return new JButton(Bundle.getMessage("StateQueryButton")).getPreferredSize()
-                                .width;
+                        return new JButton(Bundle.getMessage("StateQueryButton")).getPreferredSize().width;
                     default:
                         super.getPreferredWidth(col);
                 }
@@ -775,7 +776,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                             return null;
                         }
 
-                        if (retval == null) {                                                        
+                        if (retval == null) {
                             if (column == SENSOR1COL) {
                                 loadRenderEditMaps(rendererMapSensor1, editorMapSensor1, t, t.getFirstSensor());
                                 retval = rendererMapSensor1.get(t);
@@ -784,7 +785,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                                 retval = rendererMapSensor1.get(t);
                             }
                         }
-                        log.debug("fetched for Turnout \"{}\" renderer", t, retval);
+                        log.debug("fetched for Turnout \"{}\" renderer {}", t, retval);
                         return retval;
                     }
 
@@ -811,30 +812,54 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                                 retval = editorMapSensor2.get(t);
                             }
                         }
-                        log.debug("fetched for Turnout \"{}\" editor", t, retval);
+                        log.debug("fetched for Turnout \"{}\" editor {}", t, retval);
                         return retval;
                     }
 
                     protected void loadRenderEditMaps(Hashtable<Turnout, TableCellRenderer> r, Hashtable<Turnout, TableCellEditor> e,
-                                                        Turnout t, Sensor s) {
-                            JmriBeanComboBox c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), s, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);            
-                            c.setFirstItemBlank(true);
-                            
-                            TableCellRenderer renderer = new BeanBoxRenderer();
-                            ((JmriBeanComboBox)renderer).setSelectedBean(s);
-                            r.put(t, renderer);
-                            
-                            TableCellEditor editor = new BeanComboBoxEditor(c);
-                            e.put(t, editor);
-                            log.debug("initialize for Turnout \"{}\" Sensor \"{}\"", t, s);
+                            Turnout t, Sensor s) {
+                        JmriBeanComboBox c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), s, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                        c.setFirstItemBlank(true);
+
+                        TableCellRenderer renderer = new BeanBoxRenderer();
+                        ((JmriBeanComboBox) renderer).setSelectedBean(s);
+                        r.put(t, renderer);
+
+                        TableCellEditor editor = new BeanComboBoxEditor(c);
+                        e.put(t, editor);
+                        log.debug("initialize for Turnout \"{}\" Sensor \"{}\"", t, s);
                     }
-                                                        
+
                     Hashtable<Turnout, TableCellRenderer> rendererMapSensor1 = new Hashtable<>();
                     Hashtable<Turnout, TableCellEditor> editorMapSensor1 = new Hashtable<>();
 
                     Hashtable<Turnout, TableCellRenderer> rendererMapSensor2 = new Hashtable<>();
                     Hashtable<Turnout, TableCellEditor> editorMapSensor2 = new Hashtable<>();
                 };
+            }
+
+            @Override
+            protected void setColumnIdentities(JTable table) {
+                super.setColumnIdentities(table);
+                Enumeration<TableColumn> columns;
+                if (table.getColumnModel() instanceof XTableColumnModel) {
+                    columns = ((XTableColumnModel) table.getColumnModel()).getColumns(false);
+                } else {
+                    columns = table.getColumnModel().getColumns();
+                }
+                while (columns.hasMoreElements()) {
+                    TableColumn column = columns.nextElement();
+                    switch (column.getModelIndex()) {
+                        case FORGETCOL:
+                            column.setIdentifier("ForgetState");
+                            break;
+                        case QUERYCOL:
+                            column.setIdentifier("QueryState");
+                            break;
+                        default:
+                        // use existing value
+                    }
+                }
             }
 
             /**
@@ -971,13 +996,17 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         m.fireTableDataChanged();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleTurnoutTable"));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.TurnoutTable";
@@ -988,7 +1017,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     CheckedTextField hardwareAddressTextField = new CheckedTextField(20);
     // initially allow any 20 char string, updated to prefixBox selection by canAddRange()
     JTextField userNameTextField = new JTextField(40);
-    JComboBox<String> prefixBox = new JComboBox<String>();
+    JComboBox<String> prefixBox = new JComboBox<>();
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
     JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
@@ -999,7 +1028,9 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     jmri.UserPreferencesManager p;
     String connectionChoice = "";
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addPressed(ActionEvent e) {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -1570,6 +1601,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         column = columnModel.getColumnByModelIndex(QUERYCOL);
         columnModel.setColumnVisible(column, showStateForgetAndQuery);
     }
+
     /**
      * Insert a table specific Operations menu. Account for the Window and Help
      * menus, which are already added to the menu bar as part of the creation of
@@ -1885,20 +1917,26 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
     private boolean noWarn = false;
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String getClassName() {
         return TurnoutTableAction.class.getName();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setMessagePreferencesDetails() {
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
         super.setMessagePreferencesDetails();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleTurnoutTable");
