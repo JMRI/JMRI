@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -935,6 +936,7 @@ public class AbstractAutomaton implements Runnable {
 
     private DccThrottle throttle;
     private boolean failedThrottleRequest = false;
+    private HashMap<DccThrottle, ThrottleListener> throttleListenerMap =  new HashMap<DccThrottle, ThrottleListener>();
 
     /**
      * Obtains a DCC throttle, including waiting for the command station
@@ -1000,7 +1002,14 @@ public class AbstractAutomaton implements Runnable {
         if (throttle == null) {
             log.debug("canceling request for Throttle " + address);
             InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(address, throttleListener);  //kill the pending request
+        } else {
+            // keep the listener so we can release the throttle properly
+            ThrottleListener tl = throttleListenerMap.get(throttle);
+            if (tl == null) {
+                throttleListenerMap.put(throttle, throttleListener);
+            } 
         }
+
         return throttle;
     }
 
@@ -1018,64 +1027,25 @@ public class AbstractAutomaton implements Runnable {
      * @return A usable throttle, or null if error
      */
     public DccThrottle getThrottle(BasicRosterEntry re, int waitSecs) {
-        log.debug("requesting DccThrottle for rosterEntry " + re.getId());
-        if (!inThread) {
-            log.warn("getThrottle invoked from invalid context");
-        }
-        throttle = null;
-        ThrottleListener throttleListener = new ThrottleListener() {
-            @Override
-            public void notifyThrottleFound(DccThrottle t) {
-                throttle = t;
-                synchronized (self) {
-                    self.notifyAll(); // should be only one thread waiting, but just in case
-                }
-            }
-
-            @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
-                failedThrottleRequest = true;
-                synchronized (self) {
-                    self.notifyAll(); // should be only one thread waiting, but just in case
-                }
-            }
-
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-                // this is an automatically stealing impelementation.
-                InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
-            }
-        };
-        boolean ok = InstanceManager.throttleManagerInstance()
-                .requestThrottle(re, throttleListener);
-
-        // check if reply is coming
-        if (!ok) {
-            log.info("Throttle for loco " + re.getId() + " not available");
-            InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(re, throttleListener);  //kill the pending request
-            return null;
-        }
-
-        // now wait for reply from identified throttle
-        int waited = 0;
-        while (throttle == null && failedThrottleRequest == false && waited <= waitSecs) {
-            log.debug("waiting for throttle");
-            wait(1000);  //  1 seconds
-            waited++;
-            if (throttle == null) {
-                log.warn("Still waiting for throttle " + re.getId() + "!");
-            }
-        }
-        if (throttle == null) {
-            log.debug("canceling request for Throttle " + re.getId());
-            InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(re, throttleListener);  //kill the pending request
-        }
-        return throttle;
+        return getThrottle(Integer.parseInt(re.getDccAddress()), re.isLongAddress(), waitSecs);
     }
 
     public DccThrottle getThrottle(BasicRosterEntry re) {
         return getThrottle(re, 30);  //default to 30 seconds
+    }
+
+    /**
+     * Release a throttle previously obtained using getThrottle()
+     *
+     * @param t - the throttle to release
+     */
+    public void releaseThrottle(DccThrottle t) {
+        log.debug("releasing throttle {}", t);
+        ThrottleListener tl = throttleListenerMap.get(t);
+        if (tl == null) {
+            log.warn("unable to find throttle listener for throttle {}", t);
+        }
+        t.release(tl);
     }
 
     /**
@@ -1313,4 +1283,5 @@ public class AbstractAutomaton implements Runnable {
     }
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(AbstractAutomaton.class);
+
 }
