@@ -105,8 +105,8 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                         columnIds.add(columnId);
                     }
                 }
-                if (this.getColumnCount(model) != columnIds.size()) {
-                    log.error("Saving table state for table {} will not be reliable; please notify the JMRI developers.", table.getName(), new Exception());
+                if (log.isDebugEnabled() && this.getColumnCount(model) != columnIds.size()) {
+                    log.debug("Saving table state for table {} will not be reliable.", table.getName(), new Exception());
                 }
             }
         }
@@ -270,7 +270,10 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
             this.firePropertyChange(PAUSED, old, paused);
         }
         if (!paused && this.dirty) {
-            this.savePreferences(ProfileManager.getDefault().getActiveProfile());
+            Profile profile = ProfileManager.getDefault().getActiveProfile();
+            if (profile != null) {
+                this.savePreferences(profile);
+            }
         }
     }
 
