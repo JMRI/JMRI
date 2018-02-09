@@ -889,14 +889,14 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     if (iconHeight > 0) { // if necessary, increase row height;
                         table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5));
                     }
-                    if (value.equals(closedText) && offIcon != null) {
-                        label = new JLabel(offIcon);
-                        label.setVerticalAlignment(JLabel.BOTTOM);
-                        log.debug("offIcon set");
-                    } else if (value.equals(thrownText) && onIcon != null) {
+                    if (value.equals(closedText) && onIcon != null) {
                         label = new JLabel(onIcon);
                         label.setVerticalAlignment(JLabel.BOTTOM);
                         log.debug("onIcon set");
+                    } else if (value.equals(thrownText) && offIcon != null) {
+                        label = new JLabel(offIcon);
+                        label.setVerticalAlignment(JLabel.BOTTOM);
+                        log.debug("offIcon set");
                     } else if (value.equals(Bundle.getMessage("BeanStateInconsistent"))) {
                         label = new JLabel("X", JLabel.CENTER); // centered text alignment
                         label.setForeground(Color.red);

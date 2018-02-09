@@ -114,9 +114,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
-        beanIcon = new IconSwitch(iconOffPath, iconOnPath);
-        beanKey = new IconSwitch(keyOffPath, keyOnPath);
-        beanSymbol = new IconSwitch(rootPath + beanTypeChar + "-off-s.png", rootPath + beanTypeChar + "-on-s.png");
+        beanIcon = new IconSwitch(iconOnPath, iconOffPath);
+        beanKey = new IconSwitch(keyOnPath, keyOffPath);
+        beanSymbol = new IconSwitch(rootPath + beanTypeChar + "-on-s.png", rootPath + beanTypeChar + "-off-s.png");
 
         // look for bean to connect to by name
         log.debug("beanconnect = {}, beantype = {}", beanManuPrefix, beanTypeChar);
@@ -509,7 +509,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         if (e.getPropertyName().equals("KnownState")) {
             int now = ((Integer) e.getNewValue());
             displayState(now);
-            log.debug("Turnout state changed");
+            log.debug("Item state changed");
         }
         if (e.getPropertyName().equals("UserName")) {
             // update tooltip
@@ -591,7 +591,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     /**
      * Show pop-up on a switch with its unique attributes including the
      * (un)connected bean. Derived from
-     * {@link #showPopUp(Positionable, MouseEvent)}
+     * {@link jmri.jmrit.display.switchboardEditor.SwitchboardEditor#showPopUp(Positionable, MouseEvent)}
      *
      * @param e the event
      */
@@ -1008,11 +1008,11 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             log.debug("showSwitchIcon {}", stateIndex);
             if (image1 != null && image2 != null) {
                 switch (stateIndex) {
-                    case 4:
-                        image = image2; // on/Thrown
+                    case 2:
+                        image = image1; // on/Thrown/Active
                         break;
                     default:
-                        image = image1; // off, also for connected & unknown
+                        image = image2; // off, also for connected & unknown
                         break;
                 }
                 this.repaint();
