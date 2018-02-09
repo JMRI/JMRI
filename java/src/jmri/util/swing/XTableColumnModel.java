@@ -8,19 +8,19 @@ import javax.swing.table.TableColumn;
 
 /**
  * Taken from http://www.stephenkelvin.de/XTableColumnModel/
- * {@code XTableColumnModel} extends the DefaultTableColumnModel . It
- * provides a comfortable way to hide/show columns. Columns keep their positions
- * when hidden and shown again.
+ * {@code XTableColumnModel} extends the DefaultTableColumnModel . It provides a
+ * comfortable way to hide/show columns. Columns keep their positions when
+ * hidden and shown again.
  * <p>
  * In order to work with JTable it cannot add any events to
- * {@code TableColumnModelListener}. Therefore hiding a column will result
- * in {@code columnRemoved} event and showing it again will notify
- * listeners of a {@code columnAdded}, and possibly a
- * {@code columnMoved} event. For the same reason the following methods
- * still deal with visible columns only: getColumnCount(), getColumns(),
- * getColumnIndex(), getColumn() There are overloaded versions of these methods
- * that take a parameter {@code onlyVisible} which let's you specify wether
- * you want invisible columns taken into account.
+ * {@code TableColumnModelListener}. Therefore hiding a column will result in
+ * {@code columnRemoved} event and showing it again will notify listeners of a
+ * {@code columnAdded}, and possibly a {@code columnMoved} event. For the same
+ * reason the following methods still deal with visible columns only:
+ * getColumnCount(), getColumns(), getColumnIndex(), getColumn() There are
+ * overloaded versions of these methods that take a parameter
+ * {@code onlyVisible} which let's you specify whether you want invisible
+ * columns taken into account.
  *
  * @version 0.9 04/03/01
  * @author Stephen Kelvin, mail@StephenKelvin.de
@@ -98,9 +98,9 @@ public class XTableColumnModel extends DefaultTableColumnModel {
 
     /**
      * Maps the index of the column in the table model at
-     * {@code modelColumnIndex} to the TableColumn object. There may me
-     * multiple TableColumn objects showing the same model column, though this
-     * is uncommon. This method will always return the first visible or else the
+     * {@code modelColumnIndex} to the TableColumn object. There may me multiple
+     * TableColumn objects showing the same model column, though this is
+     * uncommon. This method will always return the first visible or else the
      * first invisible column with the specified index.
      *
      * @param modelColumnIndex index of column in table model
@@ -134,8 +134,7 @@ public class XTableColumnModel extends DefaultTableColumnModel {
      *
      * @param column The column to be added
      * @see #removeColumn
-     * @exception IllegalArgumentException if {@code column} is
-     *                                     {@code null}
+     * @exception IllegalArgumentException if {@code column} is {@code null}
      */
     @Override
     public void addColumn(TableColumn column) {
@@ -145,8 +144,8 @@ public class XTableColumnModel extends DefaultTableColumnModel {
 
     /**
      * Removes {@code column} from this column model. Posts
-     * {@code columnRemoved} event. Will do nothing if the column is not in
-     * this model.
+     * {@code columnRemoved} event. Will do nothing if the column is not in this
+     * model.
      *
      * @param column the column to be added
      * @see #addColumn
@@ -161,35 +160,37 @@ public class XTableColumnModel extends DefaultTableColumnModel {
     }
 
     /**
-     * Moves the column from {@code oldIndex} to {@code newIndex}.
-     * Posts {@code columnMoved} event. Will not move any columns if
-     * {@code oldIndex} equals {@code newIndex}.
+     * Moves the column from {@code columnIndex} to {@code newIndex}. Posts
+     * {@code columnMoved} event. Will not move any columns if
+     * {@code columnIndex} equals {@code newIndex}.
      *
-     * @param oldIndex index of column to be moved
-     * @param newIndex new index of the column
+     * @param columnIndex index of column to be moved
+     * @param newIndex    new index of the column
      * @exception IllegalArgumentException if either {@code oldIndex} or
      *                                     {@code newIndex} are not in [0,
      *                                     getColumnCount() - 1]
      */
     @Override
-    public void moveColumn(int oldIndex, int newIndex) {
-        if ((oldIndex < 0) || (oldIndex >= getColumnCount())
+    public void moveColumn(int columnIndex, int newIndex) {
+        if ((columnIndex < 0) || (columnIndex >= getColumnCount())
                 || (newIndex < 0) || (newIndex >= getColumnCount())) {
             throw new IllegalArgumentException("moveColumn() - Index out of range");
         }
 
-        TableColumn fromColumn = tableColumns.get(oldIndex);
-        TableColumn toColumn = tableColumns.get(newIndex);
+        if (columnIndex != newIndex) {
+            TableColumn fromColumn = tableColumns.get(columnIndex);
+            TableColumn toColumn = tableColumns.get(newIndex);
 
-        int allColumnsOldIndex = allTableColumns.indexOf(fromColumn);
-        int allColumnsNewIndex = allTableColumns.indexOf(toColumn);
+            int allColumnsColumnIndex = allTableColumns.indexOf(fromColumn);
+            int allColumnsNewIndex = allTableColumns.indexOf(toColumn);
 
         if (oldIndex != newIndex) {
             allTableColumns.remove(allColumnsOldIndex);
+            allTableColumns.remove(allColumnsColumnIndex);
             allTableColumns.add(allColumnsNewIndex, toColumn);
         }
 
-        super.moveColumn(oldIndex, newIndex);
+        super.moveColumn(columnIndex, newIndex);
     }
 
     /**
@@ -216,8 +217,8 @@ public class XTableColumnModel extends DefaultTableColumnModel {
 
     /**
      * Returns the position of the first column whose identifier equals
-     * {@code identifier}. Position is the the index in all visible columns
-     * if {@code onlyVisible} is true or else the index in all columns.
+     * {@code identifier}. Position is the the index in all visible columns if
+     * {@code onlyVisible} is true or else the index in all columns.
      *
      * @param identifier  the identifier object to search for
      * @param onlyVisible if set searches only visible columns
