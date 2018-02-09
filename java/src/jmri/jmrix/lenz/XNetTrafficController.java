@@ -353,6 +353,13 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         return _FeedbackCache;
     }
 
+    /**
+     * @return whether or not this connection currently has a timeslot from the Command station.
+     */
+    boolean hasTimeSlot(){
+       return ((XNetPortController)controller).hasTimeSlot();
+    }
+
     private final static Logger log = LoggerFactory.getLogger(XNetTrafficController.class);
 
 }
