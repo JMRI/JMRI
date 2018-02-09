@@ -13,6 +13,8 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  */
 public class XNetPacketizerTest extends XNetTrafficControllerTest {
+        
+    protected XNetPortControllerScaffold port = null;
 
     /**
      * Local test class to make XNetPacketizer more felicitous to test
@@ -41,45 +43,41 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
     public void testOutbound() throws Exception {
         XNetPacketizer c = (XNetPacketizer) tc;
         // connect to iostream via port controller scaffold
-        XNetPortControllerScaffold p = new XNetPortControllerScaffold();
-        c.connectPort(p);
-        //c.startThreads();
+        tc.connectPort(port);
         XNetMessage m = XNetMessage.getTurnoutCommandMsg(22, true, false, true);
         m.setTimeout(1);  // don't want to wait a long time
         c.sendXNetMessage(m, null);
 
-        p.flush();
+        port.flush();
         jmri.util.JUnitUtil.waitFor(() -> {
-            return p.tostream.available() == 4;
+            return port.tostream.available() == 4;
         }, "total length 4");
 
-        Assert.assertEquals("total length ", 4, p.tostream.available());
-        Assert.assertEquals("Char 0", 0x52, p.tostream.readByte() & 0xff);
-        Assert.assertEquals("Char 1", 0x05, p.tostream.readByte() & 0xff);
-        Assert.assertEquals("Char 2", 0x8A, p.tostream.readByte() & 0xff);
-        Assert.assertEquals("parity", 0xDD, p.tostream.readByte() & 0xff);
-        Assert.assertEquals("remaining ", 0, p.tostream.available());
+        Assert.assertEquals("total length ", 4, port.tostream.available());
+        Assert.assertEquals("Char 0", 0x52, port.tostream.readByte() & 0xff);
+        Assert.assertEquals("Char 1", 0x05, port.tostream.readByte() & 0xff);
+        Assert.assertEquals("Char 2", 0x8A, port.tostream.readByte() & 0xff);
+        Assert.assertEquals("parity", 0xDD, port.tostream.readByte() & 0xff);
+        Assert.assertEquals("remaining ", 0, port.tostream.available());
     }
 
     @Test
     public void testInbound() throws Exception {
         XNetPacketizer c = (XNetPacketizer) tc;
-
-        // connect to iostream via port controller
-        XNetPortControllerScaffold p = new XNetPortControllerScaffold();
-        c.connectPort(p);
+        // connect to iostream via port controller scaffold
+        tc.connectPort(port);
 
         // object to receive reply
         XNetListenerScaffold l = new XNetListenerScaffold();
         c.addXNetListener(~0, l);
 
         // now send reply
-        p.tistream.write(0x52);
-        p.tistream.write(0x12);
-        p.tistream.write(0x12);
-        p.tistream.write(0x52);
+        port.tistream.write(0x52);
+        port.tistream.write(0x12);
+        port.tistream.write(0x12);
+        port.tistream.write(0x52);
 
-        p.flush();
+        port.flush();
         jmri.util.JUnitUtil.waitFor(() -> {
             return l.rcvdRply != null;
         }, "reply received");
@@ -95,10 +93,8 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
         // at the same time, the first listener is still the active listener until
         // it receives a message.
         XNetPacketizer c = (XNetPacketizer) tc;
-
-        // connect to iostream via port controller
-        XNetPortControllerScaffold p = new XNetPortControllerScaffold();
-        c.connectPort(p);
+        // connect to iostream via port controller scaffold
+        tc.connectPort(port);
 
         // We need three objects to receive messages.
         // The first one recieves broadcast messages.
@@ -117,12 +113,12 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
             l2.rcvdRply = null;
 
             // first, we send an unsolicited message
-            p.tistream.write(0x42);
-            p.tistream.write(0x12);
-            p.tistream.write(0x12);
-            p.tistream.write(0x42);
+            port.tistream.write(0x42);
+            port.tistream.write(0x12);
+            port.tistream.write(0x12);
+            port.tistream.write(0x42);
 
-            p.flush();
+            port.flush();
             jmri.util.JUnitUtil.waitFor(() -> {
                 return l.rcvdRply != null;
             }, "reply received");
@@ -139,7 +135,7 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
             XNetMessage m1 = XNetMessage.getTurnoutCommandMsg(23, true, false, true);
             c.sendXNetMessage(m1, l2);
 
-            p.flush();
+            port.flush();
 
             // and now we verify l1 is the last sender.
             jmri.util.JUnitUtil.waitFor(() -> {
@@ -151,11 +147,11 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
             l2.rcvdRply = null;
 
             // Now we reply to the messages above
-            p.tistream.write(0x01);
-            p.tistream.write(0x04);
-            p.tistream.write(0x05);
+            port.tistream.write(0x01);
+            port.tistream.write(0x04);
+            port.tistream.write(0x05);
 
-            p.flush();
+            port.flush();
             jmri.util.JUnitUtil.waitFor(() -> {
                 return l1.rcvdRply != null;
             }, "iteration " + i + " reply received ");
@@ -177,11 +173,11 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
             l1.rcvdRply = null;
             l2.rcvdRply = null;
 
-            p.tistream.write(0x01);
-            p.tistream.write(0x04);
-            p.tistream.write(0x05);
+            port.tistream.write(0x01);
+            port.tistream.write(0x04);
+            port.tistream.write(0x05);
 
-            p.flush();
+            port.flush();
             jmri.util.JUnitUtil.waitFor(() -> {
                 return l2.rcvdRply != null;
             }, "iteration " + i + " reply received ");
@@ -210,6 +206,11 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
         JUnitUtil.setUp();
         LenzCommandStation lcs = new LenzCommandStation();
         tc = new StoppingXNetPacketizer(lcs);
+        try {
+           port = new XNetPortControllerScaffold();
+        } catch (Exception e) {
+           Assert.fail("Error creating test port");
+        }
     }
 
     @After

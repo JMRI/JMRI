@@ -30,7 +30,7 @@
       <br>The Warrant List is a table of all Recorded Warrants.
       It also temporarily lists NX Warrants during the time they
       are in effect. You access the Warrant Table by selecting
-      <br>Warrant List</br> from the Warrants menu of your
+      <b>Warrant List</b> from the Warrants menu of your
       Control Panel. For an overview discussion of Warrants,
       see <a href="Warrant.shtml">Warrants</a>.</p>
 
@@ -49,7 +49,7 @@
 
         <li><b>Train Name</b> - The Train ID, as stated in the
         Roster. This cell can be edited and its content is
-        displayed by the Indicator Track Icons when the train
+        displayed next to the Indicator Track Icons when the train
         occupies their OBlock (the Edit popup of Indicator Track
         Icons have a checkbox to enable this function).</li>
 
@@ -116,6 +116,7 @@
 			<li><b>E-Stop</b> - Issue an emergency stop to the train
 			and suspend execution of the throttle command script.
 			</li>
+
             <li><b>Abort</b> - Abort the script and deallocate the
             Warrant.</li>
           </ul>
@@ -125,8 +126,7 @@
         the Warrant.
         <a href="images/WarrantEdit.png"><img
         src="images/WarrantEdit.png" width="241" height="235"
-        hspace="0" vspace="0" align="right" alt="Warrants Edit
-        pane in in JMRI 4.10"></a><br>
+        align="right" alt="Warrants Edit pane in in JMRI 4.10"></a>
         Just as when you created the Warrant, you may use your
         Control Panel to change the Track Icons that are part of
         the Warrrant. With every click, the total number of items
@@ -144,8 +144,8 @@
         hidden or visible.
       </div>
 
-      <h2>The Warrant List Menus</h2>The following item are under
-      the <b>Warrants</b> menu.
+      <h2>The Warrant List Menus</h2>
+      <p>The following item are under the <b>Warrants</b> menu.</p>
 
       <ul>
         <li><b>Concatenate Warrants</b> - Join two Warrants
@@ -164,8 +164,8 @@
         block to another.</li>
 
         <li><b>Create NX Warrant</b> - Opens a window to create an
-        eNtry/eXit Warrant. This is discussed in <a href=
-        "NXWarrant.shtml">About NX Warrants</a>.</li>
+        eNtry/eXit Warrant. This is discussed in the <a href=
+        "NXWarrant.shtml">NX Warrants</a> Help.</li>
 
         <li><b>Open Session Log</b> - Opens a window to name a file
         that records the Warrant and train tracking status

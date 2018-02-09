@@ -14,7 +14,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.util.FileUtil;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -232,7 +232,7 @@ public class HtmlConductor extends HtmlTrainCommon {
             return dropCars(local);
         }
     }
-    
+
     private String pickupCars() {
         StringBuilder builder = new StringBuilder();
         RouteLocation location = train.getCurrentLocation();

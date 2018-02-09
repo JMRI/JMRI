@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.StringJoiner;
+import jmri.InstanceManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.server.web.spi.AngularRoute;
@@ -50,22 +51,24 @@ import org.slf4j.LoggerFactory;
 public class WebAppManager extends AbstractPreferencesManager {
 
     private final HashMap<Profile, WatchService> watcher = new HashMap<>();
-    private final static Logger log = LoggerFactory.getLogger(WebAppManager.class);
     private final Map<WatchKey, Path> watchPaths = new HashMap<>();
     private final HashMap<Profile, List<WebManifest>> manifests = new HashMap<>();
+    private Thread lifeCycleListener = null;
+    private final static Logger log = LoggerFactory.getLogger(WebAppManager.class);
 
     public WebAppManager() {
     }
 
     @Override
     public void initialize(Profile profile) throws InitializationException {
-        WebServerPreferences.getDefault().addPropertyChangeListener(WebServerPreferences.ALLOW_REMOTE_CONFIG, (PropertyChangeEvent evt) -> {
+        WebServerPreferences preferences = InstanceManager.getDefault(WebServerPreferences.class);
+        preferences.addPropertyChangeListener(WebServerPreferences.ALLOW_REMOTE_CONFIG, (PropertyChangeEvent evt) -> {
             this.savePreferences(profile);
         });
-        WebServerPreferences.getDefault().addPropertyChangeListener(WebServerPreferences.RAILROAD_NAME, (PropertyChangeEvent evt) -> {
+        preferences.addPropertyChangeListener(WebServerPreferences.RAILROAD_NAME, (PropertyChangeEvent evt) -> {
             this.savePreferences(profile);
         });
-        WebServerPreferences.getDefault().addPropertyChangeListener(WebServerPreferences.READONLY_POWER, (PropertyChangeEvent evt) -> {
+        preferences.addPropertyChangeListener(WebServerPreferences.READONLY_POWER, (PropertyChangeEvent evt) -> {
             this.savePreferences(profile);
         });
         WebServer.getDefault().addLifeCycleListener(new LifeCycle.Listener() {
@@ -320,39 +323,42 @@ public class WebAppManager extends AbstractPreferencesManager {
                 } catch (IOException ex) {
                     log.error("Unable to watch {} for changes.", file);
                 }
-                (new Thread() {
-                    @Override
-                    public void run() {
-                        while (WebAppManager.this.watcher.get(profile) != null) {
-                            WatchKey key;
-                            try {
-                                key = WebAppManager.this.watcher.get(profile).take();
-                            } catch (InterruptedException ex) {
-                                return;
-                            }
+                this.lifeCycleListener = new Thread(() -> {
+                    while (WebAppManager.this.watcher.get(profile) != null) {
+                        WatchKey key;
+                        try {
+                            key = WebAppManager.this.watcher.get(profile).take();
+                        } catch (InterruptedException ex) {
+                            return;
+                        }
 
-                            key.pollEvents().stream().filter((event) -> (event.kind() != OVERFLOW)).forEachOrdered((event) -> {
-                                WebAppManager.this.savePreferences(profile);
-                            });
-                            if (!key.reset()) {
-                                WebAppManager.this.watcher.remove(profile);
-                            }
+                        key.pollEvents().stream().filter((event) -> (event.kind() != OVERFLOW)).forEachOrdered((event) -> {
+                            WebAppManager.this.savePreferences(profile);
+                        });
+                        if (!key.reset()) {
+                            WebAppManager.this.watcher.remove(profile);
                         }
                     }
-                }).start();
+                }, "WebAppManager");
+                this.lifeCycleListener.start();
             });
         }
     }
 
     private void lifeCycleFailure(LifeCycle lc, Throwable thrwbl, Profile profile) {
-        this.watcher.remove(profile);
+        log.debug("Web server life cycle failure", thrwbl);
+        this.lifeCycleStopped(lc, profile);
     }
 
     private void lifeCycleStopping(LifeCycle lc, Profile profile) {
-        this.watcher.remove(profile);
+        this.lifeCycleStopped(lc, profile);
     }
 
     private void lifeCycleStopped(LifeCycle lc, Profile profile) {
+        if (this.lifeCycleListener != null) {
+            this.lifeCycleListener.interrupt();
+            this.lifeCycleListener = null;
+        }
         // stop watching web/app directories
         this.watcher.remove(profile);
     }

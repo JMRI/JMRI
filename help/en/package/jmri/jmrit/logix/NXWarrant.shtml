@@ -72,7 +72,7 @@
         that route <i>must</i> include.</li>
 
         <li>(Optionally) Chose an <b>Avoid</b> block, that is, a
-        block the the route <i>must not</i> include.</li>
+        block the route <i>must not</i> include.</li>
       </ul>
 
       <p>Blocks are chosen either by typing in the block name or
@@ -81,7 +81,8 @@
       destination blocks can also be chosen by clicking on track
       icons that represent these OBlocks. To use this feature your
       panel must have your layout depicted by Indicator Track Icons
-      placed there by Circuit Builder.</p>
+      placed there by <a href=
+      "../display/CircuitBuilder.shtml">Circuit Builder</a>.</p>
 
       <p>To specify a Warrant route by mouse clicks, simply click
       on a track icon on your Control Panel. The mouse clicks
@@ -273,7 +274,7 @@
       <p>It is
       necessary to have a length specified for each path in a 
       block. A rough estimate within 5% of the actual length 
-      is adequate. Each path inherits the the length specified
+      is adequate. Each path inherits the length specified
       for the block, so it is only important to input a separate
       length for a path when its length is significantly less
       than the block length. Lengths can be set for OBlocks and
@@ -295,7 +296,7 @@
 
       <a name="prefs" id="prefs"></a>
       <h2>Warrant Preferences</h2>
-      <p>From the general JMRi Preferences, select the Warrants tab
+      <p>From the general JMRI Preferences, select the Warrants tab
       and check the options set for:</p>
       <ul>
         <li><b>Layout Scale</b> - Setting the modelling scale

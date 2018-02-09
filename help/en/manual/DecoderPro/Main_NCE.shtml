@@ -151,7 +151,7 @@
       macro in the text box under the heading
       <strong>Macro</strong> and click the <strong>Get</strong>
       button. This will retrieve the macro from the command
-      station's memory. If the the macro currently exists,
+      station's memory. If the macro currently exists,
       <strong>Reply:</strong> will be macro found. If the macro
       does not exist, the <strong>Reply:</strong> will be macro
       empty. If there is a macro, the editor will show a list of

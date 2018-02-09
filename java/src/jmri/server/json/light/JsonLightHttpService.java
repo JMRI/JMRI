@@ -37,7 +37,7 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService {
         root.put(TYPE, LIGHT);
         Light light = InstanceManager.lightManagerInstance().getLight(name);
         ObjectNode data = this.getNamedBean(light, name, type, locale);
-        root.put(DATA, data);
+        root.set(DATA, data);
         if (light != null) {
             switch (light.getState()) {
                 case Light.ON:

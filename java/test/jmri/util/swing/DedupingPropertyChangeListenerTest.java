@@ -1,6 +1,7 @@
 package jmri.util.swing;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,24 +11,21 @@ import java.util.concurrent.Semaphore;
 import javax.swing.SwingUtilities;
 
 import jmri.util.JUnitUtil;
-import jmri.util.MockPropertyChangeListener;
-
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import jmri.util.PropertyChangeListenerScaffold;
 
 /**
  * @author Balazs Racz Copyright (C) 2017
  */
 public class DedupingPropertyChangeListenerTest {
     PropertyChangeSupport source = new PropertyChangeSupport(this);
-    MockPropertyChangeListener l = new MockPropertyChangeListener();
+    PropertyChangeListenerScaffold l; 
 
     Semaphore semaphore = new Semaphore(1);
 
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        l = new PropertyChangeListenerScaffold();
     }
 
     @After
@@ -72,7 +70,8 @@ public class DedupingPropertyChangeListenerTest {
         source.addPropertyChangeListener(new DedupingPropertyChangeListener(l));
         source.firePropertyChange("test", null, 42);
         waitForEventThread();
-        verify(l.m).onChange("test", 42);
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged();});
+        Assert.assertEquals("called once",1,l.getCallCount());
     }
 
     @Test
@@ -84,10 +83,8 @@ public class DedupingPropertyChangeListenerTest {
         waitForEventThread();
         source.firePropertyChange("test", null, 44);
         waitForEventThread();
-        verify(l.m).onChange("test", 42);
-        verify(l.m).onChange("test", 43);
-        verify(l.m).onChange("test", 44);
-        verifyNoMoreInteractions(l.m);
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged();});
+        Assert.assertEquals("called three times",3,l.getCallCount());
     }
 
     @Test
@@ -95,12 +92,15 @@ public class DedupingPropertyChangeListenerTest {
         source.addPropertyChangeListener(new DedupingPropertyChangeListener(l));
         source.firePropertyChange("test", null, 42);
         waitForEventThread();
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged();});
+        l.resetPropertyChanged();
         source.firePropertyChange("test", null, 42);
         waitForEventThread();
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged();});
+        l.resetPropertyChanged();
         source.firePropertyChange("test", null, 42);
         waitForEventThread();
-        verify(l.m, times(3)).onChange("test", 42);
-        verifyNoMoreInteractions(l.m);
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged();});
     }
 
     @Test
@@ -111,8 +111,8 @@ public class DedupingPropertyChangeListenerTest {
         source.firePropertyChange("test", null, 44);
         source.firePropertyChange("test", null, 43);
         releaseEventThread();
-        verify(l.m, times(1)).onChange("test", 43);
-        verifyNoMoreInteractions(l.m);
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged();});
+        Assert.assertEquals("called once",1,l.getCallCount());
     }
 
     @Test
@@ -123,9 +123,8 @@ public class DedupingPropertyChangeListenerTest {
         source.firePropertyChange("testy", null, 44);
         source.firePropertyChange("testx", null, 43);
         releaseEventThread();
-        verify(l.m, times(1)).onChange("testx", 43);
-        verify(l.m, times(1)).onChange("testy", 44);
-        verifyNoMoreInteractions(l.m);
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged();});
+        Assert.assertEquals("called twice",2,l.getCallCount());
     }
 
 }
