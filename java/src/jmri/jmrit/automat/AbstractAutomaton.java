@@ -1004,7 +1004,13 @@ public class AbstractAutomaton implements Runnable {
             InstanceManager.getDefault(ThrottleManager.class).cancelThrottleRequest(address, throttleListener);  //kill the pending request
         } else {
             // keep the listener so we can release the throttle properly
-            throttleListenerMap.put(throttle, throttleListener);
+            tl = throttleListenerMap.get(throttle);
+            if (tl == null) {
+                throttleListenerMap.put(throttle, throttleListener);
+            } else {
+                // we already have a listener for this throttle object
+                throttle.removePropertyChangeListener(throttleListener);
+            }
         }
 
         return throttle;
