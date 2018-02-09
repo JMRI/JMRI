@@ -178,16 +178,13 @@ public class XTableColumnModel extends DefaultTableColumnModel {
         }
 
         if (columnIndex != newIndex) {
-            TableColumn fromColumn = tableColumns.get(columnIndex);
-            TableColumn toColumn = tableColumns.get(newIndex);
+            // columnIndex and newIndex are indexes of visblie columns, so need
+            // to get index of column in list of all columns
+            int allColumnsColumnIndex = allTableColumns.indexOf(tableColumns.get(columnIndex));
+            int allColumnsNewIndex = allTableColumns.indexOf(tableColumns.get(newIndex));
 
-            int allColumnsColumnIndex = allTableColumns.indexOf(fromColumn);
-            int allColumnsNewIndex = allTableColumns.indexOf(toColumn);
-
-        if (oldIndex != newIndex) {
-            allTableColumns.remove(allColumnsOldIndex);
-            allTableColumns.remove(allColumnsColumnIndex);
-            allTableColumns.add(allColumnsNewIndex, toColumn);
+            TableColumn column = allTableColumns.remove(allColumnsColumnIndex);
+            allTableColumns.add(allColumnsNewIndex, column);
         }
 
         super.moveColumn(columnIndex, newIndex);
