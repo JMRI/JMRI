@@ -4,8 +4,10 @@ import java.util.Enumeration;
 import javax.swing.table.TableColumn;
 import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -18,6 +20,14 @@ public class XTableColumnModelTest {
     private static final String COLUMN1 = "column1";
     private static final String COLUMN2 = "column2";
     private static final String COLUMN3 = "column3";
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
 
     @Before
     public void setUp() {
@@ -156,7 +166,7 @@ public class XTableColumnModelTest {
      * Test of moveColumn method, of class XTableColumnModel.
      */
     @Test
-    public void testMoveColumn() {
+    public void testMoveColumn_int_int() {
         XTableColumnModel instance = testModel();
         TableColumn column1 = instance.getColumn(0);
         TableColumn column2 = instance.getColumn(1);
@@ -193,6 +203,88 @@ public class XTableColumnModelTest {
         Assert.assertEquals(column1, instance.getColumn(0));
         Assert.assertEquals(column2, instance.getColumn(1));
         Assert.assertEquals(column3, instance.getColumn(2));
+    }
+
+    /**
+     * Test of moveColumn method, of class XTableColumnModel.
+     */
+    @Test
+    public void testMoveColumn_3args() {
+        XTableColumnModel instance = testModel();
+        TableColumn column1 = instance.getColumn(0);
+        TableColumn column2 = instance.getColumn(1);
+        TableColumn column3 = instance.getColumn(2);
+        boolean onlyVisible = true;
+        //
+        // move only visible columns (third arg is true)
+        //
+        instance.moveColumn(0, 0, onlyVisible);
+        Assert.assertEquals(column1, instance.getColumn(0));
+        Assert.assertEquals(column2, instance.getColumn(1));
+        Assert.assertEquals(column3, instance.getColumn(2));
+        instance.moveColumn(0, 2, onlyVisible);
+        Assert.assertEquals(column2, instance.getColumn(0));
+        Assert.assertEquals(column3, instance.getColumn(1));
+        Assert.assertEquals(column1, instance.getColumn(2));
+        instance.setColumnVisible(column1, false);
+        try {
+            instance.moveColumn(2, 0, onlyVisible);
+            Assert.fail("Expected IllegalArgumentException not thrown");
+        } catch (IllegalArgumentException ex) {
+            // passes
+        } catch (Exception ex) {
+            Assert.fail("Unexpected Exception thrown: " + ex.getMessage());
+        }
+        Assert.assertEquals(column2, instance.getColumn(0));
+        Assert.assertEquals(column3, instance.getColumn(1));
+        try {
+            instance.getColumn(2);
+            Assert.fail("Expected ArrayIndexOutOfBoundsException not thrown");
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            // pass
+        } catch (Exception ex) {
+            Assert.fail("Unexpected Exception thrown: " + ex.getMessage());
+        }
+        instance.setColumnVisible(column1, true);
+        instance.moveColumn(2, 0, onlyVisible);
+        Assert.assertEquals(column1, instance.getColumn(0));
+        Assert.assertEquals(column2, instance.getColumn(1));
+        Assert.assertEquals(column3, instance.getColumn(2));
+        //
+        // move hidden or visible columns (third arg is false)
+        //
+        onlyVisible = false;
+        instance.moveColumn(0, 0, onlyVisible);
+        Assert.assertEquals(column1, instance.getColumn(0));
+        Assert.assertEquals(column2, instance.getColumn(1));
+        Assert.assertEquals(column3, instance.getColumn(2));
+        instance.moveColumn(0, 2, onlyVisible);
+        Assert.assertEquals(column2, instance.getColumn(0));
+        Assert.assertEquals(column3, instance.getColumn(1));
+        Assert.assertEquals(column1, instance.getColumn(2));
+        instance.setColumnVisible(column1, false);
+        instance.moveColumn(2, 0, onlyVisible);
+        Assert.assertEquals(column2, instance.getColumn(0));
+        Assert.assertEquals(column3, instance.getColumn(1));
+        Assert.assertEquals(column1, instance.getColumn(0, onlyVisible));
+        Assert.assertEquals(column2, instance.getColumn(1, onlyVisible));
+        Assert.assertEquals(column3, instance.getColumn(2, onlyVisible));
+        try {
+            instance.getColumn(2, !onlyVisible);
+            Assert.fail("Expected ArrayIndexOutOfBoundsException not thrown");
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            // pass
+        } catch (Exception ex) {
+            Assert.fail("Unexpected Exception thrown: " + ex.getMessage());
+        }
+        instance.setColumnVisible(column1, true);
+        Assert.assertEquals(column1, instance.getColumn(0));
+        Assert.assertEquals(column2, instance.getColumn(1));
+        Assert.assertEquals(column3, instance.getColumn(2));
+        instance.moveColumn(2, 0, onlyVisible);
+        Assert.assertEquals(column3, instance.getColumn(0));
+        Assert.assertEquals(column1, instance.getColumn(1));
+        Assert.assertEquals(column2, instance.getColumn(2));
     }
 
     /**

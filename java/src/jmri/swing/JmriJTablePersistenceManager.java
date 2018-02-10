@@ -205,7 +205,11 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                     }
                 }
                 if (dataModelIndex != -1 && (dataModelIndex != i)) {
-                    model.moveColumn(dataModelIndex, i);
+                    if (isXModel) {
+                        ((XTableColumnModel) model).moveColumn(dataModelIndex, i, false);
+                    } else {
+                        model.moveColumn(dataModelIndex, i);
+                    }
                 }
             }
         }
