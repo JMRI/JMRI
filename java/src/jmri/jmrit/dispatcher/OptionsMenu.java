@@ -229,7 +229,7 @@ public class OptionsMenu extends JMenu {
             optionsPane.add(p13);
             JPanel p8 = new JPanel();
             initializeScaleCombo();
-            p8.add(new JLabel(Bundle.getMessage("LayoutScale") + ":"));
+            p8.add(new JLabel(Bundle.getMessage("LabelLayoutScale")));
             p8.add(layoutScaleBox);
             layoutScaleBox.setToolTipText(Bundle.getMessage("ScaleBoxHint"));
             optionsPane.add(p8);
