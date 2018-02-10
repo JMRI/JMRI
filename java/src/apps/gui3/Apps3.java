@@ -92,7 +92,7 @@ public abstract class Apps3 extends AppsBase {
         super(applicationName, configFileDef, args);
 
         // Prepare font lists
-        FontComboUtil.isReady();
+        FontComboUtil.initialize();
 
         // create GUI
         initializeHelpSystem();

@@ -20,7 +20,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood Copyright 2018
  * @since 2.13.1
  */
-public class FontComboUtilSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
+public class FontComboUtilSupport implements InstanceManagerAutoDefault {
 
     private List<String> all = null;
     private List<String> monospaced = null;
@@ -335,9 +334,13 @@ public class FontComboUtilSupport implements InstanceManagerAutoDefault, Instanc
         return prepared;
     }
 
-    private final Logger log = LoggerFactory.getLogger(FontComboUtilSupport.class);
-
-    @Override
+    /**
+     * Prepare for use. Cannot be used in conjunction with
+     * {@link jmri.InstanceManagerAutoInitialize} since the synchronization in
+     * {@link jmri.InstanceManager#getInstance(java.lang.Class)} forces this
+     * method to wait on the thread it creates to run
+     * {@link #prepareFontLists()}.
+     */
     public void initialize() {
         synchronized (this) {
             if (prepareThread == null) {
@@ -350,5 +353,7 @@ public class FontComboUtilSupport implements InstanceManagerAutoDefault, Instanc
             prepareThread.start();
         }
     }
+
+    private final Logger log = LoggerFactory.getLogger(FontComboUtilSupport.class);
 
 }

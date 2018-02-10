@@ -127,7 +127,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         SliderSnap.init();
 
         // Prepare font lists
-        FontComboUtil.isReady();
+        FontComboUtil.initialize();
 
         // Get configuration profile
         // Needs to be done before loading a ConfigManager or UserPreferencesManager

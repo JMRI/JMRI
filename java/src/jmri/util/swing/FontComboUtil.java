@@ -160,6 +160,13 @@ public class FontComboUtil {
         return InstanceManager.getDefault(FontComboUtilSupport.class).isReady();
     }
 
+    /**
+     * Prepare for use.
+     */
+    public static void initialize() {
+        InstanceManager.getDefault(FontComboUtilSupport.class).initialize();
+    }
+
     private static final Logger log = LoggerFactory.getLogger(FontComboUtil.class);
 
 }
