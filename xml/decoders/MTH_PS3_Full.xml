@@ -311,19 +311,25 @@
       <!-- Added CV55 reset -->
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">
+        <mode>OPSBYTEMODE</mode>
         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
       </factReset>
       <factReset label="Reset All CVs except user speed table" CV="8" default="192">
+        <mode>OPSBYTEMODE</mode>
         <label xml:lang="it">Reset delle CV salvo Tabella VelocitÃ  ai valori di fabbrica</label>
       </factReset>
       <factReset label="Reset volumes, smoke and light settings" CV="8" default="64">
+        <mode>OPSBYTEMODE</mode>
        <label xml:lang="it">Reset volume, fumo e luci ai valori di fabbrica</label>
       </factReset>
       <factReset label="Reset address" CV="8" default="128">
+        <mode>OPSBYTEMODE</mode>
         <label xml:lang="it">Reset indirizzo ai valori di fabbrica</label>
       </factReset>
-      <factReset label="Reset All CVs in POM Mode" CV="55" default="55">
-        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      <factReset label="Program Track Reset All CVs" CV="55" default="55">
+        <mode>PAGEMODE</mode>
+        <mode>DIRECTMODE</mode>
+        <label xml:lang="it">Program Track Reset delle CV ai valori di fabbrica</label>
       </factReset>
     </resets>
   </decoder>
