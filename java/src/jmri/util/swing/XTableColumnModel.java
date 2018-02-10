@@ -98,14 +98,13 @@ public class XTableColumnModel extends DefaultTableColumnModel {
 
     /**
      * Maps the index of the column in the table model at
-     * {@code modelColumnIndex} to the TableColumn object. There may me multiple
+     * {@code modelColumnIndex} to the TableColumn object. There may be multiple
      * TableColumn objects showing the same model column, though this is
-     * uncommon. This method will always return the first visible or else the
-     * first invisible column with the specified index.
+     * uncommon.
      *
      * @param modelColumnIndex index of column in table model
-     * @return table column object or null if no such column in this column
-     *         model
+     * @return the first column, visible or invisible, with the specified index
+     *         or null if no such column
      */
     public TableColumn getColumnByModelIndex(int modelColumnIndex) {
         for (int columnIndex = 0; columnIndex < allTableColumns.size(); ++columnIndex) {
