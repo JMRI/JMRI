@@ -127,7 +127,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         SliderSnap.init();
 
         // Prepare font lists
-        prepareFontLists();
+        FontComboUtil.isReady();
 
         // Get configuration profile
         // Needs to be done before loading a ConfigManager or UserPreferencesManager
@@ -896,7 +896,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 log.warn("JMRI property {} already set to {}, skipping reset to {}", key, current, value);
             }
         } catch (RuntimeException e) {
-            log.error("Unable to set JMRI property {} to {} due to execption {}", key, value, e);
+            log.error("Unable to set JMRI property {} to {}", key, value, e);
         }
     }
 
@@ -1179,15 +1179,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         // Log the startup information
         log.info(Log4JUtil.startupInfo(name));
-    }
-
-    private void prepareFontLists() {
-        // Prepare font lists
-        new Thread(() -> {
-            log.debug("Prepare font lists...");
-            FontComboUtil.prepareFontLists();
-            log.debug("...Font lists built");
-        }, "PrepareFontListsThread").start();
     }
 
     @Override

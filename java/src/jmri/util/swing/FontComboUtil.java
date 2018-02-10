@@ -91,7 +91,7 @@ public class FontComboUtil {
     /**
      * Method to initialise the font lists on first access
      */
-    public static synchronized void prepareFontLists() {
+    private static synchronized void prepareFontLists() {
         if (prepared || preparing) {
             // Normally we shouldn't get here except when the initialisation
             // thread has taken a bit longer than normal.
