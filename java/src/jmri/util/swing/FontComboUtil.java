@@ -53,6 +53,7 @@ public class FontComboUtil {
 
     private static boolean prepared = false;
     private static boolean preparing = false;
+    private static Thread prepareThread;
 
     public static List<String> getFonts(int which) {
         if (!prepared) {
@@ -332,11 +333,14 @@ public class FontComboUtil {
      *
      * @return true if ready for use; false otherwise
      */
-    public static boolean isReady() {
+    public synchronized static boolean isReady() {
         if (!prepared) {
-            new Thread(() -> {
-                prepareFontLists();
-            }, "FontComboUtil Prepare").start();
+            if (prepareThread == null) {
+                prepareThread = new Thread(() -> {
+                    prepareFontLists();
+                }, "FontComboUtil Prepare");
+                prepareThread.start();
+            }
         }
         return prepared;
     }
