@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-<version author="Alain Carasso" version="1" lastUpdated="20180204"/>
+<version author="Alain Carasso" version="1" lastUpdated="20180210"/>
   <!-- Version 1 - using the 2 existing MTH PS3 definitions created by Michael Mosher, merging them into a single one  -->
   <decoder>
     <family name="MTH HO Full PS3 Definition" mfg="MTH Electric Trains, Inc.">
@@ -383,32 +383,4 @@
     </column>
     <name>MTH Function Mapping</name>
   </pane>
-  <pane>
-    <column>
-      <display item="Short Address Alt Access"/>
-      <display item="Extended Address Alt Access"/>
-      <label>
-         <text>For controllers that prohibit address changes on POM (Ops mode programming)</text>
-      </label>
-      <label>
-         <text>Reset only works if value of 55 is sent to CV55 on address 55, using this TAB in Programming Track Mode</text>
-      </label>
-      <label>
-         <text>------------------------------------------------------------------------------------------------------------------------------------------------------------------------</text>
-      </label>
-      <label>
-         <text>But if the command station allows to change address in POM mode, various resets can be done using CV8</text>
-      </label>
-      <label>
-         <text>CV8=8 for full reset, CV8=64 for volume+light+smoke, CV8=128 for address only,  CV8=192 for all except the speed table</text>
-      </label>
-      <label>
-         <text>In that case, use the CVs TAB to reset using CV8, not this one</text>
-      </label>
-      <label>
-         <text>------------------------------------------------------------------------------------------------------------------------------------------------------------------------</text>
-      </label>
-    </column>
-    <name>MTH reset with 55</name>
-  </pane>
-</decoder-config>
+ </decoder-config>
