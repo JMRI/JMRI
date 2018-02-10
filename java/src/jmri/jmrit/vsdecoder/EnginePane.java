@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011, 2018
  * 
  */
 import java.beans.PropertyChangeEvent;
@@ -47,7 +47,6 @@ public class EnginePane extends JPanel {
     }
 
     public void init() {
-
     }
 
     public void initContext(Object context) {
@@ -59,7 +58,7 @@ public class EnginePane extends JPanel {
 
     @Override
     public String getName() {
-        return (name);
+        return name;
     }
 
     @Override
@@ -68,7 +67,7 @@ public class EnginePane extends JPanel {
     }
 
     public EngineSoundEvent getEngine() {
-        return (engine);
+        return engine;
     }
 
     public void setEngine(EngineSoundEvent e) {
@@ -76,6 +75,15 @@ public class EnginePane extends JPanel {
     }
 
     public void setThrottle(int t) {
+    }
+
+    public void setSpeed(float s) {
+    }
+
+    public void startButtonClick() {
+    }
+
+    public void setButtonDelay(long t) {
     }
 
     @Override

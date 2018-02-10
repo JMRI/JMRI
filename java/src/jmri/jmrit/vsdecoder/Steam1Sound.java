@@ -50,7 +50,6 @@ class Steam1Sound extends EngineSound {
     // Trigger Sounds
     HashMap<String, SoundBite> trigger_sounds;
 
-    private float lastSpeed = 0.0f;
     private int top_speed;
     private float driver_diameter_float;
     private int num_cylinders;
@@ -62,8 +61,6 @@ class Steam1Sound extends EngineSound {
     private SoundBite pre_arrival_sound;
 
     // Common variables
-    EnginePane engine_pane;
-
     boolean is_looping = false;
     S1LoopThread _loopThread = null;
 
@@ -76,10 +73,6 @@ class Steam1Sound extends EngineSound {
         _loopThread = new S1LoopThread(this, _soundName, top_speed,
                 driver_diameter_float, num_cylinders, exponent, decel_trigger_rpms, true);
         log.debug("Loop Thread Started.  Sound name: {}", _soundName);
-        if (auto_start_engine && _loopThread.isRunning()) {
-            //startEngine(); // unclear side-effects.
-            log.info("Option \"Auto Start Engine\" not yet available!");
-        }
     }
 
     @Override
@@ -91,19 +84,12 @@ class Steam1Sound extends EngineSound {
         is_looping = false;
     }
 
-    @Override
-    public void handleSpeedChange(Float s, EnginePane e) {
-        // DieselPane; I use notches for Steam similarly.
-        engine_pane = e; // For notch updates in JSpinner (see changeNotch())
-    }
-
     // Responds to "CHANGE" trigger (float)
     @Override
     public void changeThrottle(float s) {
         // This is all we have to do.  The loop thread will handle everything else.
         if (_loopThread != null) {
             _loopThread.setThrottle(s);
-            lastSpeed = s;
         }
     }
 
@@ -115,11 +101,7 @@ class Steam1Sound extends EngineSound {
     @Override
     public void startEngine() {
         log.debug("startEngine. ID = {}", this.getName());
-        if (lastSpeed < 0.001f) {
-            _loopThread.startEngine();
-        } else {
-            log.info("speed must be 0 to start engine!");
-        }
+        _loopThread.startEngine();
     }
 
     @Override
@@ -180,7 +162,7 @@ class Steam1Sound extends EngineSound {
 
         //log.debug("Steam EngineSound: {}", e.getAttribute("name").getValue());
         _soundName = this.getName();
-        log.debug("Steam1: name: {},  soundName: {}", this.getName(), _soundName);
+        log.debug("Steam1: name: {}, soundName: {}", this.getName(), _soundName);
 
         // Required values
         top_speed = Integer.parseInt(e.getChildText("top-speed"));
@@ -199,6 +181,11 @@ class Steam1Sound extends EngineSound {
             exponent = 1.0f; // default
         }
         log.debug("exponent: {}", exponent);
+
+        // Optional value 
+        // auto-start
+        is_auto_start = setXMLAutoStart(e);
+        log.debug("config auto-start: {}", is_auto_start);
 
         // Optional value
         // Defines how many rpms in 0.5 seconds will trigger decel actions like braking.
@@ -347,7 +334,7 @@ class Steam1Sound extends EngineSound {
         if (el != null) {
             fn = el.getChild("sound-file").getValue();
             log.debug("boiling-sound: {}", fn);
-            boiling_sound = new SoundBite(vf, fn, name + "_boiling", name + "_Boiling");
+            boiling_sound = new SoundBite(vf, fn, name + "_BOILING", name + "_Boiling");
             boiling_sound.setGain(setXMLGain(el)); // Handle gain
             log.debug("boiling-sound gain: {}", boiling_sound.getGain());
             boiling_sound.setLooped(true);
@@ -388,6 +375,9 @@ class Steam1Sound extends EngineSound {
 
         // Kick-start the loop thread.
         this.startThread();
+
+        // Check auto-start setting
+        autoStartCheck();
     }
 
     private static final Logger log = LoggerFactory.getLogger(Steam1Sound.class);
@@ -585,7 +575,6 @@ class Steam1Sound extends EngineSound {
         private boolean is_running = false;
         private boolean is_looping = false;
         private boolean is_dying = false;
-        private boolean _engine_started;
         private boolean is_auto_coasting;
         private boolean is_idling;
         private boolean is_braking;
@@ -629,7 +618,6 @@ class Steam1Sound extends EngineSound {
             is_running = r;
             is_looping = false;
             is_dying = false;
-            _engine_started = false;
             is_auto_coasting = false;
             is_idling = false;
             is_braking = false;
@@ -670,7 +658,7 @@ class Steam1Sound extends EngineSound {
         public void setThrottle(float t) {
             // Don't do anything, if engine is not started.
             // Another required value is a S1Notch (should have been set at engine start).
-            if (_engine_started) {
+            if (_parent.engine_started) {
                 if (t < 0.0f) {
                     // DO something to shut down.
                     _sound.stop();
@@ -747,7 +735,7 @@ class Steam1Sound extends EngineSound {
             }
         }
 
-        public void startboilingSound() {
+        public void startBoilingSound() {
             if (_parent.trigger_sounds.containsKey("boiling")) {
                 _parent.trigger_sounds.get("boiling").setLooped(true);
                 _parent.trigger_sounds.get("boiling").play();
@@ -755,7 +743,7 @@ class Steam1Sound extends EngineSound {
             }
         }
 
-        private void stopboilingSound() {
+        private void stopBoilingSound() {
             if (_parent.trigger_sounds.containsKey("boiling")) {
                 _parent.trigger_sounds.get("boiling").setLooped(false);
                 _parent.trigger_sounds.get("boiling").fadeOut();
@@ -776,27 +764,27 @@ class Steam1Sound extends EngineSound {
             coast_notch  = _parent.getNotch(1); // Coast sounds are bound to notch 1.
             helper_notch = _parent.getNotch(1); // Helper buffers are bound to notch 1.
             _notch = _parent.getNotch(1); // Initial value.
-            _engine_started = true;
+            _parent.engine_pane.setThrottle(1); // Set EnginePane (DieselPane) notch
             setRpm(0);
             setRpmNominal(0);
             setupAccDec(); // Setup acceleration and deceleration factors.
             helper_index = -1; // Prepare helper buffer start. Index will be incremented before first use.
             setWait(0);
-            startboilingSound();
+            startBoilingSound();
             startIdling();
         }
 
         public void stopEngine() {
             log.debug("thread: stop engine ...");
-            _engine_started = false;
             if (is_looping) {
                 is_looping = false; // Stop the loop player.
             }
             is_dying = true;
             stopBraking();
             stopAutoCoasting();
-            stopboilingSound();
+            stopBoilingSound();
             stopIdling();
+            _throttle = 0.0f; // Clear it, just in case the engine was stopped at speed > 0
         }
 
         public void setupAccDec() {
@@ -961,7 +949,7 @@ class Steam1Sound extends EngineSound {
                     startIdling();
                 }
             } else {
-                if (_engine_started && (getRpm() >= _parent.getNotch(1).getMinLimit())) {
+                if (_parent.engine_started && (getRpm() >= _parent.getNotch(1).getMinLimit())) {
                     stopIdling();
                     //
                     // Now prepare to start the chuff sound (or coasting sound).

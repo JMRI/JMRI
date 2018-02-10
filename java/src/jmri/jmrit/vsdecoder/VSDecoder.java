@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011, 2018
  */
 public class VSDecoder implements PropertyChangeListener {
 
@@ -287,13 +287,23 @@ public class VSDecoder implements PropertyChangeListener {
             return;
         }
 
-        log.debug("VSDecoderPane throttle property change: " + eventName);
+        log.debug("VSDecoderPane throttle property change: {}", eventName);
 
         if (oldValue != null) {
-            log.debug("Old: " + oldValue.toString());
+            log.debug("Old: {}", oldValue.toString());
         }
         if (newValue != null) {
-            log.debug("New: " + newValue.toString());
+            log.debug("New: {}", newValue.toString());
+        }
+
+        if (eventName.equals("throttleAssigned")) {
+            Float s = (Float) InstanceManager.throttleManagerInstance().getThrottleInfo(config.getDccAddress(), "SpeedSetting"); 
+            if (s != null) {
+                ((EngineSound) this.getSound("ENGINE")).setFirstSpeed(true); // Auto-start needs this
+                // Mimic a throttlePropertyChange to propagate the current (init) speed setting of the throttle.
+                log.debug("Existing DCC Throttle found. Speed: {}", s);
+                this.throttlePropertyChange(new PropertyChangeEvent(this, "SpeedSetting", null, s));
+            }
         }
 
         // Iterate through the list of sound events, forwarding the propertyChange event.
@@ -333,12 +343,11 @@ public class VSDecoder implements PropertyChangeListener {
                 new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent event) {
-                log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue()
-                        + " new " + event.getNewValue());
+                log.debug("property change name: {}, old: {}, new: {}", event.getPropertyName(), event.getOldValue(), event.getNewValue());
                 throttlePropertyChange(event);
             }
         });
-        log.debug("VSDecoder: Address set to " + config.getLocoAddress().toString());
+        log.debug("VSDecoder: Address set to {}", config.getLocoAddress().toString());
     }
 
     /**
@@ -826,18 +835,7 @@ public class VSDecoder implements PropertyChangeListener {
             se.setXml(el, vf);
             event_list.put(se.getName(), se);
         }
-
         // Handle other types of children similarly here.
-        // Check for an existing throttle and update speed if it exists.
-        Float s = (Float) InstanceManager.throttleManagerInstance().getThrottleInfo(config.getDccAddress(),
-                "SpeedSetting");
-        if (s != null) {
-            // Mimic a throttlePropertyChange to propagate the current (init) speed setting of the throttle.
-            log.debug("Existing Throttle found.  Speed = " + s);
-            this.throttlePropertyChange(new PropertyChangeEvent(this, "SpeedSetting", null, s));
-        } else {
-            log.debug("No existing throttle found.");
-        }
     }
 
     private static final Logger log = LoggerFactory.getLogger(VSDecoder.class);
