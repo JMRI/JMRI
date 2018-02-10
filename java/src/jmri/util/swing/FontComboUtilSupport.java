@@ -173,9 +173,9 @@ public class FontComboUtilSupport implements InstanceManagerAutoDefault, Instanc
      * list is displayed using a preview of the font at the standard size.
      *
      * @see #getFontCombo(int, int, boolean)
-     * @param which the set of fonts to return; {@link #MONOSPACED},
-     * {@link #PROPORTIONAL}, {@link #CHARACTER}, {@link #SYMBOL} or
-     *              {@link #ALL}
+     * @param which the set of fonts to return; {@link FontComboUtil#MONOSPACED},
+     *              {@link FontComboUtil#PROPORTIONAL}, {@link FontComboUtil#CHARACTER},
+     *              {@link FontComboUtil#SYMBOL} or {@link FontComboUtil#ALL}
      * @return List of specified font families as a {@link JComboBox}
      */
     public JComboBox<String> getFontCombo(int which) {
@@ -188,9 +188,9 @@ public class FontComboUtilSupport implements InstanceManagerAutoDefault, Instanc
      * with the option of the name alongside in the regular dialog font.
      *
      * @see #getFontCombo(int, int, boolean)
-     * @param which       the set of fonts to return; {@link #MONOSPACED},
-     * {@link #PROPORTIONAL}, {@link #CHARACTER}, {@link #SYMBOL} or
-     *                    {@link #ALL}
+     * @param which       the set of fonts to return; {@link FontComboUtil#MONOSPACED},
+     *                    {@link FontComboUtil#PROPORTIONAL}, {@link FontComboUtil#CHARACTER},
+     *                    {@link FontComboUtil#SYMBOL} or {@link FontComboUtil#ALL}
      * @param previewOnly set to True to show only a preview in the list; False
      *                    to show both name and preview
      * @return List of specified font families as a {@link JComboBox}
@@ -205,9 +205,9 @@ public class FontComboUtilSupport implements InstanceManagerAutoDefault, Instanc
      * size.
      *
      * @see #getFontCombo(int, int, boolean)
-     * @param which the set of fonts to return; {@link #MONOSPACED},
-     * {@link #PROPORTIONAL}, {@link #CHARACTER}, {@link #SYMBOL} or
-     *              {@link #ALL}
+     * @param which the set of fonts to return; {@link FontComboUtil#MONOSPACED},
+     * {@link FontComboUtil#PROPORTIONAL}, {@link FontComboUtil#CHARACTER}, {@link FontComboUtil#SYMBOL}
+     *              or {@link FontComboUtil#ALL}
      * @param size  point size for the preview
      * @return List of specified font families as a {@link JComboBox}
      */
@@ -222,11 +222,11 @@ public class FontComboUtilSupport implements InstanceManagerAutoDefault, Instanc
      * <p>
      * Available font sets:
      * <ul>
-     * <li>Monospaced fonts {@link #MONOSPACED}
-     * <li>Proportional fonts {@link #PROPORTIONAL}
-     * <li>Character fonts {@link #CHARACTER}
-     * <li>Symbol fonts {@link #SYMBOL}
-     * <li>All available fonts {@link #ALL}
+     * <li>Monospaced fonts {@link FontComboUtil#MONOSPACED}
+     * <li>Proportional fonts {@link FontComboUtil#PROPORTIONAL}
+     * <li>Character fonts {@link FontComboUtil#CHARACTER}
+     * <li>Symbol fonts {@link FontComboUtil#SYMBOL}
+     * <li>All available fonts {@link FontComboUtil#ALL}
      * </ul>
      * <p>
      * Typical usage:
@@ -240,9 +240,9 @@ public class FontComboUtilSupport implements InstanceManagerAutoDefault, Instanc
      *  fontFamily.setSelectedItem(myObject.getFontFamily());
      * </pre>
      *
-     * @param which       the set of fonts to return; {@link #MONOSPACED},
-     * {@link #PROPORTIONAL}, {@link #CHARACTER}, {@link #SYMBOL} or
-     *                    {@link #ALL}
+     * @param which       the set of fonts to return; {@link FontComboUtil#MONOSPACED},
+     *                    {@link FontComboUtil#PROPORTIONAL}, {@link FontComboUtil#CHARACTER},
+     *                    {@link FontComboUtil#SYMBOL}, or {@link FontComboUtil#ALL}
      * @param size        point size for the preview
      * @param previewOnly true to show only a preview in the list; false to show
      *                    both name and preview
