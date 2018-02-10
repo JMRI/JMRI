@@ -57,7 +57,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         _manager = inManager;
         setSelectedBean(inNamedBean);
         //setEditable(true);
-        _manager.addPropertyChangeListener(new DedupingPropertyChangeListener(this));
+        _manager.addPropertyChangeListener(new DedupingPropertyChangeListener(this)); // reduce traffic, force Swing thread
         setKeySelectionManager(new BeanSelectionManager());
 
         //fires when drop down list item is selected
@@ -76,10 +76,11 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         });
     }
 
+    /** {@inheritDoc} */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
-            // a new NamedBean is available in the manager
+            // a bean has been added or removed in the manager
             _lastSelected = (String) getSelectedItem();
             updateComboBox(_lastSelected);
             log.debug("Update triggered in name list");
@@ -93,7 +94,8 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 removeSelectionInterval(newValueInt, oldValueInt);
             }
         } else if (e.getPropertyName().equals("DisplayListName")) {
-            refreshCombo();
+            // a bean has been renamed
+            updateComboBox((String) getSelectedItem());
         }
     }
 
@@ -109,10 +111,18 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         return _manager;
     }
 
+    /**
+     * Update contents of combobox, keeping the current selection
+     * @deprecated 4.11.3 Not necessary (or if it is, there's a bug)
+     */
+    @Deprecated
     public void refreshCombo() {
         updateComboBox((String) getSelectedItem());
     }
 
+    /**
+     * Update contents of combobox, setting a specific selection at end
+     */
     private void updateComboBox(String inSelect) {
         displayToBean = new HashMap<>();
         removeAllItems();
@@ -136,10 +146,11 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
     /**
      * Get the display list used by this combo box.
+     * Handles exclusion, see {@link #excludeItems()}.
      *
      * @return the display list used by this combo box
      */
-    public String[] getDisplayList() {
+    protected String[] getDisplayList() {
         ArrayList<String> nameList = new ArrayList<>(Arrays.asList(_manager.getSystemNameArray()));
 
         exclude.stream().filter((bean) -> (bean != null)).forEachOrdered((bean) -> {
@@ -308,7 +319,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      */
     public String getText() {
         return getEditor().getItem().toString();
-    }   // getText
+    }
 
     /**
      * Set the text from the editor for this JmriBeanComboBox
@@ -323,7 +334,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             setSelectedIndex(-1);
         }
         validateText();
-    }   // setText
+    }
 
     /**
      * Get the display order of the combobox.
@@ -357,7 +368,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         if (_firstBlank == inFirstItemBlank) {
             return; // no Change to make
         }
-        if (_firstBlank) {
+        if (_firstBlank) { // the first item was blank, so remove it now
             super.removeItemAt(0);
         } else {
             super.insertItemAt("", 0);
@@ -589,6 +600,9 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         }
     }
 
+    /**
+     * Called when done to release resources
+     */
     public void dispose() {
         _manager.removePropertyChangeListener(this);
 
@@ -599,6 +613,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         long lastKeyTime = 0;
         String pattern = "";
 
+        /** {@inheritDoc} */
         // FIXME: What is the correct type for the combo model here? This class may need refactored significantly to fix this?
         @Override
         public int selectionForKey(char inKey, @SuppressWarnings("rawtypes") javax.swing.ComboBoxModel model) {
@@ -821,6 +836,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             return _disabledBackgroundColor;
         }
 
+        /** {@inheritDoc} */
         @Override
         public Component getListCellRendererComponent(JList inList, Object inValue,
                 int inIndex, boolean isSelected, boolean inCellHasFocus) {
