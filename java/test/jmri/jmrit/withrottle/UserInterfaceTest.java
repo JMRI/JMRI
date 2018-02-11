@@ -20,7 +20,8 @@ public class UserInterfaceTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         UserInterface panel = new UserInterface() {
             @Override
-            public void createServerThread() {
+            public void listen() {
+               // don't actually open the server port for this test.
             }
         };
 
