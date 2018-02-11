@@ -111,7 +111,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         _layoutScales.setPreferredSize(dim);
         _layoutScales.addItemListener(this);
         _layoutScales.setToolTipText(Bundle.getMessage("ToolTipLayoutScale"));
-        JLabel label = new JLabel(Bundle.getMessage("LabelLayoutScale"));
+        JLabel label = new JLabel(Bundle.getMessage("LabelLayoutScale")); // shared key in jmrit.Bundle.properties
         label.setToolTipText(Bundle.getMessage("ToolTipLayoutScale"));
         panel.add(label);
         JPanel p = new JPanel();

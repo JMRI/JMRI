@@ -3,10 +3,10 @@ package jmri.jmrit.logix;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
-import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.SignalMast;
@@ -1925,7 +1925,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
     }
 
-    private void cancelDelayRamp() {
+    synchronized private void cancelDelayRamp() {
         if (_delayCommand != null) {
             //            _delayCommand.interrupt();
             _delayCommand.cancel(true);
