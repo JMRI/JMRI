@@ -1,6 +1,19 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import jmri.Audio;
+import jmri.AudioException;
+import jmri.AudioManager;
+import jmri.jmrit.audio.AudioBuffer;
+import jmri.util.PhysicalLocation;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -15,21 +28,9 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011, 2018
+ * @author Mark Underwood Copyright (C) 2011
+ * @author Klaus Killinger Copyright (C) 2018
  */
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import jmri.Audio;
-import jmri.AudioException;
-import jmri.AudioManager;
-import jmri.jmrit.audio.AudioBuffer;
-import jmri.util.PhysicalLocation;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 // Usage:
 // EngineSound() : constructor
 // Suppressing "unused" warnings throughout. There are a dozen 

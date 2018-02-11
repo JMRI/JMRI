@@ -32,14 +32,12 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood Copyright (C) 2011
  * @author Klaus Killinger Copyright (C) 2017, 2018
  */
-
 // Usage:
 // Steam1Sound() : constructor
 // stop() : ends extended sustain horn (plays end sound)
 // Suppressing "unused" warnings throughout. There are a dozen
 // methods, ctors and values that aren't used and don't have
 // outside access.
-
 @SuppressWarnings("unused")
 class Steam1Sound extends EngineSound {
 

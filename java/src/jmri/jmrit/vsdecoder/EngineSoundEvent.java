@@ -1,6 +1,13 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import javax.swing.JComponent;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -15,16 +22,9 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011, 2018
- * 
+ * @author Mark Underwood Copyright (C) 2011
+ * @author Klaus Killinger Copyright (C) 2018
  */
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import javax.swing.JComponent;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class EngineSoundEvent extends SoundEvent implements PropertyChangeListener {
 
     EnginePane engine_pane;

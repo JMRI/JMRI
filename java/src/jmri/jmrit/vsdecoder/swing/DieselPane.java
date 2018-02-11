@@ -1,29 +1,5 @@
 package jmri.jmrit.vsdecoder.swing;
 
-/**
- * class DieselPane
- *
- * Diesel sound control buttons for the new GUI
- */
-
-/*
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
- * <P>
- *
- * @author   Mark Underwood Copyright (C) 2011, 2018
- * 
- */
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,6 +18,30 @@ import jmri.jmrit.vsdecoder.EnginePane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * class DieselPane
+ *
+ * Diesel sound control buttons for the new GUI
+ */
+
+/**
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ * <P>
+ *
+ * @author Mark Underwood Copyright (C) 2011
+ * @author Klaus Killinger Copyright (C) 2018
+ */
 @SuppressWarnings("serial")
 public class DieselPane extends EnginePane {
 

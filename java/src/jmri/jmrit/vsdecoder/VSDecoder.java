@@ -41,7 +41,8 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Mark Underwood Copyright (C) 2011, 2018
+ * @author Mark Underwood Copyright (C) 2011
+ * @author Klaus Killinger Copyright (C) 2018
  */
 public class VSDecoder implements PropertyChangeListener {
 

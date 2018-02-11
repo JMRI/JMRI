@@ -1,6 +1,13 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.SwingUtilities;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -15,16 +22,9 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011, 2018
- * 
+ * @author Mark Underwood Copyright (C) 2011
+ * @author Klaus Killinger Copyright (C) 2018
  */
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.SwingUtilities;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 // Usage:
 // EngineSound() : constructor
 // play() : plays short horn pop

@@ -1,6 +1,10 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import javax.swing.JPanel;
+
+/**
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -15,13 +19,9 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011, 2018
- * 
+ * @author Mark Underwood Copyright (C) 2011
+ * @author Klaus Killinger Copyright (C) 2018
  */
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import javax.swing.JPanel;
-
 @SuppressWarnings("serial")
 public class EnginePane extends JPanel {
     // Superclass for Diesel, Steam, Electric panes.
