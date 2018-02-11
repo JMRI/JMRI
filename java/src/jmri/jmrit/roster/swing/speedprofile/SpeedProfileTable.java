@@ -24,7 +24,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
 /**
- * Display Speed Profile
+ * Display Speed Profile.
  *
  * @author  Pete Cressman Copyright (C) 2015
  */
@@ -116,15 +116,15 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         switch(interp) {
             case SignalSpeedMap.SPEED_MPH:
                 mph.setSelected(true);
-                str = "scale";
+                str = "scale"; // NOI18N
                 break;
             case SignalSpeedMap.SPEED_KMPH:
                 kph.setSelected(true);
-                str = "scale";
+                str = "scale"; // NOI18N
                 break;
             default:
                 mm.setSelected(true);
-                str = "track";
+                str = "track"; // NOI18N
         }
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.PAGE_AXIS));
@@ -188,10 +188,10 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         switch(interp) {
             case SignalSpeedMap.SPEED_MPH:
             case SignalSpeedMap.SPEED_KMPH:
-                str = "scale";
+                str = "scale"; // NOI18N
                 break;
             default:
-                str = "track";
+                str = "track"; // NOI18N
         }
         description.setText(Bundle.getMessage("rosterId", Bundle.getMessage(str), rosterId));
         model.fireTableDataChanged();
