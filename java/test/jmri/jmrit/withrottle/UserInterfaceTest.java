@@ -15,18 +15,12 @@ import org.junit.Test;
  */
 public class UserInterfaceTest {
 
+    private UserInterface panel = null;
+
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        UserInterface panel = new UserInterface() {
-            @Override
-            public void listen() {
-               // don't actually open the server port for this test.
-            }
-        };
-
         Assert.assertNotNull("exists", panel);
-        JUnitUtil.dispose(panel);
     }
 
     @Before
@@ -37,11 +31,23 @@ public class UserInterfaceTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initDefaultUserMessagePreferences();
+        if(!GraphicsEnvironment.isHeadless()){
+           panel = new UserInterface();
+        }
     }
 
     @After
     public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
-        JUnitUtil.resetInstanceManager();
+        if(!GraphicsEnvironment.isHeadless()){
+          try {
+             panel.disableServer();
+             JUnitUtil.waitFor( () -> { return panel.isListen; });
+             JUnitUtil.dispose(panel);
+          } catch(java.lang.NullPointerException npe) {
+             // not all tests fully configure the server, so an
+             // NPE here is ok.
+          }
+        }
+        JUnitUtil.tearDown();
     }
 }

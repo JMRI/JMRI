@@ -20,20 +20,26 @@ public class FacelessServerTest {
         Assert.assertNotNull("exists", panel );
     }
 
+    @Test
+    public void testGetDeviceList() {
+        Assert.assertNotNull("exists", panel.getDeviceList() );
+    }
+
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        panel = new FacelessServer(){
-            @Override
-            public void listen() {
-               // don't actually open the server port for this test.
-            }
-        };
+        panel = new FacelessServer();
     }
     
     @After
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
-        //panel.disableServer();
+        try {
+          panel.disableServer();
+          JUnitUtil.waitFor( () -> { return panel.isListen; });
+        } catch(java.lang.NullPointerException npe) {
+          // not all tests fully configure the server, so an
+          // NPE here is ok.
+        }
     }
 }

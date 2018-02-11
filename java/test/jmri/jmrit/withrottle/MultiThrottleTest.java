@@ -19,7 +19,7 @@ public class MultiThrottleTest extends TestCase {
         java.net.Socket s = new java.net.Socket();
         FacelessServer f = new FacelessServer(){
            @Override
-           public void createServerThread(){
+           public void listen(){
            }
         };
         DeviceServer ds = new DeviceServer(s,f);
