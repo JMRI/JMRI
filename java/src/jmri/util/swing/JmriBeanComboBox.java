@@ -415,7 +415,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         _firstBlank = inFirstItemBlank;
     }
 
-    public void setSelectedBean(@Nonnull NamedBean inNamedBean) {
+    public void setSelectedBean(NamedBean inNamedBean) {
         String selectedItem = "";
         if (inNamedBean != null) {
             String uname = inNamedBean.getUserName();
