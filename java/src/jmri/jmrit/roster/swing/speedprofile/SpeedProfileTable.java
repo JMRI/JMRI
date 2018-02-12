@@ -18,11 +18,14 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
+
 /**
  * Display Speed Profile.
  *
@@ -127,6 +130,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                 str = "track"; // NOI18N
         }
         JPanel topPanel = new JPanel();
+        topPanel.setBorder( new EmptyBorder( 0, 8, 8, 8 ) ); // keep text away from edges of pane
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.PAGE_AXIS));
         description = new JLabel(Bundle.getMessage("rosterId", Bundle.getMessage(str), rosterId));
         description.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -173,8 +177,8 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                 model.speedArray.remove(entry);
                 speedProfile.deleteStep(entry.getKey());
                 model.fireTableDataChanged();
-//                re.updateFile();
-//                Roster.getDefault().writeRoster();
+                // re.updateFile();
+                // Roster.getDefault().writeRoster();
             }
         }
     }
