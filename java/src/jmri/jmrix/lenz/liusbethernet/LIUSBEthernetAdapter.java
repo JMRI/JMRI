@@ -42,7 +42,6 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
     public void connect() throws java.io.IOException {
         super.connect();
         log.debug("openPort called");
-        keepAliveTimer();
     }
 
     /**
@@ -76,6 +75,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
         new XNetInitializationManager(this.getSystemConnectionMemo());
+        keepAliveTimer();
     }
 
     /**
@@ -91,18 +91,21 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
                     jmri.jmrix.lenz.XNetSystemConnectionMemo m = LIUSBEthernetAdapter.this
                             .getSystemConnectionMemo();
                     XNetTrafficController t = m.getXNetTrafficController();
-                    jmri.jmrix.lenz.XNetProgrammer p = (jmri.jmrix.lenz.XNetProgrammer) (m.getProgrammerManager().getGlobalProgrammer());
+                    jmri.jmrix.lenz.XNetProgrammer p = null;
+                    if(m.provides(jmri.GlobalProgrammerManager.class)){
+                        p = (jmri.jmrix.lenz.XNetProgrammer) (m.getProgrammerManager().getGlobalProgrammer());
+                    }
                     if (p == null || !(p.programmerBusy())) {
-                        t.sendXNetMessage(
-                                jmri.jmrix.lenz.XNetMessage.getCSStatusRequestMessage(),
-                                null);
+                       t.sendXNetMessage(
+                        jmri.jmrix.lenz.XNetMessage.getCSStatusRequestMessage(),
+                        null);
                     }
                 }
             };
         } else {
             keepAliveTimer.cancel();
         }
-        new java.util.Timer().schedule(keepAliveTimer, keepAliveTimeoutValue, keepAliveTimeoutValue);
+        new java.util.Timer("LIUSB Ethernet Keepalive timer").schedule(keepAliveTimer, keepAliveTimeoutValue, keepAliveTimeoutValue);
     }
 
     private boolean mDNSConfigure = false;

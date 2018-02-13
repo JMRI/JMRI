@@ -6,8 +6,8 @@
 <meta name="generator"
  content="HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<title>JMRI - Operations</title>
-<meta name="Author" content="Dan Boudreau">
+<title>JMRI: Operations</title>
+<meta name="author" content="Dan Boudreau">
 <meta name="keywords"
  content="JMRI Help Operations Setup Settings Cars Engines Locomotives Trains Routes Locations Schedules">
 <!-- Style -->
@@ -389,7 +389,7 @@
     liking without the use of staging tracks, classification/interchange tracks, and especially
     schedules and custom loads. We find that users attempting to use the advanced features before
     they understand how the program works tend to need a lot of help getting the car movement they
-    desire. So start off small and get your trains to build correctly, read the build reports in the
+    desire. So start off small and get your trains to build correctly, read the <a href="#BuildReports">build reports</a> in the
     very detailed mode for your trains, even if they build to your liking. You need to get
     proficient with the build reports before you begin using the more advanced features of the
     OperationsPro&trade;. Once you get your trains to build correctly, you can add staging tracks if
@@ -893,7 +893,7 @@
    mode will not fill every track to capacity which is more prototypical. However, normal mode won't
    swap a set of cars, cars are picked up or set out based on the available track space. Normal mode
    prevents track overloading. In aggressive mode you can "accidentally" create track overloading by
-   the order you build and run your trains or by using the the train reset function.
+   the order you build and run your trains or by using the Train Reset function.
 
    <p>Aggressive builds makes the car's track space available as soon as a car is scheduled for
     a pick up. Therefore there can be instances where a train was to pick up a car to vacate the
@@ -915,7 +915,7 @@
     decide that you don't want to run the first train, and reset the train. Now the original cars on
     still sitting on the track, and you now run and terminate the second train. The program will
     deliver the new cars, while the old cars are still sitting there, which unfortunately will
-    overload the track. You could also overload the the track if you ran the second train before the
+    overload the track. You could also overload the track if you ran the second train before the
     first, the second train would try and deliver cars to the track that still has cars sitting on
     it.</p>
 
@@ -1963,7 +1963,7 @@
    <h4>Show Cars</h4>
    <p>If you only want to see cars for a location or track, select "Show Cars" from the "Tools"
     menu. This tool is also useful when you want to print out cars for a specific location or track.
-    Note that the the export cars tool will only export cars for a location or track, and the delete
+    Note that the Export Cars tool will only export cars for a location or track, and the delete
     cars tool when only showing cars on a track, will only delete those cars.</p>
 
    <a name="LocationReporter" id="LocationReporter"></a>
@@ -2153,6 +2153,11 @@
     any load to be received by the spur/industry. When the "Ship" field is blank, the program will
     only place the default empty "E" or default load "L" into the car. See <a href="#Sidings">Spurs</a>
     for how the program deals with the default loads.
+   </p>
+   
+   <p>The "Receive" pull down menu will only show the loads that the spur can service for that particular
+   car type. To review which car loads are available see the <a href="#LoadOptions">load
+     options</a> for this spur.
    </p>
 
    <p>
@@ -2445,7 +2450,7 @@
 
    <p>Due to the complexity of staging tracks, it is strongly recommended that you not use
     staging tracks until you become comfortable with how the program builds trains including the
-    ability to read the train build reports.</p>
+    ability to read the train's <a href="#BuildReports">build report</a>.</p>
 
    <p>
     If this is your first time using a computer program to create car movements, it is recommended
@@ -2536,7 +2541,7 @@
    </p>
 
    <p>Both options work the same with regards to placing custom car loads into empty cars, only
-    the number the number of spurs considered by the program changes. If a schedule demands a
+    the number of spurs considered by the program changes. If a schedule demands a
     certain car type, and that car type is departing staging, and the car's load is default empty,
     the program will place the custom load into that car if one of the two options is selected.</p>
 
@@ -2590,7 +2595,7 @@
    will not be blocked for you, you need to first terminate a new train into staging, those cars
    will have the blocking tags assigned to them. To enable this feature, see Edit Staging Track,
    "Optional Car Blocking" in the lower right corner of the window. There are many reasons why this
-   option will not block cars correctly. See the train's build report for more details.
+   option will not block cars correctly. See the train's <a href="#BuildReports">build report</a> for more details.
 
    <p>
     This feature is disabled if you've decided to <a href="#StagingAndCarLoads">generate custom
@@ -2768,7 +2773,7 @@
     you only have two tracks at a location that can hold exactly three cars each. You place three
     cars on each track for a total of six cars. You've configured the program to allow a local
     switcher to swap the cars on each track. Without planned pickups, when you build the switcher
-    the program would find both tracks full and the build report will state that there isn't any
+    the program would find both tracks full and the <a href="#BuildReports">build report</a> will state that there isn't any
     space available to move cars to either track. The program needs to find an empty spot for a car
     before it can plan a move. With planned pickups set to 100% for both tracks, it allows the
     program to plan three car set outs to the full track, because with planned pickups the space
@@ -2830,7 +2835,7 @@
 
    <h4>Show Cars</h4>
    <p>This will open a "Cars" window displaying only the cars for the track selected. Note that
-    the the export cars tool will only export cars for the track selected, and the delete cars tool
+    the Export Cars tool will only export cars for the track selected, and the delete cars tool
     will only delete the cars for the track selected.</p>
 
    <a name="LocationsTools" id="LocationsTools"></a>
@@ -2973,7 +2978,7 @@
 
    <p>To import a file, use the "Tools" menu in the upper left hand corner of the
     Tools-&gt;Operations-&gt;Cars window. Then select "Tools-&gt;Car Roster-&gt;Import from file".
-    Note that the program will only add cars that don't exist in the program's car roster. It the
+    Note that the program will only add cars that don't exist in the program's car roster. If the
     car already exists, the import will be skipped by the program.</p>
 
    <p>
@@ -3445,7 +3450,7 @@
    <p>To import a file, use the "Tools" menu in the upper left hand corner of the
     Tools-&gt;Operations-&gt;Locomotives menu. Select "Tools-&gt;Locomotive Roster-&gt;Import from
     file. Note that the program will only add locomotives that don't exist in the program's
-    locomotive roster. It the locomotive already exists, it will be skipped by the program.</p>
+    locomotive roster. If the locomotive already exists, it will be skipped by the program.</p>
 
    <p>After importing your locomotives, you must save them if you want to keep them as part of
     your roster. Press the "Save" button located at the bottom of the Locomotives window, or select
@@ -3767,7 +3772,7 @@
     <img src="images/Trains.png">
    </p>
 
-   <p>The "Trains" window shows all of your trains. For each train, the there's a checkbox in
+   <p>The "Trains" window shows all of your trains. For each train, there's a checkbox in
     the "Build" column used to select which trains to build, print, and terminate. The buttons on
     the bottom of the page will build, print or terminate the trains selected. You can also modify
     an existing train using the "Edit" button for that train. For each train there's also an action
@@ -3783,12 +3788,12 @@
     selected shows all trains in your roster. When deselected, only trains that have the "Build"
     checkbox selected are shown. The "Messages" checkbox when selected will present a dialog box
     whenever a train build failure occurs explaining why the train didn't build. The "Build Report"
-    checkbox when selected provides a report detailing how the train was built by the program. Use
-    the "Print" or "Preview" button for a built train to see the build report. The program always
+    checkbox when selected provides a <a href="#BuildReports">Build Report</a> detailing how the train was built by the program. Use
+    the "Print" or "Preview" button for a built train to see the <a href="#BuildReports">build report</a>. The program always
     provides a "Report" button under the "Action" column for a train that fails to build.</p>
 
    <p>The "Preview" checkbox when selected, allows you to preview rather than printing your
-    train's Manifest or build report.</p>
+    train's Manifest or <a href="#BuildReports">build report</a>.</p>
 
    <p>
     If you select the "Generate CSV Manifest" from the <a href="#ManifestOptions">Options</a> window
@@ -4763,13 +4768,13 @@
     href="#Trains">Trains</a> window. The button will become "Print" or "Preview" after the train is
    built. If you want to review how the train was built, select the "Build Reports" checkbox before
    pressing the "Print" or "Preview" button for the desired train. If the "Preview" checkbox is
-   selected, the program will generate the build report and Manifest and present them in preview
+   selected, the program will generate the <a href="#BuildReports">Build Report</a> and Manifest and present them in preview
    windows. If you want to build several trains without having to press individual buttons for each
    train, select the trains that you want built and press the "Build" button found at the bottom of
    the trains window. The program will then build Manifests for all of the selected trains.
 
    <p>If a train fails to build, the "Action" button will change its text to "Report". Pressing
-    "Report" will print or preview the build report for this train. Whenever a train fails to build,
+    "Report" will print or preview the <a href="#BuildReports">build report</a> for this train. Whenever a train fails to build,
     a build failure message will appear. If you want to disable this feature deselect the checkbox
     "Build Messages".</p>
 
@@ -4810,6 +4815,11 @@
    If you want to examine how a train was built, you can select the "Build Reports" checkbox at the
    bottom of the train window, and then press the "Print" or "Preview" button for that train. The
    program will then provide the train Manifest and build report for your viewing.
+
+   <p>You can also find a copy of the train build report file in the "operations" directory in a
+    subdirectory called "buildstatus". Each train build report has its own file with the .txt
+    extension and the name of the train as part of the file name. You can if you wish use a text
+    editor to view the train build report file.</p>
 
    <p>
     When a train build fails for any reason, the train action button becomes "Report" which allows
@@ -4859,9 +4869,9 @@
    <a name="ReadingBuildReport" id="ReadingBuildReport"></a>
 
    <h3>Reading the Build Report</h3>
-   OperationsPro&trade; when building a train creates a build report and saves it to a file.
+   OperationsPro&trade; when building a train creates a <a href="#BuildReports">Build Report</a> and saves it to a file.
    Normally you would access the build report from the <a href="#BuildingTrains">Trains</a> window
-   or from the edit train "Tools" menu. The text files can be found in the
+   or from the edit train "Tools" menu. The train build report text files can be found in the
    operations-&gt;buildstatus directory. The build report shows the steps the operations program
    goes through while building a train. The first page provides the route the train will travel and
    the number of car moves requested for each location. The report then shows the car type and
@@ -5010,7 +5020,7 @@
    for all of the selected trains. You can modify the look of your Manifests from the <a
     href="#PrintOptions">Manifest Print Options</a> window.
 
-   <p>You can also access a train's Manifest and build report from the "Tools" menu in the edit
+   <p>You can also access a train's Manifest and <a href="#BuildReports">Build Report</a> from the "Tools" menu in the edit
     train window. The "Tools" menu option allows you to recover the Manifest and build report for a
     train that has been terminated. Useful if you've accidentally terminated a train before printing
     out the train's Manifest. Below is a train Manifest using the "Standard" format, with blue text

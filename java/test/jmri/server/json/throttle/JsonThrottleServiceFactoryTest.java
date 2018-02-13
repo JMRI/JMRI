@@ -3,9 +3,7 @@ package jmri.server.json.throttle;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.DataOutputStream;
 import jmri.server.json.JsonConnection;
-import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonMockConnection;
-import jmri.server.json.JsonSocketService;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -34,9 +32,8 @@ public class JsonThrottleServiceFactoryTest {
     public void testGetSocketService() {
         JsonConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonThrottleServiceFactory instance = new JsonThrottleServiceFactory();
-        JsonSocketService result = instance.getSocketService(connection);
+        JsonThrottleSocketService result = instance.getSocketService(connection);
         Assert.assertNotNull(result);
-        Assert.assertTrue(JsonSocketService.class.isInstance(result));
     }
 
     /**
@@ -45,8 +42,8 @@ public class JsonThrottleServiceFactoryTest {
     @Test
     public void testGetHttpService() {
         JsonThrottleServiceFactory instance = new JsonThrottleServiceFactory();
-        JsonHttpService result = instance.getHttpService(new ObjectMapper());
-        Assert.assertNull(result);
+        JsonThrottleHttpService result = instance.getHttpService(new ObjectMapper());
+        Assert.assertNotNull(result);
     }
 
 }

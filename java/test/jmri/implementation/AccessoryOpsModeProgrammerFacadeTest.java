@@ -1,8 +1,5 @@
 package jmri.implementation;
 
-import java.text.MessageFormat;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -117,7 +114,7 @@ public class AccessoryOpsModeProgrammerFacadeTest {
         StringBuilder sb = new StringBuilder();
         Pattern pattern;
         Matcher matcher;
-        ArrayList<String> retString = new ArrayList();
+        ArrayList<String> retString = new ArrayList<>();
 
         // Extract test parameters from test name.
         String methodName = Thread.currentThread().getStackTrace()[methodOffset].getMethodName();

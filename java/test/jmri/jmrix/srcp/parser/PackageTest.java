@@ -6,9 +6,9 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    SRCPClientParserTokenizerTest.class,
-    SRCPClientParserTest.class,
-    SRCPClientVisitorTest.class
+        SRCPClientParserTokenizerTest.class,
+        SRCPClientParserTest.class,
+        SRCPClientVisitorTest.class,
 })
 
 /**

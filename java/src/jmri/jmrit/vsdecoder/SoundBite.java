@@ -17,7 +17,6 @@ package jmri.jmrit.vsdecoder;
  *
  * @author   Mark Underwood Copyright (C) 2011
  */
-import java.util.ArrayList;
 import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.jmrit.audio.AudioBuffer;
@@ -38,18 +37,16 @@ class SoundBite extends VSDSound {
     AudioSource sound_src;
     boolean initialized = false;
     boolean looped = false;
-    boolean buf_loaded = false;
     int minloops;
     int maxloops;
     long length;
     BufferMode bufferMode;
-    ArrayList<AudioBuffer> loopBufferList = new ArrayList<AudioBuffer>();
 
     // Constructor for QUEUE_MODE.
     public SoundBite(String name) {
         super(name);
-        system_name = VSDSound.SrcSysNamePrefix + name;
-        user_name = VSDSound.SrcUserNamePrefix + name;
+        system_name = name;
+        user_name = name;
         bufferMode = BufferMode.QUEUE_MODE;
         initialized = init(null, bufferMode);
     }
@@ -85,7 +82,7 @@ class SoundBite extends VSDSound {
         if (!initialized) {
             try {
                 sound_src = (AudioSource) am.provideAudio(SrcSysNamePrefix + system_name);
-                sound_src.setUserName(BufUserNamePrefix + user_name);
+                sound_src.setUserName(SrcUserNamePrefix + user_name);
                 setLooped(false);
                 if (mode == BufferMode.BOUND_MODE) {
                     sound_buf = (AudioBuffer) am.provideAudio(BufSysNamePrefix + system_name);

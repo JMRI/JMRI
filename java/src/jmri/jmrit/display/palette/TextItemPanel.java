@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * ItemPanel for text labels.
+ * @see ItemPanel palette class diagram
  */
 public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
 
@@ -38,7 +39,9 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
     @Override
     public void init() {
         if (!_initialized) {
-            if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
+            if (!jmri.util.ThreadingUtil.isGUIThread()) {
+                log.error("Not on GUI thread", new Exception("traceback"));
+            }
             Thread.yield();
             JPanel blurb = new JPanel();
             blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
@@ -93,7 +96,7 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             try {
                 dataFlavor = new DataFlavor(Editor.POSITIONABLE_FLAVOR);
             } catch (ClassNotFoundException cnfe) {
-                cnfe.printStackTrace();
+                log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
             }
         }
 
@@ -162,8 +165,8 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             _decorator.setAttributes(l);
             PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
             l.setPopupUtility(util.clone(l, l.getTextComponent()));
-//            l.setFont(util.getFont().deriveFont(util.getFontStyle()));
-            if (util.hasBackground()) {     //unrotated
+            // l.setFont(util.getFont().deriveFont(util.getFontStyle()));
+            if (util.hasBackground()) { // unrotated
                 l.setOpaque(true);
             }
             l.setLevel(this.getDisplayLevel());

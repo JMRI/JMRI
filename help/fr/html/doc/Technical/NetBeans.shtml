@@ -1,14 +1,12 @@
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
-<!-- UpDated by Blorec Herv&#233;  2016-08-09-->
+<!-- Updated by Blorec Herv&#233;  2016-08-09-->
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Construire avec NetBeans</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code NetBeans">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -40,7 +38,7 @@
         <li><a href="#jar">Faire un Fichier Jar</a>
         <li><a href="#nsis">Faire un paquet deparution pour Windows en utilisant NSIS</a></li>
         <li><a href="#xmltools">Utilisation des outils XML de NetBeans</a></li>
-        <li><a href="#findbugs">Ex&#233;cuter FindBugs</a></li>
+        <li><a href="#findbugs">Ex&#233;cuter SpotBugs</a></li>
         <li><a href="#compileIndividualFile">NetBeans et la compilation de fichiers individuels</a></li>            
         <li><a href="#patch">R&#233;alisation d'uin Fichier Patch</a>
     </ul>
@@ -259,8 +257,8 @@
      <p style="font-family: monospace"> nsis.home = C:Program Files (x86)NSIS</p>
      <p> ou</p>
 		 <p style="font-family: monospace"> nsis.home=/opt/nsis/nsis-2.46/</p>
-     <p>Si vous installez un outil "findbugs", vous d&#233;finirez &#233;galement findbugs.home
-         dans ce fichier. Vous pouvez &#233;galement d&#233;finir plusieurs autres machines sp&#233;cifiques et
+                 <p>Si vous installez un outil "spotbugs", vous d&#233;finirez &#233;galement spotbugs.home
+                     dans ce fichier. Vous pouvez &#233;galement d&#233;finir plusieurs autres machines sp&#233;cifiques et
          les informations sp&#233;cifiques utilisateur, comme d&#233;crit dans divers endroits du
          fichier build.xml.<p>
      <p>Avec le paquet  NSIS install&#233; sur votre ordinateur, il est n&#233;cessaire de cr&#233;er un fichier appel&#233;
@@ -272,8 +270,8 @@
     <p style="font-family: monospace">nsis.home=C:/Program  Files (x86)/NSIS</p>
     <p>ou</p>
     <p style="font-family: monospace">nsis.home=/opt/nsis/nsis-2.46/</p> 
-		<p>Si vous installez un outil "findbugs", vous devez aussi d&#233;finir findbugs.home
-			  dans ce fichier. Vous pouvez aussi d&#233;finir plusieurs autres informations  machine-specific ou
+    <p>Si vous installez un outil "spotbugs", vous devez aussi d&#233;finir spotbugs.home
+        dans ce fichier. Vous pouvez aussi d&#233;finir plusieurs autres informations  machine-specific ou
 				user-specific, comme d&#233;crit dans des emplacements vari&#233;s dans le
 				fichier build.xml.</p>
 		<p>Avec le paquet NSIS install&#233; sur votre ordinateur, et build.xml proprement
@@ -296,32 +294,32 @@
 		Notez que ceci est un r&#233;glage global dans NetBeans, donc si vous travaillez sur de multiple branches JMRI,
 		quelque soit la branche que vous ajoutez au catalogue, ce sch&#233;ma de branche est celui qui est utilis&#233;.
 
-     <h2> <a id="findbugs"> Ex&#233;cution de FindBugs </a></h2>
+                <h2> <a id="findbugs"> Ex&#233;cution de SpotBugs </a></h2>
 
-     <p> L'outil FindBugs est un outil d'analyse de code statique qui examine le code source Java
-         pour les questions de codage courantes. L'installation d'un outil FindBugs permet une t&#226;che ant
-         d&#233;finie dans le build.xml pour ex&#233;cuter l'analyse FindBugs &#224; travers l'ensemble du code source Java
+     <p> L'outil SpotBugs est un outil d'analyse de code statique qui examine le code source Java
+         pour les questions de codage courantes. L'installation d'un outil SpotBugs permet une t&#226;che ant
+         d&#233;finie dans le build.xml pour ex&#233;cuter l'analyse SpotBugs &#224; travers l'ensemble du code source Java
          dans JMRI.<p>
      <p> Il semble que le fichier build.xml ne soit pas configur&#233; pour permettre au "plug-in" NetBeans
-         FindBugs de lancer l'analyse sur le code JMRI sauf sur un one-file-at-a-time-basis. 
-				 En tant que tel, il semble conseill&#233; de t&#233;l&#233;charger et d'installer 
-				 l'outil appropri&#233; FindBugs autonome pour votre syst&#232;me d'exploitation. Les t&#233;l&#233;chargements FindBugs
-          peuvent &#234;tre trouv&#233;s &#224; l'adresse du <a href="http://findbugs.sourceforge.net"> 
-         Site web FindBugs </a>.
-		<p> Une fois que vous avez l'outil FindBugs install&#233;, vous devez fournir un chemin vers le
+         SpotBugs de lancer l'analyse sur le code JMRI sauf sur un one-file-at-a-time-basis.
+         En tant que tel, il semble conseill&#233; de t&#233;l&#233;charger et d'installer 
+                                 l'outil appropri&#233; SpotBugs autonome pour votre syst&#232;me d'exploitation. Les t&#233;l&#233;chargements SpotBugs
+                                 peuvent &#234;tre trouv&#233;s &#224; l'adresse du <a href="https://spotbugs.github.io">
+                                     Site web SpotBugs </a>.
+     <p> Une fois que vous avez l'outil SpotBugs install&#233;, vous devez fournir un chemin vers le
          r&#233;pertoire contenant l'ex&#233;cutable pour une utilisation par le fichier ant build.xml. 
          Si n&#233;cessaire, cr&#233;ez le fichier local.properties dans le m&#234;me r&#233;pertoire que
          le fichier JMRI build.xml. Dans le fichier local.properties, ajouter la variable
-         findbugs.home avec un chemin vers l'ex&#233;cutable findbugs, tels que: </p>
-		<p style="font-family: monospace"> findbugs.home=C:/findbugs-1.3.8</p>
-		<p>ou</p>
-		<p style="font-family: monospace"> findbugs.home =/opt/findbugs-1.3.8</p>
-    <p> Pour ex&#233;cuter l'outil FindBugs sur le code JMRI,ex&#233;cutez la cible ant "findbugs"
-        qui est d&#233;fini dans build.xml. Dans NetBeans cela peut &#234;tre accompli 
-				par un clic droit sur le fichier build.xml  dans le volet "Files" et " Run"ing La cible "Findbugs". 
-				Quand FindBugs est termin&#233;, la fen&#234;tre de sortie NetBeans va montrer 
-				le chemin vers un fichier de rapport au format HTML. Ouvrez ce fichier avec un navigateur 
-				pour examiner les r&#233;sultats FindBugs .<p>
+         spotbugs.home avec un chemin vers l'ex&#233;cutable spotbugs, tels que: </p>
+     <p style="font-family: monospace"> spotbugs.home=C:/spotbugs-3.1.1</p>
+     <p>ou</p>
+                <p style="font-family: monospace"> spotbugs.home =/opt/spotbugs-3.1.1</p>
+                <p> Pour ex&#233;cuter l'outil SpotBugs sur le code JMRI,ex&#233;cutez la cible ant "spotbugs"
+                    qui est d&#233;fini dans build.xml. Dans NetBeans cela peut &#234;tre accompli 
+                    par un clic droit sur le fichier build.xml  dans le volet "Files" et " Run"ing La cible "SpotBugs".
+                    Quand SpotBugs est termin&#233;, la fen&#234;tre de sortie NetBeans va montrer
+                                le chemin vers un fichier de rapport au format HTML. Ouvrez ce fichier avec un navigateur 
+                                pour examiner les r&#233;sultats SpotBugs .<p>
 
 
 		<h2><a id="compileIndividualFile"> NetBeans et la compilation des fichiers individuels</a></h2>
@@ -345,7 +343,7 @@
         <p> <a href="http://netbeans.org/"> Le site Web d'Environnement de d&#233;veloppement int&#233;gr&#233; NetBeans </a></p>
         <p> <a href="http://subversion.apache.org/"> Le site Web du projet Subversion de Apache.org</a></p>
         <p> <a href="http://sourceforge.net/projects/nsis"> Le site web du projet NSIS</a></p>
-        <p> <a href="http://findbugs.sourceforge.net"> Le site webSource Forge FindBugs</a></p>
+        <p> <a href="https://spotbugs.github.io"> Le site web SpotBugs</a></p>
 
 		<h2><a id="patch">Cr&#233;ation d'un fichier patch</a></h2>
     
@@ -358,7 +356,7 @@
 			</p>
 
 			<p>
-    	Pour cr&#233;er le fichier "patch diff" <strong>[deprecated]</strong>( obsolète ):
+    	Pour cr&#233;er le fichier "patch diff" <strong>[deprecated]</strong>( obsol������������������te ):
      <ul>
  
      <li> Depuis le menu [Team], s&#233;lectionnez "Export Diff Patch..."

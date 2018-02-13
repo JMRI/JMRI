@@ -1,20 +1,16 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.event.WindowListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.Reading;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JComponentOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Tests for the RpsIcon class.
@@ -23,7 +19,6 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  */
 public class RpsPositionIconTest extends PositionableTestBase {
 
-    private Editor panel = null;
     private RpsPositionIcon rpsIcon = null;
 
     @Test
@@ -93,29 +88,9 @@ public class RpsPositionIconTest extends PositionableTestBase {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         if (!GraphicsEnvironment.isHeadless()) {
-            panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel");
-            p = rpsIcon = new RpsPositionIcon(panel);
+            editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel");
+            p = rpsIcon = new RpsPositionIcon(editor);
         }
-    }
-
-    @After
-    public void tearDown() {
-        // now close panel window
-        if (panel != null) {
-            java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
-            for (WindowListener listener : listeners) {
-                panel.getTargetFrame().removeWindowListener(listener);
-            }
-
-            // close the panel target frame.
-            EditorFrameOperator to = new EditorFrameOperator(panel.getTargetFrame());
-            // this panel isn't behaving like others that create a 
-            // panelEditor. It does not create dialogs when it closes, so call 
-            // requestClose without handling the dialogs as in 
-            // to.closeFrameWithConfirmations()
-            to.requestClose();
-        }
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(RpsPositionIconTest.class);

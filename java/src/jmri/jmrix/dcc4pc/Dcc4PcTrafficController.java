@@ -2,6 +2,7 @@ package jmri.jmrix.dcc4pc;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -131,7 +132,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
      */
     @Deprecated
     @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // FindBugs wants this package protected, but we're removing it when multi-connection
+    // SpotBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected Dcc4PcTrafficController self = null;
 
@@ -304,7 +305,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
 
         // Create message off the right concrete class
         AbstractMRReply msg = newReply();
-                
+
         // message exists, now fill it
         loadChars(msg, istream);
         if (mLastSentMessage != null) {
@@ -419,9 +420,8 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         Runnable r = newRcvNotifier(msg, mLastSender, this);
         try {
             javax.swing.SwingUtilities.invokeAndWait(r);
-        } catch (Exception e) {
-            log.error("Unexpected exception in invokeAndWait:" + e);
-            e.printStackTrace();
+        } catch (InterruptedException | InvocationTargetException e) {
+            log.error("Unexpected exception in invokeAndWait:", e);
         }
 
         if (log.isDebugEnabled()) {
@@ -431,8 +431,8 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             // effect on transmit:
             switch (mCurrentState) {
                 case WAITMSGREPLYSTATE: {
-                    // check to see if the response was an error message we want 
-                    // to automatically handle by re-queueing the last sent 
+                    // check to see if the response was an error message we want
+                    // to automatically handle by re-queueing the last sent
                     // message, otherwise go on to the next message
                     if (msg.isRetransmittableErrorMsg()) {
                         if (log.isDebugEnabled()) {
@@ -490,8 +490,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                 }
                 default: {
                     replyInDispatch = false;
-                    log.error("reply complete in unexpected state: "
-                            + mCurrentState + " was " + msg.toString());
+                    unexpectedReplyStateError(mCurrentState,msg.toString());
                 }
             }
             // Unsolicited message
@@ -595,7 +594,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     if (readingData) {
                         endTime = endTime + 10;
                     }
-                    //if we have received a packet and a seperate message has been sent to retrieve 
+                    //if we have received a packet and a seperate message has been sent to retrieve
                     //the reply we will add more time to our wait process.
                     if (waitingForMore) {
                         waitingForMore = false;

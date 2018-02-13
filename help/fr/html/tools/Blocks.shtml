@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
-<!-- UpDated by Blorec Herv&#233; 2016-08-28-->
+<!-- Updated by Blorec Herv&#233; 2016-08-28-->
 <head>
   <title>
  	JMRI: Blocks Documentation
   </title>
-  <meta name="Author" content="Bob Jacobsen">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="layout java model railroad JMRI tools dcc">
 
 <!-- Style -->
@@ -20,8 +20,10 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
 
 <h1>JMRI: Documentation Canton</h1>
 

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * {@code # start of programming session PC -> IB: E5 07 01 49 42 41 56
  * OPC_PEER_XFER, src=7, dst=9345, ?? PC -> IB: 82 7D OPC_GPOFF}
- * 
+ *
  * {@code # read cv 1 R CV CV PC -> IB: ED 1F 01 49 42 71 72 01 00 00 70 00 00
  * 00 00 10 OPC_IMM_PACKET 00 00 00 00 00 00 00 00 00 00 00 00 00 00 65 IB ->
  * PC: B4 6D 01 27 OPC_LONG_ACK, on OPC_IMM_PACKET # cv 1 has value 3 VV IB ->
@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
  *
  * <P>
  * @author Lisby Copyright (C) 2014
- * 
+ *
  */
 public class UhlenbrockSlotManager extends SlotManager implements LocoNetListener, CommandStation {
 
@@ -135,6 +135,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
      * table below contains value observed from an Intellibox II when doing
      * programming on main.
      *
+     * {@literal
      * Address  CV      Value   Element Decimal Hex     Decimal Hex     Decimal Hex     4       5
      * 60       11      12      13      14      15      16      17      18      19      20      21      22      23      24      25      26      27      28      29      30 1
      * 01       2       02      1       01      ED      1F      1       49      42      71      5E      1       0       2       70      0       1       0       0       10      0       0       0       0       0       0       0       0       0       0
@@ -174,7 +175,8 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
      * 0        0       4A 256  100     255     FF      255     FF      ED      1F      1       49      42      79      5E      0       1       7F      72      0       7F      0       0       10      0
      * 0        0       0       0       0       0       0       0       0       0       0       0       0       43 1000 3E8       3       03      1       01      ED      1F      1       49      42      73      5E      68      3
      * 3        70      0       1       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       23
-     *
+     * }
+     * <p>
      * Element 0: OPC_IMM_PACKET Element 1: Always 1F Element 2: Always 01
      * Element 3: Always 49 Element 4: Always 42 Element 5: Basic value 71. Bit
      * 1 (value 02) equals bit 7 in address. Bit 3 (value 08) equals bit 7 in CV
@@ -210,6 +212,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
      * programming track. The table below contains value observed from an
      * Intellibox II when doing programming on programming track.
      *
+     * {@literal
      * Operation        CV      Value   Byte # Decimal  Hex     Decimal Hex     0       1       2       3       4       5       6       7       8       9       10
      * 11       12      13      14      15      16      17      18      19      20      21      22      23      24      25      26      27      28      29      30 Read 1       01      ED
      * 1F       1       49      42      71      72      1       0       0       70      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       65 Write
@@ -217,7 +220,8 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
      * 0        0       65 Write        27      1B      254     FE      ED      1F      1       49      42      79      71      1B      0       7E      70      0       0       0       0       10      0       0       0
      * 0        0       0       0       0       0       0       0       0       0       0       0A Write        545     221     255     FF      ED      1F      1       49      42      79      71      21      2       7F
      * 70       0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       33 Read 393     189     ED      1F      1       49      42
-     * 73       72      9       1       0       70      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       6D Write        n    * 01       ED      1F      1       49      42      73      71      7F      0       1       70      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0
+     * 73       72      9       1       0       70      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       6D Write        n
+     * 01       ED      1F      1       49      42      73      71      7F      0       1       70      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0
      * 1B Write 255     FF      127     7F      ED      1F      1       49      42      73      71      7F      0       7F      70      0       0       0       0       10      0       0       0       0
      * 0        0       0       0       0       0       0       0       0       0       65 Write        255     FF      255     FF      ED      1F      1       49      42      7B      71      7F      0       7F      70
      * 0        0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       6D Write        256     100     1       01      ED      1F      1       49
@@ -232,7 +236,8 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
      * 0        0       0       0       0       0       0       0       0       0       0       0       62 Write        1024    400     127     7F      ED      1F      1       49      42      71      71      0       4
      * 7F       70      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       1C Write        1024    400     255     FF      ED
      * 1F       1       49      42      79      71      0       4       7F      70      0       0       0       0       10      0       0       0       0       0       0       0       0       0       0       0       0       0       0       14
-     *
+     * }
+     * <p>
      * Element 0: OPC_IMM_PACKET Element 1: Always 1F Element 2: Always 01
      * Element 3: Always 49 Element 4: Always 42 Element 5: Basic value 71. Bit
      * 1 (value 02) equals bit 7 in CV number. Bit 3 (value 08) equals bit 7 in
@@ -243,7 +248,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
      *
      */
     protected LocoNetMessage progOnProgrammingTrackMessage(int element6, int val, int cvnum) {
-        //       new Exception("About to create read/write CV command for IB-COM. Call tree").printStackTrace();
+        //       log.error("About to create read/write CV command for IB-COM.", new Excception());
         LocoNetMessage m = new LocoNetMessage(0x1F);
 //log.info("--------SENDING OPC_IMM_PACKET TO IB-COM PROGRAMMING TRACK. pcmd=" + pcmd + "val="+val+" cvnum="+cvnum+" write="+write);
         m.setOpCode(LnConstants.OPC_IMM_PACKET);
@@ -262,7 +267,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
     }
 
     /*
-     * Internal method to create the LocoNetMessage for programmer task start 
+     * Internal method to create the LocoNetMessage for programmer task start
      */
     @Override
     protected LocoNetMessage progTaskStart(int pcmd, int val, int cvnum, boolean write) {
@@ -297,10 +302,10 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
      * Uhlenbrock
      */
     protected LocoNetMessage startIBComPT() {
-        //       new Exception("About to initiate programming track for IB-COM. Call tree").printStackTrace();
+        //       log.error("About to initiate programming track for IB-COM.", new Exception());
 
         LocoNetMessage m = new LocoNetMessage(7);
-//log.info("--------startIBComPT");        
+//log.info("--------startIBComPT");
         m.setOpCode(LnConstants.OPC_PEER_XFER);
         m.setElement(1, 0x07);
         m.setElement(2, 0x01);
@@ -315,7 +320,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
      * track in IB-COM / Intellibox II Note: This method is currently not used
      */
     protected LocoNetMessage stopIBComPT() {
-        //       new Exception("About to stop using programming track for IB-COM. Call tree").printStackTrace();
+        //       log.error("About to stop using programming track for IB-COM.", new Exception());
 
         LocoNetMessage m = new LocoNetMessage(7);
 

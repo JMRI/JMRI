@@ -1,15 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
-<!-- $Id$ -->
 
 <html>
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>Jython access to JMRI tools</title>
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content=
+  <title>Jython access to JMRI Tools</title>
+  <meta name="author" content="Bob Jacobsen">  <meta name="keywords" content=
   "JMRI technical code Python Jython scripting">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -32,7 +30,8 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>Jython access to JMRI tools</h1>This page discusses
+      <h1>Jython access to JMRI Tools</h1>
+      <p>This page discusses
       access to the JMRI libraries from Jython, a Java version of
       Python. The emphasis is on using JMRI capabilities from a
       command-line Jython interpreter. <b>This page is not about
@@ -68,13 +67,13 @@ type Python statements.
       <p>We've provided a few Python command files to make setup
       easier.</p>
 
-      <p>For example, you can run the JmriDemo application from the
-      Jython command line, which is then available for manipulating
+      <p>For example, you can run the PanelPro application from the
+          Jython command line, which is then available for manipulating
       objects like turnouts and sensors:</p>
       <pre>
-execfile("JmriDemo.py")
-     0 JmriDemo.JMRIdemo                     INFO  - program starts [main]
- 11109 JmriDemo.JMRIdemo                     INFO  - main initialization done [main]
+execfile("PanelPro.py")
+     0 PanelPro.PanelPro                     INFO  - program starts [main]
+ 11109 PanelPro.PanelPro                     INFO  - main initialization done [main]
 
 &gt;&gt;&gt; turnouts.newTurnout("LT1", "")
 jmri.jmrix.loconet.LnTurnout@1a8f49
@@ -95,8 +94,8 @@ jmri.jmrix.loconet.LnTurnout@1a8f49
 4
 
 &gt;&gt;&gt; 
-</pre>Note that this is running a complete version of the JmriDemo
-application; all of the windows and menus are presented the same
+      </pre>Note that this is running a complete version of the PanelPro
+      application; all of the windows and menus are presented the same
 way, configuration is done by the preferences panel, etc. What the
 Jython connection adds is a command line from which you can
 directly manipulate things.<br>
@@ -190,8 +189,8 @@ to fix the installation before you'll be able to do the next step.
       directly.
 
       <p>Note that you don't need most of this when running the
-      JmriDemo.py or similar scripts, as they handle starting a
-      complete application.</p>
+          PanelPro.py or similar scripts, as they handle starting a
+          complete application.</p>
 
       <h3>Initialization</h3>JMRI uses the LogJ system extensively
       for logging information during program execution. To
@@ -208,33 +207,33 @@ the name of the logging control file to be used; it can be omitted.
 </pre>As currently set up, this does not run any initialization
 code to start the hardware connections, etc. One way to do that is
 to load a configuration file, perhaps one you've created earlier
-via the JmriDemo preferences panel:
-      <pre>
+via the PanelPro preferences panel:
+<pre>
   import java.io
-  configfile = java.io.File(jmri.util.FileUtil.getPreferencesPath()+"JmriDemoConfig2.xml")
+  configfile = java.io.File(jmri.util.FileUtil.getPreferencesPath()+"PanelProConfig2.xml")
   jmri.InstanceManager.setConfigureManager(jmri.configurexml.ConfigXmlManager())
   jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).load(configfile)
 </pre>to activate the JMRI classes and connect to your layout
-hardware. "JmriDemoConfig2.xml" is the name of the configuration
-file from the JmriDemo program; you can use another name if
+hardware. "PanelProConfig2.xml" is the name of the configuration
+file from the PanelPro program; you can use another name if
 desired. The configuration file controls the layout connection, and
 any other options that may have been set when it was created.
 
-      <p>Alternately, if you want to start the complete JmriDemo
-      application, including the menu bar, spash screen, etc, you
+<p>Alternately, if you want to start the complete PanelPro
+    application, including the menu bar, spash screen, etc, you
       can do:</p>
       <pre>
  import apps
- apps.JmriDemo.JMRIdemo.main([]) 
-</pre>
+ apps.PanelPro.PanelPro.main([])
+      </pre>
 
       <p>This will start the program, including its startup
       configuration, etc.</p>
 
       <p>To simplify this startup even further, you can do:</p>
       <pre>
- execfile("JmriDemo.py")
-</pre>to invoke these commands.
+ execfile("PanelPro.py")
+      </pre>to invoke these commands.
 
       <h3>Access to JMRI</h3>JMRI uses the factory-pattern
       extensively to get access to objects. In Java this results in
@@ -335,30 +334,30 @@ returns to the command line.
   % ./jmrithon
   Jython 2.1 on java1.4.1_01 (JIT: null)
   Type "copyright", "credits" or "license" for more information.
-  &gt;&gt;&gt; import JmriDemo
-</pre>This works, in the sense that the program starts up. But the
-convenience methods are all in the JmriDemo namespace:
-          <pre>
+  &gt;&gt;&gt; import PanelPro
+          </pre>This works, in the sense that the program starts up. But the
+convenience methods are all in the PanelPro namespace:
+<pre>
   &gt;&gt;&gt; turnouts.newTurnout("LT1","")
   Traceback (innermost last):
     File &amp;&lt;console&gt;&amp;, line 1, in ?
   NameError: turnouts
 
-  &gt;&gt;&gt; JmriDemo.turnouts.newTurnout("LT1","")
+  &gt;&gt;&gt; PanelPro.turnouts.newTurnout("LT1","")
   jmri.jmrix.loconet.LnTurnout@36b91b
 </pre>which makes for significantly more typing later. And it's
-confusing, because depending on whether you started JmriDemo,
+confusing, because depending on whether you started PanelPro,
 DecoderPro or some other application, the names will be different.
         </li>
 
         <li>
           <pre>
   % ./jmrithon
-  &gt;&gt;&gt;  execfile("JmriDemo.py")
-</pre>or the simpler form
+  &gt;&gt;&gt;  execfile("PanelPro.py")
+          </pre>or the simpler form
           <pre>
-  % ./jmrithon -JmriDemo.py
-</pre>This looks somewhat ugly, as it's not using the normal Python
+  % ./jmrithon -PanelPro.py
+          </pre>This looks somewhat ugly, as it's not using the normal Python
 modules technique. But the convenience methods are in the top-level
 name space:
           <pre>
@@ -371,14 +370,15 @@ name space:
       </ol>We need to understand how the developers of Jython
       intended this to be done.
 
-      <h3>Termination</h3>Once the JMRI main thread (or Swing GUI
+      <h3>Termination</h3>
+      <p>Once the JMRI main thread (or Swing GUI
       thread?) has started, ^D is not sufficient to exist the
       program. You have to select "Quit" from the actual file menu,
-      or ^C the program.
+      or ^C the program.</p>
 
       <p>It would be good to understand what's preventing the
-      program from stopping when it gets the ^D. 
-      <!--#include virtual="/Footer" --></p>
+      program from stopping when it gets the <pre>^D</pre>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

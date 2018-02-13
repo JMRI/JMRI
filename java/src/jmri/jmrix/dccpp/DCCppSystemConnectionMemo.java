@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public DCCppSystemConnectionMemo(DCCppTrafficController xt) {
-        super("DCCPP", "DCC++");
+        super("D", "DCC++");
         this.xt = xt;
         xt.setSystemConnectionMemo(this);
         register(); // registers general type
@@ -41,7 +41,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     public DCCppSystemConnectionMemo() {
-        super("DCCPP", "DCC++");
+        super("D", "DCC++");
         register(); // registers general type
         InstanceManager.store(this, DCCppSystemConnectionMemo.class); // also register as specific type
 

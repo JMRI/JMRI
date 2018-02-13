@@ -19,7 +19,6 @@ import org.junit.Test;
 public class Z21SimulatorTest {
 
     private static  java.net.InetAddress host;
-    private static int port = 21105; // default port for Z21 connections.
     private static Z21SimulatorAdapter a = null;
 
 
@@ -51,6 +50,9 @@ public class Z21SimulatorTest {
         }
         // create a new simulator.
         a = new Z21SimulatorAdapter();
+        
+        // shouldn't the 'host' variable be used here?
+        
         // connect the port
         try {
            a.connect();

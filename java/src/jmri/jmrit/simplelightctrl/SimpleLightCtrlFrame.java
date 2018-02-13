@@ -2,7 +2,6 @@ package jmri.jmrit.simplelightctrl;
 
 import java.awt.Dimension;
 import java.text.DecimalFormat;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import jmri.InstanceManager;

@@ -27,7 +27,7 @@ public class ThreadingUtilTest extends TestCase {
     public void testThreadingNesting() {
         done = false;
         
-        new Thread(
+        Thread t = new Thread(
             new Runnable() {
                 @Override
                 public void run() {
@@ -41,7 +41,9 @@ public class ThreadingUtilTest extends TestCase {
                     } );
                 }
             }
-        ).start();
+        );
+        t.setName("Thread Nesting Test Thread");
+        t.start();
 
         // wait for separate thread to do it's work before confirming test
         JUnitUtil.waitFor( ()->{ return done; }, "Separate thread complete");

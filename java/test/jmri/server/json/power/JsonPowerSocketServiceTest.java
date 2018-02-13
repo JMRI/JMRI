@@ -42,7 +42,7 @@ public class JsonPowerSocketServiceTest extends TestCase {
             JsonPowerSocketService service = new JsonPowerSocketService(connection);
             PowerManager power = InstanceManager.getDefault(PowerManager.class);
             power.setPower(PowerManager.UNKNOWN);
-            service.onMessage(JsonPowerServiceFactory.POWER, message, Locale.ENGLISH);
+            service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.POST, Locale.ENGLISH);
             // TODO: test that service is listener in PowerManager
             Assert.assertEquals(JSON.UNKNOWN, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
             power.setPower(PowerManager.ON);
@@ -64,18 +64,18 @@ public class JsonPowerSocketServiceTest extends TestCase {
             JsonPowerSocketService service = new JsonPowerSocketService(connection);
             PowerManager power = InstanceManager.getDefault(PowerManager.class);
             power.setPower(PowerManager.UNKNOWN);
-            service.onMessage(JsonPowerServiceFactory.POWER, message, Locale.ENGLISH);
+            service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(PowerManager.ON, power.getPower());
             message = connection.getObjectMapper().readTree("{\"state\":4}"); // Power OFF
-            service.onMessage(JsonPowerServiceFactory.POWER, message, Locale.ENGLISH);
+            service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(PowerManager.OFF, power.getPower());
             message = connection.getObjectMapper().readTree("{\"state\":0}"); // JSON Power UNKNOWN
-            service.onMessage(JsonPowerServiceFactory.POWER, message, Locale.ENGLISH);
+            service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(PowerManager.OFF, power.getPower()); // did not change
             message = connection.getObjectMapper().readTree("{\"state\":1}"); // JSON Invalid
             JsonException exception = null;
             try {
-                service.onMessage(JsonPowerServiceFactory.POWER, message, Locale.ENGLISH);
+                service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.POST, Locale.ENGLISH);
             } catch (JsonException ex) {
                 exception = ex;
             }

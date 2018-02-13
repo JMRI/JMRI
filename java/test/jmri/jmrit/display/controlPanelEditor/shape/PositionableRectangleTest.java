@@ -3,7 +3,6 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -27,13 +26,9 @@ public class PositionableRectangleTest extends PositionableShapeTest {
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
-           p = new PositionableRectangle(new EditorScaffold());
+           editor = new EditorScaffold();
+           p = new PositionableRectangle(editor);
         }
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PositionableRectangleTest.class);

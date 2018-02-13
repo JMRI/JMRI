@@ -2,7 +2,6 @@ package jmri;
 
 import java.util.List;
 import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -258,9 +257,9 @@ public interface TurnoutManager extends Manager<Turnout> {
      */
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
-    public void setDefaultClosedSpeed(String speed) throws JmriException;
+    public void setDefaultClosedSpeed(@Nonnull String speed) throws JmriException;
 
-    public void setDefaultThrownSpeed(String speed) throws JmriException;
+    public void setDefaultThrownSpeed(@Nonnull String speed) throws JmriException;
 
     public String getDefaultThrownSpeed();
 

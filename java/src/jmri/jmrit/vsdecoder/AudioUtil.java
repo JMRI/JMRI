@@ -165,29 +165,27 @@ public class AudioUtil {
             try {
                 AudioBuffer buf = (AudioBuffer) jmri.InstanceManager.getDefault(jmri.AudioManager.class).provideAudio(prefix + "_sbuf" + i);
                 i++;
-                if (buf.getLength() > 0) {
-                    log.debug("provideAudio found already-built buffer:{} ... skipping load.", buf.getSystemName());
+                if (buf.getState() == Audio.STATE_LOADED) {
+                    log.debug("provideAudio found already-built buffer: {} ... skipping load.", buf.getSystemName());
                 } else {
                     buf.loadBuffer(b.data, b.format, b.frequency);
                     if (log.isDebugEnabled()) {
-                        log.debug("Loaded buffer: " + buf.getSystemName());
-                        log.debug(" from file: " + buf.getURL());
-                        log.debug(" format: " + b.format + ", " + b.frequency + " Hz");
-                        log.debug(" length: " + b.data.limit());
+                        log.debug("Loaded buffer: {}", buf.getSystemName());
+                        log.debug(" from file: {}", buf.getURL());
+                        log.debug(" format: {}, {} Hz", parseFormat(b.format), b.frequency);
+                        log.debug(" length: {}", b.data.limit());
                     }
                 }
-
                 rlist.add(buf);
             } catch (AudioException | IllegalArgumentException e) {
                 log.warn("Error on provideAudio! {}", (Object) e);
                 if (log.isDebugEnabled()) {
                     jmri.InstanceManager.getDefault(jmri.AudioManager.class).getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {
-                        log.debug("\tBuffer: " + s);
+                        log.debug("\tBuffer: {}", s);
                     });
                 }
                 return null;
             }
-
         }
         return rlist;
     }
@@ -274,7 +272,7 @@ public class AudioUtil {
         // freq == samples per second.  time_us = microseconds to calculate.
         // samples = time_us * freq / 1e3.
         // This will be approximate due to integer rounding.
-        int rv = frameSize(fmt) * ((time_ms * freq) / 1000);
+        int rv = frameSize(fmt) * (time_ms * freq / 1000);
         log.debug("calcTimeIndex: freq = {} time_us = {} rv = {}", freq, time_ms, rv);
         return rv;
     }
@@ -375,7 +373,7 @@ public class AudioUtil {
             retbuf.put(retbytes, 0, bufcount);
             log.debug("\tAfter: source= {}bufcount={} retbuf= {}", source, bufcount, retbuf);
         } else {
-            log.warn("Remaining bytes less than minimum time interval.  Discarding.");
+            log.debug("Remaining bytes less than minimum time interval.  Discarding.");
             return null;
         }
         return retbuf;

@@ -28,7 +28,7 @@ import jmri.server.json.operations.JsonUtil;
 import jmri.util.FileUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -197,7 +197,7 @@ public class OperationsServlet extends HttpServlet {
                             )
                     ),
                     InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), request.getContextPath()),
-                    !train.getTrainRailroadName().equals("") ? train.getTrainRailroadName() : InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                    !train.getRailroadName().equals("") ? train.getRailroadName() : InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                     InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), request.getContextPath()),
                     train.getId()
             ));
@@ -243,7 +243,7 @@ public class OperationsServlet extends HttpServlet {
                             )
                     ),
                     InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), request.getContextPath()),
-                    !train.getTrainRailroadName().equals("") ? train.getTrainRailroadName() : InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                    !train.getRailroadName().equals("") ? train.getRailroadName() : InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                     InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), request.getContextPath()),
                     train.getId()
             ));

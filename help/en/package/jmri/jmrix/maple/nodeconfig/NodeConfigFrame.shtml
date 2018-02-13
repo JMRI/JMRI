@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
 
   <title>JMRI: Maple Node Configuration</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -199,7 +198,8 @@
 
       <p>JMRI will refuse to create a Light if it doesn't
       correspond to the configured address range for output bits
-      (see above). <!--#include virtual="/Footer" --></p>
+      (see above).</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

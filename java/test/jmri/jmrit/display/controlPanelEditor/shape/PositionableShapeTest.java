@@ -6,7 +6,6 @@ import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJComponentTest;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -40,7 +39,8 @@ public class PositionableShapeTest extends PositionableJComponentTest {
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
-           p = new PositionableShape(new EditorScaffold()) {
+           editor = new EditorScaffold();
+           p = new PositionableShape(editor) {
                @Override
                protected Shape makeShape() {
                    // bogus body, not used in tests
@@ -54,11 +54,6 @@ public class PositionableShapeTest extends PositionableJComponentTest {
                }
            };
        }
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PositionableShapeTest.class);

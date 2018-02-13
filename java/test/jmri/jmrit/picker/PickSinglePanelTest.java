@@ -8,8 +8,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -20,8 +18,8 @@ public class PickSinglePanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel tableModel = PickListModel.sensorPickModelInstance(); // N11N
-        PickSinglePanel panel = new PickSinglePanel<Sensor>(tableModel);
+        PickListModel<Sensor> tableModel = PickListModel.sensorPickModelInstance(); // N11N
+        PickSinglePanel<Sensor> panel = new PickSinglePanel<Sensor>(tableModel);
         Assert.assertNotNull("exists",panel);
     }
 

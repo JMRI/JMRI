@@ -1,8 +1,6 @@
 package jmri.implementation;
 
 import java.util.Arrays;
-import java.util.Timer;
-import java.util.TimerTask;
 import javax.annotation.CheckReturnValue;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -118,15 +116,9 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             if (_activeFeedbackType == DIRECT) {
                 newKnownState(s);
             } else if (_activeFeedbackType == DELAYED) {
-                if (timer == null) {
-                    timer = new Timer("DELAYED turnout feedback", true);
-                }
-                if (lastTimerTask != null) lastTimerTask.cancel();  // in case any running
                 newKnownState(INCONSISTENT);
-                lastTimerTask = new TimerTask() {
-                        public void run () { newKnownState(s); }
-                    };
-                timer.schedule(lastTimerTask, DELAYED_FEEDBACK_INTERVAL );
+                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(s); },
+                         DELAYED_FEEDBACK_INTERVAL );
             }
         } else {
             myOperator.start();
@@ -140,9 +132,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * so it can be changed in e.g. the jython/SetDefaultDelayedTurnoutDelay script
      */
     public static int DELAYED_FEEDBACK_INTERVAL = 4000;
-
-    static Timer timer = null;
-    TimerTask lastTimerTask = null;
 
     @Override
     public int getCommandedState() {
@@ -339,6 +328,18 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
         throw new IllegalArgumentException("Unexpected internal mode: "
                 + _activeFeedbackType);
+    }
+
+    @Override
+    public void requestUpdateFromLayout() {
+        if (_activeFeedbackType == ONESENSOR || _activeFeedbackType == TWOSENSOR) {
+            Sensor s1 = getFirstSensor();
+            if (s1 != null) s1.requestUpdateFromLayout();
+        }
+        if (_activeFeedbackType == TWOSENSOR) {
+            Sensor s2 = getSecondSensor();
+            if (s2 != null) s2.requestUpdateFromLayout();
+        }
     }
 
     @Override
@@ -808,15 +809,31 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             int mode = ((Integer) evt.getNewValue()).intValue();
             Sensor s = (Sensor) evt.getSource();
             if ((mode == Sensor.ACTIVE) && (s == getSecondSensor())) {
-                newKnownState(CLOSED);
+                if(getFirstSensor().getKnownState()==Sensor.INACTIVE) {
+                   newKnownState(CLOSED);
+                } else {
+                   newKnownState(INCONSISTENT);
+                }
+            } else if ((mode == Sensor.INACTIVE) && (s == getSecondSensor())) {
+                if(getFirstSensor().getKnownState()==Sensor.ACTIVE) {
+                   newKnownState(THROWN);
+                } else {
+                   newKnownState(INCONSISTENT);
+                }
             } else if ((mode == Sensor.ACTIVE) && (s == getFirstSensor())) {
-                newKnownState(THROWN);
-            } else if (!(((getFirstSensor().getKnownState() == Sensor.ACTIVE) && (getSecondSensor()
-                    .getKnownState() == Sensor.INACTIVE)) || ((getFirstSensor()
-                    .getKnownState() == Sensor.INACTIVE) && (getSecondSensor()
-                    .getKnownState() == Sensor.ACTIVE)))) // INCONSISTENT if sensor has transitioned to an inconsistent state
-            {
-                newKnownState(INCONSISTENT);
+                if(getSecondSensor().getKnownState()==Sensor.INACTIVE) {
+                   newKnownState(THROWN);
+                } else {
+                   newKnownState(INCONSISTENT);
+                }
+            } else if ((mode == Sensor.INACTIVE) && (s == getFirstSensor())) {
+                if(getSecondSensor().getKnownState()==Sensor.ACTIVE) {
+                   newKnownState(CLOSED);
+                } else {
+                   newKnownState(INCONSISTENT);
+                }
+            } else {
+                   newKnownState(UNKNOWN);
             }
             // end TWOSENSOR block
         } else // don't need to do anything

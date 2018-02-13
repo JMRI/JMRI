@@ -212,10 +212,12 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     /**
      * request an update on status by sending a DCC++ message
      */
+    @Override
     public void requestUpdateFromLayout() {
+        // This will handle query for ONESENSOR and TWOSENSOR feedback modes.
+        super.requestUpdateFromLayout();
         // (02/2017) Yes it does... using the <s> command or possibly
         // some others.  TODO: Plumb this in... IFF it is needed.
-        
         return;
         /*
         // DCCppMessage msg = DCCppMessage.getFeedbackRequestMsg(mNumber,

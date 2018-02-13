@@ -49,7 +49,12 @@
         <dt><a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dt>
 
         <dd>Dispatcher lets you dispatch and (automatically) run
-          trains on layouts with <a href="../../apps/PanelPro/PanelPro.shtml">Layout Editor Panels</a>.</dd>
+          trains on layouts with <a href="../../apps/PanelPro/PanelPro.shtml#le">Layout Editor Panels</a>.</dd>
+
+        <dt><a href="../../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a></dt>
+
+        <dd>Warrants let you automatically run trains on layouts with
+          <a href="../../apps/PanelPro/PanelPro.shtml#cpe">Control Panel Editor Panels</a>.</dd>
 
         <dt><a href="../Logix.shtml">Logix</a></dt>
 

@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
  <title>JMRI Hardware Support - EasyDCC</title>
-    <meta content="Bob Jacobsen" name="Author">
+	<meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="EasyDCC CVP Products java model railroad JMRI install windows">
 
 <!-- Style -->

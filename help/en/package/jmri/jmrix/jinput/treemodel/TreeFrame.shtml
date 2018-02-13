@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
 
   <title>JMRI: USB Input Control</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -69,8 +68,8 @@
       <p>This feature was added on an experimental basis in JMRI
       2.1.5. In that version, your configuration information isn't
       restored after you quit and restart the program. That will be
-      added in the next JMRI version. 
-      <!--#include virtual="/Footer" --></p>
+      added in the next JMRI version.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

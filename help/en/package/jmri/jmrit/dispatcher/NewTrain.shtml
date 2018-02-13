@@ -6,10 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Activate New Train Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Dave Duchamp" name="Author">
+  <title>JMRI: Dispatcher - Activate New Train Help</title>
+  <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Dispatcher New Train">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -27,7 +25,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Dispatcher: Activate New Train</h1>
+      <h1>JMRI Dispatcher: Activate New Train</h1>
 
       <h2>Introduction</h2>
 
@@ -35,14 +33,14 @@
       of a new <b>Active Train</b>. To create an Active Train, the
       dispatcher uses this window to assign a <b><a href=
       "../beantable/TransitTable.shtml">Transit</a></b>, assign a
-      train, and specify a starting Block (train location at start)
-      and an end Block (train location when transit of the layout
+      train, and specify a starting Block (Train location at start)
+      and an end Block (Train location when transit of the layout
       is complete). Options for the new <b>Active Train</b> are
       also set using this window.</p>
 
-      <p>Transits are selected from Transits defined in the Transit
-      Table. Dispatcher will list all Transits that are not
-      currently in Active Trains.</p>
+      <p>Transits are selected from the Transits defined in the
+      Transit Table. Dispatcher will list all Transits that are
+      not currently in Active Trains.</p>
 
       <p>Trains may come from any one of three sources:</p>
 
@@ -52,13 +50,14 @@
         Trains.</li>
 
         <li><b>Trains from Trains</b> - Dispatcher will list all
-        trains available from Operations that are not in Active
-        Trains.</li>
+        trains available from <a href=
+        "../operations/Operations.shtml#Trains">Operations</a>
+        that are not already in any Dispatcher Active Trains.</li>
 
         <li><b>Trains from User Entry</b> - Dispatcher will replace
         the train selection box in the Activate New Train window
-        with two entry fields allowing the user to enter a train
-        name and a dcc Address.</li>
+        with two entry fields allowing the user to enter a Train
+        name and a loco Address.</li>
       </ul>
 
       <p>Dispatcher's train source is set by selecting one of the
@@ -73,20 +72,23 @@
       Block, entry to the Transit from the starting Block must
       result in travel in the Transit's defined direction. This
       window only allows selection of valid starting and stopping
-      Blocks. If an expected Block is not in the starting Block
-      selection box, it may be because of this
-      requirement.</p><a name="loadsave" id="loadsave"></a>
+      Blocks. Initially the first occupied block is selected for
+      you in the combo box.<br>
+      Note: If an expected Block is not in the starting Block
+      selection box, it may be because of this requirement.</p>
 
+      <a name="loadsave" id="loadsave"></a>
       <h2>Saving and Retrieving Active Train Information</h2>
 
+      <span class="since">since 2.5.2</span>
       <p>To facilitate easy set up of Active Trains that are used
       more than once, Dispatcher provides for saving and loading
       train information from disk.</p>
 
       <p>To save your train information to disk, click the <b>Save
-      Train Info</b> button after all selections and options have
-      been set up but <i>before</i> clicking the <b>Add New
-      Train</b> button. This will bring up a small window allowing
+      Train Info...</b> button after all selections and options have
+      been set up but <i>before</i> clicking the <b>Create</b>
+      button. This will bring up a small window allowing
       you to name the saved train information file. The name you
       enter will be normalized automatically with any
       non-alphanumeric characters replaced, and a .xml suffix added
@@ -95,7 +97,7 @@
       on disk.</p>
 
       <p>To load previously saved train information, click the
-      <b>Load Train Info</b> button immediately after the Activate
+      <b>Load Train Info...</b> button immediately after the Activate
       New Train window is displayed. This will bring up a small
       window allowing you to select the train information file to
       load from all the train information files in the dispatcher
@@ -104,14 +106,14 @@
       train information if possible. If an item cannot be set, for
       example if the specified Transit is in use, a warning is
       displayed and a default selection is made. After loading, you
-      may change any option or selection, then may save your new
-      train information, before clicking the <b>Add New Train</b>
+      may change any option or selection and again save your new
+      train information, before clicking the <b>Create</b>
       button.</p>
 
       <p>To permanently remove an unneeded Train Info file from the
       <b>dispatcher</b> folder in your user preferences area, click
-      the <b>Delete Train Info</b> button, then select the train
-      information file to be deleted.</p>
+      the <b>Delete...</b> button, then select the train information
+      file to be deleted.</p>
 
       <h2>Using the Activate New Train Window</h2>
 
@@ -127,9 +129,9 @@
         </li>
 
         <li>
-          <p>If you want to use saved train information, click
-          <b>Load Train Info</b>. See <a href="#loadsave">above</a>
-          for more on loading train information.</p>
+          <p>If you want to use saved Train information, click
+          <b>Load Train Info...</b> See <a href="#loadsave">above</a>
+          for more on loading Train information.</p>
         </li>
 
         <li>
@@ -155,17 +157,18 @@
         </li>
 
         <li>
-          <a>If <a href="Options.shtml">Dispatcher Options</a> is
+          If <a href="Options.shtml">Dispatcher Options</a> is
           set to <b>Trains from User Entry</b>,
           the following pane is displayed.<br>
           Enter a train name in the <b>Train:</b> field, and set a numeric
           address from 1 to 9999 as the <b>DCC Address</b>.</p><img src=
           "images/NewTrainAltWindow.png" height="593" width="463">
           <p>
-          Any short name that identifies the train may be used
+          Any short name that identifies the train may be used,
           provided the name is not being used by another Active
-          Train. Dcc addresses must be a number in the range 1 -
-          9999. Note: If the train will not be run automatically,
+          Train. DCC addresses must be a number in the range 1 -
+          9999.<br>
+          Note: If the train will not be run automatically,
           the dcc address need not be accurate. This window is
           displayed if <b>Trains from User Entry</b> is selected as
           Dispatcher's train source.</p>
@@ -211,26 +214,54 @@
           to identify the destination Block uniquely.</p>
         </li>
 
+        <li><a name="allocateOptions" id="allocateOptions"></a>
+        Allocation Options <span class="since">since 4.9.5</span>
+        <ul>
         <li>
-          <p>Check <b>Allocate Train As Far As Possible</b> to allow
-          Dispatcher when using Auto Allocation to allocate as far
-          ahead of the train as allowed by other circumstances such as
-          an occupied block. Allocation is limited of course by the
-          <b>Destination location of Train</b> selection. If left unchecked
-          Dispatcher will in using Auto Allocation allocate no more than
-          three sections ahead of the current location of the train.
+          <b>As Far As Pos</b> (Allocate As Far As Possible) -
+          Select to allow Dispatcher, when using Auto Allocation, to
+          allocate as far ahead of the Train as allowed by other
+          circumstances such as an occupied Block. Allocation is
+          of course also limited by the
+          <b>Destination Location of Train</b> selection.
+          </li>
+          <li>
+          <b>To Safe Secs</b> (Allocate to Safe Sections) - Choose
+          this option if you have different trains going through a
+          single Block in both directions.<br>
+          Define Transits and mark as Safe the Sections that form
+          passing places for opposing traffic. If there are Alternative
+          Sections in the Transit, mark those as Safe as well.<br>
+          Note: If you notice that, upon assignment, Turnouts are being
+          set that were already set, you need to select "Trust Known
+          State of Turnouts" in the <a href=
+          "Options.shtml">Dispatcher Options</a>.
+          </li>
+          <li>
+          <b>Number of Sections</b> - When using Auto Allocation,
+          Dispatcher will allocate ahead of the current location of the
+          Train no more than the entered number of Sections set in the
+          Spinner.<br>
+          Because a value of 1 in the current version is known to cause
+          unexpected results, be advised to set it to 2 or higher.
+          </li>
+        </ul>
         </li>
+
+
         <li>
-          <p>Check <b>Reset When Done</b> to set up the Active
-          Train for continuous running. With continuous running,
-          when an Active Train has completed running through its
+          <p>Check <b>Reset when Done</b> to set up the Active
+          Train for continuous running. When checked, the train
+          will restart based on the "Add Delay" value. When an
+          Active Train has completed running through its
           Transit, it is immediately reset to run around its
           Transit again. Continuous running requires that the
           selected Transit be set up in a certain way--the first
           Section and the last Section must be the same. If the
           selected Transit is not capable of continuous running,
-          the user is warned and <b>Reset When Done</b> remains
-          unchecked. For more information on setting up a Transit
+          the user is warned and <b>Reset when Done</b> remains
+          unchecked.<br>
+          For more information on setting up a Transit
           for continuous running see the <b><a href=
           "../beantable/TransitTable.shtml">Transit Table</a></b>
           help file.</p>
@@ -246,15 +277,17 @@
           least three Sections, one at each end and at least one in
           the middle, and the Active Train should fit into each of
           the end Sections. Continuous back and forth running is
-          accomplished by also checking <b>Reset When Done</b>.</p>
+          accomplished by also checking <b>Reset when Done</b>.</p>
         </li>
 
-        <li>Enter a <b>Priority</b> for the Active Train relative
-        to other Active Trains. Larger numbers are higher priority.
-        The priority is used by the dispatcher and/or automated
-        dispatching functions to arbitrate between Active Trains if
-        multiple Active Trains are requesting the same
-        resources.</li>
+        <li>
+          Enter a <b>Priority</b> for the Active Train relative
+          to other Active Trains. Larger numbers are higher priority.
+          The priority is used by the dispatcher and/or automated
+          dispatching functions to arbitrate between Active Trains if
+          multiple Active Trains are requesting the same
+          resources.
+        </li>
 
         <li>
           <p>Select a <b>Train Type</b> from the <b>Train Type:</b>
@@ -263,7 +296,7 @@
         </li>
 
         <li>
-          <p>If the train is to start at a specified fast clock
+          <p>If the train is to start at a specified Fast Clock
           time, check the <b>Delayed Start</b> box, and enter the
           desired start time in the hour and minute fields of the
           <b>Departure Time:</b> entry. If the fast clock has not
@@ -281,10 +314,12 @@
           during a session.</p>
         </li>
 
-        <li>Check <b>Load this Train at Startup</b> to have
-        Dispatcher automatically load this train when Dispatcher
-        starts. You must <b>Save Train Info</b> for this flag to
-        take effect on the next start.</li>
+        <li>
+          Check <b>Load this Train at Startup</b> to have
+          Dispatcher automatically load this Train when Dispatcher
+          starts. You must <b>Save Train Info...</b> for this flag to
+          take effect on the next start.
+        </li>
 
         <li>
           <p>Check <b>Run Train Automatically</b> to request that
@@ -299,8 +334,9 @@
 
           <p><b>Note:</b> Requirements for automatic running are
           not validated until creation of an Active Train is
-          requested. More information about automatic running of
-          Active Trains may be found in the <b><a href=
+          requested.<br>
+          More information about automatic running of Active Trains
+          may be found in the <b><a href=
           "Dispatcher.shtml#automatic">Running Trains
           Automatically</a></b> help page.</p>
         </li>
@@ -352,6 +388,28 @@
         </li>
 
         <li>
+        <b>Use Speed Profile</b> - If a locomotive has a <a href=
+        "../roster/swing/speedprofile/SpeedProfileFrame.shtml">Speed Profile</a>,
+        the speed will be set using the Warrant Preferences settings
+        and the speed profile. So if the speed calls for "restricted",
+        it looks that up in the Warrant Preferences, gets the required
+        speed &amp; units and uses the Profile to set the Throttle
+        percentage.
+        </li>
+
+        <li>
+        <p><b>Stop By Speed Profile</b> The loco will begin to stop when
+        it enters the Section and -if the profile is accurate and the
+        block lengths are accurate- stop at the far end.</p>
+        </li>
+
+        <li>
+        <p><b>Adjust</b> Set the percentage of the final Block length to be
+        used for stopping when stopping By Speed Profiles is set. Small
+        values in small Blocks tend to cause the loco to just stop.</p>
+        </li>
+
+        <li>
           <p>Check <b>Loco has sound decoder.</b> if the locomotive
           has a sound decoder. If this item is not checked,
           <b>Actions</b> that require a sound decoder, such as
@@ -365,9 +423,8 @@
           confused with the direction through the Transit, which is
           always FORWARD when the Active Train starts up. Checking
           this item is equivalent to using the reverse setting on a
-          manual throttle.</p>
-
-          <p>This option allows a locomotive to back up through the
+          manual throttle.<br>
+          This option allows a locomotive to back up through the
           Transit. For example, a local moves out of a yard
           automatically in the forward direction to a siding, cars
           are switched manually, then the locomotive needs to back
@@ -407,22 +464,28 @@
           Length:</b> field. The length should be entered in scale
           feet or scale meters, depending upon the dimension
           selection in the <b><a href=
-          "Options.shtml">Options</a></b> window accessed from
+          "Options.shtml">Dispatcher Options</a></b> accessed from
           Dispatcher's <b>Options</b> menu. Entering a reasonable
           value for the maximum length of the train is important
           for deciding if a train will fit in a Section when
-          stopping the train (see above).</p>
+          stopping the train (see above). When NOT stopping by
+          Speed Profile, if the length of the train does not fit
+          in a Block when stopping it is stopped immediately.
+          Otherwise it is stopped as soon as the preceding Block goes
+          UNOCCUPIED. Remember this uses <i>debounce timings</i>,
+          which -if large- can result in the train overrunning the
+          block if it only just fits.</p>
         </li>
 
         <li>
           <p>If you want to save your entered train information for
-          later use, click <b>Save Train Info</b>. See <a href=
+          later use, click <b>Save Train Info...</b> See <a href=
           "#loadsave">above</a> for more information on saving
           train information.</p>
         </li>
 
         <li>
-          <p>Click <b>Add New Train</b> after all the above have
+          <p>Click <b>Create</b> after all the above have
           been set to create and activate the new Active Train. The
           new Active Train will immediately appear in the
           Dispatcher window, and this window will be dismissed.</p>
@@ -437,6 +500,7 @@
       </ol>
 
       <p>Back to <a href="Dispatcher.shtml">Dispatcher</a> help.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

@@ -73,7 +73,9 @@
       <p>XML files can be edited with a text editor, but a
       dedicated editor can help a lot. We provide a <a href=
       "XmlEditors.shtml">list of editors</a>, along with a few
-      comments on each. <!--#include virtual="/Footer" --></p>
+      comments on each.</p>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

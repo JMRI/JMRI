@@ -143,7 +143,7 @@ class ConfigurableSound extends VSDSound {
 
     // Catch the timer pop after the start sound is played and trigger the (looped) sustain sound.
     protected void handleTimerPop(ActionEvent e) {
-        log.info("Received timer pop after start sound played.");
+        log.debug("Received timer pop after start sound played.");
         //TODO: Need to validate that this is the timer pop
         if (use_mid_sound) {
             mid_sound.setLooped(true);
@@ -154,7 +154,7 @@ class ConfigurableSound extends VSDSound {
 
     @Override
     public void stop() {
-        log.warn("Stopping");
+        log.debug("Stopping");
         // make sure the start sound is killed
         if (use_start_sound) {
             start_sound.stop();
@@ -299,7 +299,6 @@ class ConfigurableSound extends VSDSound {
     }
 
     public void setXml(Element e, VSDFile vf) {
-        this.setName(this.getName() + e.getAttributeValue("name"));
         log.debug("ConfigurableSound: " + e.getAttributeValue("name"));
         //log.debug("  start file: " + e.getChildText("start-file"));
         if (((start_file = e.getChildText("start-file")) != null) && !(start_file.equals(""))) {

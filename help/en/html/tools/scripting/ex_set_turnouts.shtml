@@ -188,8 +188,8 @@ setStartup().start()          # create one of these, and start it running
         which I believe he interpreted and modified from JMRI's
         sample scripts.</p>
 
-        <p>-- Page authored by Jerry Britton, March 2006. 
-        <!--#include virtual="/Footer" --></p>
+        <p>-- Page authored by Jerry Britton, March 2006.</p>
+        <!--#include virtual="/Footer" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
   </div>

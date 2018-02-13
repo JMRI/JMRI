@@ -21,14 +21,11 @@ import org.slf4j.LoggerFactory;
  */
 public class OutputBits {
 
-    private SerialTrafficController tc = null;
-
     public OutputBits(SerialTrafficController _tc) {
         // clear all output bits
         for (int i = 0; i < 256; i++) {
             outputArray[i] = 0;
         }
-        tc = _tc;
     }
 
     // operational variables

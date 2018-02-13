@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Application Preferences</title>
-  <meta name="Author" content="Bob Jacobsen">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -25,23 +25,22 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Application Preferences</h1>
+      <h1>JMRI Code: Application Preferences</h1>
 
-      This page discusses the how the main 
+      <p>This page discusses how the main
       <a href="AppStructure.shtml">JMRI applications</a>
-      store and retrieve their preferences.
-      <p>
-      
+      store and retrieve their preferences.<br>
+
       For the structure of the JMRI library itself, see the
-      <a href="IntroStructure.shtml">Introduction to JMRI Library Structure page</a>.
-      For information the structure of the main JMRI applications, 
-      see the <a href="AppStructure.shtml">JMRI Application Structure</a> page.
+      <a href="IntroStructure.shtml">Introduction to JMRI Library Structure page</a>.<br>
+      For information on the structure of the main JMRI applications,
+      see the <a href="AppStructure.shtml">JMRI Application Structure</a> page.<br>
       For information on how JMRI initializes its connections to the layout,  
       see the <a href="SystemStructure.shtml">JMRI External System Connection Structure</a> page.
-      
-      <p>This is just a stub of a page, which we'll slowly be building out.
+      </p>
+      <p>This is just a stub of a page, which we'll slowly be building out.</p>
 
-<h4>Concepts</h4>
+<h3>Concepts</h3>
     <ul>
     <li>The profile
     <li>The host ID
@@ -57,7 +56,7 @@
     <code>jmri.UserPreferencesManager</code>.
     
     
-<h4>How Preferences Are Stored</h4>
+<h3>How Preferences Are Stored</h3>
     <ul>
     <li>Multiple search directories are stored in ...
     <li>Within each of those...
@@ -136,8 +135,9 @@ and
 &lt;/auxiliary-configuration&gt;
 </pre>
 
-In that example, the ProfileID was created as <code>NewEmptyProfile.3d854083</code>.  
-<h4>Specifics</h4>
+In that example, the ProfileID was created as <code>NewEmptyProfile.3d854083</code>.
+
+<h3>Specifics</h3>
       <ul>
       <li>jmri.UserPreferencesManager
       <li>jmri/managers/JmriUserPreferencesManager

@@ -25,7 +25,7 @@ public class FnMapPanelESUTest {
                 new String[]{"Name", "Value"},
                 cvtm
         );
-        List<Integer> varsUsed = new ArrayList();
+        List<Integer> varsUsed = new ArrayList<>();
         RosterEntry re = new RosterEntry();
         Element model = new Element("model");
 

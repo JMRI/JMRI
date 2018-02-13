@@ -7,9 +7,9 @@ import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
-import jmri.util.JmriJFrame;
 
 /**
  * ItemPanel for for PortalIcons. Since this class has been introduced after
@@ -23,7 +23,7 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
     /**
      * Constructor types with multiple families and multiple icon families.
      */
-    public PortalItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
+    public PortalItemPanel(DisplayFrame parentFrame, String type, String family, Editor editor) {
         super(parentFrame, type, family, editor);
     }
 

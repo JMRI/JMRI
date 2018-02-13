@@ -27,6 +27,8 @@ import org.slf4j.LoggerFactory;
  * Frame providing a command station slot manager.
  * <P>
  * May-17 Modified to a SprogListener to handle status replies.
+ * 
+ * Jan-18 Moved status request generation here, based on a timer.
  *
  * @author	Bob Jacobsen Copyright (C) 2001 
  * @author  Andrew Crosland (C) 2006 ported to SPROG 2008
@@ -48,6 +50,9 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
 
     SprogSystemConnectionMemo _memo = null;
     private SprogTrafficController tc = null;
+    
+    private static final int STATUS_PERIOD = 500;
+    javax.swing.Timer timer = null;
 
     public SprogSlotMonFrame(SprogSystemConnectionMemo memo) {
         super();
@@ -134,6 +139,8 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
         pack();
         pane1.setMaximumSize(pane1.getSize());
         pack();
+        
+        startTimer(STATUS_PERIOD);
     }
 
     /**
@@ -179,10 +186,9 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
      */
     @Override
     public void notifyReply(SprogReply m) {
-        byte[] p;
         int [] statusA = new int[4];
         String s = m.toString();
-        log.debug("Reply received: "+s);
+        log.debug("Reply received: {}", s);
         if (s.indexOf('S') > -1) {
             // Handle a status reply
             log.debug("Status reply");
@@ -221,11 +227,52 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
     @Override
     public void dispose() {
         // deregister with the command station.
+        stopTimer();
         slotModel.dispose();
         slotModel = null;
         slotTable = null;
         slotScroll = null;
         super.dispose();
+    }
+
+    /**
+     * Internal routine to handle a timeout
+     */
+    synchronized protected void timeout() {
+        Runnable r = () -> {
+            // Send a status request
+            log.debug("Sending status request");
+            tc.sendSprogMessage(SprogMessage.getStatus(), this);
+        };
+        javax.swing.SwingUtilities.invokeLater(r);
+    }
+
+    /**
+     * Internal routine to handle timer starts {@literal &} restarts
+     * 
+     * @param delay timer delay
+     */
+    protected void startTimer(int delay) {
+        log.debug("Restart timer");
+        if (timer == null) {
+            timer = new javax.swing.Timer(delay, (java.awt.event.ActionEvent e) -> {
+                timeout();
+            });
+        }
+        timer.stop();
+        timer.setInitialDelay(delay);
+        timer.setRepeats(true);
+        timer.start();
+    }
+
+    /**
+     * Internal routine to handle timer stop
+     */
+    protected void stopTimer() {
+        log.debug("Stop timer");
+        if (timer != null) {
+            timer.stop();
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(SprogSlotMonFrame.class);

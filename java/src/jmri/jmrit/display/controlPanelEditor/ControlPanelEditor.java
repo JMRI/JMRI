@@ -96,7 +96,7 @@ import org.slf4j.LoggerFactory;
  * The "contents" List keeps track of all the objects added to the target frame
  * for later manipulation. Extends the behavior it shares with PanelPro DnD
  * implemented at JDK 1.2 for backward compatibility
- *
+ * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2009, 2010, 2011
  *
  */
@@ -186,7 +186,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             public CatalogPanel doInBackground() {
                 return CatalogPanel.makeDefaultCatalog();
             }
-
             /**
              * Minimal implementation to catch and log errors
              */
@@ -982,7 +981,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             name = name.substring(0, name.length() - ending.length());
         }
         if (name.equals(defaultName)) {
-            name = Bundle.getMessage("untitled") + " (" + name + ")";
+            name = Bundle.getMessage("untitled") + "(" + name + ")";
         }
        if (isEditable()) {
             super.setTitle(name + " " + Bundle.getMessage("LabelEditor"));
@@ -1195,8 +1194,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     ///////////////// Handle mouse events ////////////////
-
     private long _mouseDownTime = 0;
+
     @Override
     public void mousePressed(MouseEvent event) {
         _mouseDownTime = System.currentTimeMillis();
@@ -1265,7 +1264,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
             if (isEditable()) {
                 _shapeDrawer.doMouseReleased(selection, event, this);
-                
+
                 if (!_circuitBuilder.doMouseReleased(selection, _dragging)) {
                     if (selection != null) {
                         if (!_dragging) {
@@ -1463,7 +1462,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (g instanceof Graphics2D) {
                 Graphics2D g2d = (Graphics2D) g;
                 g2d.setStroke(new java.awt.BasicStroke(2.0f));
-                
+
             }
             g.setColor(new Color(150, 150, 255));
             for (Positionable p : _secondSelectionGroup) {
@@ -1808,7 +1807,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             _namedIconDataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);
             _positionableListDataFlavor = new DataFlavor(List.class, "JComponentList");
         } catch (ClassNotFoundException cnfe) {
-            cnfe.printStackTrace();
+            log.error("Unable to find class supporting {}", ImageIndexEditor.IconDataFlavorMime, cnfe);
         }
         new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
     }
@@ -1947,5 +1946,4 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     private final static Logger log = LoggerFactory.getLogger(ControlPanelEditor.class);
-
 }

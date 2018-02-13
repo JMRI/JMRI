@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.JmriException;
@@ -21,18 +22,18 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
-public class JsonThrottleSocketService extends JsonSocketService {
+public class JsonThrottleSocketService extends JsonSocketService<JsonThrottleHttpService> {
 
     private final HashMap<String, JsonThrottle> throttles = new HashMap<>();
     private final HashMap<JsonThrottle, String> throttleIds = new HashMap<>();
     private final static Logger log = LoggerFactory.getLogger(JsonThrottleSocketService.class);
 
     public JsonThrottleSocketService(JsonConnection connection) {
-        super(connection);
+        super(connection, new JsonThrottleHttpService(connection.getObjectMapper()));
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
         log.debug("Processing {}", data);
         String id = data.path(THROTTLE).asText();
         if (id.isEmpty()) {
@@ -55,10 +56,10 @@ public class JsonThrottleSocketService extends JsonSocketService {
 
     @Override
     public void onClose() {
-        for (String throttleId : this.throttles.keySet()) {
+        new HashSet<>(this.throttles.keySet()).stream().forEach((throttleId) -> {
             this.throttles.get(throttleId).close(this, false);
             this.throttles.remove(throttleId);
-        }
+        });
         this.throttleIds.clear();
     }
 
@@ -74,7 +75,7 @@ public class JsonThrottleSocketService extends JsonSocketService {
             ObjectNode root = this.connection.getObjectMapper().createObjectNode();
             root.put(TYPE, THROTTLE);
             data.put(THROTTLE, id);
-            root.put(DATA, data);
+            root.set(DATA, data);
             this.connection.sendMessage(root);
         }
     }

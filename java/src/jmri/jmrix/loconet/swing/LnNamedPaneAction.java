@@ -64,7 +64,11 @@ public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConn
     @Override
     public void setSystemConnectionMemo(SystemConnectionMemo memo) throws IllegalArgumentException {
         if (LocoNetSystemConnectionMemo.class.isAssignableFrom(memo.getClass())) {
+            if (memo instanceof LocoNetSystemConnectionMemo) {
             this.memo = (LocoNetSystemConnectionMemo) memo;
+            } else {
+                throw new IllegalArgumentException();
+            }
         } else {
             throw new IllegalArgumentException();
         }

@@ -14,7 +14,6 @@ import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
 import jmri.jmrix.loconet.spjfile.SpjFile;
 import jmri.swing.RowSorterUtil;
-import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,8 +36,7 @@ public class EditorFilePane extends javax.swing.JPanel {
             file = new SpjFile(name);
             file.read();
         } catch (IOException e) {
-            log.error("Exception reading file: " + e);
-            e.printStackTrace();
+            log.error("Exception reading file", e);
             return;
         }
 
@@ -51,9 +49,8 @@ public class EditorFilePane extends javax.swing.JPanel {
         JTable dataTable = new JTable(dataModel);
         JScrollPane dataScroll = new JScrollPane(dataTable);
 
-        // give system name column a smarter sorter and use it initially
+        // set default sort order
         TableRowSorter<EditorTableDataModel> sorter = new TableRowSorter<>(dataModel);
-        sorter.setComparator(EditorTableDataModel.HEADERCOL, new SystemNameComparator());
         RowSorterUtil.setSortOrder(sorter, EditorTableDataModel.HEADERCOL, SortOrder.ASCENDING);
 
         // configure items for GUI
@@ -61,7 +58,7 @@ public class EditorFilePane extends javax.swing.JPanel {
 
         add(dataScroll);
 
-        // some stuff at bottom for now       
+        // some stuff at bottom for now
         add(new JSeparator());
         JPanel bottom = new JPanel();
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));

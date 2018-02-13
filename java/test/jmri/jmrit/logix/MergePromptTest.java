@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,16 +26,18 @@ public class MergePromptTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        new Thread(() -> {
+        Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator("Merge Prompt CTor Test");
             jdo.close();
-        }).start();
+        });
+        t.setName("MergePrompt Dialog Close Thread");
+        t.start();
 
-        MergePrompt t = new MergePrompt("Merge Prompt CTor Test",new HashMap<String,Boolean>(),
+        MergePrompt m = new MergePrompt("Merge Prompt CTor Test",new HashMap<String,Boolean>(),
                         new HashMap<String, HashMap<Integer,Boolean>>());
-        Assert.assertNotNull("exists",t);
-        t.dispose();
+        Assert.assertNotNull("exists",m);
+        m.dispose();
     }
 
     // The minimal setup for log4J
@@ -50,6 +51,6 @@ public class MergePromptTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MergePromptTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MergePromptTest.class.getName());
 
 }

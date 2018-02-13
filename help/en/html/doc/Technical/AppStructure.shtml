@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Application Structure</title>
-  <meta name="Author" content="Bob Jacobsen">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -30,7 +30,7 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Application Structure</h1>
+      <h1>JMRI Code: Application Structure</h1>
       
       This page discusses the structure of JMRI application(s).
       For the structure of the JMRI library itself, see the
@@ -144,16 +144,16 @@
       hard-coded layout configuration. See the internal comments
       for more info.</p>
 
-      <p>Better is to use the JMRI configuration system to read a
+      <p>The preferred way is to use the JMRI configuration system to read a
       configuration file and do the initialization. There's
       commented out code in apps.SampleMinimalProgram that shows
       how to do that.</p>
 
       <p>The JMRI applications themselves use a more powerful
       "profile" mechanism that's inherited from the apps.Apps and
-      apps.AppsBase classes. 
-
-      <!--#include virtual="/Footer" --></p>
+      apps.AppsBase classes.
+      </p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

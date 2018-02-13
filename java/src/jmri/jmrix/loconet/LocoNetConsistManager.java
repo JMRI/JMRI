@@ -7,6 +7,7 @@
 package jmri.jmrix.loconet;
 
 import jmri.Consist;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.implementation.AbstractConsistManager;
 import org.slf4j.Logger;
@@ -52,13 +53,16 @@ public class LocoNetConsistManager extends AbstractConsistManager {
      * consistTable/consistList
      */
     @Override
-    public Consist addConsist(DccLocoAddress address) {
+    public Consist addConsist(LocoAddress address) {
+        if (! (address instanceof DccLocoAddress)) {
+            throw new IllegalArgumentException("address is not a DccLocoAddress object");
+        }
         if (consistTable.containsKey(address)) // no duplicates allowed.
         {
             return consistTable.get(address);
         }
         LocoNetConsist consist;
-        consist = new LocoNetConsist(address, memo);
+        consist = new LocoNetConsist((DccLocoAddress) address, memo);
         consistTable.put(address, consist);
         return consist;
     }

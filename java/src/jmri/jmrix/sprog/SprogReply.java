@@ -6,9 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SprogReply.java
- *
- * Description:	Carries the reply to a SprogMessage
+ * Carries the reply to a SprogMessage.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Andrew Berridge - refactored, cleaned up, Feb 2010
@@ -18,12 +16,21 @@ public class SprogReply extends AbstractMRReply {
     // Longest boot reply is 256bytes each preceded by DLE + 2xSTX + ETX
     static public final int maxSize = 515;
     private boolean _isBoot = false;
+    protected int _id = -1;
 
     // create a new one
     public SprogReply() {
         super();
     }
 
+    public void setId(int id) {
+        _id = id;
+    }
+    
+    public int getId() {
+        return _id;
+    }
+    
     // no need to do anything
     @Override
     protected int skipPrefix(int index) {
@@ -50,6 +57,7 @@ public class SprogReply extends AbstractMRReply {
         for (int i = 0; i < _nDataChars; i++) {
             _dataChars[i] = m._dataChars[i];
         }
+        _id = m._id;
     }
 
     /**
@@ -156,8 +164,10 @@ public class SprogReply extends AbstractMRReply {
      * Extract Read-CV returned value from a message.
      * <p>
      * SPROG is assumed to not be echoing commands. A reply to a command may
-     * include the prompt that was printed after the previous command Reply to a
-     * CV read is of the form " = hvv" where vv is the CV value in hex
+     * include the prompt that was printed after the previous command.
+     * <p>
+     * Reply to a CV read is of the form " = hvv" where vv is the CV value in hex
+     *
      * @return -1 if message can't be parsed
      */
     @Override
@@ -174,8 +184,7 @@ public class SprogReply extends AbstractMRReply {
             sum += 16 * Integer.valueOf(s1, 16).intValue();
             val = sum;  // don't do this assign until now in case the conversion throws
         } catch (NumberFormatException e) {
-            log.error("Unable to get number from reply: \"" + s1 + s2 + "\" index: " + index
-                    + " message: \"" + toString() + "\"");
+            log.error("Unable to get number from reply: \"{}{}\" index: {} message: \"{}\"", s1, s2, index, toString());
         }
         return val;
     }
@@ -204,10 +213,10 @@ public class SprogReply extends AbstractMRReply {
         return index;
     }
 
-    /*
-     * Normal SPROG replies will end with the prompt for the next command
+    /**
+     * Normal SPROG replies will end with the prompt for the next command.
      * Bootloader will end with ETX with no preceding DLE.
-     * SPROG v4 bootloader replies "L>" on entry and replies "." at other
+     * SPROG v4 bootloader replies "L{@literal >}" on entry and replies "." at other
      * times.
      */
     public boolean endNormalReply() {
@@ -240,9 +249,9 @@ public class SprogReply extends AbstractMRReply {
     }
 
     public boolean endBootReply() {
-        // Detect that the reply buffer ends with ETX with no preceding DLE
+        // Detect that the reply buffer ends with ETX with no preceding DLE.
         // This is the end of a SPROG II bootloader reply or the end of
-        // a SPROG v4 echoing the botloader version request
+        // a SPROG v4 echoing the bootloader version request
         int num = this.getNumDataElements();
         if (num >= 2) {
             // ptr is offset of last element in SprogReply

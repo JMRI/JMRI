@@ -30,7 +30,7 @@ import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SignalMastLogicTableAction extends AbstractTableAction {
+public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLogic> {
 
     /**
      * Create an action with a specific title.
@@ -109,7 +109,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
 
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<SignalMastLogic>() {
             static public final int SOURCECOL = 0;
             static public final int SOURCEAPPCOL = 1;
             static public final int DESTCOL = 2;
@@ -137,7 +137,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
             }
 
             @Override
-            public void clickOn(jmri.NamedBean t) {
+            public void clickOn(SignalMastLogic t) {
             }
 
             @Override
@@ -398,12 +398,12 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public SignalMastLogic getBySystemName(String name) {
                 return null;
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public SignalMastLogic getByUserName(String name) {
                 return null;
             }
 

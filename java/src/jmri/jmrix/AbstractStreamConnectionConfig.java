@@ -62,7 +62,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
                 public void actionPerformed(ActionEvent e) {
                     if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
                         JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
-                        systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+                        systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
                 }
             });
@@ -71,7 +71,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
                 public void focusLost(FocusEvent e) {
                     if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
                         JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
-                        systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+                        systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
                 }
 
@@ -124,7 +124,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         }
 
         if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
     }
@@ -173,7 +173,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         }
 
         if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
         NUMOPTIONS = NUMOPTIONS + options.size();

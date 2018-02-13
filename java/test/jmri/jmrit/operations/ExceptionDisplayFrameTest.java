@@ -1,6 +1,7 @@
 package jmri.jmrit.operations;
 
 import java.awt.GraphicsEnvironment;
+import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -18,19 +19,34 @@ public class ExceptionDisplayFrameTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ExceptionContext ec = new ExceptionContext(new Exception("Test"),"Test","Test");
-        new Thread(() -> {
+        ExceptionContext ec = new ExceptionContext(new Exception("Test"), "Test", "Test");
+        ExceptionDisplayFrame dialog = new ExceptionDisplayFrame(ec, null);
+        Assert.assertNotNull("exists", dialog);
+        Assert.assertEquals(Exception.class.getSimpleName(), dialog.getTitle());
+        JUnitUtil.dispose(dialog);
+    }
+
+    @Test
+    public void testSetVisible() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ExceptionContext ec = new ExceptionContext(new Exception("Test"), "Test", "Test");
+        JFrame testFrame = new JFrame();
+        Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(ec.getTitle());
-            jdo.close();
-        }).start();
-        ExceptionDisplayFrame dialog = new ExceptionDisplayFrame(ec);
-        Assert.assertNotNull("exists",dialog);
+            jdo.requestClose();
+        });
+        t.setName("Exception Dialog Close Thread");
+        t.start();
+        ExceptionDisplayFrame dialog = new ExceptionDisplayFrame(ec, testFrame);
+        dialog.setName(ec.getTitle());
+        Assert.assertNotNull("exists", dialog);
+        dialog.setVisible(true);
         JUnitUtil.waitFor(() -> {
             return !dialog.isVisible();
         }, "Exception Frame did not close");
-        dialog.dispose();
         JUnitUtil.dispose(dialog);
+        JUnitUtil.dispose(testFrame);
     }
 
     // The minimal setup for log4J

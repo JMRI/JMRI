@@ -7,8 +7,10 @@ package jmri.jmrix.easydcc;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.util.JUnitUtil;
 
 public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase{
 
@@ -94,11 +96,25 @@ public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsi
 
     }
 
+    @Test
+    @Override
+    public void testIsCommandStationConsistPossible(){
+       // possible for EasyDCC
+       Assert.assertTrue("CS Consist Possible",cm.isCommandStationConsistPossible());
+    }
+
+    @Test
+    public void tesCsConsistNeedsSeperateAddress(){
+       Assume.assumeTrue(cm.isCommandStationConsistPossible());
+       // EasyDCC requires an address for CS consists.
+       Assert.assertTrue("CS Consist Needs Seperate Address",cm.csConsistNeedsSeperateAddress());
+    }
+
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
         t = new EasyDccTrafficControlScaffold(memo);
         memo.setEasyDccTrafficController(t); // important for successful getTrafficController()
@@ -109,7 +125,8 @@ public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsi
     @Override
     public void tearDown() {
         cm = null;
-        apps.tests.Log4JFixture.tearDown();
+        t.terminateThreads();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManagerTest.class);

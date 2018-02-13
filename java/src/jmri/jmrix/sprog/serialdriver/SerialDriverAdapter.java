@@ -67,7 +67,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     }
 
     SerialPort activeSerialPort = null;
-    
+
     private int baudRate = -1;
 
     @Override
@@ -94,9 +94,9 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
             activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
             activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            //AJB: Removed Jan 2010 - 
+            //AJB: Removed Jan 2010 -
             //Setting flow control mode to zero kills comms - SPROG doesn't send data
-            //Concern is that will disabling this affect other SPROGs? Serial ones? 
+            //Concern is that will disabling this affect other SPROGs? Serial ones?
             //activeSerialPort.setFlowControlMode(0);
 
             // set timeout
@@ -136,8 +136,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -148,9 +147,8 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     public void setHandshake(int mode) {
         try {
             activeSerialPort.setFlowControlMode(mode);
-        } catch (Exception ex) {
-            log.error("Unexpected exception while setting COM port handshake mode trace follows: " + ex);
-            ex.printStackTrace();
+        } catch (UnsupportedCommOperationException ex) {
+            log.error("Unexpected exception while setting COM port handshake mode,", ex);
         }
     }
 

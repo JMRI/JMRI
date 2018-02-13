@@ -110,10 +110,10 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         }
         // check parity
         if (!((XNetReply) m).checkParity()) {
-            log.warn("Ignore packet with bad checksum: {}", ((XNetReply) m));
+            log.warn("Ignore packet with bad checksum: {}", (m));
         } else {
             try {
-                int mask = (mListenerMasks.get((XNetListener) client));
+                int mask = (mListenerMasks.get(client));
                 if (mask == XNetInterface.ALL) {
                     ((XNetListener) client).message((XNetReply) m);
                 } else if ((mask & XNetInterface.COMMINFO)
@@ -245,7 +245,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         if (mMemo == null) {
             return true;
         }
-        jmri.jmrix.lenz.XNetProgrammerManager pm = (XNetProgrammerManager) mMemo.getProgrammerManager();
+        jmri.jmrix.lenz.XNetProgrammerManager pm = mMemo.getProgrammerManager();
         if (pm == null) {
             return true;
         }
@@ -351,6 +351,13 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
             _FeedbackCache = new XNetFeedbackMessageCache(this);
         }
         return _FeedbackCache;
+    }
+
+    /**
+     * @return whether or not this connection currently has a timeslot from the Command station.
+     */
+    boolean hasTimeSlot(){
+       return ((XNetPortController)controller).hasTimeSlot();
     }
 
     private final static Logger log = LoggerFactory.getLogger(XNetTrafficController.class);

@@ -1,18 +1,14 @@
 package jmri.util.swing;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Common utility to draw colored rectangular Image.
- * Used as background in jmrit.catalog, jmrit.display.LE#AddItems, Palette.
+ * Used as background in jmrit.catalog, jmrit.display.CPE#AddItems, Palette.
  *
  * @author Egbert Broerse copyright (c) 2017
  */

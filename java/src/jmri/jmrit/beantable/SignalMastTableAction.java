@@ -11,6 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
+import jmri.SignalMast;
 import jmri.jmrit.beantable.signalmast.SignalMastTableDataModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2009, 2010
  */
-public class SignalMastTableAction extends AbstractTableAction {
+public class SignalMastTableAction extends AbstractTableAction<SignalMast> {
 
     /**
      * Create an action with a specific title.

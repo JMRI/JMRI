@@ -1,14 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Xml Schema Examples</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <title>JMRI: XML Schema Examples</title>
+    <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code xml schema usage">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -24,11 +23,13 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: XML Schema Examples</h1>This page contains examples
-      of various XML Schema fragments that you might find useful.
+
+      <h1>JMRI Code: XML Schema Examples</h1>
+      <p>This page contains examples of various XML Schema fragments
+      that you might find useful.<br>
       For discussion of JMRI's use of XML Schema, including info on
       preferred patterns and organization, see <a href=
-      "XmlSchema.shtml">another page</a>.
+      "XmlSchema.shtml">another page</a>.</p>
 
       <h2>Element with just text content, no attributes</h2>
       <pre>
@@ -158,7 +159,9 @@ elsewhere:
 <code>
 &lt;xs:attributeGroup ref="EditorCommonAttributesGroup" /&gt;
 </code>
-</pre><!--#include virtual="/Footer" -->
+</pre>
+
+        <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

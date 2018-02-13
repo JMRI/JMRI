@@ -56,7 +56,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
     int previousGroupChannel;
 //    Dimension channelTextSize;
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -169,7 +169,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -177,7 +177,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         return "package.jmri.jmrix.loconet.DuplexGroupSetup.DuplexGroupScanPanel"; // NOI18N
     } // NOI18N
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -185,7 +185,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         return rb.getString("Title");
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -556,22 +556,20 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
             int textHeight = 0;
             int textWidth = 0;
 
-            if (signalBarsFont != null) {
-                // get metrics from the graphics
-                java.awt.FontMetrics metrics = getFontMetrics(signalBarsFont);
-                // get the height of a line of text in this font and render context
-                textHeight = metrics.getHeight();
-                // get the advance of my text in this font and render context
-                textWidth = metrics.stringWidth("38");  // representative (but not accurate) example text string // NOI18N
-                // calculate the size of a box to hold the text with some padding.
-                channelTextSize = new Dimension(textWidth + HORIZ_PADDING, textHeight + VERT_PADDING);
-                requiredMinWindowWidth = channelCount * channelTextSize.width;
-                requiredMinWindowHeight += (2 * channelTextSize.height);
-                baseline += channelTextSize.height;
-                barSpace = channelTextSize.width;
-                barWidth = textWidth;
-                barOffset = (barSpace - barWidth) / 2;
-            }
+            // get metrics from the graphics
+            java.awt.FontMetrics metrics = getFontMetrics(signalBarsFont);
+            // get the height of a line of text in this font and render context
+            textHeight = metrics.getHeight();
+            // get the advance of my text in this font and render context
+            textWidth = metrics.stringWidth("38");  // representative (but not accurate) example text string // NOI18N
+            // calculate the size of a box to hold the text with some padding.
+            channelTextSize = new Dimension(textWidth + HORIZ_PADDING, textHeight + VERT_PADDING);
+            requiredMinWindowWidth = channelCount * channelTextSize.width;
+            requiredMinWindowHeight += (2 * channelTextSize.height);
+            baseline += channelTextSize.height;
+            barSpace = channelTextSize.width;
+            barWidth = textWidth;
+            barOffset = (barSpace - barWidth) / 2;
             textWidth = 0;
             setSize(requiredMinWindowWidth, requiredMinWindowHeight);
         }
@@ -605,7 +603,12 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         public void paint(java.awt.Graphics g) {
             int channelIndex;
             java.awt.Graphics2D g2;
-            g2 = (java.awt.Graphics2D) g;
+            if (g instanceof java.awt.Graphics2D) {
+                g2 = (java.awt.Graphics2D) g;
+            } else {
+                log.error("paint() cannot cast object g to Graphics2D.  Aborting paint().");
+                return;
+            }
             for (int i = 11; i <= 26; ++i) {
                 g2.drawString(Integer.toString(i), (i - 11) * channelTextSize.width, channelTextSize.height);
                 g2.drawString(Integer.toString(i), (i - 11) * channelTextSize.width, requiredMinWindowHeight - 1);

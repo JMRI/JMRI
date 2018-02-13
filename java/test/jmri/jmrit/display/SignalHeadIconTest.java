@@ -2,7 +2,6 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -26,17 +25,13 @@ public class SignalHeadIconTest extends PositionableIconTest {
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()) {
-           Editor ef = new EditorScaffold();
-           SignalHeadIcon shi = new SignalHeadIcon(ef);
+           editor = new EditorScaffold();
+           SignalHeadIcon shi = new SignalHeadIcon(editor);
            jmri.implementation.VirtualSignalHead h = new jmri.implementation.VirtualSignalHead("IH1");
            jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
            shi.setSignalHead(new jmri.NamedBeanHandle<>("IH1", h));
            p = shi;
         }
     }
-
-    @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
-
 
 }

@@ -6,8 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
-  <!-- UpDated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-04-->
+  <!-- Updated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-04-->
 
   <title>JMRI: Send Throttle Message</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -25,13 +24,11 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI:Envoi de Message Au R&eacute;gulateur</h1>JMRI a une
-      capacit&eacute; limit&eacute;e pour envoyer des messages
-      &agrave; un r&eacute;gulateur &agrave; main.
+      <h1>JMRI:Envoi de Message Au R&eacute;gulateur</h1>
+      <p>JMRI a une capacit&eacute; limit&eacute;e pour envoyer des messages
+      &agrave; un r&eacute;gulateur &agrave; main.</p>
 
-      <p>Ceci est la page d'aide
-      help/fr/package/jmri/jmrit/.messager.MessageFrame. 
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

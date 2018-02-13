@@ -46,8 +46,7 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
         TableRowSorter<RosterGroupTableModel> sorter = new TableRowSorter<>(dataModel);
         dataTable.setRowSorter(sorter);
 
-        // not sure I understand how to address this unchecked warning
-        sorter.setComparator(RosterGroupTableModel.IDCOL, new jmri.util.SystemNameComparator());
+        sorter.setComparator(RosterGroupTableModel.IDCOL, new jmri.util.AlphanumComparator());
         sorter.toggleSortOrder(RosterGroupTableModel.IDCOL);
         dataTable = new JTable(dataModel);
         

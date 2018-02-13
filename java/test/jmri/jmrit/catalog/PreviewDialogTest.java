@@ -5,12 +5,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.util.JmriJFrame;
 
 /**
@@ -42,6 +39,6 @@ public class PreviewDialogTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PreviewDialogTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PreviewDialogTest.class.getName());
 
 }

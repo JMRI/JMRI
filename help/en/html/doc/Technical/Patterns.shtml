@@ -27,7 +27,7 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Patterns and Organization</h1>
+      <h1>JMRI Code: Patterns and Organization</h1>
 
       <p>JMRI has grown and evolved with time, and you can't always
       see the currently-preferred structure and patterns by looking
@@ -61,6 +61,8 @@
       "http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
       class.
 
+      <h3>Naming and Handles</h3>
+      
       <p>To get access to a specific object (a NamedBean of a
       specific type with a specific name), you make requests of a
       manager: You ask a <a href=
@@ -92,20 +94,98 @@
       </code></pre>
       Please use <code>getBean()</code> every time you need to access the bean.  Don't cache the
       reference from <code>getBean()</code>.  That way, if somebody does a "move" or "rename" operation,
-      the <code>NamedBeanHandle</code> will get updated and you're next <code>getBean()</code> call will get the
+      the <code>NamedBeanHandle</code> will get updated and your next <code>getBean()</code> call will get the
       right reference.
+
+      <h3>Bean properties</h3>
+
+      <p>NamedBeans usually have state, for example a <code>Sensor</code> may
+      be Active or Inactive (or Unknown or Inconsistent). This state is
+      represented by one or more Java Bean properties. Code in Java and Jython
+      can use the
+      <a href="https://docs.oracle.com/javase/tutorial/uiswing/events/propertychangelistener.html">PropertyChangeListener
+      pattern</a> to get notified when a given property changes. As an example,
+      when a turnout is configured for a feedback sensor,
+      the <code>Turnout</code> object registers itself as a change listener
+      when the <code>Sensor</code>'s state property changes, and updates
+      the <code>Turnout</code>'s <code>"KnownState"</code> property.</p>
+
+      <p>The available Bean properties are defined in the abstract base class
+      usually, for example <code>AbstractTurnout</code>
+      defines <code>"CommandedState"</code>,
+      <code>"KnownState"</code>, <code>"feedbackchange"</code>, <code>"locked"</code>
+      and some more at the time of this writing. These properties are not
+      system-dependent. Some of the properties are run-time only (e.g. state --
+      is the turnout thrown or closed?), while others (e.g. turnout feedback
+      mode) are configuration settings, selected by the user and saved between
+      sessions.</p>
+
+      <h3>Editing and saving NamedBeans</h3>
+
+      <p>NamedBeans are created and configured by the user using explicit
+      actions. Most of the UI for these actions is in
+      the <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/package-summary.html">jmri.jmrit.beantable</a>
+      package, using the generic <code>BeanTable{Frame,Pane,Model}</code>
+      classes specialized for the particular type, for example in the
+      <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/TurnoutTableAction.html"><code>TurnoutTableAction</code></a>
+      class. The configuration options present in the table and the edit dialog
+      are specific to the type (<code>Turnout</code>) but not the system.</p>
       
+      <p>The beans with the configured options are persisted into the
+      Configuration (and Panel) XML file when the user saves those. The
+      persistence is handled by the system- and object-specific ManagerXml
+      class, for
+      example <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/configurexml/LnTurnoutManagerXml.html">LnTurnoutManagerXml</a>
+      or <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/openlcb/configurexml/OlcbTurnoutManagerXml.html">OlcbTurnoutManagerXml</a>,
+      which heavily rely on shared code
+      in <a href="http://jmri.org/JavaDoc/doc/jmri/managers/configurexml/AbstractTurnoutManagerConfigXML.html">AbstractTurnoutManagerConfigXML</a>,
+      but can introduce system-specific functionality and work together with
+      the system- and object-specific manager
+      (e.g. <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/openlcb/OlcbTurnoutManager.html">OlcbTurnoutManager</a>)
+      to achieve this.</p>
+
+      <p>The base class handles persisting the user settings that were entered
+      via the BeanTable.</p>
+
+      <h3>System-specific properties</h3>
+      
+      <p>Adding a system-specific property requires using a generic API,
+      because the code in the <code>jmrit.beantable</code>
+      package <a href="IntroStructure.shtml">cannot depend</a> on the
+      jmrix.system-specific packages. All NamedBeans have
+      a <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#setProperty-java.lang.String-java.lang.Object-">setProperty</a>
+      and
+      <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#getProperty-java.lang.String-">getProperty</a>
+      method where arbitrary values can be saved for any string key. These
+      properties are persisted into the XML file by the base class of the
+      ManagerXml, so no code needs to be written for it. A variety of basic
+      types can be chosen for the property value, such as <code>Integer</code>
+      or <code>Boolean</code>, and will be correctly persisted and recovered
+      upon load. Custom types might work if they have a <code>toString()</code>
+      method and a constructor that takes only one <code>String</code> as
+      argument and these correctly serialize and parse the data value.</p>
+
+      <p>To allow the user to edit these system-specific properties, a specific
+      <code>Manager</code> can declare the set of supported properties by
+      returning appropriately
+      filled <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanPropertyDescriptor.html">NamedBeanPropertyDescriptor</a>
+      objects from
+      the <a href="http://jmri.org/JavaDoc/doc/jmri/Manager.html#getKnownBeanProperties--">getKnownBeanProperties</a>
+      method. This descriptor tells the BeanTable that additional columns need
+      to be created, what type of data those columns will hold and what should
+      be the column names (printed in the header). The system-specific columns
+      are hidden by default from the user; the user needs to click a checkbox
+      in the bottom row to show them; the checkbox only appears if there are
+      system-specific properties. The column name has to be filled with a
+      localized string that should come out of the
+      respective <code>Manager</code>'s <code>Bundle</code>.</p>
 
       <a id="SPI" name="SPI"></a>
       <h2>Service Providers</h2>
-      Java provides a capability, using a 
-      "Service Provider Interface", 
-      that allows us to reduce the complexity of our
-      code by having the code itself discover what pieces
-      are available and need to be installed. 
-      For background on this, see the 
-      tutorial
-      sections on
+      Java provides a capability, using a "Service Provider Interface",
+      that allows us to reduce the complexity of our code by having the
+      code itself discover what pieces are available and need to be installed.<br>
+      For background on this, see the tutorial sections on
       "<a href="https://docs.oracle.com/javase/tutorial/ext/basics/spi.html">Creating Extensible Applications</a>"
       and
       "<a href="https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">Introduction to the Service Provider Interfaces</a>".
@@ -115,8 +195,7 @@
       <pre><code>
       @ServiceProvider(service = PreferencesManager.class)
       </code></pre> 
-      the 
-      JMRI Preferences System
+      the JMRI Preferences System
       automatically will discover that the class uses the preferences
       and should be hooked up.  This means that we don't have to 
       modify the Preferences classes to look up each new class using them, 
@@ -141,13 +220,13 @@
       </dl>
 
       <p>
-      Classes provide SPI also have to be registered with the system so they can be found.
+      Classes that provide SPI also have to be registered with the system so they can be found.
       JMRI does this with entries
       inside files in the <code>target/classes/META-INF/services/</code> directory.
       These entries are created automatically during the JMRI build process from 
       the annotations in the source files.
       JMRI then packages those into the appropriate level of <code>jmri.jar</code> file, 
-      where they will eventually be found and acted on.
+      where they will eventually be found and acted on.</p>
       
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

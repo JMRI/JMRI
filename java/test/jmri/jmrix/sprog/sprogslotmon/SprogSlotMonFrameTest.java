@@ -17,12 +17,13 @@ import org.junit.Test;
  */
 public class SprogSlotMonFrameTest {
 
-    SprogSystemConnectionMemo memo = null;
+    private SprogTrafficControlScaffold stcs = null;
+    SprogSystemConnectionMemo m = null;
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SprogSlotMonFrame action = new SprogSlotMonFrame(memo);
+        SprogSlotMonFrame action = new SprogSlotMonFrame(m);
         Assert.assertNotNull("exists", action);
         action.dispose();
     }
@@ -30,12 +31,15 @@ public class SprogSlotMonFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        memo = new jmri.jmrix.sprog.SprogSystemConnectionMemo();
-        memo.setSprogTrafficController(new SprogTrafficControlScaffold(memo));
-        memo.setSprogMode(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
-        memo.configureCommandStation();
+        m = new jmri.jmrix.sprog.SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
+        stcs = new SprogTrafficControlScaffold(m);
+        m.setSprogTrafficController(stcs);
+        m.configureCommandStation();
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        m.getSlotThread().interrupt();
+        JUnitUtil.tearDown();
+    }
 }

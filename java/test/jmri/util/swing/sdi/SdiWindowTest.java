@@ -28,9 +28,6 @@ public class SdiWindowTest {
         f.add(b);
         f.pack();
         f.setVisible(true);
-//    }
-//  test order isn't guaranteed!
-//    public void testFrameCreation() {
         JFrame f2 = jmri.util.JmriJFrame.getFrame("SDI test");
         Assert.assertTrue("found frame", f2 != null);
         JUnitUtil.dispose(f2);

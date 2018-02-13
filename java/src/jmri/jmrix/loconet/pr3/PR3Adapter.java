@@ -28,7 +28,7 @@ public class PR3Adapter extends LocoBufferAdapter {
      * Sets up the serial port characteristics.  Always uses flow control, which is
      * not considered a user-settable option.  Sets the PR3 for the appropriate
      * operating mode, based on the selected "command station type".
-     * 
+     *
      * @param activeSerialPort - the port to be configured
      */
     @Override
@@ -50,9 +50,11 @@ public class PR3Adapter extends LocoBufferAdapter {
         }
         configureLeadsAndFlowControl(activeSerialPort, flow);
 
-        log.debug("Found flow control " + activeSerialPort.getFlowControlMode() // NOI18N
-                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT // NOI18N
-                + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN); // NOI18N
+        log.info("PR3 adapter"
+                +(activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
+                +activeSerialPort.getFlowControlMode()
+                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
+                + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN);
     }
 
     /**
@@ -73,7 +75,7 @@ public class PR3Adapter extends LocoBufferAdapter {
             packets.connectPort(this);
 
             // create memo
-            /*PR3SystemConnectionMemo memo 
+            /*PR3SystemConnectionMemo memo
              = new PR3SystemConnectionMemo(packets, new SlotManager(packets));*/
             this.getSystemConnectionMemo().setLnTrafficController(packets);
             // do the common manager config
@@ -100,7 +102,7 @@ public class PR3Adapter extends LocoBufferAdapter {
             packets.connectPort(this);
 
             // create memo
-            /*PR3SystemConnectionMemo memo 
+            /*PR3SystemConnectionMemo memo
              = new PR3SystemConnectionMemo(packets, new SlotManager(packets));*/
             this.getSystemConnectionMemo().setLnTrafficController(packets);
             // do the common manager config
@@ -128,7 +130,7 @@ public class PR3Adapter extends LocoBufferAdapter {
 
     /**
      * Get an array of valid baud rates.
-     * 
+     *
      * @return String[] containing the single valid baud rate, "57,600".
      */
     @Override
@@ -147,12 +149,12 @@ public class PR3Adapter extends LocoBufferAdapter {
     }
 
     // Option 1 does flow control, inherited from LocoBufferAdapter
-    
+
     /**
-     * The PR3 can be used as a "Standalone Programmer", or with various LocoNet 
+     * The PR3 can be used as a "Standalone Programmer", or with various LocoNet
      * command stations, or as an interface to a "Standalone LocoNet".  Provide those
      * options.
-     * 
+     *
      * @return an array of strings containing the various command station names and
      *      name(s) of modes without command stations
      */
@@ -168,7 +170,12 @@ public class PR3Adapter extends LocoBufferAdapter {
 
     @Override
     public PR3SystemConnectionMemo getSystemConnectionMemo() {
-        return (PR3SystemConnectionMemo) super.getSystemConnectionMemo();
+        if (super.getSystemConnectionMemo() instanceof PR3SystemConnectionMemo) {
+            return (PR3SystemConnectionMemo) super.getSystemConnectionMemo();
+        } else {
+            log.error("Cannot cast the system connection memo to a PR3SystemConnection Memo.");
+            return null;
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(PR3Adapter.class);

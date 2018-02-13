@@ -1,10 +1,8 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -28,14 +26,9 @@ public class PositionablePolygonTest extends PositionableShapeTest {
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
-           Editor e = new EditorScaffold();
-           p = new PositionablePolygon(e,new java.awt.Polygon());
+           editor = new EditorScaffold();
+           p = new PositionablePolygon(editor,new java.awt.Polygon());
         }
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PositionablePolygonTest.class);

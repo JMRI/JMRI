@@ -5,10 +5,10 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2009 -->
-  <!-- $Id$ -->
 
-  <title>JMRI: Multi-connection Update</title><!-- Style -->
+  <title>JMRI: Multi-connection Update</title>
+  <meta name="keywords" content="JMRI jmrix connections hardware">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -26,9 +26,10 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Multi-connection Update</h1>This page is a list of
-      hints for adapting systems (jmri.jmrix subdirectories) to the
-      new multi-system format. It's clearly a work in progress!
+      <h1>JMRI Code: Multi-connection Update</h1>
+      This page is a list of hints for adapting systems (jmri.jmrix
+      subdirectories) to the new multi-system format.<br>
+      It's clearly a work in progress!
 
       <p>Basically, you have to get all the static variables and
       instance() methods out of the code. In their place, you put
@@ -132,7 +133,8 @@ the serial/network refactoring.
       "https://github.com/JMRI/JMRI/issues/1383#issuecomment-226808327">
       this GitHub discussion</a> and associated PR for information
       on making startup actions work with more than one connection
-      of the same type. <!--#include virtual="/Footer" --></p>
+      of the same type.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

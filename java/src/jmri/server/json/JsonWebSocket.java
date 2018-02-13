@@ -59,7 +59,7 @@ public class JsonWebSocket {
     @OnWebSocketClose
     public void onClose(int i, String string) {
         log.debug("Closing connection because {} ({})", string, i);
-        this.handler.dispose();
+        this.handler.onClose();
         InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
     }
 

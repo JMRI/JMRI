@@ -29,14 +29,14 @@ public interface ConsistManager {
      * @param address the consist address
      * @return an existing or new consist
      */
-    public Consist getConsist(DccLocoAddress address);
+    public Consist getConsist(LocoAddress address);
 
     /**
      * Remove an old Consist.
      *
      * @param address the consist address
      */
-    public void delConsist(DccLocoAddress address);
+    public void delConsist(LocoAddress address);
 
     /**
      * Does this implementation support Command Station Consists?
@@ -59,7 +59,7 @@ public interface ConsistManager {
      *
      * @return list of addresses
      */
-    public ArrayList<DccLocoAddress> getConsistList();
+    public ArrayList<LocoAddress> getConsistList();
 
     /**
      * Translate Error Codes relieved by a consistListener into Strings
