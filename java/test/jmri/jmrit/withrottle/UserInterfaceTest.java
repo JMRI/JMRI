@@ -32,7 +32,11 @@ public class UserInterfaceTest {
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         if(!GraphicsEnvironment.isHeadless()){
-           panel = new UserInterface();
+           panel = new UserInterface(){
+              @Override
+              public void listen(){
+              } 
+           };
         }
     }
 

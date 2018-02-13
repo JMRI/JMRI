@@ -13,7 +13,7 @@ import org.junit.Test;
  */
 public class FacelessServerTest {
 
-    FacelessServer panel;
+    private FacelessServer panel;
 
     @Test
     public void testCtor() {
@@ -28,12 +28,15 @@ public class FacelessServerTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        panel = new FacelessServer();
+        panel = new FacelessServer(){
+           @Override
+           public void listen(){
+           }
+        };
     }
     
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
         try {
           panel.disableServer();
           JUnitUtil.waitFor( () -> { return panel.isListen; });
@@ -41,5 +44,6 @@ public class FacelessServerTest {
           // not all tests fully configure the server, so an
           // NPE here is ok.
         }
+        JUnitUtil.tearDown();
     }
 }
