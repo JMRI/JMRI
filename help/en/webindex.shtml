@@ -406,8 +406,14 @@
 
  
 <li>
-    <a href="html/doc/Technical/FindBugs.shtml">SpotBugs </a>
-    <ul></ul>
+<a href="html/doc/Technical/SpotBugs.shtml">FindBugs </a>
+<ul></ul>
+</li>
+
+ 
+<li>
+<a href="html/doc/Technical/SpotBugs.shtml">SpotBugs </a>
+<ul></ul>
 </li>
 
  
