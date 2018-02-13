@@ -13,7 +13,6 @@ spotbugs.xml
 spotbugs.html
 jacoco.exec
 jmri-fb.html
-
 coveragereport
 tests.log
 cucumber-results.xml
@@ -59,4 +58,3 @@ RemoteSystemsTempFiles
 # OS junk files
 [Tt]humbs.db
 *.DS_Store
-

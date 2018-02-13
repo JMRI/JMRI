@@ -666,6 +666,7 @@
              resources in ${target} (this is important for the Java ServiceLoader -->
         <copy todir="${testtarget}">
             <fileset dir="${test}" includes="**/*.properties"/>
+            <fileset dir="${test}" includes="**/*.xml"/>
             <fileset dir="${test}" includes="META-INF/**"/>
         </copy>
     </target>

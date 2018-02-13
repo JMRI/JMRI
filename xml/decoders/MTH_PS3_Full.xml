@@ -25,7 +25,7 @@
         <decVal/>
         <label>PWM Start voltage</label>
         <label xml:lang="it">PWM Volt Partenza</label>
-    <label xml:lang="fr">PWM V dÃ©marr.</label>
+    <label xml:lang="fr">PWM V demarr.</label>
     <label xml:lang="de">PWM Anfahrspannung</label>
       </variable>
       <!-- CV 3-4 -->
@@ -34,7 +34,7 @@
         <decVal/>
         <label>PWM max voltage</label>
         <label xml:lang="it">PWM Volt Massimi (0-255):</label>
-        <label xml:lang="de">PWM HÃ¶chstgeschwindigkeit</label>
+        <label xml:lang="de">PWM Hoechstgeschwindigkeit</label>
       </variable>
       <!-- CV 7-8 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
@@ -316,7 +316,7 @@
       </factReset>
       <factReset label="Reset All CVs except user speed table" CV="8" default="192">
         <mode>OPSBYTEMODE</mode>
-        <label xml:lang="it">Reset delle CV salvo Tabella VelocitÃ  ai valori di fabbrica</label>
+        <label xml:lang="it">Reset delle CV salvo Tabella Velocita ai valori di fabbrica</label>
       </factReset>
       <factReset label="Reset volumes, smoke and light settings" CV="8" default="64">
         <mode>OPSBYTEMODE</mode>
