@@ -630,10 +630,6 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
     protected boolean addressReleased(DccLocoAddress la, ThrottleListener l) {
         if (addressThrottles.containsKey(la)) {
-            log.debug("addressReleased: starting user"
-                    + " count for address {} is {}; listener is {}", 
-                    la.getNumber(), addressThrottles.get(la).getUseCount(),
-                    l.toString());
             if (addressThrottles.get(la).containsListener(l)) {
                 log.debug("decrementUse called with listener " + l);
                 addressThrottles.get(la).decrementUse();
@@ -647,13 +643,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
         if (addressThrottles.containsKey(la)) {
             if (addressThrottles.get(la).getUseCount() > 0) {
-                log.debug("Users of loco {} has {} users", 
-                        la.getNumber(), addressThrottles.get(la).getUseCount());
-                log.debug("addressReleased still has at least listener {} of type {}", 
-                        addressThrottles.get(la).listeners.get(0), 
-                        addressThrottles.get(la).listeners.get(0).getClass().toString());
-                log.debug("listener parameter is {}, class {}",
-                        l, l.getClass());
+                log.debug("addressReleased still has at least one listener");
                 return true;
             }
         }
