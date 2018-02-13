@@ -604,12 +604,6 @@ public class SRCPVisitor implements SRCPParserVisitor {
     }
 
     @Override
-    public Object visit(ASTcomment node, java.lang.Object data) {
-        log.debug("COMMENT " + node.jjtGetValue());
-        return node.childrenAccept(this, data);
-    }
-
-    @Override
     public Object visit(ASTgl node, Object data) {
         log.debug("GL " + node.jjtGetValue());
         return node.childrenAccept(this, data);

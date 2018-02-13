@@ -525,8 +525,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _portalModel = new PortalTableModel(this);
         _portalTable = new JTable(_portalModel);
         TableRowSorter<PortalTableModel> sorter = new TableRowSorter<>(_portalModel);
-        sorter.setComparator(PortalTableModel.FROM_BLOCK_COLUMN, new jmri.util.SystemNameComparator());
-        sorter.setComparator(PortalTableModel.TO_BLOCK_COLUMN, new jmri.util.SystemNameComparator());
         _portalTable.setRowSorter(sorter);
         _portalTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{PortalTableModel.DELETE_COL}));
         _portalTable.setDragEnabled(true);

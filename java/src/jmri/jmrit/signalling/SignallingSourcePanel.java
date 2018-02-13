@@ -26,7 +26,6 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.SystemNameComparator;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -80,7 +79,6 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         _AppearanceModel = new SignalMastAspectModel();
         JTable table = new JTable(_AppearanceModel);
         TableRowSorter<SignalMastAspectModel> sorter = new TableRowSorter<>(_AppearanceModel);
-        sorter.setComparator(SignalMastAspectModel.SYSNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(sorter, SignalMastAspectModel.SYSNAME_COLUMN, SortOrder.ASCENDING);
         table.setRowSorter(sorter);
         table.setRowSelectionAllowed(false);
