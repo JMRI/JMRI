@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import jmri.ThrottleListener;
+import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import org.slf4j.Logger;
@@ -20,9 +21,12 @@ import org.slf4j.LoggerFactory;
 public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     private DccThrottle throttle;
+    private DccThrottle throttle2;
 
     boolean failedThrottleRequest = false;
+    boolean failedThrottleRequest2 = false;
     int flagGotStealRequest = -1;
+    int flagGotStealRequest2 = -1;
 
     @Test
     public void testCTor() {
@@ -393,7 +397,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     public void testCreateLnThrottleStealScenario4() {
         throttle = null;
         tm = memo.throttleManager;
-        
+
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
             public void notifyThrottleFound(DccThrottle t) {
@@ -439,7 +443,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     public void testCreateLnThrottleStealScenario5() {
         throttle = null;
         tm = memo.throttleManager;
-        
+
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
             public void notifyThrottleFound(DccThrottle t) {
@@ -482,7 +486,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     public void testCreateLnThrottleStealScenario7() {
         throttle = null;
         tm = memo.throttleManager;
-        
+
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
             public void notifyThrottleFound(DccThrottle t) {
@@ -518,6 +522,102 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         Assert.assertNotNull("Throttle should be created and non-null", throttle);
         jmri.util.JUnitAppender.assertErrorMessage("created a throttle");
         tm.releaseThrottle(throttle, throtListen);
+        throtListen = null;
+    }
+
+
+
+        @Test
+    public void testShareSingleLnThrottleScenario1() {
+        throttle = null;
+        tm = memo.throttleManager;
+
+        ThrottleListener throtListen = new ThrottleListener() {
+            @Override
+            public void notifyThrottleFound(DccThrottle t) {
+                throttle = t;
+                log.error("created a throttle");
+            }
+
+            @Override
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+                log.error("Throttle request failed for " + address + " because " + reason);
+                failedThrottleRequest = true;
+            }
+
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                // this is a never-stealing impelementation.
+                flagGotStealRequest = address.getNumber();
+                log.debug("going to steal loco {}", address);
+                tm.stealThrottleRequest(address, this, false);
+            }
+        };
+        ThrottleListener throtListen2 = new ThrottleListener() {
+            @Override
+            public void notifyThrottleFound(DccThrottle t) {
+                throttle2 = t;
+                log.error("created a throttle2");
+            }
+
+            @Override
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+                log.error("Throttle2 request failed for " + address + " because " + reason);
+                failedThrottleRequest2 = true;
+            }
+
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                // this is a never-stealing impelementation.
+                flagGotStealRequest2 = address.getNumber();
+                log.debug("Throttle2 going to steal loco {}", address);
+                tm.stealThrottleRequest(address, this, false);
+            }
+        };
+
+
+        tm.requestThrottle(260, throtListen);
+
+        Assert.assertEquals("address request message",
+                "BF 02 04 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
+
+        Assert.assertEquals("count is correct", 1, lnis.outbound.size());
+        LocoNetMessage cmdStationReply = new LocoNetMessage(new int[] {
+                0xe7, 0x0e, 0x9, 0x00, 0x04, 0x0, 0x0, 0x7, 0x0, 0x02, 0x00, 0x13, 0x01, 0x53});  // slot is in-use
+        lnis.sendTestMessage(cmdStationReply);
+        Assert.assertNotNull("Throttle should be created and non-null", throttle);
+        jmri.util.JUnitAppender.assertErrorMessage("created a throttle");
+
+        int netTxMsgCount = lnis.outbound.size()-1;
+
+        tm.requestThrottle(260, throtListen2);  // An additional user of the same throttle
+        jmri.util.JUnitAppender.assertErrorMessage("created a throttle2");
+
+        Assert.assertNotNull("Throttle should be created and non-null", throttle2);
+        Assert.assertEquals("both throttle users point to the same throttle object",
+                throttle, throttle2);
+        Assert.assertEquals("no new LocoNet traffic generated", netTxMsgCount, lnis.outbound.size()-1);
+
+        throttle.setSpeedSetting(0.5f);
+        Assert.assertEquals("sent speed message",
+                "A0 09 44 00", lnis.outbound.elementAt(lnis.outbound.size() -1). toString());
+        Assert.assertEquals("only one new loconet message", netTxMsgCount +1, lnis.outbound.size()-1);
+        tm.releaseThrottle(throttle2, throtListen2);
+        Assert.assertEquals("No loconet traffic at throttle2 release", netTxMsgCount +1, lnis.outbound.size()-1);
+
+        Assert.assertTrue("Address still required",
+                InstanceManager.throttleManagerInstance().addressStillRequired(new DccLocoAddress(260, true)));
+
+        tm.releaseThrottle(throttle, throtListen);
+        Assert.assertFalse("Address no longer required",
+                InstanceManager.throttleManagerInstance().addressStillRequired(new DccLocoAddress(260, true)));
+
+        Assert.assertEquals("One loconet message sent at throttle release", netTxMsgCount +2, lnis.outbound.size()-1);
+        Assert.assertEquals("sent set slot status to COMMON message",
+                "B5 09 10 00", lnis.outbound.elementAt(lnis.outbound.size() -1). toString());
+
         throtListen = null;
     }
 
