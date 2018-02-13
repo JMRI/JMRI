@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * Abstract implementation of a ThrottleManager.
  * <P>
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author      Steve Rawlinson Copyright (C) 2016
  */
@@ -115,8 +115,8 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
     /**
      * throttleListeners is indexed by the address, and contains as elements an
-     * ArrayList of WaitingThrottle objects, each of which has one ThrottleListner. 
-     * This allows more than one ThrottleLister to request a throttle at a time, 
+     * ArrayList of WaitingThrottle objects, each of which has one ThrottleListner.
+     * This allows more than one ThrottleLister to request a throttle at a time,
      * the entries in this Hashmap are only valid during the throttle setup process.
      */
     private HashMap<LocoAddress, ArrayList<WaitingThrottle>> throttleListeners = new HashMap<LocoAddress, ArrayList<WaitingThrottle>>(5);
@@ -400,7 +400,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     /**
      * Steal a requested throttle.
      *
-     * @param address desired LocoAddress 
+     * @param address desired LocoAddress
      * @param l  ThrottleListener requesting the throttle steal occur.
      * @param steal true if the request should continue, false otherwise.
      * @since 4.9.2
@@ -497,7 +497,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             listenerOnly.remove(dla);
         }
     }
-    
+
     /**
      * When the system-specific ThrottleManager has been unable to create the DCC
      * throttle because it is already in use and must be "stolen" to take control,
@@ -596,13 +596,13 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
     @Override
     public void releaseThrottle(DccThrottle t, ThrottleListener l) {
-        log.debug("AbstractThrottleManager.releaseThrottle: {}, {}", t.toString(), l.toString());
+        log.debug("AbstractThrottleManager.releaseThrottle: {}, {}", t, l);
         disposeThrottle(t, l);
     }
 
     @Override
     public boolean disposeThrottle(DccThrottle t, ThrottleListener l) {
-        log.debug("AbstractThrottleManager.disposeThrottle: {}, {}", t.toString(), l.toString());
+        log.debug("AbstractThrottleManager.disposeThrottle: {}, {}", t, l);
 
 //        if (!active) log.error("Dispose called when not active");  <-- might need to control this in the sub class
         DccLocoAddress la = (DccLocoAddress) t.getLocoAddress();
@@ -636,7 +636,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
                 addressThrottles.get(la).removeListener(l);
             } else if (l == null) {
                 log.debug("decrementUse called withOUT listener");
-                /*The release release has been called, but as no listener has 
+                /*The release release has been called, but as no listener has
                  been specified, we can only decrement the use flag*/
                 addressThrottles.get(la).decrementUse();
             }
@@ -810,7 +810,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             // Check for duplication here
             if (listeners.contains(l))
                 log.debug("this Addresses listeners already includes listener" + l);
-            else 
+            else
                 listeners.add(l);
         }
 
