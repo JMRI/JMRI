@@ -219,7 +219,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         if (addressThrottles.containsKey(la)) {
             log.debug("A throttle to address " + la.getNumber() + " already exists, so will return that throttle");
             a.add(new WaitingThrottle(l, re));
-            notifyThrottleKnown(addressThrottles.get(la).getThrottle(), la, true);
+            notifyThrottleKnown(addressThrottles.get(la).getThrottle(), la);
             return throttleFree;
         } else {
             log.debug(la.getNumber() + " has not been created before");
@@ -454,7 +454,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * This method creates a throttle for all ThrottleListeners of that address
      * and notifies them via the ThrottleListener.notifyThrottleFound method.
      */
-    public void notifyThrottleKnown(DccThrottle throttle, LocoAddress addr, boolean suppressUseIncrements) {
+    public void notifyThrottleKnown(DccThrottle throttle, LocoAddress addr) {
         log.debug("notifyThrottleKnown for " + addr);
         DccLocoAddress dla = (DccLocoAddress) addr;
         Addresses ads = null;
@@ -473,13 +473,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
                 ThrottleListener l = a.get(i).getListener();
                 log.debug("Notify listener " + (i + 1) + " of " + a.size() );
                 l.notifyThrottleFound(throttle);
-                if (suppressUseIncrements == false) {
-                    // this is a new throttle
-                   addressThrottles.get(dla).incrementUse();
-                } else {
-                    // requestThrottle() found an existing throttle, we're re-using that one
-                    log.debug("incrementUse suppressed");
-                }
+                addressThrottles.get(dla).incrementUse();
                 addressThrottles.get(dla).addListener(l);
                 if (ads != null && a.get(i).getRosterEntry() != null && throttle.getRosterEntry() == null) {
                     throttle.setRosterEntry(a.get(i).getRosterEntry());
@@ -504,10 +498,6 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
     }
     
-    public void notifyThrottleKnown(DccThrottle throttle, LocoAddress addr) {
-        notifyThrottleKnown(throttle, addr, false);
-    }
-
     /**
      * When the system-specific ThrottleManager has been unable to create the DCC
      * throttle because it is already in use and must be "stolen" to take control,
@@ -606,11 +596,14 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
     @Override
     public void releaseThrottle(DccThrottle t, ThrottleListener l) {
+        log.debug("AbstractThrottleManager.releaseThrottle: {}, {}", t.toString(), l.toString());
         disposeThrottle(t, l);
     }
 
     @Override
     public boolean disposeThrottle(DccThrottle t, ThrottleListener l) {
+        log.debug("AbstractThrottleManager.disposeThrottle: {}, {}", t.toString(), l.toString());
+
 //        if (!active) log.error("Dispose called when not active");  <-- might need to control this in the sub class
         DccLocoAddress la = (DccLocoAddress) t.getLocoAddress();
         if (addressReleased(la, l)) {
@@ -637,6 +630,10 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
     protected boolean addressReleased(DccLocoAddress la, ThrottleListener l) {
         if (addressThrottles.containsKey(la)) {
+            log.debug("addressReleased: starting user"
+                    + " count for address {} is {}; listener is {}", 
+                    la.getNumber(), addressThrottles.get(la).getUseCount(),
+                    l.toString());
             if (addressThrottles.get(la).containsListener(l)) {
                 log.debug("decrementUse called with listener " + l);
                 addressThrottles.get(la).decrementUse();
@@ -650,6 +647,13 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
         if (addressThrottles.containsKey(la)) {
             if (addressThrottles.get(la).getUseCount() > 0) {
+                log.debug("Users of loco {} has {} users", 
+                        la.getNumber(), addressThrottles.get(la).getUseCount());
+                log.debug("addressReleased still has at least listener {} of type {}", 
+                        addressThrottles.get(la).listeners.get(0), 
+                        addressThrottles.get(la).listeners.get(0).getClass().toString());
+                log.debug("listener parameter is {}, class {}",
+                        l, l.getClass());
                 return true;
             }
         }
