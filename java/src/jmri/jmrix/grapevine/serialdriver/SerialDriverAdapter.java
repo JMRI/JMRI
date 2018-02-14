@@ -45,7 +45,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             try {
                 setSerialPort();
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -105,7 +105,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     /**
-     * set up all of the other objects to operate connected to this port
+     * Set up all of the other objects to operate connected to this port.
      */
     @Override
     public void configure() {
@@ -143,7 +143,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     /**
-     * Local method to do specific port configuration
+     * Local method to do specific port configuration.
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options

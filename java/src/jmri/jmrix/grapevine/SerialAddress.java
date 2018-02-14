@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Multiple address formats are supported:
  * <ul>
- * <li>Gtnnnxxx where: t is the type code,
+ * <li>Gtnnnxxx where: G is the (multichar) system connection prefix,
+ * t is the type code,
  * 'T' for turnouts, 'S' for sensors, 'H' for signals and 'L' for lights; nn is
  * the node address (0-127); xxx is a bit number of the input or output bit
  * (001-999)</li>
@@ -196,7 +197,7 @@ public class SerialAddress {
         Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
             // here if an illegal format 
-            log.error("illegal system name format: " + systemName);
+            log.error("illegal system name format: {}", systemName);
             return (null);
         }
 
@@ -208,7 +209,7 @@ public class SerialAddress {
             if (num > 0) {
                 ua = num / 1000;
             } else {
-                log.error("invalid value in system name: " + systemName);
+                log.error("invalid value in system name: {}", systemName);
                 return (null);
             }
         } else {
@@ -463,10 +464,10 @@ public class SerialAddress {
 
     /**
      * Public static method to normalize a system name
-     * <P>
+     * <p>
      * This routine is used to ensure that each system name is uniquely linked
      * to one bit, by removing extra zeros inserted by the user.
-     * <P>
+     * <p>
      * If the supplied system name does not have a valid format, an empty string
      * is returned. Otherwise a normalized name is returned in the same format
      * as the input name.

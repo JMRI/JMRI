@@ -1,6 +1,7 @@
 package jmri.jmrix.grapevine;
 
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,27 +18,34 @@ import jmri.SensorManager;
 public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
 
     public GrapevineSystemConnectionMemo() {
-        super("G", "Grapevine");
+        this("G", SerialConnectionTypeList.PROTRAK);
+    }
 
+    public GrapevineSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
+        super(prefix, name);
         register(); // registers general type
         InstanceManager.store(this, GrapevineSystemConnectionMemo.class); // also register as specific type
-
-        // create and register the ComponentFactory
-        InstanceManager.store(new jmri.jmrix.grapevine.swing.GrapevineComponentFactory(this),
+        log.debug("Grapevine SystemConnectionMemo prefix={}", prefix);
+        // create and register the ComponentFactory for the GUI (menu)
+        InstanceManager.store(cf = new jmri.jmrix.grapevine.swing.GrapevineComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
 
         log.debug("Created GrapevineSystemConnectionMemo");
     }
 
     private SerialTrafficController tc = null;
+    jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**
      * Set the traffic controller instance associated with this connection memo.
      *
-     * @param s jmri.jmrix.oaktree.SerialTrafficController object to use.
+     * @param s jmri.jmrix.grapevine.SerialTrafficController object to use.
      */
-    public void setTrafficController(SerialTrafficController s){
-        tc = s;
+    public void setTrafficController(SerialTrafficController tc){
+        this.tc = tc;
+        // in addition to setting the TrafficController in this object,
+        // set the systemConnectionMemo in the traffic controller
+        tc.setSystemConnectionMemo(this);
     }
 
     /**
@@ -45,7 +53,7 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
      */
     public SerialTrafficController getTrafficController(){
         if (tc == null) {
-            setTrafficController(new SerialTrafficController());
+            setTrafficController(new SerialTrafficController(this));
             log.debug("Auto create of SerialTrafficController for initial configuration");
         }
         return tc;
@@ -143,6 +151,15 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
         return super.get(T);
     }
 
+    @Override
+    public void dispose() {
+        tc = null;
+        InstanceManager.deregister(this, GrapevineSystemConnectionMemo.class);
+        if (cf != null) {
+            InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
+        }
+        super.dispose();
+    }
 
     private final static Logger log = LoggerFactory.getLogger(GrapevineSystemConnectionMemo.class);
 

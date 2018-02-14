@@ -47,17 +47,13 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     @Override
     public synchronized void message(SerialMessage l) {  // receive a message and log it
-        if (log.isDebugEnabled()) {
-            log.debug("Message: " + l.toString());
-        }
+        log.debug("Message: {}", l.toString());
         nextLine("M: " + l.format() + "\n", l.toString());
     }
 
     @Override
     public synchronized void reply(SerialReply l) {  // receive a reply and log it
-        if (log.isDebugEnabled()) {
-            log.debug("Reply: " + l.toString());
-        }
+        log.debug("Reply: {}", l.toString());
         nextLine("R: " + l.format() + "\n", l.toString());
     }
 

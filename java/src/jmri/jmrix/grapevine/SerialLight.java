@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the Light interface using Grapevine signal ports.
- * <P>
- * The "On" state results in sending a "green" setting to the hardware port; the
- * "Off" state results in sending a "dark" setting to the hardware.
+ * <p>
+ * The "On" state results in sending a "green" setting to the hardware port;
+ * the "Off" state results in sending a "dark" setting to the hardware.
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
@@ -19,10 +19,10 @@ public class SerialLight extends AbstractLight {
 
     /**
      * Create a Light object, with only system name.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SerialLight(String systemName,GrapevineSystemConnectionMemo _memo) {
+    public SerialLight(String systemName, GrapevineSystemConnectionMemo _memo) {
         super(systemName);
         memo = _memo;
         // Initialize the Light
@@ -31,7 +31,7 @@ public class SerialLight extends AbstractLight {
 
     /**
      * Create a Light object, with both system and user names.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in SerialLightManager
      */
     public SerialLight(String systemName, String userName,GrapevineSystemConnectionMemo _memo) {
@@ -41,8 +41,8 @@ public class SerialLight extends AbstractLight {
     }
 
     /**
-     * Sets up system dependent instance variables and sets system independent
-     * instance variables to default values Note: most instance variables are in
+     * Set up system dependent instance variables and set system independent
+     * instance variables to default values. Note: most instance variables are in
      * AbstractLight.java
      */
     private void initializeLight(String systemName) {
@@ -63,30 +63,30 @@ public class SerialLight extends AbstractLight {
     int bank;           // bank number, 0-3
 
     /**
-     * Set the current state of this Light This routine requests the hardware to
+     * Set the current state of this Light. This routine requests the hardware to
      * change. If this is really a change in state of this bit (tested in
      * SerialNode), a Transmit packet will be sent before this Node is next
      * polled.
      */
     @Override
     protected void doNewState(int oldState, int newState) {
-        SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName(),memo.getTrafficController());
+        SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName(), memo.getTrafficController());
         if (mNode != null) {
             if (newState == ON) {
                 sendMessage(true);
             } else if (newState == OFF) {
                 sendMessage(false);
             } else {
-                log.warn("illegal state requested for Light: " + getSystemName());
+                log.warn("illegal state requested for Light: {}", getSystemName());
             }
         }
     }
 
     protected void sendMessage(boolean on) {
-        SerialNode tNode = SerialAddress.getNodeFromSystemName(getSystemName(),memo.getTrafficController());
+        SerialNode tNode = SerialAddress.getNodeFromSystemName(getSystemName(), memo.getTrafficController());
         if (tNode == null) {
             // node does not exist, ignore call
-            log.error("Can't find node for " + getSystemName() + ", command ignored");
+            log.error("Can't find node for {}, command ignored", getSystemName());
             return;
         }
         boolean high = (output >= 12);
@@ -95,7 +95,7 @@ public class SerialLight extends AbstractLight {
             tOut = output - 12;
         }
         if ((bank < 0) || (bank > 4)) {
-            log.error("invalid bank " + bank + " for Light " + getSystemName());
+            log.error("invalid bank {}  for Light {}", bank, getSystemName());
             bank = 0;
         }
         SerialMessage m = new SerialMessage(high ? 8 : 4);
@@ -116,4 +116,5 @@ public class SerialLight extends AbstractLight {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialLight.class);
+
 }

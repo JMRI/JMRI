@@ -21,10 +21,10 @@ public class SerialTurnout extends AbstractTurnout {
 
     /**
      * Create a Turnout object, with both system and user names.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in SerialTurnoutManager
      */
-    public SerialTurnout(String systemName, String userName,GrapevineSystemConnectionMemo _memo) {
+    public SerialTurnout(String systemName, String userName, GrapevineSystemConnectionMemo _memo) {
         super(systemName, userName);
         memo = _memo;
         // Save system Name
@@ -37,7 +37,7 @@ public class SerialTurnout extends AbstractTurnout {
     }
 
     /**
-     * Grapevine turnouts can invert their outputs
+     * Grapevine turnouts can invert their outputs.
      */
     @Override
     public boolean canInvert() {
@@ -45,7 +45,7 @@ public class SerialTurnout extends AbstractTurnout {
     }
 
     /**
-     * Handle a request to change state by sending a turnout command
+     * Handle a request to change state by sending a turnout command.
      */
     @Override
     protected void forwardCommandChangeToLayout(int s) {
@@ -61,7 +61,7 @@ public class SerialTurnout extends AbstractTurnout {
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
+                log.error("Cannot command both CLOSED and THROWN {}", s);
                 return;
             } else {
                 // send a CLOSED command
@@ -75,9 +75,7 @@ public class SerialTurnout extends AbstractTurnout {
 
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
-        if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton");
-        }
+        log.debug("Send command to {} Pushbutton", (_pushButtonLockout ? "Lock" : "Unlock"));
     }
 
     // data members
@@ -89,7 +87,7 @@ public class SerialTurnout extends AbstractTurnout {
         SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName,memo.getTrafficController());
         if (tNode == null) {
             // node does not exist, ignore call
-            log.error("Can't find node for " + tSystemName + ", command ignored");
+            log.error("Can't find node for {}, command ignored", tSystemName);
             return;
         }
         boolean high = (output >= 12);
@@ -98,7 +96,7 @@ public class SerialTurnout extends AbstractTurnout {
             tOut = output - 12;
         }
         if ((bank < 0) || (bank > 4)) {
-            log.error("invalid bank " + bank + " for Turnout " + getSystemName());
+            log.error("invalid bank {}  for Turnout {}", bank, getSystemName());
             bank = 0;
         }
 
@@ -120,4 +118,5 @@ public class SerialTurnout extends AbstractTurnout {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class);
+
 }

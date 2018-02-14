@@ -22,15 +22,12 @@ public class GrapevineMenu extends JMenu {
         super();
         memo = _memo;
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.grapevine.GrapevineBundle");
+        setText(Bundle.getMessage("MenuSystem"));
 
-        setText(rb.getString("MenuSystem"));
-
-        add(new jmri.jmrix.grapevine.serialmon.SerialMonAction(rb.getString("MenuItemCommandMonitor"),memo));
-        add(new jmri.jmrix.grapevine.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand"),memo));
-        add(new jmri.jmrix.grapevine.nodeconfig.NodeConfigAction(rb.getString("MenuItemConfigNodes"),memo));
-        add(new jmri.jmrix.grapevine.nodetable.NodeTableAction(rb.getString("MenuItemNodeTable"),memo));
-
+        add(new jmri.jmrix.grapevine.serialmon.SerialMonAction(Bundle.getMessage("MenuItemCommandMonitor"), memo));
+        add(new jmri.jmrix.grapevine.packetgen.SerialPacketGenAction(Bundle.getMessage("MenuItemSendCommand"), memo));
+        add(new jmri.jmrix.grapevine.nodeconfig.NodeConfigAction(Bundle.getMessage("MenuItemConfigNodes"), memo));
+        add(new jmri.jmrix.grapevine.nodetable.NodeTableAction(Bundle.getMessage("MenuItemNodeTable"), memo));
     }
 
 }

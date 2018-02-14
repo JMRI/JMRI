@@ -7,12 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager for Grapevine systems
- * <P>
- * System names are "GTnnn", where nnn is the turnout number without padding.
+ * Implement turnout manager for Grapevine systems.
+ * <p>
+ * System names are "GTnnn", where G is the system connection prefix,
+ * nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
-  */
+ */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     GrapevineSystemConnectionMemo memo = null;
@@ -49,9 +50,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         t = new SerialTurnout(sName, userName,memo);
 
         // does system name correspond to configured hardware
-        if (!SerialAddress.validSystemNameConfig(sName, 'T',memo.getTrafficController())) {
+        if (!SerialAddress.validSystemNameConfig(sName, 'T', memo.getTrafficController())) {
             // system name does not correspond to configured hardware
-            log.warn("Turnout '" + sName + "' refers to an undefined Serial Node.");
+            log.warn("Turnout '{}' refers to an undefined Serial Node.", sName);
         }
         return t;
     }
@@ -85,7 +86,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                     bitNum = Integer.valueOf(curAddress.substring(nxSeperator + 1)).intValue();
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+                log.error("Unable to convert {} Hardware Address to a number", curAddress);
                 throw new JmriException("Hardware Address passed should be a number");
             }
             tmpSName = prefix + "T" + nNode + (nCard + bitNum);
@@ -102,7 +103,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     int nNode = 0;
 
     /**
-     * A method that returns the next valid free turnout hardware address.
+     * Return the next valid free turnout hardware address.
      */
     @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
@@ -144,7 +145,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             return Integer.toString(nNode) + Integer.toString((nCard + bitNum));
         }
     }
-
 
     /**
      * Public method to validate system name format.

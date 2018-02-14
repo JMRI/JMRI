@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 
 /**
- * Swing action to create and register a SerialMonFrame object
+ * Swing action to create and register a SerialMonFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007
  */
@@ -21,7 +21,7 @@ public class SerialMonAction extends AbstractAction {
     }
 
     public SerialMonAction(GrapevineSystemConnectionMemo _memo) {
-        this("Grapevine Tree monitor",_memo);
+        this("Grapevine Tree monitor", _memo);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class SerialMonAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("SerialMonAction starting SerialMonFrame: Exception: " + ex.toString());
+            log.warn("SerialMonAction starting SerialMonFrame: Exception: {}", ex.toString());
         }
         f.setVisible(true);
     }

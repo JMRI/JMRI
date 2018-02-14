@@ -7,14 +7,15 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement light manager for Grapevine serial systems
- * <P>
- * System names are "TLnnn", where nnn is the bit number without padding.
- * <P>
+ * <p>
+ * System names are "GLnnn", where G is the system connection prefix,
+ * nnn is the bit number without padding.
+ * <p>
  * Based in part on SerialTurnoutManager.java
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007
-  */
+ */
 public class SerialLightManager extends AbstractLightManager {
 
     GrapevineSystemConnectionMemo memo = null;
@@ -39,20 +40,19 @@ public class SerialLightManager extends AbstractLightManager {
      *
      * @return null if the
      * system name is not in a valid format or if the system name does not
-     * correspond to a configured C/MRI digital output bit
+     * correspond to a configured Grapevine digital output bit
      */
     @Override
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // Validate the systemName
         if (SerialAddress.validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
-            lgt = new SerialLight(systemName, userName,memo);
-            if (!SerialAddress.validSystemNameConfig(systemName, 'L',memo.getTrafficController())) {
-                log.warn("Light system Name does not refer to configured hardware: "
-                        + systemName);
+            lgt = new SerialLight(systemName, userName, memo);
+            if (!SerialAddress.validSystemNameConfig(systemName, 'L', memo.getTrafficController())) {
+                log.warn("Light system Name does not refer to configured hardware: {}", systemName);
             }
         } else {
-            log.warn("Invalid Light system Name format: " + systemName);
+            log.warn("Invalid Light system Name format: {}", systemName);
         }
         return lgt;
     }
@@ -76,7 +76,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        return (SerialAddress.validSystemNameConfig(systemName, 'L',memo.getTrafficController()));
+        return (SerialAddress.validSystemNameConfig(systemName, 'L', memo.getTrafficController()));
     }
 
     /**
