@@ -1339,8 +1339,9 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                     return;
                 }
                 String inputsysname = InstanceManager.getDefault(SignalHeadManager.class).normalizeSystemName(systemNameTextField.getText());
-                if (!inputsysname.substring(0, 2).equals("GH")) { // TODO add real check for G123H
-                    log.warn("skipping creation of signal, " + inputsysname + " does not start with GH");
+                int offset = jmri.Manager.getSystemPrefixLength(inputsysname);
+                if (!inputsysname.substring(0, 1).equals("G") || !inputsysname.substring(offset, offset + 1).equals("H")) { // TODO add real check for G123H
+                    log.warn("skipping creation of signal head, '{}' does not start with GxH", inputsysname);
                     String msg = Bundle.getMessage("GrapevineSkippingCreation", new Object[]{inputsysname});
                     JOptionPane.showMessageDialog(addFrame, msg,
                             Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
