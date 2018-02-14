@@ -105,7 +105,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
 
         createWindow();
 
-        setShutDownTask();
     } // End of constructor
 
     protected void createWindow() {
@@ -316,22 +315,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
             }
         }
         withrottlesListModel.updateDeviceList(deviceList);
-    }
-
-    private jmri.implementation.AbstractShutDownTask task = null;
-
-    @Override
-    protected void setShutDownTask() {
-        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-            task = new jmri.implementation.AbstractShutDownTask(getTitle()) {
-                @Override
-                public boolean execute() {
-                    disableServer();
-                    return true;
-                }
-            };
-            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(task);
-        }
     }
 
     // this is package protected so tests can trigger easilly.
