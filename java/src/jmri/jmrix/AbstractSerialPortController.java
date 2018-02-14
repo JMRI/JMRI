@@ -207,7 +207,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         return -1;
     }
 
-
     /**
      * Set event logging
      */
@@ -287,10 +286,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         port.notifyOnCarrierDetect(true);
         port.notifyOnCTS(true);
         port.notifyOnDSR(true);
-
     }
 
-    
     Vector<String> portNameVector = null;
 
     /**

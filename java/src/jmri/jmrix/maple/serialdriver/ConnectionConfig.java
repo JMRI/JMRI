@@ -4,9 +4,11 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.jmrix.maple.nodeconfig.NodeConfigAction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Definition of objects to handle configuring a layout connection via an
+ * Definition of objects to handle configuring a layout connection via a
  * SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
@@ -22,7 +24,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter.
      */
     public ConnectionConfig() {
         super();
@@ -32,18 +34,20 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public void loadDetails(JPanel details) {
+        setInstance();
+
         // have to embed the usual one in a new JPanel
-        b.addActionListener(new NodeConfigAction((MapleSystemConnectionMemo) adapter.getSystemConnectionMemo()));
+        log.error("=========== adapter is null: {}", (adapter == null));
+        b.addActionListener(new NodeConfigAction((MapleSystemConnectionMemo)adapter.getSystemConnectionMemo()));
         if (!additionalItems.contains(b)) {
             additionalItems.add(b);
         }
         super.loadDetails(details);
-
     }
 
     @Override
     public String name() {
-        return "Serial";
+        return Bundle.getMessage("TypeSerial");
     }
 
     @Override
@@ -52,5 +56,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
             adapter = new SerialDriverAdapter();
         }
     }
+
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
 
 }

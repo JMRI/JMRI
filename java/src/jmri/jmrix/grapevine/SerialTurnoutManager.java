@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement turnout manager for Grapevine systems.
  * <p>
- * System names are "GTnnn", where G is the system connection prefix,
+ * System names are "GTnnn", where G is the (multichar) system connection prefix,
  * nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
@@ -22,6 +22,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
        memo = _memo;
     }
 
+    /**
+     * Return the Grapevine system prefix.
+     */
     @Override
     public String getSystemPrefix() {
         return memo.getSystemPrefix();
@@ -47,7 +50,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             return null;
         }
         // create the turnout
-        t = new SerialTurnout(sName, userName,memo);
+        t = new SerialTurnout(sName, userName, memo);
 
         // does system name correspond to configured hardware
         if (!SerialAddress.validSystemNameConfig(sName, 'T', memo.getTrafficController())) {

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the system-specific Sensor implementation.
  * <p>
- * System names are "GSnnnn", where G is the system connection prefix,
+ * System names are "GSnnnn", where G is the (multichar) system connection prefix,
  * nnnn is the sensor number without padding.
  * <p>
  * Sensors are numbered from 1.
@@ -40,7 +40,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Return the Grapevine system letter.
+     * Return the Grapevine system prefix.
      */
     @Override
     public String getSystemPrefix() {

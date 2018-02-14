@@ -3,10 +3,13 @@ package jmri.jmrix.grapevine.serialdriver;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.nodeconfig.NodeConfigAction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Definition of objects to handle configuring a Grapevine layout connection
+ * Definition of objects to handle configuring a Grapevine layout connection.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007
  */
@@ -21,25 +24,25 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no prexisting adapter.
      */
     public ConnectionConfig() {
         super();
     }
 
-    JButton b = new JButton("Configure nodes");
+    JButton b = new JButton(Bundle.getMessage("ConfigNodesTitle"));
 
     @Override
     public void loadDetails(JPanel details) {
+        setInstance();
 
-        jmri.jmrix.grapevine.GrapevineSystemConnectionMemo memo = (jmri.jmrix.grapevine.GrapevineSystemConnectionMemo)adapter.getSystemConnectionMemo();
-
-        b.addActionListener(new NodeConfigAction(memo));
+        // have to embed the usual one in a new JPanel
+        log.error("=========== adapter is null: {}", (adapter == null));
+        b.addActionListener(new NodeConfigAction((GrapevineSystemConnectionMemo)adapter.getSystemConnectionMemo()));
         if (!additionalItems.contains(b)) {
             additionalItems.add(b);
         }
         super.loadDetails(details);
-
     }
 
     @Override
@@ -54,8 +57,11 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     protected void setInstance() {
-        if(adapter == null) { 
+        if (adapter == null) {
            adapter = new SerialDriverAdapter();
         }
     }
+
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
+
 }

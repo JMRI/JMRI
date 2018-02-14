@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement light manager for Grapevine serial systems
  * <p>
- * System names are "GLnnn", where G is the system connection prefix,
+ * System names are "GLnnn", where G is the (multichar) system connection prefix,
  * nnn is the bit number without padding.
  * <p>
  * Based in part on SerialTurnoutManager.java
@@ -25,7 +25,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Returns the system letter for grapevine
+     * Return the Grapevine system prefix .
      */
     @Override
     public String getSystemPrefix() {
