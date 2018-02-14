@@ -55,7 +55,10 @@ public class WiThrottleCreationAction extends JmriAbstractAction {
         });
         // ensure the GUI is visible if we are not in headless mode.
         if (!GraphicsEnvironment.isHeadless()) {
-            (new UserInterface()).setVisible(true);
+           UserInterface ui = InstanceManager.getOptionalDefault(UserInterface.class).orElseGet(() -> {
+            return InstanceManager.setDefault(UserInterface.class, new UserInterface());
+           });
+           ui.setVisible(true);
         }
     }
 
