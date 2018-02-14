@@ -135,22 +135,25 @@ public class AcelaNode extends AbstractNode {
     public static final String outputLEN0 = "0";        // used to dump/restore config file.
     public static final String outputNO = "N0";         // used to dump/restore config file.
     protected int startingOutputAddress = -1;           // used to aid linear address search
-    protected int endingOutputAddress = -1;           // used to aid linear address search
+    protected int endingOutputAddress = -1;             // used to aid linear address search
     protected int startingSensorAddress = -1;           // used to aid linear address search
-    protected int endingSensorAddress = -1;           // used to aid linear address search
+    protected int endingSensorAddress = -1;             // used to aid linear address search
 
     /**
-     * Assumes a node address of 0, and a node type of NO_CARD If this
+     * Assumes a node address of 0, and a node type of NO_CARD. If this
      * constructor is used, actual node address must be set using
-     * setNodeAddress, and actual node type using 'setNodeType'
+     * 'setNodeAddress()', and actual node type using 'setNodeType()'
      */
     public AcelaNode() {
         this(0, UN, InstanceManager.getDefault(AcelaSystemConnectionMemo.class).getTrafficController());
     }
 
     /**
-     * Creates a new AcelaNode and initialize default instance variables address
-     * - Address of first bit on Acela bus (0-1023) type - D8, SM, WM
+     * Creates a new AcelaNode and initialize default instance variables.
+     *
+     * @param address the address of first bit on Acela bus (0-1023) type - D8, SM, WM
+     * @param type a type constant from the class
+     * @param tc the TrafficControllerfor this connection
      */
     public AcelaNode(int address, int type, AcelaTrafficController tc) {
         // set address and type and check validity
@@ -618,14 +621,16 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method to set transmission delay. delay - delay between bytes on
-     * receive (units of 10 microsec.) Note: two bytes are used, so range is
-     * 0-65,535. If delay is out of range, it is restricted to the allowable
-     * range
+     * Public method to set transmission delay.
+     * <p>
+     * Note: two bytes are used, so range is 0-65,535. If delay is out of
+     * range, it is restricted to the allowable range.
+     *
+     * @param delay a delay between bytes on receive (units of 10 microsec.)
      */
     public void setTransmissionDelay(int delay) {
         if ((delay < 0) || (delay > MAXDELAY)) {
-            log.warn("transmission delay out of 0-65535 range: {}",
+            log.warn("transmission delay {} out of 0-65535 range",
                     Integer.toString(delay));
             if (delay < 0) {
                 delay = 0;
@@ -638,7 +643,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Create an initialization packet if needed
+     * Create an initialization packet if needed.
      */
     @Override
     public AbstractMRMessage createInitPacket() {

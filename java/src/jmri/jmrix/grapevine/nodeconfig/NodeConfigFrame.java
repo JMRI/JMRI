@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame for user configuration of serial nodes
+ * Frame for user configuration of serial nodes.
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2007
  * @author Dave Duchamp Copyright (C) 2004, 2006
@@ -70,7 +70,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Initialize the config window
+     * Initialize the config window.
      */
     @Override
     public void initComponents() {
@@ -221,14 +221,14 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Set the node number
+     * Set the node number.
      */
     public void setNodeAddress(int node) {
         nodeAddrField.setText("" + node);
     }
 
     /**
-     * Method to handle add button
+     * Handle Add button.
      */
     public void addButtonActionPerformed() {
         // Check that a node with this address does not exist
@@ -265,7 +265,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle edit button
+     * Handle Edit button.
      */
     public void editButtonActionPerformed() {
         // Find Serial Node address
@@ -304,7 +304,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle init button
+     * Handle Init button.
      */
     public void initButtonActionPerformed() {
         // Find Serial Node address
@@ -326,7 +326,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle delete button
+     * Handle Delete button.
      */
     public void deleteButtonActionPerformed() {
         // Find Serial Node address
@@ -364,7 +364,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle done button
+     * Handle Done button.
      */
     public void doneButtonActionPerformed() {
         if (editMode) {
@@ -393,7 +393,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle update button
+     * Handle Update button.
      */
     public void updateButtonActionPerformed() {
         // update node information
@@ -428,7 +428,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle cancel button
+     * Handle Cancel button.
      */
     public void cancelButtonActionPerformed() {
         // Reset 
@@ -470,7 +470,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to reset the notes error after error display
+     * Reset the Notes error after error display.
      */
     private void resetNotes() {
         if (errorInStatus1) {
@@ -485,7 +485,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Reset the second line of Notes area
+     * Reset the second line of the Notes area.
      */
     private void resetNotes2() {
         if (errorInStatus2) {
@@ -499,8 +499,10 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read node address and check for legal range If successful, a node address
-     * in the range 0-255 is returned. If not successful, -1 is returned and an
+     * Read node address and check for legal range.
+     *
+     * @return if successful, a node address in the range 0-255.
+     * If not successful, return -1 and an
      * appropriate error message is placed in statusText1.
      */
     private int readNodeAddress() {
