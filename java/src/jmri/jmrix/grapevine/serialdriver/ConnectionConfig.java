@@ -5,8 +5,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.nodeconfig.NodeConfigAction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Definition of objects to handle configuring a Grapevine layout connection.
@@ -37,7 +35,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         setInstance();
 
         // have to embed the usual one in a new JPanel
-        log.error("=========== adapter is null: {}", (adapter == null));
         b.addActionListener(new NodeConfigAction((GrapevineSystemConnectionMemo)adapter.getSystemConnectionMemo()));
         if (!additionalItems.contains(b)) {
             additionalItems.add(b);
@@ -61,7 +58,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
            adapter = new SerialDriverAdapter();
         }
     }
-
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
 
 }
