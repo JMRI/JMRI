@@ -156,7 +156,7 @@ abstract public class AbstractCanTrafficController
      * If no message is needed, you may return null.
      *
      * If the programmerIdle() function returns true, enterNormalMode() is
-     * called after a timeout while in IDLESTATE durring programing to
+     * called after a timeout while in IDLESTATE during programming to
      * return the system to normal mode.
      *
      */

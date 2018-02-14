@@ -5,8 +5,8 @@ package jmri.jmrix.lenz;
  * <p>
  * Variable prefix abreviation keys: ACC_ is for accessory messages BC_ is for
  * broadcast messages CS_ is for command station messages PROG_ is for
- * programing related messages LOCO_ is for locomotive related commands
- * OPS_MODE_ is for operations mode programing commands LI_ is for commands that
+ * programming related messages LOCO_ is for locomotive related commands
+ * OPS_MODE_ is for operations mode programming commands LI_ is for commands that
  * are for messages to and from the computer interface LI101_ is for commands
  * specific to the LI101.
  * <p>
@@ -190,7 +190,7 @@ public final class XNetConstants {
     /* Program mode read requests */
     public final static int PROG_READ_REQUEST = 0x22;
 
-    /* programing modes to be used with PROG_READ_REQUEST */
+    /* programming modes to be used with PROG_READ_REQUEST */
     public final static int PROG_READ_MODE_REGISTER = 0x11;
     public final static int PROG_READ_MODE_CV = 0x15;
     public final static int PROG_READ_MODE_PAGED = 0x14;
@@ -199,7 +199,7 @@ public final class XNetConstants {
     /* Program mode read requests */
     public final static int PROG_WRITE_REQUEST = 0x23;
 
-    /* programing modes to be used with PROG_WRITE_REQUEST */
+    /* programming modes to be used with PROG_WRITE_REQUEST */
     public final static int PROG_WRITE_MODE_REGISTER = 0x12;
     public final static int PROG_WRITE_MODE_CV = 0x16;
     public final static int PROG_WRITE_MODE_PAGED = 0x17;
@@ -321,7 +321,7 @@ public final class XNetConstants {
     public final static int LOCO_DOUBLEHEAD = 0xE5;
     public final static int LOCO_DOUBLEHEAD_BYTE2 = 0x43;
 
-    /* Operations mode programing */
+    /* Operations mode programming */
     public final static int OPS_MODE_PROG_REQ = 0xE6;
 
     /* Write requests (second byte for above) */

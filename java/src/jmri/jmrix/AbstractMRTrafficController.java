@@ -1166,7 +1166,7 @@ abstract public class AbstractMRTrafficController {
             try {
                 xmtThread.join();
             } catch (InterruptedException ie){
-                // interrupted durring cleanup.
+                // interrupted during cleanup.
             }
         }
         
@@ -1175,7 +1175,7 @@ abstract public class AbstractMRTrafficController {
             try {
                 rcvThread.join();
             } catch (InterruptedException ie){
-                // interrupted durring cleanup.
+                // interrupted during cleanup.
             }
         }    
 
