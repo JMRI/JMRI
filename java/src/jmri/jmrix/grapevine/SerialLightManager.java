@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for Grapevine serial systems
+ * Implement light manager for Grapevine serial systems.
  * <p>
  * System names are "GLnnn", where G is the (multichar) system connection prefix,
  * nnn is the bit number without padding.
@@ -25,7 +25,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Return the Grapevine system prefix .
+     * Return the Grapevine system prefix.
      */
     @Override
     public String getSystemPrefix() {
@@ -44,9 +44,10 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public Light createNewLight(String systemName, String userName) {
+        String prefix = memo.getSystemPrefix();
         Light lgt = null;
         // Validate the systemName
-        if (SerialAddress.validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
+        if (SerialAddress.validSystemNameFormat(systemName, 'L', prefix) == NameValidity.VALID) {
             lgt = new SerialLight(systemName, userName, memo);
             if (!SerialAddress.validSystemNameConfig(systemName, 'L', memo.getTrafficController())) {
                 log.warn("Light system Name does not refer to configured hardware: {}", systemName);
@@ -65,7 +66,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'L'));
+        return (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()));
     }
 
     /**
@@ -87,7 +88,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName));
+        return (SerialAddress.normalizeSystemName(systemName, getSystemPrefix()));
     }
 
     /**
@@ -98,7 +99,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String convertSystemNameToAlternate(String systemName) {
-        return (SerialAddress.convertSystemNameToAlternate(systemName));
+        return (SerialAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));
     }
 
     /**

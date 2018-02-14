@@ -72,10 +72,10 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             int addr = Integer.parseInt(n.getAttributeValue("name"));
             int type = Integer.parseInt(findParmValue(n, "nodetype"));
 
-            // create node (they register themselves)
-            SerialNode node = new SerialNode(addr, type);
-
             SerialTrafficController tc = ((GrapevineSystemConnectionMemo) adapter.getSystemConnectionMemo()).getTrafficController();
+
+            // create node (they register themselves)
+            SerialNode node = new SerialNode(addr, type, tc);
 
             // Trigger initialization of this Node to reflect these parameters
             tc.initializeSerialNode(node);

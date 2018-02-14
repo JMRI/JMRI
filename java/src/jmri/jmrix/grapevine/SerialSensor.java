@@ -16,7 +16,7 @@ public class SerialSensor extends AbstractSensor {
         _knownState = UNKNOWN;
     }
 
-    public SerialSensor(String systemName, String userName,GrapevineSystemConnectionMemo _memo) {
+    public SerialSensor(String systemName, String userName, GrapevineSystemConnectionMemo _memo) {
         super(systemName, userName);
         _knownState = UNKNOWN;
     }

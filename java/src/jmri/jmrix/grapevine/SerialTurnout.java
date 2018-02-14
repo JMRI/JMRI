@@ -30,7 +30,7 @@ public class SerialTurnout extends AbstractTurnout {
         // Save system Name
         tSystemName = systemName;
         // Extract the Bit from the name
-        int num = SerialAddress.getBitFromSystemName(systemName); // bit one is address zero
+        int num = SerialAddress.getBitFromSystemName(systemName, memo.getSystemPrefix()); // bit one is address zero
         // num is 101-124, 201-224, 301-324, 401-424
         output = (num % 100) - 1; // 0-23
         bank = (num / 100) - 1;  // 0 - 3
@@ -84,7 +84,7 @@ public class SerialTurnout extends AbstractTurnout {
     int bank;           // bank number, 0-3
 
     protected void sendMessage(boolean closed) {
-        SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName,memo.getTrafficController());
+        SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName, memo.getTrafficController());
         if (tNode == null) {
             // node does not exist, ignore call
             log.error("Can't find node for {}, command ignored", tSystemName);
@@ -114,7 +114,7 @@ public class SerialTurnout extends AbstractTurnout {
         m.setElement(i++, tNode.getNodeAddress() | 0x80);  // address 2
         m.setElement(i++, bank << 4); // bank is most significant bits
         m.setParity(i - 4);
-        SerialTrafficController.instance().sendSerialMessage(m, null);
+        memo.getTrafficController().sendSerialMessage(m, null);
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class);

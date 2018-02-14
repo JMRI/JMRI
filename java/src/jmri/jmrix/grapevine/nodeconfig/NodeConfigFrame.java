@@ -249,7 +249,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeType = nodeTypeBox.getSelectedIndex();
 
         // all ready, create the new node
-        curNode = new SerialNode(nodeAddress, nodeType);
+        curNode = new SerialNode(nodeAddress, nodeType, memo.getTrafficController());
 
         // configure the new node
         setNodeParameters();

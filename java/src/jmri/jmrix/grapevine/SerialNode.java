@@ -75,12 +75,12 @@ public class SerialNode extends AbstractNode {
      * If this constructor is used, actual node address must be set using
      * 'setNodeAddress()', and actual node type using 'setNodeType()'
      */
-    public SerialNode() {
-        this(1, NODE2002V6);
+    public SerialNode(SerialTrafficController tc) {
+        this(1, tc);
     }
 
-    public SerialNode(int address, int type) {
-        this(address, type, InstanceManager.getDefault(GrapevineSystemConnectionMemo.class).getTrafficController());
+    public SerialNode(int address, SerialTrafficController tc) {
+        this(address, NODE2002V6, tc);
     }
 
     /**

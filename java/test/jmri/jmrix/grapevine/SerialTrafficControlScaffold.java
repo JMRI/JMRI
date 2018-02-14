@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialTrafficControlScaffold extends SerialTrafficController {
 
-    public SerialTrafficControlScaffold() {
+    public SerialTrafficControlScaffold(GrapevineSystemConnectionMemo memo) {
+        super(memo);
         if (log.isDebugEnabled()) {
             log.debug("setting instance: " + this);
         }
@@ -45,7 +46,7 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
      * forward a message to the listeners, e.g. test receipt
      */
     protected void sendTestMessage(SerialMessage m, SerialListener l) {
-        // forward a test message to NceListeners
+        // forward a test message to GrapevineListeners
         if (log.isDebugEnabled()) {
             log.debug("sendTestMessage    [" + m + "]");
         }

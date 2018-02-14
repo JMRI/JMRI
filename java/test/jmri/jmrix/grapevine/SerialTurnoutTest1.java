@@ -18,12 +18,12 @@ public class SerialTurnoutTest1 extends AbstractTurnoutTestBase {
     @Override
     public void setUp() {
         // prepare an interface
-        tcis = new SerialTrafficControlScaffold();
-        tcis.registerNode(new SerialNode(1, SerialNode.NODE2002V6));
         memo = new GrapevineSystemConnectionMemo();
+        tcis = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tcis);
+        tcis.registerNode(new SerialNode(1, SerialNode.NODE2002V6, tcis));
 
-        t = new SerialTurnout("GT1304", "t4",memo);
+        t = new SerialTurnout("GT1304", "t4", memo);
     }
 
     @Override

@@ -32,8 +32,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
+        String prefix = memo.getSystemPrefix();
         // validate the system name, and normalize it
-        String sName = SerialAddress.normalizeSystemName(systemName);
+        String sName = SerialAddress.normalizeSystemName(systemName, prefix);
         if (sName.equals("")) {
             // system name is not valid
             return null;
@@ -44,7 +45,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             return null;
         }
         // check under alternate name
-        String altName = SerialAddress.convertSystemNameToAlternate(sName);
+        String altName = SerialAddress.convertSystemNameToAlternate(sName, prefix);
         t = getBySystemName(altName);
         if (t != null) {
             return null;
@@ -94,8 +95,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             }
             tmpSName = prefix + "T" + nNode + (nCard + bitNum);
         } else {
-            bitNum = SerialAddress.getBitFromSystemName(tmpSName);
-            nNode = SerialAddress.getNodeAddressFromSystemName(tmpSName);
+            bitNum = SerialAddress.getBitFromSystemName(tmpSName, prefix);
+            nNode = SerialAddress.getNodeAddressFromSystemName(tmpSName, prefix);
             tmpSName = prefix + "T" + nNode + bitNum;
         }
         return (tmpSName);
@@ -157,7 +158,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'T'));
+        return (SerialAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
     }
 
     /**
@@ -168,7 +169,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName));
+        return (SerialAddress.normalizeSystemName(systemName, getSystemPrefix()));
     }
 
     /**

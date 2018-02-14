@@ -16,7 +16,7 @@ public class SerialSensorTest {
 
     @Test
     public void testCTor() {
-        SerialSensor t = new SerialSensor("GS1",memo);
+        SerialSensor t = new SerialSensor("GS1", memo);
         Assert.assertNotNull("exists",t);
     }
 
@@ -24,8 +24,8 @@ public class SerialSensorTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        SerialTrafficController tc = new SerialTrafficControlScaffold();
         memo = new GrapevineSystemConnectionMemo();
+        SerialTrafficController tc = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tc);
     }
 

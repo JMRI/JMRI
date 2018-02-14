@@ -140,7 +140,7 @@ public class SerialNode extends AbstractNode {
      * address - Address of node on CMRI serial bus (0-127) type - SMINI,
      * USIC_SUSIC,
      */
-    public SerialNode(int address, int type,SerialTrafficController tc) {
+    public SerialNode(int address, int type, SerialTrafficController tc) {
         // set address and type and check validity
         setNodeAddress(address);
         setNodeType(type);
