@@ -120,6 +120,10 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
         }
     }
 
+    public ArrayList<DeviceServer> getDeviceList() {
+        return deviceList;
+    }
+
     @Override
     public String getSelectedRosterGroup() {
 //        return rosterGroupSelector.getSelectedRosterGroup();
@@ -176,6 +180,42 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
             log.error("IOException in FacelessServer.servicePublished(): {}", ex.getLocalizedMessage());
         }
     }
+
+    // package protected method to disable the server.
+    void disableServer() {
+        isListen = false;
+        stopDevices();
+        try {
+            socket.close();
+            log.debug("UI socket in ServerThread just closed");
+            service.stop();
+        } catch (IOException ex) {
+            log.error("socket in ServerThread won't close");
+        }
+    }
+
+    // Clear out the deviceList array and close each device thread
+    private void stopDevices() {
+        DeviceServer device;
+        int cnt = 0;
+        if (deviceList.size() > 0) {
+            do {
+                device = deviceList.get(0);
+                if (device != null) {
+                    device.closeThrottles(); //Tell device to stop its throttles,
+                    device.closeSocket();   //close its sockets
+                    //close() will throw read error and it will be caught
+                    //and drop the thread.
+                    cnt++;
+                    if (cnt > 200) {
+                        break;
+                    }
+                }
+            } while (!deviceList.isEmpty());
+        }
+        deviceList.clear();
+    }
+
 
     @Override
     public void serviceUnpublished(ZeroConfServiceEvent se) {
