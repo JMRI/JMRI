@@ -34,7 +34,7 @@
         <decVal/>
         <label>PWM max voltage</label>
         <label xml:lang="it">PWM Volt Massimi (0-255):</label>
-        <label xml:lang="de">PWM Hachstgeschwindigkeit</label>
+        <label xml:lang="de">PWM Hoechstgeschwindigkeit</label>
       </variable>
       <!-- CV 7-8 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
