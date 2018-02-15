@@ -127,6 +127,60 @@ public class JsonClientHandlerTest {
         Assert.assertEquals("Response object data size is 1", 1, data.size());
     }
 
+    @Test
+    public void testOnMessage_JsonNode_Method_get_exception() throws Exception {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonClientHandler instance = new TestJsonClientHandler(connection);
+        JsonNode node = connection.getObjectMapper().readTree("{\"type\":\"test\",\"data\":{\"name\":\"JsonException\"},\"method\":\"get\"}");
+        instance.onMessage(node);
+        JsonNode root = connection.getMessage();
+        JsonNode data = root.path(JSON.DATA);
+        Assert.assertTrue("Error response is an object", root.isObject());
+        Assert.assertEquals("Error response is an ERROR", JsonException.ERROR, root.path(JSON.TYPE).asText());
+        Assert.assertEquals("Error response is type 499", 499, data.path(JsonException.CODE).asInt());
+    }
+
+    @Test
+    public void testOnMessage_JsonNode_Method_Goodbye() throws Exception {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonClientHandler instance = new TestJsonClientHandler(connection);
+        JsonNode node = connection.getObjectMapper().readTree("{\"type\":\"goodbye\"}");
+        Assert.assertTrue(connection.isOpen());
+        instance.onMessage(node);
+        JsonNode root = connection.getMessage();
+        JsonNode data = root.path(JSON.DATA);
+        Assert.assertTrue("Response is an object", root.isObject());
+        Assert.assertEquals("Response is a Goodbye message", JSON.GOODBYE, root.path(JSON.TYPE).asText());
+        Assert.assertTrue(data.isMissingNode());
+        Assert.assertFalse(connection.isOpen());
+    }
+
+    /**
+     * Test all methods except {@code get} and {@code list} for missing data
+     * node. The {@code get} and {@code list} methods are not required to have a
+     * data node by the JsonClientHandler.
+     *
+     * @throws Exception if an unexpected exception occurs
+     */
+    @Test
+    public void testOnMessage_JsonNode_missing_data() throws Exception {
+        testOnMessage_JsonNode_missing_data("{\"type\":\"test\",\"method\":\"post\"}");
+        testOnMessage_JsonNode_missing_data("{\"type\":\"test\",\"method\":\"put\"}");
+        testOnMessage_JsonNode_missing_data("{\"type\":\"test\",\"method\":\"delete\"}");
+    }
+
+    private void testOnMessage_JsonNode_missing_data(String message) throws Exception {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonClientHandler instance = new TestJsonClientHandler(connection);
+        JsonNode node = connection.getObjectMapper().readTree(message);
+        instance.onMessage(node);
+        JsonNode root = connection.getMessage();
+        JsonNode data = root.path(JSON.DATA);
+        Assert.assertTrue("Error response is an object", root.isObject());
+        Assert.assertEquals("Error response is an ERROR", JsonException.ERROR, root.path(JSON.TYPE).asText());
+        Assert.assertEquals("Error response is type 400", 400, data.path(JsonException.CODE).asInt());
+    }
+
     /**
      * Test of sendHello method, of class JsonClientHandler.
      */
