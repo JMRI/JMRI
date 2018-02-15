@@ -7,7 +7,6 @@ import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Basic interface for access to named, managed objects.
@@ -31,7 +30,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * may have other properties that will also notify.
  * <p>
  * Probably should have been called NamedBeanManager
- * 
+ *
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -163,7 +162,7 @@ public interface Manager<E extends NamedBean> {
      * @return list of known properties, or empty list if there are none.
      */
     @Nonnull
-    default public List<NamedBeanPropertyDescriptor> getKnownBeanProperties() {
+    default public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         return new LinkedList<>();
     }
 
@@ -301,7 +300,7 @@ public interface Manager<E extends NamedBean> {
     String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException;
 
     /**
-     * Provides length of the system prefix of the given system name. 
+     * Provides length of the system prefix of the given system name.
      * <p>
      * This is a common operation across JMRI, as the system prefix can be
      * parsed out without knowledge of the type of NamedBean involved.
@@ -316,7 +315,7 @@ public interface Manager<E extends NamedBean> {
     int getSystemPrefixLength(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
         if (inputName.isEmpty()) throw new NamedBean.BadSystemNameException();
         if (! Character.isLetter(inputName.charAt(0))) throw new NamedBean.BadSystemNameException();
-    
+
         // As a very special case, check for legacy prefixs - to be removed
         // This is also quite a bit slower than the tuned implementation below
         int p = startsWithLegacySystemPrefix(inputName);
@@ -332,7 +331,7 @@ public interface Manager<E extends NamedBean> {
     }
 
     /**
-     * Provides the system prefix of the given system name. 
+     * Provides the system prefix of the given system name.
      * <p>
      * This is a common operation across JMRI, as the system prefix can be
      * parsed out without knowledge of the type of NamedBean involved.
@@ -356,18 +355,16 @@ public interface Manager<E extends NamedBean> {
      * @return true if a legacy prefix, hence non-parsable
      */
     @Deprecated
-    @SuppressWarnings("fallthrough")
-    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH", justification="intentional to make code more readable")
     @CheckReturnValue
     public static boolean isLegacySystemPrefix(@Nonnull String prefix) {
         return legacyPrefixes.contains(prefix);
     }
-    
+
     @Deprecated
-    static final java.util.TreeSet<String> legacyPrefixes 
+    static final java.util.TreeSet<String> legacyPrefixes
         = new java.util.TreeSet<>(java.util.Arrays.asList(
             new String[]{
-                "DX", "DCCPP", "DP", "MR", "MC", "PI", "TM" 
+                "DX", "DCCPP", "DP", "MR", "MC", "PI", "TM"
             }));
 
     /**
@@ -375,7 +372,7 @@ public interface Manager<E extends NamedBean> {
      * indicate its length.
      * <p>
      * This is a slightly-expensive operation, and should be used sparingly
-     * 
+     *
      * @deprecated to make sure we remember to remove this post-4.11
      * @since 4.11.2
      * @return length of a legacy prefix, if present, otherwise -1
