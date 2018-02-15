@@ -5,18 +5,16 @@ import static jmri.server.json.layoutblock.JsonLayoutBlock.LAYOUTBLOCKS;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
-import jmri.server.json.JsonHttpService;
-import jmri.server.json.JsonSocketService;
 import jmri.spi.JsonServiceFactory;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
- * @author mstevetodd Copyright (C) 2016 (copied from JsonMemoryServiceFactory)
- * @author Randall Wood
+ * @author mstevetodd Copyright (C) 2016
+ * @author Randall Wood Copyright 2018
  */
 @ServiceProvider(service = JsonServiceFactory.class)
-public class JsonLayoutBlockServiceFactory implements JsonServiceFactory {
+public class JsonLayoutBlockServiceFactory implements JsonServiceFactory<JsonLayoutBlockHttpService, JsonLayoutBlockSocketService> {
 
 
     @Override
@@ -25,12 +23,12 @@ public class JsonLayoutBlockServiceFactory implements JsonServiceFactory {
     }
 
     @Override
-    public JsonSocketService getSocketService(JsonConnection connection) {
+    public JsonLayoutBlockSocketService getSocketService(JsonConnection connection) {
         return new JsonLayoutBlockSocketService(connection);
     }
 
     @Override
-    public JsonHttpService getHttpService(ObjectMapper mapper) {
+    public JsonLayoutBlockHttpService getHttpService(ObjectMapper mapper) {
         return new JsonLayoutBlockHttpService(mapper);
     }
 

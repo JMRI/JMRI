@@ -113,7 +113,7 @@ public class JsonServer extends JmriServer implements InstanceManagerAutoDefault
                 // Read the command from the client
             } catch (IOException e) {
                 // attempt to close the connection and throw the exception
-                handler.dispose();
+                handler.onClose();
                 throw e;
             } catch (NoSuchElementException nse) {
                 // we get an NSE when we are finished with this client
@@ -121,7 +121,7 @@ public class JsonServer extends JmriServer implements InstanceManagerAutoDefault
                 break;
             }
         }
-        handler.dispose();
+        handler.onClose();
     }
 
     @Override

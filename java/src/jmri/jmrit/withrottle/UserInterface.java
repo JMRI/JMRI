@@ -374,7 +374,8 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         }
     }
 
-    private void disableServer() {
+    // this is package protected so tests can trigger easilly.
+    void disableServer() {
         isListen = false;
         stopDevices();
         try {

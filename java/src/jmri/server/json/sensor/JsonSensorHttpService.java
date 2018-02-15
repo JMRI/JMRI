@@ -34,7 +34,7 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService {
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor(name);
         ObjectNode data = this.getNamedBean(sensor, name, type, locale); // throws JsonException if sensor == null
         if (sensor != null) {
-            root.put(JSON.DATA, data);
+            root.set(JSON.DATA, data);
             switch (sensor.getKnownState()) {
                 case Sensor.ACTIVE:
                     data.put(JSON.STATE, JSON.ACTIVE);

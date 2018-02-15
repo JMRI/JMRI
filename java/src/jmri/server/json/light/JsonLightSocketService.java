@@ -1,6 +1,5 @@
 package jmri.server.json.light;
 
-import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
 import static jmri.server.json.light.JsonLight.LIGHT;
@@ -23,22 +22,19 @@ import jmri.server.json.JsonSocketService;
  *
  * @author Randall Wood
  */
-public class JsonLightSocketService extends JsonSocketService {
+public class JsonLightSocketService extends JsonSocketService<JsonLightHttpService> {
 
-    private final JsonLightHttpService service;
-    private final HashMap<String, LightListener> lights = new HashMap<>();
-    private Locale locale;
+    protected final HashMap<String, LightListener> lights = new HashMap<>();
 
     public JsonLightSocketService(JsonConnection connection) {
-        super(connection);
-        this.service = new JsonLightHttpService(connection.getObjectMapper());
+        super(connection, new JsonLightHttpService(connection.getObjectMapper()));
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+        this.setLocale(locale);
         String name = data.path(NAME).asText();
-        if (data.path(METHOD).asText().equals(PUT)) {
+        if (method.equals(PUT)) {
             this.connection.sendMessage(this.service.doPut(type, name, data, locale));
         } else {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
@@ -55,7 +51,7 @@ public class JsonLightSocketService extends JsonSocketService {
 
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+        this.setLocale(locale);
         this.connection.sendMessage(this.service.doGetList(type, locale));
     }
 
@@ -81,7 +77,7 @@ public class JsonLightSocketService extends JsonSocketService {
             if (e.getPropertyName().equals("KnownState")) {
                 try {
                     try {
-                        connection.sendMessage(service.doGet(LIGHT, this.light.getSystemName(), locale));
+                        connection.sendMessage(service.doGet(LIGHT, this.light.getSystemName(), getLocale()));
                     } catch (JsonException ex) {
                         connection.sendMessage(ex.getJsonMessage());
                     }

@@ -1,10 +1,10 @@
 package jmri.util.swing;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.GraphicsEnvironment;
-import java.awt.font.FontRenderContext;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BoxLayout;
@@ -52,6 +52,7 @@ public class FontComboUtil {
     private static List<String> symbol = null;
 
     private static boolean prepared = false;
+    private static boolean preparing = false;
 
     public static List<String> getFonts(int which) {
         if (!prepared) {
@@ -60,15 +61,15 @@ public class FontComboUtil {
 
         switch (which) {
             case MONOSPACED:
-                return monospaced;
+                return new ArrayList<>(monospaced);
             case PROPORTIONAL:
-                return proportional;
+                return new ArrayList<>(proportional);
             case CHARACTER:
-                return character;
+                return new ArrayList<>(character);
             case SYMBOL:
-                return symbol;
+                return new ArrayList<>(symbol);
             default:
-                return all;
+                return new ArrayList<>(all);
         }
 
     }
@@ -89,15 +90,14 @@ public class FontComboUtil {
     /**
      * Method to initialise the font lists on first access
      */
-    @SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="font sizes are really quantized")
     public static synchronized void prepareFontLists() {
-
-        if (prepared) {
+        if (prepared || preparing) {
             // Normally we shouldn't get here except when the initialisation
             // thread has taken a bit longer than normal.
             log.debug("Subsequent call - no need to prepare");
             return;
         }
+        preparing = true;
 
         log.debug("Prepare font lists...");
 
@@ -109,8 +109,7 @@ public class FontComboUtil {
         all = new ArrayList<>();
 
         // Create a font render context to use for the comparison
-        FontRenderContext frc = new FontRenderContext(null, false, false);
-
+        Canvas c = new Canvas();
         // Loop through all available font families
         for (String s : GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames()) {
 
@@ -119,6 +118,7 @@ public class FontComboUtil {
 
             // Retrieve a plain version of the current font family
             Font f = new Font(s, Font.PLAIN, 12);
+            FontMetrics fm = c.getFontMetrics(f);
 
             // Fairly naive test if this is a symbol font
 //            if (f.canDisplayUpTo("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")==-1) {
@@ -129,11 +129,8 @@ public class FontComboUtil {
 
                 // Check if the widths of a 'narrow' letter (I)
                 // a 'wide' letter (W) and a 'space' ( ) are the same.
-                double w;
-                // next line is the FE_FLOATING_POINT_EQUALITY annotated above
-                if (f.getStringBounds("I", frc).getWidth()
-                        == (w = f.getStringBounds("W", frc).getWidth())
-                        && w == f.getStringBounds(" ", frc).getWidth()) {
+                int w = fm.charWidth('I');
+                if (fm.charWidth('W') == w && fm.charWidth(' ') == w) {
                     // Yes, they're all the same width - add to the monospaced list
                     monospaced.add(s);
                 } else {
@@ -257,17 +254,18 @@ public class FontComboUtil {
      */
     public static JComboBox<String> getFontCombo(int which, final int size, final boolean previewOnly) {
         // Create a JComboBox containing the specified list of font families
-        JComboBox<String> fontList = new JComboBox<>(getFonts(which).toArray(new String[0]));
+        List<String> fonts = getFonts(which);
+        JComboBox<String> fontList = new JComboBox<>(fonts.toArray(new String[fonts.size()]));
 
         // Assign a custom renderer
         fontList.setRenderer((JList<? extends String> list, String family, // name of the current font family
                 int index, boolean isSelected, boolean hasFocus) -> {
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            
+
             // Opaque only when rendering the actual list items
             p.setOpaque(index > -1);
-            
+
             // Invert colours when item selected in the list
             if (isSelected && index > -1) {
                 p.setBackground(list.getSelectionBackground());
@@ -327,6 +325,20 @@ public class FontComboUtil {
 
         });
         return fontList;
+    }
+
+    /**
+     * Determine if usable.
+     *
+     * @return true if ready for use; false otherwise
+     */
+    public static boolean isReady() {
+        if (!prepared) {
+            new Thread(() -> {
+                prepareFontLists();
+            }, "FontComboUtil Prepare").start();
+        }
+        return prepared;
     }
 
     private static final Logger log = LoggerFactory.getLogger(FontComboUtil.class);

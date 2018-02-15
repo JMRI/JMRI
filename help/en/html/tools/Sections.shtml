@@ -356,6 +356,7 @@
       (recommended), select <b>File&gt;Store&gt;Store Configuration
       and Panels To File...</b> or select <b>Panels&gt;Store
       Panels...</b> in the main JMRI window.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
