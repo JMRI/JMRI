@@ -14,6 +14,7 @@ import jmri.profile.NullProfile;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.node.NodeIdentity;
 import jmri.web.server.WebServerPreferences;
@@ -36,7 +37,6 @@ public class JsonClientHandlerTest {
         Assert.assertNotNull("exists", t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws IOException {
         JUnitUtil.setUp();
@@ -74,6 +74,11 @@ public class JsonClientHandlerTest {
         Assert.assertEquals("Response array element 0 is empty", 0, connection.getMessage().get(0).size());
         Assert.assertTrue("Response array element 1 is an object", connection.getMessage().get(1).isObject());
         Assert.assertEquals("Response array element 1 is empty", 0, connection.getMessage().get(1).size());
+        instance.onMessage("not a JSON object");
+        Assert.assertNotNull("Expected warning not shown", JUnitAppender.checkForMessageStartingWith("Exception processing \"not a JSON object\""));
+        Assert.assertTrue("Error response is an object", connection.getMessage().isObject());
+        Assert.assertEquals("Error response is an ERROR", JsonException.ERROR, connection.getMessage().path(JSON.TYPE).asText());
+        Assert.assertEquals("Error response is type 500", 500, connection.getMessage().path(JSON.DATA).path(JsonException.CODE).asInt());
     }
 
     /**
@@ -145,7 +150,7 @@ public class JsonClientHandlerTest {
         Assert.assertEquals("Message data has 6 elements", 6, data.size());
     }
 
-    private class TestJsonClientHandler extends JsonClientHandler {
+    private static class TestJsonClientHandler extends JsonClientHandler {
 
         public TestJsonClientHandler(JsonConnection connection) {
             super(connection);
