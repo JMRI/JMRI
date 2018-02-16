@@ -99,7 +99,7 @@ public class ActivateTrainFrame {
     private JRadioButton allocateAllTheWayRadioButton = new JRadioButton(Bundle.getMessage("AsFarAsPos"));
     private JRadioButton allocateNumberOfBlocks = new JRadioButton(Bundle.getMessage("NumberOfBlocks") + ":");
     private ButtonGroup allocateMethodButtonGroup = new ButtonGroup();
-    private JSpinner allocateCustomSpinner = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
+    private JSpinner allocateCustomSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 100, 1));
     private JCheckBox terminateWhenDoneBox = new JCheckBox(Bundle.getMessage("TerminateWhenDone"));
     private JSpinner prioritySpinner = new JSpinner(new SpinnerNumberModel(5, 0, 100, 1));
     private JCheckBox resetWhenDoneBox = new JCheckBox(Bundle.getMessage("ResetWhenDone"));
@@ -274,15 +274,15 @@ public class ActivateTrainFrame {
             JPanel p4b = new JPanel();
             p4b.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AllocateMethodLabel")));
             p4b.setLayout(new FlowLayout());
-//            p4b.add(allocateMethodLabel);
             allocateMethodButtonGroup.add(allocateAllTheWayRadioButton);
             allocateMethodButtonGroup.add(allocateBySafeRadioButton);
             allocateMethodButtonGroup.add(allocateNumberOfBlocks);
             p4b.add(allocateAllTheWayRadioButton);
-            allocateAllTheWayRadioButton.setToolTipText(Bundle.getMessage("AllocateAllTheWayBoxHint"));
+            allocateAllTheWayRadioButton.setToolTipText(Bundle.getMessage("AllocateAllTheWayHint"));
             p4b.add(allocateBySafeRadioButton);
+            allocateBySafeRadioButton.setToolTipText(Bundle.getMessage("AllocateSafeHint"));
             p4b.add(allocateNumberOfBlocks);
-            allocateNumberOfBlocks.setToolTipText(Bundle.getMessage("AllocateMethodBoxHint"));
+            allocateNumberOfBlocks.setToolTipText(Bundle.getMessage("AllocateMethodHint"));
             allocateAllTheWayRadioButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -302,7 +302,7 @@ public class ActivateTrainFrame {
                 }
             });
             p4b.add(allocateCustomSpinner);
-            allocateCustomSpinner.setToolTipText(Bundle.getMessage("AllocateMethodBoxHint"));
+            allocateCustomSpinner.setToolTipText(Bundle.getMessage("AllocateMethodHint"));
             initiatePane.add(p4b);
             JPanel p6 = new JPanel();
             p6.setLayout(new FlowLayout());
@@ -429,7 +429,7 @@ public class ActivateTrainFrame {
                 }
             });
             cancelButton.setToolTipText(Bundle.getMessage("CancelButtonHint"));
-            p7.add(addNewTrainButton = new JButton(Bundle.getMessage("AddNewTrainButton")));
+            p7.add(addNewTrainButton = new JButton(Bundle.getMessage("ButtonCreate")));
             addNewTrainButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -834,6 +834,14 @@ public class ActivateTrainFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         RosterEntry r = trainBoxList.get(trainSelectBox.getSelectedIndex());
+                        // check to see if speed profile exists and is not empty
+                        if (r.getSpeedProfile() == null || r.getSpeedProfile().getProfileSize() < 1) {
+                            // disable profile boxes etc.
+                            setSpeedProfileOptions(false);
+                        } else {
+                            // enable profile boxes
+                            setSpeedProfileOptions(true);
+                        }
                         if (transitsFromSpecificBlock) {
                             //resets the transit box if required
                             transitsFromSpecificBlock = false;
@@ -864,6 +872,19 @@ public class ActivateTrainFrame {
         if (trainBoxList.size() > 0) {
             trainSelectBox.setSelectedIndex(0);
         }
+    }
+
+    /**
+     * Sets the labels and inputs for speed profile running
+     * @param b True if the roster entry has valid speed profile else false
+     */
+    private void setSpeedProfileOptions(boolean b) {
+        useSpeedProfileLabel.setEnabled(b);
+        useSpeedProfileCheckBox.setEnabled(b);
+        stopBySpeedProfileLabel.setEnabled(b);
+        stopBySpeedProfileCheckBox.setEnabled(b);
+        stopBySpeedProfileAdjustLabel.setEnabled(b);
+        stopBySpeedProfileAdjustSpinner.setEnabled(b);
     }
 
     private boolean isTrainFree(String rName) {
@@ -1104,7 +1125,7 @@ public class ActivateTrainFrame {
             info.setDccAddress(" ");
         } else if (_TrainsFromUser) {
             info.setTrainName(trainNameField.getText());
-            info.setDccAddress((String) dccAddressSpinner.getValue());
+            info.setDccAddress(String.valueOf(dccAddressSpinner.getValue()));
         }
         info.setTrainInTransit(inTransitBox.isSelected());
         info.setStartBlockName((String) startingBlockBox.getSelectedItem());
@@ -1235,7 +1256,7 @@ public class ActivateTrainFrame {
     private JPanel pa2a = new JPanel();
     private JLabel useSpeedProfileLabel = new JLabel(Bundle.getMessage("UseSpeedProfileLabel"));
     private JCheckBox useSpeedProfileCheckBox = new JCheckBox( );
-    private JLabel stopBySpeedProfile = new JLabel(Bundle.getMessage("StopBySpeedProfileLabel"));
+    private JLabel stopBySpeedProfileLabel = new JLabel(Bundle.getMessage("StopBySpeedProfileLabel"));
     private JCheckBox stopBySpeedProfileCheckBox = new JCheckBox( );
     private JLabel stopBySpeedProfileAdjustLabel = new JLabel(Bundle.getMessage("StopBySpeedProfileAdjustLabel"));
     private JSpinner stopBySpeedProfileAdjustSpinner = new JSpinner();
@@ -1296,7 +1317,7 @@ public class ActivateTrainFrame {
         useSpeedProfileCheckBox.setToolTipText(Bundle.getMessage("UseSpeedProfileHint"));
         initiatePane.add(pa2);
         pa2a.setLayout(new FlowLayout());
-        pa2a.add(stopBySpeedProfile);
+        pa2a.add(stopBySpeedProfileLabel);
         pa2a.add(stopBySpeedProfileCheckBox);
         stopBySpeedProfileCheckBox.setToolTipText(Bundle.getMessage("UseSpeedProfileHint")); // reuse identical hint for Stop
         pa2a.add(stopBySpeedProfileAdjustLabel);
@@ -1385,9 +1406,16 @@ public class ActivateTrainFrame {
         info.setRunInReverse(runInReverseBox.isSelected());
         info.setSoundDecoder(soundDecoderBox.isSelected());
         info.setMaxTrainLength((float) maxTrainLengthSpinner.getValue());
-        info.setUseSpeedProfile(useSpeedProfileCheckBox.isSelected());
-        info.setStopBySpeedProfile(stopBySpeedProfileCheckBox.isSelected());
-        info.setStopBySpeedProfileAdjust((float)stopBySpeedProfileAdjustSpinner.getValue());
+        // Only use speed profile values if enabled
+        if (useSpeedProfileCheckBox.isEnabled()) {
+            info.setUseSpeedProfile(useSpeedProfileCheckBox.isSelected());
+            info.setStopBySpeedProfile(stopBySpeedProfileCheckBox.isSelected());
+            info.setStopBySpeedProfileAdjust((float) stopBySpeedProfileAdjustSpinner.getValue());
+        } else {
+            info.setUseSpeedProfile(false);
+            info.setStopBySpeedProfile(false);
+            info.setStopBySpeedProfileAdjust(100.0f);
+        }
     }
 
     private boolean readAutoRunItems() {

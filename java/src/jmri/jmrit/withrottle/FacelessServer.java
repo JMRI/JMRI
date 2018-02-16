@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * listen() has to run in a separate thread.
  *
  * @author Brett Hoffman Copyright (C) 2009, 2010
+ * @author Paul Bender Copyright (C) 2018
  */
 public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
@@ -33,9 +34,11 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
     boolean isListen = true;
     ServerSocket socket = null;
     final private ArrayList<DeviceServer> deviceList = new ArrayList<>();
+    final private ArrayList<DeviceListener> deviceListenerList = new ArrayList<>();
 
     FacelessServer() {
         createServerThread();
+        setShutDownTask();
     } // End of constructor
 
     @Override
@@ -58,6 +61,8 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
         service.addEventListener(this);
         service.publish();
 
+        addDeviceListener(this);
+
         while (isListen) { //Create DeviceServer threads
             DeviceServer device;
             try {
@@ -65,7 +70,9 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
                 device = new DeviceServer(socket.accept(), this);  //blocks here until a connection is made
 
                 Thread t = new Thread(device);
-                device.addDeviceListener(this);
+                for(DeviceListener dl:deviceListenerList){
+                   device.addDeviceListener(dl);
+                }
                 log.debug("Starting DeviceListener thread");
                 t.start();
             } catch (IOException e3) {
@@ -78,6 +85,40 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
         }
 
     }
+
+    // package protected getters
+    ZeroConfService getZeroConfService(){
+        return service;
+    }
+
+    int getPort(){
+       return port;
+    }
+
+    /**
+     * Add a device listener that will be added for each new
+     * device connection
+     *
+     * @param dl the device listener to add 
+     */
+    public void addDeviceListener(DeviceListener dl){
+       if(!deviceListenerList.contains(dl)){
+          deviceListenerList.add(dl);
+       }
+    }
+
+    /**
+     * Remove a device listener from the list that will be added for each new
+     * device connection
+     *
+     * @param dl the device listener to remove
+     */
+    public void removeDeviceListener(DeviceListener dl){
+       if(deviceListenerList.contains(dl)){
+          deviceListenerList.remove(dl);
+       }
+    }
+
 
     @Override
     public void notifyDeviceConnected(DeviceServer device) {
@@ -120,42 +161,26 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
         }
     }
 
-    @Override
-    public String getSelectedRosterGroup() {
-//        return rosterGroupSelector.getSelectedRosterGroup();
-        return null;
-    }
-
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void addPropertyChangeListener(String propertyName,
-            PropertyChangeListener listener) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void removePropertyChangeListener(String propertyName,
-            PropertyChangeListener listener) {
-        // TODO Auto-generated method stub
-
+    public ArrayList<DeviceServer> getDeviceList() {
+        return deviceList;
     }
 
     @Override
     public void notifyDeviceAddressChanged(DeviceServer device) {
         // TODO Auto-generated method stub
 
+    }
+
+    private String rosterGroup = null;
+
+    @Override
+    public void setSelectedRosterGroup(String group) {
+        rosterGroup = group;
+    }
+
+    @Override
+    public String getSelectedRosterGroup() {
+        return rosterGroup;
     }
 
     @Override
@@ -174,6 +199,56 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
             log.error("NPE in FacelessServer.servicePublished(): {}", ex.getLocalizedMessage());
         } catch (IOException ex) {
             log.error("IOException in FacelessServer.servicePublished(): {}", ex.getLocalizedMessage());
+        }
+    }
+
+    // package protected method to disable the server.
+    void disableServer() {
+        isListen = false;
+        stopDevices();
+        try {
+            socket.close();
+            log.debug("UI socket in ServerThread just closed");
+            service.stop();
+        } catch (IOException ex) {
+            log.error("socket in ServerThread won't close");
+        }
+    }
+
+    // Clear out the deviceList array and close each device thread
+    private void stopDevices() {
+        DeviceServer device;
+        int cnt = 0;
+        if (deviceList.size() > 0) {
+            do {
+                device = deviceList.get(0);
+                if (device != null) {
+                    device.closeThrottles(); //Tell device to stop its throttles,
+                    device.closeSocket();   //close its sockets
+                    //close() will throw read error and it will be caught
+                    //and drop the thread.
+                    cnt++;
+                    if (cnt > 200) {
+                        break;
+                    }
+                }
+            } while (!deviceList.isEmpty());
+        }
+        deviceList.clear();
+    }
+
+    private jmri.implementation.AbstractShutDownTask task = null;
+
+    private void setShutDownTask() {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+            task = new jmri.implementation.AbstractShutDownTask("WiThrottle Server ShutdownTask") {
+                @Override
+                public boolean execute() {
+                    disableServer();
+                    return true;
+                }
+            };
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(task);
         }
     }
 

@@ -71,7 +71,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -375,7 +375,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
 
     /**
-     * Responds to the Add... button and the Edit buttons in Transit Table
+     * Responds to the Add... button and the Edit buttons in Transit Table.
      */
     @Override
     protected void addPressed(ActionEvent e) {
@@ -2540,7 +2540,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         String s = sectionList.get(r).getSystemName();
         String u = sectionList.get(r).getUserName();
         if ((u != null) && (!u.equals(""))) {
-            return (s + "( " + u + " )");
+            return (s + " ( " + u + " )");
         }
         return s;
     }
@@ -2575,6 +2575,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         public Class<?> getColumnClass(int c) {
             if (c == ACTION_COLUMN) {
                 return JButton.class;
+            }
+            if (c == SAFE_COLUMN) {
+                return Boolean.class;
             }
             return String.class;
         }
@@ -2613,7 +2616,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 case ALTERNATE_COLUMN:
                     return rbx.getString("AlternateColName");
                 case SAFE_COLUMN:
-                    return "Safe"; //rbx.getString("SafeColName");
+                    return rbx.getString("SafeColName");
                 default:
                     return "";
             }
@@ -2634,7 +2637,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 case ALTERNATE_COLUMN:
                     return new JTextField(12).getPreferredSize().width;
                 case SAFE_COLUMN:
-                    return new JTextField(12).getPreferredSize().width;
+                    return new JTextField(4).getPreferredSize().width;
                 default:
                     // fall through
                     break;
@@ -2668,11 +2671,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     }
                     return rbx.getString("Primary");
                 case SAFE_COLUMN:
-                    if (safe[rx]) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    boolean val = safe[rx];
+                    return Boolean.valueOf(val);
                 default:
                     return Bundle.getMessage("BeanStateUnknown");
             }
@@ -2683,11 +2683,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             if (col == ACTION_COLUMN) {
                 addEditActionsPressed(row);
             } else if (col == SAFE_COLUMN) {
-                if ( value.equals("true")) {
-                    safe[row] = true;
-                } else if (value.equals("false")) {
-                    safe[row] = false;
-                }
+                boolean val = ((Boolean) value).booleanValue();
+                safe[row] = val; // use checkbox to show Safe
             }
             return;
         }
@@ -2835,4 +2832,5 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     }
 
     private final static Logger log = LoggerFactory.getLogger(TransitTableAction.class);
+
 }

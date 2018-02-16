@@ -12,6 +12,7 @@ import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
+import jmri.util.ThreadingUtil;
 import jmri.util.prefs.InitializationException;
 import jmri.util.swing.FontComboUtil;
 import org.openide.util.lookup.ServiceProvider;
@@ -118,7 +119,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
 
     /**
      * Sets the fontSize.
-     *
+     * <p>
      * If the parameter is less than 6, the fontSize is set to 6. If the
      * parameter is greater than 24, the fontSize is set to 24.
      *
@@ -141,9 +142,8 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     }
 
     /**
-     * @param fontStyle one of
-     *                  {@link java.awt.Font#BOLD}, {@link java.awt.Font#ITALIC},
-     *                  or {@link java.awt.Font#PLAIN}.
+     * @param fontStyle one of {@link Font#BOLD}, {@link Font#ITALIC}, or
+     *                  {@link Font#PLAIN}.
      */
     public void setFontStyle(int fontStyle) {
         if (fontStyle == Font.BOLD || fontStyle == Font.ITALIC || fontStyle == Font.PLAIN || fontStyle == (Font.BOLD | Font.ITALIC)) {
@@ -167,13 +167,19 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
      * @param fontFamily the fontFamily to set
      */
     public void setFontFamily(String fontFamily) {
-        if (FontComboUtil.getFonts(FontComboUtil.MONOSPACED).contains(fontFamily)) {
-            String oldFontFamily = this.fontFamily;
-            this.fontFamily = fontFamily;
-            this.firePropertyChange(FONT_FAMILY, oldFontFamily, fontFamily);
-            SystemConsole.getInstance().setFontFamily(this.getFontFamily());
+        if (FontComboUtil.isReady()) {
+            if (FontComboUtil.getFonts(FontComboUtil.MONOSPACED).contains(fontFamily)) {
+                String oldFontFamily = this.fontFamily;
+                this.fontFamily = fontFamily;
+                this.firePropertyChange(FONT_FAMILY, oldFontFamily, fontFamily);
+                SystemConsole.getInstance().setFontFamily(this.getFontFamily());
+            } else {
+                log.warn("Incompatible console font \"{}\" - using \"{}\"", fontFamily, this.getFontFamily());
+            }
         } else {
-            log.warn("Incompatible console font \"{}\" - using \"{}\"", fontFamily, this.getFontFamily());
+            ThreadingUtil.runOnGUIDelayed(() -> {
+                this.setFontFamily(fontFamily);
+            }, 1000); // one second
         }
     }
 
