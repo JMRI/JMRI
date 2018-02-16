@@ -15,9 +15,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This is the main JMRI Server implementation.
- *
+ * <p>
  * It starts a thread for each client.
- *
  */
 public class JmriServer {
 
@@ -64,7 +63,11 @@ public class JmriServer {
         } catch (IOException e) {
             log.error("Failed to connect to port {}", port);
         }
-        this.portNo = port;
+        if (port != 0) {
+            this.portNo = port;
+        } else {
+            this.portNo = this.connectSocket.getLocalPort();
+        }
         this.timeout = timeout;
     }
 
@@ -89,6 +92,7 @@ public class JmriServer {
         /* Start the server thread */
         if (this.listenThread == null) {
             this.listenThread = new Thread(new NewClientListener(connectSocket));
+            this.listenThread.setName("port-" + this.getPort() + "-listener");
             this.listenThread.start();
             this.advertise();
         }
@@ -124,6 +128,10 @@ public class JmriServer {
         }
     }
 
+    public int getPort() {
+        return this.portNo;
+    }
+
     // Internal thread to listen for new connections
     class NewClientListener implements Runnable {
 
@@ -141,6 +149,9 @@ public class JmriServer {
             try {
                 while (running) {
                     Socket clientSocket = listenSocket.accept();
+                    if (getPort() == -1) {
+                        portNo = listenSocket.getLocalPort();
+                    }
                     clientSocket.setSoTimeout(timeout);
                     log.debug(" Client Connected from IP {} port {}", clientSocket.getInetAddress(), clientSocket.getPort());
                     addClient(new ClientListener(clientSocket));
@@ -183,6 +194,7 @@ public class JmriServer {
 
         public void start() {
             clientThread = new Thread(this);
+            clientThread.setName("port-" + getPort() + "-client-" + clientSocket.getInetAddress().toString() + ":" + clientSocket.getPort());
             clientThread.start();
         }
 

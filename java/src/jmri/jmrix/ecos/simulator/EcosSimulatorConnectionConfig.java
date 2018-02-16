@@ -1,45 +1,43 @@
-package jmri.jmrix.dccpp.simulator;
+package jmri.jmrix.ecos.simulator;
 
 import jmri.jmrix.AbstractSimulatorConnectionConfig;
-import jmri.jmrix.SerialPortAdapter;
+import jmri.jmrix.NetworkPortAdapter;
+import jmri.jmrix.ecos.EcosConnectionTypeList;
 
 /**
- * Handle configuring a DCC++ layout connection via a DCCppSimulator
- * adapter.
- * <P>
- * This uses the {@link DCCppSimulatorAdapter} class to do the actual connection.
+ * Handle configuring an ECoS layout connection via an EcosSimulator adapter.
+ * <p>
+ * This uses the {@link EcosSimulatorAdapter} class to do the actual connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Paul Bender Copyright (C) 2009
  * @author Mark Underwood Copyright (C) 2015
-  *
- * @see DCCppSimulatorAdapter
- *
- * Based on jmri.jmrix.lenz.xnetsimulator.ConnectionConfig
+ * @author Randall Wood Copyright 2017
  */
-public class ConnectionConfig extends AbstractSimulatorConnectionConfig<SerialPortAdapter> {
+public class EcosSimulatorConnectionConfig extends AbstractSimulatorConnectionConfig<NetworkPortAdapter> {
 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p the port adapter supporting this connection
      */
-    public ConnectionConfig(SerialPortAdapter p) {
+    public EcosSimulatorConnectionConfig(NetworkPortAdapter p) {
         super(p);
     }
 
     /**
      * Ctor for a functional Swing object with no prexisting adapter
      */
-    public ConnectionConfig() {
+    public EcosSimulatorConnectionConfig() {
         super();
     }
 
     @Override
     public String name() {
-        return "DCC++ Simulator";
+        return "ECoS Simulator";
     }
 
-    String manufacturerName = "DCC++";
+    String manufacturerName = EcosConnectionTypeList.ESU;
 
     @Override
     public String getManufacturer() {
@@ -54,7 +52,8 @@ public class ConnectionConfig extends AbstractSimulatorConnectionConfig<SerialPo
     @Override
     protected void setInstance() {
         if (adapter == null) {
-            adapter = new DCCppSimulatorAdapter();
+            adapter = new EcosSimulatorAdapter();
         }
     }
+
 }

@@ -19,25 +19,23 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract base class for common implementation of the Simulator
  * ConnectionConfig.
- * <p>
- * Currently uses the serial adapter, but this will change to
- * the simulator adapter in due course.
  *
  * @author Kevin Dickerson Copyright (C) 2001, 2003
+ * @param <P> the supported adapter
  */
-abstract public class AbstractSimulatorConnectionConfig extends AbstractConnectionConfig {
+abstract public class AbstractSimulatorConnectionConfig<P extends PortAdapter> extends AbstractConnectionConfig {
 
     /**
      * Ctor for an object being created during load process. Currently uses the
      * serialportadapter, but this will change to a simulator port adapter in
      * due course.
      */
-    public AbstractSimulatorConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
+    public AbstractSimulatorConnectionConfig(P p) {
         adapter = p;
     }
 
     @Override
-    public jmri.jmrix.SerialPortAdapter getAdapter() {
+    public P getAdapter() {
         return adapter;
     }
 
@@ -136,7 +134,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     }
 
     protected String[] baudList;
-    protected jmri.jmrix.SerialPortAdapter adapter = null;
+    protected P adapter = null;
 
     /**
      * Load the adapter with an appropriate object

@@ -49,6 +49,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             return;
         }
         try {
+            log.debug("connecting to port {} on {}", m_port, getHostAddress());
             socketConn = new Socket(getHostAddress(), m_port);
             socketConn.setKeepAlive(true);
             socketConn.setSoTimeout(getConnectionTimeout());
@@ -357,7 +358,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
                     log.error("restart failed", ex);
                     return;
                 }
-                
+
                 reply = !opened;
                 if (count >= retryAttempts) {
                     log.error("Unable to reconnect after {} Attempts, increasing duration of retries", count);

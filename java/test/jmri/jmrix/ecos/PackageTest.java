@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
         BundleTest.class,
         jmri.jmrix.ecos.swing.PackageTest.class,
         jmri.jmrix.ecos.networkdriver.PackageTest.class,
+        jmri.jmrix.ecos.simulator.PackageTest.class,
         jmri.jmrix.ecos.configurexml.PackageTest.class,
         EcosPreferencesTest.class,
         EcosSystemConnectionMemoTest.class,
@@ -37,5 +38,5 @@ import org.junit.runners.Suite;
  *
  * @author	Bob Jacobsen
  */
-public class PackageTest  {
+public class PackageTest {
 }

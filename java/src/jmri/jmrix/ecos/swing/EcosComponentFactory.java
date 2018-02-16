@@ -15,9 +15,10 @@ public class EcosComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     EcosSystemConnectionMemo memo;
 
     /**
-     * Provide a menu with all items attached to this system connection
+     * Provide a menu with all items attached to this system connection.
+     *
+     * @return the menu or null if no Ecos connection exists
      */
-    //JMenu currentMenu;
     @Override
     public javax.swing.JMenu getMenu() {
         if (memo.getDisabled()) {

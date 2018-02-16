@@ -8,7 +8,7 @@ import jmri.jmrix.SerialPortAdapter;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2010
  */
-public class ConnectionConfig extends AbstractSimulatorConnectionConfig {
+public class ConnectionConfig extends AbstractSimulatorConnectionConfig<SerialPortAdapter> {
 
     /**
      * Ctor for an object being created during load process;
