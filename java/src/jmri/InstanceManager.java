@@ -670,18 +670,16 @@ public final class InstanceManager {
     @Deprecated
     static public void setConfigureManager(ConfigureManager p) {
         log.debug(" setConfigureManager");
-        store(p, ConfigureManager.class);
         setDefault(ConfigureManager.class, p);
     }
 
-    //
-    // This provides notification services, which
-    // must be migrated before this method can be
-    // deprecated.
-    //
+    /**
+     * @param p consist manager to make store
+     * @deprecated Since 4.11.4, use
+     * {@link #store(java.lang.Object, java.lang.Class)} directly.
+     */
     static public void setConsistManager(ConsistManager p) {
         store(p, ConsistManager.class);
-        getDefault().pcs.firePropertyChange("consistmanager", null, null);
     }
 
     // Needs to have proxy manager converted to work
