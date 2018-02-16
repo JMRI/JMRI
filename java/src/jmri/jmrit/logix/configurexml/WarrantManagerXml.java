@@ -59,6 +59,7 @@ public class WarrantManagerXml //extends XmlFile
             }
             if (warrant instanceof SCWarrant) {
                 elem.setAttribute("wtype", "SC");
+                elem.setAttribute("speedFactor", ""+((SCWarrant) warrant).getSpeedFactor());
                 elem.setAttribute("timeToPlatform", ""+((SCWarrant) warrant).getTimeToPlatform());
                 elem.setAttribute("forward", ((SCWarrant) warrant).getForward()?"true":"false");
             } else {
@@ -241,6 +242,11 @@ public class WarrantManagerXml //extends XmlFile
             if (SCWa) {
                 if (elem.getAttribute("forward") != null) {
                     ((SCWarrant)warrant).setForward(elem.getAttribute("forward").getValue().equals("true"));
+                }
+                if (elem.getAttribute("speedFactor") != null) {
+                    try {
+                        ((SCWarrant)warrant).setSpeedFactor(elem.getAttribute("speedFactor").getFloatValue());
+                    } catch (DataConversionException e) {}
                 }
                 warrant.setNoRamp(SCWa);
                 warrant.setShareRoute(SCWa);
