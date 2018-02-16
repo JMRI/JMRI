@@ -7,7 +7,7 @@ import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import jmri.jmrix.oaktree.nodeconfig.NodeConfigAction;
 
 /**
- * Definition of objects to handle configuring a Oak Tree layout connection
+ * Definition of objects to handle configuring a Oak Tree layout connection.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006
   */

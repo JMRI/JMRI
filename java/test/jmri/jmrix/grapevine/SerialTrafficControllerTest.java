@@ -94,6 +94,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         DataInputStream i = new DataInputStream(new ByteArrayInputStream(
                 new byte[]{(byte) 129, (byte) 90, (byte) 129, (byte) 32}));
 
+
         c.doNextStep(new SerialReply(), i);
 
         jmri.util.JUnitAppender.assertWarnMessage("parity mismatch: 18, going to state 2 with content 129,32");

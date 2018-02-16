@@ -10,7 +10,7 @@ import jmri.jmrix.maple.nodeconfig.NodeConfigAction;
  * SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

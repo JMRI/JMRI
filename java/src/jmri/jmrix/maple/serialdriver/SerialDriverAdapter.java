@@ -123,6 +123,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     // base class methods for the SerialPortController interface
+
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {

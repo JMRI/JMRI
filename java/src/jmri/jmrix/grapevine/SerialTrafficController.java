@@ -31,6 +31,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     public SerialTrafficController(GrapevineSystemConnectionMemo adaptermemo) {
         super();
         mMemo = adaptermemo;
+        log.debug("creating a new GrapevineTrafficController object for {}", adaptermemo.getUserName());
         logDebug = log.isDebugEnabled();
 
         // set node range
@@ -58,7 +59,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Public method to set up for initialization of a Serial node
+     * Public method to set up for initialization of a Serial node.
      */
     public void initializeSerialNode(SerialNode node) {
         synchronized (this) {
@@ -75,7 +76,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     @Override
     protected AbstractMRMessage enterProgMode() {
-        log.warn("enterProgMode doesn't make sense for grapevine serial");
+        log.warn("enterProgMode doesn't make sense for Grapevine Serial");
         return null;
     }
 
@@ -109,8 +110,8 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Handles initialization, output and polling for Grapevine from within the
-     * running thread
+     * Handle initialization, output and polling for Grapevine from within the
+     * running thread.
      */
     @Override
     protected synchronized AbstractMRMessage pollMessage() {
@@ -164,7 +165,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             if (getNode(curSerialNodeIndex).handleTimeout(m, l)) {
                 setMustInit(curSerialNodeIndex, true);
             } else {
-                log.warn("Timeout can't be handled due to missing node index={}", curSerialNodeIndex);
+                log.warn("Timeout can't be handled due to missing node index = {}", curSerialNodeIndex);
             }
         }
     }
@@ -232,7 +233,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
+            justification = "temporary until multi-system; only set at startup")
     @Override
     @Deprecated
     protected void setInstance() {
@@ -350,7 +351,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                         + ((buffer[1] * 2) & 0xF) + (((buffer[1] * 2) & 0xF0) >> 4)
                         + (buffer[3] & 0xF) + ((buffer[3] & 0x70) >> 4);
                 if (((parity & 0xF) != 0) && !pollMsg && !errMsg) {
-                    log.warn("parity mismatch: {}, going to state 2 with content {},{}" + parity, (buffer[2] & 0xFF), (buffer[3] & 0xFF));
+                    log.warn("parity mismatch: {}, going to state 2 with content {},{}", parity, (buffer[2] & 0xFF), (buffer[3] & 0xFF));
                     buffer[0] = buffer[2];
                     buffer[1] = buffer[3];
                     state = 2;
@@ -362,7 +363,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                 state = 0;
                 return false;
             default:
-                log.error("unexpected loadChars state: {}, go direct to state 0" + state);
+                log.error("unexpected loadChars state: {}, go direct to state 0", state);
                 state = 0;
                 return true;
         }

@@ -92,7 +92,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to convert system name to its alternate format
+     * Public method to convert system name to its alternate format.
      *
      * @return a normalized system name if system name is valid and has a valid
      * alternate representation, else return ""

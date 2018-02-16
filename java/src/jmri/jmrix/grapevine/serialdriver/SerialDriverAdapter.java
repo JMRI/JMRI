@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.SerialPortController;
+import jmri.jmrix.grapevine.SerialTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -78,8 +79,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             }
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows " // NOI18N
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
+                log.debug(" port flow control shows {}", // NOI18N
+                        (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
 
                 // log events
                 setPortEventLogging(activeSerialPort);
@@ -90,7 +91,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port {}", portName, ex);
+            log.error("Unexpected exception while opening port {}: ", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -98,7 +99,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     /**
-     * Can the port accept additional characters? Yes, always
+     * Can the port accept additional characters?
+     *
+     * @return Yes, always
      */
     public boolean okToSend() {
         return true;
@@ -109,12 +112,15 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      */
     @Override
     public void configure() {
+        log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
         // connect to the traffic controller
         ((GrapevineSystemConnectionMemo)getSystemConnectionMemo()).getTrafficController().connectPort(this);
+        // do the common manager config
         ((GrapevineSystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
     }
 
     // base class methods for the SerialPortController interface
+
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -132,7 +138,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e.getMessage());
+            log.error("getOutputStream exception: {}", e.getMessage());
         }
         return null;
     }
@@ -171,7 +177,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      */
     @Override
     public void configureBaudRate(String rate) {
-        log.debug("configureBaudRate: " + rate);
+        log.debug("configureBaudRate: {}", rate);
         selectedSpeed = rate;
         super.configureBaudRate(rate);
     }
@@ -184,11 +190,11 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     private boolean opened = false;
     InputStream serialStream = null;
 
+    /**
+     * @deprecated JMRI Since 4.12.3 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
     static public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new SerialDriverAdapter();
-        }
-        return mInstance;
+        return null;
     }
     static SerialDriverAdapter mInstance = null;
 

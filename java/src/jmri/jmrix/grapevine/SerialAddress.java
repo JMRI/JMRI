@@ -16,9 +16,9 @@ import org.slf4j.LoggerFactory;
  * and 'L' for lights;
  * nn is the node address (0-127); xxx is a bit number of the input or
  * output bit (001-999)</li>
- * <li>Gtnnxxx = (node address x 1000) + bit number.<br>Examples: GT2 (node
- * address 0, bit 2), GS1003 (node address 1, bit 3), GL11234 (node address 11,
- * bit234)</li>
+ * <li>Gtnnxxx = (node address x 1000) + bit number.<br>
+ * Examples: GT2 (node address 0, bit 2), GS1003 (node address 1, bit 3),
+ * GL11234 (node address 11, bit234)</li>
  * <li>Gtnnnaxxxx where: t is the type code, 'T' for turnouts, 'S' for
  * sensors, 'H' for signals and 'L' for lights; nnn is the node address of the
  * input or output bit (0-127); xxxx is a bit number of the input or output bit
@@ -44,7 +44,7 @@ public class SerialAddress {
      * <p>
      * Groups:
      * <ul>
-     * <li> - System letter/prefix (excluded since 4.12.3)
+     * <li> - System letter/prefix (excluded in regex since 4.12.3)
      * <li>1 - Type letter
      * <li>2 - suffix, if of nnnAnnn form
      * <li>3 - node number in nnnAnnn form
@@ -69,7 +69,7 @@ public class SerialAddress {
      * <p>
      * Groups:
      * <ul>
-     * <li> - System letter/prefix (excluded since 4.12.3)
+     * <li> - System letter/prefix (excluded in regex since 4.12.3)
      * <li>1 - Type letter
      * <li>2 - suffix, if of nnnAnnn form
      * <li>3 - node number in nnnAnnn form
@@ -94,7 +94,7 @@ public class SerialAddress {
      * <p>
      * Groups:
      * <ul>
-     * <li> - System letter/prefix (excluded since 4.12.3)
+     * <li> - System letter/prefix (excluded in regex since 4.12.3)
      * <li>1 - Type letter
      * <li>2 - suffix, if of nnnAnnn form
      * <li>3 - node number in nnnAnnn form
@@ -119,7 +119,7 @@ public class SerialAddress {
      * <p>
      * Groups:
      * <ul>
-     * <li> - System letter/prefix (excluded since 4.12.3)
+     * <li> - System letter/prefix (excluded in regex since 4.12.3)
      * <li>1 - Type letter
      * <li>2 - suffix, if of nnnAnnn form
      * <li>3 - node number in nnnAnnn form
@@ -144,13 +144,13 @@ public class SerialAddress {
      * <p>
      * Groups:
      * <ul>
-     * <li>1 - System letter
-     * <li>2 - Type letter
-     * <li>3 - suffix, if of nnnAnnn form
-     * <li>4 - node number in nnnAnnn form
-     * <li>5 - address type in nnnAnnn form
-     * <li>6 - bit number in nnnAnnn form
-     * <li>7 - combined number in nnnnnn form
+     * <li> - System letter/prefix (excluded in regex since 4.12.3)
+     * <li>1 - Type letter
+     * <li>2 - suffix, if of nnnAnnn form
+     * <li>3 - node number in nnnAnnn form
+     * <li>4 - address type in nnnAnnn form
+     * <li>5 - bit number in nnnAnnn form
+     * <li>6 - combined number in nnnnnn form
      * </ul>
      */
     static final String allRegex = "([SHLT])(?:((\\d++)([BbAaMmPpSs])(\\d++))|(\\d++))$";

@@ -12,7 +12,7 @@ public class GrapevineMenu extends JMenu {
 
     private GrapevineSystemConnectionMemo memo = null;
 
-    public GrapevineMenu(String name,GrapevineSystemConnectionMemo _memo) {
+    public GrapevineMenu(String name, GrapevineSystemConnectionMemo _memo) {
         this(_memo);
         setText(name);
     }

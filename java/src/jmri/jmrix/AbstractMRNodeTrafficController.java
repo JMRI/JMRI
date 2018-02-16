@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficController {
 
     /**
-     * Creates a new instance of AbstractMRNodeTrafficController
+     * Ctor
      */
     public AbstractMRNodeTrafficController() {
     }
@@ -28,7 +28,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
         this.minNode = minNode;
         this.maxNode = maxNode;
 
-        nodeArray = new AbstractNode[this.maxNode + 1];  // numbering from 0
+        nodeArray = new AbstractNode[this.maxNode + 1]; // numbering from 0
         mustInit = new boolean[this.maxNode + 1];
 
         // initialize content
@@ -90,10 +90,12 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     }
 
     /**
-     * Public method to return the Serial node with a given index Note: To cycle
-     * through all nodes, begin with index=0, and increment your index at each
-     * call. When index exceeds the number of defined nodes, this routine
-     * returns 'null'.
+     * Public method to return the Serial node with a given index.
+     * <p>
+     * Note: To cycle through all nodes, begin with index=0, and increment
+     * your index at each call.
+     *
+     * @return 'null' when index exceeds the number of defined nodes
      */
     public synchronized AbstractNode getNode(int index) {
         if (index >= numNodes) {
@@ -103,9 +105,11 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     }
 
     /**
-     * Public method to identify a SerialNode from its node address Note: 'addr'
-     * is the node address, numbered from 0. Returns 'null' if a SerialNode with
-     * the specified address was not found
+     * Public method to identify a SerialNode from its node address.
+     * <p>
+     * Note: 'addr' is the node address, numbered from 0.
+     *
+     * @return 'null' if a SerialNode with the specified address was not found
      */
     synchronized public AbstractNode getNodeFromAddress(int addr) {
         for (int i = 0; i < numNodes; i++) {
@@ -122,7 +126,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     protected int curSerialNodeIndex = 0;
 
     /**
-     * Public method to delete a Serial node by node address
+     * Public method to delete a Serial node by node address.
      */
     @SuppressFBWarnings(value = "VO_VOLATILE_INCREMENT", justification = "Method itself is synchronized to protect numNodes")
     public synchronized void deleteNode(int nodeAddress) {
@@ -149,4 +153,5 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMRNodeTrafficController.class);
+
 }

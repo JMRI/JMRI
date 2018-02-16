@@ -13,7 +13,7 @@ import purejavacomm.SerialPortEventListener;
 
 /**
  * Provide an abstract base for *PortController classes.
- * <P>
+ * <p>
  * This is complicated by the lack of multiple inheritance. SerialPortAdapter is
  * an Interface, and its implementing classes also inherit from various
  * PortController types. But we want some common behaviours for those, so we put
@@ -72,7 +72,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     @Override
     public void setPort(String port) {
-        log.debug("Setting port to " + port);
+        log.debug("Setting port to {}", port);
         mPort = port;
     }
     protected String mPort = null;
@@ -434,4 +434,5 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSerialPortController.class);
+
 }

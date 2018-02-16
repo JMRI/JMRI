@@ -44,7 +44,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "Grapevine (ProTrak) Layout Bus";
+        return Bundle.getMessage("GrapevineSerialName");
     }
 
     @Override

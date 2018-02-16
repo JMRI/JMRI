@@ -29,4 +29,9 @@ public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPort
     @Override
     public abstract boolean status();
 
+    @Override
+    public GrapevineSystemConnectionMemo getSystemConnectionMemo() {
+        return (GrapevineSystemConnectionMemo) super.getSystemConnectionMemo();
+    }
+
 }

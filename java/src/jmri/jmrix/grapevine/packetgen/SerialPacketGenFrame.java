@@ -25,7 +25,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
-    javax.swing.JButton parityButton = new javax.swing.JButton("Set Parity");
+    javax.swing.JButton parityButton = new javax.swing.JButton("Set Parity"); // TODO I18N
 
     javax.swing.JButton pollButton = new javax.swing.JButton("Query Node");
     javax.swing.JTextField uaAddrField = new javax.swing.JTextField(5);
@@ -45,7 +45,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         jLabel1.setText("Command:");
         jLabel1.setVisible(true);
 
-        sendButton.setText("Send");
+        sendButton.setText(Bundle.getMessage("ButtonSend"));
         sendButton.setVisible(true);
         sendButton.setToolTipText("Send packet");
 

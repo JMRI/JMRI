@@ -2,16 +2,17 @@ package jmri.jmrix.grapevine;
 
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
-import jmri.jmrix.SystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.TurnoutManager;
 import jmri.SensorManager;
+import jmri.jmrix.SystemConnectionMemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Minimum required SystemConnectionMemo.
+ * Minimum required SystemConnectionMemo for Grapevine.
+ * Expanded for multichar/multiconnection support.
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
@@ -23,14 +24,15 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
 
     public GrapevineSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
         super(prefix, name);
+
         register(); // registers general type
         InstanceManager.store(this, GrapevineSystemConnectionMemo.class); // also register as specific type
-        log.debug("Grapevine SystemConnectionMemo prefix={}", prefix);
+
         // create and register the ComponentFactory for the GUI (menu)
         InstanceManager.store(cf = new jmri.jmrix.grapevine.swing.GrapevineComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
 
-        log.debug("Created GrapevineSystemConnectionMemo");
+        log.debug("Created Grapevine SystemConnectionMemo, prefix = {}", prefix);
     }
 
     private SerialTrafficController tc = null;
@@ -39,13 +41,10 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
     /**
      * Set the traffic controller instance associated with this connection memo.
      *
-     * @param s jmri.jmrix.grapevine.SerialTrafficController object to use.
+     * @param tc jmri.jmrix.grapevine.SerialTrafficController object to use.
      */
     public void setTrafficController(SerialTrafficController tc){
         this.tc = tc;
-        // in addition to setting the TrafficController in this object,
-        // set the systemConnectionMemo in the traffic controller
-        tc.setSystemConnectionMemo(this);
     }
 
     /**
@@ -59,12 +58,17 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
         return tc;
     }
 
+    /**
+     * Provide Grapevine menu strings.
+     *
+     * @return bundle file containing action - menuitem pairs
+     */
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.grapevine.GrapevineActionListBundle");
     }
 
-    public void configureManagers(){
+    public void configureManagers() {
         setTurnoutManager(new SerialTurnoutManager(this));
         setLightManager(new SerialLightManager(this));
         setSensorManager(new SerialSensorManager(this));
@@ -85,7 +89,6 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     private SensorManager sensorManager = null;
-
 
     /**
      * Provide access to the Turnout Manager for this particular connection.
