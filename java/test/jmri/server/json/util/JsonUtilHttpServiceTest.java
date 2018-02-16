@@ -42,6 +42,7 @@ public class JsonUtilHttpServiceTest {
     public void setUp() throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager(new NullProfile("JsonUtilHttpServiceTest", "12345678", FileUtil.getFile("program:test")));
+        JUnitUtil.initConnectionConfigManager();
     }
 
     @After
@@ -61,7 +62,7 @@ public class JsonUtilHttpServiceTest {
         Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
-        JsonServerPreferences.getDefault().setHeartbeatInterval(10);
+        InstanceManager.getDefault(JsonServerPreferences.class).setHeartbeatInterval(10);
         Assert.assertEquals(instance.getHello(locale, 10), instance.doGet(JSON.HELLO, null, locale));
         Assert.assertEquals(instance.getMetadata(locale, Metadata.JMRIVERCANON), instance.doGet(JSON.METADATA, Metadata.JMRIVERCANON, locale));
         Assert.assertEquals(instance.getMetadata(locale), instance.doGet(JSON.METADATA, null, locale));
