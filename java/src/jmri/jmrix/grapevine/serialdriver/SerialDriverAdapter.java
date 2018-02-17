@@ -112,9 +112,13 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      */
     @Override
     public void configure() {
-        log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
+        log.debug("SerialDriverAdapter configure() with prefix = {}", this.getSystemConnectionMemo().getSystemPrefix());
         // connect to the traffic controller
-        ((GrapevineSystemConnectionMemo)getSystemConnectionMemo()).getTrafficController().connectPort(this);
+        SerialTrafficController control = new SerialTrafficController(this.getSystemConnectionMemo());
+        control.connectPort(this);
+        control.setSystemConnectionMemo(this.getSystemConnectionMemo());
+        log.debug("SimulatorAdapter configure() set tc for memo {}", getSystemConnectionMemo().getUserName());
+        this.getSystemConnectionMemo().setTrafficController(control);
         // do the common manager config
         ((GrapevineSystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
     }

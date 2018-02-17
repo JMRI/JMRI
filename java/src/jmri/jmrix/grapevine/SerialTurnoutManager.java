@@ -58,6 +58,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             // system name does not correspond to configured hardware
             log.warn("Turnout '{}' refers to an undefined Serial Node.", sName);
         }
+        log.debug("new turnout {} for prefix {}", systemName, prefix);
         return t;
     }
 

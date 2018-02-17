@@ -34,7 +34,7 @@ public class SerialLight extends AbstractLight {
      * <p>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SerialLight(String systemName, String userName,GrapevineSystemConnectionMemo _memo) {
+    public SerialLight(String systemName, String userName, GrapevineSystemConnectionMemo _memo) {
         super(systemName, userName);
         memo = _memo;
         initializeLight(systemName);
@@ -42,8 +42,9 @@ public class SerialLight extends AbstractLight {
 
     /**
      * Set up system dependent instance variables and set system independent
-     * instance variables to default values. Note: most instance variables are in
-     * AbstractLight.java
+     * instance variables to default values.
+     * <p>
+     * Note: most instance variables are in AbstractLight.java
      */
     private void initializeLight(String systemName) {
         // Extract the Bit from the name

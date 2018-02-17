@@ -38,9 +38,9 @@ public class SerialLightManager extends AbstractLightManager {
      * Assumes calling method has checked that a Light with this
      * system name does not already exist.
      *
-     * @return null if the
-     * system name is not in a valid format or if the system name does not
-     * correspond to a configured Grapevine digital output bit
+     * @return null if the system name is not in a valid format or if
+     * the system name does not correspond to a configured Grapevine
+     * digital output bit
      */
     @Override
     public Light createNewLight(String systemName, String userName) {
@@ -55,6 +55,7 @@ public class SerialLightManager extends AbstractLightManager {
         } else {
             log.warn("Invalid Light system Name format: {}", systemName);
         }
+        log.debug("new light {} for prefix {}", systemName, prefix);
         return lgt;
     }
 

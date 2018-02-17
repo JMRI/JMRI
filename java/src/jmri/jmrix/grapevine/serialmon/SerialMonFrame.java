@@ -24,7 +24,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     @Override
     protected String title() {
         return "Grapevine Serial Command Monitor";
-    }
+    } // TODO I18N
 
     @Override
     protected void init() {

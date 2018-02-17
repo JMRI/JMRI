@@ -45,6 +45,7 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
      */
     public void setTrafficController(SerialTrafficController tc){
         this.tc = tc;
+        log.debug("Memo {} set GrapevineTrafficController {}", getUserName(), tc);
     }
 
     /**
