@@ -31,7 +31,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     public SerialTrafficController(GrapevineSystemConnectionMemo adaptermemo) {
         super();
         mMemo = adaptermemo;
-        log.debug("creating a new GrapevineTrafficController object for {}", adaptermemo.getUserName());
+        log.debug("creating a new GrapevineTrafficController object on {}", adaptermemo.getSystemPrefix());
         logDebug = log.isDebugEnabled();
 
         // set node range
@@ -48,6 +48,22 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     boolean logDebug = false;
 
     // The methods to implement the SerialInterface
+
+    /**
+     * Make connection to existing PortController (adapter) object.
+     *
+     * @param p the Adapter we're connecting to
+     */
+    public void connectPort(SerialPortController p) {
+        if (controller != null) {
+            log.warn("connectPort called when already connected");
+        } else {
+            log.debug("connectPort invoked");
+        }
+        //controller = p;
+        super.connectPort(p);
+    }
+
     @Override
     public synchronized void addSerialListener(SerialListener l) {
         this.addListener(l);

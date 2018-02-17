@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement Turnout for Grapevine.
- *
+ * <p>
  * This object doesn't listen to the Grapevine serial communications. This is
  * because it should be the only object that is sending messages for this
  * turnout; more than one Turnout object pointing to a single device is not
@@ -27,12 +27,13 @@ public class SerialTurnout extends AbstractTurnout {
     public SerialTurnout(String systemName, String userName, GrapevineSystemConnectionMemo _memo) {
         super(systemName, userName);
         memo = _memo;
-        // Save system Name
+        // Save systemName
         tSystemName = systemName;
         // Extract the Bit from the name
         int num = SerialAddress.getBitFromSystemName(systemName, memo.getSystemPrefix()); // bit one is address zero
+        log.debug("SerialTurnout {} created, num: {} prefix: {}", systemName, num, memo.getSystemPrefix());
         // num is 101-124, 201-224, 301-324, 401-424
-        output = (num % 100) - 1; // 0-23
+        output = (num % 100) - 1; // 0 - 23
         bank = (num / 100) - 1;  // 0 - 3
     }
 
@@ -52,7 +53,7 @@ public class SerialTurnout extends AbstractTurnout {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
         //  public void firePropertyChange(String propertyName,
-        //                    Object oldValue,
+        //      Object oldValue,
         //      Object newValue)
         // _once_ if anything has changed state (or set the commanded state directly)
 

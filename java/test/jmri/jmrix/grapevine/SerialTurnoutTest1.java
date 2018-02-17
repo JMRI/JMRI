@@ -1,6 +1,8 @@
 package jmri.jmrix.grapevine;
 
 import jmri.implementation.AbstractTurnoutTestBase;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 
@@ -41,6 +43,16 @@ public class SerialTurnoutTest1 extends AbstractTurnoutTestBase {
     public void checkThrownMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         Assert.assertEquals("content", "81 1E 81 2E", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
+    }
+
+    // reset objects
+    @After
+    public void tearDown() {
+        tcis.terminateThreads();
+        tcis = null;
+        memo = null;
+        t.dispose();
+        JUnitUtil.tearDown();
     }
 
 }

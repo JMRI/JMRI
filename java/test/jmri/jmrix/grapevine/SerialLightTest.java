@@ -1,11 +1,13 @@
 package jmri.jmrix.grapevine;
 
 import jmri.implementation.AbstractLightTestBase;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 
 /**
- * Tests for the jmri.jmrix.grapevine.SerialLight class, low address.
+ * Tests for the jmri.jmrix.grapevine.SerialLight class.
  *
  * @author	Bob Jacobsen
  */
@@ -41,6 +43,16 @@ public class SerialLightTest extends AbstractLightTestBase {
     public void checkOnMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         Assert.assertEquals("content", "81 18 81 0C", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
+    }
+
+    // reset objects
+    @After
+    public void tearDown() {
+        tcis.terminateThreads();
+        tcis = null;
+        memo = null;
+        t.dispose();
+        JUnitUtil.tearDown();
     }
 
 }

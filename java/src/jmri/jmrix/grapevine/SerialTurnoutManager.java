@@ -99,6 +99,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             bitNum = SerialAddress.getBitFromSystemName(tmpSName, prefix);
             nNode = SerialAddress.getNodeAddressFromSystemName(tmpSName, prefix);
             tmpSName = prefix + "T" + nNode + bitNum;
+            log.debug("createSystemName {}", tmpSName);
         }
         return (tmpSName);
     }
@@ -143,7 +144,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                 if (t == null) {
                     return Integer.toString(nNode) + Integer.toString((nCard + bitNum));
                 }
-                //return ""+nNode+(nCard+bitNum);
             }
             return null;
         } else {

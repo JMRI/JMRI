@@ -1,8 +1,8 @@
 package jmri.jmrix.grapevine;
 
 import java.util.Vector;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * Stands in for the SerialTrafficController class.
@@ -28,7 +28,7 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
     /**
      * Record messages sent, provide access for making sure they are OK.
      */
-    public Vector<SerialMessage> outbound = new Vector<SerialMessage>();  // public OK here, so long as this is a test class
+    public Vector<SerialMessage> outbound = new Vector<SerialMessage>(); // public OK here, so long as this is a test class
 
     @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
@@ -36,7 +36,7 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
             log.debug("sendSerialMessage [" + m + "]");
         }
         // save a copy
-        log.info("sendSerialMessage [" + m + "] added, size = " + outbound.size()); // remove EBR
+        //log.debug("outbound.sendSerialMessage [" + m + "] added, size = " + outbound.size());
         outbound.addElement(m);
         // we don't return an echo so that the processing before the echo can be
         // separately tested
@@ -63,6 +63,6 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
         return cmdListeners.size();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControlScaffold.class);
+    //private final static Logger log = LoggerFactory.getLogger(SerialTrafficControlScaffold.class);
 
 }

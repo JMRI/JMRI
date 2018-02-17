@@ -917,15 +917,17 @@ public class SerialNodeTest extends TestCase {
 
         // replace the traffic manager
         memo = new GrapevineSystemConnectionMemo();
-        SerialTrafficControlScaffold tcis = new SerialTrafficControlScaffold(memo);
+        tcis = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tcis);
         // install a grapevine sensor manager
         jmri.InstanceManager.setSensorManager(new jmri.jmrix.grapevine.SerialSensorManager(memo));
         Assert.assertNotNull("exists", tcis);
     }
 
+    // reset objects
     @Override
-    protected void tearDown() {
+    public void tearDown() {
+        tcis.terminateThreads();
         tcis = null;
         memo = null;
         JUnitUtil.tearDown();

@@ -85,7 +85,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     /**
      * Forward a preformatted XNetMessage to a specific listener interface.
      *
-     * @param m Message to send;
+     * @param m Message to send
      */
     @Override
     public void forwardMessage(AbstractMRListener reply, AbstractMRMessage m) {
@@ -221,7 +221,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
 
     /**
      * This method has to be available, even though it doesn't do anything on
-     * lenz.
+     * Lenz.
      */
     @Override
     protected AbstractMRMessage enterProgMode() {

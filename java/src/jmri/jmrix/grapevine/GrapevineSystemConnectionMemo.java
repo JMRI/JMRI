@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
 
     public GrapevineSystemConnectionMemo() {
-        this("G", SerialConnectionTypeList.PROTRAK);
+        this("G", Bundle.getMessage("MenuSystem"));
     }
 
     public GrapevineSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
@@ -32,7 +32,7 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
         InstanceManager.store(cf = new jmri.jmrix.grapevine.swing.GrapevineComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
 
-        log.debug("Created Grapevine SystemConnectionMemo, prefix = {}", prefix);
+        log.debug("Created GrapevineSystemConnectionMemo, prefix = {}", prefix);
     }
 
     private SerialTrafficController tc = null;
