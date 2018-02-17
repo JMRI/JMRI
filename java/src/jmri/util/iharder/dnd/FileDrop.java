@@ -394,7 +394,7 @@ public class FileDrop {
         if (supportsDnD == null) {
             boolean support = false;
             try {
-                Class.forName("DnDConstants");
+                Class.forName("java.awt.dnd.DnDConstants");
                 support = true;
             } catch (Exception e) {
                 support = false;
