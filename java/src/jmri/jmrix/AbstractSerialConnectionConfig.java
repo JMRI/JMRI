@@ -156,7 +156,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     @Override
     public void updateAdapter() {
-        log.debug("updateAdapter() to {}", systemPrefixField.getText()); // EBR
+        log.debug("updateAdapter() to {}", systemPrefixField.getText());
         adapter.setPort(PortNameMapper.getPortFromName((String) portBox.getSelectedItem()));
         adapter.configureBaudRate((String) baudBox.getSelectedItem());
         for (String i : options.keySet()) {

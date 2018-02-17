@@ -69,7 +69,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     @Override
     public boolean allowMultipleAdditions(String systemName) {
-        return false; //Turnout address format is more than a simple number.
+        return false; // Turnout address format is more than a simple number.
     }
 
     @Override
@@ -77,7 +77,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         String tmpSName = prefix + "T" + curAddress;
 
         if (curAddress.contains(":")) {
-            //Address format passed is in the form of node:cardOutput or node:card:address
+            // Address format passed is in the form of node:cardOutput or node:card:address
             int seperator = curAddress.indexOf(":");
             try {
                 nNode = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
@@ -120,19 +120,19 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             throw ex;
         }
 
-        //If the hardware address passed does not already exist then this can
-        //be considered the next valid address.
+        // If the hardware address passed does not already exist then this can
+        // be considered the next valid address.
         Turnout t = getBySystemName(tmpSName);
         if (t == null) {
             return Integer.toString(nNode) + Integer.toString((nCard + bitNum));
             //return ""+nNode+(nCard+bitNum);
         }
 
-        //The Number of Output Bits of the previous turnout will help determine the next
-        //valid address.
+        // The Number of Output Bits of the previous turnout will help determine the next
+        // valid address.
         bitNum = bitNum + t.getNumberOutputBits();
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
+        // Check to determine if the systemName is in use, return null if it is,
+        // otherwise return the next valid address.
         tmpSName = prefix + "T" + nNode + (nCard + bitNum);
         t = getBySystemName(tmpSName);
         if (t != null) {
@@ -185,5 +185,3 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 
 }
-
-
