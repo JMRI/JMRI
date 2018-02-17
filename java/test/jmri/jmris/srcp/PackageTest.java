@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     JmriSRCPServerTest.class,
-    jmri.jmris.srcp.parser.SRCPParserTests.class,
+    jmri.jmris.srcp.parser.PackageTest.class,
     JmriSRCPTurnoutServerTest.class,
     JmriSRCPSensorServerTest.class,
     JmriSRCPPowerServerTest.class,
@@ -29,5 +29,5 @@ import org.junit.runners.Suite;
  *
  * @author Paul Bender Copyright (C) 2012,2016
  */
-public class SRCPTest {
+public class PackageTest {
 }

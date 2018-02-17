@@ -449,6 +449,35 @@ public class SRCPParserTest {
     }
 
     @Test
+    public void testSetCVBITValue() throws ParseException {
+        String code = "SET 1 SM 0 CVBIT 1 1 0\n\r";
+        SRCPParser p = new SRCPParser(new StringReader(code));
+        p.command();
+    }
+
+    @Test
+    public void testGetCVBITValue() throws ParseException {
+        String code = "GET 1 SM 0 CVBIT 1 0\n\r";
+        SRCPParser p = new SRCPParser(new StringReader(code));
+        p.command();
+    }
+
+    @Test
+    public void testSetRegValue() throws ParseException {
+        String code = "SET 1 SM 0 REG 1 1\n\r";
+        SRCPParser p = new SRCPParser(new StringReader(code));
+        p.command();
+    }
+
+    @Test
+    public void testGetRegValue() throws ParseException {
+        String code = "GET 1 SM 0 REG 1\n\r";
+        SRCPParser p = new SRCPParser(new StringReader(code));
+        p.command();
+    }
+
+
+    @Test
     public void testINITSM() {
         boolean exceptionOccured = false;
         String code = "INIT 1 SM NMRA\n\r";

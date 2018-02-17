@@ -117,7 +117,7 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
         try {
             r.setBlockSpeed("Global"); // NOI18N
         } catch (JmriException ex) {
-            log.error(ex.toString());
+            log.error("{}", ex.getMessage());
         }
         return r;
     }
@@ -217,7 +217,7 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * Forces upper case and trims leading and trailing whitespace.
      * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
      */
@@ -256,8 +256,8 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
         } catch (NumberFormatException nx) {
             try {
                 InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
-            } catch (Exception ex) {
-                throw new IllegalArgumentException("Value of requested default block speed \"" + speed + "\" is not valid");
+            } catch (IllegalArgumentException ex) {
+                throw new IllegalArgumentException("Value of requested default block speed \"" + speed + "\" is not valid", ex);
             }
         }
         String oldSpeed = defaultSpeed;
