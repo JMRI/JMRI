@@ -1,8 +1,8 @@
 package jmri.jmrix.grapevine;
 
 import java.util.Vector;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Stands in for the SerialTrafficController class.
@@ -63,6 +63,6 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
         return cmdListeners.size();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(SerialTrafficControlScaffold.class);
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControlScaffold.class);
 
 }
