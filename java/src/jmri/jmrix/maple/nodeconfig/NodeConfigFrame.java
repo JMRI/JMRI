@@ -13,7 +13,7 @@ import jmri.jmrix.maple.OutputBits;
 import jmri.jmrix.maple.SerialNode;
 
 /**
- * Frame for user configuration of Maple panel nodes
+ * Frame for user configuration of Maple panel nodes.
  *
  * Note: Currently anything to do with pulse width for pulsing a turnout is
  * commented out. This code from the C/MRI version was not deleted in case it is
@@ -403,7 +403,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         if (changedNode) {
             // Remind user to Save new configuration
             javax.swing.JOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("Reminder1") + "\n" + Bundle.getMessage("Reminder2"),
+                    Bundle.getMessage("ReminderNode1") + "\n" + Bundle.getMessage("Reminder2"),
                     Bundle.getMessage("ReminderTitle"),
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }

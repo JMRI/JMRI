@@ -15,13 +15,13 @@ public class SerialPacketGenAction extends AbstractAction {
 
     private GrapevineSystemConnectionMemo memo = null;
 
-    public SerialPacketGenAction(String s,GrapevineSystemConnectionMemo _memo) {
+    public SerialPacketGenAction(String s, GrapevineSystemConnectionMemo _memo) {
         super(s);
         memo = _memo;
     }
 
     public SerialPacketGenAction(GrapevineSystemConnectionMemo _memo) {
-        this("Send Grapevine message",_memo);
+        this(Bundle.getMessage("SendXCommandTitle", Bundle.getMessage("MenuSystem")), _memo);
     }
 
     @Override

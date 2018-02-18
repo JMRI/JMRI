@@ -23,8 +23,8 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     @Override
     protected String title() {
-        return "Grapevine Serial Command Monitor";
-    } // TODO I18N
+        return Bundle.getMessage("MonitorXTitle", "Grapevine");
+    }
 
     @Override
     protected void init() {
@@ -48,13 +48,13 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     @Override
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         log.debug("Message: {}", l.toString());
-        nextLine("M: " + l.format() + "\n", l.toString());
+        nextLine(Bundle.getMessage("CommandLabel") + " " + l.format() + "\n", l.toString());
     }
 
     @Override
     public synchronized void reply(SerialReply l) {  // receive a reply and log it
         log.debug("Reply: {}", l.toString());
-        nextLine("R: " + l.format() + "\n", l.toString());
+        nextLine(Bundle.getMessage("ReplyLabel") + " " + l.format() + "\n", l.toString());
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialMonFrame.class);

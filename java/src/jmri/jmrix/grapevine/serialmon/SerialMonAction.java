@@ -15,13 +15,13 @@ public class SerialMonAction extends AbstractAction {
 
     private GrapevineSystemConnectionMemo memo = null;
 
-    public SerialMonAction(String s,GrapevineSystemConnectionMemo _memo) {
+    public SerialMonAction(String s, GrapevineSystemConnectionMemo _memo) {
         super(s);
         memo = _memo;
     }
 
     public SerialMonAction(GrapevineSystemConnectionMemo _memo) {
-        this("Grapevine Tree monitor", _memo);
+        this(Bundle.getMessage("MonitorXTitle", "Grapevine"), _memo);
     }
 
     @Override
