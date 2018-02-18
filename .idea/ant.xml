@@ -9,6 +9,9 @@
     </buildFile>
     <buildFile url="file://$PROJECT_DIR$/build.xml">
       <customJdkName value="1.8" />
+      <properties>
+        <property name="test.includes" value="jmri.jmrix.grapevine.PackageTest" />
+      </properties>
     </buildFile>
   </component>
 </project>
