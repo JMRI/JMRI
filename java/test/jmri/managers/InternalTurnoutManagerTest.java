@@ -14,6 +14,7 @@ import org.junit.Test;
  */
 public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
+    /** {@inheritDoc} */
     @Override
     public String getSystemName(int i) {
         return "IT" + i;

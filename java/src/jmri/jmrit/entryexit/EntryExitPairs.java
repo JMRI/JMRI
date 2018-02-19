@@ -202,6 +202,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return sourcePoint.getRefLocation();
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
         return ENTRYEXIT;
@@ -217,11 +218,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return null;
     }
 
+    /** {@inheritDoc} */
     @Override
     public DestinationPoints getBeanBySystemName(String systemName) {
         return getBySystemName(systemName);
     }
 
+    /** {@inheritDoc} */
     @Override
     public DestinationPoints getBeanByUserName(String userName) {
         for (Source e : nxpair.values()) {
@@ -233,6 +236,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return null;
     }
 
+    /** {@inheritDoc} */
     @Override
     public DestinationPoints getNamedBean(String name) {
         DestinationPoints b = getBeanByUserName(name);
@@ -242,16 +246,19 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return getBeanBySystemName(name);
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getSystemPrefix() {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
+    /** {@inheritDoc} */
     @Override
     public char typeLetter() {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
+    /** {@inheritDoc} */
     @Override
     public String makeSystemName(String s) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
@@ -299,17 +306,18 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return arr;
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<String> getSystemNameList() {
         return getEntryExitList();
     }
 
-    @Override
     /**
      * Implemented to support the Conditional combo box name list
      * @since 4.9.3
      * @return a list of Destination Point beans
      */
+    @Override
     public List<DestinationPoints> getNamedBeanList() {
         List<DestinationPoints> beanList = new ArrayList<>();
         for (Source e : nxpair.values()) {
@@ -321,11 +329,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return beanList;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void register(DestinationPoints n) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
+    /** {@inheritDoc} */
     @Override
     public void deregister(DestinationPoints n) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
@@ -339,6 +349,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return routeClearOption;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void dispose() {
     }

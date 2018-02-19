@@ -15,6 +15,7 @@ abstract public class AbstractPowerManager implements PowerManager {
         this.userName = memo.getUserName();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getUserName() {
         return userName;
@@ -25,6 +26,7 @@ abstract public class AbstractPowerManager implements PowerManager {
     // to hear of changes
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    /** {@inheritDoc} */
     @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
@@ -34,6 +36,7 @@ abstract public class AbstractPowerManager implements PowerManager {
         pcs.firePropertyChange(p, old, n);
     }
 
+    /** {@inheritDoc} */
     @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);

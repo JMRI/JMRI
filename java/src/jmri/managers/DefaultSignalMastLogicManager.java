@@ -41,6 +41,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         //_speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
         return Manager.SIGNALMASTLOGICS;
@@ -52,6 +53,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         return _speedMap;
     }
 
+    /** {@inheritDoc} */
     @Override
     public SignalMastLogic getSignalMastLogic(SignalMast source) {
         for (int i = 0; i < signalMastLogic.size(); i++) {
@@ -62,6 +64,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         return null;
     }
 
+    /** {@inheritDoc} */
     @Override
     public SignalMastLogic newSignalMastLogic(SignalMast source) {
         for (int i = 0; i < signalMastLogic.size(); i++) {
@@ -78,6 +81,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     List<SignalMastLogic> signalMastLogic = new ArrayList<SignalMastLogic>();
     //Hashtable<SignalMast, List<SignalMastLogic>> destLocationList = new Hashtable<SignalMast, List<SignalMastLogic>>();
 
+    /** {@inheritDoc} */
     @Override
     public void replaceSignalMast(SignalMast oldMast, SignalMast newMast) {
         if (oldMast == null || newMast == null) {
@@ -92,6 +96,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void swapSignalMasts(SignalMast mastA, SignalMast mastB) {
         if (mastA == null || mastB == null) {
@@ -119,6 +124,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
 
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<SignalMastLogic> getLogicsByDestination(SignalMast destination) {
         List<SignalMastLogic> list = new ArrayList<>();
@@ -130,11 +136,13 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         return list;
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<SignalMastLogic> getSignalMastLogicList() {
         return signalMastLogic;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isSignalMastUsed(SignalMast mast) {
         if (getSignalMastLogic(mast) != null) {
@@ -150,6 +158,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         return false;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void removeSignalMastLogic(SignalMastLogic sml, SignalMast dest) {
         if (sml.removeDestination(dest)) {
@@ -157,6 +166,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void removeSignalMastLogic(SignalMastLogic sml) {
         if (sml == null) {
@@ -169,6 +179,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         firePropertyChange("length", null, Integer.valueOf(signalMastLogic.size()));
     }
 
+    /** {@inheritDoc} */
     @Override
     public void removeSignalMast(SignalMast mast) {
         if (mast == null) {
@@ -216,6 +227,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
 
     // Abstract methods to be extended by subclasses:
 
+    /** {@inheritDoc} */
     @Override
     public void dispose() {
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -236,31 +248,37 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public SignalMastLogic getBeanBySystemName(String systemName) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public SignalMastLogic getBeanByUserName(String userName) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public SignalMastLogic getNamedBean(String name) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getSystemPrefix() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public char typeLetter() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public String makeSystemName(String s) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -291,16 +309,19 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         return inputName;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getSystemNameArray() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<String> getSystemNameList() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<SignalMastLogic> getNamedBeanList() {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -308,11 +329,13 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    /** {@inheritDoc} */
     @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    /** {@inheritDoc} */
     @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
@@ -324,26 +347,31 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
 
     java.beans.VetoableChangeSupport vcs = new java.beans.VetoableChangeSupport(this);
 
+    /** {@inheritDoc} */
     @Override
     public synchronized void addVetoableChangeListener(java.beans.VetoableChangeListener l) {
         vcs.addVetoableChangeListener(l);
     }
 
+    /** {@inheritDoc} */
     @Override
     public synchronized void removeVetoableChangeListener(java.beans.VetoableChangeListener l) {
         vcs.removeVetoableChangeListener(l);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void deleteBean(SignalMastLogic bean, String property) throws java.beans.PropertyVetoException {
 
     }
 
+    /** {@inheritDoc} */
     @Override
     public void register(SignalMastLogic n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public void deregister(SignalMastLogic n) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -351,11 +379,13 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
 
     int signalLogicDelay = 500;
 
+    /** {@inheritDoc} */
     @Override
     public int getSignalLogicDelay() {
         return signalLogicDelay;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setSignalLogicDelay(int l) {
         signalLogicDelay = l;
@@ -554,6 +584,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { //NOI18N
@@ -590,6 +621,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameSignalMastLogic");

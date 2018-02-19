@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase implements Manager.ManagerDataListener {
 
+    /** {@inheritDoc} */
     @Override
     public String getSystemName(int i) {
         return "IS" + i;
