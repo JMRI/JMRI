@@ -7,7 +7,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 import org.netbeans.jemmy.operators.JDialogOperator;
 
 /**
@@ -15,6 +17,9 @@ import org.netbeans.jemmy.operators.JDialogOperator;
  * @author Paul Bender Copyright (C) 2017
  */
 public class ExceptionDisplayFrameTest {
+
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
 
     @Test
     public void testCTor() {
