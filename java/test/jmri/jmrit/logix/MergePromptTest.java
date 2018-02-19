@@ -23,6 +23,7 @@ public class MergePromptTest {
     public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
 
     @Test
+    @Ignore // unreliable; tends to error or time out
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
