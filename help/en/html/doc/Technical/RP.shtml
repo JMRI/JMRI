@@ -123,6 +123,23 @@
       deprecated interface working in the future, so that it would
       be good to code away from it while it's still working.</p>
 
+      <p>There are two forms of marking something as deprecated
+      (Javadoc tag and Annotation), and both allow you to add
+      additional information. A nice discussion of the
+      technicalities is <a href=
+      "http://download.oracle.com/javase/1.5.0/docs/guide/javadoc/deprecation/deprecation.html">
+      here</a>. We recommend using both of them like this:</p>
+<pre style="font-family: monospace;">
+/**
+ * (Other Javadoc comments)
+ * @deprecated 2.7.8 Use {@ link #foo()} instead
+ */
+@Deprecated // 2.7.8
+</pre>
+        where the line contains the version in which the deprecation
+        is applied. That lets you easily know how long ago it was
+        deprecated. 
+
       <p>You may want to work with the deprecation checks "on"
       during compilation. To do that, change this line of
       build.xml:</p>
@@ -131,20 +148,6 @@
 </pre>
       <p>This lets you pay attention to new deprecation warnings as
       you code.</p>
-
-      <p>There are two forms of marking something as deprecated
-      (Javadoc tag and Annotation), and both allow you to add
-      additional information. A nice discussion of the
-      technicalities is <a href=
-      "http://download.oracle.com/javase/1.5.0/docs/guide/javadoc/deprecation/deprecation.html">
-      here</a>. We use them this way:</p>
-<pre style="font-family: monospace;">
-* @deprecated 2.7.8<br>
-@Deprecated // 2.7.8<br>
-</pre>
-        where the line contains the version in which the deprecation
-        is applied. That lets you easily know how long ago it was
-        deprecated. 
 
     <h2>Exceptions</h2>
     
