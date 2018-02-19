@@ -21,7 +21,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen 2003, 2006, 2008
  * @author      Paul Bender Copyright (C) 2016
  */
-public abstract class AbstractReporterMgrTestBase {
+public abstract class AbstractReporterMgrTestBase extends AbstractManagerTestBase<ReporterManager> {
 
     /**
      * Max number of Reporters supported.  Override to return 1 if
@@ -33,8 +33,6 @@ public abstract class AbstractReporterMgrTestBase {
     abstract public void setUp();    	// load l with actual object; create scaffolds as needed, tag @Before
 
     abstract public String getSystemName(String i);
-
-    protected ReporterManager l = null;	// holds objects under test
 
     static protected boolean listenerResult = false;
 

@@ -20,7 +20,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen 2003, 2006, 2008, 2016
  * @author      Paul Bender Copyright(C) 2016
  */
-public abstract class AbstractSensorMgrTestBase {
+public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<SensorManager> {
 
     // implementing classes must provide these abstract members:
     //
@@ -28,8 +28,6 @@ public abstract class AbstractSensorMgrTestBase {
     abstract public void setUp();    	// load t with actual object; create scaffolds as needed
 
     abstract public String getSystemName(int i);
-
-    protected SensorManager l = null;	// holds objects under test
 
     static protected boolean listenerResult = false;
 
@@ -143,4 +141,5 @@ public abstract class AbstractSensorMgrTestBase {
     protected int getNumToTest2() {
         return 7;
     }
+
 }

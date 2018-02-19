@@ -6,10 +6,8 @@ import java.beans.PropertyChangeSupport;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -54,15 +52,18 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         });
     }
 
+    /** {@inheritDoc} */
     @Override
     abstract public int getXMLOrder();
 
+    /** {@inheritDoc} */
     @Override
     @Nonnull
     public String makeSystemName(@Nonnull String s) {
         return getSystemPrefix() + typeLetter() + s;
     }
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public void dispose() {
@@ -103,38 +104,20 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         return normalizedUserName != null ? _tuser.get(normalizedUserName) : null;
     }
 
-    /**
-     * Locate an instance based on a system name. Returns null if no instance
-     * already exists.
-     *
-     * @param systemName System Name of the required NamedBean
-     * @return requested NamedBean object or null if none exists
-     */
+    /** {@inheritDoc} */
     @Override
     public E getBeanBySystemName(String systemName) {
         return _tsys.get(systemName);
     }
 
-    /**
-     * Locate an instance based on a user name. Returns null if no instance
-     * already exists.
-     *
-     * @param userName System Name of the required NamedBean
-     * @return requested NamedBean object or null if none exists
-     */
+    /** {@inheritDoc} */
     @Override
     public E getBeanByUserName(String userName) {
         String normalizedUserName = NamedBean.normalizeUserName(userName);
         return normalizedUserName != null ? _tuser.get(normalizedUserName) : null;
     }
 
-    /**
-     * Locate an instance based on a name. Returns null if no instance already
-     * exists.
-     *
-     * @param name System Name of the required NamedBean
-     * @return requested NamedBean object or null if none exists
-     */
+    /** {@inheritDoc} */
     @Override
     public E getNamedBean(String name) {
         String normalizedUserName = NamedBean.normalizeUserName(name);
@@ -147,19 +130,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         return getBeanBySystemName(name);
     }
 
-    /**
-     * Method for a UI to delete a bean, the UI should first request a
-     * "CanDelete", then if that comes back clear, or the user agrees with the
-     * actions, then a "DoDelete" can be called which inform the listeners to
-     * delete the bean, then it will be deregistered and disposed of.
-     *
-     * @param bean     The NamedBean to be deleted
-     * @param property The programmatic name of the property: "CanDelete" will
-     *                 enquire with all listeners if the item can be deleted.
-     *                 "DoDelete" tells the listener to delete the item
-     * @throws PropertyVetoException - If the recipient(s) wishes the delete to
-     *                               be aborted.
-     */
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public void deleteBean(@Nonnull E bean, @Nonnull String property) throws PropertyVetoException {
@@ -174,13 +145,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         }
     }
 
-    /**
-     * Remember a NamedBean Object created outside the manager.
-     * <P>
-     * The non-system-specific SignalHeadManagers use this method extensively.
-     *
-     * @param s the bean to register
-     */
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public void register(E s) {
@@ -190,8 +155,21 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         registerUserName(s);
 
         firePropertyChange("length", null, _tsys.size());
+        int position = getPosition(s);
+        fireDataListenersAdded(position, position);
         // listen for name and state changes to forward
         s.addPropertyChangeListener(this, "", "Manager");
+    }
+
+    // not efficient, but does job for now
+    private int getPosition(E s) {
+        int position = 0;
+        Iterator<E> iter = _tsys.values().iterator();
+        while (iter.hasNext()) {
+            if (s == iter.next()) return position;
+            position++;
+        }
+        return -1;
     }
 
     /**
@@ -230,16 +208,11 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         }
     }
 
-    /**
-     * Forget a NamedBean Object created outside the manager.
-     * <P>
-     * The non-system-specific RouteManager uses this method.
-     *
-     * @param s the bean to forget
-     */
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public void deregister(E s) {
+        int position = getPosition(s);
         s.removePropertyChangeListener(this);
         String systemName = s.getSystemName();
         _tsys.remove(systemName);
@@ -248,6 +221,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
             _tuser.remove(userName);
         }
         firePropertyChange("length", null, _tsys.size());
+        fireDataListenersRemoved(position, position);
         // listen for name and state changes to forward
     }
 
@@ -298,11 +272,13 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getSystemNameArray() {
         return this.getSystemNameList().toArray(new String[_tsys.size()]);
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<String> getSystemNameList() {
         List<String> out = new ArrayList<>(_tsys.keySet());
@@ -310,22 +286,26 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         return out;
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<E> getNamedBeanList() {
         return new ArrayList<>(_tsys.values());
     }
 
+    /** {@inheritDoc} */
     @Override
     abstract public String getBeanTypeHandled();
 
     PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
@@ -339,12 +319,14 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     VetoableChangeSupport vcs = new VetoableChangeSupport(this);
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public synchronized void addVetoableChangeListener(VetoableChangeListener l) {
         vcs.addVetoableChangeListener(l);
     }
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public synchronized void removeVetoableChangeListener(VetoableChangeListener l) {
@@ -395,6 +377,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
@@ -433,15 +416,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         }
     }
 
-    /**
-     * Enforces, and as a user convenience converts to, the standard form for a
-     * system name for the NamedBeans handled by this manager.
-     *
-     * @param inputName System name to be normalized
-     * @throws NamedBean.BadSystemNameException If the inputName can't be
-     *                                          converted to normalized form
-     * @return A system name in standard normalized form
-     */
+    /** {@inheritDoc} */
     @CheckReturnValue
     @Override
     @Nonnull
@@ -458,6 +433,31 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return NameValidity.VALID;
+    }
+
+    /** {@inheritDoc} */
+    public void addDataListener(ManagerDataListener e) {
+        if (e != null) listeners.add(e);
+    }
+
+    /** {@inheritDoc} */
+    public void removeDataListener(ManagerDataListener e) {
+        if (e != null) listeners.remove(e);
+    }
+
+    final List<ManagerDataListener> listeners = new ArrayList<>();
+    
+    protected void fireDataListenersAdded(int start, int end) {
+        ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.INTERVAL_ADDED, start, end);
+        for (ManagerDataListener m : listeners) {
+            m.intervalAdded(e);
+        }
+    }
+    protected void fireDataListenersRemoved(int start, int end) {
+        ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.INTERVAL_REMOVED, start, end);
+        for (ManagerDataListener m : listeners) {
+            m.intervalRemoved(e);
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractManager.class);

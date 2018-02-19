@@ -216,4 +216,10 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     @Override
     public String getEntryToolTip() { return "No Help"; }
 
+    /** {@inheritDoc} */
+    public void addDataListener(ManagerDataListener e) {}
+
+    /** {@inheritDoc} */
+    public void removeDataListener(ManagerDataListener e) {}
+
 }

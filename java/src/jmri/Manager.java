@@ -2,6 +2,7 @@ package jmri;
 
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.CheckForNull;
@@ -394,6 +395,126 @@ public interface Manager<E extends NamedBean> {
      */
     public default String getEntryToolTip() {
         return null;
+    }
+
+    /**
+     * Register a {@link ManagerDataListener} to hear about 
+     * adding or removing items from the list of NamedBeans
+     */
+    public void addDataListener(ManagerDataListener e);
+    
+    /**
+     * Unregister a previously-added {@link ManagerDataListener}
+     */
+    public void removeDataListener(ManagerDataListener e);
+
+    /**
+     * Intended to be equivalent to {@link javax.swing.event.ListDataListener}
+     * without introducing a Swing dependency into core JMRI
+     * @since JMRI 4.11.4
+     */
+    interface ManagerDataListener {
+        /**
+         * Sent when the contents of the list has changed in a way that's too complex to characterize with the previous methods.
+         * @param e encapsulates event information
+         */
+        void contentsChanged(ManagerDataEvent e);
+        /**
+         * Sent after the indices in the index0,index1 interval have been inserted in the data model.
+         * @param e encapsulates the event information
+         */
+        void intervalAdded(ManagerDataEvent e);
+        /**
+         * Sent after the indices in the index0,index1 interval have been removed from the data model.
+         * @param e encapsulates the event information
+         */
+        void intervalRemoved(ManagerDataEvent e);
+    }
+    
+    /**
+     * Defines an event that encapsulates changes to a list.
+     * <p>
+     * Intended to be equivalent to {@link javax.swing.event.ListDataEvent}
+     * without introducing a Swing dependency into core JMRI
+     * @since JMRI 4.11.4
+     */
+    @javax.annotation.concurrent.Immutable
+    public final class ManagerDataEvent<E extends NamedBean> extends java.util.EventObject {
+        /**
+         * Equal to {@link javax.swing.event.ListDataEvent#CONTENTS_CHANGED}
+         */
+        final static public int CONTENTS_CHANGED = 0;
+        /**
+         * Equal to {@link javax.swing.event.ListDataEvent#INTERVAL_ADDED}
+         */
+        final static public int INTERVAL_ADDED = 1;
+        /**
+         * Equal to {@link javax.swing.event.ListDataEvent#INTERVAL_REMOVED}
+         */
+        final static public int INTERVAL_REMOVED = 2;
+        
+        final private int type;
+        final private int index0;
+        final private int index1;
+        final private Manager<E> source;
+        /**
+         * Creates a <code>ListDataEvent</code> object.
+         * 
+         * @param source  the source of the event (<code>null</code> not permitted).
+         * @param type  the type of the event (should be one of 
+         *     {@link #CONTENTS_CHANGED}, {@link #INTERVAL_ADDED} or 
+         *     {@link #INTERVAL_REMOVED}, although this is not enforced).
+         * @param index0  the index for one end of the modified range of list 
+         *     elements.
+         * @param index1  the index for the other end of the modified range of list 
+         *     elements.
+         */
+        public ManagerDataEvent(@Nonnull Manager<E> source, int type, int index0, int index1) {
+            super(source);
+            this.source = source;
+            this.type = type;
+            this.index0 = Math.min(index0, index1);  // from javax.swing.event.ListDataEvent implementation
+            this.index1 = Math.max(index0, index1);  // from javax.swing.event.ListDataEvent implementation
+        }
+
+        /**
+         * Returns the source of the event in a type-safe manner.
+         *
+         * @return the event source
+         */
+        public Manager<E> getSource() { return source; }
+  
+        /**
+         * Returns the index of the first item in the range of modified list items.
+         * 
+         * @return The index of the first item in the range of modified list items.
+         */
+        public int getIndex0() { return index0; }
+
+        /**
+         * Returns the index of the last item in the range of modified list items.
+         * 
+         * @return The index of the last item in the range of modified list items.
+         */
+        public int getIndex1() { return index1; }
+
+        /**
+         * Returns a code representing the type of this event, which is usually one
+         * of {@link #CONTENTS_CHANGED}, {@link #INTERVAL_ADDED} or 
+         * {@link #INTERVAL_REMOVED}.
+         * 
+         * @return The event type.
+         */
+        public int getType() { return type; }
+   
+        /**
+         * Returns a string representing the state of this event.
+         * 
+         * @return A string.
+         */
+         public String toString() {
+            return getClass().getName() + "[type=" + type + ",index0=" + index0 + ",index1=" + index1 + "]";
+        }
     }
 
 }

@@ -102,13 +102,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
      */
     abstract protected Manager<E> makeInternalManager();
 
-    /**
-     * Locate via user name, then system name if needed. Subclasses use this to
-     * provide more specific getters such as getSensor or getTurnout via casts.
-     *
-     * @param name the user or system name for the requested NamedBean
-     * @return the requested NamedBean or null if nothing matches name
-     */
+    /** {@inheritDoc} */
     @Override
     public E getNamedBean(String name) {
         E t = getBeanByUserName(name);
@@ -118,17 +112,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         return getBeanBySystemName(name);
     }
 
-    /**
-     * Enforces, and as a user convenience converts to, the standard form for a system name
-     * for the NamedBeans handled by this manager and its submanagers.
-     * <p>
-     * Attempts to match by system prefix first.
-     * <p>
-     *
-     * @param inputName System name to be normalized
-     * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
-     * @return A system name in standard normalized form
-     */
+    /** {@inheritDoc} */
     @Override
     @CheckReturnValue
     public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
@@ -177,6 +161,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
      */
     abstract protected E makeBean(int index, String systemName, String userName);
 
+    /** {@inheritDoc} */
     @Override
     public E getBeanBySystemName(String systemName) {
         for (Manager<E> m : this.mgrs) {
@@ -188,6 +173,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         return null;
     }
 
+    /** {@inheritDoc} */
     @Override
     public E getBeanByUserName(String userName) {
         for (Manager<E> m : this.mgrs) {
@@ -244,6 +230,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         return makeBean(0, systemName, userName);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void dispose() {
         for (int i = 0; i < mgrs.size(); i++) {
@@ -289,6 +276,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         return index;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void deleteBean(E s, String property) throws java.beans.PropertyVetoException {
         String systemName = s.getSystemName();
@@ -300,11 +288,9 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
     }
 
     /**
-     * Remember a NamedBean Object created outside the manager.
+     * {@inheritDoc}
      * <P>
      * Forwards the register request to the matching system
-     *
-     * @param s the bean
      */
     @Override
     public void register(E s) {
@@ -313,7 +299,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
     }
 
     /**
-     * Forget a NamedBean Object created outside the manager.
+     * {@inheritDoc}
      * <P>
      * Forwards the deregister request to the matching system
      *
@@ -325,6 +311,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         getMgr(match(systemName)).deregister(s);
     }
 
+    /** {@inheritDoc} */
     @Nonnull
     @Override
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
@@ -335,6 +322,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         return l;
     }
 
+    /** {@inheritDoc} */
     @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         for (int i = 0; i < nMgrs(); i++) {
@@ -342,6 +330,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         for (int i = 0; i < nMgrs(); i++) {
@@ -349,6 +338,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public synchronized void addVetoableChangeListener(java.beans.VetoableChangeListener l) {
         if (!propertyVetoListenerList.contains(l)) {
@@ -359,6 +349,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public synchronized void removeVetoableChangeListener(java.beans.VetoableChangeListener l) {
         if (propertyVetoListenerList.contains(l)) {
@@ -385,7 +376,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
     }
 
     /**
-     * @return The type letter for turnouts
+     * @return The type letter for for the primary implementation
      */
     @Override
     public char typeLetter() {
@@ -401,13 +392,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         return getMgr(0).makeSystemName(s);
     }
 
-    /**
-     * Get a list of all system names.
-     * <p>
-     * The list is ordered by system name
-     *
-     * @return a list, possibly empty, of system names
-     */
+    /** {@inheritDoc} */
     @Override
     @Nonnull
     public String[] getSystemNameArray() {
@@ -418,13 +403,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         return retval;
     }
 
-    /**
-     * Get a list of all system names.
-     * <p>
-     * The list is ordered by system name
-     *
-     * @return a list, possibly empty, of system names
-     */
+    /** {@inheritDoc} */
     @Override
     @Nonnull
     public List<String> getSystemNameList() {
@@ -434,13 +413,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         return retval;
     }
 
-    /**
-     * Get a list of all system names.
-     * <p>
-     * The list is ordered by system name
-     *
-     * @return a list, possibly empty, of system names
-     */
+    /** {@inheritDoc} */
     @Override
     @Nonnull
     public List<E> getNamedBeanList() {
@@ -449,6 +422,25 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
             ts.addAll(m.getNamedBeanList());
         });
         return new ArrayList<>(ts);
+    }
+
+    /** {@inheritDoc} */
+    public void addDataListener(ManagerDataListener e) {
+        if (e != null) listeners.add(e);
+    }
+
+    /** {@inheritDoc} */
+    public void removeDataListener(ManagerDataListener e) {
+        if (e != null) listeners.remove(e);
+    }
+
+    final List<ManagerDataListener> listeners = new ArrayList<>();
+    
+    protected void fireDataListenersAdded() {
+        ManagerDataEvent<E> e = new ManagerDataEvent<>(this, ManagerDataEvent.INTERVAL_ADDED, 0, 0);
+        for (ManagerDataListener m : listeners) {
+            m.intervalAdded(e);
+        }
     }
 
     // initialize logging

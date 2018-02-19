@@ -67,6 +67,7 @@ public class ManagerTest {
     
     // Test legacy prefixes
     @Deprecated
+    @Test
     public void testIsLegacySystemPrefix() {
         Assert.assertTrue(Manager.isLegacySystemPrefix("DX"));
         Assert.assertTrue(Manager.isLegacySystemPrefix("DCCPP"));
@@ -83,6 +84,7 @@ public class ManagerTest {
     
     // Test legacy prefixes
     @Deprecated
+    @Test
     public void testLegacyPrefixes() {
         // catch if this is changed, so we remember to change
         // rest of tests
@@ -91,6 +93,7 @@ public class ManagerTest {
 
     // Test legacy prefixes
     @Deprecated
+    @Test
     public void startsWithLegacySystemPrefix() {
         Assert.assertEquals(2, Manager.startsWithLegacySystemPrefix("DXS1"));
         Assert.assertEquals(5, Manager.startsWithLegacySystemPrefix("DCCPPT4"));
@@ -101,10 +104,18 @@ public class ManagerTest {
         Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("DT12132"));
         
         for (String s : Manager.legacyPrefixes.toArray(new String[0])) {
-            Assert.assertEquals(s.length()+3, Manager.startsWithLegacySystemPrefix(s+"T12"));
+            Assert.assertEquals("Length test of \""+s+"\"",s.length(), Manager.startsWithLegacySystemPrefix(s+"T12"));
         }
     }
 
+    // test proper coding of constants
+    @Test
+    public void checkAgainstSwingConstants() {
+        Assert.assertEquals(javax.swing.event.ListDataEvent.CONTENTS_CHANGED, Manager.ManagerDataEvent.CONTENTS_CHANGED);
+        Assert.assertEquals(javax.swing.event.ListDataEvent.INTERVAL_ADDED, Manager.ManagerDataEvent.INTERVAL_ADDED);
+        Assert.assertEquals(javax.swing.event.ListDataEvent.INTERVAL_REMOVED, Manager.ManagerDataEvent.INTERVAL_REMOVED);
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() {
