@@ -2,9 +2,7 @@ package jmri;
 
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -111,17 +109,68 @@ public interface Manager<E extends NamedBean> {
      */
     public void dispose();
 
+    /**
+     * Note: this is ordered by the underlying NamedBeans, not
+     *       on the Strings themselves.
+     * <p>
+     * Note: this is not a live array; the contents don't stay up to date
+     * @return (slow) copy of system names in array form
+     * @deprecated 4.11.4 - use direct access via 
+     *                  {@link getNamedBeanSet} or if need be
+     *                  {@link getNamedBeanList} instead
+     */
+    @Deprecated // 4.11.4
     @CheckReturnValue
     @Nonnull
     public String[] getSystemNameArray();
 
+    /**
+     * This provides an 
+     * {@linkplain java.util.Collections#unmodifiableLink unmodifiable}
+     * List of system names.
+     * <p>
+     * Note: this is ordered by the underlying NamedBeans, not
+     *       on the Strings themselves.
+     * <p>
+     * Note: Access via {@link getNamedBeanSet} or if need be
+     *                  {@link getNamedBeanList} is faster.
+     * <p>
+     * Note: This is not a live list; the contents don't stay up to date
+     * @return Unmodifiable access to a list of system names
+     */
     @CheckReturnValue
     @Nonnull
     public List<String> getSystemNameList();
 
+    /**
+     * This provides an
+     * {@linkplain java.util.Collections#unmodifiableList unmodifiable}
+     * List of NamedBeans in 
+     * NamedBean order.
+     * <p>
+     * Note: Access via {@link getNamedBeanSet} is faster.
+     * <p>
+     * Note: This is not a live list; the contents don't stay up to date
+     * @return Unmodifiable access to a List of NamedBeans
+     */   
     @CheckReturnValue
     @Nonnull
     public List<E> getNamedBeanList();
+
+    /**
+     * This provides an
+     * {@linkplain java.util.Collections#unmodifiableSet unmodifiable}
+     * SortedSet of NamedBeans in 
+     * NamedBean order.
+     * <p>
+     * Note: AThis is the fastest of the accessors.
+     * <p>
+     * Note: This is a live set; the contents are kept up to date
+     * @return Unmodifiable access to a SortedSet of NamedBeans
+     */   
+    @CheckReturnValue
+    @Nonnull
+    public default SortedSet<E> getNamedBeanSet() { return new TreeSet<E>(); }
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
