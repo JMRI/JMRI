@@ -282,7 +282,12 @@ public class SprogReply extends AbstractMRReply {
         }
     }
 
-    // deprecated since 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+    /**
+     * @param sprogState the current SPROG state
+     * 
+     * @return true if end of bootloader reply is found
+     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+     */
     @Deprecated
     public boolean endBootloaderReply(SprogState sprogState) {
         // Detect that the reply buffer ends with "L>" or "." from a SPROG v4

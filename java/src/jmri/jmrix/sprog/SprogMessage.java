@@ -125,7 +125,9 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         _dataChars[1] = i;
     }
 
-    // deprecated since 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+    /**
+     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+     */
     @Deprecated
     private void setV4Length(int i) {
         _dataChars[0] = hexDigit((i & 0xf0) >> 4);
@@ -138,7 +140,9 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         _dataChars[4] = i >> 16;
     }
 
-    // deprecated since 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+    /**
+     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+     */
     @Deprecated
     private void setV4Address(int i) {
         _dataChars[2] = hexDigit((i & 0xf000) >> 12);
@@ -147,7 +151,9 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         _dataChars[5] = hexDigit(i & 0xf);
     }
 
-    // deprecated since 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+    /**
+     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+     */
     @Deprecated
     private void setV4RecType(int i) {
         _dataChars[6] = hexDigit((i & 0xf0) >> 4);
@@ -160,7 +166,9 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         }
     }
 
-    // deprecated since 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+    /**
+     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+     */
     @Deprecated
     private void setV4Data(int[] d) {
         int j = 8;
@@ -182,7 +190,9 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         _dataChars[_nDataChars - 1] = checksum;
     }
 
-    // deprecated since 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+    /**
+     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+     */
     @Deprecated
     private void setV4Checksum(int length, int addr, int type, int[] data) {
         int checksum = length + ((addr & 0xff00) >> 8) + (addr & 0xff) + type;
@@ -226,7 +236,9 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         return f;
     }
 
-    // deprecated since 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+    /**
+     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+     */
     @Deprecated
     private SprogMessage v4frame() {
         int i = 0;
@@ -322,8 +334,9 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    // [AC] 23/01/17 This was never actually required by a SPROG. Was copied
-    // from some other interface type. No longer used by SprogProgrammer
+    /**
+     * @deprecated 4.11.2 as bootloading old sprogs is no longer supported in JMRI
+     */
     @Deprecated
     static public SprogMessage getProgMode() {
         SprogMessage m = new SprogMessage(1);
@@ -331,10 +344,9 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    // [AC] 11/09/2002 Leave SPROG in programmer mode. Don't want to go
-    // to booster mode as this would power up the track.
-    // [AC] 23/01/17 This was never actually required by a SPROG. Was copied
-    // from some other interface type. No longer used by SprogProgrammer
+    /**
+     * @deprecated 4.11.2 as bootloading old sprogs is no longer supported in JMRI
+     */
     @Deprecated
     static public SprogMessage getExitProgMode() {
         SprogMessage m = new SprogMessage(1);
@@ -457,7 +469,9 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         return m.frame();
     }
 
-    // deprecated since 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+    /**
+     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+     */
     @Deprecated
     static public SprogMessage getV4WriteFlash(int addr, int[] data, int type) {
         // Create a v4 bootloader message which is same format as a record
@@ -472,7 +486,9 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         return m.v4frame();
     }
 
-    // deprecated since 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+    /**
+     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+     */
     @Deprecated
     static public SprogMessage getV4EndOfFile() {
         // Create a v4 bootloader end of file message
@@ -485,7 +501,9 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         return m.v4frame();
     }
 
-    // deprecated since 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+    /**
+     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+     */
     @Deprecated
     static public SprogMessage getv4ExtAddr() {
         // Create a v4 bootloader extended address message
