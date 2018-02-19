@@ -7,13 +7,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend jmri.AbstractTurnout for TMCC serial layouts.
- *
+ * <p>
  * This object doesn't listen to the TMCC communications. This is because it
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
-  */
+ */
 public class SerialTurnout extends AbstractTurnout {
 
     // data members
@@ -25,7 +25,9 @@ public class SerialTurnout extends AbstractTurnout {
      * Create a turnout. TMCC turnouts use the NMRA number (0-511) as their
      * numerical identification.
      *
+     * @param prefix the connection prefix
      * @param number the NMRA turnout number from 0 to 511
+     * @param memo   the connection memo
      */
     public SerialTurnout(String prefix, int number, TmccSystemConnectionMemo memo) {
         super(prefix + "T" + number);

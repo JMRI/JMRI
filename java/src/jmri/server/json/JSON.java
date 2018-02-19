@@ -767,5 +767,6 @@ public final class JSON {
 
     /* prevent the constructor from being documented */
     private JSON() {
+        throw new UnsupportedOperationException("There is no valid instance of this class");
     }
 }

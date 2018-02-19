@@ -1,8 +1,12 @@
 package jmri.util.swing;
 
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.plaf.basic.BasicComboPopup;
+import java.awt.Component;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
+import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+import javax.swing.ListModel;
 
 /**
  * Common utility methods for working with JComboBoxes.
@@ -14,18 +18,20 @@ import javax.swing.plaf.basic.BasicComboPopup;
 public class JComboBoxUtil {
 
     /**
-     * Set the maximum number of rows for a JComboBox so that
-     * it always can fit on the screen
+     * Set the maximum number of rows for a JComboBox so that it always can fit
+     * on the screen
+     *
+     * @param <E>        type of JComboBox contents
+     * @param <T>        subclass of JComboBox being setup
+     * @param inComboBox the JComboBox to setup
      */
-    public static <T extends javax.swing.JComboBox> void setupComboBoxMaxRows(T inComboBox) {
-        // find the max height of all popup items
-        BasicComboPopup popup = (BasicComboPopup) inComboBox.getAccessibleContext().getAccessibleChild(0);
-        JList list = popup.getList();
-        ListModel lm = list.getModel();
+    public static <E extends Object, T extends JComboBox<E>> void setupComboBoxMaxRows(T inComboBox) {
+        ListModel<E> lm = inComboBox.getModel();
+        JList<E> list = new JList<>(lm);
         ListCellRenderer renderer = list.getCellRenderer();
         int maxItemHeight = 12; // pick some absolute minimum here
         for (int i = 0; i < lm.getSize(); ++i) {
-            Object value = lm.getElementAt(i);
+            E value = lm.getElementAt(i);
             Component c = renderer.getListCellRendererComponent(list, value, i, false, false);
             maxItemHeight = Math.max(maxItemHeight, c.getPreferredSize().height);
         }
@@ -42,6 +48,5 @@ public class JComboBoxUtil {
         int c = Math.min(itemsPerScreen, inComboBox.getItemCount());
         inComboBox.setMaximumRowCount(c);
     }
-
 
 }
