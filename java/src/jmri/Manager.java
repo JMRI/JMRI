@@ -126,7 +126,7 @@ public interface Manager<E extends NamedBean> {
 
     /**
      * This provides an 
-     * {@linkplain java.util.Collections#unmodifiableLink unmodifiable}
+     * {@linkplain java.util.Collections#unmodifiableList unmodifiable}
      * List of system names.
      * <p>
      * Note: this is ordered by the underlying NamedBeans, not
