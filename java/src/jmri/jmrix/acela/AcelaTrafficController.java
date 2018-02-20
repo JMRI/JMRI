@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 public class AcelaTrafficController extends AbstractMRNodeTrafficController implements AcelaInterface {
 
     /**
-     * Create a new unnamed AcelaTrafficController instance.
+     * Create a new AcelaTrafficController instance.
      */
     public AcelaTrafficController() {
         super();

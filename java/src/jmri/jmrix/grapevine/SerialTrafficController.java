@@ -28,6 +28,11 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
+    /**
+     * Create a new TrafficController instance.
+     *
+     * @param adaptermemo the associated SystemConnectionMemo
+     */
     public SerialTrafficController(GrapevineSystemConnectionMemo adaptermemo) {
         super();
         mMemo = adaptermemo;

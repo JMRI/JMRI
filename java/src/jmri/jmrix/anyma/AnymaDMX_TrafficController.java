@@ -12,8 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Traffic controller for Anyma DMX
- * <P>
+ * Traffic controller for Anyma DMX.
+ *
  * @author George Warner Copyright (c) 2017
  * @since 4.9.6
  */
@@ -25,7 +25,7 @@ public class AnymaDMX_TrafficController {
     private AnymaDMX_UsbPortAdapter controller = null;
 
     /**
-     * constructor
+     * Create a new AnymaTrafficController instance.
      */
     public AnymaDMX_TrafficController() {
        // this forces first pass to transmit everything
@@ -131,4 +131,5 @@ public class AnymaDMX_TrafficController {
 
     private final static Logger log
             = LoggerFactory.getLogger(AnymaDMX_TrafficController.class);
+
 }

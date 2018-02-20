@@ -27,11 +27,12 @@ import org.slf4j.LoggerFactory;
  */
 public class MarklinTrafficController extends AbstractMRTrafficController implements MarklinInterface, CommandStation {
 
+    /**
+     * Create a new MarklinTrafficController instance.
+     */
     public MarklinTrafficController() {
         super();
-        if (log.isDebugEnabled()) {
-            log.debug("creating a new MarklinTrafficController object");
-        }
+        log.debug("creating a new MarklinTrafficController object");
         // set as command station too
         jmri.InstanceManager.setCommandStation(this);
         this.setAllowUnexpectedReply(true);
