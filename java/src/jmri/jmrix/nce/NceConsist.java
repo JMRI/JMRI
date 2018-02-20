@@ -55,6 +55,11 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
            // already disposed;
            return;
         }
+        if (consistList.size() > 0) {
+            // kill this consist
+            DccLocoAddress locoAddress = consistList.get(0);
+            killConsist(locoAddress.getNumber(), locoAddress.isLongAddress());
+        }
         stopReadNCEconsistThread();
         super.dispose();
         consistList = null;
@@ -253,6 +258,16 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
             address += 0xC000; // set the upper two bits for long addresses
         }
         sendNceBinaryCommand(address, NceBinaryCommand.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
+    }
+
+    /**
+     * Kills consist using lead loco address
+     */
+    void killConsist(int address, boolean isLong) {
+        if (isLong) {
+            address += 0xC000; // set the upper two bits for long addresses
+        }
+        sendNceBinaryCommand(address, NceBinaryCommand.LOCO_CMD_KILL_CONSIST, (byte) 0);
     }
 
     private void sendNceBinaryCommand(int nceAddress, byte nceLocoCmd, byte consistNumber) {
