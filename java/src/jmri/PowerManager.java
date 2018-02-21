@@ -53,4 +53,6 @@ public interface PowerManager {
 
     @CheckReturnValue
     @Nonnull public String getUserName();
+
+    public long timeSinceLastPowerOn();
 }
