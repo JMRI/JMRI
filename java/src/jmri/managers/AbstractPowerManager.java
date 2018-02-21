@@ -24,7 +24,7 @@ abstract public class AbstractPowerManager implements PowerManager {
         addPropertyChangeListener(tk);
     }
 
-    int power = UNKNOWN;
+    private int powerState = UNKNOWN;
     private Instant lastOn;
 
     @Override
@@ -51,6 +51,7 @@ abstract public class AbstractPowerManager implements PowerManager {
         pcs.removePropertyChangeListener(l);
     }
 
+    // a class for listening for power state changes
     public class TimeKeeper implements PropertyChangeListener {
         @Override
         public void propertyChange(PropertyChangeEvent e) {
@@ -61,18 +62,12 @@ abstract public class AbstractPowerManager implements PowerManager {
                 } catch (JmriException ex) {
                     return;
                 }
-                if (newPowerState != power) {
-                    power = newPowerState;
+                if (newPowerState != powerState) {
+                    powerState = newPowerState;
                     if (newPowerState == ON) {
                         lastOn = Instant.now();
                     }
-                    if (newPowerState == OFF) {
-                        log.info("power has been on for " + timeSinceLastPowerOn() + " millisecs");
-                    }
-
                 }
-            } else {
-                log.info("property changed: " + e.getPropertyName());
             }
         }
     }
