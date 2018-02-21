@@ -132,7 +132,7 @@ SimpleNode handshakeresponse():{SimpleNode t; SimpleNode s;}
 {
   // this should match any valid response to the client in handshake
   // mode.
-  t=timestamp() ( s=serviceversion() | s=connectionmode() | s=inforesponse() )
+  t=timestamp() ( s=serviceversion() | s=inforesponse() )
   {
     jjtThis.jjtSetValue(s.jjtGetValue());
     log.debug("Handshake Response Production: "+jjtThis.jjtGetValue());
@@ -156,16 +156,6 @@ SimpleNode serviceversion():{Token t; Token s;}
   {
     log.debug("Service Version Production");
     jjtThis.jjtSetValue(t.image +" " + s.image);
-    return jjtThis;
-  }
-}
-
-SimpleNode connectionmode():{Token t;}
-{
-  (( t=<COMMAND> | t=<INFO> ) <EOL> )
-  {
-    log.debug("Connection Mode Production");
-    jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
 }
@@ -225,17 +215,6 @@ SimpleNode commandresponse():{SimpleNode t; SimpleNode s; }
     return jjtThis;
   }
 }
-
-SimpleNode cvno():{SimpleNode s;}
-{
-  ( s=nonzeroaddress())
-  {
-    log.debug("CV Number Production "+ s.jjtGetValue());
-    jjtThis.jjtSetValue(s.jjtGetValue());
-    return jjtThis;
-  }
-}
-
 
 SimpleNode bus():{SimpleNode s;}
 {

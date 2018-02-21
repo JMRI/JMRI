@@ -138,12 +138,6 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     }
 
     @Override
-    public Object visit(ASTconnectionmode node, Object data) {
-        log.debug("Connection Mode " + node.jjtGetValue());
-        return node.childrenAccept(this, data);
-    }
-
-    @Override
     public Object visit(ASTinforesponse node, Object data) {
         log.debug("Information Response " + node.jjtGetValue());
         return node.childrenAccept(this, data);
@@ -218,12 +212,6 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     @Override
     public Object visit(ASTerror node, Object data) {
         log.debug("Error Response " + node.jjtGetValue());
-        return node.childrenAccept(this, data);
-    }
-
-    @Override
-    public Object visit(ASTcvno node, Object data) {
-        log.debug("CV Number " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
