@@ -1312,9 +1312,6 @@
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
               <rule element="SOURCEFILE">
-                 <executiondata>
-                   <file file="${jacocosourceexec}" />
-                 </executiondata>
                  <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
               </rule>
           </check>
