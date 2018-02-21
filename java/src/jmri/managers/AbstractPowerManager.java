@@ -83,6 +83,5 @@ abstract public class AbstractPowerManager implements PowerManager {
         }
         return Instant.now().toEpochMilli() - lastOn.toEpochMilli();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(PowerManager.class);
+    
 }
