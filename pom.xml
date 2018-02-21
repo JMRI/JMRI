@@ -527,6 +527,16 @@
                                 </rule>
                                 <rule>
                                     <element>SOURCEFILE</element>
+                                    <excludes>
+                                       <!-- pure interfaces and classes of constants -->
+                                       <exclude>jmri.jmrit.operations.locations.Xml.class</exclude>
+                                       <exclude>jmri.jmrit.operations.rolligstock.cars.Xml.class</exclude>
+                                       <exclude>jmri.jmrit.operations.rolligstock.engines.Xml.class</exclude>
+                                       <exclude>jmri.jmrit.operations.trains.Xml.class</exclude>
+                                       <exclude>jmri.jmris.simpleserver.parser.JmriServerParserTreeConstants.class</exclude>
+                                       <exclude>jmri.jmrix.srcp.parser.SRCPClientParserTreeConstants.class</exclude>
+                                       <exclude>jmri.jmris.srcp.parser.SRCPParserTreeConstants.class</exclude>
+                                    </excludes>
                                     <limits>
                                         <limit>
                                             <counter>LINE</counter>
