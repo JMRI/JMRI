@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import java.util.Objects;
+
 import jmri.Manager;
 import jmri.Reporter;
 import jmri.ReporterManager;
@@ -85,11 +87,19 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
     /** {@inheritDoc} */
     @Override
     public Reporter newReporter(String systemName, String userName) {
-        if (log.isDebugEnabled()) {
-            log.debug("new Reporter:"
-                    + ((systemName == null) ? "null" : systemName)
-                    + ";" + ((userName == null) ? "null" : userName));
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "+ ((userName == null) ? "null" : userName));  // NOI18N
+
+        log.debug("new Reporter: {} {}", systemName, userName);
+
+       // is system name in correct format?
+        if (!systemName.startsWith(getSystemPrefix() + typeLetter())
+                || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
+            log.error("Invalid system name for reporter: {} needed {}{}",
+                    systemName, getSystemPrefix(), typeLetter());
+            throw new IllegalArgumentException("Invalid system name for turnout: " + systemName
+                    + " needed " + getSystemPrefix() + typeLetter());
         }
+
         // return existing if there is one
         Reporter r;
         if ((userName != null) && ((r = getByUserName(userName)) != null)) {

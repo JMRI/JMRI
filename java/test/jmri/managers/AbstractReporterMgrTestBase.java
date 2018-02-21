@@ -72,9 +72,13 @@ public abstract class AbstractReporterMgrTestBase extends AbstractManagerTestBas
     }
 
     @Test(expected=IllegalArgumentException.class)
-    @Ignore("Not currently functional")
     public void testProvideFailure() {
-        l.provideReporter("..");
+        try {
+            l.provideReporter("");
+        } catch (IllegalArgumentException ex) {
+          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for reporter: "+l.getSystemPrefix()+l.typeLetter()+" needed "+l.getSystemPrefix()+l.typeLetter());
+          throw ex;
+        }
     }
 
     @Test
