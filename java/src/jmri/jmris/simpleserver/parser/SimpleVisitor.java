@@ -28,11 +28,7 @@ public class SimpleVisitor implements JmriServerParserVisitor {
         log.debug("Command Production " + node.jjtGetValue());
         return data;
     }
-    @Override
-    public Object visit(ASTaddress node, Object data){
-        log.debug("Address Production " + node.jjtGetValue());
-        return data;
-    }
+
     @Override
     public Object visit(ASTpowercmd node, Object data){
         log.debug("Power Command Production " + node.jjtGetValue());

@@ -125,11 +125,6 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
         return node.childrenAccept(this, data);
     }
 
-    @Override
-    public Object visit(ASTdelay node, Object data) {
-        log.debug("Delay " + node.jjtGetValue());
-        return node.childrenAccept(this, data);
-    }
 //  public Object visit(ASTzeroone node, Object data)
 //  {
 //    log.debug("ZeroOne " +node.jjtGetValue() );
@@ -139,12 +134,6 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     @Override
     public Object visit(ASTserviceversion node, Object data) {
         log.debug("Service Version " + node.jjtGetValue());
-        return node.childrenAccept(this, data);
-    }
-
-    @Override
-    public Object visit(ASTconnectionmode node, Object data) {
-        log.debug("Connection Mode " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 
@@ -223,42 +212,6 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     @Override
     public Object visit(ASTerror node, Object data) {
         log.debug("Error Response " + node.jjtGetValue());
-        return node.childrenAccept(this, data);
-    }
-
-    @Override
-    public Object visit(ASTtimeout node, Object data) {
-        log.debug("Timeout " + node.jjtGetValue());
-        return node.childrenAccept(this, data);
-    }
-
-    @Override
-    public Object visit(ASTcvno node, Object data) {
-        log.debug("CV Number " + node.jjtGetValue());
-        return node.childrenAccept(this, data);
-    }
-
-    @Override
-    public Object visit(ASTprogmode node, Object data) {
-        log.debug("Programming Mode Production" + node.jjtGetValue());
-        return node.childrenAccept(this, data);
-    }
-
-    @Override
-    public Object visit(ASTcv node, Object data) {
-        log.debug("CV Programming Mode " + node.jjtGetValue());
-        return node.childrenAccept(this, data);
-    }
-
-    @Override
-    public Object visit(ASTcvbit node, Object data) {
-        log.debug("CVBIT Programming Mode " + node.jjtGetValue());
-        return node.childrenAccept(this, data);
-    }
-
-    @Override
-    public Object visit(ASTreg node, Object data) {
-        log.debug("REG Programming Mode " + node.jjtGetValue());
         return node.childrenAccept(this, data);
     }
 

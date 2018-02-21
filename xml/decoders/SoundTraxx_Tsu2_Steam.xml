@@ -79,6 +79,12 @@
             <authorinitials>ALM</authorinitials>
             <revremark>Separate ECO CVs file for Extended Function Map. Add labels to Extended Function map CVs.</revremark>
         </revision>
+        <revision>
+            <revnumber>6.1</revnumber>
+            <date>2018-02-18</date>
+            <authorinitials>ALM</authorinitials>
+            <revremark>Volume and Alt volume display alignment.</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
@@ -1714,59 +1720,59 @@
                 <decVal/>
                 <label>Cylinder Cocks Alt Volume</label>
             </variable>
-            <variable CV="2.298" mask="VVVVVVVV" item="Alt Sound Setting 10" default="32" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.298" mask="VVVVVVVV" item="Alt Sound Setting 11" default="32" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Train Brake Apply/Release Alt Volume</label>
             </variable>
-            <variable CV="2.301" mask="VVVVVVVV" item="Alt Sound Setting 13" default="32" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.301" mask="VVVVVVVV" item="Alt Sound Setting 14" default="32" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Snifter Valve Alt Volume</label>
             </variable>
-            <variable CV="2.302" mask="VVVVVVVV" item="Alt Sound Setting 14" default="32" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.302" mask="VVVVVVVV" item="Alt Sound Setting 15" default="32" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Johnson Bar/Power Reverser Alt Volume</label>
             </variable>
-            <variable CV="2.303" mask="VVVVVVVV" item="Alt Sound Setting 15" default="112" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.303" mask="VVVVVVVV" item="Alt Sound Setting 16" default="112" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Safety Valve Alt Volume</label>
             </variable>
-            <variable CV="2.304" mask="VVVVVVVV" item="Alt Sound Setting 16" default="75" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.304" mask="VVVVVVVV" item="Alt Sound Setting 17" default="75" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Blowdown Alt Volume</label>
             </variable>
-            <variable CV="2.306" mask="VVVVVVVV" item="Alt Sound Setting 18" default="25" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.306" mask="VVVVVVVV" item="Alt Sound Setting 19" default="25" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Water Stop Alt Volume</label>
             </variable>
-            <variable CV="2.307" mask="VVVVVVVV" item="Alt Sound Setting 19" default="32" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.307" mask="VVVVVVVV" item="Alt Sound Setting 20" default="32" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Injector Alt Volume</label>
             </variable>
-            <variable CV="2.312" mask="VVVVVVVV" item="Alt Sound Setting 24" default="7" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.312" mask="VVVVVVVV" item="Alt Sound Setting 25" default="7" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Valve Packing Alt Volume</label>
             </variable>
-            <variable CV="2.313" mask="VVVVVVVV" item="Alt Sound Setting 25" default="7" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.313" mask="VVVVVVVV" item="Alt Sound Setting 26" default="7" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Clickety-Clack Alt Volume</label>
             </variable>
-            <variable CV="2.314" mask="VVVVVVVV" item="Alt Sound Setting 26" default="2" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.314" mask="VVVVVVVV" item="Alt Sound Setting 27" default="2" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Sander Valve Alt Volume</label>
             </variable>
-            <variable CV="2.315" mask="VVVVVVVV" item="Alt Sound Setting 27" default="32" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.315" mask="VVVVVVVV" item="Alt Sound Setting 28" default="32" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Fuel Loading Alt Volume</label>
             </variable>
-            <variable CV="2.316" mask="VVVVVVVV" item="Alt Sound Setting 28" default="32" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.316" mask="VVVVVVVV" item="Alt Sound Setting 29" default="32" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Firing Alt Volume</label>
             </variable>
-            <variable CV="2.318" mask="VVVVVVVV" item="Alt Sound Setting 30" default="20" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.318" mask="VVVVVVVV" item="Alt Sound Setting 31" default="20" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Oil Can/Grease Gun Alt Volume</label>
             </variable>
-            <variable CV="2.319" mask="VVVVVVVV" item="Alt Sound Setting 31" default="25" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.319" mask="VVVVVVVV" item="Alt Sound Setting 32" default="25" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Ash Dump Alt Volume</label>
             </variable>

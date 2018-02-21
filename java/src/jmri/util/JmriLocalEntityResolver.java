@@ -51,7 +51,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                     path = "/xml/schema/xinclude.xsd";
                 }
                 // type 3 - find local file if we can
-                String filename = path.substring(1);  // drop leading slash
+                String filename = path.substring(1).trim();  // drop leading slash
                 log.trace("http finds filename: {}", filename);
                 stream = FileUtil.findInputStream(filename);
                 if (stream != null) {
@@ -116,7 +116,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                         if (path.lastIndexOf(realSeparator + "DTD" + realSeparator) >= 0) {
                             log.trace("file not exist, DTD in name, insert xml directory");
                             String modifiedPath = realSeparator + "xml"
-                                    + path.substring(path.lastIndexOf(realSeparator + "DTD" + realSeparator), path.length());
+                                    + path.substring(path.lastIndexOf(realSeparator + "DTD" + realSeparator), path.length()).trim();
                             path = modifiedPath;
                         } else {
                             log.trace("file not exist, no DTD, insert xml/DTD directory");
