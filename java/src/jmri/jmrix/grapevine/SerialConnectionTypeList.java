@@ -18,7 +18,8 @@ public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
-            "jmri.jmrix.grapevine.serialdriver.ConnectionConfig"
+                "jmri.jmrix.grapevine.serialdriver.ConnectionConfig",
+                "jmri.jmrix.grapevine.simulator.ConnectionConfig",
         };
     }
 

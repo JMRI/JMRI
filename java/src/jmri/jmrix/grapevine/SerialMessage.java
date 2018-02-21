@@ -60,6 +60,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // static methods to return a formatted message
+
     /**
      * For Grapevine, which doesn't have a data poll, the poll operation is only
      * used to see that the nodes are present. This is done by sending a "get
@@ -145,7 +146,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * Provide a human-readable form of a message.
-     * <P>
+     * <p>
      * Used by both SerialMessage and SerialReply, because so much of it is
      * common. That forces the passing of arguements as numbers. Short messages
      * are signalled by having missing bytes put to -1 in the arguments.
