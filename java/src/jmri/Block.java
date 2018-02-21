@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
+import java.time.Instant;
 import jmri.implementation.AbstractNamedBean;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.PhysicalLocation;
@@ -651,6 +652,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         }
     }
 
+    private Instant timeLastInactive;
     /**
      * Handles Block sensor going INACTIVE: this block is empty
      */
@@ -666,6 +668,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         setValue(null);
         setDirection(Path.NONE);
         setState(UNOCCUPIED);
+        timeLastInactive = Instant.now();
     }
 
     private final int maxInfoMessages = 5;
@@ -712,10 +715,20 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         switch (count) {
             case 0:
                 if (null != _previousValue) {
-                    setValue(_previousValue);
-                    if (infoMessageCount < maxInfoMessages) {
-                        log.debug("Sensor ACTIVE came out of nowhere, no neighbors active for block {}. Restoring previous value.", getDisplayName());
-                        infoMessageCount++;
+                    // restore the previous value under either of these circumstances:
+                    // 1. the block has been 'unoccupied' only very briefly
+                    // 2. power has just come back on
+                    Instant tn = Instant.now();
+                    PowerManager pm = jmri.InstanceManager.getDefault(jmri.PowerManager.class);
+                    if (pm.timeSinceLastPowerOn() < 5000 || tn.toEpochMilli() - timeLastInactive.toEpochMilli() < 2000) {
+                        setValue(_previousValue);
+                        if (infoMessageCount < maxInfoMessages) {
+                            log.info("Sensor ACTIVE came out of nowhere, no neighbors active for block {}. Restoring previous value.", getDisplayName());
+                            infoMessageCount++;
+                        }
+                    } else {
+                        log.info("not restoring previous value, block has been inactive for too long + ("
+                                + (tn.toEpochMilli() - timeLastInactive.toEpochMilli()) + "ms and power has been on for " + pm.timeSinceLastPowerOn() + "ms");
                     }
                 } else {
                     if (infoMessageCount < maxInfoMessages) {
