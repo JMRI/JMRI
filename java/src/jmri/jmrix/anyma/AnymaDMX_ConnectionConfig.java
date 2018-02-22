@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * This uses the {@link AnymaDMX_UsbPortAdapter} class to do the actual
  * connection.
  *
- * @author George Warner Copyright (c) 2017
+ * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  * @see AnymaDMX_UsbPortAdapter
  */

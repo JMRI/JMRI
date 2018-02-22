@@ -20,8 +20,6 @@ import jmri.swing.RowSorterUtil;
  */
 public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
 
-    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
-
     private LayoutBlockRouteTableModel dataModel;
     private LayoutBlockNeighbourTableModel neighbourDataModel;
     private TableRowSorter<LayoutBlockNeighbourTableModel> neighbourSorter;
@@ -60,7 +58,7 @@ public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
 
         // set initial sort
         RowSorterUtil.setSortOrder(sorter, LayoutBlockRouteTableModel.HOPCOUNTCOL, SortOrder.ASCENDING);
-        RowSorterUtil.setSortOrder(this.neighbourSorter, LayoutBlockNeighbourTableModel.NEIGHBOURCOL,SortOrder.ASCENDING);
+        RowSorterUtil.setSortOrder(this.neighbourSorter, LayoutBlockNeighbourTableModel.NEIGHBOURCOL, SortOrder.ASCENDING);
         RowSorterUtil.setSortOrder(this.throughPathsSorter, LayoutBlockThroughPathsTableModel.SOURCECOL, SortOrder.ASCENDING);
 
         // allow reordering of the columns

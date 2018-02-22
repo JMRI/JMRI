@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutTurntableXml extends AbstractXmlAdapter {
 
@@ -107,7 +108,7 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
-        // load ray tracks 
+        // load ray tracks
         List<Element> rayTrackList = element.getChildren("raytrack");
         if (rayTrackList.size() > 0) {
             for (int i = 0; i < rayTrackList.size(); i++) {
