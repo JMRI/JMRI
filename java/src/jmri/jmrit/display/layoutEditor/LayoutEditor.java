@@ -9615,7 +9615,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             drawLayoutTracksHidden(g2);
         }
         drawTrackSegmentsDashed(g2);
-
         drawLayoutTracksBallast(g2);
         drawLayoutTracksTies(g2);
         drawLayoutTracksRails(g2);
@@ -9803,7 +9802,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             g2.setColor(railColor);
             draw1(g2, main, block, hidden, dashed);
-            draw1(g2, main, block, hidden, dashed = true);
         }
 
         main = true;
@@ -9825,7 +9823,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             g2.setColor(railColor);
             draw1(g2, main, block, hidden, dashed = false);
-            draw1(g2, main, block, hidden, dashed = true);
         }
     }   // drawLayoutTracksRails
 

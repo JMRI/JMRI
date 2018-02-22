@@ -2074,44 +2074,54 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
+        if (!isBlock && getDashed() && getLayoutBlock() != null) {
+            // Skip the dashed rail layer, the block layer will display the dashed track
+            // This removes random rail fragments from between the block dashes
+            return;
+        }
         if (isMain == mainline) {
             if (isBlock) {
-        setColorForTrackBlock(g2, getLayoutBlock());
-    }
-        if (isArc()) {
-            calculateTrackSegmentAngle();
-                g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN));
-                trackRedrawn();
-        } else if (isBezier()) {
-            Point2D pt1 = LayoutEditor.getCoords(getConnect1(), getType1());
-            Point2D pt2 = LayoutEditor.getCoords(getConnect2(), getType2());
-
-            int cnt = bezierControlPoints.size();
-            Point2D[] points = new Point2D[cnt + 2];
-            points[0] = pt1;
-            for (int idx = 0; idx < cnt; idx++) {
-                points[idx + 1] = bezierControlPoints.get(idx);
+                setColorForTrackBlock(g2, getLayoutBlock());
             }
-            points[cnt + 1] = pt2;
+            if (isArc()) {
+                calculateTrackSegmentAngle();
+                    g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN));
+                    trackRedrawn();
+            } else if (isBezier()) {
+                Point2D pt1 = LayoutEditor.getCoords(getConnect1(), getType1());
+                Point2D pt2 = LayoutEditor.getCoords(getConnect2(), getType2());
 
-            MathUtil.drawBezier(g2, points);
-        } else {
-            Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
-            Point2D end2 = LayoutEditor.getCoords(getConnect2(), getType2());
+                int cnt = bezierControlPoints.size();
+                Point2D[] points = new Point2D[cnt + 2];
+                points[0] = pt1;
+                for (int idx = 0; idx < cnt; idx++) {
+                    points[idx + 1] = bezierControlPoints.get(idx);
+                }
+                points[cnt + 1] = pt2;
+
+                MathUtil.drawBezier(g2, points);
+            } else {
+                Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
+                Point2D end2 = LayoutEditor.getCoords(getConnect2(), getType2());
 
                 g2.draw(new Line2D.Double(end1, end2));
             }
-            }
         }
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+        if (getDashed() && getLayoutBlock() != null) {
+            // Skip the dashed rail layer, the block layer will display the dashed track
+            // This removes random rail fragments from between the block dashes
+            return;
+        }
         if (isMain == mainline) {
-        if (isArc()) {
-            calculateTrackSegmentAngle();
+            if (isArc()) {
+                calculateTrackSegmentAngle();
                 Rectangle2D cRectangle2D = new Rectangle2D.Double(
                         getCX(), getCY(), getCW(), getCH());
                 Rectangle2D cLeftRectangle2D = MathUtil.inset(cRectangle2D, -railDisplacement);
@@ -2130,7 +2140,7 @@ public class TrackSegment extends LayoutTrack {
                         cLRightRectangle2D.getHeight(),
                         startAdj, tmpAngle, Arc2D.OPEN));
                 trackRedrawn();
-        } else if (isBezier()) {
+            } else if (isBezier()) {
                 Point2D pt1 = LayoutEditor.getCoords(getConnect1(), getType1());
                 Point2D pt2 = LayoutEditor.getCoords(getConnect2(), getType2());
 
@@ -2144,9 +2154,9 @@ public class TrackSegment extends LayoutTrack {
 
                 MathUtil.drawBezier(g2, points, -railDisplacement);
                 MathUtil.drawBezier(g2, points, +railDisplacement);
-        } else {
-            Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
-            Point2D end2 = LayoutEditor.getCoords(getConnect2(), getType2());
+            } else {
+                Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
+                Point2D end2 = LayoutEditor.getCoords(getConnect2(), getType2());
 
                 Point2D delta = MathUtil.subtract(end2, end1);
                 Point2D vector = MathUtil.normalize(delta, railDisplacement);

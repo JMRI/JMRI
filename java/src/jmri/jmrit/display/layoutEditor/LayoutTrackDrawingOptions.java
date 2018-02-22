@@ -246,7 +246,7 @@ public class LayoutTrackDrawingOptions {
         mainRailCount = val;
     }
 
-    private int mainRailWidth = 1;
+    private int mainRailWidth = 2;
 
     public int getMainRailWidth() {
         return mainRailWidth;
