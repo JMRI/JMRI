@@ -119,7 +119,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Public method to validate system name format.
+     * Validate system name format.
      *
      * @return 'true' if system name has a valid format,
      * else returns 'false'
@@ -190,6 +190,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      *
      * @return the registered SerialSensorManager instance for general use, if
      *         need be creating one.
+     * @deprecated  Since JMRI 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
     static public SerialSensorManager instance() {

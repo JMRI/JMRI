@@ -1,4 +1,4 @@
-package jmri.jmrix.grapevine.serialdriver;
+package jmri.jmrix.grapevine.simulator;
 
 import java.util.Locale;
 import org.junit.Assert;

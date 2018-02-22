@@ -1,4 +1,4 @@
-package jmri.jmrix.grapevine.serialdriver.configurexml;
+package jmri.jmrix.grapevine.simulator.configurexml;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the ConnectionConfigXml class.
+ * Tests for the ConnectionConfigXml class
  *
  * @author Paul Bender Copyright (C) 2016
  */

@@ -6,7 +6,7 @@ import jmri.jmrix.powerline.X10Sequence;
 import jmri.util.StringUtil;
 
 /**
- * Contains the data payload of a serial reply packet. Note that its _only_ the
+ * Contains the data payload of a serial reply packet. Note that it's _only_ the
  * payload.
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008 Converted to

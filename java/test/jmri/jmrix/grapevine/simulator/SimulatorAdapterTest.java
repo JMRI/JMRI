@@ -1,4 +1,4 @@
-package jmri.jmrix.grapevine.serialdriver;
+package jmri.jmrix.grapevine.simulator;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -7,16 +7,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for ConnectionConfig class.
+ * Tests for SimulatorAdapter class.
  *
  * @author Paul Bender Copyright (C) 2016
  */
-
-public class ConnectionConfigTest {
+public class SimulatorAdapterTest {
 
    @Test
    public void ConstructorTest(){
-      Assert.assertNotNull("ConnectionConfig constructor", new ConnectionConfig());
+      Assert.assertNotNull("SimulatorAdapter constructor", new SimulatorAdapter());
    }
 
    @Before

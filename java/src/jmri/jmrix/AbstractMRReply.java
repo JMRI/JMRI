@@ -85,9 +85,10 @@ abstract public class AbstractMRReply extends AbstractMessage {
     }
 
     /*
-     * Return true if the message is an error and we can automatically 
-     * recover by retransmitting the message.  Override in system specific 
-     * classes if required.
+     * Override in system specific classes if required.
+     *
+     * @return 'true' if the message is an error and we can automatically
+     * recover by retransmitting the message.
      */
     public boolean isRetransmittableErrorMsg() {
         return false;
@@ -112,7 +113,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
 
     abstract protected int skipPrefix(int index);
 
-    public int value() {  // integer value of 1st three digits
+    public int value() { // integer value of 1st three digits
         int index = 0;
         index = skipWhiteSpace(index);
         index = skipPrefix(index);
@@ -122,13 +123,12 @@ abstract public class AbstractMRReply extends AbstractMessage {
         try {
             val = Integer.parseInt(s);
         } catch (RuntimeException e) {
-            log.error("Unable to get number from reply: \"" + s + "\" index: " + index
-                    + " message: \"" + toString() + "\"");
+            log.error("Unable to get number from reply: \"{}\" index: {} message: \"{}\"", s, index, toString());
         }
         return val;
     }
 
-    public int pollValue() {  // integer value of HHHH
+    public int pollValue() { // integer value of HHHH
         int index = 0;
         index = skipWhiteSpace(index);
         index = skipPrefix(index);
@@ -139,8 +139,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
         try {
             val = Integer.parseInt(s, 16);
         } catch (RuntimeException e) {
-            log.error("Unable to get number from reply: \"" + s + "\" index: " + index
-                    + " message: \"" + toString() + "\"");
+            log.error("Unable to get number from reply: \"{}\" index: {} message: \"{}\"", s, index, toString());
         }
         return val;
     }
@@ -176,7 +175,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
     }
     static public final int DEFAULTMAXSIZE = 120;
 
-    // contents (private)
+    // contents
     private boolean unsolicited;
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMRReply.class);

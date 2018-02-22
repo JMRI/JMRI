@@ -1,4 +1,4 @@
-package jmri.jmrix.grapevine.serialdriver;
+package jmri.jmrix.grapevine.simulator;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -10,7 +10,7 @@ import org.junit.Test;
  * Tests for ConnectionConfig class.
  *
  * @author Paul Bender Copyright (C) 2016
- */
+ **/
 
 public class ConnectionConfigTest {
 

@@ -5,12 +5,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Contains the data payload of a serial packet.
+ * Contains the data payload of a serial packet. Note that it's _only_ the
+ * payload.
  *
  * @author Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008
  */
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
-    // is this logically an abstract class?
 
     public SerialMessage() {
         super(4);  // most messages are four bytes, binary
@@ -29,7 +29,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * This ctor interprets the String as the exact sequence to send,
+     * Interpret the String as the exact sequence to send,
      * byte-for-byte.
      *
      */
@@ -39,7 +39,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * This ctor interprets the byte array as a sequence of characters to send.
+     * Interpret the byte array as a sequence of characters to send.
      *
      * @param a Array of bytes to send
      */
@@ -55,6 +55,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // static methods to recognize a message
+
     public int getAddr() {
         return getElement(0) & 0x7F;
     }

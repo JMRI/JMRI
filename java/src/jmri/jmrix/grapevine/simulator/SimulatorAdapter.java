@@ -234,83 +234,26 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      */
     @SuppressWarnings("fallthrough")
     private SerialReply generateReply(SerialMessage msg) {
-        log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg.toString());
+        log.debug("Generate Reply to message from node {} (string = {})", msg.getElement(0), msg.toString());
 
-        SerialReply reply = new SerialReply();
-        int i = 0;
-        char command = msg.toString().charAt(0);
-        log.debug("Message type = " + command);
+        SerialReply reply = new SerialReply(); // 4 byte default reply length
+        int node = msg.getAddr(); // element(0)
+        int command = msg.getElement(1);
+        log.debug("Message command = {}", command);
         switch (command) {
 
-            case 'X': // eXit programming
-            case 'S': // Send packet
-            case 'D': // Dequeue packet
-            case 'Q': // Queue packet
-            case 'F': // display memory
-            case 'C': // program loCo
-                reply.setElement(i++, EDC_OPS); // capital O for Operation
-                break;
-
-            case 'P':
-            case 'M':
-                reply.setElement(i++, EDC_PROG); // capital P for Programming
-                break;
-
-            case 'E':
-                log.debug("TRACK_POWER_ON detected");
-                reply.setElement(i++, EDC_OPS); // capital O for Operation
-                break;
-
-            case 'K':
-                log.debug("TRACK_POWER_OFF detected");
-                reply.setElement(i++, EDC_OPS); // capital O for Operation
-                break;
-
-            case 'V':
-                log.debug("Read_CS_Version detected");
-                String replyString = "V999 01 01 1999";
-                reply = new SerialReply(replyString); // fake version number reply
-                i = replyString.length();
-//                reply.setElement(i++, 0x0d); // add CR for second reply line
-//                reply.setElement(i++, EDC_OPS); // capital O for Operation
-                break;
-
-            case 'G': // Consist
-                log.debug("Consist detected");
-                if (msg.toString().charAt(0) == 'D') { // Display consist
-                    replyString = "G" + msg.getElement(2) + msg.getElement(3) + "0000";
-                    reply = new SerialReply(replyString); // fake version number reply
-                    i = replyString.length();
-//                    reply.setElement(i++, 0x0d); // add CR
-                    break;
-                }
-                reply.setElement(i++, EDC_OPS); // capital O for Operation, anyway
-                break;
-
-            case 'L': // Read Loco
-                log.debug("Read Loco detected");
-                replyString = "L" + msg.getElement(1) + msg.getElement(2) + msg.getElement(3) + msg.getElement(4) + "000000";
-                reply = new SerialReply(replyString); // fake reply dir = 00 step = 00 F5-12=00
-                i = replyString.length();
-//                reply.setElement(i++, 0x0d); // add CR for second reply line
-//                reply.setElement(i++, EDC_OPS); // capital O for Operation, anyway
-                break;
-
-            case 'R':
-                log.debug("Read_CV detected");
-                replyString = "--";
-                reply = new SerialReply(replyString); // cannot read
-                i = replyString.length();
-//                reply.setElement(i++, 0x0d); // add CR for second reply line
-//                reply.setElement(i++, EDC_PROG); // capital O for Operation
+            case 115 :
+                log.debug("get software version (poll) message detected");
+                reply = new SerialReply(); // 2 byte software version number reply
+                reply.setElement(0, node);
+                reply.setElement(1, 999);
                 break;
 
             default:
                 log.debug("non-reply message detected");
-                reply.setElement(i++, '?');
+                reply.setElement(0, node);
         }
         log.debug("Reply generated = {}", reply.toString());
-        reply.setElement(i++, 0x0d); // add final CR for all replies
         return (reply);
     }
 

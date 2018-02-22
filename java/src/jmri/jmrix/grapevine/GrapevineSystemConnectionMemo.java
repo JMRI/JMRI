@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Minimum required SystemConnectionMemo for Grapevine.
- * Expanded for multichar/multiconnection support.
+ * Expanded for multichar/multiconnection support. Nodes are handled bij superclass.
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
@@ -81,6 +81,7 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
      * NOTE: Sensor manager defaults to NULL
      */
     public SensorManager getSensorManager() {
+        log.debug(sensorManager != null ? "getSensorManager OK": "getSensorManager returnedNULL");
         return sensorManager;
     }
 
@@ -97,8 +98,8 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
      * NOTE: Turnout manager defaults to NULL
      */
     public TurnoutManager getTurnoutManager() {
+        log.debug(turnoutManager != null ? "getTurnoutManager OK": "getLightManager returned NULL");
         return turnoutManager;
-
     }
 
     public void setTurnoutManager(SerialTurnoutManager t) {
@@ -113,6 +114,7 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
      * NOTE: Light manager defaults to NULL
      */
     public LightManager getLightManager() {
+        log.debug(lightManager != null ? "getLightManager OK": "getLightManager returned NULL");
         return lightManager;
 
     }

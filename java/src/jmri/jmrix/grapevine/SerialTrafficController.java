@@ -6,6 +6,8 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRNodeTrafficController;
 import jmri.jmrix.AbstractMRReply;
+import jmri.jmrix.AbstractNode;
+import jmri.jmrix.grapevine.SerialNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * This handles the state transitions, based on the necessary state in each
  * message.
  * <p>
- * Handles initialization, polling, output, and input for multiple Serial Nodes.
+ * Handles initialization, polling, output, and input for multiple SerialNodes.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2008
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
@@ -215,7 +217,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      *
      * @return The registered SerialTrafficController instance for general use,
      *         if need be creating one.
-     * @deprecated JMRI Since 4.12.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.11.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
     static public SerialTrafficController instance() {
@@ -224,7 +226,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * @deprecated JMRI Since 4.12.4 instance() shouldn't be used
+     * @deprecated JMRI Since 4.11.4 instance() shouldn't be used
      */
     @Deprecated
     static volatile protected SerialTrafficController self = null;

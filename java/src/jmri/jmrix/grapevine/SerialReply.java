@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Contains the data payload of a serial reply packet. Note that its _only_ the
+ * Contains the data payload of a serial reply packet. Note that it's _only_ the
  * payload.
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008
@@ -29,7 +29,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * Is reply to poll message
+     * Is reply to poll message.
      */
     public int getAddr() {
         return getElement(0) & 0x7F;
@@ -38,7 +38,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
     @Override
     public boolean isUnsolicited() {
         return true;
-    } //always unsolicited!
+    } // always unsolicited!
 
     @Override
     protected int skipPrefix(int index) {
@@ -86,7 +86,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
     public void setNumDataElements(int len) {
         if (len > _nDataChars) {
-            log.error("Can't shorten reply from " + _nDataChars + " to " + len);
+            log.error("Can't shorten reply from {} to {}", _nDataChars, len);
             return;
         }
         _nDataChars = len;
@@ -94,7 +94,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Format the reply as human-readable text.
-     * <P>
+     * <p>
      * Since Grapevine doesn't distinguish between message and reply, this uses
      * the Message method.
      */
