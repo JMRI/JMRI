@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Enables basic setup of a USB interface for a jmrix implementation.
  *
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class UsbPortAdapter extends AbstractPortController {
 

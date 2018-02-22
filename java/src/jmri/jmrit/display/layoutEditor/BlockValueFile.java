@@ -1,5 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.jmrit.XmlFile.newDocument;
+import static jmri.jmrit.XmlFile.xsltLocation;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -27,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * manipulates files conforming to the block_value DTD.
  *
  * @author Dave Duchamp Copyright (C) 2008
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class BlockValueFile extends XmlFile {
 
@@ -45,12 +49,13 @@ public class BlockValueFile extends XmlFile {
     private Element root = null;
 
     /**
-     *  Reads Block values from a file in the user's preferences directory.
-     *  If the file containing block values does not exist this routine returns quietly.
-     *  If a Block named in the file does not exist currently, that entry is quietly ignored.
-     * 
+     * Reads Block values from a file in the user's preferences directory. If
+     * the file containing block values does not exist this routine returns
+     * quietly. If a Block named in the file does not exist currently, that
+     * entry is quietly ignored.
+     *
      * @throws JDOMException on rootFromName if all methods fail
-     * @throws IOException if an I/O error occurs while reading a file
+     * @throws IOException   if an I/O error occurs while reading a file
      */
     @SuppressWarnings("unchecked")
     public void readBlockValues() throws JDOMException, IOException {
@@ -58,7 +63,7 @@ public class BlockValueFile extends XmlFile {
         List<String> blocks = blockManager.getSystemNameList();
         // check if file exists
         if (checkFile(defaultFileName)) {
-            // file is present, 
+            // file is present,
             root = rootFromName(defaultFileName);
             if ((root != null) && (blocks.size() > 0)) {
                 // there is a file and there are Blocks defined
@@ -112,8 +117,8 @@ public class BlockValueFile extends XmlFile {
      *  Writes out block values to a file in the user's preferences directory
      *  If there are no defined Blocks, no file is written.
      *  If none of the defined Blocks have values, no file is written.
-     * 
-     * @throws IOException 
+     *
+     * @throws IOException
      */
     public void writeBlockValues() throws IOException {
         log.debug("entered writeBlockValues");

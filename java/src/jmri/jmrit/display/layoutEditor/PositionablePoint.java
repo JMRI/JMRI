@@ -1,6 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.BasicStroke;
+import static java.lang.Float.POSITIVE_INFINITY;
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -65,6 +67,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author Bob Jacobsen Copyright (2) 2014
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class PositionablePoint extends LayoutTrack {
 
@@ -1252,8 +1255,7 @@ public class PositionablePoint extends LayoutTrack {
         }
         int ourDir = getConnect1Dir();
         linkPointsBox.setEnabled(true);
-        LayoutEditor le = editorCombo.getItemAt(
-                editorCombo.getSelectedIndex()).item();
+        LayoutEditor le = editorCombo.getItemAt(editorCombo.getSelectedIndex()).item();
         for (PositionablePoint p : le.getPositionablePoints()) {
             if (p.getType() == EDGE_CONNECTOR) {
                 if (p.getLinkedPoint() == this) {
@@ -1317,17 +1319,32 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
+        //note: optimization here: instead of creating rectangles for all the
+        // points to check below, we create a rectangle for the test point
+        // and test if the points below are in that rectangle instead.
+        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        Point2D p, minPoint = MathUtil.zeroPoint2D;
+
+        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+        double distance, minDistance = POSITIVE_INFINITY;
 
         if (!requireUnconnected || (getConnect1() == null)
                 || ((getType() == ANCHOR) && (getConnect2() == null))) {
             // test point control rectangle
-            Rectangle2D r = layoutEditor.trackControlPointRectAt(getCoordsCenter());
-            if (r.contains(hitPoint)) {
+            p = getCoordsCenter();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minPoint = p;
                 result = POS_POINT;
             }
         }
+        if ((useRectangles && !r.contains(minPoint))
+                || (!useRectangles && (minDistance > circleRadius))) {
+            result = NONE;
+        }
         return result;
-    }
+    }   // findHitPointType
 
     /**
      * return the coordinates for a specified connection type
@@ -1393,13 +1410,34 @@ public class PositionablePoint extends LayoutTrack {
         return result;
     }
 
-    /*
+    public boolean isMainline() {
+        boolean result = false; // assume failure (pessimist!)
+        if (getConnect1() != null) {
+            result = getConnect1().isMainline();
+        }
+        if (getType() == ANCHOR) {
+            if (getConnect2() != null) {
+                result |= getConnect2().isMainline();
+            }
+        }
+        return result;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
-    protected void draw(Graphics2D g2) {
-        // nothing to see here... move along...
-    }   // draw
+    protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
+        //nothing to do here... move along...
+    }   // draw1
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+        //nothing to do here... move along...
+    }
 
     /**
      * {@inheritDoc}
@@ -1417,8 +1455,6 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     protected void drawEditControls(Graphics2D g2) {
-        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-
         TrackSegment ts1 = getConnect1();
         if (ts1 == null) {
             g2.setColor(Color.red);
@@ -1437,9 +1473,12 @@ public class PositionablePoint extends LayoutTrack {
                 g2.setColor(Color.green);
             }
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsCenter()));
+        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsCenter()));
     }   // drawEditControls
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {
         // PositionablePoints don't have turnout controls...
@@ -1601,13 +1640,12 @@ public class PositionablePoint extends LayoutTrack {
         TrackSegment ts1 = getConnect1();
         String blk1 = null;
         List<Set<String>> TrackNameSets = null;
-        Set<String> TrackNameSet = null;
+        Set<String> TrackNameSet = null;    // assume not found (pessimist!)
 
         // this should never be null... but just in case...
         if (ts1 != null) {
             blk1 = ts1.getBlockName();
             if (blk1 != null) {
-                TrackNameSet = null;    // assume not found (pessimist!)
                 TrackNameSets = blockNamesToTrackNameSetsMap.get(blk1);
                 if (TrackNameSets != null) { // (#1)
                     for (Set<String> checkTrackNameSet : TrackNameSets) {
@@ -1617,13 +1655,13 @@ public class PositionablePoint extends LayoutTrack {
                         }
                     }
                 } else {    // (#3)
-                    log.info("-New block ('{}') trackNameSets", blk1);
+                    log.debug("*New block ('{}') trackNameSets", blk1);
                     TrackNameSets = new ArrayList<>();
                     blockNamesToTrackNameSetsMap.put(blk1, TrackNameSets);
                 }
                 if (TrackNameSet == null) {
                     TrackNameSet = new LinkedHashSet<>();
-                    log.info("-    Add track '{}' to trackNameSet for block '{}'", getName(), blk1);
+                    log.debug("*    Add track '{}' to trackNameSet for block '{}'", getName(), blk1);
                     TrackNameSet.add(getName());
                     TrackNameSets.add(TrackNameSet);
                 }
@@ -1650,13 +1688,13 @@ public class PositionablePoint extends LayoutTrack {
                             }
                         }
                     } else {    // (#3)
-                        log.info("-New block ('{}') trackNameSets", blk2);
+                        log.debug("*New block ('{}') trackNameSets", blk2);
                         TrackNameSets = new ArrayList<>();
                         blockNamesToTrackNameSetsMap.put(blk2, TrackNameSets);
                     }
                     if (TrackNameSet == null) {
                         TrackNameSet = new LinkedHashSet<>();
-                        log.info("-    Add track '{}' to TrackNameSet for block '{}'", getName(), blk2);
+                        log.debug("*    Add track '{}' to TrackNameSet for block '{}'", getName(), blk2);
                         TrackNameSets.add(TrackNameSet);
                         TrackNameSet.add(getName());
                     }
@@ -1682,7 +1720,7 @@ public class PositionablePoint extends LayoutTrack {
                 if (blk1.equals(blockName)) {
                     // if we are added to the TrackNameSet
                     if (TrackNameSet.add(getName())) {
-                        log.info("-    Add track '{}'for block '{}'", getName(), blockName);
+                        log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
                     }
                     // this should never be null... but just in case...
                     if (connect1 != null) {
@@ -1699,7 +1737,7 @@ public class PositionablePoint extends LayoutTrack {
                     if (blk2.equals(blockName)) {
                         // if we are added to the TrackNameSet
                         if (TrackNameSet.add(getName())) {
-                            log.info("-    Add track '{}'for block '{}'", getName(), blockName);
+                            log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
                         }
                         // this should never be null... but just in case...
                         if (connect2 != null) {
@@ -1720,6 +1758,6 @@ public class PositionablePoint extends LayoutTrack {
         // nothing to see here, move along...
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
-
+    private final static Logger log
+            = LoggerFactory.getLogger(PositionablePoint.class);
 }

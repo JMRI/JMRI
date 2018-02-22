@@ -206,7 +206,10 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
 
         InstanceManager.setReporterManager(getReporterManager());
 
-        InstanceManager.addClockControl(getClockControl());
+        jmri.ClockControl cc = getClockControl();
+        // make sure InstanceManager knows about that
+        InstanceManager.store(cc, jmri.ClockControl.class);
+        InstanceManager.setDefault(jmri.ClockControl.class, cc);
 
     }
 

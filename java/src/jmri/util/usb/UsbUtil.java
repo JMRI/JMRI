@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 /**
  * USB utilities.
  *
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
 public final class UsbUtil {
