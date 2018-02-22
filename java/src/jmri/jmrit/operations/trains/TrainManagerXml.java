@@ -440,7 +440,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
             // now create unique backup directory for each train
             createFile(getBackupBuildStatusDirectoryName(name) + " ", false); // no backup
             // get old build status file for this train
-            File file = getTrainBuildReportFile(name);
+            File file = findFile(defaultBuildReportFileName(name));
             if (file == null) {
                 log.debug("No ({}) train build status file to backup", name);
             } else if (file.canRead()) {

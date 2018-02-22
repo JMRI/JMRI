@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Ignore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.GraphicsEnvironment;
@@ -23,6 +24,7 @@ public class MergePromptTest {
     public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
 
     @Test
+    @Ignore // unreliable ; frequently errors or times out
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 

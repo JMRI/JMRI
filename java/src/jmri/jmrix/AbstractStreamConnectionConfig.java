@@ -25,7 +25,11 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractStreamConnectionConfig extends AbstractConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process.
+     * Create a connection configuration with a preexisting adapter. This is
+     * used principally when loading a configuration that defines this
+     * connection.
+     *
+     * @param p the adapter to create a connection configuration for
      */
     public AbstractStreamConnectionConfig(jmri.jmrix.AbstractStreamPortController p) {
         adapter = p;

@@ -17,6 +17,7 @@
 <!-- version 3 - Moved all labels to CV definition files in order to get
                  a universal pane usable by all variants notably UK
                  (Alain Le Marchand)                                        -->
+<!-- version 4 - Additional items for SoundTraxx Tsunami2 SW version 1.2    -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Function Map</name>
   <name xml:lang="ca">Mapejat de funcions</name>
@@ -717,6 +718,8 @@
 			</griditem>
 			<griditem gridx="0" gridy="32" anchor="LINE_END">
 				<display item="Extended Function Map HEP Mode"/>
+				<display item="Extended Function Map HEP Mode2"/>
+				<display item="Extended Function Map Turbine Start-Stop"/>
 				<display item="Extended Function Map Stop Request Bell"/>
 			</griditem>
 			<griditem gridx="1" gridy="32" anchor="CENTER">
@@ -909,21 +912,27 @@
 			</griditem>
 			<griditem gridx="0" gridy="41" anchor="LINE_END">
 				<display item="Extended Function Map Ash Dump"/>
+				<display item="Extended Function Map Straight-to-Idle"/>
 			</griditem>
 			<griditem gridx="1" gridy="41" anchor="CENTER">
 				<display item="Ash Dump Automatic Effects - FWDD" label="" format="checkbox"/>
+				<display item="Straight-to-Idle Automatic Effects - FWDD" label="" format="checkbox"/>
 			</griditem>
 			<griditem gridx="2" gridy="41" anchor="CENTER">
 				<display item="Ash Dump Automatic Effects - REVD" label="" format="checkbox"/>
+				<display item="Straight-to-Idle Automatic Effects - REVD" label="" format="checkbox"/>
 			</griditem>
 			<griditem gridx="3" gridy="41" anchor="CENTER">
 				<display item="Ash Dump Automatic Effects - FWDS" label="" format="checkbox"/>
+				<display item="Straight-to-Idle Automatic Effects - FWDS" label="" format="checkbox"/>
 			</griditem>
 			<griditem gridx="4" gridy="41" anchor="CENTER">
 				<display item="Ash Dump Automatic Effects - REVS" label="" format="checkbox"/>
+				<display item="Straight-to-Idle Automatic Effects - REVS" label="" format="checkbox"/>
 			</griditem>
 			<griditem gridx="5" gridy="41" anchor="CENTER">
 				<display item="Ash Dump Automatic Effects - ESTP" label="" format="checkbox"/>
+				<display item="Straight-to-Idle Automatic Effects - ESTP" label="" format="checkbox"/>
 			</griditem>
 			<griditem gridx="0" gridy="42" anchor="LINE_END">
 				<display item="Extended Function Map Injector"/>

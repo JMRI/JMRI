@@ -268,7 +268,6 @@ public final class InstanceManager {
 
                 // example of tracing where something is being initialized
                 // log.error("jmri.implementation.SignalSpeedMap init", new Exception());
-
                 if (traceFileActive) {
                     traceFilePrint("Start initialization: " + type.toString());
                     traceFileIndent++;
@@ -879,6 +878,7 @@ public final class InstanceManager {
      * Clear all managed instances of a particular type from this
      * InstanceManager.
      *
+     * @param <T>  the type of class to clear
      * @param type the type to clear
      */
     public <T> void clear(@Nonnull Class<T> type) {

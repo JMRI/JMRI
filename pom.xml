@@ -278,9 +278,6 @@
                 <version>${surefire.version}</version>
                 <configuration>
                     <excludes>
-                        <!-- ignore until #3340 is merged -->
-                        <exclude>jmri.jmrix.nce.Nce*</exclude>
-                        <exclude>%regex[jmri/jmrix/nce/(boosterprog|cab|clockmon|consist|macro|ncemon|networkdriver|packetgen|simulator|swing|usbdriver|usbinterface)/.*/Nce.*]</exclude>
                         <!-- ignore until #3492 is resolved -->
                         <exclude>%regex[jmri.jmrix.loconet.locormi.LnMessage[Client|Server]Test]</exclude>
                         <!-- ignore to avoid duplicate test runs -->
