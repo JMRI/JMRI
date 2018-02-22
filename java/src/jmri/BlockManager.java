@@ -45,7 +45,7 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
         InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
         InstanceManager.getDefault(ReporterManager.class).addVetoableChangeListener(this);
         InstanceManager.getList(PowerManager.class).forEach((pm) -> {
-            pm.addProperyChangeListener(this);
+            pm.addPropertyChangeListener(this);
         });
     }
 
@@ -314,7 +314,6 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
 
 
     private Instant lastTimeLayoutPowerOn; // the most recent time any power manager had a power ON event
-    private int powerState = jmri.PowerManager.UNKNOWN; // the current power state
 
     /**
      * Listen for changes to the power state from any power managers
@@ -327,16 +326,18 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
+        super.propertyChange(e);
         if ("Power".equals(e.getPropertyName())) {
-            int newPowerState = jmri.PowerManager.OFF;
-            Instance.getList(PowerManager.class).forEach((pm) -> {
-               if (pm.getPower() == jmri.PowerManager.ON) {
-                    lastTimeLayoutPowerOn = Instant.now();
-                    break;
+            InstanceManager.getList(PowerManager.class).forEach((pm) -> {
+                try {
+                    if (pm.getPower() == jmri.PowerManager.ON) {
+                        lastTimeLayoutPowerOn = Instant.now();
+                    }
+                } catch (JmriException xe) {
+                    // do nothing
                 }
             });
         }
-        super(e);
     }
 
 
