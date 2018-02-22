@@ -340,8 +340,8 @@
         <exclude name="jmri/jmrit/display/EditorFrameOperator.class" />
         <!-- Exclude pure interfaces and classes only providing constants. -->
         <exclude name="jmri/jmrit/operations/locations/Xml.class" />
-        <exclude name="jmri/jmrit/operations/rolligstock/cars/Xml.class"/>
-        <exclude name="jmri/jmrit/operations/rolligstock/engines/Xml.class" />
+        <exclude name="jmri/jmrit/operations/rollingstock/cars/Xml.class"/>
+        <exclude name="jmri/jmrit/operations/rollingstock/engines/Xml.class" />
         <exclude name="jmri/jmrit/operations/trains/Xml.class" />
         <exclude name="jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class" />
         <exclude name="jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class" />
