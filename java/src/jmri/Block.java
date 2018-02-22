@@ -719,8 +719,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                     // 1. the block has been 'unoccupied' only very briefly
                     // 2. power has just come back on
                     Instant tn = Instant.now();
-                    PowerManager pm = jmri.InstanceManager.getDefault(jmri.PowerManager.class);
-                    if (pm.timeSinceLastPowerOn() < 5000 || tn.toEpochMilli() - _timeLastInactive.toEpochMilli() < 2000) {
+                    BlockManager bm = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
+                    if (bm.timeSinceLastLayoutPowerOn() < 5000 || tn.toEpochMilli() - _timeLastInactive.toEpochMilli() < 2000) {
                         setValue(_previousValue);
                         if (infoMessageCount < maxInfoMessages) {
                             log.debug("Sensor ACTIVE came out of nowhere, no neighbors active for block {}. Restoring previous value.", getDisplayName());
@@ -729,7 +729,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                     } else {
                         log.debug("not restoring previous value, block has been inactive for too long ("
                                 + (tn.toEpochMilli() - _timeLastInactive.toEpochMilli()) + "ms) and layout power has not just been restored ("
-                                + pm.timeSinceLastPowerOn() + "ms ago)");
+                                + bm.timeSinceLastLayoutPowerOn() + "ms ago)");
                     }
                 } else {
                     if (infoMessageCount < maxInfoMessages) {

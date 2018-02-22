@@ -2,9 +2,11 @@ package jmri;
 
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
+import java.beans.PropertyChangeEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.Instant;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -42,6 +44,9 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
         super();
         InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
         InstanceManager.getDefault(ReporterManager.class).addVetoableChangeListener(this);
+        InstanceManager.getList(PowerManager.class).forEach((pm) -> {
+            pm.addProperyChangeListener(this);
+        });
     }
 
     @Override
@@ -306,6 +311,50 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
 
         return blockList;
     }
+
+
+    private Instant lastTimeLayoutPowerOn; // the most recent time any power manager had a power ON event
+    private int powerState = jmri.PowerManager.UNKNOWN; // the current power state
+
+    /**
+     * Listen for changes to the power state from any power managers
+     * in use in order to track how long it's been since powet was applied
+     * to the layout. This information is used in {@link Block#goingActive()}
+     * when deciding whether to restore a block's last value.
+     *
+     * @param e
+     */
+
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        if ("Power".equals(e.getPropertyName())) {
+            int newPowerState = jmri.PowerManager.OFF;
+            Instance.getList(PowerManager.class).forEach((pm) -> {
+               if (pm.getPower() == jmri.PowerManager.ON) {
+                    lastTimeLayoutPowerOn = Instant.now();
+                    break;
+                }
+            });
+        }
+        super(e);
+    }
+
+
+
+    /**
+     * Returns the amount of time since the layout was last powered up,
+     * in milliseconds. If the layout has not been powered up as far as
+     * JMRI knows it returns a very long time indeed.
+     *
+     * @return long int
+     */
+    public long timeSinceLastLayoutPowerOn() {
+        if (lastTimeLayoutPowerOn == null) {
+            return Long.MAX_VALUE;
+        }
+        return Instant.now().toEpochMilli() - lastTimeLayoutPowerOn.toEpochMilli();
+    }
+
 
     private final static Logger log = LoggerFactory.getLogger(BlockManager.class);
 }
