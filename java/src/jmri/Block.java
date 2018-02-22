@@ -727,8 +727,9 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                             infoMessageCount++;
                         }
                     } else {
-                        log.debug("not restoring previous value, block has been inactive for too long + ("
-                                + (tn.toEpochMilli() - _timeLastInactive.toEpochMilli()) + "ms and power has been on for " + pm.timeSinceLastPowerOn() + "ms");
+                        log.debug("not restoring previous value, block has been inactive for too long ("
+                                + (tn.toEpochMilli() - _timeLastInactive.toEpochMilli()) + "ms) and layout power has not just been restored ("
+                                + pm.timeSinceLastPowerOn() + "ms ago)");
                     }
                 } else {
                     if (infoMessageCount < maxInfoMessages) {
