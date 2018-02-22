@@ -529,13 +529,13 @@
                                     <element>SOURCEFILE</element>
                                     <excludes>
                                        <!-- pure interfaces and classes of constants -->
-                                       <exclude>jmri/jmrit/operations/locations/Xml.class</exclude>
-                                       <exclude>jmri/jmrit/operations/rolligstock/cars/Xml.class</exclude>
-                                       <exclude>jmri/jmrit/operations/rolligstock/engines/Xml.class</exclude>
-                                       <exclude>jmri/jmrit/operations/trains/Xml.class</exclude>
-                                       <exclude>jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class</exclude>
-                                       <exclude>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</exclude>
-                                       <exclude>jmri/jmris/srcp/parser/SRCPParserTreeConstants.class</exclude>
+                                       <File>jmri/jmrit/operations/locations/Xml.class</File>
+                                       <File>jmri/jmrit/operations/rolligstock/cars/Xml.class</File>
+                                       <File>jmri/jmrit/operations/rolligstock/engines/Xml.class</File>
+                                       <File>jmri/jmrit/operations/trains/Xml.class</File>
+                                       <File>jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class</File>
+                                       <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
+                                       <File>jmri/jmris/srcp/parser/SRCPParserTreeConstants.class</File>
                                     </excludes>
                                     <limits>
                                         <limit>
