@@ -274,8 +274,9 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         setConsistManager(new LocoNetConsistManager(this));
 
-        InstanceManager.addClockControl(
-                getClockControl());
+        ClockControl cc = getClockControl();
+        // make sure InstanceManager knows about that
+        InstanceManager.setDefault(ClockControl.class, cc);
 
     }
 
