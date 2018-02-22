@@ -70,12 +70,14 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent((cm) -> {
             cm.deregister(this);
         });
+        _beans.clear();
         _tsys.clear();
         _tuser.clear();
     }
 
-    protected Hashtable<String, E> _tsys = new Hashtable<>();   // stores known Turnout instances by system name
-    protected Hashtable<String, E> _tuser = new Hashtable<>();   // stores known Turnout instances by user name
+    protected TreeSet<E> _beans = new TreeSet<>(new jmri.util.NamedBeanComparator());
+    protected Hashtable<String, E> _tsys = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by system name
+    protected Hashtable<String, E> _tuser = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by user name
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -97,7 +99,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * Java doesn't have polymorphic return types.
      *
      * @param userName the user name
-     * @return requested Turnout object or null if none exists
+     * @return requested E (NamedBean, i.e. Turnout) object or null if none exists
      */
     protected E getInstanceByUserName(String userName) {
         String normalizedUserName = NamedBean.normalizeUserName(userName);
@@ -150,11 +152,12 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @OverridingMethodsMustInvokeSuper
     public void register(E s) {
         String systemName = s.getSystemName();
+        _beans.add(s);
         _tsys.put(systemName, s);
 
         registerUserName(s);
 
-        firePropertyChange("length", null, _tsys.size());
+        firePropertyChange("length", null, _beans.size());
         int position = getPosition(s);
         fireDataListenersAdded(position, position);
         // listen for name and state changes to forward
@@ -164,7 +167,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     // not efficient, but does job for now
     private int getPosition(E s) {
         int position = 0;
-        Iterator<E> iter = _tsys.values().iterator();
+        Iterator<E> iter = _beans.iterator();
         while (iter.hasNext()) {
             if (s == iter.next()) return position;
             position++;
@@ -215,12 +218,13 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         int position = getPosition(s);
         s.removePropertyChangeListener(this);
         String systemName = s.getSystemName();
+        _beans.remove(s);
         _tsys.remove(systemName);
         String userName = s.getUserName();
         if (userName != null) {
             _tuser.remove(userName);
         }
-        firePropertyChange("length", null, _tsys.size());
+        firePropertyChange("length", null, _beans.size());
         fireDataListenersRemoved(position, position);
         // listen for name and state changes to forward
     }
@@ -275,21 +279,23 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /** {@inheritDoc} */
     @Override
     public String[] getSystemNameArray() {
-        return this.getSystemNameList().toArray(new String[_tsys.size()]);
+        return this.getSystemNameList().toArray(new String[_beans.size()]);
     }
 
     /** {@inheritDoc} */
     @Override
     public List<String> getSystemNameList() {
-        List<String> out = new ArrayList<>(_tsys.keySet());
-        out.sort(null);
+        ArrayList<String> out = new ArrayList<>();
+        for (E b : _beans) {
+            out.add(b.getSystemName());
+        }
         return out;
     }
 
     /** {@inheritDoc} */
     @Override
     public List<E> getNamedBeanList() {
-        return new ArrayList<>(_tsys.values());
+        return new ArrayList<>(_beans);
     }
 
     /** {@inheritDoc} */
@@ -387,7 +393,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
             message.append(Bundle.getMessage("VetoFoundIn", getBeanTypeHandled()))
                     .append("<ul>");
             boolean found = false;
-            for (NamedBean nb : _tsys.values()) {
+            for (NamedBean nb : _beans) {
                 try {
                     nb.vetoableChange(evt);
                 } catch (PropertyVetoException e) {
@@ -406,7 +412,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
                 throw new PropertyVetoException(message.toString(), evt);
             }
         } else {
-            for (NamedBean nb : _tsys.values()) {
+            for (NamedBean nb : _beans) {
                 try {
                     nb.vetoableChange(evt);
                 } catch (PropertyVetoException e) {
