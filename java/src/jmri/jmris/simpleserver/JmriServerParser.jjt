@@ -28,6 +28,22 @@ public class JmriServerParser {
 
    private final static Logger log = LoggerFactory.getLogger(JmriServerParser.class);
 
+   /*
+    * The error_skipto method is from the JavaCC error recovery tutorial
+    * https://javacc.org/tutorials/errorrecovery
+    */
+   private void error_skipto(int kind){
+      ParseException e = generateParseException();  // generate the exception object.
+      log.error("Recovery after Parse Exception");
+      log.debug(e.toString());  // print the error message
+      Token t;
+      do {
+        t = getNextToken();
+      } while (t.kind != kind);
+        // The above loop consumes tokens all the way up to a token of
+        // "kind".  We use a do-while loop rather than a while because the
+        // current token is the one immediately before the erroneous token
+      }
   }
 
 PARSER_END(JmriServerParser)
@@ -136,31 +152,23 @@ TOKEN :
 | < TRAINLOCATION: <T><R><A><I><N><L><O><C><A><T><I><O><N>>
 | < TERMINATE: <T><E><R><M><I><N><A><T><E>>
 | < EQUALS: "=">:VALUE
-// catch all
-| <BADTOKEN:~[" "]>
 }
 
 // Lexical specifications begin here
 
 SimpleNode command():{}
 {
-  // This is a simple list of the possible commands.
-  // They are broken down further below.
-  ( powercmd() | turnoutcmd() |reportercmd() | lightcmd() |sensorcmd() | operationscmd()) <EOL>
-  {
-    log.debug("Command Production");
-    return jjtThis;
+  try {
+     // This is a simple list of the possible commands.
+     // They are broken down further below.
+     ( powercmd() | turnoutcmd() |reportercmd() | lightcmd() |sensorcmd() | operationscmd()) <EOL>
+  } catch(ParseException e){
+     error_skipto(EOL);
   }
-}
-
-SimpleNode address():{Token t;}
-{
-  t=<ADDR>
-  {
-    log.debug("Address Production "+ t.image);
-    jjtThis.jjtSetValue(t.image);
-    return jjtThis;
-  }
+     {
+       log.debug("Command Production");
+       return jjtThis;
+     }
 }
 
 SimpleNode powercmd():{}

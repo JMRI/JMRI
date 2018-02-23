@@ -2,6 +2,7 @@ package jmri.util.zeroconf;
 
 import java.util.HashMap;
 import javax.jmdns.ServiceInfo;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.web.server.WebServerPreferences;
 import org.junit.After;
@@ -56,7 +57,7 @@ public class ZeroConfServiceTest {
     public void testCreate_String_int() {
         ZeroConfService result = ZeroConfService.create(HTTP, 9999);
         Assert.assertNotNull(result);
-        Assert.assertEquals(WebServerPreferences.getDefault().getRailroadName(), result.name());
+        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), result.name());
     }
 
     /**
@@ -67,7 +68,7 @@ public class ZeroConfServiceTest {
         HashMap<String, String> properties = new HashMap<>();
         ZeroConfService result = ZeroConfService.create(HTTP, 9999, properties);
         Assert.assertNotNull(result);
-        Assert.assertEquals(WebServerPreferences.getDefault().getRailroadName(), result.name());
+        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), result.name());
     }
 
     /**
@@ -108,7 +109,7 @@ public class ZeroConfServiceTest {
     @Test
     public void testName() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        Assert.assertEquals(WebServerPreferences.getDefault().getRailroadName(), instance.name());
+        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), instance.name());
     }
 
     /**
@@ -201,7 +202,7 @@ public class ZeroConfServiceTest {
     public void testAllServices() {
         Assert.assertEquals(0, ZeroConfService.allServices().size());
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        Assert.assertEquals(WebServerPreferences.getDefault().getDefaultRailroadName(), instance.name());
+        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getDefaultRailroadName(), instance.name());
         Assert.assertEquals(0, ZeroConfService.allServices().size());
         // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();

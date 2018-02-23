@@ -165,29 +165,27 @@ public class AudioUtil {
             try {
                 AudioBuffer buf = (AudioBuffer) jmri.InstanceManager.getDefault(jmri.AudioManager.class).provideAudio(prefix + "_sbuf" + i);
                 i++;
-                if (buf.getLength() > 0) {
-                    log.debug("provideAudio found already-built buffer:{} ... skipping load.", buf.getSystemName());
+                if (buf.getState() == Audio.STATE_LOADED) {
+                    log.debug("provideAudio found already-built buffer: {} ... skipping load.", buf.getSystemName());
                 } else {
                     buf.loadBuffer(b.data, b.format, b.frequency);
                     if (log.isDebugEnabled()) {
-                        log.debug("Loaded buffer: " + buf.getSystemName());
-                        log.debug(" from file: " + buf.getURL());
-                        log.debug(" format: " + b.format + ", " + b.frequency + " Hz");
-                        log.debug(" length: " + b.data.limit());
+                        log.debug("Loaded buffer: {}", buf.getSystemName());
+                        log.debug(" from file: {}", buf.getURL());
+                        log.debug(" format: {}, {} Hz", parseFormat(b.format), b.frequency);
+                        log.debug(" length: {}", b.data.limit());
                     }
                 }
-
                 rlist.add(buf);
             } catch (AudioException | IllegalArgumentException e) {
                 log.warn("Error on provideAudio! {}", (Object) e);
                 if (log.isDebugEnabled()) {
                     jmri.InstanceManager.getDefault(jmri.AudioManager.class).getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {
-                        log.debug("\tBuffer: " + s);
+                        log.debug("\tBuffer: {}", s);
                     });
                 }
                 return null;
             }
-
         }
         return rlist;
     }

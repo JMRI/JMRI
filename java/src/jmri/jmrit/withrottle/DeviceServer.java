@@ -52,6 +52,12 @@ package jmri.jmrit.withrottle;
  * turnouts Format:
  * PTL]\[SysName}|{UsrName}|{CurrentState]\[SysName}|{UsrName}|{CurrentState
  * States: 1 - UNKNOWN, 2 - CLOSED, 4 - THROWN
+ * 
+ * Send time or time&rate:
+ * 'PFT' + UTCAdjustedTimeSeconds
+ *     -OR-
+ * 'PFT' + UTCAdjustedTimeSeconds + "<;>" + RateMultipier
+ * Set rate to 0.0 for stop, float value to run.
  *
  * Web server port: 'PW' + {port#}
  *
@@ -124,6 +130,8 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     final boolean isRouteAllowed = InstanceManager.getDefault(WiThrottlePreferences.class).isAllowRoute();
     private ConsistController consistC = null;
     private boolean isConsistAllowed;
+    private FastClockController fastClockC = null;
+    final boolean isClockDisplayed = InstanceManager.getDefault(WiThrottlePreferences.class).isDisplayFastClock();
 
     private DeviceManager manager;
 
@@ -413,6 +421,9 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         if (consistC != null) {
             consistC.removeControllerListener(this);
         }
+        if (fastClockC != null) {
+            fastClockC.removeControllerListener(this);
+        }
 
         closeSocket();
         for (int i = 0; i < listeners.size(); i++) {
@@ -447,7 +458,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         log.debug("starting heartbeat EKG for '{}' with interval: {}", getName(), pulseInterval);
         isUsingHeartbeat = true;
         stopEKGCount = 0;
-        ekg = new Timer();
+        ekg = new Timer("Withrottle hearbeat");
         TimerTask task = new TimerTask() {
             @Override
             public void run() {  //  Drops on second pass
@@ -538,7 +549,16 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
             consistC.sendAllConsistData();
         }
-
+        if (isClockDisplayed) {
+            fastClockC = InstanceManager.getDefault(WiThrottleManager.class).getFastClockController();
+            if (fastClockC.verifyCreation()) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Fast Clock Controller valid.");
+                }
+                fastClockC.addControllerListener(this);
+                fastClockC.sendFastRate();
+            }
+        }
     }
 
     public String getUDID() {
@@ -577,7 +597,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     }
 
     public static String getWebServerPort() {
-        return Integer.toString(WebServerPreferences.getDefault().getPort());
+        return Integer.toString(InstanceManager.getDefault(WebServerPreferences.class).getPort());
     }
 
     /**

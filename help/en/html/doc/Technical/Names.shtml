@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -32,10 +31,10 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Names and Naming</h1>This page discusses how JMRI
-      objects are named, how those names are used to reference the
-      objects (hardware and software), and how user-readable names
-      are used.
+      <h1>JMRI: Names and Naming</h1>
+      <p>This page discusses how JMRI objects are named, how those
+      names are used to reference the objects (hardware and software),
+      and how user-readable names are used.</p>
 
       <span class="since">Since JMRI 4.7.4</span>
         <b>As of March 2017, we have changed

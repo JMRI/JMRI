@@ -385,7 +385,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             });
             cancelRestartButton.setToolTipText(Bundle.getMessage("CancelRestartButtonHint"));
             p13.add(new JLabel("   "));
-            p13.add(terminateTrainButton = new JButton(Bundle.getMessage("TerminateTrain") + "..."));
+            p13.add(terminateTrainButton = new JButton(Bundle.getMessage("TerminateTrain"))); // immediate if there is only one train
             terminateTrainButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -466,16 +466,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             JPanel p30 = new JPanel();
             p30.setLayout(new FlowLayout());
             p30.add(new JLabel(Bundle.getMessage("AllocatedSectionsTitle") + "    "));
-            autoReleaseBox = new JCheckBox(Bundle.getMessage("AutoReleaseBoxLabel"));
-            p30.add(autoReleaseBox);
-            autoReleaseBox.setToolTipText(Bundle.getMessage("AutoReleaseBoxHint"));
-            autoReleaseBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleAutoReleaseChanged(e);
-                }
-            });
-            autoReleaseBox.setSelected(_AutoAllocate);  // initiallize autoRelease to match autoAllocate
             autoAllocateBox = new JCheckBox(Bundle.getMessage("AutoDispatchItem"));
             p30.add(autoAllocateBox);
             autoAllocateBox.setToolTipText(Bundle.getMessage("AutoAllocateBoxHint"));
@@ -485,8 +475,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     handleAutoAllocateChanged(e);
                 }
             });
-            contentPane.add(p30);
             autoAllocateBox.setSelected(_AutoAllocate);
+            autoReleaseBox = new JCheckBox(Bundle.getMessage("AutoReleaseBoxLabel"));
+            p30.add(autoReleaseBox);
+            autoReleaseBox.setToolTipText(Bundle.getMessage("AutoReleaseBoxHint"));
+            autoReleaseBox.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    handleAutoReleaseChanged(e);
+                }
+            });
+            autoReleaseBox.setSelected(_AutoAllocate); // initialize autoRelease to match autoAllocate
+            contentPane.add(p30);
             JPanel p31 = new JPanel();
             p31.setLayout(new FlowLayout());
             allocatedSectionTableModel = new AllocatedSectionTableModel();

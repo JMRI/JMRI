@@ -103,7 +103,32 @@ public interface Throttle {
      */
     public float getSpeedSetting();
 
+    /**
+     * Set the speed.
+     *
+     * @param speed a number from 0.0 to 1.0
+     */
     public void setSpeedSetting(float speed);
+
+    /**
+     * Set the speed - on systems which normally suppress the sending of a message
+     * if the new speed won't (appear to JMRI to) make any difference, the two extra
+     * options allow the calling method to insist the message is sent under some
+     * circumstances.
+     *
+     * @param speed a number from 0.0 to 1.0
+     * @param allowDuplicates if true, don't suppress messages that should have no effect
+     * @param allowDuplicatesOnStop if true, and the new speed is idle or estop, don't suppress messages
+     */
+    public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop);
+
+    /**
+     * Set the speed, and on systems which normally suppress the sending of a message make sure
+     * the message gets sent.
+     *
+     * @param speed a number from 0.0 to 1.0
+     */
+    public void setSpeedSettingAgain(float speed);
 
     /**
      * direction This is an bound property.
@@ -232,7 +257,7 @@ public interface Throttle {
 
     public void setF28(boolean f28);
 
-    // functions momentary status - note that we use the naming for DCC, 
+    // functions momentary status - note that we use the naming for DCC,
     // though that's not the implication;
     // see also DccThrottle interface
     public boolean getF0Momentary();

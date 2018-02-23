@@ -690,32 +690,31 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                 //back when the file is read.
                 if (!entry.getId().equals(newLocoString)) {
                     String tempComment = entry.getComment();
-                    String xmlComment = "";
+                    StringBuilder xmlComment = new StringBuilder();
 
                     //transfer tempComment to xmlComment one character at a time, except
                     //when \n is found.  In that case, insert <?p?>
                     for (int k = 0; k < tempComment.length(); k++) {
                         if (tempComment.startsWith("\n", k)) { // NOI18N
-                            xmlComment = xmlComment + "<?p?>"; // NOI18N
+                            xmlComment.append("<?p?>"); // NOI18N
                         } else {
-                            xmlComment = xmlComment + tempComment.substring(k, k + 1);
+                            xmlComment.append(tempComment.substring(k, k + 1));
                         }
                     }
-                    entry.setComment(xmlComment);
+                    entry.setComment(xmlComment.toString());
 
                     //Now do the same thing for the decoderComment field
                     String tempDecoderComment = entry.getDecoderComment();
-                    String xmlDecoderComment = "";
+                    StringBuilder xmlDecoderComment = new StringBuilder();
 
                     for (int k = 0; k < tempDecoderComment.length(); k++) {
                         if (tempDecoderComment.startsWith("\n", k)) { // NOI18N
-                            xmlDecoderComment = xmlDecoderComment + "<?p?>"; // NOI18N
+                            xmlDecoderComment.append("<?p?>"); // NOI18N
                         } else {
-                            xmlDecoderComment = xmlDecoderComment
-                                    + tempDecoderComment.substring(k, k + 1);
+                            xmlDecoderComment.append(tempDecoderComment.substring(k, k + 1));
                         }
                     }
-                    entry.setDecoderComment(xmlDecoderComment);
+                    entry.setDecoderComment(xmlDecoderComment.toString());
                 } else {
                     log.debug("skip unsaved roster entry with default name " + entry.getId());
                 }
@@ -756,33 +755,32 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             _list.stream().forEach((entry) -> {
                 if (!entry.getId().equals(newLocoString)) {
                     String xmlComment = entry.getComment();
-                    String tempComment = "";
+                    StringBuilder tempComment = new StringBuilder();
 
                     for (int k = 0; k < xmlComment.length(); k++) {
                         if (xmlComment.startsWith("<?p?>", k)) { // NOI18N
-                            tempComment = tempComment + "\n"; // NOI18N
+                            tempComment.append("\n"); // NOI18N
                             k = k + 4;
                         } else {
-                            tempComment = tempComment + xmlComment.substring(k, k + 1);
+                            tempComment.append(xmlComment.substring(k, k + 1));
                         }
                     }
-                    entry.setComment(tempComment);
+                    entry.setComment(tempComment.toString());
 
                     String xmlDecoderComment = entry.getDecoderComment();
-                    String tempDecoderComment = ""; // NOI18N
+                    StringBuilder tempDecoderComment = new StringBuilder(); // NOI18N
 
                     for (int k = 0; k < xmlDecoderComment.length(); k++) {
                         if (xmlDecoderComment.startsWith("<?p?>", k)) { // NOI18N
-                            tempDecoderComment = tempDecoderComment + "\n"; // NOI18N
+                            tempDecoderComment.append("\n"); // NOI18N
                             k = k + 4;
                         } else {
-                            tempDecoderComment = tempDecoderComment
-                                    + xmlDecoderComment.substring(k, k + 1);
+                            tempDecoderComment.append(xmlDecoderComment.substring(k, k + 1));
                         }
                     }
-                    entry.setDecoderComment(tempDecoderComment);
+                    entry.setDecoderComment(tempDecoderComment.toString());
                 } else {
-                    log.debug("skip unsaved roster entry with default name " + entry.getId());
+                    log.debug("skip unsaved roster entry with default name {}", entry.getId());
                 }
             });
         }
@@ -811,7 +809,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             throw new IllegalArgumentException("makeValidFilename requires non-empty argument");
         }
 
-        // name sure there are no bogus chars in name        
+        // name sure there are no bogus chars in name
         String cleanName = entry.replaceAll("[\\W]", "_");  // remove \W, all non-word (a-zA-Z0-9_) characters // NOI18N
 
         // ensure suffix
@@ -826,7 +824,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @param name filename of roster file
      */
     void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
-        // roster exists?  
+        // roster exists?
         if (!(new File(name)).exists()) {
             log.debug("no roster file found; this is normal if you haven't put decoders in your roster yet");
             return;
@@ -856,40 +854,39 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                 _list.stream().map((entry) -> {
                     //Extract the Comment field and create a new string for output
                     String tempComment = entry.getComment();
-                    String xmlComment = "";
+                    StringBuilder xmlComment = new StringBuilder();
                     //transfer tempComment to xmlComment one character at a time, except
                     //when <?p?> is found.  In that case, insert a \n and skip over those
                     //characters in tempComment.
                     for (int k = 0; k < tempComment.length(); k++) {
                         if (tempComment.startsWith("<?p?>", k)) { // NOI18N
-                            xmlComment = xmlComment + "\n"; // NOI18N
+                            xmlComment.append("\n"); // NOI18N
                             k = k + 4;
                         } else {
-                            xmlComment = xmlComment + tempComment.substring(k, k + 1);
+                            xmlComment.append(tempComment.substring(k, k + 1));
                         }
                     }
-                    entry.setComment(xmlComment);
+                    entry.setComment(xmlComment.toString());
                     return entry;
                 }).forEachOrdered((r) -> {
                     //Now do the same thing for the decoderComment field
                     String tempDecoderComment = r.getDecoderComment();
-                    String xmlDecoderComment = "";
+                    StringBuilder xmlDecoderComment = new StringBuilder();
 
                     for (int k = 0; k < tempDecoderComment.length(); k++) {
                         if (tempDecoderComment.startsWith("<?p?>", k)) { // NOI18N
-                            xmlDecoderComment = xmlDecoderComment + "\n"; // NOI18N
+                            xmlDecoderComment.append("\n"); // NOI18N
                             k = k + 4;
                         } else {
-                            xmlDecoderComment = xmlDecoderComment
-                                    + tempDecoderComment.substring(k, k + 1);
+                            xmlDecoderComment.append(tempDecoderComment.substring(k, k + 1));
                         }
                     }
 
-                    r.setDecoderComment(xmlDecoderComment);
+                    r.setDecoderComment(xmlDecoderComment.toString());
                 });
             }
         } else {
-            log.error("Unrecognized roster file contents in file: " + name);
+            log.error("Unrecognized roster file contents in file: {}", name);
         }
         if (root.getChild("rosterGroup") != null) { // NOI18N
             List<Element> groups = root.getChild("rosterGroup").getChildren("group"); // NOI18N
@@ -970,7 +967,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                     roster.addEntry(re);
                 }
             } catch (JDOMException | IOException ex) {
-                log.error("Exception while loading loco XML file: {} execption: {}", fileName, ex);
+                log.error("Exception while loading loco XML file: {}", fileName, ex);
             }
         }
 

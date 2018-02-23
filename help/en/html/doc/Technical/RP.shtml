@@ -32,8 +32,9 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Recommended Practices</h1>This is page of
-      miscellaneous info and pointers for JMRI developers.
+      <h1>JMRI Code: Recommended Practices</h1>
+      <p>This page contains miscellaneous info and pointers for JMRI
+      developers.</p>
 
       <h2>Class Library Preferences</h2>
 
@@ -51,7 +52,7 @@
         Before JMRI 4.7.5, we used the RXTX and
         SerialIO libraries for this, but these were then removed.</li>
 
-        <li>Take a few moments to learn about the the different
+        <li>Take a few moments to learn about the different
         types of <a href=
         "https://docs.oracle.com/javase/tutorial/collections/intro/">
         Java collections</a> that are available (

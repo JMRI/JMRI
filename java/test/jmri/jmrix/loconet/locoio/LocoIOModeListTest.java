@@ -22,7 +22,7 @@ public class LocoIOModeListTest {
 
     @Test
     public void test() {
-        LocoIOModeList t = new LocoIOModeList() {
+        new LocoIOModeList() {  // just have to create it to test it via initializer
             {
                 /**
                  * This used to be in main class file, so we run

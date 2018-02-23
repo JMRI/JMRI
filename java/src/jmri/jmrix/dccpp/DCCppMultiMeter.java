@@ -70,14 +70,6 @@ public class DCCppMultiMeter extends jmri.implementation.AbstractMultiMeter impl
         return false;
     }
 
-    /**
-     * Remove references to and from this object, so that it can eventually be
-     * garbage-collected.
-     */
-    @Override
-    public void dispose() {
-    }
-
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {

@@ -51,7 +51,7 @@
       report will contain the context information (JMRI version,
       Java version, hardware types, etc) and the most recent log
       files. If you don't want to include those for some reason,
-      just uncheck the them.</p>
+      just uncheck them.</p>
 
       <p>Finally, push send. If everything goes OK, the window will
       close itself in a couple of seconds after the information has

@@ -9,12 +9,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.swing.JmriJTablePersistenceManager;
+import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
 /**
@@ -32,7 +34,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
      */
     protected final JCheckBox showUnusedCheckBox = new JCheckBox();
     /**
-     * Controls whether system slots (120-127) are shown
+     * Controls whether system slots (0, 121-127) are shown
      */
     protected final JCheckBox showSystemCheckBox = new JCheckBox();
 
@@ -146,6 +148,8 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         tcm.getColumn(column).setCellRenderer(buttonRenderer);
         // ensure the table rows, columns have enough room for buttons
+        TableCellEditor buttonEditor = new ButtonEditor(new JButton());
+        slotTable.setDefaultEditor(JButton.class, buttonEditor);
         slotTable.setRowHeight(new JButton("  " + slotModel.getValueAt(1, column)).getPreferredSize().height);
         slotTable.getColumnModel().getColumn(column)
                 .setPreferredWidth(new JButton("  " + slotModel.getValueAt(1, column)).getPreferredSize().width);
@@ -157,6 +161,8 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         tcm.getColumn(column).setCellRenderer(buttonRenderer);
         // ensure the table rows, columns have enough room for buttons
+        TableCellEditor buttonEditor = new ButtonEditor(new JButton());
+        slotTable.setDefaultEditor(JButton.class, buttonEditor);
         slotTable.setRowHeight(new JButton("  " + slotModel.getValueAt(1, column)).getPreferredSize().height);
         slotTable.getColumnModel().getColumn(column)
                 .setPreferredWidth(new JButton("  " + slotModel.getValueAt(1, column)).getPreferredSize().width);
@@ -186,11 +192,12 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
             @Override
             public boolean include(RowFilter.Entry<? extends SlotMonDataModel, ? extends Integer> entry) {
                 int slotNum = entry.getIdentifier();
-                boolean include = entry.getModel().getSlot(entry.getIdentifier()).slotStatus() == LnConstants.LOCO_IN_USE;
-                if (!include && showUnusedCheckBox.isSelected() && (slotNum > 0 && slotNum < 120)) {
+                // default filter is IN-USE and regular systems slot
+                boolean include = entry.getModel().getSlot(entry.getIdentifier()).slotStatus() == LnConstants.LOCO_IN_USE && (slotNum > 0 && slotNum < 121);
+                if (!include && showUnusedCheckBox.isSelected() && (slotNum > 0 && slotNum < 121)) {
                     include = true;
                 }
-                if (!include && showSystemCheckBox.isSelected() && (slotNum == 0 || slotNum >= 120)) {
+                if (!include && showSystemCheckBox.isSelected() && (slotNum == 0 || slotNum > 120)) {
                     include = true;
                 }
                 return include;

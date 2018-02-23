@@ -1,6 +1,5 @@
 package jmri.server.json.signalMast;
 
-import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
 import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MAST;
@@ -23,22 +22,19 @@ import jmri.server.json.JsonSocketService;
  *
  * @author Randall Wood (C) 2016
  */
-public class JsonSignalMastSocketService extends JsonSocketService {
+public class JsonSignalMastSocketService extends JsonSocketService<JsonSignalMastHttpService> {
 
-    private final JsonSignalMastHttpService service;
     private final HashMap<String, SignalMastListener> signalMasts = new HashMap<>();
-    private Locale locale;
 
     public JsonSignalMastSocketService(JsonConnection connection) {
-        super(connection);
-        this.service = new JsonSignalMastHttpService(connection.getObjectMapper());
+        super(connection, new JsonSignalMastHttpService(connection.getObjectMapper()));
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+        this.setLocale(locale);
         String name = data.path(NAME).asText();
-        if (data.path(METHOD).asText().equals(PUT)) {
+        if (method.equals(PUT)) {
             this.connection.sendMessage(this.service.doPut(type, name, data, locale));
         } else {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
@@ -55,7 +51,7 @@ public class JsonSignalMastSocketService extends JsonSocketService {
 
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+        this.setLocale(locale);
         this.connection.sendMessage(this.service.doGetList(type, locale));
     }
 
@@ -82,7 +78,7 @@ public class JsonSignalMastSocketService extends JsonSocketService {
                     || e.getPropertyName().equals("Lit")) {
                 try {
                     try {
-                        connection.sendMessage(service.doGet(SIGNAL_MAST, this.signalMast.getSystemName(), locale));
+                        connection.sendMessage(service.doGet(SIGNAL_MAST, this.signalMast.getSystemName(), getLocale()));
                     } catch (JsonException ex) {
                         connection.sendMessage(ex.getJsonMessage());
                     }

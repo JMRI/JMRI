@@ -3,6 +3,7 @@ package jmri.jmrix.can;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.Nonnull;
 import jmri.jmrix.AbstractMRMessage;
+import jmri.util.StringUtil;
 
 /**
  * Base class for messages in a CANbus based message/reply protocol.
@@ -133,6 +134,18 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        String s = String.format("[%x] ", _header);
+        for (int i = 0; i < _nDataChars; i++) {
+            if (i != 0) {
+                s += " ";
+            }
+            s = StringUtil.appendTwoHexFromInt(_dataChars[i] & 255, s);
+        }
+        return s;
     }
 
     @Override

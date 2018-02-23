@@ -1,6 +1,7 @@
 package jmri.server.json;
 
 import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.GET;
 import static jmri.server.json.JSON.GOODBYE;
 import static jmri.server.json.JSON.HELLO;
 import static jmri.server.json.JSON.LIST;
@@ -11,7 +12,6 @@ import static jmri.server.json.JSON.TYPE;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,32 +32,31 @@ public class JsonClientHandler {
      */
     public static final String HELLO_MSG = "{\"" + JSON.TYPE + "\":\"" + JSON.HELLO + "\"}";
     private final JsonConnection connection;
-    private final HashMap<String, HashSet<JsonSocketService>> services = new HashMap<>();
+    private final HashMap<String, HashSet<JsonSocketService<?>>> services = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(JsonClientHandler.class);
 
     public JsonClientHandler(JsonConnection connection) {
         this.connection = connection;
-        for (JsonServiceFactory factory : ServiceLoader.load(JsonServiceFactory.class)) {
+        for (JsonServiceFactory<?, ?> factory : ServiceLoader.load(JsonServiceFactory.class)) {
             for (String type : factory.getTypes()) {
-                JsonSocketService service = factory.getSocketService(connection);
-                if (service != null) {
-                    HashSet<JsonSocketService> set = this.services.get(type);
-                    if (set == null) {
-                        this.services.put(type, new HashSet<>());
-                        set = this.services.get(type);
-                    }
-                    set.add(service);
+                JsonSocketService<?> service = factory.getSocketService(connection);
+                HashSet<JsonSocketService<?>> set = this.services.get(type);
+                if (set == null) {
+                    this.services.put(type, new HashSet<>());
+                    set = this.services.get(type);
                 }
+                set.add(service);
             }
         }
     }
 
-    public void dispose() {
+    public void onClose() {
         services.values().stream().forEach((set) -> {
             set.stream().forEach((service) -> {
                 service.onClose();
             });
         });
+        services.clear();
     }
 
     /**
@@ -110,41 +109,43 @@ public class JsonClientHandler {
      */
     public void onMessage(JsonNode root) throws IOException {
         try {
+            String method = root.path(METHOD).asText(GET);
             String type = root.path(TYPE).asText();
-            if (root.path(TYPE).isMissingNode() && root.path(LIST).isValueNode()) {
-                type = LIST;
-            }
             JsonNode data = root.path(DATA);
-            if ((type.equals(HELLO) || type.equals(PING) || type.equals(GOODBYE) || type.equals(LIST))
-                    && data.isMissingNode()) {
-                // these messages are not required to have a data payload,
-                // so create one if the message did not contain one to avoid
-                // special casing later
-                data = this.connection.getObjectMapper().createObjectNode();
-            }
-            if (data.isMissingNode() && root.path(METHOD).isValueNode()
-                    && JSON.GET.equals(root.path(METHOD).asText())) {
-                // create an empty data node for get requests, if only to contain the method
-                data = this.connection.getObjectMapper().createObjectNode();
+            if ((root.path(TYPE).isMissingNode() || type.equals(LIST))
+                    && root.path(LIST).isValueNode()) {
+                type = root.path(LIST).asText();
+                method = LIST;
             }
             if (data.isMissingNode()) {
-                this.sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));
-                return;
+                if ((type.equals(HELLO) || type.equals(PING) || type.equals(GOODBYE))
+                        || (method.equals(LIST) || method.equals(GET))) {
+                    // these messages are not required to have a data payload,
+                    // so create one if the message did not contain one to avoid
+                    // special casing later
+                    data = this.connection.getObjectMapper().createObjectNode();
+                } else {
+                    this.sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));
+                    return;
+                }
             }
-            if (root.path(METHOD).isValueNode() && data.path(METHOD).isMissingNode()) {
-                ((ObjectNode) data).put(METHOD, root.path(METHOD).asText());
+            if (root.path(METHOD).isMissingNode()) { // method not explicitly set
+                if (data.path(METHOD).isValueNode()) {
+                    // at one point, we used method within data, so check there also
+                    // if method was not specified, set it to "post"
+                    method = data.path(METHOD).asText(JSON.POST);
+                }
             }
             log.debug("Processing {} with {}", type, data);
-            if (type.equals(LIST)) {
-                String list = root.path(LIST).asText();
-                if (this.services.get(list) != null) {
-                    for (JsonSocketService service : this.services.get(list)) {
-                        service.onList(list, data, this.connection.getLocale());
+            if (method.equals(LIST)) {
+                if (this.services.get(type) != null) {
+                    for (JsonSocketService<?> service : this.services.get(type)) {
+                        service.onList(type, data, this.connection.getLocale());
                     }
                     return;
                 } else {
-                    log.warn("Requested list type '{}' unknown.", list);
-                    this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", list));
+                    log.warn("Requested list type '{}' unknown.", type);
+                    this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
                     return;
                 }
             } else if (!data.isMissingNode()) {
@@ -155,8 +156,8 @@ public class JsonClientHandler {
                     }
                 }
                 if (this.services.get(type) != null) {
-                    for (JsonSocketService service : this.services.get(type)) {
-                        service.onMessage(type, data, this.connection.getLocale());
+                    for (JsonSocketService<?> service : this.services.get(type)) {
+                        service.onMessage(type, data, method, this.connection.getLocale());
                     }
                 } else {
                     log.warn("Requested type '{}' unknown.", type);
@@ -176,19 +177,6 @@ public class JsonClientHandler {
         }
     }
 
-    /**
-     *
-     * @param heartbeat seconds until heartbeat must be received before breaking
-     *                  connection to client; currently ignored
-     * @throws IOException if communications broken with client
-     * @deprecated since 4.5.2; use {@link #onMessage(java.lang.String)} with
-     * the parameter {@link #HELLO_MSG} instead
-     */
-    @Deprecated
-    public void sendHello(int heartbeat) throws IOException {
-        this.onMessage(HELLO_MSG);
-    }
-
     private void sendErrorMessage(int code, String message) throws IOException {
         JsonException ex = new JsonException(code, message);
         this.sendErrorMessage(ex);
@@ -196,5 +184,9 @@ public class JsonClientHandler {
 
     private void sendErrorMessage(JsonException ex) throws IOException {
         this.connection.sendMessage(ex.getJsonMessage());
+    }
+
+    protected HashMap<String, HashSet<JsonSocketService<?>>> getServices() {
+        return new HashMap<>(this.services);
     }
 }

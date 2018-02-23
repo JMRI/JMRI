@@ -34,6 +34,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
     private boolean allowRoute = true;
     private boolean allowConsist = true;
     private boolean useWiFiConsist = true;
+    private boolean displayFastClock = true;
 
     // track as loaded / as saved state
     private boolean asLoadedUseEStop = true;
@@ -48,6 +49,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
     private boolean asLoadedAllowRoute = true;
     private boolean asLoadedAllowConsist = true;
     private boolean asLoadedUseWiFiConsist = true;
+    private boolean asLoadedDisplayFastClock = true;
 
     public WiThrottlePreferences(String fileName) {
         super.openFile(fileName);
@@ -104,36 +106,24 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
             setUseWiFiConsist(a.getValue().equalsIgnoreCase("true"));
             this.asLoadedUseWiFiConsist = this.isUseWiFiConsist();
         }
+        if ((a = child.getAttribute("isDisplayFastClock")) != null) {
+            setDisplayFastClock(a.getValue().equalsIgnoreCase("true"));
+            this.asLoadedDisplayFastClock = this.isDisplayFastClock();
+        }
 
     }
 
     public boolean compareValuesDifferent(WiThrottlePreferences prefs) {
-        if (isAllowTrackPower() != prefs.isAllowTrackPower()) {
-            return true;
-        }
-        if (isAllowTurnout() != prefs.isAllowTurnout()) {
-            return true;
-        }
-        if (isAllowRoute() != prefs.isAllowRoute()) {
-            return true;
-        }
-        if (isAllowConsist() != prefs.isAllowConsist()) {
-            return true;
-        }
-        if (isUseWiFiConsist() != prefs.isUseWiFiConsist()) {
-            return true;
-        }
-
-        if (isUseEStop() != prefs.isUseEStop()) {
-            return true;
-        }
-        if (getEStopDelay() != prefs.getEStopDelay()) {
-            return true;
-        }
-        if (isUseMomF2() != prefs.isUseMomF2()) {
-            return true;
-        }
-        return getPort() != prefs.getPort();
+                return prefs.isUseEStop() != this.isUseEStop()
+                || prefs.getEStopDelay() != this.getEStopDelay()
+                || prefs.isUseMomF2() != this.isUseMomF2()
+                || prefs.getPort() != this.getPort()
+                || prefs.isAllowTrackPower() != this.isAllowTrackPower()
+                || prefs.isAllowTurnout() != this.isAllowTurnout()
+                || prefs.isAllowRoute() != this.isAllowRoute()
+                || prefs.isAllowConsist() != this.isAllowConsist()
+                || prefs.isUseWiFiConsist() != this.isUseWiFiConsist()
+                || prefs.isDisplayFastClock() != this.isDisplayFastClock();
     }
 
     public void apply(WiThrottlePreferences prefs) {
@@ -146,6 +136,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
         setAllowRoute(prefs.isAllowRoute());
         setAllowConsist(prefs.isAllowConsist());
         setUseWiFiConsist(prefs.isUseWiFiConsist());
+        setDisplayFastClock(prefs.isDisplayFastClock());
     }
 
     @Override
@@ -172,6 +163,8 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
         this.asLoadedAllowConsist = this.isAllowConsist();
         element.setAttribute("isUseWiFiConsist", "" + isUseWiFiConsist());
         this.asLoadedUseWiFiConsist = this.isUseWiFiConsist();
+        element.setAttribute("isDisplayFastClock", "" + isDisplayFastClock());
+        this.asLoadedDisplayFastClock = this.isDisplayFastClock();
         return element;
     }
 
@@ -185,7 +178,8 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
                 || this.asLoadedAllowTurnout != this.isAllowTurnout()
                 || this.asLoadedAllowRoute != this.isAllowRoute()
                 || this.asLoadedAllowConsist != this.isAllowConsist()
-                || this.asLoadedUseWiFiConsist != this.isUseWiFiConsist();
+                || this.asLoadedUseWiFiConsist != this.isUseWiFiConsist()
+                || this.asLoadedDisplayFastClock != this.isDisplayFastClock();
     }
 
     public boolean isRestartRequired() {
@@ -262,6 +256,14 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
 
     public void setUseWiFiConsist(boolean value) {
         useWiFiConsist = value;
+    }
+    
+    public boolean isDisplayFastClock() {
+        return displayFastClock;
+    }
+
+    public void setDisplayFastClock(boolean value) {
+        displayFastClock = value;
     }
 
     private final static Logger log = LoggerFactory.getLogger(WiThrottlePreferences.class);
