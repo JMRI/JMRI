@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This utility class provides methods that initialise and return a JComboBox
+ * This utility class provides methods that initialize and return a JComboBox
  * containing a specific sub-set of fonts installed on a users system.
  * <p>
  * Optionally, the JComboBox can be displayed with a preview of the specific

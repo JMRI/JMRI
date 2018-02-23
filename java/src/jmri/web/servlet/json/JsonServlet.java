@@ -81,14 +81,9 @@ public class JsonServlet extends WebSocketServlet {
                     this.services.put(type, new HashSet<>());
                     set = this.services.get(type);
                 }
-                set.add(factory.getHttpService(this.mapper));
+                set.add(service);
             }
         }
-    }
-
-    @Override
-    public void destroy() {
-        super.destroy();
     }
 
     @Override

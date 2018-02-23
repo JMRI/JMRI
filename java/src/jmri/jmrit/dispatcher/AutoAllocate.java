@@ -462,7 +462,7 @@ public class AutoAllocate {
         // test how far ahead of occupied track this requested section is
         List<AllocatedSection> aSectionList = ar.getActiveTrain().getAllocatedSectionList();
         boolean allocateBySafeSections = false;
-        // check for allocating by safe section
+        // check for allocating By Safe Sections
         if (allocateSectionsAhead == 0) {
             // check for type of allocating N ahead or until passing
             allocateBySafeSections = true;
@@ -488,7 +488,7 @@ public class AutoAllocate {
                     && ((curAS.getSection().getOccupancy() != jmri.Section.OCCUPIED)
                     && ar.getActiveTrain().getTransit().getTransitSectionFromSectionAndSeq(curAS.getSection(),
                             curSeq).isSafe())) {
-                //last allocated section exists and is not occupied but is a Passing point
+                // last allocated section exists and is not occupied but is a Passing point
                 // block further allocations till occupied.
                 log.debug("auto allocating Section returning false");
                 return false;
@@ -1364,4 +1364,5 @@ public class AutoAllocate {
     }
 
     private final static Logger log = LoggerFactory.getLogger(AutoAllocate.class);
+
 }

@@ -657,17 +657,17 @@ public class AutoActiveTrain implements ThrottleListener {
                 sm.addPropertyChangeListener(_conSignalMastListener = (PropertyChangeEvent e) -> {
                     if (e.getPropertyName().equals("Aspect")) {
                         // controlling signal has changed appearance
+                        setSpeedBySignal();
                         if (_stoppingForStopSignal && (_targetSpeed > 0.0)) {
                             cancelStopInCurrentSection();
                             _stoppingForStopSignal = false;
                         }
-                        setSpeedBySignal();
                     } else if (e.getPropertyName().equals("Held")) {
+                        setSpeedBySignal();
                         if (!((Boolean) e.getNewValue())) {
                             cancelStopInCurrentSection();
                             _stoppingForStopSignal = false;
                         }
-                        setSpeedBySignal();
                     }
                 });
                 log.debug("{}: new current signalmast {}({}) for section {}", _activeTrain.getTrainName(), sm.getDisplayName(),

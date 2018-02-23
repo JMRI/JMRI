@@ -7,16 +7,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
-import jmri.InstanceManager;
-import jmri.Version;
-import jmri.jmris.json.JsonServerPreferences;
 import jmri.profile.NullProfile;
-import jmri.profile.Profile;
-import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import jmri.util.node.NodeIdentity;
-import jmri.web.server.WebServerPreferences;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,7 +30,6 @@ public class JsonClientHandlerTest {
         Assert.assertNotNull("exists", t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws IOException {
         JUnitUtil.setUp();
@@ -74,6 +67,11 @@ public class JsonClientHandlerTest {
         Assert.assertEquals("Response array element 0 is empty", 0, connection.getMessage().get(0).size());
         Assert.assertTrue("Response array element 1 is an object", connection.getMessage().get(1).isObject());
         Assert.assertEquals("Response array element 1 is empty", 0, connection.getMessage().get(1).size());
+        instance.onMessage("not a JSON object");
+        Assert.assertNotNull("Expected warning not shown", JUnitAppender.checkForMessageStartingWith("Exception processing \"not a JSON object\""));
+        Assert.assertTrue("Error response is an object", connection.getMessage().isObject());
+        Assert.assertEquals("Error response is an ERROR", JsonException.ERROR, connection.getMessage().path(JSON.TYPE).asText());
+        Assert.assertEquals("Error response is type 500", 500, connection.getMessage().path(JSON.DATA).path(JsonException.CODE).asInt());
     }
 
     /**
@@ -122,30 +120,61 @@ public class JsonClientHandlerTest {
         Assert.assertEquals("Response object data size is 1", 1, data.size());
     }
 
-    /**
-     * Test of sendHello method, of class JsonClientHandler.
-     */
     @Test
-    public void testSendHello() throws Exception {
+    public void testOnMessage_JsonNode_Method_get_exception() throws Exception {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonClientHandler instance = new TestJsonClientHandler(connection);
-        instance.sendHello(1000);
+        JsonNode node = connection.getObjectMapper().readTree("{\"type\":\"test\",\"data\":{\"name\":\"JsonException\"},\"method\":\"get\"}");
+        instance.onMessage(node);
         JsonNode root = connection.getMessage();
         JsonNode data = root.path(JSON.DATA);
-        Assert.assertEquals("Hello type", JSON.HELLO, root.path(JSON.TYPE).asText());
-        Assert.assertEquals("JMRI Version", Version.name(), data.path(JSON.JMRI).asText());
-        Assert.assertEquals("JSON Verson", JSON.JSON_PROTOCOL_VERSION, data.path(JSON.JSON).asText());
-        Assert.assertEquals("Heartbeat", Math.round(InstanceManager.getDefault(JsonServerPreferences.class).getHeartbeatInterval() * 0.9f), data.path(JSON.HEARTBEAT).asInt());
-        Assert.assertEquals("RR Name", InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.RAILROAD).asText());
-        Assert.assertEquals("Node Identity", NodeIdentity.identity(), data.path(JSON.NODE).asText());
-        Profile profile = ProfileManager.getDefault().getActiveProfile();
-        Assert.assertNotNull(profile);
-        Assert.assertEquals("Profile", profile.getName(), data.path(JSON.ACTIVE_PROFILE).asText());
-        Assert.assertEquals("Message has 2 elements", 2, root.size());
-        Assert.assertEquals("Message data has 6 elements", 6, data.size());
+        Assert.assertTrue("Error response is an object", root.isObject());
+        Assert.assertEquals("Error response is an ERROR", JsonException.ERROR, root.path(JSON.TYPE).asText());
+        Assert.assertEquals("Error response is type 499", 499, data.path(JsonException.CODE).asInt());
     }
 
-    private class TestJsonClientHandler extends JsonClientHandler {
+    @Test
+    public void testOnMessage_JsonNode_Method_Goodbye() throws Exception {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonClientHandler instance = new TestJsonClientHandler(connection);
+        JsonNode node = connection.getObjectMapper().readTree("{\"type\":\"goodbye\"}");
+        Assert.assertTrue(connection.isOpen());
+        instance.onMessage(node);
+        JsonNode root = connection.getMessage();
+        JsonNode data = root.path(JSON.DATA);
+        Assert.assertTrue("Response is an object", root.isObject());
+        Assert.assertEquals("Response is a Goodbye message", JSON.GOODBYE, root.path(JSON.TYPE).asText());
+        Assert.assertTrue(data.isMissingNode());
+        Assert.assertFalse(connection.isOpen());
+    }
+
+    /**
+     * Test all methods except {@code get} and {@code list} for missing data
+     * node. The {@code get} and {@code list} methods are not required to have a
+     * data node by the JsonClientHandler.
+     *
+     * @throws Exception if an unexpected exception occurs
+     */
+    @Test
+    public void testOnMessage_JsonNode_missing_data() throws Exception {
+        testOnMessage_JsonNode_missing_data("{\"type\":\"test\",\"method\":\"post\"}");
+        testOnMessage_JsonNode_missing_data("{\"type\":\"test\",\"method\":\"put\"}");
+        testOnMessage_JsonNode_missing_data("{\"type\":\"test\",\"method\":\"delete\"}");
+    }
+
+    private void testOnMessage_JsonNode_missing_data(String message) throws Exception {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonClientHandler instance = new TestJsonClientHandler(connection);
+        JsonNode node = connection.getObjectMapper().readTree(message);
+        instance.onMessage(node);
+        JsonNode root = connection.getMessage();
+        JsonNode data = root.path(JSON.DATA);
+        Assert.assertTrue("Error response is an object", root.isObject());
+        Assert.assertEquals("Error response is an ERROR", JsonException.ERROR, root.path(JSON.TYPE).asText());
+        Assert.assertEquals("Error response is type 400", 400, data.path(JsonException.CODE).asInt());
+    }
+
+    private static class TestJsonClientHandler extends JsonClientHandler {
 
         public TestJsonClientHandler(JsonConnection connection) {
             super(connection);
