@@ -3988,7 +3988,9 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     protected void drawTurnoutControls(Graphics2D g2) {
-        g2.draw(layoutEditor.trackControlCircleAt(center));
+        if (!disabled && !(disableWhenOccupied && isOccupied())) {
+            g2.draw(layoutEditor.trackControlCircleAt(center));
+        }
     }
 
     protected void drawEditControls(Graphics2D g2) {

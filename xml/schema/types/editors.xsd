@@ -1508,6 +1508,8 @@
             <xs:attribute name="index" type="xs:string"></xs:attribute>
             <xs:attribute name="turnout" type="beanNameType"></xs:attribute>
             <xs:attribute name="turnoutstate" type="xs:string"></xs:attribute><!-- THROWN/CLOSED -->
+            <xs:attribute name="disabled" type="yesNoType"></xs:attribute>
+            <xs:attribute name="disableWhenOccupied" type="yesNoType"></xs:attribute>
           </xs:complexType>
         </xs:element>
       </xs:sequence>
