@@ -131,6 +131,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
             }
         }
 
+        log.debug("SimulatorAdapter configure() with prefix = {}", this.getSystemConnectionMemo().getSystemPrefix());
         // start the simulator
         sourceThread = new Thread(this);
         sourceThread.setName("SPROG Simulator");

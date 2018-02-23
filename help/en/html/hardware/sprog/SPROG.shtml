@@ -61,24 +61,9 @@
         <li>SPROG II USB</li>
         <li>SPROG 3 (USB)</li>
         <li>SPROG Nano (only as Command Station, using an external Booster)</li>
-        <li>Pi SPROG</li>
+        <li>Pi SPROG One</li>
         <li>Pi SPROG Nano</li>
       </ul>
-
-      <a name="limitations" id="limitations"></a>
-      <h2>Limitations</h2>
-
-      <p class="important">On some earlier SPROG versions the
-      <a href="#update">Firmware Update tool</a> is not completely functional
-      and the firmware update tools in JMRI should NOT be used without first
-      checking the current firmware version (see <a href="#update">
-      below</a>) and contacting <a href="#documentation">SPROG DCC</a>
-      to ascertain if that version can be updated by the user.<br>
-      Under no circumstances should you experiment
-      with the Firmware Update tool if you do not have a valid update file
-      available. Doing so could result in your SPROG becoming
-      non-responsive. It will then need to be returned to the
-      manufacturer (or local representative) for unlocking.</p>
 
       <a name="connecting" id="connecting"></a>
       <h2>Connecting</h2>
@@ -249,14 +234,11 @@
 
       <p>SPROG includes a "Firmware Update" tool that allows the
       SPROG firmware (the internal software that operates the SPROG) to
-      be updated by the user. The tool is only functional in
-      <a href=
-      "../../../package/jmri/jmrix/sprog/update/SprogIIUpdateFrame.shtml">
-      USB SPROG II version 2.2 to 3</a> and the newer <a href=
-      "../../../package/jmri/jmrix/sprog/update/Sprogv4UpdateFrame.shtml">
-      version 4 SPROG</a>.<br>
-      <strong>Warning: see <a href="#limitations">Limitations</a>
-      above.</strong></p>
+      be updated by the user. The  
+      <a href="../../../package/jmri/jmrix/sprog/update/SprogIIUpdateFrame.shtml">
+      update tool</a>.<br> supports USB SPROG II (from version 2.2), SPROG 3 (all versions)
+	  and Pi-SPROG One (from version 2.5). For more information contact the manufacturer
+	  <a href="http://www.sprog-dcc.co.uk/">SPROG DCC</a>
 
       <a name="documentation" id="documentation"></a>
       <h2>Documentation</h2>

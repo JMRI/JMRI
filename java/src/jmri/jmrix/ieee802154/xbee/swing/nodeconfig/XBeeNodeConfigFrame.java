@@ -504,7 +504,7 @@ public class XBeeNodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.
      */
     @Override
     public void discoveryError(String error){
-        log.error("Error durring node discovery process: {}",error);
+        log.error("Error during node discovery process: {}", error);
     }
 
     /*

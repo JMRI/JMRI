@@ -135,22 +135,29 @@ public class AcelaNode extends AbstractNode {
     public static final String outputLEN0 = "0";        // used to dump/restore config file.
     public static final String outputNO = "N0";         // used to dump/restore config file.
     protected int startingOutputAddress = -1;           // used to aid linear address search
-    protected int endingOutputAddress = -1;           // used to aid linear address search
+    protected int endingOutputAddress = -1;             // used to aid linear address search
     protected int startingSensorAddress = -1;           // used to aid linear address search
-    protected int endingSensorAddress = -1;           // used to aid linear address search
+    protected int endingSensorAddress = -1;             // used to aid linear address search
 
     /**
-     * Assumes a node address of 0, and a node type of NO_CARD If this
+     * Create a new AcelaNode instance on the TrafficController associated
+     * with the default AcelaSystemConnectionMemo.
+     * <p>
+     * Assumes a node address of 0, and a node type of NO_CARD. If this
      * constructor is used, actual node address must be set using
-     * setNodeAddress, and actual node type using 'setNodeType'
+     * {@link jmri.jmrix.AbstractNode#setNodeAddress(int)} and actual
+     * node type using {@link #setNodeType(int)}
      */
     public AcelaNode() {
         this(0, UN, InstanceManager.getDefault(AcelaSystemConnectionMemo.class).getTrafficController());
     }
 
     /**
-     * Creates a new AcelaNode and initialize default instance variables address
-     * - Address of first bit on Acela bus (0-1023) type - D8, SM, WM
+     * Create a new AcelaNode instance and initialize default instance variables.
+     *
+     * @param address the address of first bit on Acela bus (0-1023) type - D8, SM, WM
+     * @param type a type constant from the class
+     * @param tc the TrafficControllerfor this connection
      */
     public AcelaNode(int address, int type, AcelaTrafficController tc) {
         // set address and type and check validity
@@ -227,72 +234,74 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method setting starting output addresses Used to help linear
-     * address search
+     * Set starting output address for range.
+     * Used to help linear address search.
      */
     public void setStartingOutputAddress(int startingAddress) {
         startingOutputAddress = startingAddress;
     }
 
     /**
-     * Public method getting starting output addresses Used to help linear
-     * address search
+     * Get starting output address for range.
+     * Used to help linear address search.
      */
     public int getStartingOutputAddress() {
         return startingOutputAddress;
     }
 
     /**
-     * Public method setting ending output addresses Used to help linear address
-     * search
+     * Set ending output address for range.
+     * Used to help linear address search.
      */
     public void setEndingOutputAddress(int endingAddress) {
         endingOutputAddress = endingAddress;
     }
 
     /**
-     * Public method getting ending output addresses Used to help linear address
-     * search
+     * Get ending output address for range.
+     * Used to help linear address search.
      */
     public int getEndingOutputAddress() {
         return endingOutputAddress;
     }
 
     /**
-     * Public method setting starting sensor addresses Used to help linear
-     * address search
+     * Set starting sensor address for range.
+     * Used to help linear address search.
      */
     public void setStartingSensorAddress(int startingAddress) {
         startingSensorAddress = startingAddress;
     }
 
     /**
-     * Public method getting starting sensor addresses Used to help linear
-     * address search
+     * Get starting sensor addresses for range.
+     * Used to help linear address search.
      */
     public int getStartingSensorAddress() {
         return startingSensorAddress;
     }
 
     /**
-     * Public method setting ending sensor addresses Used to help linear address
-     * search
+     * Set ending sensor addresses for range.
+     * Used to help linear address search.
      */
     public void setEndingSensorAddress(int endingAddress) {
         endingSensorAddress = endingAddress;
     }
 
     /**
-     * Public method getting ending sensor addresses Used to help linear address
-     * search
+     * Get ending sensor addresses for range.
+     * Used to help linear address search.
      */
     public int getEndingSensorAddress() {
         return endingSensorAddress;
     }
 
     /**
-     * Public method setting an output bit. Note: state = 'true' for 0, 'false'
-     * for 1
+     * Set an output bit on this node.
+     *
+     * @param bitNumber the bit to set
+     * @param state bit state to set: 'true' for 0, 'false' for 1
      */
     public void setOutputBit(int bitNumber, boolean state) {
         // Save old state
@@ -329,8 +338,10 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method get the current state of an output bit. Note: returns
-     * 'true' for 0, 'false' for 1 bits are numbered from 0 for Acela
+     * Get the current state of an output bit.
+     *
+     * @param bitNumber the bit. Bits are numbered from 0 for Acela
+     * @return 'true' for 0, 'false' for 1
      */
     public boolean getOutputBit(int bitNumber) {
         int newbitNumber = 0;
@@ -344,8 +355,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method to return state of Sensors. Note: returns 'true' if at
-     * least one sensor is active for this node
+     * {@inheritDoc}
      */
     @Override
     public boolean getSensorsActive() {
@@ -353,7 +363,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method to set and return Output configuration values
+     * Set and return Output configuration values.
      */
     public int getOutputWired(int circuitnum) {
         return outputWired[circuitnum];
@@ -596,7 +606,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method to set the node address.
+     * {@inheritDoc}
      */
     @Override
     public boolean checkNodeAddress(int address) {
@@ -604,28 +614,32 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method to return the number of sensor bits per node.
+     * Get the number of sensor bits per node.
+     *
+     * @return sensorbitsPerCard
      */
     public int getSensorBitsPerCard() {
         return (sensorbitsPerCard);
     }
 
     /**
-     * Public method to return transmission delay.
+     * Get the transmission delay on thsi node.
      */
     public int getTransmissionDelay() {
         return (transmissionDelay);
     }
 
     /**
-     * Public method to set transmission delay. delay - delay between bytes on
-     * receive (units of 10 microsec.) Note: two bytes are used, so range is
-     * 0-65,535. If delay is out of range, it is restricted to the allowable
-     * range
+     * Set transmission delay.
+     * <p>
+     * Note: two bytes are used, so range is 0-65,535. If delay is out of
+     * range, it is restricted to the allowable range.
+     *
+     * @param delay a delay between bytes on receive (units of 10 microsec.)
      */
     public void setTransmissionDelay(int delay) {
         if ((delay < 0) || (delay > MAXDELAY)) {
-            log.warn("transmission delay out of 0-65535 range: {}",
+            log.warn("transmission delay {} out of 0-65535 range",
                     Integer.toString(delay));
             if (delay < 0) {
                 delay = 0;
@@ -638,7 +652,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Create an initialization packet if needed
+     * {@inheritDoc}
      */
     @Override
     public AbstractMRMessage createInitPacket() {
@@ -646,7 +660,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public Method to create an Transmit packet (SerialMessage)
+     * Create a Transmit packet (SerialMessage) to send current state.
      */
     @Override
     public AbstractMRMessage createOutPacket() {
@@ -1052,7 +1066,7 @@ public class AcelaNode extends AbstractNode {
     boolean warned = false;
 
     /**
-     * Use the contents of the poll reply to mark changes
+     * Use the contents of the poll reply to mark changes.
      *
      * @param l Reply to a poll operation
      */
@@ -1182,11 +1196,12 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
+     * Register a sensor on an Acela node.
      * The numbers here are 0 to MAXSENSORBITS, not 1 to MAXSENSORBITS.
      *
-     * @param s       - Sensor object
-     * @param rawaddr - 0 to MAXSENSORBITS number of sensor's input bit on this
-     *                node
+     * @param s       Sensor object
+     * @param rawaddr index number of sensor's input bit on this
+     *                node, valid range from 0 to MAXSENSORBITS
      */
     public void registerSensor(Sensor s, int rawaddr) {
         // validate the sensor ordinal
@@ -1222,8 +1237,7 @@ public class AcelaNode extends AbstractNode {
     int timeout = 0;
 
     /**
-     *
-     * @return true if initialization required
+     * {@inheritDoc}
      */
     @Override
     public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
@@ -1234,6 +1248,9 @@ public class AcelaNode extends AbstractNode {
         return false;   // tells caller to NOT force init
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void resetTimeout(AbstractMRMessage m) {
         if (timeout > 0) {

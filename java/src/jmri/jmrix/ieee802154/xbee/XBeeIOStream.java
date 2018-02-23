@@ -123,7 +123,7 @@ final public class XBeeIOStream extends AbstractPortController {
             outpipe.close();
             inpipe.close();
         } catch (java.io.IOException ioe) {
-            log.debug("IO Exception closing port durring dispose call");
+            log.debug("IO Exception closing port during dispose call");
         }
         super.dispose();
     }

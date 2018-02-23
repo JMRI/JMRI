@@ -18,7 +18,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * Convention is to provide a subclass of this name in each package, working off
  * the local resource bundle name.
  *
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
 public class Bundle extends jmri.jmrix.Bundle {

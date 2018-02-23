@@ -51,9 +51,9 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         Attribute a = shared.getAttribute("userName");
         SignalHead h;
         if (a == null) {
-            h = new SerialSignalHead(sys,memo);
+            h = new SerialSignalHead(sys, memo);
         } else {
-            h = new SerialSignalHead(sys, a.getValue(),memo);
+            h = new SerialSignalHead(sys, a.getValue(), memo);
         }
 
         loadCommon(h, shared);
