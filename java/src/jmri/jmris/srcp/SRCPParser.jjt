@@ -146,7 +146,6 @@ TOKEN :
 | <#X:["x","X"]>
 | <#Y:["y","Y"]>
 | <#Z:["z","Z"]>
-| <BADTOKEN:~[" "]>
 }
 
 // Lexical specifications begin here
