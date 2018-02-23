@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Traffic controller for Anyma DMX.
  *
- * @author George Warner Copyright (c) 2017
+ * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
 public class AnymaDMX_TrafficController {
@@ -87,7 +87,7 @@ public class AnymaDMX_TrafficController {
      *
      * @param from the beginning index (inclusive)
      * @param to   the ending index (inclusive)
-     * @param buf  the data to send 
+     * @param buf  the data to send
      * note: the from/to indexes are 1-512 (inclusive)
      */
     public void setChannelRangeValues(int from, int to, byte buf[]) {

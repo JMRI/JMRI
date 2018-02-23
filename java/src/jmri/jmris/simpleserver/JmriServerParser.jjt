@@ -153,16 +153,6 @@ SimpleNode command():{}
   }
 }
 
-SimpleNode address():{Token t;}
-{
-  t=<ADDR>
-  {
-    log.debug("Address Production "+ t.image);
-    jjtThis.jjtSetValue(t.image);
-    return jjtThis;
-  }
-}
-
 SimpleNode powercmd():{}
 {
    power() (onoff())?
