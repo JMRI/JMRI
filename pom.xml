@@ -505,6 +505,14 @@
                                 <File>jmri/util/swing/SamplePane.class</File>
                                 <File>apps/tests/Log4JFixture.class</File>
                                 <File>jmri/jmrit/display/EditorFrameOperator.class</File>
+                                <!-- pure interfaces and classes of constants -->
+                                <File>jmri/jmrit/operations/locations/Xml.class</File>
+                                <File>jmri/jmrit/operations/rollingstock/cars/Xml.class</File>
+                                <File>jmri/jmrit/operations/rollingstock/engines/Xml.class</File>
+                                <File>jmri/jmrit/operations/trains/Xml.class</File>
+                                <File>jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class</File>
+                                <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
+                                <File>jmri/jmris/srcp/parser/SRCPParserTreeConstants.class</File>
                             </excludes>
                             <rules>
                                 <rule>
@@ -534,16 +542,6 @@
                                 </rule>
                                 <rule>
                                     <element>SOURCEFILE</element>
-                                    <excludes>
-                                       <!-- pure interfaces and classes of constants -->
-                                       <File>jmri/jmrit/operations/locations/Xml.class</File>
-                                       <File>jmri/jmrit/operations/rollingstock/cars/Xml.class</File>
-                                       <File>jmri/jmrit/operations/rollingstock/engines/Xml.class</File>
-                                       <File>jmri/jmrit/operations/trains/Xml.class</File>
-                                       <File>jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class</File>
-                                       <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
-                                       <File>jmri/jmris/srcp/parser/SRCPParserTreeConstants.class</File>
-                                    </excludes>
                                     <limits>
                                         <limit>
                                             <counter>LINE</counter>
