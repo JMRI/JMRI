@@ -327,16 +327,15 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         super.propertyChange(e);
-        if ("Power".equals(e.getPropertyName())) {
-            InstanceManager.getList(PowerManager.class).forEach((pm) -> {
-                try {
-                    if (pm.getPower() == jmri.PowerManager.ON) {
-                        lastTimeLayoutPowerOn = Instant.now();
-                    }
-                } catch (JmriException xe) {
-                    // do nothing
+        if (jmri.PowerManager.POWER.equals(e.getPropertyName())) {
+            try {
+                PowerManager pm = (PowerManager) e.getSource();
+                if (pm.getPower() == jmri.PowerManager.ON) {
+                    lastTimeLayoutPowerOn = Instant.now();
                 }
-            });
+            } catch (JmriException | NoSuchMethodError xe) {
+                // do nothing
+            }
         }
     }
 
