@@ -66,6 +66,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
     }
 
     public void addManager(Manager<E> m) {
+        Objects.requireNonNull(m, "Can only add non-null manager");
         // check for already present
         if (mgrs.contains(m)) {
             // already present, complain and skip
