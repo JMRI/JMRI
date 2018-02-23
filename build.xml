@@ -338,6 +338,14 @@
         <exclude name="jmri/util/swing/SamplePane.class" />
         <exclude name="apps/tests/Log4JFixture.class" />
         <exclude name="jmri/jmrit/display/EditorFrameOperator.class" />
+        <!-- Exclude pure interfaces and classes only providing constants. -->
+        <exclude name="jmri/jmrit/operations/locations/Xml.class" />
+        <exclude name="jmri/jmrit/operations/rollingstock/cars/Xml.class"/>
+        <exclude name="jmri/jmrit/operations/rollingstock/engines/Xml.class" />
+        <exclude name="jmri/jmrit/operations/trains/Xml.class" />
+        <exclude name="jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class" />
+        <exclude name="jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class" />
+        <exclude name="jmri/jmris/srcp/parser/SRCPParserTreeConstants.class" />
     </fileset>
 
 
@@ -1303,6 +1311,9 @@
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
+              <rule element="SOURCEFILE">
+                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
           </check>
        </jacoco:report>
     </target>
@@ -1469,6 +1480,9 @@
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
+              <rule element="SOURCEFILE">
+                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
           </check>
        </jacoco:report>
     </target>
@@ -1495,6 +1509,9 @@
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
+              <rule element="SOURCEFILE">
+                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
           </check>
        </jacoco:report>
     </target>
@@ -1520,6 +1537,9 @@
               </rule>
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
+              <rule element="SOURCEFILE">
+                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
               </rule>
           </check>
        </jacoco:report>

@@ -532,6 +532,26 @@
                                         </limit>
                                     </limits>
                                 </rule>
+                                <rule>
+                                    <element>SOURCEFILE</element>
+                                    <excludes>
+                                       <!-- pure interfaces and classes of constants -->
+                                       <File>jmri/jmrit/operations/locations/Xml.class</File>
+                                       <File>jmri/jmrit/operations/rollingstock/cars/Xml.class</File>
+                                       <File>jmri/jmrit/operations/rollingstock/engines/Xml.class</File>
+                                       <File>jmri/jmrit/operations/trains/Xml.class</File>
+                                       <File>jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class</File>
+                                       <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
+                                       <File>jmri/jmris/srcp/parser/SRCPParserTreeConstants.class</File>
+                                    </excludes>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDCOUNT</value>
+                                            <minimum>1</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
                             </rules>
                         </configuration>
                     </execution>
