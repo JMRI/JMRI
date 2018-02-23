@@ -18,7 +18,7 @@ import org.jdom2.Element;
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006
+ * @author Bob Jacobsen Copyright (c) 2003, 2006
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -58,7 +58,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     @Override
     protected void getInstance() {
-        if(adapter == null) {
+        if (adapter == null) {
            adapter = new SerialDriverAdapter();
         }
     }
