@@ -3018,9 +3018,11 @@ public class LayoutTurnout extends LayoutTrack {
      */
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
-//        if (isBlock) {
-//            return; //TODO: remove this!
-//        }
+        if (isBlock && getLayoutBlock() == null) {
+            // Skip the block layer if there is no block assigned.
+            return;
+        }
+
         Point2D pA = getCoordsA();
         Point2D pB = getCoordsB();
         Point2D pC = getCoordsC();
@@ -3081,42 +3083,42 @@ public class LayoutTurnout extends LayoutTrack {
 
         int type = getTurnoutType();
         if (type == DOUBLE_XOVER) {
-            if (!isBlock || (state != Turnout.THROWN)) { // unknown or continuing path - not crossed over
+            if (state != Turnout.THROWN) { // unknown or continuing path - not crossed over
                 if (isMain == mainlineA) {
                     g2.setColor(colorA);
                     g2.draw(new Line2D.Double(pA, pABM));
-                    if (isBlock && drawUnselectedLeg) {
+                    if (!isBlock || drawUnselectedLeg) {
                         g2.draw(new Line2D.Double(pAF, pM));
                     }
                 }
                 if (isMain == mainlineB) {
                     g2.setColor(colorB);
                     g2.draw(new Line2D.Double(pB, pABM));
-                    if (isBlock && drawUnselectedLeg) {
+                    if (!isBlock || drawUnselectedLeg) {
                         g2.draw(new Line2D.Double(pBF, pM));
                     }
                 }
                 if (isMain == mainlineC) {
                     g2.setColor(colorC);
                     g2.draw(new Line2D.Double(pC, pCDM));
-                    if (isBlock && drawUnselectedLeg) {
+                    if (!isBlock || drawUnselectedLeg) {
                         g2.draw(new Line2D.Double(pCF, pM));
                     }
                 }
                 if (isMain == mainlineD) {
                     g2.setColor(colorD);
                     g2.draw(new Line2D.Double(pD, pCDM));
-                    if (isBlock && drawUnselectedLeg) {
+                    if (!isBlock || drawUnselectedLeg) {
                         g2.draw(new Line2D.Double(pDF, pM));
                     }
                 }
             }
-            if (!isBlock || (state != Turnout.CLOSED)) { // unknown or diverting path - crossed over
+            if (state != Turnout.CLOSED) { // unknown or diverting path - crossed over
                 if (isMain == mainlineA) {
                     g2.setColor(colorA);
                     g2.draw(new Line2D.Double(pA, pAM));
                     g2.draw(new Line2D.Double(pAM, pM));
-                    if (isBlock && drawUnselectedLeg) {
+                    if (!isBlock || drawUnselectedLeg) {
                         g2.draw(new Line2D.Double(pAMP, pABM));
                     }
                 }
@@ -3124,7 +3126,7 @@ public class LayoutTurnout extends LayoutTrack {
                     g2.setColor(colorB);
                     g2.draw(new Line2D.Double(pB, pBM));
                     g2.draw(new Line2D.Double(pBM, pM));
-                    if (isBlock && drawUnselectedLeg) {
+                    if (!isBlock || drawUnselectedLeg) {
                         g2.draw(new Line2D.Double(pBMP, pABM));
                     }
                 }
@@ -3132,7 +3134,7 @@ public class LayoutTurnout extends LayoutTrack {
                     g2.setColor(colorC);
                     g2.draw(new Line2D.Double(pC, pCM));
                     g2.draw(new Line2D.Double(pCM, pM));
-                    if (isBlock && drawUnselectedLeg) {
+                    if (!isBlock || drawUnselectedLeg) {
                         g2.draw(new Line2D.Double(pCMP, pCDM));
                     }
                 }
@@ -3140,7 +3142,7 @@ public class LayoutTurnout extends LayoutTrack {
                     g2.setColor(colorD);
                     g2.draw(new Line2D.Double(pD, pDM));
                     g2.draw(new Line2D.Double(pDM, pM));
-                    if (isBlock && drawUnselectedLeg) {
+                    if (!isBlock || drawUnselectedLeg) {
                         g2.draw(new Line2D.Double(pDMP, pCDM));
                     }
                 }
@@ -3151,7 +3153,7 @@ public class LayoutTurnout extends LayoutTrack {
             pBF = MathUtil.midPoint(pABM, pM);
             pCF = MathUtil.midPoint(pCDM, pM);
             pDF = MathUtil.midPoint(pCDM, pM);
-            if (!isBlock || (state != Turnout.THROWN)) { // unknown or continuing path - not crossed over
+            if (state != Turnout.THROWN) { // unknown or continuing path - not crossed over
                 if (isMain == mainlineA) {
                     g2.setColor(colorA);
                     g2.draw(new Line2D.Double(pA, pABM));
@@ -3168,7 +3170,7 @@ public class LayoutTurnout extends LayoutTrack {
                     g2.setColor(colorD);
                     g2.draw(new Line2D.Double(pCDM, pD));
                 }
-                if (isBlock && drawUnselectedLeg) {
+                if (!isBlock || drawUnselectedLeg) {
                     if (getTurnoutType() == RH_XOVER) {
                         if (isMain == mainlineA) {
                             g2.setColor(colorA);
@@ -3190,14 +3192,14 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             }
-            if (!isBlock || (state != Turnout.CLOSED)) { // unknown or diverting path - crossed over
+            if (state != Turnout.CLOSED) { // unknown or diverting path - crossed over
                 if (getTurnoutType() == RH_XOVER) {
                     if (isMain == mainlineA) {
                         g2.setColor(colorA);
                         g2.draw(new Line2D.Double(pA, pABM));
                         g2.draw(new Line2D.Double(pABM, pM));
                     }
-                    if (isBlock && drawUnselectedLeg) {
+                    if (!isBlock || drawUnselectedLeg) {
                         if (isMain == mainlineB) {
                             g2.setColor(colorB);
                             g2.draw(new Line2D.Double(pBM, pB));
@@ -3208,14 +3210,14 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.draw(new Line2D.Double(pC, pCDM));
                         g2.draw(new Line2D.Double(pCDM, pM));
                     }
-                    if (isBlock && drawUnselectedLeg) {
+                    if (!isBlock || drawUnselectedLeg) {
                         if (isMain == mainlineD) {
                             g2.setColor(colorD);
                             g2.draw(new Line2D.Double(pDM, pD));
                         }
                     }
                 } else if (getTurnoutType() == LH_XOVER) {
-                    if (isBlock && drawUnselectedLeg) {
+                    if (!isBlock || drawUnselectedLeg) {
                         if (isMain == mainlineA) {
                             g2.setColor(colorA);
                             g2.draw(new Line2D.Double(pA, pAM));
@@ -3226,7 +3228,7 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.draw(new Line2D.Double(pB, pABM));
                         g2.draw(new Line2D.Double(pABM, pM));
                     }
-                    if (isBlock && drawUnselectedLeg) {
+                    if (!isBlock || drawUnselectedLeg) {
                         if (isMain == mainlineC) {
                             g2.setColor(colorC);
                             g2.draw(new Line2D.Double(pC, pCM));
@@ -3247,26 +3249,26 @@ public class LayoutTurnout extends LayoutTrack {
                 g2.setColor(colorA);
                 g2.draw(new Line2D.Double(pA, pM));
             }
-            if (!isBlock || ((state == UNKNOWN) || (continuingSense == state))) { // unknown or continuing path
+            if (state == UNKNOWN || continuingSense == state) { // unknown or continuing path
                 // draw center<===>B
                 if (isMain == mainlineB) {
                     g2.setColor(colorB);
                     g2.draw(new Line2D.Double(pM, pB));
                 }
-            } else if (isBlock && drawUnselectedLeg) {
+            } else if (!isBlock || drawUnselectedLeg) {
                 // draw center<--=>B
                 if (isMain == mainlineB) {
                     g2.setColor(colorB);
                     g2.draw(new Line2D.Double(MathUtil.twoThirdsPoint(pM, pB), pB));
                 }
             }
-            if (!isBlock || (continuingSense != state)) { // unknown or diverting path
+            if (continuingSense != state) { // unknown or diverting path
                 // draw center<===>C
                 if (isMain == mainlineC) {
                     g2.setColor(colorC);
                     g2.draw(new Line2D.Double(pM, pC));
                 }
-            } else if (isBlock && drawUnselectedLeg) {
+            } else if (!isBlock || drawUnselectedLeg) {
                 // draw center<--=>C
                 if (isMain == mainlineC) {
                     g2.setColor(colorC);
@@ -3358,9 +3360,9 @@ public class LayoutTurnout extends LayoutTrack {
                 if (isMain == mainlineB) {
                     g2.draw(new Line2D.Double(pML, pBL));
                     g2.draw(new Line2D.Double(pF, pBR));
-                    if (continuingSense != state) {  // unknown or diverting path
-                        g2.draw(new Line2D.Double(pSR, pFPR));
-                    } else {
+                    if (continuingSense == state) {  // unknown or diverting path
+//                         g2.draw(new Line2D.Double(pSR, pFPR));
+//                     } else {
                         g2.draw(new Line2D.Double(pAPR, pF));
                     }
                 }
@@ -3377,11 +3379,11 @@ public class LayoutTurnout extends LayoutTrack {
                         path.moveTo(pAPL.getX(), pAPL.getY());
                         path.quadTo(pML.getX(), pML.getY(), pF.getX(), pF.getY());
                         g2.draw(path);
-                    } else {
-                        path = new GeneralPath();
-                        path.moveTo(pSL.getX(), pSL.getY());
-                        path.quadTo(pML.getX(), pML.getY(), pFPL.getX(), pFPL.getY());
-                        g2.draw(path);
+//                     } else {
+//                         path = new GeneralPath();
+//                         path.moveTo(pSL.getX(), pSL.getY());
+//                         path.quadTo(pML.getX(), pML.getY(), pFPL.getX(), pFPL.getY());
+//                         g2.draw(path);
                     }
                 }
                 break;
@@ -3395,9 +3397,9 @@ public class LayoutTurnout extends LayoutTrack {
                 if (isMain == mainlineB) {
                     g2.draw(new Line2D.Double(pMR, pBR));
                     g2.draw(new Line2D.Double(pF, pBL));
-                    if (continuingSense != state) {  // unknown or diverting path
-                        g2.draw(new Line2D.Double(pSL, pFPL));
-                    } else {
+                    if (continuingSense == state) {  // straight path
+//                         g2.draw(new Line2D.Double(pSL, pFPL));  Offset problem
+//                     } else {
                         g2.draw(new Line2D.Double(pAPL, pF));
                     }
                 }
@@ -3413,11 +3415,11 @@ public class LayoutTurnout extends LayoutTrack {
                         path.moveTo(pAPR.getX(), pAPR.getY());
                         path.quadTo(pMR.getX(), pMR.getY(), pF.getX(), pF.getY());
                         g2.draw(path);
-                    } else {
-                        path = new GeneralPath();
-                        path.moveTo(pSR.getX(), pSR.getY());
-                        path.quadTo(pMR.getX(), pMR.getY(), pFPR.getX(), pFPR.getY());
-                        g2.draw(path);
+//                     } else {
+//                         path = new GeneralPath();
+//                         path.moveTo(pSR.getX(), pSR.getY());
+//                         path.quadTo(pMR.getX(), pMR.getY(), pFPR.getX(), pFPR.getY());
+//                         g2.draw(path);
                     }
                 }
                 break;
@@ -3440,11 +3442,11 @@ public class LayoutTurnout extends LayoutTrack {
                         path.moveTo(pAPR.getX(), pAPR.getY());
                         path.quadTo(pMR.getX(), pMR.getY(), pF.getX(), pF.getY());
                         g2.draw(path);
-                    } else {
-                        path = new GeneralPath();
-                        path.moveTo(pSR.getX(), pSR.getY());
-                        path.quadTo(pMR.getX(), pMR.getY(), pFPR.getX(), pFPR.getY());
-                        g2.draw(path);
+//                     } else {
+//                         path = new GeneralPath();
+//                         path.moveTo(pSR.getX(), pSR.getY());
+//                         path.quadTo(pMR.getX(), pMR.getY(), pFPR.getX(), pFPR.getY());
+//     bad                    g2.draw(path);
                     }
                 }
                 if (isMain == mainlineC) {
@@ -3456,10 +3458,10 @@ public class LayoutTurnout extends LayoutTrack {
                     g2.draw(path);
                     g2.draw(new Line2D.Double(pF, pCR));
                     if (continuingSense != state) {  // unknown or diverting path
-                        path = new GeneralPath();
-                        path.moveTo(pSL.getX(), pSL.getY());
-                        path.quadTo(pML.getX(), pML.getY(), pFPL.getX(), pFPL.getY());
-                        g2.draw(path);
+//                         path = new GeneralPath();
+//                         path.moveTo(pSL.getX(), pSL.getY());
+//                         path.quadTo(pML.getX(), pML.getY(), pFPL.getX(), pFPL.getY());
+//           bad              g2.draw(path);
                     } else {
                         path = new GeneralPath();
                         path.moveTo(pAPL.getX(), pAPL.getY());
@@ -3610,13 +3612,13 @@ public class LayoutTurnout extends LayoutTrack {
                         path.moveTo(pAPL.getX(), pAPL.getY());
                         path.quadTo(pAML.getX(), pAML.getY(), pAFL.getX(), pAFL.getY());
                         g2.draw(path);
-                        g2.draw(new Line2D.Double(pASR, pAFSR));
+//                         g2.draw(new Line2D.Double(pASR, pAFSR));
                     } else {                        // continuing path
                         g2.draw(new Line2D.Double(pAPR, pAFL));
                         path = new GeneralPath();
                         path.moveTo(pASL.getX(), pASL.getY());
                         path.quadTo(pAML.getX(), pAML.getY(), pAFS.getX(), pAFS.getY());
-                        g2.draw(path);
+//                         g2.draw(path);
                     }
                 }
                 if (isMain == mainlineB) {
@@ -3635,13 +3637,13 @@ public class LayoutTurnout extends LayoutTrack {
                         path.moveTo(pBPL.getX(), pBPL.getY());
                         path.quadTo(pBML.getX(), pBML.getY(), pBFL.getX(), pBFL.getY());
                         g2.draw(path);
-                        g2.draw(new Line2D.Double(pBSR, pBFSR));
+//                         g2.draw(new Line2D.Double(pBSR, pBFSR));
                     } else {
                         g2.draw(new Line2D.Double(pBPR, pBFL));
                         path = new GeneralPath();
                         path.moveTo(pBSL.getX(), pBSL.getY());
                         path.quadTo(pBML.getX(), pBML.getY(), pBFS.getX(), pBFS.getY());
-                        g2.draw(path);
+//                         g2.draw(path);
                     }
                 }
                 if (isMain == mainlineC) {
@@ -3660,13 +3662,13 @@ public class LayoutTurnout extends LayoutTrack {
                         path.moveTo(pCPR.getX(), pCPR.getY());
                         path.quadTo(pCMR.getX(), pCMR.getY(), pCFR.getX(), pCFR.getY());
                         g2.draw(path);
-                        g2.draw(new Line2D.Double(pCSL, pCFSL));
+//                         g2.draw(new Line2D.Double(pCSL, pCFSL));
                     } else {
                         g2.draw(new Line2D.Double(pCPL, pCFR));
                         path = new GeneralPath();
                         path.moveTo(pCSR.getX(), pCSR.getY());
                         path.quadTo(pCMR.getX(), pCMR.getY(), pCFS.getX(), pCFS.getY());
-                        g2.draw(path);
+//                         g2.draw(path);
                     }
                 }
                 if (isMain == mainlineD) {
@@ -3685,13 +3687,13 @@ public class LayoutTurnout extends LayoutTrack {
                         path.moveTo(pDPR.getX(), pDPR.getY());
                         path.quadTo(pDMR.getX(), pDMR.getY(), pDFR.getX(), pDFR.getY());
                         g2.draw(path);
-                        g2.draw(new Line2D.Double(pDSL, pDFSL));
+//                         g2.draw(new Line2D.Double(pDSL, pDFSL));
                     } else {
                         g2.draw(new Line2D.Double(pDPL, pDFR));
                         path = new GeneralPath();
                         path.moveTo(pDSR.getX(), pDSR.getY());
                         path.quadTo(pDMR.getX(), pDMR.getY(), pDFS.getX(), pDFS.getY());
-                        g2.draw(path);
+//                         g2.draw(path);
                     }
                 }
                 break;
@@ -3779,13 +3781,13 @@ public class LayoutTurnout extends LayoutTrack {
                         path.moveTo(pAPL.getX(), pAPL.getY());
                         path.quadTo(pABL.getX(), pABL.getY(), pABF.getX(), pABF.getY());
                         g2.draw(path);
-                        g2.draw(new Line2D.Double(pASR, pABFSP));
+//                         g2.draw(new Line2D.Double(pASR, pABFSP));
                     } else {                        // continuing path
                         g2.draw(new Line2D.Double(pAPR, pABF));
                         path = new GeneralPath();
                         path.moveTo(pASL.getX(), pASL.getY());
                         path.quadTo(pABL.getX(), pABL.getY(), pABFS.getX(), pABFS.getY());
-                        g2.draw(path);
+//                         g2.draw(path);
                     }
                 }
                 if (isMain == mainlineB) {
@@ -3806,13 +3808,13 @@ public class LayoutTurnout extends LayoutTrack {
                         path.moveTo(pCPR.getX(), pCPR.getY());
                         path.quadTo(pCDR.getX(), pCDR.getY(), pCDF.getX(), pCDF.getY());
                         g2.draw(path);
-                        g2.draw(new Line2D.Double(pCSL, pCDFSP));
+//                         g2.draw(new Line2D.Double(pCSL, pCDFSP));
                     } else {                        // continuing path
                         g2.draw(new Line2D.Double(pCPL, pCDF));
                         path = new GeneralPath();
                         path.moveTo(pCSR.getX(), pCSR.getY());
                         path.quadTo(pCDR.getX(), pCDR.getY(), pCDFS.getX(), pCDFS.getY());
-                        g2.draw(path);
+//                         g2.draw(path);
                     }
                 }
                 if (isMain == mainlineD) {
@@ -3908,13 +3910,13 @@ public class LayoutTurnout extends LayoutTrack {
                         path.moveTo(pBPL.getX(), pBPL.getY());
                         path.quadTo(pBAL.getX(), pBAL.getY(), pBFL.getX(), pBFL.getY());
                         g2.draw(path);
-                        g2.draw(new Line2D.Double(pBSR, pBAFSP));
+//                         g2.draw(new Line2D.Double(pBSR, pBAFSP));
                     } else {                        // continuing path
                         g2.draw(new Line2D.Double(pBPR, pBFL));
                         path = new GeneralPath();
                         path.moveTo(pBSL.getX(), pBSL.getY());
                         path.quadTo(pBAL.getX(), pBAL.getY(), pBAFS.getX(), pBAFS.getY());
-                        g2.draw(path);
+//                         g2.draw(path);
                     }
                 }
                 if (isMain == mainlineC) {
@@ -3935,13 +3937,13 @@ public class LayoutTurnout extends LayoutTrack {
                         path.moveTo(pDPR.getX(), pDPR.getY());
                         path.quadTo(pDCR.getX(), pDCR.getY(), pDFR.getX(), pDFR.getY());
                         g2.draw(path);
-                        g2.draw(new Line2D.Double(pDSL, pDCFSP));
+//                         g2.draw(new Line2D.Double(pDSL, pDCFSP));
                     } else {                        // continuing path
                         g2.draw(new Line2D.Double(pDPL, pDFR));
                         path = new GeneralPath();
                         path.moveTo(pDSR.getX(), pDSR.getY());
                         path.quadTo(pDCR.getX(), pDCR.getY(), pDCFS.getX(), pDCFS.getY());
-                        g2.draw(path);
+//                         g2.draw(path);
                     }
                 }
                 break;
