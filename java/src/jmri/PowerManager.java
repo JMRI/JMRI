@@ -53,5 +53,4 @@ public interface PowerManager {
 
     @CheckReturnValue
     @Nonnull public String getUserName();
-
 }
