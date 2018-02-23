@@ -40,13 +40,17 @@ import org.slf4j.LoggerFactory;
  */
 public class BlockManager extends AbstractManager<Block> implements PropertyChangeListener, VetoableChangeListener, InstanceManagerAutoDefault {
 
+    private String powerManagerChangeName;
+
     public BlockManager() {
         super();
-        InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
+        InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(ReporterManager.class).addVetoableChangeListener(this);
         InstanceManager.getList(PowerManager.class).forEach((pm) -> {
             pm.addPropertyChangeListener(this);
         });
+        powerManagerChangeName = InstanceManager.getListPropertyName(PowerManager.class);
+        InstanceManager.addPropertyChangeListener(this);
     }
 
     @Override
@@ -317,11 +321,13 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
 
     /**
      * Listen for changes to the power state from any power managers
-     * in use in order to track how long it's been since powet was applied
+     * in use in order to track how long it's been since power was applied
      * to the layout. This information is used in {@link Block#goingActive()}
      * when deciding whether to restore a block's last value.
      *
-     * @param e
+     * Also listen for additions/removals or PowerManagers
+     *
+     * @param e - the change event
      */
 
     @Override
@@ -335,6 +341,17 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
                 }
             } catch (JmriException | NoSuchMethodError xe) {
                 // do nothing
+            }
+        }
+        if (powerManagerChangeName.equals(e.getPropertyName())) {
+            if (e.getNewValue() == null) {
+                // powermanager has been removed
+                PowerManager pm = (PowerManager) e.getOldValue();
+                pm.removePropertyChangeListener(this);
+            } else {
+                // a powermanager has been added
+                PowerManager pm = (PowerManager) e.getNewValue();
+                pm.addPropertyChangeListener(this);
             }
         }
     }
