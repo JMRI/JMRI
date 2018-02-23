@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import javax.swing.JOptionPane;
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialPortController; // no special xSimulatorController
 import jmri.jmrix.grapevine.SerialReply;
@@ -16,8 +17,12 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide access to a simulated Grapevine system.
  * <p>
- * Currently, the Grapevine SimulatorAdapter reacts to commands sent from the user interface
- * with an appropriate reply message.
+ * Currently, the Grapevine SimulatorAdapter reacts to the following commands sent from the user
+ * interface with an appropriate reply message:
+ * <ul>
+ *     <li>Software version (poll)</li>
+ *     <li>Node Init (2 replies)</li>
+ * </ul>
  * Based on jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter / EasyDCCSimulatorAdapter 2017
  * <p>
  * NOTE: Some material in this file was modified from other portions of the
@@ -236,22 +241,51 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     private SerialReply generateReply(SerialMessage msg) {
         log.debug("Generate Reply to message from node {} (string = {})", msg.getElement(0), msg.toString());
 
-        SerialReply reply = new SerialReply(); // 4 byte default reply length
-        int node = msg.getAddr(); // element(0)
-        int command = msg.getElement(1);
-        log.debug("Message command = {}", command);
+        SerialReply reply = new SerialReply(); // reply length  is determined by highest byte added
+        int nodeaddr = msg.getAddr();               // node addres from element(0)
+        int command = msg.getElement(1); // command instruction from element(1)
+        log.debug("Message address={} command={} b3={} bank={}", nodeaddr, command, msg.getElement(2), msg.getElement(3));
         switch (command) {
 
-            case 115 :
+            case 119 :
                 log.debug("get software version (poll) message detected");
-                reply = new SerialReply(); // 2 byte software version number reply
-                reply.setElement(0, node);
-                reply.setElement(1, 999);
+                // 2 byte software version number reply
+                reply.setElement(0, nodeaddr | 0x80); // 0x80 + (f & 0x7F)
+                reply.setElement(1, 9); // pretend version "9"
+                break;
+
+            case 71 :
+                log.debug("init node message 1 detected");
+                // 4 byte init reply
+                reply.setElement(0, nodeaddr | 0x80);
+                reply.setElement(1, 0x0);
+                reply.setElement(2, nodeaddr | 0x80);
+                reply.setElement(3, 0x10);
+                break;
+
+            case 73 :
+                log.debug("init node message 2 detected");
+                // 4 byte init reply
+                reply.setElement(0, nodeaddr | 0x80);
+                reply.setElement(1, 0x0);
+                reply.setElement(2, nodeaddr | 0x80);
+                reply.setElement(3, 0x30); // bank 3
                 break;
 
             default:
-                log.debug("non-reply message detected");
-                reply.setElement(0, node);
+                if (msg.getElement(3) == 101) { // this is the rename command, with element 2 = new node number
+                    JOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("RenumberSupport"),
+                            Bundle.getMessage("MessageTitle"),
+                            JOptionPane.ERROR_MESSAGE);
+                    return null;
+                }
+                log.debug("message unrecognized command detected, code: {}", command);
+                // 4 byte general reply
+                reply.setElement(0, nodeaddr | 0x80);
+                reply.setElement(1, 0x0);  // normally: command (values 0x6, 0x7 are for signals
+                reply.setElement(2, nodeaddr | 0x80);
+                reply.setElement(3, 0x00); // 0 = error, bank 1..3 for signals, 4..5 sensors (and parity)
         }
         log.debug("Reply generated = {}", reply.toString());
         return (reply);
@@ -260,7 +294,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     /**
      * Write reply to output.
      * <p>
-     * Copied from jmri.jmrix.nce.simulator.SimulatorAdapter.
+     * Adapted from jmri.jmrix.nce.simulator.SimulatorAdapter.
      *
      * @param r reply on message
      */

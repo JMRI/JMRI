@@ -209,6 +209,11 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      */
     @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
+        if (m == null) {
+            log.debug("empty message");
+            return;
+        }
+        log.debug("Grapevine SerialTrafficController sendMessage() {}", m.toString());
         sendMessage(m, reply);
     }
 

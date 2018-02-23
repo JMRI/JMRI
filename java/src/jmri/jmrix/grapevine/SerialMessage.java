@@ -12,26 +12,40 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
+    /**
+     * Create a new SerialMessage instance.
+     */
     public SerialMessage() {
-        super(4);  // most messages are four bytes, binary
+        super(4); // most Grapevine messages are four bytes, binary
         setBinary(true);
     }
 
+    /**
+     * Create a new SerialMessage instance of a given byte size.
+     *
+     * @param len number of elements
+     */
     public SerialMessage(int len) {
-        super(len);  // most messages are four bytes, binary
+        super(len); // most Grapevine messages are four bytes, binary
         setBinary(true);
     }
 
-    // copy one
+    /**
+     * Copy a SerialMessage to a new instance.
+     *
+     * @param m the message to copy
+     */
     public SerialMessage(SerialMessage m) {
         super(m);
         setBinary(true);
     }
 
     /**
-     * Interpret the String as the exact sequence to send,
+     * Create a new Message instance from a string.
+     * Interprets the String as the exact sequence to send,
      * byte-for-byte.
      *
+     * @param m String to use as message content
      */
     public SerialMessage(String m) {
         super(m);
@@ -149,8 +163,8 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      * Provide a human-readable form of a message.
      * <p>
      * Used by both SerialMessage and SerialReply, because so much of it is
-     * common. That forces the passing of arguements as numbers. Short messages
-     * are signalled by having missing bytes put to -1 in the arguments.
+     * common. That forces the passing of arguments as numbers. Short messages
+     * are marked by having missing bytes put to -1 in the arguments.
      */
     static String staticFormat(int b1, int b2, int b3, int b4) {
         String result;

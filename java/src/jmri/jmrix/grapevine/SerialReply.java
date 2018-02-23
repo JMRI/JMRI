@@ -12,19 +12,31 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
-    // create a new one
+    /**
+     * Create a new SerialReply instance.
+     */
     public SerialReply() {
-        super();
+        super(); // normal Grapevine replies are four bytes, binary
         setBinary(true);
     }
 
-    public SerialReply(String s) {
-        super(s);
-        setBinary(true);
-    }
-
+    /**
+     * Copy a Reply to a new SerialReply instance.
+     *
+     * @param m the reply to copy
+     */
     public SerialReply(SerialReply l) {
         super(l);
+        setBinary(true);
+    }
+
+    /**
+     * Create a new SerialReply instance from a string.
+     *
+     * @param s String to use as reply content
+     */
+    public SerialReply(String s) {
+        super(s);
         setBinary(true);
     }
 

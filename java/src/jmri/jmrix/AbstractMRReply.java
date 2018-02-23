@@ -16,14 +16,20 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractMRReply extends AbstractMessage {
     // is this logically an abstract class?
 
-    // create a new one
+    /**
+     * Create a new AbstractMRReply instance.
+     */
     public AbstractMRReply() {
         setBinary(false);
         unsolicited = false;
         _dataChars = new int[maxSize()];
     }
 
-    // copy one
+    /**
+     * Copy a Reply to a new AbstractMRReply instance.
+     *
+     * @param m the reply to copy
+     */
     public AbstractMRReply(AbstractMRReply m) {
         this();
         if (m == null) {
@@ -36,7 +42,11 @@ abstract public class AbstractMRReply extends AbstractMessage {
         }
     }
 
-    // from String
+    /**
+     * Create a new AbstractMRReply instance from a string.
+     *
+     * @param s String to use as reply content
+     */
     public AbstractMRReply(String s) {
         this();
         _nDataChars = s.length();

@@ -4,7 +4,7 @@ import jmri.jmrix.ConnectionTypeList;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Return a list of valid Protrak (Grapevine) Connection Types.
+ * Return a list of valid ProTrak (Grapevine) Connection Types.
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010

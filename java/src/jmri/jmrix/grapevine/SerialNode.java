@@ -234,6 +234,8 @@ public class SerialNode extends AbstractNode {
                 m2.setElement(i++, getNodeAddress() | 0x80);  // address
                 m2.setElement(i++, 0x00);  // bank and parity
                 m2.setParity(i - 4);
+                log.debug("Node initpacket 2 sent to {} trafficController",
+                        (tc == null ? "null" : tc.getSystemConnectionMemo().getSystemPrefix()));
                 tc.sendSerialMessage(m2, null);
             }
         };
@@ -252,12 +254,13 @@ public class SerialNode extends AbstractNode {
         m1.setElement(i++, getNodeAddress() | 0x80);  // address
         m1.setElement(i++, 0x00);  // bank and parity
         m1.setParity(i - 4);
-
+        log.debug("Node initpacket 1 ready to send to {} trafficController",
+                (tc == null ? "null" : tc.getSystemConnectionMemo().getSystemPrefix()));
         return m1;
     }
 
     /**
-     * Public Method to create an Transmit packet (SerialMessage)
+     * Public Method to create a Transmit packet (SerialMessage)
      */
     @Override
     public AbstractMRMessage createOutPacket() {
