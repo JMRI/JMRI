@@ -261,7 +261,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
        try {
           sourceThread.join();
        } catch (InterruptedException ie){
-          // interrupted durring cleanup.
+          // interrupted during cleanup.
        }
     }
 

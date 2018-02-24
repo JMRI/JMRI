@@ -17,11 +17,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from Tams messages. The "TamsInterface" side
  * sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a TamsPortController is via a pair of Streams, which then
  * carry sequences of characters for transmission. Note that this processing is
  * handled in an independent thread.
- * <P>
+ * <p>
  * This handles the state transitions, based on the necessary state in each
  * message.
  * <p>
@@ -31,13 +31,15 @@ import org.slf4j.LoggerFactory;
  */
 public class TamsTrafficController extends AbstractMRTrafficController implements TamsInterface, CommandStation {
 
+    /**
+     * Create a new TamsTrafficController instance.
+     */
     public TamsTrafficController() {
         super();
         log.debug("creating a new TamsTrafficController object");
         // set as command station too
         jmri.InstanceManager.setCommandStation(this);
         super.setAllowUnexpectedReply(false);
-
     }
 
     public void setAdapterMemo(TamsSystemConnectionMemo memo) {

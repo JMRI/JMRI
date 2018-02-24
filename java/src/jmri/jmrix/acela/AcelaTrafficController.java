@@ -11,17 +11,18 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from Acela messages.
- * <P>
+ * <p>
  * The "SerialInterface" side sends/receives message objects.
- * <P>
+ * <p>
  * The connection to an AcelaPortController is via a pair of Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
+ * <p>
  * This handles the state transitions, based on the necessary state in each
  * message.
- * <P>
+ * <p>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
+ * @see jmri.jmrix.AbstractMRNodeTrafficController
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
@@ -30,6 +31,9 @@ import org.slf4j.LoggerFactory;
  */
 public class AcelaTrafficController extends AbstractMRNodeTrafficController implements AcelaInterface {
 
+    /**
+     * Create a new AcelaTrafficController instance.
+     */
     public AcelaTrafficController() {
         super();
 
@@ -37,7 +41,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         mWaitBeforePoll = 25;  // default = 25
         setAllowUnexpectedReply(true);
 
-        super.init(0, 1024); // 1024 is an artifical limit but economically reasonable
+        super.init(0, 1024); // 1024 is an artifical limit but economically reasonable maxNode upper limit
 
         reallyReadyToPoll = false;           // Need to not start polling until we are ready
         needToPollNodes = true;              // Need to poll and create corresponding nodes
@@ -49,6 +53,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     // The methods to implement the AcelaInterface
+
     @Override
     public synchronized void addAcelaListener(AcelaListener l) {
         this.addListener(l);
@@ -88,14 +93,14 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     private static int SPECIALNODE = 0;         //  Needed to initialize system
 
     /**
-     * Public method to get minimum address of an Acela node
+     * Get minimum address of an Acela node as set on this TrafficController.
      */
     public int getMinimumNodeAddress() {
         return minNode;
     }
 
     /**
-     * Public method to get maximum number of Acela nodes
+     * Get maximum number of Acela nodes as set on this TrafficController.
      */
     public int getMaximumNumberOfNodes() {
         return maxNode;
