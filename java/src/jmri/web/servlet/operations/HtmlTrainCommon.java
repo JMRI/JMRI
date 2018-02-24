@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -327,7 +328,7 @@ public class HtmlTrainCommon extends TrainCommon {
     public String getValidity() {
         if (Setup.isPrintTimetableNameEnabled()) {
             return String.format(locale, strings.getProperty("ManifestValidityWithSchedule"), getDate(true),
-                    TrainScheduleManager.instance().getScheduleById(train.getId()));
+                    InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(train.getId()));
         } else {
             return String.format(locale, strings.getProperty("ManifestValidity"), getDate(true));
         }

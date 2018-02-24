@@ -14,7 +14,7 @@ import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 public class Mx1Menu extends JMenu {
 
     /**
-     * Create a MRC menu.
+     * Create a Zimo menu.
      *
      * @param memo the connection to associate actions with
      */

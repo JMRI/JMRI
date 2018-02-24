@@ -63,7 +63,7 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
     }
 
     /**
-     * Determine how much many bytes the entire message will take, including
+     * Determine how many bytes the entire message will take, including
      * space for header and trailer
      *
      * @param m The message to be sent
@@ -125,7 +125,7 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
     }
 
     /*
-     * Dummy; lookback doesn't parse serial messages
+     * Dummy; loopback doesn't parse serial messages
      */
     @Override
     protected boolean endOfMessage(AbstractMRReply r) {
@@ -134,7 +134,7 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
     }
 
     /*
-     * Dummy; lookback doesn't parse serial messages
+     * Dummy; loopback doesn't parse serial messages
      */
     boolean endNormalReply(AbstractMRReply r) {
         log.error("endNormalReply unexpected");

@@ -21,11 +21,11 @@ public class EasyDccPacketGenAction extends AbstractAction {
     }
 
     public EasyDccPacketGenAction(EasyDccSystemConnectionMemo memo) {
-        this("Generate EasyDCC message", memo);
+        this(Bundle.getMessage("SendXCommandTitle", "EasyDCC"), memo);
     }
 
     public EasyDccPacketGenAction() {
-        this(Bundle.getMessage("SendCommandTitle"), jmri.InstanceManager.getDefault(jmri.jmrix.easydcc.EasyDccSystemConnectionMemo.class));
+        this(jmri.InstanceManager.getDefault(jmri.jmrix.easydcc.EasyDccSystemConnectionMemo.class));
     }
 
     @Override

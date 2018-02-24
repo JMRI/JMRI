@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 public abstract class DCCppTrafficController extends AbstractMRTrafficController implements DCCppInterface {
 
     /**
+     * Create a new DCCppTrafficController instance.
      * Must provide a DCCppCommandStation reference at creation time.
      *
      * @param pCommandStation reference to associated command station object,

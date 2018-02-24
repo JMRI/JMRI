@@ -19,7 +19,7 @@ public class DeviceServerTest extends TestCase {
         java.net.Socket s = new java.net.Socket();
         FacelessServer f = new FacelessServer(){
            @Override
-           public void createServerThread(){
+           public void listen(){
            }
         };
         DeviceServer panel = new DeviceServer(s,f);

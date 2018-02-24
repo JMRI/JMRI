@@ -204,6 +204,45 @@
       </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="EditorLayoutTrackDrawingOptionsType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing and loading LayoutTrackDrawingOptions
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.layouteditor.configurexml.LayoutTrackDrawingOptionsXml
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:all>
+        <xs:element name="mainBallastColor" type="screenColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainBallastWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainBlockLineDashPercentageX10" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainBlockLineWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainRailColor" type="screenColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainRailCount" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainRailGap" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainRailWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainTieColor" type="screenColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainTieGap" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainTieLength" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainTieWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideBallastColor" type="screenColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideBallastWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideBlockLineDashPercentageX10" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideBlockLineWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideRailColor" type="screenColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideRailCount" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideRailGap" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideRailWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideTieColor" type="screenColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideTieGap" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideTieLength" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideTieWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+      </xs:all>
+      <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+    </xs:complexType>
+
 
     <xs:complexType name="EditorPositionableLabelType">
       <xs:annotation>
@@ -1286,7 +1325,7 @@
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
       <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
-      
+
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="train" type="xs:string"></xs:attribute>
       <xs:attribute name="trainName" type="xs:string"></xs:attribute>
@@ -1469,6 +1508,8 @@
             <xs:attribute name="index" type="xs:string"></xs:attribute>
             <xs:attribute name="turnout" type="beanNameType"></xs:attribute>
             <xs:attribute name="turnoutstate" type="xs:string"></xs:attribute><!-- THROWN/CLOSED -->
+            <xs:attribute name="disabled" type="yesNoType"></xs:attribute>
+            <xs:attribute name="disableWhenOccupied" type="yesNoType"></xs:attribute>
           </xs:complexType>
         </xs:element>
       </xs:sequence>

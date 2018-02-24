@@ -27,9 +27,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
-import jmri.InstanceManager;
 import jmri.CommandStation;
-import jmri.Manager;
+import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.SignalHead;
@@ -282,35 +281,8 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 return getClassName();
             }
 
-            // no longer used since 4.7.1, but have to override
-            @Deprecated
             @Override
             public void clickOn(SignalHead t) {
-                int oldState = t.getAppearance();
-                int newState = 99;
-                int[] stateList = t.getValidStates();
-                for (int i = 0; i < stateList.length; i++) {
-                    if (oldState == stateList[i]) {
-                        if (i < stateList.length - 1) {
-                            newState = stateList[i + 1];
-                            break;
-                        } else {
-                            newState = stateList[0];
-                            break;
-                        }
-                    }
-                }
-                if (newState == 99) {
-                    if (stateList.length == 0) {
-                        newState = SignalHead.DARK;
-                        log.warn("New signal state not found so setting to Dark " + t.getDisplayName());
-                    } else {
-                        newState = stateList[0];
-                        log.warn("New signal state not found so setting to the first available " + t.getDisplayName());
-                    }
-                }
-                log.debug("was " + oldState + " becomes " + newState);
-                t.setAppearance(newState);
             }
 
             /**
@@ -405,15 +377,12 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                  * @return an appropriate combobox for this signal head
                  */
                 @Override
-                protected JComboBox getEditorBox(int row) {
+                protected JComboBox<String> getEditorBox(int row) {
                     return getAppearanceEditorBox(row);
                 }
 
             }
 
-            // Methods to display VALUECOL (appearance) ComboBox in the Signal Head Table
-            // Derived from the SignalMastJTable class (deprecated since 4.5.5):
-            // All row values are in terms of the Model, not the Table as displayed.
             /**
              * Clear the old appearance comboboxes and force them to be rebuilt.
              * Used with the Single Output Signal Head to capture reconguration.
@@ -436,16 +405,16 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
              * @return A combobox containing the valid appearance names for this
              *         mast
              */
-            public JComboBox getAppearanceEditorBox(int row) {
-                JComboBox editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
+            public JComboBox<String> getAppearanceEditorBox(int row) {
+                JComboBox<String> editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
                 if (editCombo == null) {
                     // create a new one with correct appearances
-                    editCombo = new JComboBox<String>(getRowVector(row));
+                    editCombo = new JComboBox<>(getRowVector(row));
                     editorMap.put(this.getValueAt(row, SYSNAMECOL), editCombo);
                 }
                 return editCombo;
             }
-            Hashtable<Object, JComboBox> editorMap = new Hashtable<Object, JComboBox>();
+            Hashtable<Object, JComboBox<String>> editorMap = new Hashtable<>();
 
             /**
              * returns a list of all the valid appearances that have not been
@@ -789,7 +758,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 acelaAspect, dccSignalDecoder, doubleTurnout, lsDec, mergSignalDriver, quadOutput,
                 singleTurnout, se8c4Aspect, tripleTurnout, tripleOutput, virtualHead
             }));
-            //If no DCC Command station is found remove the DCC Signal Decoder option.
+            // If no DCC Command station is found, remove the DCC Signal Decoder option.
             if (prefixBox.getItemCount() == 0) {
                 typeBox.removeItem(dccSignalDecoder);
             }
@@ -1003,6 +972,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         } else if (grapevine.equals(typeBox.getSelectedItem())) { // Need to see how this works with username
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
             systemNameTextField.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
+            // TODO use Grapevine specific tooltip
             systemNameLabel.setVisible(true);
             systemNameTextField.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -1103,6 +1073,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         } else if (lsDec.equals(typeBox.getSelectedItem())) { // LDT LS-DEC
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
             systemNameTextField.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
+            // TODO use LDT specific tooltip
             systemNameLabel.setVisible(true);
             systemNameTextField.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -1158,6 +1129,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         } else if (mergSignalDriver.equals(typeBox.getSelectedItem())) {
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
             systemNameTextField.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
+            // TODO use MERG specific tooltip
             systemNameLabel.setVisible(true);
             systemNameTextField.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -1204,7 +1176,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
         } else {
             sName = InstanceManager.getDefault(SignalHeadManager.class).normalizeSystemName(sysName);
-            
+
             boolean ok = true;
             try {
                 int i = jmri.Manager.getSystemPrefixLength(sName);
@@ -1308,7 +1280,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                     return;
                 }
                 if (inputsysname.length() > 2) {
-                    if (inputsysname.substring(0, 2).equals("AH")) {
+                    if (inputsysname.substring(0, 2).equals("AH")) { // TODO add real check for A123H
                         headnumber = Integer.parseInt(inputsysname.substring(2, inputsysname.length()));
                     } else if (checkIntegerOnly(inputsysname)) {
                         headnumber = Integer.parseInt(inputsysname);
@@ -1360,15 +1332,16 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 }
 
             } else if (grapevine.equals(typeBox.getSelectedItem())) {
-                // the turnout field must hold a GH system name
+                // the turnout field must hold a GH system name (G = multichar prefix)
                 if (systemNameTextField.getText().length() == 0) {
                     // TODO Add user dialog
                     log.warn("must supply a signalhead number (i.e. GH23)");
                     return;
                 }
                 String inputsysname = InstanceManager.getDefault(SignalHeadManager.class).normalizeSystemName(systemNameTextField.getText());
-                if (!inputsysname.substring(0, 2).equals("GH")) {
-                    log.warn("skipping creation of signal, " + inputsysname + " does not start with GH");
+                int offset = jmri.Manager.getSystemPrefixLength(inputsysname);
+                if (!inputsysname.substring(0, 1).equals("G") || !inputsysname.substring(offset, offset + 1).equals("H")) { // TODO add real check for G123H
+                    log.warn("skipping creation of signal head, '{}' does not start with GxH", inputsysname);
                     String msg = Bundle.getMessage("GrapevineSkippingCreation", new Object[]{inputsysname});
                     JOptionPane.showMessageDialog(addFrame, msg,
                             Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);

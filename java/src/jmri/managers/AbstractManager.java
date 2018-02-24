@@ -18,7 +18,6 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +40,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     public AbstractManager() {
         registerSelf();
     }
-    
+
     /**
      * By default, register this manager to store as configuration information.
      * Override to change that.
@@ -257,7 +256,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * @return empty list
      */
     @Override
-    public List<NamedBeanPropertyDescriptor> getKnownBeanProperties() {
+    public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         return new LinkedList<>();
     }
 

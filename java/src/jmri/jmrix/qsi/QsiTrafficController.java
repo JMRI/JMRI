@@ -23,6 +23,9 @@ import purejavacomm.SerialPort;
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 
+    /**
+     * Create a new QsiTrafficController instance.
+     */
     public QsiTrafficController() {
     }
 

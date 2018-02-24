@@ -185,7 +185,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         super.configureBaudRate(rate);
     }
 
-    protected String[] validSpeeds = new String[]{"19,200 baud", "38,400 baud"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud38400")};
     protected int[] validSpeedValues = new int[]{19200, 38400};
     protected String selectedSpeed = validSpeeds[0];
 

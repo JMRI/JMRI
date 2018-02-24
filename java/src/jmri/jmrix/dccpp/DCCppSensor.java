@@ -25,7 +25,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     private boolean pullup;
 
     //private int nibble;      /* Is this sensor in the upper or lower 
-     //nibble for the feedback encoder */
+    //nibble for the feedback encoder */
 
     private String systemName;
 
@@ -53,9 +53,9 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     private void init(String id) {
         // store address
         systemName = id;
- //prefix = jmri.InstanceManager.getDefault(jmri.jmrix.dccpp.DCCppSensorManager.class).getSystemPrefix();
- address = Integer.parseInt(id.substring(id.lastIndexOf('S')+1, id.length()));
- log.debug("New sensor system name {} address {}", this.getSystemName(), address);
+        //prefix = jmri.InstanceManager.getDefault(jmri.jmrix.dccpp.DCCppSensorManager.class).getSystemPrefix();
+        address = Integer.parseInt(id.substring(id.lastIndexOf('S')+1, id.length()));
+        log.debug("New sensor system name {} address {}", this.getSystemName(), address);
         if (log.isDebugEnabled()) {
             log.debug("Created Sensor " + systemName);
         }
@@ -70,8 +70,8 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
      */
     @Override
     public void requestUpdateFromLayout() {
- // Yeah... this isn't really supported.  Yet.
- //
+        // Yeah... this isn't really supported.  Yet.
+        //
         // To do this, we send an DCC++ Accessory Decoder Information 
         // Request.
         // The generated message works for Feedback modules and turnouts 
@@ -96,8 +96,6 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
      * a feedback message at initialization without changing the state of the
      * sensor with respect to whether or not a feedback request was sent. This
      * is used only when the sensor is created by on layout feedback.
-     *
-     *
      */
     synchronized void initmessage(DCCppReply l) {
         boolean oldState = statusRequested;
@@ -106,12 +104,12 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     }
 
     /**
+     * {@inheritDoc}
      * implementing classes will typically have a function/listener to get
      * updates from the layout, which will then call public void
      * firePropertyChange(String propertyName, Object oldValue, Object newValue)
      * _once_ if anything has changed state (or set the commanded state
      * directly)
-     *
      */
     @Override
     public synchronized void message(DCCppReply l) {
@@ -133,22 +131,24 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
                 setProperty("Pullup", pullup);
             }
         } else if (l.isSensorReply() && (l.getSensorNumInt() == address)) {
-     if (log.isDebugEnabled()) {
-  log.debug("Message for sensor " + systemName
-     + " (Pin " + address + ")");
-     }
-     if (l.getSensorIsActive()) {
-  setOwnState(_inverted ? Sensor.INACTIVE : Sensor.ACTIVE);
-     } else if (l.getSensorIsInactive()){
-  setOwnState(_inverted ? Sensor.ACTIVE : Sensor.INACTIVE);
-     } else {
+                log.debug("Message for sensor {} (Pin {})", systemName, address);
+            if (l.getSensorIsActive()) {
+                setOwnState(_inverted ? Sensor.INACTIVE : Sensor.ACTIVE);
+            } else if (l.getSensorIsInactive()){
+                setOwnState(_inverted ? Sensor.ACTIVE : Sensor.INACTIVE);
+            } else {
                 setOwnState(Sensor.UNKNOWN);
             }
- }
+        }
         return;
     }
 
-    // listen for the messages to the Base Station... but ignore them.
+    /**
+     * {@inheritDoc}
+     * Listen for the messages to the Base Station... but ignore them.
+     *
+     * @param l the message heard
+     */
     @Override
     public void message(DCCppMessage l) {
     }

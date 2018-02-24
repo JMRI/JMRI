@@ -19,6 +19,9 @@ public class JsonTestHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+        if (name.equals("JsonException")) {
+            throw new JsonException(499, "Thrown for test"); // not a standard code
+        }
         ObjectNode root = mapper.createObjectNode();
         root.put(JSON.TYPE, type);
         ObjectNode data = root.putObject(JSON.DATA);
