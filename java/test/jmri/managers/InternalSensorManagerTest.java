@@ -70,7 +70,8 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("last call 1", "Added", lastCall);
         Assert.assertEquals("type 1", Manager.ManagerDataEvent.INTERVAL_ADDED, lastType);
         Assert.assertEquals("start == end 1", lastEvent0, lastEvent1);
-        Assert.assertEquals("right index 1", s2, l.getNamedBeanList().get(lastEvent0));
+        Assert.assertEquals("index 1", 1, lastEvent0);
+        Assert.assertEquals("content at index 1", s2, l.getNamedBeanList().get(lastEvent0));
 
         // add an item
         Sensor s3 = l.provideSensor("IS3");
@@ -81,7 +82,8 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("last call 2", "Added", lastCall);
         Assert.assertEquals("type 2", Manager.ManagerDataEvent.INTERVAL_ADDED, lastType);
         Assert.assertEquals("start == end 2", lastEvent0, lastEvent1);
-        Assert.assertEquals("right index 2", s3, l.getNamedBeanList().get(lastEvent0));
+        Assert.assertEquals("index 2", 2, lastEvent0);
+        Assert.assertEquals("content at index 2", s3, l.getNamedBeanList().get(lastEvent0));
     }
 
     @Test
@@ -102,8 +104,29 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("last call", "Removed", lastCall);
         Assert.assertEquals("type", Manager.ManagerDataEvent.INTERVAL_REMOVED, lastType);
         Assert.assertEquals("start == end 2", lastEvent0, lastEvent1);
-        Assert.assertEquals("right index", s2, tlist.get(lastEvent0));
+        Assert.assertEquals("index", 1, lastEvent0);
+        Assert.assertEquals("content at index", s2, tlist.get(lastEvent0));
         
+    }
+
+    @Test
+    public void testUnmodifiable() {
+        Sensor s1 = l.provideSensor("IS1");
+        Sensor s2 = l.provideSensor("IS2");
+        
+        List<String> nameList = l.getSystemNameList();
+        List<Sensor> beanList = l.getNamedBeanList();
+
+        try {
+            nameList.add("Foo");
+            Assert.fail("Should have thrown");
+        } catch (UnsupportedOperationException e) { /* this is OK */}
+
+        try {
+            beanList.add(s1);
+            Assert.fail("Should have thrown");
+        } catch (UnsupportedOperationException e) { /* this is OK */}
+
     }
 
     // a listen & audit methods

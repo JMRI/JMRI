@@ -152,11 +152,17 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @OverridingMethodsMustInvokeSuper
     public void register(E s) {
         String systemName = s.getSystemName();
+
+        // clear caches
+        cachedSystemNameList = null;
+        cachedNamedBeanList = null;
+        
+        // save this bean
         _beans.add(s);
         _tsys.put(systemName, s);
-
         registerUserName(s);
 
+        // notifications
         firePropertyChange("length", null, _beans.size());
         int position = getPosition(s);
         fireDataListenersAdded(position, position);
@@ -216,7 +222,15 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @OverridingMethodsMustInvokeSuper
     public void deregister(E s) {
         int position = getPosition(s);
+
+        // clear caches
+        cachedSystemNameList = null;
+        cachedNamedBeanList = null;
+
+        // stop listening for user name changes
         s.removePropertyChangeListener(this);
+        
+        // remove bean from local storage
         String systemName = s.getSystemName();
         _beans.remove(s);
         _tsys.remove(systemName);
@@ -224,9 +238,10 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         if (userName != null) {
             _tuser.remove(userName);
         }
+        
+        // notifications
         firePropertyChange("length", null, _beans.size());
         fireDataListenersRemoved(position, position);
-        // listen for name and state changes to forward
     }
 
     /**
@@ -282,20 +297,31 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         return this.getSystemNameList().toArray(new String[_beans.size()]);
     }
 
+    // Cached result for getSystemNameList()
+    private ArrayList<String> cachedSystemNameList = null;
+    
     /** {@inheritDoc} */
     @Override
     public List<String> getSystemNameList() {
-        ArrayList<String> out = new ArrayList<>();
-        for (E b : _beans) {
-            out.add(b.getSystemName());
+        if (cachedSystemNameList == null) {
+            cachedSystemNameList = new ArrayList<>();
+            for (E b : _beans) {
+                cachedSystemNameList.add(b.getSystemName());
+            }
         }
-        return out;
+        return Collections.unmodifiableList(cachedSystemNameList);
     }
+
+    // Cached result for getNamedBeanList()
+    private ArrayList<E> cachedNamedBeanList = null;
 
     /** {@inheritDoc} */
     @Override
     public List<E> getNamedBeanList() {
-        return new ArrayList<>(_beans);
+        if (cachedNamedBeanList == null) {
+            cachedNamedBeanList = new ArrayList<>(_beans);
+        }
+        return Collections.unmodifiableList(cachedNamedBeanList);
     }
 
     /** {@inheritDoc} */
