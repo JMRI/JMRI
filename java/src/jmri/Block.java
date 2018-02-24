@@ -726,10 +726,16 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                             log.debug("Sensor ACTIVE came out of nowhere, no neighbors active for block {}. Restoring previous value.", getDisplayName());
                             infoMessageCount++;
                         }
-                    } else {
-                        log.debug("not restoring previous value, block {} has been inactive for too long ("
-                                + (tn.toEpochMilli() - _timeLastInactive.toEpochMilli()) + "ms) and layout power has not just been restored ("
-                                + bm.timeSinceLastLayoutPowerOn() + "ms ago)", getDisplayName());
+                    } else if (log.isDebugEnabled()) {
+                        if (null != _timeLastInactive) {
+                            log.debug("not restoring previous value, block {} has been inactive for too long ("
+                                    + (tn.toEpochMilli() - _timeLastInactive.toEpochMilli()) + "ms) and layout power has not just been restored ("
+                                    + bm.timeSinceLastLayoutPowerOn() + "ms ago)", getDisplayName());
+                        } else {
+                            log.debug("not restoring previous value, block {} has been inactive since the start " +
+                                    "of this session and layout power has not just been restored ("
+                                    + bm.timeSinceLastLayoutPowerOn() + "ms ago)", getDisplayName());
+                        }
                     }
                 } else {
                     if (infoMessageCount < maxInfoMessages) {
