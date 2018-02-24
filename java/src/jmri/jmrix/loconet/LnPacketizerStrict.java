@@ -33,175 +33,32 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2018
  *
  */
-public class LnPacketizer extends LnTrafficController {
+public class LnPacketizerStrict extends LnPacketizer {
 
-    /**
-     * true if the external hardware is not echoing messages, so we must
-     */
-    protected boolean echo = false;  // echo messages here, instead of in hardware
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during system initialization") // NOI18N
-    public LnPacketizer() {
-        self = this;
-    }
-
-    // The methods to implement the LocoNetInterface
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean status() {
-        return (ostream != null && istream != null);
-    }
-
-    /**
-     * Synchronized list used as a transmit queue.
-     * <P>
-     * This is public to allow access from the internal class(es) when compiling
-     * with Java 1.1
-     */
-    public LinkedList<byte[]> xmtList = new LinkedList<byte[]>();
-
-    /**
-     * XmtHandler (a local class) object to implement the transmit thread
-     */
-    protected Runnable xmtHandler;
-
-    /**
-     * RcvHandler (a local class) object to implement the receive thread
-     */
-    protected Runnable rcvHandler;
-
-    /**
-     * Forward a preformatted LocoNetMessage to the actual interface.
-     * <p>
-     * Checksum is computed and overwritten here, then the message is converted
-     * to a byte array and queue for transmission
-     *
-     * @param m Message to send; will be updated with CRC
-     */
-    @Override
-    public void sendLocoNetMessage(LocoNetMessage m) {
-        // update statistics
-        transmittedMsgCount++;
-
-        // set the error correcting code byte(s) before transmittal
-        m.setParity();
-
-        // stream to port in single write, as that's needed by serial
-        int len = m.getNumDataElements();
-        byte msg[] = new byte[len];
-        for (int i = 0; i < len; i++) {
-            msg[i] = (byte) m.getElement(i);
-        }
-
-        if (log.isDebugEnabled()) { // avoid String building if not needed
-            log.debug("queue LocoNet packet: {}", m.toString());
-        }
-        // in an atomic operation, queue the request and wake the xmit thread
-        try {
-            synchronized (xmtHandler) {
-                xmtList.addLast(msg);
-                xmtHandler.notify();
-            }
-        } catch (RuntimeException e) {
-            log.warn("passing to xmit: unexpected exception: " + e);
-        }
-    }
-
-    /**
-     * Implement abstract method to signal if there's a backlog of information
-     * waiting to be sent.
-     *
-     * @return true if busy, false if nothing waiting to send
-     */
-    @Override
-    public boolean isXmtBusy() {
-        if (controller == null) {
-            return false;
-        }
-
-        return (!controller.okToSend());
-    }
-
-    // methods to connect/disconnect to a source of data in a LnPortController
-    // This is public to allow access from the internal class(es) when compiling with Java 1.1
-    public LnPortController controller = null;
-
-    /**
-     * Make connection to existing LnPortController object.
-     *
-     * @param p Port controller for connected. Save this for a later disconnect
-     *          call
-     */
-    public void connectPort(LnPortController p) {
-        istream = p.getInputStream();
-        ostream = p.getOutputStream();
-        if (controller != null) {
-            log.warn("connectPort: connect called while connected");
-        }
-        controller = p;
-    }
-
-    /**
-     * Break connection to existing LnPortController object. Once broken,
-     * attempts to send via "message" member will fail.
-     *
-     * @param p previously connected port
-     */
-    public void disconnectPort(LnPortController p) {
-        istream = null;
-        ostream = null;
-        if (controller != p) {
-            log.warn("disconnectPort: disconnect called from non-connected LnPortController");
-        }
-        controller = null;
-    }
-
-    // data members to hold the streams. These are public so the inner classes defined here
-    // can access whem with a Java 1.1 compiler
-    public DataInputStream istream = null;
-    public OutputStream ostream = null;
-
-    /**
-     * Read a single byte, protecting against various timeouts, etc.
-     * <P>
-     * When a port is set to have a receive timeout (via the
-     * enableReceiveTimeout() method), some will return zero bytes or an
-     * EOFException at the end of the timeout. In that case, the read should be
-     * repeated to get the next real character.
-     *
-     * @param istream stream to read from
-     * @return buffer of received data
-     * @throws java.io.IOException failure during stream read
-     *
-     */
-    protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
-        while (true) { // loop will repeat until character found
-            int nchars;
-            nchars = istream.read(rcvBuffer, 0, 1);
-            if (nchars > 0) {
-                return rcvBuffer[0];
-            }
-        }
-    }
     // Defined this way to reduce new object creation
     private byte[] rcvBuffer = new byte[1];
+    // waiting for this echo
+    private LocoNetMessage waitForMsg;
+    // waiting on LACK
+    private boolean waitingOnLack;
+    // wait this, CS gone busy
+    private int waitBusy;
+    // retry required, lost echo, bad IMM, general busy
+    private boolean reTryRequired;
 
     /**
      * Captive class to handle incoming characters. This is a permanent loop,
      * looking for input messages in character form on the stream connected to
      * the LnPortController via <code>connectPort</code>.
      */
-    protected class RcvHandler implements Runnable {
+    protected class RcvHandlerStrict implements Runnable {
 
         /**
          * Remember the LnPacketizer object
          */
         LnTrafficController trafficController;
 
-        public RcvHandler(LnTrafficController lt) {
+        public RcvHandlerStrict(LnTrafficController lt) {
             trafficController = lt;
         }
 
@@ -213,7 +70,6 @@ public class LnPacketizer extends LnTrafficController {
          */
         @Override
         public void run() {
-
             int opCode;
             while (true) {   // loop permanently, program close will exit
                 try {
@@ -237,25 +93,18 @@ public class LnPacketizer extends LnTrafficController {
                             switch ((opCode & 0x60) >> 5) {
                                 case 0:
                                     /* 2 byte message */
-
                                     len = 2;
                                     break;
-
                                 case 1:
                                     /* 4 byte message */
-
                                     len = 4;
                                     break;
-
                                 case 2:
                                     /* 6 byte message */
-
                                     len = 6;
                                     break;
-
                                 case 3:
                                     /* N byte message */
-
                                     if (byte2 < 2) {
                                         log.error("LocoNet message length invalid: " + byte2
                                                 + " opcode: " + Integer.toHexString(opCode)); // NOI18N
@@ -297,18 +146,45 @@ public class LnPacketizer extends LnTrafficController {
                     }
                     // check parity
                     if (!msg.checkParity()) {
-                        log.warn("Ignore Loconet packet with bad checksum: " + msg.toString());
+                        log.warn("Ignore Loconet packet with bad checksum: [{}]", msg.toString());  // NOI18N
                         throw new LocoNetMessageException();
                     }
                     // message is complete, dispatch it !!
                     {
                         if (log.isDebugEnabled()) { // avoid String building if not needed
-                            log.debug("queue message for notification: {}", msg.toString());
+                            log.debug("queue message for notification: {}", msg.toString());  // NOI18N
                         }
-
+                        // check for XmtHandler waiting on return values
+                        if (waitForMsg != null) {
+                            if (waitForMsg.equals(msg)) {
+                                waitForMsg = null;
+                            }
+                        }
+                        if (waitingOnLack) {
+                            if (msg.getOpCode() == LnConstants.OPC_LONG_ACK) {
+                                waitingOnLack = false;
+                                // check bad IMM
+                                if ((msg.getElement(1) & 0xff) == 0x6d && (msg.getElement(2) & 0xff) == 0) {
+                                    reTryRequired = true;
+                                    waitBusy = 100;
+                                    log.warn("IMM Back off");  // NOI18N
+                                } else {
+                                    reTryRequired = false;
+                                }
+                            } else if (msg.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
+                                waitingOnLack = false;
+                            } else if ( msg.getOpCode() == 0xe6 ) { // Extended slot status
+                                waitingOnLack = false;
+                            }
+                            // check for CS busy
+                        } else if (msg.getOpCode() == LnConstants.OPC_GPBUSY) {
+                            waitBusy = 100;
+                            log.warn("CS Busy Back off");  // NOI18N
+                            reTryRequired = true;
+                            // check for waiting on echo
+                        }
                         jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));
                     }
-
                     // done with this one
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
@@ -355,15 +231,16 @@ public class LnPacketizer extends LnTrafficController {
     /**
      * Captive class to handle transmission
      */
-    class XmtHandler implements Runnable {
+    class XmtHandlerStrict implements Runnable {
 
         /**
          * {@inheritDoc}
          */
         @Override
         public void run() {
-
-            while (true) {   // loop permanently
+            int immCount = 0;
+            int waitCount;
+            while (true) { // loop permanently
                 // any input?
                 try {
                     // get content; failure is a NoSuchElementException
@@ -372,7 +249,6 @@ public class LnPacketizer extends LnTrafficController {
                     synchronized (this) {
                         msg = xmtList.removeFirst();
                     }
-
                     // input - now send
                     try {
                         if (ostream != null) {
@@ -382,10 +258,91 @@ public class LnPacketizer extends LnTrafficController {
                             if (log.isDebugEnabled()) { // avoid String building if not needed
                                 log.debug("start write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
                             }
-                            ostream.write(msg);
-                            ostream.flush();
-                            if (log.isTraceEnabled()) { // avoid String building if not needed
-                                log.trace("end write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
+                            // get it started
+                            reTryRequired = true;
+                            int reTryCount = 0;
+                            while (reTryRequired) {
+                                // assert its going to work
+                                reTryRequired = false;
+                                waitForMsg = new LocoNetMessage(msg);
+                                if ((msg[0] & 0x08) != 0) {
+                                    waitingOnLack = true;
+                                }
+                                while (waitBusy != 0) {
+                                    // we do it this way as during our sleep the waitBusy time can be reset
+                                    int waitTime = waitBusy;
+                                    waitBusy = 0;
+                                    //if (log.isDebugEnabled()) {
+                                    //    log.debug("waitBusy");
+                                    //}
+                                    // for now so we know how prevalent this is over a long time span
+                                    log.warn("Waitbusy");
+                                    try {
+                                        Thread.sleep(waitTime);
+                                    } catch (InterruptedException ee) {
+                                        log.warn("waitBusy sleep Interupted", ee); // NOI18N
+                                    }
+                                }
+                                ostream.write(msg);
+                                ostream.flush();
+                                if (log.isTraceEnabled()) {
+                                    log.trace("end write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
+                                }
+                                // loop waiting for echo message and or LACK
+                                // minimal sleeps so as to exit fast
+                                waitCount = 0;
+                                // echo as really fast
+                                while ((waitForMsg != null) && waitCount < 20) {
+                                    try {
+                                        Thread.sleep(1);
+                                    } catch (InterruptedException ee) {
+                                        log.error("waitForMsg sleep Interupted", ee); // NOI18N
+                                    }
+                                    waitCount++;
+                                }
+                                // Oh my lost the echo...
+                                if (waitCount > 19) {
+                                    try {
+                                        log.warn("Retry Send for Lost Packet [{}] Count[{}]", waitForMsg.toString(),
+                                                reTryCount); // NOI18N
+                                    } catch (NullPointerException npe) {
+                                        log.warn("Retry Send for waitingOnMsg null?  Count[{}]", reTryCount); // NOI18N
+                                    }
+                                    if (reTryCount < 5) {
+                                        reTryRequired = true;
+                                        reTryCount++;
+                                    } else {
+                                        reTryRequired = false;
+                                        reTryCount = 0;
+                                        log.warn("Give up on lost packet");
+                                    }
+                                } else {
+                                    // LACKs / a response can be slow
+                                    while (waitingOnLack && waitCount < 50) {
+                                        try {
+                                            Thread.sleep(1);
+                                        } catch (InterruptedException ee) {
+                                            log.error("waitingOnLack sleep Interupted", ee); // NOI18N
+                                        }
+                                        waitCount++;
+                                    }
+                                    // Oh my lost the LACK / response...
+                                    if (waitCount > 49) {
+                                        try {
+                                            log.warn("Retry Send for Lost Response Count[{}]", reTryCount); // NOI18N
+                                        } catch (NullPointerException npe) {
+                                            log.warn("Retry Send for waitingOnLack null?  Count[{}]", reTryCount); // NOI18N
+                                        }
+                                        if (reTryCount < 5) {
+                                            reTryRequired = true;
+                                            reTryCount++;
+                                        } else {
+                                            log.warn("Give up on Lost Response."); // NOI18N
+                                            reTryRequired = false;
+                                            reTryCount = 0;
+                                        }
+                                    }
+                                }
                             }
                             messageTransmited(msg);
                         } else {
@@ -398,49 +355,13 @@ public class LnPacketizer extends LnTrafficController {
                 } catch (NoSuchElementException e) {
                     // message queue was empty, wait for input
                     log.trace("start wait"); // NOI18N
-
-                    new jmri.util.WaitHandler(this);  // handle synchronization, spurious wake, interruption
-
+                    new jmri.util.WaitHandler(this); // handle synchronization, spurious wake, interruption
                     log.trace("end wait"); // NOI18N
                 }
             }
         }
     }
 
-    /**
-     * When a message is finally transmitted, forward it to listeners if echoing
-     * is needed
-     *
-     * @param msg message sent
-     *
-     */
-    protected void messageTransmited(byte[] msg) {
-        log.debug("message transmitted");
-        if (!echo) {
-            return;
-        }
-        // message is queued for transmit, echo it when needed
-        // return a notification via the queue to ensure end
-        javax.swing.SwingUtilities.invokeLater(new Echo(this, new LocoNetMessage(msg)));
-    }
-
-    static class Echo implements Runnable {
-
-        Echo(LnPacketizer t, LocoNetMessage m) {
-            myTc = t;
-            msgForLater = m;
-        }
-        LocoNetMessage msgForLater;
-        LnPacketizer myTc;
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void run() {
-            myTc.notify(msgForLater);
-        }
-    }
 
     /**
      * Invoked at startup to start the threads needed here.
@@ -454,7 +375,7 @@ public class LnPacketizer extends LnTrafficController {
         int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
         // start the XmtHandler in a thread of its own
         if (xmtHandler == null) {
-            xmtHandler = new XmtHandler();
+            xmtHandler = new XmtHandlerStrict();
         }
         Thread xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
         log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
@@ -464,14 +385,16 @@ public class LnPacketizer extends LnTrafficController {
 
         // start the RcvHandler in a thread of its own
         if (rcvHandler == null) {
-            rcvHandler = new RcvHandler(this);
+            rcvHandler = new RcvHandlerStrict(this);
         }
         Thread rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
         rcvThread.setDaemon(true);
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();
-        log.info("lnPacketizer Started");
+
+        log.info("Strict Packetizer in use");
+
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnPacketizer.class);
+    private final static Logger log = LoggerFactory.getLogger(LnPacketizerStrict.class);
 }

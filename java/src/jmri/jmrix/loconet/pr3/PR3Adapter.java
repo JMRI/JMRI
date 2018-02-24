@@ -1,7 +1,9 @@
 package jmri.jmrix.loconet.pr3;
 
+import java.lang.reflect.Constructor;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
+import jmri.jmrix.loconet.LnPacketizerStrict;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import org.slf4j.Logger;
@@ -22,6 +24,9 @@ public class PR3Adapter extends LocoBufferAdapter {
 
         options.remove(option2Name);
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
+        option4Name = Bundle.getMessage("lnPacketizer");
+        options.put(option4Name, new Option(Bundle.getMessage("PacketizerTypeLabel"),packetizerOptions()));
+
     }
 
     /**
@@ -98,7 +103,20 @@ public class PR3Adapter extends LocoBufferAdapter {
         } else {
             // MS100 modes - connecting to a separate command station
             // connect to a packetizing traffic controller
-            LnPacketizer packets = new LnPacketizer();
+
+            LnPacketizer packets;
+            String packetSelection = getPacketizerOption(getOptionState(option4Name));
+            switch (packetSelection){
+                case "lnPacketizer":
+                    packets = new LnPacketizer();
+                    break;
+                case "lnPacketizerStrict":
+                    packets = new LnPacketizerStrict();
+                    break;
+                default:
+                    packets = new LnPacketizer();
+                    log.warn("Using Normal do not understand option [{}]",packetSelection);
+            }
             packets.connectPort(this);
 
             // create memo
@@ -176,6 +194,37 @@ public class PR3Adapter extends LocoBufferAdapter {
             log.error("Cannot cast the system connection memo to a PR3SystemConnection Memo.");
             return null;
         }
+    }
+
+    /**
+     *  Define the readable data and internal code
+     */
+    private static String[][] packetizers = { {Bundle.getMessage("lnPacketizer"),"lnPacketizer" },
+            {Bundle.getMessage("lnPacketizerStrict"),"lnPacketizerStrict"} };
+    /**
+     *
+     * @return String array of readable choices
+     */
+    public String[] packetizerOptions() {
+        String[] retval = new String[packetizers.length];
+        for (int i=0;i < packetizers.length; i++) {
+            retval[i]=packetizers[i][0];
+        }
+        return retval;
+    }
+    /**
+     * for a given readable choice return internal value
+     * or the default
+     * @param s  - readable text
+     * @return - internal value
+     */
+    private String getPacketizerOption(String s) {
+        for (int i=0;i < packetizers.length; i++) {
+            if (packetizers[i][0].equals(s)) {
+                return packetizers[i][1];
+            }
+        }
+        return "lnPacketizer";
     }
 
     private final static Logger log = LoggerFactory.getLogger(PR3Adapter.class);
