@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represents a single command or response on the DCC++.
- * <P>
+ * <p>
  * Content is represented with ints to avoid the problems with sign-extension
  * that bytes have, and because a Java char is actually a variable number of
  * bytes in Unicode.
@@ -21,15 +21,15 @@ import org.slf4j.LoggerFactory;
  */
 
 /*
- * A few words on implementation
+ * A few words on implementation:
  *
  * DCCppMessage objects are (usually) created by calling one of the static makeMessageType()
  * methods, and are then consumed by the TrafficController/Packetizer by being converted to
  * a String and sent out the port.
- *
+ * <p>
  * Internally the DCCppMessage is actually stored as a String, and alongside that is kept
  * a Regex for easy extraction of the values where needed in the code.
- *
+ * <p>
  * The various getParameter() type functions are mainly for convenience in places such as the
  * port monitor where we want to be able to extract the /meaning/ of the DCCppMessage and
  * present it in a human readable form.  Using the getParameterType() methods insulates
@@ -41,7 +41,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     static private int _nRetries = 5;
 
     /* According to the specification, DCC++ has a maximum timing 
-     interval of 500 milliseconds durring normal communications */
+     interval of 500 milliseconds during normal communications */
     // TODO: Note this timing interval is actually an XpressNet thing...
     // Need to find out what DCC++'s equivalent is.
     static protected final int DCCppProgrammingTimeout = 10000;  // TODO: Appropriate value for DCC++?
@@ -141,7 +141,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * Parse a string and generate/return a DCCppMessage object
+     * Parse a string and generate/return a DCCppMessage object.
      * 
      * @param s String of DCC++ message without the {@literal < >} brackets
      * @return DCCppMessage
@@ -383,8 +383,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     /**
-     * toString() converts DCCppMessage to String format
-     * (without the {@code <>} brackets)
+     * Converts DCCppMessage to String format (without the {@code <>} brackets)
      * 
      * @return String form of message.
      */
@@ -558,7 +557,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     @Override
     public int getNumDataElements() {
         return(myMessage.length());
-//        return(_nDataChars);
+        // return(_nDataChars);
     }
     
     @Override
@@ -654,23 +653,23 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * return the message length
+     * @return the message length
      */
     public int length() {
         return(myMessage.length());
     }
 
     /**
-     * changing the default number of retries for an DCC++ message
+     * Change the default number of retries for an DCC++ message.
      *
-     * @param t number of retries to attempt.
+     * @param t number of retries to attempt
      */
     static public void setDCCppMessageRetries(int t) {
         _nRetries = t;
     }
 
     /**
-     * changing the default timeout for an DCC++ message
+     * Change the default timeout for a DCC++ message.
      *
      * @param t Timeout in milliseconds
      */
@@ -686,26 +685,26 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Returns true if this DCCppMessage is properly formatted
      * (or will generate a properly formatted command when
-     * converted to String)
+     * converted to String).
      * 
      * @return boolean true/false 
      */
     public boolean isValidMessageFormat() {
         if (this.match(this.myRegex) != null) {
-     return(true);
- } else {
-     return(false);
- }
+            return(true);
+        } else {
+            return(false);
+        }
     }
 
     /**
-     * matches this DCCppMessage against the given regex 'pat'
+     * Matches this DCCppMessage against the given regex 'pat'
      * 
      * @param pat Regex
      * @return Matcher or null if no match.
      */
     private Matcher match(String pat) {
- return(match(this.toString(), pat, "Validator"));
+        return(match(this.toString(), pat, "Validator"));
     }
 
     /**
@@ -717,24 +716,24 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      * @return Matcher or null if no match
      */
     private static Matcher match(String s, String pat, String name) {
- try {
-     Pattern p = Pattern.compile(pat);
-     Matcher m = p.matcher(s);
-     if (!m.matches()) {
-  //log.warn("No Match {} Command: {} Pattern: {}",name, s, pat);
-  return(null);
-     }
-     return(m);
+        try {
+            Pattern p = Pattern.compile(pat);
+            Matcher m = p.matcher(s);
+            if (!m.matches()) {
+                //log.warn("No Match {} Command: {} Pattern: {}",name, s, pat);
+                return(null);
+            }
+            return(m);
 
- } catch (PatternSyntaxException e) {
+        } catch (PatternSyntaxException e) {
             log.error("Malformed DCC++ message syntax! s = ", pat);
-     return(null);
+            return(null);
         } catch (IllegalStateException e) {
             log.error("Group called before match operation executed string= " + s);
-     return(null);
+            return(null);
         } catch (IndexOutOfBoundsException e) {
             log.error("Index out of bounds string= " + s);
-     return(null);
+            return(null);
         }
     }
     
@@ -797,11 +796,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     // Helper methods for Sensor Query Commands
 
     public String getOutputIDString() {
- if (this.isOutputAddMessage() || this.isOutputDeleteMessage() || this.isOutputCmdMessage()) {
+        if (this.isOutputAddMessage() || this.isOutputDeleteMessage() || this.isOutputCmdMessage()) {
             return getValueString(1);
- } else { 
-     log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
-     return("0");
+        } else {
+            log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
+            return("0");
         }
     }
 
@@ -809,17 +808,17 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         if (this.isOutputAddMessage() || this.isOutputDeleteMessage() || this.isOutputCmdMessage()) {
         return(getValueInt(1)); // assumes stored as an int!
         } else {
-     log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
-     return(0);
+            log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
+            return(0);
         }
     }
 
     public String getOutputPinString() {
- if (this.isOutputAddMessage()) {
+        if (this.isOutputAddMessage()) {
             return(getValueString(2));
- } else {
-     log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
-     return("0");
+        } else {
+            log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
+            return("0");
         }
     }
 
@@ -827,17 +826,17 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         if (this.isOutputAddMessage()) {
             return(getValueInt(2));
         } else {
-     log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
+            log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
             return(0);
         }
     }
 
     public String getOutputIFlagString() {
- if (this.isOutputAddMessage()) {
+        if (this.isOutputAddMessage()) {
             return(getValueString(3));
- } else {
-     log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
-     return("0");
+        } else {
+            log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
+            return("0");
         }
     }
 
@@ -845,60 +844,61 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         if (this.isOutputAddMessage()) {
             return(getValueInt(3));
         } else {
-     log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
+            log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
             return(0);
         }
     }
 
     public String getOutputStateString() {
- if (isOutputCmdMessage()) {
-     return(this.getOutputStateInt() == 1 ? "HIGH" : "LOW");
- } else {
-     return("Not a Turnout");
- }
+        if (isOutputCmdMessage()) {
+            return(this.getOutputStateInt() == 1 ? "HIGH" : "LOW");
+        } else {
+            return("Not a Turnout");
+        }
     }
 
     public int getOutputStateInt() {
- if (isOutputCmdMessage()) {
+        if (isOutputCmdMessage()) {
             return(getValueInt(2));
- } else {
-     log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
-     return(0);
- }
+        } else {
+            log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
+            return(0);
+        }
     }
     
     public boolean getOutputStateBool() {
- if (this.isOutputCmdMessage()) {
+        if (this.isOutputCmdMessage()) {
             return(getValueInt(2) != 0);
- } else {
-     log.error("Output Parser called on non-Output message type {} message {}", this.getOpCodeChar(), this.toString());
-     return(false);
+        } else {
+            log.error("Output Parser called on non-Output message type {} message {}", this.getOpCodeChar(), this.toString());
+            return(false);
         }
     }
+
     public String getSensorIDString() {
- if (this.isSensorAddMessage()) {
+        if (this.isSensorAddMessage()) {
             return getValueString(1);
- } else { 
-     log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
-     return("0");
+        } else {
+            log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
+            return("0");
         }
     }
 
     public int getSensorIDInt() {
         if (this.isSensorAddMessage()) {
-        return(getValueInt(1)); // assumes stored as an int!
+            return(getValueInt(1)); // assumes stored as an int!
         } else {
-     log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
-     return(0);
+            log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
+            return(0);
         }
     }
 
     public String getSensorPinString() {
- if (this.isSensorAddMessage()) {
+        if (this.isSensorAddMessage()) {
             return(getValueString(2));
- } else {
-     log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
-     return("0");
+        } else {
+            log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
+            return("0");
         }
     }
 
@@ -906,47 +906,45 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         if (this.isSensorAddMessage()) {
             return(getValueInt(2));
         } else {
-     log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
+            log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
             return(0);
         }
     }
 
     public String getSensorPullupString() {
- if (isSensorAddMessage()) {
+        if (isSensorAddMessage()) {
             return(getValueBool(3) ? "PULLUP" : "NO PULLUP");
- } else {
-     return("Not a Sensor");
- }
+        } else {
+            return("Not a Sensor");
+        }
     }
 
     public int getSensorPullupInt() {
- if (this.isSensorAddMessage()) {
+        if (this.isSensorAddMessage()) {
             return(getValueInt(3));
- } else {
-     log.error("Sensor Parser called on non-Sensor message type {} message {}", this.getOpCodeChar(), this.toString());
-     return(0);
+        } else {
+            log.error("Sensor Parser called on non-Sensor message type {} message {}", this.getOpCodeChar(), this.toString());
+            return(0);
         }
     }
     
     public boolean getSensorPullupBool() {
- if (this.isSensorAddMessage()) {
+        if (this.isSensorAddMessage()) {
             return(getValueBool(3));
- } else {
-     log.error("Sensor Parser called on non-Sensor message type {} message {}", this.getOpCodeChar(), this.toString());
-     return(false);
+        } else {
+            log.error("Sensor Parser called on non-Sensor message type {} message {}", this.getOpCodeChar(), this.toString());
+            return(false);
         }
     }
-
-
 
     // Helper methods for Accessory Decoder Commands
 
     public String getAccessoryAddrString() {
- if (this.isAccessoryMessage()) {
+        if (this.isAccessoryMessage()) {
             return(getValueString(1));
- } else {
-     log.error("Accessory Parser called on non-Accessory message type {}", this.getOpCodeChar());
-     return("0");
+        } else {
+            log.error("Accessory Parser called on non-Accessory message type {}", this.getOpCodeChar());
+            return("0");
         }
     }
 
@@ -954,17 +952,17 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         if (this.isAccessoryMessage()) {
             return(getValueInt(1));
         } else {
-     log.error("Accessory Parser called on non-Accessory message type {}", this.getOpCodeChar());
+            log.error("Accessory Parser called on non-Accessory message type {}", this.getOpCodeChar());
             return(0);
         }
- //return(Integer.parseInt(this.getAccessoryAddrString()));
+    //return(Integer.parseInt(this.getAccessoryAddrString()));
     }
 
     public String getAccessorySubString() {
- if (this.isAccessoryMessage()) {
+        if (this.isAccessoryMessage()) {
             return(getValueString(2));
- } else {
-     log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
+        } else {
+            log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
             return("0");
         }
     }
@@ -972,103 +970,101 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public int getAccessorySubInt() {
         if (this.isAccessoryMessage()) {
             return(getValueInt(2));
- } else {
-     log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
+        } else {
+            log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
             return(0);
         }
     }
 
     public String getAccessoryStateString() {
- if (isAccessoryMessage()) {
-     return(this.getAccessoryStateInt() == 1 ? "ON" : "OFF");
- } else {
-     return("Not an Accessory Decoder");
- }
-    }
-
-    public int getAccessoryStateInt() {
- if (this.isAccessoryMessage()) {
-            return(getValueInt(3));
+        if (isAccessoryMessage()) {
+            return(this.getAccessoryStateInt() == 1 ? "ON" : "OFF");
         } else {
-     log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
-     return(0);
+            return("Not an Accessory Decoder");
         }
     }
 
-
+    public int getAccessoryStateInt() {
+        if (this.isAccessoryMessage()) {
+            return(getValueInt(3));
+        } else {
+            log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
+            return(0);
+        }
+    }
 
     //------------------------------------------------------
     // Helper methods for Throttle Commands
 
     public String getRegisterString() {
- if (this.isThrottleMessage() || this.isWriteDccPacketMessage() ) {
+        if (this.isThrottleMessage() || this.isWriteDccPacketMessage() ) {
             return(getValueString(1));
- } else {
-     log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
-     return("0");
+        } else {
+            log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
+            return("0");
         }
     }
 
     public int getRegisterInt() {
         if (this.isThrottleMessage()) {
             return(getValueInt(1));
- } else {
-     log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
-     return(0);
+        } else {
+            log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
+            return(0);
         }
     }
 
     public String getAddressString() {
- if (this.isThrottleMessage()) {
+        if (this.isThrottleMessage()) {
             return(getValueString(2));
- } else {
-     log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
-     return("0");
+        } else {
+            log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
+            return("0");
         }
     }
 
     public int getAddressInt() {
         if (this.isThrottleMessage()) {
             return(getValueInt(2));
- } else {
-     log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
-     return(0);
+        } else {
+            log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
+            return(0);
         }
     }
 
     public String getSpeedString() {
- if (this.isThrottleMessage()) {
+        if (this.isThrottleMessage()) {
             return(getValueString(3));
- } else {
-     log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
-     return("0");
+        } else {
+            log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
+            return("0");
         }
     }
 
     public int getSpeedInt() {
         if (this.isThrottleMessage()) {
             return(getValueInt(3));
- } else {
+        } else {
      log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
      return(0);
         }
     }
 
     public String getDirectionString() {
- if (this.isThrottleMessage()) {
-     return(this.getDirectionInt() == 1 ? "Forward" : "Reverse");
- } else {
-     log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
-     return("Not a Throttle");
- }
+        if (this.isThrottleMessage()) {
+            return(this.getDirectionInt() == 1 ? "Forward" : "Reverse");
+        } else {
+            log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
+            return("Not a Throttle");
+        }
     }
 
     public int getDirectionInt() {
- if (this.isThrottleMessage()) {
+        if (this.isThrottleMessage()) {
             return(getValueInt(4));
- } else {
-     log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
-     return(0);
+        } else {
+            log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
+            return(0);
         }
     }
 
@@ -1076,56 +1072,56 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     // Helper methods for Function Commands
 
     public String getFuncAddressString() {
- if (this.isFunctionMessage()) {
+        if (this.isFunctionMessage()) {
             return(getValueString(1));
- } else {
-     log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
-     return("0");
+        } else {
+            log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
+            return("0");
         }
     }
 
     public int getFuncAddressInt() {
         if (this.isFunctionMessage()) {
             return(getValueInt(1));
- } else {
-     log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
-     return(0);
+        } else {
+            log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
+            return(0);
         }
     }
 
     public String getFuncByte1String() {
- if (this.isFunctionMessage()) {
+        if (this.isFunctionMessage()) {
             return(getValueString(2));
- } else {
-     log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
-     return("0");
+        } else {
+            log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
+            return("0");
         }
     }
 
     public int getFuncByte1Int() {
         if (this.isFunctionMessage()) {
             return(getValueInt(2));
- } else {
-     log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
-     return(0);
+        } else {
+            log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
+            return(0);
         }
     }
 
     public String getFuncByte2String() {
- if (this.isFunctionMessage()) {
+        if (this.isFunctionMessage()) {
             return(getValueString(3));
- } else {
-     log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
-     return("0");
+        } else {
+            log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
+            return("0");
         }
     }
 
     public int getFuncByte2Int() {
         if (this.isFunctionMessage()) {
             return(getValueInt(3));
-  } else {
-     log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
-     return(0);
+        } else {
+            log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
+            return(0);
         }
     }
 
@@ -1133,74 +1129,73 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     // Helper methods for Turnout Commands
 
     public String getTOIDString() {
- if (this.isTurnoutMessage()) {
+        if (this.isTurnoutMessage()) {
             return(getValueString(1));
- } else {
-     log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
-     return("0");
+        } else {
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
+            return("0");
         }
     }
 
     public int getTOIDInt() {
         if (this.isTurnoutMessage()) {
             return(getValueInt(1));
- } else {
-     log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
-     return(0);
+        } else {
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
+            return(0);
         }
     }
 
     public String getTOStateString() {
- if (isTurnoutMessage()) {
-     return(this.getTOStateInt() == 1 ? "THROWN" : "CLOSED");
- } else {
-     return("Not a Turnout");
- }
-    }
-
-    public int getTOStateInt() {
- if (this.isTurnoutMessage()) {
-            return(getValueInt(2));
- } else {
-     log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
-     return(0);
+        if (isTurnoutMessage()) {
+            return(this.getTOStateInt() == 1 ? "THROWN" : "CLOSED");
+        } else {
+            return("Not a Turnout");
         }
     }
 
+    public int getTOStateInt() {
+        if (this.isTurnoutMessage()) {
+            return(getValueInt(2));
+        } else {
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
+            return(0);
+        }
+    }
 
     public String getTOAddressString() {
- if (this.isTurnoutAddMessage()) {
+        if (this.isTurnoutAddMessage()) {
             return(getValueString(2));
- } else {
-     log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
-     return("0");
+        } else {
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
+            return("0");
         }
     }
 
     public int getTOAddressInt() {
         if (this.isTurnoutAddMessage()) {
             return(getValueInt(2));
- } else {
-     log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
-     return(0);
+        } else {
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
+            return(0);
         }
     }
 
     public String getTOSubAddressString() {
- if (this.isTurnoutAddMessage()) {
+        if (this.isTurnoutAddMessage()) {
             return(getValueString(3));
- } else {
-     log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
-     return("0");
+        } else {
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
+            return("0");
         }
     }
 
     public int getTOSubAddressInt() {
         if (this.isTurnoutAddMessage()) {
             return(getValueInt(3));
- } else {
-     log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
-     return(0);
+        } else {
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
+            return(0);
         }
     }
 
@@ -1256,14 +1251,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     public String getOpsWriteValueString() {
- if (this.isOpsWriteByteMessage()) {
+        if (this.isOpsWriteByteMessage()) {
             return(getValueString(3));
- } else if (this.isOpsWriteBitMessage()) {
+        } else if (this.isOpsWriteBitMessage()) {
             return(getValueString(4));
- } else {
-     log.error("Ops Program Parser called on non-OpsProgram message type {}", this.getOpCodeChar());
-     return("0");
- }
+        } else {
+            log.error("Ops Program Parser called on non-OpsProgram message type {}", this.getOpCodeChar());
+            return("0");
+        }
     }
 
     public int getOpsWriteValueInt() {
@@ -1379,11 +1374,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     // Helper methods for Prog Write Bit Commands
 
     public String getBitString() {
- if (this.isProgWriteBitMessage()) {
+        if (this.isProgWriteBitMessage()) {
             return(getValueString(2));
         } else {
-     log.error("PWBit Parser called on non-PWBit message type {}", this.getOpCodeChar());
-     return("0");
+            log.error("PWBit Parser called on non-PWBit message type {}", this.getOpCodeChar());
+            return("0");
         }
     }
 
@@ -1419,26 +1414,26 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     // TODO: Not sure this is useful in DCC++
     @Override
     public boolean replyExpected() {
- boolean retv = false;
- switch(this.getOpCodeChar()) {
- case DCCppConstants.THROTTLE_CMD:
- case DCCppConstants.TURNOUT_CMD:
- case DCCppConstants.PROG_WRITE_CV_BYTE:
- case DCCppConstants.PROG_WRITE_CV_BIT:
- case DCCppConstants.PROG_READ_CV:
- case DCCppConstants.TRACK_POWER_ON:
- case DCCppConstants.TRACK_POWER_OFF:
- case DCCppConstants.READ_TRACK_CURRENT:
- case DCCppConstants.READ_CS_STATUS:
- case DCCppConstants.GET_FREE_MEMORY:
-        case DCCppConstants.OUTPUT_CMD:
- case DCCppConstants.LIST_REGISTER_CONTENTS:
-     retv = true;
-     break;
- default:
-     retv = false;
- }
- return(retv);
+        boolean retv = false;
+        switch(this.getOpCodeChar()) {
+            case DCCppConstants.THROTTLE_CMD:
+            case DCCppConstants.TURNOUT_CMD:
+            case DCCppConstants.PROG_WRITE_CV_BYTE:
+            case DCCppConstants.PROG_WRITE_CV_BIT:
+            case DCCppConstants.PROG_READ_CV:
+            case DCCppConstants.TRACK_POWER_ON:
+            case DCCppConstants.TRACK_POWER_OFF:
+            case DCCppConstants.READ_TRACK_CURRENT:
+            case DCCppConstants.READ_CS_STATUS:
+            case DCCppConstants.GET_FREE_MEMORY:
+            case DCCppConstants.OUTPUT_CMD:
+            case DCCppConstants.LIST_REGISTER_CONTENTS:
+                retv = true;
+                break;
+            default:
+                retv = false;
+        }
+        return(retv);
     }
 
     //private boolean responseExpected = true;
@@ -1481,11 +1476,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    returns: NONE
     */
     public static DCCppMessage makeAccessoryDecoderMsg(int address, int subaddress, boolean activate) {
- // Sanity check inputs
- if (address < 0 || address > DCCppConstants.MAX_ACC_DECODER_ADDRESS)
-     return(null);
- if (subaddress < 0 || subaddress > DCCppConstants.MAX_ACC_DECODER_SUBADDR)
-     return(null);
+        // Sanity check inputs
+        if (address < 0 || address > DCCppConstants.MAX_ACC_DECODER_ADDRESS)
+            return(null);
+        if (subaddress < 0 || subaddress > DCCppConstants.MAX_ACC_DECODER_SUBADDR)
+            return(null);
 
         DCCppMessage m = new DCCppMessage(DCCppConstants.ACCESSORY_CMD);
         
@@ -1499,8 +1494,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     public static DCCppMessage makeAccessoryDecoderMsg(int address, boolean activate) {
- // Convert the single address to an address/subaddress pair:
- // address = (address - 1) * 4 + subaddress + 1 for address>0;
+        // Convert the single address to an address/subaddress pair:
+        // address = (address - 1) * 4 + subaddress + 1 for address>0;
         int addr, subaddr;
         if (address > 0) {
             addr = (address - 1) / (DCCppConstants.MAX_ACC_DECODER_SUBADDR + 1);
@@ -1536,10 +1531,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    RETURNS: {@code <H ID ADDRESS SUBADDRESS THROW>} for each defined turnout or {@code <X>} if no turnouts defined.
      */
     public static DCCppMessage makeTurnoutCommandMsg(int id, boolean thrown) {
- // Sanity check inputs
- if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) return(null);
- // Need to also validate whether turnout is predefined?  Where to store the IDs?
- // Turnout Command
+        // Sanity check inputs
+        if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) return(null);
+        // Need to also validate whether turnout is predefined?  Where to store the IDs?
+        // Turnout Command
         
         DCCppMessage m = new DCCppMessage(DCCppConstants.TURNOUT_CMD);
         m.myMessage.append(" " + id);
@@ -1551,8 +1546,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public static DCCppMessage makeOutputCmdMsg(int id, boolean state) {
- // Sanity check inputs
- if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) { return(null); }
+        // Sanity check inputs
+        if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) { return(null); }
 
         DCCppMessage m = new DCCppMessage(DCCppConstants.OUTPUT_CMD);
         m.myMessage.append(" " + id);
@@ -1564,8 +1559,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public static DCCppMessage makeOutputAddMsg(int id, int pin, int iflag) {
- // Sanity check inputs
- if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) { return(null); }
+        // Sanity check inputs
+        if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) { return(null); }
 
         DCCppMessage m = new DCCppMessage(DCCppConstants.OUTPUT_CMD);
         m.myMessage.append(" " + id);
@@ -1578,8 +1573,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public static DCCppMessage makeOutputDeleteMsg(int id) {
- // Sanity check inputs
- if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) { return(null); }
+        // Sanity check inputs
+        if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) { return(null); }
 
         DCCppMessage m = new DCCppMessage(DCCppConstants.OUTPUT_CMD);
         m.myMessage.append(" " + id);
@@ -1594,10 +1589,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public static DCCppMessage makeTurnoutAddMsg(int id, int addr, int subaddr) {
- // Sanity check inputs
- if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) { return(null); }
- if (addr < 0 || addr > DCCppConstants.MAX_ACC_DECODER_ADDRESS) { return(null); }
- if (subaddr < 0 || subaddr > DCCppConstants.MAX_ACC_DECODER_SUBADDR) { return(null); }
+        // Sanity check inputs
+        if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) { return(null); }
+        if (addr < 0 || addr > DCCppConstants.MAX_ACC_DECODER_ADDRESS) { return(null); }
+        if (subaddr < 0 || subaddr > DCCppConstants.MAX_ACC_DECODER_SUBADDR) { return(null); }
 
         DCCppMessage m = new DCCppMessage(DCCppConstants.TURNOUT_CMD);
         m.myMessage.append(" " + id);
@@ -1610,8 +1605,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public static DCCppMessage makeTurnoutDeleteMsg(int id) {
- // Sanity check inputs
- if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) { return(null); }
+        // Sanity check inputs
+        if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) { return(null); }
 
         DCCppMessage m = new DCCppMessage(DCCppConstants.TURNOUT_CMD);
         m.myMessage.append(" " + id);
@@ -1640,9 +1635,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    RETURNS: {@code <Q ID PIN PULLUP>} for each defined sensor, or {@code <X>} if no sensors defined.
      */
     public static DCCppMessage makeSensorAddMsg(int id, int pin, int pullup) {
- // Sanity check inputs
- // TODO: Optional sanity check pin number vs. Arduino model.
- if (id < 0 || id > DCCppConstants.MAX_SENSOR_ID) { return(null); }
+        // Sanity check inputs
+        // TODO: Optional sanity check pin number vs. Arduino model.
+        if (id < 0 || id > DCCppConstants.MAX_SENSOR_ID) { return(null); }
 
         DCCppMessage m = new DCCppMessage(DCCppConstants.SENSOR_CMD);
         m.myMessage.append(" " + id);
@@ -1655,8 +1650,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public static DCCppMessage makeSensorDeleteMsg(int id) {
- // Sanity check inputs
- if (id < 0 || id > DCCppConstants.MAX_SENSOR_ID) { return(null); }
+        // Sanity check inputs
+        if (id < 0 || id > DCCppConstants.MAX_SENSOR_ID) { return(null); }
 
         DCCppMessage m = new DCCppMessage(DCCppConstants.SENSOR_CMD);
         m.myMessage.append(" " + id);
@@ -1677,8 +1672,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *
      *    returns status messages containing the status of each connected sensor.
      */
-  public static DCCppMessage makeQuerySensorStatesMsg() {
- return(new DCCppMessage(DCCppConstants.QUERY_SENSOR_STATES_CMD, DCCppConstants.QUERY_SENSOR_STATES_REGEX));
+    public static DCCppMessage makeQuerySensorStatesMsg() {
+        return(new DCCppMessage(DCCppConstants.QUERY_SENSOR_STATES_CMD, DCCppConstants.QUERY_SENSOR_STATES_REGEX));
     }
 
     /**
@@ -1699,17 +1694,17 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    where VALUE is a number from 0-255 as read from the requested CV, or -1 if verificaiton read fails
      */
     public static DCCppMessage makeWriteDirectCVMsg(int cv, int val) {
- return(makeWriteDirectCVMsg(cv, val, 0, DCCppConstants.PROG_WRITE_CV_BYTE));
+        return(makeWriteDirectCVMsg(cv, val, 0, DCCppConstants.PROG_WRITE_CV_BYTE));
     }
 
     public static DCCppMessage makeWriteDirectCVMsg(int cv, int val, int callbacknum, int callbacksub) {
- // Sanity check inputs
- if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
- if (val < 0 || val > DCCppConstants.MAX_DIRECT_CV_VAL) return(null);
- if (callbacknum < 0 || callbacknum > DCCppConstants.MAX_CALLBACK_NUM)
-     return(null);
- if (callbacksub < 0 || callbacksub > DCCppConstants.MAX_CALLBACK_SUB)
-     return(null);
+        // Sanity check inputs
+        if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
+        if (val < 0 || val > DCCppConstants.MAX_DIRECT_CV_VAL) return(null);
+        if (callbacknum < 0 || callbacknum > DCCppConstants.MAX_CALLBACK_NUM)
+            return(null);
+        if (callbacksub < 0 || callbacksub > DCCppConstants.MAX_CALLBACK_SUB)
+            return(null);
 
         DCCppMessage m = new DCCppMessage(DCCppConstants.PROG_WRITE_CV_BYTE);
         m.myMessage.append(" " + cv);
@@ -1724,7 +1719,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * Write Direct CV Bit to Programming Track
+     * Write Direct CV Bit to Programming Track.
      *
      * Format: {@code <B CV BIT VALUE CALLBACKNUM CALLBACKSUB>}
      *
@@ -1742,18 +1737,18 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    where VALUE is a number from 0-1 as read from the requested CV bit, or -1 if verificaiton read fails
      */    
     public static DCCppMessage makeBitWriteDirectCVMsg(int cv, int bit, int val) {
- return(makeBitWriteDirectCVMsg(cv, bit, val, 0, DCCppConstants.PROG_WRITE_CV_BIT));
+        return(makeBitWriteDirectCVMsg(cv, bit, val, 0, DCCppConstants.PROG_WRITE_CV_BIT));
     }
 
     public static DCCppMessage makeBitWriteDirectCVMsg(int cv, int bit, int val, int callbacknum, int callbacksub) {
 
- // Sanity Check Inputs
- if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
- if (bit < 0 || bit > 7) return(null);
- if (callbacknum < 0 || callbacknum > DCCppConstants.MAX_CALLBACK_NUM)
-     return(null);
- if (callbacksub < 0 || callbacksub > DCCppConstants.MAX_CALLBACK_SUB)
-     return(null);
+        // Sanity Check Inputs
+        if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
+        if (bit < 0 || bit > 7) return(null);
+        if (callbacknum < 0 || callbacknum > DCCppConstants.MAX_CALLBACK_NUM)
+            return(null);
+        if (callbacksub < 0 || callbacksub > DCCppConstants.MAX_CALLBACK_SUB)
+            return(null);
 
         DCCppMessage m = new DCCppMessage(DCCppConstants.PROG_WRITE_CV_BIT);
         m.myMessage.append(" " + cv);
@@ -1785,17 +1780,16 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    where VALUE is a number from 0-255 as read from the requested CV, or -1 if read could not be verified
      */    
     public static DCCppMessage makeReadDirectCVMsg(int cv) {
- return(makeReadDirectCVMsg(cv, 0, DCCppConstants.PROG_READ_CV));
+        return(makeReadDirectCVMsg(cv, 0, DCCppConstants.PROG_READ_CV));
     }
 
     public static DCCppMessage makeReadDirectCVMsg(int cv, int callbacknum, int callbacksub) {
-
- // Sanity check inputs
- if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
- if (callbacknum < 0 || callbacknum > DCCppConstants.MAX_CALLBACK_NUM)
-     return(null);
- if (callbacksub < 0 || callbacksub > DCCppConstants.MAX_CALLBACK_SUB)
-     return(null);
+        // Sanity check inputs
+        if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
+        if (callbacknum < 0 || callbacknum > DCCppConstants.MAX_CALLBACK_NUM)
+            return(null);
+        if (callbacksub < 0 || callbacksub > DCCppConstants.MAX_CALLBACK_SUB)
+            return(null);
         
         DCCppMessage m = new DCCppMessage(DCCppConstants.PROG_READ_CV);
         m.myMessage.append(" " + cv);
@@ -1823,11 +1817,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    returns: NONE
      */    
     public static DCCppMessage makeWriteOpsModeCVMsg(int address, int cv, int val) {
- // Sanity check inputs
- if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS)
-     return(null);
- if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
- if (val < 0 || val > DCCppConstants.MAX_DIRECT_CV_VAL) return(null);
+        // Sanity check inputs
+        if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS)
+            return(null);
+        if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
+        if (val < 0 || val > DCCppConstants.MAX_DIRECT_CV_VAL) return(null);
  
         DCCppMessage m = new DCCppMessage(DCCppConstants.OPS_WRITE_CV_BYTE);
         m.myMessage.append(" " + address);
@@ -1855,12 +1849,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    returns: NONE
      */        
     public static DCCppMessage makeBitWriteOpsModeCVMsg(int address, int cv, int bit, int val) {
-
- // Sanity Check Inputs
- if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS)
-     return(null);
- if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
- if (bit < 0 || bit > 7) return(null);
+        // Sanity Check Inputs
+        if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS)
+            return(null);
+        if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
+        if (bit < 0 || bit > 7) return(null);
  
         DCCppMessage m = new DCCppMessage(DCCppConstants.OPS_WRITE_CV_BIT);
         m.myMessage.append(" " + address);
@@ -1883,8 +1876,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      * Returns {@code <p1> (ON) or <p0> (OFF)}
      */
     public static DCCppMessage makeSetTrackPowerMsg(boolean on) {
- //String s = new String(Character.toString((on ? DCCppConstants.TRACK_POWER_ON : DCCppConstants.TRACK_POWER_OFF)));
- //return(new DCCppMessage(s));
+        //String s = new String(Character.toString((on ? DCCppConstants.TRACK_POWER_ON : DCCppConstants.TRACK_POWER_OFF)));
+        //return(new DCCppMessage(s));
         return(new DCCppMessage((on ? DCCppConstants.TRACK_POWER_ON : DCCppConstants.TRACK_POWER_OFF),
                                 DCCppConstants.TRACK_POWER_REGEX));
     }
@@ -1908,11 +1901,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    returns: {@code <a CURRENT>}
      *    where CURRENT = 0-1024, based on exponentially-smoothed weighting scheme
      */
-   public static DCCppMessage makeReadTrackCurrentMsg() {
- return(new DCCppMessage(DCCppConstants.READ_TRACK_CURRENT, DCCppConstants.READ_TRACK_CURRENT_REGEX));
+    public static DCCppMessage makeReadTrackCurrentMsg() {
+        return(new DCCppMessage(DCCppConstants.READ_TRACK_CURRENT, DCCppConstants.READ_TRACK_CURRENT_REGEX));
     }
 
-     /**
+    /**
      * Read DCC++ Base Station Status
      *
      * Format: {@code <s>}
@@ -1922,12 +1915,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    
      *    returns: series of status messages that can be read by an interface to determine status of DCC++ Base Station and important settings
      */
-  public static DCCppMessage makeCSStatusMsg() {
- return(new DCCppMessage(DCCppConstants.READ_CS_STATUS, DCCppConstants.READ_CS_STATUS_REGEX));
+    public static DCCppMessage makeCSStatusMsg() {
+        return(new DCCppMessage(DCCppConstants.READ_CS_STATUS, DCCppConstants.READ_CS_STATUS_REGEX));
     }
 
-
-    /*
+    /**
      * Generate an emergency stop for the specified address
      * @param address is the locomotive address
      *
@@ -1947,7 +1939,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         return(m);
     }
     
-    /*
+    /**
      * Generate a Speed and Direction Request message
      * @param register is the DCC++ base station register assigned.
      * @param address is the locomotive address
@@ -1968,17 +1960,17 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    
      */
     public static DCCppMessage makeSpeedAndDirectionMsg(int register, int address, float speed, boolean isForward) {
- // Sanity check inputs
- if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
+        // Sanity check inputs
+        if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
  
         DCCppMessage m = new DCCppMessage(DCCppConstants.THROTTLE_CMD);
         m.myMessage.append(" " + register);
         m.myMessage.append(" " + address);
- if (speed < 0.0) {
+        if (speed < 0.0) {
             m.myMessage.append(" -1");
- } else {
-     int speedVal = java.lang.Math.round(speed * 126);
-     speedVal = ((speedVal > DCCppConstants.MAX_SPEED) ? DCCppConstants.MAX_SPEED : speedVal);
+        } else {
+            int speedVal = java.lang.Math.round(speed * 126);
+            speedVal = ((speedVal > DCCppConstants.MAX_SPEED) ? DCCppConstants.MAX_SPEED : speedVal);
             m.myMessage.append(" " + speedVal);
         }
         m.myMessage.append(" " + (isForward ? "1" : "0"));
@@ -2028,8 +2020,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      * 
      */
 
-    /*
-     * Generate a Function Group One Operation Request message
+    /**
+     * Generate a Function Group One Operation Request message.
      * @param address is the locomotive address
      * @param f0 is true if f0 is on, false if f0 is off
      * @param f1 is true if f1 is on, false if f1 is off
@@ -2037,15 +2029,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      * @param f3 is true if f3 is on, false if f3 is off
      * @param f4 is true if f4 is on, false if f4 is off
      */
-
     public static DCCppMessage makeFunctionGroup1OpsMsg(int address,
             boolean f0,
             boolean f1,
             boolean f2,
             boolean f3,
             boolean f4) 
-    { 
-
+    {
         // Sanity check inputs
         if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
         
@@ -2064,8 +2054,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         return(m);
     }
 
-    /*
-     * Generate a Function Group One Set Momentary Functions message
+    /**
+     * Generate a Function Group One Set Momentary Functions message.
      * @param address is the locomotive address
      * @param f0 is true if f0 is momentary
      * @param f1 is true if f1 is momentary
@@ -2100,8 +2090,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
 
-    /*
-     * Generate a Function Group Two Operation Request message
+    /**
+     * Generate a Function Group Two Operation Request message.
      * @param address is the locomotive address
      * @param f5 is true if f5 is on, false if f5 is off
      * @param f6 is true if f6 is on, false if f6 is off
@@ -2129,12 +2119,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         m.myMessage.append(" " + byte1);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
         
-       m._nDataChars = m.toString().length();
+        m._nDataChars = m.toString().length();
         return(m);
-     }
+    }
 
-    /*
-     * Generate a Function Group Two Set Momentary Functions message
+    /**
+     * Generate a Function Group Two Set Momentary Functions message.
      * @param address is the locomotive address
      * @param f5 is true if f5 is momentary
      * @param f6 is true if f6 is momentary
@@ -2166,8 +2156,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
 
-    /*
-     * Generate a Function Group Three Operation Request message
+    /**
+     * Generate a Function Group Three Operation Request message.
      * @param address is the locomotive address
      * @param f9 is true if f9 is on, false if f9 is off
      * @param f10 is true if f10 is on, false if f10 is off
@@ -2198,8 +2188,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         return(m);
     }
 
-    /*
-     * Generate a Function Group Three Set Momentary Functions message
+    /**
+     * Generate a Function Group Three Set Momentary Functions message.
      * @param address is the locomotive address
      * @param f9 is true if f9 is momentary
      * @param f10 is true if f10 is momentary
@@ -2230,8 +2220,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         return(m);
     }
 
-    /*
-     * Generate a Function Group Four Operation Request message
+    /**
+     * Generate a Function Group Four Operation Request message.
      * @param address is the locomotive address
      * @param f13 is true if f13 is on, false if f13 is off
      * @param f14 is true if f14 is on, false if f14 is off
@@ -2275,8 +2265,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         return(m);
     }
 
-    /*
-     * Generate a Function Group Four Set Momentary Function message
+    /**
+     * Generate a Function Group Four Set Momentary Function message.
      * @param address is the locomotive address
      * @param f13 is true if f13 is Momentary
      * @param f14 is true if f14 is Momentary
@@ -2321,8 +2311,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         return(m);
     }
 
-    /*
-     * Generate a Function Group Five Operation Request message
+    /**
+     * Generate a Function Group Five Operation Request message.
      * @param address is the locomotive address
      * @param f21 is true if f21 is on, false if f21 is off
      * @param f22 is true if f22 is on, false if f22 is off
@@ -2367,8 +2357,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         return(m);
     }
 
-    /*
-     * Generate a Function Group Five Set Momentary Function message
+    /**
+     * Generate a Function Group Five Set Momentary Function message.
      * @param address is the locomotive address
      * @param f21 is true if f21 is momentary
      * @param f22 is true if f22 is momentary
@@ -2416,13 +2406,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /*
      * Build an Emergency Off Message
      */
-    
 
     /**
      * Test Code Functions... not for normal use
      */
 
-    /** Write DCC Packet to a specified Register on the Main*/
+    /***
+     * Write DCC Packet to a specified Register on the Main.
+     */
     public static DCCppMessage makeWriteDCCPacketMainMsg( int register, int num_bytes, byte[] bytes) {
         // Sanity Check Inputs
         if (register < 0 || register > DCCppConstants.MAX_MAIN_REGISTERS) return(null);
@@ -2438,7 +2429,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         
     }
  
-    /** Write DCC Packet to a specified Register on the Programming Track*/
+    /**
+     * Write DCC Packet to a specified Register on the Programming Track.
+     */
     public static DCCppMessage makeWriteDCCPacketProgMsg( int register, int num_bytes, byte bytes[]) {
         // Sanity Check Inputs
         if (register < 0 || register > DCCppConstants.MAX_MAIN_REGISTERS) return(null);

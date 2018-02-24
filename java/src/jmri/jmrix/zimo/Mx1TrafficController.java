@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for implementations of MX-1 Interface.
- * <P>
+ * <p>
  * This provides just the basic interface, plus the "" static method for
  * locating the local implementation.
  *
@@ -17,6 +17,9 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class Mx1TrafficController implements Mx1Interface {
 
+    /**
+     * Create a new TrafficController instance. Simple implementation.
+     */
     public Mx1TrafficController() {
         super();
     }

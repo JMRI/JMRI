@@ -10,8 +10,8 @@ package jmri.jmrix.dccpp;
  *
  * Variable prefix abreviation keys: ACC_ is for accessory messages BC_ is for
  * broadcast messages CS_ is for command station messages PROG_ is for
- * programing related messages LOCO_ is for locomotive related commands
- * OPS_MODE_ is for operations mode programing commands LI_ is for commands that
+ * programming related messages LOCO_ is for locomotive related commands
+ * OPS_MODE_ is for operations mode programming commands LI_ is for commands that
  * are for messages to and from the computer interface LI101_ is for commands
  * specific to the LI101
  *

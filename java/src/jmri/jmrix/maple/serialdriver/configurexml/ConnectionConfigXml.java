@@ -67,7 +67,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     @Override
     protected void getInstance() {
-        if(adapter == null ) {
+        if (adapter == null ) {
            adapter = new SerialDriverAdapter();
         }
     }

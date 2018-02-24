@@ -70,7 +70,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     @Override
     protected void checkInitDone() {
         if (log.isDebugEnabled()) {
-            log.debug("init called for " + name());
+            log.debug("init called for {}", name());
         }
         if (init) {
             return;
@@ -156,6 +156,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     @Override
     public void updateAdapter() {
+        log.debug("updateAdapter() to {}", systemPrefixField.getText());
         adapter.setPort(PortNameMapper.getPortFromName((String) portBox.getSelectedItem()));
         adapter.configureBaudRate((String) baudBox.getSelectedItem());
         for (String i : options.keySet()) {

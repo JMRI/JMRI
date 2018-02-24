@@ -10,17 +10,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts Stream-based I/O to/from Grapevine serial messages.
- * <P>
+ * Convert Stream-based I/O to/from Grapevine serial messages.
+ * <p>
  * The "SerialInterface" side sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a SerialPortController is via a pair of *Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
+ * <p>
  * This handles the state transitions, based on the necessary state in each
  * message.
- * <P>
+ * <p>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2008
@@ -28,9 +28,15 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
-    public SerialTrafficController() {
+    /**
+     * Create a new TrafficController instance.
+     *
+     * @param adaptermemo the associated SystemConnectionMemo
+     */
+    public SerialTrafficController(GrapevineSystemConnectionMemo adaptermemo) {
         super();
-
+        mMemo = adaptermemo;
+        log.debug("creating a new GrapevineTrafficController object on {}", adaptermemo.getSystemPrefix());
         logDebug = log.isDebugEnabled();
 
         // set node range
@@ -47,6 +53,22 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     boolean logDebug = false;
 
     // The methods to implement the SerialInterface
+
+    /**
+     * Make connection to existing PortController (adapter) object.
+     *
+     * @param p the Adapter we're connecting to
+     */
+    public void connectPort(SerialPortController p) {
+        if (controller != null) {
+            log.warn("connectPort called when already connected");
+        } else {
+            log.debug("connectPort invoked");
+        }
+        //controller = p;
+        super.connectPort(p);
+    }
+
     @Override
     public synchronized void addSerialListener(SerialListener l) {
         this.addListener(l);
@@ -58,7 +80,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Public method to set up for initialization of a Serial node
+     * Public method to set up for initialization of a Serial node.
      */
     public void initializeSerialNode(SerialNode node) {
         synchronized (this) {
@@ -75,7 +97,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     @Override
     protected AbstractMRMessage enterProgMode() {
-        log.warn("enterProgMode doesn't make sense for grapevine serial");
+        log.warn("enterProgMode doesn't make sense for Grapevine Serial");
         return null;
     }
 
@@ -109,8 +131,8 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Handles initialization, output and polling for Grapevine from within the
-     * running thread
+     * Handle initialization, output and polling for Grapevine from within the
+     * running thread.
      */
     @Override
     protected synchronized AbstractMRMessage pollMessage() {
@@ -129,7 +151,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             setMustInit(curSerialNodeIndex, false);
             SerialMessage m = (SerialMessage) (getNode(curSerialNodeIndex).createInitPacket());
             if (m != null) {
-                log.debug("send init message: " + m);
+                log.debug("send init message: {}", m.toString());
                 m.setTimeout(50);  // wait for init to finish (milliseconds)
                 return m;
             }   // else fall through to continue
@@ -164,7 +186,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             if (getNode(curSerialNodeIndex).handleTimeout(m, l)) {
                 setMustInit(curSerialNodeIndex, true);
             } else {
-                log.warn("Timeout can't be handled due to missing node index=" + curSerialNodeIndex);
+                log.warn("Timeout can't be handled due to missing node index = {}", curSerialNodeIndex);
             }
         }
     }
@@ -173,7 +195,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     protected synchronized void resetTimeout(AbstractMRMessage m) {
         // inform node
         getNode(curSerialNodeIndex).resetTimeout(m);
-
     }
 
     @Override
@@ -190,25 +211,51 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * static function returning the SerialTrafficController instance to use.
+     * Static function returning the SerialTrafficController instance to use.
      *
      * @return The registered SerialTrafficController instance for general use,
      *         if need be creating one.
+     * @deprecated JMRI Since 4.12.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SerialTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new SerialTrafficController object");
-            }
-            self = new SerialTrafficController();
-        }
-        return self;
+        log.warn("deprecated instance() call for Grapevine SerialTrafficController");
+        return null;
     }
 
+    /**
+     * @deprecated JMRI Since 4.12.4 instance() shouldn't be used
+     */
+    @Deprecated
     static volatile protected SerialTrafficController self = null;
 
+    /**
+     * Reference to the system connection memo.
+     */
+    GrapevineSystemConnectionMemo mMemo = null;
+
+    /**
+     * Get access to the system connection memo associated with this traffic
+     * controller.
+     *
+     * @return associated systemConnectionMemo object
+     */
+    public GrapevineSystemConnectionMemo getSystemConnectionMemo() {
+        return mMemo;
+    }
+
+    /**
+     * Set the system connection memo associated with this traffic controller.
+     *
+     * @param m associated systemConnectionMemo object
+     */
+    public void setSystemConnectionMemo(GrapevineSystemConnectionMemo m) {
+        log.debug("GrapevineTrafficController set memo from {} to {}", mMemo.getUserName(), m.getUserName());
+        mMemo = m;
+    }
+
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
+            justification = "temporary until multi-system; only set at startup")
     @Override
     @Deprecated
     protected void setInstance() {
@@ -248,8 +295,9 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     /**
      * Execute a state machine to parse messages from the input characters. May
-     * consume one or more than one character. Returns true when the message has
-     * been completely loaded.
+     * consume one or more than one character.
+     *
+     * @return true when the message has been completely loaded
      */
     @SuppressWarnings("fallthrough")
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
@@ -262,20 +310,18 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                     log.debug("state 0, rcv " + (buffer[0] & 0xFF));
                 }
                 if ((buffer[0] & 0x80) == 0) {
-                    log.warn("1st byte not address: " + (buffer[0] & 0xFF));
+                    log.warn("1st byte not address: {}", (buffer[0] & 0xFF));
                     return true;  // try again with next
                 }
                 state = 1;
             // and continue anyway
             case 1:
                 buffer[1] = readByteProtected(istream);
-                if (logDebug) {
-                    log.debug("state 1, rcv " + (buffer[1] & 0xFF));
-                }
+                log.debug("state 1, rcv {}", (buffer[1] & 0xFF));
                 if ((buffer[1] & 0x80) != 0) {
                     buffer[0] = buffer[1];
                     state = 1; // use this as address and try again
-                    log.warn("2nd byte HOB set: " + (buffer[1] & 0xFF) + ", going to state 1");
+                    log.warn("2nd byte HOB set: {}, going to state 1", (buffer[1] & 0xFF));
                     return true;
                 }
                 state = 2;
@@ -292,18 +338,16 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                     nextReplyLen = 4; // only happens once
                     state = 0;
                     if (logDebug) {
-                        log.debug("Short message complete: " + msg.toString());
+                        log.debug("Short message complete: {}", msg.toString());
                     }
                     return false;  // have received a message
                 }
                 // here for normal four byte message expected
                 buffer[2] = readByteProtected(istream);
-                if (logDebug) {
-                    log.debug("state 2, rcv " + (buffer[2] & 0xFF));
-                }
+                log.debug("state 2, rcv {}", (buffer[2] & 0xFF));
                 if (buffer[0] != buffer[2]) {
                     // no match, consider buffer[2] start of new message
-                    log.warn("addresses don't match: " + (buffer[0] & 0xFF) + ", " + (buffer[2] & 0xFF) + ", going to state 1");
+                    log.warn("addresses don't match: {}, {}, going to state 1", (buffer[0] & 0xFF), (buffer[2] & 0xFF));
                     buffer[0] = buffer[2];
                     state = 1;
                     return true;
@@ -312,13 +356,11 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             // fall through
             case 3:
                 buffer[3] = readByteProtected(istream);
-                if (logDebug) {
-                    log.debug("state 3, rcv " + (buffer[3] & 0xFF));
-                }
+                log.debug("state 3, rcv {}", (buffer[3] & 0xFF));
                 if ((buffer[3] & 0x80) != 0) { // unexpected high bit
                     buffer[0] = buffer[3];
                     state = 1; // use this as address and try again
-                    log.warn("3rd byte HOB set: " + (buffer[3] & 0xFF) + ", going to state 1");
+                    log.warn("3rd byte HOB set: {}, going to state 1", (buffer[3] & 0xFF));
                     return true;
                 }
                 // Check for "software version" command, error message; special
@@ -331,7 +373,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                         + ((buffer[1] * 2) & 0xF) + (((buffer[1] * 2) & 0xF0) >> 4)
                         + (buffer[3] & 0xF) + ((buffer[3] & 0x70) >> 4);
                 if (((parity & 0xF) != 0) && !pollMsg && !errMsg) {
-                    log.warn("parity mismatch: " + parity + ", going to state 2 with content " + (buffer[2] & 0xFF) + "," + (buffer[3] & 0xFF));
+                    log.warn("parity mismatch: {}, going to state 2 with content {},{}", parity, (buffer[2] & 0xFF), (buffer[3] & 0xFF));
                     buffer[0] = buffer[2];
                     buffer[1] = buffer[3];
                     state = 2;
@@ -339,13 +381,11 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                 }
                 // success!
                 loadBuffer(msg);
-                if (logDebug) {
-                    log.debug("Message complete: " + msg.toString());
-                }
+                log.debug("Message complete: {}", msg.toString());
                 state = 0;
                 return false;
             default:
-                log.error("unexpected loadChars state: " + state + ", go direct to state 0");
+                log.error("unexpected loadChars state: {}, go direct to state 0", state);
                 state = 0;
                 return true;
         }

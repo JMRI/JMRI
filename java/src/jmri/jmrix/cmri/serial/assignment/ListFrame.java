@@ -87,7 +87,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
     public void initComponents() {
 
         // set the frame's initial state
-        setTitle(Bundle.getMessage("MenuItemAssignments"));
+        setTitle(Bundle.getMessage("WindowTitle"));
         setSize(500, 300);
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));

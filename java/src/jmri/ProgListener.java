@@ -102,7 +102,7 @@ public interface ProgListener extends java.util.EventListener {
 
     /**
      * Constant denoting that a communications error occurred between the command
-     * station and the PC durring programming
+     * station and the PC during programming
      */
     public final int CommError = 0x400;
 }
