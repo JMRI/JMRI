@@ -7,8 +7,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -37,6 +35,6 @@ public class MarklinNamedPaneActionTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinNamedPaneActionTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(MarklinNamedPaneActionTest.class);
 
 }

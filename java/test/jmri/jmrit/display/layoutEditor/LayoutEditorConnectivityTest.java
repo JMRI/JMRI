@@ -1,43 +1,38 @@
-                        package jmri.jmrit.display.layoutEditor;
+package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
-import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.Turnout;
+import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.JUnitUtil;
-import junit.extensions.jfcunit.TestHelper;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.extensions.jfcunit.finder.DialogFinder;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * Swing jfcUnit tests for the LayoutEditor
+ * Swing tests for the LayoutEditor
  *
  * @author	Dave Duchamp Copyright 2011
  */
-public class LayoutEditorConnectivityTest extends jmri.util.SwingTestCase {
+public class LayoutEditorConnectivityTest {
 
-    @SuppressWarnings("unchecked")
+    @Test
     public void testShowAndClose() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // Can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
 
         // load and display test panel file
         java.io.File f = new java.io.File("java/test/jmri/jmrit/display/layoutEditor/valid/LEConnectTest.xml");
         cm.load(f);
-        sleep(100); // time for internal listeners to calm down
 
         // Find new window by name (should be more distinctive, comes from sample file)
+        EditorFrameOperator to = new EditorFrameOperator("Connectivity Test");
+
         LayoutEditor le = (LayoutEditor) jmri.util.JmriJFrame.getFrame("Connectivity Test");
         Assert.assertNotNull(le);
 
@@ -51,343 +46,265 @@ public class LayoutEditorConnectivityTest extends jmri.util.SwingTestCase {
         Block cBlock = bm.getBlock("4");
         Block pBlock = bm.getBlock("6");
         Block nBlock = bm.getBlock("5");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        ArrayList<Integer> tsList = cu.getTurnoutSettingList();
-        int setting = tsList.get(0).intValue();
-        Assert.assertEquals("6_4_5Connect", setting, Turnout.CLOSED);
+        List <LayoutTrackExpectedState<LayoutTurnout>> tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        int setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("6_4_5Connect", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("5");
         nBlock = bm.getBlock("6");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("5_4_6Connect", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("5_4_6Connect", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("5");
         nBlock = bm.getBlock("2");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("5_4_2Connect", setting, Turnout.THROWN);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("5_4_2Connect", Turnout.THROWN, setting);
 
         cBlock = bm.getBlock("2");
         pBlock = bm.getBlock("1");
         nBlock = bm.getBlock("3");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("1_2_3Connect", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("1_2_3Connect", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("3");
         nBlock = bm.getBlock("1");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("3_2_1Connect", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("3_2_1Connect", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("1");
         nBlock = bm.getBlock("4");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("1_2_4Connect", setting, Turnout.THROWN);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("1_2_4Connect", Turnout.THROWN, setting);
 
         // Test left-handed crossover connectivity turnout settings
         cBlock = bm.getBlock("14");
         pBlock = bm.getBlock("13");
         nBlock = bm.getBlock("17");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("13_14_17Connect", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("13_14_17Connect", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("17");
         nBlock = bm.getBlock("13");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("17_14_13Connect", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("17_14_13Connect", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("17");
         nBlock = bm.getBlock("12");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("17_14_12Connect", setting, Turnout.THROWN);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("17_14_12Connect", Turnout.THROWN, setting);
 
         cBlock = bm.getBlock("12");
         pBlock = bm.getBlock("11");
         nBlock = bm.getBlock("15");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("11_12_15Connect", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("11_12_15Connect", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("15");
         nBlock = bm.getBlock("11");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("15_12_11Connect", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("15_12_11Connect", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("15");
         nBlock = bm.getBlock("14");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("15_12_14Connect", setting, Turnout.THROWN);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("15_12_14Connect", Turnout.THROWN, setting);
 
         // Test double crossover connectivity turnout settings
         cBlock = bm.getBlock("21");
         pBlock = bm.getBlock("20");
         nBlock = bm.getBlock("22");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("20_21_22Connect", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("20_21_22Connect", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("22");
         nBlock = bm.getBlock("20");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("22_21_20Connect", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("22_21_20Connect", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("20");
         nBlock = bm.getBlock("26");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("20_21_26Connect", setting, Turnout.THROWN);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("20_21_26Connect", Turnout.THROWN, setting);
 
         cBlock = bm.getBlock("22");
         pBlock = bm.getBlock("23");
         nBlock = bm.getBlock("21");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("23_22_21Connect", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("23_22_21Connect", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("21");
         nBlock = bm.getBlock("23");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("21_22_23Connect", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("21_22_23Connect", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("23");
         nBlock = bm.getBlock("25");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("23_22_25Connect", setting, Turnout.THROWN);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("23_22_25Connect", Turnout.THROWN, setting);
 
         cBlock = bm.getBlock("26");
         pBlock = bm.getBlock("27");
         nBlock = bm.getBlock("25");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("27_26_25Connect", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("27_26_25Connect", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("25");
         nBlock = bm.getBlock("27");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("25_26_27Connect", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("25_26_27Connect", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("27");
         nBlock = bm.getBlock("21");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("27_26_21Connect", setting, Turnout.THROWN);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("27_26_21Connect", Turnout.THROWN, setting);
 
         cBlock = bm.getBlock("25");
         pBlock = bm.getBlock("24");
         nBlock = bm.getBlock("26");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("24_25_26Connect", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("24_25_26Connect", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("26");
         nBlock = bm.getBlock("24");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("26_25_24Connect", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("26_25_24Connect", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("24");
         nBlock = bm.getBlock("22");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("24_25_22Connect", setting, Turnout.THROWN);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("24_25_22Connect", Turnout.THROWN, setting);
 
         // Test right handed turnout (with "wings" in same block) connectivity turnout settings
         cBlock = bm.getBlock("62");
         pBlock = bm.getBlock("64");
         nBlock = bm.getBlock("61");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("64_62_61Connect", setting, Turnout.THROWN);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("64_62_61Connect", Turnout.THROWN, setting);
 
         pBlock = bm.getBlock("61");
         nBlock = bm.getBlock("64");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("61_62_64Connect", setting, Turnout.THROWN);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("61_62_64Connect", Turnout.THROWN, setting);
 
         pBlock = bm.getBlock("63");
         nBlock = bm.getBlock("61");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("63_62_61Connect", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("63_62_61Connect", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("61");
         nBlock = bm.getBlock("63");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("61_62_63Connect", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("61_62_63Connect", Turnout.CLOSED, setting);
 
         // Test extended track following connectivity turnout settings
         //   Each path must go through two turnouts, whose settings are tested in order
         cBlock = bm.getBlock("32");
         pBlock = bm.getBlock("31");
         nBlock = bm.getBlock("33");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("31_32_33ConnectA", setting, Turnout.CLOSED);
-        setting = tsList.get(1).intValue();
-        Assert.assertEquals("31_32_33ConnectB", setting, Turnout.THROWN);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("31_32_33ConnectA", Turnout.CLOSED, setting);
+        setting = tsList.get(1).getExpectedState();
+        Assert.assertEquals("31_32_33ConnectB", Turnout.THROWN, setting);
 
         pBlock = bm.getBlock("33");
         nBlock = bm.getBlock("31");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("33_32_31ConnectA", setting, Turnout.THROWN);
-        setting = tsList.get(1).intValue();
-        Assert.assertEquals("33_32_31ConnectB", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("33_32_31ConnectA", Turnout.THROWN, setting);
+        setting = tsList.get(1).getExpectedState();
+        Assert.assertEquals("33_32_31ConnectB", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("31");
         nBlock = bm.getBlock("34");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("31_32_34ConnectA", setting, Turnout.CLOSED);
-        setting = tsList.get(1).intValue();
-        Assert.assertEquals("31_32_34ConnectB", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("31_32_34ConnectA", Turnout.CLOSED, setting);
+        setting = tsList.get(1).getExpectedState();
+        Assert.assertEquals("31_32_34ConnectB", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("34");
         nBlock = bm.getBlock("31");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("34_32_31ConnectA", setting, Turnout.CLOSED);
-        setting = tsList.get(1).intValue();
-        Assert.assertEquals("34_32_31ConnectB", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("34_32_31ConnectA", Turnout.CLOSED, setting);
+        setting = tsList.get(1).getExpectedState();
+        Assert.assertEquals("34_32_31ConnectB", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("31");
         nBlock = bm.getBlock("35");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("31_32_35ConnectA", setting, Turnout.THROWN);
-        setting = tsList.get(1).intValue();
-        Assert.assertEquals("31_32_35ConnectB", setting, Turnout.CLOSED);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("31_32_35ConnectA", Turnout.THROWN, setting);
+        setting = tsList.get(1).getExpectedState();
+        Assert.assertEquals("31_32_35ConnectB", Turnout.CLOSED, setting);
 
         pBlock = bm.getBlock("35");
         nBlock = bm.getBlock("31");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("35_32_31ConnectA", setting, Turnout.CLOSED);
-        setting = tsList.get(1).intValue();
-        Assert.assertEquals("35_32_31ConnectB", setting, Turnout.THROWN);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("35_32_31ConnectA", Turnout.CLOSED, setting);
+        setting = tsList.get(1).getExpectedState();
+        Assert.assertEquals("35_32_31ConnectB", Turnout.THROWN, setting);
 
         pBlock = bm.getBlock("31");
         nBlock = bm.getBlock("36");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("31_32_36ConnectA", setting, Turnout.THROWN);
-        setting = tsList.get(1).intValue();
-        Assert.assertEquals("31_32_36ConnectB", setting, Turnout.THROWN);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("31_32_36ConnectA", Turnout.THROWN, setting);
+        setting = tsList.get(1).getExpectedState();
+        Assert.assertEquals("31_32_36ConnectB", Turnout.THROWN, setting);
 
         pBlock = bm.getBlock("36");
         nBlock = bm.getBlock("31");
-        cu.getTurnoutList(cBlock, pBlock, nBlock);
-        tsList = cu.getTurnoutSettingList();
-        setting = tsList.get(0).intValue();
-        Assert.assertEquals("36_32_31ConnectA", setting, Turnout.THROWN);
-        setting = tsList.get(1).intValue();
-        Assert.assertEquals("36_32_31ConnectB", setting, Turnout.THROWN);
+        tsList = cu.getTurnoutList(cBlock, pBlock, nBlock);
+        setting = tsList.get(0).getExpectedState();
+        Assert.assertEquals("36_32_31ConnectA", Turnout.THROWN, setting);
+        setting = tsList.get(1).getExpectedState();
+        Assert.assertEquals("36_32_31ConnectB", Turnout.THROWN, setting);
 
-        // Ask to close window
-        TestHelper.disposeWindow(le, this);
-
-        // Dialog has popped up, so handle that. First, locate it.
-        List<JDialog> dialogList = new DialogFinder(null).findAll(le);
-        JDialog d = dialogList.get(0);
-
-        // Find the button that deletes the panel
-        AbstractButtonFinder finder = new AbstractButtonFinder("Delete Panel");
-        JButton button = (JButton) finder.find(d, 0);
-        Assert.assertNotNull(button);
-
-        // Click button to delete panel and close window
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
-
-        // another dialog has popped up, so handle that by finding the "Yes - Delete" button.
-        dialogList = new DialogFinder(null).findAll(le);
-        d = dialogList.get(0);
-        finder = new AbstractButtonFinder("Yes - Delete");
-        button = (JButton) finder.find(d, 0);
-        Assert.assertNotNull(button);
-
-        // Click to say yes, I really mean it.
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
-        JUnitUtil.dispose(le);
-    }
-
-    // from here down is testing infrastructure
-    public LayoutEditorConnectivityTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {LayoutEditorConnectivityTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LayoutEditorConnectivityTest.class);
-        return suite;
+        // and close the window
+        to.closeFrameWithConfirmations();
     }
 
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initShutDownManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         JUnitUtil.tearDown();
-        super.tearDown();
     }
 }

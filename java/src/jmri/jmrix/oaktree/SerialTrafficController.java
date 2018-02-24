@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
  * <P>
- * This handles the state transistions, based on the necessary state in each
+ * This handles the state transitions, based on the necessary state in each
  * message.
  * <P>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
@@ -28,6 +28,9 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
+    /**
+     * Create a new Oaktree SerialTrafficController instance. Simple implementation.
+     */
     public SerialTrafficController() {
         super();
 
@@ -51,31 +54,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         this.removeListener(l);
     }
 
-// remove this code when SerialLight is operational - obsoleted and doesn't belong here anyway
-    /**
-     * Public method to set a Oak Tree Serial Output bit Note: systemName is of
-     * format CNnnnBxxxx where "nnn" is the serial node number (0 - 127) "xxxx'
-     * is the bit number within that node (1 thru number of defined bits) state
-     * is 'true' for 0, 'false' for 1 The bit is transmitted to the Oak Tree
-     * hardware immediately before the next poll packet is sent.
-     */
-    public void setSerialOutput(String systemName, boolean state) {
-        // get the node and bit numbers
-        SerialNode node = SerialAddress.getNodeFromSystemName(systemName);
-        if (node == null) {
-            log.error("bad SerialNode specification in SerialOutput system name:" + systemName);
-            return;
-        }
-        int bit = SerialAddress.getBitFromSystemName(systemName);
-        if (bit == 0) {
-            log.error("bad output bit specification in SerialOutput system name:" + systemName);
-            return;
-        }
-        // set the bit
-        node.setOutputBit(bit, state);
-    }
-// end of code to be removed
-
     /**
      * Public method to set up for initialization of a Serial node
      */
@@ -94,7 +72,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     @Override
     protected AbstractMRMessage enterProgMode() {
-        log.warn("enterProgMode doesnt make sense for Oak Tree serial");
+        log.warn("enterProgMode doesn't make sense for Oak Tree serial");
         return null;
     }
 
@@ -211,14 +189,10 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      *
      * @return The registered SerialTrafficController instance for general use,
      *         if need be creating one.
+     * @deprecated since 4.9.7
      */
+    @Deprecated
     static public SerialTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new SerialTrafficController object");
-            }
-            self = new SerialTrafficController();
-        }
         return self;
     }
 
@@ -309,4 +283,5 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
+
 }

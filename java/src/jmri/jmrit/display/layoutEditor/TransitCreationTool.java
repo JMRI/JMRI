@@ -33,13 +33,14 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Kevin Dickerson Copyright (C) 2011
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class TransitCreationTool {
 
     public TransitCreationTool() {
     }
 
-    ArrayList<NamedBean> list = new ArrayList<NamedBean>();
+    ArrayList<NamedBean> list = new ArrayList<>();
 
     public void addNamedBean(NamedBean nb) throws JmriException {
         if (!list.isEmpty()) {
@@ -95,12 +96,12 @@ public class TransitCreationTool {
             }
         }
         //Once created clear the list for a fresh start.
-        list = new ArrayList<NamedBean>();
+        list = new ArrayList<>();
         return t;
     }
 
     public void cancelTransitCreate() {
-        list = new ArrayList<NamedBean>();
+        list = new ArrayList<>();
     }
 
     public List<NamedBean> getBeans() {

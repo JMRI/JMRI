@@ -2,28 +2,30 @@ package jmri.jmrix.loconet.hexfile;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
+import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class LocoNetSystemConnectionMemoTest {
+public class LocoNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-    @Test
-    public void testCTor() {
-        LocoNetSystemConnectionMemo t = new LocoNetSystemConnectionMemo();
-        Assert.assertNotNull("exists",t);
-    }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
+       JUnitUtil.setUp();
+       LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+       LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
+       memo.setLnTrafficController(lnis);
+       memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false);
+       memo.configureManagers();
+       scm = memo;
     }
-
+   
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

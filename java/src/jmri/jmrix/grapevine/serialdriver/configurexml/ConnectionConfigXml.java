@@ -6,6 +6,7 @@ import jmri.jmrix.grapevine.SerialNode;
 import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.serialdriver.ConnectionConfig;
 import jmri.jmrix.grapevine.serialdriver.SerialDriverAdapter;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import org.jdom2.Element;
 
 /**
@@ -13,12 +14,12 @@ import org.jdom2.Element;
  * SerialDriverAdapter (and connections). Note this is named as the XML version
  * of a ConnectionConfig object, but it's actually persisting the
  * SerialDriverAdapter.
- * <P>
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007
+ * @author Bob Jacobsen Copyright (c) 2003, 2006, 2007
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -33,7 +34,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      */
     @Override
     protected void extendElement(Element e) {
-        SerialNode node = (SerialNode) SerialTrafficController.instance().getNode(0);
+        SerialNode node = (SerialNode) ((GrapevineSystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().getNode(0);
         int index = 1;
         while (node != null) {
             // add node as an element
@@ -44,7 +45,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             n.addContent(makeParameter("nodetype", "" + node.getNodeType()));
 
             // look for the next node
-            node = (SerialNode) SerialTrafficController.instance().getNode(index);
+            node = (SerialNode) ((GrapevineSystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().getNode(index);
             index++;
         }
     }
@@ -58,7 +59,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     @Override
     protected void getInstance() {
-        adapter = SerialDriverAdapter.instance();
+        if (adapter == null ) {
+           adapter = new SerialDriverAdapter();
+        }
     }
 
     @Override
@@ -69,11 +72,13 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             int addr = Integer.parseInt(n.getAttributeValue("name"));
             int type = Integer.parseInt(findParmValue(n, "nodetype"));
 
+            SerialTrafficController tc = ((GrapevineSystemConnectionMemo) adapter.getSystemConnectionMemo()).getTrafficController();
+
             // create node (they register themselves)
-            SerialNode node = new SerialNode(addr, type);
+            SerialNode node = new SerialNode(addr, type, tc);
 
             // Trigger initialization of this Node to reflect these parameters
-            SerialTrafficController.instance().initializeSerialNode(node);
+            tc.initializeSerialNode(node);
         }
     }
 
@@ -99,6 +104,11 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     @Override
     protected void register() {
         this.register(new ConnectionConfig(adapter));
+    }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
     }
 
 }

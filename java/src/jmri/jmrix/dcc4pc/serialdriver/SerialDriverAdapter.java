@@ -78,8 +78,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
         return null; // indicates OK return
@@ -88,9 +87,8 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
     public void setHandshake(int mode) {
         try {
             activeSerialPort.setFlowControlMode(mode);
-        } catch (Exception ex) {
-            log.error("Unexpected exception while setting COM port handshake mode trace follows: " + ex);
-            ex.printStackTrace();
+        } catch (UnsupportedCommOperationException ex) {
+            log.error("Unexpected exception while setting COM port handshake mode", ex);
         }
     }
 
@@ -112,7 +110,8 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
             }
             for (int i = 0; i < connList.size(); i++) {
                 SystemConnectionMemo scm = connList.get(i);
-                if (scm.provides(jmri.ProgrammerManager.class) && (!scm.getUserName().equals(userName))) {
+                if ((scm.provides(jmri.AddressedProgrammerManager.class) || scm.provides(jmri.GlobalProgrammerManager.class))
+                        && (!scm.getUserName().equals(userName))) {
                     progConn.add(scm.getUserName());
                 }
             }
@@ -209,8 +208,6 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
         this.getSystemConnectionMemo().setDefaultProgrammer(getOptionState(option1Name));
         control.connectPort(this);
         this.getSystemConnectionMemo().configureManagers();
-
-        jmri.jmrix.dcc4pc.ActiveFlag.setActive();
 
     }
 

@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for replies in a message/reply protocol.
- * <P>
+ * <p>
  * Handles the character manipulation.
  * <p>
  * This is a variable length reply, which can grow as needed. The length is
@@ -121,7 +121,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
         int val = -1;
         try {
             val = Integer.parseInt(s);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.error("Unable to get number from reply: \"" + s + "\" index: " + index
                     + " message: \"" + toString() + "\"");
         }
@@ -138,7 +138,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
         int val = -1;
         try {
             val = Integer.parseInt(s, 16);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.error("Unable to get number from reply: \"" + s + "\" index: " + index
                     + " message: \"" + toString() + "\"");
         }

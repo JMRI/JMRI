@@ -1,13 +1,12 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import jmri.BeanSetting;
 import jmri.InstanceManager;
 import jmri.Path;
 import jmri.Turnout;
-import jmri.util.MathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,15 +21,14 @@ import org.slf4j.LoggerFactory;
  * directly from LayoutEditor or LayoutEditor specific modules.
  * <P>
  * @author Dave Duchamp Copyright (c) 2008
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutEditorAuxTools {
-
-    // Defined text resource
-    //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
     // constants
+
     // operational instance variables
     private LayoutEditor layoutEditor = null;
-    private ArrayList<LayoutConnectivity> cList = new ArrayList<LayoutConnectivity>(); //LayoutConnectivity list
+    private List<LayoutConnectivity> cList = new ArrayList<>(); //LayoutConnectivity list
     private boolean blockConnectivityChanged = false;  // true if block connectivity may have changed
     private boolean initialized = false;
 
@@ -50,14 +48,14 @@ public class LayoutEditorAuxTools {
      * This routine returns an ArrayList of BlockConnectivity objects involving
      * the specified LayoutBlock.
      */
-    public ArrayList<LayoutConnectivity> getConnectivityList(LayoutBlock blk) {
+    public List<LayoutConnectivity> getConnectivityList(LayoutBlock blk) {
         if (!initialized) {
             initializeBlockConnectivity();
         }
         if (blockConnectivityChanged) {
             updateBlockConnectivity();
         }
-        ArrayList<LayoutConnectivity> retList = new ArrayList<LayoutConnectivity>();
+        List<LayoutConnectivity> retList = new ArrayList<>();
         for (LayoutConnectivity lc : cList) {
             if ((lc.getBlock1() == blk) || (lc.getBlock2() == blk)) {
                 retList.add(lc);
@@ -85,44 +83,20 @@ public class LayoutEditorAuxTools {
      * 2) and 3) above. For case 1), two track segments, the direction reflects
      * an "average" over the two track segments. See LayoutConnectivity for the
      * allowed values of direction.
-     *
      */
     public void initializeBlockConnectivity() {
         if (initialized) {
             log.error("Call to initialize a connectivity list that has already been initialized");
             return;
         }
-        cList = new ArrayList<LayoutConnectivity>();
-        ArrayList<LayoutConnectivity> lcs = null;
+        cList = new ArrayList<>();
+        List<LayoutConnectivity> lcs = null;
 
-        // Check for block boundaries at positionable points.
-        for (PositionablePoint p : layoutEditor.pointList) {
-            lcs = p.getLayoutConnectivity();
-            if (lcs != null) {
-                cList.addAll(lcs); // append to list
-            }
-        }
-
-        // Check for block boundaries at layout turnouts and level crossings
-        for (TrackSegment ts : layoutEditor.trackList) {
-            lcs = ts.getLayoutConnectivity();
-            if (lcs != null) {
-                cList.addAll(lcs); // append to list
-            }
-        }
-
-        // check for block boundaries internal to crossover turnouts
-        for (LayoutTurnout lt : layoutEditor.turnoutList) {
-            lcs = lt.getLayoutConnectivity();
-            if (lcs != null) {
-                cList.addAll(lcs); // append to list
-            }
-        }
-
-        // check for block boundaries internal to slips
-        for (LayoutSlip ls : layoutEditor.slipList) {
-            lcs = ls.getLayoutConnectivity();
-            if (lcs != null) {
+        for (LayoutTrack lt : layoutEditor.getLayoutTracks()) {
+            if ((lt instanceof PositionablePoint)
+                    || (lt instanceof TrackSegment)
+                    || (lt instanceof LayoutTurnout)) { // <== includes LayoutSlips
+                lcs = lt.getLayoutConnectivity();
                 cList.addAll(lcs); // append to list
             }
         }
@@ -138,49 +112,41 @@ public class LayoutEditorAuxTools {
         boolean[] found = new boolean[sz];
         Arrays.fill(found, false);
 
-        ArrayList<LayoutConnectivity> lcs = null;
+        List<LayoutConnectivity> lcs = null;
 
         // Check for block boundaries at positionable points.
-        for (PositionablePoint p : layoutEditor.pointList) {
+        for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
             lcs = p.getLayoutConnectivity();
-            if (lcs != null) {
-                for (LayoutConnectivity lc : lcs) {
-                    // add to list, if not already present
-                    checkConnectivity(lc, found);
-                }
+            for (LayoutConnectivity lc : lcs) {
+                // add to list, if not already present
+                checkConnectivity(lc, found);
             }
         }
 
         // Check for block boundaries at layout turnouts and level crossings
-        for (TrackSegment ts : layoutEditor.trackList) {
+        for (TrackSegment ts : layoutEditor.getTrackSegments()) {
             lcs = ts.getLayoutConnectivity();
-            if (lcs != null) {
-                for (LayoutConnectivity lc : lcs) {
-                    // add to list, if not already present
-                    checkConnectivity(lc, found);
-                }
+            for (LayoutConnectivity lc : lcs) {
+                // add to list, if not already present
+                checkConnectivity(lc, found);
             }
         }
 
         // check for block boundaries internal to crossover turnouts
-        for (LayoutTurnout lt : layoutEditor.turnoutList) {
+        for (LayoutTurnout lt : layoutEditor.getLayoutTurnouts()) {
             lcs = lt.getLayoutConnectivity();
-            if (lcs != null) {
-                for (LayoutConnectivity lc : lcs) {
-                    // add to list, if not already present
-                    checkConnectivity(lc, found);
-                }
+            for (LayoutConnectivity lc : lcs) {
+                // add to list, if not already present
+                checkConnectivity(lc, found);
             }
         }
 
         // check for block boundaries internal to slips
-        for (LayoutSlip ls : layoutEditor.slipList) {
+        for (LayoutSlip ls : layoutEditor.getLayoutSlips()) {
             lcs = ls.getLayoutConnectivity();
-            if (lcs != null) {
-                for (LayoutConnectivity lc : lcs) {
-                    // add to list, if not already present
-                    checkConnectivity(lc, found);
-                }
+            for (LayoutConnectivity lc : lcs) {
+                // add to list, if not already present
+                checkConnectivity(lc, found);
             }
         }
 
@@ -207,7 +173,7 @@ public class LayoutEditorAuxTools {
         int rDir = c.getReverseDirection();
 
         TrackSegment track = c.getTrackSegment();
-        Object connected = c.getConnectedObject();
+        LayoutTrack connected = c.getConnectedObject();
         int type = c.getConnectedType();
 
         LayoutTurnout xOver = c.getXover();
@@ -240,7 +206,7 @@ public class LayoutEditorAuxTools {
         }
 
         // Check to see if this connectivity is already in the list
-        // This occurs for the first layout editor panel when there 
+        // This occurs for the first layout editor panel when there
         // are multiple panels connected by edge connectors.
         if (cList.contains(c)) {
             log.debug("checkConnectivity: Duplicate connection: '{}'", c);
@@ -248,23 +214,6 @@ public class LayoutEditorAuxTools {
             cList.add(c);
         }
     }   // checkConnectivity
-
-    // compute direction of vector from p1 to p2
-    static protected int computeDirection(Point2D p1, Point2D p2) {
-        double angleDEG = MathUtil.computeAngleDEG(p2, p1);
-        angleDEG = MathUtil.wrap360(angleDEG);  // don't want to deal with negative numbers here...
-
-        // convert the angleDEG into octants
-        // note: because we use round here, the octants are offset by half (+/-22.5 deg)
-        // so SOUTH isn't from 0-45 deg; it's from -22.5 deg to +22.5 deg; etc. for other octants.
-        // (and this is what we want!)
-        int octant = (int) Math.round(angleDEG / 45.0);
-
-        // use the octant to lookup its direction
-        int dirs[] = {Path.SOUTH, Path.SOUTH + Path.EAST, Path.EAST, Path.NORTH + Path.EAST,
-            Path.NORTH, Path.NORTH + Path.WEST, Path.WEST, Path.SOUTH + Path.WEST, Path.SOUTH};
-        return dirs[octant];
-    }   // computeDirection
 
     /**
      * Searches for and adds BeanSetting's to a Path as needed.
@@ -285,15 +234,15 @@ public class LayoutEditorAuxTools {
      */
     public void addBeanSettings(Path p, LayoutConnectivity lc, LayoutBlock layoutBlock) {
         p.clearSettings();
-        Object curConnection = null;
-        Object prevConnection = null;
+        LayoutTrack curConnection = null;
+        LayoutTrack prevConnection = null;
         int typeCurConnection = 0;
         BeanSetting bs = null;
         LayoutTurnout lt = null;
-        // process object at block boundary
+        // process track at block boundary
         if (lc.getBlock1() == layoutBlock) {    // block1 is this LayoutBlock
             curConnection = lc.getTrackSegment();
-            if (curConnection != null) {        // connected object in this block is a track segment
+            if (curConnection != null) {        // connected track in this block is a track segment
                 prevConnection = lc.getConnectedObject();
                 typeCurConnection = LayoutTrack.TRACK;
                 // is this Track Segment connected to a RH, LH, or WYE turnout at the continuing or diverging track?
@@ -304,25 +253,33 @@ public class LayoutEditorAuxTools {
                     LayoutTurnout ltx = (LayoutTurnout) prevConnection;
                     // Track Segment connected to continuing track of turnout?
                     if (lc.getConnectedType() == LayoutTrack.TURNOUT_B) {
-                        bs = new BeanSetting(ltx.getTurnout(), ltx.getTurnoutName(), ltx.getContinuingSense());
-                        if (bs.getBean() != null) {
-                            p.addSetting(bs);
+                        if (ltx.getTurnout() != null) {
+                            bs = new BeanSetting(ltx.getTurnout(), ltx.getTurnoutName(), ltx.getContinuingSense());
+                            if (bs.getBean() != null) {
+                                p.addSetting(bs);
+                            } else {
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                log.error("BadBeanError (A): " + ltx.getName() + " " + ltx.getLayoutBlock().getDisplayName() + " ltx.getContinuingSense(): " + ltx.getContinuingSense());
+                            }
                         } else {
-                            InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                            log.error("BadBeanError (A): " + ltx.getName() + " " + ltx.getLayoutBlock().getDisplayName() + " ltx.getContinuingSense(): " + ltx.getContinuingSense());
+                            log.warn("No assigned turnout");
                         }
                     } else if (lc.getConnectedType() == LayoutTrack.TURNOUT_C) {
                         // is Track Segment connected to diverging track of turnout?
-                        if (ltx.getContinuingSense() == Turnout.CLOSED) {
-                            bs = new BeanSetting(ltx.getTurnout(), ltx.getTurnoutName(), Turnout.THROWN);
+                        if (ltx.getTurnout() != null) {
+                            if (ltx.getContinuingSense() == Turnout.CLOSED) {
+                                bs = new BeanSetting(ltx.getTurnout(), ltx.getTurnoutName(), Turnout.THROWN);
+                            } else {
+                                bs = new BeanSetting(ltx.getTurnout(), ltx.getTurnoutName(), Turnout.CLOSED);
+                            }
+                            if (bs.getBean() != null) {
+                                p.addSetting(bs);
+                            } else {
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                log.error("BadBeanError (B): " + ltx.getName() + " " + ltx.getLayoutBlock().getDisplayName() + " ltx.getContinuingSense(): " + ltx.getContinuingSense());
+                            }
                         } else {
-                            bs = new BeanSetting(ltx.getTurnout(), ltx.getTurnoutName(), Turnout.CLOSED);
-                        }
-                        if (bs.getBean() != null) {
-                            p.addSetting(bs);
-                        } else {
-                            InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                            log.error("BadBeanError (B): " + ltx.getName() + " " + ltx.getLayoutBlock().getDisplayName() + " ltx.getContinuingSense(): " + ltx.getContinuingSense());
+                            log.warn("No assigned turnout");
                         }
                     } else {
                         log.warn("Did not decode lc.getConnectedType() of {}", lc.getConnectedType());
@@ -339,12 +296,16 @@ public class LayoutEditorAuxTools {
                             || ((ltz.getTurnoutType() == LayoutTurnout.LH_XOVER)
                             && ((lc.getConnectedType() == LayoutTrack.TURNOUT_A)
                             || (lc.getConnectedType() == LayoutTrack.TURNOUT_C)))) {
-                        bs = new BeanSetting(ltz.getTurnout(), ltz.getTurnoutName(), Turnout.CLOSED);
-                        if (bs.getBean() != null) {
-                            p.addSetting(bs);
+                        if (ltz.getTurnout() != null) {
+                            bs = new BeanSetting(ltz.getTurnout(), ltz.getTurnoutName(), Turnout.CLOSED);
+                            if (bs.getBean() != null) {
+                                p.addSetting(bs);
+                            } else {
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                log.error("BadBeanError (C): " + ltz.getName() + " " + ltz.getLayoutBlock().getDisplayName() + " ltz.getTurnoutType(): " + ltz.getTurnoutType() + " lc.getConnectedType(): " + lc.getConnectedType());
+                            }
                         } else {
-                            InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                            log.error("BadBeanError (C): " + ltz.getName() + " " + ltz.getLayoutBlock().getDisplayName() + " ltz.getTurnoutType(): " + ltz.getTurnoutType() + " lc.getConnectedType(): " + lc.getConnectedType());
+                            log.warn("No assigned turnout");
                         }
                     }
                 } // is this track section is connected to a slip?
@@ -354,35 +315,51 @@ public class LayoutEditorAuxTools {
                     LayoutSlip lsz = (LayoutSlip) prevConnection;
                     if (lsz.getSlipType() == LayoutSlip.SINGLE_SLIP) {
                         if (lc.getConnectedType() == LayoutTrack.SLIP_C) {
-                            bs = new BeanSetting(lsz.getTurnout(), lsz.getTurnoutName(), lsz.getTurnoutState(LayoutTurnout.STATE_AC));
-                            if (bs.getBean() != null) {
-                                p.addSetting(bs);
+                            if (lsz.getTurnout() != null) {
+                                bs = new BeanSetting(lsz.getTurnout(), lsz.getTurnoutName(), lsz.getTurnoutState(LayoutTurnout.STATE_AC));
+                                if (bs.getBean() != null) {
+                                    p.addSetting(bs);
+                                } else {
+                                    InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                    log.error("BadBeanError (D): " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
+                                }
                             } else {
-                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                                log.error("BadBeanError (D): " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
+                                log.warn("No assigned turnout");
                             }
-                            bs = new BeanSetting(lsz.getTurnoutB(), lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutTurnout.STATE_AC));
-                            if (bs.getBean() != null) {
-                                p.addSetting(bs);
+                            if (lsz.getTurnoutB() != null) {
+                                bs = new BeanSetting(lsz.getTurnoutB(), lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutTurnout.STATE_AC));
+                                if (bs.getBean() != null) {
+                                    p.addSetting(bs);
+                                } else {
+                                    InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                    log.error("BadBeanError (E): " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
+                                }
                             } else {
-                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                                log.error("BadBeanError (E): " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
+                                log.warn("No assigned turnoutB");
                             }
                         } else if (lc.getConnectedType() == LayoutTrack.SLIP_B) {
-                            bs = new BeanSetting(lsz.getTurnout(), lsz.getTurnoutName(), lsz.getTurnoutState(LayoutTurnout.STATE_BD));
-                            if (bs.getBean() != null) {
-                                p.addSetting(bs);
+                            if (lsz.getTurnout() != null) {
+                                bs = new BeanSetting(lsz.getTurnout(), lsz.getTurnoutName(), lsz.getTurnoutState(LayoutTurnout.STATE_BD));
+                                if (bs.getBean() != null) {
+                                    p.addSetting(bs);
+                                } else {
+                                    InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                    log.error("BadBeanError (F): " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName() + " " + lsz.getTurnout() + " " + lsz.getTurnoutName() + " " + lsz.getTurnoutState(LayoutTurnout.STATE_BD));
+                                }
                             } else {
-                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                                log.error("BadBeanError (F): " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName() + " " + lsz.getTurnout() + " " + lsz.getTurnoutName() + " " + lsz.getTurnoutState(LayoutTurnout.STATE_BD));
+                                log.warn("No assigned turnout");
                             }
 
-                            bs = new BeanSetting(lsz.getTurnoutB(), lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutTurnout.STATE_BD));
-                            if (bs.getBean() != null) {
-                                p.addSetting(bs);
+                            if (lsz.getTurnoutB() != null) {
+                                bs = new BeanSetting(lsz.getTurnoutB(), lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutTurnout.STATE_BD));
+                                if (bs.getBean() != null) {
+                                    p.addSetting(bs);
+                                } else {
+                                    InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                    log.error("BadBeanError (G): " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName() + " " + lsz.getTurnoutB() + " " + lsz.getTurnoutBName() + " " + lsz.getTurnoutBState(LayoutTurnout.STATE_BD));
+                                }
                             } else {
-                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                                log.error("BadBeanError (G): " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName() + " " + lsz.getTurnoutB() + " " + lsz.getTurnoutBName() + " " + lsz.getTurnoutBState(LayoutTurnout.STATE_BD));
+                                log.warn("No assigned turnoutB");
                             }
                         } else if (lc.getConnectedType() == LayoutTrack.SLIP_A) {
                             log.debug("At connection A of a single slip which could go in two different directions");
@@ -390,15 +367,15 @@ public class LayoutEditorAuxTools {
                             log.debug("At connection D of a single slip which could go in two different directions");
                         }
                     } else {
-                        //note: I'm adding these logs as a prequel to adding the correct code for (single &double) slips
+                        //note: I'm adding these logs as a prequel to adding the correct code for double slips
                         if (lc.getConnectedType() == LayoutTrack.SLIP_A) {
-                            log.info("At connection A of a double slip which could go in two different directions");
+                            log.debug("At connection A of a double slip which could go in two different directions");
                         } else if (lc.getConnectedType() == LayoutTrack.SLIP_B) {
-                            log.info("At connection B of a double slip which could go in two different directions");
+                            log.debug("At connection B of a double slip which could go in two different directions");
                         } else if (lc.getConnectedType() == LayoutTrack.SLIP_C) {
-                            log.info("At connection C of a double slip which could go in two different directions");
+                            log.debug("At connection C of a double slip which could go in two different directions");
                         } else if (lc.getConnectedType() == LayoutTrack.SLIP_D) {
-                            log.info("At connection D of a double slip which could go in two different directions");
+                            log.debug("At connection D of a double slip which could go in two different directions");
                         } else {    // this should NEVER happen (it should always be SLIP_A, _B, _C or _D.
                             log.info("At a double slip we could go in two different directions");
                         }
@@ -410,20 +387,25 @@ public class LayoutEditorAuxTools {
                 prevConnection = lt;
                 if ((lt != null) && (lt.getTurnout() != null)) {
                     int type = lc.getXoverBoundaryType();
-                    if (type == LayoutConnectivity.XOVER_BOUNDARY_AB) {
-                        bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
-                        curConnection = lt.getConnectA();
-                    } else if (type == LayoutConnectivity.XOVER_BOUNDARY_CD) {
-                        bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
-                        curConnection = lt.getConnectC();
-                    } else if (type == LayoutConnectivity.XOVER_BOUNDARY_AC) {
-                        bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.THROWN);
-                        curConnection = lt.getConnectA();
-                    } else if (type == LayoutConnectivity.XOVER_BOUNDARY_BD) {
-                        bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.THROWN);
-                        curConnection = lt.getConnectB();
-                    } else {
-                        log.warn("failed to decode lc.getXoverBoundaryType() of {} (A)", lc.getXoverBoundaryType());
+                    if (lt.getTurnout() != null) {
+                        if (type == LayoutConnectivity.XOVER_BOUNDARY_AB) {
+                            bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
+                            curConnection = lt.getConnectA();
+                        } else if (type == LayoutConnectivity.XOVER_BOUNDARY_CD) {
+                            bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
+                            curConnection = lt.getConnectC();
+                        } else if (type == LayoutConnectivity.XOVER_BOUNDARY_AC) {
+                            bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.THROWN);
+                            curConnection = lt.getConnectA();
+                        } else if (type == LayoutConnectivity.XOVER_BOUNDARY_BD) {
+                            bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.THROWN);
+                            curConnection = lt.getConnectB();
+                        } else {
+                            log.warn("failed to decode lc.getXoverBoundaryType() of {} (A)", lc.getXoverBoundaryType());
+                            //bs = null;    // [javac] can only be null here
+                        }
+                    //} else {
+                        //bs = null;    // [javac] can only be null here
                     }
                     typeCurConnection = LayoutTrack.TRACK;
                     if ((bs != null) && (bs.getBean() != null)) {
@@ -439,20 +421,25 @@ public class LayoutEditorAuxTools {
             lt = lc.getXover();
             if ((lt != null) && (lt.getTurnout() != null)) {
                 int type = lc.getXoverBoundaryType();
-                if (type == LayoutConnectivity.XOVER_BOUNDARY_AB) {
-                    bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
-                    curConnection = lt.getConnectB();
-                } else if (type == LayoutConnectivity.XOVER_BOUNDARY_CD) {
-                    bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
-                    curConnection = lt.getConnectD();
-                } else if (type == LayoutConnectivity.XOVER_BOUNDARY_AC) {
-                    bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.THROWN);
-                    curConnection = lt.getConnectC();
-                } else if (type == LayoutConnectivity.XOVER_BOUNDARY_BD) {
-                    bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.THROWN);
-                    curConnection = lt.getConnectD();
-                } else {
-                    log.warn("failed to decode lc.getXoverBoundaryType() of {} (B)", lc.getXoverBoundaryType());
+                if (lt.getTurnout() != null) {
+                    if (type == LayoutConnectivity.XOVER_BOUNDARY_AB) {
+                        bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
+                        curConnection = lt.getConnectB();
+                    } else if (type == LayoutConnectivity.XOVER_BOUNDARY_CD) {
+                        bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
+                        curConnection = lt.getConnectD();
+                    } else if (type == LayoutConnectivity.XOVER_BOUNDARY_AC) {
+                        bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.THROWN);
+                        curConnection = lt.getConnectC();
+                    } else if (type == LayoutConnectivity.XOVER_BOUNDARY_BD) {
+                        bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.THROWN);
+                        curConnection = lt.getConnectD();
+                    } else {
+                        log.warn("failed to decode lc.getXoverBoundaryType() of {} (B)", lc.getXoverBoundaryType());
+                        //bs = null;    // [javac] can only be null here
+                    }
+                //} else {
+                    //bs = null;    // [javac] can only be null here
                 }
                 typeCurConnection = LayoutTrack.TRACK;
                 if ((bs != null) && (bs.getBean() != null)) {
@@ -481,12 +468,16 @@ public class LayoutEditorAuxTools {
                             curConnection = null;
                         } else {
                             // entering turnout at continuing track
-                            bs = new BeanSetting(((LayoutTurnout) curConnection).getTurnout(), ((LayoutTurnout) curConnection).getTurnoutName(), Turnout.CLOSED);
-                            if (bs.getBean() != null) {
-                                p.addSetting(bs);
+                            if (((LayoutTurnout) curConnection).getTurnout() != null) {
+                                bs = new BeanSetting(((LayoutTurnout) curConnection).getTurnout(), ((LayoutTurnout) curConnection).getTurnoutName(), Turnout.CLOSED);
+                                if (bs.getBean() != null) {
+                                    p.addSetting(bs);
+                                } else {
+                                    InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                    log.error("BadBeanError (J): " + ((LayoutTurnout) curConnection).getName() + " " + ((LayoutTurnout) curConnection).getLayoutBlock().getDisplayName());
+                                }
                             } else {
-                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                                log.error("BadBeanError (J): " + ((LayoutTurnout) curConnection).getName() + " " + ((LayoutTurnout) curConnection).getLayoutBlock().getDisplayName());
+                                log.warn("No assigned turnout");
                             }
                             prevConnection = curConnection;
                             if (typeCurConnection == LayoutTrack.TURNOUT_A) {
@@ -503,35 +494,44 @@ public class LayoutEditorAuxTools {
                     } // must be RH, LH, or WYE turnout
                     else if (typeCurConnection == LayoutTrack.TURNOUT_A) {
                         // turnout throat, no bean setting needed and cannot follow Path any further
+                        log.debug("At connection A of a turnout which could go in two different directions");
                         curConnection = null;
                     } else if (typeCurConnection == LayoutTrack.TURNOUT_B) {
                         // continuing track of turnout
-                        if (((LayoutTurnout) curConnection).getContinuingSense() == Turnout.CLOSED) {
-                            bs = new BeanSetting(((LayoutTurnout) curConnection).getTurnout(), ((LayoutTurnout) curConnection).getTurnoutName(), Turnout.CLOSED);
+                        if (((LayoutTurnout) curConnection).getTurnout() != null) {
+                            if (((LayoutTurnout) curConnection).getContinuingSense() == Turnout.CLOSED) {
+                                bs = new BeanSetting(((LayoutTurnout) curConnection).getTurnout(), ((LayoutTurnout) curConnection).getTurnoutName(), Turnout.CLOSED);
+                            } else {
+                                bs = new BeanSetting(((LayoutTurnout) curConnection).getTurnout(), ((LayoutTurnout) curConnection).getTurnoutName(), Turnout.THROWN);
+                            }
+                            if (bs.getBean() != null) {
+                                p.addSetting(bs);
+                            } else {
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                log.error("BadBeanError (K): " + ((LayoutTurnout) curConnection).getName() + " " + ((LayoutTurnout) curConnection).getLayoutBlock().getDisplayName());
+                            }
                         } else {
-                            bs = new BeanSetting(((LayoutTurnout) curConnection).getTurnout(), ((LayoutTurnout) curConnection).getTurnoutName(), Turnout.THROWN);
-                        }
-                        if (bs.getBean() != null) {
-                            p.addSetting(bs);
-                        } else {
-                            InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                            log.error("BadBeanError (K): " + ((LayoutTurnout) curConnection).getName() + " " + ((LayoutTurnout) curConnection).getLayoutBlock().getDisplayName());
+                            log.warn("No assigned turnout");
                         }
                         prevConnection = curConnection;
                         curConnection = ((LayoutTurnout) curConnection).getConnectA();
                         typeCurConnection = LayoutTrack.TRACK;
                     } else if (typeCurConnection == LayoutTrack.TURNOUT_C) {
                         // diverging track of turnout
-                        if (((LayoutTurnout) curConnection).getContinuingSense() == Turnout.CLOSED) {
-                            bs = new BeanSetting(((LayoutTurnout) curConnection).getTurnout(), ((LayoutTurnout) curConnection).getTurnoutName(), Turnout.THROWN);
+                        if (((LayoutTurnout) curConnection).getTurnout() != null) {
+                            if (((LayoutTurnout) curConnection).getContinuingSense() == Turnout.CLOSED) {
+                                bs = new BeanSetting(((LayoutTurnout) curConnection).getTurnout(), ((LayoutTurnout) curConnection).getTurnoutName(), Turnout.THROWN);
+                            } else {
+                                bs = new BeanSetting(((LayoutTurnout) curConnection).getTurnout(), ((LayoutTurnout) curConnection).getTurnoutName(), Turnout.CLOSED);
+                            }
+                            if (bs.getBean() != null) {
+                                p.addSetting(bs);
+                            } else {
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                log.error("BadBeanError (L): " + ((LayoutTurnout) curConnection).getName() + " " + ((LayoutTurnout) curConnection).getLayoutBlock().getDisplayName());
+                            }
                         } else {
-                            bs = new BeanSetting(((LayoutTurnout) curConnection).getTurnout(), ((LayoutTurnout) curConnection).getTurnoutName(), Turnout.CLOSED);
-                        }
-                        if (bs.getBean() != null) {
-                            p.addSetting(bs);
-                        } else {
-                            InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                            log.error("BadBeanError (L): " + ((LayoutTurnout) curConnection).getName() + " " + ((LayoutTurnout) curConnection).getLayoutBlock().getDisplayName());
+                            log.warn("No assigned turnout");
                         }
                         prevConnection = curConnection;
                         curConnection = ((LayoutTurnout) curConnection).getConnectA();
@@ -554,9 +554,6 @@ public class LayoutEditorAuxTools {
                     prevConnection = curConnection;
                     curConnection = ((LevelXing) curConnection).getConnectB();
                     typeCurConnection = LayoutTrack.TRACK;
-                } else if (typeCurConnection == LayoutTrack.SLIP_D) {
-                    LayoutSlip lsz = (LayoutSlip) curConnection;
-                    curConnection = null;
                 }
             } else {
                 // block boundary is internal to a crossover turnout
@@ -564,18 +561,24 @@ public class LayoutEditorAuxTools {
                 prevConnection = lt;
                 if ((lt != null) && (lt.getTurnout() != null)) {
                     int type = lc.getXoverBoundaryType();
-                    if (type == LayoutConnectivity.XOVER_BOUNDARY_AB) {
-                        bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
-                        curConnection = lt.getConnectB();
-                    } else if (type == LayoutConnectivity.XOVER_BOUNDARY_CD) {
-                        bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
-                        curConnection = lt.getConnectD();
-                    } else if (type == LayoutConnectivity.XOVER_BOUNDARY_AC) {
-                        bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.THROWN);
-                        curConnection = lt.getConnectC();
-                    } else if (type == LayoutConnectivity.XOVER_BOUNDARY_BD) {
-                        bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.THROWN);
-                        curConnection = lt.getConnectD();
+                    if (lt.getTurnout() != null) {
+                        if (type == LayoutConnectivity.XOVER_BOUNDARY_AB) {
+                            bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
+                            curConnection = lt.getConnectB();
+                        } else if (type == LayoutConnectivity.XOVER_BOUNDARY_CD) {
+                            bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
+                            curConnection = lt.getConnectD();
+                        } else if (type == LayoutConnectivity.XOVER_BOUNDARY_AC) {
+                            bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.THROWN);
+                            curConnection = lt.getConnectC();
+                        } else if (type == LayoutConnectivity.XOVER_BOUNDARY_BD) {
+                            bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.THROWN);
+                            curConnection = lt.getConnectD();
+                        //} else {
+                            //bs = null;    // [javac] can only be null here
+                        }
+                    //} else {
+                        //bs = null;    // [javac] can only be null here
                     }
                     typeCurConnection = LayoutTrack.TRACK;
                     if ((bs != null) && (bs.getBean() != null)) {
@@ -590,19 +593,20 @@ public class LayoutEditorAuxTools {
         // follow path through this block - done when reaching another block, or a branching of Path
         while (curConnection != null) {
             if (typeCurConnection == LayoutTrack.TRACK) {
+                TrackSegment curTS = (TrackSegment) curConnection;
                 // track segment is current connection
-                if (((TrackSegment) curConnection).getLayoutBlock() != layoutBlock) {
+                if (curTS.getLayoutBlock() != layoutBlock) {
                     curConnection = null;
                 } else {
                     // skip over to other end of Track Segment
-                    if (((TrackSegment) curConnection).getConnect1() == prevConnection) {
+                    if (curTS.getConnect1() == prevConnection) {
                         prevConnection = curConnection;
-                        typeCurConnection = ((TrackSegment) curConnection).getType2();
-                        curConnection = ((TrackSegment) curConnection).getConnect2();
+                        typeCurConnection = curTS.getType2();
+                        curConnection = curTS.getConnect2();
                     } else {
                         prevConnection = curConnection;
-                        typeCurConnection = ((TrackSegment) curConnection).getType1();
-                        curConnection = ((TrackSegment) curConnection).getConnect1();
+                        typeCurConnection = curTS.getType1();
+                        curConnection = curTS.getConnect1();
                     }
                     // skip further if positionable point (possible anchor point)
                     if (typeCurConnection == LayoutTrack.POS_POINT) {
@@ -647,16 +651,20 @@ public class LayoutEditorAuxTools {
                             curConnection = null;
                         } else if (typeCurConnection == LayoutTrack.TURNOUT_B) {
                             // continuing track of turnout, add a bean setting
-                            if (lt.getContinuingSense() == Turnout.CLOSED) {
-                                bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
+                            if (lt.getTurnout() != null) {
+                                if (lt.getContinuingSense() == Turnout.CLOSED) {
+                                    bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
+                                } else {
+                                    bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.THROWN);
+                                }
+                                if (bs.getBean() != null) {
+                                    p.addSetting(bs);
+                                } else {
+                                    InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                    log.error("BadBeanError (R): " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
+                                }
                             } else {
-                                bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.THROWN);
-                            }
-                            if (bs.getBean() != null) {
-                                p.addSetting(bs);
-                            } else {
-                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                                log.error("BadBeanError (R): " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
+                                log.warn("No assigned turnout");
                             }
                             if (lt.getLayoutBlock() != layoutBlock) {
                                 curConnection = null;
@@ -667,16 +675,20 @@ public class LayoutEditorAuxTools {
                             }
                         } else if (typeCurConnection == LayoutTrack.TURNOUT_C) {
                             // diverging track of turnout
-                            if (lt.getContinuingSense() == Turnout.CLOSED) {
-                                bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.THROWN);
+                            if (lt.getTurnout() != null) {
+                                if (lt.getContinuingSense() == Turnout.CLOSED) {
+                                    bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.THROWN);
+                                } else {
+                                    bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
+                                }
+                                if (bs.getBean() != null) {
+                                    p.addSetting(bs);
+                                } else {
+                                    InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                    log.error("BadBeanError (S) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
+                                }
                             } else {
-                                bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
-                            }
-                            if (bs.getBean() != null) {
-                                p.addSetting(bs);
-                            } else {
-                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                                log.error("BadBeanError (S) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
+                                log.warn("No assigned turnout");
                             }
                             if (lt.getLayoutBlock() != layoutBlock) {
                                 curConnection = null;
@@ -698,12 +710,16 @@ public class LayoutEditorAuxTools {
                         curConnection = null;
                     } else if (typeCurConnection == LayoutTrack.TURNOUT_B) {
                         // entry is at continuing track of turnout
-                        bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
-                        if (bs.getBean() != null) {
-                            p.addSetting(bs);
+                        if (lt.getTurnout() != null) {
+                            bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
+                            if (bs.getBean() != null) {
+                                p.addSetting(bs);
+                            } else {
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                log.error("BadBeanError (T) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
+                            }
                         } else {
-                            InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                            log.error("BadBeanError (T) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
+                            log.warn("No assigned turnout");
                         }
                         if (lt.getLayoutBlock() != layoutBlock) {
                             // left current block
@@ -715,12 +731,16 @@ public class LayoutEditorAuxTools {
                         }
                     } else if (typeCurConnection == LayoutTrack.TURNOUT_D) {
                         // entry is at continuing track of turnout
-                        bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
-                        if (bs.getBean() != null) {
-                            p.addSetting(bs);
+                        if (lt.getTurnout() != null) {
+                            bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
+                            if (bs.getBean() != null) {
+                                p.addSetting(bs);
+                            } else {
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                log.error("BadBeanError (U) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
+                            }
                         } else {
-                            InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                            log.error("BadBeanError (U) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
+                            log.warn("No assigned turnout");
                         }
                         if (lt.getLayoutBlockC() != layoutBlock) {
                             // left current block
@@ -739,12 +759,16 @@ public class LayoutEditorAuxTools {
                         curConnection = null;
                     } else if (typeCurConnection == LayoutTrack.TURNOUT_A) {
                         // entry is at continuing track of turnout
-                        bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
-                        if (bs.getBean() != null) {
-                            p.addSetting(bs);
+                        if (lt.getTurnout() != null) {
+                            bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
+                            if (bs.getBean() != null) {
+                                p.addSetting(bs);
+                            } else {
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                log.error("BadBeanError (V) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
+                            }
                         } else {
-                            InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                            log.error("BadBeanError (V) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
+                            log.warn("No assigned turnout");
                         }
                         if (lt.getLayoutBlockB() != layoutBlock) {
                             // left current block
@@ -756,12 +780,16 @@ public class LayoutEditorAuxTools {
                         }
                     } else { // typeCurConnection == LayoutTrack.TURNOUT_C per if statement 2 levels up
                         // entry is at continuing track of turnout
-                        bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
-                        if (bs.getBean() != null) {
-                            p.addSetting(bs);
+                        if (lt.getTurnout() != null) {
+                            bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
+                            if (bs.getBean() != null) {
+                                p.addSetting(bs);
+                            } else {
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                log.error("BadBeanError (W) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
+                            }
                         } else {
-                            InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                            log.error("BadBeanError (W) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
+                            log.warn("No assigned turnout");
                         }
                         if (lt.getLayoutBlockD() != layoutBlock) {
                             // left current block
@@ -823,38 +851,54 @@ public class LayoutEditorAuxTools {
                     curConnection = null;
                 } else if (ls.getSlipType() == LayoutSlip.SINGLE_SLIP) {
                     if (typeCurConnection == LayoutTrack.SLIP_C) {
-                        bs = new BeanSetting(ls.getTurnout(), ls.getTurnoutName(), ls.getTurnoutState(LayoutTurnout.STATE_AC));
-                        if (bs.getBean() != null) {
-                            p.addSetting(bs);
+                        if (ls.getTurnout() != null) {
+                            bs = new BeanSetting(ls.getTurnout(), ls.getTurnoutName(), ls.getTurnoutState(LayoutTurnout.STATE_AC));
+                            if (bs.getBean() != null) {
+                                p.addSetting(bs);
+                            } else {
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                log.error("BadBeanError (X): " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
+                            }
                         } else {
-                            InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                            log.error("BadBeanError (X): " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
+                            log.warn("No assigned turnout");
                         }
-                        bs = new BeanSetting(ls.getTurnoutB(), ls.getTurnoutBName(), ls.getTurnoutBState(LayoutTurnout.STATE_AC));
-                        if (bs.getBean() != null) {
-                            p.addSetting(bs);
+                        if (ls.getTurnoutB() != null) {
+                            bs = new BeanSetting(ls.getTurnoutB(), ls.getTurnoutBName(), ls.getTurnoutBState(LayoutTurnout.STATE_AC));
+                            if (bs.getBean() != null) {
+                                p.addSetting(bs);
+                            } else {
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                log.error("BadBeanError (Y): " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
+                            }
                         } else {
-                            InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                            log.error("BadBeanError (Y): " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
+                            log.warn("No assigned turnoutB");
                         }
                         prevConnection = curConnection;
                         curConnection = ((LayoutSlip) curConnection).getConnectC();
                         typeCurConnection = LayoutTrack.TRACK;
                     } else if (typeCurConnection == LayoutTrack.SLIP_B) {
-                        bs = new BeanSetting(ls.getTurnout(), ls.getTurnoutName(), ls.getTurnoutState(LayoutTurnout.STATE_BD));
-                        if (bs.getBean() != null) {
-                            p.addSetting(bs);
+                        if (ls.getTurnout() != null) {
+                            bs = new BeanSetting(ls.getTurnout(), ls.getTurnoutName(), ls.getTurnoutState(LayoutTurnout.STATE_BD));
+                            if (bs.getBean() != null) {
+                                p.addSetting(bs);
+                            } else {
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                log.error("BadBeanError (Z): " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
+                            }
                         } else {
-                            InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                            log.error("BadBeanError (Z): " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
+                            log.warn("No assigned turnout");
                         }
 
-                        bs = new BeanSetting(ls.getTurnoutB(), ls.getTurnoutBName(), ls.getTurnoutBState(LayoutTurnout.STATE_BD));
-                        if (bs.getBean() != null) {
-                            p.addSetting(bs);
+                        if (ls.getTurnoutB() != null) {
+                            bs = new BeanSetting(ls.getTurnoutB(), ls.getTurnoutBName(), ls.getTurnoutBState(LayoutTurnout.STATE_BD));
+                            if (bs.getBean() != null) {
+                                p.addSetting(bs);
+                            } else {
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
+                                log.error("BadBeanError (1): " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
+                            }
                         } else {
-                            InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                            log.error("BadBeanError (1): " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
+                            log.warn("No assigned turnoutB");
                         }
                         prevConnection = curConnection;
                         curConnection = ((LayoutSlip) curConnection).getConnectB();
@@ -870,17 +914,28 @@ public class LayoutEditorAuxTools {
                 }
             } else if (typeCurConnection >= 50) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Layout Block: " + layoutBlock.getDisplayName() + " found track type: " + typeCurConnection + " to Block: " + p.getBlock().getDisplayName() + " Is potentially assigned to turntable ray");
+                    log.debug("Layout Block: {}, found track type: {}, to "
+                            + "Block: {}, is potentially assigned to turntable ray",
+                            layoutBlock.getDisplayName(),
+                            typeCurConnection,
+                            p.getBlock().getDisplayName()
+                    );
                 }
                 curConnection = null;
             } else {
                 // catch when some new type got added
-                log.error("Layout Block: " + layoutBlock.getDisplayName() + " found unknown track type: " + typeCurConnection + " to Block: " + p.getBlock().getDisplayName());
+                log.error("Layout Block: {} found unknown track type: {}"
+                        + " to Blcok: {}",
+                        layoutBlock.getDisplayName(),
+                        typeCurConnection,
+                        p.getBlock().getDisplayName()
+                );
                 break;
             }
         }
     }   // addBeanSettings
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorAuxTools.class);
+    private final static Logger log
+            = LoggerFactory.getLogger(LayoutEditorAuxTools.class);
 }

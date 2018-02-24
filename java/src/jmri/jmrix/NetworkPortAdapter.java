@@ -13,7 +13,7 @@ public interface NetworkPortAdapter extends PortAdapter {
     /**
      * Connects to the end device using a hostname/ip address and port
      */
-    public void connect(String host, int port) throws Exception;
+    public void connect(String host, int port) throws java.io.IOException;
 
     /**
      * Configure all of the other jmrix widgets needed to work with this adapter

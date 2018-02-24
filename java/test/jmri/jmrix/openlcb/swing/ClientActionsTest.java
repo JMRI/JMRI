@@ -10,8 +10,6 @@ import org.junit.Test;
 import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.can.CanInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -40,6 +38,6 @@ public class ClientActionsTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ClientActionsTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(ClientActionsTest.class);
 
 }

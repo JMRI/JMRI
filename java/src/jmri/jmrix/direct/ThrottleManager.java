@@ -20,29 +20,22 @@ import org.slf4j.LoggerFactory;
  */
 public class ThrottleManager extends AbstractThrottleManager {
 
+    private jmri.CommandStation tc = null;
     /**
      * Constructor.
      */
-    public ThrottleManager() {
+    public ThrottleManager(jmri.CommandStation tcl) {
         super();
-        if (mInstance != null) {
-            log.warn("Creating too many objects");
-        }
-        mInstance = this;
+        tc = tcl;
+        jmri.InstanceManager.setDefault(jmri.jmrix.direct.ThrottleManager.class,this);
     }
 
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
-    static private ThrottleManager mInstance = null;
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
     static public ThrottleManager instance() {
-        return mInstance;
+        return jmri.InstanceManager.getDefault(jmri.jmrix.direct.ThrottleManager.class);
     }
 
     Throttle currentThrottle = null;
@@ -58,7 +51,7 @@ public class ThrottleManager extends AbstractThrottleManager {
             return;
         }
         log.warn("requestThrottleSetup should preserve actual address object, not use ints");
-        currentThrottle = new Throttle(((DccLocoAddress) address).getNumber());
+        currentThrottle = new Throttle(((DccLocoAddress) address).getNumber(),tc);
         notifyThrottleKnown(currentThrottle, currentThrottle.getLocoAddress());
     }
 

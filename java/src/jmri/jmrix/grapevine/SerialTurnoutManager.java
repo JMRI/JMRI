@@ -7,27 +7,34 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager for Grapevine systems
- * <P>
- * System names are "GTnnn", where nnn is the turnout number without padding.
+ * Implement turnout manager for Grapevine systems.
+ * <p>
+ * System names are "GTnnn", where G is the (multichar) system connection prefix,
+ * nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
-  */
+ */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
-    public SerialTurnoutManager() {
+    GrapevineSystemConnectionMemo memo = null;
 
+    public SerialTurnoutManager(GrapevineSystemConnectionMemo _memo) {
+       memo = _memo;
     }
 
+    /**
+     * Return the Grapevine system prefix.
+     */
     @Override
     public String getSystemPrefix() {
-        return "G";
+        return memo.getSystemPrefix();
     }
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
+        String prefix = memo.getSystemPrefix();
         // validate the system name, and normalize it
-        String sName = SerialAddress.normalizeSystemName(systemName);
+        String sName = SerialAddress.normalizeSystemName(systemName, prefix);
         if (sName.equals("")) {
             // system name is not valid
             return null;
@@ -38,33 +45,31 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             return null;
         }
         // check under alternate name
-        String altName = SerialAddress.convertSystemNameToAlternate(sName);
+        String altName = SerialAddress.convertSystemNameToAlternate(sName, prefix);
         t = getBySystemName(altName);
         if (t != null) {
             return null;
         }
         // create the turnout
-        t = new SerialTurnout(sName, userName);
+        t = new SerialTurnout(sName, userName, memo);
 
         // does system name correspond to configured hardware
-        if (!SerialAddress.validSystemNameConfig(sName, 'T')) {
+        if (!SerialAddress.validSystemNameConfig(sName, 'T', memo.getTrafficController())) {
             // system name does not correspond to configured hardware
-            log.warn("Turnout '" + sName + "' refers to an undefined Serial Node.");
+            log.warn("Turnout '{}' refers to an undefined Serial Node.", sName);
         }
+        log.debug("new turnout {} for prefix {}", systemName, prefix);
         return t;
     }
 
+    @Deprecated
     static public SerialTurnoutManager instance() {
-        if (_instance == null) {
-            _instance = new SerialTurnoutManager();
-        }
-        return _instance;
+        return null;
     }
-    static SerialTurnoutManager _instance = null;
 
     @Override
     public boolean allowMultipleAdditions(String systemName) {
-        return false; //Turnout address format is more than a simple number.
+        return false; // Turnout address format is more than a simple number.
     }
 
     @Override
@@ -72,7 +77,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         String tmpSName = prefix + "T" + curAddress;
 
         if (curAddress.contains(":")) {
-            //Address format passed is in the form of node:cardOutput or node:card:address
+            // Address format passed is in the form of node:cardOutput or node:card:address
             int seperator = curAddress.indexOf(":");
             try {
                 nNode = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
@@ -86,14 +91,15 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                     bitNum = Integer.valueOf(curAddress.substring(nxSeperator + 1)).intValue();
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+                log.error("Unable to convert {} Hardware Address to a number", curAddress);
                 throw new JmriException("Hardware Address passed should be a number");
             }
             tmpSName = prefix + "T" + nNode + (nCard + bitNum);
         } else {
-            bitNum = SerialAddress.getBitFromSystemName(tmpSName);
-            nNode = SerialAddress.getNodeAddressFromSystemName(tmpSName);
+            bitNum = SerialAddress.getBitFromSystemName(tmpSName, prefix);
+            nNode = SerialAddress.getNodeAddressFromSystemName(tmpSName, prefix);
             tmpSName = prefix + "T" + nNode + bitNum;
+            log.debug("createSystemName {}", tmpSName);
         }
         return (tmpSName);
     }
@@ -103,7 +109,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     int nNode = 0;
 
     /**
-     * A method that returns the next valid free turnout hardware address.
+     * Return the next valid free turnout hardware address.
      */
     @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
@@ -115,19 +121,19 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             throw ex;
         }
 
-        //If the hardware address passed does not already exist then this can
-        //be considered the next valid address.
+        // If the hardware address passed does not already exist then this can
+        // be considered the next valid address.
         Turnout t = getBySystemName(tmpSName);
         if (t == null) {
             return Integer.toString(nNode) + Integer.toString((nCard + bitNum));
             //return ""+nNode+(nCard+bitNum);
         }
 
-        //The Number of Output Bits of the previous turnout will help determine the next
-        //valid address.
+        // The Number of Output Bits of the previous turnout will help determine the next
+        // valid address.
         bitNum = bitNum + t.getNumberOutputBits();
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
+        // Check to determine if the systemName is in use, return null if it is,
+        // otherwise return the next valid address.
         tmpSName = prefix + "T" + nNode + (nCard + bitNum);
         t = getBySystemName(tmpSName);
         if (t != null) {
@@ -138,14 +144,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                 if (t == null) {
                     return Integer.toString(nNode) + Integer.toString((nCard + bitNum));
                 }
-                //return ""+nNode+(nCard+bitNum);
             }
             return null;
         } else {
             return Integer.toString(nNode) + Integer.toString((nCard + bitNum));
         }
     }
-
 
     /**
      * Public method to validate system name format.
@@ -154,8 +158,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'T'));
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
     }
 
     /**
@@ -166,7 +170,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName));
+        return (SerialAddress.normalizeSystemName(systemName, getSystemPrefix()));
     }
 
     /**
@@ -181,5 +185,3 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 
 }
-
-

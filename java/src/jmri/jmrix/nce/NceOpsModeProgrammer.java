@@ -7,7 +7,6 @@ import jmri.NmraPacket;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +30,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         log.debug("NCE ops mode programmer " + pAddress + " " + pLongAddr);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
-        setMode(DefaultProgrammerManager.OPSBYTEMODE);
+        setMode(ProgrammingMode.OPSBYTEMODE);
     }
 
     /**
@@ -117,7 +116,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 

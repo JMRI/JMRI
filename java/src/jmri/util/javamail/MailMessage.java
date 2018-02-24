@@ -77,7 +77,7 @@ import org.slf4j.LoggerFactory;
  */
 public class MailMessage {
 
-    // first two required 
+    // first two required
     String to;
     String mailhost;
     String subject;
@@ -263,7 +263,7 @@ public class MailMessage {
         }
     }
 
-    public void send() throws Exception {
+    public void send() throws MessagingException {
         msg.setContent(mp);
 
         msg.setHeader("X-Mailer", mailer);
@@ -319,7 +319,7 @@ public class MailMessage {
             }
 
         } catch (MessagingException e) {
-            e.printStackTrace();
+            log.error("Unable to send message.", e);
         }
     }
 

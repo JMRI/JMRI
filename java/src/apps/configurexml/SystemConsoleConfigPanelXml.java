@@ -64,7 +64,7 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         String value;
         SystemConsolePreferencesManager manager = InstanceManager.getDefault(SystemConsolePreferencesManager.class);

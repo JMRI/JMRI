@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 /**
  * Provides common services for classes representing objects on the layout, and
  * allows a common form of access by their Managers.
- * <P>
+ * <p>
  * Each object has two types of names:
  * <p>
  * The "system" name is provided by the system-specific implementations, and
@@ -43,20 +43,20 @@ import javax.annotation.Nonnull;
  * Info</a> pages.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004
  * @see jmri.Manager
  */
-public interface NamedBean {
+public interface NamedBean extends Comparable<NamedBean> {
 
     /**
      * Constant representing an "unknown" state, indicating that the object's
@@ -101,6 +101,14 @@ public interface NamedBean {
     @CheckReturnValue
     @Nonnull
     public String getSystemName();
+
+    /**
+     * Display the system-specific name. 
+     *
+     * @return the system-specific name.
+     */
+    @Nonnull
+    public String toString(); 
 
     /**
      * return user name if it exists, otherwise return System name
@@ -198,15 +206,15 @@ public interface NamedBean {
     /**
      * Deactivate this object, so that it releases as many resources as possible
      * and no longer effects others.
-     * <P>
+     * <p>
      * For example, if this object has listeners, after a call to this method it
      * should no longer notify those listeners. Any native or system-wide
      * resources it maintains should be released, including threads, files, etc.
-     * <P>
+     * <p>
      * It is an error to invoke any other methods on this object once dispose()
      * has been called. Note, however, that there is no guarantee about behavior
      * in that case.
-     * <P>
+     * <p>
      * Afterwards, references to this object may still exist elsewhere,
      * preventing its garbage collection. But it's formally dead, and shouldn't
      * be keeping any other objects alive. Therefore, this method should null
@@ -216,7 +224,7 @@ public interface NamedBean {
 
     /**
      * Provide generic access to internal state.
-     * <P>
+     * <p>
      * This generally shouldn't be used by Java code; use the class-specific
      * form instead (e.g. setCommandedState in Turnout). This is provided to
      * make scripts access easier to read.
@@ -228,7 +236,7 @@ public interface NamedBean {
 
     /**
      * Provide generic access to internal state.
-     * <P>
+     * <p>
      * This generally shouldn't be used by Java code; use the class-specific
      * form instead (e.g. getCommandedState in Turnout). This is provided to
      * make scripts easier to read.
@@ -240,7 +248,7 @@ public interface NamedBean {
 
     /**
      * Provide human-readable, localized version of state value.
-     * <P>
+     * <p>
      * This method is intended for use when presenting to a human operator.
      *
      * @param state the state to describe
@@ -339,6 +347,53 @@ public interface NamedBean {
         }
         return result;
     }
+
+    /**
+     * Provide a comparison between the system names of two beans.
+     * This provides a implementation for e.g. {@link java.util.Comparator}.
+     * @return 0 if the names are the same, -1 if the first argument orders before
+     * the second argument's name, +1 if the first argument's name  orders after the second argument's name.
+     * The comparison is alphanumeric on the system prefix, then alphabetic on the
+     * type letter, then system-specific comparison on the two suffix parts
+     * via the {@link compareSystemNameSuffix} method.
+     *
+     * @param n2 The second NamedBean in the comparison ("this" is the first one)
+     * @return -1,0,+1 for ordering if the names are well-formed; may not provide proper ordering if the names are not well-formed.
+     */
+    @CheckReturnValue
+    public default int compareTo(@Nonnull NamedBean n2) {
+        jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
+        String o1 = this.getSystemName();
+        String o2 = n2.getSystemName();
+        
+        int p1len = Manager.getSystemPrefixLength(o1);
+        int p2len = Manager.getSystemPrefixLength(o2);
+        
+        int comp = ac.compare(o1.substring(0, p1len), o2.substring(0, p2len));
+        if (comp != 0) return comp;
+
+        char c1 = o1.charAt(p1len);
+        char c2 = o2.charAt(p2len);
+           
+        if (c1 != c2) {
+            return (c1 > c2) ? +1 : -1 ;
+        } else {
+            return this.compareSystemNameSuffix(o1.substring(p1len+1), o2.substring(p2len+1), n2);
+        }
+    }
+
+    /**
+     * Compare the suffix of this NamedBean's name with the 
+     * suffix of the argument NamedBean's name for the {@link #compareTo} operation.
+     * This is intended to be a system-specific comparison that understands the various formats, etc.
+     *
+     * @param suffix1 The suffix for the 1st bean in the comparison
+     * @param suffix2 The suffix for the 2nd bean in the comparison
+     * @param n2 The other (second) NamedBean in the comparison
+     * @return -1,0,+1 for ordering if the names are well-formed; may not provide proper ordering if the names are not well-formed.
+     */
+    @CheckReturnValue
+    public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n2);
 
     public class BadUserNameException extends IllegalArgumentException {
     }

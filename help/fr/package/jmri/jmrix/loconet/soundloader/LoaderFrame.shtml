@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
+
 <!-- Translated  by Blorec Hervé le 2011-11-1-->
 
 <html lang="fr">
@@ -9,9 +9,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Sound Loader</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help loconet sound loader">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -176,8 +174,8 @@
       JMRI pour essayer vos nouveaux sons via le PR2. JMRI prend
       soin de convertir les interfaces PR2/PR3 en
       programmateur/chargeur avec une centrale de commande de
-      faible puissance pour faire rouler une locomotive . 
-      <!--#include virtual="/Footer" --></p>
+      faible puissance pour faire rouler une locomotive .</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

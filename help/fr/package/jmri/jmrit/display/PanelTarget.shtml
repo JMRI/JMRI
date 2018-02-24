@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!--  UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013*11-01-->
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013*11-01-->
 
 <html lang="fr">
 <head>
@@ -9,9 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Panel Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Panel"><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -28,12 +25,13 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Le Panneau</h1>Un panneau est un ensemble d'ic&ocirc;nes
+      <h1>Le Panneau</h1>
+      <p>Un panneau est un ensemble d'ic&ocirc;nes
       repr&eacute;sentant les diff&eacute;rentes composantes d'un
       r&eacute;seau. Certaines des ic&ocirc;nes disponibles dans
       JMRI comprennent les aiguillages, signaux, et capteurs. Vous
       pouvez &eacute;galement inclure une ic&ocirc;ne de fond pour
-      votre TCO.
+      votre TCO.</p>
 
       <p>L'&eacute;diteur de panneau que vous utilisez pour
       cr&eacute;er un panneau est d&eacute;crits sur une <a href=
@@ -172,7 +170,8 @@
       <p>Si vous souhaitez conserver vos marqueurs entre les
       sessions d'exploitation, vous pouvez sauver le TCO et les
       marqueurs seront sauvegard&eacute;s dans votre fichier
-      panneau. <!--#include virtual="/Footer" --></p>
+      panneau.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

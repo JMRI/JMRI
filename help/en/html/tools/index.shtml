@@ -260,7 +260,7 @@
         <h3><a href="../hardware/acela/index.shtml#tools">Acela
         Tools</a></h3>
 
-        <p>When JMRI is connected to a layout via this system, a
+        <p>When JMRI is connected to a layout via this system, an
         <b>Acela</b> menu is shown:</p>
 
         <ul>
@@ -514,7 +514,7 @@
         Tools</a></h3>
 
         <p>When JMRI is connected to a layout with <a href=
-        "../hardware/rps/sensors.shtml">RPS Sensors</a> , an
+        "../hardware/rps/sensors.shtml">RPS Sensors</a>, an
         <b>RPS</b> menu is shown:</p>
 
         <ul>
@@ -549,7 +549,7 @@
         Tools</a></h3>
 
         <p>When JMRI is connected to a layout with <a href=
-        "../hardware/sprog/index.shtml">SPROG</a>, an <b>SPROG</b>
+        "../hardware/sprog/SPROG.shtml">SPROG</a>, a <b>SPROG</b>
         menu is shown:</p>
 
         <ul>
@@ -558,14 +558,24 @@
           SPROG Slots Monitor</a></li>
 
           <li><a href=
+          "../../../package/jmri/jmrix/sprog/sprogmon/SprogMonFrame.shtml">
+          SPROG Command Monitor</a></li>
+
+          <li><a href=
           "../../package/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame.shtml">
-          SPROG Packet Generator</a></li>
+          Send SPROG Command</a></li>
 
           <li><a href=
           "../../package/jmri/jmrix/sprog/console/SprogConsoleFrame.shtml">
           SPROG Console</a></li>
 
-          <li>Firmware Update</li>
+          <li><a href=
+          "../../package/jmri/jmrix/sprog/update/SprogVersionFrame.shtml">
+          Get SPROG Firmware Version</a></li>
+
+          <li><a href=
+          "../hardware/sprog/SPROG.shtml#tools">
+          SPROGx Firmware Update</a></li>
         </ul>
 
         <h3><a href="../hardware/XBee/index.shtml#tools">XBee
@@ -617,8 +627,8 @@
         power to control your layout anyway you'd like.
 
         <p>Run your own scripts or scripts shared by other JMRI
-        user from the Panels &gt; Run Script... menu. 
-        <!--#include virtual="/Footer" --></p>
+        user from the Panels &gt; Run Script... menu.</p>
+        <!--#include virtual="/Footer" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
   </div><!-- closes #container -->

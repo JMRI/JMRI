@@ -5,14 +5,14 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
 public class Dcc4PcBoardManagerTest {
+
+    Dcc4PcSensorManager tm = null;
 
     @Test
     public void testCTor() {
@@ -23,7 +23,7 @@ public class Dcc4PcBoardManagerTest {
         };
         Dcc4PcSystemConnectionMemo memo = new Dcc4PcSystemConnectionMemo(tc);
 
-        Dcc4PcSensorManager tm = new Dcc4PcSensorManager(tc,memo);
+        tm = new Dcc4PcSensorManager(tc,memo);
         Dcc4PcBoardManager t = new Dcc4PcBoardManager(tc,tm);
         Assert.assertNotNull("exists",t);
     }
@@ -36,9 +36,10 @@ public class Dcc4PcBoardManagerTest {
 
     @After
     public void tearDown() {
+        tm.dispose();
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcBoardManagerTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(Dcc4PcBoardManagerTest.class);
 
 }

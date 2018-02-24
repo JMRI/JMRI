@@ -9,8 +9,8 @@
   <title>JMRI: Adding/Editing Signal Heads</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta name="Author" content="Bob Jacobsen">
-  <meta name="Author" content="Egbert Broerse">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="author" content="Egbert Broerse">
   <meta name="Date.Modified" content="20160516">
   <meta name="keywords" content="JMRI help Signal Heads Add Edit">
   <!--#include virtual="/Style" -->
@@ -71,6 +71,11 @@
           "../../../../html/hardware/acela/">Acela hardware help
           page</a>.</p>
         </dd>
+
+        <dd><a href="images/SignalHeadAddDCC.png"><img src=
+        "images/SignalHeadAddDCC.png" align="right" width="168"
+        height="230" hspace="0" vspace="0" alt=
+        "Add Signal Head panel DCC"></a></dd>
 
         <dt>DCC Signal Decoder</dt>
 

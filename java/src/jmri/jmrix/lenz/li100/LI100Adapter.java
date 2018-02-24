@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.TooManyListenersException;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
@@ -16,8 +15,6 @@ import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
 import purejavacomm.SerialPort;
-import purejavacomm.SerialPortEvent;
-import purejavacomm.SerialPortEventListener;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
@@ -37,6 +34,9 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String openPort(String portName, String appName) {
         // open the port in XpressNet mode, check ability to set moderators
@@ -62,7 +62,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
                 log.debug("Serial timeout was observed as: {} {}",
                         activeSerialPort.getReceiveTimeout(),
                         activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (Exception et) {
+            } catch (UnsupportedCommOperationException et) {
                 log.info("failed to set serial timeout: " + et);
             }
 
@@ -84,100 +84,20 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
                         + "  CD: " + activeSerialPort.isCD()
                 );
             }
-            // report additional status
-            log.debug(" port flow control shows {} ",
-                    (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
-            // arrange to notify later
-            activeSerialPort.addEventListener(new SerialPortEventListener() {
-                @Override
-                public void serialEvent(SerialPortEvent e) {
-                    int type = e.getEventType();
-                    switch (type) {
-                        case SerialPortEvent.DATA_AVAILABLE:
-                            log.debug("SerialEvent: DATA_AVAILABLE is {}", e.getNewValue());
-                            return;
-                        case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                            log.debug("SerialEvent: OUTPUT_BUFFER_EMPTY is {}", e.getNewValue());
-                            setOutputBufferEmpty(true);
-                            return;
-                        case SerialPortEvent.CTS:
-                            log.debug("SerialEvent: CTS is {}", e.getNewValue());
-                            return;
-                        case SerialPortEvent.DSR:
-                            log.debug("SerialEvent: DSR is {}", e.getNewValue());
-                            return;
-                        case SerialPortEvent.RI:
-                            log.debug("SerialEvent: RI is {}", e.getNewValue());
-                            return;
-                        case SerialPortEvent.CD:
-                            log.debug("SerialEvent: CD is {}", e.getNewValue());
-                            return;
-                        case SerialPortEvent.OE:
-                            log.debug("SerialEvent: OE (overrun error) is {}", e.getNewValue());
-                            return;
-                        case SerialPortEvent.PE:
-                            log.debug("SerialEvent: PE (parity error) is {}", e.getNewValue());
-                            return;
-                        case SerialPortEvent.FE:
-                            log.debug("SerialEvent: FE (framing error) is {}", e.getNewValue());
-                            return;
-                        case SerialPortEvent.BI:
-                            log.debug("SerialEvent: BI (break interrupt) is {}", e.getNewValue());
-                            return;
-                        default:
-                            log.debug("SerialEvent of unknown type: {} value: {}", type, e.getNewValue());
-                            return;
-                    }
-                }
-            }
-            );
-            try {
-                activeSerialPort.notifyOnFramingError(true);
-            } catch (Exception e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Could not notifyOnFramingError: " + e);
-                }
-            }
+            if (log.isDebugEnabled()) {
+                // report additional status
+                log.debug(" port flow control shows " // NOI18N
+                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
 
-            try {
-                activeSerialPort.notifyOnBreakInterrupt(true);
-            } catch (Exception e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Could not notifyOnBreakInterrupt: " + e);
-                }
+                // log events
+                setPortEventLogging(activeSerialPort);
             }
-
-            try {
-                activeSerialPort.notifyOnParityError(true);
-            } catch (Exception e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Could not notifyOnParityError: " + e);
-                }
-            }
-
-            try {
-                activeSerialPort.notifyOnOutputEmpty(true);
-            } catch (Exception e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Could not notifyOnOutputEmpty: " + e);
-                }
-            }
-
-            try {
-                activeSerialPort.notifyOnOverrunError(true);
-            } catch (Exception e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Could not notifyOnOverrunError: " + e);
-                }
-            }
-
             opened = true;
 
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (IOException | TooManyListenersException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+        } catch (IOException ex) {
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -201,7 +121,9 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         new LI100XNetInitializationManager(this.getSystemConnectionMemo());
     }
 
-    // base class methods for the XNetSerialPortController interface
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -211,6 +133,9 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         return new DataInputStream(serialStream);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
@@ -224,6 +149,9 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;
@@ -256,6 +184,9 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
          checkBuffer = true;*/
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);

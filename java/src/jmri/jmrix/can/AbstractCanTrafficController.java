@@ -130,7 +130,7 @@ abstract public class AbstractCanTrafficController
                 // no stream connected
                 connectionWarn();
             }
-        } catch (Exception e) {
+        } catch (java.io.IOException | RuntimeException e) {
             portWarn(e);
         }
     }
@@ -150,15 +150,15 @@ abstract public class AbstractCanTrafficController
     }
 
     /*
-     * enterProgMode() and enterNormalMode() return any message that 
+     * enterProgMode() and enterNormalMode() return any message that
      * needs to be returned to the command station to change modes.
-     * 
+     *
      * If no message is needed, you may return null.
-     * 
-     * If the programmerIdle() function returns true, enterNormalMode() is 
-     * called after a timeout while in IDLESTATE durring programing to 
-     * return the system to normal mode.  
-     * 
+     *
+     * If the programmerIdle() function returns true, enterNormalMode() is
+     * called after a timeout while in IDLESTATE during programming to
+     * return the system to normal mode.
+     *
      */
     @Override
     protected AbstractMRMessage enterProgMode() {
@@ -285,8 +285,7 @@ abstract public class AbstractCanTrafficController
                                     + mCurrentState + " was " + msg.toString());
                         }
                     } else {
-                        log.error("reply complete in unexpected state: "
-                                + mCurrentState + " was " + msg.toString());
+                        unexpectedReplyStateError(mCurrentState,msg.toString());
                     }
                 }
             }
@@ -299,14 +298,8 @@ abstract public class AbstractCanTrafficController
     public void distributeOneReply(CanReply msg, AbstractMRListener mLastSender) {
         // forward the message to the registered recipients,
         // which includes the communications monitor
-        // return a notification via the Swing event queue to ensure proper thread
         Runnable r = newRcvNotifier(msg, mLastSender, this);
-        try {
-            javax.swing.SwingUtilities.invokeAndWait(r);
-        } catch (Exception e) {
-            log.error("Unexpected exception in invokeAndWait:" + e);
-            e.printStackTrace();
-        }
+        distributeReply(r);
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractCanTrafficController.class);

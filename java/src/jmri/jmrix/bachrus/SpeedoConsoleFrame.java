@@ -33,6 +33,7 @@ import javax.swing.border.TitledBorder;
 import jmri.CommandStation;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
@@ -61,9 +62,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     /**
      *
-     * TODO: Complete the help file Allow selection of arbitrary scale
+     * TODO: Complete the help file
      */
-
     private PowerManager pm = null;
 
     // member declarations
@@ -72,6 +72,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JTextField customScaleField = new JTextField(3);
     protected int customScale = 148;
     protected JTextField speedTextField = new JTextField(12);
+    protected JPanel displayCards = new JPanel();
 
     protected ButtonGroup modeGroup = new ButtonGroup();
     protected JRadioButton progButton = new JRadioButton(Bundle.getMessage("ProgTrack"));
@@ -93,11 +94,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     //protected JTextField profileAddressField = new JTextField(6);
     protected JButton readAddressButton = new JButton(Bundle.getMessage("Read"));
 
-    private DccLocoAddressSelector addrSelector = new DccLocoAddressSelector();
+    private final DccLocoAddressSelector addrSelector = new DccLocoAddressSelector();
     private JButton setButton;
     private GlobalRosterEntryComboBox rosterBox;
     protected RosterEntry rosterEntry;
-    private boolean disableRosterBoxActions = false;
+    private final boolean disableRosterBoxActions = false;
 
     private int profileAddress = 0;
     private boolean profileIsLong = false;
@@ -115,20 +116,20 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected javax.swing.JLabel readerLabel = new javax.swing.JLabel();
 
     protected String[] scaleStrings = new String[]{
-            Bundle.getMessage("ScaleZ"),
-            Bundle.getMessage("ScaleEuroN"),
-            Bundle.getMessage("ScaleNFine"),
-            Bundle.getMessage("ScaleJapaneseN"),
-            Bundle.getMessage("ScaleBritishN"),
-            Bundle.getMessage("Scale3mm"),
-            Bundle.getMessage("ScaleTT"),
-            Bundle.getMessage("Scale00"),
-            Bundle.getMessage("ScaleH0"),
-            Bundle.getMessage("ScaleS"),
-            Bundle.getMessage("Scale048"),
-            Bundle.getMessage("Scale045"),
-            Bundle.getMessage("Scale043"),
-            Bundle.getMessage("ScaleOther")
+        Bundle.getMessage("ScaleZ"),
+        Bundle.getMessage("ScaleEuroN"),
+        Bundle.getMessage("ScaleNFine"),
+        Bundle.getMessage("ScaleJapaneseN"),
+        Bundle.getMessage("ScaleBritishN"),
+        Bundle.getMessage("Scale3mm"),
+        Bundle.getMessage("ScaleTT"),
+        Bundle.getMessage("Scale00"),
+        Bundle.getMessage("ScaleH0"),
+        Bundle.getMessage("ScaleS"),
+        Bundle.getMessage("Scale048"),
+        Bundle.getMessage("Scale045"),
+        Bundle.getMessage("Scale043"),
+        Bundle.getMessage("ScaleOther")
     };
 
     protected float[] scales = new float[]{
@@ -224,6 +225,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected Programmer prog = null;
     protected CommandStation commandStation = null;
 
+    String selectedScalePref = this.getClass().getName() + ".SelectedScale"; // NOI18N
+    String customScalePref = this.getClass().getName() + ".CustomScale"; // NOI18N
+    String speedUnitsKphPref = this.getClass().getName() + ".SpeedUnitsKph"; // NOI18N
+    String dialTypePref = this.getClass().getName() + ".DialType"; // NOI18N
+    jmri.UserPreferencesManager prefs;
+
     protected enum ProgState {
 
         IDLE, WAIT29, WAIT1, WAIT17, WAIT18
@@ -234,7 +241,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected static final int speedTestScaleFactor = 1;
 
     //Create the combo box, and assign the scales to it
-    JComboBox<String> scaleList = new JComboBox<String>(scaleStrings);
+    JComboBox<String> scaleList = new JComboBox<>(scaleStrings);
 
     // members for handling the Speedo interface
     SpeedoTrafficController tc = null;
@@ -253,6 +260,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     @Override
     public void dispose() {
+        prefs.setComboBoxLastSelection(selectedScalePref, (String)scaleList.getSelectedItem());
+        prefs.setProperty(customScalePref, "customScale", customScale);
+        prefs.setSimplePreferenceState(speedUnitsKphPref, kphButton.isSelected());
+        prefs.setSimplePreferenceState(dialTypePref, dialButton.isSelected());
         _memo.getTrafficController().removeSpeedoListener(this);
         super.dispose();
     }
@@ -260,16 +271,19 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     // FIXME: Why does the if statement in this method include a direct false?
     @SuppressWarnings("unused")
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
+        prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+
         setTitle(title());
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // What services do we have?
         dccServices = BASIC;
-        if (InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null
-                && InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
-            prog = InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
-            dccServices |= PROG;
+        if (InstanceManager.getNullableDefault(GlobalProgrammerManager.class) != null) {
+            if (InstanceManager.getDefault(GlobalProgrammerManager.class).isGlobalProgrammerAvailable()) {
+                prog = InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+                dccServices |= PROG;
+            }
         }
         if (InstanceManager.getNullableDefault(jmri.ThrottleManager.class) != null) {
             // otherwise we'll send speed commands
@@ -295,9 +309,14 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         scalePanel.setLayout(new FlowLayout());
 
         scaleList.setToolTipText(Bundle.getMessage("SelectScaleToolTip"));
-        scaleList.setSelectedIndex(defaultScale);
-        selectedScale = scales[defaultScale];
-
+        try {
+            scaleList.setSelectedItem(prefs.getComboBoxLastSelection(selectedScalePref));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            scaleList.setSelectedItem(defaultScale);
+        }
+        if ( scaleList.getSelectedIndex() > -1 ) {
+            selectedScale = scales[scaleList.getSelectedIndex()];
+        }
         // Listen to selection of scale
         scaleList.addActionListener(new java.awt.event.ActionListener() {
             @SuppressWarnings("unchecked") // action semantics pass an Object that must be a JComboBox<String>
@@ -305,11 +324,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 JComboBox<String> cb = (JComboBox<String>) e.getSource();
                 selectedScale = scales[cb.getSelectedIndex()];
-                if (selectedScale == -1) {
-                    customScaleField.setEnabled(true);
-                } else {
-                    customScaleField.setEnabled(false);
-                }
+                checkCustomScale();
             }
         });
 
@@ -322,7 +337,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         scalePanel.add(scaleLabel);
         scalePanel.add(scaleList);
         scalePanel.add(readerLabel);
-        
+
         // Custom Scale panel to hold the custome scale selection
         JPanel customScalePanel = new JPanel();
         customScalePanel.setBorder(BorderFactory.createTitledBorder(
@@ -332,8 +347,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         customScaleLabel.setText("1: ");
         customScaleLabel.setVisible(true);
         customScaleField.setVisible(true);
-        customScaleField.setEnabled(false);
-        
+        customScaleField.setText(prefs.getProperty(customScalePref, "customScale").toString());
+        checkCustomScale();
+        getCustomScale();
+
         // Let user press return to enter custom scale
         customScaleField.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -393,7 +410,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         // Display Panel which is a card layout with cards to show
         // numeric or dial type speed display
-        final JPanel displayCards = new JPanel();
         displayCards.setLayout(new CardLayout());
 
         // Numeric speed card
@@ -425,14 +441,16 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         speedGroup.add(mphButton);
         speedGroup.add(kphButton);
-        mphButton.setSelected(true);
         mphButton.setToolTipText(Bundle.getMessage("TTDisplayMPH"));
         kphButton.setToolTipText(Bundle.getMessage("TTDisplayKPH"));
+        mphButton.setSelected(!prefs.getSimplePreferenceState(speedUnitsKphPref));
+        kphButton.setSelected(prefs.getSimplePreferenceState(speedUnitsKphPref));
         displayGroup.add(numButton);
         displayGroup.add(dialButton);
-        dialButton.setSelected(true);
         numButton.setToolTipText(Bundle.getMessage("TTDisplayNumeric"));
         dialButton.setToolTipText(Bundle.getMessage("TTDisplayDial"));
+        numButton.setSelected(!prefs.getSimplePreferenceState(dialTypePref));
+        dialButton.setSelected(prefs.getSimplePreferenceState(dialTypePref));
         buttonPanel.add(mphButton);
         buttonPanel.add(kphButton);
         buttonPanel.add(numButton);
@@ -445,21 +463,13 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         mphButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                profileGraphPane.setUnitsMph();
-                profileGraphPane.repaint();
-                speedoDialDisplay.setUnitsMph();
-                speedoDialDisplay.update(currentSpeed);
-                speedoDialDisplay.repaint();
+                setUnits();
             }
         });
         kphButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                profileGraphPane.setUnitsKph();
-                profileGraphPane.repaint();
-                speedoDialDisplay.setUnitsKph();
-                speedoDialDisplay.update(currentSpeed);
-                speedoDialDisplay.repaint();
+                setUnits();
             }
         });
 
@@ -467,17 +477,13 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         numButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                display = DisplayType.NUMERIC;
-                CardLayout cl = (CardLayout) displayCards.getLayout();
-                cl.show(displayCards, "NUMERIC");
+                setDial();
             }
         });
         dialButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                display = DisplayType.DIAL;
-                CardLayout cl = (CardLayout) displayCards.getLayout();
-                cl.show(displayCards, "DIAL");
+                setDial();
             }
         });
 
@@ -518,13 +524,13 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
          */
         rosterBox.addPropertyChangeListener(
                 RosterEntrySelector.SELECTED_ROSTER_ENTRIES, new PropertyChangeListener() {
-                    @Override
-                    public void propertyChange(PropertyChangeEvent pce) {
-                        if (!disableRosterBoxActions) { //Have roster box actions been disabled?
-                            rosterItemSelected();
-                        }
-                    }
-                });
+            @Override
+            public void propertyChange(PropertyChangeEvent pce) {
+                if (!disableRosterBoxActions) { //Have roster box actions been disabled?
+                    rosterItemSelected();
+                }
+            }
+        });
 
         readAddressButton.setToolTipText(Bundle.getMessage("ReadLoco"));
 
@@ -712,6 +718,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         if (((dccServices & THROTTLE) == THROTTLE)
                 || ((dccServices & COMMAND) == COMMAND)) {
             tabbedPane.add(profilePane);
+        } else {
+            log.info(Bundle.getMessage("StatNoDCC"));
+            statusLabel.setText(Bundle.getMessage("StatNoDCC"));
         }
 
         // connect to TrafficController
@@ -734,12 +743,59 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         getContentPane().add(statusWrapper);
 
+        setUnits();
+        setDial();
+
         // pack for display
         pack();
 
         speedoDialDisplay.scaleFace();
     }
 
+    /**
+     * Check if custom scale selected and enable the custom scale entry field.
+     */
+    protected void checkCustomScale() {
+        if (selectedScale == -1) {
+            customScaleField.setEnabled(true);
+        } else {
+            customScaleField.setEnabled(false);
+        }
+    }
+
+    /**
+     * Set the speed to be displayed as a dial or numeric
+     */
+    protected void setDial() {
+        CardLayout cl = (CardLayout) displayCards.getLayout();
+        if (numButton.isSelected()) {
+            display = DisplayType.NUMERIC;
+            cl.show(displayCards, "NUMERIC");
+        } else {
+            display = DisplayType.DIAL;
+            cl.show(displayCards, "DIAL");
+        }
+    }
+    
+    /**
+     * Set the displays to mile pre hour or kilometers per hour
+     */
+    protected void setUnits() {
+        if (mphButton.isSelected()) {
+            profileGraphPane.setUnitsMph();
+        } else {
+            profileGraphPane.setUnitsKph();
+        }
+        profileGraphPane.repaint();
+        if (mphButton.isSelected()) {
+            speedoDialDisplay.setUnitsMph();
+        } else {
+            speedoDialDisplay.setUnitsKph();
+        }
+        speedoDialDisplay.update(currentSpeed);
+        speedoDialDisplay.repaint();
+    }
+    
     /**
      * Validate the users custom scale entry.
      */
@@ -753,7 +809,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             }
         }
     }
-    
+
     /**
      * Handle changing/setting the address.
      */
@@ -824,6 +880,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * Handle "replies" from the hardware. In fact, all the hardware does is
      * send a constant stream of unsolicited speed updates.
      *
+     * @param l the reply to handle
      */
     @Override
     public synchronized void reply(SpeedoReply l) {  // receive a reply message and log it
@@ -942,7 +999,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 }
                 break;
             default:
-                log.debug("range {} unsupported, range unchanged.",range);
+                log.debug("range {} unsupported, range unchanged.", range);
         }
     }
 
@@ -1071,11 +1128,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     }
 
     @Override
-    public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
+    public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
     }
 
     @Override
-    public void notifyStealThrottleRequired(DccLocoAddress address){
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
         // this is an automatically stealing impelementation.
         InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }

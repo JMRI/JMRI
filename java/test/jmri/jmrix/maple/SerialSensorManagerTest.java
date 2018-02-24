@@ -8,15 +8,24 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JUnit tests for the SerialSensorManager class.
+ * JUnit tests for the Maple SerialSensorManager class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2008
  */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
+    private MapleSystemConnectionMemo memo = null;
+
     @Override
     public String getSystemName(int i) {
         return "KS" + i;
+    }
+
+    @Test
+    public void testConstructor() {
+        // create and register the manager object
+        SerialSensorManager atm = new SerialSensorManager(new MapleSystemConnectionMemo());
+        Assert.assertNotNull("Maple Sensor Manager creation", atm);
     }
 
     @Test
@@ -28,7 +37,6 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         Sensor s11 = l.provideSensor("11");
         Assert.assertNotNull("found s11", s11);
         Assert.assertTrue("right name s11", s11.getSystemName().equals("KS11"));
-        //InputBits ibit = new InputBits();
         InputBits.setNumInputBits(1000);
         Sensor s248 = l.provideSensor("KS248");
         Assert.assertNotNull("found s248", s248);
@@ -43,23 +51,21 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        // replace SerialTurnoutManager to make sure nodes start
+        // replace SerialSensorManager to make sure nodes start
         // at the beginning
-        new SerialTrafficController() {
-            void reset() {
-                self = null;
-            }
-        }.reset();
-
-        l = new SerialSensorManager();
-
+        SerialTrafficController tc = new SerialTrafficControlScaffold();
+        memo = new MapleSystemConnectionMemo("K", "Maple");
+        memo.setTrafficController(tc);
+        // create and register the turnout manager object
+        l = new SerialSensorManager(memo);
+//        jmri.InstanceManager.setSensorManager(l);
 //        SerialNode n1 = new SerialNode(1,0);
 //        SerialNode n2 = new SerialNode(2,0);
     }
 
     @After
     public void tearDown() {
-        l.dispose();
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

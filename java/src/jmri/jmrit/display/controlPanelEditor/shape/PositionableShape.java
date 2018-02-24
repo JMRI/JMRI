@@ -1,6 +1,5 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -44,9 +43,9 @@ public abstract class PositionableShape extends PositionableJComponent implement
     private int _degrees;
     protected AffineTransform _transform;
     private NamedBeanHandle<Sensor> _controlSensor = null;
-    private int _saveLevel = 5;   // default level set in popup
+    private int _saveLevel = ControlPanelEditor.ICONS; // default level set in popup
     private int _changeLevel = 5;
-    private boolean _doHide;  // whether sensor controls show/hide or change level
+    private boolean _doHide; // whether sensor controls show/hide or change level
     // GUI resizing params
     private Rectangle[] _handles;
     protected int _hitIndex = -1; // dual use! also is index of polygon's vertices
@@ -55,6 +54,8 @@ public abstract class PositionableShape extends PositionableJComponent implement
     // params for shape's bounding box
     protected int _width;
     protected int _height;
+    protected boolean _editing = false;
+
     static final int TOP = 0;
     static final int RIGHT = 1;
     static final int BOTTOM = 2;
@@ -63,9 +64,9 @@ public abstract class PositionableShape extends PositionableJComponent implement
 
     public PositionableShape(Editor editor) {
         super(editor);
-        super.setName("Graphic");
+        super.setName("Graphic"); // NOI18N
         super.setShowToolTip(false);
-        super.setDisplayLevel(ControlPanelEditor.LABELS);
+        super.setDisplayLevel(ControlPanelEditor.ICONS);
     }
 
     public PositionableShape(Editor editor, @Nonnull Shape shape) {
@@ -176,16 +177,18 @@ public abstract class PositionableShape extends PositionableJComponent implement
         } else {
             double rad = Math.toRadians(_degrees);
             _transform = new AffineTransform();
-            // use bit shift to avoid FindBugs paranoia
+            // use bit shift to avoid SpotBugs paranoia
             _transform.setToRotation(rad, (_width >>> 1), (_height >>> 1));
         }
         updateSize();
     }
 
     @Override
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST", justification = "Cast required due to how Graphics2D was implemented in Java 1.2")
     public void paint(Graphics g) {
         if (!getEditor().isEditable() && !isVisible()) {
+            return;
+        }
+        if (!(g instanceof Graphics2D)) {
             return;
         }
         Graphics2D g2d = (Graphics2D) g;
@@ -232,7 +235,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
             r.width += _lineWidth;
             r.height += _lineWidth;
             g2d.draw(r);
-//         g2d.fill(r);
+            //         g2d.fill(r);
             for (Rectangle handle : _handles) {
                 if (handle != null) {
                     g2d.setColor(Color.RED);
@@ -249,9 +252,13 @@ public abstract class PositionableShape extends PositionableJComponent implement
 
     protected Positionable finishClone(PositionableShape pos) {
         pos._lineWidth = _lineWidth;
-        pos._fillColor = new Color(_fillColor.getRed(), _fillColor.getGreen(), _fillColor.getBlue(), _fillColor.getAlpha());
-        pos._lineColor = new Color(_lineColor.getRed(), _lineColor.getGreen(), _lineColor.getBlue(), _lineColor.getAlpha());
-        pos.setControlSensor(getSensorName(), _doHide, _changeLevel);
+        pos._fillColor =
+                new Color(_fillColor.getRed(), _fillColor.getGreen(), _fillColor.getBlue(), _fillColor.getAlpha());
+        pos._lineColor =
+                new Color(_lineColor.getRed(), _lineColor.getGreen(), _lineColor.getBlue(), _lineColor.getAlpha());
+        pos._doHide = _doHide;
+        pos._changeLevel = _changeLevel;
+        pos.setControlSensor(getSensorName());
         pos.setWidth(_width);
         pos.setHeight(_height);
         pos.invalidateShape();
@@ -270,6 +277,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
         setWidth(r.width);
         setHeight(r.height);
         setSize(r.width, r.height);
+        getEditor().repaint();
     }
 
     @Override
@@ -296,9 +304,8 @@ public abstract class PositionableShape extends PositionableJComponent implement
     @Override
     public boolean setRotateMenu(JPopupMenu popup) {
         if (super.getDisplayLevel() > Editor.BKG) {
-//             popup.add(CoordinateEdit.getRotateEditAction(this));
-//             return true;
-            return _editor.setShowRotationMenu(this, popup);
+            popup.add(jmri.jmrit.display.CoordinateEdit.getRotateEditAction(this));
+            return true;
         }
         return false;
     }
@@ -316,8 +323,8 @@ public abstract class PositionableShape extends PositionableJComponent implement
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) {
-            log.debug("property change: \"{}\"= {} for {}",
-                    evt.getPropertyName(), evt.getNewValue(), getClass().getName());
+            log.debug("property change: \"{}\"= {} for {} {}",
+                    evt.getPropertyName(), evt.getNewValue(), getSensorName(), hashCode());
         }
         if (!_editor.isEditable()) {
             if (evt.getPropertyName().equals("KnownState")) {
@@ -367,33 +374,26 @@ public abstract class PositionableShape extends PositionableJComponent implement
     }
 
     /**
-     * Attach a named sensor to shape
+     * Attach a named sensor to a PositionableShape.
      *
      * @param pName Used as a system/user name to lookup the sensor object
-     * @param hide  true if sensor should be hidden
-     * @param level level at which sensor is placed
-     * @return error message, if any
      */
-    public String setControlSensor(String pName, boolean hide, int level) {
+    public String setControlSensor(String pName) {
         String msg = null;
+        log.debug("setControlSensor: name= {}", pName);
         if (pName == null || pName.trim().isEmpty()) {
-            setControlSensorHandle(null);
+            removeListener();
+            _controlSensor = null;
             return null;
         }
-        NamedBeanHandle<Sensor> senHandle = null;
-        _saveLevel = super.getDisplayLevel();
+//        _saveLevel = super.getDisplayLevel();
         Optional<SensorManager> sensorManager = InstanceManager.getOptionalDefault(SensorManager.class);
         if (sensorManager.isPresent()) {
             Sensor sensor = sensorManager.get().getSensor(pName);
             Optional<NamedBeanHandleManager> nbhm = InstanceManager.getOptionalDefault(NamedBeanHandleManager.class);
             if (sensor != null) {
                 if (nbhm.isPresent()) {
-                    senHandle = nbhm.get().getNamedBeanHandle(pName, sensor);
-                }
-                _doHide = hide;
-                _changeLevel = level;
-                if (_changeLevel <= 0) {
-                    _changeLevel = super.getDisplayLevel();
+                    _controlSensor = nbhm.get().getNamedBeanHandle(pName, sensor);
                 }
             } else {
                 msg = Bundle.getMessage("badSensorName", pName); // NOI18N
@@ -404,20 +404,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
         if (msg != null) {
             log.warn("{} for {} sensor", msg, Bundle.getMessage("VisibleSensor"));
         }
-        setControlSensorHandle(senHandle);
         return msg;
-    }
-
-    public void setControlSensorHandle(NamedBeanHandle<Sensor> senHandle) {
-        if (_controlSensor != null) {
-            getControlSensor().removePropertyChangeListener(this);
-            setDisplayLevel(_saveLevel);
-            setVisible(true);
-        }
-        _controlSensor = senHandle;
-        if (_controlSensor != null) {
-            getControlSensor().addPropertyChangeListener(this, _controlSensor.getName(), "PositionalShape");
-        }
     }
 
     public Sensor getControlSensor() {
@@ -442,6 +429,12 @@ public abstract class PositionableShape extends PositionableJComponent implement
     public boolean isHideOnSensor() {
         return _doHide;
     }
+    public void setHide(boolean h) {
+        _doHide = h;
+        if (_doHide) {
+            _changeLevel = _saveLevel;
+        }
+    }
 
     public int getChangeLevel() {
         return _changeLevel;
@@ -451,11 +444,19 @@ public abstract class PositionableShape extends PositionableJComponent implement
         _changeLevel = l;
     }
 
-    public void dispose() {
+    public void setListener() {
+        if (_controlSensor != null) {
+            getControlSensor().addPropertyChangeListener(this, getSensorName(), "PositionalShape");
+        }
+    }
+
+    /*
+     * Remove listen, if any, but retain handle.
+     */
+    protected void removeListener() {
         if (_controlSensor != null) {
             getControlSensor().removePropertyChangeListener(this);
         }
-        _controlSensor = null;
     }
 
     DrawFrame _editFrame;
@@ -465,14 +466,9 @@ public abstract class PositionableShape extends PositionableJComponent implement
     }
 
     protected void setEditParams() {
-        _editFrame.setDisplayParams(this);
+        _editFrame.setDisplayParams();
         _editFrame.makeCopy(this);
         drawHandles();
-    }
-
-    protected void closeEditFrame() {
-        _editFrame = null;
-        removeHandles();
     }
 
     public void removeHandles() {
@@ -503,6 +499,10 @@ public abstract class PositionableShape extends PositionableJComponent implement
             return new Point(Math.round(pt[0]), Math.round(pt[1]));
         }
         return new Point(x, y);
+    }
+
+    protected void editing(boolean edit) {
+        _editing = edit;
     }
 
     @Override
@@ -584,4 +584,5 @@ public abstract class PositionableShape extends PositionableJComponent implement
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionableShape.class);
+
 }

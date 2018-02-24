@@ -27,7 +27,7 @@ import jmri.util.BusyGlassPane;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.davidflanagan.HardcopyWriter;
-import org.jdom2.Element;
+import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,7 +68,7 @@ public class PrintRosterEntry implements PaneContainer {
         try {
             Element root = pf.rootFromName(filename);
             if (root == null) {
-                log.error("Programmer file name incorrect " + filename);
+                log.error("Programmer file name incorrect {}", filename);
                 return;
             }
             if ((base = root.getChild("programmer")) == null) {
@@ -76,10 +76,8 @@ public class PrintRosterEntry implements PaneContainer {
                 return;
             }
             log.debug("Success: xml file top element is 'programmer'");
-        } catch (Exception e) {
-            log.error("exception reading programmer file: " + filename, e);
-            // provide traceback too
-            e.printStackTrace();
+        } catch (JDOMException | java.io.IOException e) {
+            log.error("exception reading programmer file {}", filename, e);
             return;
         }
 

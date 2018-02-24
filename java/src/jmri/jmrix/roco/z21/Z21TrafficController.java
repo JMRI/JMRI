@@ -95,7 +95,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
     /**
      * Actually transmits the next message to the port.
      */
-    @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT", "SBSC_USE_STRINGBUFFER_CONCATENATION", "UW_UNCOND_WAIT"},
+    @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT", "", "UW_UNCOND_WAIT"},
             justification = "Two locks needed for synchronization here, this is OK; String + only used for debug, so inefficient String processing not really a problem; Unconditional Wait is to give external hardware, which doesn't necessarilly respond, time to process the data.")
     @Override
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
@@ -159,10 +159,14 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                         }
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt(); // retain if needed later
-                        log.error("retry wait interupted");
+                        if(!threadStopRequest) {
+                           log.error("retry wait interupted");
+                        } else {
+                           log.error("retry wait interupted during thread stop");
+                        }
                     }
                 } else {
-                    log.warn("sendMessage: port not ready for data sending: " + java.util.Arrays.toString(msg));
+                    log.warn("sendMessage: port not ready for data sending: {}", java.util.Arrays.toString(msg));
                 }
             }
         } catch (Exception e) {
@@ -223,7 +227,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                 try {
                     transmitLoop();
                 } catch (Throwable e) {
-                    log.error("Transmit thread terminated prematurely by: " + e.toString(), e);
+                    if(!threadStopRequest) log.error("Transmit thread terminated prematurely by: " + e.toString(), e);
                     // ThreadDeath must be thrown per Java API JavaDocs
                     if (e instanceof ThreadDeath) {
                         throw e;
@@ -406,8 +410,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                             xmtRunnable.notify();
                         }
                     } else {
-                        log.error("reply complete in unexpected state: "
-                                + mCurrentState + " was " + msg.toString());
+                        unexpectedReplyStateError(mCurrentState,msg.toString());
                     }
                 }
             }

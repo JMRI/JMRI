@@ -3,7 +3,6 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -13,24 +12,23 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class PositionableCircleTest {
+public class PositionableCircleTest extends PositionableShapeTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PositionableCircle t = new PositionableCircle(new EditorScaffold());
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",p);
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
+        if(!GraphicsEnvironment.isHeadless()){
+           editor = new EditorScaffold();
+           p = new PositionableCircle(editor);
+        }
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PositionableCircleTest.class);

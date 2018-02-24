@@ -13,19 +13,34 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class StandaloneSystemConnectionMemoTest {
+public class StandaloneSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
+    @Override
     @Test
-    public void testCTor() {
-        Assert.assertNotNull(new StandaloneSystemConnectionMemo());
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        StandaloneSystemConnectionMemo memo =new StandaloneSystemConnectionMemo();
+        StandaloneTrafficController tc = new StandaloneTrafficController(memo){
+          @Override
+          public void transmitLoop(){
+          }
+          @Override
+          public void receiveLoop(){
+          }
+        };
+        memo.setRfidTrafficController(tc);
+        memo.configureManagers(null,null);
+        scm=memo;
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

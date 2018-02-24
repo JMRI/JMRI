@@ -3,7 +3,7 @@ package jmri.jmrix.roco.z21;
 import java.util.ResourceBundle;
 import jmri.CommandStation;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
+import jmri.jmrix.lenz.XNetProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private Z21XPressNetTunnel _xnettunnel = null;
+    private Z21LocoNetTunnel _loconettunnel = null;
 
     public Z21SystemConnectionMemo() {
         this("Z", "Z21");
@@ -35,7 +36,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /*
-     * Override the init function for any subtype specific 
+     * Override the init function for any subtype specific
      * registration into init.  init is called by the generic contstructor.
      */
     protected void init() {
@@ -62,28 +63,31 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Reporter Manager for this instance.
      */
     public void setReporterManager(Z21ReporterManager rm){
-           _rm = rm;
+        _rm = rm;
     }
 
     public Z21ReporterManager getReporterManager() {
-           return _rm;
+        if(_rm==null){
+           setReporterManager(new Z21ReporterManager(this));
+        }
+        return _rm;
     }
 
     private Z21ReporterManager _rm = null;
 
-    public ProgrammerManager getProgrammerManager() {
+    public XNetProgrammerManager getProgrammerManager() {
         if (_xnettunnel!=null) {
             // delegate to the XPressNet tunnel.
-            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();        
+            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();
         }
         return null;
     }
 
-    public void setProgrammerManager(ProgrammerManager p) {
+    public void setProgrammerManager(XNetProgrammerManager p) {
     }
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
     @Override
     public boolean provides(Class<?> type) {
@@ -93,11 +97,18 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (type.equals(jmri.ReporterManager.class)){
            return true;
         }
+        if (type.equals(jmri.MultiMeter.class)){
+           return true;
+        }
         if (_xnettunnel!=null) {
             // delegate to the XPressNet tunnel.
-            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);        
+            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);
         }
-        return false; // nothing, by default
+        if (_loconettunnel!=null) {
+            // delegate to the LocoNet tunnel.
+            return _loconettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);
+        }
+        return super.provides(type); // nothing, by default
     }
 
     /**
@@ -112,9 +123,16 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if(T.equals(jmri.ReporterManager.class)){
             return (T) getReporterManager();
         }
-        if (_xnettunnel!=null) {
+        if(T.equals(jmri.MultiMeter.class)){
+            return (T) getMultiMeter();
+        }
+        if (_xnettunnel!=null && _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(T) ) {
             // delegate to the XPressNet tunnel.
-            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().get(T);        
+            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().get(T);
+        }
+        if (_loconettunnel!=null && _loconettunnel.getStreamPortController().getSystemConnectionMemo().provides(T) ) {
+            // delegate to the LocoNet tunnel.
+            return _loconettunnel.getStreamPortController().getSystemConnectionMemo().get(T);
         }
         return null; // nothing, by default
     }
@@ -133,6 +151,10 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         // set the broadcast flags so we get messages we may want to hear
         z21CommandStation.setXPressNetMessagesFlag(true);
         z21CommandStation.setXPressNetLocomotiveMessagesFlag(true);
+        z21CommandStation.setLocoNetMessagesFlag(true);
+        z21CommandStation.setLocoNetLocomotiveMessagesFlag(true);
+        z21CommandStation.setLocoNetTurnoutMessagesFlag(true);
+        z21CommandStation.setLocoNetOccupancyMessagesFlag(true);
 
         // and forward the flags to the command station.
         _tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(
@@ -141,12 +163,15 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         // add an XpressNet Tunnel.
         _xnettunnel = new Z21XPressNetTunnel(this);
 
+        // add an LocoNet Tunnel.
+        _loconettunnel = new Z21LocoNetTunnel(this);
+
         // set up the Reporter Manager
-        if(_rm==null){
-           setReporterManager(new Z21ReporterManager(this));
-           jmri.InstanceManager.store(getReporterManager(),jmri.ReporterManager.class);
-        }
- 
+        jmri.InstanceManager.store(getReporterManager(),jmri.ReporterManager.class);
+
+        // setup the MultiMeter
+        getMultiMeter();
+
    }
 
     @Override
@@ -184,6 +209,23 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     private RocoZ21CommandStation z21CommandStation = null;
+
+    /**
+     * Provide access to the Roco Z21 MultiMeter for this particular
+     * connection.
+     * <p>
+     * NOTE: MultiMeter defaults to NULL
+     */
+    public jmri.MultiMeter getMultiMeter() {
+        if(meter == null){
+           meter = new Z21MultiMeter(this);
+           jmri.InstanceManager.store(meter,jmri.MultiMeter.class);
+        }
+        return meter;
+    }
+
+    private Z21MultiMeter meter = null;
+
 
     void shutdownTunnel(){
         if (_xnettunnel!=null) {

@@ -14,7 +14,6 @@ public class LocoNetMenu extends JMenu {
      * Create a LocoNet menu. Preloads the TrafficController to certain actions.
      * Actions will open new windows.
      */
-    // Need to Sort out the Loconet server menu items;
     public LocoNetMenu(LocoNetSystemConnectionMemo memo) {
         super();
 
@@ -37,7 +36,7 @@ public class LocoNetMenu extends JMenu {
         add(new jmri.jmrix.loconet.locormi.LnMessageServerAction(Bundle.getMessage("MenuItemStartLocoNetServer")));
         add(new jmri.jmrix.loconet.loconetovertcp.LnTcpServerAction(Bundle.getMessage("MenuItemLocoNetOverTCPServer")));
     }
-
+    // TODO Sort out the Loconet server menu items
     Item[] panelItems = new Item[]{
         new Item("MenuItemLocoNetMonitor", "jmri.jmrix.loconet.locomon.LocoMonPane"), // NOI18N
         new Item("MenuItemSlotMonitor", "jmri.jmrix.loconet.slotmon.SlotMonPane"), // NOI18N

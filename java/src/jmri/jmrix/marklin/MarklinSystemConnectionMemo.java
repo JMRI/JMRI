@@ -12,12 +12,11 @@ import jmri.InstanceManager;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2012
- * 
  */
 public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public MarklinSystemConnectionMemo(MarklinTrafficController et) {
-        super("MC", "Marklin-CS2");
+        super("M", "Marklin-CS2");
         this.et = et;
         et.setAdapterMemo(this);
         register();
@@ -27,7 +26,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
 
     public MarklinSystemConnectionMemo() {
-        super("MC", "Marklin-CS2");
+        super("M", "Marklin-CS2");
         register(); // registers general type
         InstanceManager.store(this, MarklinSystemConnectionMemo.class); // also register as specific type
         //Needs to be implemented
@@ -105,7 +104,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     //public MarklinReporterManager getReporterManager() { return reporterManager; }
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
     @Override
     public boolean provides(Class<?> type) {
@@ -183,7 +182,5 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         super.dispose();
     }
+
 }
-
-
-

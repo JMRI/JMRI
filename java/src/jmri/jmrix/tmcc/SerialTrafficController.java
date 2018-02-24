@@ -10,33 +10,39 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts Stream-based I/O to/from TMCC serial messages.
- * <P>
+ * Convert Stream-based I/O to/from TMCC serial messages.
+ * <p>
  * The "SerialInterface" side sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a SerialPortController is via a pair of *Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
- * This handles the state transistions, based on the necessary state in each
+ * <p>
+ * This handles the state transitions, based on the necessary state in each
  * message.
- * <P>
+ * <p>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2003, 2006
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
-    public SerialTrafficController() {
+    /**
+     * Create a new TMCC SerialTrafficController instance.
+     *
+     * @param adaptermemo the associated SystemConnectionMemo
+     */
+    public SerialTrafficController(TmccSystemConnectionMemo adaptermemo) {
         super();
-
+        mMemo = adaptermemo;
         // entirely poll driven, so reduce interval
-        mWaitBeforePoll = 25;  // default = 25
-
+        mWaitBeforePoll = 25; // default = 25
+        log.debug("creating a new TMCCTrafficController object");
     }
 
     // The methods to implement the SerialInterface
+
     @Override
     public synchronized void addSerialListener(SerialListener l) {
         this.addListener(l);
@@ -49,13 +55,63 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
 
     @Override
     protected AbstractMRMessage enterProgMode() {
-        log.warn("enterProgMode doesnt make sense for TMCC serial");
+        log.warn("enterProgMode doesn't make sense for TMCC serial");
         return null;
     }
 
     @Override
     protected AbstractMRMessage enterNormalMode() {
         return null;
+    }
+
+    /**
+     * Reference to the system connection memo.
+     */
+    TmccSystemConnectionMemo mMemo = null;
+
+    /**
+     * Get access to the system connection memo associated with this traffic
+     * controller.
+     *
+     * @return associated systemConnectionMemo object
+     */
+    public TmccSystemConnectionMemo getSystemConnectionMemo() {
+        return mMemo;
+    }
+
+    /**
+     * Set the system connection memo associated with this traffic controller.
+     *
+     * @param m associated systemConnectionMemo object
+     */
+    public void setSystemConnectionMemo(TmccSystemConnectionMemo m) {
+        mMemo = m;
+    }
+
+    /**
+     * Static function returning the SerialTrafficController instance to use.
+     *
+     * @return The registered SerialTrafficController instance for general use,
+     *         if need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used
+     */
+    @Deprecated
+    static public SerialTrafficController instance() {
+        log.warn("deprecated instance() call for TMCCTrafficController");
+        return null;
+    }
+
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used
+     */
+    @Deprecated
+    static volatile protected SerialTrafficController self = null;
+
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "temporary until mult-system; only set at startup")
+    @Override
+    protected void setInstance() {
+        self = this;
     }
 
     /**
@@ -97,37 +153,6 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         sendMessage(m, reply);
     }
 
-    /**
-     * static function returning the SerialTrafficController instance to use.
-     *
-     * @return The registered SerialTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new SerialTrafficController object");
-            }
-            self = new SerialTrafficController();
-        }
-        return self;
-    }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static volatile protected SerialTrafficController self = null;
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
-    @Override
-    protected void setInstance() {
-        self = this;
-    }
-
     @Override
     protected AbstractMRReply newReply() {
         return new SerialReply();
@@ -146,7 +171,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         char1 = readByteProtected(istream);
         msg.setElement(0, char1 & 0xFE);
         if ((char1 & 0xFF) != 0xFE) {
-            log.warn("return short message as 1st byte is " + (char1 & 0xFF));
+            log.warn("return short message as 1st byte is {}", char1 & 0xFF);
             return;
         }
 
@@ -197,14 +222,9 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     /**
      * Actually transmits the next message to the port
      */
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used in debug log, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
-        if (log.isDebugEnabled()) {
-            log.debug("forwardToPort message: [" + m + "]");
-        }
+        log.debug("forwardToPort message: [{}]", m);
         // remember who sent this
         mLastSender = reply;
 
@@ -232,11 +252,11 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         try {
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
-                    String f = "write message: ";
+                    StringBuilder f = new StringBuilder("");
                     for (int i = 0; i < msg.length; i++) {
-                        f = f + Integer.toHexString(0xFF & msg[i]) + " ";
+                        f.append(Integer.toHexString(0xFF & msg[i])).append(" ");
                     }
-                    log.debug(f);
+                    log.debug("write message: {}", f);
                 }
                 while (m.getRetries() >= 0) {
                     if (portReadyToSend(controller)) {
@@ -253,9 +273,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                         }
                         break;
                     } else if (m.getRetries() >= 0) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("Retry message: " + m.toString() + " attempts remaining: " + m.getRetries());
-                        }
+                        log.debug("Retry message: {} attempts remaining: {}", m, m.getRetries());
                         m.setRetries(m.getRetries() - 1);
                         try {
                             synchronized (xmtRunnable) {
@@ -265,17 +283,18 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                             log.error("retry wait interupted");
                         }
                     } else {
-                        log.warn("sendMessage: port not ready for data sending: " + java.util.Arrays.toString(msg));
+                        log.warn("sendMessage: port not ready for data sending: {}", java.util.Arrays.toString(msg));
                     }
                 }
             } else {
                 // no stream connected
                 log.warn("sendMessage: no connection established");
             }
-        } catch (Exception e) {
-            log.warn("sendMessage: Exception: " + e.toString());
+        } catch (java.io.IOException | RuntimeException e) {
+            log.warn("sendMessage: Exception:", e);
         }
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
+
 }

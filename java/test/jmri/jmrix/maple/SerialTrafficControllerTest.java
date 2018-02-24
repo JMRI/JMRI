@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Description:	JUnit tests for the SerialTrafficController class
+ * JUnit tests for the SerialTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2006
  */
@@ -23,10 +23,10 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @Test
     public void testSerialNodeEnumeration() {
         SerialTrafficController c = (SerialTrafficController)tc;
-        SerialNode b = new SerialNode(1, 0);
-        SerialNode f = new SerialNode(3, 0);
-        SerialNode d = new SerialNode(2, 0);
-        SerialNode e = new SerialNode(6, 0);
+        SerialNode b = new SerialNode(1, 0,c);
+        SerialNode f = new SerialNode(3, 0,c);
+        SerialNode d = new SerialNode(2, 0,c);
+        SerialNode e = new SerialNode(6, 0,c);
         Assert.assertEquals("1st Node", b, c.getNode(0));
         Assert.assertEquals("2nd Node", f, c.getNode(1));
         Assert.assertEquals("3rd Node", d, c.getNode(2));
@@ -69,12 +69,10 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
 
         public SerialListenerScaffold() {
             rcvdReply = null;
-            rcvdMsg = null;
         }
 
         @Override
         public void message(SerialMessage m) {
-            rcvdMsg = m;
         }
 
         @Override
@@ -82,9 +80,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
             rcvdReply = r;
         }
     }
-    SerialReply rcvdReply;
-    SerialMessage rcvdMsg;
-
+    private SerialReply rcvdReply;
     // internal class to simulate a PortController
     class SerialPortControllerScaffold extends SerialPortController {
 
@@ -153,6 +149,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @Override
     @After
     public void tearDown() {
+        rcvdReply = null;
         JUnitUtil.tearDown();
     }
 

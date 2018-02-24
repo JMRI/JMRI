@@ -54,8 +54,6 @@ public class TurnoutEditAction extends BeanEditAction {
         return InstanceManager.turnoutManagerInstance().getByUserName(name);
     }
 
-    private JmriBeanComboBox reporterField;
-    private JCheckBox useCurrent = new JCheckBox();
     private JCheckBox inverted = new JCheckBox();
 
     @Override
@@ -91,7 +89,6 @@ public class TurnoutEditAction extends BeanEditAction {
     private TurnoutOperationConfig config;
     private BeanItemPanel feedback;
     private JPanel turnoutOperation = new JPanel();
-    private String userDefinedOperation = null;  // ERROR: Something here should be setting this to a user-selected value!
 
     private BeanItemPanel feedback() {
         feedback = new BeanItemPanel();
@@ -257,9 +254,6 @@ public class TurnoutEditAction extends BeanEditAction {
     }
 
     private void updateAutomationOptions() {
-        if ((userDefinedOperation != null) && userDefinedOperation.equals(automationBox.getSelectedItem())) {
-            return;
-        }
 
         currentOperation = null;
         automationBox.removeActionListener(automationSelectionListener);
@@ -303,8 +297,6 @@ public class TurnoutEditAction extends BeanEditAction {
     private final static String noneText = "None";
 
     private JComboBox<String> lockBox;
-    private JComboBox<String> lockOperationBox;
-
     protected BeanItemPanel lock() {
         Turnout t = (Turnout) bean;
         BeanItemPanel lock = new BeanItemPanel();
@@ -513,5 +505,5 @@ public class TurnoutEditAction extends BeanEditAction {
 
         bei.add(speed);
         return speed;
-    }   // speed()
-}   // class TurnoutEditAction
+    }
+} 

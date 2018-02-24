@@ -5,7 +5,6 @@ import java.util.List;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.jmrix.ecos.utilities.GetEcosObjectNumber;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +20,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         tc = etc;
     }
 
-    EcosTrafficController tc; 
+    EcosTrafficController tc;
     
     /**
      * @return list of programming modes implemented for ECoS
@@ -29,7 +28,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.DIRECTBYTEMODE);
         return ret;
     }
 

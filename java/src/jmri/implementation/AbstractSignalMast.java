@@ -29,7 +29,6 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         super(systemName);
     }
 
-    @OverridingMethodsMustInvokeSuper
     @Override
     public void setAspect(String aspect) {
         String oldAspect = this.aspect;
@@ -90,12 +89,11 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
 
     /**
      * Set the lit property.
-     *
+     * <p>
      * This acts on all the SignalHeads included in this SignalMast
      *
      * @param newLit the new value of lit
      */
-    @OverridingMethodsMustInvokeSuper
     @Override
     public void setLit(boolean newLit) {
         boolean oldLit = mLit;
@@ -117,7 +115,6 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
      *
      * @param newHeld the new value of the help property
      */
-    @OverridingMethodsMustInvokeSuper
     @Override
     public void setHeld(boolean newHeld) {
         boolean oldHeld = mHeld;
@@ -126,21 +123,20 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
             // notify listeners, if any
             firePropertyChange("Held", oldHeld, newHeld);
         }
-
     }
 
     DefaultSignalAppearanceMap map;
     SignalSystem systemDefn;
 
-    void configureSignalSystemDefinition(String name) {
+    protected void configureSignalSystemDefinition(String name) {
         systemDefn = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(name);
         if (systemDefn == null) {
-            log.error("Did not find signal definition: " + name);
+            log.error("Did not find signal definition: {}", name);
             throw new IllegalArgumentException("Signal definition not found: " + name);
         }
     }
 
-    void configureAspectTable(String signalSystemName, String aspectMapName) {
+    protected void configureAspectTable(String signalSystemName, String aspectMapName) {
         map = DefaultSignalAppearanceMap.getMap(signalSystemName, aspectMapName);
     }
 
@@ -156,21 +152,15 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
 
     ArrayList<String> disabledAspects = new ArrayList<>(1);
 
-    /**
-     * Get a list of all the valid aspects that have not been disabled.
-     * Sorted alphabetically for useful display in GUI.
-     *
-     * @return list of valid aspects (as Vector); may be empty
-     */
     @Override
     public Vector<String> getValidAspects() {
         java.util.Enumeration<String> e = map.getAspects();
         // copy List to Vector
         Vector<String> v = new Vector<>();
         while (e.hasMoreElements()) {
-            String aspect = e.nextElement();
-            if (!disabledAspects.contains(aspect)) {
-                v.add(aspect);
+            String a = e.nextElement();
+            if (!disabledAspects.contains(a)) {
+                v.add(a);
             }
         }
         return v;
@@ -196,7 +186,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
             return;
         }
         if (!map.checkAspect(aspect)) {
-            log.warn("attempting to disable an aspect: " + aspect + " that is not on the mast " + getDisplayName());
+            log.warn("attempting to disable an aspect: {} that is not on the mast {}", aspect, getDisplayName());
             return;
         }
         if (!disabledAspects.contains(aspect)) {
@@ -210,7 +200,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
             return;
         }
         if (!map.checkAspect(aspect)) {
-            log.warn("attempting to disable an aspect: " + aspect + " that is not on the mast " + getDisplayName());
+            log.warn("attempting to disable an aspect: {} that is not on the mast {}", aspect, getDisplayName());
             return;
         }
         if (disabledAspects.contains(aspect)) {

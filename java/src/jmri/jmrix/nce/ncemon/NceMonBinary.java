@@ -37,6 +37,12 @@ public class NceMonBinary {
     private static final int REPLY_FOUR = 4;
     private static final int REPLY_OK = 0x21;  // !
 
+    /**
+     * Creates a command message for the log, in a human-friendly form if possible.
+     *
+     * @param m the raw command message
+     * @return the displayable message string
+     */
     public String displayMessage(NceMessage m) {
         return parseMessage(m) + NEW_LINE;
     }
@@ -295,14 +301,8 @@ public class NceMonBinary {
                             new Object[]{m.getElement(1)});
                 }
                 break;
-            case (NceBinaryCommand.USB_MEM_READ_CMD):
-                if (m.getNumDataElements() == 2) {
-                    return MessageFormat.format(Bundle.getMessage("Usb_Mem_Read_Cmd"),
-                            new Object[]{m.getElement(1)});
-                }
-                break;
             default:
-                log.error("Unhandled command code: {}", m.getOpCode() & 0xFF);
+                log.debug("Unhandled command code: {} after pass 1", m.getOpCode() & 0xFF);
                 break;
         }
         // 2nd pass, check for messages that have a data reply
@@ -322,6 +322,12 @@ public class NceMonBinary {
                 if (m.getNumDataElements() == 3) {
                     return MessageFormat.format(Bundle.getMessage("READ16_CMD"),
                             new Object[]{getAddress(m)});
+                }
+                break;
+            case (NceBinaryCommand.USB_MEM_READ_CMD):
+                if (m.getNumDataElements() == 2) {
+                    return MessageFormat.format(Bundle.getMessage("Usb_Mem_Read_Cmd"),
+                            new Object[]{m.getElement(1)});
                 }
                 break;
             case (NceBinaryCommand.READ_AUI2_CMD):
@@ -357,11 +363,12 @@ public class NceMonBinary {
             case (NceBinaryCommand.SW_REV_CMD):
                 return Bundle.getMessage("SW_REV_CMD");
             default:
-                log.error("Unhandled cmd code: {}", m.getOpCode() & 0xFF);
+                log.debug("Unhandled command code: {} after pass 2", m.getOpCode() & 0xFF);
                 break;
         }
         // this is one we don't know about or haven't coded it up
         replyType = REPLY_UNKNOWN;
+        log.debug("Unhandled command code: {}, display as raw", m.getOpCode() & 0xFF);
         return MessageFormat.format(Bundle.getMessage("BIN_CMD"), new Object[]{m.toString()});
     }
 
@@ -378,7 +385,7 @@ public class NceMonBinary {
     }
 
     private String getNumber(NceMessage m) {
-        return Integer.toString(m.getElement(1) * 256 + m.getElement(2));
+        return Integer.toString(((m.getElement(1) & 0xFF) << 8) | (m.getElement(2) & 0xFF));
     }
 
     private String getLocoAddress(NceMessage m) {
@@ -387,7 +394,7 @@ public class NceMonBinary {
         if ((m.getElement(1) & 0xE0) != 0) {
             appendix = " (long)";
         }
-        return Integer.toString((m.getElement(1) & 0x3F) * 256 + m.getElement(2)) + appendix;
+        return Integer.toString(((m.getElement(1) & 0x3F) << 8) | (m.getElement(2) & 0xFF)) + appendix;
     }
 
     private String getFunctionNumber(NceMessage m) {
@@ -475,6 +482,12 @@ public class NceMonBinary {
         }
     }
 
+    /**
+     * Creates a reply message for the log, in a human-friendly form if possible.
+     *
+     * @param r the raw reply message
+     * @return  the displayable message string
+     */
     public String displayReply(NceReply r) {
         return parseReply(r) + NEW_LINE;
     }
@@ -528,7 +541,7 @@ public class NceMonBinary {
                 }
                 break;
             default:
-                log.error("Unhandled reply type code: {}", replyType);
+                log.debug("Unhandled reply type code: {}, display as raw", replyType);
                 break;
         }
         return MessageFormat.format(Bundle.getMessage("NceReply"), new Object[]{r.toString()});

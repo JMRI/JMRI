@@ -105,7 +105,7 @@ public class JmriConfigurationManager implements ConfigureManager {
     }
 
     @Override
-    public ArrayList<Object> getInstanceList(Class<?> c) {
+    public List<Object> getInstanceList(Class<?> c) {
         return this.legacy.getInstanceList(c);
     }
 
@@ -184,7 +184,7 @@ public class JmriConfigurationManager implements ConfigureManager {
                 });
                 if (!this.initializationExceptions.isEmpty()) {
                     if (!GraphicsEnvironment.isHeadless()) {
-                        ArrayList<String> errors = new ArrayList<>();
+                        List<String> errors = new ArrayList<>();
                         this.initialized.forEach((provider) -> {
                             List<Exception> exceptions = provider.getInitializationExceptions(profile);
                             if (!exceptions.isEmpty()) {
@@ -226,7 +226,8 @@ public class JmriConfigurationManager implements ConfigureManager {
         }
         // make this url the default "Save Panels..." file
         JFileChooser ufc = jmri.configurexml.StoreXmlUserAction.getUserFileChooser();
-        ufc.setSelectedFile(new File(url.getFile()));
+        ufc.setSelectedFile(new File(FileUtil.urlToURI(url)));
+
         return this.legacy.load(url, registerDeferred);
         // return true; // always return true once legacy support is dropped
     }

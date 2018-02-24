@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor panel. Allowed values (using Path object definitions) are:
  * Path.NORTH (up on panel) Path.SOUTH (down on panel) Path.EAST (right on
  * panel) Path.WEST (left on panel) and points in between: Path.NORTH +
- * Path.EAST Path.NORTH + Path.WEST Path.SOUTH + Path.EAST Path.SOUTH +
- * Path.WEST
+ * Path.EAST Path.NORTH_WEST, Path.SOUTH_EAST Path.SOUTH + Path.WEST
  * <P>
  * The connected object in the first block is usually a track segment. This
  * track segment is connected to an object in the second block. The connection
@@ -42,6 +41,7 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor panels.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007-2008
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutConnectivity {
 
@@ -75,7 +75,7 @@ public class LayoutConnectivity {
     private int direction = Path.NONE;
     private TrackSegment track1 = null;
 
-    private Object connect2 = null;
+    private LayoutTrack connect2 = null;
     private int typeConnect2 = 0;
 
     private LayoutTurnout xover = null;
@@ -90,7 +90,7 @@ public class LayoutConnectivity {
             result = result + ", track: " + track1.getId();
         }
         if (connect2 != null) {
-            result = result + ", connect2: " + ((LayoutTrack) connect2).getId() + ", type2: " + typeConnect2;
+            result = result + ", connect2: " + connect2.getId() + ", type2: " + typeConnect2;
         }
         if (xover != null) {
             result = result + ", xover: " + xover.getId() + ", xoverBoundaryType: " + xoverBoundaryType;
@@ -114,38 +114,14 @@ public class LayoutConnectivity {
     }
 
     public int getReverseDirection() {
-        if (direction == Path.NORTH) {
-            return (Path.SOUTH);
-        }
-        if (direction == Path.SOUTH) {
-            return (Path.NORTH);
-        }
-        if (direction == Path.EAST) {
-            return (Path.WEST);
-        }
-        if (direction == Path.WEST) {
-            return (Path.EAST);
-        }
-        if (direction == (Path.NORTH + Path.WEST)) {
-            return (Path.SOUTH + Path.EAST);
-        }
-        if (direction == (Path.NORTH + Path.EAST)) {
-            return (Path.SOUTH + Path.WEST);
-        }
-        if (direction == (Path.SOUTH + Path.WEST)) {
-            return (Path.NORTH + Path.EAST);
-        }
-        if (direction == (Path.SOUTH + Path.EAST)) {
-            return (Path.NORTH + Path.WEST);
-        }
-        return (Path.NONE);
+        return Path.reverseDirection(direction);
     }
 
     public boolean setDirection(int dir) {
         if ((dir == Path.NORTH) || (dir == Path.SOUTH)
                 || (dir == Path.EAST) || (dir == Path.WEST)
-                || (dir == (Path.NORTH + Path.WEST)) || (dir == (Path.NORTH + Path.EAST))
-                || (dir == (Path.SOUTH + Path.WEST)) || (dir == (Path.SOUTH + Path.EAST))) {
+                || (dir == Path.NORTH_WEST) || (dir == (Path.NORTH_EAST))
+                || (dir == (Path.SOUTH_WEST)) || (dir == (Path.SOUTH_EAST))) {
             direction = dir;
             return (true);
         }
@@ -154,14 +130,14 @@ public class LayoutConnectivity {
         return (false);
     }
 
-    public void setConnections(TrackSegment t, Object o, int type, PositionablePoint p) {
+    public void setConnections(TrackSegment t, LayoutTrack o, int type, PositionablePoint p) {
         track1 = t;
         if (t == null) {
             log.error("null track1 when setting up LayoutConnectivity");
         }
         connect2 = o;
         if (o == null) {
-            log.error("null connect object when setting up LayoutConnectivity");
+            log.error("null connect track when setting up LayoutConnectivity");
         }
         typeConnect2 = type;
         anchor = p;
@@ -179,7 +155,7 @@ public class LayoutConnectivity {
         return track1;
     }
 
-    public Object getConnectedObject() {
+    public LayoutTrack getConnectedObject() {
         return connect2;
     }
 
@@ -255,5 +231,6 @@ public class LayoutConnectivity {
         return hash;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class);
+    private final static Logger log
+            = LoggerFactory.getLogger(LayoutConnectivity.class);
 }   // class LayoutConnectivity

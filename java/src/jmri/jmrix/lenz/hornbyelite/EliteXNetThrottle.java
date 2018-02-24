@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An implementation of DccThrottle with code specific to a XpressNet
+ * An implementation of DccThrottle with code specific to an XpressNet
  * connection on the Hornby Elite.
  *
  * @author Paul Bender (C) 2008-2009

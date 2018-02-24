@@ -3,10 +3,7 @@ package jmri.jmrit.symbolicprog;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import jmri.progdebugger.ProgDebugger;
 import javax.swing.JLabel;
@@ -67,6 +64,6 @@ public class DccAddressVarHandlerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DccAddressVarHandlerTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(DccAddressVarHandlerTest.class);
 
 }

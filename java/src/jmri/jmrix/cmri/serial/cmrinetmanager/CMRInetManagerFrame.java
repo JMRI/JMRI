@@ -58,20 +58,20 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
     JButton netStatsButton = new JButton(Bundle.getMessage("NetStatsButtonText") );
 
     private CMRISystemConnectionMemo _memo = null;
-    private CMRInetManagerFrame curFrame;
-
     public CMRInetManagerFrame(CMRISystemConnectionMemo memo) {
         super();
 	_memo = memo;
-        curFrame = this;
         addHelpMenu("package.jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetManagerFrame", true); // c2
    }
 
     protected javax.swing.JTextField pollIntervalField = new javax.swing.JTextField();
 
-    public void initComponents() throws Exception
-    {
-	initializeNodes();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void initComponents() {
+	    initializeNodes();
 
         // set the frame's initial state
         setTitle(Bundle.getMessage("WindowTitle"));
@@ -176,39 +176,39 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
         // --------------------------
         haltPollButton.setVisible(true);
         haltPollButton.setToolTipText(Bundle.getMessage("HaltPollButtonTip") );
-		haltPollButton.addActionListener(new java.awt.event.ActionListener()
+	haltPollButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent e) {
 					haltpollButtonActionPerformed(e);
 				}
 			});
-		panel3.add(haltPollButton);
+	panel3.add(haltPollButton);
 
         // --------------------------
         // Set up Open monitor button
         // --------------------------
         monitorButton.setVisible(true);
         monitorButton.setToolTipText(Bundle.getMessage("MonitorButtonTip") );
-		monitorButton.addActionListener(new java.awt.event.ActionListener()
+	monitorButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent e) {
 					monitorButtonActionPerformed(e);
 				}
 			});
-		panel3.add(monitorButton);
+	panel3.add(monitorButton);
 
         // -----------------------------
         // Set up Network Metrics button
         // -----------------------------
-        netStatsButton.setVisible(true);
+        netStatsButton.setVisible(false);
         netStatsButton.setToolTipText(Bundle.getMessage("NetStatsButtonTip") );
-		netStatsButton.addActionListener(new java.awt.event.ActionListener()
+	netStatsButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent e) {
 					netStatsButtonActionPerformed(e);
 				}
 			});
-		panel3.add(netStatsButton);
+	panel3.add(netStatsButton);
         panel3.add(Box.createRigidArea(new Dimension(30,0)));
 
         // ------------------
@@ -216,13 +216,13 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
         // ------------------
         doneButton.setVisible(true);
         doneButton.setToolTipText(Bundle.getMessage("DoneButtonTip") );
-		doneButton.addActionListener(new java.awt.event.ActionListener()
+	doneButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent e) {
 					doneButtonActionPerformed();
 				}
 			});
-		panel3.add(doneButton);
+	panel3.add(doneButton);
         contentPane13.add(panel3);
 
         addHelpMenu("package.jmri.jmrix.cmri.serial.CMRInetManagerFrame", true);
@@ -237,9 +237,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
      */
     public void initializeNodes()  //c2
     {
-	String str = "";
-
-    // get all configured nodes
+	// get all configured nodes
         SerialNode node = (SerialNode) _memo.getTrafficController().getNode(0);
         int index = 1;
         while (node != null)
@@ -329,7 +327,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
                 default:
                     return String.class;
             }
-        };
+        }
 	public boolean isCellEditable(int r,int c)
         {
             switch (c)
@@ -412,5 +410,3 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
     private final static Logger log = LoggerFactory.getLogger(CMRInetManagerFrame.class);
 
 }
-
-/* @(#)CMRInetManagerFrame.java */

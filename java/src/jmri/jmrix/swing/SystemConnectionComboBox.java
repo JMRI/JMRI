@@ -15,7 +15,7 @@ import jmri.jmrix.SystemConnectionMemo;
  *
  * @author Randall Wood Copyright 2017
  */
-public class SystemConnectionComboBox extends JComboBox {
+public class SystemConnectionComboBox extends JComboBox<SystemConnectionMemo> {
 
     private final SystemConnectionComboBoxModel model = new SystemConnectionComboBoxModel();
 
@@ -28,7 +28,8 @@ public class SystemConnectionComboBox extends JComboBox {
         this.model.dispose();
     }
 
-    private static class SystemConnectionComboBoxModel extends AbstractListModel implements ComboBoxModel {
+    private static class SystemConnectionComboBoxModel extends AbstractListModel<SystemConnectionMemo> 
+                        implements ComboBoxModel<SystemConnectionMemo> {
 
         SystemConnectionMemo selectedItem = null;
         PropertyChangeListener memoListener = (PropertyChangeEvent evt) -> {
@@ -46,10 +47,10 @@ public class SystemConnectionComboBox extends JComboBox {
             if (evt.getSource().equals(InstanceManager.getDefault())) {
                 if (evt instanceof IndexedPropertyChangeEvent) {
                     IndexedPropertyChangeEvent event = (IndexedPropertyChangeEvent) evt;
-                    if (event.getOldValue() == null) {
+                    if (event.getNewValue() != null) {
                         ((SystemConnectionMemo) event.getNewValue()).addPropertyChangeListener(memoListener);
                         this.fireIntervalAdded(this, event.getIndex(), event.getIndex());
-                    } else if (event.getNewValue() == null) {
+                    } else if (event.getOldValue() != null) {
                         ((SystemConnectionMemo) event.getOldValue()).removePropertyChangeListener(memoListener);
                         this.fireIntervalRemoved(this, event.getIndex(), event.getIndex());
                     }
@@ -74,8 +75,9 @@ public class SystemConnectionComboBox extends JComboBox {
             });
         }
 
+        /** {@inheritDoc} */
         @Override
-        public void setSelectedItem(Object anItem) {
+        public void setSelectedItem(Object anItem) {  // Object parameter required by interface
             if ((anItem == null || anItem instanceof SystemConnectionMemo) // anItem is valid in this model
                     && ((selectedItem != null && !selectedItem.equals(anItem)) // anItem is not selectedItem
                     || selectedItem == null && anItem != null)) {
@@ -84,16 +86,19 @@ public class SystemConnectionComboBox extends JComboBox {
             }
         }
 
+        /** {@inheritDoc} */
         @Override
         public SystemConnectionMemo getSelectedItem() {
             return this.selectedItem;
         }
 
+        /** {@inheritDoc} */
         @Override
         public int getSize() {
             return this.getSource().size();
         }
 
+        /** {@inheritDoc} */
         @Override
         public SystemConnectionMemo getElementAt(int index) {
             return this.getSource().get(index);

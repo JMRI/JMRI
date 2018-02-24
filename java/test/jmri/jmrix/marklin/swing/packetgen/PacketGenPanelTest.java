@@ -2,27 +2,22 @@ package jmri.jmrix.marklin.swing.packetgen;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of PacketGenPanel
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class PacketGenPanelTest {
+public class PacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
 
-
-    @Test
-    public void testCtor() {
-        PacketGenPanel action = new PacketGenPanel();
-        Assert.assertNotNull("exists", action);
-    }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new PacketGenPanel();
+        helpTarget="package.jmri.jmrix.marklin.swing.packetgen.PacketGenFrame";
+        title=Bundle.getMessage("SendCommandTitle");
     }
 
     @After

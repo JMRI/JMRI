@@ -14,7 +14,8 @@ public class SecsiMenuTest {
 
     @Test
     public void testCTor() {
-        SecsiMenu t = new SecsiMenu();
+        SecsiSystemConnectionMemo memo = new SecsiSystemConnectionMemo();
+        SecsiMenu t = new SecsiMenu(memo);
         Assert.assertNotNull("exists",t);
     }
 

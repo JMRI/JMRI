@@ -60,7 +60,7 @@ public class ResetAction extends AbstractAction {
         } catch (IOException ex) {
             UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
                     "Deleting Operations files"); // NOI18N
-            new ExceptionDisplayFrame(context);
+            new ExceptionDisplayFrame(context, null).setVisible(true);
         }
     }
 

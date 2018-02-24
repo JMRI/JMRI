@@ -7,6 +7,9 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
+import jmri.jmrix.grapevine.SerialTrafficController;
+import jmri.jmrix.grapevine.SerialTrafficControlScaffold;
 
 /**
  *
@@ -14,17 +17,40 @@ import org.junit.Test;
  */
 public class NodeConfigFrameTest {
 
+    private GrapevineSystemConnectionMemo memo = null;
+
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        NodeConfigFrame t = new NodeConfigFrame();
+        NodeConfigFrame t = new NodeConfigFrame(memo);
         Assert.assertNotNull("exists",t);
+    }
+
+    @Test
+    public void testInitComponents() throws Exception{
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        NodeConfigFrame t = new NodeConfigFrame(memo);
+        // for now, just makes ure there isn't an exception.
+        t.initComponents();
+        t.dispose();
+    }
+
+    @Test
+    public void testGetTitle(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        NodeConfigFrame t = new NodeConfigFrame(memo);
+        t.initComponents();
+        Assert.assertEquals("title","Configure Nodes",t.getTitle());
+        t.dispose();
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new GrapevineSystemConnectionMemo();
+        SerialTrafficController tc = new SerialTrafficControlScaffold(memo);
+        memo.setTrafficController(tc);
     }
 
     @After

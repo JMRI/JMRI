@@ -8,48 +8,54 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import jmri.jmrix.secsi.SerialMessage;
 import jmri.jmrix.secsi.SerialReply;
-import jmri.jmrix.secsi.SerialTrafficController;
+import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 import jmri.util.StringUtil;
 
 /**
- * Frame for user input of serial messages
+ * Frame for user input of serial messages.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2003, 2006, 2007, 2008
   */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.secsi.SerialListener {
+
+    private SecsiSystemConnectionMemo memo;
 
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
-    javax.swing.JButton pollButton = new javax.swing.JButton("Send poll");
+    javax.swing.JButton pollButton = new javax.swing.JButton(Bundle.getMessage("LabelPoll"));
     javax.swing.JTextField uaAddrField = new javax.swing.JTextField(5);
 
-    public SerialPacketGenFrame() {
+    public SerialPacketGenFrame(SecsiSystemConnectionMemo _memo) {
         super();
+        memo = _memo;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         // the following code sets the frame's initial state
 
-        jLabel1.setText("Command:");
+        jLabel1.setText(Bundle.getMessage("CommandLabel"));
         jLabel1.setVisible(true);
 
-        sendButton.setText("Send");
+        sendButton.setText(Bundle.getMessage("ButtonSend"));
         sendButton.setVisible(true);
-        sendButton.setToolTipText("Send packet");
+        sendButton.setToolTipText(Bundle.getMessage("TooltipSendPacket"));
 
         packetTextField.setText("");
-        packetTextField.setToolTipText("Enter command as hexadecimal bytes separated by a space");
+        packetTextField.setToolTipText(Bundle.getMessage("EnterHexToolTip"));
         packetTextField.setMaximumSize(
                 new Dimension(packetTextField.getMaximumSize().width,
                         packetTextField.getPreferredSize().height
                 )
         );
 
-        setTitle("Send SECSI serial command");
+        setTitle(Bundle.getMessage("SendXCommandTitle", "SECSI"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(jLabel1);
@@ -68,11 +74,12 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         // add poll message buttons
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
-        pane3.add(new JLabel("Address:"));
+        pane3.add(new JLabel(Bundle.getMessage("LabelNodeAddress")));
         pane3.add(uaAddrField);
         pane3.add(pollButton);
+        pollButton.setToolTipText(Bundle.getMessage("PollToolTip"));
         uaAddrField.setText("0");
-        uaAddrField.setToolTipText("Enter node address (decimal integer)");
+        uaAddrField.setToolTipText(Bundle.getMessage("TooltipNodeAddress"));
         getContentPane().add(pane3);
 
         pollButton.addActionListener(new java.awt.event.ActionListener() {
@@ -81,7 +88,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
                 pollButtonActionPerformed(e);
             }
         });
-        pollButton.setToolTipText("Send poll request");
+        pollButton.setToolTipText(Bundle.getMessage("PollToolTip"));
 
         // pack for display
         pack();
@@ -89,11 +96,11 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
 
     public void pollButtonActionPerformed(java.awt.event.ActionEvent e) {
         SerialMessage msg = SerialMessage.getPoll(Integer.valueOf(uaAddrField.getText()).intValue());
-        SerialTrafficController.instance().sendSerialMessage(msg, this);
+        memo.getTrafficController().sendSerialMessage(msg, this);
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        SerialTrafficController.instance().sendSerialMessage(createPacket(packetTextField.getText()), this);
+        memo.getTrafficController().sendSerialMessage(createPacket(packetTextField.getText()), this);
     }
 
     SerialMessage createPacket(String s) {
@@ -116,4 +123,5 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     @Override
     public void reply(SerialReply r) {
     } // ignore replies
+
 }

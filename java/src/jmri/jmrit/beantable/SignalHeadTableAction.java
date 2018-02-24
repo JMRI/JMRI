@@ -27,11 +27,12 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import jmri.CommandStation;
 import jmri.InstanceManager;
-import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.SignalHead;
+import jmri.SignalHeadManager;
 import jmri.Turnout;
 import jmri.implementation.DccSignalHead;
 import jmri.implementation.DoubleTurnoutSignalHead;
@@ -54,7 +55,7 @@ import org.slf4j.LoggerFactory;
  * @author Petr Koud'a Copyright (C) 2007
  * @author Egbert Broerse Copyright (C) 2016
  */
-public class SignalHeadTableAction extends AbstractTableAction {
+public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
     /**
      * Create an action with a specific title.
@@ -67,7 +68,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     public SignalHeadTableAction(String s) {
         super(s);
         // disable ourself if there is no primary Signal Head manager available
-        if (jmri.InstanceManager.getNullableDefault(jmri.SignalHeadManager.class) == null) {
+        if (InstanceManager.getNullableDefault(SignalHeadManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -82,7 +83,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<SignalHead>() {
             static public final int LITCOL = NUMCOLUMN;
             static public final int HELDCOL = LITCOL + 1;
             static public final int EDITCOL = HELDCOL + 1;
@@ -94,9 +95,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
             @Override
             public String getColumnName(int col) {
-               if (col == VALUECOL) {
-                   return Bundle.getMessage("SignalMastAppearance");  // override default title, correct name SignalHeadAppearance i.e. "Red"
-               } else if (col == LITCOL) {
+                if (col == VALUECOL) {
+                    return Bundle.getMessage("SignalMastAppearance");  // override default title, correct name SignalHeadAppearance i.e. "Red"
+                } else if (col == LITCOL) {
                     return Bundle.getMessage("ColumnHeadLit");
                 } else if (col == HELDCOL) {
                     return Bundle.getMessage("ColumnHeadHeld");
@@ -170,7 +171,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     return Bundle.getMessage("ButtonEdit");
                 } else if (col == VALUECOL) {
                     try {
-                        return s.getAppearanceName();
+                        if (s.getAppearanceName() != null) {
+                            return s.getAppearanceName();
+                        } else {
+                            //Appearance (head) not set
+                            log.debug("NULL Appearance returned for head in row {}", row);
+                            return Bundle.getMessage("BeanStateUnknown"); // use place holder string in table
+                        }
                     } catch (java.lang.NullPointerException e) {
                         //Appearance (head) not set
                         log.debug("Appearance for head {} not set", row);
@@ -198,7 +205,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                         int[] validStateList = s.getValidStates(); // Array of valid appearance numbers
                         for (int i = 0; i < stateNameList.length; i++) {
                             if (value.equals(stateNameList[i])) {
-                                newState = validStateList [i];
+                                newState = validStateList[i];
                                 break;
                             }
                         }
@@ -252,19 +259,20 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
-                return InstanceManager.getDefault(jmri.SignalHeadManager.class);
+            public SignalHeadManager getManager() {
+                return InstanceManager.getDefault(SignalHeadManager.class);
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public SignalHead getBySystemName(String name) {
                 return InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public SignalHead getByUserName(String name) {
                 return InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(name);
             }
+
             /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
              public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
 
@@ -273,39 +281,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 return getClassName();
             }
 
-            // no longer used since 4.7.1, but have to override
-            @Deprecated
             @Override
-            public void clickOn(NamedBean t) {
-                int oldState = ((SignalHead) t).getAppearance();
-                int newState = 99;
-                int[] stateList = ((SignalHead) t).getValidStates(); // getValidAppearances((String)
-                for (int i = 0; i < stateList.length; i++) {
-                    if (oldState == stateList[i]) {
-                        if (i < stateList.length - 1) {
-                            newState = stateList[i + 1];
-                            break;
-                        } else {
-                            newState = stateList[0];
-                            break;
-                        }
-                    }
-                }
-                if (newState == 99) {
-                    if (stateList.length == 0) {
-                        newState = SignalHead.DARK;
-                        log.warn("New signal state not found so setting to Dark " + t.getDisplayName());
-                    } else {
-                        newState = stateList[0];
-                        log.warn("New signal state not found so setting to the first available " + t.getDisplayName());
-                    }
-                }
-                log.debug("was " + oldState + " becomes " + newState);
-                ((SignalHead) t).setAppearance(newState);
+            public void clickOn(SignalHead t) {
             }
 
             /**
              * Set column width.
+             *
              * @return a button to fit inside the VALUE column
              */
             @Override
@@ -332,7 +314,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
 
             /**
-             * Respond to change from bean. Prevent Appearance change when Signal Head is set to Hold or Unlit.
+             * Respond to change from bean. Prevent Appearance change when
+             * Signal Head is set to Hold or Unlit.
+             *
              * @param e A property change of any bean
              */
             @Override
@@ -355,8 +339,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
 
             /**
-             * Customize the SignalHead Value (Appearance) column to show an appropriate ComboBox of available Appearances
-             * when the TableDataModel is being called from ListedTableAction.
+             * Customize the SignalHead Value (Appearance) column to show an
+             * appropriate ComboBox of available Appearances when the
+             * TableDataModel is being called from ListedTableAction.
+             *
              * @param table a JTable of Signal Head
              */
             @Override
@@ -384,79 +370,83 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 }
 
                 /**
-                 * Call the method in the surrounding method for the SignalHeadTable.
+                 * Call the method in the surrounding method for the
+                 * SignalHeadTable.
+                 *
                  * @param row the user clicked on in the table
                  * @return an appropriate combobox for this signal head
                  */
                 @Override
-                protected JComboBox getEditorBox(int row) {
+                protected JComboBox<String> getEditorBox(int row) {
                     return getAppearanceEditorBox(row);
                 }
 
             }
 
-            // Methods to display VALUECOL (appearance) ComboBox in the Signal Head Table
-            // Derived from the SignalMastJTable class (deprecated since 4.5.5):
-            // All row values are in terms of the Model, not the Table as displayed.
-
             /**
              * Clear the old appearance comboboxes and force them to be rebuilt.
              * Used with the Single Output Signal Head to capture reconguration.
-             * @param row Index of the signal mast (in TableDataModel) to be rebuilt in the Hashtables
+             *
+             * @param row Index of the signal mast (in TableDataModel) to be
+             *            rebuilt in the Hashtables
              */
-
             public void clearAppearanceVector(int row) {
                 boxMap.remove(this.getValueAt(row, SYSNAMECOL));
                 editorMap.remove(this.getValueAt(row, SYSNAMECOL));
             }
 
             // Hashtables for Editors; not used for Renderer)
-
             /**
-             * Provide a JComboBox element to display inside the JPanel CellEditor.
-             * When not yet present, create, store and return a new one.
+             * Provide a JComboBox element to display inside the JPanel
+             * CellEditor. When not yet present, create, store and return a new
+             * one.
+             *
              * @param row Index number (in TableDataModel)
-             * @return A combobox containing the valid appearance names for this mast
+             * @return A combobox containing the valid appearance names for this
+             *         mast
              */
-            public JComboBox getAppearanceEditorBox(int row) {
-                JComboBox editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
+            public JComboBox<String> getAppearanceEditorBox(int row) {
+                JComboBox<String> editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
                 if (editCombo == null) {
                     // create a new one with correct appearances
-                    editCombo = new JComboBox<String> (getRowVector(row));
+                    editCombo = new JComboBox<>(getRowVector(row));
                     editorMap.put(this.getValueAt(row, SYSNAMECOL), editCombo);
                 }
                 return editCombo;
             }
-            Hashtable<Object, JComboBox> editorMap = new Hashtable<Object, JComboBox>();
+            Hashtable<Object, JComboBox<String>> editorMap = new Hashtable<>();
 
             /**
-             * returns a list of all the valid appearances that have not been disabled
+             * returns a list of all the valid appearances that have not been
+             * disabled
+             *
              * @param head the name of the signal head
              * @return List of valid signal head appearance names
              */
-            public Vector<String> getValidAppearances(String head) {
+            public Vector<String> getValidAppearances(SignalHead head) {
                 // convert String[] validStateNames to Vector
-                String[] app = InstanceManager.getDefault(jmri.SignalHeadManager.class)
-                        .getSignalHead(head).getValidStateNames();
+                String[] app = head.getValidStateNames();
                 Vector<String> v = new Vector<String>();
                 for (int i = 0; i < app.length; i++) {
-                    String appearance = app [i];
+                    String appearance = app[i];
                     v.add(appearance);
                 }
                 return v;
             }
 
             /**
-             * Holds a Hashtable of valid appearances per signal head,
-             * used by getEditorBox()
+             * Holds a Hashtable of valid appearances per signal head, used by
+             * getEditorBox()
+             *
              * @param row Index number (in TableDataModel)
-             * @return The Vector of valid appearance names for this mast to show in the JComboBox
+             * @return The Vector of valid appearance names for this mast to
+             *         show in the JComboBox
              */
             Vector<String> getRowVector(int row) {
                 Vector<String> comboappearances = boxMap.get(this.getValueAt(row, SYSNAMECOL));
                 if (comboappearances == null) {
                     // create a new one with right appearance
-                    Vector<String> v = getValidAppearances((String) this.getValueAt(row, SYSNAMECOL));
+                    Vector<String> v = getValidAppearances((SignalHead) this.getValueAt(row, SYSNAMECOL));
                     comboappearances = v;
                     boxMap.put(this.getValueAt(row, SYSNAMECOL), comboappearances);
                 }
@@ -466,7 +456,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
             Hashtable<Object, Vector<String>> boxMap = new Hashtable<Object, Vector<String>>();
 
             // end of methods to display VALUECOL ComboBox
-
         };
     }
 
@@ -501,7 +490,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
     private String[] turnoutStates = new String[]{stateClosed, stateThrown};
     private int[] turnoutStateValues = new int[]{Turnout.CLOSED, Turnout.THROWN};
 
-    private String signalheadSingle = Bundle.getMessage("StringSignalheadSingle");
     private String signalheadDouble = Bundle.getMessage("StringSignalheadDouble");
     private String signalheadTriple = Bundle.getMessage("StringSignalheadTriple");
     private String signalheadRGB = Bundle.getMessage("StringSignalheadRGB");
@@ -747,19 +735,19 @@ public class SignalHeadTableAction extends AbstractTableAction {
     @Override
     protected void addPressed(ActionEvent e) {
         if (addFrame == null) {
-            for (Object obj : jmri.InstanceManager.getList(jmri.CommandStation.class)) {
+            for (Object obj : InstanceManager.getList(CommandStation.class)) {
                 jmri.CommandStation station = (jmri.CommandStation) obj;
                 prefixBox.addItem(station.getUserName());
             }
             dccSignalPanel();
 
-            to1 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to2 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to3 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to4 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to5 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to6 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to7 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
+            to1 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to2 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to3 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to4 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to5 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to6 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to7 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddSignalHead"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalAddEdit", true);
             addFrame.getContentPane().setLayout(new BorderLayout());
@@ -770,7 +758,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 acelaAspect, dccSignalDecoder, doubleTurnout, lsDec, mergSignalDriver, quadOutput,
                 singleTurnout, se8c4Aspect, tripleTurnout, tripleOutput, virtualHead
             }));
-            //If no DCC Command station is found remove the DCC Signal Decoder option.
+            // If no DCC Command station is found, remove the DCC Signal Decoder option.
             if (prefixBox.getItemCount() == 0) {
                 typeBox.removeItem(dccSignalDecoder);
             }
@@ -814,7 +802,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
             //typeChanged();
 
             // create seven boxes for input information, and put into pane
-
             v1Panel = new JPanel();
             v1Panel.setLayout(new FlowLayout());
             v1Panel.add(ato1TextField);
@@ -985,6 +972,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         } else if (grapevine.equals(typeBox.getSelectedItem())) { // Need to see how this works with username
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
             systemNameTextField.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
+            // TODO use Grapevine specific tooltip
             systemNameLabel.setVisible(true);
             systemNameTextField.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -1085,6 +1073,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         } else if (lsDec.equals(typeBox.getSelectedItem())) { // LDT LS-DEC
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
             systemNameTextField.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
+            // TODO use LDT specific tooltip
             systemNameLabel.setVisible(true);
             systemNameTextField.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -1140,6 +1129,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         } else if (mergSignalDriver.equals(typeBox.getSelectedItem())) {
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
             systemNameTextField.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
+            // TODO use MERG specific tooltip
             systemNameLabel.setVisible(true);
             systemNameTextField.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -1185,8 +1175,20 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
 
         } else {
-            sName = sysName.toUpperCase();
-            if ((sName.length() < 3) || (!sName.substring(1, 2).equals("H"))) {
+            sName = InstanceManager.getDefault(SignalHeadManager.class).normalizeSystemName(sysName);
+
+            boolean ok = true;
+            try {
+                int i = jmri.Manager.getSystemPrefixLength(sName);
+                if (sName.length() < i+2) {
+                    ok = false;
+                } else {
+                    if (!sName.substring(i, i+1).equals("H")) ok = false;
+                }
+            } catch (NamedBean.BadSystemNameException e) {
+                ok = false;
+            }
+            if (!ok) {
                 String msg = Bundle.getMessage("InvalidSignalSystemName", new Object[]{sName});
                 JOptionPane.showMessageDialog(addFrame, msg,
                         Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
@@ -1198,7 +1200,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         // return true if signal head does not exist
         if (s == null) {
             //Need to check that the Systemname doesn't already exists as a UserName
-            NamedBean nB = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(sName);
+            SignalHead nB = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(sName);
             if (nB != null) {
                 log.error("System name is not unique " + sName + " It already exists as a User name");
                 String msg = Bundle.getMessage("WarningSystemNameAsUser", new Object[]{("" + sName)});
@@ -1229,12 +1231,12 @@ public class SignalHeadTableAction extends AbstractTableAction {
         return result;
     }
 
-/*    private boolean checkDCCAspectValue(String s, String aspect) { // not useful as we are now using JSpinners
+    /*    private boolean checkDCCAspectValue(String s, String aspect) { // not useful as we are now using JSpinners
         int number = 0;
         try {
             number = Integer.parseInt(s);
         } catch (Exception ex) {
-            *//*String msg = java.text.MessageFormat.format(AbstractTableAction.rb
+     *//*String msg = java.text.MessageFormat.format(AbstractTableAction.rb
              .getString("ShouldBeNumber"), new Object[] { "Aspect Numner" });*//*
             JOptionPane.showMessageDialog(addFrame, Bundle.getMessage("ShouldBeNumber", aspect),
                     Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
@@ -1268,7 +1270,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 handleSE8cOkPressed();
             } else if (acelaAspect.equals(typeBox.getSelectedItem())) {
                 String inputusername = userNameTextField.getText();
-                String inputsysname = ato1TextField.getText().toUpperCase();
+                String inputsysname = InstanceManager.getDefault(SignalHeadManager.class).normalizeSystemName(ato1TextField.getText());
                 int headnumber;
                 //int aspecttype;
 
@@ -1278,7 +1280,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     return;
                 }
                 if (inputsysname.length() > 2) {
-                    if (inputsysname.substring(0, 2).equals("AH")) {
+                    if (inputsysname.substring(0, 2).equals("AH")) { // TODO add real check for A123H
                         headnumber = Integer.parseInt(inputsysname.substring(2, inputsysname.length()));
                     } else if (checkIntegerOnly(inputsysname)) {
                         headnumber = Integer.parseInt(inputsysname);
@@ -1295,9 +1297,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     //if (jmri.jmrix.acela.status()) { // check for an active Acela connection status
                     try {
                         if (inputusername.length() == 0) {
-                            s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber, jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
+                            s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber, InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
                         } else {
-                            s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber, inputusername, jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
+                            s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber, inputusername, InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
                         }
                         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
                     } catch (java.lang.NullPointerException ex) {
@@ -1309,7 +1311,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
                 int st = signalheadTypeFromBox(stBox);
                 // This bit returns null I think, will need to check though
-                AcelaNode sh = AcelaAddress.getNodeFromSystemName("AH" + headnumber,jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
+                AcelaNode sh = AcelaAddress.getNodeFromSystemName("AH" + headnumber, InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
                 switch (st) {
                     case 1:
                         sh.setOutputSignalHeadType(headnumber, AcelaNode.DOUBLE);
@@ -1330,22 +1332,23 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 }
 
             } else if (grapevine.equals(typeBox.getSelectedItem())) {
-                // the turnout field must hold a GH system name
+                // the turnout field must hold a GH system name (G = multichar prefix)
                 if (systemNameTextField.getText().length() == 0) {
                     // TODO Add user dialog
                     log.warn("must supply a signalhead number (i.e. GH23)");
                     return;
                 }
-                String inputsysname = systemNameTextField.getText().toUpperCase();
-                if (!inputsysname.substring(0, 2).equals("GH")) {
-                    log.warn("skipping creation of signal, " + inputsysname + " does not start with GH");
+                String inputsysname = InstanceManager.getDefault(SignalHeadManager.class).normalizeSystemName(systemNameTextField.getText());
+                int offset = jmri.Manager.getSystemPrefixLength(inputsysname);
+                if (!inputsysname.substring(0, 1).equals("G") || !inputsysname.substring(offset, offset + 1).equals("H")) { // TODO add real check for G123H
+                    log.warn("skipping creation of signal head, '{}' does not start with GxH", inputsysname);
                     String msg = Bundle.getMessage("GrapevineSkippingCreation", new Object[]{inputsysname});
                     JOptionPane.showMessageDialog(addFrame, msg,
                             Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (checkBeforeCreating(inputsysname)) {
-                    s = new jmri.jmrix.grapevine.SerialSignalHead(inputsysname, userNameTextField.getText());
+                    s = new jmri.jmrix.grapevine.SerialSignalHead(inputsysname, userNameTextField.getText(), InstanceManager.getDefault(jmri.jmrix.grapevine.GrapevineSystemConnectionMemo.class));
                     InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
                 }
             } else if (quadOutput.equals(typeBox.getSelectedItem())) {
@@ -1553,7 +1556,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     ex.getLocalizedMessage(),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
-        } else if (ex.getMessage() != null ) {
+        } else if (ex.getMessage() != null) {
             JOptionPane.showMessageDialog(addFrame,
                     ex.getMessage(),
                     Bundle.getMessage("ErrorTitle"),
@@ -1595,7 +1598,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     private void handleSE8cOkPressed() {
         SignalHead s;
-/*        String msg;
+        /*        String msg;
 
         // if no selection was made severeal exeptions as cast to the console, most start in the createbeanpane
         try {
@@ -1783,12 +1786,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
     private TitledBorder ev7Border = BorderFactory.createTitledBorder(blackline);
 
     private Turnout et1 = null;
-    private Turnout et2 = null;
-    private Turnout et3 = null;
-    private Turnout et4 = null;
-    private Turnout et5 = null;
-    private Turnout et6 = null;
-    private Turnout et7 = null;
 
     private JLabel eSystemNameLabel = new JLabel("");
     private JLabel eUserNameLabel = new JLabel("");
@@ -1810,9 +1807,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     private void editSignal(int row) {
         // Logix was found, initialize for edit
-        String eSName = (String) m.getValueAt(row, BeanTableDataModel.SYSNAMECOL);
-        _curSignal = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(eSName);
-        //numConditionals = _curLogix.getNumConditionals();
+        _curSignal = (SignalHead) m.getValueAt(row, BeanTableDataModel.SYSNAMECOL);
+        String eSName = _curSignal.getSystemName();
+
         // create the Edit Logix Window
         // Use separate Runnable so window is created on top
         Runnable t = new Runnable() {
@@ -1852,13 +1849,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
         curS = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(editSysName);
         if (editFrame == null) {
             dccSignalPanelEdt();
-            eto1 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto2 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto3 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto4 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto5 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto6 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto7 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
+            eto1 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto2 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto3 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto4 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto5 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto6 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto7 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
             // set up a new edit window
             editFrame = new JmriJFrame(Bundle.getMessage("TitleEditSignalHead"), false, true);
             editFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalAddEdit", true);
@@ -2206,7 +2203,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
              eto1.setText(curS.getUserName());*/
             evtLabel.setText(Bundle.getMessage("LabelAspectType") + ":");
             etot.setVisible(false);
-            AcelaNode tNode = AcelaAddress.getNodeFromSystemName(curS.getSystemName(),jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
+            AcelaNode tNode = AcelaAddress.getNodeFromSystemName(curS.getSystemName(), jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
             if (tNode == null) {
                 // node does not exist, ignore call
                 log.error("Can't find new Acela Signal with name '" + curS.getSystemName());
@@ -2225,7 +2222,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             for (int i = 0; i < DccSignalHead.getDefaultValidStates().length; i++) {
                 JSpinner tmp = dccAspectEdt[i];
                 tmp.setValue(((DccSignalHead) curS).getOutputForAppearance(curS.getValidStates()[i]));
-            //  tmp.setValue((Integer) DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]))
+                //  tmp.setValue((Integer) DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]))
             }
             dccOffSetAddressEdt.setVisible(true);
             dccOffSetAddressEdt.setSelected(((DccSignalHead) curS).useAddressOffSet());
@@ -2540,7 +2537,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
              curS.setUserName(nam);
 
              }*/
-            AcelaNode tNode = AcelaAddress.getNodeFromSystemName(curS.getSystemName(),jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
+            AcelaNode tNode = AcelaAddress.getNodeFromSystemName(curS.getSystemName(), jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
             if (tNode == null) {
                 // node does not exist, ignore call
                 log.error("Can't find new Acela Signal with name '{}'", curS.getSystemName());
@@ -2765,10 +2762,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     /**
      * Update Turnout object for a signal mast output
-     * @param bp Pane in which the new output/bean was entered by user
-     * @param reference Turnout application description
+     *
+     * @param bp         Pane in which the new output/bean was entered by user
+     * @param reference  Turnout application description
      * @param oldTurnout Previously used output
-     * @param title for warning pane
+     * @param title      for warning pane
      * @return The newly defined output as Turnout object
      */
     protected Turnout updateTurnoutFromPanel(BeanSelectCreatePanel bp, String reference, Turnout oldTurnout, String title) {
@@ -2791,7 +2789,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     /**
      * Create Turnout object for a signal mast output
-     * @param bp Pane in which the new output/bean was entered by user
+     *
+     * @param bp        Pane in which the new output/bean was entered by user
      * @param reference Turnout application description
      * @return The new output as Turnout object
      */
@@ -2832,10 +2831,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
             String aspect = DccSignalHead.getDefaultValidStateNames()[i];
             dccSignalPanel.add(new JLabel(aspect));
 
-            SpinnerNumberModel DccSpinnerModel = new SpinnerNumberModel(1, 1, 13, 1);
+            SpinnerNumberModel DccSpinnerModel = new SpinnerNumberModel(1, 0, 31, 1);
             JSpinner tmp = new JSpinner(DccSpinnerModel);
             //tmp.setFocusable(false);
-            tmp.setValue((Integer) DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]));
+            tmp.setValue(DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]));
             dccAspect[i] = tmp; // store the whole JSpinner
             dccSignalPanel.add(tmp); // and display that copy on the JPanel
             tmp.setToolTipText(Bundle.getMessage("DccAccessoryAspect", i));
@@ -2856,7 +2855,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             String aspect = DccSignalHead.getDefaultValidStateNames()[i];
             dccSignalPanelEdt.add(new JLabel(aspect));
 
-            SpinnerNumberModel DccSpinnerModel = new SpinnerNumberModel(1, 1, 13, 1);
+            SpinnerNumberModel DccSpinnerModel = new SpinnerNumberModel(1, 0, 31, 1);
             JSpinner tmp = new JSpinner(DccSpinnerModel);
             dccAspectEdt[i] = tmp; // store the whole JSpinner
             dccSignalPanelEdt.add(tmp); // and display that copy on the JPanel

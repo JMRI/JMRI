@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: index.shtml 25755 2014-05-03 21:25:55Z jacobsen $ -->
+<title>N&amp;W 1981 Signaling Definition</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h2>
+Western Maryland 1973-1980 Signal Definitions
+</h2>
+
+This directory contains signaling definitions corresponding to color light signals on the Western Maryland Railway.  These definitions are based on signal rules published in the 1973 Western Maryland Railway Operating Rules, The 1980 Chessie System Railroads Operating Rules, and the Western Maryland Historical Society's magazine The Blue Mountain Express Vol.34 Numbers 3 and 4.
+<p>
+The WM used US&amp;S Model R-2 color light signals to replace their semaphore signals.  Configurations included single head, double head, and single head with a marker above or below the main head.  In general the light arrangement from top to bottom was RYG-GYR for a full two head signal mast,but there were exceptions.  Dwarfs signals used YGR from top to bottom.  Unlike the other Chessie roads, the WM used route signaling instead of speed signaling, thereby limiting the number of aspects needed.  
+<p>
+The dwarf signal in this set needs to be set up as two heads in JMRI.  The green and yellow outputs go to the upper head, and the red to the lower head.
+</body>
+<p>
+<a href="aspects.xml">Aspect Page</a>.
+
+<p>
+Signal Mast definitions:
+<ul>
+<li><a href="appearance-USS-R2-2-arm-absolute.xml">US&amp;S Model R2 Two Arm Absolute Signal</a>
+<li><a href="appearance-USS-R2-1-arm-high-marker-absolute.xml">US&amp;S Model R2 Two Arm Absolute Signal with a High Marker</a>
+<li><a href="appearance-USS-R2-1-arm-low-marker-absolute.xml">US&amp;S Model R2 Two Arm Absolute Signal with a Low Marker</a>
+<li><a href="appearance-USS-R2-1-arm-absolute.xml">US&amp;S Model R2 Single Arm Absolute Signal</a>
+<li><a href="appearance-USS-R2-1-arm-low-marker-permissive.xml">US&amp;S Model R2 Two Arm Permissive Signal with a Low Marker</a>
+<li><a href="appearance-USS-R2-1-arm-permissive.xml">US&amp;S Model R2 Single Arm Permissive Signal</a>
+<li><a href="appearance-WM-Dwarf-absolute.xml">WM Dwarf Signals</a>
+</ul>
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

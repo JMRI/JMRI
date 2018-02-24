@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement simulator for powerline serial systems
+ * Implement simulator for Powerline serial systems
  * <P>
  * System names are "PLnnn", where nnn is the bit number without padding.
  * <P>
@@ -28,7 +28,7 @@ public class SimulatorAdapter extends SerialPortController implements
 
     // streams to share with user class
     private DataOutputStream pout = null; // this is provided to classes who want to write to us
-    private DataInputStream pin = null; // this is provided to class who want data from us
+    private DataInputStream pin = null; // this is provided to classes who want data from us
 
     // internal ends of the pipes
     @SuppressWarnings("unused")
@@ -57,7 +57,7 @@ public class SimulatorAdapter extends SerialPortController implements
     }
 
     /**
-     * set up all of the other objects to simulate operation with an command
+     * Set up all of the other objects to simulate operation with an command
      * station.
      */
     @Override

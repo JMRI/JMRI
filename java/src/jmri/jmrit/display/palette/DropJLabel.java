@@ -34,7 +34,7 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         try {
             _dataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);
         } catch (ClassNotFoundException cnfe) {
-            cnfe.printStackTrace();
+            log.error("Unable to find class supporting {}", ImageIndexEditor.IconDataFlavorMime, cnfe);
         }
         new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
         //if (log.isDebugEnabled()) log.debug("DropJLabel ctor");
@@ -104,8 +104,7 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         DropTarget target = (DropTarget) e.getSource();
         DropJLabel label = (DropJLabel) target.getComponent();
         if (log.isDebugEnabled()) {
-            log.debug("accept drop for " + label.getName()
-                    + ", " + newIcon.getURL());
+            log.debug("accept drop for {}, {}", label.getName(),newIcon.getURL());
         }
         if (newIcon == null || newIcon.getIconWidth() < 1 || newIcon.getIconHeight() < 1) {
             label.setText(Bundle.getMessage("invisibleIcon"));
@@ -125,10 +124,11 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         }
         e.dropComplete(true);
         if (log.isDebugEnabled()) {
-            log.debug("DropJLabel.drop COMPLETED for " + label.getName()
-                    + ", " + (newIcon != null ? newIcon.getURL() : " newIcon==null "));
+            log.debug("DropJLabel.drop COMPLETED for {}, {}",
+                    label.getName(), (newIcon != null ? newIcon.getURL() : " newIcon==null "));
         }
     }
 
     private final static Logger log = LoggerFactory.getLogger(DropJLabel.class);
+
 }

@@ -3,181 +3,199 @@
 
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright Bob Jacobsen, John Plocher 2005, 2006, 2008 -->
-  <!-- $Id$ -->
-  <!-- Translated by Herv&#233; Blorec le 2012/01/18-->
+<!-- Copyright Bob Jacobsen, John Plocher 2005, 2006, 2008 -->
+<!-- Translated by Herv&#233; Blorec le 2016/09/09-->
+<title>JMRI: Layout Automation in Java</title>
 
-  <title>JMRI: Layout Automation in Java</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
 
-    <div id="mainContent">
-      <!-- Page Body -->
 
-      <h2>JMRI: Automatisation R&eacute;seau en Java</h2>La
-      biblioth&egrave;que JMRI fournit un ensemble puissant
-      d'outils pour automatiser votre r&eacute;seau. Si les outils
-      int&eacute;gr&eacute;s &agrave; <a href=
-      "../../apps/PanelPro/PanelPro.shtml">PanelPro</a> ou les
-      <a href="../scripting/index.shtml">capacit&eacute;s de
-      scripts</a> ne sont pas suffisantes pour faire ce que vous
-      voulez, la solution sera d'&eacute;crire vous-m&ecirc;me vos
-      propres programme de commande.
+<!-- Page Body -->
+<H2>JMRI: Automatisation R&#233;seau en Java</h2>
 
-      <p>Cette page d&eacute;crit les classes Java qui ont en
-      charge l'&eacute;criture
-      &Acirc;&laquo;Automatisation&Acirc;&raquo; JMRI du code en
-      Java. C'est des choses comme les signaux d'exploitation, les
-      trains, et m&ecirc;me des choses subtiles comme
-      l'&eacute;volution du volume du son du d&eacute;codeur quand
-      un train passe dans un tunnel.</p>
+La biblioth&#232;que JMRI fournit un ensemble puissant d'outils pour
+automatiser votre r&#233;seau. Si les outils int&#233;gr&#233;s &#224;
+<A HREF="../../apps/PanelPro/PanelPro.shtml"> PanelPro</a> ou les
+<A HREF="../scripting/index.shtml"> capacit&#233;s de scripts</a>
+ne sont pas suffisantes pour faire ce que vous voulez, la solution sera d'&#233;crire vous-m&#234;me vos propres
+programme de commande.
 
-      <dl>
-        <dt class="left">Introduction</dt>
+<p> Cette page d&#233;crit les classes Java qui ont en charge l'&#233;criture
+"Automatisation" JMRI du code en Java. C'est des choses comme les
+signaux d'exploitation, les trains, et m&#234;me des choses subtiles comme
+l'&#233;volution du volume du son du d&#233;codeur quand un train passe dans un tunnel.</p>
 
-        <dd class="first">
-          <p>La classe"Automat" fournit un moyen facile
-          d'&eacute;crire l'automatisation par Java pour votre
-          r&eacute;seau en utilisant JMRI.</p>
+<p>
+Notez que vous pouvez aussi &#233;crire votre code d'automatisme en utilisant Jython 
+comme <a href="../scripting/index.shtml">"scripts" JMRI </a>. 
+Pour plusieurs raisons, ceci peut &#234;tre plus simple 
+parce qu'il plus r&#233;actif et a un meilleur support de d&#233;bogage.
+Java est r&#233;ellement le meilleur pour les cas longs et complexes, ou si vous &#233;crivez 
+quelque chose que vous voulez finalement voir contribuer &#224; JMRI lui-m&#234;me.
+</P>
 
-          <p>La classe cl&eacute; est <a href=
-          "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">
-          AbstractAutomaton</a>, qui fournit un support de liaison
-          pour simplifier le code d'automatisation
-          personnalis&eacute;es.</p>
+<dl>
+<dt class=left> Introduction</dt>
+<dd class=first> 
+<p> La classe"Automat" fournit un moyen facile d'&#233;crire l'automatisation par Java
+pour votre r&#233;seau en utilisant JMRI.</p>
 
-          <p>Aspect essentiel: Ceux-ci s'ex&eacute;cutent dans un
-          liens&eacute;par&eacute;, de sorte qu'ils peuvent
-          attendre que quelque chose se produise pour que le reste
-          du programme continue. Effectivement, chaque Automat est
-          un programme distinct s'ex&eacute;cutant quand il le
-          doit.</p>
+<p> La classe cl&#233; est
+<A    HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>,
+qui fournit un  support de liaison  pour simplifier le code d'automatisation personnalis&#233;.</p>
 
-          <p>Il y a plusieurs exemples:</p>
+<p>Aspect essentiel:  Ceux-ci  s'ex&#233;cutent dans un lien s&#233;par&#233;, de sorte qu'ils peuvent attendre 
+que quelque chose se produise pour que le reste du  programme continue.
+Effectivement, chaque Automat est un programme distinct s'ex&#233;cutant quand il le
+doit.
 
-          <ul>
-            <li>SampleAutomaton - surveille un capteur, et ajuste
-            l' &eacute;tat d'un aiguillage afin qu'elle corresponde
-            &agrave; l'&eacute;tat du capteur.</li>
+<p> Il y a plusieurs exemples:
+<ul>
+<li> SampleAutomaton - surveille un capteur, et ajuste l'
+&#233;tat d'un aiguillage afin qu'il corresponde &#224; l'&#233;tat du Capteur.
+<li> SampleAutomaton2 - surveille un capteur, et ajuste
+le mouvement d'un d&#233;codeur de locomotive utilisant le mode de programmation mode ops 
+lorsque l'&#233;tat du capteur change.
+<li> SampleAutomaton3 - une locomotive fonctionne en avant et en arri&#232;re
+sur un morceau de voie en regardant deux capteurs, inversant la locomotive
+quand ils changent d'&#233;tat.
+</Ul></p>
 
-            <li>SampleAutomaton2 - surveille un capteur, et ajuste
-            le mouvement d'un d&eacute;codeur de locomotive
-            utilisant le mode de programmation ops-mode lorsque
-            l'&eacute;tat du capteur change.</li>
+<p>Notez qu'ils ne peuvent rien faire d'utile sur votre
+r&#233;seau, car ils ont les num&#233;ros de Loco qui ne sont pas modifiables.
+Ils sont cens&#233;s &#234;tre des exemples pour votre propre programmation, pas des outils 
+utiles.
+</Dd>
 
-            <li>SampleAutomaton3 - une locomotive fonctionne en
-            avant et en arri&egrave;re sur un morceau de voie en
-            regardant deux capteurs, inversant la locomotive quand
-            ils changent d'&eacute;tat.</li>
-          </ul>
+<dt class=left>Commande de Locomotives</dt>
+<dd>
+<p class=example>
+// R&#233;cup&#232;re l'instance du r&#233;gulateur  pour l'"adresse courte" 3 <br>
+throttle = getThrottle (3, false);
+</P>
 
-          <p>Ceux-ci peuvent &ecirc;tre d&eacute;marr&eacute;s
-          &agrave; partir du Menu
-          &Acirc;&laquo;D&eacute;veloppement&Acirc;&raquo; de l'
-          application JmriDemo . Notez qu'ils ne peuvent rien faire
-          d'utile sur votre r&eacute;seau, car ils ont les
-          num&eacute;ros de Loco qui ne sont pas modifiables. Ils
-          sont cens&eacute;s &ecirc;tre des exemples pour votre
-          propre programmation, pas des outils utiles .</p>
-        </dd>
+<p> Cet extrait de code assigne "adresse courte 3" &#224; la variable "r&#233;gulateur" 
+ ( le "false" s&#233;lectionne l'adresse courte; "true" aurait
+&#233;t&#233; pour l'adresse longue). Si cela ne fonctionne pas pour une raison quelconque, vous obtiendrez un 
+message p&#233;riodique "toujours en attente de r&#233;gulateur" dans la fen&#234;tre de Java, et
+le programme attendra.</p>
+</Dd>
 
-        <dt class="left">Contr&ocirc;le de Locomotives</dt>
+<dt class=left> Interaction avec l'utilisateur</dt>
+<dd>
+<p> Vous pouvez mettre en place des bo&#238;tes de message directement &#224; partir de Java, mais cela prend un peu de
+code pour le faire. Pour simplifier, au d&#233;but, j'ai ajout&#233; une classe d'assistance "MsgFrame" 
+&#224; la biblioth&#232;que JMRI.</P>
 
-        <dd>
-          <p class="example">/ / R&eacute;cup&egrave;re l'instance
-          du r&eacute;gulateur pour l'&Acirc; &Acirc;&laquo;adresse
-          courte&Acirc;&raquo; 3<br>
-          throttle = getThrottle (3, false);</p>
+<p> Pour faire une bo&#238;te de message, vous devez d'abord faire un objet de la classe "MsgFrame":</p>
+<p class=example>
+MsgFrame box = nouveau MsgFrame ();
+</P>
 
-          <p>Cet extrait de code assigne "adresse courte de 3"
-          &agrave; la variable &Acirc;&laquo;
-          r&eacute;gulateur&Acirc; &Acirc;&raquo; (le
-          &Acirc;&laquo;faux&Acirc;&raquo; s&eacute;lectionne
-          l'adresse courte; l'adresse longue aurait
-          &eacute;t&eacute; pour &Acirc;&laquo;vrai&Acirc;&raquo;).
-          Si cela ne fonctionne pas pour une raison quelconque,
-          vous obtiendrez un message p&eacute;riodique "toujours en
-          attente de r&eacute;gulateur" dans la fen&ecirc;tre de
-          Java, et le programme attendra.</p>
-        </dd>
+<p> (Vous pouvez appelez &#231;a comme vous voulez, bien s&#251;r). Cette ligne devrait aller
+avec les autres d&#233;clarations, par exemple &#224; droite apr&#232;s la ligne "DccThrottle throttle=
+null;. "</p>
 
-        <dt class="left">Interaction avec l'utilisateur</dt>
+<p> Puis, &#224; l'int&#233;rieur des routines de test, il y a quelques choses que vous pouvez faire. Pour
+afficher un message et attendre que l'utilisateur clique sur un bouton "Continuer", faites: .
 
-        <dd>
-          <p>Vous pouvez mettre en place des bo&icirc;tes de
-          message directement &agrave; partir de Java, mais cela
-          prend un peu de code pour le faire. Pour simplifier, au
-          d&eacute;but, j'ai ajout&eacute; une classe d'assistance
-          "MsgFrame" &agrave; la biblioth&egrave;que JMRI.</p>
+<p class=example>
+box.show ("mon texte du message va ici", true);
+</P>
 
-          <p>Pour faire une bo&icirc;te de message, vous devez
-          d'abord faire un objet de la &Acirc;&laquo;MsgFrame"
-          classe:</p>
+<p> Le 2&#232;me argument montre le bouton "Continuer" et attend si elle est vraie, et
+continue si elle est fausse. Donc, si vous souhaitez afficher un message d'&#233;tat pendant 
+que le programme continue &#224; &#224; se d&#233;rouler, faire:</p>
 
-          <p class="example">Bo&icirc;te MsgFrame = nouvelle
-          MsgFrame ();</p>
+<p class=example>
+box.show ("text message d'&#233;tat", false);
+</P>
 
-          <p>(Vous pouvez appelez &ccedil;a comme vous voulez, bien
-          s&ucirc;r). Cette ligne devrait aller avec les autres
-          d&eacute;clarations, par exemple &agrave; droite
-          apr&egrave;s la ligne "DccThrottle= null;. "</p>
+<p> Si vous avez fait cela, vous pouvez modifier le message avec un autre "show", ou
+vous pouvez faire partir la bo&#238;te avec:</p>
 
-          <p>Puis, &agrave; l'int&eacute;rieur des routines de
-          test, il y a quelques choses que vous pouvez faire. Pour
-          afficher un message et attendre que l'utilisateur clique
-          sur un bouton faite:
-          &Acirc;&laquo;Continuer&Acirc;&raquo;.</p>
+<p class=example>
+box.hide ();
+</P>
 
-          <p class="example">box.show ("mon texte du message va
-          ici", true);</p>
+<p> Java a fait faire des travaux pour faire appara&#238;tre la bo&#238;te et la dessiner. Nous ne
+voulons pas retarder le programme de test principal, donc j'ai &#233;crit cette classe d'aide
+pour faire tout ce genre de travail en tant que 2i&#232;me plus faible priorit&#233;. Vous devriez &#234;tre capable
+de mettre en place des messages sur l'&#233;cran sans ralentir consid&#233;rablement le fonctionnement
+ (&#224; moins que le programme attende que le bouton "Continuer" soit press&#233; pour continuer,
+bien s&#251;r). Et attendre que "Continuer" soit press&#233; ne fera pas arr&#234;ter l'ex&#233;cution
+du reste du programme.</p>
+</Dd>
 
-          <p>Le 2&egrave;me argument montre le "bouton Continuer et
-          attendre si elle est vraie, et continuer si elle est
-          fausse. Donc, si vous souhaitez afficher un message
-          d'&eacute;tat pendant que le programme continue &agrave;
-          courir, faire:</p>
+<dt class=left>Ex&#233;cution de Votre Code</dt>
+<dd>
+Il y a deux fa&#231;ons de le faire: Rendre votre code Java disponible pour JMRI et l'appeler.
+<p>
+La mani&#232;re la plus simple pour rendre votre code accessible est de faire un fichier .jar et 
+de le placer dans le r&#233;pertoire "lib" dans le r&#233;pertoire du programme JMRI.
+Autrement, vous pouvez cr&#233;er un r&#233;pertoire "Classes", et compiler votre class Java &#224; l'int&#233;rieur.
+Dans ce cas, il devrait se retrouver dans:
 
-          <p class="example">box.show ("text message
-          d'&eacute;tat", false);</p>
+<code><pre>
+classes/MyCode.class
+</pre></code>
 
-          <p>Si vous avez fait cela, vous pouvez modifier le
-          message avec un autre "show", ou vous pouvez faire la
-          bo&icirc;te s'en aller avec:</p>
+Si vous n'avez pas sp&#233;cifi&#233; de code dans votre paquet, ou
 
-          <p class="example">box.hide ();</p>
+<code><pre>
+classes/MyCode.class
+</pre></code>
 
-          <p>Java a fait faire des travaux pour faire
-          appara&icirc;tre la bo&icirc;te et la dessiner. Nous ne
-          voulons que retarder le programme de test principal, donc
-          j'ai &eacute;crit cette classe d'aide pour faire tout ce
-          genre de travail en tant que 2&egrave;me plus faible
-          priorit&eacute;. Vous devriez &ecirc;tre capable de
-          mettre en place des messages sur l'&eacute;cran sans
-          ralentir consid&eacute;rablement le fonctionnement
-          (&agrave; moins que le programme attende que le bouton
-          &Acirc;&laquo;Continuer&Acirc;&raquo; soit press&eacute;
-          pour continuer, des bien s&ucirc;r). Et attendre que
-          &Acirc;&laquo;Continuer&Acirc;&raquo; soit ne fera pas
-          arr&ecirc;ter l'op&eacute;ration du reste du
-          programme.</p>
-        </dd>
-      </dl><!--#include virtual="/Footer" -->
-    </div>
-  </div>
+ou
+
+<code><pre>
+classes/jmri/jmrit/automat/SampleAutomaton.class
+</pre></code>
+
+comme un exemple de la fa&#231;on dont le code est stock&#233; dans un package sp&#233;cifique .
+<p>
+La mani&#232;re la plus simple pour appeler votre code est d'utiliser le support script de JMRI.
+Ouvrir une fen&#234;tre Sortie Script  ( ainsi vous verrez les erreurs ) depuis le menu Panneaux,
+puis une fen&#234;tre Entr&#233;e Script, entrez:
+
+<code><pre>
+MyCode().start()
+</pre></code>
+
+ou
+
+<code><pre>
+import jmri.jmrit.automat
+jmri.jmrit.automat.SampleAutomaton().start()
+</pre></code>
+
+et appuyez sur Executer. La deuxi&#232;me ligne cr&#233;e une instance de votre class et lui dit de d&#233;marrer une ex&#233;cution.
+<p>
+Une fois que vous avez obtenu qu'il travaille, vous pouvez le mettre dans un petit fichier script 
+et l'appeler au d&#233;marrage,  via un Logix ou autre chose.
+
+</dd>
+
+
+</dl>
+<p>Retour &#224; la <a href="index.shtml">page d'Aide Automatisation</a>.
+
+<!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
+
 </html>

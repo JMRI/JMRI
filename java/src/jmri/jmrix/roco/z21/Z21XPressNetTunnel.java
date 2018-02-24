@@ -245,7 +245,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         xsc = x;
 
         // configure the XpressNet connections properties.
-        xsc.getSystemConnectionMemo().setSystemPrefix(_memo.getSystemPrefix() + "X");
+        xsc.getSystemConnectionMemo().setSystemPrefix("X");
         xsc.getSystemConnectionMemo().setUserName(_memo.getUserName() + "XpressNet");
 
         // register a connection config object for this stream port.
@@ -261,7 +261,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
        try {
           sourceThread.join();
        } catch (InterruptedException ie){
-          // interrupted durring cleanup.
+          // interrupted during cleanup.
        }
     }
 

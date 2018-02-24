@@ -22,10 +22,10 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
 
     public void testSerialNodeEnumeration() {
         SerialTrafficController c = (SerialTrafficController)tc;
-        SerialNode b = new SerialNode(1, SerialNode.DAUGHTER);
-        SerialNode f = new SerialNode(3, SerialNode.CABDRIVER);
-        SerialNode d = new SerialNode(2, SerialNode.CABDRIVER);
-        SerialNode e = new SerialNode(6, SerialNode.DAUGHTER);
+        SerialNode b = new SerialNode(1, SerialNode.DAUGHTER,c);
+        SerialNode f = new SerialNode(3, SerialNode.CABDRIVER,c);
+        SerialNode d = new SerialNode(2, SerialNode.CABDRIVER,c);
+        SerialNode e = new SerialNode(6, SerialNode.DAUGHTER,c);
         Assert.assertEquals("1st Node", b, c.getNode(0));
         Assert.assertEquals("2nd Node", f, c.getNode(1));
         Assert.assertEquals("3rd Node", d, c.getNode(2));
@@ -50,23 +50,13 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
 
     public void testSerialOutput() {
         SerialTrafficController c = (SerialTrafficController)tc;
-        SerialNode a = new SerialNode();
+        SerialNode a = new SerialNode(c);
         Assert.assertNotNull("exists", a);
-        SerialNode g = new SerialNode(5, SerialNode.DAUGHTER);
+        SerialNode g = new SerialNode(5, SerialNode.DAUGHTER,c);
         Assert.assertTrue("must Send", g.mustSend());
         g.resetMustSend();
         Assert.assertTrue("must Send off", !(g.mustSend()));
-        c.setSerialOutput("VL5B2", false);
-        c.setSerialOutput("VL5B1", false);
-        c.setSerialOutput("VL5B23", false);
-        c.setSerialOutput("VL5B22", false);
-        c.setSerialOutput("VL5B21", false);
-        c.setSerialOutput("VL5B2", true);
-        c.setSerialOutput("VL5B19", false);
-        c.setSerialOutput("VL5B5", false);
-        c.setSerialOutput("VL5B20", false);
-        c.setSerialOutput("VL5B17", true);
-        Assert.assertTrue("must Send on", g.mustSend());
+        // c.setSerialOutput("VL5B2", false); // test and 12 year old method removed, called nowhere as of 4.9.4
         AbstractMRMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 9, m.getNumDataElements());
         Assert.assertEquals("node address", 5, m.getElement(0));

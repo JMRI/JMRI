@@ -1,6 +1,7 @@
 package jmri.jmrix.nce.swing;
 
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import javax.swing.JMenu;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
@@ -14,22 +15,16 @@ import jmri.jmrix.nce.NceTrafficController;
 public class NceMenu extends JMenu {
 
     /**
-     * Create a NCE menu. And loads the NceSystemConnectionMemo to the various
+     * Create an NCE menu and load the NceSystemConnectionMemo to the various
      * actions. Actions will open new windows.
      *
      * @param memo the system connection memo to associate menu items with
      */
     // Need to Sort out the NCE server menu items;
-    public NceMenu(NceSystemConnectionMemo memo) {
+    public NceMenu(@Nonnull NceSystemConnectionMemo memo) {
         super();
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
-
-        // memo can not be null!
-        if (memo == null) {
-            new Exception().printStackTrace();
-            return;
-        }
 
         setText(memo.getUserName());
 
@@ -79,4 +74,5 @@ public class NceMenu extends JMenu {
         String load;
         long enable;
     }
+
 }

@@ -1,13 +1,11 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.AbstractAction;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -53,7 +51,6 @@ public class PrintEngineRosterAction extends AbstractAction {
     static final String TAB = "\t"; // NOI18N
 
     @Override
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "EngineManager only provides Engine Objects")
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this
@@ -64,7 +61,7 @@ public class PrintEngineRosterAction extends AbstractAction {
             log.debug("Print cancelled");
             return;
         }
-        
+
         numberCharPerLine = writer.getCharactersPerLine();
 
         // Loop through the Roster, printing as needed
@@ -80,7 +77,7 @@ public class PrintEngineRosterAction extends AbstractAction {
         String rfid = "";
         String location;
 
-        List<RollingStock> engines = panel.getSortByList();
+        List<Engine> engines = panel.getSortByList();
         try {
             // header
             String header = padAttribute(Bundle.getMessage("Number"), Control.max_len_string_print_road_number)
@@ -98,8 +95,7 @@ public class PrintEngineRosterAction extends AbstractAction {
                                     .getMessage("Built"), Control.max_len_string_built_name) : "")
                     + Bundle.getMessage("Location") + NEW_LINE;
             writer.write(header);
-            for (RollingStock rs : engines) {
-                Engine engine = (Engine) rs;
+            for (Engine engine : engines) {
 
                 // loco number
                 number = padAttribute(engine.getNumber(), Control.max_len_string_print_road_number);

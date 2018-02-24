@@ -23,11 +23,11 @@ public class SprogIIUpdateFrame
         super(memo);
     }
 
-    /**
-     * Set the help item.
+    /** 
+     * {@inheritDoc}
      */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         super.initComponents();
 
         // add help menu to window
@@ -39,6 +39,10 @@ public class SprogIIUpdateFrame
 
     int bootVer = 0;
 
+    /** 
+     * {@inheritDoc}
+     * @param v SPROG version to be decoded
+     */
     @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD")
     @Override
     synchronized public void notifyVersion(SprogVersion v) {
@@ -121,7 +125,6 @@ public class SprogIIUpdateFrame
                 if (blockLen != SprogType.getBlockLen(bootVer)) {
                     log.error("Bootloader version does not match SPROG type");
                     bootState = BootState.IDLE;
-                    return;
                 }
             } else {
                 // Don't yet have correct SPROG version
@@ -129,7 +132,7 @@ public class SprogIIUpdateFrame
                     // Force SPROG version SPROG II 1.x or 2.x
                     sv = new SprogVersion(new SprogType(SprogType.SPROGII), "");
                 } else {
-                    // Force SPROG version SPROG SPROG II v3.x (also covers SPROG 3 and Nano)
+                    // Force SPROG version SPROG SPROG II v3.x (also covers IIv4, SPROG 3 and Nano)
                     sv = new SprogVersion(new SprogType(SprogType.SPROGIIv3), "");
                 }
                 blockLen = sv.sprogType.getBlockLen();
@@ -142,7 +145,6 @@ public class SprogIIUpdateFrame
             JOptionPane.showMessageDialog(this, Bundle.getMessage("StatusUnableToConnectBootloader"),
                     Bundle.getMessage("SprogXFirmwareUpdate", " II"), JOptionPane.ERROR_MESSAGE);
             statusBar.setText(Bundle.getMessage("StatusUnableToConnectBootloader"));
-            return;
         }
     }
 
@@ -169,7 +171,6 @@ public class SprogIIUpdateFrame
             statusBar.setText(Bundle.getMessage("StatusBadReplyWriteRequest"));
             bootState = BootState.IDLE;
             tc.setSprogState(SprogState.NORMAL);
-            return;
         }
     }
 
@@ -209,7 +210,6 @@ public class SprogIIUpdateFrame
             log.error("Bad reply to erase request");
             bootState = BootState.IDLE;
             tc.setSprogState(SprogState.NORMAL);
-            return;
         }
     }
 
@@ -235,7 +235,6 @@ public class SprogIIUpdateFrame
             log.error("Bad reply to SPROG Mode request");
             bootState = BootState.IDLE;
             tc.setSprogState(SprogState.NORMAL);
-            return;
         }
     }
 

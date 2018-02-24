@@ -83,12 +83,12 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
 
     @Override
     public SignalMast getBySystemName(String key) {
-        return (SignalMast) _tsys.get(key);
+        return _tsys.get(key);
     }
 
     @Override
     public SignalMast getByUserName(String key) {
-        return (SignalMast) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override

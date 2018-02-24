@@ -5,6 +5,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
+import jmri.jmrix.grapevine.SerialTrafficController;
+import jmri.jmrix.grapevine.SerialTrafficControlScaffold;
 
 /**
  *
@@ -12,9 +15,11 @@ import org.junit.Test;
  */
 public class NodeTablePaneTest {
 
+    private GrapevineSystemConnectionMemo memo = null; 
+
     @Test
     public void testCTor() {
-        NodeTablePane t = new NodeTablePane();
+        NodeTablePane t = new NodeTablePane(memo);
         Assert.assertNotNull("exists",t);
     }
 
@@ -22,6 +27,9 @@ public class NodeTablePaneTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new GrapevineSystemConnectionMemo();
+        SerialTrafficController tc = new SerialTrafficControlScaffold(memo);
+        memo.setTrafficController(tc);
     }
 
     @After

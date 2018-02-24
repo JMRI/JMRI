@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Models a Acela node.
+ * Models an Acela node.
  * <P>
  * Nodes are numbered from 0. The first watchman node carries the first 8
  * sensors 0 to 7, etc.
@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * have it change back the next time that node is polled.
  * <P>
  * Same applies to the outputs (Dash-8s and Signalmen)
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
   *
@@ -135,22 +135,29 @@ public class AcelaNode extends AbstractNode {
     public static final String outputLEN0 = "0";        // used to dump/restore config file.
     public static final String outputNO = "N0";         // used to dump/restore config file.
     protected int startingOutputAddress = -1;           // used to aid linear address search
-    protected int endingOutputAddress = -1;           // used to aid linear address search
+    protected int endingOutputAddress = -1;             // used to aid linear address search
     protected int startingSensorAddress = -1;           // used to aid linear address search
-    protected int endingSensorAddress = -1;           // used to aid linear address search
+    protected int endingSensorAddress = -1;             // used to aid linear address search
 
     /**
-     * Assumes a node address of 0, and a node type of NO_CARD If this
+     * Create a new AcelaNode instance on the TrafficController associated
+     * with the default AcelaSystemConnectionMemo.
+     * <p>
+     * Assumes a node address of 0, and a node type of NO_CARD. If this
      * constructor is used, actual node address must be set using
-     * setNodeAddress, and actual node type using 'setNodeType'
+     * {@link jmri.jmrix.AbstractNode#setNodeAddress(int)} and actual
+     * node type using {@link #setNodeType(int)}
      */
     public AcelaNode() {
         this(0, UN, InstanceManager.getDefault(AcelaSystemConnectionMemo.class).getTrafficController());
     }
 
     /**
-     * Creates a new AcelaNode and initialize default instance variables address
-     * - Address of first bit on Acela bus (0-1023) type - D8, SM, WM
+     * Create a new AcelaNode instance and initialize default instance variables.
+     *
+     * @param address the address of first bit on Acela bus (0-1023) type - D8, SM, WM
+     * @param type a type constant from the class
+     * @param tc the TrafficControllerfor this connection
      */
     public AcelaNode(int address, int type, AcelaTrafficController tc) {
         // set address and type and check validity
@@ -227,72 +234,74 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method setting starting output addresses Used to help linear
-     * address search
+     * Set starting output address for range.
+     * Used to help linear address search.
      */
     public void setStartingOutputAddress(int startingAddress) {
         startingOutputAddress = startingAddress;
     }
 
     /**
-     * Public method getting starting output addresses Used to help linear
-     * address search
+     * Get starting output address for range.
+     * Used to help linear address search.
      */
     public int getStartingOutputAddress() {
         return startingOutputAddress;
     }
 
     /**
-     * Public method setting ending output addresses Used to help linear address
-     * search
+     * Set ending output address for range.
+     * Used to help linear address search.
      */
     public void setEndingOutputAddress(int endingAddress) {
         endingOutputAddress = endingAddress;
     }
 
     /**
-     * Public method getting ending output addresses Used to help linear address
-     * search
+     * Get ending output address for range.
+     * Used to help linear address search.
      */
     public int getEndingOutputAddress() {
         return endingOutputAddress;
     }
 
     /**
-     * Public method setting starting sensor addresses Used to help linear
-     * address search
+     * Set starting sensor address for range.
+     * Used to help linear address search.
      */
     public void setStartingSensorAddress(int startingAddress) {
         startingSensorAddress = startingAddress;
     }
 
     /**
-     * Public method getting starting sensor addresses Used to help linear
-     * address search
+     * Get starting sensor addresses for range.
+     * Used to help linear address search.
      */
     public int getStartingSensorAddress() {
         return startingSensorAddress;
     }
 
     /**
-     * Public method setting ending sensor addresses Used to help linear address
-     * search
+     * Set ending sensor addresses for range.
+     * Used to help linear address search.
      */
     public void setEndingSensorAddress(int endingAddress) {
         endingSensorAddress = endingAddress;
     }
 
     /**
-     * Public method getting ending sensor addresses Used to help linear address
-     * search
+     * Get ending sensor addresses for range.
+     * Used to help linear address search.
      */
     public int getEndingSensorAddress() {
         return endingSensorAddress;
     }
 
     /**
-     * Public method setting an output bit. Note: state = 'true' for 0, 'false'
-     * for 1
+     * Set an output bit on this node.
+     *
+     * @param bitNumber the bit to set
+     * @param state bit state to set: 'true' for 0, 'false' for 1
      */
     public void setOutputBit(int bitNumber, boolean state) {
         // Save old state
@@ -329,8 +338,10 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method get the current state of an output bit. Note: returns
-     * 'true' for 0, 'false' for 1 bits are numbered from 0 for Acela
+     * Get the current state of an output bit.
+     *
+     * @param bitNumber the bit. Bits are numbered from 0 for Acela
+     * @return 'true' for 0, 'false' for 1
      */
     public boolean getOutputBit(int bitNumber) {
         int newbitNumber = 0;
@@ -344,8 +355,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method to return state of Sensors. Note: returns 'true' if at
-     * least one sensor is active for this node
+     * {@inheritDoc}
      */
     @Override
     public boolean getSensorsActive() {
@@ -353,7 +363,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method to set and return Output configuration values
+     * Set and return Output configuration values.
      */
     public int getOutputWired(int circuitnum) {
         return outputWired[circuitnum];
@@ -579,7 +589,7 @@ public class AcelaNode extends AbstractNode {
             default: {
                 outputbitsPerCard = 0;
                 sensorbitsPerCard = 0;
-                log.error("Bad node type - " + Integer.toString(type));
+                log.error("Bad node type - {}", Integer.toString(type));
             }
         }
     }
@@ -596,7 +606,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method to set the node address.
+     * {@inheritDoc}
      */
     @Override
     public boolean checkNodeAddress(int address) {
@@ -604,29 +614,33 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method to return the number of sensor bits per node.
+     * Get the number of sensor bits per node.
+     *
+     * @return sensorbitsPerCard
      */
     public int getSensorBitsPerCard() {
         return (sensorbitsPerCard);
     }
 
     /**
-     * Public method to return transmission delay.
+     * Get the transmission delay on thsi node.
      */
     public int getTransmissionDelay() {
         return (transmissionDelay);
     }
 
     /**
-     * Public method to set transmission delay. delay - delay between bytes on
-     * receive (units of 10 microsec.) Note: two bytes are used, so range is
-     * 0-65,535. If delay is out of range, it is restricted to the allowable
-     * range
+     * Set transmission delay.
+     * <p>
+     * Note: two bytes are used, so range is 0-65,535. If delay is out of
+     * range, it is restricted to the allowable range.
+     *
+     * @param delay a delay between bytes on receive (units of 10 microsec.)
      */
     public void setTransmissionDelay(int delay) {
         if ((delay < 0) || (delay > MAXDELAY)) {
-            log.warn("transmission delay out of 0-65535 range: "
-                    + Integer.toString(delay));
+            log.warn("transmission delay {} out of 0-65535 range",
+                    Integer.toString(delay));
             if (delay < 0) {
                 delay = 0;
             }
@@ -638,7 +652,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Create an initialization packet if needed
+     * {@inheritDoc}
      */
     @Override
     public AbstractMRMessage createInitPacket() {
@@ -646,7 +660,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public Method to create an Transmit packet (SerialMessage)
+     * Create a Transmit packet (SerialMessage) to send current state.
      */
     @Override
     public AbstractMRMessage createOutPacket() {
@@ -1052,7 +1066,7 @@ public class AcelaNode extends AbstractNode {
     boolean warned = false;
 
     /**
-     * Use the contents of the poll reply to mark changes
+     * Use the contents of the poll reply to mark changes.
      *
      * @param l Reply to a poll operation
      */
@@ -1071,25 +1085,25 @@ public class AcelaNode extends AbstractNode {
         int firstBitAt = startingSensorAddress % 8; // mod operator
         //int numBytes = 1;   // For TB there are only 4 sensors so always 1 byte
 
-        log.debug("Sensor Parsing for module type: " + moduleNames[nodeType]);
-        log.debug("Sensor Parsing has startingSensorAddress: " + startingSensorAddress);
-        log.debug("Sensor Parsing has firstByteNum: " + firstByteNum);
-        log.debug("Sensor Parsing has firstBitAt: " + firstBitAt);
+        log.debug("Sensor Parsing for module type: {}", moduleNames[nodeType]);
+        log.debug("Sensor Parsing has startingSensorAddress: {}", startingSensorAddress);
+        log.debug("Sensor Parsing has firstByteNum: {}", firstByteNum);
+        log.debug("Sensor Parsing has firstBitAt: {}", firstBitAt);
 
         //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
         int rawvalue = l.getElement(firstByteNum);
-        log.debug("Sensor Parsing has first rawvalue: " + Integer.toHexString(rawvalue));
+        log.debug("Sensor Parsing has first rawvalue: {}", Integer.toHexString(rawvalue));
 
         int usingByteNum = 0;
 
         try {
             for (int i = 0; i < sensorbitsPerCard; i++) {
                 if (sensorArray[i] == null) {
-                    log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " was skipped");
+                    log.debug("Sensor Parsing for Sensor: {} + {} was skipped", startingSensorAddress, i);
                     continue;
                 } // skip ones that don't exist
 
-                log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i);
+                log.debug("Sensor Parsing for Sensor: {} + {}", startingSensorAddress, i);
 
                 int relvalue = rawvalue;
 
@@ -1102,7 +1116,7 @@ public class AcelaNode extends AbstractNode {
                         for (int j = 0; j < firstBitAt; j++) {
                             relvalue = relvalue >> 1;
                         }
-                        log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " shifted by 4: " + Integer.toHexString(relvalue));
+                        log.debug("Sensor Parsing for Sensor: {} + {} shifted by 4: {}", startingSensorAddress, i, Integer.toHexString(relvalue));
                     }
                 }
 
@@ -1112,7 +1126,7 @@ public class AcelaNode extends AbstractNode {
                         usingByteNum = 2;
                         //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
                         rawvalue = l.getElement(usingByteNum + firstByteNum);
-                        log.debug("Sensor Parsing (1stat4) has third rawvalue: " + Integer.toHexString(rawvalue));
+                        log.debug("Sensor Parsing (1stat4) has third rawvalue: {}", Integer.toHexString(rawvalue));
                         relvalue = rawvalue;
                         tempi = i - 12;  // tempi needs to shift down by 12
                     } else {
@@ -1120,7 +1134,7 @@ public class AcelaNode extends AbstractNode {
                             usingByteNum = 1;
                             //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
                             rawvalue = l.getElement(usingByteNum + firstByteNum);
-                            log.debug("Sensor Parsing (1stat4) has second rawvalue: " + Integer.toHexString(rawvalue));
+                            log.debug("Sensor Parsing (1stat4) has second rawvalue: {}", Integer.toHexString(rawvalue));
                             relvalue = rawvalue;
                             tempi = i - 4;  // tempi needs to shift down by 4
                         }
@@ -1130,20 +1144,20 @@ public class AcelaNode extends AbstractNode {
                         usingByteNum = 1;
                         //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
                         rawvalue = l.getElement(usingByteNum + firstByteNum);
-                        log.debug("Sensor Parsing has second rawvalue: " + Integer.toHexString(rawvalue));
+                        log.debug("Sensor Parsing has second rawvalue: {}", Integer.toHexString(rawvalue));
                         relvalue = rawvalue;
                         tempi = i - 8;  // tempi needs to shift down by 8
                     }
                 }
 
-                log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " has tempi: " + tempi);
+                log.debug("Sensor Parsing for Sensor: {} + {} has tempi: {}", startingSensorAddress, i, tempi);
 
                 //  Finally we can isolate the bit from the poll result
                 for (int j = 0; j < tempi; j++) {
                     relvalue = relvalue >> 1;
                 }
 
-                log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " has relvalue: " + Integer.toHexString(relvalue));
+                log.debug("Sensor Parsing for Sensor: {} + {} has relvalue: {}", startingSensorAddress, i, Integer.toHexString(relvalue));
 
                 // Now that we have the relvalue need to compare to last time
                 boolean nooldstate = false;
@@ -1162,7 +1176,7 @@ public class AcelaNode extends AbstractNode {
 
                 if ((nooldstate) || (oldstate != newstate)) {
                     if (nooldstate) {
-                        log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + "  had no old state.");
+                        log.debug("Sensor Parsing for Sensor: {} + {} had no old state.", startingSensorAddress, i);
                     }
                     if (newstate == 0x00) {
                         sensorLastSetting[i] = Sensor.INACTIVE;
@@ -1171,9 +1185,9 @@ public class AcelaNode extends AbstractNode {
                         sensorLastSetting[i] = Sensor.ACTIVE;
                         sensorArray[i].setKnownState(sensorLastSetting[i]);
                     }
-                    log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " changed state: " + sensorLastSetting[i] + " rawvalue: " + Integer.toHexString(rawvalue));
+                    log.debug("Sensor Parsing for Sensor: {} + {} changed state: {} rawvalue: {}", startingSensorAddress, i, sensorLastSetting[i], Integer.toHexString(rawvalue));
                 } else {
-                    log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " did NOT change state: " + sensorLastSetting[i] + " rawvalue: " + Integer.toHexString(rawvalue));
+                    log.debug("Sensor Parsing for Sensor: {} + {} did NOT change state: {} rawvalue: {}", startingSensorAddress, i, sensorLastSetting[i], Integer.toHexString(rawvalue));
                 }
             }
         } catch (JmriException e) {
@@ -1182,16 +1196,17 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
+     * Register a sensor on an Acela node.
      * The numbers here are 0 to MAXSENSORBITS, not 1 to MAXSENSORBITS.
      *
-     * @param s       - Sensor object
-     * @param rawaddr - 0 to MAXSENSORBITS number of sensor's input bit on this
-     *                node
+     * @param s       Sensor object
+     * @param rawaddr index number of sensor's input bit on this
+     *                node, valid range from 0 to MAXSENSORBITS
      */
     public void registerSensor(Sensor s, int rawaddr) {
         // validate the sensor ordinal
         if ((rawaddr < 0) || (rawaddr >= MAXNODE)) {
-            log.error("Unexpected sensor ordinal in registerSensor: " + Integer.toString(rawaddr));
+            log.error("Unexpected sensor ordinal in registerSensor: {}", Integer.toString(rawaddr));
             return;
         }
 
@@ -1201,7 +1216,9 @@ public class AcelaNode extends AbstractNode {
         hasActiveSensors = true;
         InstanceManager.getDefault(AcelaSystemConnectionMemo.class).getTrafficController().setAcelaSensorsState(true);
         if (startingSensorAddress < 0) {
-            log.info("Trying to register sensor too early: AS" + rawaddr);
+            log.info("Trying to register sensor too early: {}S{}",
+                    InstanceManager.getDefault(AcelaSystemConnectionMemo.class).getSystemPrefix(), // multichar prefix
+                    rawaddr);
         } else {
 
             if (sensorArray[addr] == null) {
@@ -1211,29 +1228,33 @@ public class AcelaNode extends AbstractNode {
                 }
             } else {
                 // multiple registration of the same sensor
-                log.warn("Multiple registration of same sensor: CS" + rawaddr);
+                log.warn("Multiple registration of same sensor: {}S{}",
+                        InstanceManager.getDefault(AcelaSystemConnectionMemo.class).getSystemPrefix(), // multichar prefix
+                        rawaddr);
             }
         }
     }
     int timeout = 0;
 
     /**
-     *
-     * @return true if initialization required
+     * {@inheritDoc}
      */
     @Override
     public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         timeout++;
         if (log.isDebugEnabled()) {
-            log.warn("Timeout to poll for UA=" + nodeAddress + ": consecutive timeouts: " + timeout);
+            log.warn("Timeout to poll for UA={}: consecutive timeouts: {}", nodeAddress, timeout);
         }
         return false;   // tells caller to NOT force init
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void resetTimeout(AbstractMRMessage m) {
         if (timeout > 0) {
-            log.debug("Reset " + timeout + " timeout count");
+            log.debug("Reset {} timeout count", timeout);
         }
         timeout = 0;
     }

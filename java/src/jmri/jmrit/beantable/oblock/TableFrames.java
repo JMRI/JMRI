@@ -432,7 +432,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _oBlockModel = new OBlockTableModel(this);
         _oBlockTable = new JTable(_oBlockModel);
         TableRowSorter<OBlockTableModel> sorter = new TableRowSorter<>(_oBlockModel);
-        sorter.setComparator(OBlockTableModel.SYSNAMECOL, new jmri.util.SystemNameComparator());
+        // use NamedBean's built-in Comparator interface for sorting
         _oBlockTable.setRowSorter(sorter);
         _oBlockTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{OBlockTableModel.EDIT_COL,
             OBlockTableModel.DELETE_COL, OBlockTableModel.REPORT_CURRENTCOL, OBlockTableModel.SPEEDCOL,
@@ -525,8 +525,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _portalModel = new PortalTableModel(this);
         _portalTable = new JTable(_portalModel);
         TableRowSorter<PortalTableModel> sorter = new TableRowSorter<>(_portalModel);
-        sorter.setComparator(PortalTableModel.FROM_BLOCK_COLUMN, new jmri.util.SystemNameComparator());
-        sorter.setComparator(PortalTableModel.TO_BLOCK_COLUMN, new jmri.util.SystemNameComparator());
         _portalTable.setRowSorter(sorter);
         _portalTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{PortalTableModel.DELETE_COL}));
         _portalTable.setDragEnabled(true);

@@ -13,6 +13,7 @@ import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.trains.TrainLogger;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.util.ColorUtil;
 import jmri.web.server.WebServerPreferences;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -162,18 +163,6 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static final String NO_LOCATION = "NO_LOCATION"; // NOI18N
     public static final String NO_TRACK = "NO_TRACK"; // NOI18N
 
-    // the supported colors for printed text
-    public static final String BLACK = Bundle.getMessage("Black");
-    public static final String RED = Bundle.getMessage("Red");
-    public static final String ORANGE = Bundle.getMessage("Orange");
-    public static final String YELLOW = Bundle.getMessage("Yellow");
-    public static final String GREEN = Bundle.getMessage("Green");
-    public static final String BLUE = Bundle.getMessage("Blue");
-    public static final String GRAY = Bundle.getMessage("Gray");
-    public static final String PINK = Bundle.getMessage("Pink");
-    public static final String CYAN = Bundle.getMessage("Cyan");
-    public static final String MAGENTA = Bundle.getMessage("Magenta");
-
     // Unit of Length
     public static final String FEET = Bundle.getMessage("Feet");
     public static final String METER = Bundle.getMessage("Meter");
@@ -209,9 +198,9 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     private int buildReportFontSize = 10;
     private String manifestOrientation = PORTRAIT;
     private String switchListOrientation = PORTRAIT;
-    private String pickupColor = BLACK;
-    private String dropColor = BLACK;
-    private String localColor = BLACK;
+    private Color pickupColor = Color.black;
+    private Color dropColor = Color.black;
+    private Color localColor = Color.black;
     private String[] pickupEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, LOCATION, COMMENT};
     private String[] dropEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, DESTINATION, COMMENT};
     private String[] pickupManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
@@ -519,6 +508,10 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         getDefault().trackImmediatelyAvail = enabled;
     }
 
+    /**
+     * allow cars to return to the same staging location if no other options (tracks) are available
+     * @return true if cars are allowed to depart and return to same staging location
+     */
     public static boolean isAllowReturnToStagingEnabled() {
         return getDefault().allowCarsReturnStaging;
     }
@@ -578,8 +571,8 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     }
 
     public static String getRailroadName() {
-        if (getDefault().railroadName == null) {
-            return WebServerPreferences.getDefault().getRailroadName();
+        if (getDefault().railroadName.isEmpty()) {
+            return InstanceManager.getDefault(WebServerPreferences.class).getRailroadName();
         }
         return getDefault().railroadName;
     }
@@ -1431,65 +1424,55 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     }
 
     public static String getDropTextColor() {
-        return getDefault().dropColor;
+        return ColorUtil.colorToColorName(getDefault().dropColor);
     }
 
     public static void setDropTextColor(String color) {
-        getDefault().dropColor = color;
+        getDefault().dropColor = ColorUtil.stringToColor(color);
+    }
+
+    public static void setDropColor(Color c) {
+        getDefault().dropColor = c;
     }
 
     public static String getPickupTextColor() {
-        return getDefault().pickupColor;
+        return ColorUtil.colorToColorName(getDefault().pickupColor);
     }
 
     public static void setPickupTextColor(String color) {
-        getDefault().pickupColor = color;
+        getDefault().pickupColor = ColorUtil.stringToColor(color);
+    }
+
+    public static void setPickupColor(Color c) {
+        getDefault().pickupColor = c;
     }
 
     public static String getLocalTextColor() {
-        return getDefault().localColor;
+        return ColorUtil.colorToColorName(getDefault().localColor);
     }
 
     public static void setLocalTextColor(String color) {
-        getDefault().localColor = color;
+        getDefault().localColor = ColorUtil.stringToColor(color);
+    }
+
+    public static void setLocalColor(Color c) {
+        getDefault().localColor = c;
     }
 
     public static Color getPickupColor() {
-        return getColor(getDefault().pickupColor);
+        return getDefault().pickupColor;
     }
 
     public static Color getDropColor() {
-        return getColor(getDefault().dropColor);
+        return getDefault().dropColor;
     }
 
     public static Color getLocalColor() {
-        return getColor(getDefault().localColor);
+        return getDefault().localColor;
     }
 
     public static Color getColor(String colorName) {
-        if (colorName.equals(BLACK)) {
-            return Color.black;
-        } else if (colorName.equals(BLUE)) {
-            return Color.blue;
-        } else if (colorName.equals(GREEN)) {
-            return Color.green;
-        } else if (colorName.equals(RED)) {
-            return Color.red;
-        } else if (colorName.equals(ORANGE)) {
-            return Color.orange;
-        } else if (colorName.equals(GRAY)) {
-            return Color.gray;
-        } else if (colorName.equals(YELLOW)) {
-            return Color.yellow;
-        } else if (colorName.equals(PINK)) {
-            return Color.pink;
-        } else if (colorName.equals(CYAN)) {
-            return Color.cyan;
-        } else if (colorName.equals(MAGENTA)) {
-            return Color.magenta;
-        } else {
-            return null; // default
-        }
+        return ColorUtil.stringToColor(colorName);
     }
 
     public static String getManifestLogoURL() {
@@ -1642,16 +1625,18 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     /**
      *
      * @return the available text colors used for printing
+     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead. 
      */
+    @Deprecated
     public static JComboBox<String> getPrintColorComboBox() {
         JComboBox<String> box = new JComboBox<>();
-        box.addItem(BLACK);
-        box.addItem(RED);
-        box.addItem(ORANGE);
-        box.addItem(YELLOW);
-        box.addItem(GREEN);
-        box.addItem(BLUE);
-        box.addItem(GRAY);
+        box.addItem(ColorUtil.ColorBlack);
+        box.addItem(ColorUtil.ColorRed);
+        box.addItem(ColorUtil.ColorOrange);
+        box.addItem(ColorUtil.ColorYellow);
+        box.addItem(ColorUtil.ColorGreen);
+        box.addItem(ColorUtil.ColorBlue);
+        box.addItem(ColorUtil.ColorGray);
         return box;
     }
 
@@ -1787,10 +1772,10 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static Element store() {
         Element values;
         Element e = new Element(Xml.OPERATIONS);
-        e.addContent(values = new Element(Xml.RAIL_ROAD));
-        if (Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailroadName())) {
-            values.setAttribute(Xml.NAME, Xml.USE_JMRI_RAILROAD_NAME);
-        } else {
+ 
+        // only store railroad name if it doesn't match the preferences railroad name
+        if (!InstanceManager.getDefault(WebServerPreferences.class).getRailroadName().equals(getRailroadName())) {
+            e.addContent(values = new Element(Xml.RAIL_ROAD));
             values.setAttribute(Xml.NAME, getRailroadName());
         }
 
@@ -2034,9 +2019,9 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
                 && (a = operations.getChild(Xml.RAIL_ROAD).getAttribute(Xml.NAME)) != null) {
             String name = a.getValue();
             log.debug("railroadName: {}", name);
-            if (name.equals(Xml.USE_JMRI_RAILROAD_NAME)) {
-                getDefault().railroadName = null;
-            } else {
+            // code before 4.11 "useJmriRailroadName" when using the preferences railroad name.
+            // here for backwards compatibility
+            if (!name.equals(Xml.USE_JMRI_RAILROAD_NAME)) {
                 getDefault().railroadName = name; // don't set the dirty bit
             }
         }

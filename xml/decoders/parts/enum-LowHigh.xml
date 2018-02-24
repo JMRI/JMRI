@@ -3,9 +3,11 @@
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Low">
-            <choice>Low</choice>
+    <choice>Low</choice>
+    <choice xml:lang="fr">Bas</choice>
   </enumChoice>
   <enumChoice choice="High">
-            <choice>High</choice>
+    <choice>High</choice>
+    <choice xml:lang="fr">Haut</choice>
   </enumChoice>
 </enumVal>

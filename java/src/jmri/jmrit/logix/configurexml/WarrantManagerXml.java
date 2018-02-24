@@ -59,6 +59,7 @@ public class WarrantManagerXml //extends XmlFile
             }
             if (warrant instanceof SCWarrant) {
                 elem.setAttribute("wtype", "SC");
+                elem.setAttribute("speedFactor", ""+((SCWarrant) warrant).getSpeedFactor());
                 elem.setAttribute("timeToPlatform", ""+((SCWarrant) warrant).getTimeToPlatform());
                 elem.setAttribute("forward", ((SCWarrant) warrant).getForward()?"true":"false");
             } else {
@@ -242,6 +243,11 @@ public class WarrantManagerXml //extends XmlFile
                 if (elem.getAttribute("forward") != null) {
                     ((SCWarrant)warrant).setForward(elem.getAttribute("forward").getValue().equals("true"));
                 }
+                if (elem.getAttribute("speedFactor") != null) {
+                    try {
+                        ((SCWarrant)warrant).setSpeedFactor(elem.getAttribute("speedFactor").getFloatValue());
+                    } catch (DataConversionException e) {}
+                }
                 warrant.setNoRamp(SCWa);
                 warrant.setShareRoute(SCWa);
             }
@@ -295,7 +301,7 @@ public class WarrantManagerXml //extends XmlFile
     }
 
     @Override
-    public void load(Element element, Object o) throws Exception {
+    public void load(Element element, Object o) {
         log.error("load called. Invalid method.");
     }
 
@@ -393,7 +399,7 @@ public class WarrantManagerXml //extends XmlFile
             try {
                 speed = attr.getFloatValue();
             } catch (DataConversionException ex) {
-                speed = 0.0f;;
+                speed = 0.0f;
                 log.error("Unable to read speed of command.", ex);
             }
         }

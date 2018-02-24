@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for implementations of XNetInterface.
- * <P>
- * This provides just the basic interface, plus the "" static method for
- * locating the local implementation.
+ * <p>
+ * This provides just the basic interface.
+ * @see jmri.jmrix.AbstractMRTrafficController
  *
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender Copyright (C) 2004-2010
@@ -23,31 +23,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     protected HashMap<XNetListener, Integer> mListenerMasks;
 
     /**
-     * Static function returning the TrafficController instance to use.
-     *
-     * @return The registered TrafficController instance for general use, if
-     *         need be creating one.
-     */
-    @Deprecated
-    static public XNetTrafficController instance() {
-        return self;
-    }
-
-    /**
-     * Static function setting this object as the TrafficController instance to
-     * use.
-     */
-    @Override
-    @Deprecated
-    protected void setInstance() {
-        if (self == null) {
-            self = this;
-        }
-    }
-
-    static XNetTrafficController self = null;
-
-    /**
+     * Create a new XNetTrafficController.
      * Must provide a LenzCommandStation reference at creation time.
      *
      * @param pCommandStation reference to associated command station object,
@@ -61,7 +37,33 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         highPriorityListeners = new LinkedBlockingQueue<>();
     }
 
+    /**
+     * Get the TrafficController instance to use.
+     *
+     * @return The registered TrafficController instance for general use, if
+     *         need be creating one.
+     * @deprecated - does not work with multi-system support, needs to have other classes migrated and then be removed
+     */
+    @Deprecated
+    static public XNetTrafficController instance() {
+        return self;
+    }
+
+    /**
+     * Set this object as the TrafficController instance to use.
+     */
+    @Override
+    @Deprecated
+    protected void setInstance() {
+        if (self == null) {
+            self = this;
+        }
+    }
+
+    static XNetTrafficController self = null;
+
     // Abstract methods for the XNetInterface
+
     /**
      * Forward a preformatted XNetMessage to the actual interface.
      *
@@ -84,7 +86,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     /**
      * Forward a preformatted XNetMessage to a specific listener interface.
      *
-     * @param m Message to send;
+     * @param m Message to send
      */
     @Override
     public void forwardMessage(AbstractMRListener reply, AbstractMRMessage m) {
@@ -109,10 +111,10 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         }
         // check parity
         if (!((XNetReply) m).checkParity()) {
-            log.warn("Ignore packet with bad checksum: {}", ((XNetReply) m));
+            log.warn("Ignore packet with bad checksum: {}", (m));
         } else {
             try {
-                int mask = (mListenerMasks.get((XNetListener) client));
+                int mask = (mListenerMasks.get(client));
                 if (mask == XNetInterface.ALL) {
                     ((XNetListener) client).message((XNetReply) m);
                 } else if ((mask & XNetInterface.COMMINFO)
@@ -220,7 +222,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
 
     /**
      * This method has to be available, even though it doesn't do anything on
-     * lenz.
+     * Lenz.
      */
     @Override
     protected AbstractMRMessage enterProgMode() {
@@ -244,7 +246,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         if (mMemo == null) {
             return true;
         }
-        jmri.jmrix.lenz.XNetProgrammerManager pm = (XNetProgrammerManager) mMemo.getProgrammerManager();
+        jmri.jmrix.lenz.XNetProgrammerManager pm = mMemo.getProgrammerManager();
         if (pm == null) {
             return true;
         }
@@ -350,6 +352,13 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
             _FeedbackCache = new XNetFeedbackMessageCache(this);
         }
         return _FeedbackCache;
+    }
+
+    /**
+     * @return whether or not this connection currently has a timeslot from the Command station.
+     */
+    boolean hasTimeSlot(){
+       return ((XNetPortController)controller).hasTimeSlot();
     }
 
     private final static Logger log = LoggerFactory.getLogger(XNetTrafficController.class);

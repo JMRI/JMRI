@@ -70,7 +70,7 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
     }
 
     @Override
-    public void initComponents(LocoNetSystemConnectionMemo memo) {
+    public synchronized void initComponents(LocoNetSystemConnectionMemo memo) {
         this.memo = memo;
         // connect to the LnTrafficController
         if (memo.getLnTrafficController() == null) {
@@ -85,14 +85,14 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
     public synchronized void message(LocoNetMessage l) {  // receive a LocoNet message and log it
         // send the raw data, to display if requested
         String raw = l.toString();
-        //format the message text, expect it to provide consistent \n after each line
+        // format the message text, expect it to provide consistent \n after each line
         String formatted = llnmon.displayMessage(l);
 
         // display the formatted data in the monitor pane
         nextLine(formatted, raw);
 
-        //include loconet monitoring in session.log if TRACE enabled
-        log.trace(formatted.substring(0, formatted.length() - 1));
+        // include loconet monitoring in session.log if TRACE enabled
+        if (log.isTraceEnabled()) log.trace(formatted.substring(0, formatted.length() - 1));  // remove trailing newline
 
     }
 

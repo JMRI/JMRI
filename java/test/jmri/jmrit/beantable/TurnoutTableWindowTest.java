@@ -88,10 +88,21 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         JTextField hwAddressField = (JTextField) ncfinder.find(fa, 0);
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
-        // set to "1"
+        // set to "C/MRI"
+        a.connectionChoice = "C/MRI";
+        // set address to "a" (invalid for C/MRI)
+        hwAddressField.setText("a");
+        // test silent entry validation
+        boolean _valid = hwAddressField.isValid();
+        Assert.assertEquals("invalid entry", false, _valid);
+
+        // set address to "1"
         // The following line works on the CI servers, but not in some standalone cases
         //getHelper().sendString(new StringEventData(this, hwAddressField, "1"));
         hwAddressField.setText("1"); // workaround
+        NamedComponentFinder ncfinder2 = new NamedComponentFinder(JComponent.class, "createButton");
+        JButton createButton = (JButton) ncfinder2.find(fa, 0);
+        createButton.setEnabled(true); // skip validation
 
         flushAWT();
         Assert.assertEquals("name content", "1", hwAddressField.getText());
@@ -177,4 +188,5 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         JUnitUtil.tearDown();
         super.tearDown();
     }
+
 }

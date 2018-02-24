@@ -1,12 +1,5 @@
 package jmri.implementation;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 import jmri.InstanceManager;
@@ -15,6 +8,8 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
+import jmri.util.PropertyChangeListenerScaffold;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,24 +22,7 @@ import org.junit.Test;
  */
 public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
 
-    interface MockablePropertyChangeListener {
-        void onChange(String property, Object newValue);
-    }
-
-    class FakePropertyChangeListener implements PropertyChangeListener {
-        MockablePropertyChangeListener m;
-
-        FakePropertyChangeListener() {
-            m = mock(MockablePropertyChangeListener.class);
-        }
-
-        @Override
-        public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-            m.onChange(propertyChangeEvent.getPropertyName(), propertyChangeEvent.getNewValue());
-        }
-    }
-
-    protected FakePropertyChangeListener l = new FakePropertyChangeListener();
+    protected PropertyChangeListenerScaffold l;
 
     @Test
     public void testCTor() {
@@ -112,18 +90,18 @@ public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
         mHead.addPropertyChangeListener(l);
 
         mHead.setAppearance(SignalHead.YELLOW);
-        verify(l.m).onChange("Appearance", SignalHead.YELLOW);
-        verifyNoMoreInteractions(l.m);
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); } );
+        Assert.assertEquals("called once",1,l.getCallCount());
 
         waitForTimer();
-        verifyNoMoreInteractions(l.m);
+        Assert.assertEquals("called once",1,l.getCallCount());
 
         mHead.setAppearance(SignalHead.GREEN);
-        verify(l.m).onChange("Appearance", SignalHead.GREEN);
-        verifyNoMoreInteractions(l.m);
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); } );
+        Assert.assertEquals("called twice",2,l.getCallCount());
 
         waitForTimer();
-        verifyNoMoreInteractions(l.m);
+        Assert.assertEquals("called twice",2,l.getCallCount());
     }
 
     @Test
@@ -137,26 +115,26 @@ public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
         mRedTurnout.setCommandedState(Turnout.CLOSED);
         mGreenTurnout.setCommandedState(Turnout.THROWN);
         Assert.assertEquals(SignalHead.RED, mHead.getAppearance());
-        verifyNoMoreInteractions(l.m);
+        Assert.assertEquals("not called",0,l.getCallCount());
         Assert.assertNotNull(mHead.readUpdateTimer); // Should be running.
 
         waitForTimer();
-        verify(l.m).onChange("Appearance", SignalHead.GREEN);
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); } );
         Assert.assertEquals(SignalHead.GREEN, mHead.getAppearance());
-        reset(l.m);
+        l.resetPropertyChanged();
 
         mRedTurnout.setCommandedState(Turnout.THROWN);
-        verifyNoMoreInteractions(l.m);
+        Assert.assertEquals("not called",0,l.getCallCount());
         waitForTimer();
-        verify(l.m).onChange("Appearance", SignalHead.YELLOW);
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); } );
         Assert.assertEquals(SignalHead.YELLOW, mHead.getAppearance());
-        verifyNoMoreInteractions(l.m);
+        Assert.assertEquals("called once",1,l.getCallCount());
 
         mRedTurnout.setCommandedState(Turnout.CLOSED);
         mGreenTurnout.setCommandedState(Turnout.CLOSED);
-        verifyNoMoreInteractions(l.m);
+        Assert.assertEquals("called once",1,l.getCallCount());
         waitForTimer();
-        verify(l.m).onChange("Appearance", SignalHead.DARK);
+        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); } );
     }
 
     @Test
@@ -169,7 +147,7 @@ public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
         Assert.assertEquals(SignalHead.FLASHRED, mHead.getAppearance());
         // Should not be running, since all commands came from us.
         Assert.assertNull(mHead.readUpdateTimer);
-        verifyNoMoreInteractions(l.m);
+        Assert.assertEquals("not called",0,l.getCallCount());
 
         // Wait for the flash
         try {
@@ -177,16 +155,16 @@ public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
         } catch (InterruptedException e) {
         }
         Assert.assertEquals(SignalHead.FLASHRED, mHead.getAppearance()); // hasn't changed
-        verifyNoMoreInteractions(l.m); // also no notification
+        Assert.assertEquals("not called",0,l.getCallCount());
 
         Assert.assertEquals(Turnout.CLOSED, mRedTurnout.getKnownState());
         Assert.assertEquals(Turnout.CLOSED, mGreenTurnout.getKnownState());
 
         mGreenTurnout.setCommandedState(Turnout.THROWN);
-        verifyNoMoreInteractions(l.m);
+        Assert.assertEquals("not called",0,l.getCallCount());
         Assert.assertNotNull(mHead.readUpdateTimer); // now it's started
         waitForTimer();
-        verifyNoMoreInteractions(l.m);
+        Assert.assertEquals("not called",0,l.getCallCount());
         Assert.assertEquals(SignalHead.FLASHRED, mHead.getAppearance()); // hasn't changed
     }    
     
@@ -199,7 +177,9 @@ public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.setUp();
+        JUnitUtil.initInternalTurnoutManager();
+        l = new PropertyChangeListenerScaffold();
     }
 
     @After

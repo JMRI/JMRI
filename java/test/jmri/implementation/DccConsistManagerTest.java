@@ -14,7 +14,9 @@ public class DccConsistManagerTest extends jmri.implementation.AbstractConsistMa
     @Before
     @Override
     public void setUp() {
-        JUnitUtil.setUp();        cm = new DccConsistManager();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initDebugProgrammerManager();
+        cm = new DccConsistManager(jmri.InstanceManager.getNullableDefault(jmri.AddressedProgrammerManager.class));
     }
 
     @After

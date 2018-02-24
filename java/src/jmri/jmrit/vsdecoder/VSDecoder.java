@@ -42,6 +42,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Mark Underwood Copyright (C) 2011
+ * @author Klaus Killinger Copyright (C) 2018
  */
 public class VSDecoder implements PropertyChangeListener {
 
@@ -287,13 +288,23 @@ public class VSDecoder implements PropertyChangeListener {
             return;
         }
 
-        log.debug("VSDecoderPane throttle property change: " + eventName);
+        log.debug("VSDecoderPane throttle property change: {}", eventName);
 
         if (oldValue != null) {
-            log.debug("Old: " + oldValue.toString());
+            log.debug("Old: {}", oldValue.toString());
         }
         if (newValue != null) {
-            log.debug("New: " + newValue.toString());
+            log.debug("New: {}", newValue.toString());
+        }
+
+        if (eventName.equals("throttleAssigned")) {
+            Float s = (Float) InstanceManager.throttleManagerInstance().getThrottleInfo(config.getDccAddress(), "SpeedSetting"); 
+            if (s != null) {
+                ((EngineSound) this.getSound("ENGINE")).setFirstSpeed(true); // Auto-start needs this
+                // Mimic a throttlePropertyChange to propagate the current (init) speed setting of the throttle.
+                log.debug("Existing DCC Throttle found. Speed: {}", s);
+                this.throttlePropertyChange(new PropertyChangeEvent(this, "SpeedSetting", null, s));
+            }
         }
 
         // Iterate through the list of sound events, forwarding the propertyChange event.
@@ -333,12 +344,11 @@ public class VSDecoder implements PropertyChangeListener {
                 new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent event) {
-                log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue()
-                        + " new " + event.getNewValue());
+                log.debug("property change name: {}, old: {}, new: {}", event.getPropertyName(), event.getOldValue(), event.getNewValue());
                 throttlePropertyChange(event);
             }
         });
-        log.debug("VSDecoder: Address set to " + config.getLocoAddress().toString());
+        log.debug("VSDecoder: Address set to {}", config.getLocoAddress().toString());
     }
 
     /**
@@ -453,7 +463,7 @@ public class VSDecoder implements PropertyChangeListener {
         // Respond to events from the new GUI.
         if (evt.getSource() instanceof VSDControl) {
             if (property.equals(VSDControl.PCIdMap.get(VSDControl.PropertyChangeId.OPTION_CHANGE))) {
-                Train selected_train = TrainManager.instance().getTrainByName((String) evt.getNewValue());
+                Train selected_train = InstanceManager.getDefault(TrainManager.class).getTrainByName((String) evt.getNewValue());
                 if (selected_train != null) {
                     selected_train.addPropertyChangeListener(this);
                 }
@@ -742,7 +752,7 @@ public class VSDecoder implements PropertyChangeListener {
         // Read and create all of its components.
         // Check for default element.
         if (e.getChild("default") != null) {
-            log.debug("" + getProfileName() + "is default.");
+            log.debug("{} is default", getProfileName());
             is_default = true;
         } else {
             is_default = false;
@@ -783,17 +793,17 @@ public class VSDecoder implements PropertyChangeListener {
                 es.setXml(el, vf);
                 sound_list.put(el.getAttributeValue("name"), es);
             } else if (el.getAttributeValue("type").equals("diesel3")) {
-                // Handle a Diesel Engine sound
+                // Handle a Diesel3 Engine sound
                 Diesel3Sound es = new Diesel3Sound(prefix + el.getAttributeValue("name"));
                 es.setXml(el, vf);
                 sound_list.put(el.getAttributeValue("name"), es);
             } else if (el.getAttributeValue("type").equals("steam")) {
-                // Handle a Diesel Engine sound
+                // Handle a Steam Engine sound
                 SteamSound es = new SteamSound(prefix + el.getAttributeValue("name"));
                 es.setXml(el, vf);
                 sound_list.put(el.getAttributeValue("name"), es);
             } else if (el.getAttributeValue("type").equals("steam1")) {
-                // Handle a Steam Engine sound
+                // Handle a Steam1 Engine sound
                 Steam1Sound es = new Steam1Sound(prefix + el.getAttributeValue("name"));
                 es.setXml(el, vf);
                 sound_list.put(el.getAttributeValue("name"), es);
@@ -826,18 +836,7 @@ public class VSDecoder implements PropertyChangeListener {
             se.setXml(el, vf);
             event_list.put(se.getName(), se);
         }
-
         // Handle other types of children similarly here.
-        // Check for an existing throttle and update speed if it exists.
-        Float s = (Float) InstanceManager.throttleManagerInstance().getThrottleInfo(config.getDccAddress(),
-                "SpeedSetting");
-        if (s != null) {
-            // Mimic a throttlePropertyChange to propagate the current (init) speed setting of the throttle.
-            log.debug("Existing Throttle found.  Speed = " + s);
-            this.throttlePropertyChange(new PropertyChangeEvent(this, "SpeedSetting", null, s));
-        } else {
-            log.debug("No existing throttle found.");
-        }
     }
 
     private static final Logger log = LoggerFactory.getLogger(VSDecoder.class);

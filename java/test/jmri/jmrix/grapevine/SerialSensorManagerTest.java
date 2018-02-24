@@ -14,6 +14,7 @@ import org.junit.Test;
  */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
+    private GrapevineSystemConnectionMemo memo = null; 
     private SerialNode n1 = null;
     private SerialNode n2 = null;
     private SerialNode n3 = null;
@@ -61,21 +62,17 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        // replace the SerialTrafficController to get clean reset
-        SerialTrafficController t = new SerialTrafficController() {
-            SerialTrafficController test() {
-                setInstance();
-                return this;
-            }
-        }.test();
+        memo = new GrapevineSystemConnectionMemo();
+        SerialTrafficController t = new SerialTrafficControlScaffold(memo);
+        memo.setTrafficController(t);
         Assert.assertNotNull("exists", t);
 
         // construct nodes
-        n1 = new SerialNode(1, SerialNode.NODE2002V6);
-        n2 = new SerialNode(2, SerialNode.NODE2002V6);
-        n3 = new SerialNode(3, SerialNode.NODE2002V1);
+        n1 = new SerialNode(1, SerialNode.NODE2002V6, t);
+        n2 = new SerialNode(2, SerialNode.NODE2002V6, t);
+        n3 = new SerialNode(3, SerialNode.NODE2002V1, t);
 
-        l = new SerialSensorManager();
+        l = new SerialSensorManager(memo);
     }
 
     // The minimal setup for log4J

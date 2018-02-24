@@ -87,7 +87,6 @@ public class BlockTableActionTest extends AbstractTableActionBase {
 
         // clean up
         JUnitUtil.dispose(af);
-        b2 = null;
         _bTable.dispose();
         _b1Table.dispose();
         JUnitUtil.dispose(f);

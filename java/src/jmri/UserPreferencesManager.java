@@ -5,8 +5,6 @@ import java.awt.Point;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import javax.swing.SortOrder;
 
 /**
  * Interface for the User Preferences Manager.
@@ -15,7 +13,7 @@ import javax.swing.SortOrder;
  * has selected in messages where they have selected "Remember this setting for
  * next time"
  *
- * @see jmri.managers.DefaultUserMessagePreferences
+ * @see jmri.managers.JmriUserPreferencesManager
  *
  * @author Kevin Dickerson Copyright (C) 2010
  */
@@ -45,7 +43,7 @@ public interface UserPreferencesManager {
      * allow that checkBox to be set to a true state when it is next
      * initialized. This can also be used anywhere else that a simple yes/no,
      * true/false type preference needs to be stored.
-     *
+     * <p>
      * It should not be used for remembering if a user wants to suppress a
      * message as there is no means in the GUI for the user to reset the flag.
      * setPreferenceState() should be used in this instance The name is
@@ -658,115 +656,9 @@ public interface UserPreferencesManager {
      */
     public java.util.Set<String> getPropertyKeys(String strClass);
 
-    /**
-     * Stores the details of a tables column, so that it can be saved and
-     * re-applied when jmri is re-started
-     *
-     * @param table  The reference for the table
-     * @param column The column name
-     * @param order  The position that the column appears in the header
-     * @param width  The width of the column
-     * @param sort   The sort order of the column
-     * @param hidden Should the column be hidden
-     * @deprecated since 4.5.4 without direct replacement. Use the
-     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
-     * interface state.
-     */
-    @Deprecated
-    public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden);
-
-    /**
-     * Get the stored position of the column for a given table
-     *
-     * @param table  The reference for the table
-     * @param column The column name
-     * @return -1 if not found
-     * @deprecated since 4.5.4 without direct replacement. Use the
-     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
-     * interface state.
-     */
-    @Deprecated
-    public int getTableColumnOrder(String table, String column);
-
-    /**
-     * Get the stored column width for a given table
-     *
-     * @param table  The reference for the table
-     * @param column The column name
-     * @return -1 if not found
-     * @deprecated since 4.5.4 without direct replacement. Use the
-     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
-     * interface state.
-     */
-    @Deprecated
-    public int getTableColumnWidth(String table, String column);
-
-    /**
-     * Get the stored column sort order for a given table
-     *
-     * @param table  The reference for the table
-     * @param column The column name
-     * @return {@link javax.swing.SortOrder#UNSORTED} if not found
-     * @deprecated since 4.5.4 without direct replacement. Use the
-     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
-     * interface state.
-     */
-    @Deprecated
-    public SortOrder getTableColumnSort(String table, String column);
-
-    /**
-     * Get the stored column hidden state for a given table
-     *
-     * @param table  The reference for the table
-     * @param column The column name
-     * @return 0 if not found
-     * @deprecated since 4.5.4 without direct replacement. Use the
-     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
-     * interface state.
-     */
-    @Deprecated
-    public boolean getTableColumnHidden(String table, String column);
-
-    /**
-     * Get a name for a column at index i
-     *
-     * @param table The reference for the table
-     * @param i     The column index
-     * @return null if not found, otherwise the column name
-     * @deprecated since 4.5.4 without direct replacement. Use the
-     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
-     * interface state.
-     */
-    @Deprecated
-    public String getTableColumnAtNum(String table, int i);
-
-    /**
-     * Get a list of all the table preferences stored
-     *
-     * @return a List of all the tables, if no tables exist then an empty list
-     *         is returned
-     * @deprecated since 4.5.4 without direct replacement. Use the
-     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
-     * interface state.
-     */
-    @Deprecated
-    public List<String> getTablesList();
-
-    /**
-     * Get a list of all the column settings for a specific table
-     *
-     * @param table table to retrieve column settings for
-     * @return a List of all the columns in a table, if the table is not valid
-     *         an empty list is returned
-     * @deprecated since 4.5.4 without direct replacement. Use the
-     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
-     * interface state.
-     */
-    @Deprecated
-    public List<String> getTablesColumnList(String table);
     /*
      Example informational message dialog box.
-        
+
      final UserPreferencesManager p;
      p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
      if (p.getRouteSaveMsg()){
@@ -777,22 +669,22 @@ public interface UserPreferencesManager {
      JPanel container = new JPanel();
      container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
      container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-            
+
      JLabel question = new JLabel("Remember to save your Route information.", JLabel.CENTER);
      question.setAlignmentX(Component.CENTER_ALIGNMENT);
      container.add(question);
-            
+
      JButton okButton = new JButton("Okay");
      JPanel button = new JPanel();
      button.setAlignmentX(Component.CENTER_ALIGNMENT);
      button.add(okButton);
      container.add(button);
-            
+
      final JCheckBox remember = new JCheckBox("Do not remind me again?");
      remember.setAlignmentX(Component.CENTER_ALIGNMENT);
      remember.setFont(remember.getFont().deriveFont(10f));
      container.add(remember);
-            
+
      okButton.addActionListener(new ActionListener(){
      public void actionPerformed(ActionEvent e) {
      if(remember.isSelected()){
@@ -801,8 +693,8 @@ public interface UserPreferencesManager {
      dialog.dispose();
      }
      });
-            
-            
+
+
      dialog.getContentPane().add(container);
      dialog.pack();
      dialog.setModal(true);
@@ -813,7 +705,7 @@ public interface UserPreferencesManager {
 
  /*
      Example question message dialog box.
-        
+
      final DefaultUserMessagePreferences p;
      p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
      if (p.getQuitAfterSave()==0x00){
@@ -840,7 +732,7 @@ public interface UserPreferencesManager {
      button.add(yesButton);
      button.add(noButton);
      container.add(button);
-            
+
      noButton.addActionListener(new ActionListener(){
      public void actionPerformed(ActionEvent e) {
      if(remember.isSelected()){
@@ -849,7 +741,7 @@ public interface UserPreferencesManager {
      dialog.dispose();
      }
      });
-            
+
      yesButton.addActionListener(new ActionListener(){
      public void actionPerformed(ActionEvent e) {
      if(remember.isSelected()) {

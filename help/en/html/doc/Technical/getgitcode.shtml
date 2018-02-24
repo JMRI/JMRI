@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Getting the Code</title>
-  <meta content="Bob Jacobsen" name="Author">
+    <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Git download">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -22,25 +22,21 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <!-- ============= -->
-      <!-- Page Contents --><!-- Required -->
-      <!-- ============= -->
 
-      <h1>JMRI: Getting the Code</h1>
+      <h1>JMRI Code: Getting the Code</h1>
 
       <h2>Background</h2>
 
       <p>"<a href="https://git-scm.com">Git</a>" is a powerful,
       free system for managing code as it's worked-on by a
-      distributed group. Like <a href="getsvncode.shtml">SVN</a>
-      before it, and <a href="getcvscode.shtml">CVS</a> before
-      that, it allows a group like JMRI to cooperate effectively.
+      distributed group. It allows a group like JMRI to cooperate effectively.
       We keep the JMRI code, help files, sample scripts, XML files,
       etc. in a Git repository hosted on <a href=
       "https://github.com/JMRI">GitHub.com</a>. The <a href=
       "WebSite.shtml">JMRI web site</a> is in a similar repository.
-      <a name="view" id="view"></a></p>
+      </p>
 
+      <a name="view" id="view"></a>
       <h2>Viewing the Code Online</h2>
 
       <p>You can <a href="https://github.com/JMRI/JMRI">browse the
@@ -146,7 +142,7 @@
         desired:<br>
         <a href="images/GhDtCloneDialog.png"><img src=
         "images/GhDtCloneDialog.png" alt=
-        "Clone dialog in GitHub Desktop Mac" height="279" width=
+        "Clone dialog in GitHub Desktop Mac" height="184" width=
         "267"></a><br>
         and click "Clone".</li>
 
@@ -253,15 +249,14 @@ into it.
 
       <h2>Access to Old Releases</h2>
 
-      <p>The best way to retrieve the source for releases 4.1.2 and
+        <p>The best way to retrieve the source for releases 4.1.2 and
       earlier is from the <a href="getsvncode.shtml">SVN
-      Repository</a>. Please see those instructions for
-      details.</p>
+      Repository</a> (see the link for details.</p>
 
       <p>The best way to retrieve the source for releases 2.12 and
       earlier is from the <a href="getcvscode.shtml">CVS
-      Repository</a>. Please see those instructions for
-      details.</p><!--#include virtual="/Footer" -->
+      Repository</a> (see the link for details.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

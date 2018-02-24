@@ -3,6 +3,8 @@ package jmri.jmrix.cmri.serial;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import javax.annotation.Nonnull;
+import javax.annotation.CheckReturnValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +58,7 @@ public class SerialTurnout extends AbstractTurnout {
      * <P>
      * 'systemName' was previously validated in SerialTurnoutManager
      */
-    public SerialTurnout(String systemName, String userName,CMRISystemConnectionMemo memo) {
+    public SerialTurnout(@Nonnull String systemName, String userName, CMRISystemConnectionMemo memo) {
         super(systemName, userName);
         // Save system Name
         tSystemName = systemName;
@@ -128,10 +130,10 @@ public class SerialTurnout extends AbstractTurnout {
         // if a Pulse Timer is running, ignore the call
         if (!mPulseTimerOn) {
             if (tNode == null) {
-                tNode = (SerialNode) _memo.getNodeFromSystemName(tSystemName,_memo.getTrafficController());
+                tNode = (SerialNode) _memo.getNodeFromSystemName(tSystemName, _memo.getTrafficController());
                 if (tNode == null) {
                     // node does not exist, ignore call
-                    log.error("Trying to set a C/MRI turnout that doesn't exist: " + tSystemName + " - ignored");
+                    log.error("Trying to set a C/MRI turnout that doesn't exist: {} - ignored", tSystemName);
                     return;
                 }
             }
@@ -265,5 +267,16 @@ public class SerialTurnout extends AbstractTurnout {
         }
     }
 
+    /**
+     * {@inheritDoc} 
+     * 
+     * Sorts by node number and then by bit
+     */
+    @CheckReturnValue
+    public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull jmri.NamedBean n) {
+        return CMRISystemConnectionMemo.compareSystemNameSuffix(suffix1, suffix2);
+    }
+
     private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class);
+
 }

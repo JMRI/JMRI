@@ -27,17 +27,20 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
 
     public LocoIdPanel() {
         super();
+        idBox = new javax.swing.JComboBox<String>(IDValues);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         ResourceBundle rb = ResourceBundle
                 .getBundle("jmri.jmrix.loconet.locoid.LocoId");
 
         // Create our UI elements, two buttons and a drop-down.
         setButton = new javax.swing.JButton(rb.getString("ButtonSet"));
         readButton = new javax.swing.JButton(rb.getString("ButtonRead"));
-        idBox = new javax.swing.JComboBox<String>(IDValues);
 
         // Do our layout, two buttons side by side, drop down below.
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -71,16 +74,25 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.locoid.LocoIdFrame"; // NOI18N
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemSetID"));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -189,6 +201,9 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         t.addLocoNetListener(~0, this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         memo.getLnTrafficController().removeLocoNetListener(~0, this);

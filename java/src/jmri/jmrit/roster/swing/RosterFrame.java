@@ -29,6 +29,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.annotation.Nullable;
 import javax.help.SwingHelpUtilities;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -60,7 +61,6 @@ import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.Programmer;
-import jmri.ProgrammerManager;
 import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.decoderdefn.DecoderFile;
@@ -174,7 +174,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     JButton prog1Button = new JButton(Bundle.getMessage("Program"));
     JButton prog2Button = new JButton(Bundle.getMessage("BasicProgrammer"));
     ActionListener programModeListener;
-    ProgDebugger progDebugger = new ProgDebugger();
+    transient ProgDebugger progDebugger = new ProgDebugger();
 
     // These are the names of the programmer _files_, not what should be displayed to the user
     String programmer1 = "Comprehensive"; // NOI18N
@@ -182,7 +182,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
     java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("apps.AppsBundle");
     //current selected loco
-    RosterEntry re;
+    transient RosterEntry re;
     JTextPane roadName = new JTextPane();
     JTextPane roadNumber = new JTextPane();
     JPanel rosterDetailPanel = new JPanel();
@@ -363,19 +363,23 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 //p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideSummary",hideSummary);
             }
         };
-        updateProgrammerStatus();
+        updateProgrammerStatus(null);
         ConnectionStatus.instance().addPropertyChangeListener((PropertyChangeEvent e) -> {
             if ((e.getPropertyName().equals("change")) || (e.getPropertyName().equals("add"))) {
                 log.debug("Received property {} with value {} ", e.getPropertyName(), e.getNewValue());
-                updateProgrammerStatus();
+                updateProgrammerStatus(e);
             }
         });
-        InstanceManager.addPropertyChangeListener((PropertyChangeEvent e) -> {
-            if (e.getPropertyName().equals(InstanceManager.getDefaultsPropertyName(ProgrammerManager.class))) {
-                log.debug("Received property {} with value {} ", e.getPropertyName(), e.getNewValue());
-                updateProgrammerStatus();
-            }
-        });
+        InstanceManager.addPropertyChangeListener(InstanceManager.getListPropertyName(AddressedProgrammerManager.class),
+                (PropertyChangeEvent evt) -> {
+                    log.debug("Received property {} with value {} ", evt.getPropertyName(), evt.getNewValue());
+                    updateProgrammerStatus(evt);
+                });
+        InstanceManager.addPropertyChangeListener(InstanceManager.getListPropertyName(GlobalProgrammerManager.class),
+                (PropertyChangeEvent evt) -> {
+                    log.debug("Received property {} with value {} ", evt.getPropertyName(), evt.getNewValue());
+                    updateProgrammerStatus(evt);
+                });
         getSplitPane().addPropertyChangeListener(propertyChangeListener);
         if (this.getProgrammerConfigManager().getDefaultFile() != null) {
             programmer1 = this.getProgrammerConfigManager().getDefaultFile();
@@ -1341,13 +1345,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 programmer = gpm.getGlobalProgrammer();
                 log.warn("Selector did not provide a programmer, attempt to use GlobalProgrammerManager default: {}", programmer);
             } else {
-                ProgrammerManager dpm = InstanceManager.getNullableDefault(jmri.ProgrammerManager.class);
-                if (dpm != null) {
-                    programmer = dpm.getGlobalProgrammer();
-                    log.warn("Selector did not provide a programmer, attempt to use InstanceManager default: {}", programmer);
-                } else {
-                    log.warn("Selector did not provide a programmer, and no ProgramManager found in InstanceManager");
-                }
+                log.warn("Selector did not provide a programmer, and no ProgramManager found in InstanceManager");
             }
         }
 
@@ -1409,8 +1407,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     }
                 };
             } else if (service.isSelected()) {
-                progFrame = new PaneServiceProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", modePanel.getProgrammer()) {
-                };
+                progFrame = new PaneServiceProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", modePanel.getProgrammer());
             } else if (ops.isSelected()) {
                 int address = Integer.parseInt(re.getDccAddress());
                 boolean longAddr = re.isLongAddress();
@@ -1507,41 +1504,63 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         firePropertyChange(progMode, "setSelected", true);
     }
 
-    /*
+    /**
      * Handle setting up and updating the GUI for the types of progDebugger
      * available.
+     *
+     * @param evt the triggering event; if not null and if a removal of a
+     *            ProgrammerManager, care will be taken not to trigger the
+     *            automatic creation of a new ProgrammerManager
      */
-    protected void updateProgrammerStatus() {
+    protected void updateProgrammerStatus(@Nullable PropertyChangeEvent evt) {
         log.debug("Updating Programmer Status");
         ConnectionConfig oldServMode = serModeProCon;
         ConnectionConfig oldOpsMode = opsModeProCon;
+        GlobalProgrammerManager gpm = null;
+        AddressedProgrammerManager apm = null;
 
         // Find the connection that goes with the global programmer
-        GlobalProgrammerManager gpm = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
+        // test that IM has a default GPM, or that event is not the removal of a GPM
+        if (InstanceManager.containsDefault(GlobalProgrammerManager.class)
+                || (evt != null
+                && evt.getPropertyName().equals(InstanceManager.getDefaultsPropertyName(GlobalProgrammerManager.class))
+                && evt.getNewValue() == null)) {
+            gpm = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
+        }
         if (gpm != null) {
             String serviceModeProgrammerName = gpm.getUserName();
             log.debug("GlobalProgrammerManager found of class {} name {} ", gpm.getClass(), serviceModeProgrammerName);
-            for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
-                log.debug("Checking connection name {}", connection.getConnectionName());
-                if (connection.getConnectionName() != null && connection.getConnectionName().equals(serviceModeProgrammerName)) {
-                    log.debug("Connection found for GlobalProgrammermanager");
-                    serModeProCon = connection;
+            InstanceManager.getOptionalDefault(ConnectionConfigManager.class).ifPresent((ccm) -> {
+                for (ConnectionConfig connection : ccm) {
+                    log.debug("Checking connection name {}", connection.getConnectionName());
+                    if (connection.getConnectionName() != null && connection.getConnectionName().equals(serviceModeProgrammerName)) {
+                        log.debug("Connection found for GlobalProgrammermanager");
+                        serModeProCon = connection;
+                    }
                 }
-            }
+            });
         }
 
         // Find the connection that goes with the addressed programmer
-        AddressedProgrammerManager apm = InstanceManager.getNullableDefault(AddressedProgrammerManager.class);
+        // test that IM has a default APM, or that event is not the removal of an APM
+        if (InstanceManager.containsDefault(AddressedProgrammerManager.class)
+                || (evt != null
+                && evt.getPropertyName().equals(InstanceManager.getDefaultsPropertyName(AddressedProgrammerManager.class))
+                && evt.getNewValue() == null)) {
+            apm = InstanceManager.getNullableDefault(AddressedProgrammerManager.class);
+        }
         if (apm != null) {
             String opsModeProgrammerName = apm.getUserName();
             log.debug("AddressedProgrammerManager found of class {} name {} ", apm.getClass(), opsModeProgrammerName);
-            for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
-                log.debug("Checking connection name {}", connection.getConnectionName());
-                if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammerName)) {
-                    log.debug("Connection found for AddressedProgrammermanager");
-                    opsModeProCon = connection;
+            InstanceManager.getOptionalDefault(ConnectionConfigManager.class).ifPresent((ccm) -> {
+                for (ConnectionConfig connection : ccm) {
+                    log.debug("Checking connection name {}", connection.getConnectionName());
+                    if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammerName)) {
+                        log.debug("Connection found for AddressedProgrammermanager");
+                        opsModeProCon = connection;
+                    }
                 }
-            }
+            });
         }
 
         if (serModeProCon != null && gpm != null && gpm.isGlobalProgrammerAvailable()) {
@@ -1676,7 +1695,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     /**
      * Displays a context (right-click) menu for a roster entry.
      */
-    class RosterPopupListener extends MouseAdapter {
+    private class RosterPopupListener extends MouseAdapter {
 
         // does clickTimer still actually do anything in this code?
         // it looks like it just starts and stops, without
@@ -1718,7 +1737,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
     }
 
-    static class ExportRosterItem extends ExportRosterItemAction {
+    private static class ExportRosterItem extends ExportRosterItemAction {
 
         ExportRosterItem(String pName, Component pWho, RosterEntry re) {
             super(pName, pWho);
@@ -1731,7 +1750,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
     }
 
-    static class CopyRosterItem extends CopyRosterItemAction {
+    private static class CopyRosterItem extends CopyRosterItemAction {
 
         CopyRosterItem(String pName, Component pWho, RosterEntry re) {
             super(pName, pWho);

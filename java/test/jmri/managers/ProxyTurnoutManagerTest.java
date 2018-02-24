@@ -64,7 +64,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
     public void testProvideFailure() {
         boolean correct = false;
         try {
-            Turnout t = l.provideTurnout("");
+            l.provideTurnout("");
             Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
             correct = true;

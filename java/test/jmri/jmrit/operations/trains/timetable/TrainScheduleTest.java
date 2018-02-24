@@ -3,10 +3,7 @@ package jmri.jmrit.operations.trains.timetable;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -33,6 +30,6 @@ public class TrainScheduleTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainScheduleTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(TrainScheduleTest.class);
 
 }

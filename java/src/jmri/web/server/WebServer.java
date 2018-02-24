@@ -68,7 +68,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
      * Create a WebServer instance with the default preferences.
      */
     public WebServer() {
-        this(WebServerPreferences.getDefault());
+        this(InstanceManager.getDefault(WebServerPreferences.class));
     }
 
     /**
@@ -96,6 +96,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
             return InstanceManager.setDefault(WebServer.class, new WebServer());
         });
     }
+
 
     /**
      * Start the web server.
@@ -138,7 +139,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
     /**
      * Stop the server.
      *
-     * @throws Exception if there is an error stopping the server
+     * @throws Exception if there is an error stopping the server; defined by Jetty superclass
      */
     @Override
     public void stop() throws Exception {
@@ -364,6 +365,9 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
     @Override
     public void lifeCycleFailure(LifeCycle lc, Throwable thrwbl) {
+        if (zeroConfService != null) {
+            zeroConfService.stop();
+        }
         log.error("Web Server failed", thrwbl);
     }
 
@@ -377,6 +381,9 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
     @Override
     public void lifeCycleStopped(LifeCycle lc) {
+        if (zeroConfService != null) {
+            zeroConfService.stop();
+        }
         InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
             manager.deregister(shutDownTask);
         });

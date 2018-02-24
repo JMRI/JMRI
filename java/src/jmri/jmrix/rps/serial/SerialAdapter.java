@@ -102,8 +102,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -136,7 +135,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
      */
     @Override
     public void configure() {
-
         // Connect the control objects:
         //   connect an Engine to the Distributor
         Engine e = Engine.instance();
@@ -145,8 +143,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         // start the reader
         readerThread = new Thread(new Reader());
         readerThread.start();
-
-        jmri.jmrix.rps.ActiveFlag.setActive();
 
     }
 
@@ -207,6 +203,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
     volatile OutputStream ostream = null;
     int[] offsetArray = null;
 
+    @Deprecated
     static public SerialAdapter instance() {
         if (mInstance == null) {
             mInstance = new SerialAdapter();
@@ -453,13 +450,8 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
                         vals[index] = Double.valueOf(c.get(2 + i * 2 + 1)).doubleValue();
                     }
                 }
-            } catch (Exception e) {
-                log.warn("Exception handling input: " + e);
-                System.out.flush();
-                System.err.flush();
-                e.printStackTrace();
-                System.out.flush();
-                System.err.flush();
+            } catch (IOException | NumberFormatException e) {
+                log.warn("Exception handling input.", e);
                 return null;
             }
             Reading r = new Reading(Engine.instance().getPolledID(), vals, s);

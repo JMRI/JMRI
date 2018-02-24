@@ -13,12 +13,12 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from Marklin CS2 messages. The
  * "MarklinInterface" side sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a MarklinPortController is via a pair of UDP Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
- * This handles the state transistions, based on the necessary state in each
+ * <p>
+ * This handles the state transitions, based on the necessary state in each
  * message.
  *
  * Based on work by Bob Jacobsen
@@ -27,11 +27,12 @@ import org.slf4j.LoggerFactory;
  */
 public class MarklinTrafficController extends AbstractMRTrafficController implements MarklinInterface, CommandStation {
 
+    /**
+     * Create a new MarklinTrafficController instance.
+     */
     public MarklinTrafficController() {
         super();
-        if (log.isDebugEnabled()) {
-            log.debug("creating a new MarklinTrafficController object");
-        }
+        log.debug("creating a new MarklinTrafficController object");
         // set as command station too
         jmri.InstanceManager.setCommandStation(this);
         this.setAllowUnexpectedReply(true);
@@ -61,7 +62,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     }
 
     /**
-     * CommandStation implementation, not yet supported
+     * CommandStation implementation, not yet supported.
      */
     @Override
     public void sendPacket(byte[] packet, int count) {
@@ -134,7 +135,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
      */
     @Deprecated
     @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // FindBugs wants this package protected, but we're removing it when multi-connection
+    // SpotBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected MarklinTrafficController self = null;
 
@@ -258,10 +259,11 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     @Override
     public String getSystemPrefix() {
         if (adaptermemo == null) {
-            return "MC";
+            return "M";
         }
         return adaptermemo.getSystemPrefix();
     }
 
     private final static Logger log = LoggerFactory.getLogger(MarklinTrafficController.class);
+
 }

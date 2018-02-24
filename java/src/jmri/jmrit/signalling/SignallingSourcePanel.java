@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -26,7 +26,6 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.SystemNameComparator;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -80,7 +79,6 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         _AppearanceModel = new SignalMastAspectModel();
         JTable table = new JTable(_AppearanceModel);
         TableRowSorter<SignalMastAspectModel> sorter = new TableRowSorter<>(_AppearanceModel);
-        sorter.setComparator(SignalMastAspectModel.SYSNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(sorter, SignalMastAspectModel.SYSNAME_COLUMN, SortOrder.ASCENDING);
         table.setRowSorter(sorter);
         table.setRowSelectionAllowed(false);
@@ -156,7 +154,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             }
         }
 
-        ArrayList<LayoutEditor> layout = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+        List<LayoutEditor> layout = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
         if (layout.size() > 0) {
             signalMastLogicFrame = new JmriJFrame(Bundle.getMessage("DiscoverMastsTitle"), false, false);  // NOI18N
             signalMastLogicFrame.setPreferredSize(null);
@@ -192,9 +190,11 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("autoSignalMastGenerateComplete")) {  // NOI18N
-            signalMastLogicFrame.setVisible(false);
-            signalMastLogicFrame.dispose();
-
+            if (signalMastLogicFrame != null) { // this is also called from a LayoutEditorPanel by
+                // jmri.managers.DefaultSignalMastLogicManager#discoverSignallingDest(), without an open signalMastLogicFrame
+                signalMastLogicFrame.setVisible(false);
+                signalMastLogicFrame.dispose();
+            }
             if (sml == null) {
                 updateDetails();
             }
@@ -210,7 +210,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         }
     }
 
-    private ArrayList<SignalMast> _signalMastList;
+    private List<SignalMast> _signalMastList;
 
     /**
      * Refresh the list of destination Signal Masts available for edit in the current SML.

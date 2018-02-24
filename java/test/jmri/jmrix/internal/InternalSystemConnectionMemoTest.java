@@ -2,26 +2,19 @@ package jmri.jmrix.internal;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class InternalSystemConnectionMemoTest {
-
-    @Test
-    public void testCTor() {
-        InternalSystemConnectionMemo t = new InternalSystemConnectionMemo();
-        Assert.assertNotNull("exists",t);
-    }
+public class InternalSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        scm = new InternalSystemConnectionMemo();
     }
 
     @After

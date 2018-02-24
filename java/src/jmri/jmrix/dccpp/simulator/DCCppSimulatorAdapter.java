@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender, Copyright (C) 2009-2010
  * @author Mark Underwood, Copyright (C) 2015
  *
- * Based on jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter
+ * Based on {@link jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter}
  */
 public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implements Runnable {
 
@@ -53,7 +53,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private Random rgen = null;
 
     public DCCppSimulatorAdapter() {
-        setPort("None");
+        setPort(Bundle.getMessage("None"));
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
             pout = new DataOutputStream(tempPipeI);
@@ -495,7 +495,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         Random sNumGenerator = new Random();
         int sensorNum = sNumGenerator.nextInt(10); // Generate a random sensor number between 0 and 9
         Random valueGenerator = new Random();
-        int value = valueGenerator.nextInt(2); // Generate state value betweeon 0 and 1
+        int value = valueGenerator.nextInt(2); // Generate state value between 0 and 1
 
         String reply = (value == 1 ? "Q " : "q ") + Integer.toString(sensorNum);
 
@@ -537,7 +537,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         byte char1;
         boolean found_start = false;
 
-        // this loop reads every other character; is that the desired behavor?
+        // this loop reads every other character; is that the desired behavior?
         while (!found_start) {
             char1 = readByteProtected(inpipe);
             if ((char1 & 0xFF) == '<') {

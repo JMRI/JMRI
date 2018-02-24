@@ -11,15 +11,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
-import org.powermock.core.classloader.annotations.MockPolicy;
 
 /**
  *
  * @author Randall Wood Copyright 2017
  */
-@MockPolicy(Slf4jMockPolicy.class)
 public class ServletUtilTest {
 
     @Before
@@ -29,7 +25,9 @@ public class ServletUtilTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     @Test
     public void testGetRailroadName() {
@@ -42,7 +40,7 @@ public class ServletUtilTest {
 
     @Test
     public void testSetNonCachingHeaders() {
-        HttpServletResponse response = PowerMockito.mock(HttpServletResponse.class);
+        HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
         ServletUtil instance = new ServletUtil();
         Date now = instance.setNonCachingHeaders(response);
         Mockito.verify(response).setDateHeader("Date", now.getTime());

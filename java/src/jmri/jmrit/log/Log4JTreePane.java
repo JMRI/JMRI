@@ -18,12 +18,6 @@ import org.apache.log4j.spi.LoggerRepository;
 public class Log4JTreePane extends jmri.util.swing.JmriPanel {
 
     /**
-     * Provide a help target string which an enclosing frame can provide as a
-     * help reference.
-     */
-    //public String getHelpTarget() { return "Acknowledgements.shtml"; }
-
-    /**
      * Provide a recommended title for an enclosing frame.
      */
     @Override
@@ -44,7 +38,7 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         LoggerRepository repo = Logger.getRootLogger().getLoggerRepository();
 
         List<String> list = new ArrayList<String>();
@@ -76,10 +70,11 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
      * 3rd stage of initialization, invoked after Swing components exist.
      */
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
     }
 
     @Override
     public void dispose() {
     }
+
 }

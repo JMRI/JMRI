@@ -3,7 +3,6 @@ package apps.configurexml;
 import apps.PerformFileModel;
 import apps.StartupActionsManager;
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -51,7 +50,7 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws JmriException {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         String fileName = FileUtil.getAbsoluteFilename(shared.getAttribute("name").getValue());
         PerformFileModel m = new PerformFileModel();

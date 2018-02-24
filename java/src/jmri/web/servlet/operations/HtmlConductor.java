@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -14,7 +15,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.util.FileUtil;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,8 +50,8 @@ public class HtmlConductor extends HtmlTrainCommon {
                     train.getStatusCode());
         }
 
-        List<Engine> engineList = EngineManager.instance().getByTrainBlockingList(train);
-        List<Car> carList = CarManager.instance().getByTrainDestinationList(train);
+        List<Engine> engineList = InstanceManager.getDefault(EngineManager.class).getByTrainBlockingList(train);
+        List<Car> carList = InstanceManager.getDefault(CarManager.class).getByTrainDestinationList(train);
         log.debug("Train has {} cars assigned to it", carList.size());
 
         String pickups = performWork(true, false); // pickup=true, local=false
@@ -114,7 +115,7 @@ public class HtmlConductor extends HtmlTrainCommon {
     }
 
     private String getLocationComments() {
-        List<Car> carList = CarManager.instance().getByTrainDestinationList(train);
+        List<Car> carList = InstanceManager.getDefault(CarManager.class).getByTrainDestinationList(train);
         StringBuilder builder = new StringBuilder();
         RouteLocation routeLocation = train.getCurrentLocation();
         boolean work = isThereWorkAtLocation(train, routeLocation.getLocation());
@@ -232,14 +233,14 @@ public class HtmlConductor extends HtmlTrainCommon {
             return dropCars(local);
         }
     }
-    
+
     private String pickupCars() {
         StringBuilder builder = new StringBuilder();
         RouteLocation location = train.getCurrentLocation();
-        List<Car> carList = CarManager.instance().getByTrainDestinationList(train);
+        List<Car> carList = InstanceManager.getDefault(CarManager.class).getByTrainDestinationList(train);
         List<Track> tracks = location.getLocation().getTrackByNameList(null);
-        List<String> trackNames = new ArrayList<String>();
-        List<String> pickedUp = new ArrayList<String>();
+        List<String> trackNames = new ArrayList<>();
+        List<String> pickedUp = new ArrayList<>();
         this.clearUtilityCarTypes();
         for (Track track : tracks) {
             if (trackNames.contains(splitString(track.getName()))) {
@@ -276,10 +277,10 @@ public class HtmlConductor extends HtmlTrainCommon {
     private String dropCars(boolean local) {
         StringBuilder builder = new StringBuilder();
         RouteLocation location = train.getCurrentLocation();
-        List<Car> carList = CarManager.instance().getByTrainDestinationList(train);
+        List<Car> carList = InstanceManager.getDefault(CarManager.class).getByTrainDestinationList(train);
         List<Track> tracks = location.getLocation().getTrackByNameList(null);
-        List<String> trackNames = new ArrayList<String>();
-        List<String> dropped = new ArrayList<String>();
+        List<String> trackNames = new ArrayList<>();
+        List<String> dropped = new ArrayList<>();
         for (Track track : tracks) {
             if (trackNames.contains(splitString(track.getName()))) {
                 continue;

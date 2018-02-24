@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Nonnull;
 import jmri.Block;
 import jmri.EntryPoint;
@@ -177,9 +178,9 @@ public class AllocatedSection {
     // instance variables used with automatic running of trains
     private int mIndex = 0;
     private PropertyChangeListener mExitSignalListener = null;
-    private final ArrayList<PropertyChangeListener> mBlockListeners = new ArrayList<>();
-    private ArrayList<Block> mBlockList = null;
-    private final ArrayList<Block> mActiveBlockList = new ArrayList<>();
+    private final List<PropertyChangeListener> mBlockListeners = new ArrayList<>();
+    private List<Block> mBlockList = null;
+    private final List<Block> mActiveBlockList = new ArrayList<>();
 
     //
     // Access methods for automatic running instance variables
@@ -371,18 +372,15 @@ public class AllocatedSection {
         @Override
         public void run() {
             // delay to insure that change is not a short spike
-            try {
-                Thread.sleep(_delay);
-            } catch (InterruptedException exc) {
-                // ignore this exception
-            }
-            if (_occ == _block.getState()) {
-                // occupancy has not changed, must be OK
-                if (mActiveTrain.getAutoActiveTrain() != null) {
-                    // automatically running train
-                    mActiveTrain.getAutoActiveTrain().handleBlockStateChange(_aSection, _block);
-                } else if (_occ == Block.OCCUPIED) {
-                    // manual running train - block newly occupied
+            // The forced delay has been removed. The delay can be controlled by the debounce
+            // values in the sensor table. The use of an additional fixed 250 milliseconds
+            // caused it to always fail when crossing small blocks at speed.
+            if (mActiveTrain.getAutoActiveTrain() != null) {
+                // automatically running train
+                mActiveTrain.getAutoActiveTrain().handleBlockStateChange(_aSection, _block);
+            } else if (_occ == Block.OCCUPIED) {
+                // manual running train - block newly occupied
+                if (!mActiveTrain.getAutoRun()) {
                     if ((_block == mActiveTrain.getEndBlock()) && mActiveTrain.getReverseAtEnd()) {
                         // reverse direction of Allocated Sections
                         mActiveTrain.reverseAllAllocatedSections();
@@ -395,7 +393,7 @@ public class AllocatedSection {
             // remove from lists
             removeFromActiveBlockList(_block);
         }
-        private final int _delay = 250;
+
         private Block _block = null;
         private int _occ = 0;
         private AllocatedSection _aSection = null;

@@ -5,10 +5,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -26,6 +23,7 @@ public class PanedInterfaceTest {
         );
         PanedInterface t = new PanedInterface(w);
         Assert.assertNotNull("exists",t);
+        jmri.util.JUnitUtil.dispose(w);
     }
 
     // The minimal setup for log4J
@@ -39,6 +37,6 @@ public class PanedInterfaceTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PanedInterfaceTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PanedInterfaceTest.class.getName());
 
 }

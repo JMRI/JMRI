@@ -1,11 +1,17 @@
 package jmri.jmrit.roster;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.symbolicprog.*;
-import org.jdom2.*;
+import jmri.jmrit.symbolicprog.CvTableModel;
+import jmri.jmrit.symbolicprog.CvValue;
+import jmri.jmrit.symbolicprog.VariableTableModel;
+import jmri.jmrit.symbolicprog.VariableValue;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.ProcessingInstruction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
-class LocoFile extends XmlFile {
+public class LocoFile extends XmlFile {
 
     /**
      * Convert to a canonical text form for ComboBoxes, etc
@@ -45,7 +51,7 @@ class LocoFile extends XmlFile {
         String rosterName = loco.getAttributeValue("id");
         Element values = loco.getChild("values");
 
-        // Ugly hack because of bug 1898971 in JMRI 2.1.2 - contents may be directly inside the 
+        // Ugly hack because of bug 1898971 in JMRI 2.1.2 - contents may be directly inside the
         // locomotive element, instead of in a nested values element
         if (values == null) {
             // check for non-nested content, in which case use loco element
@@ -117,15 +123,15 @@ class LocoFile extends XmlFile {
             log.error("no values element found in config file; Variable values not loaded for \"{}\"", loco.getAttributeValue("id"));
             return;
         }
-        
+
         Element decoderDef = values.getChild("decoderDef");
 
         if (decoderDef == null) {
             log.error("no decoderDef element found in config file; Variable values not loaded for \"{}\"", loco.getAttributeValue("id"));
             return;
         }
-        
-        
+
+
         // get the Variable values and load
         if (log.isDebugEnabled()) {
             log.debug("Found " + decoderDef.getChildren("varValue").size() + " varValue elements");
@@ -138,7 +144,7 @@ class LocoFile extends XmlFile {
             map.put(varModel.getItem(i), varModel.getVariable(i));
             map.put(varModel.getLabel(i), varModel.getVariable(i));
         }
-                
+
         for (Element element : decoderDef.getChildren("varValue")) {
             // locate the row
             if (element.getAttribute("item") == null) {
@@ -157,7 +163,7 @@ class LocoFile extends XmlFile {
             String item = element.getAttribute("item").getValue();
             String value = element.getAttribute("value").getValue();
             log.debug("Variable \"{}\" has value: {}", item, value);
-            
+
             VariableValue var = map.get(item);
             if (var != null) {
                 var.setValue(value);
@@ -181,7 +187,7 @@ class LocoFile extends XmlFile {
         if (var.startsWith("ESU Function Row")) return MessageResponse.IGNORE; // from jmri.jmrit.symbolicprog.FnMapPanelESU
         return MessageResponse.REPORT;
     }
-    
+
     /**
      * Write an XML version of this object, including also the RosterEntry
      * information, and memory-resident decoder contents.
@@ -292,8 +298,7 @@ class LocoFile extends XmlFile {
 
             writeXML(pFile, doc);
         } catch (IOException ex) {
-            // need to trace this one back
-            ex.printStackTrace();
+            log.error("Unable to write {}", pFile, ex);
         }
     }
 
@@ -338,8 +343,7 @@ class LocoFile extends XmlFile {
 
             writeXML(pFile, doc);
         } catch (IOException ex) {
-            // need to trace this one back
-            ex.printStackTrace();
+            log.error("Unable to write {}", pFile, ex);
         }
     }
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +43,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.PAGEMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
         return ret;
     }
 
@@ -72,7 +71,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         // start the error timer
         startShortTimer();
         // format and send message to go to program mode
-        if (getMode() == DefaultProgrammerManager.PAGEMODE) {
+        if (getMode() == ProgrammingMode.PAGEMODE) {
             if (tc.getProtocol() == Mx1Packetizer.ASCII) {
                 if (firstTime) {
                     tc.sendMx1Message(tc.getCommandStation().resetModeMsg(), this);
@@ -103,7 +102,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         // start the error timer
         startShortTimer();
         // format and send message to go to program mode
-        if (getMode() == DefaultProgrammerManager.PAGEMODE) {
+        if (getMode() == ProgrammingMode.PAGEMODE) {
             if (tc.getProtocol() == Mx1Packetizer.ASCII) {
                 if (firstTime) {
                     tc.sendMx1Message(tc.getCommandStation().resetModeMsg(), this);

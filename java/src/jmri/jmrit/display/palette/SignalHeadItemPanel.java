@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,16 +22,17 @@ import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalHeadIcon;
 import jmri.jmrit.picker.PickListModel;
-import jmri.util.JmriJFrame;
+import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelectionListener {
+public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelectionListener {
 
-    public SignalHeadItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
+    public SignalHeadItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<SignalHead> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
 
@@ -67,13 +70,18 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
 
     @Override
     protected void showIcons() {
-        //updateFamiliesPanel();
-        _iconFamilyPanel.remove(_iconPanel);
-        _iconPanel = new JPanel();
-        _iconFamilyPanel.add(_iconPanel, 0);
+        if (_iconPanel == null) { // create a new one
+            _iconPanel = new ImagePanel();
+            _iconPanel.setOpaque(false);
+            _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
+                    Bundle.getMessage("PreviewBorderTitle")));
+            _iconFamilyPanel.add(_iconPanel, 0);
+        } else {
+            _iconPanel.removeAll(); // clear old icons
+        }
         addIconsToPanel(_currentIconMap);
         _iconPanel.setVisible(true);
-        if (!_update) {
+        if (!_update && _dragIconPanel != null) { // prevent NPE
             _dragIconPanel.setVisible(false);
         }
         _showIconsButton.setText(Bundle.getMessage("HideIcons"));
@@ -84,7 +92,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         HashMap<String, NamedIcon> iconMap = getFilteredIconMap(allIconsMap);
         if (iconMap == null) {
             iconMap = ItemPalette.getIconMap(_itemType, _family);
-            if (iconMap == null) {
+            if (iconMap == null) { // none found
                 _updateButton.setEnabled(false);
                 _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
             }
@@ -94,7 +102,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
     }
 
     /**
-     * ListSelectionListener action
+     * ListSelectionListener action.
      */
     @Override
     public void valueChanged(ListSelectionEvent e) {
@@ -103,7 +111,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         }
         int row = _table.getSelectedRow();
         if (log.isDebugEnabled()) {
-            log.debug("Table valueChanged: row= " + row);
+            log.debug("Table valueChanged: row= {}", row);
         }
         if (row >= 0) {
             _updateButton.setEnabled(true);
@@ -118,7 +126,6 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         if (_iconPanel.isVisible()) {
             showIcons();
         }
-        //       hideIcons();
     }
 
     protected HashMap<String, NamedIcon> getFilteredIconMap(HashMap<String, NamedIcon> allIconsMap) {
@@ -225,4 +232,5 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
     }
 
     private final static Logger log = LoggerFactory.getLogger(SignalHeadItemPanel.class);
+
 }

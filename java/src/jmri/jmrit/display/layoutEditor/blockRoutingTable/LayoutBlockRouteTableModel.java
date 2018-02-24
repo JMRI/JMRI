@@ -20,8 +20,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
-
     public static final int DESTCOL = 0;
     static final int NEXTHOPCOL = 1;
     static final int HOPCOUNTCOL = 2;
@@ -183,7 +181,7 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
         return jmri.InstanceManager.getDefault(LayoutBlockManager.class);
     }
 
-    LayoutBlock lBlock;
+    private LayoutBlock lBlock = null;
 
     private final static Logger log = LoggerFactory.getLogger(LayoutBlockRouteTableModel.class);
 }

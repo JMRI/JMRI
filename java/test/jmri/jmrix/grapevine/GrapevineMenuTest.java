@@ -15,19 +15,27 @@ import org.junit.Test;
  */
 public class GrapevineMenuTest {
 
+    private GrapevineSystemConnectionMemo memo = null; 
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        GrapevineMenu action = new GrapevineMenu();
+        GrapevineMenu action = new GrapevineMenu(memo);
         Assert.assertNotNull("exists", action);
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new GrapevineSystemConnectionMemo();
+        SerialTrafficController tc = new SerialTrafficControlScaffold(memo);
+        memo.setTrafficController(tc);
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+
+    }
+
 }

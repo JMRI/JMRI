@@ -31,6 +31,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     private static final String BUILD_REPORT_FILE_NAME = Bundle.getMessage("train") + " (";
     private static final String MANIFEST_FILE_NAME = Bundle.getMessage("train") + " (";
     private static final String SWITCH_LIST_FILE_NAME = Bundle.getMessage("location") + " (";
+    private static final String BACKUP_BUILD_REPORT_FILE_NAME = Bundle.getMessage("Report") + " " + Bundle.getMessage("train") + " (";
     private static final String FILE_TYPE_TXT = ").txt"; // NOI18N
     private static final String FILE_TYPE_CSV = ").csv"; // NOI18N
 
@@ -43,6 +44,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     static final String JSON_MANIFESTS = "jsonManifests"; // NOI18N
     static final String MANIFESTS_BACKUPS = "manifestsBackups"; // NOI18N
     static final String SWITCH_LISTS_BACKUPS = "switchListsBackups"; // NOI18N
+    static final String BUILD_STATUS_BACKUPS = "buildStatusBackups"; // NOI18N
 
     public TrainManagerXml() {
     }
@@ -72,7 +74,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
         Document doc = newDocument(root, dtdLocation + "operations-trains.dtd"); // NOI18N
 
         // add XSLT processing instruction
-        java.util.Map<String, String> m = new java.util.HashMap<String, String>();
+        java.util.Map<String, String> m = new java.util.HashMap<>();
         m.put("type", "text/xsl"); // NOI18N
         m.put("href", xsltLocation + "operations-trains.xsl"); // NOI18N
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
@@ -226,6 +228,29 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
 
     public String getBackupSwitchListDirectoryName(String name) {
         return getBackupSwitchListDirectoryName() + File.separator + name + File.separator;
+    }
+    
+    public String getBackupBuildStatusFileName(String name, String lastModified) {
+        return getBackupBuildStatusDirectoryName()
+                + name
+                + File.separator
+                + BACKUP_BUILD_REPORT_FILE_NAME
+                + name
+                + ") "
+                + lastModified
+                + ".txt";// NOI18N
+    }
+    
+    public String getBackupBuildStatusDirectoryName() {
+        return OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + BUILD_STATUS_BACKUPS
+                + File.separator;
+    }
+    
+    public String getBackupBuildStatusDirectoryName(String name) {
+        return getBackupBuildStatusDirectoryName() + File.separator + name + File.separator;
     }
 
     /**
@@ -382,19 +407,51 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
         if (Setup.isSaveTrainManifestsEnabled()) {
             // create the switch list backup directory
             createFile(getBackupSwitchListDirectoryName() + " ", false); // no backup
-            // now create unique backup directory for each train manifest
+            // now create unique backup directory for location
             createFile(getBackupSwitchListDirectoryName(name) + " ", false); // no backup
             // get old switch list file
             File file = findFile(getDefaultSwitchListName(name));
             if (file == null) {
                 log.debug("No ({}) switch list file to backup", name);
-            } else if (file.canWrite()) {
+            } else if (file.canRead()) {
                 String lastModified = new SimpleDateFormat("yyyyMMdd-HHmmss").format(file.lastModified()); // NOI18N
                 String backupName = getBackupSwitchListFileName(name, lastModified); // NOI18N
-                if (file.renameTo(new File(backupName))) {
-                    log.debug("created new switch list backup file {}", backupName);
-                } else {
+                File backupCopy = new File(backupName);
+                try {
+                FileUtil.copy(file, backupCopy);
+                log.debug("created new switch list backup file {}", backupName);
+                } catch (Exception e) {
                     log.error("could not create switch list backup file {}", backupName);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Save previous train build status file in a separate directory called
+     * BuildStatusBackups. Each build status is saved in a unique directory using
+     * the train's name. 
+     * @param name train's name
+     */
+    public void savePreviousBuildStatusFile(String name) {
+        if (Setup.isSaveTrainManifestsEnabled()) {
+            // create the build status backup directory
+            createFile(getBackupBuildStatusDirectoryName() + " ", false); // no backup
+            // now create unique backup directory for each train
+            createFile(getBackupBuildStatusDirectoryName(name) + " ", false); // no backup
+            // get old build status file for this train
+            File file = findFile(defaultBuildReportFileName(name));
+            if (file == null) {
+                log.debug("No ({}) train build status file to backup", name);
+            } else if (file.canRead()) {
+                String lastModified = new SimpleDateFormat("yyyyMMdd-HHmmss").format(file.lastModified()); // NOI18N
+                String backupName = getBackupBuildStatusFileName(name, lastModified); // NOI18N
+                File backupCopy = new File(backupName);
+                try {
+                FileUtil.copy(file, backupCopy);
+                log.debug("created new train build status backup file {}", backupName);
+                } catch (Exception e) {
+                    log.error("could not create train build status backup file {}", backupName);
                 }
             }
         }

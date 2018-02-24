@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,11 +42,11 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         }
 
         if (tc != null && tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
-            ret.add(DefaultProgrammerManager.DIRECTMODE);
+            ret.add(ProgrammingMode.DIRECTMODE);
         }
 
-        ret.add(DefaultProgrammerManager.PAGEMODE);
-        ret.add(DefaultProgrammerManager.REGISTERMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
+        ret.add(ProgrammingMode.REGISTERMODE);
 
         return ret;
     }
@@ -70,9 +69,9 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     boolean getCanWrite(int cv) {
         // prevent writing Prog Track mode CV > 256 on PowerHouse 2007C and earlier
         if (    (cv > 256)
-                && ((getMode() == DefaultProgrammerManager.PAGEMODE)
-                    || (getMode() == DefaultProgrammerManager.DIRECTMODE)
-                    || (getMode() == DefaultProgrammerManager.REGISTERMODE))
+                && ((getMode() == ProgrammingMode.PAGEMODE)
+                    || (getMode() == ProgrammingMode.DIRECTMODE)
+                    || (getMode() == ProgrammingMode.REGISTERMODE))
                 && ((tc != null)
                         && ((tc.getCommandOptions() == NceTrafficController.OPTION_1999)
                             || (tc.getCommandOptions() == NceTrafficController.OPTION_2004)
@@ -174,18 +173,18 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
             // read
-            if (mode == DefaultProgrammerManager.PAGEMODE) {
+            if (mode == ProgrammingMode.PAGEMODE) {
                 return NceMessage.getReadPagedCV(tc, cvnum);
-            } else if (mode == DefaultProgrammerManager.DIRECTMODE) {
+            } else if (mode == ProgrammingMode.DIRECTMODE) {
                 return NceMessage.getReadDirectCV(tc, cvnum);
             } else {
                 return NceMessage.getReadRegister(tc, registerFromCV(cvnum));
             }
         } else {
             // write
-            if (mode == DefaultProgrammerManager.PAGEMODE) {
+            if (mode == ProgrammingMode.PAGEMODE) {
                 return NceMessage.getWritePagedCV(tc, cvnum, val);
-            } else if (mode == DefaultProgrammerManager.DIRECTMODE) {
+            } else if (mode == ProgrammingMode.DIRECTMODE) {
                 return NceMessage.getWriteDirectCV(tc, cvnum, val);
             } else {
                 return NceMessage.getWriteRegister(tc, registerFromCV(cvnum), val);

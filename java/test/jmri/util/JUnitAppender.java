@@ -332,27 +332,49 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             Assert.fail("No message present: " + msg);
             return;
         }
+        LoggingEvent evt = checkForMessage(msg);
+        
+        if (evt == null) {
+             Assert.fail("Looking for message \"" + msg + "\" and didn't find it");
+        }
+    }
+
+    /**
+     * Assert that a specific message, of any severity, has been logged.
+     * <P>
+     * Invokes a JUnit Assert if no matching message is found, but doesn't require it to 
+     * be the next message. This allows use e.g. for debug-severity messages.
+     *
+     * @param msg the message to assert exists
+     */
+    public static void assertMessage(String msg) {
+        if (list.isEmpty()) {
+            Assert.fail("No message present: " + msg);
+            return;
+        }
         LoggingEvent evt = list.remove(0);
 
         while ((evt.getLevel() == Level.INFO) || (evt.getLevel() == Level.DEBUG) || (evt.getLevel() == Level.TRACE)) { // better in Log4J 2
             if (list.isEmpty()) {
-                Assert.fail("Only debug/info messages present: " + msg);
+                Assert.fail("Message not found: " + msg);
                 return;
             }
             evt = list.remove(0);
         }
 
-        // check the remaining message, if any
-        if (evt.getLevel() != Level.WARN) {
-            Assert.fail("Level mismatch when looking for WARN message: \"" + msg + "\" found \"" + (String) evt.getMessage() + "\"");
-        }
-
         if (!compare(evt, msg)) {
-            Assert.fail("Looking for WARN message \"" + msg + "\" got \"" + evt.getMessage() + "\"");
+            Assert.fail("Looking for message \"" + msg + "\" got \"" + evt.getMessage() + "\"");
         }
     }
 
     protected static boolean compare(LoggingEvent e1, String s2) {
+        if(e1==null) {
+           System.err.println("Logging event null when comparing to " + s2);
+           return s2==null;
+        } else if(e1.getMessage()==null) {
+           System.err.println("Logging event has null message when comparing to " + s2);
+           return s2==null;
+        }
         String s1 = e1.getMessage().toString();
         return StringUtils.deleteWhitespace(s1).equals(StringUtils.deleteWhitespace(s2));
     }

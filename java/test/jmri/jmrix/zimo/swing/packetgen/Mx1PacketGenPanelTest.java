@@ -2,28 +2,25 @@ package jmri.jmrix.zimo.swing.packetgen;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of Mx1PacketGenPanel
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class Mx1PacketGenPanelTest {
+public class Mx1PacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testMemoCtor() {
-        Mx1PacketGenPanel action = new Mx1PacketGenPanel();
-        Assert.assertNotNull("exists", action);
-    }
-
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new Mx1PacketGenPanel();
+        helpTarget="package.jmri.jmrix.zimo.swing.packetgen.Mx1PacketGenPanel";
+        title="MX1_: " + Bundle.getMessage("Title");
     }
 
+    @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

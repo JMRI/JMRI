@@ -3,7 +3,6 @@ package jmri.jmrix.sprog;
 import java.util.*;
 import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,15 +26,15 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.DIRECTBITMODE);
-        ret.add(DefaultProgrammerManager.PAGEMODE);
+        ret.add(ProgrammingMode.DIRECTBITMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
         return ret;
     }
 
     @Override
     public boolean getCanRead() {
-        if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) return true;
-        else if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE)) return true;
+        if (getMode().equals(ProgrammingMode.PAGEMODE)) return true;
+        else if (getMode().equals(ProgrammingMode.DIRECTBITMODE)) return true;
         else {
             log.error("Unknown internal mode {} returned true from getCanRead()",getMode());
             return true;

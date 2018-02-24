@@ -117,7 +117,7 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
         try {
             r.setBlockSpeed("Global"); // NOI18N
         } catch (JmriException ex) {
-            log.error(ex.toString());
+            log.error("{}", ex.getMessage());
         }
         return r;
     }
@@ -216,9 +216,23 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * Forces upper case and trims leading and trailing whitespace.
+     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
+     */
+    @CheckReturnValue
+    @Override
+    public @Nonnull
+    String normalizeSystemName(@Nonnull String inputName) {
+        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
+        return inputName.toUpperCase().trim();
+    }
+
+    /**
      * @return the default BlockManager instance
      * @deprecated since 4.9.1; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     * {@link InstanceManager#getDefault(Class)} instead
      */
     @Deprecated
     @CheckForNull
@@ -242,8 +256,8 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
         } catch (NumberFormatException nx) {
             try {
                 InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
-            } catch (Exception ex) {
-                throw new IllegalArgumentException("Value of requested default block speed \"" + speed + "\" is not valid");
+            } catch (IllegalArgumentException ex) {
+                throw new IllegalArgumentException("Value of requested default block speed \"" + speed + "\" is not valid", ex);
             }
         }
         String oldSpeed = defaultSpeed;
@@ -282,7 +296,7 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
             Block b = getBySystemName(sysName);
             Object o = b.getValue();
             if (o != null) {
-                if (o instanceof jmri.jmrit.roster.RosterEntry && o == re) {
+                if (o instanceof RosterEntry && o == re) {
                     blockList.add(b);
                 } else if (o.toString().equals(re.getId()) || o.toString().equals(re.getDccAddress())) {
                     blockList.add(b);

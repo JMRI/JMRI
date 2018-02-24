@@ -1,81 +1,69 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
-<html lang="en">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2008 -->
-  <!-- $Id$ -->
-  <!-- translated by Herv&#233; Blorec 2013-09-17 -->
+<!-- translated by Herv&#233; Blorec 2017-02-05 -->
+<<title>JMRI Hardware Support - M&auml;rklin Command Station 2</title>
 
-  <title>JMRI: Marklin Command Station 2</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+<!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h1>JMRI: Marklin Centrale CS 2</h1>JMRI peut se connecter
-      &agrave; une centrale Marklin CS2 en utilisant l(interface
-      ethernet int&eacute;gr&eacute;e.<br>
-      Il est possible pour plusieurs ordinateurs de se connecter
-      &agrave; l'aide de CS2 IP/UDP..
+<div id="mainContent">
 
-      <p>La CS2 utilise son propre protocole de BUS CAN fontionnant
-      sur UDP, les r&eacute;ponses de la CS2 sont envoy&eacute;es
-      sous forme de message de diffusion et par cons&eacute;quent,
-      les ordinateurs qui se connectent au CS2 doit &ecirc;tre dans
-      le m&ecirc;me sous-r&eacute;seau IP sinon les messages de
-      r&eacute;ponse ne seront pas vus.</p>
+<h1>Documentation Mat&#233;riel : Marklin Centrale CS 2</h1>
+<p>
+JMRI peut se connecter &#224; une centrale M&auml;rklin CS2 en utilisant l(interface ethernet int&#233;gr&#233;e.<br>
+Il est possible pour plusieurs ordinateurs de se connecter &#224; l'aide de CS2 IP/UDP..
+<p>
+La CS2 utilise son propre protocole de BUS CAN fontionnant sur UDP, les r&#233;ponses de la CS2 sont envoy&#233;es sous forme de message de diffusion
+et par cons&#233;quent, les ordinateurs qui se connectent au CS2 doit &#234;tre dans le m&#234;me sous-r&#233;seau IP sinon les messages de r&#233;ponse ne seront pas vus.
+<p>
+Cette mise en oeuvre du protocole CAN CS2 a &#233;t&#233; d&#233;velopp&#233; et test&#233; sur la version du firmware 2.
+<b>
+Cette interface est encore en d&#233;veloppement, si vous trouvez des probl&#232;mes alors s'il vous pla&#238;t poser une question sur le groupe Yahoo</b>
+<p>
+Le Support &#224; la Marklin CS2 &#233;tait d'abord disponible en
+<a href="http://jmri.org/releasenotes/jmri3.1.1.shtml"> JMRI 3.1.1</a>.<p>
 
-      <p>Cette mise en oeuvre du protocole CAN CS2 a
-      &eacute;t&eacute; d&eacute;velopp&eacute; et test&eacute; sur
-      la version du firmware 2. <b>Cette interface est encore en
-      d&eacute;veloppement, si vous trouvez des probl&egrave;mes
-      alors s'il vous pla&icirc;t poser une question sur le groupe
-      Yahoo</b></p>
+<a name="limitations"></a><h2>Limitations</h2>
+<b>
+Cette interface est encore en d&#233;veloppement; si vous trouvez n'importe quel probl&#232;me, alors s'il vous plait envoyez un message 
+sur la liste des <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">Utilisateurs JMRI</a> mailing list.</b>
+<p>
+Le Couplage et la Programmation ne sont pas encore support&#233;s.
 
-      <p>Pour configurer la connexion:</p>
+<a name="connecting"></a><h2>Connexion</h2>
+<p>Pour configurer la connexion</p>
+<ul>
+		<li> Ouvrez les "Pr&#233;f&#233;rences" JMRI dans le menu "Edition"
+		<li> S&#233;lectionnez "M&#228;rklin" comme le manufacuturer, puis le type de connexion qui est Commande Station 2,
+		<li> Entrez l'adresse attribu&#233;e &#224; la CS2.
+		<li> cliquez sur "Enregistrer".
+</ul>
 
-      <ul>
-        <li>Ouvrez les "Pr&eacute;f&eacute;rences" JMRI dans le
-        menu "Edition"</li>
+<p>
+La mise en oeuvre pour les Aiguillages, Capteurs, R&#233;gulateurs et Alimentation est disponible pour
+une unit&#233; CS2 connect&#233;e &#224; JMRI 
+<p>
+La prise en charge des r&#233;gulateurs inclut la possibilit&#233; de s&#233;lectionner un protocole sp&#233;cifique (M&auml;rklin, DCC & MFX)
 
-        <li>S&eacute;lectionnez "M&auml;rklin" comme le
-        manufacuturer, puis le type de connexion qui est Commande
-        Station 2,</li>
+<img src="images/MarklinMenu416.png" width="251" height="74" align="right" alt="Menu">
+<a name="tools"></a><h2>Outils JMRI</h2>
+<h4>Moniteur de Commandes Marklin </h4>
+<img src="images/MarklinCommandMonitor.png" width="410" height="88" alt="Menu">
+<h4>Envoi Commandes Marklin</h4>
+<img src="images/MarklinCS2SendCommand.png" width="252" height="137" alt="Menu">
 
-        <li>Entrez l'adresse attribu&eacute;e &agrave; la CS2.</li>
-
-        <li>cliquez sur "Enregistrer".</li>
-      </ul>
-
-      <p>La mise en oeuvre pour les Aiguillages, Capteurs,
-      R&eacute;gulateurs et Alimentation est disponible pour une
-      unit&eacute; CS2 JMRI connect&eacute;e.</p>
-
-      <p>La prise en charge des r&eacute;gulateurs inclut la
-      possibilit&eacute; de s&eacute;lectionner un protocole
-      sp&eacute;cifique (Marklin, DCC &amp; MFX)</p>
-
-      <p>Couplage et Programmation ne sont pas encore pris en
-      charge.</p>
-
-      <p>Le Support &agrave; la Marklin CS2 &eacute;tait d'abord
-      disponible en <a href=
-      "http://jmri.org/releasenotes/jmri3.1.1.shtml">JMRI
-      3.1.1</a>. <!--#include virtual="/Footer" --></p>
-    </div>
-  </div>
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

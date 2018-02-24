@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.util.ResourceBundle;
+import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
@@ -36,8 +36,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PositionableLabel extends JLabel implements Positionable {
 
-    public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
-
     protected Editor _editor;
 
     protected boolean _icon = false;
@@ -58,6 +56,11 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected boolean _rotateText = false;
     private int _degrees;
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param editor where this label is displayed
+     */
     public PositionableLabel(String s, Editor editor) {
         super(s);
         _editor = editor;
@@ -69,12 +72,12 @@ public class PositionableLabel extends JLabel implements Positionable {
         setPopupUtility(new PositionablePopupUtil(this, this));
     }
 
-    public PositionableLabel(NamedIcon s, Editor editor) {
+    public PositionableLabel(@Nullable NamedIcon s, Editor editor) {
         super(s);
         _editor = editor;
         _icon = true;
         _namedIcon = s;
-        log.debug("PositionableLabel ctor (icon) {}", s.getName());
+        log.debug("PositionableLabel ctor (icon) {}", s != null ? s.getName() : null);
         setPopupUtility(new PositionablePopupUtil(this, this));
     }
 
@@ -100,9 +103,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _editor = ed;
     }
 
-    /**
-     * *************** Positionable methods *********************
-     */
+    // *************** Positionable methods *********************
     @Override
     public void setPositionable(boolean enabled) {
         _positionable = enabled;
@@ -434,7 +435,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             }
         }
         if (log.isTraceEnabled()) { // avoid AWT size computation
-            log.trace("maxWidth= {} preferred width= ", result, getPreferredSize().width);
+            log.trace("maxWidth= {} preferred width= {}", result, getPreferredSize().width);
         }
         return result;
     }
@@ -484,9 +485,10 @@ public class PositionableLabel extends JLabel implements Positionable {
         repaint();
     }
 
-    /**
+    /*
      * ***** Methods to add menu items to popup *******
      */
+
     /**
      * Call to a Positionable that has unique requirements - e.g.
      * RpsPositionIcon, SecurityElementIcon
@@ -503,8 +505,8 @@ public class PositionableLabel extends JLabel implements Positionable {
     public boolean setRotateOrthogonalMenu(JPopupMenu popup) {
 
         if (isIcon() && _displayLevel > Editor.BKG) {
-            popup.add(new AbstractAction(Bundle.getMessage("RotateOrthogonal")) {
-
+            popup.add(new AbstractAction(Bundle.getMessage("RotateOrthoSign",
+                    (_namedIcon.getRotation() * 90))) { // Bundle property includes degree symbol
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     rotateOrthogonal();
@@ -528,8 +530,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     /**
-     * ********** Methods for Item Popups in Panel editor
-     * ************************
+     * ********** Methods for Item Popups in Panel editor ************************
      */
     JFrame _iconEditorFrame;
     IconAdder _iconEditor;
@@ -602,7 +603,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         repaint();
     }
 
-    public jmri.util.JmriJFrame _paletteFrame;
+    public jmri.jmrit.display.DisplayFrame _paletteFrame; // extended JmriJFrame allowing for Listener and field
 
     //
     // ********** Methods for Item Popups in Control Panel editor *******************
@@ -615,25 +616,31 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected void makePaletteFrame(String title) {
         jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
 
-        _paletteFrame = new jmri.util.JmriJFrame(title, false, false);
+        _paletteFrame = new jmri.jmrit.display.DisplayFrame(title, false, false);
+        if (_paletteFrame == null) {
+            log.warn("null paletteFrame");
+        } else {
+            log.debug("new _paletteFrame created OK");
+        }
         _paletteFrame.setLocationRelativeTo(this);
         _paletteFrame.toFront();
     }
 
     /**
-     * Rotate degrees return true if popup is set
+     * Rotate degrees return true if popup is set.
      */
     @Override
     public boolean setRotateMenu(JPopupMenu popup) {
         if (_displayLevel > Editor.BKG) {
-//             popup.add(CoordinateEdit.getRotateEditAction(this));
-            return _editor.setShowRotationMenu(this, popup);
+             popup.add(CoordinateEdit.getRotateEditAction(this));
         }
         return false;
     }
 
     /**
-     * Scale percentage return true if popup is set
+     * Scale percentage form display.
+     *
+     * @return true if popup is set
      */
     @Override
     public boolean setScaleMenu(JPopupMenu popup) {
@@ -860,8 +867,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     /**
-     * create a text image whose bit map can be rotated
-     *
+     * Create a text image whose bit map can be rotated.
      */
     private NamedIcon makeTextIcon(String text) {
         if (text == null || text.equals("")) {
@@ -958,10 +964,12 @@ public class PositionableLabel extends JLabel implements Positionable {
      */
     @Override
     public void remove() {
-        _editor.removeFromContents(this);
-        // remove from persistance by flagging inactive
-        active = false;
-        dispose();
+        if (_editor.removeFromContents(this)) {
+            // Modified to support conditional delete for NX sensors
+            // remove from persistance by flagging inactive
+            active = false;
+            dispose();
+        }
     }
 
     boolean active = true;

@@ -6,10 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for DCC++ systems
- * <P>
- * System names are "DCCppLnnnnn", where nnnnn is the bit number without padding.
- * <P>
+ * Implement Light Manager for DCC++ systems.
+ * <p>
+ * System names are "DxppSnnn", where Dx is the system prefix and nnn is the sensor number without padding.
+ * <p>
  * Based in part on SerialLightManager.java
  *
  * @author Paul Bender Copyright (C) 2008
@@ -20,13 +20,20 @@ public class DCCppLightManager extends AbstractLightManager {
     private DCCppTrafficController tc = null;
     private String prefix = null;
 
+    /**
+     * Create an new DCC++ LightManager.
+     * Has to register for DCC++ events.
+     *
+     * @param tc the TrafficController to connect the TurnoutManager to
+     * @param prefix the system connection prefix string as set for this connection in SystemConnectionMemo
+     */
     public DCCppLightManager(DCCppTrafficController tc, String prefix) {
         this.prefix = prefix;
         this.tc = tc;
     }
 
     /**
-     * Returns the system letter for DCC++
+     * Returns the system prefix for DCC++.
      */
     @Override
     public String getSystemPrefix() {
@@ -34,7 +41,7 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Method to create a new Light based on the system name.
+     * Create a new Light based on the system name.
      * Assumes calling method has checked that a Light with this
      * system name does not already exist.
      *
@@ -56,7 +63,7 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Get the bit address from the system name
+     * Get the bit address from the system name.
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
@@ -72,33 +79,35 @@ public class DCCppLightManager extends AbstractLightManager {
             num = Integer.valueOf(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())).intValue();
         } catch (Exception e) {
-            log.debug("illegal character in number field of system name: " + systemName);
+            log.debug("invalid character in number field of system name: {}", systemName);
             return (0);
         }
         if (num <= 0) {
-            log.warn("invalid DCC++ light system name: " + systemName);
+            log.debug("invalid DCC++ light system name: " + systemName);
             return (0);
         } else if (num > DCCppConstants.MAX_ACC_DECODER_JMRI_ADDR) {
-            log.warn("bit number out of range in DCC++ light system name: " + systemName);
+            log.debug("bit number out of range in DCC++ light system name: {}", systemName);
             return (0);
         }
         return (num);
     }
 
     /**
-     * Public method to validate system name format returns 'true' if system
-     * name has a valid format, else returns 'false'
+     * Validate system name format.
+     *
+     * @return VALID if system name has a valid format, else returns INVALID
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return (getBitFromSystemName(systemName) != 0);
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**
-     * Public method to validate system name for configuration returns 'true' if
-     * system name has a valid meaning in current configuration, else returns
-     * 'false' for now, this method always returns 'true'; it is needed for the
-     * Abstract Light class
+     * Validate system name for configuration.
+     * Needed for the Abstract Light class.
+     *
+     * @return 'true' if system name has a valid meaning in current configuration,
+     * else returns 'false' for now, this method always returns 'true'
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
@@ -106,7 +115,7 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * A method that determines if it is possible to add a range of lights in
+     * Determine if it is possible to add a range of lights in
      * numerical order eg 11 thru 18, primarily used to enable/disable the add
      * range box in the add Light window
      *
@@ -126,7 +135,7 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Allow access to DCCppLightManager
+     * Allow access to DCCppLightManager.
      */
     @Deprecated
     static public DCCppLightManager instance() {

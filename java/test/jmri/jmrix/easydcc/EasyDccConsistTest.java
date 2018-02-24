@@ -8,18 +8,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * EasyDccConsistTest.java
+ * Tests for the jmri.jmrix.nce.EasyDccConsist class
  *
- * Description:	tests for the jmri.jmrix.nce.EasyDccConsist class
- *
- * @author	Paul Bender Copyright (C) 2016,2017
+ * @author Paul Bender Copyright (C) 2016, 2017
  */
 
 public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestBase {
 
     @Test public void testCtor2() {
         // NmraLocoAddress constructor test.
-        EasyDccConsist c = new EasyDccConsist(new DccLocoAddress(12, true));
+        EasyDccConsist c = new EasyDccConsist(new DccLocoAddress(12, true), _memo);
         Assert.assertNotNull(c);
     }
 
@@ -30,13 +28,13 @@ public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestB
     }
 
     @Test public void checkSizeLimitCS(){
-        EasyDccConsist c = new EasyDccConsist(5);
+        EasyDccConsist c = new EasyDccConsist(5, _memo);
         c.setConsistType(jmri.Consist.CS_CONSIST);
         Assert.assertEquals("CS Consist Limit",8,c.sizeLimit());   
     } 
 
     @Test public void checkContainsCS(){
-        EasyDccConsist c = new EasyDccConsist(5);
+        EasyDccConsist c = new EasyDccConsist(5, _memo);
         c.setConsistType(jmri.Consist.CS_CONSIST);
         jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
         jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
@@ -55,33 +53,37 @@ public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestB
     }
 
     @Test public void checkGetLocoDirectionCS(){
-        EasyDccConsist c = new EasyDccConsist(5);
+        EasyDccConsist c = new EasyDccConsist(5, _memo);
         c.setConsistType(jmri.Consist.CS_CONSIST);
         jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
         jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
         c.restore(A,true); // use restore here, as it does not send
                            // any data to the command station
-        c.restore(B,false); // revese direction.
+        c.restore(B,false); // reverse direction.
         Assert.assertTrue("Direction in CS Consist",c.getLocoDirection(A));   
         Assert.assertFalse("Direction in CS Consist",c.getLocoDirection(B));   
     }
 
+    private EasyDccSystemConnectionMemo _memo;
 
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        EasyDccSystemConnectionMemo m = new EasyDccSystemConnectionMemo(new EasyDccTrafficControlScaffold());
-        jmri.InstanceManager.setDefault(jmri.CommandStation.class,new EasyDccCommandStation(m));
-        c = new EasyDccConsist(5);
+        _memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
+        _memo.setEasyDccTrafficController(new EasyDccTrafficControlScaffold(_memo));
+        jmri.InstanceManager.setDefault(jmri.CommandStation.class, new EasyDccCommandStation(_memo));
+        c = new EasyDccConsist(5, _memo);
     }
    
     @After
     @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
+        _memo.getTrafficController().terminateThreads();
+        _memo = null;
         c = null;
+        JUnitUtil.tearDown();
     }
 
 }

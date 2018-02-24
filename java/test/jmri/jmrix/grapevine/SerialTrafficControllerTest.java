@@ -94,6 +94,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         DataInputStream i = new DataInputStream(new ByteArrayInputStream(
                 new byte[]{(byte) 129, (byte) 90, (byte) 129, (byte) 32}));
 
+
         c.doNextStep(new SerialReply(), i);
 
         jmri.util.JUnitAppender.assertWarnMessage("parity mismatch: 18, going to state 2 with content 129,32");
@@ -273,10 +274,10 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @Test
     public void testSerialNodeEnumeration() {
         SerialTrafficController c = (SerialTrafficController) tc;
-        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6);
-        SerialNode f = new SerialNode(3, SerialNode.NODE2002V1);
-        SerialNode d = new SerialNode(2, SerialNode.NODE2002V1);
-        SerialNode e = new SerialNode(6, SerialNode.NODE2002V6);
+        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, c);
+        SerialNode f = new SerialNode(3, SerialNode.NODE2002V1, c);
+        SerialNode d = new SerialNode(2, SerialNode.NODE2002V1, c);
+        SerialNode e = new SerialNode(6, SerialNode.NODE2002V6, c);
         Assert.assertEquals("1st Node", b, c.getNode(0));
         Assert.assertEquals("2nd Node", f, c.getNode(1));
         Assert.assertEquals("3rd Node", d, c.getNode(2));
@@ -302,23 +303,13 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @Test
     public void testSerialOutput() {
         SerialTrafficController c = (SerialTrafficController) tc;
-        SerialNode a = new SerialNode();
-        SerialNode g = new SerialNode(5, SerialNode.NODE2002V1);
+        SerialNode a = new SerialNode(c);
+        SerialNode g = new SerialNode(5, SerialNode.NODE2002V1, c);
         Assert.assertTrue("must Send", g.mustSend());
         g.resetMustSend();
         Assert.assertNotNull("exists", a);
         Assert.assertTrue("must Send off", !(g.mustSend()));
-        c.setSerialOutput("GL5B2", false);
-        c.setSerialOutput("GL5B1", false);
-        c.setSerialOutput("GL5B7", false);
-        c.setSerialOutput("GL5B3", false);
-        c.setSerialOutput("GL5B5", false);
-        c.setSerialOutput("GL5B8", true);
-        c.setSerialOutput("GL5B11", false);
-        c.setSerialOutput("GL5B5", false);
-        c.setSerialOutput("GL5B10", false);
-        c.setSerialOutput("GL5B9", false);
-        Assert.assertTrue("must Send on", g.mustSend());
+        //c.setSerialOutput("GL5B2", false); // test and 12 year old method removed, called nowhere as of 4.9.4
         AbstractMRMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 4, m.getNumDataElements());
         Assert.assertEquals("node address", 5, m.getElement(0));
@@ -428,7 +419,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        tc = new SerialTrafficController() {
+        tc = new SerialTrafficController(new GrapevineSystemConnectionMemo()) {
             @Override
             void loadBuffer(AbstractMRReply msg) {
                 testBuffer[0] = buffer[0];

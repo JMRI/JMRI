@@ -5,10 +5,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
-import org.powermock.core.classloader.annotations.MockPolicy;
-import org.powermock.modules.junit4.PowerMockRunner;
-@MockPolicy(Slf4jMockPolicy.class)
 
 /**
  * XBeeLightTest.java
@@ -17,7 +13,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
  *
  * @author	Paul Bender copyright (C) 2012,2016
  */
-@RunWith(PowerMockRunner.class)
 public class XBeeLightTest {
 
     XBeeTrafficController tc;
@@ -44,6 +39,7 @@ public class XBeeLightTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
+        jmri.util.JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
         memo = new XBeeConnectionMemo();
         memo.setSystemPrefix("ABC");
@@ -53,6 +49,8 @@ public class XBeeLightTest {
 
     @After
     public void tearDown() {
+        tc.terminate();
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

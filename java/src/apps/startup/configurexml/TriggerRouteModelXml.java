@@ -3,7 +3,6 @@ package apps.startup.configurexml;
 import apps.StartupActionsManager;
 import apps.startup.TriggerRouteModel;
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.configurexml.AbstractXmlAdapter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -53,7 +52,7 @@ public class TriggerRouteModelXml extends AbstractXmlAdapter {
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws JmriException {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         String userName = shared.getAttribute("name").getValue();
 

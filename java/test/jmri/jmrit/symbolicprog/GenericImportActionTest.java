@@ -4,10 +4,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.swing.JLabel;
 import java.awt.GraphicsEnvironment;
 
@@ -40,6 +37,6 @@ public class GenericImportActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GenericImportActionTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(GenericImportActionTest.class);
 
 }

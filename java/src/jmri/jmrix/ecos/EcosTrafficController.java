@@ -2,7 +2,6 @@ package jmri.jmrix.ecos;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
-import jmri.CommandStation;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -13,25 +12,25 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from ECOS messages. The "EcosInterface" side
  * sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a EcosPortController is via a pair of *Streams, which then
  * carry sequences of characters for transmission. Note that this processing is
  * handled in an independent thread.
- * <P>
- * This handles the state transistions, based on the necessary state in each
+ * <p>
+ * This handles the state transitions, based on the necessary state in each
  * message.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface, CommandStation {
+public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface {
 
+    /**
+     * Create a new EcosTrafficController instance.
+     */
     public EcosTrafficController() {
         super();
-        if (log.isDebugEnabled()) {
-            log.debug("creating a new EcosTrafficController object");
-        }
+        log.debug("creating a new EcosTrafficController object");
         // set as command station too
-        jmri.InstanceManager.setCommandStation(this);
         this.setAllowUnexpectedReply(true);
         this.setSynchronizeRx(false);
     }
@@ -57,14 +56,6 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     protected int enterProgModeDelayTime() {
         // we should to wait at least a second after enabling the programming track
         return 1000;
-    }
-
-    /**
-     * CommandStation implementation.
-     * This is NOT Supported in the ECoS
-     */
-    @Override
-    public void sendPacket(byte[] packet, int count) {
     }
 
     /**
@@ -141,7 +132,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     }
 
     @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // FindBugs wants this package protected, but we're removing it when multi-connection
+    // SpotBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected EcosTrafficController self = null;
 
@@ -284,7 +275,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
                             modeMsg = new EcosMessage("set(" + ecosObject + ", stop)");
                             break;
                         default:
-                            modeMsg = new EcosMessage("request(" + ecosObject + ",control)");
+                            modeMsg = new EcosMessage("request(" + ecosObject + ", control)");
                             break;
                     }
                     modeMsg.setTimeout(50);
@@ -309,21 +300,6 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         }
     }
 
-    @Override
-    public String getUserName() {
-        if (adaptermemo == null) {
-            return "ECoS"; // NOI18N
-        }
-        return adaptermemo.getUserName();
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        if (adaptermemo == null) {
-            return "U";
-        }
-        return adaptermemo.getSystemPrefix();
-    }
     private final static Logger log = LoggerFactory.getLogger(EcosTrafficController.class);
 
 }

@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz.hornbyelite;
 
+import jmri.GlobalProgrammerManager;
 import jmri.jmrix.lenz.AbstractXNetInitializationManager;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import org.slf4j.Logger;
@@ -11,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * on the Command Station Type.
  *
  * @author Paul Bender Copyright (C) 2003,2008
-  */
+ */
 public class EliteXNetInitializationManager extends AbstractXNetInitializationManager {
 
     public EliteXNetInitializationManager(XNetSystemConnectionMemo memo) {
@@ -39,11 +40,14 @@ public class EliteXNetInitializationManager extends AbstractXNetInitializationMa
         systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
         jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
         systemMemo.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(new jmri.jmrix.lenz.hornbyelite.EliteXNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
-        jmri.InstanceManager.setProgrammerManager(systemMemo.getProgrammerManager());
-
-        if (log.isDebugEnabled()) {
-            log.debug("XpressNet Initialization Complete");
+        if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
+            jmri.InstanceManager.setAddressedProgrammerManager(systemMemo.getProgrammerManager());
         }
+        if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
+            jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
+        }
+
+        log.debug("XpressNet Initialization Complete");
     }
 
     private final static Logger log = LoggerFactory.getLogger(EliteXNetInitializationManager.class);

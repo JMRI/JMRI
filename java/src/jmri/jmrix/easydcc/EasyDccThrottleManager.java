@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * EasyDCC implementation of a ThrottleManager.
- * <P>
+ * <p>
  * Based on early NCE code.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2005
@@ -17,37 +17,37 @@ import org.slf4j.LoggerFactory;
  */
 public class EasyDccThrottleManager extends AbstractThrottleManager {
 
+    private EasyDccSystemConnectionMemo _memo = null;
+
     /**
-     * Constructor.
+     * Constructor
      */
     public EasyDccThrottleManager(EasyDccSystemConnectionMemo memo) {
         super(memo);
+        _memo = memo;
     }
 
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
-        // KSL 20040409 - EasyDcc does not require feedback afaik
-        // don't quite know if the EasyDcc requires feedback.
-        // may need to extend this.
-        /* KSL - appears that the first command sent to the Queue in EasyDcc
+        // Not sure if EasyDcc requires feedback. May need to extend this.
+        /* It appears that the first command sent to the Queue in EasyDcc
          is 'lost' - so it may be beneficial to send a 'Send' command 
          just to wake up the command station.
          This was tested on v418 - also appears as an issue with the
          radio throttles. 
          */
-        log.debug("new EasyDccThrottle for " + address);
-        notifyThrottleKnown(new EasyDccThrottle((EasyDccSystemConnectionMemo) adapterMemo, (DccLocoAddress) address), address);
+        log.debug("new EasyDccThrottle for {}", address);
+        notifyThrottleKnown(new EasyDccThrottle(_memo, (DccLocoAddress) address), address);
     }
 
-    // KSL 20040409 - EasyDcc does not have a 'dispatch' function.
+    // EasyDcc does not have a 'dispatch' function.
     @Override
     public boolean hasDispatchFunction() {
         return false;
     }
 
     /**
-     * Address 100 and above is a long address
-     *
+     * Address 100 and above is a long address.
      */
     @Override
     public boolean canBeLongAddress(int address) {
@@ -55,8 +55,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
     }
 
     /**
-     * Address 99 and below is a short address
-     *
+     * Address 99 and below is a short address.
      */
     @Override
     public boolean canBeShortAddress(int address) {
@@ -72,7 +71,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
     }
 
     /*
-     * Local method for deciding short/long address
+     * Local method for deciding short/long address.
      */
     static boolean isLongAddress(int num) {
         return (num >= 100);
@@ -116,7 +115,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
                 i = i + 2;
             }
 
-            EasyDccTrafficController.instance().sendEasyDccMessage(m, null);
+            _memo.getTrafficController().sendEasyDccMessage(m, null);
             EasyDccThrottle lnt = (EasyDccThrottle) t;
             lnt.throttleDispose();
             return true;

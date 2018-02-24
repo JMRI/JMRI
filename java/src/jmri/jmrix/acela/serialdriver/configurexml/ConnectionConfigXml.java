@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * SerialDriverAdapter (and connections). Note this is named as the XML version
  * of a ConnectionConfig object, but it's actually persisting the
  * SerialDriverAdapter.
- * <P>
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
@@ -124,8 +124,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             int type = AcelaNode.moduleTypes.lastIndexOf(nodetypestring) / 2;
 
             // create node (they register themselves)
-            AcelaNode node = new AcelaNode(addr, type,((jmri.jmrix.acela.serialdriver.SerialDriverAdapter) adapter).getSystemConnectionMemo().getTrafficController());
-            log.info("Created a new Acela Node [" + addr + "] as a result of a configuration file of type: " + type);
+            AcelaNode node = new AcelaNode(addr, type, ((jmri.jmrix.acela.serialdriver.SerialDriverAdapter) adapter).getSystemConnectionMemo().getTrafficController());
+            log.info("Created a new Acela Node [{}] as a result of a configuration file of type: {}", addr, type);
 
             if (type == AcelaNode.TB) {
                 for (int s = 0; s < 4; s++) {
@@ -326,7 +326,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             tc.initializeAcelaNode(node);
         }
         // Do not let the Acela network poll until we are really ready
-
         ((AcelaSystemConnectionMemo) adapter.getSystemConnectionMemo()).getTrafficController().setReallyReadyToPoll(true);
     }
 

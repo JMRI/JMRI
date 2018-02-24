@@ -10,17 +10,32 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Rule;
+import jmri.util.junit.rules.RetryRule;
+import org.junit.rules.Timeout;
 
 /**
- * Description:	JUnit tests for the EasyDccTrafficController class
+ * JUnit tests for the EasyDccTrafficController class
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2015
  */
 public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(90); // 90 second timeout for methods in this test class.
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
+
     @Test
     public void testSendThenRcvReply() throws Exception {
-        c = (EasyDccTrafficController)tc;
+        EasyDccTrafficController c = new EasyDccTrafficController(new EasyDccSystemConnectionMemo("E", "EasyDCC Test")){
+            @Override
+            protected void terminate(){
+               // do nothing, so we don't try to write to a closed pipe
+               // after this test
+            }
+        };
 
         // connect to iostream via port controller
         EasyDccPortControllerScaffold p = new EasyDccPortControllerScaffold();
@@ -48,21 +63,20 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
         Assert.assertEquals("Char 2", '2', tostream.readByte());
         Assert.assertEquals("EOM", 0x0d, tostream.readByte());
 
-
         // now send reply
         tistream.write('P');
         tistream.write(0x0d);
 
-        // drive the mechanism
-        c.handleOneIncomingReply();
-
+        // threading causes the traffic controller to handle the reply,
+        // so wait until that happens.
         JUnitUtil.waitFor(()->{return rcvdReply != null;}, "reply received");
 
         Assert.assertTrue("reply received ", rcvdReply != null);
         Assert.assertEquals("first char of reply ", 'P', rcvdReply.getOpCode());
+        c.terminateThreads(); // stop any threads we might have created.
     }
 
-    // internal class to simulate a EasyDccListener
+    // internal class to simulate an EasyDccListener
     class EasyDccListenerScaffold implements EasyDccListener {
 
         public EasyDccListenerScaffold() {
@@ -83,7 +97,7 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
     EasyDccReply rcvdReply;
     EasyDccMessage rcvdMsg;
 
-    // internal class to simulate a EasyDccPortController
+    // internal class to simulate an EasyDccPortController
     class EasyDccPortControllerScaffold extends EasyDccPortController {
 
         @Override
@@ -135,27 +149,26 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
         }
     }
     DataOutputStream ostream;  // Traffic controller writes to this
-    DataInputStream tostream; // so we can read it from this
+    DataInputStream tostream;  // so we can read it from this
 
     DataOutputStream tistream; // tests write to this
-    DataInputStream istream;  // so the traffic controller can read from this
+    DataInputStream istream;   // so the traffic controller can read from this
 
-    EasyDccTrafficController c;
-    
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
-        c = null;
-        apps.tests.Log4JFixture.setUp();
-        tc = new EasyDccTrafficController();
+        jmri.util.JUnitUtil.setUp();
+        tc = new EasyDccTrafficController(new EasyDccSystemConnectionMemo("E", "EasyDCC Test"));
     }
 
     @Override
     @After
     public void tearDown() {
-        if (c!=null) c.terminateThreads();
-        apps.tests.Log4JFixture.tearDown();
+        if (tc!=null) {
+            tc.terminateThreads();
+        }
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

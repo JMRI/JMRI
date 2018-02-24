@@ -18,7 +18,7 @@ public class PR2Adapter extends LocoBufferAdapter {
         super(new PR2SystemConnectionMemo());
 
         options.remove(option2Name);
-        options.put(option2Name, new Option("Command station type:", commandStationOptions(), false));
+        options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
     }
 
     /**
@@ -42,9 +42,11 @@ public class PR2Adapter extends LocoBufferAdapter {
             flow = SerialPort.FLOWCONTROL_NONE;
         }
         configureLeadsAndFlowControl(activeSerialPort, flow);
-        log.debug("Found flow control " + activeSerialPort.getFlowControlMode() // NOI18N
-                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT // NOI18N
-                + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN); // NOI18N
+        log.info("PR2 adapter"
+                +(activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
+                +activeSerialPort.getFlowControlMode()
+                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
+                + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN);
     }
 
     /**

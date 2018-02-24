@@ -5,8 +5,6 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2009 -->
-  <!-- $Id$ -->
 
   <title>JMRI: Send Problem Report</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -24,7 +22,8 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: Upload Debugging Information</h1>The "Upload
+      <h1>JMRI: Upload Debugging Information</h1>
+      <p>The "Upload
       Debugging Information" item in JMRI Help menus lets you store
       debugging information where the JMRI developers can easily
       find it. The information contains all of the specific details
@@ -33,7 +32,7 @@
       your private information. You can see previous problem
       reports on the <a href=
       "https://sourceforge.net/p/jmri/mailman/jmri-reports/">jmri-reports
-      SourceForge mailing list</a>.
+      SourceForge mailing list</a>.</p>
 
       <p>To make the information most useful, you should do the
       upload as soon as possible after encountering the problem, so
@@ -52,7 +51,7 @@
       report will contain the context information (JMRI version,
       Java version, hardware types, etc) and the most recent log
       files. If you don't want to include those for some reason,
-      just uncheck the them.</p>
+      just uncheck them.</p>
 
       <p>Finally, push send. If everything goes OK, the window will
       close itself in a couple of seconds after the information has
@@ -67,7 +66,8 @@
       some JMRI users in your area (it's always good to talk to
       friends), or ask on the <a href=
       "https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI
-      users Yahoo group</a>. <!--#include virtual="/Footer" --></p>
+      users Yahoo group</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

@@ -17,8 +17,10 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialLightManager extends AbstractLightManager {
 
-    public SerialLightManager() {
+    private SecsiSystemConnectionMemo memo = null;
 
+    public SerialLightManager(SecsiSystemConnectionMemo _memo) {
+        memo = _memo;
     }
 
     /**
@@ -26,7 +28,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String getSystemPrefix() {
-        return "V";
+        return memo.getSystemPrefix();
     }
 
     /**
@@ -34,16 +36,16 @@ public class SerialLightManager extends AbstractLightManager {
      * Assumes calling method has checked that a Light with this system
      * name does not already exist.
      *
-     * @return null if the system name is not in a valid format or if the
+     * @return null if memo.getSystemPrefix() system name is not in a valid format or if the
      * system name does not correspond to a configured C/MRI digital output bit
      */
     @Override
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // Validate the systemName
-        if (SerialAddress.validSystemNameFormat(systemName, 'L')) {
-            lgt = new SerialLight(systemName, userName);
-            if (!SerialAddress.validSystemNameConfig(systemName, 'L')) {
+        if (SerialAddress.validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
+            lgt = new SerialLight(systemName, userName,memo);
+            if (!SerialAddress.validSystemNameConfig(systemName, 'L', memo.getTrafficController())) {
                 log.warn("Light system Name does not refer to configured hardware: "
                         + systemName);
             }
@@ -58,7 +60,7 @@ public class SerialLightManager extends AbstractLightManager {
      * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, 'L'));
     }
 
@@ -70,7 +72,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        return (SerialAddress.validSystemNameConfig(systemName, 'L'));
+        return (SerialAddress.validSystemNameConfig(systemName, 'L',memo.getTrafficController()));
     }
 
     /**
@@ -97,14 +99,12 @@ public class SerialLightManager extends AbstractLightManager {
 
     /**
      * Allow access to SerialLightManager.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SerialLightManager instance() {
-        if (_instance == null) {
-            _instance = new SerialLightManager();
-        }
-        return _instance;
+        return null;
     }
-    static SerialLightManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class);
 

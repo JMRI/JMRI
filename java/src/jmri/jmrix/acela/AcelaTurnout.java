@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * AcelaLight.java
  * <p>
  * Implementation of the Light Object for Acela
- * <P>
+ * <p>
  * Based in part on SerialTurnout.java
  *
  * @author Dave Duchamp Copyright (C) 2004
@@ -23,8 +23,8 @@ public class AcelaTurnout extends AbstractTurnout {
 
     /**
      * Create a Light object, with only system name.
-     * <P>
-     * 'systemName' was previously validated in AcelaLightManager
+     * <p>
+     * 'SystemName' was previously validated in AcelaLightManager
      *
      * @param systemName the system name for this Turnout
      * @param memo       the memo for the system connection
@@ -37,7 +37,7 @@ public class AcelaTurnout extends AbstractTurnout {
 
     /**
      * Create a Light object, with both system and user names.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in AcelaLightManager
      *
      * @param systemName the system name for this Turnout
@@ -57,7 +57,7 @@ public class AcelaTurnout extends AbstractTurnout {
      */
     private void initializeTurnout(String systemName) {
         // Extract the Bit from the name
-        mBit = AcelaAddress.getBitFromSystemName(systemName);
+        mBit = AcelaAddress.getBitFromSystemName(systemName, _memo.getSystemPrefix());
 
         // Set initial state
         setState(UNKNOWN);
@@ -126,10 +126,8 @@ public class AcelaTurnout extends AbstractTurnout {
     protected void sendMessage(boolean closed) {
         int newState;
         if (closed) {
-//            newState = adjustStateForInversion(ON);
             newState = adjustStateForInversion(CLOSED);
         } else {
-//            newState = adjustStateForInversion(OFF);
             newState = adjustStateForInversion(THROWN);
         }
 
@@ -159,4 +157,5 @@ public class AcelaTurnout extends AbstractTurnout {
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaTurnout.class);
+
 }

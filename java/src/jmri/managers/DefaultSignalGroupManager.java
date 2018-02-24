@@ -4,7 +4,13 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+
 import jmri.Manager;
+import jmri.NamedBean;
 import jmri.SignalGroup;
 import jmri.SignalGroupManager;
 import jmri.implementation.DefaultSignalGroup;
@@ -57,12 +63,26 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
 
     @Override
     public SignalGroup getBySystemName(String key) {
-        return (SignalGroup) _tsys.get(key);
+        return _tsys.get(key);
     }
 
     @Override
     public SignalGroup getByUserName(String key) {
-        return (SignalGroup) _tuser.get(key);
+        return _tuser.get(key);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Forces upper case and trims leading and trailing whitespace.
+     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
+     */
+    @CheckReturnValue
+    @Override
+    public @Nonnull
+    String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
+        return inputName.toUpperCase().trim();
     }
 
     @Override

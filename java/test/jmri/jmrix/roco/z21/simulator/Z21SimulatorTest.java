@@ -19,15 +19,14 @@ import org.junit.Test;
 public class Z21SimulatorTest {
 
     private static  java.net.InetAddress host;
-    private static int port = 21105; // default port for Z21 connections.
     private static Z21SimulatorAdapter a = null;
 
 
     // verify there is a railComm manager
     @Test
     @Ignore("tests before this class are leaving the port open, need to close first")
-    public void testProgrammerManager() {
-        Assert.assertTrue(a.getSystemConnectionMemo().provides(jmri.ProgrammerManager.class));
+    public void testAddressedProgrammerManager() {
+        Assert.assertTrue(a.getSystemConnectionMemo().provides(jmri.AddressedProgrammerManager.class));
     }
 
     // verify there is a Reporter manager
@@ -51,6 +50,9 @@ public class Z21SimulatorTest {
         }
         // create a new simulator.
         a = new Z21SimulatorAdapter();
+        
+        // shouldn't the 'host' variable be used here?
+        
         // connect the port
         try {
            a.connect();

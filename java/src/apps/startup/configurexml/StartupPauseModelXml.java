@@ -3,7 +3,6 @@ package apps.startup.configurexml;
 import apps.StartupActionsManager;
 import apps.startup.StartupPauseModel;
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.configurexml.AbstractXmlAdapter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -41,7 +40,7 @@ public class StartupPauseModelXml extends AbstractXmlAdapter {
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws JmriException {
+    public boolean load(Element shared, Element perNode) {
         boolean result = false;
         StartupPauseModel model = new StartupPauseModel();
         int delay = 0;

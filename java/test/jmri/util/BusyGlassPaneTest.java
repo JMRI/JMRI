@@ -5,10 +5,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -45,6 +42,6 @@ public class BusyGlassPaneTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BusyGlassPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BusyGlassPaneTest.class.getName());
 
 }

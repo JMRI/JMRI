@@ -4,6 +4,7 @@ import java.awt.Container;
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JDialog;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  * Frame for user configuration of RPS alignment.
@@ -16,13 +17,16 @@ import javax.swing.JDialog;
  */
 public class AlignTableFrame extends jmri.util.JmriJFrame {
 
+    RpsSystemConnectionMemo memo = null;
+
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.aligntable.AlignTableBundle");
 
     /**
      * Constructor method
      */
-    public AlignTableFrame() {
+    public AlignTableFrame(RpsSystemConnectionMemo _memo) {
         super();
+        memo = _memo;
     }
 
     AlignTablePane p;

@@ -48,8 +48,11 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
      */
     protected LocoNetSystemConnectionMemo memo;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
         if (context instanceof LocoNetSystemConnectionMemo) {
             initComponents((LocoNetSystemConnectionMemo) context);
         }
@@ -58,14 +61,16 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     /** This gets invoked early. We don't want it to do anything, so 
      * we just fail to pass it up. Instead, we wait for the later call of
      * initComponents(LocoNetSystemConnectionMemo memo)
-
      */
     @Override
     public void initComponents(){
     }
         
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents(LocoNetSystemConnectionMemo memo) throws Exception {
+    public void initComponents(LocoNetSystemConnectionMemo memo) {
         this.memo = memo; 
         super.initComponents();
     }

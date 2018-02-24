@@ -4,25 +4,29 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 
 /**
- * Swing action to create and register a NodeConfigFrame object
+ * Swing action to create and register a NodeConfigFrame object.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
  */
 public class NodeConfigAction extends AbstractAction {
 
-    public NodeConfigAction(String s) {
+    private SecsiSystemConnectionMemo memo;
+
+    public NodeConfigAction(String s, SecsiSystemConnectionMemo _memo) {
         super(s);
+        memo = _memo;
     }
 
-    public NodeConfigAction() {
-        this("Configure SECSI Nodes");
+    public NodeConfigAction(SecsiSystemConnectionMemo _memo) {
+        this(Bundle.getMessage("ConfigNodesTitle"), _memo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        NodeConfigFrame f = new NodeConfigFrame();
+        NodeConfigFrame f = new NodeConfigFrame(memo);
         try {
             f.initComponents();
         } catch (Exception ex) {
@@ -31,5 +35,7 @@ public class NodeConfigAction extends AbstractAction {
         f.setLocation(100, 30);
         f.setVisible(true);
     }
+
     private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class);
+
 }

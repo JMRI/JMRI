@@ -1,8 +1,8 @@
 package jmri.util.zeroconf;
 
-import apps.tests.Log4JFixture;
 import java.util.HashMap;
 import javax.jmdns.ServiceInfo;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.web.server.WebServerPreferences;
 import org.junit.After;
@@ -33,8 +33,12 @@ public class ZeroConfServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        Log4JFixture.setUp();
+        JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        ZeroConfService.stopAll();
+        JUnitUtil.waitFor(() -> {
+            return (ZeroConfService.allServices().isEmpty());
+        }, "Stopping all ZeroConf Services");
     }
 
     @After
@@ -43,7 +47,7 @@ public class ZeroConfServiceTest {
         JUnitUtil.waitFor(() -> {
             return (ZeroConfService.allServices().isEmpty());
         }, "Stopping all ZeroConf Services");
-        Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     /**
@@ -53,7 +57,7 @@ public class ZeroConfServiceTest {
     public void testCreate_String_int() {
         ZeroConfService result = ZeroConfService.create(HTTP, 9999);
         Assert.assertNotNull(result);
-        Assert.assertEquals(WebServerPreferences.getDefault().getRailroadName(), result.name());
+        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), result.name());
     }
 
     /**
@@ -64,7 +68,7 @@ public class ZeroConfServiceTest {
         HashMap<String, String> properties = new HashMap<>();
         ZeroConfService result = ZeroConfService.create(HTTP, 9999, properties);
         Assert.assertNotNull(result);
-        Assert.assertEquals(WebServerPreferences.getDefault().getRailroadName(), result.name());
+        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), result.name());
     }
 
     /**
@@ -105,7 +109,7 @@ public class ZeroConfServiceTest {
     @Test
     public void testName() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        Assert.assertEquals(WebServerPreferences.getDefault().getRailroadName(), instance.name());
+        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), instance.name());
     }
 
     /**
@@ -158,10 +162,11 @@ public class ZeroConfServiceTest {
     public void testStop() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         Assert.assertFalse(instance.isPublished());
+        // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
-        JUnitUtil.waitFor(() -> {
+        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
             return instance.isPublished() == true;
-        }, "Publishing ZeroConf Service");
+        }));
         Assert.assertTrue(instance.isPublished());
         instance.stop();
         JUnitUtil.waitFor(() -> {
@@ -197,7 +202,7 @@ public class ZeroConfServiceTest {
     public void testAllServices() {
         Assert.assertEquals(0, ZeroConfService.allServices().size());
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        Assert.assertEquals(WebServerPreferences.getDefault().getDefaultRailroadName(), instance.name());
+        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getDefaultRailroadName(), instance.name());
         Assert.assertEquals(0, ZeroConfService.allServices().size());
         // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();

@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Technology Road Map History</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code road map">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -31,10 +30,10 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Technology Road Map History</h1>This page is the
-      historical version of the road map for JMRI's future
-      development. It contains notes on older releases. For more
-      recent work, see the <a href="TechRoadMap.shtml">main
+      <h1>JMRI: Technology Road Map History</h1>
+      <p>This page is the historical version of the road map for
+      JMRI's future development. It contains notes on older releases.<br>
+      For more recent work, see the <a href="TechRoadMap.shtml">main
       Technology Road Map page</a>.
 
       <h3>Java Release and Operating System Support</h3>More
@@ -429,13 +428,15 @@
         <li>Start using <a href=
         "https://jcp.org/en/jsr/detail?id=305">JSR 305
         annotations</a> <a href=
-        "https://code.google.com/p/findbugs/">via Findbugs</a> to
+           "http://spotbugs.github.io">via SpotBugs</a> to
         strengthen the code checking (see <a href=
         "https://today.java.net/pub/a/today/2008/09/11/jsr-305-annotations.html">
         this</a> and <a href=
         "http://findbugs.sourceforge.net/api/edu/umd/cs/findbugs/annotations/package-summary.html">
         this</a>).</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

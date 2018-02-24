@@ -117,7 +117,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                         String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
                         String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
                         this.addInitializationException(profile, new InitializationException(english, localized, ex));
-                    } catch (Exception ex) {
+                    } catch (RuntimeException | jmri.configurexml.JmriConfigureXmlException ex) {
                         log.error("Unable to load {} into {}", shared, className, ex);
                         String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
                         String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
@@ -431,10 +431,6 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
             } else {
                 this.exceptions.add(new InitializationException(memo.description, Bundle.getMessage("ErrorSubException", memo.description) + memo.description));
             }
-        }
-
-        public List<InitializationException> getExceptions() {
-            return this.exceptions;
         }
     }
 }

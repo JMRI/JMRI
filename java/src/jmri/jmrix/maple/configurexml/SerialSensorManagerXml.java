@@ -1,7 +1,6 @@
 package jmri.jmrix.maple.configurexml;
 
 import jmri.configurexml.JmriConfigureXmlException;
-import jmri.jmrix.maple.SerialSensorManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +31,6 @@ public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractS
 
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
-        // create the master object
-        SerialSensorManager.instance();
         // load individual sensors
         return loadSensors(shared);
     }

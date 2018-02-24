@@ -173,8 +173,20 @@
           </dd>
 
           <dt class="im"><a href=
+          "http://www.digikeijs.nl/"><img src=
+          "images/digikeijs-logo.png" width="50" height="14" alt=
+          "Digikeijs"></a></dt>
+
+          <dt><a href="digirails/index.shtml">Digikeijs (Digirails)</a></dt>
+
+          <dd>
+            <p class="dl">Configure: <a href=
+            "digirails/index.shtml">DR5000</a></p>
+          </dd>
+
+          <dt class="im"><a href=
           "http://www.digitrax.com/"><img src=
-          "images/Digitrax-logo.jpg" width="44" height="34" alt=
+          "images/Digitrax-logo.jpg" width="60" height="28" alt=
           "Digitrax"></a></dt>
 
           <dt><a href="loconet/Digitrax.shtml">Digitrax</a></dt>

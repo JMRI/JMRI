@@ -23,7 +23,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     @Override
-    protected AbstractManager makeInternalManager() {
+    protected AbstractManager<Turnout> makeInternalManager() {
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getTurnoutManager();
     }
 
@@ -31,7 +31,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * Revise superclass behavior: support TurnoutOperations
      */
     @Override
-    public void addManager(Manager m) {
+    public void addManager(Manager<Turnout> m) {
         super.addManager(m);
         TurnoutOperationManager.getInstance().loadOperationTypes();
     }
@@ -43,7 +43,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      */
     @Override
     public Turnout getTurnout(String name) {
-        return (Turnout) super.getNamedBean(name);
+        return super.getNamedBean(name);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
 
     @Override
     public Turnout provideTurnout(String name) throws IllegalArgumentException {
-        return (Turnout) super.provideNamedBean(name);
+        return super.provideNamedBean(name);
     }
 
     /**
@@ -64,7 +64,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      */
     @Override
     public Turnout getBySystemName(String systemName) {
-        return (Turnout) super.getBeanBySystemName(systemName);
+        return super.getBeanBySystemName(systemName);
     }
 
     /**
@@ -75,7 +75,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      */
     @Override
     public Turnout getByUserName(String userName) {
-        return (Turnout) super.getBeanByUserName(userName);
+        return super.getBeanByUserName(userName);
     }
 
     /**
@@ -104,11 +104,11 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * except to issue warnings. This will mostly happen if you're creating
      * Sensors when you should be looking them up.
      *
-     * @return requested Sensor object (never null)
+     * @return requested Turnout object (never null)
      */
     @Override
     public Turnout newTurnout(String systemName, String userName) {
-        return (Turnout) newNamedBean(systemName, userName);
+        return newNamedBean(systemName, userName);
     }
 
     /**
@@ -236,15 +236,15 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * Validate system name format. Locate a system specfic TurnoutManager based on a system name.
      *
      * @return if a manager is found, return its determination of validity of
-     * system name format. Return false if no manager exists.
+     * system name format. Return INVALID if no manager exists.
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((TurnoutManager) getMgr(i)).validSystemNameFormat(systemName);
         }
-        return false;
+        return NameValidity.INVALID;
     }
 
     @Override

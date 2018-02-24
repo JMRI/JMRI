@@ -28,6 +28,9 @@ import org.slf4j.LoggerFactory;
   */
 abstract public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
+    /**
+     * Create a new TrafficController instance. Simple implementation.
+     */
     public SerialTrafficController() {
         super();
         logDebug = log.isDebugEnabled();
@@ -204,7 +207,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
         return memo;
     }
 
-    private SerialSystemConnectionMemo memo = null;
+    protected SerialSystemConnectionMemo memo = null;
     SerialTrafficController self = null;
 
     boolean sendInterlock = false; // send the 00 interlock when CRC received

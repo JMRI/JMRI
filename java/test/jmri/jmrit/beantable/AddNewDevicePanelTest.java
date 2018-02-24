@@ -3,16 +3,9 @@ package jmri.jmrit.beantable;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 /**
@@ -48,6 +41,6 @@ public class AddNewDevicePanelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddNewDevicePanelTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(AddNewDevicePanelTest.class);
 
 }

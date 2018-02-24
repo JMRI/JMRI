@@ -3,10 +3,7 @@ package jmri.jmrit.catalog;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -31,6 +28,6 @@ public class CatalogTreeLeafTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CatalogTreeLeafTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(CatalogTreeLeafTest.class);
 
 }

@@ -10,10 +10,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.BoxLayout;
@@ -21,7 +21,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SortOrder;
 import jmri.ConfigureManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
@@ -34,7 +33,6 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 import jmri.swing.JmriJTablePersistenceManager;
-import jmri.swing.JmriJTablePersistenceManager.TableColumnPreferences;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.jdom.JDOMUtil;
@@ -633,7 +631,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 desc = (String) method.invoke(t);
                 classDesFound = true;
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                log.debug(ex.toString());
+                log.debug("Unable to call declared method \"getClassDescription\" with exception {}", ex.toString());
                 classDesFound = false;
             }
             if (!classDesFound) {
@@ -641,7 +639,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     method = cl.getMethod("getClassDescription");
                     desc = (String) method.invoke(t);
                 } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                    log.debug(ex.toString());
+                    log.debug("Unable to call undeclared method \"getClassDescription\" with exception {}", ex.toString());
                     classDesFound = false;
                 }
             }
@@ -659,7 +657,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 method.invoke(t);
                 classSetFound = true;
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                log.debug(ex.toString()); // *TableAction.setMessagePreferencesDetails() method is routinely not present in multiple classes
+                // TableAction.setMessagePreferencesDetails() method is routinely not present in multiple classes
+                log.debug("Unable to call declared method \"setMessagePreferencesDetails\" with exception {}", ex.toString());
                 classSetFound = false;
             }
             if (!classSetFound) {
@@ -667,7 +666,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     method = cl.getMethod("setMessagePreferencesDetails");
                     method.invoke(t);
                 } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                    log.debug(ex.toString());
+                    log.debug("Unable to call undeclared method \"setMessagePreferencesDetails\" with exception {}", ex.toString());
                 }
             }
 
@@ -819,96 +818,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         }
         displayRememberMsg();
         this.savePreferencesState();
-    }
-
-    @Override
-    public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden) {
-        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
-        if (manager != null) {
-            manager.setTableColumnPreferences(table, column, order, width, sort, hidden);
-        }
-    }
-
-    @Override
-    public int getTableColumnOrder(String table, String column) {
-        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
-        if (manager != null) {
-            TableColumnPreferences preferences = manager.getTableColumnPreferences(table, column);
-            if (preferences != null) {
-                return preferences.getOrder();
-            }
-        }
-        return -1;
-    }
-
-    @Override
-    public int getTableColumnWidth(String table, String column) {
-        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
-        if (manager != null) {
-            TableColumnPreferences preferences = manager.getTableColumnPreferences(table, column);
-            if (preferences != null) {
-                return preferences.getWidth();
-            }
-        }
-        return -1;
-    }
-
-    @Override
-    public SortOrder getTableColumnSort(String table, String column) {
-        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
-        if (manager != null) {
-            TableColumnPreferences preferences = manager.getTableColumnPreferences(table, column);
-            if (preferences != null) {
-                return preferences.getSort();
-            }
-        }
-        return SortOrder.UNSORTED;
-    }
-
-    @Override
-    public boolean getTableColumnHidden(String table, String column) {
-        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
-        if (manager != null) {
-            TableColumnPreferences preferences = manager.getTableColumnPreferences(table, column);
-            if (preferences != null) {
-                return preferences.getHidden();
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public String getTableColumnAtNum(String table, int i) {
-        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
-        if (manager != null) {
-            Map<String, TableColumnPreferences> map = manager.getTableColumnPreferences(table);
-            for (Map.Entry<String, TableColumnPreferences> entry : map.entrySet()) {
-                if ((entry.getValue()).getOrder() == i) {
-                    return entry.getKey();
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Returns an empty list, since this class does not track table state.
-     *
-     * @return an empty list
-     */
-    @Override
-    public List<String> getTablesList() {
-        return new ArrayList<>();
-    }
-
-    @Override
-    public List<String> getTablesColumnList(String table) {
-        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
-        if (manager != null) {
-            Map<String, TableColumnPreferences> map = manager.getTableColumnPreferences(table);
-            return new ArrayList<>(map.keySet());
-        }
-        return new ArrayList<>();
     }
 
     public String getClassDescription() {
@@ -1140,7 +1049,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 for (Entry<String, WindowLocations> entry : windowDetails.entrySet()) {
                     Element window = new Element("window");
                     window.setAttribute("class", entry.getKey());
-                    if (entry.getValue().saveLocation) {
+                    if (entry.getValue().getSaveLocation()) {
                         try {
                             window.setAttribute("locX", Double.toString(entry.getValue().getLocation().getX()));
                             window.setAttribute("locY", Double.toString(entry.getValue().getLocation().getY()));
@@ -1148,7 +1057,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                             // Expected if the location has not been set or the window is open
                         }
                     }
-                    if (entry.getValue().saveSize) {
+                    if (entry.getValue().getSaveSize()) {
                         try {
                             double height = entry.getValue().getSize().getHeight();
                             double width = entry.getValue().getSize().getWidth();
@@ -1391,10 +1300,10 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     protected final static class WindowLocations {
 
-        Point xyLocation = new Point(0, 0);
-        Dimension size = new Dimension(0, 0);
-        boolean saveSize = false;
-        boolean saveLocation = false;
+        private Point xyLocation = new Point(0, 0);
+        private Dimension size = new Dimension(0, 0);
+        private boolean saveSize = false;
+        private boolean saveLocation = false;
 
         WindowLocations() {
         }
@@ -1433,10 +1342,15 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             saveSize = true;
         }
 
-        void setProperty(String key, Object value) {
-            parameters.put(key, value);
+        void setProperty(@Nonnull String key, @CheckForNull Object value) {
+            if (value == null) {
+                parameters.remove(key);
+            } else {
+                parameters.put(key, value);
+            }
         }
 
+        @CheckForNull
         Object getProperty(String key) {
             return parameters.get(key);
         }
@@ -1445,7 +1359,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             return parameters.keySet();
         }
 
-        final HashMap<String, Object> parameters = new HashMap<>();
+        final ConcurrentHashMap<String, Object> parameters = new ConcurrentHashMap<>();
 
     }
 

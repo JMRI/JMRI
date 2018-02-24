@@ -52,17 +52,41 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialTurnout extends AbstractTurnout {
 
+    private MapleSystemConnectionMemo _memo = null;
+
     /**
      * Create a Turnout object, with both system and user names.
-     * <P>
-     * 'systemName' was previously validated in SerialTurnoutManager
+     * <p>
+     * 'systemName' has already been validated in SerialTurnoutManager
+     *
+     * @param systemName the system name for this Turnout
+     * @param userName   the user name for this Turnout
+     * @param memo       the memo for the system connection
      */
-    public SerialTurnout(String systemName, String userName) {
+    public SerialTurnout(String systemName, String userName, MapleSystemConnectionMemo memo) {
         super(systemName, userName);
         // Save system Name
         tSystemName = systemName;
+        _memo = memo;
         // Extract the Bit from the name
-        tBit = SerialAddress.getBitFromSystemName(systemName);
+        tBit = SerialAddress.getBitFromSystemName(systemName, _memo.getSystemPrefix());
+    }
+
+    /**
+     * Create a Turnout object, with only a system name.
+     * <p>
+     * 'systemName' has already been validated in SerialTurnoutManager
+     *
+     * @param systemName the system name for this Turnout
+     * @param memo       the memo for the system connection
+     */
+    public SerialTurnout(String systemName, MapleSystemConnectionMemo memo) {
+        super(systemName);
+        // Save system Name
+        tSystemName = systemName;
+        _memo = memo;
+        // Extract the Bit from the name
+        tBit = SerialAddress.getBitFromSystemName(systemName, _memo.getSystemPrefix());
     }
 
     /**
@@ -84,7 +108,7 @@ public class SerialTurnout extends AbstractTurnout {
             // first look for the double case, which we can't handle
             if ((newState & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN: " + newState);
+                log.error("Cannot command both CLOSED and THROWN: {}", newState);
                 return;
             } else {
                 // send a CLOSED command
@@ -107,7 +131,7 @@ public class SerialTurnout extends AbstractTurnout {
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton ");
+            log.debug("Send command to {} Pushbutton", (_pushButtonLockout ? "Lock" : "Unlock"));
         }
     }
 
@@ -131,9 +155,9 @@ public class SerialTurnout extends AbstractTurnout {
                 // check for pulsed control
                 if (getControlType() == 0) {
                     // steady state control, get current status of the output bit
-                    if ((OutputBits.instance().getOutputBit(tBit) ^ getInverted()) != closed) {
+                    if ((_memo.getTrafficController().outputBits().getOutputBit(tBit) ^ getInverted()) != closed) {
                         // bit state is different from the requested state, set it
-                        OutputBits.instance().setOutputBit(tBit, closed ^ getInverted());
+                        _memo.getTrafficController().outputBits().setOutputBit(tBit, closed ^ getInverted());
                     } else {
                         // Bit state is the same as requested state, so nothing
                         // will happen if requested state is set.
@@ -144,7 +168,7 @@ public class SerialTurnout extends AbstractTurnout {
                             if ((kState & Turnout.THROWN) != 0) {
                                 // known state is different from output bit, set output bit to be correct
                                 //     for known state, then start a timer to set it to requested state
-                                OutputBits.instance().setOutputBit(tBit, false ^ getInverted());
+                                _memo.getTrafficController().outputBits().setOutputBit(tBit, false ^ getInverted());
 //        // start a timer to finish setting this turnout
 //        if (mPulseClosedTimer==null) {
 //         mPulseClosedTimer = new javax.swing.Timer(OutputBits.instance().getPulseWidth(), 
@@ -164,7 +188,7 @@ public class SerialTurnout extends AbstractTurnout {
                             if ((kState & Turnout.CLOSED) != 0) {
                                 // known state is different from output bit, set output bit to be correct
                                 //     for known state, then start a timer to set it to requested state
-                                OutputBits.instance().setOutputBit(tBit, true ^ getInverted());
+                                _memo.getTrafficController().outputBits().setOutputBit(tBit, true ^ getInverted());
 //        // start a timer to finish setting this turnout
 //        if (mPulseThrownTimer==null) {
 //         mPulseThrownTimer = new javax.swing.Timer(OutputBits.instance().getPulseWidth(), 
@@ -211,4 +235,5 @@ public class SerialTurnout extends AbstractTurnout {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class);
+
 }

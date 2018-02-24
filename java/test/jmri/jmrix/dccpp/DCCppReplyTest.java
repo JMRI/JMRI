@@ -1,10 +1,10 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * DCCppReplyTest.java
@@ -14,14 +14,16 @@ import org.junit.Assert;
  * @author	Bob Jacobsen
  * @author	Mark Underwood (C) 2015
  */
-public class DCCppReplyTest extends TestCase {
+public class DCCppReplyTest {
 
+    @Test
     public void testCtor() {
         DCCppReply m = new DCCppReply();
         Assert.assertNotNull(m);
     }
 
     // Test the string constructor.
+    @Test
     public void testStringCtor() {
         DCCppReply m = DCCppReply.parseDCCppReply("H 23 1");
         Assert.assertEquals("length", 6, m.getNumDataElements());
@@ -34,6 +36,7 @@ public class DCCppReplyTest extends TestCase {
     }
 
     // check is direct mode response
+    @Test
     public void testIsDirectModeResponse() {
         // CV 1 in direct mode.
         DCCppReply r = DCCppReply.parseDCCppReply("r 1234|87|23 12");
@@ -45,14 +48,17 @@ public class DCCppReplyTest extends TestCase {
     }
 
     // check get service mode CV Number response code.
+    @Test
     public void testGetServiceModeCVNumber() {
     }
 
     // check get service mode CV Value response code.
+    @Test
     public void testGetServiceModeCVValue() {
     }
     
     // Test Comm Type Reply
+    @Test
     public void testCommTypeReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("N0: SERIAL");
         Assert.assertTrue(l.isCommTypeReply());
@@ -68,31 +74,49 @@ public class DCCppReplyTest extends TestCase {
         
     }
 
-    // from here down is testing infrastructure
-    public DCCppReplyTest(String s) {
-        super(s);
+    // Test named power districts
+    @Test
+    public void testNamedPowerDistrictReply() {
+        DCCppReply l = DCCppReply.parseDCCppReply("p 0 MAIN");
+        Assert.assertTrue(l.isNamedPowerReply());
+        Assert.assertEquals('p', l.getOpCodeChar());
+        Assert.assertEquals("MAIN", l.getPowerDistrictName());
+        Assert.assertEquals("OFF", l.getPowerDistrictStatus());
+
+        l = DCCppReply.parseDCCppReply("p 1 MAIN");
+        Assert.assertTrue(l.isNamedPowerReply());
+        Assert.assertEquals('p', l.getOpCodeChar());
+        Assert.assertEquals("MAIN", l.getPowerDistrictName());
+        Assert.assertEquals("ON", l.getPowerDistrictStatus());
+
+        l = DCCppReply.parseDCCppReply("p 2 MAIN");
+        Assert.assertTrue(l.isNamedPowerReply());
+        Assert.assertEquals('p', l.getOpCodeChar());
+        Assert.assertEquals("MAIN", l.getPowerDistrictName());
+        Assert.assertEquals("OVERLOAD", l.getPowerDistrictStatus());
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DCCppReplyTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
+    // Test named power districts
+    @Test
+    public void testNamedCurrentReply() {
+        DCCppReply l = DCCppReply.parseDCCppReply("a MAIN 0");
+        Assert.assertTrue(l.isNamedCurrentReply());
+        Assert.assertEquals('a', l.getOpCodeChar());
+        Assert.assertEquals("0", l.getCurrentString());
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DCCppReplyTest.class);
-        return suite;
+        l = DCCppReply.parseDCCppReply("a MAIN 100");
+        Assert.assertTrue(l.isNamedCurrentReply());
+        Assert.assertEquals('a', l.getOpCodeChar());
+        Assert.assertEquals("100", l.getCurrentString());
     }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

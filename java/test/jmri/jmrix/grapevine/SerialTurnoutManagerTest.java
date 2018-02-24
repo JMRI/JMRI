@@ -10,29 +10,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SerialTurnoutManagerTest.java
- *
- * Description:	tests for the SerialTurnoutManager class
+ * Tests for the SerialTurnoutManager class.
  *
  * @author	Bob Jacobsen Copyright 2004, 2007, 2008
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
+    private GrapevineSystemConnectionMemo memo = null; 
+
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
 
-        // replace the SerialTrafficController
-        SerialTrafficController t = new SerialTrafficController() {
-            SerialTrafficController test() {
-                setInstance();
-                return this;
-            }
-        }.test();
-        t.registerNode(new SerialNode(1, SerialNode.NODE2002V6));
+        memo = new GrapevineSystemConnectionMemo();
+        SerialTrafficController tc = new SerialTrafficControlScaffold(memo);
+        memo.setTrafficController(tc);
+        tc.registerNode(new SerialNode(1, SerialNode.NODE2002V6, tc));
         // create and register the manager object
-        l = new SerialTurnoutManager();
+        l = new SerialTurnoutManager(memo);
         jmri.InstanceManager.setTurnoutManager(l);
     }
 

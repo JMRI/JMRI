@@ -7,22 +7,25 @@ import org.junit.Assert;
 import org.junit.Before;
 
 /**
- * Tests for the jmri.jmrix.nce.EasyDccTurnout class
+ * Tests for the jmri.jmrix.easydcc.EasyDccTurnout class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class EasyDccTurnoutTest extends AbstractTurnoutTestBase {
 
     private EasyDccTrafficControlScaffold tcis = null;
+    private EasyDccSystemConnectionMemo memo = null;
 
     @Before
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         // prepare an interface
-        tcis = new EasyDccTrafficControlScaffold();
+        memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
+        tcis = new EasyDccTrafficControlScaffold(memo);
+        memo.setEasyDccTrafficController(tcis); // important for successful getTrafficController()
 
-        t = new EasyDccTurnout(4);
+        t = new EasyDccTurnout("E", 4, memo);
     }
 
     @Override
@@ -42,9 +45,11 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTestBase {
         Assert.assertEquals("content", "S 02 81 FF 7E", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
     }
 
-    // The minimal setup for log4J
+    // reset objects
     @After
     public void tearDown() {
+        tcis.terminateThreads();
+        t.dispose();
         JUnitUtil.tearDown();
     }
 

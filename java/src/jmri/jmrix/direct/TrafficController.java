@@ -1,7 +1,7 @@
 package jmri.jmrix.direct;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import jmri.jmrix.AbstractSerialPortController;
 import org.slf4j.Logger;
@@ -10,13 +10,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from NMRA packets and controls sending to the
  * direct interface.
- * <P>
+ * <p>
  * This is much simpler than many other "TrafficHandler" classes, because
- * <UL>
- * <LI>It's not handling mode information, or even any information back from the
- * device; it's just sending
- * <LI>It can work with the direct packets.
- * </UL>
+ *   <ul>
+ *   <li>It's not handling mode information, or even any information back from the
+ *   device; it's just sending.
+ *   <li>It can work with the direct packets.
+ *   </ul>
  * This actually bears more similarity to a pure implementation of the
  * CommandStation interface, which is where the real guts of it is. In
  * particular, note that transmission is not a threaded operation.
@@ -25,37 +25,23 @@ import org.slf4j.LoggerFactory;
  */
 public class TrafficController implements jmri.CommandStation {
 
+    /**
+     * Create a new Direct TrafficController instance.
+     */
     public TrafficController() {
         super();
     }
 
     /**
-     * static function returning the instance to use.
+     * Static function returning the instance to use.
      *
      * @return The registered instance for general use, if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
+     * multi-system support structure
      */
     @Deprecated
     static public TrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new TrafficController object");
-            }
-            self = new TrafficController();
-        }
-        return self;
-    }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static TrafficController self = null;
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
-    protected void setInstance() {
-        self = this;
+        return null;
     }
 
     /**
@@ -66,9 +52,6 @@ public class TrafficController implements jmri.CommandStation {
      * @param repeats Number of times to repeat the transmission, but is ignored
      *                in the current implementation
      */
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     @Override
     public void sendPacket(byte[] packet, int repeats) {
 
@@ -81,7 +64,7 @@ public class TrafficController implements jmri.CommandStation {
 
         if (msgAsInt[0] == 0) {
             // failed to make packet
-            log.error("Failed to convert packet to transmitable form: " + java.util.Arrays.toString(packet));
+            log.error("Failed to convert packet to transmitable form: {}", java.util.Arrays.toString(packet));
             return;
         }
 
@@ -96,25 +79,25 @@ public class TrafficController implements jmri.CommandStation {
         try {
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
-                    String f = "write message: ";
+                    StringBuilder f = new StringBuilder("write message: ");
                     for (int i = 0; i < msg.length; i++) {
-                        f = f
-                                + Integer.toHexString(0xFF & msg[i]) + " ";
+                        f.append(Integer.toHexString(0xFF & msg[i])).append(" ");
                     }
-                    log.debug(f);
+                    log.debug(f.toString());
                 }
                 ostream.write(msg);
             } else {
                 // no stream connected
                 log.warn("sendMessage: no connection established");
             }
-        } catch (Exception e) {
-            log.warn("sendMessage: Exception: " + e.toString());
+        } catch (IOException e) {
+            log.warn("sendMessage: Exception: {}", e.getMessage());
         }
 
     }
 
-    // methods to connect/disconnect to a source of data in a AbstractSerialPortController
+    // methods to connect/disconnect to a source of data in an AbstractSerialPortController
+
     private AbstractSerialPortController controller = null;
 
     public boolean status() {
@@ -123,6 +106,8 @@ public class TrafficController implements jmri.CommandStation {
 
     /**
      * Make connection to existing PortController object.
+     *
+     * @param p the controller to connect to
      */
     public void connectPort(AbstractSerialPortController p) {
         istream = p.getInputStream();
@@ -138,6 +123,8 @@ public class TrafficController implements jmri.CommandStation {
     /**
      * Break connection to existing PortController object. Once broken, attempts
      * to send via "message" member will fail.
+     *
+     * @param p the controller to disconnect from
      */
     public void disconnectPort(AbstractSerialPortController p) {
         istream = null;
@@ -163,4 +150,5 @@ public class TrafficController implements jmri.CommandStation {
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrafficController.class);
+
 }

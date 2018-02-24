@@ -36,7 +36,6 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
 
     private List<JButton> _writeButtons = new ArrayList<>();
 
-    private CvValue _iCv = null;
     private JLabel _status = null;
     private Programmer mProgrammer;
 
@@ -81,7 +80,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
 
     @Override
     public Object getValueAt(int row, int col) {
-        // if (log.isDebugEnabled()) log.debug("getValueAt "+row+" "+col);
+        // log.debug("getValueAt "+row+" "+col);
         // some error checking
         if (row >= rowVector.size()) {
             log.debug("row greater than row vector");
@@ -125,16 +124,11 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     public void setRow(int row, Element e, Element p, String model) {
         decoderModel = model; // Save for use elsewhere
         String label = LocaleSelector.getAttribute(e, "label"); // Note the name variable is actually the label attribute
-        if (log.isDebugEnabled()) {
-            log.debug("Starting to setRow \""
-                    + label + "\"");
-        }
+        log.debug("Starting to setRow \"{}\"", label);
         String cv = e.getAttribute("CV").getValue();
         int cvVal = Integer.valueOf(e.getAttribute("default").getValue());
 
-        if (log.isDebugEnabled()) {
-            log.debug("            CV \"" + cv + "\" value " + cvVal);
-        }
+        log.debug("            CV \"{}\" value {}", cv, cvVal);
 
         CvValue resetCV = new CvValue(cv, mProgrammer);
         resetCV.addPropertyChangeListener(this);
@@ -168,7 +162,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
                 modeList.add(mode);
                 flagIfOpsMode(mode);
             } catch (NullPointerException ex) {
-                mode = null;
+                // ignore as expected result if there is no attribute mode
             }
 
             try {
@@ -184,7 +178,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
                     flagIfOpsMode(s.getText());
                 }
             } catch (NullPointerException ex) {
-                elementModes = null;
+                // ignore as expected result if there is no attribute mode
             }
         }
 
@@ -202,11 +196,12 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
 
             StringBuilder programmerModeListBuffer = new StringBuilder("");
             modes.forEach((m) -> {
-                programmerModeListBuffer.append(",");
-                programmerModeListBuffer.append(m.toString());
+                programmerModeListBuffer.append(",").append(m.toString());
             });
             String programmerModeList = programmerModeListBuffer.toString();
-            if (programmerModeList.startsWith(",")) {
+            if (programmerModeList.length() <= 1) {
+                programmerModeList = ""; // NOI18N
+            } else if (programmerModeList.startsWith(",")) {
                 programmerModeList = programmerModeList.substring(1);
             }
 
@@ -215,7 +210,9 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
                 resetModeBuilder.append(",").append(new ProgrammingMode(mode).toString());
             });
             String resetModeList = resetModeBuilder.toString();
-            if (resetModeList.startsWith(",")) {
+            if (resetModeList.length() <= 1) {
+                resetModeList = ""; // NOI18N
+            } else if (resetModeList.startsWith(",")) {
                 resetModeList = resetModeList.substring(1);
             }
 
@@ -242,29 +239,23 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
                     if (!badModeOk((savedMode.toString()), resetModeList, programmerModeList)) {
                         return;
                     }
-                    log.warn(labelVector.get(row) + " for " + decoderModel + " was attempted in " + savedMode.toString() + " mode.");
-                    log.warn("Recommended mode(s) were \"" + resetModeList + "\" but available modes were \"" + programmerModeList + "\"");
+                    log.warn("{} for {} was attempted in {} mode.", labelVector.get(row), decoderModel, savedMode);
+                    log.warn("Recommended mode(s) were \"{}\" but available modes were \"{}\"", resetModeList, programmerModeList);
                 }
             }
         }
         CvValue cv = rowVector.get(row);
-        if (log.isDebugEnabled()) {
-            log.debug("performReset: " + cv);
-        }
+        log.debug("performReset: {}", cv);
         _progState = WRITING_CV;
         cv.write(_status);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("action command: " + e.getActionCommand());
-        }
+        log.debug("action command: {}", e.getActionCommand());
         char b = e.getActionCommand().charAt(0);
         int row = Integer.valueOf(e.getActionCommand().substring(1));
-        if (log.isDebugEnabled()) {
-            log.debug("event on " + b + " row " + row);
-        }
+        log.debug("event on {} row {}", b, row);
         if (b == 'W') {
             // write command
             performReset(row);
@@ -278,27 +269,21 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     @Override
     public void propertyChange(PropertyChangeEvent e) {
 
-        if (log.isDebugEnabled()) {
-            log.debug("Property changed: " + e.getPropertyName());
-        }
+        log.debug("Property changed: {}", e.getPropertyName());
         // notification from Indexed CV; check for Value being changed
         if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
             // busy transitions drive the state
             switch (_progState) {
                 case IDLE:  // no, just an Indexed CV update
-                    if (log.isDebugEnabled()) {
-                        log.error("Busy goes false with state IDLE");
-                    }
+                    log.debug("Busy goes false with state IDLE");
                     return;
                 case WRITING_CV:  // now done with the write request
-                    if (log.isDebugEnabled()) {
-                        log.debug("Finished writing the CV");
-                    }
+                    log.debug("Finished writing the CV");
                     mProgrammer.setMode(savedMode);
                     _progState = IDLE;
                     return;
                 default:  // unexpected!
-                    log.error("Unexpected state found: " + _progState);
+                    log.error("Unexpected state found: {}", _progState);
                     mProgrammer.setMode(savedMode);
                     _progState = IDLE;
             }
@@ -358,9 +343,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+        log.debug("dispose");
 
         // remove buttons
         for (int i = 0; i < _writeButtons.size(); i++) {

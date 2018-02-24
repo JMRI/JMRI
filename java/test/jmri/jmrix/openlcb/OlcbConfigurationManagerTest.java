@@ -14,8 +14,17 @@ public class OlcbConfigurationManagerTest {
 
     @Test
     public void testCTor() {
-        OlcbConfigurationManager t = new OlcbConfigurationManager(new OlcbSystemConnectionMemo());
+        OlcbSystemConnectionMemo memo = OlcbTestInterface.createForLegacyTests();
+        OlcbConfigurationManager t = new OlcbConfigurationManager(memo);
         Assert.assertNotNull("exists",t);
+    }
+
+    @Test
+    public void testConfigureManagers() {
+        OlcbSystemConnectionMemo memo = OlcbTestInterface.createForLegacyTests();
+        OlcbConfigurationManager t = new OlcbConfigurationManager(memo);
+        // this tet verifies this does not throw an exception
+        t.configureManagers(); 
     }
 
     // The minimal setup for log4J

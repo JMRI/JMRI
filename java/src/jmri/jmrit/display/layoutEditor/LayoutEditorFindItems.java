@@ -1,6 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nullable;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SignalHead;
@@ -11,6 +14,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A collection of tools to find various object on the layout editor panel.
+ *
+ * @author Dave Duchamp Copyright (c) 2004-2007
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutEditorFindItems {
 
@@ -24,7 +30,7 @@ public class LayoutEditorFindItems {
         if (name.isEmpty()) {
             return null;
         }
-        for (TrackSegment t : layoutEditor.trackList) {
+        for (TrackSegment t : layoutEditor.getTrackSegments()) {
             if (t.getId().equals(name)) {
                 return t;
             }
@@ -36,7 +42,7 @@ public class LayoutEditorFindItems {
         if (name.isEmpty()) {
             return null;
         }
-        for (PositionablePoint p : layoutEditor.pointList) {
+        for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
             if (p.getId().equals(name)) {
                 return p;
             }
@@ -45,7 +51,7 @@ public class LayoutEditorFindItems {
     }
 
     public PositionablePoint findPositionablePointAtTrackSegments(TrackSegment tr1, TrackSegment tr2) {
-        for (PositionablePoint p : layoutEditor.pointList) {
+        for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
             if (((p.getConnect1() == tr1) && (p.getConnect2() == tr2))
                     || ((p.getConnect1() == tr2) && (p.getConnect2() == tr1))) {
                 return p;
@@ -55,7 +61,7 @@ public class LayoutEditorFindItems {
     }
 
     public PositionablePoint findPositionableLinkPoint(LayoutBlock blk1) {
-        for (PositionablePoint p : layoutEditor.pointList) {
+        for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
             if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {
                 if ((p.getConnect1() != null && p.getConnect1().getLayoutBlock() == blk1)
                         || (p.getConnect2() != null && p.getConnect2().getLayoutBlock() == blk1)) {
@@ -73,8 +79,8 @@ public class LayoutEditorFindItems {
         if (name.isEmpty()) {
             return null;
         }
-        ArrayList<TrackSegment> ts = new ArrayList<TrackSegment>();
-        for (TrackSegment t : layoutEditor.trackList) {
+        ArrayList<TrackSegment> ts = new ArrayList<>();
+        for (TrackSegment t : layoutEditor.getTrackSegments()) {
             if (t.getBlockName().equals(name)) {
                 ts.add(t);
             }
@@ -83,7 +89,7 @@ public class LayoutEditorFindItems {
     }
 
     public PositionablePoint findPositionablePointByEastBoundSignal(String signalName) {
-        for (PositionablePoint p : layoutEditor.pointList) {
+        for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
             if (p.getEastBoundSignal().equals(signalName)) {
                 return p;
             }
@@ -92,7 +98,7 @@ public class LayoutEditorFindItems {
     }
 
     public PositionablePoint findPositionablePointByWestBoundSignal(String signalName) {
-        for (PositionablePoint p : layoutEditor.pointList) {
+        for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
             if (p.getWestBoundSignal().equals(signalName)) {
                 return p;
             }
@@ -102,19 +108,19 @@ public class LayoutEditorFindItems {
 
     public PositionablePoint findPositionablePointByWestBoundBean(NamedBean bean) {
         if (bean instanceof SignalMast) {
-            for (PositionablePoint p : layoutEditor.pointList) {
+            for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
                 if (p.getWestBoundSignalMast() == bean) {
                     return p;
                 }
             }
         } else if (bean instanceof Sensor) {
-            for (PositionablePoint p : layoutEditor.pointList) {
+            for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
                 if (p.getWestBoundSensor() == bean) {
                     return p;
                 }
             }
         } else if (bean instanceof SignalHead) {
-            for (PositionablePoint p : layoutEditor.pointList) {
+            for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
                 if (p.getWestBoundSignal().equals(bean.getSystemName())) {
                     return p;
                 }
@@ -125,19 +131,19 @@ public class LayoutEditorFindItems {
 
     public PositionablePoint findPositionablePointByEastBoundBean(NamedBean bean) {
         if (bean instanceof SignalMast) {
-            for (PositionablePoint p : layoutEditor.pointList) {
+            for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
                 if (p.getEastBoundSignalMast() == bean) {
                     return p;
                 }
             }
         } else if (bean instanceof Sensor) {
-            for (PositionablePoint p : layoutEditor.pointList) {
+            for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
                 if (p.getEastBoundSensor() == bean) {
                     return p;
                 }
             }
         } else if (bean instanceof SignalHead) {
-            for (PositionablePoint p : layoutEditor.pointList) {
+            for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
                 if (p.getEastBoundSignal().equals(bean.getSystemName())) {
                     return p;
                 }
@@ -147,7 +153,7 @@ public class LayoutEditorFindItems {
     }
 
     public PositionablePoint findPositionablePointByWestBoundSignalMast(String signalMastName) {
-        for (PositionablePoint p : layoutEditor.pointList) {
+        for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
             if (p.getWestBoundSignalMastName().equals(signalMastName)) {
                 return p;
             }
@@ -157,21 +163,21 @@ public class LayoutEditorFindItems {
 
     public PositionablePoint findPositionablePointByBean(NamedBean bean) {
         if (bean instanceof SignalMast) {
-            for (PositionablePoint p : layoutEditor.pointList) {
+            for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
                 if (p.getWestBoundSignalMast() == bean
                         || p.getEastBoundSignalMast() == bean) {
                     return p;
                 }
             }
         } else if (bean instanceof Sensor) {
-            for (PositionablePoint p : layoutEditor.pointList) {
+            for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
                 if (p.getWestBoundSensor() == bean
                         || p.getEastBoundSensor() == bean) {
                     return p;
                 }
             }
         } else if (bean instanceof SignalHead) {
-            for (PositionablePoint p : layoutEditor.pointList) {
+            for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
                 if (p.getEastBoundSignal().equals(bean.getSystemName())
                         || p.getWestBoundSignal().equals(bean.getSystemName())) {
                     return p;
@@ -186,13 +192,16 @@ public class LayoutEditorFindItems {
 
     }
 
+    @CheckReturnValue
     public LayoutTurnout findLayoutTurnoutBySignalMast(String signalMastName) throws IllegalArgumentException {
         return findLayoutTurnoutByBean(jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMastName));
     }
 
-    public LayoutTurnout findLayoutTurnoutByBean(NamedBean bean) {
+    @CheckReturnValue
+    public LayoutTurnout findLayoutTurnoutByBean(@Nullable NamedBean bean) {
+        List<LayoutTurnout> layoutTurnouts = layoutEditor.getLayoutTurnouts();
         if (bean instanceof SignalMast) {
-            for (LayoutTurnout t : layoutEditor.turnoutList) {
+            for (LayoutTurnout t : layoutTurnouts) {
                 if (t.getSignalAMast() == bean
                         || t.getSignalBMast() == bean
                         || t.getSignalCMast() == bean
@@ -201,7 +210,7 @@ public class LayoutEditorFindItems {
                 }
             }
         } else if (bean instanceof Sensor) {
-            for (LayoutTurnout t : layoutEditor.turnoutList) {
+            for (LayoutTurnout t : layoutTurnouts) {
                 if (t.getSensorA() == bean
                         || t.getSensorB() == bean
                         || t.getSensorC() == bean
@@ -210,7 +219,7 @@ public class LayoutEditorFindItems {
                 }
             }
         } else if (bean instanceof SignalHead) {
-            for (LayoutTurnout t : layoutEditor.turnoutList) {
+            for (LayoutTurnout t : layoutTurnouts) {
                 if (t.getSignalA1Name().equals(bean.getSystemName())
                         || t.getSignalA2Name().equals(bean.getSystemName())
                         || t.getSignalA3Name().equals(bean.getSystemName())) {
@@ -251,15 +260,16 @@ public class LayoutEditorFindItems {
                 }
             }
         } else if (bean instanceof Turnout) {
-            for (LayoutTurnout t : layoutEditor.turnoutList) {
+            for (LayoutTurnout t : layoutTurnouts) {
                 if (bean.equals(t.getTurnout())) {
                     return t;
                 }
             }
         }
         return null;
-    }
+    }   // findLayoutTurnoutByBean
 
+    @CheckReturnValue
     public LayoutTurnout findLayoutTurnoutBySensor(String sensorName) throws IllegalArgumentException {
         return findLayoutTurnoutByBean(jmri.InstanceManager.sensorManagerInstance().provideSensor(sensorName));
     }
@@ -273,8 +283,9 @@ public class LayoutEditorFindItems {
     }
 
     public LevelXing findLevelXingByBean(NamedBean bean) {
+        List<LevelXing> levelXings = layoutEditor.getLevelXings();
         if (bean instanceof SignalMast) {
-            for (LevelXing l : layoutEditor.xingList) {
+            for (LevelXing l : levelXings) {
                 if (l.getSignalAMast() == bean
                         || l.getSignalBMast() == bean
                         || l.getSignalCMast() == bean
@@ -283,7 +294,7 @@ public class LayoutEditorFindItems {
                 }
             }
         } else if (bean instanceof Sensor) {
-            for (LevelXing l : layoutEditor.xingList) {
+            for (LevelXing l : levelXings) {
                 if (l.getSensorA() == bean
                         || l.getSensorB() == bean
                         || l.getSensorC() == bean
@@ -293,7 +304,7 @@ public class LayoutEditorFindItems {
             }
 
         } else if (bean instanceof SignalHead) {
-            for (LevelXing l : layoutEditor.xingList) {
+            for (LevelXing l : levelXings) {
                 if (l.getSignalAName().equals(bean.getSystemName())
                         || l.getSignalBName().equals(bean.getSystemName())
                         || l.getSignalCName().equals(bean.getSystemName())
@@ -312,8 +323,9 @@ public class LayoutEditorFindItems {
     }
 
     public LayoutSlip findLayoutSlipByBean(NamedBean bean) {
+        List<LayoutSlip> layoutSlips = layoutEditor.getLayoutSlips();
         if (bean instanceof SignalMast) {
-            for (LayoutSlip l : layoutEditor.slipList) {
+            for (LayoutSlip l : layoutSlips) {
                 if (l.getSignalAMast() == bean
                         || l.getSignalBMast() == bean
                         || l.getSignalCMast() == bean
@@ -322,7 +334,7 @@ public class LayoutEditorFindItems {
                 }
             }
         } else if (bean instanceof Sensor) {
-            for (LayoutSlip l : layoutEditor.slipList) {
+            for (LayoutSlip l : layoutSlips) {
                 if (l.getSensorA() == bean
                         || l.getSensorB() == bean
                         || l.getSensorC() == bean
@@ -331,7 +343,7 @@ public class LayoutEditorFindItems {
                 }
             }
         } else if (bean instanceof SignalHead) {
-            for (LayoutSlip l : layoutEditor.slipList) {
+            for (LayoutSlip l : layoutSlips) {
                 if (l.getSignalA1Name().equals(bean.getSystemName())
                         || l.getSignalA2Name().equals(bean.getSystemName())
                         || l.getSignalA3Name().equals(bean.getSystemName())) {
@@ -371,7 +383,7 @@ public class LayoutEditorFindItems {
                 }
             }
         } else if (bean instanceof Turnout) {
-            for (LayoutSlip l : layoutEditor.slipList) {
+            for (LayoutSlip l : layoutSlips) {
                 if (bean.equals(l.getTurnout())) {
                     return l;
                 }
@@ -393,7 +405,7 @@ public class LayoutEditorFindItems {
 
     public PositionablePoint findPositionablePointByEastBoundSensor(String sensorName) {
         PositionablePoint result = null;
-        for (PositionablePoint p : layoutEditor.pointList) {
+        for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
             if (p.getEastBoundSensorName().equals(sensorName)) {
                 result = p;
                 break;
@@ -404,7 +416,7 @@ public class LayoutEditorFindItems {
 
     public PositionablePoint findPositionablePointByWestBoundSensor(String sensorName) {
         PositionablePoint result = null;
-        for (PositionablePoint p : layoutEditor.pointList) {
+        for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
             if (p.getWestBoundSensorName().equals(sensorName)) {
                 result = p;
                 break;
@@ -413,10 +425,11 @@ public class LayoutEditorFindItems {
         return result;
     }
 
+    @CheckReturnValue
     public LayoutTurnout findLayoutTurnoutByName(String name) {
         LayoutTurnout result = null;
         if ((name != null) && !name.isEmpty()) {
-            for (LayoutTurnout t : layoutEditor.turnoutList) {
+            for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
                 if (t.getName().equals(name)) {
                     result = t;
                     break;
@@ -426,11 +439,12 @@ public class LayoutEditorFindItems {
         return result;
     }
 
-    public LayoutTurnout findLayoutTurnoutByTurnoutName(String name) {
+    @CheckReturnValue
+    public LayoutTurnout findLayoutTurnoutByTurnoutName(String turnoutName) {
         LayoutTurnout result = null;
-        if ((name != null) && !name.isEmpty()) {
-            for (LayoutTurnout t : layoutEditor.turnoutList) {
-                if (t.getTurnoutName().equals(name)) {
+        if ((turnoutName != null) && !turnoutName.isEmpty()) {
+            for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
+                if (t.getTurnoutName().equals(turnoutName)) {
                     result = t;
                 }
             }
@@ -441,7 +455,7 @@ public class LayoutEditorFindItems {
     public LevelXing findLevelXingByName(String name) {
         LevelXing result = null;
         if ((name != null) && !name.isEmpty()) {
-            for (LevelXing x : layoutEditor.xingList) {
+            for (LevelXing x : layoutEditor.getLevelXings()) {
                 if (x.getId().equals(name)) {
                     result = x;
                     break;
@@ -454,7 +468,7 @@ public class LayoutEditorFindItems {
     public LayoutSlip findLayoutSlipByName(String name) {
         LayoutSlip result = null;
         if ((name != null) && !name.isEmpty()) {
-            for (LayoutSlip x : layoutEditor.slipList) {
+            for (LayoutSlip x : layoutEditor.getLayoutSlips()) {
                 if (x.getName().equals(name)) {
                     result = x;
                     break;
@@ -467,7 +481,7 @@ public class LayoutEditorFindItems {
     public LayoutTurntable findLayoutTurntableByName(String name) {
         LayoutTurntable result = null;
         if ((name != null) && !name.isEmpty()) {
-            for (LayoutTurntable x : layoutEditor.turntableList) {
+            for (LayoutTurntable x : layoutEditor.getLayoutTurntables()) {
                 if (x.getId().equals(name)) {
                     result = x;
                     break;
@@ -500,7 +514,7 @@ public class LayoutEditorFindItems {
      * @deprecated since 4.7.1 use @link{findObjectByName()} instead.
      */
     @Deprecated
-    public Object findObjectByTypeAndName(int type, String name) {
+    public LayoutTrack findObjectByTypeAndName(int type, String name) {
         if (name.isEmpty()) {
             return null;
         }
@@ -548,8 +562,8 @@ public class LayoutEditorFindItems {
     // move toward encapsulation this routine should see a lot more usage;
     // specifically, instead of a TON of "if (type == XXX) { findXXXByName(...)...}"
     // code you would just call this method instead.
-    public Object findObjectByName(String name) {
-        Object result = null;   // assume failure (pessimist!)
+    public LayoutTrack findObjectByName(String name) {
+        LayoutTrack result = null;   // assume failure (pessimist!)
         if ((name != null) && !name.isEmpty()) {
             if (name.startsWith("TO")) {
                 result = findLayoutTurnoutByName(name);
@@ -574,7 +588,7 @@ public class LayoutEditorFindItems {
         }
         return result;
     }
-    
+
    /**
      * Determine the first unused LayoutTrack object name...
      * @param inPrefix ...with this prefix...

@@ -2,9 +2,7 @@ package jmri.jmrix.tams;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * JUnit tests for the TamsSystemConnectionMemo class
@@ -12,22 +10,18 @@ import org.junit.Test;
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class TamsSystemConnectionMemoTest {
+public class TamsSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
      
-    TamsSystemConnectionMemo memo = null;
-
-    @Test
-    public void testCtor(){
-       Assert.assertNotNull("exists",memo);
-    }
-
+    @Override
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       TamsTrafficController tc = new TamsInterfaceScaffold();
-       memo = new TamsSystemConnectionMemo();
+       TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(new TamsInterfaceScaffold());
+       memo.configureManagers();
+       scm = memo;
     }
 
+    @Override
     @After
     public void tearDown(){
        JUnitUtil.tearDown();

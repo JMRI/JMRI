@@ -13,9 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements SerialPortAdapter for the Marklin system network connection.
+ * Implements NetworkPortAdapter for the Marklin system network connection.
  * <P>
- * This connects an Marklin command station via a UDP connection. Normally
+ * This connects a Marklin command station via a UDP connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
@@ -41,7 +41,7 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
     }
 
     @Override
-    public void connect() throws Exception {
+    public void connect() {
         opened = false;
 
         if (m_HostName == null) {
@@ -85,8 +85,7 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
         try {
             return new DataInputStream(new UDPInputStream(null, 15730));
         } catch (java.io.IOException ex1) {
-            ex1.printStackTrace();
-            log.error("an Exception getting input stream: " + ex1);
+            log.error("an Exception getting input stream", ex1);
             return null;
         }
     }
@@ -99,8 +98,7 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
         try {
             return new DataOutputStream(new UDPOutputStream(m_HostName, 15731));
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
-            e.printStackTrace();
+            log.error("getOutputStream exception", e);
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
                         m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);

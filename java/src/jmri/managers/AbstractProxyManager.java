@@ -7,7 +7,8 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import jmri.Manager;
 import jmri.NamedBean;
-import jmri.util.SystemNameComparator;
+import jmri.NamedBeanPropertyDescriptor;
+import jmri.util.NamedBeanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +41,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         return mgrs.size();
     }
 
-    protected Manager getMgr(int index) {
+    protected Manager<E> getMgr(int index) {
         // make sure internal present
         initInternal();
 
@@ -57,14 +58,14 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
      *
      * @return the list of managers
      */
-    public List<Manager> getManagerList() {
+    public List<Manager<E>> getManagerList() {
         // make sure internal present
         initInternal();
 
         return new ArrayList<>(mgrs);
     }
 
-    public void addManager(Manager m) {
+    public void addManager(Manager<E> m) {
         // check for already present
         if (mgrs.contains(m)) {
             // already present, complain and skip
@@ -83,7 +84,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         }
     }
 
-    private Manager initInternal() {
+    private Manager<E> initInternal() {
         if (internalManager == null) {
             log.debug("create internal manager when first requested");
             internalManager = makeInternalManager();
@@ -91,15 +92,15 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         return internalManager;
     }
 
-    private final java.util.ArrayList<Manager> mgrs = new java.util.ArrayList<>();
-    private Manager internalManager = null;
+    private final java.util.ArrayList<Manager<E>> mgrs = new java.util.ArrayList<>();
+    private Manager<E> internalManager = null;
 
     /**
      * Create specific internal manager as needed for concrete type.
      *
      * @return an internal manager
      */
-    abstract protected Manager makeInternalManager();
+    abstract protected Manager<E> makeInternalManager();
 
     /**
      * Locate via user name, then system name if needed. Subclasses use this to
@@ -122,11 +123,11 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
      * for the NamedBeans handled by this manager and its submanagers.
      * <p>
      * Attempts to match by system prefix first.
-     * <p> 
+     * <p>
      *
      * @param inputName System name to be normalized
      * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
-     * @return A system name in standard normalized form 
+     * @return A system name in standard normalized form
      */
     @Override
     @CheckReturnValue
@@ -143,7 +144,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
      * Locate via user name, then system name if needed. If that fails, create a
      * new NamedBean: If the name is a valid system name, it will be used for
      * the new NamedBean. Otherwise, the makeSystemName method will attempt to
-     * turn it into a valid system name. Subclasses use this to create provider methods such as 
+     * turn it into a valid system name. Subclasses use this to create provider methods such as
      * getSensor or getTurnout via casts.
      *
      * @param name the user name or system name of the bean
@@ -324,6 +325,16 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         getMgr(match(systemName)).deregister(s);
     }
 
+    @Nonnull
+    @Override
+    public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
+        List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
+        for (int i = 0; i < nMgrs(); i++) {
+            l.addAll(getMgr(i).getKnownBeanProperties());
+        }
+        return l;
+    }
+
     @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         for (int i = 0; i < nMgrs(); i++) {
@@ -390,32 +401,50 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         return getMgr(0).makeSystemName(s);
     }
 
-    @Override
-    public String[] getSystemNameArray() {
-        TreeSet<String> ts = new TreeSet<>(new SystemNameComparator());
-        this.mgrs.stream().forEach((mgr) -> {
-            ts.addAll(mgr.getSystemNameList());
-        });
-        return ts.toArray(new String[ts.size()]);
-    }
-
     /**
      * Get a list of all system names.
+     * <p>
+     * The list is ordered by system name
      *
      * @return a list, possibly empty, of system names
      */
     @Override
-    public List<String> getSystemNameList() {
-        TreeSet<String> ts = new TreeSet<>(new SystemNameComparator());
-        for (int i = 0; i < nMgrs(); i++) {
-            ts.addAll(getMgr(i).getSystemNameList());
-        }
-        return new ArrayList<>(ts);
+    @Nonnull
+    public String[] getSystemNameArray() {
+        List<E> list = getNamedBeanList();
+        String[] retval = new String[list.size()];
+        int i = 0;
+        for (E e : list) retval[i++] = e.getSystemName();
+        return retval;
     }
 
+    /**
+     * Get a list of all system names.
+     * <p>
+     * The list is ordered by system name
+     *
+     * @return a list, possibly empty, of system names
+     */
     @Override
+    @Nonnull
+    public List<String> getSystemNameList() {
+        List<E> list = getNamedBeanList();
+        ArrayList<String> retval = new ArrayList<>(list.size());
+        for (E e : list) retval.add(e.getSystemName());
+        return retval;
+    }
+
+    /**
+     * Get a list of all system names.
+     * <p>
+     * The list is ordered by system name
+     *
+     * @return a list, possibly empty, of system names
+     */
+    @Override
+    @Nonnull
     public List<E> getNamedBeanList() {
-        TreeSet<E> ts = new TreeSet<>(new SystemNameComparator());
+        TreeSet<E> ts = new TreeSet<>(new NamedBeanComparator());
         mgrs.stream().forEach((m) -> {
             ts.addAll(m.getNamedBeanList());
         });

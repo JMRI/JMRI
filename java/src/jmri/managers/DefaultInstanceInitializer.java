@@ -6,13 +6,11 @@ import jmri.AudioManager;
 import jmri.BlockManager;
 import jmri.ClockControl;
 import jmri.ConditionalManager;
-import jmri.IdTagManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.LogixManager;
 import jmri.MemoryManager;
-import jmri.ProgrammerManager;
 import jmri.RailComManager;
 import jmri.ReporterManager;
 import jmri.RouteManager;
@@ -35,7 +33,7 @@ import org.openide.util.lookup.ServiceProvider;
  * {@link jmri.InstanceManager}.
  * <P>
  * Not all {@link jmri.InstanceManager} related classes are provided by this
- * class. See the discussion in {@link jmri.InstanceManager} of initilization
+ * class. See the discussion in {@link jmri.InstanceManager} of initialization
  * methods.
  * <hr>
  * This file is part of JMRI.
@@ -69,10 +67,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
             return new DefaultConditionalManager();
         }
 
-        if (type == IdTagManager.class) {
-            return new DefaultIdTagManager();
-        }
-
         if (type == LightManager.class) {
             return new jmri.managers.ProxyLightManager();
         }
@@ -83,10 +77,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
         if (type == MemoryManager.class) {
             return new DefaultMemoryManager();
-        }
-
-        if (type == ProgrammerManager.class) {
-            return new DeferringProgrammerManager();
         }
 
         if (type == RailComManager.class) {
@@ -156,11 +146,9 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 BlockManager.class,
                 ClockControl.class,
                 ConditionalManager.class,
-                IdTagManager.class,
                 LightManager.class,
                 LogixManager.class,
                 MemoryManager.class,
-                ProgrammerManager.class,
                 RailComManager.class,
                 ReporterManager.class,
                 RouteManager.class,

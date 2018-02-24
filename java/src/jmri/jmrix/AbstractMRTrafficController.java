@@ -14,14 +14,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base for TrafficControllers in a Message/Reply protocol.
- * <P>
+ * <p>
  * Two threads are used for the actual communication. The "Transmit" thread
  * handles pushing characters to the port, and also changing the mode. The
  * "Receive" thread converts characters from the input stream into replies.
- * <P>
+ * <p>
  * A third thread is registered by the constructor as a shutdown hook. It
  * triggers the necessary cleanup code
- * <P>
+ * <p>
  * "Mode" refers to the state of the command station communications.<br>
  * "State" refers to the internal state machine used to control the mode, e.g.
  * to send commands to change mode.<br>
@@ -36,6 +36,9 @@ abstract public class AbstractMRTrafficController {
     private Thread shutdownHook = null; // retain shutdown hook for 
                                         // possible removal.
 
+    /**
+     * Create a new unnamed MRTrafficController.
+     */
     public AbstractMRTrafficController() {
         log.debug("Creating AbstractMRTrafficController instance");
         mCurrentMode = NORMALMODE;
@@ -47,7 +50,7 @@ abstract public class AbstractMRTrafficController {
         // in a clean state prior to exiting.  This is required on systems
         // which have a service mode to ensure we don't leave the system 
         // in an unusable state (This code predates the ShutdownTask 
-        // mechanisim).  Once the , shutdown hook executes, the connection
+        // mechanisim).  Once the shutdown hook executes, the connection
         // must be considered closed.
         shutdownHook = new Thread(new CleanupHook(this));
         Runtime.getRuntime().addShutdownHook(shutdownHook);
@@ -58,11 +61,17 @@ abstract public class AbstractMRTrafficController {
     protected void setSynchronizeRx(boolean val) {
         synchronizeRx = val;
     }
-    
-    // set the instance variable
+    protected boolean getSynchronizeRx() {
+        return synchronizeRx;
+    }
+
+    /**
+     * Set the instance variable.
+     */
     abstract protected void setInstance();
 
     // The methods to implement the abstract Interface
+
     protected Vector<AbstractMRListener> cmdListeners = new Vector<AbstractMRListener>();
 
     protected synchronized void addListener(AbstractMRListener l) {
@@ -103,7 +112,7 @@ abstract public class AbstractMRTrafficController {
                 log.debug("notify client: {}", client);
                 try {
                     forwardMessage(client, m);
-                } catch (Exception e) {
+                } catch (RuntimeException e) {
                     log.warn("notify: During message dispatch to {}", client, e);
                 }
             }
@@ -131,29 +140,43 @@ abstract public class AbstractMRTrafficController {
     public static final int NORMALMODE = 1;
     public static final int PROGRAMINGMODE = 4;
 
-    /*
-     * enterProgMode() and enterNormalMode() return any message that
-     * needs to be returned to the command station to change modes.
+    /**
+     * Set the system to programming mode.
+     * @see #enterNormalMode()
      *
-     * If no message is needed, you may return null.
-     *
-     * If the programmerIdle() function returns true, enterNormalMode() is
-     * called after a timeout while in IDLESTATE during programming to
-     * return the system to normal mode.
-     *
+     * @return any message that needs to be returned to the Command Station
+     * to change modes. If no message is needed, returns null.
      */
     abstract protected AbstractMRMessage enterProgMode();
 
+    /**
+     * Sets the system to normal mode during programming while in IDLESTATE.
+     * If {@link #programmerIdle()} returns true, enterNormalMode() is
+     * called after a timeout.
+     * @see #enterProgMode()
+     *
+     * @return any message that needs to be returned to the Command Station
+     * to change modes. If no message is needed, returns null.
+     */
     abstract protected AbstractMRMessage enterNormalMode();
 
-    // Use this function to check and see if the programmer is idle
-    // Override in the system specific code if necessary (see notes for
-    // enterNormalMode() Above).
+    /**
+     * Check if the programmer is idle.
+     * Override in the system specific code if necessary (see notes for
+     * {@link #enterNormalMode()}.
+     *
+     * @return true if not busy programming
+     */
     protected boolean programmerIdle() {
         return true;
     }
 
-    // Allow subclasses to add a delay after enabling the programming track
+    /**
+     * Get the delay (wait time) after enabling the programming track.
+     * Override in subclass to add a longer delay.
+     *
+     * @return 0 as default delay
+     */
     protected int enterProgModeDelayTime() {
         return 0;
     }
@@ -170,8 +193,12 @@ abstract public class AbstractMRTrafficController {
 
     protected boolean allowUnexpectedReply;
 
-    // Use this function to identify If the command station may send
-    // messages without a request sent to it
+    /**
+     * Set whether the command station may send messages without a request
+     * sent to it.
+     *
+     * @param expected true to allow messages without a prior request
+     */
     protected void setAllowUnexpectedReply(boolean expected) {
         allowUnexpectedReply = expected;
     }
@@ -200,7 +227,7 @@ abstract public class AbstractMRTrafficController {
                 if (dest != client) {
                     forwardReply(client, r);
                 }
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 log.warn("notify: During reply dispatch to {}", client, e);
             }
         }
@@ -216,14 +243,18 @@ abstract public class AbstractMRTrafficController {
     abstract protected void forwardReply(AbstractMRListener client, AbstractMRReply m);
 
     /**
-     * Messages to be transmitted
+     * Messages to be transmitted.
      */
     protected LinkedList<AbstractMRMessage> msgQueue = new LinkedList<AbstractMRMessage>();
     protected LinkedList<AbstractMRListener> listenerQueue = new LinkedList<AbstractMRListener>();
 
     /**
-     * This is invoked with messages to be forwarded to the port. It queues
-     * them, then notifies the transmission thread.
+     * Forward message to the port. Messages are queued and then the
+     * transmission thread is notified.
+     * @see #forwardToPort(AbstractMRMessage, AbstractMRListener)
+     *
+     * @param m the message to send
+     * @param reply the Listener sending the message, often provided as 'this'
      */
     synchronized protected void sendMessage(AbstractMRMessage m, AbstractMRListener reply) {
         msgQueue.addLast(m);
@@ -470,7 +501,11 @@ abstract public class AbstractMRTrafficController {
         }
     }
 
-    // used to determine if interface is down
+    /**
+     *  Determine if the interface is down.
+     *
+     *  @return timeoutFlag
+     */
     public boolean hasTimeouts() {
         return timeoutFlag;
     }
@@ -502,7 +537,7 @@ abstract public class AbstractMRTrafficController {
     /**
      * Add header to the outgoing byte stream.
      *
-     * @param msg The output byte stream
+     * @param msg the output byte stream
      * @return next location in the stream to fill
      */
     protected int addHeaderToOutput(byte[] msg, AbstractMRMessage m) {
@@ -515,7 +550,7 @@ abstract public class AbstractMRTrafficController {
     /**
      * Add trailer to the outgoing byte stream.
      *
-     * @param msg    The output byte stream
+     * @param msg    the output byte stream
      * @param offset the first byte not yet used
      */
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
@@ -525,11 +560,11 @@ abstract public class AbstractMRTrafficController {
     }
 
     /**
-     * Determine how much many bytes the entire message will take, including
-     * space for header and trailer
+     * Determine how many bytes the entire message will take, including
+     * space for header and trailer.
      *
-     * @param m The message to be sent
-     * @return Number of bytes
+     * @param m the message to be sent
+     * @return number of bytes
      */
     protected int lengthOfByteStream(AbstractMRMessage m) {
         int len = m.getNumDataElements();
@@ -543,7 +578,11 @@ abstract public class AbstractMRTrafficController {
     protected boolean xmtException = false;
 
     /**
-     * Actually transmits the next message to the port
+     * Actually transmit the next message to the port.
+     * @see #sendMessage(AbstractMRMessage, AbstractMRListener)
+     *
+     * @param m the message to send
+     * @param reply the Listener sending the message, often provided as 'this'
      */
     @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT"},
             justification = "Two locks needed for synchronization here, this is OK")
@@ -608,7 +647,7 @@ abstract public class AbstractMRTrafficController {
                 // no stream connected
                 connectionWarn();
             }
-        } catch (Exception e) {
+        } catch (IOException | RuntimeException e) {
             // TODO Currently there's no port recovery if an exception occurs
             // must restart JMRI to clear xmtException.
             xmtException = true;
@@ -630,7 +669,8 @@ abstract public class AbstractMRTrafficController {
         log.warn("Exception java net: {}", e.toString());
         connectionError = true;
     }
-    // methods to connect/disconnect to a source of data in a AbstractPortController
+    // methods to connect/disconnect to a source of data in an AbstractPortController
+
     public AbstractPortController controller = null;
 
     public boolean status() {
@@ -643,7 +683,9 @@ abstract public class AbstractMRTrafficController {
     volatile protected Runnable xmtRunnable = null;
 
     /**
-     * Make connection to existing PortController object.
+     * Make connection to an existing PortController object.
+     *
+     * @param p the PortController
      */
     public void connectPort(AbstractPortController p) {
         rcvException = false;
@@ -699,14 +741,16 @@ abstract public class AbstractMRTrafficController {
             rcvThread.setDaemon(true);
             rcvThread.start();
             
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.error("Failed to start up communications. Error was {}", e.toString());
             log.debug("Full trace:", e);
         }
     }
 
     /**
-     * Get the port name for this connection
+     * Get the port name for this connection from the TrafficController.
+     *
+     * @return the name of the port
      */
     public String getPortName() {
         return controller.getCurrentPortName();
@@ -715,6 +759,8 @@ abstract public class AbstractMRTrafficController {
     /**
      * Break connection to existing PortController object. Once broken, attempts
      * to send via "message" member will fail.
+     *
+     * @param p the PortController
      */
     public void disconnectPort(AbstractPortController p) {
         istream = null;
@@ -726,10 +772,12 @@ abstract public class AbstractMRTrafficController {
     }
 
     /**
-     * Check to see if PortController object can be sent to. returns true if
-     * ready, false otherwise May throw an Exception.
+     * Check if PortController object can be sent to.
+     *
+     * @param p the PortController
+     * @return true if ready, false otherwise May throw an Exception.
      */
-    public boolean portReadyToSend(AbstractPortController p) throws Exception {
+    public boolean portReadyToSend(AbstractPortController p) {
         if (p != null && !xmtException && !rcvException) {
             return true;
         } else {
@@ -748,8 +796,9 @@ abstract public class AbstractMRTrafficController {
     /**
      * Handle incoming characters. This is a permanent loop, looking for input
      * messages in character form on the stream connected to the PortController
-     * via <code>connectPort</code>. Each turn of the loop is the receipt of a
-     * single message.
+     * via {@link #connectPort(AbstractPortController)}.
+     * <p>
+     * Each turn of the loop is the receipt of a single message.
      */
     public void receiveLoop() {
         log.debug("receiveLoop starts");
@@ -765,7 +814,7 @@ abstract public class AbstractMRTrafficController {
                 rcvException = true;
                 reportReceiveLoopException(e);
                 break;
-            } catch (Exception e1) {
+            } catch (RuntimeException e1) {
                 log.error("Exception in receive loop: {}", e1.toString(), e1);
                 errorCount++;
                 if (errorCount == maxRcvExceptionCount) {
@@ -782,7 +831,8 @@ abstract public class AbstractMRTrafficController {
     }
 
     /**
-     * Invoked at abnormal end of receiveLoop
+     * Disconnect and reset the current PortController.
+     * Invoked at abnormal ending of receiveLoop.
      */
     protected final void recovery() {
         AbstractPortController adapter = controller;
@@ -791,7 +841,7 @@ abstract public class AbstractMRTrafficController {
     }
 
     /**
-     * Report error on receive loop. Separated so tests can suppress, even
+     * Report an error on the receive loop. Separated so tests can suppress, even
      * though message is asynchronous.
      */
     protected void reportReceiveLoopException(Exception e) {
@@ -816,11 +866,11 @@ abstract public class AbstractMRTrafficController {
 
     /**
      * Read a single byte, protecting against various timeouts, etc.
-     * <P>
+     * <p>
      * When a port is set to have a receive timeout (via the
-     * enableReceiveTimeout() method), some will return zero bytes or an
-     * EOFException at the end of the timeout. In that case, the read should be
-     * repeated to get the next real character.
+     * {@link purejavacomm.SerialPort#enableReceiveTimeout(int)} method), some will return
+     * zero bytes or an EOFException at the end of the timeout. In that case, the read
+     * should be repeated to get the next real character.
      *
      * @param istream stream to read
      * @return the byte read
@@ -845,11 +895,11 @@ abstract public class AbstractMRTrafficController {
 
     /**
      * Get characters from the input source, and file a message.
-     * <P>
+     * <p>
      * Returns only when the message is complete.
-     * <P>
+     * <p>
      * Only used in the Receive thread.
-     * <P>
+     * <p>
      * Handles timeouts on read by ignoring zero-length reads.
      *
      * @param msg     message to fill
@@ -894,6 +944,28 @@ abstract public class AbstractMRTrafficController {
     private int retransmitCount = 0;
 
     /**
+     * Executes a reply distribution action on the appropriate thread for JMRI.
+     * @param r a runnable typically encapsulating a MRReply and the iteration code needed to
+     *          send it to all the listeners.
+     */
+    protected void distributeReply(Runnable r) {
+        try {
+            if (synchronizeRx) {
+                SwingUtilities.invokeAndWait(r);
+            } else {
+                SwingUtilities.invokeLater(r);
+            }
+        } catch (InterruptedException ie) {
+            if(threadStopRequest) return;
+            log.error("Unexpected exception in invokeAndWait: {}" + ie.toString(), ie);
+        } catch (java.lang.reflect.InvocationTargetException| RuntimeException e) {
+            log.error("Unexpected exception in invokeAndWait: {}" + e.toString(), e);
+            return;
+        }
+        log.debug("dispatch thread invoked");
+    }
+
+    /**
      * Handle each reply when complete.
      * <P>
      * (This is public for testing purposes) Runs in the "Receive" thread.
@@ -924,17 +996,7 @@ abstract public class AbstractMRTrafficController {
         // which includes the communications monitor
         // return a notification via the Swing event queue to ensure proper thread
         Runnable r = new RcvNotifier(msg, mLastSender, this);
-        try {
-            if (synchronizeRx) {
-                SwingUtilities.invokeAndWait(r);
-            } else {
-                SwingUtilities.invokeLater(r);
-            }
-        } catch (Exception e) {
-            log.error("Unexpected exception in invokeAndWait: {}" + e.toString(), e);
-            return;
-        }
-        log.debug("dispatch thread invoked");
+        distributeReply(r);
 
         if (!msg.isUnsolicited()) {
             // effect on transmit:
@@ -1019,7 +1081,7 @@ abstract public class AbstractMRTrafficController {
                             xmtRunnable.notify();
                         }
                     } else {
-                        log.error("reply complete in unexpected state: {} was {}", mCurrentState, msg.toString());
+                        unexpectedReplyStateError(mCurrentState,msg.toString());
                     }
                 }
             }
@@ -1031,6 +1093,16 @@ abstract public class AbstractMRTrafficController {
 
             replyInDispatch = false;
         }
+    }
+
+    /*
+     * log an error message for a message received in an unexpected state. 
+     */
+    protected void unexpectedReplyStateError(int State,String msgString) {
+       String[] packages = this.getClass().getName().split("\\.");
+       String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
+                     +(packages.length>=1 ? packages[packages.length-1] :"");
+       log.error("reply complete in unexpected state: {} was {} in class {}", State, msgString,name);
     }
 
     /*
@@ -1141,7 +1213,7 @@ abstract public class AbstractMRTrafficController {
             try {
                 xmtThread.join();
             } catch (InterruptedException ie){
-                // interrupted durring cleanup.
+                // interrupted during cleanup.
             }
         }
         
@@ -1150,7 +1222,7 @@ abstract public class AbstractMRTrafficController {
             try {
                 rcvThread.join();
             } catch (InterruptedException ie){
-                // interrupted durring cleanup.
+                // interrupted during cleanup.
             }
         }    
 
@@ -1183,4 +1255,5 @@ abstract public class AbstractMRTrafficController {
     } // end cleanUpHook
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMRTrafficController.class);
+
 }

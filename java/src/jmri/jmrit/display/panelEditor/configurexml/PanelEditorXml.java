@@ -75,9 +75,8 @@ public class PanelEditorXml extends AbstractXmlAdapter {
                     if (e != null) {
                         panel.addContent(e);
                     }
-                } catch (Exception e) {
-                    log.error("Error storing panel element: " + e);
-                    e.printStackTrace();
+                } catch (RuntimeException e) {
+                    log.error("Error storing panel element", e);
                 }
             }
         }
@@ -208,10 +207,11 @@ public class PanelEditorXml extends AbstractXmlAdapter {
                 if (!panel.loadOK()) {
                     result = false;
                 }
-            } catch (Exception e) {
-                log.error("Exception while loading " + item.getName() + ":" + e);
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                    | jmri.configurexml.JmriConfigureXmlException
+                    | RuntimeException e) {
+                log.error("Exception while loading {}", item.getName(), e);
                 result = false;
-                e.printStackTrace();
             }
         }
         panel.disposeLoadData();     // dispose of url correction data

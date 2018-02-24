@@ -21,12 +21,14 @@ import org.slf4j.LoggerFactory;
  * same set of input bits. Coil bits within Maple Systems HMI's are divided into
  * input (1-1000) and output (1001-9000), so input bits are read starting from
  * HMI address 1, and output bits are written starting at HMI address 1001.
- * <P>
+ *
  * @author Dave Duchamp, Copyright (C) 2009
  */
 public class InputBits {
 
-    private InputBits() {
+    private SerialTrafficController tc = null;
+
+    public InputBits(SerialTrafficController _tc) {
         // clear the Sensor arrays
         for (int i = 0; i < MAXSENSORS + 1; i++) {
             sensorArray[i] = null;
@@ -34,6 +36,7 @@ public class InputBits {
             sensorTempSetting[i] = Sensor.UNKNOWN;
             sensorORedSetting[i] = false;
         }
+        tc = _tc;
     }
 
     // class constants
@@ -82,8 +85,8 @@ public class InputBits {
                 sensorORedSetting[i] = false;
                 try {
                     sensorArray[i].setKnownState(Sensor.UNKNOWN);
-                } catch (jmri.JmriException e) {
-                    log.error("unexpected exception setting sensor i=" + i + ", e: " + e);
+                } catch (jmri.JmriException ex) {
+                    log.error("unexpected exception setting sensor i={}, ex:{}", i, ex);
                 }
             }
         }
@@ -98,7 +101,7 @@ public class InputBits {
      * @param l Reply to a poll operation
      */
     public void markChanges(SerialReply l) {
-        int begAddress = SerialTrafficController.instance().getSavedPollAddress();
+        int begAddress = tc.getSavedPollAddress();
         int count = l.getNumDataElements() - 8;
         for (int i = 0; i < count; i++) {
             if (sensorArray[i + begAddress - 1] == null) {
@@ -171,7 +174,7 @@ public class InputBits {
     public void registerSensor(Sensor s, int i) {
         // validate the sensor ordinal
         if ((i < 0) || (i >= mNumInputBits)) {
-            log.error("Unexpected sensor ordinal in registerSensor: " + Integer.toString(i + 1));
+            log.error("Unexpected sensor ordinal in registerSensor: {}", Integer.toString(i + 1));
             return;
         }
         if (sensorArray[i] == null) {
@@ -185,13 +188,11 @@ public class InputBits {
         }
     }
 
+    @Deprecated
     public static InputBits instance() {
-        if (mInstance == null) {
-            mInstance = new InputBits();
-        }
-        return mInstance;
+        return null;
     }
-    static InputBits mInstance = null;  // package access for tests
 
     private final static Logger log = LoggerFactory.getLogger(InputBits.class);
+
 }

@@ -25,7 +25,7 @@ public class SpeedoConsoleAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Uncaught Exception in SpeedoConsoleFrame: ", ex);
         }
         f.setVisible(true);
     }

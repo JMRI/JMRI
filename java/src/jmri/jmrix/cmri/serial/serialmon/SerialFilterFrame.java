@@ -1,5 +1,3 @@
-// SerialFilterFrame.java
-
 package jmri.jmrix.cmri.serial.serialmon;
 
 import java.awt.*;
@@ -104,17 +102,16 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
     HandlerClass packetTypeCkBoxHandler = new HandlerClass();
     private CMRISystemConnectionMemo _memo = null;
 
-    SerialFilterFrame curFrame;
-
-    public SerialFilterFrame() {
+    public SerialFilterFrame(CMRISystemConnectionMemo memo) {
         super("CMRInet Packet Filter");
-        curFrame = this;
-
+        _memo = memo;
     }
 
-    public void initComponents() throws Exception
-    {
-	initializeNodes();
+    /** 
+     * {@inheritDoc}
+     */
+    public void initComponents() {
+	    initializeNodes();
 
         // For the class
         setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -312,9 +309,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
      */
     public void initializeNodes()  //c2
     {
-	String str = "";
-
-    // get all configured nodes
+	// get all configured nodes
 //	SerialNode aNode = (SerialNode) SerialTrafficController.instance().getNode(0);
         SerialNode node = (SerialNode) _memo.getTrafficController().getNode(0);
         int index = 1;
@@ -427,7 +422,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
                 default:
                     return Boolean.class;
             }
-        };
+        }
 	public boolean isCellEditable(int r,int c) {
            if(c!=NODEADDR_COLUMN) return true;
            else return false;
@@ -471,8 +466,6 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
 
     private String[] nodeEnableColumnsNames = {"Node","Monitor"};
 
-    private final static Logger log = LoggerFactory.getLogger(SerialFilterFrame.class);
+    // private final static Logger log = LoggerFactory.getLogger(SerialFilterFrame.class);
 
 }
-
-/* @(#)SerialFilterFrame.java */

@@ -3,10 +3,7 @@ package jmri.jmrit.beantable.beanedit;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -32,6 +29,6 @@ public class BeanEditItemTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BeanEditItemTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(BeanEditItemTest.class);
 
 }

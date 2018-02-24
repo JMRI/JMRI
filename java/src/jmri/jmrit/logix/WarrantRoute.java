@@ -170,7 +170,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                     _pickListFrame.dispose();
                 }
                 _pickListFrame = new JmriJFrame();
-                PickListModel model = PickListModel.oBlockPickModelInstance();
+                PickListModel<OBlock> model = PickListModel.oBlockPickModelInstance();
                 _pickListFrame.add(new JScrollPane(model.makePickTable()));
                 _pickListFrame.pack();
                 _pickListFrame.setVisible(true);
@@ -246,13 +246,11 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         if (_spTable != null) {
             _spTable.dispose();
         }
-        if (_speedUtil.profileHasSpeedInfo(true) || _speedUtil.profileHasSpeedInfo(false)) {
-            RosterSpeedProfile speedProfile = _speedUtil.getValidSpeedProfile(this);
-            if (speedProfile != null) {
-                _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getRosterId());
-                _spTable.setVisible(true);
-                return;
-            }            
+        RosterSpeedProfile speedProfile = _speedUtil.getMergeProfile();
+        if (speedProfile.hasForwardSpeeds() || speedProfile.hasReverseSpeeds()) {
+            _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getRosterId());
+            _spTable.setVisible(true);
+            return;
         }
         JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSpeedProfile"));
     }
@@ -412,7 +410,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         p.setLayout(new BorderLayout());
         p.setToolTipText(Bundle.getMessage(tooltip));
         box.setToolTipText(Bundle.getMessage(tooltip));
-        p.add(new JLabel(PAD + Bundle.getMessage(title) + PAD), BorderLayout.NORTH);
+        JLabel l = new JLabel(PAD + Bundle.getMessage(title) + PAD);
+        p.add(l, BorderLayout.NORTH);
+        l.setLabelFor(box);
         p.add(box, BorderLayout.CENTER);
         box.setBackground(Color.white);
         box.addActionListener(this);
@@ -494,7 +494,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             p.setLayout(new BorderLayout());
             p.setToolTipText(Bundle.getMessage(tooltip));
             blockBox.setToolTipText(Bundle.getMessage(tooltip));
-            p.add(new JLabel(Bundle.getMessage("BlockName")), BorderLayout.NORTH);
+            JLabel l = new JLabel(Bundle.getMessage("BlockName"));
+            p.add(l, BorderLayout.NORTH);
+            l.setLabelFor(blockBox);
             p.add(blockBox, BorderLayout.CENTER);
             return p;
         }
@@ -583,7 +585,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             blockBox.setText(text);
             OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(text);
             if (block == null && text.length() > 0) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("BlockNotFound", text),
+                JOptionPane.showMessageDialog(blockBox.getParent(), Bundle.getMessage("BlockNotFound", text),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             }
             return block;

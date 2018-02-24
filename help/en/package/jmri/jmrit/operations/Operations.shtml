@@ -6,8 +6,8 @@
 <meta name="generator"
  content="HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<title>JMRI - Operations</title>
-<meta name="Author" content="Dan Boudreau">
+<title>JMRI: Operations</title>
+<meta name="author" content="Dan Boudreau">
 <meta name="keywords"
  content="JMRI Help Operations Setup Settings Cars Engines Locomotives Trains Routes Locations Schedules">
 <!-- Style -->
@@ -67,11 +67,13 @@
    <ul>
     <li><a href="#newUserAdvice">New User Advice</a></li>
 
-    <li><a href="#demo">Operations Demo Files</a></li>
-
     <li><a href="#Display">Display and Help</a></li>
 
     <li><a href="#MultipleLayouts">Multiple Layout Support</a></li>
+    
+    <li><a href="#OperationFiles">Operation Files</a></li>
+    
+    <li><a href="#demo">Operations Demo Files</a></li>
 
     <li><a href="#QuickStartHelp">Quick Start Help</a></li>
 
@@ -101,7 +103,21 @@
        </ul></li>
      </ul></li>
 
-    <li><a href="#PrintOptions">Manifest Print Options</a></li>
+    <li><a href="#PrintOptions">Manifest Print Options</a>
+    
+     <ul>
+     
+     <li><a href="#ManifestComments">Manifests and Switch List Options</a></li>
+     
+     <li><a href="#AddLogo">Add Logo</a></li>
+     
+     <li><a href="#MisplacedCarsComment">Misplaced Cars Comment</a></li>
+     
+     <li><a href="#HazardousComment">Hazardous Comment</a></li>
+     
+     <li><a href="#ManifestPrintOptionsTools">Manifest Print Options Tools</a></li>
+    
+   </ul></li>
 
     <li><a href="#BuildReportDetails">Build Report Options</a></li>
 
@@ -288,16 +304,22 @@
 
       <li><a href="#TrainReset">Reset Train</a></li>
 
-      <li><a href="#TrainBuildOptions">Train Build Options</a></li>
+      <li><a href="#EditTrainTools">Edit Train Tools</a>
 
-      <li><a href="#TrainLoadOptions">Train Load Options</a></li>
+       <ul>
+        <li><a href="#TrainBuildOptions">Train Build Options</a></li>
 
-      <li><a href="#TrainRoadOptions">Train Road Options</a></li>
+        <li><a href="#TrainLoadOptions">Train Load Options</a></li>
 
-      <li><a href="#TrainManifestOptions">Train Manifest Options</a></li>
+        <li><a href="#TrainRoadOptions">Train Road Options</a></li>
 
-      <li><a href="#TrainScripts">Scripts</a></li>
+        <li><a href="#TrainManifestOptions">Train Manifest Options</a></li>
 
+        <li><a href="#TrainScripts">Scripts</a></li>
+        
+        <li><a href="#TrainConductor">Train Conductor</a></li>
+       </ul>
+       
       <li><a href="#TrainsTools">Trains Tools</a>
 
        <ul>
@@ -367,7 +389,7 @@
     liking without the use of staging tracks, classification/interchange tracks, and especially
     schedules and custom loads. We find that users attempting to use the advanced features before
     they understand how the program works tend to need a lot of help getting the car movement they
-    desire. So start off small and get your trains to build correctly, read the build reports in the
+    desire. So start off small and get your trains to build correctly, read the <a href="#BuildReports">build reports</a> in the
     very detailed mode for your trains, even if they build to your liking. You need to get
     proficient with the build reports before you begin using the more advanced features of the
     OperationsPro&trade;. Once you get your trains to build correctly, you can add staging tracks if
@@ -392,6 +414,7 @@
     train using the "departure" track, car pulls directly into the train rather than to a specific
     departure track makes the operations run more smoothly. By not specifying the A/D tracks, you're
     letting your crew, and not the program, decide which tracks to use when servicing a train.</p>
+    
    <a name="Display" id="Display"></a>
 
    <h3>Display and Help</h3>
@@ -405,7 +428,9 @@
    configure JMRI to automatically open any of the operation windows on <a
     href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a> by adding a "Perform action".
    Most JMRI windows have as part of the menu bar the "Help" option. Select "Window Help.." to get
-   information about the window you're using. <a name="MultipleLayouts" id="MultipleLayouts"></a>
+   information about the window you're using. 
+   
+   <a name="MultipleLayouts" id="MultipleLayouts"></a>
 
    <h3>Multiple Layout Support</h3>
    You can create and manage multiple layouts using OperationsPro&trade;. From the main menu bar
@@ -413,8 +438,69 @@
     href="../../../apps/TabbedPreferences.shtml#Profiles">Configuration Profile</a> for each layout
    that you want to manage. The database for each layout is unique and not shared with the other
    layouts. You can find each set of operation files under JMRI-&gt; "profile name" -&gt;
-   operations. <a name="demo" id="demo"></a>
+   operations. 
+   
+  <a name="OperationFiles" id="OperationFiles"></a>
+   <h3>Operations Files</h3>
+   OperationsPro&trade; uses up to six XML files to store the operations database. You can find
+   these files by selecting from the main menu bar, Help-&gt;Locations..., a new window should
+   appear showing where your JMRI user files are. The operation files are stored in a directory
+   called "operations" located inside a directory that uses the name of your profile. Once you start
+   entering your data into OperationsPro&trade;, you can find up to six operation files, and six
+   identically named backup files. The operation files use the .xml extension, and the backup files have the
+   .bak extension appended to them. These files are created when needed, for example the
+   "OperationsEngineRoster.xml" file is created when you enter your first locomotive into
+   OperationsPro&trade;. The back up files are created when you make a change to one of the
+   operation files.
 
+   <p>
+   
+   <table>
+    <tr>
+     <td>File Name</td>
+
+     <td>Contains</td>
+    </tr>
+
+    <tr>
+     <td>Operations.xml</td>
+
+     <td>Settings</td>
+    </tr>
+
+    <tr>
+     <td>OperationsCarRoster.xml</td>
+
+     <td>Car database</td>
+    </tr>
+
+    <tr>
+     <td>OperationsEngineRoster.xml</td>
+
+     <td>Locomotive database</td>
+    </tr>
+
+    <tr>
+     <td>OperationsLocationRoster.xml</td>
+
+     <td>Location database</td>
+    </tr>
+
+    <tr>
+     <td>OperationsRouteRoster.xml</td>
+
+     <td>Route database</td>
+    </tr>
+
+    <tr>
+     <td>OperationsTrainRoster.xml</td>
+
+     <td>Train database</td>
+    </tr>
+
+   </table>
+
+   <a name="demo" id="demo"></a> 
    <h3>Operations Demo Files</h3>
    The operations program provides a set of demo files to help introduce you to the some of the
    features and capabilities of this program. To load the demo files, first open the Operations
@@ -423,10 +509,10 @@
     href="#BackupRestore">backup</a> of your current configuration if you have one, and then loads
    the demo files. Restart JMRI to complete the demo load process.
 
-   <p>The program also supplies a simple panel to show how the train icons work. Load the panel
-    before building the trains by selecting in the main JMRI menu, "Panels-&gt;Load Panels .." a
+   <p>The demo program also supplies a simple panel to show how the train icons work. Load the panel
+    before building the trains by selecting from the main JMRI menu, "Panels-&gt;Open Panels..." a
     window should appear and open the "operations" directory and then open the "Operations Demo
-    Panel" xml file.</p>
+    Panel.xml" file.</p>
 
    <a name="QuickStartHelp" id="QuickStartHelp"></a>
    <h3>Quick Start Help</h3>
@@ -727,9 +813,9 @@
 
    <h3>Save</h3>
    <p>When you're finished with the settings window, press the save button to store your
-    settings in a file called "Operations.xml". You can find this file in your JMRI directory in a
-    folder called "operations". OperationsPro&trade; will also create a backup file each time you
-    press the save button.</p>
+    settings in a file named "Operations.xml". You can find this file in JMRI-&gt; "profile name"
+    -&gt; operations. OperationsPro&trade; will also create a backup file each time you press the
+    save button.</p>
 
    <a name="Backup" id="Backup"></a>
    <h3>Backup</h3>
@@ -807,7 +893,7 @@
    mode will not fill every track to capacity which is more prototypical. However, normal mode won't
    swap a set of cars, cars are picked up or set out based on the available track space. Normal mode
    prevents track overloading. In aggressive mode you can "accidentally" create track overloading by
-   the order you build and run your trains or by using the the train reset function.
+   the order you build and run your trains or by using the Train Reset function.
 
    <p>Aggressive builds makes the car's track space available as soon as a car is scheduled for
     a pick up. Therefore there can be instances where a train was to pick up a car to vacate the
@@ -829,7 +915,7 @@
     decide that you don't want to run the first train, and reset the train. Now the original cars on
     still sitting on the track, and you now run and terminate the second train. The program will
     deliver the new cars, while the old cars are still sitting there, which unfortunately will
-    overload the track. You could also overload the the track if you ran the second train before the
+    overload the track. You could also overload the track if you ran the second train before the
     first, the second train would try and deliver cars to the track that still has cars sitting on
     it.</p>
 
@@ -1520,7 +1606,9 @@
    <h3>Switch List Format</h3>
    You can use the same format for Manifest and switch lists, or you can customize the switch lists
    to your liking. Deselect the "Same as Manifest" if you want a different format for your switch
-   lists. <a name="ManifestComments" id="ManifestComments"></a>
+   lists. 
+   
+   <a name="ManifestComments" id="ManifestComments"></a>
 
    <h3>Manifests and Switch List Options</h3>
    OperationsPro&trade; allows you to customize the text used in the train Manifest and switch lists
@@ -1604,24 +1692,28 @@
    This option also allows you to make manual changes to your Manifests and switch lists before you
    print them.
 
+   <a name="AddLogo" id="AddLogo"></a>
    <h3>Add Logo</h3>
    If you want a logo in the top right hand corner of your Manifests and switch lists, press the
    "Add Logo" button and select a file with the image you want to display. You can also have a
    different logo for every train in your roster, see <a href="#TrainManifestOptions">Train
-    Manifest Options</a> for details. <a name="MisplacedCarsComment" id="MisplacedCarsComment"></a>
+    Manifest Options</a> for details. 
+    
+   <a name="MisplacedCarsComment" id="MisplacedCarsComment"></a>
 
    <h3>Misplaced Cars Comment</h3>
    OperationsPro&trade; provides a comment for your crew to search for <a href="#CarsSet">misplaced</a>
    cars. You can modify the comment to your liking. Full scale railroads unfortunately misplace cars
    as part of their operations, so having a few cars in the wrong place on your railroad is very
-   prototypical. Save time and effort and let your operators find those misplaced cars for you. <a
-    name="HazardousComment" id="HazardousComment"></a>
+   prototypical. Save time and effort and let your operators find those misplaced cars for you. 
+   
+   <a name="HazardousComment" id="HazardousComment"></a>
 
    <h3>Hazardous Comment</h3>
    <p>
     The program will add the "Hazardous Comment" to the Manifests and switch lists when a car has
     the <a href="#CabooseFredHazardous">Hazardous</a> checkbox selected in the "Car Edit" window and
-    the "Hazardous" message format is selected in your Manifest and switch lists print options. You
+    the "Hazardous" message format is selected in the <a href="#PrintOptions">Manifest Print Options</a>. You
     can change the comment if desired, and press "Save" to keep the change.
    </p>
 
@@ -1871,7 +1963,7 @@
    <h4>Show Cars</h4>
    <p>If you only want to see cars for a location or track, select "Show Cars" from the "Tools"
     menu. This tool is also useful when you want to print out cars for a specific location or track.
-    Note that the the export cars tool will only export cars for a location or track, and the delete
+    Note that the Export Cars tool will only export cars for a location or track, and the delete
     cars tool when only showing cars on a track, will only delete those cars.</p>
 
    <a name="LocationReporter" id="LocationReporter"></a>
@@ -2061,6 +2153,11 @@
     any load to be received by the spur/industry. When the "Ship" field is blank, the program will
     only place the default empty "E" or default load "L" into the car. See <a href="#Sidings">Spurs</a>
     for how the program deals with the default loads.
+   </p>
+   
+   <p>The "Receive" pull down menu will only show the loads that the spur can service for that particular
+   car type. To review which car loads are available see the <a href="#LoadOptions">load
+     options</a> for this spur.
    </p>
 
    <p>
@@ -2353,7 +2450,7 @@
 
    <p>Due to the complexity of staging tracks, it is strongly recommended that you not use
     staging tracks until you become comfortable with how the program builds trains including the
-    ability to read the train build reports.</p>
+    ability to read the train's <a href="#BuildReports">build report</a>.</p>
 
    <p>
     If this is your first time using a computer program to create car movements, it is recommended
@@ -2444,7 +2541,7 @@
    </p>
 
    <p>Both options work the same with regards to placing custom car loads into empty cars, only
-    the number the number of spurs considered by the program changes. If a schedule demands a
+    the number of spurs considered by the program changes. If a schedule demands a
     certain car type, and that car type is departing staging, and the car's load is default empty,
     the program will place the custom load into that car if one of the two options is selected.</p>
 
@@ -2498,7 +2595,7 @@
    will not be blocked for you, you need to first terminate a new train into staging, those cars
    will have the blocking tags assigned to them. To enable this feature, see Edit Staging Track,
    "Optional Car Blocking" in the lower right corner of the window. There are many reasons why this
-   option will not block cars correctly. See the train's build report for more details.
+   option will not block cars correctly. See the train's <a href="#BuildReports">build report</a> for more details.
 
    <p>
     This feature is disabled if you've decided to <a href="#StagingAndCarLoads">generate custom
@@ -2676,7 +2773,7 @@
     you only have two tracks at a location that can hold exactly three cars each. You place three
     cars on each track for a total of six cars. You've configured the program to allow a local
     switcher to swap the cars on each track. Without planned pickups, when you build the switcher
-    the program would find both tracks full and the build report will state that there isn't any
+    the program would find both tracks full and the <a href="#BuildReports">build report</a> will state that there isn't any
     space available to move cars to either track. The program needs to find an empty spot for a car
     before it can plan a move. With planned pickups set to 100% for both tracks, it allows the
     program to plan three car set outs to the full track, because with planned pickups the space
@@ -2738,7 +2835,7 @@
 
    <h4>Show Cars</h4>
    <p>This will open a "Cars" window displaying only the cars for the track selected. Note that
-    the the export cars tool will only export cars for the track selected, and the delete cars tool
+    the Export Cars tool will only export cars for the track selected, and the delete cars tool
     will only delete the cars for the track selected.</p>
 
    <a name="LocationsTools" id="LocationsTools"></a>
@@ -2881,7 +2978,7 @@
 
    <p>To import a file, use the "Tools" menu in the upper left hand corner of the
     Tools-&gt;Operations-&gt;Cars window. Then select "Tools-&gt;Car Roster-&gt;Import from file".
-    Note that the program will only add cars that don't exist in the program's car roster. It the
+    Note that the program will only add cars that don't exist in the program's car roster. If the
     car already exists, the import will be skipped by the program.</p>
 
    <p>
@@ -3041,9 +3138,9 @@
 
    <h3>Save</h3>
    <p>Press "Save" to store the car's attributes after you've made changes. The program will
-    create a file (OperationsCarRoster.xml) in your JMRI directory in a folder called "operations".
-    A backup file with the last settings for all of your cars is also created each time the "Save"
-    button is pressed.</p>
+    create a file named "OperationsCarRoster.xml". You can find this file in JMRI-&gt; "profile
+    name" -&gt; operations. A backup file with the last settings for all of your cars is also
+    created each time the "Save" button is pressed.</p>
 
    <a name="EditCarAttributes" id="EditCarAttributes"></a>
    <h3>Edit Car Attributes</h3>
@@ -3353,7 +3450,7 @@
    <p>To import a file, use the "Tools" menu in the upper left hand corner of the
     Tools-&gt;Operations-&gt;Locomotives menu. Select "Tools-&gt;Locomotive Roster-&gt;Import from
     file. Note that the program will only add locomotives that don't exist in the program's
-    locomotive roster. It the locomotive already exists, it will be skipped by the program.</p>
+    locomotive roster. If the locomotive already exists, it will be skipped by the program.</p>
 
    <p>After importing your locomotives, you must save them if you want to keep them as part of
     your roster. Press the "Save" button located at the bottom of the Locomotives window, or select
@@ -3418,8 +3515,8 @@
    to enable this feature.
 
    <h3>Save</h3>
-   <p>Press "Save" to store the locomotive's settings. The program will create a file
-    (OperationsEngineRoster.xml) in your JMRI directory in a folder called "operations". A backup
+   <p>Press "Save" to store the locomotive's settings. The program will create a file named
+    "OperationsEngineRoster.xml". You can find this file in JMRI-&gt; "profile name" -&gt; operations. A backup
     file with the last settings for all of your locomotives is also created each time the "Save"
     button is pressed.</p>
 
@@ -3564,10 +3661,10 @@
     a location.</p>
 
    <h3>Save Route</h3>
-   <p>Press "Save Route" to save your route. The program will create a file
-    (OperationsRouteRoster.xml) in your JMRI directory in a folder called "operations". A backup
-    file with the last settings for all of your routes is also created each time the "Save Route"
-    button is pressed.</p>
+   <p>Press "Save Route" to save your route. The program will create a file named
+    "OperationsRouteRoster.xml". You can find this file in JMRI-&gt; "profile name" -&gt;
+    operations. A backup file with the last settings for all of your routes is also created each
+    time the "Save Route" button is pressed.</p>
 
    <a name="TrainTurnRoute" id="TrainTurnRoute"></a>
    <h3>Train Turn Route</h3>
@@ -3675,7 +3772,7 @@
     <img src="images/Trains.png">
    </p>
 
-   <p>The "Trains" window shows all of your trains. For each train, the there's a checkbox in
+   <p>The "Trains" window shows all of your trains. For each train, there's a checkbox in
     the "Build" column used to select which trains to build, print, and terminate. The buttons on
     the bottom of the page will build, print or terminate the trains selected. You can also modify
     an existing train using the "Edit" button for that train. For each train there's also an action
@@ -3691,12 +3788,12 @@
     selected shows all trains in your roster. When deselected, only trains that have the "Build"
     checkbox selected are shown. The "Messages" checkbox when selected will present a dialog box
     whenever a train build failure occurs explaining why the train didn't build. The "Build Report"
-    checkbox when selected provides a report detailing how the train was built by the program. Use
-    the "Print" or "Preview" button for a built train to see the build report. The program always
+    checkbox when selected provides a <a href="#BuildReports">Build Report</a> detailing how the train was built by the program. Use
+    the "Print" or "Preview" button for a built train to see the <a href="#BuildReports">build report</a>. The program always
     provides a "Report" button under the "Action" column for a train that fails to build.</p>
 
    <p>The "Preview" checkbox when selected, allows you to preview rather than printing your
-    train's Manifest or build report.</p>
+    train's Manifest or <a href="#BuildReports">build report</a>.</p>
 
    <p>
     If you select the "Generate CSV Manifest" from the <a href="#ManifestOptions">Options</a> window
@@ -3805,10 +3902,16 @@
    moved.
 
    <h3>Save Train</h3>
-   <p>Press "Save Train" to save your train. The program will create a file
-    (OperationsTrainRoster.xml) in your JMRI directory in a folder called "operations". A backup
-    file with the last settings for all of your trains is also created each time the "Save Train"
-    button is pressed.</p>
+   <p>Press "Save Train" to save your train. The program will create a file named
+    "OperationsTrainRoster.xml". You can find this file in JMRI-&gt; "profile name" -&gt;
+    operations. A backup file with the last settings for all of your trains is also created each
+    time the "Save Train" button is pressed.</p>
+
+   <a name="EditTrainTools" id="EditTrainTools"></a>
+   <h3>Edit Train Tools</h3>
+   <img src="images/EditTrainTools.png" alt="Operations Edit Train Tools Menu">
+
+   <p>In the upper left side of each "Edit Train" window is the "Tools" menu for that train.</p>
 
    <a name="TrainBuildOptions" id="TrainBuildOptions"></a>
    <h3>Train Build Options</h3>
@@ -4261,7 +4364,44 @@
    </table>
 
    <p>
-    FD = Final Destination <a name="TrainsTools" id="TrainsTools"></a>
+    FD = Final Destination
+    </p>
+
+   <a name="TrainConductor" id="TrainConductor"></a>
+   <h3>Train Conductor</h3>
+
+   The train conductor window provides a train manifest for each location that the train visits.
+   This real time window allows you to see the work needed at a location for a built train, and once
+   the work is completed by selected all of the work checkboxes, allows you to move the train to the
+   next location in the train's route.
+
+   <h4>Modifying a built train</h4>
+
+   <p>You can also modify the train's manifest by pressing the "Modify" button. The modify
+    button once pressed will ask you if you want to add cars to the train. If you answer yes a
+    "Cars" window will appear for the location being serviced. Press the "Set" button for the car
+    you want to add, and in the "Set Car" window under the section "Optional -- Normally Set by
+    Program" enter a destination, destination track, and train for that car. Note that by default, a
+    car's destination and track is disabled, but you can enable it under the "Tools" menu in the set
+    car window. Pressing "Save" should cause the program to ask you if you want to add the car to
+    the train.</p>
+
+   <p>To remove a car from the train, press the "Set" button, and the "Set Car" window should
+    appear. Pressing the set car "Save" button will ask you if you really want to remove the car
+    from the train.</p>
+
+   <h4>Yardmaster</h4>
+
+   <p>
+    The Yardmaster window provides the real time version of a <a href="#SwitchList">switch list</a>. To
+    see the work for all trains visiting a location, press the "Yardmaster" button in the <a
+     href="#Locations">locations</a> window. The Yardmaster window also allows you to modify a built
+    train.
+   </p>
+
+
+   <a name="TrainsTools" id="TrainsTools"></a>
+   
    <h3>Trains Tools</h3>
    <img src="images/TrainsPaneMenu.png" alt="Operations Trains window Tools Menu">
 
@@ -4628,13 +4768,13 @@
     href="#Trains">Trains</a> window. The button will become "Print" or "Preview" after the train is
    built. If you want to review how the train was built, select the "Build Reports" checkbox before
    pressing the "Print" or "Preview" button for the desired train. If the "Preview" checkbox is
-   selected, the program will generate the build report and Manifest and present them in preview
+   selected, the program will generate the <a href="#BuildReports">Build Report</a> and Manifest and present them in preview
    windows. If you want to build several trains without having to press individual buttons for each
    train, select the trains that you want built and press the "Build" button found at the bottom of
    the trains window. The program will then build Manifests for all of the selected trains.
 
    <p>If a train fails to build, the "Action" button will change its text to "Report". Pressing
-    "Report" will print or preview the build report for this train. Whenever a train fails to build,
+    "Report" will print or preview the <a href="#BuildReports">build report</a> for this train. Whenever a train fails to build,
     a build failure message will appear. If you want to disable this feature deselect the checkbox
     "Build Messages".</p>
 
@@ -4675,6 +4815,11 @@
    If you want to examine how a train was built, you can select the "Build Reports" checkbox at the
    bottom of the train window, and then press the "Print" or "Preview" button for that train. The
    program will then provide the train Manifest and build report for your viewing.
+
+   <p>You can also find a copy of the train build report file in the "operations" directory in a
+    subdirectory called "buildstatus". Each train build report has its own file with the .txt
+    extension and the name of the train as part of the file name. You can if you wish use a text
+    editor to view the train build report file.</p>
 
    <p>
     When a train build fails for any reason, the train action button becomes "Report" which allows
@@ -4724,9 +4869,9 @@
    <a name="ReadingBuildReport" id="ReadingBuildReport"></a>
 
    <h3>Reading the Build Report</h3>
-   OperationsPro&trade; when building a train creates a build report and saves it to a file.
+   OperationsPro&trade; when building a train creates a <a href="#BuildReports">Build Report</a> and saves it to a file.
    Normally you would access the build report from the <a href="#BuildingTrains">Trains</a> window
-   or from the edit train "Tools" menu. The text files can be found in the
+   or from the edit train "Tools" menu. The train build report text files can be found in the
    operations-&gt;buildstatus directory. The build report shows the steps the operations program
    goes through while building a train. The first page provides the route the train will travel and
    the number of car moves requested for each location. The report then shows the car type and
@@ -4875,7 +5020,7 @@
    for all of the selected trains. You can modify the look of your Manifests from the <a
     href="#PrintOptions">Manifest Print Options</a> window.
 
-   <p>You can also access a train's Manifest and build report from the "Tools" menu in the edit
+   <p>You can also access a train's Manifest and <a href="#BuildReports">Build Report</a> from the "Tools" menu in the edit
     train window. The "Tools" menu option allows you to recover the Manifest and build report for a
     train that has been terminated. Useful if you've accidentally terminated a train before printing
     out the train's Manifest. Below is a train Manifest using the "Standard" format, with blue text

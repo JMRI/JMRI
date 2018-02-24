@@ -6,8 +6,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -33,6 +31,6 @@ public class JsonBlockHttpServiceTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonBlockHttpServiceTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(JsonBlockHttpServiceTest.class);
 
 }

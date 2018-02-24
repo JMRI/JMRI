@@ -10,22 +10,22 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class MrcThrottleManagerTest {
+public class MrcThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     @Test
     public void testCTor() {
-        MrcSystemConnectionMemo memo = new MrcSystemConnectionMemo();
-        MrcInterfaceScaffold tc = new MrcInterfaceScaffold();
-        memo.setMrcTrafficController(tc);
-        jmri.InstanceManager.store(memo, MrcSystemConnectionMemo.class);
-        MrcThrottleManager t = new MrcThrottleManager(memo);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",tm);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        MrcSystemConnectionMemo memo = new MrcSystemConnectionMemo();
+        MrcInterfaceScaffold tc = new MrcInterfaceScaffold();
+        memo.setMrcTrafficController(tc);
+        jmri.InstanceManager.store(memo, MrcSystemConnectionMemo.class);
+        tm = new MrcThrottleManager(memo);
     }
 
     @After

@@ -1,10 +1,9 @@
 package jmri.jmrix.secsi.serialmon;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.secsi.SerialListener;
 import jmri.jmrix.secsi.SerialMessage;
 import jmri.jmrix.secsi.SerialReply;
-import jmri.jmrix.secsi.SerialTrafficController;
+import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 
 /**
  * Frame displaying (and logging) serial command messages
@@ -13,8 +12,11 @@ import jmri.jmrix.secsi.SerialTrafficController;
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
-    public SerialMonFrame() {
+    private SecsiSystemConnectionMemo memo = null;
+
+    public SerialMonFrame(SecsiSystemConnectionMemo _memo) {
         super();
+        memo = _memo;
     }
 
     @Override
@@ -25,23 +27,28 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     @Override
     protected void init() {
         // connect to TrafficController
-        SerialTrafficController.instance().addSerialListener(this);
+        memo.getTrafficController().addSerialListener(this);
+    }
+
+    /**
+     * Define system-specific help item
+     */
+    protected void setHelp() {
+        addHelpMenu("package.jmri.jmrix.secsi.serialmon.SerialMonFrame", true);  // NOI18N
     }
 
     @Override
     public void dispose() {
-        SerialTrafficController.instance().removeSerialListener(this);
+        memo.getTrafficController().removeSerialListener(this);
         super.dispose();
     }
 
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "string concatenation, efficiency not as important as clarity here")
     @Override
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 5) {
             nextLine("Truncated message of length " + l.getNumDataElements() + "\n",
                     l.toString());
-            return;
         } else if (l.isPoll()) {
             nextLine("Poll addr=" + l.getAddr() + "\n", l.toString());
         } else if (l.isXmt()) {
@@ -54,7 +61,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         }
     }
 
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "string concatenation, efficiency not as important as clarity here")
     @Override
     public synchronized void reply(SerialReply l) {  // receive a reply message and log it
         // check for valid length
@@ -64,18 +70,15 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             } else {
                 nextLine("Ack from node " + l.getElement(0) + "\n", l.toString());
             }
-            return;
         } else if (l.getNumDataElements() != 5) {
             nextLine("Truncated reply of length " + l.getNumDataElements() + ":" + l.toString() + "\n",
                     l.toString());
-            return;
         } else { // must be data reply
-            String s = "Receive addr=" + l.getAddr() + " IB=";
+            StringBuilder s = new StringBuilder(String.format("Receive addr=%d IB=", l.getAddr()));
             for (int i = 2; i < 4; i++) {
-                s += Integer.toHexString(l.getElement(i)) + " ";
+                s.append(Integer.toHexString(l.getElement(i))).append(" ");
             }
-            nextLine(s + "\n", l.toString());
-            return;
+            nextLine(s.append("\n").toString(), l.toString());
         }
     }
 

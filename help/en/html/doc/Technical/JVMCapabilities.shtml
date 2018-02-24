@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Java Version-Specific Features</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code road map">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -25,14 +25,16 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Java Version-Specific Features</h1>This page
+      <h1>JMRI: Java Version-Specific Features</h1>
+      <p>This page
       contains information about the compatibility and features of
       various Java versions. We use this information to decide on
       our <a href="TechRoadMap.shtml">road map</a> for future JMRI
       versions. (This page is a bit long, and perhaps overdue for a
       "historical" page)
 
-      <h2>Capabilities</h2>This section lists new Java
+      <h2>Capabilities</h2>
+      <p>This section lists new Java
       capabilities, and which Java version they first appeared in.
       The "JDK" column shows the first Java Development Kit that
       could compile the feature; the "JRE" column lists the first
@@ -326,7 +328,8 @@
       </table>(* indicates that a compatibility library is used in
       the early version)
 
-      <h2>JRE availability</h2>This section lists the most recent
+      <h2>JRE availability</h2>
+      <p>This section lists the most recent
       Java Runtime version available for various operating system
       versions. Please note that not all users of that operating
       system will have updated to this Java version; many will be
@@ -340,10 +343,14 @@
       finds numerous pages that show how to install Java 1.7 on XP
       or XP SP2.</p>
 
-      <p>Java 9 is not released yet, but pre-release information is
-      available on the <a href=
-      "https://jdk9.java.net/jdk9_supported_platforms.html">supported
-      platforms page</a>.</p>
+      <p>Oracle has announced that "Java SE 9 will be a short term release, and users should immediately transition to the next release (18.3) when available".
+      That 18.3 refers to the statement "Oracle has proposed a new version scheme (YY.M) starting in March, 2018", 
+      hence 18.3 for that version. But they've also said that: "
+      Java SE 18.3 will be a short term release and users should transition to the next release when available"
+      So there's some uncertainty coming in the Java releases. For more info, please
+      see the 
+      <a href=
+      "http://www.oracle.com/technetwork/java/eol-135779.html">Oracle Java SE Support Roadmap page</a>.</p>
 
       <table border="1">
         <tr>

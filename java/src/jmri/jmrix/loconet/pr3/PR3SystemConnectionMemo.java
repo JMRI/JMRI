@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.pr3;
 
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.ThrottleManager;
@@ -17,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * Lightweight class to denote that a PR3 is active
  *
  * @author Bob Jacobsen Copyright (C) 2010
- * @author B. Milhaupt  Copyright (C) 2017
+ * @author B. Milhaupt Copyright (C) 2017
  */
 public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
 
@@ -39,9 +40,6 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         if (mode == MS100MODE) {
             return (T) super.get(T);
         }
-        if (T.equals(jmri.ProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();
         }
@@ -55,7 +53,10 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         if (T.equals(jmri.PowerManager.class)) {
             return (T) getPowerManager();
         }
-        return null; // nothing, by default
+        if(T.equals(jmri.ConsistManager.class)){
+           return (T) getConsistManager();
+        }
+        return null;
     }
 
     final static int PR3MODE = 0x00;
@@ -74,17 +75,20 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         InstanceManager.setThrottleManager(
                 getThrottleManager());
 
-        jmri.InstanceManager.setProgrammerManager(
-                getProgrammerManager());
-        // Establish a ShutDownTask so that the PR3 should be be returned to 
+        if (getProgrammerManager().isAddressedModePossible()) {
+            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+        }
+        if (getProgrammerManager().isGlobalProgrammerAvailable()) {
+            InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+        }
+        // Establish a ShutDownTask so that the PR3 should be be returned to
         // LocoNet Interface mode at shutdown
-                // Finally, create and register a shutdown task to ensure clean exit
+        // Finally, create and register a shutdown task to ensure clean exit
         if (restoreToLocoNetInterfaceModeTask == null) {
             restoreToLocoNetInterfaceModeTask = new QuietShutDownTask("Restore PR3 to LocoNet Interface Mode") {    // NOI18N
                 @Override
                 public boolean execute() {
-                    
-                    
+
                     if (mode == PR3MODE) {
                         // try to change from "standalone programmer" to "LocoNet interface" mode
                         LnTrafficController tc;
@@ -135,9 +139,6 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         if (mode == MS100MODE) {
             return super.provides(type);
         }
-        if (type.equals(jmri.ProgrammerManager.class)) {
-            return true;
-        }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
             return getProgrammerManager().isGlobalProgrammerAvailable();
         }
@@ -151,13 +152,16 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         if (type.equals(jmri.PowerManager.class)) {
             return true;
         }
+        if(type.equals(jmri.ConsistManager.class)){
+           return(getConsistManager()!=null);
+        } 
         return false;
     }
     //private jmri.jmrix.loconet.pr2.LnPr2PowerManager powerManager;
 
     /**
      * Get the connection's LnPowerManager.
-     * 
+     *
      * @return the LocoNet power manager; may be null in some circumstances
      */
     @Override
@@ -181,7 +185,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         mode = MS100MODE;
 
         tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
-        log.debug("ThrottleTransmitted configured with :" + mTurnoutExtraSpace); // NOI18N
+        log.debug("ThrottleTransmitted configured with :{}", mTurnoutExtraSpace); // NOI18N
 
         InstanceManager.store(super.getPowerManager(), jmri.PowerManager.class);
 
@@ -193,17 +197,28 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
 
         InstanceManager.setThrottleManager(super.getThrottleManager());
 
-        jmri.InstanceManager.setProgrammerManager(getProgrammerManager());
+        if (getProgrammerManager().isAddressedModePossible()) {
+            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+        }
+        if (getProgrammerManager().isGlobalProgrammerAvailable()) {
+            InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+        }
 
         InstanceManager.setReporterManager(getReporterManager());
 
-        InstanceManager.addClockControl(getClockControl());
+        jmri.ClockControl cc = getClockControl();
+        // make sure InstanceManager knows about that
+        InstanceManager.store(cc, jmri.ClockControl.class);
+        InstanceManager.setDefault(jmri.ClockControl.class, cc);
 
     }
 
     @Override
     public void dispose() {
         InstanceManager.deregister(this, PR3SystemConnectionMemo.class);
+        if(tm!=null){
+           tm.dispose();
+        }
         super.dispose();
     }
     private final static Logger log = LoggerFactory.getLogger(PR3SystemConnectionMemo.class);

@@ -7,8 +7,8 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -17,6 +17,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.NamedBeanPropertyDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * It does include, with AbstractNamedBean, the implementation of the normalized
  * user name.
  *
+ * @param <E> the class this manager supports
  * @see jmri.NamedBean#normalizeUserName
  *
  * @author Bob Jacobsen Copyright (C) 2003
@@ -42,16 +44,14 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /**
      * By default, register this manager to store as configuration information.
      * Override to change that.
-     *
      */
     @OverridingMethodsMustInvokeSuper
     protected void registerSelf() {
         log.debug("registerSelf for config of type {}", getClass());
-        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cm != null) {
+        InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent((cm) -> {
             cm.registerConfig(this, getXMLOrder());
             log.debug("registering for config of type {}", getClass());
-        }
+        });
     }
 
     @Override
@@ -66,10 +66,9 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @Override
     @OverridingMethodsMustInvokeSuper
     public void dispose() {
-        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cm != null) {
+        InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent((cm) -> {
             cm.deregister(this);
-        }
+        });
         _tsys.clear();
         _tuser.clear();
     }
@@ -100,7 +99,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * @return requested Turnout object or null if none exists
      */
     protected E getInstanceByUserName(String userName) {
-        return _tuser.get(NamedBean.normalizeUserName(userName));
+        String normalizedUserName = NamedBean.normalizeUserName(userName);
+        return normalizedUserName != null ? _tuser.get(normalizedUserName) : null;
     }
 
     /**
@@ -124,7 +124,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      */
     @Override
     public E getBeanByUserName(String userName) {
-        return _tuser.get(NamedBean.normalizeUserName(userName));
+        String normalizedUserName = NamedBean.normalizeUserName(userName);
+        return normalizedUserName != null ? _tuser.get(normalizedUserName) : null;
     }
 
     /**
@@ -136,9 +137,12 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      */
     @Override
     public E getNamedBean(String name) {
-        E b = getBeanByUserName(NamedBean.normalizeUserName(name));
-        if (b != null) {
-            return b;
+        String normalizedUserName = NamedBean.normalizeUserName(name);
+        if (normalizedUserName != null) {
+            E b = getBeanByUserName(normalizedUserName);
+            if (b != null) {
+                return b;
+            }
         }
         return getBeanBySystemName(name);
     }
@@ -248,6 +252,15 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     }
 
     /**
+     * By default there are no custom properties.
+     * @return empty list
+     */
+    @Override
+    public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
+        return new LinkedList<>();
+    }
+
+    /**
      * The PropertyChangeListener interface in this class is intended to keep
      * track of user name changes to individual NamedBeans. It is not completely
      * implemented yet. In particular, listeners are not added to newly
@@ -256,57 +269,44 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * @param e the event
      */
     @Override
+    @SuppressWarnings("unchecked") // The cast of getSource() to E can't be checked due to type erasure, but we catch errors
     @OverridingMethodsMustInvokeSuper
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("UserName")) {
             String old = (String) e.getOldValue();  // previous user name
             String now = (String) e.getNewValue();  // current user name
-            E t = (E) e.getSource();
-            if (old != null) {
-                _tuser.remove(old); // remove old name for this bean
-            }
-            if (now != null) {
-                // was there previously a bean with the new name?
-                if (_tuser.get(now) != null && _tuser.get(now) != t) {
-                    // If so, clear. Note that this is not a "move" operation
-                    _tuser.get(now).setUserName(null);
+            try { // really should always succeed
+                E t = (E) e.getSource();
+                if (old != null) {
+                    _tuser.remove(old); // remove old name for this bean
                 }
+                if (now != null) {
+                    // was there previously a bean with the new name?
+                    if (_tuser.get(now) != null && _tuser.get(now) != t) {
+                        // If so, clear. Note that this is not a "move" operation
+                        _tuser.get(now).setUserName(null);
+                    }
 
-                _tuser.put(now, t); // put new name for this bean
+                    _tuser.put(now, t); // put new name for this bean
+                }
+            } catch (ClassCastException ex) {
+                log.error("Received event of wrong type {}", e.getSource().getClass().getName(), ex);
             }
 
-            //called DisplayListName, as DisplayName might get used at some point by a NamedBean
+            // called DisplayListName, as DisplayName might get used at some point by a NamedBean
             firePropertyChange("DisplayListName", old, now); //IN18N
         }
     }
 
     @Override
     public String[] getSystemNameArray() {
-        String[] arr = new String[_tsys.size()];
-        Enumeration<String> en = _tsys.keys();
-        int i = 0;
-        while (en.hasMoreElements()) {
-            arr[i] = en.nextElement();
-            i++;
-        }
-        java.util.Arrays.sort(arr);
-        return arr;
+        return this.getSystemNameList().toArray(new String[_tsys.size()]);
     }
 
     @Override
     public List<String> getSystemNameList() {
-        String[] arr = new String[_tsys.size()];
-        List<String> out = new ArrayList<>();
-        Enumeration<String> en = _tsys.keys();
-        int i = 0;
-        while (en.hasMoreElements()) {
-            arr[i] = en.nextElement();
-            i++;
-        }
-        jmri.util.StringUtil.sort(arr);
-        for (i = 0; i < arr.length; i++) {
-            out.add(arr[i]);
-        }
+        List<String> out = new ArrayList<>(_tsys.keySet());
+        out.sort(null);
         return out;
     }
 
@@ -443,9 +443,21 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * @return A system name in standard normalized form
      */
     @CheckReturnValue
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+    @Override
+    @Nonnull
+    public String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
         return inputName;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return always 'VALID' to let undocumented connection system
+     *         managers pass entry validation.
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return NameValidity.VALID;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractManager.class);

@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
 
   <title>JMRI: Startup Scripts</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -26,7 +25,7 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI Startup Scripts</h1>
+      <h1>JMRI: Startup Scripts</h1>
 
       <p>Although JMRI itself is constructed to "run anywhere",
       starting a JMRI application requires commands that are
@@ -179,31 +178,6 @@
       <p>To register the bundles with macOS, they need to be
       copied from the distributed disk image onto the user's disk
       drive.</p>
-
-      <h3>Bundle Details</h3>JMRI has registered five application
-      signatures:
-
-      <dl>
-        <dt>JMRD</dt>
-
-        <dd>DecoderPro</dd>
-
-        <dt>JMRP</dt>
-
-        <dd>PanelPro</dd>
-
-        <dt>JMRI</dt>
-
-        <dd>(generic JMRI, was JMRIdemo; no longer used)</dd>
-
-        <dt>JMRL</dt>
-
-        <dd>LocoTools (no longer used)</dd>
-
-        <dt>JMRC</dt>
-
-        <dd>Cornwall demo (no longer used)</dd>
-      </dl>
 
       <h3>Script Details</h3>Each bundle has a startup bash shell
       script in the Contents/MacOSX directory what does the actual
@@ -588,7 +562,9 @@
             interface.</li>
           </ul>
         </li>
-      </ol><!--#include virtual="/Footer" -->
+      </ol>
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

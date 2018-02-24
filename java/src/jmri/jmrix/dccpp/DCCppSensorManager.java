@@ -7,22 +7,38 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manage the DCC++ specific Sensor implementation.
- *
- * System names are "DCCppSnnn", where nnn is the sensor number without padding.
+ * Implement Sensor Manager for DCC++ systems.
+ * <p>
+ * System names are "DxppSnnn", where Dx is the system prefix and nnn is the sensor number without padding.
  *
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Mark Underwood Copyright (C) 2015
  */
 public class DCCppSensorManager extends jmri.managers.AbstractSensorManager implements DCCppListener {
 
+    protected DCCppTrafficController tc = null;
+    protected String prefix = null;
+
+    /**
+     * Create an new DCC++ SensorManager.
+     * Has to register for DCC++ events.
+     *
+     * @param controller the TrafficController to connect the SensorManager to
+     * @param prefix the system connection prefix string as set for this connection in SystemConnectionMemo
+     */
+    public DCCppSensorManager(DCCppTrafficController controller, String prefix) {
+        tc = controller;
+        tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
+        this.prefix = prefix;
+        DCCppMessage msg = DCCppMessage.makeSensorListMsg();
+        // then Send the version request to the controller
+        tc.sendDCCppMessage(msg, this);
+    }
+
     @Override
     public String getSystemPrefix() {
         return prefix;
     }
-    protected String prefix = null;
-
-    protected DCCppTrafficController tc = null;
 
     @Deprecated
     static public DCCppSensorManager instance() {
@@ -38,19 +54,6 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     }
 
     // DCCpp specific methods
-
-    /**
-     * Ctor
-     * Has to register for DCC++ events.
-     */
-    public DCCppSensorManager(DCCppTrafficController controller, String prefix) {
-        tc = controller;
-        tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
-        this.prefix = prefix;
-        DCCppMessage msg = DCCppMessage.makeSensorListMsg();
-        //Then Send the version request to the controller
-        tc.sendDCCppMessage(msg, this);
-    }
 
     @Override
     public Sensor createNewSensor(String systemName, String userName) throws IllegalArgumentException {
@@ -78,12 +81,14 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         if (l.isSensorDefReply()) {
             addr = l.getSensorDefNumInt();
             if (log.isDebugEnabled()) {
-                log.debug("SensorDef Reply for Encoder " + Integer.toString(addr));
+                log.debug("SensorDef Reply for Encoder {}", Integer.toString(addr));
             }
             
         } else if (l.isSensorReply()) {
             addr = l.getSensorNumInt();
-            log.debug("Sensor Status Reply for Encoder" + Integer.toString(addr));
+            if (log.isDebugEnabled()) {
+                log.debug("Sensor Status Reply for Encoder {}", Integer.toString(addr));
+            }
         }
         if (addr >= 0) {
             String s = prefix + typeLetter() + (addr);
@@ -117,7 +122,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message {}", msg.toString());
         }
     }
 
@@ -138,7 +143,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
                 encoderAddress = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
                 input = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the cab and input format of nn:xx");
+                log.error("Unable to convert {} into the cab and input format of nn:xx", curAddress);
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningAddressAsNumber"),
                         Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
                 throw new JmriException("Hardware Address passed should be a number");
@@ -149,7 +154,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
             try {
                 iName = Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+                log.error("Unable to convert {} Hardware Address to a number", curAddress);
                 throw new JmriException("Hardware Address passed should be a number");
             }
         }
@@ -193,7 +198,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     }
 
     /**
-     * Get the bit address from the system name
+     * Get the bit address from the system name.
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
@@ -203,32 +208,33 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
                     systemName, getSystemPrefix(), typeLetter());
             return (0);
         }
-        // name must be in the DCCppSnnnnn format (DCCPP is user configurable)
+        // name must be in the DCCppSnnnnn format (DCCPP prefix is user configurable)
         int num = 0;
         try {
             num = Integer.valueOf(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())).intValue();
         } catch (Exception e) {
-            log.debug("illegal character in number field of system name: " + systemName);
+            log.debug("invalid character in number field of system name: {}", systemName);
             return (0);
         }
         if (num <= 0) {
-            log.warn("invalid DCC++ sensor system name: " + systemName);
+            log.debug("invalid DCC++ sensor system name: {}", systemName);
             return (0);
         } else if (num > DCCppConstants.MAX_ACC_DECODER_JMRI_ADDR) {
-            log.warn("bit number out of range in DCC++ sensor system name: " + systemName);
+            log.debug("bit number out of range in DCC++ sensor system name: {}", systemName);
             return (0);
         }
         return (num);
     }
 
     /**
-     * Public method to validate system name format returns 'true' if system
-     * name has a valid format, else returns 'false'
+     * Validate system name format.
+     *
+     * @return VALID if system name has a valid format, else returns INVALID
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return (getBitFromSystemName(systemName) != 0);
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**
@@ -236,7 +242,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
         return entryToolTip;
     }
 

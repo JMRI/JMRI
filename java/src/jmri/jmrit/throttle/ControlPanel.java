@@ -206,6 +206,15 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
 
     /**
+     * is this enabled?
+     * @return true if enabled
+     */
+    @Override
+    public boolean isEnabled() {
+        return speedControllerEnable;
+    }
+    
+    /**
      * Set the GUI to match that the loco is set to forward.
      *
      * @param isForward True if the loco is set to forward, false otherwise.
@@ -374,9 +383,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     }
                     return;
                 }
-                break;
-            default:
-                log.warn("Unhandled slider type: {}", displaySlider);
                 break;
         }
         sliderPanel.setVisible(true);
@@ -930,7 +936,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * Perform an emergency stop.
      *
      */
-    private void stop() {
+    public void stop() {
         if (this.throttle == null) {
             return;
         }
@@ -1425,6 +1431,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         }
         if ((throttle != null) && (_displaySlider != STEPDISPLAY)) { // Update UI depending on function state
             try {
+                // this uses reflection because the user is allowed to name a 
+                // throttle function that triggers this action. 
                 java.lang.reflect.Method getter = throttle.getClass().getMethod("get" + switchSliderFunction, (Class[]) null);
 
                 Boolean state = (Boolean) getter.invoke(throttle, (Object[]) null);
@@ -1434,7 +1442,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     setSpeedController(SLIDERDISPLAY);
                 }
 
-            } catch (java.lang.Exception ex) {
+            } catch (IllegalAccessException|NoSuchMethodException|java.lang.reflect.InvocationTargetException ex) {
                 log.debug("Exception in setSwitchSliderFunction: " + ex + " while looking for function " + switchSliderFunction);
             }
         }

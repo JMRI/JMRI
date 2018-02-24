@@ -54,24 +54,22 @@ public class DefaultSignalMastManagerXml
             if (repeaterList.size() > 0) {
                 //Element repeatElem= new Element("signalmastrepeaters");
                 for (SignalMastRepeater smr : repeaterList) {
-                    if (smr.getMasterMast() != null && smr.getSlaveMast() != null) {
-                        Element e = new Element("signalmastrepeater");
-                        e.addContent(new Element("masterMast").addContent(smr.getMasterMastName()));
-                        e.addContent(new Element("slaveMast").addContent(smr.getSlaveMastName()));
-                        e.addContent(new Element("enabled").addContent(smr.getEnabled() ? "true" : "false"));
-                        switch (smr.getDirection()) {
-                            case 1:
-                                e.addContent(new Element("update").addContent("MasterToSlave"));
-                                break;
-                            case 2:
-                                e.addContent(new Element("update").addContent("SlaveToMaster"));
-                                break;
-                            default:
-                                e.addContent(new Element("update").addContent("BothWay"));
-                                break;
-                        }
-                        element.addContent(e);
+                    Element e = new Element("signalmastrepeater");
+                    e.addContent(new Element("masterMast").addContent(smr.getMasterMastName()));
+                    e.addContent(new Element("slaveMast").addContent(smr.getSlaveMastName()));
+                    e.addContent(new Element("enabled").addContent(smr.getEnabled() ? "true" : "false"));
+                    switch (smr.getDirection()) {
+                        case 1:
+                            e.addContent(new Element("update").addContent("MasterToSlave"));
+                            break;
+                        case 2:
+                            e.addContent(new Element("update").addContent("SlaveToMaster"));
+                            break;
+                        default:
+                            e.addContent(new Element("update").addContent("BothWay"));
+                            break;
                     }
+                    element.addContent(e);
                 }
                 //element.add(repeatElem);
             }
@@ -170,6 +168,22 @@ public class DefaultSignalMastManagerXml
         }
 
         list = shared.getChildren("dccsignalmast");
+        if (list != null) {
+            for (int i = 0; i < list.size(); i++) {
+                Element e = list.get(i);
+                String adapterName = e.getAttribute("class").getValue();
+                log.debug("load via " + adapterName);
+                try {
+                    XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                    // and do it
+                    adapter.load(e, null);
+                } catch (Exception ex) {
+                    log.error("Exception while loading {}: {}", e.getName(), ex, ex);
+                }
+            }
+        }
+
+        list = shared.getChildren("olcbsignalmast");
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
                 Element e = list.get(i);

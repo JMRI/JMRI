@@ -24,8 +24,11 @@ public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements E
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // the following code sets the frame's initial state
         {
@@ -54,11 +57,17 @@ public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements E
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.ecos.swing.packetgen.PacketGenFrame";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         if (memo != null) {
@@ -67,6 +76,9 @@ public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements E
         return Bundle.getMessage("MenuItemSendPacket");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents(EcosSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -85,10 +97,16 @@ public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements E
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void message(EcosMessage m) {
     }  // ignore replies
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reply(EcosReply r) {
     } // ignore replies

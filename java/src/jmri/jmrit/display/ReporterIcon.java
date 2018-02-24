@@ -2,7 +2,6 @@ package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
 import jmri.Reporter;
@@ -40,9 +39,6 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
 
         @Override
         public void setTextMarginMenu(JPopupMenu popup) {
-            JMenu colorMenu = new JMenu(Bundle.getMessage("FontBackgroundColor"));
-            makeColorMenu(colorMenu, BACKGROUND_COLOR);
-            popup.add(colorMenu);
         }
     }
     // the associated Reporter object

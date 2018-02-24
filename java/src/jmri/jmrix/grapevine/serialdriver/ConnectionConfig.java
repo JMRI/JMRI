@@ -3,10 +3,11 @@ package jmri.jmrix.grapevine.serialdriver;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.nodeconfig.NodeConfigAction;
 
 /**
- * Definition of objects to handle configuring a Grapevine layout connection
+ * Definition of objects to handle configuring a Grapevine layout connection.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007
  */
@@ -21,28 +22,29 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no prexisting adapter.
      */
     public ConnectionConfig() {
         super();
     }
 
-    JButton b = new JButton("Configure nodes");
+    JButton b = new JButton(Bundle.getMessage("ConfigNodesTitle"));
 
     @Override
     public void loadDetails(JPanel details) {
+        setInstance();
 
-        b.addActionListener(new NodeConfigAction());
+        // have to embed the usual one in a new JPanel
+        b.addActionListener(new NodeConfigAction((GrapevineSystemConnectionMemo)adapter.getSystemConnectionMemo()));
         if (!additionalItems.contains(b)) {
             additionalItems.add(b);
         }
         super.loadDetails(details);
-
     }
 
     @Override
     public String name() {
-        return "Grapevine (ProTrak) Layout Bus";
+        return Bundle.getMessage("GrapevineSerialName");
     }
 
     @Override
@@ -52,6 +54,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     protected void setInstance() {
-        adapter = SerialDriverAdapter.instance();
+        if (adapter == null) {
+           adapter = new SerialDriverAdapter();
+        }
     }
+
 }

@@ -53,14 +53,19 @@ public class CbusEventFilterFrame extends JmriJFrame {
     protected void init() {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         super.dispose();
-//        _console.filterFrameClosed();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         setTitle(title());
         // Panels will be added downwards
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -129,9 +134,8 @@ public class CbusEventFilterFrame extends JmriJFrame {
      * desired.
      */
     protected void addHelpMenu() {
-
         // *** TO DO
-//     addHelpMenu("package.jmri.jmrix.can.cbus.CbusEventFilterFrame", true);
+        //     addHelpMenu("package.jmri.jmrix.can.cbus.CbusEventFilterFrame", true);
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusEventFilterFrame.class);

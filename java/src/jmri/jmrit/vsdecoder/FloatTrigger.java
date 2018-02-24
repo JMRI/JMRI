@@ -120,7 +120,7 @@ class FloatTrigger extends Trigger implements PropertyChangeListener {
 
     @Override
     public void setXml(Element e) {
-        log.warn("FloatTrigger.setXml()");
+        log.debug("FloatTrigger.setXml()");
 
         //Get common stuff
         super.setXml(e);

@@ -68,6 +68,9 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
     public AbstractLoaderPane() {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     abstract public String getHelpTarget();
 
@@ -78,10 +81,11 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
     protected void addOptionsPanel() {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
-        super.initComponents();
-
+    public void initComponents() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         {
@@ -506,6 +510,9 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         inputFileName.setToolTipText("");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         updateDownloadVerifyButtons();

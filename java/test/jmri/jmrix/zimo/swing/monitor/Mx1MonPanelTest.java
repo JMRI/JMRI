@@ -2,28 +2,25 @@ package jmri.jmrix.zimo.swing.monitor;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of Mx1MonPanel
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class Mx1MonPanelTest {
+public class Mx1MonPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testMemoCtor() {
-        Mx1MonPanel action = new Mx1MonPanel();
-        Assert.assertNotNull("exists", action);
-    }
-
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new Mx1MonPanel();
+        helpTarget="package.jmri.jmrix.zimo.swing.monitor.Mx1MonPanel";
+        title="Mx1_: Command Monitor";
     }
 
+    @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

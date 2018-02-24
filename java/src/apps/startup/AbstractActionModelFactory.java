@@ -49,7 +49,7 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
 
     @Override
     public void editModel(StartupModel model, Component parent) {
-        if (this.getModelClass().isInstance(model)) {
+        if (model instanceof AbstractActionModel && this.getModelClass().isInstance(model)) {
             JList<String> actions = new JList<>(StartupActionModelUtil.getDefault().getNames());
             JComboBox<String> connections = new JComboBox<>();
             JPanel message = this.getDialogMessage(actions, connections);

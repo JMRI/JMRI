@@ -30,10 +30,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2014
  */
-public class PortalManager extends AbstractManager
+public class PortalManager extends AbstractManager<Portal>
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
 
-    private static int _nextSName = 1;
+    private int _nextSName = 1;
 
     public PortalManager() {
         super();
@@ -54,7 +54,7 @@ public class PortalManager extends AbstractManager
         return 'P';
     }
 
-    /**
+    /*
      * Method to create a new Portal. Returns null if a
      * Portal with the same systemName or userName already exists. 
      *
@@ -106,6 +106,8 @@ public class PortalManager extends AbstractManager
      * Method to get an existing Portal. First looks up assuming that name is a
      * User Name. If this fails looks up assuming that name is a System Name. If
      * both fail, returns null.
+     * @param name - either System name or user name
+     * @return Portal, if found
      */
     public Portal getPortal(String name) {
         Portal portal = getByUserName(name);
@@ -119,14 +121,14 @@ public class PortalManager extends AbstractManager
         if (name == null || name.trim().length() == 0) {
             return null;
         }
-        return (Portal) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     public Portal getByUserName(String key) {
         if (key == null || key.trim().length() == 0) {
             return null;
         }
-        return (Portal) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     public Portal providePortal(String name) {

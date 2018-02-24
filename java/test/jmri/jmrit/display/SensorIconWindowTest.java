@@ -1,29 +1,16 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.Point;
-import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert;
-import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComponentOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
-import org.netbeans.jemmy.operators.WindowOperator;
-
 
 /**
  * Swing tests for the SensorIcon
@@ -32,29 +19,6 @@ import org.netbeans.jemmy.operators.WindowOperator;
  * @author  Paul Bender Copyright 2017
  */
 public class SensorIconWindowTest {
-
-    private void closeFrameWithConfirmations(WindowOperator jo){
-        // if OK to here, close window
-        jo.requestClose();
-
-        // that pops dialog, find and press Delete
-        JDialogOperator d = new JDialogOperator(Bundle.getMessage("ReminderTitle"));
-
-        // Find the button that deletes the panel
-        JButtonOperator bo = new JButtonOperator(d,Bundle.getMessage("ButtonDeletePanel"));
-
-        // Click button to delete panel and close window
-        bo.push();
-
-        // that pops dialog, find and press Yes - Delete
-        d = new JDialogOperator(Bundle.getMessage("DeleteVerifyTitle"));
-
-        // Find the button that deletes the panel
-        bo = new JButtonOperator(d,Bundle.getMessage("ButtonYesDelete"));
-
-        // Click button to delete panel and close window
-        bo.push();
-    }
 
     @Test
     public void testPanelEditor() throws Exception {
@@ -105,8 +69,8 @@ public class SensorIconWindowTest {
         eo.requestClose();
 
         // close the panel target frame.
-        JFrameOperator to = new JFrameOperator(panel.getTargetFrame());
-        closeFrameWithConfirmations(to);
+        EditorFrameOperator to = new EditorFrameOperator(panel.getTargetFrame());
+        to.closeFrameWithConfirmations();
     }
 
     @Test
@@ -165,8 +129,8 @@ public class SensorIconWindowTest {
         Assert.assertEquals("state after two clicks", Sensor.ACTIVE, sn.getState());
 
         // close the panel editor frame
-        JFrameOperator eo = new JFrameOperator(panel);
-        closeFrameWithConfirmations(eo);
+        EditorFrameOperator to = new EditorFrameOperator(panel);
+        to.closeFrameWithConfirmations();
     }
 
     // The minimal setup for log4J

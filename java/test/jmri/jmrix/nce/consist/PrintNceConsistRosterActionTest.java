@@ -7,8 +7,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -35,6 +33,6 @@ public class PrintNceConsistRosterActionTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintNceConsistRosterActionTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(PrintNceConsistRosterActionTest.class);
 
 }

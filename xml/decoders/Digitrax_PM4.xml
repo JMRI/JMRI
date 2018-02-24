@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2004, 2007, 2015, 2017 All rights reserved -->
+<!--                                                                         -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under   -->
+<!-- the terms of version 2 of the GNU General Public License as published   -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy      -->
+<!-- of this license.                                                        -->
+<!--                                                                         -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT     -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or   -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License    -->
+<!-- for more details. -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
+                showEmptyPanes="no">
+
+    <version author="Bob Jacobsen" version="1" lastUpdated="20171121" />
+
+    <decoder>
+
+        <family name="PM4x" mfg="Digitrax">
+            <model model="PM4"/>
+            <model model="PM42"/>
+        </family>
+
+        <programming direct="no" paged="no" register="no" ops="no">
+            <mode>LOCONETBDOPSWMODE</mode>
+        </programming>
+
+        <variables>
+          <variable CV="1" comment="Board address" item="Short Address" default="01" infoOnly="yes">
+            <!-- needed to set the board address value -->
+            <decVal min="1" max="128" />
+            <label>Board Address (Board ID)</label>
+          </variable>
+
+          <variable CV="112.01" item="Trip Current 1" default="0"
+                tooltip="OpSw01">
+            <enumVal>
+              <enumChoice><choice>Thrown</choice></enumChoice>
+              <enumChoice><choice>Closed</choice></enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="112.02" item="Trip Current 2" default="0"
+                tooltip="OpSw02">
+            <enumVal>
+              <enumChoice><choice>Thrown</choice></enumChoice>
+              <enumChoice><choice>Closed</choice></enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="112.09" item="Trip Current 3" default="0"
+                tooltip="OpSw09">
+            <enumVal>
+              <enumChoice><choice>Thrown</choice></enumChoice>
+              <enumChoice><choice>Closed</choice></enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="112.03" item="Section 1 Trip Speed2" default="0"
+                tooltip="OpSw03" include="PM42">
+            <enumVal>
+              <enumChoice><choice>Thrown</choice></enumChoice>
+              <enumChoice><choice>Closed</choice></enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="112.05" item="Section 1 Trip Speed1" default="0"
+                tooltip="OpSw05">
+            <enumVal>
+              <enumChoice><choice>Normal</choice></enumChoice>
+              <enumChoice><choice>Slow</choice></enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="112.06" item="Section 1 AutoReversing Mode" default="0"
+                tooltip="OpSw06">
+            <enumVal>
+              <enumChoice><choice>Short-circuit Protection (pins 5 and 6 unconnected)</choice></enumChoice>
+              <enumChoice><choice>Autoreversing (with pin E shorted to pin 5 and pin F shorted to pin 6)</choice></enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="112.11" item="Section 2 Trip Speed2" default="0"
+                tooltip="OpSw11" include="PM42">
+            <enumVal>
+              <enumChoice><choice>Thrown</choice></enumChoice>
+              <enumChoice><choice>Closed</choice></enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="112.13" item="Section 2 Trip Speed1" default="0"
+                tooltip="OpSw13">
+            <enumVal>
+              <enumChoice><choice>Normal</choice></enumChoice>
+              <enumChoice><choice>Slow</choice></enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="112.14" item="Section 2 AutoReversing Mode" default="0"
+                tooltip="OpSw14">
+            <enumVal>
+              <enumChoice><choice>Short-circuit Protection (pins 9 and 10 unconnected)</choice></enumChoice>
+              <enumChoice><choice>Autoreversing (with pin K shorted to pin 9 and pin L shorted to pin 10)</choice></enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="112.19" item="Section 3 Trip Speed2" default="0"
+                tooltip="OpSw019" include="PM42">
+            <enumVal>
+              <enumChoice><choice>Thrown</choice></enumChoice>
+              <enumChoice><choice>Closed</choice></enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="112.21" item="Section 3 Trip Speed1" default="0"
+                tooltip="OpSw21">
+            <enumVal>
+              <enumChoice><choice>Normal</choice></enumChoice>
+              <enumChoice><choice>Slow</choice></enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="112.22" item="Section 3 AutoReversing Mode" default="0"
+                tooltip="OpSw22">
+            <enumVal>
+              <enumChoice><choice>Short-circuit Protection (pins 13 and 14 unconnected)</choice></enumChoice>
+              <enumChoice><choice>Autoreversing (with pin P shorted to pin 13 and pin R shorted to pin 14)</choice></enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="112.27" item="Section 4 Trip Speed2" default="0"
+                tooltip="OpSw27" include="PM42">
+            <enumVal>
+              <enumChoice><choice>Thrown</choice></enumChoice>
+              <enumChoice><choice>Closed</choice></enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable CV="112.29" item="Section 4 Trip Speed1" default="0"
+                tooltip="OpSw29">
+            <enumVal>
+              <enumChoice><choice>Slow</choice></enumChoice>
+              <enumChoice><choice>Normal</choice></enumChoice>
+            </enumVal>
+            <label>Short-Circuit Trip Speed"</label>
+          </variable>
+
+          <variable CV="112.30" item="Section 4 AutoReversing Mode" default="0"
+                tooltip="OpSw30">
+            <enumVal>
+              <enumChoice><choice>Short-circuit Protection (pins 17 and 18 unconnected)</choice></enumChoice>
+              <enumChoice><choice>Autoreversing (with pin U shorted to pin 17 and pin V shorted to pin 18)</choice></enumChoice>
+            </enumVal>
+          </variable>
+
+          <variable item="Trip Current"
+                tooltip="OpSw01, OpSw02, OpSw09">
+            <compositeVal>
+              <compositeChoice choice="1.5 Amps">
+                <compositeSetting label="Trip Current 1" value="0"/>
+                <compositeSetting label="Trip Current 2" value="0"/>
+                <compositeSetting label="Trip Current 3" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="3 Amps">
+                <compositeSetting label="Trip Current 1" value="0"/>
+                <compositeSetting label="Trip Current 2" value="0"/>
+                <compositeSetting label="Trip Current 3" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="4.5 Amps">
+                <compositeSetting label="Trip Current 1" value="1"/>
+                <compositeSetting label="Trip Current 2" value="0"/>
+                <compositeSetting label="Trip Current 3" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="6 Amps">
+                <compositeSetting label="Trip Current 1" value="1"/>
+                <compositeSetting label="Trip Current 2" value="0"/>
+                <compositeSetting label="Trip Current 3" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="7.5 Amps">
+                <compositeSetting label="Trip Current 1" value="0"/>
+                <compositeSetting label="Trip Current 2" value="1"/>
+                <compositeSetting label="Trip Current 3" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="9 Amps">
+                <compositeSetting label="Trip Current 1" value="0"/>
+                <compositeSetting label="Trip Current 2" value="1"/>
+                <compositeSetting label="Trip Current 3" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="10.5 Amps">
+                <compositeSetting label="Trip Current 1" value="1"/>
+                <compositeSetting label="Trip Current 2" value="1"/>
+                <compositeSetting label="Trip Current 3" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="12 Amps">
+                <compositeSetting label="Trip Current 1" value="1"/>
+                <compositeSetting label="Trip Current 2" value="1"/>
+                <compositeSetting label="Trip Current 3" value="0"/>
+              </compositeChoice>
+            </compositeVal>
+            <label>Trip Current is</label>
+          </variable>
+
+          <variable item="Section 1 Short-Circuit Detection Speed"
+                tooltip="OpSw03, OpSw05" include="PM42">
+            <compositeVal>
+              <compositeChoice choice="Slow">
+                <compositeSetting label="Section 1 Trip Speed1" value="1"/>
+                <compositeSetting label="Section 1 Trip Speed2" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Normal">
+                <compositeSetting label="Section 1 Trip Speed1" value="0"/>
+                <compositeSetting label="Section 1 Trip Speed2" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Fast">
+                <compositeSetting label="Section 1 Trip Speed1" value="1"/>
+                <compositeSetting label="Section 1 Trip Speed2" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="Fastest">
+                <compositeSetting label="Section 1 Trip Speed1" value="0"/>
+                <compositeSetting label="Section 1 Trip Speed2" value="1"/>
+              </compositeChoice>
+            </compositeVal>
+            <label>Section 1 Trip Speed is</label>
+          </variable>
+
+          <variable item="Section 2 Short-Circuit Detection Speed"
+                tooltip="OpSw11, OpSw13" include="PM42">
+            <compositeVal>
+              <compositeChoice choice="Slow">
+                <compositeSetting label="Section 2 Trip Speed1" value="1"/>
+                <compositeSetting label="Section 2 Trip Speed2" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Normal">
+                <compositeSetting label="Section 2 Trip Speed1" value="0"/>
+                <compositeSetting label="Section 2 Trip Speed2" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Fast">
+                <compositeSetting label="Section 2 Trip Speed1" value="1"/>
+                <compositeSetting label="Section 2 Trip Speed2" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="Fastest">
+                <compositeSetting label="Section 2 Trip Speed1" value="0"/>
+                <compositeSetting label="Section 2 Trip Speed2" value="1"/>
+              </compositeChoice>
+            </compositeVal>
+            <label>Section 2 Trip Speed is</label>
+          </variable>
+
+          <variable item="Section 3 Short-Circuit Detection Speed"
+                tooltip="OpSw19, OpSw21" include="PM42">
+            <compositeVal>
+              <compositeChoice choice="Slow">
+                <compositeSetting label="Section 3 Trip Speed1" value="1"/>
+                <compositeSetting label="Section 3 Trip Speed2" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Normal">
+                <compositeSetting label="Section 3 Trip Speed1" value="0"/>
+                <compositeSetting label="Section 3 Trip Speed2" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Fast">
+                <compositeSetting label="Section 3 Trip Speed1" value="1"/>
+                <compositeSetting label="Section 3 Trip Speed2" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="Fastest">
+                <compositeSetting label="Section 3 Trip Speed1" value="0"/>
+                <compositeSetting label="Section 3 Trip Speed2" value="1"/>
+              </compositeChoice>
+            </compositeVal>
+            <label>Section 3 Trip Speed is</label>
+          </variable>
+
+          <variable item="Section 4 Short-Circuit Detection Speed"
+                tooltip="OpSw27, OpSw29" include="PM42">
+            <compositeVal>
+              <compositeChoice choice="Slow">
+                <compositeSetting label="Section 4 Trip Speed1" value="1"/>
+                <compositeSetting label="Section 4 Trip Speed2" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Normal">
+                <compositeSetting label="Section 4 Trip Speed1" value="0"/>
+                <compositeSetting label="Section 4 Trip Speed2" value="0"/>
+              </compositeChoice>
+              <compositeChoice choice="Fast">
+                <compositeSetting label="Section 4 Trip Speed1" value="1"/>
+                <compositeSetting label="Section 4 Trip Speed2" value="1"/>
+              </compositeChoice>
+              <compositeChoice choice="Fastest">
+                <compositeSetting label="Section 4 Trip Speed1" value="0"/>
+                <compositeSetting label="Section 4 Trip Speed2" value="1"/>
+              </compositeChoice>
+            </compositeVal>
+            <label>Section 4 Trip Speed is</label>
+          </variable>
+
+        </variables>
+    </decoder>
+  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>OpSws</name>
+    <qualifier>
+          <variableref>Short Address</variableref>
+          <relation>gt</relation>
+          <value>0</value>
+
+    </qualifier>
+    <column>
+        <row>
+            <cvtable/>
+        </row>
+        <row>
+            <label>
+                <text>&lt;html&gt;The "CV" column in the table above shows "OpSw" 
+                    numbers, where the value "112." is pre-pended
+                    &lt;p&gt;to the OpSw Number.  For example, PM4/PM42 OpSw 1 
+                    is represented as "112.01".
+                    &lt;p&gt;&lt;p&gt;The top-most row above reflects the Board 
+                    Address configured on the "Basic" sheet.
+                    &lt;p&gt;&lt;p&gt;OpSw value 0 = "T"hrown.  OpSw value 1 = "C"losed.
+                    &lt;/html&gt;
+                </text>
+            </label>
+        </row>
+    </column>
+  </pane>
+
+  <pane>
+      <name>Basic</name>
+      <column>
+          <display item="Short Address"/>
+          <label>
+              <text> </text>
+          </label>
+          <label>
+            <text>&lt;html&gt;&lt;p&gt;
+                LocoNet messaging limits the supported Board Address (Board ID)
+                range to addresses between 1 and 128.  This tool cannot access PM4/PM42
+                &lt;p&gt;devices outside of this range.
+                &lt;p&gt;
+                &lt;p&gt;This roster entry will only access the specified PM4/PM42 if the
+                Board Address (Active Address), on the "Basic" sheet, is correct when the
+                &lt;p&gt;programmer is opened.
+                &lt;p&gt;
+                &lt;p&gt;If the Board Address (Active Address) has been changed since
+                the programmer was opened, the programmer will attempt to access the
+                &lt;p&gt;PM4/PM42 address which was specified in the Roster entry
+                when the progammer was opened.
+                &lt;p&gt;
+                &lt;p&gt;After making a change to the Roster entry's Board Address
+                (Active Address) on the "Basic" sheet, save and close the programmer
+                &lt;p&gt;window and re-open the Roster entry to ensure that the
+                the programmer will use the modified Active Address for accesses
+                &lt;p&gt;to the device.
+                &lt;p&gt;
+                &lt;p&gt;Note that BDL16x and PM4x documentation refers 
+                to Board Address, while DS64 and SE8C documentation refers to 
+                &lt;p&gt;Board ID.  These are equivalent concepts.
+            &lt;/html&gt;</text>
+          </label>
+      </column>
+  </pane>
+    <pane>
+        <name>Basic Settings</name>
+        <column>
+            <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Trip Current (all Sections)&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+
+            <display item="Trip Current"/>
+            <label><text> </text></label>
+            <separator/>
+            <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Section 1 Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+            <group include="PM42">
+                <row>
+                    <column>
+                        <display item="Section 1 Short-Circuit Detection Speed" label="Short-circuit detection speed"/>
+                    </column>
+                </row>
+                </group>
+            <group include="PM4">
+                <row>
+                    <column>
+                        <display item="Section 1 Trip Speed1" label="Short-circuit detection speed"/>
+                    </column>
+                </row>
+            </group>
+            <display item="Section 1 AutoReversing Mode">
+                <label>Mode</label>
+            </display>
+            <label><text>   </text></label>
+            <separator/>
+            <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Section 2 Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+            <group include="PM42">
+                <row>
+                    <column>
+                        <display item="Section 2 Short-Circuit Detection Speed" label="Short-circuit detection speed"/>
+                    </column>
+                </row>
+                </group>
+            <group include="PM4">
+                <row>
+                    <column>
+                        <display item="Section 2 Trip Speed1" label="Short-circuit detection speed"/>
+                    </column>
+                </row>
+            </group>
+            <display item="Section 2 AutoReversing Mode">
+                <label>Mode</label>
+            </display>
+            <label><text>   </text></label>
+
+            <separator/>
+            <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Section 3 Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+            <group include="PM42">
+                <row>
+                    <column>
+                        <display item="Section 3 Short-Circuit Detection Speed" label="Short-circuit detection speed"/>
+                    </column>
+                </row>
+                </group>
+            <group include="PM4">
+                <row>
+                    <column>
+                        <display item="Section 3 Trip Speed1" label="Short-circuit detection speed"/>
+                    </column>
+                </row>
+            </group>
+            <display item="Section 3 AutoReversing Mode">
+                <label>Mode</label>
+            </display>
+            <label><text>   </text></label>
+
+            <separator/>
+            <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Section 4 Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+            <group include="PM42">
+                <row>
+                    <column>
+                        <display item="Section 4 Short-Circuit Detection Speed" label="Short-circuit detection speed"/>
+                    </column>
+                </row>
+                </group>
+            <group include="PM4">
+                <row>
+                    <column>
+                        <display item="Section 4 Trip Speed1" label="Short-circuit detection speed"/>
+                    </column>
+                </row>
+            </group>
+            <display item="Section 4 AutoReversing Mode">
+                <label>Mode</label>
+            </display>
+            <label><text>   </text></label>
+        </column>
+    </pane>
+  <pane>
+      <name>Notes</name>
+      <column>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;
+            &lt;h2&gt;&lt;strong&gt;Notes on PM4/PM42 Roster Entries and Programming
+            &lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
+        </label>
+        <label><text> </text></label>
+        <label>
+            <text>&lt;html&gt;&lt;/strong&gt;&lt;ul&gt;
+                &lt;li&gt;The PM4/PM42 &lt;em&gt;must&lt;/em&gt; be in its normal
+                operating mode in order to respond to this Roster entry's read and
+                write operations.&lt;/li&gt;
+                &lt;li&gt;
+                &lt;p&gt;See the "Basic" sheet for the programmer's limitations with
+                respect to Board Address.&lt;/li&gt;
+                &lt;li&gt;This Roster entry is not currently capable of 
+                displaying the short-circuit and autoreversing status of each section.
+                &lt;li&gt;Some PM4 devices do not respond to the LocoNet messages
+                used by this tool.  Programming of these devices may 
+                &lt;p&gt;be done as described in the PM4 manual.  It is also possible
+                to upgrade the PM4 to a PM42 via a simple chip change.
+                &lt;p&gt;Upgrade chips may be available from your Digitrax dealer 
+                or from Digitrax.
+            &lt;/ul&gt;&lt;/html&gt;</text>
+        </label>
+      </column>
+  </pane>
+  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>CVs</name>
+    <name xml:lang="it">CV</name>
+    <name xml:lang="de">CV-Tabelle</name>
+    <name xml:lang="ca">Taula-CV</name>
+    <name xml:lang="cs">Tabulka CV</name>
+    <name xml:lang="nl">CV-tabel</name>
+    <qualifier>
+          <variableref>Short Address</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+    </qualifier>
+    <column>
+        <label>
+            <text>This sheet intentionally un-populated.  See the "OpSws" tab.</text>
+        </label>
+    </column>
+  </pane>
+</decoder-config>

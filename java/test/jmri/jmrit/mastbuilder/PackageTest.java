@@ -6,7 +6,9 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    MastBuilderTest.class,
-   MastBuilderPaneTest.class
+   MastBuilderPaneTest.class,
+   MastBuilderActionTest.class,
+   BundleTest.class
 })
 
 /**

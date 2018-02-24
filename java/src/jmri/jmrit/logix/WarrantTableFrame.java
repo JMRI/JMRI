@@ -59,12 +59,13 @@ import org.slf4j.LoggerFactory;
  */
 public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseListener {
 
+    static final String ramp = Bundle.getMessage("Ramp");
     static final String halt = Bundle.getMessage("Halt");
     static final String stop = Bundle.getMessage("EStop");
     static final String resume = Bundle.getMessage("Resume");
     static final String abort = Bundle.getMessage("Abort");
     static final String retry = Bundle.getMessage("Retry");
-    static final String[] controls = {halt, resume, retry, stop, abort};
+    static final String[] controls = {halt, resume, ramp, retry, stop, abort};
 
     public static int _maxHistorySize = 30;
 
@@ -137,7 +138,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
      * method, rather than in the ctor itself.
      */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         if (log.isDebugEnabled()) log.debug("initComponents");
         //Casts at getTableCellEditorComponent() now fails with 3.0 ??
@@ -266,8 +267,15 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     }
 
     protected static void nxAction() {
-        NXFrame nxFrame = NXFrame.getDefault();
-        nxFrame.setVisible(true);
+        NXFrame nxFrame = WarrantTableAction.getNXFrame();
+        if (nxFrame == null) {
+            nxFrame = new NXFrame();
+            WarrantTableAction.setNXFrame(nxFrame);
+        } else {
+            nxFrame.setState(java.awt.Frame.NORMAL);
+            nxFrame.setVisible(true);
+            nxFrame.toFront();            
+        }
     }
 
     private void haltAllAction() {
@@ -426,11 +434,11 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             setStatusText(msg, Color.red, false);
             return msg;
         }
-        if (w.commandsHaveTrackSpeeds()) {
+/*        if (w.commandsHaveTrackSpeeds()) {
             w.getSpeedUtil().getValidSpeedProfile(this);            
         } else {
             setStatusText(Bundle.getMessage("NoTrackSpeeds", w.getDisplayName()), Color.red, true);
-        }
+        }*/
         
         msg = w.setRunMode(mode, null, null, null, w.getRunBlind());
         if (msg != null) {

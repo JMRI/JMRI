@@ -1,7 +1,11 @@
 package jmri.jmrix.openlcb;
 
 import java.util.ArrayList;
+import java.util.List;
+import jmri.BooleanPropertyDescriptor;
 import jmri.JmriException;
+import jmri.NamedBean;
+import jmri.NamedBeanPropertyDescriptor;
 import jmri.Turnout;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.AbstractTurnoutManager;
@@ -13,7 +17,7 @@ import org.openlcb.OlcbInterface;
  * Turnouts must be manually created.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010
-  * @since 2.3.1
+ * @since 2.3.1
  */
 public class OlcbTurnoutManager extends AbstractTurnoutManager {
 
@@ -33,6 +37,36 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     @Override
     public String getSystemPrefix() {
         return prefix;
+    }
+
+    @Override
+    public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
+        List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
+        l.add(new BooleanPropertyDescriptor(OlcbUtils.PROPERTY_IS_AUTHORITATIVE, OlcbTurnout
+                .DEFAULT_IS_AUTHORITATIVE) {
+            @Override
+            public String getColumnHeaderText() {
+                return Bundle.getMessage("OlcbStateAuthHeader");
+            }
+
+            @Override
+            public boolean isEditable(NamedBean bean) {
+                return OlcbUtils.isOlcbBean(bean);
+            }
+        });
+        l.add(new BooleanPropertyDescriptor(OlcbUtils.PROPERTY_LISTEN, OlcbTurnout
+                .DEFAULT_LISTEN) {
+            @Override
+            public String getColumnHeaderText() {
+                return Bundle.getMessage("OlcbStateListenHeader");
+            }
+
+            @Override
+            public boolean isEditable(NamedBean bean) {
+                return OlcbUtils.isOlcbBean(bean);
+            }
+        });
+        return l;
     }
 
     /**
@@ -126,24 +160,6 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
             default:
                 throw new IllegalArgumentException("Wrong number of events in address: " + address);
         }
-    }
-
-    /**
-     * A method that creates an array of systems names to allow bulk creation of
-     * turnouts.
-     * @param start initial id for a range
-     * @param numberToAdd size of the range
-     * @param prefix system connection prefix
-     * @return array system names for range
-     */
-    //further work needs to be done on how to format a number of turnouts, therefore this method will only return one entry.
-    public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix) {
-        numberToAdd = 1;
-        String range[] = new String[numberToAdd];
-        for (int x = 0; x < numberToAdd; x++) {
-            range[x] = prefix + "T" + start;
-        }
-        return range;
     }
 }
 

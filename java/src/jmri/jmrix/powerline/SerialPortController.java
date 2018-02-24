@@ -9,7 +9,7 @@ package jmri.jmrix.powerline;
   */
 public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPortController {
 
-    // base class. Implementations will provide InputStream and OutputStream
+    // Base class. Implementations will provide InputStream and OutputStream
     // objects to SerialTrafficController classes, who in turn will deal in messages.
     protected SerialPortController(SerialSystemConnectionMemo connectionMemo) {
         super(connectionMemo);

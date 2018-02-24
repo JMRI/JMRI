@@ -6,7 +6,6 @@ import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,10 +22,9 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
 
     int mAddress;
     boolean mLongAddr;
-
     private SprogSystemConnectionMemo _memo = null;
 
-    public SprogOpsModeProgrammer(int pAddress, boolean pLongAddr,SprogSystemConnectionMemo memo) {
+    public SprogOpsModeProgrammer(int pAddress, boolean pLongAddr, SprogSystemConnectionMemo memo) {
         super(memo);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
@@ -77,7 +75,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 

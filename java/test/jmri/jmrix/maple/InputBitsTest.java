@@ -15,7 +15,7 @@ import org.junit.Assert;
 public class InputBitsTest extends TestCase {
 
     public void testConstructor1() {
-        Assert.assertNotNull("check instance", InputBits.instance());
+        Assert.assertNotNull("check instance", ibit);
     }
 
     public void testAccessors() {
@@ -27,7 +27,7 @@ public class InputBitsTest extends TestCase {
 
     public void testMarkChangesInitial() {
         SerialSensor s1 = new SerialSensor("KS1", "a");
-        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("KS1"));
+        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("KS1", "K"));
         SerialSensor s2 = new SerialSensor("KS2", "ab");
         SerialSensor s3 = new SerialSensor("KS3", "abc");
         SerialSensor s6 = new SerialSensor("KS6", "abcd");
@@ -187,14 +187,14 @@ public class InputBitsTest extends TestCase {
     @Override
     protected void setUp() {
         // The minimal setup for log4J
-        apps.tests.Log4JFixture.setUp();
-        // force init
-        InputBits.mInstance = null;
-        ibit = InputBits.instance();
+        JUnitUtil.setUp();
+        SerialTrafficControlScaffold tc = new SerialTrafficControlScaffold();
+        ibit = new InputBits(tc);
     }
 
     @Override
     protected void tearDown() {
+        ibit = null;
         JUnitUtil.tearDown();
     }
 

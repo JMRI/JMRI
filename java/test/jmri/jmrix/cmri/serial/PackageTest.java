@@ -41,7 +41,9 @@ import org.slf4j.LoggerFactory;
    SerialLightTest.class,
    SerialLightManagerTest.class,
    SerialSensorTest.class,
-   BundleTest.class
+   BundleTest.class,
+   jmri.jmrix.cmri.serial.nodeconfigmanager.PackageTest.class,
+   jmri.jmrix.cmri.serial.cmrinetmanager.PackageTest.class,
 })
 
 public class PackageTest{

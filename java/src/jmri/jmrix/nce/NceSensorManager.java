@@ -401,7 +401,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
 
@@ -467,7 +467,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
      * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         if (systemName.contains(":") && !systemName.endsWith(":")) { // prevent to try parsing too soon
             // If sensor address is presented in the AIU Cab Address:Pin Number On AIU format,
             // translate it into nnnn. Copied from createSystemName()
@@ -483,11 +483,11 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 log.debug("Unable to convert " + curAddress + " into the cab and pin format of nn:xx");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
-                return false;
+                return NameValidity.INVALID;
             }
             systemName = getSystemPrefix() + "S" + ((_aiucab - 1) * 16 + _pin - 1);
         }
-        return (getBitFromSystemName(systemName) != 0);
+        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**

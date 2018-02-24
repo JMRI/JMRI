@@ -79,12 +79,18 @@ public class Bundle extends jmri.jmrit.display.Bundle {
 
     private final static Bundle b = new Bundle();
 
+    /**
+     * @return the name of the bundle
+     */
     @Override
     @Nullable
     protected String bundleName() {
         return name;
     }
 
+    /**
+     * @return the bundle for this bundle
+     */
     @Override
     protected jmri.Bundle getBundle() {
         return b;
@@ -94,5 +100,4 @@ public class Bundle extends jmri.jmrit.display.Bundle {
     protected String retry(Locale locale, String key) {
         return super.getBundle().handleGetMessage(locale,key);
     }
-
 }

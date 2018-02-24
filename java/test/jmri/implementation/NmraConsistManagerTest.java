@@ -15,7 +15,8 @@ public class NmraConsistManagerTest extends jmri.implementation.AbstractConsistM
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        cm = new NmraConsistManager();
+        jmri.util.JUnitUtil.initDebugCommandStation();
+        cm = new NmraConsistManager(jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class));
     }
 
     @After

@@ -79,6 +79,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                             tsElem.setAttribute("sequence", Integer.toString(ts.getSequenceNumber()));
                             tsElem.setAttribute("direction", Integer.toString(ts.getDirection()));
                             tsElem.setAttribute("alternate", "" + (ts.isAlternate() ? "yes" : "no"));
+                            tsElem.setAttribute("safe", "" + (ts.isSafe() ? "yes" : "no"));
                             // save child transitsectionaction entries if any
                             ArrayList<TransitSectionAction> tsaList = ts.getTransitSectionActionList();
                             if (tsaList.size() > 0) {
@@ -173,6 +174,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                     int seq = 0;
                     int dir = Section.UNKNOWN;
                     boolean alt = false;
+                    boolean safe = false;
                     String sectionName = elem.getAttribute("sectionname").getValue();
                     if (sectionName.equals("null")) {
                         log.warn("When loading configuration - missing Section in Transit " + sysName);
@@ -186,7 +188,12 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                     if (elem.getAttribute("alternate").getValue().equals("yes")) {
                         alt = true;
                     }
-                    TransitSection ts = new TransitSection(sectionName, seq, dir, alt);
+                    if (elem.getAttribute("safe") != null) {
+                        if (elem.getAttribute("safe").getValue().equals("yes")) {
+                            safe = true;
+                        }
+                    }
+                    TransitSection ts = new TransitSection(sectionName, seq, dir, alt, safe);
                     x.addTransitSection(ts);
                     // load transitsectionaction children, if any
                     List<Element> transitTransitSectionActionList = transitTransitSectionList.get(n).

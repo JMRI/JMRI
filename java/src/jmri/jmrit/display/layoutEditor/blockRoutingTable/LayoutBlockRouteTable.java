@@ -20,21 +20,19 @@ import jmri.swing.RowSorterUtil;
  */
 public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
 
-    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+    private LayoutBlockRouteTableModel dataModel;
+    private LayoutBlockNeighbourTableModel neighbourDataModel;
+    private TableRowSorter<LayoutBlockNeighbourTableModel> neighbourSorter;
+    private JTable neighbourDataTable;
+    private JScrollPane neighbourDataScroll;
+    private TableRowSorter<LayoutBlockRouteTableModel> sorter;
+    private JTable dataTable;
+    private JScrollPane dataScroll;
 
-    LayoutBlockRouteTableModel dataModel;
-    LayoutBlockNeighbourTableModel neighbourDataModel;
-    TableRowSorter<LayoutBlockNeighbourTableModel> neighbourSorter;
-    JTable neighbourDataTable;
-    JScrollPane neighbourDataScroll;
-    TableRowSorter<LayoutBlockRouteTableModel> sorter;
-    JTable dataTable;
-    JScrollPane dataScroll;
-
-    LayoutBlockThroughPathsTableModel throughPathsDataModel;
-    TableRowSorter<LayoutBlockThroughPathsTableModel> throughPathsSorter;
-    JTable throughPathsDataTable;
-    JScrollPane throughPathsDataScroll;
+    private LayoutBlockThroughPathsTableModel throughPathsDataModel;
+    private TableRowSorter<LayoutBlockThroughPathsTableModel> throughPathsSorter;
+    private JTable throughPathsDataTable;
+    private JScrollPane throughPathsDataScroll;
 
     public LayoutBlockRouteTable(boolean editable, LayoutBlock block) {
         super();
@@ -60,7 +58,7 @@ public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
 
         // set initial sort
         RowSorterUtil.setSortOrder(sorter, LayoutBlockRouteTableModel.HOPCOUNTCOL, SortOrder.ASCENDING);
-        RowSorterUtil.setSortOrder(this.neighbourSorter, LayoutBlockNeighbourTableModel.NEIGHBOURCOL,SortOrder.ASCENDING);
+        RowSorterUtil.setSortOrder(this.neighbourSorter, LayoutBlockNeighbourTableModel.NEIGHBOURCOL, SortOrder.ASCENDING);
         RowSorterUtil.setSortOrder(this.throughPathsSorter, LayoutBlockThroughPathsTableModel.SOURCECOL, SortOrder.ASCENDING);
 
         // allow reordering of the columns

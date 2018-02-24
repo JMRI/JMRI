@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.7.1-SNAPSHOT</version>
+    <version>4.9.6-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -16,11 +16,12 @@
         <!-- dependency versions (its easier to include version in dependency
         but if multiple dependencies are linked, use a property for single
         dependency source) -->
-        <jetty.version>9.3.9.v20160517</jetty.version>
-        <slf4j.version>1.7.21</slf4j.version>
-        <jackson.version>2.8.5</jackson.version>
+        <cucumber.version>2.0.1</cucumber.version>
+        <jetty.version>9.4.7.v20170914</jetty.version>
+        <slf4j.version>1.7.25</slf4j.version>
+        <jackson.version>2.8.11</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
-        <openlcb.version>0.7.14</openlcb.version>
+        <openlcb.version>0.7.17</openlcb.version>
         <netbeans.version>RELEASE82</netbeans.version>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
@@ -29,7 +30,6 @@
         <ant.version>1.10.1</ant.version>
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m</argLine>
-        <powermock.version>1.6.6</powermock.version>
         <surefire.version>2.20</surefire.version>
     </properties>
     <scm>
@@ -42,51 +42,17 @@
         <profile>
             <id>travis-headless</id>
             <properties>
-                <findbugs.skip>true</findbugs.skip>
+                <spotbugs.skip>true</spotbugs.skip>
                 <java.awt.headless>true</java.awt.headless>
             </properties>
         </profile>
         <profile>
             <id>travis-coverage</id>
             <properties>
-                <findbugs.skip>true</findbugs.skip>
+                <spotbugs.skip>true</spotbugs.skip>
             </properties>
             <build>
                 <plugins>
-                    <!-- use surefire for all test
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.8</version>
-                        <executions>
-                            <execution>
-                                <id>test</id>
-                                <phase>test</phase>
-                                <configuration>
-                                    <target>
-                                        <property name="jvm.args">${ant.jvm.args}</property>
-                                        <ant antfile="${basedir}/build.xml">
-                                            <target name="travis-ci-coverage"/>
-                                        </ant>
-                                    </target>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    -->
-                    <!-- use surefire (maven default test harness) only for line endings
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${surefire.version}</version>
-                        <configuration>
-                            <test>jmri.util.FileLineEndingsTest</test>
-                        </configuration>
-                    </plugin>
-                    -->
                     <plugin>
                         <groupId>org.eluder.coveralls</groupId>
                         <artifactId>coveralls-maven-plugin</artifactId>
@@ -141,7 +107,7 @@
             </build>
         </profile>
         <profile>
-            <id>travis-findbugs</id>
+            <id>travis-spotbugs</id>
             <build>
                 <plugins>
                     <!-- prevent surefire (maven default test harness) from running tests -->
@@ -154,9 +120,9 @@
                         </configuration>
                     </plugin>
                     <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>findbugs-maven-plugin</artifactId>
-                        <version>3.0.4</version>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs-maven-plugin</artifactId>
+                        <version>3.1.1</version>
                         <!-- configured to fail on High priority bugs during test phase -->
                         <executions>
                             <execution>
@@ -166,7 +132,7 @@
                                     <goal>check</goal>
                                 </goals>
                                 <configuration>
-                                    <excludeFilterFile>.findbugs.xml</excludeFilterFile>
+                                    <excludeFilterFile>.spotbugs.xml</excludeFilterFile>
                                     <effort>Max</effort>
                                     <threshold>High</threshold>
                                     <maxHeap>1536</maxHeap>
@@ -242,6 +208,13 @@
                     </execution>
                 </executions>
                 -->
+                <configuration>
+                    <target>
+                        <ant antfile="${basedir}/build.xml">
+                            <target name="${anttarget}"/>
+                        </ant>
+                    </target>
+                </configuration>
                 <dependencies>
                     <!-- use the version of ant we specify -->
                     <dependency>
@@ -285,14 +258,21 @@
                         </goals>
                     </execution>
                 </executions>
+                <dependencies>
+                   <dependency>
+                      <groupId>net.java.dev.javacc</groupId>
+                      <artifactId>javacc</artifactId>
+                      <version>7.0.3</version>
+                   </dependency>
+                </dependencies>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.4</version>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>3.1.1</version>
                 <!-- configured to fail on High priority bugs -->
                 <configuration>
-                    <excludeFilterFile>.findbugs.xml</excludeFilterFile>
+                    <excludeFilterFile>.spotbugs.xml</excludeFilterFile>
                     <effort>Max</effort>
                     <threshold>High</threshold>
                     <maxHeap>1536</maxHeap>
@@ -305,13 +285,8 @@
                 <version>${surefire.version}</version>
                 <configuration>
                     <excludes>
-                        <!-- ignore until #3340 is merged -->
-                        <exclude>jmri.jmrix.nce.Nce*</exclude>
-                        <exclude>%regex[jmri/jmrix/nce/(boosterprog|cab|clockmon|consist|macro|ncemon|networkdriver|packetgen|simulator|swing|usbdriver|usbinterface)/.*/Nce.*]</exclude>
                         <!-- ignore until #3492 is resolved -->
                         <exclude>%regex[jmri.jmrix.loconet.locormi.LnMessage[Client|Server]Test]</exclude>
-                        <!-- ignore until #2601 is resolved -->
-                        <exclude>jmri.jmrit.decoderdefn.DuplicateTest</exclude>
                         <!-- ignore to avoid duplicate test runs -->
                         <exclude>apps.tests.AllTest</exclude>
                         <exclude>jmri.HeadLessTest</exclude>
@@ -370,7 +345,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <shortRevisionLength>8</shortRevisionLength>
+                    <shortRevisionLength>7</shortRevisionLength>
+                    <revisionOnScmFailure>UNKNOWN</revisionOnScmFailure>
                     <timestampFormat>yyyyMMddHHmm</timestampFormat>
                     <timezone>UTC</timezone>
                     <!-- want false to generate Version.properties -->
@@ -396,6 +372,18 @@
                             <name>current.year</name>
                             <pattern>yyyy</pattern>
                             <locale>en,US</locale>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${basedir}/java/acceptancetest/step_definitions</source>
+                            </sources>
                         </configuration>
                     </execution>
                 </executions>
@@ -470,7 +458,7 @@
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                        <br>Site hosted by:
                        <a href="http://sourceforge.net/projects/jmri">
-                       <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads"/></a>
+                       <img src="https://sourceforge.net/sflogo.php?type=13&group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
                 ]]>
                     </bottom>
                     <links>
@@ -516,6 +504,7 @@
                                 <File>jmri/jmrix/openlcb/SampleFactory.class</File>
                                 <File>jmri/util/swing/SamplePane.class</File>
                                 <File>apps/tests/Log4JFixture.class</File>
+                                <File>jmri/jmrit/display/EditorFrameOperator.class</File>
                             </excludes>
                             <rules>
                                 <rule>
@@ -524,12 +513,12 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.30</minimum>
+                                            <minimum>0.35</minimum>
                                         </limit>
                                         <limit>
                                             <counter>CLASS</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.70</minimum>
+                                            <minimum>0.75</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -548,7 +537,67 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>net.ossindex</groupId>
+                <artifactId>ossindex-maven-plugin</artifactId>
+                <version>2.3.7</version>
+                <configuration>
+                    <failOnError>true</failOnError>
+                    <!-- List packages with vulnerabilities to ignore. -->
+                    <!-- Include an issue in GitHub for each ignored package -->
+                    <!-- documenting why the vulnerability is ignored. -->
+                    <!-- jython 2.7.0: https://github.com/JMRI/JMRI/issues/3712 -->
+                    <ignore>org.python:jython-standalone:2.7.0</ignore>
+                </configuration>
+            </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <!-- This plugin's configuration is used to store Eclipse m2e
+                settings only. It has no influence on the Maven build itself. -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.codehaus.mojo</groupId>
+                                        <artifactId>buildnumber-maven-plugin</artifactId>
+                                        <versionRange>[1.4,)</versionRange>
+                                        <goals>
+                                            <goal>create-metadata</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute>
+                                            <runOnIncremental>false</runOnIncremental>
+                                        </execute>
+                                    </action>
+                                </pluginExecution>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.codehaus.mojo</groupId>
+                                        <artifactId>javacc-maven-plugin</artifactId>
+                                        <versionRange>[2.6,)</versionRange>
+                                        <goals>
+                                            <goal>jjtree-javacc</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute>
+                                            <runOnIncremental>false</runOnIncremental>
+                                        </execute>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
     <reporting>
         <plugins>
@@ -559,6 +608,20 @@
                 <configuration>
                     <showSuccess>false</showSuccess>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.5</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>dependency-updates-report</report>
+                            <report>plugin-updates-report</report>
+                            <report>property-updates-report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
         </plugins>
     </reporting>
@@ -594,6 +657,42 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java8</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.6.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>2.0.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -634,6 +733,18 @@
             <type>jar</type>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>org.eclipse.jetty.websocket</groupId>
             <artifactId>websocket-api</artifactId>
             <version>${jetty.version}</version>
@@ -646,21 +757,35 @@
             <type>jar</type>
         </dependency>
         <dependency>
+            <groupId>org.eclipse.jetty.websocket</groupId>
+            <artifactId>websocket-server</artifactId>
+            <version>${jetty.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.4</version>
+            <version>3.7</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.4</version>
+            <version>2.6</version>
             <type>jar</type>
         </dependency>
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.2</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <!-- when updating, remove from net.ossindex list of ignored -->
+            <!-- vulnerabilities elsewhere in this file -->
             <groupId>org.python</groupId>
             <artifactId>jython-standalone</artifactId>
-            <version>2.7.0</version>
+            <version>2.7.0</version><!-- versions < 2.7.1 have CVE against them -->
         </dependency>
         <!--
         <dependency>
@@ -674,12 +799,6 @@
             <version>${jetty.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${jackson.version}</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
             <groupId>jaxen</groupId>
             <artifactId>jaxen</artifactId>
             <version>1.1.6</version>
@@ -688,7 +807,7 @@
         <dependency>
             <groupId>org.jmdns</groupId>
             <artifactId>jmdns</artifactId>
-            <version>3.5.1</version>
+            <version>3.5.3</version>
         </dependency>
         <!--
         <dependency>
@@ -765,20 +884,23 @@
             <artifactId>usb4java-javax</artifactId>
             <version>1.2.0</version>
         </dependency>
+        <!-- SpotBugs annotations -->
         <dependency>
             <groupId>net.jcip</groupId>
             <artifactId>jcip-annotations</artifactId>
             <version>1.0</version>
         </dependency>
+        <!-- SpotBugs annotations (SpotBugs does not include JSR 305) -->
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
             <version>3.0.1</version>
         </dependency>
+        <!-- SpotBugs annotations -->
         <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>findbugs-annotations</artifactId>
-            <version>3.0.1</version>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-annotations</artifactId>
+            <version>3.1.1</version>
         </dependency>
         <!--
         <dependency>
@@ -815,26 +937,14 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-module-junit4</artifactId>
-            <version>${powermock.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>com.github.purejavacomm</groupId>
             <artifactId>purejavacomm</artifactId>
             <version>1.0.1.RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito2</artifactId>
-            <version>${powermock.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>2.0.42-beta</version>
+            <version>2.13.0</version>
             <scope>test</scope>
         </dependency>
         <!--
@@ -863,6 +973,12 @@
             <artifactId>org-openide-util-lookup</artifactId>
             <version>${netbeans.version}</version>
             <scope>compile</scope>
+        </dependency>
+        <!-- hid4java for cross-platform HID USB -->
+        <dependency>
+            <groupId>org.hid4java</groupId>
+            <artifactId>hid4java</artifactId>
+            <version>0.5.0</version>
         </dependency>
     </dependencies>
 

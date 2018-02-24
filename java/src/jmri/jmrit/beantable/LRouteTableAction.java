@@ -61,7 +61,7 @@ import org.slf4j.LoggerFactory;
  * @author Egbert Broerse i18n 2016
  *
  */
-public class LRouteTableAction extends AbstractTableAction {
+public class LRouteTableAction extends AbstractTableAction<Logix> {
 
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LRouteTableBundle");
 
@@ -97,7 +97,7 @@ public class LRouteTableAction extends AbstractTableAction {
         m = new LBeanTableDataModel();
     }
 
-    class LBeanTableDataModel extends BeanTableDataModel {
+    class LBeanTableDataModel extends BeanTableDataModel<Logix> {
 
         // overlay the state column with the edit column
         static public final int ENABLECOL = VALUECOL;
@@ -200,8 +200,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 case EDITCOL:
                     return Bundle.getMessage("ButtonEdit");
                 case ENABLECOL:
-                    return ((Logix) getBySystemName((String) getValueAt(row,
-                            SYSNAMECOL))).getEnabled();
+                    return ((Logix) getValueAt(row, SYSNAMECOL)).getEnabled();
                 default:
                     return super.getValueAt(row, col);
             }
@@ -212,13 +211,12 @@ public class LRouteTableAction extends AbstractTableAction {
             switch (col) {
                 case EDITCOL:
                     // set up to edit
-                    String sName = (String) getValueAt(row, SYSNAMECOL);
+                    String sName = ((Logix) getValueAt(row, SYSNAMECOL)).getSystemName();
                     editPressed(sName);
                     break;
                 case ENABLECOL:
                     // alternate
-                    Logix x = (Logix) getBySystemName((String) getValueAt(row,
-                            SYSNAMECOL));
+                    Logix x = (Logix) getValueAt(row, SYSNAMECOL);
                     boolean v = x.getEnabled();
                     x.setEnabled(!v);
                     break;
@@ -234,12 +232,11 @@ public class LRouteTableAction extends AbstractTableAction {
          * Deactivate the Logix and remove its conditionals.
          */
         @Override
-        void doDelete(NamedBean bean) {
-            if (bean != null) {
-                Logix l = (Logix) bean;
-                l.deActivateLogix();
+        void doDelete(Logix logix) {
+            if (logix != null) {
+                logix.deActivateLogix();
                 // delete the Logix and all its Conditionals
-                _logixManager.deleteLogix(l);
+                _logixManager.deleteLogix(logix);
             }
         }
 
@@ -253,17 +250,17 @@ public class LRouteTableAction extends AbstractTableAction {
         }
 
         @Override
-        public Manager getManager() {
+        public Manager<Logix> getManager() {
             return _logixManager;
         }
 
         @Override
-        public NamedBean getBySystemName(String name) {
+        public Logix getBySystemName(String name) {
             return _logixManager.getBySystemName(name);
         }
 
         @Override
-        public NamedBean getByUserName(String name) {
+        public Logix getByUserName(String name) {
             return _logixManager.getByUserName(name);
         }
 
@@ -284,7 +281,7 @@ public class LRouteTableAction extends AbstractTableAction {
 
         // Not needed - here for interface compatibility
         @Override
-        public void clickOn(NamedBean t) {
+        public void clickOn(Logix t) {
         }
 
         @Override
@@ -2437,8 +2434,8 @@ public class LRouteTableAction extends AbstractTableAction {
     private static final String SET_TO_CLOSED = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameTurnout"), Bundle.getMessage("TurnoutStateClosed")); //rbx.getString("xSetClosed");
     private static final String SET_TO_THROWN = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameTurnout"), Bundle.getMessage("TurnoutStateThrown")); //rbx.getString("xSetThrown");
     private static final String SET_TO_TOGGLE = Bundle.getMessage("SetBeanState", "", Bundle.getMessage("Toggle")); //rbx.getString("xSetToggle");
-    private static final String SET_TO_ON = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("LightStateOn")); //rbx.getString("xSetLightOn");
-    private static final String SET_TO_OFF = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("LightStateOff")); //rbx.getString("xSetLightOff");
+    private static final String SET_TO_ON = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("StateOn")); //rbx.getString("xSetLightOn");
+    private static final String SET_TO_OFF = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("StateOff")); //rbx.getString("xSetLightOff");
     private static final String SET_TO_DARK = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("SignalHeadStateDark")); //rbx.getString("xSetDark");
     private static final String SET_TO_LIT = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("ColumnHeadLit")); //rbx.getString("xSetLit");
     private static final String SET_TO_HELD = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("SignalHeadStateHeld")); //rbx.getString("xSetHeld");
@@ -2468,14 +2465,16 @@ public class LRouteTableAction extends AbstractTableAction {
     /**
      * Sorts RouteElement
      */
-    public static class RouteElementComparator extends SystemNameComparator {
+    public static class RouteElementComparator implements java.util.Comparator<RouteElement> {
 
         RouteElementComparator() {
         }
 
-        @Override
-        public int compare(Object o1, Object o2) {
-            return super.compare(((RouteElement) o1).getSysName(), ((RouteElement) o2).getSysName());
+        private SystemNameComparator sc = new SystemNameComparator();
+        
+        @Override 
+        public int compare(RouteElement o1, RouteElement o2) {
+            return sc.compare(o1.getSysName(), o2.getSysName());
         }
     }
 
@@ -2483,7 +2482,7 @@ public class LRouteTableAction extends AbstractTableAction {
      * Base class for all the output (ConditionalAction) and input
      * (ConditionalVariable) elements
      */
-    class RouteElement {
+    static class RouteElement {
 
         String _sysName;
         String _userName;

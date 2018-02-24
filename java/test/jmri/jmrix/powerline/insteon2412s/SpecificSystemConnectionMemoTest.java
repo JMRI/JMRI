@@ -5,6 +5,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.powerline.SerialMessage;
+import jmri.jmrix.powerline.SerialListener;
 
 /**
  * Tests for SpecificSystemConnectionMemo class.
@@ -12,20 +14,37 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  **/
 
-public class SpecificSystemConnectionMemoTest {
+public class SpecificSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-   @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("SpecificSystemConnectionMemo constructor",new SpecificSystemConnectionMemo());
-   }
+    @Override
+    @Test
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    }
 
+   @Override
    @Before
    public void setUp() {
-        JUnitUtil.setUp();
+       JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+       jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+       SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
+       memo.setTrafficController(new SpecificTrafficController(memo){
+          @Override
+          public void sendSerialMessage(SerialMessage m,SerialListener reply) {
+          }
+          @Override
+          public void transmitLoop(){
+          }
+          @Override
+          public void receiveLoop(){
+          }
+       });
+       memo.configureManagers();
+       scm = memo;
    }
 
+   @Override
    @After
    public void tearDown(){
         JUnitUtil.tearDown();

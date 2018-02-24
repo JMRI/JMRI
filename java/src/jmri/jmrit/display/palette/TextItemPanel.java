@@ -24,11 +24,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ItemPanel for text labels
+ * ItemPanel for text labels.
+ * @see ItemPanel palette class diagram
  */
 public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
 
-    //    JTextField _text;
     DecoratorPanel _decorator;
 
     public TextItemPanel(ItemPalette parentFrame, String type, Editor editor) {
@@ -39,7 +39,9 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
     @Override
     public void init() {
         if (!_initialized) {
-            if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
+            if (!jmri.util.ThreadingUtil.isGUIThread()) {
+                log.error("Not on GUI thread", new Exception("traceback"));
+            }
             Thread.yield();
             JPanel blurb = new JPanel();
             blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
@@ -52,18 +54,35 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             JPanel p = new JPanel();
             p.add(blurb);
             add(p);
-            DragDecoratorLabel sample = new DragDecoratorLabel(Bundle.getMessage("sample"), _editor);
-            _decorator = new DecoratorPanel(_editor, null);
-            _decorator.initDecoratorPanel(sample);
-            add(_decorator);
+            makeDecoratorPanel();
             initLinkPanel();
             _paletteFrame.pack();
             super.init();
         }
     }
 
+    private void makeDecoratorPanel() {
+        if (_decorator != null) {
+            _decorator.removeAll();
+            _decorator.updateSamples();
+        } else {
+            DragDecoratorLabel sample = new DragDecoratorLabel(Bundle.getMessage("sample"), _editor);
+            _decorator = new DecoratorPanel(_editor, null);
+            _decorator.initDecoratorPanel(sample);
+            add(_decorator, 1);
+        }
+    }
+
+    @Override
+    protected void setEditor(Editor ed) {
+        super.setEditor(ed);
+        if (_initialized) {
+            makeDecoratorPanel();
+        }
+    }
+
     /**
-     * Export a Positionable item from panel
+     * Export a Positionable item from panel.
      */
     class DragDecoratorLabel extends PositionableLabel implements DragGestureListener, DragSourceListener, Transferable {
 
@@ -77,7 +96,7 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             try {
                 dataFlavor = new DataFlavor(Editor.POSITIONABLE_FLAVOR);
             } catch (ClassNotFoundException cnfe) {
-                cnfe.printStackTrace();
+                log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
             }
         }
 
@@ -146,8 +165,8 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             _decorator.setAttributes(l);
             PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
             l.setPopupUtility(util.clone(l, l.getTextComponent()));
-//            l.setFont(util.getFont().deriveFont(util.getFontStyle()));
-            if (util.hasBackground()) {     //unrotated
+            // l.setFont(util.getFont().deriveFont(util.getFontStyle()));
+            if (util.hasBackground()) { // unrotated
                 l.setOpaque(true);
             }
             l.setLevel(this.getDisplayLevel());
@@ -156,4 +175,5 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
     }
 
     private final static Logger log = LoggerFactory.getLogger(TextItemPanel.class);
+
 }

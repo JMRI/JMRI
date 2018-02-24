@@ -22,13 +22,20 @@ public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaL
 
     @Override
     protected String title() {
-        return Bundle.getMessage("AcelaMonitorTitle");
+        return Bundle.getMessage("MonitorXTitle", "Acela");
     }
 
     @Override
     protected void init() {
         // connect to TrafficController
         _memo.getTrafficController().addAcelaListener(this);
+    }
+
+    /**
+     * Define system-specific help item
+     */
+    protected void setHelp() {
+        addHelpMenu("package.jmri.jmrix.acela.acelamon.AcelaMonFrame", true); // NOI18N
     }
 
     @Override

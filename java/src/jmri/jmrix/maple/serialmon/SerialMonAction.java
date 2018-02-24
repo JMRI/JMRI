@@ -4,26 +4,30 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 
 /**
- * Swing action to create and register a SerialMonFrame object
+ * Swing action to create and register a SerialMonFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
   */
 public class SerialMonAction extends AbstractAction {
 
-    public SerialMonAction(String s) {
+    private MapleSystemConnectionMemo memo = null;
+
+    public SerialMonAction(String s, MapleSystemConnectionMemo _memo) {
         super(s);
+        memo = _memo;
     }
 
-    public SerialMonAction() {
-        this("Maple monitor");
+    public SerialMonAction(MapleSystemConnectionMemo _memo) {
+        this("Maple monitor", _memo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // create a SerialMonFrame
-        SerialMonFrame f = new SerialMonFrame();
+        SerialMonFrame f = new SerialMonFrame(memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

@@ -1,7 +1,6 @@
 package jmri.managers;
 
 import jmri.PowerManager;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -49,7 +48,6 @@ public class ManagerDefaultSelectorTest {
         }
         // configured with only default Internal connection, preferences are valid
         Assert.assertTrue(mds.isPreferencesValid(profile));
-        CMRISystemConnectionMemo cmri = new CMRISystemConnectionMemo();
         mds.configure(profile);
         // CMRI provides no known managers, so preferences are valid
         Assert.assertTrue(mds.isPreferencesValid(profile));

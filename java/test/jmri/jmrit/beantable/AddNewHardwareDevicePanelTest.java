@@ -3,17 +3,13 @@ package jmri.jmrit.beantable;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
@@ -25,7 +21,7 @@ public class AddNewHardwareDevicePanelTest {
 
     @Test
     public void testCTor() {
-        ActionListener oklistener = new ActionListener() {
+        ActionListener createlistener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) { }
         };
@@ -37,7 +33,10 @@ public class AddNewHardwareDevicePanelTest {
             @Override
             public void actionPerformed(ActionEvent e) { }
         };
-        AddNewHardwareDevicePanel t = new AddNewHardwareDevicePanel(new JTextField(), new JTextField(), new JComboBox<String>(), new JSpinner(),new JCheckBox(), new JButton("ButtonOK"), oklistener, cancellistener,otherlistener,new JLabel());    
+        JButton okbutton = new JButton("ButtonOK");
+        okbutton.addActionListener(createlistener);
+        AddNewHardwareDevicePanel t = new AddNewHardwareDevicePanel(new JTextField(), new JTextField(), new JComboBox<String>(),
+                new JSpinner(), new JCheckBox(), okbutton, cancellistener, otherlistener, new JLabel());
         Assert.assertNotNull("exists",t);
     }
 
@@ -50,10 +49,11 @@ public class AddNewHardwareDevicePanelTest {
 
     @After
     public void tearDown() {
+
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddNewHardwareDevicePanelTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(AddNewHardwareDevicePanelTest.class);
 
 }

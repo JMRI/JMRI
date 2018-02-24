@@ -37,4 +37,5 @@ public class NodeConfigActionTest {
 
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
+
 }

@@ -49,12 +49,12 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     @Override
     public Reporter getBySystemName(String name) {
-        return (Reporter) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public Reporter getByUserName(String key) {
-        return (Reporter) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override
@@ -125,19 +125,6 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         return false;
     }
 
-    /**
-     * Validate system name format.
-     *
-     * @since 2.9.3
-     * @see jmri.jmrit.beantable.ReporterTableAction.CheckedTextField
-     * @param systemName proposed complete system name incl. prefix
-     * @return always 'true' to let undocumented connection system managers pass entry validation.
-     */
-    @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return true;
-    }
-
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
         //If the hardware address passed does not already exist then this can
@@ -177,14 +164,14 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /**
      * Provide a manager-agnostic tooltip for the Add new item beantable pane.
+     *
+     * @return the tooltip
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
-        return entryToolTip;
+        return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractReporterManager.class);
 
 }
-

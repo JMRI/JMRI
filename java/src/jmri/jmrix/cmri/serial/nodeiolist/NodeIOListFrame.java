@@ -1,4 +1,3 @@
-// NodeIOListFrame.java
 package jmri.jmrix.cmri.serial.nodeiolist;
 
 import java.awt.*;
@@ -23,8 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public class NodeIOListFrame extends jmri.util.JmriJFrame {
 
-//    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.nodeiolist.NodeIOListBundle");
-    ArrayList<SerialNode> cmriNode = new ArrayList<SerialNode>();  //c2
+    ArrayList<SerialNode> cmriNode = new ArrayList<SerialNode>();
 
     protected boolean inputSelected = true;  // true if displaying input assignments, false for output
     protected SerialNode selNode = null;
@@ -41,7 +39,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
     JRadioButton outputBits = new JRadioButton(Bundle.getMessage("ShowOutputButton"), false);
     JLabel nodeInfoText = new JLabel("Node Information Text");
 
-    JLabel nodeDesc = new JLabel("Description:");  //c2
+    JLabel nodeDesc = new JLabel("Description:");
 
     // assignment pane items
     protected JPanel assignmentPanel = null;
@@ -67,7 +65,11 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         curFrame = this;
     }
 
-    public void initComponents() throws Exception {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void initComponents() {
 
         // set the frame's initial state
         setTitle(Bundle.getMessage("WindowTitle"));
@@ -112,7 +114,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         JPanel panel12 = new JPanel();
         panel12.add(nodeInfoText);
 
-        JPanel panel13 = new JPanel();  //c2
+        JPanel panel13 = new JPanel();
         panel13.add(nodeDesc);
         panel13.setVisible(true);
         nodeDesc.setVisible(false);
@@ -151,7 +153,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         userColumn.setMinWidth(90);
         userColumn.setMaxWidth(250);
         userColumn.setResizable(true);
-        TableColumn commentColumn = assignmentColumnModel.getColumn(AssignmentTableModel.COMMENT_COLUMN);
+        assignmentColumnModel.getColumn(AssignmentTableModel.COMMENT_COLUMN);
         userColumn.setMinWidth(90);
         userColumn.setMaxWidth(250);
         userColumn.setResizable(true);
@@ -277,7 +279,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         ((AssignmentTableModel) assignmentListModel).fireTableDataChanged();
     }
 
-    /*  Done button handler */  //c2
+    /*  Done button handler */
     public void doneButtonActionPerformed() {
         setVisible(false);
         dispose();
@@ -298,11 +300,11 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         // set up a page title
         String head;
         if (inputSelected) {
-            head = "CMRInet " + Bundle.getMessage("AssignmentPanelInputName") + " - "
-                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeNum;
+            head = Bundle.getMessage("Connection") +" "+ _memo.getUserName() + "  "+ Bundle.getMessage("AssignmentPanelInputName") + " "
+                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeNum + "  ";
         } else {
-            head = "CMRInet " + Bundle.getMessage("AssignmentPanelOutputName") + " - "
-                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeNum;
+            head = Bundle.getMessage("Connection") +" "+ _memo.getUserName() + "  " + Bundle.getMessage("AssignmentPanelOutputName") + " "
+                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeNum + "  ";
         }
         // initialize a printer writer
         HardcopyWriter writer = null;
@@ -503,12 +505,9 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
             w.close();
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-        // Only used occasionally, so inefficient String processing not really a problem
-        // though it would be good to fix it if you're working in this area
         protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
             String columnString = "";
-            String lineString = "";
+            StringBuilder lineString = new StringBuilder("");
             String[] spaces = new String[MAX_COLS];
             // create base strings the width of each of the columns
             for (int k = 0; k < MAX_COLS; k++) {
@@ -551,10 +550,10 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
                         columnString = columnStrings[i] + spaces[i].substring(columnStrings[i].length());
                         columnStrings[i] = "";
                     }
-                    lineString = lineString + columnString + " ";
+                    lineString.append(columnString).append(" ");
                 }
                 try {
-                    w.write(lineString);
+                    w.write(lineString.toString());
                     //write vertical dividing lines
                     int iLine = w.getCurrentLineNumber();
                     for (int i = 0, k = 0; i < w.getCharactersPerLine(); k++) {
@@ -565,9 +564,8 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
                             i = w.getCharactersPerLine();
                         }
                     }
-                    lineString = "\n";
-                    w.write(lineString);
-                    lineString = "";
+                    w.write("\n");
+                    lineString = new StringBuilder("");
                 } catch (IOException e) {
                     log.warn("error during printing: " + e);
                 }
@@ -584,4 +582,3 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
 
 }
 
-/* @(#)NodeIOListFrame.java */

@@ -8,18 +8,21 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from MRC messages. The "MrcInterface" side
  * sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a MrcPortController is via a pair of *Streams, which then
  * carry sequences of characters for transmission. Note that this processing is
  * handled in an independent thread.
- * <P>
- * This handles the state transistions, based on the necessary state in each
+ * <p>
+ * This handles the state transitions, based on the necessary state in each
  * message.
  *
  * @author Bob Jacobsen Copyright (C) 2001
   */
 public abstract class MrcTrafficController implements MrcInterface {
 
+    /**
+     * Create a new MrcTrafficController instance. Simple implementation.
+     */
     public MrcTrafficController() {
         super();
     }

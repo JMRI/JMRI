@@ -11,7 +11,7 @@
 # Assumes that the program is being run from the "java" build directory.
 # Do "ant debug" first to copy files into the classes directory
 #
-# To test your code, use the "ant locale" target to run JmriDemo and look for
+# To test your code, use the "ant locale" target to run PanelPro and look for
 # strings that are not in upper case.
 #
 # Bob Jacobsen, copyright 2008

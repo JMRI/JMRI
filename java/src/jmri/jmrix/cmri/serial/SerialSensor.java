@@ -1,6 +1,10 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.implementation.AbstractSensor;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+
+import javax.annotation.Nonnull;
+import javax.annotation.CheckReturnValue;
 
 /**
  * Extend jmri.AbstractSensor for C/MRI serial systems
@@ -28,6 +32,16 @@ public class SerialSensor extends AbstractSensor {
      */
     @Override
     public void requestUpdateFromLayout() {
+    }
+
+    /**
+     * {@inheritDoc} 
+     * 
+     * Sorts by node number and then by bit
+     */
+    @CheckReturnValue
+    public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull jmri.NamedBean n) {
+        return CMRISystemConnectionMemo.compareSystemNameSuffix(suffix1, suffix2);
     }
 
 }

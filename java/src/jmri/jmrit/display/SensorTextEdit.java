@@ -56,7 +56,7 @@ public class SensorTextEdit extends JmriJFrame {
         super.windowClosed(e);
     }
 
-    public void initComponents(SensorIcon l, String name) throws Exception {
+    public void initComponents(SensorIcon l, String name) {
         pl = l;
 
         // the following code sets the frame's initial state

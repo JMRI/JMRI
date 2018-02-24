@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +31,8 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<>();
-        ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
-        ret.add(DefaultProgrammerManager.REGISTERMODE);
+        ret.add(ProgrammingMode.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.REGISTERMODE);
         return ret;
     }
 
@@ -67,7 +66,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
             startLongTimer();
 
             // write
-            if (getMode() == DefaultProgrammerManager.DIRECTBYTEMODE) {
+            if (getMode() == ProgrammingMode.DIRECTBYTEMODE) {
                 m = SRCPMessage.getWriteDirectCV(_bus, _cv, _val);
             } else {
                 m = SRCPMessage.getWriteRegister(_bus, registerFromCV(_cv), _val);
@@ -99,7 +98,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
             // start the error timer
             startLongTimer();
 
-            if (getMode() == DefaultProgrammerManager.DIRECTBYTEMODE) {
+            if (getMode() == ProgrammingMode.DIRECTBYTEMODE) {
                 m = SRCPMessage.getConfirmDirectCV(_bus, _cv, _confirmVal);
             } else {
                 m = SRCPMessage.getConfirmRegister(_bus, registerFromCV(_cv), _confirmVal);
@@ -133,7 +132,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
             startLongTimer();
 
             // format and send the write message
-            if (getMode() == DefaultProgrammerManager.DIRECTBYTEMODE) {
+            if (getMode() == ProgrammingMode.DIRECTBYTEMODE) {
                 m = SRCPMessage.getReadDirectCV(_bus, _cv);
             } else {
                 m = SRCPMessage.getReadRegister(_bus, registerFromCV(_cv));

@@ -406,7 +406,13 @@
 
  
 <li>
-<a href="html/doc/Technical/FindBugs.shtml">FindBugs </a>
+<a href="html/doc/Technical/SpotBugs.shtml">FindBugs </a>
+<ul></ul>
+</li>
+
+ 
+<li>
+<a href="html/doc/Technical/SpotBugs.shtml">SpotBugs </a>
 <ul></ul>
 </li>
 
@@ -618,7 +624,7 @@
 
  
 <li>
-<a href="">Switchboard Editor </a>
+<a href="package/jmri/jmrit/display/SwitchboardEditor.shtml">Switchboard Editor </a>
 <ul></ul>
 </li>
 

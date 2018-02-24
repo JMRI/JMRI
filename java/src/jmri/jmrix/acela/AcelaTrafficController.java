@@ -11,17 +11,18 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from Acela messages.
- * <P>
+ * <p>
  * The "SerialInterface" side sends/receives message objects.
- * <P>
+ * <p>
  * The connection to an AcelaPortController is via a pair of Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
+ * <p>
  * This handles the state transitions, based on the necessary state in each
  * message.
- * <P>
+ * <p>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
+ * @see jmri.jmrix.AbstractMRNodeTrafficController
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
@@ -30,6 +31,9 @@ import org.slf4j.LoggerFactory;
  */
 public class AcelaTrafficController extends AbstractMRNodeTrafficController implements AcelaInterface {
 
+    /**
+     * Create a new AcelaTrafficController instance.
+     */
     public AcelaTrafficController() {
         super();
 
@@ -37,7 +41,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         mWaitBeforePoll = 25;  // default = 25
         setAllowUnexpectedReply(true);
 
-        super.init(0, 1024); // 1024 is an artifical limit but economically reasonable
+        super.init(0, 1024); // 1024 is an artifical limit but economically reasonable maxNode upper limit
 
         reallyReadyToPoll = false;           // Need to not start polling until we are ready
         needToPollNodes = true;              // Need to poll and create corresponding nodes
@@ -49,6 +53,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     // The methods to implement the AcelaInterface
+
     @Override
     public synchronized void addAcelaListener(AcelaListener l) {
         this.addListener(l);
@@ -88,14 +93,14 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     private static int SPECIALNODE = 0;         //  Needed to initialize system
 
     /**
-     * Public method to get minimum address of an Acela node
+     * Get minimum address of an Acela node as set on this TrafficController.
      */
     public int getMinimumNodeAddress() {
         return minNode;
     }
 
     /**
-     * Public method to get maximum number of Acela nodes
+     * Get maximum number of Acela nodes as set on this TrafficController.
      */
     public int getMaximumNumberOfNodes() {
         return maxNode;
@@ -149,7 +154,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     /**
-     * Public method to register an Acela node
+     * Public method to register an Acela node.
      */
     public void registerAcelaNode(AcelaNode node) {
         synchronized (this) {
@@ -185,7 +190,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     /**
-     * Public method to set up for initialization of an Acela node
+     * Public method to set up for initialization of an Acela node.
      */
     public void initializeAcelaNode(AcelaNode node) {
         synchronized (this) {
@@ -195,9 +200,11 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     /**
-     * Public method to identify a AcelaNode from its bit address Note:
-     * nodeAddress is numbered from 0. Returns '-1' if an AcelaNode with the
-     * specified address was not found
+     * Public method to identify a AcelaNode from its bit address.
+     * <p>
+     * Note: nodeAddress is numbered from 0
+     *
+     * @return '-1' if an AcelaNode with the specified address was not found
      */
     public int lookupAcelaNodeAddress(int bitAddress, boolean isSensor) {
         for (int i = 0; i < getNumNodes(); i++) {
@@ -258,8 +265,8 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     /**
-     * Handles initialization, output and polling for Acela Nodes from within
-     * the running thread
+     * Handle initialization, output and polling for Acela Nodes from within
+     * the running thread.
      */
     @Override
     protected synchronized AbstractMRMessage pollMessage() {
@@ -327,7 +334,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                     byte tempbaddr = (byte) (tempiaddr);
                     m.setElement(2, tempbaddr);
                     m.setElement(3, node.sensorConfigArray[s]);
-                    log.debug("send Aclea Config Sensor message: " + m);
+                    log.debug("send Acela Config Sensor message: " + m);
                     incrementAcelaSensorInitCount();
                     m.setTimeout(100);  // wait for init to finish (milliseconds)
                     mCurrentMode = NORMALMODE;
@@ -398,7 +405,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     /**
-     * static function returning the AcelaTrafficController instance to use.
+     * Static function returning the AcelaTrafficController instance to use.
      *
      * @return The registered AcelaTrafficController instance for general use,
      *         if need be creating one.

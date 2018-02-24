@@ -76,7 +76,7 @@ public abstract class AbstractReporterMgrTestBase {
     @Test(expected=IllegalArgumentException.class)
     @Ignore("Not currently functional")
     public void testProvideFailure() {
-        Reporter t = l.provideReporter("..");
+        l.provideReporter("..");
     }
 
     @Test
@@ -122,6 +122,13 @@ public abstract class AbstractReporterMgrTestBase {
 
         Reporter t2 = l.getByDisplayName("Fred");
         Assert.assertTrue("get retrieved existing object ", t2 == t);
+    }
+
+    @Test
+    public void testReporterProvideByNumber() {
+        // Create
+        Reporter t = l.provideReporter("1");
+        Assert.assertNotNull("provide by number", t);
     }
 
     @Test

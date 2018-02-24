@@ -5,8 +5,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test simple functioning of LayoutBlockManager
@@ -31,5 +29,5 @@ public class LayoutBlockManagerTest {
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorActionTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(LayoutEditorActionTest.class);
 }

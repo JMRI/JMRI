@@ -2,8 +2,9 @@ package jmri.jmrix.dcc4pc;
 
 import java.util.List;
 import java.util.ResourceBundle;
+import jmri.AddressedProgrammerManager;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
 import jmri.RailComManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.managers.DefaultRailComManager;
@@ -20,14 +21,14 @@ import jmri.managers.DefaultRailComManager;
 public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public Dcc4PcSystemConnectionMemo(Dcc4PcTrafficController tc) {
-        super("DP", "Dcc4Pc");
+        super("D", "Dcc4Pc");
         this.tc = tc;
         tc.setAdapterMemo(this);
         register();
     }
 
     public Dcc4PcSystemConnectionMemo() {
-        super("DP", "Dcc4Pc");
+        super("D", "Dcc4Pc");
         register(); // registers general type
         InstanceManager.store(this, Dcc4PcSystemConnectionMemo.class); // also register as specific type
         //Needs to be implemented
@@ -60,23 +61,17 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         if (type.equals(jmri.SensorManager.class)) {
             return true;
         }
-        if (type.equals(jmri.ProgrammerManager.class)) {
-            if (progManager == null) {
-                return false;
-            }
-            return true;
-        }
-        if (type.equals(jmri.GlobalProgrammerManager.class) && provides(jmri.ProgrammerManager.class)){
-            if(getProgrammerManager()!=null){
+        if (type.equals(jmri.GlobalProgrammerManager.class)) {
+            if (getProgrammerManager() != null) {
                 return getProgrammerManager().isGlobalProgrammerAvailable();
             }
         }
-        if (type.equals(jmri.AddressedProgrammerManager.class) && provides(jmri.ProgrammerManager.class)) {
-            if(getProgrammerManager()!=null){
+        if (type.equals(jmri.AddressedProgrammerManager.class)) {
+            if (getProgrammerManager() != null) {
                 return getProgrammerManager().isAddressedModePossible();
             }
         }
-        return false; // nothing, by default
+        return super.provides(type);
     }
 
     @Override
@@ -91,16 +86,13 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         if (T.equals(jmri.SensorManager.class)) {
             return (T) getSensorManager();
         }
-        if (T.equals(jmri.ProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();
         }
         if (T.equals(jmri.AddressedProgrammerManager.class)) {
             return (T) getProgrammerManager();
         }
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     /**
@@ -172,13 +164,13 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
             }
             for (int i = 0; i < connList.size(); i++) {
                 if (connList.get(i).getUserName().equals(progManager)) {
-                    defaultProgrammer = connList.get(i).get(jmri.ProgrammerManager.class);
+                    defaultProgrammer = connList.get(i).get(GlobalProgrammerManager.class);
                     break;
                 }
             }
         }
-        if (programManager == null && defaultProgrammer!=null) {
-            programManager = new jmri.jmrix.dcc4pc.Dcc4PcProgrammerManager(defaultProgrammer/*, new Dcc4PcProgrammer(defaultProgrammer)*/);
+        if (programManager == null && defaultProgrammer != null && defaultProgrammer instanceof AddressedProgrammerManager) {
+            programManager = new Dcc4PcProgrammerManager((AddressedProgrammerManager & GlobalProgrammerManager) defaultProgrammer);
         }
         return programManager;
     }
@@ -198,9 +190,9 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         super.dispose();
     }
 
-    private ProgrammerManager defaultProgrammer;
+    private GlobalProgrammerManager defaultProgrammer;
 
-    public void setRealProgramManager(ProgrammerManager dpm) {
+    public <T extends AddressedProgrammerManager & GlobalProgrammerManager> void setRealProgramManager(T dpm) {
         defaultProgrammer = dpm;
     }
 

@@ -21,8 +21,8 @@ public class InternalTurnoutManager extends jmri.managers.InternalTurnoutManager
     }
 
     @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return true;
+    public NameValidity validSystemNameFormat(String systemName) {
+        return NameValidity.VALID;
     }
 
     /**

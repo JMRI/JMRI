@@ -1,14 +1,16 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import jmri.jmrit.catalog.NamedIcon;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * LinkingLabelTest.java
@@ -17,16 +19,13 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
  */
-public class LinkingLabelTest extends jmri.util.SwingTestCase {
+public class LinkingLabelTest extends PositionableTestBase {
 
-    LinkingLabel to = null;
-    jmri.jmrit.display.panelEditor.PanelEditor panel;
+    private LinkingLabel to = null;
 
+    @Test
     public void testShow() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
-        panel = new jmri.jmrit.display.panelEditor.PanelEditor("LinkingLabel Test Panel");
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JFrame jf = new jmri.util.JmriJFrame("LinkingLabel Target Panel");
         JPanel p = new JPanel();
@@ -36,68 +35,42 @@ public class LinkingLabelTest extends jmri.util.SwingTestCase {
         jf.pack();
         jf.setVisible(true);
 
-        to = new LinkingLabel("JMRI Link", panel, "http://jmri.org");
         to.setBounds(0, 0, 80, 80);
-        panel.putItem(to);
+        editor.putItem(to);
         to.setDisplayLevel(jmri.jmrit.display.Editor.LABELS);
 
-        assertEquals("Display Level ", to.getDisplayLevel(), jmri.jmrit.display.Editor.LABELS);
+        Assert.assertEquals("Display Level ", to.getDisplayLevel(), jmri.jmrit.display.Editor.LABELS);
 
-        to = new LinkingLabel("Target link", panel, "frame:LinkingLabel Target Panel");
+        to = new LinkingLabel("Target link", editor, "frame:LinkingLabel Target Panel");
         to.setBounds(120, 0, 80, 80);
         to.setDisplayLevel(jmri.jmrit.display.Editor.LABELS);
-        panel.putItem(to);
+        editor.putItem(to);
 
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
-        panel.setLocation(150, 150);
+        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(editor);
+        editor.setLocation(150, 150);
 
-        panel.setTitle();
+        editor.setTitle();
 
-        panel.pack();
-        panel.setVisible(true);
+        editor.pack();
+        editor.setVisible(true);
 
-        JUnitUtil.dispose(jf);
-        JUnitUtil.dispose(panel);
+        // close the frame.
+        EditorFrameOperator jfo = new EditorFrameOperator(jf);
+        jfo.requestClose();
+        jfo.waitClosed();
 
-    }
-
-    // from here down is testing infrastructure
-    public LinkingLabelTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LinkingLabelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LinkingLabelTest.class);
-        return suite;
     }
 
     // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
-    }
-
-    @Override
-    protected void tearDown() {
-        if (panel != null) {
-            // now close panel window
-            java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
-            for (WindowListener listener : listeners) {
-                panel.getTargetFrame().removeWindowListener(listener);
-            }
-            junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
-
-            panel = null;
-            JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
+        if (!GraphicsEnvironment.isHeadless()) {
+           editor = new jmri.jmrit.display.panelEditor.PanelEditor("LinkingLabel Test Panel");
+           p = to = new LinkingLabel("JMRI Link", editor, "http://jmri.org");
+           NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+           to.setIcon(icon);
         }
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);

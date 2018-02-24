@@ -20,10 +20,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
+import purejavacomm.*;
 
 /**
  * Pane for downloading software updates to PRICOM products
@@ -193,6 +190,8 @@ public class LoaderPane extends javax.swing.JPanel {
         static final int maxMsg = 80;
         byte inBuffer[];
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
+                                            justification="this is for skip-chars while loop: no matter how many, we're skipping")
         void nibbleIncomingData() throws java.io.IOException {
             long nibbled = 0;                         // total chars chucked
             serialStream = new DataInputStream(activeSerialPort.getInputStream());
@@ -416,7 +415,7 @@ public class LoaderPane extends javax.swing.JPanel {
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers 
+            // filter out line printers
             if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
             {
                 portNameVector.addElement(id.getName());
@@ -425,6 +424,8 @@ public class LoaderPane extends javax.swing.JPanel {
         return portNameVector;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
+                                        justification="this is for skip-chars while loop: no matter how many, we're skipping")
     public String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
@@ -484,9 +485,8 @@ public class LoaderPane extends javax.swing.JPanel {
             }
 
             //opened = true;
-        } catch (Exception ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+        } catch (NoSuchPortException | UnsupportedCommOperationException | IOException | RuntimeException ex) {
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
         return null; // indicates OK return

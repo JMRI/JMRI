@@ -1,6 +1,7 @@
 package jmri.jmrix.srcp;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -16,12 +17,12 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from SRCP messages. The "SRCPInterface" side
  * sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a SRCPPortController is via a pair of *Streams, which then
  * carry sequences of characters for transmission. Note that this processing is
  * handled in an independent thread.
- * <P>
- * This handles the state transistions, based on the necessary state in each
+ * <p>
+ * This handles the state transitions, based on the necessary state in each
  * message.
  *
  * @author Bob Jacobsen Copyright (C) 2001
@@ -31,6 +32,9 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 
     protected SRCPSystemConnectionMemo _memo = null;
 
+    /**
+     * Create a new SRCPTrafficController instance.
+     */
     public SRCPTrafficController() {
         super();
         if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
@@ -98,9 +102,8 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                 Runnable r = new SRCPRcvNotifier(e, mLastSender, this);
                 try {
                     javax.swing.SwingUtilities.invokeAndWait(r);
-                } catch (Exception ex) {
-                    log.error("Unexpected exception in invokeAndWait:" + ex);
-                    ex.printStackTrace();
+                } catch (InterruptedException | InvocationTargetException ex) {
+                    log.error("Unexpected exception in invokeAndWait:", ex);
                 }
                 if (log.isDebugEnabled()) {
                     log.debug("dispatch thread invoked");
@@ -113,8 +116,8 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                 SRCPClientVisitor v = new SRCPClientVisitor();
                 e.jjtAccept(v, _memo);
 
-                // we need to re-write the switch below so that it uses the 
-                // SimpleNode values instead of the reply message.            
+                // we need to re-write the switch below so that it uses the
+                // SimpleNode values instead of the reply message.
                 //SRCPReply msg = new SRCPReply((SimpleNode)e.jjtGetChild(1));
                 switch (mCurrentState) {
                     case WAITMSGREPLYSTATE: {
@@ -132,7 +135,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                         mCurrentMode = PROGRAMINGMODE;
                         replyInDispatch = false;
 
-                        // check to see if we need to delay to allow decoders 
+                        // check to see if we need to delay to allow decoders
                         // to become responsive
                         int warmUpDelay = enterProgModeDelayTime();
                         if (warmUpDelay != 0) {
@@ -179,8 +182,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                                 xmtRunnable.notify();
                             }
                         } else {
-                            log.error("reply complete in unexpected state: "
-                                    + mCurrentState + " was " + e.toString());
+                            unexpectedReplyStateError(mCurrentState,e.toString());
                         }
                     }
                 }
@@ -321,8 +323,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                     forwardReply(client, r);
                 }
             } catch (Exception ex) {
-                log.warn("notify: During reply dispatch to " + client + "\nException " + ex);
-                ex.printStackTrace();
+                log.warn("notify: During reply dispatch to {}", client, ex);
             }
             // forward to the last listener who send a message
             // this is done _second_ so monitoring can have already stored the reply
@@ -332,6 +333,22 @@ public class SRCPTrafficController extends AbstractMRTrafficController
             }
 
         }
+    }
+
+    /**
+     * Ask if shut down is allowed.
+     * <p>
+     * The shut down manager must call this method first on all the tasks
+     * before starting to execute the method execute() on the tasks.
+     * <p>
+     * If this method returns false on any task, the shut down process must
+     * be aborted.
+     *
+     * @return true if it is OK to shut down, false to abort shut down.
+     */
+    @Override
+    public boolean isShutdownAllowed() {
+        return true;
     }
 
     /**

@@ -18,7 +18,9 @@ public class ServerFrameTest {
     @Test
     public void getInstanceTest() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ServerFrame f = ServerFrame.getInstance();
+        jmri.InstanceManager.getDefault(Server.class);
+        // ServerFrame is provided by InstanceManagerAutoInitialize
+        ServerFrame f = jmri.InstanceManager.getDefault(ServerFrame.class);
         Assert.assertNotNull("ServerFrame getInstance", f);
         f.dispose();
     }

@@ -52,10 +52,11 @@ public class MatrixSignalMastXml
         List<String> outputs = p.getOutputs();
         // convert char[] to xml-storable simple String
         // max. 5 outputs (either: turnouts (bean names) [or ToDo: DCC addresses (numbers)]
-        // spotted by FindBugs as to never be null (check on creation of MatrixMast)
+        // spotted by SpotBugs as to never be null (check on creation of MatrixMast)
         Element outps = new Element("outputs");
         int i = 1;
         for (String _output : outputs) {
+            log.debug("   handling {}", _output);
             String key = ("output" + i);
             Element outp = new Element("output");
             outp.setAttribute("matrixCol", key);
@@ -129,11 +130,7 @@ public class MatrixSignalMastXml
         Element outps = shared.getChild("outputs"); // multiple
         if (outps != null) {
             List<Element> list = outps.getChildren("output"); // singular
-            int i = 0;
-            for (Element outp : list) {
-                i++; // count outputs
-            }
-            m.setBitNum(i); // set char[] size before creating outputs
+            m.setBitNum(list.size()); // set char[] size before creating outputs
             for (Element outp : list) {
                 String outputname = outp.getAttribute("matrixCol").getValue();
                 String turnoutname = outp.getText();

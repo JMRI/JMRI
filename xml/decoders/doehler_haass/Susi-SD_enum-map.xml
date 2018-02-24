@@ -15,6 +15,7 @@
   <enumChoice choice="-">
     <choice xml:lang="fr">-</choice>
     <choice xml:lang="de">-</choice>
+    <choice xml:lang="ca">-</choice>
   </enumChoice>
   <enumChoice choice="F1"/>
   <enumChoice choice="F2"/>

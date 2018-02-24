@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.trains;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
@@ -13,7 +12,6 @@ import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LocoIcon;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.routes.Route;
@@ -119,14 +117,13 @@ public class TrainIcon extends LocoIcon {
         _tf.toFront();
     }
 
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     private JMenu makeTrainRouteMenu() {
         JMenu routeMenu = new JMenu(Bundle.getMessage("Route"));
         Route route = _train.getRoute();
         if (route == null) {
             return routeMenu;
         }
-        List<RollingStock> carList = InstanceManager.getDefault(CarManager.class).getByTrainList(_train);
+        List<Car> carList = InstanceManager.getDefault(CarManager.class).getByTrainList(_train);
         for (RouteLocation rl : route.getLocationsBySequenceList()) {
             int pickupCars = 0;
             int dropCars = 0;
@@ -134,8 +131,7 @@ public class TrainIcon extends LocoIcon {
             if (_train.getCurrentLocation() == rl) {
                 current = "-> "; // NOI18N
             }
-            for (RollingStock rs : carList) {
-                Car car = (Car) rs;
+            for (Car car : carList) {
                 if (car.getRouteLocation() == rl && !car.getTrackName().equals(Car.NONE)) {
                     pickupCars++;
                 }
@@ -225,7 +221,6 @@ public class TrainIcon extends LocoIcon {
         }
     }
 
-    private final int range = 25; // how close the train icon needs to be to the next location coordinates in a train's
 
     // route
 
@@ -241,7 +236,7 @@ public class TrainIcon extends LocoIcon {
             if (next != null) {
                 Point nextPoint = next.getTrainIconCoordinates();
                 log.debug("Next location (" + next.getName() + "), X=" + nextPoint.x + " Y=" + nextPoint.y);
-                if (Math.abs(getX() - nextPoint.x) < range && Math.abs(getY() - nextPoint.y) < range) {
+                if (Math.abs(getX() - nextPoint.x) < next.getTrainIconRangeX() && Math.abs(getY() - nextPoint.y) < next.getTrainIconRangeY()) {
                     log.debug("Train icon (" + _train.getName() + ") within range of (" + next.getName() + ")");
                     if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("MoveTrainTo"),
                             new Object[]{next.getName()}), MessageFormat.format(Bundle.getMessage("MoveTrain"),

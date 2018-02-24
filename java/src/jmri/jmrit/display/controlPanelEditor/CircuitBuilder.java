@@ -27,11 +27,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Editor.TargetPane;
 import jmri.jmrit.display.IndicatorTrack;
@@ -48,14 +48,13 @@ import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.jmrit.picker.PickListModel;
-import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <P>
- * @author Pete Cressman Copyright: Copyright (c) 2011
+ * ControlPanelEditor CircuitBuilder tools.
  *
+ * @author Pete Cressman Copyright: Copyright (c) 2011
  */
 public class CircuitBuilder {
 
@@ -115,7 +114,7 @@ public class CircuitBuilder {
      * ***************************************************************
      */
     public CircuitBuilder() {
-//        _menuBar = new JMenuBar();
+        // _menuBar = new JMenuBar();
         log.error("CircuitBuilder ctor requires an Editor class");
     }
 
@@ -160,7 +159,7 @@ public class CircuitBuilder {
         }
         _circuitMap.put(block, icons);
         _darkTrack.remove(pos);
-//        if (log.isDebugEnabled()) log.debug("addIcon: block "+block.getDisplayName()+" has "+icons.size()+" icons.");
+        // if (log.isDebugEnabled()) log.debug("addIcon: block "+block.getDisplayName()+" has "+icons.size()+" icons.");
     }
 
     // display "todo" (Error correction) items
@@ -534,8 +533,8 @@ public class CircuitBuilder {
     }
 
     /**
-     * Create a new OBlock Used by New to set up _editCircuitFrame Sets
-     * _currentBlock to created new OBlock
+     * Create a new OBlock. Used by New to set up _editCircuitFrame.
+     * Sets _currentBlock to created new OBlock.
      */
     private void addCircuitDialog() {
         _dialog = new JDialog(_editor, Bundle.getMessage("TitleCircuitDialog"), true);
@@ -561,8 +560,8 @@ public class CircuitBuilder {
     }
 
     /**
-     * Edit existing OBlock Used by edit to set up _editCircuitFrame Sets
-     * _currentBlock to chosen OBlock or null if none selected
+     * Edit existing OBlock. Used by edit to set up _editCircuitFrame.
+     * Sets _currentBlock to chosen OBlock or null if none selected.
      */
     private void editCircuitDialog(String title) {
         _dialog = new JDialog(_editor, Bundle.getMessage(title), true);
@@ -700,7 +699,7 @@ public class CircuitBuilder {
         return false;
     }
 
-    /**
+    /*
      * ************************ end setup frames *****************************
      */
     private void setPortalsPositionable(OBlock block, boolean set) {
@@ -811,9 +810,10 @@ public class CircuitBuilder {
         _editor.resetEditor();
     }
 
-    /**
+    /*
      * ************** end closing frames *******************
      */
+
     /**
      * Find the blocks with no icons and the blocks with icons that need
      * conversion Setup for main Frame - used in both initialization and close
@@ -829,7 +829,7 @@ public class CircuitBuilder {
         Iterator<Positionable> it = _editor.getContents().iterator();
         while (it.hasNext()) {
             Positionable pos = it.next();
-//            if (log.isDebugEnabled()) log.debug("class: "+pos.getClass().getName());
+            // if (log.isDebugEnabled()) log.debug("class: "+pos.getClass().getName());
             if (pos instanceof IndicatorTrack) {
                 OBlock block = ((IndicatorTrack) pos).getOccBlock();
                 ((IndicatorTrack) pos).removePath(EditCircuitPaths.TEST_PATH);
@@ -909,10 +909,10 @@ public class CircuitBuilder {
                 }
             }
         }
-        List<NamedBean> list = portalMgr.getNamedBeanList();
-        Iterator<NamedBean> iter = list.iterator();
+        List<Portal> list = portalMgr.getNamedBeanList();
+        Iterator<Portal> iter = list.iterator();
         while (iter.hasNext()) {
-            Portal portal = (Portal) iter.next();
+            Portal portal =  iter.next();
             String name = portal.getName();
             PortalIcon pi = _portalIconMap.get(name);
             if (pi != null) {
@@ -1041,7 +1041,7 @@ public class CircuitBuilder {
     }
 
     /*
-     * *************** Overriden methods of Editor *******************
+     * *************** Overridden methods of Editor *******************
      *
      * public void paintTargetPanel(Graphics g) { Graphics2D g2d =
      * (Graphics2D)g; if (_circuitIcons!=null){ java.awt.Stroke stroke =
@@ -1058,8 +1058,8 @@ public class CircuitBuilder {
     IndicatorItemPanel _trackPanel;
     IndicatorTOItemPanel _trackTOPanel;
     PositionableLabel _oldIcon;
-    JmriJFrame _convertFrame;     // must be modal dialog to halt convetIcons loop
-    JDialog _convertDialog;     // must be modal dialog to halt convetIcons loop
+    DisplayFrame _convertFrame;     // must be modal dialog to halt convertIcons loop
+    JDialog _convertDialog;     // must be modal dialog to halt convertIcons loop
 
     /**
      * Check if the block being edited has all its icons converted to indicator
@@ -1177,7 +1177,7 @@ public class CircuitBuilder {
     /*
      * gimmick to get JDialog to re-layout contents and repaint
      */
-    static class ConvertFrame extends JmriJFrame {
+    static class ConvertFrame extends DisplayFrame {
 
         JDialog _dialog;
 
@@ -1437,7 +1437,7 @@ public class CircuitBuilder {
         } else if (_editPortalFrame != null) {
             _editPortalFrame.toFront();
             _editor.setSelectionGroup(_saveSelectionGroup);
-//            _editPortalFrame.setSelection(selection);
+            // _editPortalFrame.setSelection(selection);
         } else if (_editDirectionFrame != null) {
             _editDirectionFrame.toFront();
             _editor.setSelectionGroup(_saveSelectionGroup);
