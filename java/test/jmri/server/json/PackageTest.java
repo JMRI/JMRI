@@ -33,7 +33,8 @@ import org.junit.runners.Suite.SuiteClasses;
     JsonHttpServiceTest.class,
     JsonWebSocketTest.class,
     JsonConnectionTest.class,
-    JsonClientHandlerTest.class
+    JsonClientHandlerTest.class,
+    jmri.server.json.message.PackageTest.class,
 })
 public class PackageTest {
 }
