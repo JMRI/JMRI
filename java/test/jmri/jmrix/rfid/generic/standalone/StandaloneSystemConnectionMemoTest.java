@@ -36,7 +36,9 @@ public class StandaloneSystemConnectionMemoTest extends jmri.jmrix.SystemConnect
           }
         };
         memo.setRfidTrafficController(tc);
-        memo.configureManagers(null,null);
+        memo.configureManagers(
+            new StandaloneSensorManager(tc, memo.getSystemPrefix()),
+            new StandaloneReporterManager(tc, memo.getSystemPrefix()));
         scm=memo;
     }
 
