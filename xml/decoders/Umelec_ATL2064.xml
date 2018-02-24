@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id$ -->
+<!-- Copyright (C) JMRI 2004 All rights reserved                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,751 +12,1628 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="jefflaw@datamasta.co.nz" version="1.00" lastUpdated="20040809"/>
-  <!-- version 1.00 - initial version             -->
-  <decoder>
-    <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero">
-      <model model="ATL2064" lowVersionID="12" highVersionID="12" maxInputVolts="12V" maxMotorCurrent="1A" maxTotalCurrent="1A" formFactor="HO" numOuts="9" numFns="8">
-        <output name="3" label="Pad C"/>
-        <output name="4" label="Pad D"/>
-        <output name="5" label="Whistle"/>
-        <output name="6" label="Sound"/>
-        <output name="7" label="Signal"/>
-        <output name="8" label="Main Sw"/>
-        <output name="9" label="Vmid"/>
-      </model>
-    </family>
-    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
-    <variables>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable CV="2" default="15" comment="Range 0-127" item="Vstart">
-        <decVal max="127"/>
-        <label>Vstart</label>
-        <label xml:lang="it">Volt Partenza</label>
-        <label xml:lang="fr">V démarr.</label>
-        <label xml:lang="de">Startspannung</label>
-        <comment>Range 0-127</comment>
-      </variable>
-      <variable CV="3" default="15" comment="Range 0-255" item="Accel">
-        <decVal max="255"/>
-        <label>Acceleration</label>
-        <label xml:lang="it">Accellerazione (0-255)</label>
-        <label xml:lang="fr">Accelération (0-255)</label>
-        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable CV="4" default="15" comment="Range 0-255" item="Decel">
-        <decVal max="255"/>
-        <label>Deceleration</label>
-        <label xml:lang="it">Decellerazione (0-255)</label>
-        <label xml:lang="fr">Décélération (0-255)</label>
-        <label xml:lang="de">Bremszeit (0-255)</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable CV="5" default="50" comment="Range 0-100" item="Vhigh">
-        <decVal max="100"/>
-        <label>Vhigh</label>
-        <label xml:lang="it">Volt Massimi (0-100):</label>
-        <label xml:lang="de">Höchstgeschwindigkeit</label>
-        <comment>Range 0-100</comment>
-      </variable>
-      <variable CV="6" default="0" comment="Range 0-100" item="Vmid">
-        <decVal max="100"/>
-        <label>Vmid</label>
-        <comment>Range 0-100</comment>
-      </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="12">
-        <decVal/>
-        <label>Decoder Version No</label>
-        <label xml:lang="it">Versione Decoder: </label>
-        <label xml:lang="fr">Version décodeur: </label>
-        <label xml:lang="de">Decoder Version: </label>
-      </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer" default="147">
-        <decVal/>
-        <label>Manufacturer ID</label>
-        <label xml:lang="it">ID Costruttore: </label>
-        <label xml:lang="fr">ID constructeur: </label>
-        <label xml:lang="de">Hersteller ID: </label>
-      </variable>
-      <variable item="Total PWM Period" CV="9" default="63" comment="Range 40-63">
-        <decVal/>
-        <label>Total PWM Period</label>
-        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
-        <comment>Range 40-63</comment>
-      </variable>
-      <!-- CV=19 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-      <!-- CV=29 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
-      <variable CV="33" default="1" mask="XXXXXXXV" minOut="1" item="FL(f) controls output 1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(f) controls output A</label>
-      </variable>
-      <variable CV="33" mask="XXXXXXVX" minOut="2" item="FL(f) controls output 2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(f) controls output B</label>
-      </variable>
-      <variable CV="33" mask="XXXXXVXX" minOut="3" item="FL(f) controls output 3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(f) controls output C</label>
-      </variable>
-      <variable CV="33" mask="XXXXVXXX" minOut="4" item="FL(f) controls output 4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(f) controls output D</label>
-      </variable>
-      <variable CV="33" mask="XXXVXXXX" minOut="5" item="FL(f) controls output 5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(f) sounds Whistle</label>
-      </variable>
-      <variable CV="33" mask="XXVXXXXX" minOut="6" item="FL(f) controls output 6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(f) disables Sound</label>
-      </variable>
-      <variable CV="33" mask="XVXXXXXX" minOut="7" item="FL(f) controls output 7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(f) enables Signal Op.</label>
-      </variable>
-      <variable CV="33" mask="VXXXXXXX" minOut="8" item="FL(f) controls output 8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(f) is Main Switch</label>
-      </variable>
-      <variable CV="34" mask="XXXXXXXV" minOut="1" item="FL(r) controls output 1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(r) controls output A</label>
-      </variable>
-      <variable CV="34" default="1" mask="XXXXXXVX" minOut="2" item="FL(r) controls output 2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(r) controls output B</label>
-      </variable>
-      <variable CV="34" mask="XXXXXVXX" minOut="3" item="FL(r) controls output 3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(r) controls output C</label>
-      </variable>
-      <variable CV="34" mask="XXXXVXXX" minOut="4" item="FL(r) controls output 4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(r) controls output D</label>
-      </variable>
-      <variable CV="34" mask="XXXVXXXX" minOut="5" item="FL(r) controls output 5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(r) sounds Whistle</label>
-      </variable>
-      <variable CV="34" mask="XXVXXXXX" minOut="6" item="FL(r) controls output 6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(r) disables Sound</label>
-      </variable>
-      <variable CV="34" mask="XVXXXXXX" minOut="7" item="FL(r) controls output 7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(r) enables Signal Op.</label>
-      </variable>
-      <variable CV="34" mask="VXXXXXXX" minOut="8" item="FL(r) controls output 8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(r) is Main Switch</label>
-      </variable>
-      <variable CV="35" mask="XXXXXXXV" minOut="1" minFn="1" item="F1 controls output 1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 controls output A</label>
-      </variable>
-      <variable CV="35" mask="XXXXXXVX" minOut="2" minFn="1" item="F1 controls output 2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 controls output B</label>
-      </variable>
-      <variable CV="35" default="1" mask="XXXXXVXX" minOut="3" minFn="1" item="F1 controls output 3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 controls output C</label>
-      </variable>
-      <variable CV="35" mask="XXXXVXXX" minOut="4" minFn="1" item="F1 controls output 4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 controls output D</label>
-      </variable>
-      <variable CV="35" mask="XXXVXXXX" minOut="5" minFn="1" item="F1 controls output 5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 sounds Whistle</label>
-      </variable>
-      <variable CV="35" mask="XXVXXXXX" minOut="6" minFn="1" item="F1 controls output 6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 disables Sound</label>
-      </variable>
-      <variable CV="35" mask="XVXXXXXX" minOut="7" minFn="1" item="F1 controls output 7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 enables Signal Op.</label>
-      </variable>
-      <variable CV="35" mask="VXXXXXXX" minOut="8" minFn="1" item="F1 controls output 8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 is Main Switch</label>
-      </variable>
-      <variable CV="36" mask="XXXXXXXV" minOut="1" minFn="2" item="F2 controls output 1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 controls output A</label>
-      </variable>
-      <variable CV="36" mask="XXXXXXVX" minOut="2" minFn="2" item="F2 controls output 2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 controls output B</label>
-      </variable>
-      <variable CV="36" mask="XXXXXVXX" minOut="3" minFn="2" item="F2 controls output 3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 controls output C</label>
-      </variable>
-      <variable CV="36" default="1" mask="XXXXVXXX" minOut="4" minFn="2" item="F2 controls output 4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 controls output D</label>
-      </variable>
-      <variable CV="36" mask="XXXVXXXX" minOut="5" minFn="2" item="F2 controls output 5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 sounds Whistle</label>
-      </variable>
-      <variable CV="36" mask="XXVXXXXX" minOut="6" minFn="2" item="F2 controls output 6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 disables Sound</label>
-      </variable>
-      <variable CV="36" mask="XVXXXXXX" minOut="7" minFn="2" item="F2 controls output 7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 enables Signal Op.</label>
-      </variable>
-      <variable CV="36" mask="VXXXXXXX" minOut="8" minFn="2" item="F2 controls output 8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 is Main Switch</label>
-      </variable>
-      <variable CV="37" mask="XXXXXXXV" minOut="3" minFn="3" item="F3 controls output 3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 controls output C</label>
-      </variable>
-      <variable CV="37" mask="XXXXXXVX" minOut="4" minFn="3" item="F3 controls output 4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 controls output D</label>
-      </variable>
-      <variable CV="37" default="1" mask="XXXXXVXX" minOut="5" minFn="3" item="F3 controls output 5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 sounds Whistle</label>
-      </variable>
-      <variable CV="37" mask="XXXXVXXX" minOut="6" minFn="3" item="F3 controls output 6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 disables Sound</label>
-      </variable>
-      <variable CV="37" mask="XXXVXXXX" minOut="7" minFn="3" item="F3 controls output 7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 enables Signal Op.</label>
-      </variable>
-      <variable CV="37" mask="XXVXXXXX" minOut="8" minFn="3" item="F3 controls output 8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 is Main Switch</label>
-      </variable>
-      <variable CV="37" mask="XVXXXXXX" minOut="9" minFn="3" item="F3 controls output 9">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 sets vMid</label>
-      </variable>
-      <variable CV="38" mask="XXXXXXXV" minOut="3" minFn="4" item="F4 controls output 3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 controls output C</label>
-      </variable>
-      <variable CV="38" mask="XXXXXXVX" minOut="4" minFn="4" item="F4 controls output 4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 controls output D</label>
-      </variable>
-      <variable CV="38" mask="XXXXXVXX" minOut="5" minFn="4" item="F4 controls output 5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 sounds Whistle</label>
-      </variable>
-      <variable CV="38" default="1" mask="XXXXVXXX" minOut="6" minFn="4" item="F4 controls output 6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 disables Sound</label>
-      </variable>
-      <variable CV="38" mask="XXXVXXXX" minOut="7" minFn="4" item="F4 controls output 7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 enables Signal Op.</label>
-      </variable>
-      <variable CV="38" mask="XXVXXXXX" minOut="8" minFn="4" item="F4 controls output 8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 is Main Switch</label>
-      </variable>
-      <variable CV="38" mask="XVXXXXXX" minOut="9" minFn="4" item="F4 controls output 9">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 sets vMid</label>
-      </variable>
-      <variable CV="39" mask="XXXXXXXV" minOut="3" minFn="5" item="F5 controls output 3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 controls output C</label>
-      </variable>
-      <variable CV="39" mask="XXXXXXVX" minOut="4" minFn="5" item="F5 controls output 4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 controls output D</label>
-      </variable>
-      <variable CV="39" mask="XXXXXVXX" minOut="5" minFn="5" item="F5 controls output 5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 sounds Whistle</label>
-      </variable>
-      <variable CV="39" mask="XXXXVXXX" minOut="6" minFn="5" item="F5 controls output 6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 disables Sound</label>
-      </variable>
-      <variable CV="39" mask="XXXVXXXX" minOut="7" minFn="5" item="F5 controls output 7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 enables Signal Op.</label>
-      </variable>
-      <variable CV="39" mask="XXVXXXXX" minOut="8" minFn="5" item="F5 controls output 8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 is Main Switch</label>
-      </variable>
-      <variable CV="39" mask="XVXXXXXX" minOut="9" minFn="5" item="F5 controls output 9">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 sets vMid</label>
-      </variable>
-      <variable CV="40" mask="XXXXXXXV" minOut="3" minFn="6" item="F6 controls output 3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 controls output C</label>
-      </variable>
-      <variable CV="40" mask="XXXXXXVX" minOut="4" minFn="6" item="F6 controls output 4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 controls output D</label>
-      </variable>
-      <variable CV="40" mask="XXXXXVXX" minOut="5" minFn="6" item="F6 controls output 5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 sounds Whistle</label>
-      </variable>
-      <variable CV="40" mask="XXXXVXXX" minOut="6" minFn="6" item="F6 controls output 6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 disables Sound</label>
-      </variable>
-      <variable CV="40" mask="XXXVXXXX" minOut="7" minFn="6" item="F6 controls output 7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 enables Signal Op.</label>
-      </variable>
-      <variable CV="40" mask="XXVXXXXX" minOut="8" minFn="6" item="F6 controls output 8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 is Main Switch</label>
-      </variable>
-      <variable CV="40" default="1" mask="XVXXXXXX" minOut="9" minFn="6" item="F6 controls output 9">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 sets vMid</label>
-      </variable>
-      <variable CV="41" mask="XXXXXXXV" minOut="7" minFn="7" item="F7 controls output 7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 enables Signal Op.</label>
-      </variable>
-      <variable CV="41" mask="XXXXXXVX" minOut="8" minFn="7" item="F7 controls output 8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 is Main Switch</label>
-      </variable>
-      <variable CV="41" mask="XXXXXVXX" minOut="9" minFn="7" item="F7 controls output 9">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 sets vMid</label>
-      </variable>
-      <variable CV="42" mask="XXXXXXXV" minOut="7" minFn="8" item="F8 controls output 7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 enables Signal Op.</label>
-      </variable>
-      <variable CV="42" mask="XXXXXXVX" minOut="8" minFn="8" item="F8 controls output 8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 is Main Switch</label>
-      </variable>
-      <variable CV="42" mask="XXXXXVXX" minOut="9" minFn="8" item="F8 controls output 9">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 sets vMid</label>
-      </variable>
-      <variable CV="49" mask="XXXXXXXV" item="ATL1-A">
-        <enumVal>
-          <enumChoice choice="Speed Step Mode">
-            <choice>Speed Step Mode</choice>
-          </enumChoice>
-          <enumChoice choice="++Mode">
-            <choice>++Mode</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Control Mode</label>
-      </variable>
-      <variable CV="49" mask="XXXXXXVX" item="ATL1-B">
-        <enumVal>
-          <enumChoice choice="No Shuttle">
-            <choice>No Shuttle</choice>
-          </enumChoice>
-          <enumChoice choice="Shuttle Operation">
-            <choice>Shuttle Operation</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Shuttle Operation</label>
-      </variable>
-      <variable CV="49" mask="XXXXXVXX" item="ATL1-C">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-        <label>Speed Control</label>
-      </variable>
-      <variable CV="49" mask="XXXXVXXX" item="ATL1-D">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Braking By Steps</label>
-      </variable>
-      <variable CV="49" mask="XXXVXXXX" item="ATL1-E">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Polarity Braking</label>
-      </variable>
-      <variable CV="49" mask="XXVXXXXX" item="ATL1-F">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Dimmed">
-            <choice>Dimmed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Headlights when Stationary</label>
-      </variable>
-      <variable CV="49" mask="XVXXXXXX" item="ATL1-G">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Programming on Main</label>
-      </variable>
-      <variable CV="49" mask="VXXXXXXX" item="ATL1-H">
-        <enumVal>
-          <enumChoice choice="Brake">
-            <choice>Brake</choice>
-          </enumChoice>
-          <enumChoice choice="Stop">
-            <choice>Stop</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Signal Mode Direction Change</label>
-      </variable>
-      <variable CV="50" mask="XXXXXXXV" item="ATL2-A">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Sound Functions</label>
-      </variable>
-      <variable CV="50" mask="XXXXXXVX" item="ATL2-B">
-        <enumVal>
-          <enumChoice choice="Steam">
-            <choice>Steam</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel">
-            <choice>Diesel</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Sound Style</label>
-      </variable>
-      <variable CV="50" mask="XXXXXVXX" item="ATL2-C">
-        <enumVal>
-          <enumChoice choice="Internal">
-            <choice>Internal</choice>
-          </enumChoice>
-          <enumChoice choice="External e.g. Cam">
-            <choice>External e.g. Cam</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Exhaust Beat Control</label>
-      </variable>
-      <variable CV="50" mask="XXXXVXXX" item="ATL2-D">
-        <enumVal>
-          <enumChoice choice="4-Cylinder">
-            <choice>4-Cylinder</choice>
-          </enumChoice>
-          <enumChoice choice="6-Cylinder/Trigger on F Output">
-            <choice>6-Cylinder/Trigger on F Output</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Steam Engine</label>
-      </variable>
-      <variable CV="50" mask="XXXVXXXX" item="ATL2-E">
-        <enumVal>
-          <enumChoice choice="Whistle">
-            <choice>Whistle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn">
-            <choice>Horn</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Whistle Type</label>
-      </variable>
-      <variable CV="50" mask="XXVXXXXX" item="ATL2-F">
-        <enumVal>
-          <enumChoice choice="Style 1">
-            <choice>Style 1</choice>
-          </enumChoice>
-          <enumChoice choice="Style 2">
-            <choice>Style 2</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Whistle/Horn Variant</label>
-      </variable>
-      <variable CV="50" mask="XVXXXXXX" item="ATL2-G">
-        <enumVal>
-          <enumChoice choice="Remote Only">
-            <choice>Remote Only</choice>
-          </enumChoice>
-          <enumChoice choice="Remote and Reed Switch">
-            <choice>Remote and Reed Switch</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Whistle Activation</label>
-      </variable>
-      <variable CV="50" mask="VXXXXXXX" item="ATL2-H">
-        <enumVal>
-          <enumChoice choice="Load Independent">
-            <choice>Load Independent</choice>
-          </enumChoice>
-          <enumChoice choice="Load Dependent">
-            <choice>Load Dependent</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Sound Dependency</label>
-      </variable>
-      <variable CV="51" default="250" comment="Range 0-250" item="Signal-A">
-        <decVal max="250"/>
-        <label>Direction Change Delay</label>
-        <comment>Range 0-250</comment>
-      </variable>
-      <variable CV="52" default="50" comment="Range 0-250" item="Signal-B">
-        <decVal max="250"/>
-        <label>Departure Delay</label>
-        <comment>Range 0-250</comment>
-      </variable>
-      <variable CV="53" default="1" comment="Range 0-250" item="Signal-C">
-        <decVal max="250"/>
-        <label>Acceleration</label>
-        <comment>Range 0-250</comment>
-      </variable>
-      <variable CV="54" default="1" comment="Range 0-250" item="Signal-D">
-        <decVal max="250"/>
-        <label>Deceleration</label>
-        <comment>Range 0-250</comment>
-      </variable>
-      <variable CV="55" default="64" comment="Range 30-127" item="Signal-E">
-        <decVal min="30" max="127"/>
-        <label>Run Speed</label>
-        <comment>Range 30-127</comment>
-      </variable>
-      <variable CV="56" default="32" comment="Range 20-127" item="Signal-F">
-        <decVal min="20" max="127"/>
-        <label>Slow Speed</label>
-        <comment>Range 20-127</comment>
-      </variable>
-      <!-- Lights section -->
-      <variable CV="57" mask="XXXXXXVV" item="Output 1 effect generated">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Blinking/Flashing">
-            <choice>Blinking/Flashing</choice>
-          </enumChoice>
-          <enumChoice choice="Dimmed/Gyro/Mars">
-            <choice>Dimmed/Gyro/Mars</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Headlights A/B</label>
-      </variable>
-      <variable CV="57" mask="XXXXVVXX" item="Output 3 effect generated">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Blinking/Flashing">
-            <choice>Blinking/Flashing</choice>
-          </enumChoice>
-          <enumChoice choice="Dimmed/Gyro/Mars">
-            <choice>Dimmed/Gyro/Mars</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Output C</label>
-      </variable>
-      <variable CV="57" mask="XXVVXXXX" item="Output 4 effect generated">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Blinking/Flashing">
-            <choice>Blinking/Flashing</choice>
-          </enumChoice>
-          <enumChoice choice="Dimmed/Gyro/Mars">
-            <choice>Dimmed/Gyro/Mars</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Output D</label>
-      </variable>
-      <variable CV="57" mask="XVXXXXXX" item="Output 7 options">
-        <enumVal>
-          <enumChoice choice="Dimming, No Gyro nor Mars">
-            <choice>Dimming, No Gyro nor Mars</choice>
-          </enumChoice>
-          <enumChoice choice="Gyro or Mars, no Dimming">
-            <choice>Gyro or Mars, no Dimming</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Effect 1</label>
-      </variable>
-      <variable CV="57" mask="VXXXXXXX" item="Output 8 options">
-        <enumVal>
-          <enumChoice choice="Single Strobe or Gyro Light">
-            <choice>Single Strobe or Gyro Light</choice>
-          </enumChoice>
-          <enumChoice choice="Double Strobe or Mars Light">
-            <choice>Double Strobe or Mars Light</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Effect 2</label>
-      </variable>
-      <variable CV="58" default="130" comment="Range 8-255" item="Global lighting option 1">
-        <decVal min="8" max="255"/>
-        <label>Blink/Flash Generator</label>
-        <comment>Range 8-255</comment>
-      </variable>
-      <variable CV="59" default="161" comment="Range 0-255" item="Global lighting option 2">
-        <decVal min="0" max="255"/>
-        <label>Dimming Generator</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable CV="60" default="28" comment="Range 0-63" item="Global lighting option 3">
-        <decVal min="0" max="63"/>
-        <label>Gyrolight Generator</label>
-        <comment>Range 0-63</comment>
-      </variable>
-      <!-- Sound section -->
-      <variable CV="61" default="50" comment="Range 0-100" item="Sound Group 1 Option 1">
-        <decVal min="0" max="100"/>
-        <label>Exhaust Divider - High</label>
-        <comment>Range 0-100</comment>
-      </variable>
-      <variable CV="62" default="128" comment="Range 0-255" item="Sound Group 1 Option 2">
-        <decVal min="0" max="255"/>
-        <label>Exhaust Divider - Low</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable CV="63" default="6" comment="Range 0-63" item="Sound Group 1 Option 3">
-        <decVal min="0" max="63"/>
-        <label>Overpressure Exhaust</label>
-        <comment>Range 0-63</comment>
-      </variable>
-      <variable CV="64" default="150" comment="Range 50-255" item="Sound Group 1 Option 4">
-        <decVal min="50" max="255"/>
-        <label>Whistle Period</label>
-        <comment>Range 50-255</comment>
-      </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
-      <variable CV="107" default="3" comment="Range 1-20" item="EMF Static Config">
-        <decVal min="1" max="20"/>
-        <label>Motor Regulation Rate</label>
-        <comment>Range 1-20</comment>
-      </variable>
-      <variable CV="108" default="9" comment="Range 3-20" item="EMF Dynamic Config">
-        <decVal min="3" max="20"/>
-        <label>Motor Pulse Length</label>
-        <comment>Range 3-20</comment>
-      </variable>
-      <variable CV="109" default="0" comment="Range 0-255" item="ATL_Other-A" tooltip="Sets length of pulse when Output C triggered">
-        <decVal min="0" max="255"/>
-        <label>Output C Pulse Length Limit</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable CV="110" default="0" comment="Range 0-255" item="ATL_Other-B" tooltip="Sets length of pulse when Output D triggered">
-        <decVal min="0" max="255"/>
-        <label>Output D Pulse Length Limit</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable CV="111" default="198" comment="Range 0-255" item="Sound Group 2 Option 1">
-        <decVal min="0" max="255"/>
-        <label>Diesel Sound A</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable CV="112" default="3" comment="Range 0-255" item="Sound Group 2 Option 2">
-        <decVal min="0" max="255"/>
-        <label>Diesel Sound B</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable CV="113" default="57" comment="Range 0-255" item="Sound Group 2 Option 3">
-        <decVal min="0" max="255"/>
-        <label>Diesel Sound C</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable CV="114" default="252" comment="Range 0-255" item="Sound Group 2 Option 4">
-        <decVal min="0" max="255"/>
-        <label>Diesel Sound D</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable item="Steam Beat Length" CV="115" default="0" comment="Range 0-60">
-        <decVal min="0" max="60"/>
-        <label>Steam Beat Length</label>
-        <comment>Range 0-60</comment>
-      </variable>
-      <variable CV="116" default="19" comment="Range 0-21" item="Sound Setting 1">
-        <decVal min="0" max="21"/>
-        <label>Steam Beat Main/Diesel Running</label>
-        <comment>Range 0-21</comment>
-      </variable>
-      <variable CV="117" default="16" comment="Range 0-21" item="Sound Setting 2">
-        <decVal min="0" max="21"/>
-        <label>Steam Beat Other</label>
-        <comment>Range 0-21</comment>
-      </variable>
-      <variable CV="118" default="6" comment="Range 0-21" item="Sound Setting 3">
-        <decVal min="0" max="21"/>
-        <label>Steam Beat Braking</label>
-        <comment>Range 0-21</comment>
-      </variable>
-      <variable CV="119" default="2" comment="Range 0-21" item="Sound Setting 4">
-        <decVal min="0" max="21"/>
-        <label>Steam Idle</label>
-        <comment>Range 0-21</comment>
-      </variable>
-      <variable CV="120" default="21" comment="Range 0-21" item="Sound Setting 5">
-        <decVal min="0" max="21"/>
-        <label>Whistle</label>
-        <comment>Range 0-21</comment>
-      </variable>
-    </variables>
-  </decoder>
-  <pane nameFmt="label">
-    <column>
-      <display item="ATL1-A" layout="left" format="default"/>
-      <display item="ATL1-B" layout="left" format="default"/>
-      <display item="ATL1-C" layout="left" format="default"/>
-      <display item="ATL1-D" layout="left" format="default"/>
-      <display item="ATL1-E" layout="left" format="default"/>
-      <display item="ATL1-F" layout="left" format="default"/>
-      <display item="ATL1-G" layout="left" format="default"/>
-      <display item="ATL1-H" layout="left" format="default"/>
-      <display item="ATL2-A" layout="left" format="default"/>
-      <display item="ATL2-B" layout="left" format="default"/>
-      <display item="ATL2-C" layout="left" format="default"/>
-      <display item="ATL2-D" layout="left" format="default"/>
-      <display item="ATL2-E" layout="left" format="default"/>
-      <display item="ATL2-F" layout="left" format="default"/>
-      <display item="ATL2-G" layout="left" format="default"/>
-      <display item="ATL2-H" layout="left" format="default"/>
-    </column>
-    <name>ATLPlus</name>
-  </pane>
-  <pane nameFmt="label">
-    <column>
-      <label>
-        <text>Parameters employed in Signal Mode only</text>
-      </label>
-      <separator/>
-      <label>
-        <text/>
-      </label>
-      <display item="Signal-A" layout="left" format="default"/>
-      <display item="Signal-B" layout="left" format="default"/>
-      <display item="Signal-C" layout="left" format="default"/>
-      <display item="Signal-D" layout="left" format="default"/>
-      <display item="Signal-E" layout="left" format="default"/>
-      <display item="Signal-F" layout="left" format="default"/>
-      <display item="Signal-G" layout="left" format="default"/>
-      <display item="Signal-H" layout="left" format="default"/>
-    </column>
-    <name>Signal Mode</name>
-  </pane>
-  <pane nameFmt="label">
-    <column>
-      <label>
-        <text>Output C and D Pulse Length Limits</text>
-      </label>
-      <separator/>
-      <label>
-        <text/>
-      </label>
-      <display item="ATL_Other-A" layout="left" format="default"/>
-      <display item="ATL_Other-B" layout="left" format="default"/>
-      <display item="ATL_Other-C" layout="left" format="default"/>
-    </column>
-    <name>ATL Other</name>
-  </pane>
+	<version author="jefflaw@datamasta.co.nz" version="1.00" lastUpdated="20040809"/>
+	<version author="W.D.Kok" version="2.00" lastUpdated="20180217"/>
+	<!-- version 1.00 - initial version                                          -->
+	<!-- Version 2.00 - CV Corrections and German and Dutch translating inserted -->
+	<decoder>
+	<family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero">
+	<model model="ATL2064" lowVersionID="10" highVersionID="11" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0" connector="Wires/NEM652" numOuts="9" numFns="13" productID="ModelA1">
+				<output name="1" label="Pad A">
+					<label xml:lang="de">Ausgang A</label>
+					<label xml:lang="nl">Uitgang A</label>
+				</output>
+				<output name="2" label="Pad B">
+					<label xml:lang="de">Ausgang B</label>
+					<label xml:lang="nl">Uitgang B</label>
+				</output>
+				<output name="3" label="Pad C">
+					<label xml:lang="de">Ausgang C</label>
+					<label xml:lang="nl">Uitgang C</label>
+				</output>
+				<output name="4" label="Pad D">
+					<label xml:lang="de">Ausgang D</label>
+					<label xml:lang="nl">Uitgang D</label>
+				</output>
+				<output name="5" label="E/Whistle">
+					<label xml:lang="de">E/Pfeife</label>
+					<label xml:lang="nl">E/Fluit</label>
+				</output>
+				<output name="6" label="F/Sound">
+					<label xml:lang="de">F/Sound</label>
+					<label xml:lang="nl">E/Geluid</label>
+				</output>
+				<output name="7" label="Signal">
+					<label xml:lang="de">Signal</label>
+					<label xml:lang="nl">Signaal</label>
+				</output>
+				<output name="8" label="Main Sw">
+					<label xml:lang="de">Hauptschalter</label>
+					<label xml:lang="nl">Hoofdschakelaar</label>
+				</output>
+				<output name="9" label="Vmid">
+					<label xml:lang="de">Vmid</label>
+					<label xml:lang="nl">Vmid</label>
+				</output>
+				<size length="24" width="10" height="4.5" units="mm"/>
+			</model>
+			<model model="ATL2064-12" lowVersionID="12" highVersionID="12" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0" connector="Wires/NEM652" numOuts="9" numFns="13" productID="ModelB1">
+				<output name="1" label="Pad A">
+					<label xml:lang="de">Ausgang A</label>
+					<label xml:lang="nl">Uitgang A</label>
+				</output>
+				<output name="2" label="Pad B">
+					<label xml:lang="de">Ausgang B</label>
+					<label xml:lang="nl">Uitgang B</label>
+				</output>
+				<output name="3" label="Pad C">
+					<label xml:lang="de">Ausgang C</label>
+					<label xml:lang="nl">Uitgang C</label>
+				</output>
+				<output name="4" label="Pad D">
+					<label xml:lang="de">Ausgang D</label>
+					<label xml:lang="nl">Uitgang D</label>
+				</output>
+				<output name="5" label="E/Whistle">
+					<label xml:lang="de">E/Pfeife</label>
+					<label xml:lang="nl">E/Fluit</label>
+				</output>
+				<output name="6" label="F/Sound">
+					<label xml:lang="de">F/Sound</label>
+					<label xml:lang="nl">E/Geluid</label>
+				</output>
+				<output name="7" label="Signal">
+					<label xml:lang="de">Signal</label>
+					<label xml:lang="nl">Signaal</label>
+				</output>
+				<output name="8" label="Main Sw">
+					<label xml:lang="de">Hauptschalter</label>
+					<label xml:lang="nl">Hoofdschakelaar</label>
+				</output>
+				<output name="9" label="Vmid">
+					<label xml:lang="de">Vmid</label>
+					<label xml:lang="nl">Vmid</label>
+				</output>
+				<size length="24" width="10" height="4.5" units="mm"/>
+			</model>
+		</family>
+		<programming direct="yes" paged="yes" register="yes" ops="yes"/>
+		<variables>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+			<variable CV="2" default="2" comment="Range 0-127" item="Vstart">
+				<decVal max="127"/>
+				<label>Vstart</label>
+				<label xml:lang="it">Volt Partenza (0-127)</label>
+				<label xml:lang="fr">V démarr. (0-127)</label>
+				<label xml:lang="de">Startspannung (0-127)</label>
+				<label xml:lang="nl">Start spanning (0-127)</label>
+				<comment>Range 0-127</comment>
+			</variable>
+			<variable CV="3" default="15" comment="Range 0-255" item="Accel">
+				<decVal max="255"/>
+				<label>Acceleration</label>
+				<label xml:lang="it">Accellerazione (0-255)</label>
+				<label xml:lang="fr">Accelération (0-255)</label>
+				<label xml:lang="de">Beschleunigung (0-255)</label>
+				<label xml:lang="nl">Acceleratie (0-255)</label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="4" default="15" comment="Range 0-255" item="Decel">
+				<decVal max="255"/>
+				<label>Deceleration</label>
+				<label xml:lang="it">Decellerazione (0-255)</label>
+				<label xml:lang="fr">Décélération (0-255)</label>
+				<label xml:lang="de">Bremszeit (0-255)</label>
+				<label xml:lang="nl">Rem tijd (0-255)</label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="5" default="50" comment="Range 0-100" item="Vhigh">
+				<decVal max="100"/>
+				<label>Vhigh</label>
+				<label xml:lang="it">Volt Massimi (0-100):</label>
+				<label xml:lang="de">Höchstgeschwindigkeit (0-100)</label>
+				<label xml:lang="nl">Maximumsnelheid (0-100)</label>
+				<comment>Range 0-100</comment>
+			</variable>
+			<variable CV="6" default="0" comment="Range 0-100" item="Vmid">
+				<decVal max="100"/>
+				<label>Vmid (0-100)</label>
+				<comment>Range 0-100</comment>
+			</variable>
+			<variable CV="7"  default="10" item="Decoder Version" readOnly="yes" include="ModelA1">
+				<decVal/>
+				<label>Decoder Version No</label>
+				<label xml:lang="it">Versione Decoder: </label>
+				<label xml:lang="fr">Version décodeur: </label>
+				<label xml:lang="de">Decoder Version: </label>
+				<label xml:lang="nl">Decoder versie: </label>
+			</variable>
+			<variable CV="7"  default="12" item="Decoder Version" readOnly="yes" include="ModelB1">
+				<decVal/>
+				<label>Decoder Version No</label>
+				<label xml:lang="it">Versione Decoder: </label>
+				<label xml:lang="fr">Version décodeur: </label>
+				<label xml:lang="de">Decoder Version: </label>
+				<label xml:lang="nl">Decoder versie: </label>
+			</variable>
+			<variable CV="8" default="147" readOnly="yes" item="Manufacturer">
+				<decVal/>
+				<label>Manufacturer ID</label>
+				<label xml:lang="it">ID Costruttore: </label>
+				<label xml:lang="fr">ID constructeur: </label>
+				<label xml:lang="de">Hersteller ID: </label>
+				<label xml:lang="nl">Fabrikanten ID: </label>
+			</variable>
+			<variable item="Total PWM Period" CV="9" default="63" comment="Range 40-63">
+				<decVal/>
+				<label>Total PWM Period</label>
+				<label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
+				<label xml:lang="de">Periode PWM (Pulsweitenmodulation der Motoransteuerung)</label>
+				<label xml:lang="nl">Periode PWM (Frequentiemodulatie der Motoransteueringng)</label>
+				<comment>Range 40-63</comment>
+			</variable>
+			<!-- CV=19 -->
+			<!-- CV=29 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+			<!-- Function Assignment -->
+			<variable CV="32" mask="XXXXXXXV" minOut="1" item="F0 controls output 1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F0 controls output A</label>
+				<label xml:lang="de">F0 Ausgang A</label>
+				<label xml:lang="nl">F0 Uitgang A</label>
+			</variable>
+			<variable CV="32" mask="XXXXXXVX" minOut="2" item="F0 controls output 2">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F0 controls output B</label>
+				<label xml:lang="de">F0 Ausgang B</label>
+				<label xml:lang="nl">F0 Uitgang B</label>
+			</variable>
+			<variable CV="32" mask="XXXXXVXX" minOut="3" item="F0 controls output 3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F0 controls output C</label>
+				<label xml:lang="de">F0 Ausgang C</label>
+				<label xml:lang="nl">F0 Uitgang C</label>
+			</variable>
+			<variable CV="32" mask="XXXXVXXX" minOut="4" item="F0 controls output 4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F0 controls output D</label>
+				<label xml:lang="de">F0 Ausgang D</label>
+				<label xml:lang="nl">F0 Uitgang D</label>
+			</variable>
+			<variable CV="32" mask="XXXVXXXX" minOut="5" item="F0 controls output 5">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F0 sounds Whistle</label>
+				<label xml:lang="de">F0 E/Pfeife</label>
+				<label xml:lang="nl">F0 E/Fluit</label>
+			</variable>
+			<variable CV="32" mask="XXVXXXXX" minOut="6" item="F0 controls output 6">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F0 disables Sound</label>
+				<label xml:lang="de">F0 F/Sound aus</label>
+				<label xml:lang="nl">F0 F/Geluid uit</label>
+			</variable>
+			<variable CV="32" default="1" mask="XVXXXXXX" minOut="7" item="F0 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F0 enables Signal Op</label>
+				<label xml:lang="de">F0 Signalbetrieb</label>
+				<label xml:lang="nl">F0 Signaal bedrijf</label>
+			</variable>
+			<variable CV="33" default="1" mask="XXXXXXXV" minOut="1" item="FL(f) controls output 1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>FL(f) controls output A</label>
+				<label xml:lang="de">FL(f) Ausgang A</label>
+				<label xml:lang="nl">FL(f) Uitgang A</label>
+			</variable>
+			<variable CV="33" mask="XXXXXXVX" minOut="2" item="FL(f) controls output 2">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>FL(f) controls output B</label>
+				<label xml:lang="de">FL(f) Ausgang B</label>
+				<label xml:lang="nl">FL(f) Uitgang B</label>
+			</variable>
+			<variable CV="33" mask="XXXXXVXX" minOut="3" item="FL(f) controls output 3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>FL(f) controls output C</label>
+				<label xml:lang="de">FL(f) Ausgang C</label>
+				<label xml:lang="nl">FL(f) Uitgang C</label>
+			</variable>
+			<variable CV="33" mask="XXXXVXXX" minOut="4" item="FL(f) controls output 4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>FL(f) controls output D</label>
+				<label xml:lang="de">FL(f) Ausgang D</label>
+				<label xml:lang="nl">FL(f) Uitgang D</label>
+			</variable>
+			<variable CV="33" mask="XXXVXXXX" minOut="5" item="FL(f) controls output 5">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>FL(f) sounds Whistle</label>
+				<label xml:lang="de">FL(f) E/Pfeife</label>
+				<label xml:lang="nl">FL(f) E/Fluit</label>
+			</variable>
+			<variable CV="33" mask="XXVXXXXX" minOut="6" item="FL(f) controls output 6">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>FL(f) disables Sound</label>
+				<label xml:lang="de">FL(f) F/Sound aus</label>
+				<label xml:lang="nl">FL(f) F/Geluid uit</label>
+			</variable>
+			<variable CV="33" mask="XVXXXXXX" minOut="7" item="FL(f) controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>FL(f) enables Signal Op.</label>
+				<label xml:lang="de">FL(f) Signalbetieb</label>
+				<label xml:lang="nl">FL(f) Signaalbedrijf</label>
+			</variable>
+			<variable CV="34" mask="XXXXXXXV" minOut="1" item="FL(r) controls output 1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>FL(r) controls output A</label>
+				<label xml:lang="de">FL(r) Ausgang A</label>
+				<label xml:lang="nl">FL(r) Uitgang A</label>
+			</variable>
+			<variable CV="34" default="1" mask="XXXXXXVX" minOut="2" item="FL(r) controls output 2">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>FL(r) controls output B</label>
+				<label xml:lang="de">FL(r) Ausgang B</label>
+				<label xml:lang="nl">FL(r) Uitgang B</label>
+			</variable>
+			<variable CV="34" mask="XXXXXVXX" minOut="3" item="FL(r) controls output 3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>FL(r) controls output C</label>
+				<label xml:lang="de">FL(r) Ausgang C</label>
+				<label xml:lang="nl">FL(r) Uitgang C</label>
+			</variable>
+			<variable CV="34" mask="XXXXVXXX" minOut="4" item="FL(r) controls output 4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>FL(r) controls output D</label>
+				<label xml:lang="de">FL(r) Ausgang D</label>
+				<label xml:lang="nl">FL(r) Uitgang D</label>
+			</variable>
+			<variable CV="34" mask="XXXVXXXX" minOut="5" item="FL(r) controls output 5">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>FL(r) sounds Whistle</label>
+				<label xml:lang="de">FL(r) E/Pfeife</label>
+				<label xml:lang="nl">FL(r) E/Fluit</label>
+			</variable>
+			<variable CV="34" mask="XXVXXXXX" minOut="6" item="FL(r) controls output 6">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>FL(r) disables Sound</label>
+				<label xml:lang="de">FL(r) F/Sound aus</label>
+				<label xml:lang="nl">FL(r) F/Geluid uit</label>
+			</variable>
+			<variable CV="34" mask="XVXXXXXX" minOut="7" item="FL(r) controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>FL(r) enables Signal Op.</label>
+				<label xml:lang="de">FL(r) Signalbetieb</label>
+				<label xml:lang="nl">FL(r) Signaal bedrijf</label>
+			</variable>
+			<variable CV="35" mask="XXXXXXXV" minOut="1" minFn="1" item="F1 controls output 1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F1 controls output A</label>
+				<label xml:lang="de">F1 Ausgang A</label>
+				<label xml:lang="nl">F1 Uitgang A</label>
+			</variable>
+			<variable CV="35" mask="XXXXXXVX" minOut="2" minFn="1" item="F1 controls output 2">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F1 controls output B</label>
+				<label xml:lang="de">F1 Ausgang B</label>
+				<label xml:lang="nl">F1 Uitgang B</label>
+			</variable>
+			<variable CV="35" default="1" mask="XXXXXVXX" minOut="3" minFn="1" item="F1 controls output 3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F1 controls output C</label>
+				<label xml:lang="de">F1 Ausgang C</label>
+				<label xml:lang="nl">F1 Uitgang C</label>
+			</variable>
+			<variable CV="35" mask="XXXXVXXX" minOut="4" minFn="1" item="F1 controls output 4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F1 controls output D</label>
+				<label xml:lang="de">F1 Ausgang D</label>
+				<label xml:lang="nl">F1 Uitgang D</label>
+			</variable>
+			<variable CV="35" mask="XXXVXXXX" minOut="5" minFn="1" item="F1 controls output 5">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F1 sounds Whistle</label>
+				<label xml:lang="de">F1 E/Pfeife</label>
+				<label xml:lang="nl">F1 E/Fluit</label>
+			</variable>
+			<variable CV="35" mask="XXVXXXXX" minOut="6" minFn="1" item="F1 controls output 6">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F1 disables Sound</label>
+				<label xml:lang="de">F1 F/Sound aus</label>
+				<label xml:lang="nl">F1 F/Geluid uit</label>
+			</variable>
+			<variable CV="35" mask="XVXXXXXX" minOut="7" minFn="1" item="F1 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F1 enables Signal Op.</label>
+				<label xml:lang="de">F1 Signalbetieb</label>
+				<label xml:lang="nl">F1 Signaalbedrijf</label>
+			</variable>
+			<variable CV="35" mask="VXXXXXXX" minOut="8" minFn="1" item="F1 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F1 is Main Switch</label>
+				<label xml:lang="de">F1 Hauptschalter</label>
+				<label xml:lang="nl">F1 Hoofdschakelaar</label>
+			</variable>
+			<variable CV="36" mask="XXXXXXXV" minOut="1" minFn="2" item="F2 controls output 1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F2 controls output A</label>
+				<label xml:lang="de">F2 Ausgang A</label>
+				<label xml:lang="nl">F2 Uitgang A</label>
+			</variable>
+			<variable CV="36" mask="XXXXXXVX" minOut="2" minFn="2" item="F2 controls output 2">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F2 controls output B</label>
+			<label xml:lang="de">F2 Ausgang B</label>
+			<label xml:lang="nl">F2 Uitgang B</label>
+			</variable>
+			<variable CV="36" mask="XXXXXVXX" minOut="3" minFn="2" item="F2 controls output 3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F2 controls output C</label>
+				<label xml:lang="de">F2 Ausgang C</label>
+				<label xml:lang="nl">F2 Uitgang C</label>
+			</variable>
+			<variable CV="36" default="1" mask="XXXXVXXX" minOut="4" minFn="2" item="F2 controls output 4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F2 controls output D</label>
+				<label xml:lang="de">F2 Ausgang D</label>
+				<label xml:lang="nl">F2 Uitgang D</label>
+			</variable>
+			<variable CV="36" mask="XXXVXXXX" minOut="5" minFn="2" item="F2 controls output 5">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F2 sounds Whistle</label>
+				<label xml:lang="de">F2 E/Pfeife</label>
+				<label xml:lang="nl">F2 E/Fluit</label>
+			</variable>
+			<variable CV="36" mask="XXVXXXXX" minOut="6" minFn="2" item="F2 controls output 6">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F2 disables Sound</label>
+				<label xml:lang="de">F2 F/Sound aus</label>
+				<label xml:lang="nl">F2 F/Geluid uit</label>
+			</variable>
+			<variable CV="36" mask="XVXXXXXX" minOut="7" minFn="2" item="F2 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F2 enables Signal Op.</label>
+				<label xml:lang="de">F2 Signalbetieb</label>
+				<label xml:lang="nl">F2 Signaalbedrijf</label>
+			</variable>
+			<variable CV="36" mask="VXXXXXXX" minOut="8" minFn="2" item="F2 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F2 is Main Switch</label>
+				<label xml:lang="de">F2 Hauptschalter</label>
+				<label xml:lang="nl">F2 Hoofdschakelaar</label>
+			</variable>
+			<variable CV="37" mask="XXXXXXXV" minOut="3" minFn="3" item="F3 controls output 3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F3 controls output C</label>
+				<label xml:lang="de">F3 Ausgang C</label>
+				<label xml:lang="nl">F3 Uitgang C</label>
+			</variable>
+			<variable CV="37" mask="XXXXXXVX" minOut="4" minFn="3" item="F3 controls output 4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F3 controls output D</label>
+				<label xml:lang="de">F3 Ausgang D</label>
+				<label xml:lang="nl">F3 Uitgang D</label>
+			</variable>
+			<variable CV="37" default="1" mask="XXXXXVXX" minOut="5" minFn="3" item="F3 controls output 5">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F3 sounds Whistle</label>
+				<label xml:lang="de">F3 E/Pfeife</label>
+				<label xml:lang="nl">F3 E/Fluit</label>
+			</variable>
+			<variable CV="37" mask="XXXXVXXX" minOut="6" minFn="3" item="F3 controls output 6">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F3 disables Sound</label>
+				<label xml:lang="de">F3 F/Sound</label>
+				<label xml:lang="nl">F3 F/Geluid uit</label>
+			</variable>
+			<variable CV="37" mask="XXXVXXXX" minOut="7" minFn="3" item="F3 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F3 enables Signal Op.</label>
+				<label xml:lang="de">F3 Signalbetieb</label>
+				<label xml:lang="nl">F3 Signaalbedrijf</label>
+			</variable>
+			<variable CV="37" mask="XXVXXXXX" minOut="8" minFn="3" item="F3 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F3 is Main Switch</label>
+				<label xml:lang="de">F3 Hauptschalter</label>
+				<label xml:lang="nl">F3 Hoofdschakelaar</label>
+			</variable>
+			<variable CV="37" mask="XVXXXXXX" minOut="9" minFn="3" item="F3 controls output 9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F3 sets vMid</label>
+				<label xml:lang="de">F3 Vmid</label>
+				<label xml:lang="nl">F3 Vmid</label>
+			</variable>
+			<variable CV="38" mask="XXXXXXXV" minOut="3" minFn="4" item="F4 controls output 3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F4 controls output C</label>
+				<label xml:lang="de">F4 Ausgang C</label>
+				<label xml:lang="nl">F4 Uitgang C</label>
+			</variable>
+			<variable CV="38" mask="XXXXXXVX" minOut="4" minFn="4" item="F4 controls output 4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label xml:lang="de">F4 Ausgang D</label>
+				<label xml:lang="nl">F4 Uitgang D</label>
+			</variable>
+			<variable CV="38" mask="XXXXXVXX" minOut="5" minFn="4" item="F4 controls output 5">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F4 sounds Whistle</label>
+				<label xml:lang="de">F4 E/Pfeife</label>
+				<label xml:lang="nl">F4 E/Fluit</label>
+			</variable>
+			<variable CV="38" default="1" mask="XXXXVXXX" minOut="6" minFn="4" item="F4 controls output 6">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F4 disables Sound</label>
+				<label xml:lang="de">F4 F/Sound aus</label>
+				<label xml:lang="nl">F4 F/Geluid uit</label>
+			</variable>
+			<variable CV="38" mask="XXXVXXXX" minOut="7" minFn="4" item="F4 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F4 enables Signal Op.</label>
+				<label xml:lang="de">F4 Signalbetieb</label>
+				<label xml:lang="nl">F4 Signaalbedrijf</label>
+			</variable>
+			<variable CV="38" mask="XXVXXXXX" minOut="8" minFn="4" item="F4 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F4 is Main Switch</label>
+				<label xml:lang="de">F4 Hauptschalter</label>
+				<label xml:lang="nl">F4 Hoofdschakelaar</label>
+			</variable>
+			<variable CV="38" mask="XVXXXXXX" minOut="9" minFn="4" item="F4 controls output 9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F4 sets vMid</label>
+				<label xml:lang="de">F4 Vmid</label>
+				<label xml:lang="nl">F4 Vmid</label>
+			</variable>
+		<variable CV="39" mask="XXXXXXXV" minOut="3" minFn="5" item="F5 controls output 3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F5 controls output C</label>
+				<label xml:lang="de">F5 Ausgang C</label>
+				<label xml:lang="nl">F5 Uitgang C</label>
+			</variable>
+			<variable CV="39" mask="XXXXXXVX" minOut="4" minFn="5" item="F5 controls output 4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F5 controls output D</label>
+				<label xml:lang="de">F5 Ausgang D</label>
+				<label xml:lang="nl">F5 Uitgang D</label>
+			</variable>
+			<variable CV="39" mask="XXXXXVXX" minOut="5" minFn="5" item="F5 controls output 5">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F5 sounds Whistle</label>
+				<label xml:lang="de">F5 Pfeife</label>
+				<label xml:lang="nl">F5 E/Fluit</label>
+			</variable>
+			<variable CV="39" mask="XXXXVXXX" minOut="6" minFn="5" item="F5 controls output 6">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F5 disables Sound</label>
+				<label xml:lang="de">F5 Sound aus</label>
+				<label xml:lang="nl">F5 F/Geluid uit</label>
+			</variable>
+			<variable CV="39" mask="XXXVXXXX" minOut="7" minFn="5" item="F5 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F5 enables Signal Op.</label>
+				<label xml:lang="de">F5 Signalbetieb</label>
+				<label xml:lang="nl">F5 Signaalbedrijf</label>
+			</variable>
+			<variable CV="39" mask="XXVXXXXX" minOut="8" minFn="5" item="F5 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F5 is Main Switch</label>
+				<label xml:lang="de">F5 Hauptschalter</label>
+				<label xml:lang="nl">F5 Hoofdschakelaar</label>
+			</variable>
+			<variable CV="39" mask="XVXXXXXX" minOut="9" minFn="5" item="F5 controls output 9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F5 sets vMid</label>
+				<label xml:lang="de">F5 Vmid</label>
+				<label xml:lang="nl">F5 Vmid</label>
+			</variable>
+			<variable CV="40" mask="XXXXXXXV" minOut="3" minFn="6" item="F6 controls output 3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F6 controls output C</label>
+				<label xml:lang="de">F6 Ausgang C</label>
+				<label xml:lang="nl">F6 Uitgang C</label>
+			</variable>
+			<variable CV="40" mask="XXXXXXVX" minOut="4" minFn="6" item="F6 controls output 4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F6 controls output D</label>
+				<label xml:lang="de">F6 Ausgang D</label>
+				<label xml:lang="nl">F6 Uitgang D</label>
+			</variable>
+			<variable CV="40" mask="XXXXXVXX" minOut="5" minFn="6" item="F6 controls output 5">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F6 sounds Whistle</label>
+			<label xml:lang="de">F6 Pfeife</label>
+			<label xml:lang="nl">F6 E/Fluit</label>
+			</variable>
+			<variable CV="40" mask="XXXXVXXX" minOut="6" minFn="6" item="F6 controls output 6">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F6 disables Sound</label>
+				<label xml:lang="de">F6 Sound aus</label>
+				<label xml:lang="nl">F6 F/Geluid uit</label>
+			</variable>
+			<variable CV="40" mask="XXXVXXXX" minOut="7" minFn="6" item="F6 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F6 enables Signal Op.</label>
+				<label xml:lang="de">F6 Signalbetieb</label>
+				<label xml:lang="nl">F6 Signaalbedrijf</label>
+			</variable>
+			<variable CV="40" mask="XXVXXXXX" minOut="8" minFn="6" item="F6 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F6 is Main Switch</label>
+				<label xml:lang="de">F6 Hauptschalter</label>
+				<label xml:lang="nl">F6 Hoofdschakelaar</label>
+			</variable>
+			<variable CV="40" default="1" mask="XVXXXXXX" minOut="9" minFn="6" item="F6 controls output 9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F6 sets vMid</label>
+				<label xml:lang="de">F6 Vmid</label>
+				<label xml:lang="nl">F6 Vmid</label>
+			</variable>
+			<variable CV="41" mask="XXXXXXXV" minOut="7" minFn="7" item="F7 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F7 enables Signal Op.</label>
+				<label xml:lang="de">F7 Signalbetieb</label>
+				<label xml:lang="nl">F7 Signaal bedrijf</label>
+			</variable>
+			<variable CV="41" mask="XXXXXXVX" minOut="8" minFn="7" item="F7 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F7 is Main Switch</label>
+				<label xml:lang="de">F7 Hauptschalter</label>
+				<label xml:lang="nl">F8 Hoofdschakelaar</label>
+			</variable>
+			<variable CV="41" mask="XXXXXVXX" minOut="9" minFn="7" item="F7 controls output 9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F7 sets vMid</label>
+				<label xml:lang="de">F7 Vmid</label>
+				<label xml:lang="nl">F7 Vmid</label>
+			</variable>
+			<variable CV="42" mask="XXXXXXXV" minOut="7" minFn="8" item="F8 controls output 7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F8 enables Signal Op.</label>
+				<label xml:lang="de">F8 Signalbetieb</label>
+				<label xml:lang="nl">F8 Signaal bedrijf</label>
+			</variable>
+			<variable CV="42" mask="XXXXXXVX" minOut="8" minFn="8" item="F8 controls output 8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F8 is Main Switch</label>
+				<label xml:lang="de">F8 Hauptschalter</label>
+				<label xml:lang="nl">F8 Hoofdschakelaar</label>
+			</variable>
+			<variable CV="42" mask="XXXXXVXX" minOut="9" minFn="8" item="F8 controls output 9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>F8 sets vMid</label>
+				<label xml:lang="de">F8 Vmid</label>
+				<label xml:lang="nl">F8 Vmid</label>
+			</variable>
+			<!-- ATL part -->
+			<variable CV="49" mask="XXXXXXXV" item="ATL1-A">
+				<enumVal>
+					<enumChoice choice="Speed Step Mode">
+						<choice>++Mode off</choice>
+						<choice xml:lang="de">++Modus Aus</choice>
+						<choice xml:lang="nl">++Modus uit</choice>
+					</enumChoice>
+					<enumChoice choice="++Mode">
+						<choice>++Mode</choice>
+						<choice xml:lang="de">++Modus Ein</choice>
+						<choice xml:lang="nl">++Modus aan</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Speed Control Mode</label>
+				<label xml:lang="de">Spezielle Betriebsart</label>
+				<label xml:lang="nl">Speciale modus</label>
+			</variable>
+			<variable CV="49" mask="XXXXXXVX" item="ATL1-B">
+				<enumVal>
+					<enumChoice choice="No Shuttle">
+					<choice>No Shuttle</choice>
+						<choice xml:lang="de">Pendelbetrieb Aus</choice>
+						<choice xml:lang="nl">Pendeldienst uit</choice>
+				</enumChoice>
+					<enumChoice choice="Shuttle Operation">
+						<choice>Shuttle Operation</choice>
+						<choice xml:lang="de">Pendelbetrieb Ein</choice>
+						<choice xml:lang="nl">Pendeldienst aan</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Shuttle Operation</label>
+				<label xml:lang="de">Pendelbetrieb</label>
+				<label xml:lang="nl">Pendeldienst</label>
+			</variable>
+			<variable CV="49" mask="XXXXXVXX" item="ATL1-C">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+				<label>Speed Control</label>
+				<label xml:lang="de">Drehzahlregelung</label>
+				<label xml:lang="nl">Toerentalregeling</label>
+			</variable>
+			<variable CV="49" mask="XXXXVXXX" item="ATL1-D"> <!-- Braking By Steps -->
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/> 
+				<label>Braking By Steps</label>
+				<label xml:lang="de">Stufenbremsen</label>
+				<label xml:lang="nl">Stoefen rem</label>
+			</variable>      
+			<variable CV="49" mask="XXXVXXXX" item="ATL1-E"> <!-- Voltage shift -->
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/> 
+				<label>Voltage shift By Braking By Steps</label>
+				<label xml:lang="de">Spannungsverschiebung bei Stufenbremsen</label>
+				<label xml:lang="nl">Spanningsverschuiving bij stoefen rem</label>
+			</variable>
+			<variable CV="49" mask="XXVXXXXX" item="ATL1-F">
+				<enumVal>
+					<enumChoice choice="Normal">
+						<choice>Normal</choice>
+						<choice xml:lang="nl">Normaal</choice>
+					</enumChoice>
+					<enumChoice choice="Dimmed">
+						<choice>Dimmed</choice>
+						<choice xml:lang="de">Gedimmt</choice>
+						<choice xml:lang="nl">Dimmen</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Headlights when Stationary</label>
+				<label xml:lang="de">Frontlampen bei Stillstand</label>
+				<label xml:lang="nl">Koplampen bij stilstand</label>
+			</variable>
+			<variable CV="49" mask="XVXXXXXX" item="ATL1-G">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>Programming on Main</label>
+				<label xml:lang="de">Programmierung auf dem Hauptgleis</label>
+				<label xml:lang="nl">Programmeren op het hoofdspoor</label>
+			</variable>
+			<variable CV="49" mask="VXXXXXXX" item="ATL1-H">
+				<enumVal>
+					<enumChoice choice="Brake">
+						<choice>Brake</choice>
+						<choice xml:lang="de">Lok lauft erst Aus den Umschalten</choice>
+						<choice xml:lang="nl">Lok loopt eerst uit dan omschakelen</choice>
+					</enumChoice>
+					<enumChoice choice="Stop">
+						<choice>Not Stop</choice>
+						<choice xml:lang="de">Not Stopp</choice>
+						<choice xml:lang="nl">Noot stop</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Signal mode when changing direction</label>
+				<label xml:lang="de">Signal Modus beim Wechseln der Richtung</label>
+				<label xml:lang="nl">Signaal modus bij wijziging van richting</label>
+			</variable>
+			<!-- ATL part 2 -->
+			<variable CV="50" mask="XXXXXXXV" item="ATL2-A">
+				<enumVal>
+					<enumChoice choice="Brake">
+						<choice>E/F as normal function outputs (CMOS)</choice>
+						<choice xml:lang="de">E/F als normale Funktionsausgänge (CMOS)</choice>
+						<choice xml:lang="nl">E/F als normale functie uitgangen (CMOS)</choice>
+					</enumChoice>
+					<enumChoice choice="Stop">
+						<choice>E/F as Internensound outputs</choice>
+						<choice xml:lang="de">E/F als Internensound-Ausgänge</choice>
+						<choice xml:lang="nl">E/F als Internegeluids uitgangen</choice>
+					</enumChoice>
+				</enumVal>
+				<label>E/F output or Internal Sound</label>
+				<label xml:lang="de">E/F Ausgänge oder Internen Sound</label>
+				<label xml:lang="nl">E/F uitgangen of Interne geluid</label>
+			</variable>
+			<variable CV="50" mask="XXXXXXVX" item="ATL2-B">
+				<enumVal>
+					<enumChoice choice="Steam">
+				<choice>Steam</choice>
+				<choice xml:lang="de">Dampf</choice>
+				<choice xml:lang="nl">Stoom</choice>
+					</enumChoice>
+					<enumChoice choice="Diesel">
+						<choice>Diesel</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Sound Style</label>
+				<label xml:lang="de">Sound type</label>
+				<label xml:lang="nl">Geluids type</label>
+			</variable>
+			<variable CV="50" mask="XXXXXVXX" item="ATL2-C">
+				<enumVal>
+					<enumChoice choice="Internal">
+						<choice>Internal</choice>
+						<choice xml:lang="de">Intern</choice>
+						<choice xml:lang="nl">Interne</choice>
+					</enumChoice>
+					<enumChoice choice="External e.g. Cam">
+						<choice>External e.g. Cam</choice>
+						<choice xml:lang="de">Extern</choice>
+						<choice xml:lang="nl">Externe</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Exhaust Beat Control</label>
+				<label xml:lang="de">Dampf trigger</label>
+				<label xml:lang="nl">Stoom slag controle</label>
+			</variable>
+			<variable CV="50" mask="XXXXVXXX" item="ATL2-D">
+				<enumVal>
+					<enumChoice choice="4-Cylinder">
+						<choice>4-Cylinder</choice>
+						<choice xml:lang="de">Vierzylinder</choice>
+						<choice xml:lang="nl">Viercilinder</choice>
+					</enumChoice>
+					<enumChoice choice="6-Cylinder/Trigger on F Output">
+						<choice>6-Cylinder</choice>
+						<choice xml:lang="de">Sechszylinder</choice>
+						<choice xml:lang="nl">Zescilinder</choice>
+					</enumChoice>
+				</enumVal>
+				<label>4- or 6-Cylinder Steam Engine</label>
+				<label xml:lang="de">Vier- oder Sechszylinder-Dampflok</label>
+				<label xml:lang="nl">Vier-of zes-cilinder stoomlocomotief</label>
+			</variable>
+			<variable CV="50" mask="XXXVXXXX" item="ATL2-E">
+				<enumVal>
+					<enumChoice choice="Whistle">
+						<choice>Whistle</choice>
+						<choice xml:lang="de">Pfeife</choice>
+						<choice xml:lang="nl">Fluit</choice>
+					</enumChoice>
+					<enumChoice choice="Horn">
+						<choice>Horn</choice>
+						<choice xml:lang="de">3-Ton-Horn</choice>
+						<choice xml:lang="nl">3-Toon-Hoorn</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Whistle or Horn</label>
+				<label xml:lang="de">Pfeife oder Horn</label>
+				<label xml:lang="nl">Fluit of Hoorn</label>
+			</variable>
+			<variable CV="50" mask="XXVXXXXX" item="ATL2-F">
+				<enumVal>
+					<enumChoice choice="Style 1">
+						<choice>Whistle/Horn Style 1</choice>
+						<choice xml:lang="de">Einzelton bei Pfeife / 3-Ton-Horn</choice>
+						<choice xml:lang="nl">Een Toons Fluit / 3-toons hoorn </choice>
+					</enumChoice>
+					<enumChoice choice="Style 2">
+						<choice>Whistle/Horn Style 2</choice>
+						<choice xml:lang="de">Tonfolge bei Pfeife / 2-Ton-Horn</choice>
+						<choice xml:lang="nl">Toon volge bij Fluit / 2-toons hoorn </choice>
+					</enumChoice>
+				</enumVal>
+				<label>Whistle/Horn Variant</label>
+				<label xml:lang="de">Pfeife/Horn variant</label>
+				<label xml:lang="nl">Fluit/hoorn variant</label>
+			</variable>
+			<variable CV="50" mask="XVXXXXXX" item="ATL2-G">
+				<enumVal>
+					<enumChoice choice="Remote Only">
+						<choice>Whistle/Horn only by remote control</choice>
+						<choice xml:lang="de">Pfeife/Horn nur per Fernsteuerung</choice>
+						<choice xml:lang="nl">Fluit/hoorn alleen door afstandsbediening</choice>
+					</enumChoice>
+					<enumChoice choice="Remote and Reed Switch">
+						<choice>Local possible (with Reed contact)</choice>
+						<choice xml:lang="de">Auch lokale Auslösung (mit Reedkontakt) </choice>
+						<choice xml:lang="nl">Ook lokale mogelijk (met reed contact)</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Whistle/Horn Switching method</label>
+				<label xml:lang="de">Pfeife/Horn Schalt Methode</label>
+				<label xml:lang="nl">Fluit/Hoorn Schakel methode</label>
+			</variable>
+			<variable CV="50" mask="VXXXXXXX" item="ATL2-H">
+				<enumVal>
+					<enumChoice choice="Load Independent">
+						<choice>Load Independent</choice>
+						<choice xml:lang="de">Sound Normal</choice>
+						<choice xml:lang="nl">Geluid normaal</choice>
+					</enumChoice>
+					<enumChoice choice="Load Dependent">
+						<choice>Load Dependent</choice>
+						<choice xml:lang="de">Sound Lauter</choice>
+						<choice xml:lang="nl">Geluid Luider</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Sound Dependency</label>
+				<label xml:lang="de">Last abhängige Soundsteuerung</label>
+				<label xml:lang="nl">Last afhankelijke geluid sturing</label>
+			</variable>
+			<!-- signal operation -->
+			<variable CV="51" default="250" comment="Range 0-250" item="Signal-A">
+				<decVal max="250"/>
+				<label>Simulation of driver cab change in shuttle operation</label>
+				<label xml:lang="de">Simulation Führerstands Wechsel bei Pendelbetrieb</label>
+				<label xml:lang="nl">Simulatie van stuurstand wissel bij pendelbedrijf</label>
+				<comment>Range 0-250</comment>
+			</variable> 
+			<variable CV="52" default="50" comment="Range 0-250" item="Signal-B">
+				<decVal max="250"/>
+				<label>Simulation of the reaction time of the engineer when the signal goes green</label>
+				<label xml:lang="de">Simulation der Reaktionszeit des Lokführers, wenn  das Signal auf Grün geht</label>
+				<label xml:lang="nl">Simulatie van de reactietijd van de meester wanneer het signaal op groen gaat</label>
+				<comment>Range 0-250</comment>
+			</variable>
+			<variable CV="53" default="15" comment="Range 0-250" item="Signal-C">
+				<decVal max="250"/>
+				<label>Acceleration in signal mode</label>
+				<label xml:lang="de">Beschleunigung in Signalbetrieb</label>
+				<label xml:lang="nl">Accelereren in signaal modus</label>
+				<comment>Range 0-250</comment>
+			</variable>
+			<variable CV="54" default="15" comment="Range 0-250" item="Signal-D">
+				<decVal max="250"/>
+				<label>Deceleration in signal mode</label>
+				<label xml:lang="de">Bremsrate im Signalbetrieb</label>
+				<label xml:lang="nl">Vertraging in signaal modus</label>
+				<comment>Range 0-250</comment>
+			</variable>
+			<variable CV="55" default="64" comment="Range 30-127" item="Signal-E">
+				<decVal min="30" max="127"/>
+				<label>Block speed in signal mode</label>
+				<label xml:lang="de">Blockgeschwindigkeit in Signalbetrieb</label>
+				<label xml:lang="nl">Blok snelheid in signaal modus</label>
+				<comment>Range 30-127</comment>
+			</variable>
+			<variable CV="56" default="32" comment="Range 20-127" item="Signal-F">
+				<decVal min="20" max="127"/>
+				<label>Reduced speed for stepped brakes (also for track-work zones)</label>
+				<label xml:lang="de">Reduzierte Geschwindigkeit für Stufenbremsen (Auch für Baustellenbereiche)</label>
+				<label xml:lang="nl">Lagere snelheid voor af gestoeft remmen (ook voor bauwstellenbereik)</label>
+				<comment>Range 20-127</comment>
+			</variable>
+			<!-- Lights section -->
+			<variable CV="57" mask="XXXXXXVV" item="Output 01 effect generated">
+				<enumVal>
+					<enumChoice choice="Normal">
+						<choice>Normal</choice>
+						<choice xml:lang="nl">Normaal</choice>
+					</enumChoice>
+					<enumChoice choice="Blinking/Flashing">
+						<choice>Blinking/Flashing</choice>
+						<choice xml:lang="de">Blinkend</choice>
+						<choice xml:lang="nl">Flitsend</choice>
+					</enumChoice>
+					<enumChoice choice="Dimmed/Gyro/Mars">
+						<choice>Dimmed/Gyro/Mars</choice>
+						<choice xml:lang="de">gedimmt oder Drehlicht</choice>
+						<choice xml:lang="nl">Gedimd of Zwaailicht</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Headlights A/B</label>
+				<label xml:lang="de">Vorderlicht A/B</label>
+				<label xml:lang="nl">Koplampen A/B</label>
+			</variable>
+			<variable CV="57" mask="XXXXVVXX" item="Output 03 effect generated">
+				<enumVal>
+					<enumChoice choice="Normal">
+						<choice>Normaal</choice>
+					</enumChoice>
+					<enumChoice choice="Blinking/Flashing">
+						<choice>Blinking/Flashing</choice>
+						<choice xml:lang="de">Blinkend</choice>
+						<choice xml:lang="nl">Flitsend</choice>
+					</enumChoice>
+					<enumChoice choice="Dimmed/Gyro/Mars">
+				<choice>Dimmed/Gyro/Mars</choice>
+				<choice xml:lang="de">gedimd oder Drehlicht</choice>
+				<choice xml:lang="nl">Gedimd of Zwaailicht</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output C</label>
+				<label xml:lang="de">Ausgang C</label>
+				<label xml:lang="nl">Uitgang C</label>
+			</variable>
+			<variable CV="57" mask="XXVVXXXX" item="Output 04 effect generated">
+				<enumVal>
+					<enumChoice choice="Normal">
+						<choice>Normaal</choice>
+					</enumChoice>
+					<enumChoice choice="Blinking/Flashing">
+						<choice>Blinking/Flashing</choice>
+						<choice xml:lang="de">Blinkend</choice>
+						<choice xml:lang="nl">Flitsend</choice>
+					</enumChoice>
+					<enumChoice choice="Dimmed/Gyro/Mars">
+						<choice>Dimmed/Gyro/Mars</choice>
+						<choice xml:lang="de">gedimmt oder Drehlicht</choice>
+						<choice xml:lang="nl">Gedimd of Zwaailicht</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output D</label>
+				<label xml:lang="de">Ausgang D</label>
+				<label xml:lang="nl">Uitgang D</label>
+			</variable>
+			<variable CV="57" mask="XVXXXXXX" item="Output 07 options">
+				<enumVal>
+					<enumChoice choice="Dimming, No Gyro nor Mars">
+						<choice>Dimming light</choice>
+						<choice xml:lang="de">Dimmen</choice>
+						<choice xml:lang="nl">gedimd</choice>
+					</enumChoice>
+					<enumChoice choice="Gyro or Mars, no Dimming">
+						<choice>Rotating or Mars light</choice>
+						<choice xml:lang="de">Drehlicht</choice>
+						<choice xml:lang="nl">Zwaailicht</choice>
+					</enumChoice>
+				</enumVal>
+				<label>All outputs dimmed or Rotating </label>
+				<label xml:lang="de">Alle Ausgängen gedimd oder Drehlicht</label>
+				<label xml:lang="nl">Alle uitgangen gedimd of zwaailicht</label>
+			</variable>
+			<variable CV="57" mask="VXXXXXXX" item="Output 08 options">
+				<enumVal>
+					<enumChoice choice="Single Strobe or Gyro Light">
+						<choice>Single Strobe or Gyro Light</choice>
+						<choice xml:lang="de">Einzelblitz</choice>
+						<choice xml:lang="nl">Enkel flitsen</choice>
+					</enumChoice>
+					<enumChoice choice="Double Strobe or Mars Light">
+						<choice>Double Strobe or Mars Light</choice>
+						<choice xml:lang="de">Doppelblitz</choice>
+						<choice xml:lang="nl">Dubbele flitsen</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Single/Double Strobe (also with Rotating light working)</label>
+				<label xml:lang="de">Einzelblitz/Doppelblitz (auch bei Drehlicht wirksam)</label>
+				<label xml:lang="nl">Enkel flitsen/Dubbele flitsen (ook bij zwaailicht werkzaam</label>
+			</variable>
+			<variable CV="58" mask="XXXXXVVV" item="Global lighting option 01" default="2"> <!-- Blink/flash generator Period -->
+				<enumVal>
+					<enumChoice choice="3120">
+						<choice> 3120 ms </choice>
+					</enumChoice>
+					<enumChoice choice="1560">
+						<choice> 1560 ms </choice>
+					</enumChoice>
+					<enumChoice choice="1030">
+						<choice> 1030 ms </choice>
+					</enumChoice>
+					<enumChoice choice="770">
+						<choice> 770 ms </choice>
+					</enumChoice>
+					<enumChoice choice="620">
+						<choice> 620 ms </choice>
+					</enumChoice>
+					<enumChoice choice="520">
+						<choice> 520 ms </choice>
+					</enumChoice>
+					<enumChoice choice="440">
+						<choice> 440 ms </choice>
+					</enumChoice>
+					<enumChoice choice="390">
+						<choice> 390 ms </choice>
+					</enumChoice>
+				</enumVal>
+				<label>Period </label>
+				<label xml:lang="de">Zeitraum </label>
+				<label xml:lang="nl">Periode </label>
+			</variable>
+			<variable CV="58" mask="VVVVVXXX" item="Global lighting option 02" default="16"> <!-- Blink/flash generator Duty cycle-->
+				<enumVal>	
+					<enumChoice choice="3%" value = "1">
+						<choice> 3% </choice>
+					</enumChoice>
+					<enumChoice choice="6%" value = "2">
+						<choice> 6% </choice>
+					</enumChoice>
+					<enumChoice choice="12%" value = "4">
+						<choice> 12% </choice>
+					</enumChoice>
+					<enumChoice choice="25%" value = "8">
+						<choice> 25% </choice>
+					</enumChoice>
+					<enumChoice choice="50%" value = "16">
+						<choice> 50% </choice>
+					</enumChoice>
+					<enumChoice choice="53%" value = "17">
+						<choice> 53% </choice>
+					</enumChoice>
+					<enumChoice choice="75%" value = "24">
+						<choice> 75% </choice>
+					</enumChoice>
+				</enumVal>
+				<label>Duty cycle </label>
+				<label xml:lang="de">Einschaltdauer </label>
+				<label xml:lang="nl">Inschakeltijd </label>
+			</variable>
+			<variable CV="59" comment="Range 0-255" item="Global lighting option 03" default="161"> <!-- Dimming generator -->
+				<enumVal>	
+					<enumChoice choice="1.5v" value = "161">
+						<choice> 1.5v </choice>
+					</enumChoice>
+					<enumChoice choice="2v" value = "242">
+						<choice> 2v </choice>
+					</enumChoice>
+					<enumChoice choice="2.5v" value = "97">
+						<choice> 2.5v </choice>
+					</enumChoice>
+					<enumChoice choice="3v" value = "81">
+						<choice> 3v </choice>
+					</enumChoice>
+					<enumChoice choice="3.5v" value = "211">
+						<choice> 3.5v </choice>
+					</enumChoice>
+					<enumChoice choice="4v" value = "244">
+						<choice> 4v </choice>
+					</enumChoice>
+					<enumChoice choice="5v" value = "49">
+						<choice> 5v </choice>
+					</enumChoice>
+					<enumChoice choice="6v" value = "246">
+						<choice> 6v </choice>
+					</enumChoice>
+					<enumChoice choice="7v" value = "247">
+						<choice> 7v </choice>
+					</enumChoice>
+					<enumChoice choice="8v" value = "248">
+						<choice> 8v </choice>
+					</enumChoice>
+					<enumChoice choice="9v" value = "249">
+						<choice> 9v </choice>
+					</enumChoice>
+					<enumChoice choice="10v" value = "50">
+						<choice> 10v </choice>
+					</enumChoice>
+					<enumChoice choice="11v" value = "251">
+						<choice> 11v </choice>
+					</enumChoice>
+					<enumChoice choice="12v" value = "84">
+						<choice> 12v </choice>
+					</enumChoice>
+					<enumChoice choice="13v" value = "253">
+						<choice> 13v </choice>
+					</enumChoice>
+				</enumVal>
+				
+				<label>Dimming Generator</label>
+				<label xml:lang="de">Dimmgenerator</label>
+				<label xml:lang="nl">Dimgenerator</label>
+			</variable>
+			<variable CV="60" default="28" comment="Range 0-63" item="Global lighting option 04">
+				<decVal min="0" max="63"/>
+				<label>Gyrolight Generator</label>
+				<label xml:lang="de">Drehlichtgenerator</label>
+				<label xml:lang="nl">Zwaailicht generator</label>
+				<comment>Range 0-63</comment>
+			</variable>
+			<!-- Sound section 1 -->
+			<variable CV="61" default="50" comment="Range 0-255" item="Sound Group 1 Option 1">
+				<decVal min="0" max="255"/>
+				<label>Steam Divider per wheel turn (determine value by testing)</label>
+				<label xml:lang="de">Dampf Teiler pro Rad-Umdrehung (Wert durch Prüfung ermitteln)</label>
+				<label xml:lang="nl">Stoom deler per wiel omdraaiing (Bepaal de waarde door te testen)</label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="62" default="128" comment="Range 0-255" item="Sound Group 1 Option 2">
+				<decVal min="0" max="255"/>
+				<label>Fine adjustment of the steam trigger (setting normally not necessary, as CV61 is sufficient)</label>
+				<label xml:lang="de">Feineinstellung des Dampf triggers (Einstellung normalerweise nicht nötig, da CV61 genügt)</label>
+				<label xml:lang="nl">Fijne aanpassing van de stoom trigger (normaal niet noodzakelijk, aangezien CV61 voldoet)</label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="63" default="6" mask="XXVVVVVV" item="Sound Group 1 Option 3">
+				<decVal min="0" max="63"/>
+				<label>Frequency of steam discharge</label>
+				<label xml:lang="de">Häufigkeit der Dampf-Ablassgeräusche</label>
+				<label xml:lang="nl">Frequentie van de stoom overdruk</label>
+				<comment>Range 0-63</comment>
+			</variable>
+			<variable CV="63" default="0" mask="VVXXXXXX" item="Sound Group 1 Option 4">
+				<enumVal>
+					<enumChoice choice="5 sec" value = "2">
+						<choice>5 sec</choice>
+					</enumChoice>
+					<enumChoice choice="7.5 sec" value = "3">
+						<choice>7.5 sec</choice>
+					</enumChoice>
+					<enumChoice choice="10 sec" value = "0">
+						<choice>10 sec </choice>
+					</enumChoice>
+				</enumVal>
+				<label>Length of steam discharge</label>
+				<label xml:lang="de">Länge der Dampf-Ablassgeräusche</label>
+				<label xml:lang="nl">Lengte van de stoom overdruk</label>
+				<comment>Range 0-63</comment>
+			</variable>
+			<variable CV="64" default="150" comment="Range 50-255" item="Sound Group 1 Option 5">
+				<decVal min="50" max="255"/>
+				<label>Whistle time after firing. Holding the button extended until release confirm</label>
+				<label xml:lang="de">Pfeif dauer nach dem Auslösen. Halten der Taste verlängert bis zum Loslassen</label>
+				<label xml:lang="nl">Fluit duur na het bedienen. Houd men de knop langer vast verlengt dit het geluid</label>
+				<comment>Range 50-255</comment>
+			</variable>
+			<variable CV="67" item="Speed Table">
+				<speedTableVal min="1" max="127"/>
+				<label>Speed Table</label>
+				<label xml:lang="de">Einstellbare Fahrkurve</label>
+				<label xml:lang="nl">Instelbare snelheid’s tabel</label>
+			</variable>
+			<variable CV="107" default="3" comment="Range 1-20" item="EMF Static Config">
+				<decVal min="1" max="20"/>
+				<label>Motor Regulation Rate</label>
+				<label xml:lang="de">Regelsteilheit</label>
+				<label xml:lang="nl">Motor regulering raten</label>
+				<comment>Range 1-20</comment>
+			</variable>
+			<variable CV="108" default="9" comment="Range 3-20" item="EMF Dynamic Config">
+				<decVal min="3" max="20"/>
+				<label>Motor Pulse Length</label>
+				<label xml:lang="de">Paketlänge</label>
+				<label xml:lang="nl">Motor puls lengte</label>
+				<comment>Range 3-20</comment>
+			</variable>
+			<variable CV="109" default="0" comment="Range 0-255" item="ATL_Other-A" tooltip="Sets length of pulse when Output C triggered">
+				<decVal min="0" max="255"/>
+				<label>Output C Pulse Length Limit</label>
+				<label xml:lang="de">Zeitbegrenzung Ausgang C</label>
+				<label xml:lang="nl">Tijd begrenzing uitgang C</label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="110" default="0" comment="Range 0-255" item="ATL_Other-B" tooltip="Sets length of pulse when Output D triggered">
+				<decVal min="0" max="255"/>
+				<label>Output D Pulse Length Limit</label>
+				<label xml:lang="de">Zeitbegrenzung Ausgang D</label>
+				<label xml:lang="nl">Tijdbegrenzing uitgang D</label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<!-- Sound section 2 -->
+			<variable CV="111" default="59" comment="Range 0-255" item="Sound 1" include="ModelB1">
+				<decVal min="0" max="255"/>
+				<label> Diesel Sound A</label>
+				<label xml:lang="nl"> Diesel geluid A</label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="112" default="199" comment="Range 0-255" item="Sound 2" include="ModelB1">
+				<decVal min="0" max="255"/>
+				<label> Diesel Sound B</label>
+				<label xml:lang="nl"> Diesel geluid B</label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="113" default="150" comment="Range 0-255" item="Sound 3" include="ModelB1">
+				<decVal min="0" max="255"/>
+				<label >Diesel Sound C</label>
+				<label xml:lang="nl"> Diesel geluid C</label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="114" default="41" comment="Range 0-255" item="Sound 4" include="ModelB1">
+				<decVal min="0" max="255"/>
+				<label> Diesel Sound D</label>
+				<label xml:lang="nl"> Diesel geluid D</label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="115" default="20" comment="Range 0-60" item="Steam Beat Length" include="ModelB1">
+				<decVal min="0" max="60"/>
+				<label>Steam Beat Length</label>
+				<label xml:lang="de">Dampfstosslänge</label>
+				<label xml:lang="nl">Stoomstootlengte</label>
+				<comment>Range 0-60</comment>
+			</variable>
+			<variable CV="116" default="19" comment="Range 0-21" item="Sound 5" include="ModelB1">
+				<decVal min="0" max="21"/>
+				<label> Steam Beat Main/Diesel Running</label>
+				<label xml:lang="de"> Lautstärke Dampfstoss 1 bzw. Diesellautstärke beim Fahren</label>
+				<label xml:lang="nl"> Volume eerste stoomstoot 1 of bij diesel onder het rijden</label>
+				<comment>Range 0-21</comment>
+			</variable>
+			<variable CV="117" default="16" comment="Range 0-21" item="Sound 6" include="ModelB1">
+				<decVal min="0" max="21"/>
+				<label> Steam Beat Other</label>
+				<label xml:lang="de"> Lautstärke Dampfstoss 2-4</label>
+				<label xml:lang="nl"> Volume van stoomstoot 2-4</label>
+				<comment>Range 0-21</comment>
+			</variable>
+			<variable CV="118" default="6" comment="Range 0-21" item="Sound 7" include="ModelB1">
+				<decVal min="0" max="21"/>
+				<label> Steam Beat Braking</label>
+				<label xml:lang="de"> Lautstärke Bremsdampfstösse</label>
+				<label xml:lang="nl"> Volume van de rem stroomstoten</label>
+				<comment>Range 0-21</comment>
+			</variable>
+			<variable CV="119" default="2" comment="Range 0-21" item="Sound 8" include="ModelB1">
+				<decVal min="0" max="21"/>
+				<label> Steam Idle</label>
+				<label xml:lang="de"> Lautstärke Dampfgeräusch bei Stillstand</label>
+				<label xml:lang="nl"> Volume stoom geruis bij Stilstand</label>
+				<comment>Range 0-21</comment>
+			</variable>
+			<variable CV="120" default="21" comment="Range 0-21" item="Sound 9" include="ModelB1">
+				<decVal min="0" max="21"/>
+				<label> Whistle</label>
+				<label xml:lang="de"> Lautstärke Pfeife/Horn</label>
+				<label xml:lang="nl"> Volume Fluit/Hoorn</label>
+				<comment>Range 0-21</comment>
+			</variable> 
+		</variables>
+	</decoder>
+
+	<pane nameFmt="label"> <!-- light -->
+		<column>
+			<label>
+				<text>Blink Generator</text>
+				<text xml:lang="de">Blinkgenerator</text>
+				<text xml:lang="nl">Flitsgenerator</text>
+			</label>
+			<separator/>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="Global lighting option 01" format="default"/>
+			<display item="Global lighting option 02" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="Global lighting option 03" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<row>
+				<display item="Global lighting option 04" layout="left" format="hslider"/>
+				<display item="Global lighting option 04" layout="left" label=""/>
+			</row>
+		</column>
+		<column>
+			<display item="Output 01 effect generated" format="default"/>
+			<display item="ATL1-F" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="Output 03 effect generated" format="default"/>
+			<display item="Output 04 effect generated" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="Output 07 options" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="Output 08 options" format="default"/>
+		</column>
+		<name>Light</name>
+		<name xml:lang="de">Licht</name>
+		<name xml:lang="nl">Licht</name>
+	</pane>
+	<pane nameFmt="label"> <!-- ATL -->
+		<column>
+			<label>
+				<text>CV>49, Configuration byte ATL 1, Defines special ATL functions related to driving. </text>
+				<text xml:lang="de">CV 49, ATL Konfiguration 1, Definiert spezielle ATL-Funktionen bezüglich Fahrbetrieb.</text>
+				<text xml:lang="nl">CV 49, ATL Configuratie 1, Definieert speciale ATL-Functies betreffende rijbedrijf.</text>
+			</label>
+			<display item="ATL1-A" layout="left" format="default"/>
+			<display item="ATL1-B" layout="left" format="default"/>
+			<display item="ATL1-C" layout="left" format="default"/>
+			<display item="ATL1-D" layout="left" format="default"/>
+			<display item="ATL1-E" layout="left" format="default"/>
+			<display item="ATL1-F" layout="left" format="default"/>
+			<display item="ATL1-G" layout="left" format="default"/>
+			<display item="ATL1-H" layout="left" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>CV 50, Configuration byte ATL 2,. Defines ATL-Sound-functions.</text>
+				<text xml:lang="de">CV 50, ATL Konfiguration 2, Definiert ATL-Sound-Funktionen</text>
+				<text xml:lang="nl">CV 50, ATL Configuratie 2, Definieert ATL-Geluid functies</text>
+			</label>
+			<display item="ATL2-A" layout="left" format="default"/>
+			<display item="ATL2-B" layout="left" format="default"/>
+			<display item="ATL2-C" layout="left" format="default"/>
+			<row>
+				<column>
+					<display item="ATL2-D" layout="left" format="default"/>
+				</column>
+				<column>
+					<label>
+						<text>  (With bit 0 to 0, this bit causes F positive</text>
+						<text xml:lang="de">  (Mit Bit 0 auf 0 bewirkt dieses Bit an F positive</text>
+						<text xml:lang="nl">  (Met bit 0 0p 0, veroorzaakt deze bit op F positieve</text>
+					</label>
+					<label>
+						<text>  5-V pulses for external steam generator)</text>
+						<text xml:lang="de">  5-V-Pulse für externen Dampfgenerator)</text>
+						<text xml:lang="nl">  5-V pulsen voor externe stoom generator)</text>
+					</label>
+				</column>
+			</row>
+			
+			<display item="ATL2-E" layout="left" format="default"/>
+			<display item="ATL2-F" layout="left" format="default"/>
+			<display item="ATL2-G" layout="left" format="default"/>
+			<display item="ATL2-H" layout="left" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>Output C and D Pulse Length Limits</text>
+				<text xml:lang="de">Zeitbegrenzung für Ausgang C und D</text>
+				<text xml:lang="nl">Tijd begrenzing voor uitgang C en D</text>
+			</label>	
+			<display item="ATL_Other-A" layout="left" format="default"/>
+			<display item="ATL_Other-B" layout="left" format="default"/>
+		</column>
+		<name>ATLPlus</name>
+	</pane>
+	<pane nameFmt="label"> <!-- Signal Mode -->
+		<column>
+			<label>
+				<text>Parameters employed in Signal Mode only</text>
+				<text xml:lang="de">Parameter, die nur im Signal Modus verwendet werden</text>
+				<text xml:lang="nl">Alleen in de signaal modus gehanteerde parameters</text>
+			</label>
+			<separator/>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="Signal-A" layout="left" format="default"/>
+			<display item="Signal-B" layout="left" format="default"/>
+			<display item="Signal-C" layout="left" format="default"/>
+			<display item="Signal-D" layout="left" format="default"/>
+			<display item="Signal-E" layout="left" format="default"/>
+			<display item="Signal-F" layout="left" format="default"/>
+			<display item="Signal-G" layout="left" format="default"/>
+			<display item="Signal-H" layout="left" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>Additionale parameters for Signal mode</text>
+				<text xml:lang="de">Zusätzliche Parameter für den Signal Modus</text>
+				<text xml:lang="nl">Extra parameters voor signaal modus</text>
+			</label>
+			<separator/>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="ATL1-B" layout="left" format="default"/>
+			<display item="ATL1-D" layout="left" format="default"/>
+			<display item="ATL1-E" layout="left" format="default"/>
+			<display item="ATL1-H" layout="left" format="default"/>
+		</column>
+		<name>Signal Mode</name>
+		<name xml:lang="de">Signal Modes</name>
+		<name xml:lang="nl">Signaal modes</name>
+	</pane>
+	<pane nameFmt="label" include="ModelA1"> <!-- Sound () -->
+		<column>
+			<display item="Sound Group 1 Option 1"/>
+			<display item="Sound Group 1 Option 2"/>
+			<display item="Sound Group 1 Option 5"/>
+			<display item="Sound Group 1 Option 6"/>
+			<display item="Sound Group 1 Option 7"/>
+			<display item="Sound Group 1 Option 8"/>
+			<display item="Steam Beat Length"/>
+			<label>
+				<text> </text>
+			</label>
+			<label>
+				<text> </text>
+			</label>
+			<label>
+				<text>Length and frequency of steam discharge noise (pressure relief valve for prolonged standstill)</text>
+				<text xml:lang="de">Länge und Häufigkeit der Dampf-Ablassgeräusche (Überdruckventil bei längerem Stillstand)</text>
+				<text xml:lang="nl">Lengte en frequentie van stoom overdrukgeluid (overdrukventiel bij langdurige stilstand)</text>
+			</label>
+			<separator/>
+			<label>
+				<text> </text>
+			</label>
+			<display item="Sound Group 1 Option 3"/>
+			<display item="Sound Group 1 Option 4"/>
+			
+			<label>
+				<text> </text>
+			</label>
+			<label>
+				<text> </text>
+			</label>
+		</column>
+		<name>Sound</name>
+		<name xml:lang="de">Sound</name>
+		<name xml:lang="nl">Geluid</name>
+	</pane>
+	<pane nameFmt="label" include="ModelB1"> <!-- Sound (12) -->
+				<column>
+			<display item="Sound Group 1 Option 1"/>
+			<display item="Sound Group 1 Option 2"/>
+			<display item="Sound Group 1 Option 5"/>
+			<display item="Sound Group 1 Option 6"/>
+			<display item="Sound Group 1 Option 7"/>
+			<display item="Sound Group 1 Option 8"/>
+			<display item="Steam Beat Length"/>
+			<label>
+				<text> </text>
+			</label>
+			<label>
+				<text>Length and frequency of steam discharge noise (pressure relief valve for prolonged standstill)</text>
+				<text xml:lang="de">Länge und Häufigkeit der Dampf-Ablassgeräusche (Überdruckventil bei längerem Stillstand)</text>
+				<text xml:lang="nl">Lengte en frequentie van stoom overdrukgeluid (overdrukventiel bij langdurige stilstand)</text>
+			</label>
+			<separator/>
+			<label>
+				<text> </text>
+			</label>
+			<display item="Sound Group 1 Option 3"/>
+			<display item="Sound Group 1 Option 4"/>
+			<label>
+				<text> </text>
+			</label>
+			<label>
+				<text>only 2064-12 with improved sound version</text>
+				<text xml:lang="de">Nur 2064-12 bei verbesserter Soundversion</text>
+				<text xml:lang="nl">Alleen 2064-12 met verbeterde geluid versie</text>
+			</label>
+			<separator/>
+			<label>
+				<text> </text>
+			</label>
+			<grid gridy="NEXT" weightx="1" ipadx="10">
+			<griditem gridx="0" gridy="1" gridwidth="1">
+					<label>
+						<text>Diesel</text>
+					</label>
+				</griditem>
+				<griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_START">
+					<label>
+						<text>These variables determine the digital bit</text>
+						<text xml:lang="de">Diese Variablen bestimmen die digitale Bitfolge,</text>
+						<text xml:lang="nl">Deze variabelen bepalen de digitale bit volgen</text>
+					</label>
+				</griditem>
+				<griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_START">
+					<label>
+						<text>that the Dieselton generates.</text>
+						<text xml:lang="de">welche den Dieselton erzeugt.</text>
+						<text xml:lang="nl">die de Dieselton genereert.</text>
+					</label>
+				</griditem>
+				<griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+					<row>
+						<display item="Sound 1" layout="left" format="hslider"/>
+						<display item="Sound 1" layout="left" label=""/>
+					</row>
+				</griditem>
+				<griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
+					<row>
+						<display item="Sound 2" layout="left" format="hslider"/>
+						<display item="Sound 2" layout="left" label=""/>
+					</row>
+				</griditem>
+				<griditem gridx="0" gridy="7" gridwidth="1" anchor="LINE_END">
+					<row>
+						<display item="Sound 3" layout="left" format="hslider"/>
+						<display item="Sound 3" layout="left" label=""/>
+					</row>
+				</griditem>
+				<griditem gridx="0" gridy="8" gridwidth="1" anchor="LINE_END">
+					<row>
+						<display item="Sound 4" layout="left" format="hslider"/>
+						<display item="Sound 4" layout="left" label=""/>
+					</row>
+				</griditem>
+				<griditem gridx="1" gridy="1" gridwidth="1">
+					<label>
+						<text>                    </text>
+					</label>
+				</griditem>
+				<griditem gridx="3" gridy="1" gridwidth="1">
+					<label>
+						<text>Sound Levels</text>
+						<text xml:lang="de">Sound Lautstärke</text>
+						<text xml:lang="nl">Geluidsvolume</text>
+					</label>
+				</griditem>
+				<griditem gridx="3" gridy="2" gridwidth="1" anchor="LINE_START">
+					<label>
+						<text>These variables determine a different sound volume.</text>
+						<text xml:lang="de">Diese Variablen bestimmen verscheidende Sound Volumen.</text>
+						<text xml:lang="nl">Deze variabelen bepalen een verschillende geluidsvolumes.</text>
+					</label>
+				</griditem>
+				<griditem gridx="3" gridy="4" gridwidth="1" anchor="LINE_END">
+					<row>
+						<display item="Sound 5" layout="left" format="hslider"/>
+						<display item="Sound 5" layout="left" label=""/>
+					</row>
+				</griditem>
+				<griditem gridx="3" gridy="5" gridwidth="1" anchor="LINE_END">
+					<row>
+						<display item="Sound 6" layout="left" format="hslider"/>
+						<display item="Sound 6" layout="left" label=""/>
+					</row>
+				</griditem>
+				<griditem gridx="3" gridy="6" gridwidth="1" anchor="LINE_END">
+					<row>
+						<display item="Sound 7" layout="left" format="hslider"/>
+						<display item="Sound 7" layout="left" label=""/>
+					</row>
+				</griditem>
+				<griditem gridx="3" gridy="7" gridwidth="1" anchor="LINE_END">
+					<row>
+						<display item="Sound 8" layout="left" format="hslider"/>
+						<display item="Sound 8" layout="left" label=""/>
+					</row>
+				</griditem>
+				<griditem gridx="3" gridy="8" gridwidth="1" anchor="LINE_END">
+					<row>
+						<display item="Sound 9" layout="left" format="hslider"/>
+						<display item="Sound 9" layout="left" label=""/>
+					</row>
+				</griditem>
+			</grid>
+			<!--<row>
+				<display item="Sound 1" layout="right" label=""/>
+				<display item="Sound 1" layout="right" format="hslider"/>
+			</row>
+			<row>
+				<display item="Sound 2" layout="right" label=""/>
+				<display item="Sound 2" layout="right" format="hslider"/>
+			</row>
+			<row>
+				<display item="Sound 3" layout="right" label=""/>
+				<display item="Sound 3" layout="right" format="hslider"/>
+			</row>
+			<row>
+			<display item="Sound 4" layout="right" label=""/>
+			<display item="Sound 4" layout="right" format="hslider"/>
+			</row>
+			<label>
+				<text> </text>
+			</label>
+			<label>
+				<text>Sound Levels    (only 2064-12 with improved sound version)</text>
+				<text xml:lang="de">Sound Lautstärke,    (Nur 2064-12 bei verbesserter Soundversion)</text>
+				<text xml:lang="nl">Geluidsvolume    (Alleen 2064-12 met verbeterde geluid versie)</text>
+			</label>
+			<separator/>
+			<label>
+				<text> </text>
+			</label>
+			<row>
+				<display item="Sound 5" layout="right" label=""/>
+				<display item="Sound 5" layout="right" format="hslider"/>
+			</row>
+			<row>
+				<display item="Sound 6" layout="right" label=""/>
+				<display item="Sound 6" layout="right" format="hslider"/>
+			</row>
+			<row>
+				<display item="Sound 7" layout="right" label=""/>
+				<display item="Sound 7" layout="right" format="hslider"/>
+			</row>
+			<row>
+				<display item="Sound 8" layout="right" label=""/>
+				<display item="Sound 8" layout="right" format="hslider"/>
+			</row>
+			<row>
+				<display item="Sound 9" layout="right" label=""/>
+				<display item="Sound 9" layout="right" format="hslider"/>
+			</row>-->
+		</column>
+		<name>Sound</name>
+		<name xml:lang="de">Sound</name>
+		<name xml:lang="nl">Geluid</name>
+	</pane>
 </decoder-config>
