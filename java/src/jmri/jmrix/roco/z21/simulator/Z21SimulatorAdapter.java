@@ -86,7 +86,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
             try {
                 sourceThread.join();
             } catch (InterruptedException ie){
-                // interrupted durring cleanup.
+                // interrupted during cleanup.
             }
         }
     }

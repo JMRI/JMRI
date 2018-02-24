@@ -212,7 +212,7 @@
       <mainRailColor>#808080</mainRailColor>
       <mainRailCount>1</mainRailCount>
       <mainRailGap>0</mainRailGap>
-      <mainRailWidth>1</mainRailWidth>
+      <mainRailWidth>2</mainRailWidth>
       <mainTieColor>#000000</mainTieColor>
       <mainTieGap>0</mainTieGap>
       <mainTieLength>0</mainTieLength>

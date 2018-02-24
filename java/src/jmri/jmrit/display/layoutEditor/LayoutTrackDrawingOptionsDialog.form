@@ -397,7 +397,7 @@
         <Component class="javax.swing.JSpinner" name="mainRailWidthSpinner">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-              <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+              <SpinnerModel initial="2" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;MainRailWidthToolTip&quot;)" type="code"/>
@@ -426,7 +426,7 @@
         <Component class="javax.swing.JSpinner" name="sideRailWidthSpinner">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-              <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+              <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Bundle.getMessage(&quot;SideRailWidthToolTip&quot;)" type="code"/>

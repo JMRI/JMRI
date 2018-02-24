@@ -176,7 +176,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         railWidthLabel.setPreferredSize(new java.awt.Dimension(256, 16));
         railWidthLabel.setSize(new java.awt.Dimension(256, 16));
 
-        mainRailWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        mainRailWidthSpinner.setModel(new javax.swing.SpinnerNumberModel(2, 1, null, 1));
         mainRailWidthSpinner.setToolTipText(Bundle.getMessage("MainRailWidthToolTip"));
         mainRailWidthSpinner.setEnabled(ltdOptions.getMainRailCount() > 0);
         mainRailWidthSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
@@ -211,7 +211,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         railGapLabel.setPreferredSize(new java.awt.Dimension(256, 16));
         railGapLabel.setSize(new java.awt.Dimension(256, 16));
 
-        sideRailGapSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        sideRailGapSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         sideRailGapSpinner.setToolTipText(Bundle.getMessage("SideRailGapToolTip"));
         sideRailGapSpinner.setEnabled(ltdOptions.getSideRailCount() > 1);
         sideRailGapSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
@@ -225,7 +225,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
             }
         });
 
-        mainRailGapSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        mainRailGapSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         mainRailGapSpinner.setToolTipText(Bundle.getMessage("MainRailGapToolTip"));
         mainRailGapSpinner.setEnabled(ltdOptions.getMainRailCount() > 1);
         mainRailGapSpinner.setMinimumSize(new java.awt.Dimension(64, 16));
@@ -1164,7 +1164,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO.setMainRailColor(Color.BLACK);
         tempLTDO.setMainRailCount(1);
         tempLTDO.setMainRailGap(0);
-        tempLTDO.setMainRailWidth(1);
+        tempLTDO.setMainRailWidth(2);
         tempLTDO.setMainTieColor(Color.BLACK);
         tempLTDO.setMainTieGap(0);
         tempLTDO.setMainTieLength(0);
@@ -1218,7 +1218,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO.setMainRailColor(Color.decode("#C0C0C0"));
         tempLTDO.setMainRailCount(2);
         tempLTDO.setMainRailGap(3);
-        tempLTDO.setMainRailWidth(1);
+        tempLTDO.setMainRailWidth(2);
         tempLTDO.setMainTieColor(Color.decode("#E0E0E0"));
         tempLTDO.setMainTieGap(7);
         tempLTDO.setMainTieLength(11);
