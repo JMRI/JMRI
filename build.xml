@@ -348,6 +348,8 @@
         <exclude name="jmri/jmris/srcp/parser/SRCPParserTreeConstants.class" />
         <exclude name="jmri/Turnout.class" />
         <exclude name="jmri/server/json/reporter/JsonReporter.class" />
+        <exclude name="jmri/server/json/roster/JsonRoster.class" />
+        <exclude name="jmri/server/json/signalMast/JsonSignalMast.class" />
     </fileset>
 
 

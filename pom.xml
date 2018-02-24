@@ -516,6 +516,7 @@
                                 <File>jmri/Turnout.class</File>
                                 <File>jmri/server/json/roster/JsonRoster.class</File>
                                 <File>jmri/server/json/reporter/JsonReporter.class</File>
+                                <File>jmri/server/json/signalMast/JsonSignalMast.class</File>
                             </excludes>
                             <rules>
                                 <rule>
