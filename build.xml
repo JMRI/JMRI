@@ -346,6 +346,8 @@
         <exclude name="jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class" />
         <exclude name="jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class" />
         <exclude name="jmri/jmris/srcp/parser/SRCPParserTreeConstants.class" />
+        <exclude name="jmri/Turnout.class" />
+        <exclude name="jmri/server/json/reporter/JsonReporter.class" />
     </fileset>
 
 

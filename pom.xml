@@ -513,6 +513,9 @@
                                 <File>jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class</File>
                                 <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
                                 <File>jmri/jmris/srcp/parser/SRCPParserTreeConstants.class</File>
+                                <File>jmri/Turnout.class</File>
+                                <File>jmri/server/json/roster/JsonRoster.class</File>
+                                <File>jmri/server/json/reporter/JsonReporter.class</File>
                             </excludes>
                             <rules>
                                 <rule>
