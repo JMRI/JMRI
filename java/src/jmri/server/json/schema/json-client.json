@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/draft-06/schema#",
     "title": "jmri-json-client-message",
     "type": "object",
-    "description": "Message from client",
+    "description": "Message from client to JMRI",
     "properties": {
         "type": {
             "type": "string",
@@ -15,11 +15,11 @@
         "method": {
             "type": "string",
             "enum": ["get", "put", "post", "delete"],
-            "description": "HTTP Method equivalent to be performed on data; defaults to \"post\" if \"data\" is present, in which case, it defaults to \"get\""
+            "description": "HTTP Method equivalent to be performed on data; defaults to \"post\" if \"data\" is present, otherwise it defaults to \"get\""
         },
         "list": {
             "type": "string",
-            "description": "Request for a list of the given type"
+            "description": "Request for a list of the given type; only valid with \"type\" value of \"list\""
         }
     },
     "oneOf": [
