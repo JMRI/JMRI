@@ -471,19 +471,27 @@ SectionGroup "JMRI Core Files" SEC_CORE
 
     ; -- Delete old USB library files
     Delete "$OUTDIR\ch.ntb.usb.jar"
+    Delete "$OUTDIR\lib\ch.ntb.usb.jar"
 
     ; -- Delete old PJC file for JMRI 4.7.5
     Delete "$OUTDIR\jna-4.2.2.jar"
+    Delete "$OUTDIR\lib\jna-4.2.2.jar"
 
     ; -- Delete old jackson jar files as of JMRI 4.7.1
     Delete "$OUTDIR\jackson-annotations-2.0.6.jar"
     Delete "$OUTDIR\jackson-core-2.0.6.jar"
     Delete "$OUTDIR\jackson-databind-2.0.6.jar"
+    Delete "$OUTDIR\lib\jackson-annotations-2.0.6.jar"
+    Delete "$OUTDIR\lib\jackson-core-2.0.6.jar"
+    Delete "$OUTDIR\lib\jackson-databind-2.0.6.jar"
 
     ; -- Delete insecure jackson jar files as of JMRI 4.11.3
     Delete "$OUTDIR\jackson-annotations-2.8.5.jar"
     Delete "$OUTDIR\jackson-core-2.8.5.jar"
     Delete "$OUTDIR\jackson-databind-2.8.5.jar"
+    Delete "$OUTDIR\lib\jackson-annotations-2.8.5.jar"
+    Delete "$OUTDIR\lib\jackson-core-2.8.5.jar"
+    Delete "$OUTDIR\lib\jackson-databind-2.8.5.jar"
 
     ; -- Delete old .jar & support files in destination directory
     Delete "$OUTDIR\jh.1.1.2.jar"
