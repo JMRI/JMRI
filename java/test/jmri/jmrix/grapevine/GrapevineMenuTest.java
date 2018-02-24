@@ -27,11 +27,15 @@ public class GrapevineMenuTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        SerialTrafficController tc = new SerialTrafficControlScaffold();
         memo = new GrapevineSystemConnectionMemo();
+        SerialTrafficController tc = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tc);
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+
+    }
+
 }

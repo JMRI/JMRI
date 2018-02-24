@@ -82,7 +82,7 @@ public class SerialNode extends AbstractNode {
      * address - Address of node on serial bus (0-255) type - a type constant
      * from the class
      */
-    public SerialNode(int address, int type,OakTreeSystemConnectionMemo memo) {
+    public SerialNode(int address, int type, OakTreeSystemConnectionMemo memo) {
         _memo = memo;
         // set address and type and check validity
         setNodeAddress(address);

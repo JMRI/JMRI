@@ -20,7 +20,7 @@ public class JMRIClientSensorTest extends TestCase {
             @Override
             public void sendJMRIClientMessage(JMRIClientMessage m, JMRIClientListener reply) {
                 // do nothing to avoid null pointer when sending to non-existant
-                // connection durring test.
+                // connection during test.
             }
         };
         JMRIClientSensor m = new JMRIClientSensor(3, new JMRIClientSystemConnectionMemo(tc));

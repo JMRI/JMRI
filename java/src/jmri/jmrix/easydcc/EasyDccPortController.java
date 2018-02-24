@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import jmri.jmrix.SystemConnectionMemo;
 
 /**
- * Abstract base for classes representing an EasyDCC communications port
+ * Abstract base for classes representing an EasyDCC communications port.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */

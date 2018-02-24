@@ -250,7 +250,7 @@
             <compilation-unit>
                 <package-root>java/acceptancetest/step_definitions</package-root>
                 <unit-tests/>
-                <classpath mode="compile">target/classes:lib/webdrivermanager-2.0.1.jar:lib/junit-4.12.jar:lib/cucumber-java8-2.0.1.jar:lib/selenium-server-standalone-3.6.0.jar</classpath>
+                <classpath mode="compile">target/classes:lib/webdrivermanager-2.0.1.jar:lib/junit-4.12.jar:lib/cucumber-java8-2.0.1.jar:lib/selenium-server-standalone-3.6.0.jar:lib/slf4j-api-1.7.25.jar</classpath>
                 <source-level>1.8</source-level>
             </compilation-unit>
         </java-data>

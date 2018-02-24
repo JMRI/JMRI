@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
+import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -42,7 +43,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                 this.connection.sendMessage(this.service.doPost(type, id, data, locale));
                 if (!this.trainListeners.containsKey(id)) {
                     this.trainListeners.put(id, new TrainListener(id));
-                    TrainManager.instance().getTrainById(id).addPropertyChangeListener(this.trainListeners.get(id));
+                    InstanceManager.getDefault(TrainManager.class).getTrainById(id).addPropertyChangeListener(this.trainListeners.get(id));
                 }
                 break;
             default:
@@ -57,12 +58,12 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         this.setLocale(locale);
         this.connection.sendMessage(this.service.doGetList(type, locale));
         log.debug("adding TrainsListener");
-        TrainManager.instance().addPropertyChangeListener(trainsListener); //add parent listener
+        InstanceManager.getDefault(TrainManager.class).addPropertyChangeListener(trainsListener); //add parent listener
         addListenersToChildren();
     }
 
     private void addListenersToChildren() {
-        TrainManager.instance().getTrainsByIdList().stream().forEach((t) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(TrainManager.class).getTrainsByIdList().stream().forEach((t) -> { //add listeners to each child (if not already)
             if (!trainListeners.containsKey(t.getId())) {
                 log.debug("adding TrainListener for Train ID {}", t.getId());
                 trainListeners.put(t.getId(), new TrainListener(t.getId()));
@@ -77,7 +78,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
             listener.train.removePropertyChangeListener(listener);
         });
         this.trainListeners.clear();
-        TrainManager.instance().removePropertyChangeListener(trainsListener);
+        InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(trainsListener);
     }
 
     private class TrainListener implements PropertyChangeListener {
@@ -85,7 +86,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         protected final Train train;
 
         protected TrainListener(String id) {
-            this.train = TrainManager.instance().getTrainById(id);
+            this.train = InstanceManager.getDefault(TrainManager.class).getTrainById(id);
         }
 
         @Override
@@ -124,7 +125,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
             } catch (IOException ex) {
                 // if we get an error, de-register
                 log.debug("deregistering trainsListener due to IOException");
-                TrainManager.instance().removePropertyChangeListener(trainsListener);
+                InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(trainsListener);
             }
         }
     }

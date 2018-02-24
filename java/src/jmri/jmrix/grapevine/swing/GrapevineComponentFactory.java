@@ -16,7 +16,7 @@ public class GrapevineComponentFactory extends jmri.jmrix.swing.ComponentFactory
         this.memo = memo;
     }
 
-    GrapevineSystemConnectionMemo memo;
+    private GrapevineSystemConnectionMemo memo;
 
     /**
      * Provide a menu with all items attached to this system connection.

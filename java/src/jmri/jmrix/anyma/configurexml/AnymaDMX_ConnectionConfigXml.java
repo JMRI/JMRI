@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
  *
- * @author George Warner Copyright (c) 2017
+ * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
 public class AnymaDMX_ConnectionConfigXml extends AbstractUsbConnectionConfigXml {

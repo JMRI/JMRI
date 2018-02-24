@@ -8,11 +8,11 @@ import jmri.jmrix.AbstractMRTrafficController;
 /**
  * Converts Stream-based I/O to/from JMRIClient messages. The
  * "JMRIClientInterface" side sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a JMRIClientPortController is via a pair of *Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
+ * <p>
  * This handles the state transitions, based on the necessary state in each
  * message.
  *
@@ -21,6 +21,9 @@ import jmri.jmrix.AbstractMRTrafficController;
 public class JMRIClientTrafficController extends AbstractMRTrafficController
         implements JMRIClientInterface {
 
+    /**
+     * Create a new JMRIClientTrafficController instance.
+     */
     public JMRIClientTrafficController() {
         super();
         setAllowUnexpectedReply(true);

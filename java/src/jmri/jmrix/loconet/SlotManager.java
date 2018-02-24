@@ -1349,7 +1349,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     /**
-     * Internal routine to forward a programing reply. This is delayed to
+     * Internal routine to forward a programming reply. This is delayed to
      * prevent overruns of the command station.
      *<p>
      * @param p a ProgListener object

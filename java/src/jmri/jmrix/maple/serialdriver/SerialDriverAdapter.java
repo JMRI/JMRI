@@ -16,7 +16,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to C/MRI via a serial comm port. Normally controlled by the
+ * Provide access to Maple via a serial comm port. Normally controlled by the
  * maple.serialdriver.SerialDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2002
@@ -36,7 +36,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
+                activeSerialPort = (SerialPort) portID.open(appName, 2000); // name of program, msec to wait
             } catch (PortInUseException p) {
                 return handlePortBusy(p, portName, log);
             }
@@ -123,6 +123,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     // base class methods for the SerialPortController interface
+
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -184,7 +185,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         super.configureBaudRate(rate);
     }
 
-    protected String[] validSpeeds = new String[]{"9,600 baud", "19,200 baud", "57,600 baud"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"),
+            Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud57600")};
     protected int[] validSpeedValues = new int[]{9600, 19200, 57600};
     protected String selectedSpeed = validSpeeds[0];
 

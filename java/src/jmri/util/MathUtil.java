@@ -2,11 +2,12 @@ package jmri.util;
 
 import static java.lang.Float.NEGATIVE_INFINITY;
 import static java.lang.Float.POSITIVE_INFINITY;
+import static java.lang.Math.PI;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.geom.Line2D;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import javax.annotation.CheckReturnValue;
@@ -318,6 +319,40 @@ public final class MathUtil {
     }
 
     /**
+     * @param p the point
+     * @return the point orthogonal to this one (relative to {0, 0})
+     */
+    public static Point2D orthogonal(@Nonnull Point2D p) {
+        return new Point2D.Double(-p.getY(), p.getX());
+    }
+
+    /**
+     * create a vector given a direction and a magnitude
+     *
+     * @param dirDEG    the direction (in degrees)
+     * @param magnitude the magnitude
+     * @return the vector with the specified direction and magnitude
+     */
+    @CheckReturnValue
+    public static Point2D vectorDEG(double dirDEG, double magnitude) {
+        Point2D result = new Point2D.Double(magnitude, 0.0);
+        return rotateDEG(result, dirDEG);
+    }
+
+    /**
+     * create a vector given a direction and a magnitude
+     *
+     * @param dirRAD    the direction (in radians)
+     * @param magnitude the magnitude
+     * @return the vector with the specified direction and magnitude
+     */
+    @CheckReturnValue
+    public static Point2D vectorRAD(double dirRAD, double magnitude) {
+        Point2D result = new Point2D.Double(magnitude, 0.0);
+        return rotateRAD(result, dirRAD);
+    }
+
+    /**
      * dot product of two points (vectors)
      *
      * @param pA the first point
@@ -365,10 +400,22 @@ public final class MathUtil {
     }
 
     /**
-     * normalize a point
+     * normalize a point (vector) to a length
      *
-     * @param p the point
-     * @return the normalized point
+     * @param p      the point (vector)
+     * @param length the length to normalize to
+     * @return the normalized point (vector)
+     */
+    @CheckReturnValue
+    public static Point2D normalize(@Nonnull Point2D p, double length) {
+        return multiply(normalize(p), length);
+    }
+
+    /**
+     * normalize a point (vector)
+     *
+     * @param p the point (vector)
+     * @return the normalized point (vector)
      */
     @CheckReturnValue
     public static Point2D normalize(@Nonnull Point2D p) {
@@ -381,7 +428,32 @@ public final class MathUtil {
     }
 
     /**
+     * compute the angle (direction in radians) for a vector
+     *
+     * @param p the vector (point relative to zeroPoint2D)
+     * @return the angle in radians
+     */
+    @CheckReturnValue
+    public static double computeAngleRAD(@Nonnull Point2D p) {
+        return Math.atan2(p.getX(), p.getY());
+    }
+
+    /**
+     * compute the angle (direction in degrees) for a vector
+     *
+     * @param p the vector (point relative to zeroPoint2D)
+     * @return the angle in degrees
+     */
+    @CheckReturnValue
+    public static double computeAngleDEG(@Nonnull Point2D p) {
+        return Math.toDegrees(computeAngleRAD(p));
+    }
+
+    /**
      * compute the angle (direction in radians) from point 1 to point 2
+     * <p>
+     * Note: Goes CCW from south to east to north to west, etc.
+     * For JMRI subtract from PI/2 to get east, south, west, north
      *
      * @param p1 the first Point2D
      * @param p2 the second Point2D
@@ -389,12 +461,14 @@ public final class MathUtil {
      */
     @CheckReturnValue
     public static double computeAngleRAD(@Nonnull Point2D p1, @Nonnull Point2D p2) {
-        Point2D delta = subtract(p1, p2);
-        return Math.atan2(delta.getX(), delta.getY());
+        return computeAngleRAD(subtract(p1, p2));
     }
 
     /**
      * compute the angle (direction in degrees) from point 1 to point 2
+     * <p>
+     * Note: Goes CCW from south to east to north to west, etc.
+     * For JMRI subtract from 90.0 to get east, south, west, north
      *
      * @param p1 the first Point2D
      * @param p2 the second Point2D
@@ -402,7 +476,7 @@ public final class MathUtil {
      */
     @CheckReturnValue
     public static double computeAngleDEG(@Nonnull Point2D p1, @Nonnull Point2D p2) {
-        return Math.toDegrees(computeAngleRAD(p1, p2));
+        return Math.toDegrees(computeAngleRAD(subtract(p1, p2)));
     }
 
     /**
@@ -528,8 +602,8 @@ public final class MathUtil {
      * @return the point two thirds of the way from pA to pB
      */
     @CheckReturnValue
-    public static Point2D twoThirdPoint(@Nonnull Point2D pA, @Nonnull Point2D pB) {
-        return lerp(pA, pB, 1.0 / 3.0);
+    public static Point2D twoThirdsPoint(@Nonnull Point2D pA, @Nonnull Point2D pB) {
+        return lerp(pA, pB, 2.0 / 3.0);
     }
 
     /**
@@ -637,7 +711,7 @@ public final class MathUtil {
      *
      * @param a the first angle
      * @param b the second angle
-     * @return the relative difference between the two angles
+     * @return the relative difference between the two angles (in degrees)
      */
     @CheckReturnValue
     public static double diffAngleDEG(double a, double b) {
@@ -649,11 +723,36 @@ public final class MathUtil {
      *
      * @param a the first angle
      * @param b the second angle
-     * @return the absolute difference between the two angles
+     * @return the absolute difference between the two angles (in degrees)
      */
     @CheckReturnValue
     public static double absDiffAngleDEG(double a, double b) {
         return Math.abs(diffAngleDEG(a, b));
+    }
+
+    /**
+     * calculate the relative difference (+/-PI) between two angles
+     *
+     * @param a the first angle
+     * @param b the second angle
+     * @return the relative difference between the two angles (in radians)
+     */
+    @CheckReturnValue
+    public static double diffAngleRAD(double a, double b) {
+        return wrap(a - b, -PI, +PI);
+
+    }
+
+    /**
+     * calculate the absolute difference (0-PI) between two angles
+     *
+     * @param a the first angle
+     * @param b the second angle
+     * @return the absolute difference between the two angles (in radians)
+     */
+    @CheckReturnValue
+    public static double absDiffAngleRAD(double a, double b) {
+        return Math.abs(diffAngleRAD(a, b));
     }
 
     /**
@@ -842,7 +941,8 @@ public final class MathUtil {
      * inset a rectangle
      *
      * @param r the rectangle
-     * @param h the horzontial inset (positive make it smaller, negative, bigger)
+     * @param h the horzontial inset (positive make it smaller, negative,
+     *          bigger)
      * @param v the vertical inset (positive make it smaller, negative, bigger)
      * @return the inset rectangle
      */
@@ -890,11 +990,16 @@ public final class MathUtil {
         return offset(r1, subtract(center(r2), center(r1)));
     }
 
-    // recursive routine to draw a cubic Bezier...
+    // recursive routine to plot a cubic Bezier...
     // (also returns distance!)
-    private static double drawBezier(Graphics2D g2,
-            @Nonnull Point2D p0, @Nonnull Point2D p1, @Nonnull Point2D p2,
-            @Nonnull Point2D p3, int depth) {
+    private static double plotBezier(
+            GeneralPath path,
+            @Nonnull Point2D p0,
+            @Nonnull Point2D p1,
+            @Nonnull Point2D p2,
+            @Nonnull Point2D p3,
+            int depth,
+            double displacement) {
         double result;
 
         // calculate flatness to determine if we need to recurse...
@@ -909,7 +1014,14 @@ public final class MathUtil {
         // the flatness comparison value is somewhat arbitrary.
         // (I just kept moving it closer to 1 until I got good results. ;-)
         if ((depth > 12) || (flatness <= 1.001)) {
-            g2.draw(new Line2D.Double(p0, p3));
+            Point2D vO = normalize(orthogonal(subtract(p3, p0)), displacement);
+            if (bezier1st) {
+                Point2D p0P = add(p0, vO);
+                path.moveTo(p0P.getX(), p0P.getY());
+                bezier1st = false;
+            }
+            Point2D p3P = add(p3, vO);
+            path.lineTo(p3P.getX(), p3P.getY());
             result = l03;
         } else {
             // first order midpoints
@@ -921,13 +1033,13 @@ public final class MathUtil {
             Point2D r0 = midPoint(q0, q1);
             Point2D r1 = midPoint(q1, q2);
 
-            // oneThirdPoint order midPoint
+            // third order midPoint
             Point2D s = midPoint(r0, r1);
 
             // draw left side Bezier
-            result = drawBezier(g2, p0, q0, r0, s, depth + 1);
+            result = MathUtil.plotBezier(path, p0, q0, r0, s, depth + 1, displacement);
             // draw right side Bezier
-            result += drawBezier(g2, s, r1, q2, p3, depth + 1);
+            result += MathUtil.plotBezier(path, s, r1, q2, p3, depth + 1, displacement);
         }
         return result;
     }
@@ -940,15 +1052,29 @@ public final class MathUtil {
      * @param p1 first control point
      * @param p2 second control point
      * @param p3 terminating control point
+     *
      * @return the length of the Bezier curve
      */
-    public static double drawBezier(Graphics2D g2, @Nonnull Point2D p0, @Nonnull Point2D p1, @Nonnull Point2D p2, @Nonnull Point2D p3) {
-        return drawBezier(g2, p0, p1, p2, p3, 0);
+    public static double drawBezier(
+            Graphics2D g2,
+            @Nonnull Point2D p0,
+            @Nonnull Point2D p1,
+            @Nonnull Point2D p2,
+            @Nonnull Point2D p3) {
+        GeneralPath path = new GeneralPath();
+        bezier1st = true;
+        double result = MathUtil.plotBezier(path, p0, p1, p2, p3, 0, 0.0);
+        g2.draw(path);
+        return result;
     }
 
-    // recursive routine to draw a Bezier curve...
+    // recursive routine to plot a Bezier curve...
     // (also returns distance!)
-    private static double drawBezier(Graphics2D g2, @Nonnull Point2D points[], int depth) {
+    private static double plotBezier(
+            GeneralPath path,
+            @Nonnull Point2D points[],
+            int depth,
+            double displacement) {
         int len = points.length, idx, jdx;
         double result;
 
@@ -965,7 +1091,15 @@ public final class MathUtil {
         // the flatness comparison value is somewhat arbitrary.
         // (I just kept moving it closer to 1 until I got good results. ;-)
         if ((depth > 12) || (flatness <= 1.001)) {
-            g2.draw(new Line2D.Double(points[0], points[len - 1]));
+            Point2D p0 = points[0], pN = points[len - 1];
+            Point2D vO = normalize(orthogonal(subtract(pN, p0)), displacement);
+            if (bezier1st) {
+                Point2D p0P = add(p0, vO);
+                path.moveTo(p0P.getX(), p0P.getY());
+                bezier1st = false;
+            }
+            Point2D pNP = add(pN, vO);
+            path.lineTo(pNP.getX(), pNP.getY());
             result = inner_distance;
         } else {
             // calculate (len - 1) order of points
@@ -989,7 +1123,7 @@ public final class MathUtil {
                 leftPoints[idx + 1] = nthOrderPoints[idx][0];
             }
             // draw left side Bezier
-            result = drawBezier(g2, leftPoints, depth + 1);
+            result = plotBezier(path, leftPoints, depth + 1, displacement);
 
             // collect right points
             Point2D[] rightPoints = new Point2D[len];
@@ -999,7 +1133,7 @@ public final class MathUtil {
             rightPoints[idx] = points[len - 1];
 
             // draw right side Bezier
-            result += drawBezier(g2, rightPoints, depth + 1);
+            result += plotBezier(path, rightPoints, depth + 1, displacement);
         }
         return result;
     }
@@ -1009,13 +1143,34 @@ public final class MathUtil {
      *
      * @param g2  the Graphics2D to draw to
      * @param p[] control points
+     * @param displacement right/left to draw a line parallel to the Bezier
+     * @return the length of the Bezier curve
+     */
+    public static double drawBezier(
+            Graphics2D g2,
+            @Nonnull Point2D p[],
+            double displacement) {
+        double result;
+        GeneralPath path = new GeneralPath();
+        bezier1st = true;
+        if (p.length == 4) {    // draw cubic bezier?
+            result = MathUtil.plotBezier(path, p[0], p[1], p[2], p[3], 0, displacement);
+        } else {    // (nope)
+            result = plotBezier(path, p, 0, displacement);
+        }
+        g2.draw(path);
+        return result;
+        }
+
+    /**
+     * Draw a Bezier curve
+     *
+     * @param g2  the Graphics2D to draw to
+     * @param p[] control points
      * @return the length of the Bezier curve
      */
     public static double drawBezier(Graphics2D g2, @Nonnull Point2D p[]) {
-        if (p.length == 4) {    // draw cubic bezier?
-            return drawBezier(g2, p[0], p[1], p[2], p[3], 0);
-        } else {    // (nope)
-            return drawBezier(g2, p, 0);
-        }
+        return drawBezier(g2, p, 0.0);
     }
+    private static boolean bezier1st = false;
 }

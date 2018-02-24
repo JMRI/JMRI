@@ -227,7 +227,11 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
             }
         }
         if (sorter != null && this.sortKeys.get(table.getName()) != null) {
-            sorter.setSortKeys(this.sortKeys.get(table.getName()));
+            try {
+                sorter.setSortKeys(this.sortKeys.get(table.getName()));
+            } catch (IllegalArgumentException ex) {
+                log.debug("Ignoring IllegalArgumentException \"{}\" as column does not exist.", ex.getMessage());
+            }
         }
         if (persisting) {
             this.persist(table);
