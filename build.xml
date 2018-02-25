@@ -482,8 +482,7 @@
             <fileset dir="${resourcedir}" includes="*.gif"/>
         </copy>
         <copy todir="${target}">
-            <fileset dir="${source}" includes="**/*.properties,**/*.js,**/*.png"/>
-            <fileset dir="${source}" includes="META-INF/**"/>
+            <fileset dir="${source}" includes="**/*.properties,**/*.js,**/*.png,**/*.json"/>
         </copy>
     </target>
 
