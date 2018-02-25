@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 
@@ -34,6 +36,7 @@ public class RenumberFrame extends jmri.util.JmriJFrame {
 
     JSpinner fromSpinner;
     JSpinner toSpinner;
+    JButton renumberButton;
 
     /**
      * Initialize the window.
@@ -52,23 +55,36 @@ public class RenumberFrame extends jmri.util.JmriJFrame {
         p.add(new JLabel(Bundle.getMessage("LabelFrom")));
         fromSpinner = new JSpinner(new SpinnerNumberModel(1,1,127,1));
         p.add(fromSpinner);
+        fromSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                numberSet();
+            }
+        });
 
         p.add(new JLabel(Bundle.getMessage("LabelTo")));
         toSpinner = new JSpinner(new SpinnerNumberModel(1,1,127,1));
         p.add(toSpinner);
+        toSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                numberSet();
+            }
+        });
 
         p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         contentPane.add(p);
 
-        JButton b = new JButton(Bundle.getMessage("ButtonExec"));
-        p.add(b);
-        b.addActionListener(new ActionListener() {
+        renumberButton = new JButton(Bundle.getMessage("ButtonExec"));
+        p.add(renumberButton);
+        renumberButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 execute();
             }
         });
+        renumberButton.setEnabled(false); // start as disabled, with old and new both set to 1
 
         // add help menu to window
         addHelpMenu("package.jmri.jmrix.grapevine.nodetable.RenumberFrame", true);
@@ -84,7 +100,7 @@ public class RenumberFrame extends jmri.util.JmriJFrame {
         // get addresses
         int f = (Integer) fromSpinner.getValue();
         int t = (Integer) toSpinner.getValue();
-        if (f == t) {
+        if (f >= t) {
             return; // no use if old == new
         }
         // format the message
@@ -95,6 +111,19 @@ public class RenumberFrame extends jmri.util.JmriJFrame {
         m.setElement(3, 0x60);
         m.setParity();
         memo.getTrafficController().sendSerialMessage(m, null);
+    }
+
+    /**
+     * Check values set for old and new numbers.
+     */
+    void numberSet() {
+        int f = (Integer) fromSpinner.getValue();
+        int t = (Integer) toSpinner.getValue();
+        if (f == t) {
+            renumberButton.setEnabled(false);
+        } else {
+            renumberButton.setEnabled(true);
+        }
     }
 
 }

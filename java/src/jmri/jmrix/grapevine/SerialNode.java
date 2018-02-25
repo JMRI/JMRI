@@ -208,8 +208,8 @@ public class SerialNode extends AbstractNode {
      * Create Initialization packets (SerialMessage) for this node.
      * Initialization consists of multiple parts:
      * <ul>
-     * <li>Turn on the ASD input 0x71 to bank 0
-     * <li>After a wait, another ASD message 0x73 to bank 0
+     *   <li>Turn on the ASD input 0x71 to bank 0
+     *   <li>After a wait, another ASD message 0x73 to bank 0
      * </ul>
      * (Eventually, it should also request input values, once we know what
      * message does that)
@@ -380,9 +380,11 @@ public class SerialNode extends AbstractNode {
             log.debug("Try to create sensor {} on node {} since sensor doesn't exist", sensorNum, getNodeAddress());
             // try to make the sensor, which will also register it
             jmri.InstanceManager.sensorManagerInstance()
-                    .provideSensor("GS" + (getNodeAddress() * 1000 + sensorNum));
+                    .provideSensor(tc.getSystemConnectionMemo().getSystemPrefix() + "S" + (getNodeAddress() * 1000 + sensorNum));
             if (sensorArray[sensorNum] == null) {
-                log.error("Creating sensor GS{} failed unexpectedly", (getNodeAddress() * 1000 + sensorNum));
+                log.error("Creating sensor {}S{} failed unexpectedly",
+                        tc.getSystemConnectionMemo().getSystemPrefix(),
+                        (getNodeAddress() * 1000 + sensorNum));
                 log.debug("node should be " + this);
                 return;
             }
@@ -410,6 +412,8 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
+     * Register a sensor on a node.
+     * <p>
      * The numbers here are 0 to MAXSENSORS, not 1 to MAXSENSORS. E.g. the
      * integer argument is one less than the name of the sensor object.
      *
@@ -432,7 +436,8 @@ public class SerialNode extends AbstractNode {
             }
         } else {
             // multiple registration of the same sensor
-            log.warn("multiple registration of same sensor: GS{}",
+            log.warn("multiple registration of same sensor: {}S{}",
+                    tc.getSystemConnectionMemo().getSystemPrefix(),
                     (getNodeAddress() * SerialSensorManager.SENSORSPERNODE) + i,
                     new Exception("mult reg " + i + " S:" + s.getSystemName()));
         }

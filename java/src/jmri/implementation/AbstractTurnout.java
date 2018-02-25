@@ -102,6 +102,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * appropriate starts a TurnoutOperator to do its thing. If there is no
      * TurnoutOperator (not required or nothing suitable) then just tell the
      * layout and hope for the best.
+     *
      * @param s commanded state to set
      */
     @Override
@@ -129,7 +130,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * Define duration of delay for DELAYED feedback mode.
      * <p>
      * Defined as "public non-final"
-     * so it can be changed in e.g. the jython/SetDefaultDelayedTurnoutDelay script
+     * so it can be changed in e.g. the jython/SetDefaultDelayedTurnoutDelay script.
      */
     public static int DELAYED_FEEDBACK_INTERVAL = 4000;
 
@@ -365,6 +366,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * <p>
      * Used in polling loops in system-specific code, so made final to allow
      * optimization.
+     *
      * @return inverted status
      */
     @Override
@@ -389,7 +391,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * state. We simulate a locked turnout by monitoring the known state
      * (turnout feedback is required) and if we detect that the known state has
      * changed, negate it by forcing the turnout to return to the commanded
-     * state. Turnout that have local buttons can also be locked if their
+     * state. Turnouts that have local buttons can also be locked if their
      * decoder supports it.
      *
      * @param turnoutLockout lockout state to monitor. Possible values
@@ -426,11 +428,11 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     /**
-     * Determine if turnout is locked. Returns true if turnout is locked. There
-     * are two types of locks, cab lockout, and pushbutton lockout.
+     * Determine if turnout is locked. Returns. There
+     * are two types of locks: cab lockout, and pushbutton lockout.
      *
      * @param turnoutLockout turnout to check
-     * @return locked state
+     * @return locked state, true if turnout is locked
      */
     @Override
     public boolean getLocked(int turnoutLockout) {
