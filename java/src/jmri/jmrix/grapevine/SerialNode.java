@@ -260,7 +260,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public Method to create a Transmit packet (SerialMessage)
+     * Public Method to create a Transmit packet (SerialMessage).
      */
     @Override
     public AbstractMRMessage createOutPacket() {

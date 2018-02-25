@@ -317,7 +317,7 @@ public class SerialAddress {
         Matcher m2 = p.matcher(systemName.substring(prefix.length()));
         if (!m2.matches()) {
             // here if cannot parse specifically
-            log.warn("invalid system name format: {} for type {}", systemName, type);
+            log.debug("invalid system name format: {} for type {}", systemName, type);
             return NameValidity.INVALID;
         }
 
@@ -331,7 +331,7 @@ public class SerialAddress {
                 node = num / 1000;
                 bit = num % 1000;
             } else {
-                log.warn("invalid value in system name: {}", systemName);
+                log.debug("invalid value in system name: {}", systemName);
                 return NameValidity.INVALID;
             }
         } else {
@@ -342,7 +342,7 @@ public class SerialAddress {
 
         // check values
         if ((node < 1) || (node > 127)) {
-            log.warn("invalid node number {} in {}", node, systemName);
+            log.debug("invalid node number {} in {}", node, systemName);
             return NameValidity.INVALID;
         }
 
@@ -352,7 +352,7 @@ public class SerialAddress {
                     || (bit >= 201 && bit <= 224)
                     || (bit >= 301 && bit <= 324)
                     || (bit >= 401 && bit <= 424))) {
-                log.warn("invalid bit number {} in {}", bit, systemName);
+                log.debug("invalid bit number {} in {}", bit, systemName);
                 return NameValidity.INVALID;
             }
         } else { 
@@ -361,7 +361,7 @@ public class SerialAddress {
             String subtype = matcher.group(4);
             if (subtype == null) { // no subtype, just look at total
                 if ((bit < 1) || (bit > 224)) {
-                    log.warn("invalid bit number {} in {}", bit, systemName);
+                    log.debug("invalid bit number {} in {}", bit, systemName);
                     return NameValidity.INVALID;
                 } else {
                     return NameValidity.VALID;
@@ -371,23 +371,23 @@ public class SerialAddress {
             if (subtype.equals("A")) {
                 // advanced serial occ
                 if ((bit < 1) || (bit > 24)) {
-                    log.warn("invalid bit number {} in {}", bit, systemName);
+                    log.debug("invalid bit number {} in {}", bit, systemName);
                     return NameValidity.INVALID;
                 }
             } else if (subtype.equals("M")) { 
                 // advanced serial motion 
                 if ((bit < 1) || (bit > 24)) {
-                    log.warn("invalid bit number {} in  {}", bit, systemName);
+                    log.debug("invalid bit number {} in  {}", bit, systemName);
                     return NameValidity.INVALID;
                 }
             } else if (subtype.equals("S")) {// old serial
                 if ((bit < 1) || (bit > 24)) {
-                    log.warn("invalid bit number {} in {}", bit, systemName);
+                    log.debug("invalid bit number {} in {}", bit, systemName);
                     return NameValidity.INVALID;
                 }
             } else if (subtype.equals("P")) { // parallel
                 if ((bit < 1) || (bit > 96)) {
-                    log.warn("invalid bit number {} in {}", bit, systemName);
+                    log.debug("invalid bit number {} in {}", bit, systemName);
                     return NameValidity.INVALID;
                 }
             }
@@ -407,12 +407,12 @@ public class SerialAddress {
         String prefix = tc.getSystemConnectionMemo().getSystemPrefix();
         if (validSystemNameFormat(systemName, type, prefix) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present
-            log.warn("invalid system name {}", systemName);
+            log.debug("invalid system name {}", systemName);
             return false;
         }
         SerialNode node = getNodeFromSystemName(systemName, tc);
         if (node == null) {
-            log.warn("invalid system name {}; no such node", systemName);
+            log.debug("invalid system name {}; no such node", systemName);
             // The node indicated by this system address is not present
             return false;
         }
@@ -420,14 +420,14 @@ public class SerialAddress {
         if ((type == 'T') || (type == 'L')) {
             if ((bit <= 0) || (bit > SerialNode.outputBits[node.nodeType])) {
                 // The bit is not valid for this defined Serial node
-                log.warn("invalid system name {}; bad output bit number {} > {}",
+                log.debug("invalid system name {}; bad output bit number {} > {}",
                         systemName, bit, SerialNode.outputBits[node.nodeType]);
                 return false;
             }
         } else if (type == 'S') {
             if ((bit <= 0) || (bit > SerialNode.inputBits[node.nodeType])) {
                 // The bit is not valid for this defined Serial node
-                log.warn("invalid system name {}; bad input bit number {} > {}",
+                log.debug("invalid system name {}; bad input bit number {} > {}",
                         systemName, bit, SerialNode.inputBits[node.nodeType]);
                 return false;
             }

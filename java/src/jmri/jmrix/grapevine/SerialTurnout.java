@@ -21,8 +21,10 @@ public class SerialTurnout extends AbstractTurnout {
 
     /**
      * Create a Turnout object, with both system and user names.
-     * <p>
-     * 'systemName' was previously validated in SerialTurnoutManager
+     *
+     * @param systemName system name including prefix, previously validated in SerialTurnoutManager
+     * @param userName free form name
+     * @param _memo the associated SystemConnectionMemo
      */
     public SerialTurnout(String systemName, String userName, GrapevineSystemConnectionMemo _memo) {
         super(systemName, userName);

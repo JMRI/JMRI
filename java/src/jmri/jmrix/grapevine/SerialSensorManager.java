@@ -53,7 +53,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      *
      * @param inputName System name to be normalized
      * @throws NamedBean.BadSystemNameException if the inputName can't be converted to normalized form
-     * @return A system name in standard normalized form 
+     * @return A system name in standard normalized form
      */
     @Override
     @CheckReturnValue
@@ -139,7 +139,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Dummy routine
+     * Dummy routine.
      */
     @Override
     public void message(SerialMessage r) {
