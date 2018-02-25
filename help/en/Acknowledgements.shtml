@@ -553,11 +553,15 @@
 
         <li>Tony Koester, who helped with signaling</li>
 
+        <li>W.D. Kok created and maintained some Umelec decoder definitions</li>
+        
         <li>James Koretsky, who contributed the Burlington Northern
         1989 signal definition</li>
 
         <li>Matjaz Krajnc, who provided better code and icons for
         the web throttle</li>
+        
+        <li>Andrew Kroll, who improved the Operations documentation</a>
 
         <li>Ross Kudlick, who researched options switches on
         Digitrax command stations</li>
@@ -838,6 +842,8 @@
         <li>Mark Schutzer, who helped debug some significant NCE
         improvements and contributed the Lenz Gold decoder
         definition</li>
+        
+        <li>Thurgau Schweiz, who provided some Umelec decoder definitions.</li>
 
         <li>Knut Schwichtenberg, who contributed the FREDI
         definition files</li>
