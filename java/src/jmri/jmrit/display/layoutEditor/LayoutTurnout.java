@@ -3326,8 +3326,8 @@ public class LayoutTurnout extends LayoutTrack {
         Point2D pFR = MathUtil.add(pF, MathUtil.multiply(vBMo, 2.0));
         Point2D pFL = MathUtil.subtract(pF, MathUtil.multiply(vCMo, 2.0));
 
-        Point2D pFPR = MathUtil.add(pF, MathUtil.normalize(vBMo, 2.0));
-        Point2D pFPL = MathUtil.subtract(pF, MathUtil.normalize(vCMo, 2.0));
+        // Point2D pFPR = MathUtil.add(pF, MathUtil.normalize(vBMo, 2.0));
+        // Point2D pFPL = MathUtil.subtract(pF, MathUtil.normalize(vCMo, 2.0));
 
         Point2D vDisAP = MathUtil.normalize(vAM, hypotF);
         Point2D pAP = MathUtil.subtract(pM, vDisAP);
@@ -3335,8 +3335,8 @@ public class LayoutTurnout extends LayoutTrack {
         Point2D pAPL = MathUtil.subtract(pAP, vAMo);
 
         Point2D vSo = MathUtil.normalize(vAMo, 2.0);
-        Point2D pSL = MathUtil.add(pAPL, vSo);
-        Point2D pSR = MathUtil.subtract(pAPR, vSo);
+        // Point2D pSL = MathUtil.add(pAPL, vSo);
+        // Point2D pSR = MathUtil.subtract(pAPR, vSo);
 
         boolean mainlineA = isMainlineA();
         boolean mainlineB = isMainlineB();
@@ -3577,13 +3577,13 @@ public class LayoutTurnout extends LayoutTrack {
                 // end of switch rails (open)
                 Point2D vS = MathUtil.normalize(vABo, 2.0);
                 Point2D pASL = MathUtil.add(pAPL, vS);
-                Point2D pASR = MathUtil.subtract(pAPR, vS);
+                // Point2D pASR = MathUtil.subtract(pAPR, vS);
                 Point2D pBSL = MathUtil.add(pBPL, vS);
-                Point2D pBSR = MathUtil.subtract(pBPR, vS);
+                // Point2D pBSR = MathUtil.subtract(pBPR, vS);
                 Point2D pCSR = MathUtil.subtract(pCPR, vS);
-                Point2D pCSL = MathUtil.add(pCPL, vS);
+                // Point2D pCSL = MathUtil.add(pCPL, vS);
                 Point2D pDSR = MathUtil.subtract(pDPR, vS);
-                Point2D pDSL = MathUtil.add(pDPL, vS);
+                // Point2D pDSL = MathUtil.add(pDPL, vS);
 
                 // end of switch rails (open at frogs)
                 Point2D pAFS = MathUtil.subtract(pAFL, vS);
@@ -3591,10 +3591,10 @@ public class LayoutTurnout extends LayoutTrack {
                 Point2D pCFS = MathUtil.add(pCFR, vS);
                 Point2D pDFS = MathUtil.add(pDFR, vS);
                 vSo = MathUtil.orthogonal(vS);
-                Point2D pAFSR = MathUtil.add(pAFL, vSo);
-                Point2D pBFSR = MathUtil.subtract(pBFL, vSo);
-                Point2D pCFSL = MathUtil.subtract(pCFR, vSo);
-                Point2D pDFSL = MathUtil.add(pDFR, vSo);
+                // Point2D pAFSR = MathUtil.add(pAFL, vSo);
+                // Point2D pBFSR = MathUtil.subtract(pBFL, vSo);
+                // Point2D pCFSL = MathUtil.subtract(pCFR, vSo);
+                // Point2D pDFSL = MathUtil.add(pDFR, vSo);
 
                 if (isMain == mainlineA) {
                     g2.draw(new Line2D.Double(pAL, pABL));
@@ -3757,15 +3757,15 @@ public class LayoutTurnout extends LayoutTrack {
                 Point2D vS = MathUtil.normalize(vAB, 2.0);
                 vSo = MathUtil.orthogonal(vS);
                 Point2D pASL = MathUtil.add(pAPL, vSo);
-                Point2D pASR = MathUtil.subtract(pAPR, vSo);
-                Point2D pCSL = MathUtil.add(pCPL, vSo);
+                // Point2D pASR = MathUtil.subtract(pAPR, vSo);
+                // Point2D pCSL = MathUtil.add(pCPL, vSo);
                 Point2D pCSR = MathUtil.subtract(pCPR, vSo);
 
                 // end of switch rails (open at frogs)
                 Point2D pABFS = MathUtil.subtract(pABF, vSo);
-                Point2D pABFSP = MathUtil.subtract(pABF, vS);
+                // Point2D pABFSP = MathUtil.subtract(pABF, vS);
                 Point2D pCDFS = MathUtil.add(pCDF, vSo);
-                Point2D pCDFSP = MathUtil.add(pCDF, vS);
+                // Point2D pCDFSP = MathUtil.add(pCDF, vS);
 
                 if (isMain == mainlineA) {
                     g2.draw(new Line2D.Double(pAL, pABL));
@@ -3882,15 +3882,15 @@ public class LayoutTurnout extends LayoutTrack {
                 Point2D vS = MathUtil.normalize(vBA, 2.0);
                 vSo = MathUtil.orthogonal(vS);
                 Point2D pBSL = MathUtil.subtract(pBPL, vSo);
-                Point2D pBSR = MathUtil.add(pBPR, vSo);
-                Point2D pDSL = MathUtil.subtract(pDPL, vSo);
+                // Point2D pBSR = MathUtil.add(pBPR, vSo);
+                // Point2D pDSL = MathUtil.subtract(pDPL, vSo);
                 Point2D pDSR = MathUtil.add(pDPR, vSo);
 
                 // end of switch rails (open at frogs)
                 Point2D pBAFS = MathUtil.add(pBFL, vSo);
-                Point2D pBAFSP = MathUtil.subtract(pBFL, vS);
+                // Point2D pBAFSP = MathUtil.subtract(pBFL, vS);
                 Point2D pDCFS = MathUtil.subtract(pDFR, vSo);
-                Point2D pDCFSP = MathUtil.add(pDFR, vS);
+                // Point2D pDCFSP = MathUtil.add(pDFR, vS);
 
                 if (isMain == mainlineA) {
                     g2.draw(new Line2D.Double(pBAL, pAL));
