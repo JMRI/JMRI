@@ -30,7 +30,7 @@ public class EasyDccSimulatorTrafficController extends EasyDccTrafficController 
      */
     public EasyDccSimulatorTrafficController(EasyDccSystemConnectionMemo adaptermemo) {
         super(adaptermemo);
-        setAllowUnexpectedReply(true); // there is some command sent durring
+        setAllowUnexpectedReply(true); // there is some command sent during
                                        // testing we treat as unexpected...
     }
 

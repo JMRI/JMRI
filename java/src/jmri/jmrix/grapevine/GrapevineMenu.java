@@ -4,7 +4,7 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
- * Create a "Systems" menu containing the Jmri Grapevine-specific tools
+ * Create a "Systems" menu containing the Jmri Grapevine-specific tools.
  *
  * @author Bob Jacobsen Copyright 2003, 2006, 2007
  */
@@ -12,7 +12,7 @@ public class GrapevineMenu extends JMenu {
 
     private GrapevineSystemConnectionMemo memo = null;
 
-    public GrapevineMenu(String name,GrapevineSystemConnectionMemo _memo) {
+    public GrapevineMenu(String name, GrapevineSystemConnectionMemo _memo) {
         this(_memo);
         setText(name);
     }
@@ -22,15 +22,20 @@ public class GrapevineMenu extends JMenu {
         super();
         memo = _memo;
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.grapevine.GrapevineBundle");
+        if (memo != null) {
+            setText(memo.getUserName());
+        } else {
+            setText(Bundle.getMessage("MenuSystem"));
+        }
 
-        setText(rb.getString("MenuSystem"));
-
-        add(new jmri.jmrix.grapevine.serialmon.SerialMonAction(rb.getString("MenuItemCommandMonitor"),memo));
-        add(new jmri.jmrix.grapevine.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand"),memo));
-        add(new jmri.jmrix.grapevine.nodeconfig.NodeConfigAction(rb.getString("MenuItemConfigNodes"),memo));
-        add(new jmri.jmrix.grapevine.nodetable.NodeTableAction(rb.getString("MenuItemNodeTable"),memo));
-
+        if (memo != null) {
+            // do we have a GrapevineTrafficController?
+            setEnabled(memo.getTrafficController() != null); // disable menu, no connection, no tools!
+            add(new jmri.jmrix.grapevine.serialmon.SerialMonAction(Bundle.getMessage("MenuItemCommandMonitor"), memo));
+            add(new jmri.jmrix.grapevine.packetgen.SerialPacketGenAction(Bundle.getMessage("MenuItemSendCommand"), memo));
+            add(new jmri.jmrix.grapevine.nodeconfig.NodeConfigAction(Bundle.getMessage("ConfigNodesTitle"), memo));
+            add(new jmri.jmrix.grapevine.nodetable.NodeTableAction(Bundle.getMessage("MenuItemNodeTable"), memo));
+        }
     }
 
 }

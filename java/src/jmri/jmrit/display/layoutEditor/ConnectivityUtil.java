@@ -10,7 +10,6 @@ import javax.annotation.Nullable;
 import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
@@ -42,6 +41,7 @@ import org.slf4j.LoggerFactory;
  * method.
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class ConnectivityUtil {
 
@@ -1290,248 +1290,264 @@ public class ConnectivityUtil {
         TrackSegment tTrack = null;
         switch (cNodeType) {
             case LayoutTrack.POS_POINT:
-                PositionablePoint p = (PositionablePoint) cNode;
-                if (p.getType() == PositionablePoint.END_BUMPER) {
-                    log.error("Attempt to search beyond end of track");
-                    return null;
-                }
-                if (p.getConnect1() == null) {
-                    tTrack = p.getConnect2();
+                if (cNode instanceof PositionablePoint) {
+                    PositionablePoint p = (PositionablePoint) cNode;
+                    if (p.getType() == PositionablePoint.END_BUMPER) {
+                        log.error("Attempt to search beyond end of track");
+                        return null;
+                    }
+                    if (p.getConnect1() == null) {
+                        tTrack = p.getConnect2();
+                    } else {
+                        tTrack = p.getConnect1();
+                    }
                 } else {
-                    tTrack = p.getConnect1();
+                    log.warn("cNodeType wrong for cNode");
                 }
                 break;
             case LayoutTrack.TURNOUT_A: {
-                LayoutTurnout lt = (LayoutTurnout) cNode;
-                if ((lt.getTurnoutType() == LayoutTurnout.RH_TURNOUT)
-                        || (lt.getTurnoutType() == LayoutTurnout.LH_TURNOUT)
-                        || (lt.getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
-                    if ((lt.getLinkedTurnoutName() == null)
-                            || (lt.getLinkedTurnoutName().isEmpty())) {
-                        // Standard turnout - node type A
-                        if (lt.getContinuingSense() == Turnout.CLOSED) {
-                            switch (cNodeState) {
-                                case 0:
-                                    tTrack = (TrackSegment) lt.getConnectB();
-                                    pType = LayoutTrack.TURNOUT_B;
-                                    break;
-                                case 1:
-                                    tTrack = (TrackSegment) lt.getConnectC();
-                                    pType = LayoutTrack.TURNOUT_C;
-                                    break;
-                                default:
-                                    log.error("Bad cNodeState argument when searching track-std. normal");
-                                    return null;
-                            }
-                        } else {
-                            switch (cNodeState) {
-                                case 0:
-                                    tTrack = (TrackSegment) lt.getConnectC();
-                                    pType = LayoutTrack.TURNOUT_C;
-                                    break;
-                                case 1:
-                                    tTrack = (TrackSegment) lt.getConnectB();
-                                    pType = LayoutTrack.TURNOUT_B;
-                                    break;
-                                default:
-                                    log.error("Bad cNodeState argument when searching track-std reversed");
-                                    return null;
-                            }
-                        }
-                    } else {
-                        // linked turnout - node type A
-                        LayoutTurnout lto = layoutEditor.getFinder().findLayoutTurnoutByName(lt.getLinkedTurnoutName());
-                        if (lt.getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
-                            switch (cNodeState) {
-                                case 0:
-                                    if (lto.getContinuingSense() == Turnout.CLOSED) {
-                                        tTrack = (TrackSegment) lto.getConnectB();
-                                        pType = LayoutTrack.TURNOUT_B;
-                                    } else {
-                                        tTrack = (TrackSegment) lto.getConnectC();
-                                        pType = LayoutTrack.TURNOUT_C;
-                                    }
-                                    break;
-                                case 1:
-                                    if (lto.getContinuingSense() == Turnout.CLOSED) {
-                                        tTrack = (TrackSegment) lto.getConnectC();
-                                        pType = LayoutTrack.TURNOUT_C;
-                                    } else {
-                                        tTrack = (TrackSegment) lto.getConnectB();
-                                        pType = LayoutTrack.TURNOUT_B;
-                                    }
-                                    break;
-                                default:
-                                    log.error("Bad cNodeState argument when searching track - THROAT_TO_THROAT");
-                                    return null;
-                            }
-                            pObject = lto;
-                        } else if (lt.getLinkType() == LayoutTurnout.FIRST_3_WAY) {
-                            switch (cNodeState) {
-                                case 0:
-                                    if (lto.getContinuingSense() == Turnout.CLOSED) {
-                                        tTrack = (TrackSegment) lto.getConnectB();
-                                        pType = LayoutTrack.TURNOUT_B;
-                                    } else {
-                                        tTrack = (TrackSegment) lto.getConnectC();
-                                        pType = LayoutTrack.TURNOUT_C;
-                                    }
-                                    pObject = lto;
-                                    break;
-                                case 1:
-                                    if (lt.getContinuingSense() == Turnout.CLOSED) {
-                                        tTrack = (TrackSegment) lt.getConnectC();
-                                        pType = LayoutTrack.TURNOUT_C;
-                                    } else {
+                if (cNode instanceof LayoutTurnout) {
+                    LayoutTurnout lt = (LayoutTurnout) cNode;
+                    if ((lt.getTurnoutType() == LayoutTurnout.RH_TURNOUT)
+                            || (lt.getTurnoutType() == LayoutTurnout.LH_TURNOUT)
+                            || (lt.getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
+                        if ((lt.getLinkedTurnoutName() == null)
+                                || (lt.getLinkedTurnoutName().isEmpty())) {
+                            // Standard turnout - node type A
+                            if (lt.getContinuingSense() == Turnout.CLOSED) {
+                                switch (cNodeState) {
+                                    case 0:
                                         tTrack = (TrackSegment) lt.getConnectB();
                                         pType = LayoutTrack.TURNOUT_B;
-                                    }
-                                    break;
-                                case 2:
-                                    if (lto.getContinuingSense() == Turnout.CLOSED) {
-                                        tTrack = (TrackSegment) lto.getConnectC();
+                                        break;
+                                    case 1:
+                                        tTrack = (TrackSegment) lt.getConnectC();
                                         pType = LayoutTrack.TURNOUT_C;
-                                    } else {
-                                        tTrack = (TrackSegment) lto.getConnectB();
+                                        break;
+                                    default:
+                                        log.error("Bad cNodeState argument when searching track-std. normal");
+                                        return null;
+                                }
+                            } else {
+                                switch (cNodeState) {
+                                    case 0:
+                                        tTrack = (TrackSegment) lt.getConnectC();
+                                        pType = LayoutTrack.TURNOUT_C;
+                                        break;
+                                    case 1:
+                                        tTrack = (TrackSegment) lt.getConnectB();
                                         pType = LayoutTrack.TURNOUT_B;
-                                    }
-                                    pObject = lto;
-                                    break;
-                                default:
-                                    log.error("Bad cNodeState argument when searching track - FIRST_3_WAY");
-                                    return null;
+                                        break;
+                                    default:
+                                        log.error("Bad cNodeState argument when searching track-std reversed");
+                                        return null;
+                                }
+                            }
+                        } else {
+                            // linked turnout - node type A
+                            LayoutTurnout lto = layoutEditor.getFinder().findLayoutTurnoutByName(lt.getLinkedTurnoutName());
+                            if (lt.getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
+                                switch (cNodeState) {
+                                    case 0:
+                                        if (lto.getContinuingSense() == Turnout.CLOSED) {
+                                            tTrack = (TrackSegment) lto.getConnectB();
+                                            pType = LayoutTrack.TURNOUT_B;
+                                        } else {
+                                            tTrack = (TrackSegment) lto.getConnectC();
+                                            pType = LayoutTrack.TURNOUT_C;
+                                        }
+                                        break;
+                                    case 1:
+                                        if (lto.getContinuingSense() == Turnout.CLOSED) {
+                                            tTrack = (TrackSegment) lto.getConnectC();
+                                            pType = LayoutTrack.TURNOUT_C;
+                                        } else {
+                                            tTrack = (TrackSegment) lto.getConnectB();
+                                            pType = LayoutTrack.TURNOUT_B;
+                                        }
+                                        break;
+                                    default:
+                                        log.error("Bad cNodeState argument when searching track - THROAT_TO_THROAT");
+                                        return null;
+                                }
+                                pObject = lto;
+                            } else if (lt.getLinkType() == LayoutTurnout.FIRST_3_WAY) {
+                                switch (cNodeState) {
+                                    case 0:
+                                        if (lto.getContinuingSense() == Turnout.CLOSED) {
+                                            tTrack = (TrackSegment) lto.getConnectB();
+                                            pType = LayoutTrack.TURNOUT_B;
+                                        } else {
+                                            tTrack = (TrackSegment) lto.getConnectC();
+                                            pType = LayoutTrack.TURNOUT_C;
+                                        }
+                                        pObject = lto;
+                                        break;
+                                    case 1:
+                                        if (lt.getContinuingSense() == Turnout.CLOSED) {
+                                            tTrack = (TrackSegment) lt.getConnectC();
+                                            pType = LayoutTrack.TURNOUT_C;
+                                        } else {
+                                            tTrack = (TrackSegment) lt.getConnectB();
+                                            pType = LayoutTrack.TURNOUT_B;
+                                        }
+                                        break;
+                                    case 2:
+                                        if (lto.getContinuingSense() == Turnout.CLOSED) {
+                                            tTrack = (TrackSegment) lto.getConnectC();
+                                            pType = LayoutTrack.TURNOUT_C;
+                                        } else {
+                                            tTrack = (TrackSegment) lto.getConnectB();
+                                            pType = LayoutTrack.TURNOUT_B;
+                                        }
+                                        pObject = lto;
+                                        break;
+                                    default:
+                                        log.error("Bad cNodeState argument when searching track - FIRST_3_WAY");
+                                        return null;
+                                }
                             }
                         }
-                    }
-                } else if ((lt.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                        || (lt.getTurnoutType() == LayoutTurnout.LH_XOVER)
-                        || (lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
-                    // crossover turnout - node type A
-                    switch (cNodeState) {
-                        case 0:
-                            tTrack = (TrackSegment) lt.getConnectB();
-                            pType = LayoutTrack.TURNOUT_B;
-                            break;
-                        case 1:
-                            if ((cNodeType == LayoutTrack.TURNOUT_A)
-                                    && (!(lt.getTurnoutType() == LayoutTurnout.LH_XOVER))) {
-                                tTrack = (TrackSegment) lt.getConnectC();
-                                pType = LayoutTrack.TURNOUT_C;
-                            } else {
-                                log.error("Request to follow not allowed switch setting at LH_XOVER or RH_OVER");
+                    } else if ((lt.getTurnoutType() == LayoutTurnout.RH_XOVER)
+                            || (lt.getTurnoutType() == LayoutTurnout.LH_XOVER)
+                            || (lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
+                        // crossover turnout - node type A
+                        switch (cNodeState) {
+                            case 0:
+                                tTrack = (TrackSegment) lt.getConnectB();
+                                pType = LayoutTrack.TURNOUT_B;
+                                break;
+                            case 1:
+                                if ((cNodeType == LayoutTrack.TURNOUT_A)
+                                        && (!(lt.getTurnoutType() == LayoutTurnout.LH_XOVER))) {
+                                    tTrack = (TrackSegment) lt.getConnectC();
+                                    pType = LayoutTrack.TURNOUT_C;
+                                } else {
+                                    log.error("Request to follow not allowed switch setting at LH_XOVER or RH_OVER");
+                                    return null;
+                                }
+                                break;
+                            default:
+                                log.error("Bad cNodeState argument when searching track- XOVER A");
                                 return null;
-                            }
-                            break;
-                        default:
-                            log.error("Bad cNodeState argument when searching track- XOVER A");
-                            return null;
+                        }
                     }
+                } else {
+                    log.error("cNodeType wrong for cNode");
                 }
                 break;
             }
             case LayoutTrack.TURNOUT_B:
             case LayoutTrack.TURNOUT_C: {
-                LayoutTurnout lt = (LayoutTurnout) cNode;
-                if ((lt.getTurnoutType() == LayoutTurnout.RH_TURNOUT)
-                        || (lt.getTurnoutType() == LayoutTurnout.LH_TURNOUT)
-                        || (lt.getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
-                    if ((lt.getLinkedTurnoutName() == null)
-                            || (lt.getLinkedTurnoutName().isEmpty())
-                            || (lt.getLinkType() == LayoutTurnout.FIRST_3_WAY)) {
-                        tTrack = (TrackSegment) (lt.getConnectA());
-                        pType = LayoutTrack.TURNOUT_A;
-                    } else {
-                        LayoutTurnout lto = layoutEditor.getFinder().findLayoutTurnoutByName(lt.getLinkedTurnoutName());
-                        if (lt.getLinkType() == LayoutTurnout.SECOND_3_WAY) {
-                            tTrack = (TrackSegment) (lto.getConnectA());
+                if (cNode instanceof LayoutTurnout) {
+                    LayoutTurnout lt = (LayoutTurnout) cNode;
+                    if ((lt.getTurnoutType() == LayoutTurnout.RH_TURNOUT)
+                            || (lt.getTurnoutType() == LayoutTurnout.LH_TURNOUT)
+                            || (lt.getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
+                        if ((lt.getLinkedTurnoutName() == null)
+                                || (lt.getLinkedTurnoutName().isEmpty())
+                                || (lt.getLinkType() == LayoutTurnout.FIRST_3_WAY)) {
+                            tTrack = (TrackSegment) (lt.getConnectA());
                             pType = LayoutTrack.TURNOUT_A;
-                        } else if (lt.getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
-                            switch (cNodeState) {
-                                case 0:
-                                    if (lto.getContinuingSense() == Turnout.CLOSED) {
-                                        tTrack = (TrackSegment) lto.getConnectB();
-                                        pType = LayoutTrack.TURNOUT_B;
-                                    } else {
-                                        tTrack = (TrackSegment) lto.getConnectC();
-                                        pType = LayoutTrack.TURNOUT_C;
-                                    }
-                                    break;
-                                case 1:
-                                    if (lto.getContinuingSense() == Turnout.CLOSED) {
-                                        tTrack = (TrackSegment) lto.getConnectC();
-                                        pType = LayoutTrack.TURNOUT_C;
-                                    } else {
-                                        tTrack = (TrackSegment) lto.getConnectB();
-                                        pType = LayoutTrack.TURNOUT_B;
-                                    }
-                                    break;
-                                default:
-                                    log.error("Bad cNodeState argument when searching track - THROAT_TO_THROAT - 2");
-                                    return null;
+                        } else {
+                            LayoutTurnout lto = layoutEditor.getFinder().findLayoutTurnoutByName(lt.getLinkedTurnoutName());
+                            if (lt.getLinkType() == LayoutTurnout.SECOND_3_WAY) {
+                                tTrack = (TrackSegment) (lto.getConnectA());
+                                pType = LayoutTrack.TURNOUT_A;
+                            } else if (lt.getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
+                                switch (cNodeState) {
+                                    case 0:
+                                        if (lto.getContinuingSense() == Turnout.CLOSED) {
+                                            tTrack = (TrackSegment) lto.getConnectB();
+                                            pType = LayoutTrack.TURNOUT_B;
+                                        } else {
+                                            tTrack = (TrackSegment) lto.getConnectC();
+                                            pType = LayoutTrack.TURNOUT_C;
+                                        }
+                                        break;
+                                    case 1:
+                                        if (lto.getContinuingSense() == Turnout.CLOSED) {
+                                            tTrack = (TrackSegment) lto.getConnectC();
+                                            pType = LayoutTrack.TURNOUT_C;
+                                        } else {
+                                            tTrack = (TrackSegment) lto.getConnectB();
+                                            pType = LayoutTrack.TURNOUT_B;
+                                        }
+                                        break;
+                                    default:
+                                        log.error("Bad cNodeState argument when searching track - THROAT_TO_THROAT - 2");
+                                        return null;
+                                }
                             }
+                            pObject = lto;
                         }
-                        pObject = lto;
-                    }
-                } else if ((lt.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                        || (lt.getTurnoutType() == LayoutTurnout.LH_XOVER)
-                        || (lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
-                    switch (cNodeState) {
-                        case 0:
-                            if (cNodeType == LayoutTrack.TURNOUT_B) {
-                                tTrack = (TrackSegment) lt.getConnectA();
-                                pType = LayoutTrack.TURNOUT_A;
-                            } else if (cNodeType == LayoutTrack.TURNOUT_C) {
-                                tTrack = (TrackSegment) lt.getConnectD();
-                                pType = LayoutTrack.TURNOUT_D;
-                            }
-                            break;
-                        case 1:
-                            if ((cNodeType == LayoutTrack.TURNOUT_C)
-                                    && (!(lt.getTurnoutType() == LayoutTurnout.LH_XOVER))) {
-                                tTrack = (TrackSegment) lt.getConnectA();
-                                pType = LayoutTrack.TURNOUT_A;
-                            } else if ((cNodeType == LayoutTrack.TURNOUT_B)
-                                    && (!(lt.getTurnoutType() == LayoutTurnout.RH_XOVER))) {
-                                tTrack = (TrackSegment) lt.getConnectD();
-                                pType = LayoutTrack.TURNOUT_D;
-                            } else {
-                                log.error("Request to follow not allowed switch setting at LH_XOVER or RH_OVER");
+                    } else if ((lt.getTurnoutType() == LayoutTurnout.RH_XOVER)
+                            || (lt.getTurnoutType() == LayoutTurnout.LH_XOVER)
+                            || (lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
+                        switch (cNodeState) {
+                            case 0:
+                                if (cNodeType == LayoutTrack.TURNOUT_B) {
+                                    tTrack = (TrackSegment) lt.getConnectA();
+                                    pType = LayoutTrack.TURNOUT_A;
+                                } else if (cNodeType == LayoutTrack.TURNOUT_C) {
+                                    tTrack = (TrackSegment) lt.getConnectD();
+                                    pType = LayoutTrack.TURNOUT_D;
+                                }
+                                break;
+                            case 1:
+                                if ((cNodeType == LayoutTrack.TURNOUT_C)
+                                        && (!(lt.getTurnoutType() == LayoutTurnout.LH_XOVER))) {
+                                    tTrack = (TrackSegment) lt.getConnectA();
+                                    pType = LayoutTrack.TURNOUT_A;
+                                } else if ((cNodeType == LayoutTrack.TURNOUT_B)
+                                        && (!(lt.getTurnoutType() == LayoutTurnout.RH_XOVER))) {
+                                    tTrack = (TrackSegment) lt.getConnectD();
+                                    pType = LayoutTrack.TURNOUT_D;
+                                } else {
+                                    log.error("Request to follow not allowed switch setting at LH_XOVER or RH_OVER");
+                                    return null;
+                                }
+                                break;
+                            default:
+                                log.error("Bad cNodeState argument when searching track - XOVER B or C");
                                 return null;
-                            }
-                            break;
-                        default:
-                            log.error("Bad cNodeState argument when searching track - XOVER B or C");
-                            return null;
+                        }
                     }
+                } else {
+                    log.error("cNodeType wrong for cNode");
                 }
                 break;
             }
             case LayoutTrack.TURNOUT_D: {
-                LayoutTurnout lt = (LayoutTurnout) cNode;
-                if ((lt.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                        || (lt.getTurnoutType() == LayoutTurnout.LH_XOVER)
-                        || (lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
-                    switch (cNodeState) {
-                        case 0:
-                            tTrack = (TrackSegment) lt.getConnectC();
-                            pType = LayoutTrack.TURNOUT_C;
-                            break;
-                        case 1:
-                            if (!(lt.getTurnoutType() == LayoutTurnout.RH_XOVER)) {
-                                tTrack = (TrackSegment) lt.getConnectB();
-                                pType = LayoutTrack.TURNOUT_B;
-                            } else {
-                                log.error("Request to follow not allowed switch setting at LH_XOVER or RH_OVER");
+                if (cNode instanceof LayoutTurnout) {
+                    LayoutTurnout lt = (LayoutTurnout) cNode;
+                    if ((lt.getTurnoutType() == LayoutTurnout.RH_XOVER)
+                            || (lt.getTurnoutType() == LayoutTurnout.LH_XOVER)
+                            || (lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
+                        switch (cNodeState) {
+                            case 0:
+                                tTrack = (TrackSegment) lt.getConnectC();
+                                pType = LayoutTrack.TURNOUT_C;
+                                break;
+                            case 1:
+                                if (!(lt.getTurnoutType() == LayoutTurnout.RH_XOVER)) {
+                                    tTrack = (TrackSegment) lt.getConnectB();
+                                    pType = LayoutTrack.TURNOUT_B;
+                                } else {
+                                    log.error("Request to follow not allowed switch setting at LH_XOVER or RH_OVER");
+                                    return null;
+                                }
+                                break;
+                            default:
+                                log.error("Bad cNodeState argument when searching track - XOVER D");
                                 return null;
-                            }
-                            break;
-                        default:
-                            log.error("Bad cNodeState argument when searching track - XOVER D");
-                            return null;
+                        }
+                    } else {
+                        log.error("Bad traak node type - TURNOUT_D, but not a crossover turnout");
+                        return null;
                     }
                 } else {
-                    log.error("Bad traak node type - TURNOUT_D, but not a crossover turnout");
-                    return null;
+                    log.error("cNodeType wrong for cNode");
                 }
                 break;
             }
@@ -2326,7 +2342,7 @@ public class ConnectivityUtil {
         LayoutTrack curObj = ob;
 
         if (log.isDebugEnabled()) {
-            log.info("trackSegmentLeadsTo({}, {}): entry", curTS.getId(), objectToNameOrIDString(curObj));
+            log.info("trackSegmentLeadsTo({}, {}): entry", curTS.getId(), curObj.getName());
         }
 
         // post process track segment and conObj lists
@@ -2357,7 +2373,7 @@ public class ConnectivityUtil {
                 } else {
                     log.error("Connectivity error when following track {} in Block {}", curTS.getId(), currLayoutBlock.getUserName());
                     log.error("{} not connected to {} (connects: {} & {})",
-                            objectToNameOrIDString(curObj),
+                            curObj.getName(),
                             curTS.getId(),
                             curTS.getConnect1Name(),
                             curTS.getConnect2Name());
@@ -2367,9 +2383,9 @@ public class ConnectivityUtil {
                 if (log.isDebugEnabled()) {
                     log.info("In block {}, going from {} thru {} to {} (conType: {}), nextLayoutBlock: {}",
                             currLayoutBlock.getUserName(),
-                            objectToNameOrIDString(conObj),
+                            conObj.getName(),
                             curTS.getId(),
-                            objectToNameOrIDString(curObj),
+                            curObj.getName(),
                             connectionTypeToString(conType),
                             nextLayoutBlock.getId());
                 }
@@ -2644,8 +2660,8 @@ public class ConnectivityUtil {
                                     } else {
                                         log.debug("{} not connected to {} (connections: {} & {})",
                                                 currLayoutBlock.getUserName(), ls.getName(),
-                                                objectToNameOrIDString(ls.getConnectA()),
-                                                objectToNameOrIDString(ls.getConnectB()));
+                                                ls.getConnectA().getName(),
+                                                ls.getConnectB().getName());
                                     }
                                 }
                                 break;
@@ -2699,39 +2715,23 @@ public class ConnectivityUtil {
 
     @Nonnull
     private String connectionTypeToString(int conType) {
-        String con_type = "TURNTABLE_RAY_OFFSET";
-        if (conType <= LayoutTrack.SLIP_D) {
-            String[] con_types = {"NONE", "POS_POINT",
-                "TURNOUT_A", "TURNOUT_B", "TURNOUT_C", "TURNOUT_D",
-                "LEVEL_XING_A", "LEVEL_XING_B", "LEVEL_XING_C", "LEVEL_XING_D",
-                "TRACK", "TURNOUT_CENTER", "LEVEL_XING_CENTER", "TURNTABLE_CENTER",
-                "LAYOUT_POS_LABEL", "LAYOUT_POS_JCOMP", "MULTI_SENSOR", "MARKER",
-                "TRACK_CIRCLE_CENTRE", "UNUSED_19", "SLIP_CENTER",
-                "SLIP_A", "SLIP_B", "SLIP_C", "SLIP_D"};
-            con_type = con_types[conType];
-        }
-        return con_type;
-    }
-
-    @Nonnull
-    private String objectToNameOrIDString(@Nonnull LayoutTrack obj) {
-        String result;
-        try {
-            result = ((NamedBean) obj).getDisplayName();
-        } catch (Exception ex1) {
-            try {
-                result = obj.getId();
-            } catch (Exception ex2) {
-                try {
-                    result = obj.getName();
-                } catch (Exception ex3) {
-                    try {
-                        result = obj.getId();
-                    } catch (Exception ex4) {
-                        result = "<" + obj + ">";
-                    }
-                }
-            }
+        String result = "<" + conType + ">";
+        String[] con_types = {"NONE", "POS_POINT",
+            "TURNOUT_A", "TURNOUT_B", "TURNOUT_C", "TURNOUT_D",
+            "LEVEL_XING_A", "LEVEL_XING_B", "LEVEL_XING_C", "LEVEL_XING_D",
+            "TRACK", "TURNOUT_CENTER", "LEVEL_XING_CENTER", "TURNTABLE_CENTER",
+            "LAYOUT_POS_LABEL", "LAYOUT_POS_JCOMP", "MULTI_SENSOR", "MARKER",
+            "TRACK_CIRCLE_CENTRE", "UNUSED_19", "SLIP_CENTER",
+            "SLIP_A", "SLIP_B", "SLIP_C", "SLIP_D",
+            "SLIP_LEFT", "SLIP_RIGHT"};
+        if (conType < con_types.length) {
+            result = con_types[conType];
+        } else if ((LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN <= conType)
+                && (conType <= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX)) {
+            result = "BEZIER_CONTROL_POINT #"
+                    + (conType - LayoutTrack.TURNTABLE_RAY_OFFSET);
+        } else if (conType >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
+            result = "TURNTABLE_RAY #" + (conType - LayoutTrack.TURNTABLE_RAY_OFFSET);
         }
         return result;
     }

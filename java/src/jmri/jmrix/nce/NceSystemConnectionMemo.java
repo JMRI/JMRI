@@ -222,7 +222,9 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
 
         clockManager = new jmri.jmrix.nce.NceClockControl(getNceTrafficController(), getSystemPrefix());
-        InstanceManager.addClockControl(clockManager);
+        // make sure InstanceManager knows about that
+        InstanceManager.store(clockManager, jmri.ClockControl.class);
+        InstanceManager.setDefault(jmri.ClockControl.class, clockManager);
 
         setConsistManager(new jmri.jmrix.nce.NceConsistManager(this));
 

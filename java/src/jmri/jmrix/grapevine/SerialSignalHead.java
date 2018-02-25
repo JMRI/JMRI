@@ -29,7 +29,7 @@ public class SerialSignalHead extends DefaultSignalHead {
         // Save system Name
         tSystemName = systemName;
         // Extract the Bit from the name
-        int num = SerialAddress.getBitFromSystemName(systemName); // bit one is address zero
+        int num = SerialAddress.getBitFromSystemName(systemName, memo.getSystemPrefix()); // bit one is address zero
         // num is 101-124, 201-224, 301-324, 401-424
         output = (num % 100) - 1; // 0-23
         bank = (num / 100) - 1;  // 0 - 3
@@ -46,7 +46,7 @@ public class SerialSignalHead extends DefaultSignalHead {
         // Save system Name
         tSystemName = systemName;
         // Extract the Bit from the name
-        int num = SerialAddress.getBitFromSystemName(systemName); // bit one is address zero
+        int num = SerialAddress.getBitFromSystemName(systemName, memo.getSystemPrefix()); // bit one is address zero
         // num is 101-124, 201-224, 301-324, 401-424
         output = (num % 100) - 1; // 0-23
         bank = (num / 100) - 1;  // 0 - 3
@@ -57,7 +57,7 @@ public class SerialSignalHead extends DefaultSignalHead {
      */
     @Override
     protected void updateOutput() {
-        SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName,memo.getTrafficController());
+        SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName, memo.getTrafficController());
         if (tNode == null) {
             // node does not exist, ignore call
             log.error("Can't find node for " + tSystemName + ", command ignored");
@@ -141,6 +141,7 @@ public class SerialSignalHead extends DefaultSignalHead {
     int bank;           // bank number, 0-3
 
     private final static Logger log = LoggerFactory.getLogger(SerialSignalHead.class);
+
 }
 
 

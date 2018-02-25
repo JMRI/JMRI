@@ -73,7 +73,6 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
         setState(OFF);
         // At construction, register for messages
         tc.addDCCppListener(DCCppInterface.FEEDBACK | DCCppInterface.COMMINFO | DCCppInterface.CS_INFO, this);
-
     }
 
     /**
@@ -127,6 +126,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     }
 
     /**
+     * {@inheritDoc}
      * Handle an incoming message from the DCC++ Base Station.
      * <p>
      * NOTE: We aren't registered as a listener, so this is only triggered
@@ -138,9 +138,13 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
         // We don't expect a reply, so we don't do anything with replies.
     }
 
-    // listen for the messages to the LI100/LI101
+    /**
+     * {@inheritDoc}
+     * Listen for messages to the DCC++ Base Station.
+     */
     @Override
     public void message(DCCppMessage l) {
+        // messages not handled by DCCpp lights
     }
 
     // Handle a timeout notification
