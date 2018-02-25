@@ -49,22 +49,26 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
     /**
      * Handle a request for a list of objects.
      *
-     * @param type   The service type. If the implementing service responds to
+     * @param type   The service type; if the implementing service responds to
      *               multiple types, it will need to use this to handle data
-     *               correctly.
-     * @param data   JSON data. The contents of this will depend on the
-     *               implementing service.
+     *               correctly
+     * @param data   JSON data; the contents of this will depend on the
+     *               implementing service
      * @param locale The locale of the client, which may be different than the
-     *               locale of the JMRI server.
-     * @throws java.io.IOException Thrown if the service cannot send a response.
-     *                             This will cause the JSON Server to close its
-     *                             connection to the client if open.
-     * @throws jmri.JmriException  Thrown if the request cannot be handled.
-     *                             Throwing this will cause the JSON Server to
+     *               locale of the JMRI server
+     * @throws java.io.IOException Thrown if the service cannot send a response;
+     *                             this will cause the JSON Server to close its
+     *                             connection to the client if open
+     * @throws jmri.JmriException  Thrown if the request cannot be handled;
+     *                             throwing this will cause the JSON Server to
      *                             pass a 500 UnsupportedOperation message to
-     *                             the client.
+     *                             the client
      * @throws JsonException       If the service needs to pass an error message
-     *                             back to the client.
+     *                             back to the client; implementing services may
+     *                             throw a JsonException with code 400 and the
+     *                             localized message "UnlistableService" to
+     *                             indicate that {@code type} should not be
+     *                             listed
      */
     public abstract void onList(@Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale) throws IOException, JmriException, JsonException;
 
@@ -78,7 +82,8 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
      *
      * @return the connection
      */
-    public @Nonnull JsonConnection getConnection() {
+    @Nonnull
+    public JsonConnection getConnection() {
         return connection;
     }
 
@@ -87,7 +92,8 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
      *
      * @return the supporting service
      */
-    public @Nonnull H getHttpService() {
+    @Nonnull
+    public H getHttpService() {
         return service;
     }
 
@@ -96,7 +102,8 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
      *
      * @return the locale
      */
-    protected @Nonnull Locale getLocale() {
+    @Nonnull
+    protected Locale getLocale() {
         return locale;
     }
 

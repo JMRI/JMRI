@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 /**
  *
- * @author Randall Wood (C) 2018
+ * @author Randall Wood Copyright 2018
  */
 @RunWith(Suite.class)
 @SuiteClasses({

@@ -40,7 +40,7 @@ public class JsonSchemaSocketService extends JsonSocketService<JsonSchemaHttpSer
 
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-
+        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "UnlistableService", type));
     }
 
     @Override
