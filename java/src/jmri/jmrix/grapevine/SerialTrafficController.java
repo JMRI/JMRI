@@ -314,7 +314,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                 // get 1st char, check for address bit
                 buffer[0] = readByteProtected(istream);
                 if (logDebug) {
-                    log.debug("state 0, rcv " + (buffer[0] & 0xFF));
+                    log.debug("state 0, rcv {}", (buffer[0] & 0xFF));
                 }
                 if ((buffer[0] & 0x80) == 0) {
                     log.warn("1st byte not address: {}", (buffer[0] & 0xFF));
