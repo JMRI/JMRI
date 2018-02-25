@@ -46,13 +46,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
         // initialize input and output utility classes
         mInputBits = new InputBits(this);
-        if (mInputBits == null) {
-            log.error("Error in initializing InputBits utility class");
-        }
         mOutputBits = new OutputBits(this);
-        if (mOutputBits == null) {
-            log.error("Error in initializing OutputBits utility class");
-        }
     }
 
     // InputBits and OutputBits
