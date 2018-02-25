@@ -50,7 +50,7 @@
         pretty much anything you wish to describe the Turnout.</dd>
 
         <dt>State</dt>
-        <img src="images/TurnoutTableGraphic.png" height="96" width="399"
+        <dd><img src="images/TurnoutTableGraphic.png" height="96" width="399"
         align="right" alt="Graphic Turnout state column">
         <img src="images/TurnoutTableText.png" height="140" width="406"
         align="right" alt="Textual Turnout state column">
@@ -97,7 +97,7 @@
         pushbutton lockout, and not all systems support cab
         lockout. Turnouts that can not be locked have grayed out
         boxes and can not be checked. See <a href=
-        "#Turnout%20lock%20feature">Turnout Lock feature</a>
+        "#Turnout_lock_feature">Turnout Lock feature</a>
         below.</dd>
 
         <dt>Edit</dt>
@@ -115,7 +115,7 @@
 
         <dd>The pull down boxes allow you to select the method of
         operation for a Turnout. See <a href=
-        "#Turnout%20Feedback">Turnout Feedback</a> below.</dd>
+        "#Turnout_Feedback">Turnout Feedback</a> below.</dd>
 
         <dt>Sensor 1</dt>
 
@@ -143,7 +143,7 @@
         specific turnout. This button is inactive when Automate is
         set to Off or Use Global.</dd>
 
-        <dt><a name="Lock Mode"></a>Lock Mode</dt>
+        <dt><a name="Lock_Mode"></a>Lock Mode</dt>
 
         <dd>Shows which lockouts, if any, are active for this
         Turnout. "Both" means that cabs and pushbuttons will be
@@ -158,7 +158,7 @@
         you want to restore the operation of the pushbuttons. Cab
         lockout automatically terminates when the JMRI program is
         shut down. For more information on this, see <a href=
-        "#Turnout%20lock%20feature">Turnout Lock</a> below.</dd>
+        "#Turnout_lock_feature">Turnout Lock</a> below.</dd>
 
         <dt><a name="decodercol" id="decodercol">Decoder</a></dt>
 
@@ -233,12 +233,12 @@
         <dt>Show feedback information</dt>
 
         <dd>When checked, the optional <a href=
-        "#Turnout%20Feedback">Feedback</a> columns are shown.</dd>
+        "#Turnout_Feedback">Feedback</a> columns are shown.</dd>
 
         <dt>Show Lock information</dt>
 
         <dd>When checked, the optional <a href=
-        "#Turnout%20lock%20feature">Lock</a> columns are
+        "#Turnout_lock_feature">Lock</a> columns are
         shown.</dd>
 
         <dt>Show Turnout Speed information</dt>
@@ -260,7 +260,7 @@
         menu.</dd>
       </dl>
 
-      <h2><a name="Turnout Feedback"></a>Turnout Feedback</h2>
+      <h2><a name="Turnout_Feedback"></a>Turnout Feedback</h2>
 
       <p>Model railroaders want different things when it comes to
       knowing the status of the turnouts on their layout. Some are
@@ -441,7 +441,7 @@
       some Turnouts use those. Use the Automation -&gt; Edit...
       menu to access those defaults.</p>
 
-      <h2><a name="Turnout lock feature"></a>Turnout Lock
+      <h2><a name="Turnout_lock_feature"></a>Turnout Lock
       feature</h2>
 
       <p>The Turnout Lock feature allows you to selectively disable
