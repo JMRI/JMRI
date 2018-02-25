@@ -356,6 +356,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     // this should only be used for debugging...
+    @Override
     public String toString() {
         return "LayoutTurnout " + getId();
     }
@@ -1310,6 +1311,7 @@ public class LayoutTurnout extends LayoutTrack {
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
+    @Override
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = center;
         switch (connectionType) {
@@ -1336,6 +1338,7 @@ public class LayoutTurnout extends LayoutTrack {
     /**
      * @return the bounds of this turnout
      */
+    @Override
     public Rectangle2D getBounds() {
         Rectangle2D result;
 
@@ -1767,6 +1770,7 @@ public class LayoutTurnout extends LayoutTrack {
         return false;
     }
 
+    @Override
     public boolean isMainline() {
         return (isMainlineA() || isMainlineB() || isMainlineC() || isMainlineD());
     }
@@ -2052,6 +2056,7 @@ public class LayoutTurnout extends LayoutTrack {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
+    @Override
     public void scaleCoords(float xFactor, float yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
@@ -2239,6 +2244,7 @@ public class LayoutTurnout extends LayoutTrack {
      * LayoutTurnoutXml, then the following method is called after the entire
      * LayoutEditor is loaded to set the specific TrackSegment objects.
      */
+    @Override
     public void setObjects(LayoutEditor p) {
         connectA = p.getFinder().findTrackSegmentByName(connectAName);
         connectB = p.getFinder().findTrackSegmentByName(connectBName);
@@ -3989,12 +3995,14 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @Override
     protected void drawTurnoutControls(Graphics2D g2) {
         if (!disabled && !(disableWhenOccupied && isOccupied())) {
             g2.draw(layoutEditor.trackControlCircleAt(center));
         }
     }
 
+    @Override
     protected void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsA();
         if (getTurnoutType() >= DOUBLE_XOVER && getTurnoutType() <= DOUBLE_SLIP) {
@@ -4456,6 +4464,7 @@ public class LayoutTurnout extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void collectContiguousTracksNamesInBlockNamed(
             @Nonnull String blockName,
             @Nonnull Set<String> TrackNameSet) {
@@ -4500,6 +4509,7 @@ public class LayoutTurnout extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
         setLayoutBlock(layoutBlock);
         if ((getTurnoutType() == DOUBLE_XOVER)
