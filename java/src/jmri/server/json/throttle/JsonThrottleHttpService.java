@@ -33,4 +33,17 @@ public class JsonThrottleHttpService extends JsonHttpService {
         throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "UnlistableService", type));
     }
 
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case JsonThrottle.THROTTLE:
+                return doSchema(type,
+                        server,
+                        "/jmri/server/json/throttle/throttle-server.json",
+                        "/jmri/server/json/throttle/throttle-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+        }
+    }
+
 }

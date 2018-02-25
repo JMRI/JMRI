@@ -47,7 +47,7 @@ import jmri.web.server.WebServerPreferences;
 
 /**
  *
- * @author Randall Wood
+ * @author Randall Wood Copyright 2016, 2017, 2018
  */
 public class JsonUtilHttpService extends JsonHttpService {
 
@@ -410,4 +410,28 @@ public class JsonUtilHttpService extends JsonHttpService {
         return new DccLocoAddress(number, isLong);
     }
 
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case JSON.NETWORK_SERVICES:
+                return doSchema(type,
+                        server,
+                        "/jmri/server/json/util/" + JSON.NETWORK_SERVICE + "-server.json",
+                        "/jmri/server/json/util/" + JSON.NETWORK_SERVICE + "-client.json");
+            case JSON.HELLO:
+            case JSON.METADATA:
+            case JSON.NETWORK_SERVICE:
+            case JSON.NODE:
+            case JSON.PANELS:
+            case JSON.RAILROAD:
+            case JSON.SYSTEM_CONNECTIONS:
+            case JSON.CONFIG_PROFILES:
+                return doSchema(type,
+                        server,
+                        "/jmri/server/json/util/" + type + "-server.json",
+                        "/jmri/server/json/util/" + type + "-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+        }
+    }
 }

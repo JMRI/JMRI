@@ -45,4 +45,9 @@ public class JsonTestHttpService extends JsonHttpService {
         return array;
     }
 
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

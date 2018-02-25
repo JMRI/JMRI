@@ -1,0 +1,20 @@
+package jmri.server.json.schema;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
+
+/**
+ *
+ * @author Randall Wood (C) 2018
+ */
+@RunWith(Suite.class)
+@SuiteClasses({
+    BundleTest.class,
+    JsonSchemaServiceCacheTest.class,
+    JsonSchemaHttpServiceTest.class,
+    JsonSchemaSocketServiceTest.class,
+    JsonSchemaServiceFactoryTest.class
+})
+public class PackageTest {
+}

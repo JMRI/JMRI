@@ -10,6 +10,7 @@ import static jmri.server.json.JSON.POSITION;
 import static jmri.server.json.JSON.SIZE_LIMIT;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.consist.JsonConsist.CONSIST;
+import static jmri.server.json.consist.JsonConsist.CONSISTS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
+import javax.servlet.http.HttpServletResponse;
 import jmri.Consist;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -215,6 +217,20 @@ public class JsonConsistHttpService extends JsonHttpService {
             return root;
         } else {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", CONSIST, address.toString())); // NOI18N
+        }
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case CONSIST:
+            case CONSISTS:
+                return doSchema(type,
+                        server,
+                        "/jmri/server/json/consist/consist-server.json",
+                        "/jmri/server/json/consist/consist-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
     }
 }

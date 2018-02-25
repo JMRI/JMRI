@@ -3,6 +3,7 @@ package jmri.server.json.message;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import java.io.IOException;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.server.json.JsonException;
@@ -31,6 +32,25 @@ public class JsonMessageHttpService extends JsonHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "UnlistableService", type));
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case JsonMessage.MESSAGE:
+                if (server) {
+                    try {
+                        return doSchema(type, server,
+                                this.mapper.readTree(this.getClass().getClassLoader().getResource("/jmri/server/json/message/message-server.json")));
+                    } catch (IOException ex) {
+                        throw new JsonException(500, ex);
+                    }
+                } else {
+                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "NotAClientType", type));
+                }
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+        }
     }
 
 }

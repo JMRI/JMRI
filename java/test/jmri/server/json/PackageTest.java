@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 /**
  *
- * @author Randall Wood (C) 2016
+ * @author Randall Wood (C) 2016, 2018
  */
 @RunWith(Suite.class)
 @SuiteClasses({
@@ -16,12 +16,14 @@ import org.junit.runners.Suite.SuiteClasses;
     jmri.server.json.layoutblock.PackageTest.class,
     jmri.server.json.light.PackageTest.class,
     jmri.server.json.memory.PackageTest.class,
+    jmri.server.json.message.PackageTest.class,
     jmri.server.json.operations.PackageTest.class,
     jmri.server.json.power.PackageTest.class,
     jmri.server.json.reporter.PackageTest.class,
     jmri.server.json.route.PackageTest.class,
     jmri.server.json.roster.PackageTest.class,
     jmri.server.json.sensor.PackageTest.class,
+    jmri.server.json.schema.PackageTest.class,
     jmri.server.json.signalHead.PackageTest.class,
     jmri.server.json.signalMast.PackageTest.class,
     jmri.server.json.time.PackageTest.class,
@@ -29,12 +31,11 @@ import org.junit.runners.Suite.SuiteClasses;
     jmri.server.json.throttle.PackageTest.class,
     jmri.server.json.util.PackageTest.class,
     JSONTest.class,
+    JsonClientHandlerTest.class,
+    JsonConnectionTest.class,
     JsonExceptionTest.class,
     JsonHttpServiceTest.class,
-    JsonWebSocketTest.class,
-    JsonConnectionTest.class,
-    JsonClientHandlerTest.class,
-    jmri.server.json.message.PackageTest.class,
+    JsonWebSocketTest.class
 })
 public class PackageTest {
 }
