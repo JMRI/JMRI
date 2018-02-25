@@ -18,6 +18,7 @@ import org.junit.runners.Suite;
    JavaSoundAudioSourceTest.class,
    JoalAudioFactoryTest.class,
    JoalAudioSourceTest.class,
+   JoalAudioBufferTest.class,
    NullAudioFactoryTest.class,
    NullAudioSourceTest.class,
    DefaultAudioManagerTest.class,

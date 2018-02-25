@@ -40,7 +40,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile {
     /**
      * Write out tree values to a file in the user's preferences directory.
      *
-     * @throws IOException
+     * @throws IOException from any I/O issues during write; not handled locally
      */
     public void writeCatalogTrees() throws IOException {
         log.debug("entered writeCatalogTreeValues");
