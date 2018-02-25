@@ -255,8 +255,7 @@ public class SRCPTokenizerTest {
         String cmd = "this should fail";
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         SRCPParserTokenManager stm = new SRCPParserTokenManager(cs);
-        Token t;
-        t = stm.getNextToken();
+        stm.getNextToken();  // called to invoke TokenMgrError
     }
 
     // The minimal setup for log4J
