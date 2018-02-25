@@ -55,13 +55,16 @@ public class SpeedProfilePanel extends JPanel {
         }
         if (anomalies != null) {
             _table.addKeyListener(new KeyListener() {
+                @Override
                 public void keyTyped(KeyEvent ke) {
                     char ch = ke.getKeyChar(); 
                     if (ch == KeyEvent.VK_DELETE || ch == KeyEvent.VK_X) {
                         deleteRow();
                     }
                 }
+                @Override
                 public void keyPressed(KeyEvent e) {}
+                @Override
                 public void keyReleased(KeyEvent e) {}
             });
             _table.getColumnModel().getColumn(SpeedTableModel.FORWARD_SPEED_COL).setCellRenderer(new ColorCellRenderer());

@@ -2847,6 +2847,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalMastLogic");
     }
@@ -2856,10 +2857,12 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
      *
      * @return Always zero
      */
+    @Override
     public int getState() {
         return 0;
     }
 
+    @Override
     public void setState(int i) {
     }
 
