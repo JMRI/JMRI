@@ -569,7 +569,18 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
             return;
         }
 
-        String message = "set(" + this.objectNumber + ", dir[" + (forward ? 0 : 1) + "])";
+        String message;
+        if (this.speedSetting > 0.0f) {
+            // Need to send current speed as well as direction, otherwise
+            // speed will be set to zero on direction change
+            int speedValue = (int) ((127 - 1) * this.speedSetting);     // -1 for rescale to avoid estop
+            if (speedValue > 128) {
+                speedValue = 126;    // max possible speed
+            }
+            message = "set(" + this.objectNumber + ", dir[" + (forward ? 0 : 1) + "], speed[" + speedValue + "])";
+        } else {
+            message = "set(" + this.objectNumber + ", dir[" + (forward ? 0 : 1) + ")";
+        }
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
     }
