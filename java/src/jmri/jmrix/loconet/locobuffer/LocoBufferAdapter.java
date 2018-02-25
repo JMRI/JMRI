@@ -40,9 +40,11 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         option1Name = "FlowControl"; // NOI18N
         option2Name = "CommandStation"; // NOI18N
         option3Name = "TurnoutHandle"; // NOI18N
+        option4Name = "PacketizerType"; //NOI18N
         options.put(option1Name, new Option(Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("TypeSerial")), validOption1));
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), getCommandStationListWithStandaloneLN(), false));
         options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"})); // TODO I18N
+        options.put(option4Name, new Option(Bundle.getMessage("PacketizerTypeLabel"),packetizerOptions()));
     }
     
     /**
@@ -262,6 +264,39 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
+
+    /**
+     *  Define the readable data and internal code
+     */
+    private static String[][] packetizers = { {Bundle.getMessage("PacketizerTypelnPacketizer"),"lnPacketizer" },
+            {Bundle.getMessage("PacketizerTypelnPacketizerStrict"),"lnPacketizerStrict"} };
+
+    /**
+     *
+     * @return String array of readable choices
+     */
+    private String[] packetizerOptions() {
+        String[] retval = new String[packetizers.length];
+        for (int i=0;i < packetizers.length; i++) {
+            retval[i]=packetizers[i][0];
+        }
+        return retval;
+    }
+    /**
+     * for a given readable choice return internal value
+     * or the default
+     * @return - internal value
+     */
+    protected String getPacketizerOption() {
+        String s = getOptionState(option4Name);
+        for (int i=0;i < packetizers.length; i++) {
+            if (packetizers[i][0].equals(s)) {
+                return packetizers[i][1];
+            }
+        }
+        return "lnPacketizer";
+    }
+
 
     private final static Logger log = LoggerFactory.getLogger(LocoBufferAdapter.class);
 

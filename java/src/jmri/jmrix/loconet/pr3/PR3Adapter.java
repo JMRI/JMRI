@@ -24,8 +24,6 @@ public class PR3Adapter extends LocoBufferAdapter {
 
         options.remove(option2Name);
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
-        option4Name = Bundle.getMessage("lnPacketizer");
-        options.put(option4Name, new Option(Bundle.getMessage("PacketizerTypeLabel"),packetizerOptions()));
 
     }
 
@@ -105,7 +103,7 @@ public class PR3Adapter extends LocoBufferAdapter {
             // connect to a packetizing traffic controller
 
             LnPacketizer packets;
-            String packetSelection = getPacketizerOption(getOptionState(option4Name));
+            String packetSelection = getPacketizerOption();
             switch (packetSelection){
                 case "lnPacketizer":
                     packets = new LnPacketizer();
@@ -196,36 +194,6 @@ public class PR3Adapter extends LocoBufferAdapter {
         }
     }
 
-    /**
-     *  Define the readable data and internal code
-     */
-    private static String[][] packetizers = { {Bundle.getMessage("lnPacketizer"),"lnPacketizer" },
-            {Bundle.getMessage("lnPacketizerStrict"),"lnPacketizerStrict"} };
-    /**
-     *
-     * @return String array of readable choices
-     */
-    public String[] packetizerOptions() {
-        String[] retval = new String[packetizers.length];
-        for (int i=0;i < packetizers.length; i++) {
-            retval[i]=packetizers[i][0];
-        }
-        return retval;
-    }
-    /**
-     * for a given readable choice return internal value
-     * or the default
-     * @param s  - readable text
-     * @return - internal value
-     */
-    private String getPacketizerOption(String s) {
-        for (int i=0;i < packetizers.length; i++) {
-            if (packetizers[i][0].equals(s)) {
-                return packetizers[i][1];
-            }
-        }
-        return "lnPacketizer";
-    }
 
     private final static Logger log = LoggerFactory.getLogger(PR3Adapter.class);
 }
