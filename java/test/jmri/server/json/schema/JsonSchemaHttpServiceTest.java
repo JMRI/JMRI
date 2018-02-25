@@ -1,14 +1,14 @@
 package jmri.server.json.schema;
 
-import static org.junit.Assert.*;
-
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Locale;
+import jmri.server.json.JSON;
+import jmri.server.json.JsonException;
+import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -17,91 +17,48 @@ import org.junit.Test;
  */
 public class JsonSchemaHttpServiceTest {
 
-    public JsonSchemaHttpServiceTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
     @Before
     public void setUp() {
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
     /**
      * Test of doGet method, of class JsonSchemaHttpService.
      */
     @Test
-    public void testDoGet() throws Exception {
-        System.out.println("doGet");
-        String type = "";
-        String name = "";
-        Locale locale = null;
-        JsonSchemaHttpService instance = null;
-        JsonNode expResult = null;
-        JsonNode result = instance.doGet(type, name, locale);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testDoGet() {
+        JsonSchemaHttpService instance = new JsonSchemaHttpService(new ObjectMapper());
+        try {
+            JsonNode result = instance.doGet(JSON.SCHEMA, JSON.JSON, Locale.ENGLISH);
+            Assert.assertTrue("Is an array", result.isArray());
+            Assert.assertEquals("Array has two elements", 2, result.size());
+            Assert.assertTrue("1st element is JsonObject", result.get(0).isObject());
+            Assert.assertTrue("2nd element is JsonObject", result.get(1).isObject());
+            this.testIsSchema(result.get(0));
+            this.testIsSchema(result.get(1));
+        } catch (JsonException ex) {
+            Assert.fail("Unexpected exception " + ex);
+        }
+        try {
+            instance.doGet(JSON.JSON, JSON.JSON, Locale.ENGLISH);
+            Assert.fail("Should have thrown exception");
+        } catch (JsonException ex) {
+            Assert.assertEquals("Exception code is 405", 405, ex.getCode());
+            Assert.assertEquals("Error message", "Getting json is not allowed.", ex.getMessage());
+        }
     }
 
-    /**
-     * Test of doPost method, of class JsonSchemaHttpService.
-     */
-    @Test
-    public void testDoPost() throws Exception {
-        System.out.println("doPost");
-        String type = "";
-        String name = "";
-        JsonNode data = null;
-        Locale locale = null;
-        JsonSchemaHttpService instance = null;
-        JsonNode expResult = null;
-        JsonNode result = instance.doPost(type, name, data, locale);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    private void testIsSchema(JsonNode root) {
+        Assert.assertEquals("Is schema", JSON.SCHEMA, root.path(JSON.TYPE).asText());
+        JsonNode data = root.path(JSON.DATA);
+        Assert.assertEquals("Data has three properties", 3, data.size());
+        Assert.assertTrue("Data has name property that is string", data.path(JSON.NAME).isTextual());
+        Assert.assertTrue("Data has server property that is boolean", data.path(JSON.SERVER).isBoolean());
+        Assert.assertTrue("Data has schema property that is object", data.path(JSON.SCHEMA).isObject());
     }
-
-    /**
-     * Test of doGetList method, of class JsonSchemaHttpService.
-     */
-    @Test
-    public void testDoGetList() throws Exception {
-        System.out.println("doGetList");
-        String type = "";
-        Locale locale = null;
-        JsonSchemaHttpService instance = null;
-        ArrayNode expResult = null;
-        ArrayNode result = instance.doGetList(type, locale);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of doSchema method, of class JsonSchemaHttpService.
-     */
-    @Test
-    public void testDoSchema() throws Exception {
-        System.out.println("doSchema");
-        String type = "";
-        boolean server = false;
-        Locale locale = null;
-        JsonSchemaHttpService instance = null;
-        JsonNode expResult = null;
-        JsonNode result = instance.doSchema(type, server, locale);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
 }

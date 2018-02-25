@@ -36,22 +36,22 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
             services = new HashMap<>();
             for (JsonServiceFactory<?, ?> factory : ServiceLoader.load(JsonServiceFactory.class)) {
                 JsonHttpService service = factory.getHttpService(this.mapper);
-                for (String t : factory.getTypes()) {
-                    if (!t.equals(JSON.JSON)) {
-                        Set<JsonHttpService> set = this.services.get(t);
+                for (String type : factory.getTypes()) {
+                    if (!type.equals(JSON.JSON)) {
+                        Set<JsonHttpService> set = this.services.get(type);
                         if (set == null) {
-                            this.services.put(t, new HashSet<>());
-                            set = this.services.get(t);
+                            this.services.put(type, new HashSet<>());
+                            set = this.services.get(type);
                         }
                         set.add(service);
                     }
                 }
-                for (String t : factory.getSentTypes()) {
-                    if (!t.equals(JSON.JSON)) {
-                        Set<JsonHttpService> set = this.services.get(t);
+                for (String type : factory.getSentTypes()) {
+                    if (!type.equals(JSON.JSON)) {
+                        Set<JsonHttpService> set = this.services.get(type);
                         if (set == null) {
-                            this.services.put(t, new HashSet<>());
-                            set = this.services.get(t);
+                            this.services.put(type, new HashSet<>());
+                            set = this.services.get(type);
                         }
                         set.add(service);
                     }

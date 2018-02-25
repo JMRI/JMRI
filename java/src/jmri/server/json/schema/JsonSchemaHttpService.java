@@ -26,30 +26,37 @@ public class JsonSchemaHttpService extends JsonHttpService {
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
         switch (type) {
             case JSON.SCHEMA:
-                ArrayNode schemas = this.mapper.createArrayNode();
-                for (JsonHttpService service : InstanceManager.getDefault(JsonSchemaServiceCache.class).getServices(name)) {
-                    // separate try/catch blocks to ensure one failure does not
-                    // block following from being accepted
-                    try {
-                        schemas.add(service.doSchema(name, true, locale));
-                    } catch (JsonException ex) {
-                        if (ex.getCode() != HttpServletResponse.SC_BAD_REQUEST) {
-                            throw ex;
+                switch (name) {
+                    case JSON.JSON:
+                        return this.mapper.createArrayNode()
+                                .add(this.doSchema(JSON.JSON, true, locale))
+                                .add(this.doSchema(JSON.JSON, false, locale));
+                    default:
+                        try {
+                            ArrayNode schemas = this.mapper.createArrayNode();
+                            for (JsonHttpService service : InstanceManager.getDefault(JsonSchemaServiceCache.class).getServices(name)) {
+                                // separate try/catch blocks to ensure one failure does not
+                                // block following from being accepted
+                                try {
+                                    schemas.add(service.doSchema(name, true, locale));
+                                } catch (JsonException ex) {
+                                    if (ex.getCode() != HttpServletResponse.SC_BAD_REQUEST) {
+                                        throw ex;
+                                    }
+                                }
+                                try {
+                                    schemas.add(service.doSchema(name, false, locale));
+                                } catch (JsonException ex) {
+                                    if (ex.getCode() != HttpServletResponse.SC_BAD_REQUEST) {
+                                        throw ex;
+                                    }
+                                }
+                            }
+                            return schemas;
+                        } catch (NullPointerException ex) {
+                            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorUnknownType", name), ex);
                         }
-                    }
-                    try {
-                        schemas.add(service.doSchema(name, false, locale));
-                    } catch (JsonException ex) {
-                        if (ex.getCode() != HttpServletResponse.SC_BAD_REQUEST) {
-                            throw ex;
-                        }
-                    }
                 }
-                return schemas;
-            case JSON.JSON:
-                return this.mapper.createArrayNode()
-                        .add(this.doSchema(JSON.JSON, true, locale))
-                        .add(this.doSchema(JSON.JSON, false, locale));
             case JSON.TYPES:
                 ObjectNode root = this.mapper.createObjectNode();
                 root.put(JSON.TYPE, JSON.TYPES);
@@ -82,8 +89,8 @@ public class JsonSchemaHttpService extends JsonHttpService {
             case JSON.TYPES:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/schema/" + type + "-server.json",
-                        "/jmri/server/json/schema/" + type + "-client.json");
+                        "jmri/server/json/schema/" + type + "-server.json",
+                        "jmri/server/json/schema/" + type + "-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
