@@ -518,6 +518,8 @@
                                 <File>jmri/server/json/reporter/JsonReporter.class</File>
                                 <File>jmri/server/json/signalMast/JsonSignalMast.class</File>
                                 <File>jmri/jmrit.ussctc/Lock.class</File>
+                                <File>jmri/AddressedProgrammerManager.class</File>
+                                <File>jmri/PhysicalLocationReporter.class</File>
                             </excludes>
                             <rules>
                                 <rule>
