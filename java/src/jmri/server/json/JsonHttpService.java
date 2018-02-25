@@ -203,7 +203,7 @@ public abstract class JsonHttpService {
      * @return the object mapper
      */
     @Nonnull
-    public ObjectMapper getObjectMapper() {
+    public final ObjectMapper getObjectMapper() {
         return this.mapper;
     }
 }
