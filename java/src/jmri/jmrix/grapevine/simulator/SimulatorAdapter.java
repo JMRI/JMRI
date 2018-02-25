@@ -241,7 +241,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
 
         SerialReply reply = new SerialReply(); // reply length is determined by highest byte added
         int nodeaddr = msg.getAddr();          // node addres from element(0)
-        int b1 = msg.getElement(0);            // hex value from element(0)
+        int b1 = msg.getElement(0);            // raw hex value from element(0)
         int command = msg.getElement(1);       // command instruction
         int b3 = msg.getElement(2);            // element(2), must repeat node address
         int b4 = msg.getElement(3) ;           // bank or instruction
@@ -274,7 +274,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 reply.setElement(0, nodeaddr | 0x80);
                 reply.setElement(1, command); // echo id + state
                 reply.setElement(2, nodeaddr | 0x80);
-                log.debug ("Confirm signal mast {} set", b4);
                 reply.setElement(3, b4); // echo bank (bit 1234): 1-3 = signals, 4-5 = sensors
                 reply = setParity(reply,0);
                 break;
@@ -330,12 +329,12 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                     log.debug("general error: coded as b3: {}", b4);
                     break;
                 } else {
-                    log.debug("message unrecognized command detected, b2: {}", command);
+                    log.debug("echo normal command");
                     // 4 byte general reply
                     reply.setElement(0, nodeaddr | 0x80);
-                    reply.setElement(1, 0x0);  // normally: command (values 0x6, 0x7 are for signals
+                    reply.setElement(1, command);  // normally: command (values 0x6, 0x7 are for signals
                     reply.setElement(2, nodeaddr | 0x80);
-                    reply.setElement(3, 0x0); // 0 = error, bank 1..3 for signals, 4..5 sensors (and parity)
+                    reply.setElement(3, b4); // 0 = error, bank 1..3 for signals, 4..5 sensors (and parity)
                     reply = setParity(reply, 0);
                 }
         }
@@ -429,8 +428,8 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
             return; // node address invalid
         }
         for (int k = startBank; k <= endBank; k++) {
-            if (k <= 3) {
-                switch (k) { // signals
+            if (k <= 3) { // bank 1 to 3, signals
+                switch (k) {
                     case 1:
                         elementThree = 0x08; // bank (bit 1234): 1-3 = signals
                         break;
@@ -452,8 +451,8 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                     reply.setElement(3, elementThree);
                     reply = setParity(reply, 0);
                 }
-            } else { // bank 4 and 5
-                switch (k) { // sensors
+            } else { // bank 4 and 5, sensors
+                switch (k) {
                     case 4:
                         elementThree = 0x40; // bank (bit 1234): 4 = sensors
                         break;

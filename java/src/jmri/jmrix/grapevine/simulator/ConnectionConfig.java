@@ -1,5 +1,11 @@
 package jmri.jmrix.grapevine.simulator;
 
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
+import jmri.jmrix.grapevine.nodeconfig.NodeConfigAction;
+
 /**
  * Handle configuring an Grapevine layout connection via a GrapevineSimulator
  * adapter.
@@ -29,6 +35,20 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
      */
     public ConnectionConfig() {
         super();
+    }
+
+    JButton b = new JButton(Bundle.getMessage("ConfigNodesTitle"));
+
+    @Override
+    public void loadDetails(JPanel details) {
+        setInstance();
+
+        // have to embed the usual one in a new JPanel
+        b.addActionListener(new NodeConfigAction((GrapevineSystemConnectionMemo)adapter.getSystemConnectionMemo()));
+        if (!additionalItems.contains(b)) {
+            additionalItems.add(b);
+        }
+        super.loadDetails(details);
     }
 
     @Override

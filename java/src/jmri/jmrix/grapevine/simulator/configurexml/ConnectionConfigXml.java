@@ -1,8 +1,13 @@
 package jmri.jmrix.grapevine.simulator.configurexml;
 
+import java.util.List;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
+import jmri.jmrix.grapevine.SerialNode;
+import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.simulator.ConnectionConfig;
 import jmri.jmrix.grapevine.simulator.SimulatorAdapter;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
+import org.jdom2.Element;
 
 /**
  * Handle XML persistence of layout connections by persisting the
@@ -24,6 +29,36 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    /**
+     * Write out the SerialNode objects too
+     *
+     * @param e Element being extended
+     */
+    @Override
+    protected void extendElement(Element e) {
+        SerialNode node = (SerialNode) ((GrapevineSystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().getNode(0);
+        int index = 1;
+        while (node != null) {
+            // add node as an element
+            Element n = new Element("node");
+            n.setAttribute("name", "" + node.getNodeAddress());
+            e.addContent(n);
+            // add parameters to the node as needed
+            n.addContent(makeParameter("nodetype", "" + node.getNodeType()));
+
+            // look for the next node
+            node = (SerialNode) ((GrapevineSystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().getNode(index);
+            index++;
+        }
+    }
+
+    protected Element makeParameter(String name, String value) {
+        Element p = new Element("parameter");
+        p.setAttribute("name", name);
+        p.addContent(value);
+        return p;
+    }
+
     @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
@@ -34,6 +69,43 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         if (adapter == null) {
             adapter = new SimulatorAdapter();
         }
+    }
+
+    @Override
+    protected void unpackElement(Element shared, Element perNode) {
+        List<Element> l = shared.getChildren("node");
+        for (int i = 0; i < l.size(); i++) {
+            Element n = l.get(i);
+            int addr = Integer.parseInt(n.getAttributeValue("name"));
+            int type = Integer.parseInt(findParmValue(n, "nodetype"));
+
+            SerialTrafficController tc = ((GrapevineSystemConnectionMemo) adapter.getSystemConnectionMemo()).getTrafficController();
+
+            // create node (they register themselves)
+            SerialNode node = new SerialNode(addr, type, tc);
+
+            // Trigger initialization of this Node to reflect these parameters
+            tc.initializeSerialNode(node);
+        }
+    }
+
+    /**
+     * Service routine to look through "parameter" child elements to find a
+     * particular parameter value
+     *
+     * @param e    Element containing parameters
+     * @param name name of desired parameter
+     * @return String value
+     */
+    String findParmValue(Element e, String name) {
+        List<Element> l = e.getChildren("parameter");
+        for (int i = 0; i < l.size(); i++) {
+            Element n = l.get(i);
+            if (n.getAttributeValue("name").equals(name)) {
+                return n.getTextTrim();
+            }
+        }
+        return null;
     }
 
     @Override
