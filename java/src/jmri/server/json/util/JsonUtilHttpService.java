@@ -428,8 +428,8 @@ public class JsonUtilHttpService extends JsonHttpService {
             case JSON.CONFIG_PROFILES:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/util/" + type + "-server.json",
-                        "/jmri/server/json/util/" + type + "-client.json");
+                        "jmri/server/json/util/" + type + "-server.json",
+                        "jmri/server/json/util/" + type + "-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
