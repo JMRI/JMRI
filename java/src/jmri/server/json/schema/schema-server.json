@@ -6,8 +6,7 @@
     "properties": {
         "name": {
             "type": "string",
-            "description": "Name of type for which schema was requested",
-            "enum": ["schema"]
+            "description": "Name of type for which schema was requested"
         },
         "server": {
             "type": "boolean",
