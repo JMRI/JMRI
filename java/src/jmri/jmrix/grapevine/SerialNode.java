@@ -117,7 +117,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Set an output bit.
+     * Set an output bit on this node.
      *
      * @param bitNumber the bit index. Bits are numbered from 1 (not 0)
      * @param state 'true' for 0, 'false' for 1.

@@ -14,6 +14,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame lets user renumber a Grapevine node.
@@ -111,6 +113,7 @@ public class RenumberFrame extends jmri.util.JmriJFrame {
         m.setElement(3, 0x60);
         m.setParity();
         memo.getTrafficController().sendSerialMessage(m, null);
+        log.debug("RenumberFrame sent {}", 0x60);
     }
 
     /**
@@ -125,5 +128,7 @@ public class RenumberFrame extends jmri.util.JmriJFrame {
             renumberButton.setEnabled(true);
         }
     }
+
+    private final static Logger log = LoggerFactory.getLogger(RenumberFrame.class);
 
 }

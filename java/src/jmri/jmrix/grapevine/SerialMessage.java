@@ -7,6 +7,23 @@ import org.slf4j.LoggerFactory;
 /**
  * Contains the data payload of a serial packet. Note that it's _only_ the
  * payload.
+ * <p>
+ * Grapevine Message Format Summary:
+ * <p>
+ * Signal (Head)s (Banks 1-3)
+ * {@code
+ *  b2 (element 1): id + state      b4 (element 3): bank + parity
+ *  bit/id (0 - F = 16 poss.)       bank 1 			0001 ....
+ *                  .000 0...       bank 2 			0010 ....
+ *                  .000 1...       bank 3 			0011 ....
+ *                  .001 0...
+ *                  etc up to       parity 			.... xxxx
+ *                  .111 1...
+ *
+ *  State (7 appearances)
+ *  Green 		    .... .000
+ *  Red 			.... .110
+ * }
  *
  * @author Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008
  */
