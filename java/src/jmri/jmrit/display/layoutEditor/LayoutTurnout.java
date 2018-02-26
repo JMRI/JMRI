@@ -356,6 +356,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     // this should only be used for debugging...
+    @Override
     public String toString() {
         return "LayoutTurnout " + getId();
     }
@@ -1310,6 +1311,7 @@ public class LayoutTurnout extends LayoutTrack {
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
+    @Override
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = center;
         switch (connectionType) {
@@ -1336,6 +1338,7 @@ public class LayoutTurnout extends LayoutTrack {
     /**
      * @return the bounds of this turnout
      */
+    @Override
     public Rectangle2D getBounds() {
         Rectangle2D result;
 
@@ -1767,6 +1770,7 @@ public class LayoutTurnout extends LayoutTrack {
         return false;
     }
 
+    @Override
     public boolean isMainline() {
         return (isMainlineA() || isMainlineB() || isMainlineC() || isMainlineD());
     }
@@ -2052,6 +2056,7 @@ public class LayoutTurnout extends LayoutTrack {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
+    @Override
     public void scaleCoords(float xFactor, float yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
@@ -2239,6 +2244,7 @@ public class LayoutTurnout extends LayoutTrack {
      * LayoutTurnoutXml, then the following method is called after the entire
      * LayoutEditor is loaded to set the specific TrackSegment objects.
      */
+    @Override
     public void setObjects(LayoutEditor p) {
         connectA = p.getFinder().findTrackSegmentByName(connectAName);
         connectB = p.getFinder().findTrackSegmentByName(connectBName);
@@ -3326,8 +3332,8 @@ public class LayoutTurnout extends LayoutTrack {
         Point2D pFR = MathUtil.add(pF, MathUtil.multiply(vBMo, 2.0));
         Point2D pFL = MathUtil.subtract(pF, MathUtil.multiply(vCMo, 2.0));
 
-        Point2D pFPR = MathUtil.add(pF, MathUtil.normalize(vBMo, 2.0));
-        Point2D pFPL = MathUtil.subtract(pF, MathUtil.normalize(vCMo, 2.0));
+        // Point2D pFPR = MathUtil.add(pF, MathUtil.normalize(vBMo, 2.0));
+        // Point2D pFPL = MathUtil.subtract(pF, MathUtil.normalize(vCMo, 2.0));
 
         Point2D vDisAP = MathUtil.normalize(vAM, hypotF);
         Point2D pAP = MathUtil.subtract(pM, vDisAP);
@@ -3335,8 +3341,8 @@ public class LayoutTurnout extends LayoutTrack {
         Point2D pAPL = MathUtil.subtract(pAP, vAMo);
 
         Point2D vSo = MathUtil.normalize(vAMo, 2.0);
-        Point2D pSL = MathUtil.add(pAPL, vSo);
-        Point2D pSR = MathUtil.subtract(pAPR, vSo);
+        // Point2D pSL = MathUtil.add(pAPL, vSo);
+        // Point2D pSR = MathUtil.subtract(pAPR, vSo);
 
         boolean mainlineA = isMainlineA();
         boolean mainlineB = isMainlineB();
@@ -3577,13 +3583,13 @@ public class LayoutTurnout extends LayoutTrack {
                 // end of switch rails (open)
                 Point2D vS = MathUtil.normalize(vABo, 2.0);
                 Point2D pASL = MathUtil.add(pAPL, vS);
-                Point2D pASR = MathUtil.subtract(pAPR, vS);
+                // Point2D pASR = MathUtil.subtract(pAPR, vS);
                 Point2D pBSL = MathUtil.add(pBPL, vS);
-                Point2D pBSR = MathUtil.subtract(pBPR, vS);
+                // Point2D pBSR = MathUtil.subtract(pBPR, vS);
                 Point2D pCSR = MathUtil.subtract(pCPR, vS);
-                Point2D pCSL = MathUtil.add(pCPL, vS);
+                // Point2D pCSL = MathUtil.add(pCPL, vS);
                 Point2D pDSR = MathUtil.subtract(pDPR, vS);
-                Point2D pDSL = MathUtil.add(pDPL, vS);
+                // Point2D pDSL = MathUtil.add(pDPL, vS);
 
                 // end of switch rails (open at frogs)
                 Point2D pAFS = MathUtil.subtract(pAFL, vS);
@@ -3591,10 +3597,10 @@ public class LayoutTurnout extends LayoutTrack {
                 Point2D pCFS = MathUtil.add(pCFR, vS);
                 Point2D pDFS = MathUtil.add(pDFR, vS);
                 vSo = MathUtil.orthogonal(vS);
-                Point2D pAFSR = MathUtil.add(pAFL, vSo);
-                Point2D pBFSR = MathUtil.subtract(pBFL, vSo);
-                Point2D pCFSL = MathUtil.subtract(pCFR, vSo);
-                Point2D pDFSL = MathUtil.add(pDFR, vSo);
+                // Point2D pAFSR = MathUtil.add(pAFL, vSo);
+                // Point2D pBFSR = MathUtil.subtract(pBFL, vSo);
+                // Point2D pCFSL = MathUtil.subtract(pCFR, vSo);
+                // Point2D pDFSL = MathUtil.add(pDFR, vSo);
 
                 if (isMain == mainlineA) {
                     g2.draw(new Line2D.Double(pAL, pABL));
@@ -3757,15 +3763,15 @@ public class LayoutTurnout extends LayoutTrack {
                 Point2D vS = MathUtil.normalize(vAB, 2.0);
                 vSo = MathUtil.orthogonal(vS);
                 Point2D pASL = MathUtil.add(pAPL, vSo);
-                Point2D pASR = MathUtil.subtract(pAPR, vSo);
-                Point2D pCSL = MathUtil.add(pCPL, vSo);
+                // Point2D pASR = MathUtil.subtract(pAPR, vSo);
+                // Point2D pCSL = MathUtil.add(pCPL, vSo);
                 Point2D pCSR = MathUtil.subtract(pCPR, vSo);
 
                 // end of switch rails (open at frogs)
                 Point2D pABFS = MathUtil.subtract(pABF, vSo);
-                Point2D pABFSP = MathUtil.subtract(pABF, vS);
+                // Point2D pABFSP = MathUtil.subtract(pABF, vS);
                 Point2D pCDFS = MathUtil.add(pCDF, vSo);
-                Point2D pCDFSP = MathUtil.add(pCDF, vS);
+                // Point2D pCDFSP = MathUtil.add(pCDF, vS);
 
                 if (isMain == mainlineA) {
                     g2.draw(new Line2D.Double(pAL, pABL));
@@ -3882,15 +3888,15 @@ public class LayoutTurnout extends LayoutTrack {
                 Point2D vS = MathUtil.normalize(vBA, 2.0);
                 vSo = MathUtil.orthogonal(vS);
                 Point2D pBSL = MathUtil.subtract(pBPL, vSo);
-                Point2D pBSR = MathUtil.add(pBPR, vSo);
-                Point2D pDSL = MathUtil.subtract(pDPL, vSo);
+                // Point2D pBSR = MathUtil.add(pBPR, vSo);
+                // Point2D pDSL = MathUtil.subtract(pDPL, vSo);
                 Point2D pDSR = MathUtil.add(pDPR, vSo);
 
                 // end of switch rails (open at frogs)
                 Point2D pBAFS = MathUtil.add(pBFL, vSo);
-                Point2D pBAFSP = MathUtil.subtract(pBFL, vS);
+                // Point2D pBAFSP = MathUtil.subtract(pBFL, vS);
                 Point2D pDCFS = MathUtil.subtract(pDFR, vSo);
-                Point2D pDCFSP = MathUtil.add(pDFR, vS);
+                // Point2D pDCFSP = MathUtil.add(pDFR, vS);
 
                 if (isMain == mainlineA) {
                     g2.draw(new Line2D.Double(pBAL, pAL));
@@ -3989,12 +3995,14 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @Override
     protected void drawTurnoutControls(Graphics2D g2) {
         if (!disabled && !(disableWhenOccupied && isOccupied())) {
             g2.draw(layoutEditor.trackControlCircleAt(center));
         }
     }
 
+    @Override
     protected void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsA();
         if (getTurnoutType() >= DOUBLE_XOVER && getTurnoutType() <= DOUBLE_SLIP) {
@@ -4456,6 +4464,7 @@ public class LayoutTurnout extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void collectContiguousTracksNamesInBlockNamed(
             @Nonnull String blockName,
             @Nonnull Set<String> TrackNameSet) {
@@ -4500,6 +4509,7 @@ public class LayoutTurnout extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
         setLayoutBlock(layoutBlock);
         if ((getTurnoutType() == DOUBLE_XOVER)

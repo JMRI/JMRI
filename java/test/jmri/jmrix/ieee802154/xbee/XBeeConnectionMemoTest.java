@@ -27,7 +27,6 @@ public class XBeeConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestB
     @Mock private XBeeNetwork xn;
     private XBeeAdapter xa;
     private XBeeDevice xb;
-    private static boolean rv = true;
 
     private XBeeConnectionMemo memo = null;
 

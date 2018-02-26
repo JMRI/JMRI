@@ -245,8 +245,7 @@ public class JmriServerTokenizerTest {
         String cmd = "this should fail";
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
-        Token t;
-        t = stm.getNextToken();
+        stm.getNextToken(); // called to provoke TokenMgrError
     }
 
     @Before
