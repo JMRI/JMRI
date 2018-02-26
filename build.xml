@@ -350,7 +350,7 @@
         <exclude name="jmri/server/json/reporter/JsonReporter.class" />
         <exclude name="jmri/server/json/roster/JsonRoster.class" />
         <exclude name="jmri/server/json/signalMast/JsonSignalMast.class" />
-        <exclude name="jmri/jmrit.ussctc/Lock.class" />
+        <exclude name="jmri/jmrit/ussctc/Lock.class" />
         <exclude name="jmri/AddressedProgrammerManager.class" />
         <exclude name="jmri/PhysicalLocationReporter.class" />
     </fileset>
