@@ -129,12 +129,12 @@ public abstract class JsonHttpService {
      * Note that a schema must be contained in a standard object as:
      * <p>
      * {@code
-     * {"type":"schema", "data":{"schema":<em>schema</em>, "response":boolean}}
+     * {"type":"schema", "data":{"schema":<em>schema</em>, "server":boolean}}
      * }
      * <p>
      * If using {@link #doSchema(boolean, java.lang.String, java.lang.String)},
      * an implementation can be as simple as: {@code
-     * return doSchema(response, "/path/to/response/schema.json", "/path/to/request/schema.json");
+     * return doSchema(response, "path/to/response/schema.json", "path/to/request/schema.json");
      * }
      *
      * @param type   the type for which a schema is requested

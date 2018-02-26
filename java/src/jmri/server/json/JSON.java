@@ -778,7 +778,7 @@ public final class JSON {
      *
      * @since 4.1
      */
-    public static final String SERVER = "response"; // NOI18N
+    public static final String SERVER = "server"; // NOI18N
 
     /* ZeroConf support */
     /**
