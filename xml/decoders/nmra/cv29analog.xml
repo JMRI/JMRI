@@ -27,12 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+	<revnumber>10</revnumber>
+	<date>2018-02-14</date>
+	<authorinitials>WK</authorinitials>
+	<revremark>Added Dutch translation</revremark>
     <revision>
-			<revnumber>10</revnumber>
-			<date>2018-02-14</date>
-			<authorinitials>WK</authorinitials>
-			<revremark>Added Dutch translation</revremark>
-		</revision>
+    </revision>
       <revnumber>9</revnumber>
       <date>2018-01-02</date>
       <authorinitials>ALM</authorinitials>
