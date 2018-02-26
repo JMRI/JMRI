@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.TooManyListenersException;
 import java.util.Vector;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
+import jmri.jmrix.loconet.LnPacketizerStrict;
 import jmri.jmrix.loconet.LnPortController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import org.slf4j.Logger;
@@ -18,8 +18,6 @@ import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
 import purejavacomm.SerialPort;
-import purejavacomm.SerialPortEvent;
-import purejavacomm.SerialPortEventListener;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
@@ -72,7 +70,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     @Override
     public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector<String>();
+        portNameVector = new Vector<>();
         Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
@@ -176,7 +174,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
         // connect to a packetizing traffic controller
-        LnPacketizer packets = new LnPacketizer();
+        LnPacketizer packets = getPacketizer(getOptionState(option4Name));
         packets.connectPort(this);
 
         // create memo
@@ -287,8 +285,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      * or the default
      * @return - internal value
      */
-    protected String getPacketizerOption() {
-        String s = getOptionState(option4Name);
+    protected String getPacketizerOption(String s) {
         for (int i=0;i < packetizers.length; i++) {
             if (packetizers[i][0].equals(s)) {
                 return packetizers[i][1];
@@ -296,7 +293,27 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         }
         return "lnPacketizer";
     }
-
+    /**
+     * 
+     * @param s the packetizer to use in its readable form.
+     * @return a LnPacketizer
+     */
+    protected LnPacketizer getPacketizer(String s) {
+        LnPacketizer packets;
+        String packetSelection = getPacketizerOption(s);
+        switch (packetSelection) {
+            case "lnPacketizer":
+                packets = new LnPacketizer();
+                break;
+            case "lnPacketizerStrict":
+                packets = new LnPacketizerStrict();
+                break;
+            default:
+                packets = new LnPacketizer();
+                log.warn("Using Normal do not understand option [{}]", packetSelection);
+        }
+        return packets;
+    }
 
     private final static Logger log = LoggerFactory.getLogger(LocoBufferAdapter.class);
 

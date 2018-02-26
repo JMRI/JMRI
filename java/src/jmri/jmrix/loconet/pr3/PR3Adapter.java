@@ -1,9 +1,7 @@
 package jmri.jmrix.loconet.pr3;
 
-import java.lang.reflect.Constructor;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
-import jmri.jmrix.loconet.LnPacketizerStrict;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import org.slf4j.Logger;
@@ -102,19 +100,7 @@ public class PR3Adapter extends LocoBufferAdapter {
             // MS100 modes - connecting to a separate command station
             // connect to a packetizing traffic controller
 
-            LnPacketizer packets;
-            String packetSelection = getPacketizerOption();
-            switch (packetSelection){
-                case "lnPacketizer":
-                    packets = new LnPacketizer();
-                    break;
-                case "lnPacketizerStrict":
-                    packets = new LnPacketizerStrict();
-                    break;
-                default:
-                    packets = new LnPacketizer();
-                    log.warn("Using Normal do not understand option [{}]",packetSelection);
-            }
+            LnPacketizer packets = getPacketizer(getOptionState(option4Name));
             packets.connectPort(this);
 
             // create memo
