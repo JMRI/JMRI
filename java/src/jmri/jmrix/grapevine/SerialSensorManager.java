@@ -2,6 +2,7 @@ package jmri.jmrix.grapevine;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -10,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the system-specific Sensor implementation.
  * <p>
- * System names are "GSnnnn", where G is the (multichar) system connection prefix,
+ * System names are "GiSnnnn", where Gi is the (multichar) system connection prefix,
  * nnnn is the sensor number without padding.
  * <p>
  * Sensors are numbered from 1.
@@ -114,8 +115,21 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         }
         // register this sensor with the Serial Node
         node.registerSensor(s, bit);
-        log.debug("register {}  in node {}", s.getSystemName(), node);
+        log.debug("registered {}  in node {}", s.getSystemName(), node);
         return s;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String createSystemName(String curAddress, String prefix) throws jmri.JmriException {
+        String tmpSName = prefix + "S" + curAddress;
+        // first, check validity
+        try {
+            validSystemNameFormat(tmpSName);
+        } catch (IllegalArgumentException e) {
+            throw new JmriException(e.toString());
+        }
+        return tmpSName;
     }
 
     /**
@@ -155,6 +169,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         if (node != null) {
             node.markChanges(r);
         }
+        log.debug("node {} marked as changed by SerialSensorManager", r.getAddr());
     }
 
     /**

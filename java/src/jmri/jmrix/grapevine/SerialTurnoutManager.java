@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement turnout manager for Grapevine systems.
  * <p>
- * System names are "GTnnn", where G is the (multichar) system connection prefix,
+ * System names are "GiTnnn", where Gi is the (multichar) system connection prefix,
  * nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
@@ -76,23 +76,24 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return false; // Turnout address format is more than a simple number.
     }
 
+    /** {@inheritDoc} */
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         String tmpSName = prefix + "T" + curAddress;
 
         if (curAddress.contains(":")) {
             // Address format passed is in the form of node:cardOutput or node:card:address
-            int seperator = curAddress.indexOf(":");
+            int separator = curAddress.indexOf(":");
             try {
-                nNode = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
-                int nxSeperator = curAddress.indexOf(":", seperator + 1);
-                if (nxSeperator == -1) {
+                nNode = Integer.valueOf(curAddress.substring(0, separator)).intValue();
+                int nxSeparator = curAddress.indexOf(":", separator + 1);
+                if (nxSeparator == -1) {
                     //Address has been entered in the format node:cardOutput
-                    bitNum = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+                    bitNum = Integer.valueOf(curAddress.substring(separator + 1)).intValue();
                 } else {
                     //Address has been entered in the format node:card:output
-                    nCard = Integer.valueOf(curAddress.substring(seperator + 1, nxSeperator)).intValue() * 100;
-                    bitNum = Integer.valueOf(curAddress.substring(nxSeperator + 1)).intValue();
+                    nCard = Integer.valueOf(curAddress.substring(separator + 1, nxSeparator)).intValue() * 100;
+                    bitNum = Integer.valueOf(curAddress.substring(nxSeparator + 1)).intValue();
                 }
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert {} Hardware Address to a number", curAddress);

@@ -11,11 +11,11 @@ import javax.annotation.Nonnull;
 
 /**
  * Abstract partial implementation of a SignalHeadManager.
- * <P>
+ * <p>
  * Not truly an abstract class, this might have been better named
  * DefaultSignalHeadManager. But we've got it here for the eventual need to
  * provide system-specific implementations.
- * <P>
+ * <p>
  * Note that this does not enforce any particular system naming convention at
  * the present time. They're just names...
  *

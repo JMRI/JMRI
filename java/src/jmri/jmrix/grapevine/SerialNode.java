@@ -319,7 +319,7 @@ public class SerialNode extends AbstractNode {
     public void markChanges(SerialReply l) {
         // first, is it from a sensor?
         if (!(l.isFromParallelSensor() || l.isFromNewSerialSensor() || l.isFromOldSerialSensor())) {
-            return;  // not interesting message
+            return; // not interesting message
         }
         // Yes, continue.
         // Want to get individual sensor bits, and xor them with the

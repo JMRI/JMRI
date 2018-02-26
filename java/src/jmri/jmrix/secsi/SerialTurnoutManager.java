@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for SECSI systems
- * <P>
+ * <p>
  * System names are "VTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
-  */
+ */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     private SecsiSystemConnectionMemo memo = null;
