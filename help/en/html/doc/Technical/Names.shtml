@@ -341,7 +341,7 @@
         commonly used for block occupancy detectors.</li>
 
         <li>Y Sections - holds a map of trackwork.
-        Section</b> system names are all upper case, have no trailing whitespace and start with IY.</li>
+        Section system names are all upper case, have no trailing whitespace and start with IY.</li>
         
         <li>SignalGroups - hold a set of signal heads or masts.
             SignalGroup system names are all upper case and have no trailing whitespace.

@@ -3590,7 +3590,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         Rectangle2D result = new Rectangle2D.Double();
 
         // combine all (onscreen) Components into a list of list of Components
-        List<List> listOfListsOfComponents = new ArrayList<>();
+        List<List<? extends Component>> listOfListsOfComponents = new ArrayList<>();
         listOfListsOfComponents.add(backgroundImage);
         listOfListsOfComponents.add(sensorImage);
         listOfListsOfComponents.add(signalHeadImage);
@@ -3604,7 +3604,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         listOfListsOfComponents.add(sensorList);
         listOfListsOfComponents.add(signalMastList);
         // combine their bounds
-        for (List<Component> listOfComponents : listOfListsOfComponents) {
+        for (List<? extends Component> listOfComponents : listOfListsOfComponents) {
             for (Component o : listOfComponents) {
                 if (result.isEmpty()) {
                     result = o.getBounds();
@@ -5039,6 +5039,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         DROPPED_POSITIONABLE_POINT,
     }
 
+    // The following layoutEditorMode variable wasn't referenced anywhere (Feb 2018), 
+    // but the code goes to a lot of trouble to set it to  LayoutEditorMode.EDIT_POPUP
+    // et al. So rather than remove all the sets of an unreferenced variable, we're
+    // annotating the warning away for now.  If it's really not doing anything useful,
+    // and isn't needed as part of future work, it should be removed.
+    @SuppressWarnings("unused") // not used, but seems to be base for further work
     private LayoutEditorMode layoutEditorMode = LayoutEditorMode.UNKNOWN;
 
     /**
@@ -9749,9 +9755,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private void drawLayoutTracksTies(Graphics2D g2) {
         LayoutTrackDrawingOptions ltdo = getLayoutTrackDrawingOptions();
 
-        boolean main;
-
-        //setup for drawing sideline ties
+        // setup for drawing sideline ties
         int tieLength = ltdo.getSideTieLength();
         int tieWidth = ltdo.getSideTieWidth();
         int tieGap = ltdo.getSideTieGap();
@@ -9760,10 +9764,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
                     new float[]{tieWidth, tieGap}, 0));
             g2.setColor(ltdo.getSideTieColor());
-            draw1(g2, main = false);
+            draw1(g2, false);  // main = false
         }
 
-        //setup for drawing mainline ties
+        // setup for drawing mainline ties
         tieLength = ltdo.getMainTieLength();
         tieWidth = ltdo.getMainTieWidth();
         tieGap = ltdo.getMainTieGap();
@@ -9772,7 +9776,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
                     new float[]{tieWidth, tieGap}, 0));
             g2.setColor(ltdo.getMainTieColor());
-            draw1(g2, main = true);
+            draw1(g2, true); // main = true
         }
     }
 
