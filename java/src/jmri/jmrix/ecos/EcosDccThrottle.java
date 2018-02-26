@@ -579,7 +579,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
             }
             message = "set(" + this.objectNumber + ", dir[" + (forward ? 0 : 1) + "], speed[" + speedValue + "])";
         } else {
-            message = "set(" + this.objectNumber + ", dir[" + (forward ? 0 : 1) + ")";
+            message = "set(" + this.objectNumber + ", dir[" + (forward ? 0 : 1) + "])";
         }
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
