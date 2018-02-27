@@ -346,6 +346,13 @@
         <exclude name="jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class" />
         <exclude name="jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class" />
         <exclude name="jmri/jmris/srcp/parser/SRCPParserTreeConstants.class" />
+        <exclude name="jmri/Turnout.class" />
+        <exclude name="jmri/server/json/reporter/JsonReporter.class" />
+        <exclude name="jmri/server/json/roster/JsonRoster.class" />
+        <exclude name="jmri/server/json/signalMast/JsonSignalMast.class" />
+        <exclude name="jmri/jmrit/ussctc/Lock.class" />
+        <exclude name="jmri/AddressedProgrammerManager.class" />
+        <exclude name="jmri/PhysicalLocationReporter.class" />
     </fileset>
 
 
