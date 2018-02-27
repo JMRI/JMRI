@@ -1,35 +1,29 @@
 package jmri.jmrix.secsi.serialdriver;
 
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
+ * Tests for the Bundle class
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Bob Jacobsen Copyright (C) 2012
  */
-public class BundleTest {
+public class BundleTest  {
 
-    @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Bundle t = new Bundle();
-        Assert.assertNotNull("exists",t);
+    @Test public void testGoodKeys() {
+        Assert.assertEquals("(none)", Bundle.getMessage("none"));
+        Assert.assertEquals("No locomotive detected (301);", Bundle.getMessage("NoLocoDetected"));
+        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-    }
-
-    @After
-    public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+    @Test public void testBadKey() {
+        try {
+            Bundle.getMessage("FFFFFTTTTTTT");
+        } catch (java.util.MissingResourceException e) {
+            return;
+        } // OK
+        Assert.fail("No exception thrown");
     }
 
 }
