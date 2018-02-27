@@ -1,9 +1,9 @@
 package jmri.server.json.util;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
+import jmri.server.json.JsonException;
 import jmri.spi.JsonServiceFactory;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -27,6 +27,12 @@ public class JsonUtilServiceFactory implements JsonServiceFactory<JsonUtilHttpSe
             JSON.RAILROAD,
             JSON.SYSTEM_CONNECTIONS,
             JSON.CONFIG_PROFILES};
+    }
+
+    @Override
+    public String[] getSentTypes() {
+        // retain on behalf of JsonException for schema handling
+        return new String[]{JsonException.ERROR};
     }
 
     @Override
