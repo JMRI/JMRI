@@ -239,7 +239,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
        try {
           sourceThread.join();
        } catch (InterruptedException ie){
-          // interrupted durring cleanup.
+          // interrupted durrng cleanup.
        }
     }
 

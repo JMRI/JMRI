@@ -1,43 +1,51 @@
 package jmri.jmrix.grapevine;
 
 import java.util.ResourceBundle;
-import jmri.jmrix.SystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.TurnoutManager;
 import jmri.SensorManager;
+import jmri.jmrix.SystemConnectionMemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Minimum required SystemConnectionMemo.
+ * Minimum required SystemConnectionMemo for Grapevine.
+ * Expanded for multichar/multiconnection support.
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
 public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
 
     public GrapevineSystemConnectionMemo() {
-        super("G", "Grapevine");
+        this("G", Bundle.getMessage("MenuSystem"));
+    }
+
+    public GrapevineSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
+        super(prefix, name);
 
         register(); // registers general type
         InstanceManager.store(this, GrapevineSystemConnectionMemo.class); // also register as specific type
 
-        // create and register the ComponentFactory
-        InstanceManager.store(new jmri.jmrix.grapevine.swing.GrapevineComponentFactory(this),
+        // create and register the ComponentFactory for the GUI (menu)
+        InstanceManager.store(cf = new jmri.jmrix.grapevine.swing.GrapevineComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
 
-        log.debug("Created GrapevineSystemConnectionMemo");
+        log.debug("Created GrapevineSystemConnectionMemo, prefix = {}", prefix);
     }
 
     private SerialTrafficController tc = null;
+    jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**
      * Set the traffic controller instance associated with this connection memo.
      *
-     * @param s jmri.jmrix.oaktree.SerialTrafficController object to use.
+     * @param tc jmri.jmrix.grapevine.SerialTrafficController object to use.
      */
-    public void setTrafficController(SerialTrafficController s){
-        tc = s;
+    public void setTrafficController(SerialTrafficController tc){
+        this.tc = tc;
+        log.debug("Memo {} set GrapevineTrafficController {}", getUserName(), tc);
     }
 
     /**
@@ -45,18 +53,23 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
      */
     public SerialTrafficController getTrafficController(){
         if (tc == null) {
-            setTrafficController(new SerialTrafficController());
+            setTrafficController(new SerialTrafficController(this));
             log.debug("Auto create of SerialTrafficController for initial configuration");
         }
         return tc;
     }
 
+    /**
+     * Provide Grapevine menu strings.
+     *
+     * @return bundle file containing action - menuitem pairs
+     */
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.grapevine.GrapevineActionListBundle");
     }
 
-    public void configureManagers(){
+    public void configureManagers() {
         setTurnoutManager(new SerialTurnoutManager(this));
         setLightManager(new SerialLightManager(this));
         setSensorManager(new SerialSensorManager(this));
@@ -77,7 +90,6 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     private SensorManager sensorManager = null;
-
 
     /**
      * Provide access to the Turnout Manager for this particular connection.
@@ -143,6 +155,15 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
         return super.get(T);
     }
 
+    @Override
+    public void dispose() {
+        tc = null;
+        InstanceManager.deregister(this, GrapevineSystemConnectionMemo.class);
+        if (cf != null) {
+            InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
+        }
+        super.dispose();
+    }
 
     private final static Logger log = LoggerFactory.getLogger(GrapevineSystemConnectionMemo.class);
 

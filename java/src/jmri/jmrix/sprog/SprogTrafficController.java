@@ -31,6 +31,11 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     private SprogState sprogState = SprogState.NORMAL;
     private int lastId;
 
+    /**
+     * Create a new SprogTrafficController instance.
+     *
+     * @param adaptermemo the associated SystemConnectionMemo
+     */
     public SprogTrafficController(SprogSystemConnectionMemo adaptermemo) {
        memo = adaptermemo;
     }

@@ -46,9 +46,9 @@ public class XBeeNodeManager implements IDiscoveryListener {
           // network information.
           xbeeNetwork.setDiscoveryOptions(EnumSet.of(DiscoveryOptions.APPEND_DD,DiscoveryOptions.DISCOVER_MYSELF));
        } catch (com.digi.xbee.api.exceptions.TimeoutException te ) {
-         log.debug("timeout durring discovery process setup");
+         log.debug("timeout during discovery process setup");
        } catch (com.digi.xbee.api.exceptions.XBeeException xbe) {
-         log.error("exception durring discovery process setup");
+         log.error("exception during discovery process setup");
        }
 
        // add this class as a listener for node discovery.
@@ -94,7 +94,7 @@ public class XBeeNodeManager implements IDiscoveryListener {
      */
     @Override
     public void discoveryError(String error){
-        log.error("Error durring node discovery process: {}",error);
+        log.error("Error during node discovery process: {}",error);
     }
 
     /*

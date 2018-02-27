@@ -1358,7 +1358,7 @@ public class WarrantFrame extends WarrantRoute {
             ((SCWarrant)_warrant).setForward(_runForward.isSelected());
             ((SCWarrant)_warrant).setTimeToPlatform((long)_TTPtextField.getValue());
             long sf = (long)_speedFactorTextField.getValue();
-            float sf_float = (float)sf;
+            float sf_float = sf;
             ((SCWarrant)_warrant).setSpeedFactor(sf_float / 100);
         }
         _warrant.setTrainName(getTrainName());

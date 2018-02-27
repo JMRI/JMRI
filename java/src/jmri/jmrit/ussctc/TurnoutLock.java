@@ -29,6 +29,7 @@ public class TurnoutLock implements Lock {
      * Test the lock conditions
      * @return True if lock is clear and operation permitted
      */
+    @Override
     public boolean isLockClear() {
         InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue("");
         if (turnout.getBean().getKnownState() != value) {

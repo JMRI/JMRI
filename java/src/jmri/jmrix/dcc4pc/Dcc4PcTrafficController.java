@@ -16,11 +16,11 @@ import purejavacomm.SerialPort;
 /**
  * Converts Stream-based I/O to/from DCC4PC messages. The "Dcc4PcInterface" side
  * sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a Dcc4PcPortController is via a pair of *Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
+ * <p>
  * This handles the state transitions, based on the necessary state in each
  * message.
  *
@@ -28,6 +28,9 @@ import purejavacomm.SerialPort;
  */
 public class Dcc4PcTrafficController extends AbstractMRTrafficController implements Dcc4PcInterface {
 
+    /**
+     * Create a new DccPcTrafficController instance.
+     */
     public Dcc4PcTrafficController() {
         super();
         if (log.isDebugEnabled()) {
@@ -294,7 +297,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
 
     /**
      * Handle each reply when complete.
-     * <P>
+     * <p>
      * (This is public for testing purposes) Runs in the "Receive" thread.
      *
      */

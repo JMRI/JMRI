@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from messages. The "IEEE802154Interface" side
  * sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a IEEE802154PortController is via a pair of *Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
+ * <p>
  * This maintains a list of nodes, but doesn't currently do anything with it.
  * This implementation is complete and can be instantiated, but is not
  * functional. It will be created e.g. when a default object is needed for
@@ -27,6 +27,9 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficController implements IEEE802154Interface {
 
+    /**
+     * Create a new IEEE802154TrafficController instance.
+     */
     public IEEE802154TrafficController() {
         super();
         logDebug = log.isDebugEnabled();
