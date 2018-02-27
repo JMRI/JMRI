@@ -97,6 +97,7 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     // this should only be used for debugging...
+    @Override
     public String toString() {
         return String.format("LayoutSlip %s (%s)", getId(), getSlipStateString(getSlipState()));
     }
@@ -454,6 +455,7 @@ public class LayoutSlip extends LayoutTurnout {
      * @param connectionType the connection type
      * @return the Point2D coordinates
      */
+    @Override
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = center;
         switch (connectionType) {
@@ -487,10 +489,12 @@ public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     // just here for testing; should be removed when I'm done...
+    @Override
     public Rectangle2D getBounds() {
         return super.getBounds();
     }
 
+    @Override
     protected void updateBlockInfo() {
         LayoutBlock b1 = null;
         LayoutBlock b2 = null;
@@ -530,6 +534,7 @@ public class LayoutSlip extends LayoutTurnout {
      * connecting track segment is mainline Defaults to not mainline if
      * connecting track segments are missing
      */
+    @Override
     public boolean isMainline() {
         if (((connectA != null) && (((TrackSegment) connectA).isMainline()))
                 || ((connectB != null) && (((TrackSegment) connectB).isMainline()))
@@ -1110,6 +1115,7 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
+    @Override
     protected void draw1(Graphics2D g2, boolean drawMain, boolean isBlock) {
         if (isBlock && getLayoutBlock() == null) {
             // Skip the block layer since there is no block assigned.
@@ -1546,6 +1552,7 @@ public class LayoutSlip extends LayoutTurnout {
     /*
         this is used by ConnectivityUtil to determine the turnout state necessary to get from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
      */
+    @Override
     protected int getConnectivityStateForLayoutBlocks(
             @Nullable LayoutBlock thisLayoutBlock,
             @Nullable LayoutBlock prevLayoutBlock,

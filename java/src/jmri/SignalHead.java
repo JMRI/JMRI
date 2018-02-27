@@ -90,8 +90,10 @@ public interface SignalHead extends Signal {
      *
      * @return true if lit; false if dark
      */
+    @Override
     public boolean getLit();
 
+    @Override
     public void setLit(boolean newLit);
 
     /**
@@ -102,8 +104,10 @@ public interface SignalHead extends Signal {
      *
      * @return true if held; false otherwise
      */
+    @Override
     public boolean getHeld();
 
+    @Override
     public void setHeld(boolean newHeld);
 
     public int[] getValidStates();

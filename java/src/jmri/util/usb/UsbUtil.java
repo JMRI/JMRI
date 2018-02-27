@@ -184,8 +184,11 @@ public final class UsbUtil {
                 return new ArrayList<>(); // abort with an empty list
             }
         }
-        List<UsbDevice> devices = new ArrayList<>();
+
+        @SuppressWarnings("unchecked") // cast required by UsbHub API
         List<UsbDevice> usbDevices = usbHub.getAttachedUsbDevices();
+        
+        List<UsbDevice> devices = new ArrayList<>();
         usbDevices.forEach((usbDevice) -> {
             if (usbDevice instanceof UsbHub) {
                 UsbHub childUsbHub = (UsbHub) usbDevice;

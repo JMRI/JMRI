@@ -64,7 +64,7 @@ public class HexFileServer {
 
         // start operation of packetizer
         packets.startThreads();
-        sourceThread = new Thread(port);
+        sourceThread = new Thread(port, "LocoNet HexFileServer");
         sourceThread.start();
     }
 

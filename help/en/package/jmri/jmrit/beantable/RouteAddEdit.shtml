@@ -20,7 +20,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1><a name="Adding/Editing Routes"></a>Adding/Editing
+      <h1><a name="Adding_Editing Routes"></a>Adding/Editing
       Routes</h1>
 
       <p>After clicking <strong>Add...</strong> below the Route
@@ -90,7 +90,7 @@
       <p>The next drop down allows you to select a Turnout that
       will lock this route. When a Route is Locked, all of the
       Turnouts defined for the Route become <a href=
-      "#Turnout%20lock%20feature">Locked</a>.</p>
+      "#Turnout_lock_feature">Locked</a>.</p>
 
       <p>Once you are satisfied with your Route, use the "Add"
       button to create the new Route. To save your Route in your configuration, you must
@@ -99,7 +99,7 @@
       your Route, use the "Edit" and "Update Route" buttons to
       modify it.</p>
 
-      <h2><a name="Turnout Lock feature">Turnout Lock
+      <h2><a name="Turnout_Lock_feature">Turnout Lock
       feature</a></h2>
 
       <p>The Turnout Lock feature allows you to selectively disable
@@ -126,7 +126,7 @@
 
       <p>For more information on how to set Turnouts to be
       lockable, see the <a href=
-      "TurnoutTable.shtml#Turnout%20lock%20feature">Turnout Table
+      "TurnoutTable.shtml#Turnout_lock_feature">Turnout Table
       page</a>.</p>
 
       <p>Back to the <a href="RouteTable.shtml">Route Table help

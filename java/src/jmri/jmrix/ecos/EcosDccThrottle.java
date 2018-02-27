@@ -125,6 +125,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
     /**
      * Convert an Ecos speed integer to a float speed value.
+     * @param lSpeed speed value as an integer
+     * @return speed value as a float
      */
     protected float floatSpeed(int lSpeed) {
         if (lSpeed == 0) {
@@ -569,7 +571,18 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
             return;
         }
 
-        String message = "set(" + this.objectNumber + ", dir[" + (forward ? 0 : 1) + "])";
+        String message;
+        if (this.speedSetting > 0.0f) {
+            // Need to send current speed as well as direction, otherwise
+            // speed will be set to zero on direction change
+            int speedValue = (int) ((127 - 1) * this.speedSetting);     // -1 for rescale to avoid estop
+            if (speedValue > 128) {
+                speedValue = 126;    // max possible speed
+            }
+            message = "set(" + this.objectNumber + ", dir[" + (forward ? 0 : 1) + "], speed[" + speedValue + "])";
+        } else {
+            message = "set(" + this.objectNumber + ", dir[" + (forward ? 0 : 1) + "])";
+        }
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
     }
@@ -632,10 +645,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                     if (line.contains("speed") && !line.contains("speedstep")) {
                         speedMessageSent--;
                         if (speedMessageSent <= 0) {
-                            Float newSpeed = Float.valueOf(floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))));
+                            Float newSpeed = floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed")));
                             super.setSpeedSetting(newSpeed);
                         }
-                    } else if (line.contains("dir")) {
+                    }
+                    if (line.contains("dir")) {
                         boolean newDirection = false;
                         if (EcosReply.getContentDetails(line, "dir").equals("0")) {
                             newDirection = true;
@@ -648,10 +662,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                     if (m.toString().contains("speed") && !m.toString().contains("speedstep")) {
                         speedMessageSent--;
                         if (speedMessageSent <= 0) {
-                            Float newSpeed = Float.valueOf(floatSpeed(Integer.parseInt(EcosReply.getContentDetails(m.toString(), "speed"))));
+                            Float newSpeed = floatSpeed(Integer.parseInt(EcosReply.getContentDetails(m.toString(), "speed")));
                             super.setSpeedSetting(newSpeed);
                         }
-                    } else if (m.toString().contains("dir")) {
+                    }
+                    if (m.toString().contains("dir")) {
                         boolean newDirection = false;
                         if (EcosReply.getContentDetails(m.toString(), "dir").equals("0")) {
                             newDirection = true;
@@ -667,7 +682,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                     if (speedMessageSent > 0 && m.isUnsolicited() && line.contains("speed")) {
                         //We want to ignore these messages.
                     } else if (speedMessageSent <= 0 && line.contains("speed") && !line.contains("speedstep")) {
-                        Float newSpeed = Float.valueOf(floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))));
+                        Float newSpeed = floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed")));
                         super.setSpeedSetting(newSpeed);
                     } else if (line.contains("dir")) {
                         boolean newDirection = false;

@@ -137,6 +137,7 @@ public interface LightManager extends Manager<Light> {
      */
     @CheckReturnValue
     @Nonnull
+    @Override
     public String normalizeSystemName(@Nonnull String systemName);
 
     /**

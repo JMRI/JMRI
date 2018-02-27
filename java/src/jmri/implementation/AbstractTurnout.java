@@ -461,6 +461,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      *
      * @return One of 0 for none
      */
+    @Override
     public int getPossibleLockModes() { return 0; }
 
     /**
