@@ -687,6 +687,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         sourceLabel.setText(Bundle.getMessage("StatusLabelCalculating"));
 
         //JOD Feb18
+        //
         //  if (profileStep >= 4) {
         //    t.setSpeedSetting(profileSpeed / 2);
         //  }
