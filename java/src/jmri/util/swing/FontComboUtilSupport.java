@@ -39,11 +39,11 @@ import org.slf4j.LoggerFactory;
  */
 public class FontComboUtilSupport implements InstanceManagerAutoDefault {
 
-    private List<String> all = null;
-    private List<String> monospaced = null;
-    private List<String> proportional = null;
-    private List<String> character = null;
-    private List<String> symbol = null;
+    private final List<String> all = new ArrayList<>();
+    private final List<String> monospaced = new ArrayList<>();
+    private final List<String> proportional = new ArrayList<>();
+    private final List<String> character = new ArrayList<>();
+    private final List<String> symbol = new ArrayList<>();
 
     private boolean prepared = false;
     private boolean preparing = false;
@@ -54,17 +54,19 @@ public class FontComboUtilSupport implements InstanceManagerAutoDefault {
             prepareFontLists();
         }
 
-        switch (which) {
-            case MONOSPACED:
-                return new ArrayList<>(monospaced);
-            case PROPORTIONAL:
-                return new ArrayList<>(proportional);
-            case CHARACTER:
-                return new ArrayList<>(character);
-            case SYMBOL:
-                return new ArrayList<>(symbol);
-            default:
-                return new ArrayList<>(all);
+        synchronized (this) {
+            switch (which) {
+                case MONOSPACED:
+                    return new ArrayList<>(monospaced);
+                case PROPORTIONAL:
+                    return new ArrayList<>(proportional);
+                case CHARACTER:
+                    return new ArrayList<>(character);
+                case SYMBOL:
+                    return new ArrayList<>(symbol);
+                default:
+                    return new ArrayList<>(all);
+            }
         }
 
     }
@@ -79,7 +81,9 @@ public class FontComboUtilSupport implements InstanceManagerAutoDefault {
         if (!prepared) {
             prepareFontLists();
         }
-        return symbol.contains(font);
+        synchronized (this) {
+            return symbol.contains(font);
+        }
     }
 
     /**
@@ -97,11 +101,11 @@ public class FontComboUtilSupport implements InstanceManagerAutoDefault {
         log.debug("Prepare font lists...");
 
         // Initialise the font lists
-        monospaced = new ArrayList<>();
-        proportional = new ArrayList<>();
-        character = new ArrayList<>();
-        symbol = new ArrayList<>();
-        all = new ArrayList<>();
+        monospaced.clear();
+        proportional.clear();
+        character.clear();
+        symbol.clear();
+        all.clear();
 
         // Create a font render context to use for the comparison
         Canvas c = new Canvas();
@@ -140,6 +144,9 @@ public class FontComboUtilSupport implements InstanceManagerAutoDefault {
 
         log.debug("...font lists built");
         prepared = true;
+        if (prepareThread != null) {
+            prepareThread = null;
+        }
     }
 
     /**
@@ -343,7 +350,7 @@ public class FontComboUtilSupport implements InstanceManagerAutoDefault {
      */
     public void initialize() {
         synchronized (this) {
-            if (prepareThread == null) {
+            if (!prepared && prepareThread == null) {
                 prepareThread = new Thread(() -> {
                     prepareFontLists();
                 }, "FontComboUtil Prepare");
