@@ -378,19 +378,20 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             // Insert the id
             thisReply.setId(thisLastId);
             final SprogTrafficController thisTC = this;
-            // return a notification via the queue to ensure end
-            Runnable r = new Runnable() {
-                SprogReply replyForLater = thisReply;
-                SprogListener lastSenderForLater = thisLastSender;
-                SprogTrafficController myTC = thisTC;
-
-                @Override
-                public void run() {
-                    log.debug("Delayed notify starts [{}]", replyForLater.toString());
-                    myTC.notifyReply(replyForLater, lastSenderForLater);
-                }
-            };
-            javax.swing.SwingUtilities.invokeLater(r);
+//            // return a notification via the queue to ensure end
+//            Runnable r = new Runnable() {
+//                SprogReply replyForLater = thisReply;
+//                SprogListener lastSenderForLater = thisLastSender;
+//                SprogTrafficController myTC = thisTC;
+//
+//                @Override
+//                public void run() {
+//                    log.debug("Delayed notify starts [{}]", replyForLater.toString());
+//                    myTC.notifyReply(replyForLater, lastSenderForLater);
+//                }
+//            };
+//            javax.swing.SwingUtilities.invokeLater(r);
+            thisTC.notifyReply(thisReply, thisLastSender);
         }
 
         // Do this after reply is despatched to avoid this.reply and .lastSender

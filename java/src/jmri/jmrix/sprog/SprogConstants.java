@@ -26,6 +26,16 @@ public final class SprogConstants {
     /* Maximum number of slots for soft command station */
     public final static int MAX_SLOTS = 16;
 
+    /* Worst case DCC packet is ~10 ms, which equates to 100 packets/s. Wait for
+     * a somwhat arbitrary time before reporting a possible issue. A delay of
+     * 33 ms equates to 30 packets/s if sustained. */
+    public final static int PACKET_DELAY_WARN_THRESHOLD = 33;
+
+    /* Timeout to wait for reply from hardware.
+       On Raspberry Pi we see some pathalogical delays, assumed to be due to the
+       slower procesor and flash based file system */
+    public final static int REPLY_TIMEOUT = 2500;
+
     /* How many times to repeat an accessory or function packet in the S queue */
     public final static int S_REPEATS = 1;
 
