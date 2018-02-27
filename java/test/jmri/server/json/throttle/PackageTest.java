@@ -14,7 +14,8 @@ import org.junit.runners.Suite.SuiteClasses;
     JsonThrottleServiceFactoryTest.class,
     JsonThrottleManagerTest.class,
     JsonThrottleTest.class,
-    JsonThrottleSocketServiceTest.class
+    JsonThrottleSocketServiceTest.class,
+    JsonThrottleHttpServiceTest.class
 })
 public class PackageTest {
 }
