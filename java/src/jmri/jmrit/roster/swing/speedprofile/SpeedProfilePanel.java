@@ -39,16 +39,16 @@ import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// JOD Feb18 BugFix
+// To fix slow running locos stopping dead as they exit timed block.
+// caused by (speedProfile/2) throttle setting which may be < the loco is capable of, so it stops.
+// create a var profileSpeedAtStart
+// populate with profileSpeed at start of a profile in notifyThrottleFound()
+// in stopCurrentSpeedStep() test that current speed /2 > profileSpeedAtStart 
+// if not, profileSpeedAtStart will be our minimum otherwise default behav half speed. 
+// JOD
+
 /**
- * JOD Feb18 BugFix
- * To fix slow running locos stopping dead as they exit timed block.
- * caused by (speedProfile/2) throttle setting which may be < the loco is capable of, so it stops.
- * create a var profileSpeedAtStart
- * populate with profileSpeed at start of a profile in notifyThrottleFound()
- * in stopCurrentSpeedStep() test that current speed /2 > profileSpeedAtStart 
- * if not, profileSpeedAtStart will be our minimum otherwise default behav half speed. 
- * JOD
- *   
  * Set up and run automated speed table calibration.
  * <p>
  * Uses three sensors in a row (see diagram in window help):
