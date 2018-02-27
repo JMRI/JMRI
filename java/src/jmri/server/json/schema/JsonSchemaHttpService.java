@@ -24,10 +24,22 @@ public class JsonSchemaHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+        return this.doPost(type, name, this.mapper.createObjectNode(), locale);
+    }
+
+    @Override
+    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
+        Boolean server = null; // note use of Boolean for tristate null, true, false
+        if (data.path(JSON.SERVER).isValueNode()) {
+            server = data.path(JSON.SERVER).asBoolean();
+        }
         switch (type) {
             case JSON.SCHEMA:
                 switch (name) {
                     case JSON.JSON:
+                        if (server != null) {
+                            return this.doSchema(JSON.JSON, server, locale);
+                        }
                         return this.mapper.createArrayNode()
                                 .add(this.doSchema(JSON.JSON, true, locale))
                                 .add(this.doSchema(JSON.JSON, false, locale));
@@ -37,18 +49,22 @@ public class JsonSchemaHttpService extends JsonHttpService {
                             for (JsonHttpService service : InstanceManager.getDefault(JsonSchemaServiceCache.class).getServices(name)) {
                                 // separate try/catch blocks to ensure one failure does not
                                 // block following from being accepted
-                                try {
-                                    schemas.add(service.doSchema(name, true, locale));
-                                } catch (JsonException ex) {
-                                    if (ex.getCode() != HttpServletResponse.SC_BAD_REQUEST) {
-                                        throw ex;
+                                if (server == null || server) {
+                                    try {
+                                        schemas.add(service.doSchema(name, true, locale));
+                                    } catch (JsonException ex) {
+                                        if (ex.getCode() != HttpServletResponse.SC_BAD_REQUEST) {
+                                            throw ex;
+                                        }
                                     }
                                 }
-                                try {
-                                    schemas.add(service.doSchema(name, false, locale));
-                                } catch (JsonException ex) {
-                                    if (ex.getCode() != HttpServletResponse.SC_BAD_REQUEST) {
-                                        throw ex;
+                                if (server == null || !server) {
+                                    try {
+                                        schemas.add(service.doSchema(name, false, locale));
+                                    } catch (JsonException ex) {
+                                        if (ex.getCode() != HttpServletResponse.SC_BAD_REQUEST) {
+                                            throw ex;
+                                        }
                                     }
                                 }
                             }
@@ -60,8 +76,8 @@ public class JsonSchemaHttpService extends JsonHttpService {
             case JSON.TYPES:
                 ObjectNode root = this.mapper.createObjectNode();
                 root.put(JSON.TYPE, JSON.TYPES);
-                ObjectNode data = root.putObject(JSON.DATA);
-                ArrayNode types = data.putArray(JSON.TYPES);
+                ObjectNode payload = root.putObject(JSON.DATA);
+                ArrayNode types = payload.putArray(JSON.TYPES);
                 InstanceManager.getDefault(JsonSchemaServiceCache.class).getTypes().forEach((t) -> {
                     types.add(t);
                 });
@@ -69,11 +85,6 @@ public class JsonSchemaHttpService extends JsonHttpService {
             default:
                 throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "GetNotAllowed", type));
         }
-    }
-
-    @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "PostNotAllowed", type));
     }
 
     @Override
