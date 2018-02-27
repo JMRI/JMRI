@@ -1180,7 +1180,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
     } //LayoutEditor (constructor)
 
-    private LayoutEditorComponent layoutEditorComponent = new LayoutEditorComponent(this);
+    private final LayoutEditorComponent layoutEditorComponent = new LayoutEditorComponent(this);
 
     private void createFloatingEditToolBox() {
         if (floatingEditToolBoxFrame == null) {
@@ -5138,7 +5138,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             } else if (!event.isShiftDown() && !event.isControlDown() && !event.isPopupTrigger()) {
                 //check if controlling a turnout in edit mode
                 selectedObject = null;
-
+                if (allControlling()) {
+                    checkControls(false);
+                }
                 //initialize starting selection - cancel any previous selection rectangle
                 selectionActive = true;
                 selectionX = dLoc.getX();
@@ -5154,6 +5156,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 && !event.isAltDown() && !event.isShiftDown() && !event.isControlDown()) {
             //not in edit mode - check if mouse is on a turnout (using wider search range)
             selectedObject = null;
+            checkControls(true);
 
         } else if ((isMetaDown(event) || event.isAltDown())
                 && !event.isShiftDown() && !event.isControlDown()) {
