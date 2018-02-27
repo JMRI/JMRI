@@ -63,7 +63,9 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
     Bell bell;
 
     Station station;
+    @Override
     public Station getStation() { return station; }
+    @Override
     public String getName() { return "TC for "+hInputSensor.getBean().getDisplayName(); }
 
      /**

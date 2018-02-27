@@ -626,6 +626,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /**
      * Default XML verification. Public to allow scripting.
      */
+    @Override
     public void setValidate(XmlFile.Validate v) {
         validate = v;
     }
@@ -633,6 +634,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /**
      * Default XML verification. Public to allow scripting.
      */
+    @Override
     public XmlFile.Validate getValidate() {
         return validate;
     }

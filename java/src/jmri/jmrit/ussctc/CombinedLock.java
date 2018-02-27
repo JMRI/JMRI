@@ -20,6 +20,7 @@ public class CombinedLock implements Lock {
      * Test the lock conditions
      * @return True if lock is clear and operation permitted
      */
+    @Override
     public boolean isLockClear() {
         for (Lock lock : list)
             if (!lock.isLockClear()) return false;
