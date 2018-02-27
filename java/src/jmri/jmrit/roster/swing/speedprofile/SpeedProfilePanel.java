@@ -991,7 +991,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     }
 
     TreeMap<Integer, SpeedStep> speeds = new TreeMap<>();
-
+    
     static class SpeedStep {
 
         float forward = 0.0f;
