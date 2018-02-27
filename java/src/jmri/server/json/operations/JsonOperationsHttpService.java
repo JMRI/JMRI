@@ -193,8 +193,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
             case TRAINS:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/operations/train-server.json",
-                        "/jmri/server/json/operations/train-client.json");
+                        "jmri/server/json/operations/train-server.json",
+                        "jmri/server/json/operations/train-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
