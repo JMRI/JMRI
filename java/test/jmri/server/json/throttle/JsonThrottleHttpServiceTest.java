@@ -6,7 +6,6 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -19,7 +18,6 @@ public class JsonThrottleHttpServiceTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JsonThrottleHttpService t = new JsonThrottleHttpService(mapper);
         Assert.assertNotNull("exists",t);
     }

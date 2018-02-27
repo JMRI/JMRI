@@ -6,7 +6,6 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -16,7 +15,6 @@ public class RailDriverMenuItemTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         RailDriverMenuItem t = new RailDriverMenuItem();
         Assert.assertNotNull("exists",t);
     }
