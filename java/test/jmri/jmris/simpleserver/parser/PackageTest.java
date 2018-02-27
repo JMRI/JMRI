@@ -15,6 +15,6 @@ import org.junit.runners.Suite;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class JmriServerParserTests{
+public class PackageTest {
 }
 

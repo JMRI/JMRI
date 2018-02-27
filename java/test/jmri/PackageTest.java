@@ -66,6 +66,8 @@ import org.junit.runners.Suite;
     TransitManagerTest.class,
     TurnoutOperationManagerTest.class,
     EntryPointTest.class,
+    NamedBeanPropertyDescriptorTest.class,
+    BooleanPropertyDescriptorTest.class,
     RunCucumberTest.class,})
 
 /**

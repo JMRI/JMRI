@@ -140,6 +140,7 @@ public class TrackSegment extends LayoutTrack {
      *
      * @return text showing id and connections of this segment
      */
+    @Override
     public String toString() {
         return "TrackSegment " + getName()
                 + " c1:{" + getConnect1Name() + " (" + type1 + "},"
@@ -276,6 +277,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * @return true if track segment is a main line
      */
+    @Override
     public boolean isMainline() {
         return mainline;
     }
@@ -474,6 +476,7 @@ public class TrackSegment extends LayoutTrack {
      * {@link #getConnect2} should be used instead.
      */
     // only implemented here to suppress "does not override abstract method " error in compiler
+    @Override
     public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
         // nothing to see here, move along
         return null;
@@ -486,6 +489,7 @@ public class TrackSegment extends LayoutTrack {
      * {@link #setNewConnect2} should be used instead.
      */
     // only implemented here to suppress "does not override abstract method " error in compiler
+    @Override
     public void setConnection(int connectionType, @Nullable LayoutTrack o, int type) throws jmri.JmriException {
         // nothing to see here, move along
     }
@@ -549,6 +553,7 @@ public class TrackSegment extends LayoutTrack {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
+    @Override
     public void scaleCoords(float xFactor, float yFactor) {
         // nothing to see here, move along
     }
@@ -559,6 +564,7 @@ public class TrackSegment extends LayoutTrack {
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
+    @Override
     public void translateCoords(float xFactor, float yFactor) {
         // nothing to see here, move along
     }
@@ -568,6 +574,7 @@ public class TrackSegment extends LayoutTrack {
      *
      * @param newCenterPoint the coordinates to set
      */
+    @Override
     public void setCoordsCenter(@Nullable Point2D newCenterPoint) {
         if (center != newCenterPoint) {
             if ((newCenterPoint != null) && isBezier()) {
@@ -593,6 +600,7 @@ public class TrackSegment extends LayoutTrack {
     @SuppressWarnings("deprecation")
     //NOTE: findObjectByTypeAndName is @Deprecated;
     // we're using it here for backwards compatibility until it can be removed
+    @Override
     public void setObjects(LayoutEditor p) {
         if (!tBlockName.isEmpty()) {
             layoutBlock = p.getLayoutBlock(tBlockName);
@@ -715,6 +723,7 @@ public class TrackSegment extends LayoutTrack {
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
+    @Override
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = getCentreSeg();
         if (connectionType == TRACK_CIRCLE_CENTRE) {
@@ -728,6 +737,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * @return the bounds of this track segment
      */
+    @Override
     public Rectangle2D getBounds() {
         Rectangle2D result;
 
@@ -2074,44 +2084,54 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
+        if (!isBlock && getDashed() && getLayoutBlock() != null) {
+            // Skip the dashed rail layer, the block layer will display the dashed track
+            // This removes random rail fragments from between the block dashes
+            return;
+        }
         if (isMain == mainline) {
             if (isBlock) {
-        setColorForTrackBlock(g2, getLayoutBlock());
-    }
-        if (isArc()) {
-            calculateTrackSegmentAngle();
-                g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN));
-                trackRedrawn();
-        } else if (isBezier()) {
-            Point2D pt1 = LayoutEditor.getCoords(getConnect1(), getType1());
-            Point2D pt2 = LayoutEditor.getCoords(getConnect2(), getType2());
-
-            int cnt = bezierControlPoints.size();
-            Point2D[] points = new Point2D[cnt + 2];
-            points[0] = pt1;
-            for (int idx = 0; idx < cnt; idx++) {
-                points[idx + 1] = bezierControlPoints.get(idx);
+                setColorForTrackBlock(g2, getLayoutBlock());
             }
-            points[cnt + 1] = pt2;
+            if (isArc()) {
+                calculateTrackSegmentAngle();
+                    g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN));
+                    trackRedrawn();
+            } else if (isBezier()) {
+                Point2D pt1 = LayoutEditor.getCoords(getConnect1(), getType1());
+                Point2D pt2 = LayoutEditor.getCoords(getConnect2(), getType2());
 
-            MathUtil.drawBezier(g2, points);
-        } else {
-            Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
-            Point2D end2 = LayoutEditor.getCoords(getConnect2(), getType2());
+                int cnt = bezierControlPoints.size();
+                Point2D[] points = new Point2D[cnt + 2];
+                points[0] = pt1;
+                for (int idx = 0; idx < cnt; idx++) {
+                    points[idx + 1] = bezierControlPoints.get(idx);
+                }
+                points[cnt + 1] = pt2;
+
+                MathUtil.drawBezier(g2, points);
+            } else {
+                Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
+                Point2D end2 = LayoutEditor.getCoords(getConnect2(), getType2());
 
                 g2.draw(new Line2D.Double(end1, end2));
             }
-            }
         }
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+        if (getDashed() && getLayoutBlock() != null) {
+            // Skip the dashed rail layer, the block layer will display the dashed track
+            // This removes random rail fragments from between the block dashes
+            return;
+        }
         if (isMain == mainline) {
-        if (isArc()) {
-            calculateTrackSegmentAngle();
+            if (isArc()) {
+                calculateTrackSegmentAngle();
                 Rectangle2D cRectangle2D = new Rectangle2D.Double(
                         getCX(), getCY(), getCW(), getCH());
                 Rectangle2D cLeftRectangle2D = MathUtil.inset(cRectangle2D, -railDisplacement);
@@ -2130,7 +2150,7 @@ public class TrackSegment extends LayoutTrack {
                         cLRightRectangle2D.getHeight(),
                         startAdj, tmpAngle, Arc2D.OPEN));
                 trackRedrawn();
-        } else if (isBezier()) {
+            } else if (isBezier()) {
                 Point2D pt1 = LayoutEditor.getCoords(getConnect1(), getType1());
                 Point2D pt2 = LayoutEditor.getCoords(getConnect2(), getType2());
 
@@ -2144,9 +2164,9 @@ public class TrackSegment extends LayoutTrack {
 
                 MathUtil.drawBezier(g2, points, -railDisplacement);
                 MathUtil.drawBezier(g2, points, +railDisplacement);
-        } else {
-            Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
-            Point2D end2 = LayoutEditor.getCoords(getConnect2(), getType2());
+            } else {
+                Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
+                Point2D end2 = LayoutEditor.getCoords(getConnect2(), getType2());
 
                 Point2D delta = MathUtil.subtract(end2, end1);
                 Point2D vector = MathUtil.normalize(delta, railDisplacement);
@@ -2173,6 +2193,7 @@ public class TrackSegment extends LayoutTrack {
         // nothing to see here... move along...
         }
 
+    @Override
     protected void drawEditControls(Graphics2D g2) {
         g2.setColor(Color.black);
         if (isShowConstructionLines()) {
@@ -2201,6 +2222,7 @@ public class TrackSegment extends LayoutTrack {
         g2.draw(layoutEditor.trackEditControlCircleAt(getCentreSeg()));
     }   // drawEditControls
 
+    @Override
     protected void drawTurnoutControls(Graphics2D g2) {
         // TrackSegments don't have turnout controls...
         // nothing to see here... move along...
@@ -2761,6 +2783,7 @@ public class TrackSegment extends LayoutTrack {
      *
      * @return decorations to set
      */
+    @Override
     public Map<String, String> getDecorations() {
         if (decorations == null) {
             decorations = new HashMap<>();
@@ -2884,6 +2907,7 @@ public class TrackSegment extends LayoutTrack {
      *
      * @param decorations to set
      */
+    @Override
     public void setDecorations(Map<String, String> decorations) {
         super.setDecorations(decorations);
         if (decorations != null) {
@@ -3777,6 +3801,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void collectContiguousTracksNamesInBlockNamed(@Nonnull String blockName,
             @Nonnull Set<String> TrackNameSet) {
         if (!TrackNameSet.contains(getName())) {
@@ -3801,6 +3826,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
         setLayoutBlock(layoutBlock);
     }

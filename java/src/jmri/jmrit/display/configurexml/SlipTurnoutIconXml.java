@@ -61,6 +61,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
                 }
                 element.addContent(storeIcon("lowerWestToLowerEast", p.getLowerWestToLowerEastIcon(), p.getLWLEText()));
                 element.setAttribute("turnoutType", "scissor");
+                break;
             default:
                 log.warn("Unhandled turnout type: {}", p.getTurnoutType());
                 break;

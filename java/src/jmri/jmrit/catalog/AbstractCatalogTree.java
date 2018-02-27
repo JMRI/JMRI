@@ -277,6 +277,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
      * By default, does an alphanumeric-by-chunks comparison
      */
     @CheckReturnValue
+    @Override
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
         jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
         return ac.compare(suffix1, suffix2);

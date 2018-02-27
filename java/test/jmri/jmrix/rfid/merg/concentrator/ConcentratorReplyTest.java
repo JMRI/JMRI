@@ -19,7 +19,6 @@ public class ConcentratorReplyTest {
     ConcentratorTrafficController tc = null;
 
     @Test
-    @Ignore("setup not complete, created object is null")
     public void testCtor() {
         ConcentratorReply c = new ConcentratorReply(tc){
             @Override

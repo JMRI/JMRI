@@ -32,6 +32,7 @@ public class OccupancyLock implements Lock {
      * Test the lock conditions
      * @return True if lock is clear and operation permitted
      */
+    @Override
     public boolean isLockClear() {
         InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue("");
         for (NamedBeanHandle<Sensor> handle : list) {

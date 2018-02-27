@@ -616,6 +616,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             hardwareAddressTextField.setBackground(Color.yellow); // reset after possible error notification
             // Define PropertyChangeListener
             colorChangeListener = new PropertyChangeListener() {
+                @Override
                 public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                     String property = propertyChangeEvent.getPropertyName();
                     if ("background".equals(property)) {

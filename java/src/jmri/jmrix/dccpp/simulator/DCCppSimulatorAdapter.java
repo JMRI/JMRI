@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender, Copyright (C) 2009-2010
  * @author Mark Underwood, Copyright (C) 2015
  *
- * Based on jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter
+ * Based on {@link jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter}
  */
 public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implements Runnable {
 
