@@ -356,7 +356,7 @@ public class FontComboUtilSupport implements InstanceManagerAutoDefault {
                 }, "FontComboUtil Prepare");
             }
         }
-        if (!prepareThread.isAlive() && !prepared && !preparing) {
+        if (prepareThread != null && !prepareThread.isAlive() && !prepared && !preparing) {
             prepareThread.start();
         }
     }
