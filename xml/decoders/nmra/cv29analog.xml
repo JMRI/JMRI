@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>10</revnumber>
+      <date>2018-02-14</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>Added Dutch translation</revremark>
+    </revision>
+    <revision>
       <revnumber>9</revnumber>
       <date>2018-01-02</date>
       <authorinitials>ALM</authorinitials>
@@ -87,5 +93,6 @@
     <tooltip xml:lang="fr">&lt;html&gt;Digital NMRA seulement: fonctionne uniquement en Digital&lt;br&gt; Mode analogique activé: fonctionne à la fois en Digital et en analogique&lt;br&gt;Les deux par défaut.&lt;br&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Nur Digital nach NMRA: Die Lokomotive fährt nur digital.&lt;br&gt; Analogbetrieb Aktiviert: Die Lokomotive fährt sowohl digital als auch analog.&lt;br&gt;</tooltip>
     <tooltip xml:lang="cs">&lt;html&gt;Pouze digitál NMRA: pouze digitální provoz. &lt;br&gt; Povolena konverze DC: obojí provoz digitální + analogový, výhozí hodnota je vypnuto.&lt;br&gt;</tooltip>
+    <tooltip xml:lang="nl">&lt;html&gt;Alleen digitaal volgens NMRA: de locomotief rijdt alleen digitaal.&lt;br&gt; Analoge modus geactiveerd: de locomotief rijdt zowel digitaal als analoog.&lt;br&gt;</tooltip>
   </variable>
 </variables>
