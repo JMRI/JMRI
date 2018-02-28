@@ -80,7 +80,7 @@ public class ManagerTest {
         Assert.assertFalse(Manager.isLegacySystemPrefix("C2"));
         Assert.assertFalse(Manager.isLegacySystemPrefix("D"));
         
-        for (String s : Manager.legacyPrefixes.toArray(new String[0])) {
+        for (String s : Manager.LEGACY_PREFIXES.toArray(new String[0])) {
             Assert.assertTrue(Manager.isLegacySystemPrefix(s));
         }
     }
@@ -91,7 +91,7 @@ public class ManagerTest {
     public void testLegacyPrefixes() {
         // catch if this is changed, so we remember to change
         // rest of tests
-        Assert.assertEquals("length of legacy set", 7, Manager.legacyPrefixes.toArray().length);
+        Assert.assertEquals("length of legacy set", 7, Manager.LEGACY_PREFIXES.toArray().length);
     }
 
     // Test legacy prefixes
@@ -106,7 +106,7 @@ public class ManagerTest {
         Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("C2T12"));
         Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("DT12132"));
         
-        for (String s : Manager.legacyPrefixes.toArray(new String[0])) {
+        for (String s : Manager.LEGACY_PREFIXES.toArray(new String[0])) {
             Assert.assertEquals("Length test of \""+s+"\"",s.length(), Manager.startsWithLegacySystemPrefix(s+"T12"));
         }
     }

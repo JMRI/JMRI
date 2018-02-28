@@ -21,6 +21,7 @@ import org.slf4j.MDC;
  * layout blocks is usable and free.
  *
  * @author Kevin Dickerson Copyright (C) 2011
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutBlockConnectivityTools {
 
@@ -971,6 +972,6 @@ public class LayoutBlockConnectivityTools {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlockConnectivityTools.class);
-
+    private final static Logger log
+            = LoggerFactory.getLogger(LayoutBlockConnectivityTools.class);
 }

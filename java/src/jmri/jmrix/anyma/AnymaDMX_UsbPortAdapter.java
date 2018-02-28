@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * Provides an Adapter to allow the system connection memo and multiple
  * AnymaDMX_ managers to be handled.
  * <P>
- * @author George Warner Copyright (c) 2017
+ * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
 public class AnymaDMX_UsbPortAdapter extends UsbPortAdapter {

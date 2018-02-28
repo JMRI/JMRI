@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 public class OlcbSensorTest extends TestCase {
     private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class);
     protected PropertyChangeListenerScaffold l; 
-    private static final String KNOWN_STATE = "KnownState";
 
     public void testIncomingChange() {
         Assert.assertNotNull("exists", t);
