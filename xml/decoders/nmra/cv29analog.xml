@@ -89,6 +89,7 @@
     <label xml:lang="ca">Power Source Conversion(ca)</label>
     <label xml:lang="de">Stromquelle Konversion</label>
     <label xml:lang="cs">Konverze napájení</label>
+    <label xml:lang="nl">Stroombron conversie</label>
     <label>Power Source Conversion</label>
     <tooltip>&lt;html&gt;NMRA Digital only: Digital Operation Only.&lt;br&gt; DC conversion enabled: both Digital + Analog, default is both&lt;br&gt;</tooltip>
     <tooltip xml:lang="it">&lt;html&gt;'4' bit.&lt;br&gt; Permette alla loco di andare in DC, per default è On&lt;br&gt;</tooltip>
