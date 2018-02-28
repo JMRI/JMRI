@@ -5225,6 +5225,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param useRectangles set true to use rectangle; false for circles.
      */
     private void checkControls(boolean useRectangles) {
+        selectedObject = null;
         for (LayoutTrack theTrack : layoutTrackList) {
             selectedPointType = theTrack.findHitPointType(dLoc, useRectangles);
             if (LayoutTrack.isControlHitType(selectedPointType)) {
