@@ -78,7 +78,7 @@
             <choice xml:lang="de">28/128 Fahrstufen Modus (empfohlen)</choice>
             <choice xml:lang="fr">Format 28/128 Pas de vitesse (recommandé)</choice>
             <choice xml:lang="it">Formato 28 o 128 step (raccomandato)</choice>
-            <choice xml:lang="nl">28/128 rijstappenmodus mode (aanbevolen)
+            <choice xml:lang="nl">28/128 rijstappenmodus mode (aanbevolen)</choice>
           </enumChoice>
         </enumVal>
     <label>Speed Steps</label>
