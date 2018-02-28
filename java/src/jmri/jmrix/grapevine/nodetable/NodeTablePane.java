@@ -126,7 +126,8 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
     }
 
     /**
-     * Open a new {@link Renumberframe(GrapevineSystemConnectionMemo)}.
+     * Respond to Renumber button click by opening a new
+     * {@link RenumberFrame}.
      */
     void renumber() {
         RenumberFrame f = new RenumberFrame(memo);

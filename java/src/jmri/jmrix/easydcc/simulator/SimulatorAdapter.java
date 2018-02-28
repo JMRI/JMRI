@@ -125,6 +125,9 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
 
     // Base class methods for the EasyDccPortController simulated interface
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {
@@ -134,6 +137,9 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
         return pin;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened || pout == null) {
@@ -143,6 +149,9 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
         return pout;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;

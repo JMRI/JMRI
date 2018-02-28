@@ -30,15 +30,15 @@ public interface SerialPortAdapter extends PortAdapter {
     public void configure();
 
     /**
-     * Query the status of this connection. If all OK, at least as far as is
-     * known, return true
+     * {@inheritDoc}
      */
     @Override
     public boolean status();
 
     /**
-     * Remember the associated port name
+     * Remember the associated port name.
      *
+     * @param s name of the port
      */
     public void setPort(String s);
 

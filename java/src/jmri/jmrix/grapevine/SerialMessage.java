@@ -8,24 +8,10 @@ import org.slf4j.LoggerFactory;
  * Contains the data payload of a serial packet. Note that it's _only_ the
  * payload.
  * <p>
- * Grapevine Message Format Summary:
- * <p>
- * Signal (Head)s (Banks 1-3)
- * {@code
- *  b2 (element 1): id + state      b4 (element 3): bank + parity
- *  bit/id (0 - F = 16 poss.)       bank 1 			0001 ....
- *                  .000 0...       bank 2 			0010 ....
- *                  .000 1...       bank 3 			0011 ....
- *                  .001 0...
- *                  etc up to       parity 			.... xxxx
- *                  .111 1...
+ * Grapevine <a href="package-summary.html">Binary Message Format Summary</a>
  *
- *  State (7 appearances)
- *  Green 		    .... .000
- *  Red 			.... .110
- * }
- *
- * @author Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2006, 2007, 2008
+ * @author Egbert Broerse Copyright (C) 2018
  */
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -40,7 +26,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Create a new SerialMessage instance of a given byte size.
      *
-     * @param len number of elements
+     * @param len number of elements in the message
      */
     public SerialMessage(int len) {
         super(len); // most Grapevine messages are four bytes, binary
@@ -182,6 +168,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      * Used by both SerialMessage and SerialReply, because so much of it is
      * common. That forces the passing of arguments as numbers. Short messages
      * are marked by having missing bytes put to -1 in the arguments.
+     * See the Grapevine <a href="package.html">Binary Message Format Summary</a>
      */
     static String staticFormat(int b1, int b2, int b3, int b4) {
         String result;

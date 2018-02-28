@@ -23,7 +23,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
     /**
      * Copy a Reply to a new SerialReply instance.
      *
-     * @param m the reply to copy
+     * @param l the reply to copy
      */
     public SerialReply(SerialReply l) {
         super(l);

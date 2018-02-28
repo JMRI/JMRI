@@ -135,6 +135,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     }
 
     // base class methods for the DCCppSimulatorPortController interface
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (pin == null) {
@@ -144,6 +148,9 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         return pin;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (pout == null) {
@@ -153,6 +160,9 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         return pout;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return (pout != null && pin != null);
@@ -160,7 +170,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     /**
      * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed.
+     * it's fixed.
      *
      * @return null
      */

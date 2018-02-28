@@ -80,6 +80,7 @@ public class SimulatorAdapter extends TamsPortController implements
     }
 
     // base class methods for the TamsPortController interface
+
     @Override
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {

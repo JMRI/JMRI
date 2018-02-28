@@ -29,7 +29,7 @@ public class RenumberFrame extends jmri.util.JmriJFrame {
     /**
      * Create new RenumberFrame instance.
      *
-     * @param the {@link jmri.jmrix.grapevine.GrapevineSystemConnectionMemo} for this frame
+     * @param _memo the {@link jmri.jmrix.grapevine.GrapevineSystemConnectionMemo} for this frame
      */
     public RenumberFrame(GrapevineSystemConnectionMemo _memo) {
         super();
