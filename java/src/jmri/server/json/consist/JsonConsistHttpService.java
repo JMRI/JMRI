@@ -31,7 +31,7 @@ import jmri.server.json.util.JsonUtilHttpService;
 
 /**
  *
- * @author Randall Wood Copyright (C) 2016
+ * @author Randall Wood Copyright 2016, 2018
  */
 public class JsonConsistHttpService extends JsonHttpService {
 
@@ -227,8 +227,8 @@ public class JsonConsistHttpService extends JsonHttpService {
             case CONSISTS:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/consist/consist-server.json",
-                        "/jmri/server/json/consist/consist-client.json");
+                        "jmri/server/json/consist/consist-server.json",
+                        "jmri/server/json/consist/consist-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
