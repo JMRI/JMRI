@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "jmri-json-route-client-message",
+    "type": "object",
+    "description": "Schema data object in message from client to JMRI for type \"route\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "System name of the route"
+        },
+        "state": {
+            "type": "integer",
+            "description": "If present, and 2 (active) or 8 (toggle), activates the route",
+            "enum": [0, 2, 4, 8]
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name"]
+}

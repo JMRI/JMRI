@@ -50,7 +50,7 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService {
             data.put(ASPECT, aspect);
             data.put(LIT, signalMast.getLit());
             data.put(TOKEN_HELD, signalMast.getHeld());
-            //state is appearance, plus flags for held and dark statii
+            //state is appearance, plus flags for held and dark statuses
             if ((signalMast.getHeld()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD) != null)) {
                 data.put(STATE, ASPECT_HELD);
             } else if ((!signalMast.getLit()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK) != null)) {
@@ -104,8 +104,8 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService {
             case SIGNAL_MASTS:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/signalMast/signalMast-server.json",
-                        "/jmri/server/json/signalMast/signalMast-client.json");
+                        "jmri/server/json/signalMast/signalMast-server.json",
+                        "jmri/server/json/signalMast/signalMast-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }

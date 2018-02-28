@@ -140,8 +140,8 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService {
             case ROUTES:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/route/route-server.json",
-                        "/jmri/server/json/route/route-client.json");
+                        "jmri/server/json/route/route-server.json",
+                        "jmri/server/json/route/route-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
