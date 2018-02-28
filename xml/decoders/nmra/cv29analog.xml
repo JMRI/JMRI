@@ -72,6 +72,7 @@
         <choice xml:lang="ca">NMRA Digital only (ca)</choice>
         <choice xml:lang="de">Nur Digital nach NMRA</choice>
         <choice xml:lang="cs">Pouze digitál NMRA</choice>
+        <choice xml:lang="nl">Alleen digitaal naar NMRA</choice>
       </enumChoice>
       <enumChoice choice="DC conversion enabled">
         <choice>DC conversion enabled</choice>
@@ -80,6 +81,7 @@
         <choice xml:lang="ca">DC conversion enabled (ca)</choice>
         <choice xml:lang="de">Analogbetrieb Aktiviert</choice>
         <choice xml:lang="cs">Povolena konverze DC</choice>
+        <choice xml:lang="nl">Analogmodus ingeschakeld</choice>
       </enumChoice>
     </enumVal>
     <label xml:lang="it">Conversione Sorgente Alimentazione</label>
