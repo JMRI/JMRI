@@ -1180,7 +1180,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
     } //LayoutEditor (constructor)
 
-    private LayoutEditorComponent layoutEditorComponent = new LayoutEditorComponent(this);
+    private final LayoutEditorComponent layoutEditorComponent = new LayoutEditorComponent(this);
 
     private void createFloatingEditToolBox() {
         if (floatingEditToolBoxFrame == null) {
@@ -5139,7 +5139,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 //check if controlling a turnout in edit mode
                 selectedObject = null;
 
-                //initialize starting selection - cancel any previous selection rectangle
+                if (allControlling()) {
+                    checkControls(false);
+                }
+                 //initialize starting selection - cancel any previous selection rectangle
                 selectionActive = true;
                 selectionX = dLoc.getX();
                 selectionY = dLoc.getY();
@@ -5154,6 +5157,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 && !event.isAltDown() && !event.isShiftDown() && !event.isControlDown()) {
             //not in edit mode - check if mouse is on a turnout (using wider search range)
             selectedObject = null;
+            checkControls(true);
 
         } else if ((isMetaDown(event) || event.isAltDown())
                 && !event.isShiftDown() && !event.isControlDown()) {
@@ -5214,40 +5218,20 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //    }
     //    return result;
     //}
-    private boolean checkControls(boolean useRectangles) {
-        Optional<LayoutTrack> opt = layoutTrackList.stream().filter(layoutTrack -> {
-            selectedPointType = layoutTrack.findHitPointType(dLoc, useRectangles);
-            if (!LayoutTrack.isControlHitType(selectedPointType)) {
-                selectedPointType = LayoutTrack.NONE;
-            }
-            return (LayoutTrack.NONE != selectedPointType);
-        }).findFirst();
 
-        Object obj = null;
-        if (opt.isPresent()) {
-            obj = opt.get();
-            if (obj != null) {
-                /*  TODO: Dead-code strip this (if not needed)
-            if (layoutTrack instanceof LayoutTurntable) {
-                LayoutTurntable layoutTurntable = (LayoutTurntable) layoutTrack;
-                if (LayoutTrack.isConnectionHitType(selectedPointType)) {
-                    try {
-                        selectedObject = layoutTurntable.getConnection(selectedPointType);
-                    } catch (JmriException e) {
-                        // this should never happed because .isConnectionType will catch
-                        // invalid connection types before .getConnection is called
-                    }
-                } else {
-                    selectedPointType = LayoutTrack.NONE;
-                }
-            } else
-                 */
-                {
-                    selectedObject = obj;
-                }
+    /**
+     * Called by {@link #mousePressed} to determine if the mouse click was in a turnout control location.
+     * If so, update selectedPointType and selectedObject for use by {@link #mouseReleased}.
+     * @param useRectangles set true to use rectangle; false for circles.
+     */
+    private void checkControls(boolean useRectangles) {
+        for (LayoutTrack theTrack : layoutTrackList) {
+            selectedPointType = theTrack.findHitPointType(dLoc, useRectangles);
+            if (LayoutTrack.isControlHitType(selectedPointType)) {
+                selectedObject = theTrack;
+                return;
             }
         }
-        return (selectedObject != null);
     }
 
     // optional parameter avoid
