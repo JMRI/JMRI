@@ -15,7 +15,6 @@ import org.junit.runners.Suite.SuiteClasses;
     JsonMessageClientManagerTest.class,
     JsonMessageSocketServiceTest.class,
     JsonMessageServiceFactoryTest.class,
-    JsonMessageHttpServiceTest.class,
 })
 public class PackageTest {
 }

@@ -15,7 +15,6 @@ import org.junit.runners.Suite.SuiteClasses;
     JsonThrottleManagerTest.class,
     JsonThrottleTest.class,
     JsonThrottleSocketServiceTest.class,
-    JsonThrottleHttpServiceTest.class
 })
 public class PackageTest {
 }
