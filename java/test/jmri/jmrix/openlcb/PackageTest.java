@@ -26,7 +26,8 @@ import org.junit.runners.Suite;
         OlcbConnectionTypeListTest.class,
         OlcbConstantsTest.class,
         OlcbConfigurationManagerTest.class,
-        OpenLcbMenuTest.class
+        OpenLcbMenuTest.class,
+        OlcbUtilsTest.class,
 })
 
 
