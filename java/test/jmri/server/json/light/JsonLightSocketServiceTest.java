@@ -1,6 +1,5 @@
 package jmri.server.json.light;
 
-import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -14,24 +13,19 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
  * @author Paul Bender
  * @author Randall Wood
  */
-public class JsonLightSocketServiceTest extends TestCase {
+public class JsonLightSocketServiceTest {
 
-    public void testCtorSuccess() {
-        JsonLightSocketService service = new JsonLightSocketService(new JsonMockConnection((DataOutputStream) null));
-        Assert.assertNotNull(service);
-    }
-
+    @Test
     public void testLightChange() {
         try {
             JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -60,6 +54,7 @@ public class JsonLightSocketServiceTest extends TestCase {
         }
     }
 
+    @Test
     public void testOnMessageChange() {
         try {
             JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -95,38 +90,14 @@ public class JsonLightSocketServiceTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public JsonLightSocketServiceTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {JsonLightSocketServiceTest.class.getName()};
-        TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JsonLightSocketServiceTest.class);
-
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        Log4JFixture.setUp();
-        super.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.initInternalLightManager();
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        Log4JFixture.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
 
 }

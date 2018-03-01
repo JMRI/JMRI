@@ -26,12 +26,6 @@ import org.junit.Test;
 public class JsonReporterHttpServiceTest  {
 
     @Test
-    public void testCtorSuccess() {
-        JsonReporterHttpService service = new JsonReporterHttpService(new ObjectMapper());
-        Assert.assertNotNull(service);
-    }
-
-    @Test
     public void testDoGet() throws JmriException {
         JsonReporterHttpService service = new JsonReporterHttpService(new ObjectMapper());
         ReporterManager manager = InstanceManager.getDefault(ReporterManager.class);
@@ -104,7 +98,7 @@ public class JsonReporterHttpServiceTest  {
             Assert.fail(ex.getMessage());
         }
     }
-    
+
     @Test
     public void testDoGetList() {
         try {
@@ -124,7 +118,7 @@ public class JsonReporterHttpServiceTest  {
             Assert.fail(ex.getMessage());
         }
     }
-    
+
     @Test
     public void testDelete() {
         try {
