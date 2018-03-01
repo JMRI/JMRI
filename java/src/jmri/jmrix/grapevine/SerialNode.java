@@ -72,7 +72,7 @@ public class SerialNode extends AbstractNode {
     private SerialTrafficController tc = null;
 
     /**
-     * Assumes a node address of 0, and a node type of 0 (NODE2002V6).
+     * Assumes a node address of 1, and a node type of 0 (NODE2002V6).
      * If this constructor is used, actual node address must be set using
      * 'setNodeAddress()', and actual node type using 'setNodeType()'
      */
@@ -87,7 +87,7 @@ public class SerialNode extends AbstractNode {
     /**
      * Create a new SerialNode and initialize default instance variables.
      *
-     * @param address the address of node on serial bus (0-255)
+     * @param address the address of node on serial bus (1-127)
      * @param type a type constant from the class
      * @param tc the TrafficController for this connection
      */
@@ -229,12 +229,12 @@ public class SerialNode extends AbstractNode {
                 int i = 0;
 
                 // turn on 2nd parallel inputs
-                m2.setElement(i++, getNodeAddress() | 0x80);  // address
+                m2.setElement(i++, getNodeAddress() | 0x80); // address
                 m2.setElement(i++, 0x73);  // command
-                m2.setElement(i++, getNodeAddress() | 0x80);  // address
-                m2.setElement(i++, 0x00);  // bank and parity
+                m2.setElement(i++, getNodeAddress() | 0x80); // address
+                m2.setElement(i++, 0x00);  // bank 0 = init
                 m2.setParity(i - 4);
-                log.debug("Node initpacket 2 sent to {} trafficController",
+                log.debug("Node {} initpacket 2 sent to {} trafficController", getNodeAddress(),
                         (tc == null ? "null" : tc.getSystemConnectionMemo().getSystemPrefix()));
                 tc.sendSerialMessage(m2, null);
             }
@@ -252,15 +252,15 @@ public class SerialNode extends AbstractNode {
         m1.setElement(i++, getNodeAddress() | 0x80);  // address
         m1.setElement(i++, 0x71);  // command
         m1.setElement(i++, getNodeAddress() | 0x80);  // address
-        m1.setElement(i++, 0x00);  // bank and parity
+        m1.setElement(i++, 0x00);  // bank 0 = init
         m1.setParity(i - 4);
-        log.debug("Node initpacket 1 ready to send to {} trafficController",
+        log.debug("Node {} initpacket 1 ready to send to {} trafficController", getNodeAddress(),
                 (tc == null ? "null" : tc.getSystemConnectionMemo().getSystemPrefix()));
         return m1;
     }
 
     /**
-     * Public Method to create a Transmit packet (SerialMessage).
+     * Public method to create a Transmit packet (SerialMessage).
      */
     @Override
     public AbstractMRMessage createOutPacket() {
@@ -371,7 +371,7 @@ public class SerialNode extends AbstractNode {
     /**
      * Mark and act on a single input bit.
      *
-     * @param input     True if sensor says active
+     * @param input     true if sensor says active
      * @param sensorNum from 1 to lastUsedSensor+1 on this node
      */
     void markBit(boolean input, int sensorNum) {

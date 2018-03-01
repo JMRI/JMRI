@@ -129,6 +129,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
+        log.debug("createSystemName {}", tmpSName);
         return tmpSName;
     }
 

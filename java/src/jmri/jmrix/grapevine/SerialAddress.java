@@ -202,19 +202,19 @@ public class SerialAddress {
         if (!matcher.matches()) {
             // here if an illegal format 
             log.error("illegal system name format: {}", systemName);
-            return (null);
+            return null;
         }
 
         // start decode
         int ua;
         if (matcher.group(6) != null) {
-            // This is a Gtnnxxx address
+            // This is a Gitnnxxx address
             int num = Integer.valueOf(matcher.group(6)).intValue();
             if (num > 0) {
                 ua = num / 1000;
             } else {
                 log.error("invalid value in system name: {}", systemName);
-                return (null);
+                return null;
             }
         } else {
             ua = Integer.valueOf(matcher.group(3)).intValue();
@@ -238,7 +238,7 @@ public class SerialAddress {
         // start decode
         int n = 0;
         if (matcher.group(6) != null) {
-            // name in be Gtnnxxx format
+            // name in be Gitnnxxx format
             int num = Integer.valueOf(matcher.group(6)).intValue();
             if (num > 0) {
                 n = num % 1000;
@@ -247,15 +247,18 @@ public class SerialAddress {
                 return (0);
             }
         } else {
-            // This is a Gtnnaxxxx address
+            // This is a Gitnnaxxxx address
             n = Integer.valueOf(matcher.group(5)).intValue();
         }
         return (n);
     }
 
     /**
-     * Public static method to parse a system name and return the node number.
-     * Notes: Nodes are numbered from 1. If an error is found, -1 is returned.
+     * Public static method to parse a system name to fetch the node number.
+     * <p>
+     * Note: Nodes are numbered from 1.
+     *
+     * @return node number. If an error is found, returns -1
      */
     public static int getNodeAddressFromSystemName(String systemName, String prefix) {
         // validate the System Name leader characters
@@ -269,7 +272,7 @@ public class SerialAddress {
         // start decode
         int ua;
         if (matcher.group(6) != null) {
-            // This is a Gtnnxxx address
+            // This is a Gitnnxxx address
             int num = Integer.valueOf(matcher.group(6)).intValue();
             if (num > 0) {
                 ua = num / 1000;
@@ -279,6 +282,7 @@ public class SerialAddress {
             }
         } else {
             ua = Integer.valueOf(matcher.group(3)).intValue();
+            log.debug("node ua: {}", ua);
         }
         return ua;
     }
@@ -330,7 +334,7 @@ public class SerialAddress {
         int node = -1;
         int bit = -1;
         if (matcher.group(6) != null) {
-            // name in be Gtnnxxx format
+            // name in be Gitnnxxx format
             int num = Integer.valueOf(matcher.group(6)).intValue();
             if (num > 0) {
                 node = num / 1000;
@@ -340,7 +344,7 @@ public class SerialAddress {
                 return NameValidity.INVALID;
             }
         } else {
-            // This is a Gtnnaxxxx address, get values
+            // This is a Gitnnaxxxx address, get values
             node = Integer.valueOf(matcher.group(3)).intValue();
             bit = Integer.valueOf(matcher.group(5)).intValue();
         }

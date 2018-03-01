@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * Contains the data payload of a serial packet. Note that it's _only_ the
  * payload.
  * <p>
- * Grapevine <a href="package-summary.html">Binary Message Format Summary</a>
+ * See the Grapevine <a href="package-summary.html">Binary Message Format Summary</a>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2006, 2007, 2008
  * @author Egbert Broerse Copyright (C) 2018
@@ -93,7 +93,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(1, 119);  // get software version
         m.setElement(2, addr | 0x80);  // read first two bytes
         m.setElement(3, 119);  // send twice, without parity
-        m.setReplyLen(2); // only two bytes come back
+        m.setReplyLen(2);      // only two bytes come back
         return m;
     }
 
@@ -168,7 +168,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      * Used by both SerialMessage and SerialReply, because so much of it is
      * common. That forces the passing of arguments as numbers. Short messages
      * are marked by having missing bytes put to -1 in the arguments.
-     * See the Grapevine <a href="package.html">Binary Message Format Summary</a>
+     * See the Grapevine <a href="package-summary.html">Binary Message Format Summary</a>
      */
     static String staticFormat(int b1, int b2, int b3, int b4) {
         String result;
