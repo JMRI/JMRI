@@ -47,7 +47,8 @@ public class JsonTestHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // return an empty schema, which is valid, but accepts anything
+        return mapper.createObjectNode();
     }
 
 }

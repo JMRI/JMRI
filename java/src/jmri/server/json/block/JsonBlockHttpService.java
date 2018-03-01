@@ -101,8 +101,8 @@ public class JsonBlockHttpService extends JsonHttpService {
             case BLOCKS:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/block/block-server.json",
-                        "/jmri/server/json/block/block-client.json");
+                        "jmri/server/json/block/block-server.json",
+                        "jmri/server/json/block/block-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }

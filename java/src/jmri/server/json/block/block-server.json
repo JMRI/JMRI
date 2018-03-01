@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "jmri-json-block-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"block\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "System name of the block"
+        },
+        "userName": {
+            "type": "string",
+            "description": "User name of the block"
+        },
+        "comment": {
+            "type": "string",
+            "description": "Comment for the block"
+        },
+        "properties": {
+            "type": "array",
+            "description": "NamedBean properties of the block",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "Key by which property is accessed"
+                    },
+                    "value": {
+                        "type": ["string", "null"],
+                        "description": "String value of property or null"
+                    }
+                }
+            }
+        },
+        "value": {
+            "type": "string",
+            "description": "The value of the block"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "userName", "comment", "properties", "value"]
+}

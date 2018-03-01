@@ -1,12 +1,12 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "title": "jmri-json-signalMast-client-message",
+    "title": "jmri-json-signalHead-client-message",
     "type": "object",
-    "description": "Schema data object in message from client to JMRI for type \"signalMast\"",
+    "description": "Schema data object in message from client to JMRI for type \"signalHead\"",
     "properties": {
         "name": {
             "type": "string",
-            "description": "System name of the signalMast"
+            "description": "System name of the signalHead"
         },
         "userName": {
             "type": "string",
@@ -17,8 +17,8 @@
             "description": "If present, set the comment for the signalMast"
         },
         "state": {
-            "type": "string",
-            "description": "If present, set the state for the signalMast"
+            "type": "integer",
+            "description": "If present, set the state for the signalHead"
         }
     },
     "additionalProperties": false,

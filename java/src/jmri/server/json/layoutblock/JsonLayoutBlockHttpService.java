@@ -98,8 +98,8 @@ public class JsonLayoutBlockHttpService extends JsonHttpService {
             case LAYOUTBLOCKS:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/layoutblock/layoutblock-server.json",
-                        "/jmri/server/json/layoutblock/layoutblock-client.json");
+                        "jmri/server/json/layoutblock/layoutblock-server.json",
+                        "jmri/server/json/layoutblock/layoutblock-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }

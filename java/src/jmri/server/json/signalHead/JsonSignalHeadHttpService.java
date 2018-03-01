@@ -102,8 +102,8 @@ public class JsonSignalHeadHttpService extends JsonNamedBeanHttpService {
             case SIGNAL_HEADS:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/signalHead/signalHead-server.json",
-                        "/jmri/server/json/signalHead/signalHead-client.json");
+                        "jmri/server/json/signalHead/signalHead-server.json",
+                        "jmri/server/json/signalHead/signalHead-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
