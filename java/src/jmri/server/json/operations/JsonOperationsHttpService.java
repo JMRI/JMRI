@@ -175,20 +175,20 @@ public class JsonOperationsHttpService extends JsonHttpService {
             case CARS:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/operations/car-server.json",
-                        "/jmri/server/json/operations/car-client.json");
+                        "jmri/server/json/operations/car-server.json",
+                        "jmri/server/json/operations/car-client.json");
             case ENGINE:
             case ENGINES:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/operations/engine-server.json",
-                        "/jmri/server/json/operations/engine-client.json");
+                        "jmri/server/json/operations/engine-server.json",
+                        "jmri/server/json/operations/engine-client.json");
             case LOCATION:
             case LOCATIONS:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/operations/location-server.json",
-                        "/jmri/server/json/operations/location-client.json");
+                        "jmri/server/json/operations/location-server.json",
+                        "jmri/server/json/operations/location-client.json");
             case TRAIN:
             case TRAINS:
                 return doSchema(type,
