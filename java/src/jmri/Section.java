@@ -2358,6 +2358,7 @@ public class Section extends AbstractNamedBean {
         return true;
     }
 
+    @SuppressWarnings("unused") // not used now, preserved for later use
     private List<EntryPoint> getListOfForwardBlockEntryPoints(Block b) {
         if (initializationNeeded) {
             initializeBlocks();
