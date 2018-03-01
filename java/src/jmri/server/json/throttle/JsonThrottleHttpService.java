@@ -39,8 +39,8 @@ public class JsonThrottleHttpService extends JsonHttpService {
             case JsonThrottle.THROTTLE:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/throttle/throttle-server.json",
-                        "/jmri/server/json/throttle/throttle-client.json");
+                        "jmri/server/json/throttle/throttle-server.json",
+                        "jmri/server/json/throttle/throttle-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }

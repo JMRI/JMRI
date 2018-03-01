@@ -95,8 +95,8 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService {
             case MEMORIES:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/memory/memory-server.json",
-                        "/jmri/server/json/memory/memory-client.json");
+                        "jmri/server/json/memory/memory-server.json",
+                        "jmri/server/json/memory/memory-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }

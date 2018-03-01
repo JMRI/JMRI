@@ -418,12 +418,12 @@ public class JsonUtilHttpService extends JsonHttpService {
                 case JSON.NETWORK_SERVICES:
                     return doSchema(type,
                             server,
-                            "/jmri/server/json/util/" + JSON.NETWORK_SERVICE + "-server.json",
-                            "/jmri/server/json/util/" + JSON.NETWORK_SERVICE + "-client.json");
+                            "jmri/server/json/util/" + JSON.NETWORK_SERVICE + "-server.json",
+                            "jmri/server/json/util/" + JSON.NETWORK_SERVICE + "-client.json");
                 case JsonException.ERROR:
                     if (server) {
                         return doSchema(type, server,
-                                this.mapper.readTree(this.getClass().getClassLoader().getResource("/jmri/server/json/util/error-server.json")));
+                                this.mapper.readTree(this.getClass().getClassLoader().getResource("jmri/server/json/util/error-server.json")));
                     } else {
                         throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "NotAClientType", type));
                     }

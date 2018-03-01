@@ -107,8 +107,8 @@ public class JsonReporterHttpService extends JsonHttpService {
             case REPORTERS:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/reporter/reporter-server.json",
-                        "/jmri/server/json/reporter/reporter-client.json");
+                        "jmri/server/json/reporter/reporter-server.json",
+                        "jmri/server/json/reporter/reporter-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }

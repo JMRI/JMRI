@@ -122,8 +122,8 @@ public class JsonPowerHttpService extends JsonHttpService {
             case POWER:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/power/power-server.json",
-                        "/jmri/server/json/power/power-client.json");
+                        "jmri/server/json/power/power-server.json",
+                        "jmri/server/json/power/power-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }

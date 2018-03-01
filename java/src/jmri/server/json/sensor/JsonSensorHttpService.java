@@ -120,8 +120,8 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService {
             case SENSORS:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/sensor/sensor-server.json",
-                        "/jmri/server/json/sensor/sensor-client.json");
+                        "jmri/server/json/sensor/sensor-server.json",
+                        "jmri/server/json/sensor/sensor-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }

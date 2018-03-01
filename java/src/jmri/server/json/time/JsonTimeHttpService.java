@@ -75,8 +75,8 @@ public class JsonTimeHttpService extends JsonHttpService {
             case TIME:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/time/time-server.json",
-                        "/jmri/server/json/time/time-client.json");
+                        "jmri/server/json/time/time-server.json",
+                        "jmri/server/json/time/time-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }

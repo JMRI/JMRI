@@ -246,14 +246,14 @@ public class JsonRosterHttpService extends JsonHttpService {
             case JsonRoster.ROSTER_ENTRY:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/roster/" + type + "-server.json",
-                        "/jmri/server/json/roster/" + type + "-client.json");
+                        "jmri/server/json/roster/" + type + "-server.json",
+                        "jmri/server/json/roster/" + type + "-client.json");
             case JsonRoster.ROSTER_GROUP:
             case JsonRoster.ROSTER_GROUPS:
                 return doSchema(type,
                         server,
-                        "/jmri/server/json/roster/rosterGroup-server.json",
-                        "/jmri/server/json/roster/rosterGroup-client.json");
+                        "jmri/server/json/roster/rosterGroup-server.json",
+                        "jmri/server/json/roster/rosterGroup-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
