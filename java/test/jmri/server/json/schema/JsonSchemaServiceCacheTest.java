@@ -46,11 +46,22 @@ public class JsonSchemaServiceCacheTest {
                 try {
                     JsonNode node = service.doSchema(type, true, Locale.ENGLISH);
                 } catch (JsonException ex) {
-                    Assert.fail("No exception expected for type " + type + " from service " + service);
+                    if (ex.getCode() != 400) {
+                        Assert.fail("Unexpected exception for type " + type + " from service " + service);
+                    }
+                    Assert.assertEquals("Only no server exception expected for type " + type + " from service " + service,
+                            400,
+                            ex.getCode());
+                    Assert.assertEquals("Only no server exception expected for type " + type + " from service " + service,
+                            "No messages from servers of type \"" + type + "\" are allowed.",
+                            ex.getMessage());
                 }
                 try {
                     JsonNode node = service.doSchema(type, false, Locale.ENGLISH);
                 } catch (JsonException ex) {
+                    if (ex.getCode() != 400) {
+                        Assert.fail("Unexpected exception for type " + type + " from service " + service);
+                    }
                     Assert.assertEquals("Only no client exception expected for type " + type + " from service " + service,
                             400,
                             ex.getCode());

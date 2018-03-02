@@ -22,6 +22,8 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
 
     /**
      * Get the service type(s) for services created by this factory respond to.
+     * These type must have valid schemas for messages received from a client
+     * and sent to a client.
      * <p>
      * Types should be single words, in camelCase if needed, unless supporting a
      * plural noun exposed in the JSON 3.0 or newer protocol.
@@ -35,7 +37,8 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
 
     /**
      * Get the message type(s) services created by this factory send, if not
-     * also listed in {@link #getTypes()}.
+     * also listed in {@link #getTypes()}. These types must only have schemas
+     * for messages sent to a client.
      * <p>
      * Types should be single words, in camelCase if needed, unless supporting a
      * plural noun exposed in the JSON 3.0 or newer protocol.
@@ -44,6 +47,21 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      */
     @Nonnull
     public default String[] getSentTypes() {
+        return new String[0];
+    }
+
+    /**
+     * Get the message type(s) services created by this factory receive, if not
+     * also listed in {@link #getTypes()}. These types must only have schemas
+     * for messages received from a client.
+     * <p>
+     * Types should be single words, in camelCase if needed, unless supporting a
+     * plural noun exposed in the JSON 3.0 or newer protocol.
+     *
+     * @return An array of types this service sends, but does not respond to.
+     */
+    @Nonnull
+    public default String[] getReceivedTypes() {
         return new String[0];
     }
 

@@ -56,6 +56,16 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
                         set.add(service);
                     }
                 }
+                for (String type : factory.getReceivedTypes()) {
+                    if (!type.equals(JSON.JSON)) {
+                        Set<JsonHttpService> set = this.services.get(type);
+                        if (set == null) {
+                            this.services.put(type, new HashSet<>());
+                            set = this.services.get(type);
+                        }
+                        set.add(service);
+                    }
+                }
             }
         }
     }

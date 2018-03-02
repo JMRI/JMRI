@@ -427,6 +427,20 @@ public class JsonUtilHttpService extends JsonHttpService {
                     } else {
                         throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "NotAClientType", type));
                     }
+                case JSON.PING:
+                    if (!server) {
+                        return doSchema(type, server,
+                                this.mapper.readTree(this.getClass().getClassLoader().getResource("jmri/server/json/util/ping-client.json")));
+                    } else {
+                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "NotAServerType", type));
+                    }
+                case JSON.PONG:
+                    if (server) {
+                        return doSchema(type, server,
+                                this.mapper.readTree(this.getClass().getClassLoader().getResource("jmri/server/json/util/pong-server.json")));
+                    } else {
+                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "NotAClientType", type));
+                    }
                 case JSON.HELLO:
                 case JSON.METADATA:
                 case JSON.NETWORK_SERVICE:

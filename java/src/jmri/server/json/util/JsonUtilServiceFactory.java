@@ -23,7 +23,6 @@ public class JsonUtilServiceFactory implements JsonServiceFactory<JsonUtilHttpSe
             JSON.NETWORK_SERVICES,
             JSON.NODE,
             JSON.PANELS,
-            JSON.PING,
             JSON.RAILROAD,
             JSON.SYSTEM_CONNECTIONS,
             JSON.CONFIG_PROFILES};
@@ -32,7 +31,13 @@ public class JsonUtilServiceFactory implements JsonServiceFactory<JsonUtilHttpSe
     @Override
     public String[] getSentTypes() {
         // retain on behalf of JsonException for schema handling
-        return new String[]{JsonException.ERROR};
+        return new String[]{JsonException.ERROR, JSON.PONG};
+    }
+
+    @Override
+    public String[] getReceivedTypes() {
+        // retain on behalf of JsonException for schema handling
+        return new String[]{JSON.PING};
     }
 
     @Override
