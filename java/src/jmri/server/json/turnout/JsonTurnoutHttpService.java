@@ -120,8 +120,8 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService {
             case TURNOUTS:
                 return doSchema(type,
                         server,
-                        "jmri/server/json/schema/turnout-server.json",
-                        "jmri/server/json/schema/turnout-client.json");
+                        "jmri/server/json/turnout/turnout-server.json",
+                        "jmri/server/json/turnout/turnout-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
