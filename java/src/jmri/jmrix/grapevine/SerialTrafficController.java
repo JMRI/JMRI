@@ -6,7 +6,6 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRNodeTrafficController;
 import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.AbstractNode;
 import jmri.jmrix.grapevine.SerialNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +52,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     // have several debug statements in tight loops, e.g. every character;
     // only want to check once
     boolean logDebug = false;
+
+    /**
+     * Get minimum address of an Grapevine node as set on this TrafficController.
+     */
+    public int getMinimumNodeAddress() {
+        return minNode;
+    }
 
     // The methods to implement the SerialInterface
 
@@ -153,7 +159,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             setMustInit(curSerialNodeIndex, false);
             SerialMessage m = (SerialMessage) (getNode(curSerialNodeIndex).createInitPacket());
             if (m != null) {
-                log.debug("send init message: {}", m.toString());
+                log.debug("send init message: {} to node {}", m.toString(), curSerialNodeIndex);
                 m.setTimeout(50);  // wait for init to finish (milliseconds)
                 return m;
             }   // else fall through to continue
@@ -313,9 +319,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             case 0:
                 // get 1st char, check for address bit
                 buffer[0] = readByteProtected(istream);
-                if (logDebug) {
-                    log.debug("state 0, rcv {}", (buffer[0] & 0xFF));
-                }
+                log.debug("state 0, rcv {}", (buffer[0] & 0xFF));
                 if ((buffer[0] & 0x80) == 0) {
                     log.warn("1st byte not address: {}", (buffer[0] & 0xFF));
                     return true;  // try again with next
@@ -344,9 +348,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                     ((SerialReply) msg).setNumDataElements(2); // flag short reply
                     nextReplyLen = 4; // only happens once
                     state = 0;
-                    if (logDebug) {
-                        log.debug("Short message complete: {}", msg.toString());
-                    }
+                    log.debug("Short message complete: {}", msg.toString());
                     return false;  // have received a message
                 }
                 // here for normal four byte message expected
@@ -354,7 +356,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                 log.debug("state 2, rcv {}", (buffer[2] & 0xFF));
                 if (buffer[0] != buffer[2]) {
                     // no match, consider buffer[2] start of new message
-                    log.warn("addresses don't match: {}, {}, going to state 1", (buffer[0] & 0xFF), (buffer[2] & 0xFF));
+                    log.warn("addresses don't match: {}, {}. going to state 1", (buffer[0] & 0xFF), (buffer[2] & 0xFF));
                     buffer[0] = buffer[2];
                     state = 1;
                     return true;
@@ -380,7 +382,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                         + ((buffer[1] * 2) & 0xF) + (((buffer[1] * 2) & 0xF0) >> 4)
                         + (buffer[3] & 0xF) + ((buffer[3] & 0x70) >> 4);
                 if (((parity & 0xF) != 0) && !pollMsg && !errMsg) {
-                    log.warn("parity mismatch: {}, going to state 2 with content {},{}", parity, (buffer[2] & 0xFF), (buffer[3] & 0xFF));
+                    log.warn("parity mismatch: {}, going to state 2 with content {}, {}", parity, (buffer[2] & 0xFF), (buffer[3] & 0xFF));
                     buffer[0] = buffer[2];
                     buffer[1] = buffer[3];
                     state = 2;
@@ -392,7 +394,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                 state = 0;
                 return false;
             default:
-                log.error("unexpected loadChars state: {}, go direct to state 0", state);
+                log.error("unexpected loadChars state: {}. go direct to state 0", state);
                 state = 0;
                 return true;
         }

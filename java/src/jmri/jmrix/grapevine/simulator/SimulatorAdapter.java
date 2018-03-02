@@ -271,11 +271,11 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         SerialReply reply = new SerialReply(); // reply length is determined by highest byte added
         int nodeaddr = msg.getAddr();          // node addres from element(0)
         int b1 = msg.getElement(0);            // raw hex value from element(0)
-        int b2 = msg.getElement(1);            // command instruction
+        int b2 = msg.getElement(1);            // bit + state
         int b3 = msg.getElement(2);            // element(2), must repeat node address
-        int b4 = msg.getElement(3);            // instruction
+        int b4 = msg.getElement(3);            // bank + parity
         int bank = (b4 & 0xF0) >> 4;           // bank # on node
-        log.debug("Message address={} b1= {} b2={} b3={} b4={}", nodeaddr, b1, b2, b3, b4);
+        log.debug("Message nodeaddress={} b1={} b2={} b3={} b4={}", nodeaddr, b1, b2, b3, b4);
 
         if (nodeaddr == 0) { // node 0 = error
             log.debug("general error: coded as: {}", ((b4 & 0x70) << 4 - 1));
@@ -304,7 +304,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 reply = null;
                 break;
 
-            case 0x73:
+            case 0x73: //(b2 == 0x70) && ((b4 & 0xF0) == 0x10)
                 log.debug("init node message 2 detected - parallel sensors");
                 // init reply as set in prefs autoInit
                 if (autoInit > 0) { // not disabled
@@ -324,17 +324,18 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                             JOptionPane.ERROR_MESSAGE);
                     log.debug("rename command not supported, old address: {}, new address: {}, bank: {}",
                             nodeaddr, b2, bank);
+                } else {
+                    reply = null; // ignore all other messages
+                    log.debug("echo normal command, node {} bank {}", nodeaddr, bank);
+                    // 4 byte general reply
+                    reply.setElement(0, (nodeaddr | 0x80));
+                    reply.setElement(1, (b2 & 0xFF));  // normally: bit + state
+                    reply.setElement(2, (nodeaddr | 0x80));
+                    reply.setElement(3, (bank << 4)); // 0 = error, bank 1..3 for signals, 4..5 sensors (and parity)
+                    reply = setParity(reply, 0);
                 }
-                reply = null; // ignore all other messages
-                // log.debug("echo normal command, node {} bank {}", nodeaddr, bank);
-                // // 4 byte general reply
-                // reply.setElement(0, nodeaddr | 0x80);
-                // reply.setElement(1, b2);  // normally: bit + state
-                // reply.setElement(2, nodeaddr | 0x80);
-                // reply.setElement(3, bank << 4); // 0 = error, bank 1..3 for signals, 4..5 sensors (and parity)
-                // reply = setParity(reply, 0);
         }
-        log.debug(reply == null ? "Message ignored" : "Reply generated " + reply.toString() + " b2=" + b2);
+        log.debug(reply == null ? "Message ignored" : "Reply generated " + reply.toString());
         return (reply);
     }
 
@@ -394,19 +395,20 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     public SerialReply setParity(SerialReply r, int start) {
         // nibble sum method
         int sum = r.getElement(0 + start) & 0x0F;
-        sum += (r.getElement(0 + start) & 0x70) << 4;
+        sum += (r.getElement(0 + start) & 0x70) >> 4;
         sum += (r.getElement(1 + start) * 2) & 0x0F;
-        sum += ((r.getElement(1 + start) * 2) & 0xF0) << 4;
-        sum += (r.getElement(3 + start) & 0x70) << 4;
-
+        sum += ((r.getElement(1 + start) * 2) & 0xF0) >> 4;
+        sum += (r.getElement(3 + start) & 0x70) >> 4;
+        //log.debug("PPPParity element read: {}",
+        //       Integer.toHexString(r.getElement(3 + start) & 0x70));
         int parity = 16 - (sum & 0xF);
 
         r.setElement(3 + start, (r.getElement(3 + start) & 0xF0) | (parity & 0xF));
         return r;
     }
 
-    int SignalBankSize = 16;  // theoretically: 16
-    int SensorBankSize = 999; // theoretically: 0x3F
+    int SignalBankSize = 16; // theoretically: 16
+    int SensorBankSize = 64; // theoretically: 0x3F
     javax.swing.Timer timer;
 
     /**
@@ -420,63 +422,71 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * @param initBits  number of inputs/output bits to report
      */
     private void NodeResponse(int node, int startBank, int endBank, int initBits) {
-        if (node < 1 || node > 127) {
+        if (node < 1 || node > 127) { // node address invalid
             log.warn("Invalid Node Address; no response generated");
-            return; // node address invalid
+            return;
         }
         if (initBits > 1) { // leave at max when 1
-            SignalBankSize = 4;
-            SensorBankSize = 4;
+            SignalBankSize = 4; // only first 4 signal bits reporting
+            SensorBankSize = 4; // only first 4 sensor bits reporting
         }
-        //byte countByte; // counter for signal/sensor id calculation
-        int elementThree;
+        int b1 = -1;
+        int b2 = -1;
+        int b3 = -1;
+        int b4 = -1;
 
         SerialReply nReply = new SerialReply(); // reply length is determined by highest byte added
         nReply.setElement(0, node | 0x80);
         nReply.setElement(2, node | 0x80);
 
-        for (int k = startBank; k <= endBank; k++) {
+        for (int k = startBank; k <= endBank; k++) { // bank
             if (k <= 3) { // bank 1 to 3, signals
-                switch (k) {
-                    case 1:
-                        elementThree = 0x08; // bank (bit 1234): 1-3 = signals
-                        break;
-                    case 2:
-                        elementThree = 0x11; // repeat for bank 2 (reply.setElement(3, 0x11))
-                        break;
-                    case 3:
-                    default:
-                        elementThree = 0x18; // repeat for bank 3 (reply.setElement(3, 0x18))
-                }
-                nReply.setElement(3, elementThree << 4 | 0x00);
-                for (int j = 1; j <= SensorBankSize; j++) { // send state of each signal bit (banks 1, 2, 3)
-                log.debug("Sending output state of bank {}, bit {} on node {}", k, j, node);
-                Integer countInt = Integer.valueOf(j);
-                byte countByte = countInt.byteValue();
+                nReply.setElement(3, (k << 4)); // bank (bit 1234): 1-3 = signals
+                log.debug("element 3 set to 0x{} - {}", (k << 4) & 0x70, Integer.toBinaryString((k << 4) & 0x70));
 
-                nReply.setElement(1, (countByte << 3 | 0x06)); // id (bit 2345) + command (bit 678): set to Red
-                nReply = setParity(nReply, 0);
-                writeReply(nReply);
+                for (int j = 1; j < SignalBankSize; j++) { // bits, send state of each signal bit (banks 1, 2, 3)
+                    log.debug("Sending signal state of node {}, bank {}, bit {}", node, k, j);
+                    nReply.setElement(1, ((j << 3) | 0x6) & 0x7F); // bit id (bits 2345) + state (bits 678): set to Red
+
+                    nReply = setParity(nReply, 0);
+                    writeReply(nReply);
+                    // check
+                    b1 = nReply.getElement(0) & 0x7F;  // raw hex value from element(0)
+                    b2 = nReply.getElement(1) & 0x7F;  // bit + state
+                    b3 = nReply.getElement(2) & 0x7F;  // element(2), repeat node address
+                    b4 = nReply.getElement(3) & 0xFF;  // bank + parity
+                    if (b1 != b3) {
+                        log.error("Address mismatch on node {} bank {} bit {}", node, k, j);
+                    }
+                    log.debug("Reply written for node {} bank {} bit {}: b1= {} b2={} b3={} b4={}", node, k, j, b1, b2, b3, b4);
+                    log.debug("Reply as hex: {} {} {} {}", Integer.toHexString(b1),
+                            Integer.toHexString(b2), Integer.toHexString(b3), Integer.toHexString(b4));
+                    log.debug("Reply as bin: {} - {} - {} - {}", Integer.toBinaryString(b1),
+                            Integer.toBinaryString(b2), Integer.toBinaryString(b3), Integer.toBinaryString(b4));
                 }
             } else { // bank 4 and 5, sensors
-                switch (k) {
-                    case 4:
-                        elementThree = 0x40; // bank (bit 1234): 4 = sensors
-                        break;
-                    case 5:
-                    default:
-                        elementThree = 0x50; // repeat for bank 5 (reply.setElement(3, 0x50))
-                }
-                nReply.setElement(3, elementThree << 4 | 0x00); // bank (bit 1234): 4-5 = sensors
-                for (int j = 1; j <= SensorBankSize; j++) { // send state of each sensor bit (banks 4, 5)
-                    log.debug("Sending sensor state of bank {}, bit {} on node {}", k, j, node);
-                    Integer countInt = Integer.valueOf(j);
-                    byte countByte = countInt.byteValue();
+                nReply.setElement(3, (k << 4)); // bank (bit 1234): 4-5 = sensors
+                log.debug("element 3 set to 0x{} - {}", (k << 4) & 0x70, Integer.toBinaryString((k << 4) & 0x70));
 
-                    nReply.setElement(1, (countByte << 1 | 0x01)); // id (bit 234567) + state (bit 8): inactive
+                for (int j = 1; j < SensorBankSize; j++) { // bits, send state of each sensor bit (banks 4, 5)
+                    log.debug("Sending sensor state of node {}, bank {}, bit {}", node, k, j);
+                    nReply.setElement(1, ((j << 1) | 0x1) & 0x7F); // bit id (bits 234567) + state (bit 8): inactive
+
                     nReply = setParity(nReply,0);
                     writeReply(nReply);
-                }
+                    // check
+                    b1 = nReply.getElement(0) & 0x7F;  // raw hex value from element(0)
+                    b2 = nReply.getElement(1) & 0x7F;  // bit + state
+                    b3 = nReply.getElement(2) & 0x7F;  // element(2), repeat node address
+                    b4 = nReply.getElement(3) & 0xFF;  // bank + parity
+                    if (b1 != b3) {
+                        log.error("Address mismatch on node {} bank {} bit {}", node, k, j);
+                    }
+                    log.debug("Reply written for node {} bank {} bit {}: b1= {} b2={} b3={} b4={}", node, k, j, b1, b2, b3, b4);
+                    log.debug("Reply as hex: {} {} {} {}", Integer.toHexString(b1),
+                            Integer.toHexString(b2), Integer.toHexString(b3), Integer.toHexString(b4));
+                    log.debug("Reply as bin: {} - {} - {} - {}", Integer.toBinaryString(b1),
+                            Integer.toBinaryString(b2), Integer.toBinaryString(b3), Integer.toBinaryString(b4));               }
             }
         }
     }

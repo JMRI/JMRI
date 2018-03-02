@@ -85,7 +85,7 @@ public abstract class AbstractMessage implements Message {
             return false;
         }
         for(int i = 0;i<this.getNumDataElements();i++){
-            if(this.getElement(i)!=m.getElement(i)){
+            if(this.getElement(i) != m.getElement(i)){
                 return false;
             }
         }

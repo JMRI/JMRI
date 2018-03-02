@@ -215,7 +215,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
         // normal message
         result = "address: " + (b1 & 0x7F)
-                + " data bytes: 0x" + StringUtil.twoHexFromInt(b2)
+                + ", data bytes: 0x" + StringUtil.twoHexFromInt(b2)
                 + " 0x" + StringUtil.twoHexFromInt(b4)
                 + " => ";
 
