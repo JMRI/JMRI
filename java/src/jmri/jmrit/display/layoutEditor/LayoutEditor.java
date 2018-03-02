@@ -4935,7 +4935,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         } else {
             super.setScroll(state);
         }
-    } //setScroll
+    }
 
     /**
      * Add a layout turntable at location specified
@@ -4956,7 +4956,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         setDirty();
 
         unionToPanelBounds(lt.getBounds());
-    } //addTurntable
+    }
 
     /**
      * Allow external trigger of re-drawHidden
@@ -4986,7 +4986,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         savedControlLayout = allControlling();
         savedAnimatingLayout = isAnimating();
         savedShowHelpBar = getShowHelpBar();
-    } //resetDirty
+    }
 
     /**
      * Allow external set of dirty bit
@@ -5016,11 +5016,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         yLoc = (int) ((event.getY() + dY) / getZoom());
         dLoc.setLocation(xLoc, yLoc);
         return dLoc;
-    } //calcLocation
+    }
 
     private Point2D calcLocation(MouseEvent event) {
         return calcLocation(event, 0, 0);
-    } //calcLocation
+    }
 
     /**
      * Handle a mouse pressed event
@@ -5222,14 +5222,20 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Called by {@link #mousePressed} to determine if the mouse click was in a turnout control location.
      * If so, update selectedPointType and selectedObject for use by {@link #mouseReleased}.
+     * <p>
+     * If there's no match, selectedObject is set to null and selectedPointType
+     * is left referring to the results of the checking the last track on the list.
+     * <p>
+     * Refers to the current value of {@link #layoutTrackList) and {@link #dLoc}.
+     *
      * @param useRectangles set true to use rectangle; false for circles.
      */
     private void checkControls(boolean useRectangles) {
-        selectedObject = null;
+        selectedObject = null;  // deliberate side-effect
         for (LayoutTrack theTrack : layoutTrackList) {
-            selectedPointType = theTrack.findHitPointType(dLoc, useRectangles);
+            selectedPointType = theTrack.findHitPointType(dLoc, useRectangles); // deliberate side-effect
             if (LayoutTrack.isControlHitType(selectedPointType)) {
-                selectedObject = theTrack;
+                selectedObject = theTrack; // deliberate side-effect
                 return;
             }
         }
