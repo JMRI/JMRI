@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.server.json.JSON;
@@ -46,12 +48,17 @@ public class JsonSchemaHttpService extends JsonHttpService {
                     default:
                         try {
                             ArrayNode schemas = this.mapper.createArrayNode();
+                            Set<JsonNode> dedup = new HashSet<>();
                             for (JsonHttpService service : InstanceManager.getDefault(JsonSchemaServiceCache.class).getServices(name)) {
                                 // separate try/catch blocks to ensure one failure does not
                                 // block following from being accepted
                                 if (server == null || server) {
                                     try {
-                                        schemas.add(service.doSchema(name, true, locale));
+                                        JsonNode schema = service.doSchema(name, true, locale);
+                                        if (!dedup.contains(schema)) {
+                                            schemas.add(schema);
+                                            dedup.add(schema);
+                                        }
                                     } catch (JsonException ex) {
                                         if (ex.getCode() != HttpServletResponse.SC_BAD_REQUEST) {
                                             throw ex;
@@ -60,7 +67,11 @@ public class JsonSchemaHttpService extends JsonHttpService {
                                 }
                                 if (server == null || !server) {
                                     try {
-                                        schemas.add(service.doSchema(name, false, locale));
+                                        JsonNode schema = service.doSchema(name, false, locale);
+                                        if (!dedup.contains(schema)) {
+                                            schemas.add(schema);
+                                            dedup.add(schema);
+                                        }
                                     } catch (JsonException ex) {
                                         if (ex.getCode() != HttpServletResponse.SC_BAD_REQUEST) {
                                             throw ex;
