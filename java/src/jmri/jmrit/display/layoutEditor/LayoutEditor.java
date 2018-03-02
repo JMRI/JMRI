@@ -328,51 +328,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     protected static final double SIZE = 3.0;
     protected static final double SIZE2 = SIZE * 2.; //must be twice SIZE
 
-    //NOTE: although these have been moved to the LayoutTurnout class
-    // I'm leaving a copy of them here so that any external use of these
-    // won't break. At some point in the future these should be @Deprecated.
-    // All JMRI sources now use the ones in the LayoutTurnout class.
-    //defined constants - turnout types
-    public static final int RH_TURNOUT = LayoutTurnout.RH_TURNOUT;
-    public static final int LH_TURNOUT = LayoutTurnout.LH_TURNOUT;
-    public static final int WYE_TURNOUT = LayoutTurnout.WYE_TURNOUT;
-    public static final int DOUBLE_XOVER = LayoutTurnout.DOUBLE_XOVER;
-    public static final int RH_XOVER = LayoutTurnout.RH_XOVER;
-    public static final int LH_XOVER = LayoutTurnout.LH_XOVER;
-    public static final int SINGLE_SLIP = LayoutTurnout.SINGLE_SLIP;
-    public static final int DOUBLE_SLIP = LayoutTurnout.DOUBLE_SLIP;
-
-    // hit location (& connection) types (see NOTE above)
-    public static final int NONE = LayoutTrack.NONE;
-    public static final int POS_POINT = LayoutTrack.POS_POINT;
-    public static final int TURNOUT_A = LayoutTrack.TURNOUT_A; //throat for RH, LH, and WYE turnouts
-    public static final int TURNOUT_B = LayoutTrack.TURNOUT_B; //continuing route for RH or LH turnouts
-    public static final int TURNOUT_C = LayoutTrack.TURNOUT_C; //diverging route for RH or LH turnouts
-    public static final int TURNOUT_D = LayoutTrack.TURNOUT_D; //double-crossover or single crossover only
-    public static final int LEVEL_XING_A = LayoutTrack.LEVEL_XING_A;
-    public static final int LEVEL_XING_B = LayoutTrack.LEVEL_XING_B;
-    public static final int LEVEL_XING_C = LayoutTrack.LEVEL_XING_C;
-    public static final int LEVEL_XING_D = LayoutTrack.LEVEL_XING_D;
-    public static final int TRACK = LayoutTrack.TRACK;
-    public static final int TURNOUT_CENTER = LayoutTrack.TURNOUT_CENTER; //non-connection points should be last
-    public static final int LEVEL_XING_CENTER = LayoutTrack.LEVEL_XING_CENTER;
-    public static final int TURNTABLE_CENTER = LayoutTrack.TURNTABLE_CENTER;
-    public static final int LAYOUT_POS_LABEL = LayoutTrack.LAYOUT_POS_LABEL;
-    public static final int LAYOUT_POS_JCOMP = LayoutTrack.LAYOUT_POS_JCOMP;
-    public static final int MULTI_SENSOR = LayoutTrack.MULTI_SENSOR;
-    public static final int MARKER = LayoutTrack.MARKER;
-    public static final int TRACK_CIRCLE_CENTRE = LayoutTrack.TRACK_CIRCLE_CENTRE;
-    public static final int SLIP_CENTER = LayoutTrack.SLIP_CENTER; //should be @Deprecated (use SLIP_LEFT & SLIP_RIGHT instead)
-    public static final int SLIP_A = LayoutTrack.SLIP_A;
-    public static final int SLIP_B = LayoutTrack.SLIP_B;
-    public static final int SLIP_C = LayoutTrack.SLIP_C;
-    public static final int SLIP_D = LayoutTrack.SLIP_D;
-    public static final int SLIP_LEFT = LayoutTrack.SLIP_LEFT;
-    public static final int SLIP_RIGHT = LayoutTrack.SLIP_RIGHT;
-    public static final int BEZIER_CONTROL_POINT_OFFSET_MIN = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN;
-    public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX;
-    public static final int TURNTABLE_RAY_OFFSET = LayoutTrack.TURNTABLE_RAY_OFFSET;
-
     protected Color turnoutCircleColor = Color.black; //matches earlier versions
     protected int turnoutCircleSize = 4; //matches earlier versions
 
@@ -10643,6 +10598,87 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
         super.dispose();
     }
+
+    // The following have been moved to the LayoutTurnout class
+    // These remain to ease migration
+    
+    // defined constants - turnout types
+    @Deprecated // 4.11.3
+    public static final int RH_TURNOUT = LayoutTurnout.RH_TURNOUT;
+    @Deprecated // 4.11.3
+    public static final int LH_TURNOUT = LayoutTurnout.LH_TURNOUT;
+    @Deprecated // 4.11.3
+    public static final int WYE_TURNOUT = LayoutTurnout.WYE_TURNOUT;
+    @Deprecated // 4.11.3
+    public static final int DOUBLE_XOVER = LayoutTurnout.DOUBLE_XOVER;
+    @Deprecated // 4.11.3
+    public static final int RH_XOVER = LayoutTurnout.RH_XOVER;
+    @Deprecated // 4.11.3
+    public static final int LH_XOVER = LayoutTurnout.LH_XOVER;
+    @Deprecated // 4.11.3
+    public static final int SINGLE_SLIP = LayoutTurnout.SINGLE_SLIP;
+    @Deprecated // 4.11.3
+    public static final int DOUBLE_SLIP = LayoutTurnout.DOUBLE_SLIP;
+
+    // hit location (& connection) types (see NOTE above)
+    @Deprecated // 4.11.3
+    public static final int NONE = LayoutTrack.NONE;
+    @Deprecated // 4.11.3
+    public static final int POS_POINT = LayoutTrack.POS_POINT;
+    @Deprecated // 4.11.3
+    public static final int TURNOUT_A = LayoutTrack.TURNOUT_A; //throat for RH, LH, and WYE turnouts
+    @Deprecated // 4.11.3
+    public static final int TURNOUT_B = LayoutTrack.TURNOUT_B; //continuing route for RH or LH turnouts
+    @Deprecated // 4.11.3
+    public static final int TURNOUT_C = LayoutTrack.TURNOUT_C; //diverging route for RH or LH turnouts
+    @Deprecated // 4.11.3
+    public static final int TURNOUT_D = LayoutTrack.TURNOUT_D; //double-crossover or single crossover only
+    @Deprecated // 4.11.3
+    public static final int LEVEL_XING_A = LayoutTrack.LEVEL_XING_A;
+    @Deprecated // 4.11.3
+    public static final int LEVEL_XING_B = LayoutTrack.LEVEL_XING_B;
+    @Deprecated // 4.11.3
+    public static final int LEVEL_XING_C = LayoutTrack.LEVEL_XING_C;
+    @Deprecated // 4.11.3
+    public static final int LEVEL_XING_D = LayoutTrack.LEVEL_XING_D;
+    @Deprecated // 4.11.3
+    public static final int TRACK = LayoutTrack.TRACK;
+    @Deprecated // 4.11.3
+    public static final int TURNOUT_CENTER = LayoutTrack.TURNOUT_CENTER; //non-connection points should be last
+    @Deprecated // 4.11.3
+    public static final int LEVEL_XING_CENTER = LayoutTrack.LEVEL_XING_CENTER;
+    @Deprecated // 4.11.3
+    public static final int TURNTABLE_CENTER = LayoutTrack.TURNTABLE_CENTER;
+    @Deprecated // 4.11.3
+    public static final int LAYOUT_POS_LABEL = LayoutTrack.LAYOUT_POS_LABEL;
+    @Deprecated // 4.11.3
+    public static final int LAYOUT_POS_JCOMP = LayoutTrack.LAYOUT_POS_JCOMP;
+    @Deprecated // 4.11.3
+    public static final int MULTI_SENSOR = LayoutTrack.MULTI_SENSOR;
+    @Deprecated // 4.11.3
+    public static final int MARKER = LayoutTrack.MARKER;
+    @Deprecated // 4.11.3
+    public static final int TRACK_CIRCLE_CENTRE = LayoutTrack.TRACK_CIRCLE_CENTRE;
+    @Deprecated // 4.11.3; also use SLIP_LEFT & SLIP_RIGHT instead
+    public static final int SLIP_CENTER = LayoutTrack.SLIP_CENTER;
+    @Deprecated // 4.11.3
+    public static final int SLIP_A = LayoutTrack.SLIP_A;
+    @Deprecated // 4.11.3
+    public static final int SLIP_B = LayoutTrack.SLIP_B;
+    @Deprecated // 4.11.3
+    public static final int SLIP_C = LayoutTrack.SLIP_C;
+    @Deprecated // 4.11.3
+    public static final int SLIP_D = LayoutTrack.SLIP_D;
+    @Deprecated // 4.11.3
+    public static final int SLIP_LEFT = LayoutTrack.SLIP_LEFT;
+    @Deprecated // 4.11.3
+    public static final int SLIP_RIGHT = LayoutTrack.SLIP_RIGHT;
+    @Deprecated // 4.11.3
+    public static final int BEZIER_CONTROL_POINT_OFFSET_MIN = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN;
+    @Deprecated // 4.11.3
+    public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX;
+    @Deprecated // 4.11.3
+    public static final int TURNTABLE_RAY_OFFSET = LayoutTrack.TURNTABLE_RAY_OFFSET;
 
     //initialize logging
     private transient final static Logger log
