@@ -514,7 +514,7 @@ public class Maintenance {
 
         jmri.jmrit.logix.OBlockManager oBlockManager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         jmri.jmrit.logix.OBlock blk = oBlockManager.getBySystemName(sysName);
-        if (sec != null) {
+        if (blk != null) {
             userName = blk.getUserName();
             found = true;
         } else {

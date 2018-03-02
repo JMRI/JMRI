@@ -1180,7 +1180,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
     } //LayoutEditor (constructor)
 
-    private LayoutEditorComponent layoutEditorComponent = new LayoutEditorComponent(this);
+    private final LayoutEditorComponent layoutEditorComponent = new LayoutEditorComponent(this);
 
     private void createFloatingEditToolBox() {
         if (floatingEditToolBoxFrame == null) {
@@ -3590,7 +3590,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         Rectangle2D result = new Rectangle2D.Double();
 
         // combine all (onscreen) Components into a list of list of Components
-        List<List> listOfListsOfComponents = new ArrayList<>();
+        List<List<? extends Component>> listOfListsOfComponents = new ArrayList<>();
         listOfListsOfComponents.add(backgroundImage);
         listOfListsOfComponents.add(sensorImage);
         listOfListsOfComponents.add(signalHeadImage);
@@ -3604,7 +3604,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         listOfListsOfComponents.add(sensorList);
         listOfListsOfComponents.add(signalMastList);
         // combine their bounds
-        for (List<Component> listOfComponents : listOfListsOfComponents) {
+        for (List<? extends Component> listOfComponents : listOfListsOfComponents) {
             for (Component o : listOfComponents) {
                 if (result.isEmpty()) {
                     result = o.getBounds();
@@ -5022,25 +5022,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return calcLocation(event, 0, 0);
     } //calcLocation
 
-    public enum LayoutEditorMode {
-        UNKNOWN,
-        EDIT_POPUP,
-        EDIT_DRAG,
-        EDIT_ADDING_TRACK_SEGMENT,
-        CONTROLLING_TURNOUT,
-        MOVING_MARKER,
-        SELECTION_MOUSE_PRESSED,
-        SELECTION_MOUSE_RELEASED,
-        SELECTION_MOUSE_DRAGGED,
-        SELECTION_MOUSE_CLICKED,
-        ADDING_OBJECT,
-        SHOW_POPUP,
-        DROPPED_TURNOUT,
-        DROPPED_POSITIONABLE_POINT,
-    }
-
-    private LayoutEditorMode layoutEditorMode = LayoutEditorMode.UNKNOWN;
-
     /**
      * Handle a mouse pressed event
      */
@@ -5067,12 +5048,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 } else {
                     //no possible conflict with moving, display the popup now
                     showEditPopUps(event);
-                    layoutEditorMode = LayoutEditorMode.EDIT_POPUP;
                 }
             }
 
             if (isMetaDown(event) || event.isAltDown()) {
-                layoutEditorMode = LayoutEditorMode.EDIT_DRAG;
                 //if dragging an item, identify the item for mouseDragging
                 selectedObject = null;
                 selectedPointType = LayoutTrack.NONE;
@@ -5152,7 +5131,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     beginObject = foundObject;
                     beginPointType = foundPointType;
                     beginLocation = foundLocation;
-                    layoutEditorMode = LayoutEditorMode.EDIT_ADDING_TRACK_SEGMENT;
                 } else {
                     //TODO: auto-add anchor point?
                     beginObject = null;
@@ -5162,12 +5140,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 selectedObject = null;
 
                 if (allControlling()) {
-                    if (checkControls(false)) {
-                        layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
-                    }
+                    checkControls(false);
                 }
-
-                //initialize starting selection - cancel any previous selection rectangle
+                 //initialize starting selection - cancel any previous selection rectangle
                 selectionActive = true;
                 selectionX = dLoc.getX();
                 selectionY = dLoc.getY();
@@ -5182,15 +5157,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 && !event.isAltDown() && !event.isShiftDown() && !event.isControlDown()) {
             //not in edit mode - check if mouse is on a turnout (using wider search range)
             selectedObject = null;
-            if (checkControls(true)) {
-                layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
-            }
+            checkControls(true);
+
         } else if ((isMetaDown(event) || event.isAltDown())
                 && !event.isShiftDown() && !event.isControlDown()) {
             //not in edit mode - check if moving a marker if there are any
             selectedObject = checkMarkerPopUps(dLoc);
             if (selectedObject != null) {
-                layoutEditorMode = LayoutEditorMode.MOVING_MARKER;
                 selectedPointType = LayoutTrack.MARKER;
                 startDelta.setLocation((((LocoIcon) selectedObject).getX() - dLoc.getX()),
                         (((LocoIcon) selectedObject).getY() - dLoc.getY()));
@@ -5207,7 +5180,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             List<Positionable> selections = getSelectedItems(event);
 
             if (selections.size() > 0) {
-                layoutEditorMode = LayoutEditorMode.SELECTION_MOUSE_PRESSED;
                 selections.get(0).doMousePressed(event);
             }
         }
@@ -5246,40 +5218,21 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //    }
     //    return result;
     //}
-    private boolean checkControls(boolean useRectangles) {
-        Optional<LayoutTrack> opt = layoutTrackList.stream().filter(layoutTrack -> {
-            selectedPointType = layoutTrack.findHitPointType(dLoc, useRectangles);
-            if (!LayoutTrack.isControlHitType(selectedPointType)) {
-                selectedPointType = LayoutTrack.NONE;
-            }
-            return (LayoutTrack.NONE != selectedPointType);
-        }).findFirst();
 
-        Object obj = null;
-        if (opt.isPresent()) {
-            obj = opt.get();
-            if (obj != null) {
-                /*  TODO: Dead-code strip this (if not needed)
-            if (layoutTrack instanceof LayoutTurntable) {
-                LayoutTurntable layoutTurntable = (LayoutTurntable) layoutTrack;
-                if (LayoutTrack.isConnectionHitType(selectedPointType)) {
-                    try {
-                        selectedObject = layoutTurntable.getConnection(selectedPointType);
-                    } catch (JmriException e) {
-                        // this should never happed because .isConnectionType will catch
-                        // invalid connection types before .getConnection is called
-                    }
-                } else {
-                    selectedPointType = LayoutTrack.NONE;
-                }
-            } else
-                 */
-                {
-                    selectedObject = obj;
-                }
+    /**
+     * Called by {@link #mousePressed} to determine if the mouse click was in a turnout control location.
+     * If so, update selectedPointType and selectedObject for use by {@link #mouseReleased}.
+     * @param useRectangles set true to use rectangle; false for circles.
+     */
+    private void checkControls(boolean useRectangles) {
+        selectedObject = null;
+        for (LayoutTrack theTrack : layoutTrackList) {
+            selectedPointType = theTrack.findHitPointType(dLoc, useRectangles);
+            if (LayoutTrack.isControlHitType(selectedPointType)) {
+                selectedObject = theTrack;
+                return;
             }
         }
-        return (selectedObject != null);
     }
 
     // optional parameter avoid
@@ -5501,7 +5454,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             // released the mouse with shift down... see what we're adding
             if (!event.isPopupTrigger() && !isMetaDown(event) && event.isShiftDown()) {
-                layoutEditorMode = LayoutEditorMode.ADDING_OBJECT;
 
                 currentPoint = new Point2D.Double(xLoc, yLoc);
 
@@ -5569,7 +5521,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 selectedObject = null;
                 redrawPanel();
             } else if ((event.isPopupTrigger() || delayedPopupTrigger) && !isDragging) {
-                layoutEditorMode = LayoutEditorMode.SHOW_POPUP;
                 selectedObject = null;
                 selectedPointType = LayoutTrack.NONE;
                 whenReleased = event.getWhen();
@@ -5578,7 +5529,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     && allControlling() && (!isMetaDown(event) && !event.isAltDown()) && !event.isPopupTrigger()
                     && !event.isShiftDown() && !event.isControlDown()) {
                 //controlling turnouts, in edit mode
-                layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
                 LayoutTurnout t = (LayoutTurnout) selectedObject;
                 t.toggleTurnout();
             } else if ((selectedObject != null) && ((selectedPointType == LayoutTrack.SLIP_LEFT)
@@ -5586,14 +5536,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     && allControlling() && (!isMetaDown(event) && !event.isAltDown()) && !event.isPopupTrigger()
                     && !event.isShiftDown() && !event.isControlDown()) {
                 //controlling slips, in edit mode
-                layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
                 LayoutSlip sl = (LayoutSlip) selectedObject;
                 sl.toggleState(selectedPointType);
             } else if ((selectedObject != null) && (selectedPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET)
                     && allControlling() && (!isMetaDown(event) && !event.isAltDown()) && !event.isPopupTrigger()
                     && !event.isShiftDown() && !event.isControlDown()) {
                 //controlling turntable, in edit mode
-                layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
                 LayoutTurntable t = (LayoutTurntable) selectedObject;
                 t.setPosition(selectedPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
             } else if ((selectedObject != null) && ((selectedPointType == LayoutTrack.TURNOUT_CENTER)
@@ -5603,13 +5551,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     && allControlling() && (isMetaDown(event) && !event.isAltDown())
                     && !event.isShiftDown() && !event.isControlDown() && isDragging) {
                 // We just dropped a turnout (or slip)... see if it will connect to anything
-                layoutEditorMode = LayoutEditorMode.DROPPED_TURNOUT;
                 hitPointCheckLayoutTurnouts((LayoutTurnout) selectedObject);
             } else if ((selectedObject != null) && (selectedPointType == LayoutTrack.POS_POINT)
                     && allControlling() && (isMetaDown(event))
                     && !event.isShiftDown() && !event.isControlDown() && isDragging) {
                 // We just dropped a PositionablePoint... see if it will connect to anything
-                layoutEditorMode = LayoutEditorMode.DROPPED_POSITIONABLE_POINT;
                 PositionablePoint p = (PositionablePoint) selectedObject;
                 if ((p.getConnect1() == null) || (p.getConnect2() == null)) {
                     checkPointOfPositionable(p);
@@ -5618,7 +5564,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             if ((trackButton.isSelected()) && (beginObject != null) && (foundObject != null)) {
                 //user let up shift key before releasing the mouse when creating a track segment
-                layoutEditorMode = LayoutEditorMode.UNKNOWN;
                 setCursor(Cursor.getDefaultCursor());
                 beginObject = null;
                 foundObject = null;
@@ -5629,7 +5574,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 && allControlling() && !isMetaDown(event) && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             //controlling turnout out of edit mode
-            layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
             LayoutTurnout t = (LayoutTurnout) selectedObject;
             if (useDirectTurnoutControl) {
                 t.setState(Turnout.CLOSED);
@@ -5641,19 +5585,16 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 && allControlling() && !isMetaDown(event) && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling slip out of edit mode
-            layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
             LayoutSlip sl = (LayoutSlip) selectedObject;
             sl.toggleState(selectedPointType);
         } else if ((selectedObject != null) && (selectedPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET)
                 && allControlling() && !isMetaDown(event) && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling turntable out of edit mode
-            layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
             LayoutTurntable t = (LayoutTurntable) selectedObject;
             t.setPosition(selectedPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
         } else if ((event.isPopupTrigger() || delayedPopupTrigger) && (!isDragging)) {
             //requesting marker popup out of edit mode
-            layoutEditorMode = LayoutEditorMode.SHOW_POPUP;
             LocoIcon lo = checkMarkerPopUps(dLoc);
             if (lo != null) {
                 showPopUp(lo, event);
@@ -5707,7 +5648,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (!event.isPopupTrigger() && !isDragging) {
             List<Positionable> selections = getSelectedItems(event);
             if (selections.size() > 0) {
-                layoutEditorMode = LayoutEditorMode.SELECTION_MOUSE_RELEASED;
                 selections.get(0).doMouseReleased(event);
                 whenReleased = event.getWhen();
             }
@@ -5717,7 +5657,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (event.isPopupTrigger() && isDragging) {
             List<Positionable> selections = getSelectedItems(event);
             if (selections.size() > 0) {
-                layoutEditorMode = LayoutEditorMode.SELECTION_MOUSE_DRAGGED;
                 selections.get(0).doMouseDragged(event);
             }
         }
@@ -5925,7 +5864,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             List<Positionable> selections = getSelectedItems(event);
 
             if (selections.size() > 0) {
-                layoutEditorMode = LayoutEditorMode.SELECTION_MOUSE_CLICKED;
                 selections.get(0).doMouseClicked(event);
             }
         } else if (event.isPopupTrigger() && (whenReleased != event.getWhen())) {
@@ -9749,9 +9687,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private void drawLayoutTracksTies(Graphics2D g2) {
         LayoutTrackDrawingOptions ltdo = getLayoutTrackDrawingOptions();
 
-        boolean main;
-
-        //setup for drawing sideline ties
+        // setup for drawing sideline ties
         int tieLength = ltdo.getSideTieLength();
         int tieWidth = ltdo.getSideTieWidth();
         int tieGap = ltdo.getSideTieGap();
@@ -9760,10 +9696,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
                     new float[]{tieWidth, tieGap}, 0));
             g2.setColor(ltdo.getSideTieColor());
-            draw1(g2, main = false);
+            draw1(g2, false);  // main = false
         }
 
-        //setup for drawing mainline ties
+        // setup for drawing mainline ties
         tieLength = ltdo.getMainTieLength();
         tieWidth = ltdo.getMainTieWidth();
         tieGap = ltdo.getMainTieGap();
@@ -9772,7 +9708,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
                     new float[]{tieWidth, tieGap}, 0));
             g2.setColor(ltdo.getMainTieColor());
-            draw1(g2, main = true);
+            draw1(g2, true); // main = true
         }
     }
 

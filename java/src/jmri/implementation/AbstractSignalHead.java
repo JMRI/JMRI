@@ -51,6 +51,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
      * This might be a yellow or green appearance, or an Approach or Clear
      * aspect
      */
+    @Override
     public boolean isCleared() { return !isAtStop() && !isShowingRestricting() && getAppearance()!=DARK; }
 
     /**
@@ -59,6 +60,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
      * This might be a flashing red appearance, or a 
      * Restricting aspect.
      */
+    @Override
     public boolean isShowingRestricting() { return getAppearance() == FLASHRED || getAppearance() == LUNAR || getAppearance() == FLASHLUNAR; }
     
     /**
@@ -67,6 +69,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
      * This might be a red appearance, or a 
      * Stop aspect. Stop-and-Proceed or Restricting would return false here.
      */
+    @Override
     public boolean isAtStop()  { return getAppearance() == RED; }
 
 

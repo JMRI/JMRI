@@ -108,6 +108,7 @@ public interface NamedBean extends Comparable<NamedBean> {
      * @return the system-specific name.
      */
     @Nonnull
+    @Override
     public String toString(); 
 
     /**
@@ -361,6 +362,7 @@ public interface NamedBean extends Comparable<NamedBean> {
      * @return -1,0,+1 for ordering if the names are well-formed; may not provide proper ordering if the names are not well-formed.
      */
     @CheckReturnValue
+    @Override
     public default int compareTo(@Nonnull NamedBean n2) {
         jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
         String o1 = this.getSystemName();

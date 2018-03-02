@@ -33,6 +33,7 @@
 
                         <tr>
                             <td align="left" valign="top" colspan="1">
+                        </ul>
                         <li><a href="#ConfigurationBasics">Configuring Digitrax Command Station Operation Switch (OpSw) Settings</a>
                             <ul>
                                 <li><a href="#Requirements">Requirements</a></li>
@@ -47,7 +48,6 @@
                         <td align="right" colspan="1"><img src=
                                                            "images/RosterCmdStnConfig.png" alt=
                                                            "Example of the Roster-based Command Station Configuration Window"></td>
-                        </td>
                         </tr>
                     </table>
                 </div><a name="ConfigurationBasics" id=

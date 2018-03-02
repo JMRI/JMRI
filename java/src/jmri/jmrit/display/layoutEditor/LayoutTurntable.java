@@ -88,6 +88,7 @@ public class LayoutTurntable extends LayoutTrack {
      *
      * @return the string
      */
+    @Override
     public String toString() {
         return "LayoutTurntable " + getName();
     }
@@ -116,6 +117,7 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * @return the bounds of this turntable
      */
+    @Override
     public Rectangle2D getBounds() {
         Rectangle2D result;
 
@@ -456,6 +458,7 @@ public class LayoutTurntable extends LayoutTrack {
      * @param locationType the connection type
      * @return the coordinates
      */
+    @Override
     public Point2D getCoordsForConnectionType(int locationType) {
         Point2D result = getCoordsCenter();
         if (TURNTABLE_CENTER == locationType) {
@@ -553,6 +556,7 @@ public class LayoutTurntable extends LayoutTrack {
         return result;
     }
 
+    @Override
     public boolean isMainline() {
         return false;
     }
@@ -566,6 +570,7 @@ public class LayoutTurntable extends LayoutTrack {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
+    @Override
     public void scaleCoords(float xFactor, float yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
@@ -634,6 +639,7 @@ public class LayoutTurntable extends LayoutTrack {
      *
      * @param p the layout editor
      */
+    @Override
     public void setObjects(LayoutEditor p) {
         for (RayTrack rt : rayList) {
             rt.setConnect(p.getFinder().findTrackSegmentByName(rt.connectName));
@@ -1192,6 +1198,7 @@ public class LayoutTurntable extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
+    @Override
     protected void drawTurnoutControls(Graphics2D g2) {
         if (isTurnoutControlled()) {
             // draw control circles at all but current position ray tracks
@@ -1212,6 +1219,7 @@ public class LayoutTurntable extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
+    @Override
     protected void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsCenter();
         g2.setColor(defaultTrackColor);
@@ -1336,6 +1344,7 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void collectContiguousTracksNamesInBlockNamed(@Nonnull String blockName,
             @Nonnull Set<String> TrackNameSet) {
         if (!TrackNameSet.contains(getName())) {
@@ -1365,6 +1374,7 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
         // turntables don't have blocks...
         // nothing to see here, move along...
