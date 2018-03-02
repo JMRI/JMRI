@@ -133,6 +133,7 @@ public class LnStreamPortPacketizer extends jmri.jmrix.loconet.LnPacketizer {
     /**
      * Invoked at startup to start the threads needed here.
      */
+    @Override
     public void startThreads() {
         int priority = Thread.currentThread().getPriority();
         log.debug("startThreads current priority = " + priority // NOI18N
