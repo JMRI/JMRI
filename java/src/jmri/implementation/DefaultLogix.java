@@ -3,6 +3,7 @@ package jmri.implementation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import jmri.Conditional;
+import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -12,6 +13,7 @@ import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.SignalHead;
 import jmri.Timebase;
+import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.beantable.LRouteTableAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -339,9 +341,45 @@ public class DefaultLogix extends AbstractNamedBean
                              cName, getSystemName(), var.getName());
                     }
                 }
+
+                // Find any Entry/Exit State Variables
+                if (var.getType() == Conditional.TYPE_ENTRYEXIT_ACTIVE || var.getType() == Conditional.TYPE_ENTRYEXIT_INACTIVE) {
+                    jmri.jmrit.entryexit.DestinationPoints dp = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).
+                            getNamedBean(var.getName());
+                    if (dp != null) {
+                        var.setName(dp.getUniqueId());
+                        var.setGuiName(dp.getDisplayName());
+                        isDirty = true;
+                    } else {
+                        log.error("setGuiNames: For conditional '{}' in logix '{}', the referenced Entry Exit Pair, '{}',  does not exist",  // NOI18N
+                             cName, getSystemName(), var.getName());
+                    }
+                }
             }
             if (isDirty) {
                 conditional.setStateVariables(varList);
+            }
+            ArrayList<ConditionalAction> actionList = conditional.getCopyOfActions();
+            isDirty = false;
+            for (ConditionalAction action : actionList) {
+                // Find any Entry/Exit Actions
+                if (action.getType() == Conditional.ACTION_SET_NXPAIR_ENABLED
+                        || action.getType() == Conditional.ACTION_SET_NXPAIR_DISABLED
+                        || action.getType() == Conditional.ACTION_SET_NXPAIR_SEGMENT) {
+                    jmri.jmrit.entryexit.DestinationPoints dp = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).
+                            getNamedBean(action.getDeviceName());
+                    if (dp != null) {
+                        action.setDeviceName(dp.getUniqueId());
+                        action.setGuiName(dp.getDisplayName());
+                        isDirty = true;
+                    } else {
+                        log.error("setGuiNames: For conditional '{}' in logix '{}', the referenced Entry Exit Pair, '{}',  does not exist",  // NOI18N
+                             cName, getSystemName(), action.getDeviceName());
+                    }
+                }
+            }
+            if (isDirty) {
+                conditional.setAction(actionList);
             }
         }
         _isGuiSet = true;

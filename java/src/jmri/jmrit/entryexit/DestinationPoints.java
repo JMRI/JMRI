@@ -106,7 +106,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
         return getSystemName();
     }
 
-    String getUniqueId() {
+    public String getUniqueId() {
         return getSystemName();
     }
 

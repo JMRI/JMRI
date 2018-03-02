@@ -210,6 +210,7 @@ public class DefaultConditional extends AbstractNamedBean
             clone.setDeviceName(action.getDeviceName());
             clone.setActionData(action.getActionData());
             clone.setActionString(action.getActionString());
+            clone.setGuiName(action.getGuiName());
             actionList.add(clone);
         }
         return actionList;

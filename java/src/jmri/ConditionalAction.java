@@ -36,6 +36,19 @@ public interface ConditionalAction {
      */
     String getDeviceName();
 
+     /**
+     * @since 4.11.4
+     * @return the GUI name for the NX Pair.
+     */
+    String getGuiName();
+
+    /**
+     * Set the GUI name for the NX Pair.
+     * @since 4.11.4
+     * @param guiName The referenced Conditional user name.
+     */
+    void setGuiName(String guiName);
+
     /**
      * Options on when action is taken.
      *
