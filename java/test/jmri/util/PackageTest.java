@@ -84,6 +84,7 @@ import org.junit.runners.Suite;
         NamedBeanExpectedStateTest.class,
         NamedBeanExpectedValueTest.class,
         QuickPromptUtilTest.class,
+        AbstractFrameActionTest.class,
 
         // deliberately at end
         jmri.util.Log4JErrorIsErrorTest.class,
