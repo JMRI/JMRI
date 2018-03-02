@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.io.IOException;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
+import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 
@@ -48,6 +49,11 @@ public class JsonMessageHttpService extends JsonHttpService {
                 } else {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "NotAClientType", type));
                 }
+            case JSON.HELLO:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/util/hello-client.json",
+                        "jmri/server/json/util/hello-server.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
