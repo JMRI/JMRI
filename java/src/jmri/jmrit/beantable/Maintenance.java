@@ -362,7 +362,6 @@ public class Maintenance {
         
     }
     // captive for above
-    @Nonnull
     static private String[] checkForOneTypeAndNames( @Nonnull Manager<? extends NamedBean> manager, @Nonnull String type, @Nonnull String beanName) {
         NamedBean bean = manager.getBeanBySystemName(beanName);
         if (bean != null) return new String[]{type, bean.getUserName(), bean.getSystemName(), Integer.toString(bean.getNumPropertyChangeListeners())};

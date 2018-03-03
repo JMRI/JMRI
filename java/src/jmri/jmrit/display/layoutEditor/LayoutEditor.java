@@ -4160,7 +4160,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             //Cancel
             panel5.add(reporterCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             reporterCancel.addActionListener((ActionEvent event) -> {
-                reporterCancelPressed(event);
+                reporterCancelPressed();
             });
             reporterCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel5);
@@ -4172,7 +4172,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         enterReporterFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent event) {
-                reporterCancelPressed(null);
+                reporterCancelPressed();
             }
         });
         enterReporterFrame.pack();
@@ -4211,7 +4211,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return;
         }
 
-        //get y coordinate
+        // get y coordinate
         String newY = "";
         int yy = 0;
         newY = yPositionField.getText().trim();
@@ -4237,7 +4237,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return;
         }
 
-        //get reporter name
+        // get reporter name
         Reporter reporter = null;
         String rName = reporterNameField.getText().trim();
 
@@ -4272,7 +4272,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         enterReporterFrame.setVisible(true);
     }
 
-    void reporterCancelPressed(@Nonnull ActionEvent event) {
+    void reporterCancelPressed() {
         reporterOpen = false;
         enterReporterFrame.setVisible(false);
         enterReporterFrame.dispose();
@@ -4301,7 +4301,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return;
         }
 
-        //Initialize if needed
+        // Initialize if needed
         if (scaleTrackDiagramFrame == null) {
             scaleTrackDiagramFrame = new JmriJFrame(Bundle.getMessage("ScaleTrackDiagram"));
             scaleTrackDiagramFrame.addHelpMenu("package.jmri.jmrit.display.ScaleTrackDiagram", true);
@@ -4309,7 +4309,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             Container theContentPane = scaleTrackDiagramFrame.getContentPane();
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.PAGE_AXIS));
 
-            //setup x translate
+            // setup x translate
             JPanel panel31 = new JPanel();
             panel31.setLayout(new FlowLayout());
             JLabel xTranslateLabel = new JLabel(Bundle.getMessage("XTranslateLabel"));
@@ -4383,7 +4383,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             theContentPane.add(panel5);
         }
 
-        //Set up for Entry of Scale and Translation
+        // Set up for Entry of Scale and Translation
         xFactorField.setText("1.0");
         yFactorField.setText("1.0");
         xTranslateField.setText("0");
@@ -4408,7 +4408,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         float xFactor = 1.0F;
         float yFactor = 1.0F;
 
-        //get x translation
+        // get x translation
         newText = xTranslateField.getText().trim();
         try {
             xTranslation = Float.parseFloat(newText);
@@ -4422,7 +4422,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return;
         }
 
-        //get y translation
+        // get y translation
         newText = yTranslateField.getText().trim();
         try {
             yTranslation = Float.parseFloat(newText);
@@ -4436,7 +4436,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return;
         }
 
-        //get x factor
+        // get x factor
         newText = xFactorField.getText().trim();
         try {
             xFactor = Float.parseFloat(newText);
@@ -4450,7 +4450,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return;
         }
 
-        //get y factor
+        // get y factor
         newText = yFactorField.getText().trim();
         try {
             yFactor = Float.parseFloat(newText);
@@ -4464,7 +4464,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return;
         }
 
-        //here when all numbers read in successfully - check for translation
+        // here when all numbers read in successfully - check for translation
         if ((xTranslation != 0.0F) || (yTranslation != 0.0F)) {
             //apply translation
             if (translateTrack(xTranslation, yTranslation)) {
@@ -4486,7 +4486,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         selectionActive = false;
         clearSelectionGroups();
 
-        //success - dispose of the dialog and repaint if needed
+        // success - dispose of the dialog and repaint if needed
         scaleTrackDiagramOpen = false;
         scaleTrackDiagramFrame.setVisible(false);
         scaleTrackDiagramFrame.dispose();
@@ -4614,7 +4614,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             panel5.add(moveSelectionCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             moveSelectionCancel.addActionListener((ActionEvent event) -> {
-                moveSelectionCancelPressed(event);
+                moveSelectionCancelPressed();
             });
             moveSelectionCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel5);
@@ -4626,7 +4626,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         moveSelectionFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent event) {
-                moveSelectionCancelPressed(null);
+                moveSelectionCancelPressed();
             }
         });
         moveSelectionFrame.pack();
@@ -4714,7 +4714,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         moveSelectionFrame = null;
     }
 
-    void moveSelectionCancelPressed(@Nonnull ActionEvent event) {
+    void moveSelectionCancelPressed() {
         moveSelectionOpen = false;
         moveSelectionFrame.setVisible(false);
         moveSelectionFrame.dispose();
@@ -7354,7 +7354,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * LayoutEditor with the layout block. This method is designed to be used
      * when a panel is loaded. The calling method must handle whether the use
      * count should be incremented.
-     * @returns null if blockID does not already exist
+     * @return null if blockID does not already exist
      */
     public LayoutBlock getLayoutBlock(@Nonnull String blockID) {
         //check if this Layout Block already exists
