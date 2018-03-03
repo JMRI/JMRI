@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 
 /**
- * Swing action to create and register a NodeTableFrame object
+ * Swing action to create and register a NodeTableFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2008
  */

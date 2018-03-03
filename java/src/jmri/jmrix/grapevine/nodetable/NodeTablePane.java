@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * <ol>
  *   <li>Configured
  *   <li>Present, not configured
- *   <li>Not present
+ *   <li>Absent (not present)
  * </ol>
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2007, 2008
