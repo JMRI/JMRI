@@ -14,7 +14,7 @@ import org.junit.Test;
 public class SampleMinimalProgramTest {
 
     @Test
-    @Ignore("Tries to setup connection with real hardware, that does not exist")
+    @Ignore("Tries to set up connection with real hardware, that does not exist")
     public void testCTor() {
        String[] args = {"DecoderProConfig3.xml"};
         SampleMinimalProgram t = new SampleMinimalProgram(args);

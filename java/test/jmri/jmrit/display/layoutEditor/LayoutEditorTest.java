@@ -11,6 +11,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
@@ -712,7 +713,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     }
 
     @Test
-    @Ignore // unreliable on CI servers
+    @Ignore("unreliable on CI servers")
     public void testSetHighlightSelectedBlockFalse() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         le.setHighlightSelectedBlock(false);
