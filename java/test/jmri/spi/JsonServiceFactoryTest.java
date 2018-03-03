@@ -30,6 +30,7 @@ public class JsonServiceFactoryTest {
             Assert.assertNotNull("Create HTTP service", factory.getHttpService(connection.getObjectMapper()));
             Assert.assertNotNull("Responds to message types", factory.getTypes());
             Assert.assertNotNull("Sends message types not responded to", factory.getSentTypes());
+            Assert.assertNotNull("Receives messages types not sent", factory.getReceivedTypes());
         });
     }
 
