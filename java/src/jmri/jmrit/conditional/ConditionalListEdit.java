@@ -365,6 +365,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     /**
      * Display reminder to save.
      */
+    @Override
     void showSaveReminder() {
         /*if (_showReminder && !_suppressReminder) {
          javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
@@ -622,6 +623,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         return false;
     }
 
+    @Override
     boolean checkConditionalUserName(String uName, Logix logix) {
         if ((uName != null) && (!(uName.equals("")))) {
             Conditional p = _conditionalManager.getByUserName(logix, uName);
@@ -4678,6 +4680,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         }
     }
 
+    @Override
     protected String getClassName() {
         return ConditionalListEdit.class.getName();
     }
