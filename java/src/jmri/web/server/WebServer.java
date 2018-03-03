@@ -98,10 +98,21 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
     }
 
     /**
-     * Start the web server.
+     * Start the web server. Calls {@link #start(boolean)} with {@code true}.
      */
     @Override
     public void start() {
+        this.start(true);
+    }
+
+    /**
+     * Start the web server.
+     *
+     * @param autoLoad true to load all registered
+     *                 {@link WebServerConfiguration}s and {@link HttpServlet}s;
+     *                 false otherwise
+     */
+    public void start(boolean autoLoad) {
         if (!server.isRunning()) {
             ServerConnector connector = new ServerConnector(server);
             connector.setIdleTimeout(5 * 60 * 1000); // 5 minutes
