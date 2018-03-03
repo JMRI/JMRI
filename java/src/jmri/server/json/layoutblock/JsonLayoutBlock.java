@@ -44,4 +44,10 @@ public class JsonLayoutBlock {
      */
     public static final String OCCUPIED_SENSE = "occupiedSense"; // NOI18N
 
+    /**
+     * Prevent instantiation, since this class only contains static values
+     */
+    private JsonLayoutBlock() {
+        // nothing to do
+    }
 }

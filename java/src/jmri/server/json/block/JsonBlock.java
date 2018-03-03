@@ -16,4 +16,10 @@ public class JsonBlock {
      */
     public static final String BLOCKS = "blocks"; // NOI18N
 
+    /**
+     * Prevent instantiation, since this class only contains static values
+     */
+    private JsonBlock() {
+        // nothing to do
+    }
 }
