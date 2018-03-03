@@ -51,11 +51,17 @@ env:
   matrix:
   - HEADLESS=true
   - HEADLESS=false
+  - STATIC=true
+  - STATIC=false
 
 matrix:
   exclude:
   - os: osx
     env: HEADLESS=true
+  - os: osx
+    env: STATIC=true
+  - env: HEADLESS=false
+    env: STATIC=true
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then mvn jacoco:report coveralls:report -U -P travis-coverage ; fi
