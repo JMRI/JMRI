@@ -332,14 +332,14 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                     log.debug("rename command not supported, old address: {}, new address: {}, bank: {}",
                             nodeaddr, b2, bank);
                 } else {
+                    log.debug("echo normal command, node {} bank {} ignored", nodeaddr, bank);
                     reply = null; // ignore all other messages
-                    log.debug("echo normal command, node {} bank {}", nodeaddr, bank);
-                    // 4 byte general reply
-                    reply.setElement(0, (nodeaddr | 0x80));
-                    reply.setElement(1, (b2 & 0xFF));  // normally: bit + state
-                    reply.setElement(2, (nodeaddr | 0x80));
-                    reply.setElement(3, (bank << 4)); // 0 = error, bank 1..3 for signals, 4..5 sensors (and parity)
-                    reply = setParity(reply, 0);
+                    // alternatavely, send a 4 byte general reply:
+                    // reply.setElement(0, (nodeaddr | 0x80));
+                    // reply.setElement(1, (b2 & 0xFF));  // normally: bit + state
+                    // reply.setElement(2, (nodeaddr | 0x80));
+                    // reply.setElement(3, (bank << 4)); // 0 = error, bank 1..3 for signals, 4..5 sensors (and parity)
+                    // reply = setParity(reply, 0);
                 }
         }
         log.debug(reply == null ? "Message ignored" : "Reply generated " + reply.toString());

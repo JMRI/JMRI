@@ -235,7 +235,7 @@ public class SerialNode extends AbstractNode {
                 m2.setElement(i++, 0x00);  // bank 0 = init
                 m2.setParity(i - 4);
                 log.debug("Node {} initpacket 2 sent to {} trafficController", getNodeAddress(),
-                        (tc == null ? "null" : tc.getSystemConnectionMemo().getSystemPrefix()));
+                        tc.getSystemConnectionMemo().getSystemPrefix());
                 tc.sendSerialMessage(m2, null);
             }
         };
@@ -255,7 +255,7 @@ public class SerialNode extends AbstractNode {
         m1.setElement(i++, 0x00);  // bank 0 = init
         m1.setParity(i - 4);
         log.debug("Node {} initpacket 1 ready to send to {} trafficController", getNodeAddress(),
-                (tc == null ? "null" : tc.getSystemConnectionMemo().getSystemPrefix()));
+                tc.getSystemConnectionMemo().getSystemPrefix());
         return m1;
     }
 
