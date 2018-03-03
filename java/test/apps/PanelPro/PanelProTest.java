@@ -140,6 +140,38 @@ public class PanelProTest {
     }
 
     @Test
+    public void testLaunchGrapevine() throws IOException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        try {
+            // create a custom profile
+            File tempFolder = folder.newFolder();
+            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/Grapevine_Simulator"), tempFolder);
+            System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
+
+            // launch!
+            PanelPro.main(new String[]{"PanelPro"});
+            log.debug("started GrapevineSim");
+
+            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("PanelPro") != null;}, "window up");
+
+            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("PanelPro version") != null;}, "first Info line seen");
+
+            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("Main initialization done") != null;}, "last Info line seen");
+
+            // now clean up frames, depending on what's actually left
+            // PanelPro
+
+            // gracefully shutdown, but don't exit
+            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+
+        } finally {
+            // wait for threads, etc
+            jmri.util.JUnitUtil.releaseThread(this, 5000);
+        }
+    }
+
+    @Test
     @Ignore
     public void testLaunchSprog() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());

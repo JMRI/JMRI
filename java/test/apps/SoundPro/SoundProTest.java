@@ -98,6 +98,35 @@ public class SoundProTest {
     }
 
     @Test
+    public void testLaunchGrapevine() throws IOException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        try {
+            // create a custom profile
+            File tempFolder = folder.newFolder();
+            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/Grapevine_Simulator"), tempFolder);
+            System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
+
+            // launch!
+            SoundPro.main(new String[]{"SoundPro"});
+            log.debug("started GrapevineSim");
+
+            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("SoundPro") != null;}, "window up");
+
+            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("SoundPro version") != null;}, "first Info line seen");
+
+            // gracefully shutdown, but don't exit
+            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+
+            // now clean up frames, depending on what's actually left
+            // SoundPro
+        } finally {
+            // wait for threads, etc
+            jmri.util.JUnitUtil.releaseThread(this, 5000);
+        }
+    }
+
+    @Test
     public void testLaunchTmcc() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
