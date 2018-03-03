@@ -14,7 +14,6 @@ import org.junit.Test;
 public class DecoderProPaneTest {
 
     @Test
-    @Ignore("Generates Exception")
     public void testCTor() {
         DecoderProPane t = new DecoderProPane();
         Assert.assertNotNull("exists",t);
@@ -24,6 +23,7 @@ public class DecoderProPaneTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initConfigureManager();
     }
 
     @After

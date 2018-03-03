@@ -14,7 +14,6 @@ import org.junit.Test;
 public class PanelProPaneTest {
 
     @Test
-    @Ignore("needs more setup")
     public void testCTor() {
         PanelProPane t = new PanelProPane();
         Assert.assertNotNull("exists",t);
@@ -24,6 +23,7 @@ public class PanelProPaneTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initConfigureManager();
     }
 
     @After
