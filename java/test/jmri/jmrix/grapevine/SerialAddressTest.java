@@ -182,26 +182,26 @@ public class SerialAddressTest extends TestCase {
         checkValidSystemNameFormatName("GL22B301", 'L', true);
 
         checkValidSystemNameFormatName("GL22000", 'L', false);
-        JUnitAppender.assertWarnMessage("invalid bit number 0 in GL22000");
+        //JUnitAppender.assertWarnMessage("invalid bit number 0 in GL22000"); // * reduced to debug level for add new item pane
 
         checkValidSystemNameFormatName("GL22B0", 'L', false);
-        JUnitAppender.assertWarnMessage("invalid bit number 0 in GL22B0");
+        //JUnitAppender.assertWarnMessage("invalid bit number 0 in GL22B0"); // *
 
         checkValidSystemNameFormatName("GS2001", 'S', true);
         checkValidSystemNameFormatName("GL2B0118", 'L', true);
 
         checkValidSystemNameFormatName("GL2B2049", 'L', false);
-        JUnitAppender.assertWarnMessage("invalid bit number 2049 in GL2B2049");
+        //JUnitAppender.assertWarnMessage("invalid bit number 2049 in GL2B2049"); // *
 
         checkValidSystemNameFormatName("GL127419", 'L', true);
 
         checkValidSystemNameFormatName("GL128000", 'L', false);
-        JUnitAppender.assertWarnMessage("invalid node number 128 in GL128000");
+        //JUnitAppender.assertWarnMessage("invalid node number 128 in GL128000"); // *
 
         checkValidSystemNameFormatName("GL127B407", 'L', true);
 
         checkValidSystemNameFormatName("GL128B7", 'L', false);
-        JUnitAppender.assertWarnMessage("invalid node number 128 in GL128B7");
+        //JUnitAppender.assertWarnMessage("invalid node number 128 in GL128B7"); // *
 
         checkValidSystemNameFormatName("GL2oo5", 'L', false);
 
@@ -242,19 +242,19 @@ public class SerialAddressTest extends TestCase {
         Assert.assertTrue("valid config GL10B206", SerialAddress.validSystemNameConfig("GL10B206", 'L', tcis));
 
         Assert.assertTrue("invalid config GL10133", !SerialAddress.validSystemNameConfig("GL10133", 'L', tcis));
-        JUnitAppender.assertWarnMessage("invalid bit number 133 in GL10133");
-        JUnitAppender.assertWarnMessage("invalid system name GL10133");
+        //JUnitAppender.assertWarnMessage("invalid bit number 133 in GL10133"); // *
+        //JUnitAppender.assertWarnMessage("invalid system name GL10133"); // *
 
         Assert.assertTrue("invalid config GL10B133", !SerialAddress.validSystemNameConfig("GL10B133", 'L',tcis));
-        JUnitAppender.assertWarnMessage("invalid bit number 133 in GL10B133");
-        JUnitAppender.assertWarnMessage("invalid system name GL10B133");
+        //JUnitAppender.assertWarnMessage("invalid bit number 133 in GL10B133"); // *
+        //JUnitAppender.assertWarnMessage("invalid system name GL10B133"); // *
 
         Assert.assertTrue("valid config GS10006", SerialAddress.validSystemNameConfig("GS10006", 'S', tcis));
         Assert.assertTrue("valid config GS10B06", SerialAddress.validSystemNameConfig("GS10B06", 'S', tcis));
 
         Assert.assertTrue("invalid config GS10517", !SerialAddress.validSystemNameConfig("GS10517", 'S', tcis));
-        JUnitAppender.assertWarnMessage("invalid bit number 517 in GS10517");
-        JUnitAppender.assertWarnMessage("invalid system name GS10517");
+        //JUnitAppender.assertWarnMessage("invalid bit number 517 in GS10517"); // *
+        //JUnitAppender.assertWarnMessage("invalid system name GS10517"); // *
 
         Assert.assertTrue("invalid config GS10B547", !SerialAddress.validSystemNameConfig("GS10B547", 'S', tcis));
         JUnitAppender.assertWarnMessage("invalid system name GS10B547; bad input bit number 547 > 224");
@@ -263,19 +263,19 @@ public class SerialAddressTest extends TestCase {
         Assert.assertTrue("valid config GT4B106", SerialAddress.validSystemNameConfig("GT4B106", 'T', tcis));
 
         Assert.assertTrue("invalid config GT4517", !SerialAddress.validSystemNameConfig("GT4517", 'T', tcis));
-        JUnitAppender.assertWarnMessage("invalid bit number 517 in GT4517");
-        JUnitAppender.assertWarnMessage("invalid system name GT4517");
+        //JUnitAppender.assertWarnMessage("invalid bit number 517 in GT4517"); // *
+        //JUnitAppender.assertWarnMessage("invalid system name GT4517"); // *
 
         Assert.assertTrue("invalid config GT4299", !SerialAddress.validSystemNameConfig("GT4299", 'T', tcis));
-        JUnitAppender.assertWarnMessage("invalid bit number 299 in GT4299");
-        JUnitAppender.assertWarnMessage("invalid system name GT4299");
+        //JUnitAppender.assertWarnMessage("invalid bit number 299 in GT4299"); // *
+        //JUnitAppender.assertWarnMessage("invalid system name GT4299"); // *
 
         Assert.assertTrue("valid config GS4008", SerialAddress.validSystemNameConfig("GS4008", 'S', tcis));
         Assert.assertTrue("valid config GS4B8", SerialAddress.validSystemNameConfig("GS4B8", 'S', tcis));
 
         Assert.assertTrue("invalid config GS4309", !SerialAddress.validSystemNameConfig("GS4309", 'S', tcis));
-        JUnitAppender.assertWarnMessage("invalid bit number 309 in GS4309");
-        JUnitAppender.assertWarnMessage("invalid system name GS4309");
+        //JUnitAppender.assertWarnMessage("invalid bit number 309 in GS4309"); // *
+        //JUnitAppender.assertWarnMessage("invalid system name GS4309"); // *
 
         Assert.assertTrue("invalid config GS4B309", !SerialAddress.validSystemNameConfig("GS4B309", 'S', tcis));
         JUnitAppender.assertWarnMessage("invalid system name GS4B309; bad input bit number 309 > 224");
@@ -285,7 +285,6 @@ public class SerialAddressTest extends TestCase {
 
         Assert.assertTrue("invalid config GL11B107", !SerialAddress.validSystemNameConfig("GL11B107", 'L', tcis));
         JUnitAppender.assertWarnMessage("invalid system name GL11B107; no such node");
-
     }
 
     public void testConvertSystemNameToAlternate() {
@@ -298,7 +297,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("convert GL14B308", "GL14B308", SerialAddress.convertSystemNameToAlternate("GL14B308", "G"));
 
         Assert.assertEquals("convert GL128B7", "", SerialAddress.convertSystemNameToAlternate("GL128B7", "G"));
-        JUnitAppender.assertWarnMessage("invalid node number 128 in GL128B7");
+        //JUnitAppender.assertWarnMessage("invalid node number 128 in GL128B7"); // *
     }
 
     public void testNormalizeSystemName() {
@@ -318,7 +317,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("normalize GS98p1", "GS98001", SerialAddress.normalizeSystemName("GS98p1", "G"));
 
         Assert.assertEquals("normalize GL128B7", "", SerialAddress.normalizeSystemName("GL128B7", "G"));
-        JUnitAppender.assertWarnMessage("invalid node number 128 in GL128B7");
+        //JUnitAppender.assertWarnMessage("invalid node number 128 in GL128B7"); // *
     }
 
     // from here down is testing infrastructure

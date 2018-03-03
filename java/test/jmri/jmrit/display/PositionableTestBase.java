@@ -39,7 +39,6 @@ abstract public class PositionableTestBase{
         JUnitUtil.tearDown();
     }
 
-
     @Test
     public void testGetAndSetPositionable() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
