@@ -97,7 +97,7 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * manager config in one place.
      */
     public void configureManagers() {
-        InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+        InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
     }
 

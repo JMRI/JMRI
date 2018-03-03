@@ -91,7 +91,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      */
     public void configureCommandStation(int val) {
         getNceTrafficController().setCommandOptions(val);
-        jmri.InstanceManager.setCommandStation(nceTrafficController);
+        jmri.InstanceManager.store(nceTrafficController, jmri.CommandStation.class);
     }
 
     /**
@@ -214,7 +214,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             }
         } else {
             if (getProgrammerManager().isAddressedModePossible()) {
-                InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+                InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
             }
             if (getProgrammerManager().isGlobalProgrammerAvailable()) {
                 InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);

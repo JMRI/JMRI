@@ -37,7 +37,7 @@ public class ZTC611XNetInitializationManager extends AbstractXNetInitializationM
         jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
         systemMemo.setProgrammerManager(new XNetProgrammerManager(new XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
         if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
-            jmri.InstanceManager.setAddressedProgrammerManager(systemMemo.getProgrammerManager());
+            jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
             jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
@@ -45,7 +45,7 @@ public class ZTC611XNetInitializationManager extends AbstractXNetInitializationM
         /* the "raw" Command Station only works on systems that support
         Ops Mode Programming */
         systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
-        jmri.InstanceManager.setCommandStation(systemMemo.getCommandStation());
+        jmri.InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
         systemMemo.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
         systemMemo.setTurnoutManager(new ZTC611XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
         jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());

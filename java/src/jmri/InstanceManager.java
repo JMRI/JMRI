@@ -647,7 +647,6 @@ public final class InstanceManager {
      */
     @Deprecated
     static public void setSignalHeadManager(SignalHeadManager p) {
-        store(p, SignalHeadManager.class);
         setDefault(SignalHeadManager.class, p);
     }
 
