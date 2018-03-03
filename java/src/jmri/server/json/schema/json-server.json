@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$schema": "http://json-schema.org/draft-04/schema#",
     "title": "jmri-json-server-message",
     "type": ["object", "array"],
     "description": "Message from JMRI to client",
