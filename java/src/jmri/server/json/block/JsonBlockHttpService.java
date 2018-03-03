@@ -23,8 +23,8 @@ import jmri.server.json.JsonHttpService;
 
 /**
  *
- * @author mstevetodd Copyright (C) 2016 (copied from JsonMemoryHttpService)
- * @author Randall Wood
+ * @author mstevetodd Copyright 2016
+ * @author Randall Wood Copyright 2018
  */
 public class JsonBlockHttpService extends JsonHttpService {
 

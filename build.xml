@@ -270,6 +270,7 @@
         <pathelement location="${libdir}/objenesis-2.2.jar"/>
         <pathelement location="${libdir}/jemmy-2.3.1.1-RELEASE802.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
+        <pathelement location="${libdir}/json-schema-validator-0.1.16.jar"/>
         <!-- cucumber and it's dependencies -->
         <pathelement location="${libdir}/cucumber-core-2.0.1.jar"/>
         <pathelement location="${libdir}/cucumber-java-2.0.1.jar"/>
