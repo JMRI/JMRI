@@ -86,7 +86,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     public void configureManagers() {
 
         InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
-        InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+        InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
 
         InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
 
