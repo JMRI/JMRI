@@ -412,12 +412,11 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * 
      */
     public void run() {
-        // Send a decoder idle packet to prompt a reply from hardware and set things running
-        sendPacket(jmri.NmraPacket.idlePacket(), SprogConstants.S_REPEATS);
+        log.debug("Command station slot thread starts");
         while(true) {
             try {
                 synchronized(lock) {
-                   lock.wait(SprogConstants.REPLY_TIMEOUT);
+                    lock.wait(SprogConstants.REPLY_TIMEOUT);
                 }
             } catch (InterruptedException e) {
                log.debug("Slot thread interrupted");
@@ -488,6 +487,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
 
                         // Should never get here. Something is wrong so turn power off
                         // Kill reply wait so send doesn't block
+                        log.warn("Slot thread timeout - removing power");
                         waitingForReply = false;
                         try {
                             powerMgr.setPower(PowerManager.OFF);
@@ -555,7 +555,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     public void notifyReply(SprogReply m) {
         if (m.getId() != lastId) {
             // Not my id, so not interested, message send still locked
-            log.debug("Ignore reply with mismatched id");
+            log.debug("Ignore reply with mismatched id {} looking for {}", m.getId(), lastId);
             return;
         } else {
             // Unblock sending messages
@@ -579,7 +579,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
-        log.debug("propertyChange " + evt.getPropertyName() + "= " + evt.getNewValue());
+        log.debug("propertyChange " + evt.getPropertyName() + " = " + evt.getNewValue());
         if (evt.getPropertyName().equals("Power")) {
             try {
                 powerState = powerMgr.getPower();
