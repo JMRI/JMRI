@@ -50,8 +50,9 @@ public class JsonHttpServiceTest {
     public static void testSchemaValidJson(JsonNode node, JsonNode schema) {
         Set<ValidationMessage> errors = JsonSchemaFactory.getInstance().getSchema(schema).validate(node);
         if (!errors.isEmpty()) {
+            log.warn("Errors validating {}", node);
             errors.forEach((error) -> {
-                log.error("JSON Validation Error: {}\n\t{}\n\t{}\n\t{}", error.getCode(), error.getMessage(), error.getPath(), error.getType());
+                log.warn("JSON Validation Error: {}\n\t{}\n\t{}\n\t{}", error.getCode(), error.getMessage(), error.getPath(), error.getType());
             });
         }
         Assert.assertTrue("No errors expected", errors.isEmpty());

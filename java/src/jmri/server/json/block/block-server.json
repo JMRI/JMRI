@@ -13,7 +13,7 @@
             "description": "User name of the block"
         },
         "comment": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "Comment for the block"
         },
         "properties": {
@@ -34,10 +34,10 @@
             }
         },
         "value": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "The value of the block"
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "properties", "value"]
+    "required": ["name", "userName", "comment", "value"]
 }
