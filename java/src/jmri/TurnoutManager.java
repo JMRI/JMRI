@@ -229,8 +229,8 @@ public interface TurnoutManager extends Manager<Turnout> {
 
     /**
      * Determine if the address supplied is valid and free, if not then it shall
-     * return the next free valid address up to a maximum of 10 address away
-     * from the initial address.
+     * return the next free valid address up to a maximum of 10 addresses away
+     * from the initial address. Used when adding add a range of Turnouts.
      *
      * @param prefix     System prefix used in system name
      * @param curAddress desired hardware address

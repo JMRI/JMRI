@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract partial implementation of a LightManager.
- * <P>
+ * <p>
  * Based on AbstractSignalHeadManager.java and AbstractSensorManager.java
  *
  * @author Dave Duchamp Copyright (C) 2004
@@ -19,14 +19,14 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         implements LightManager, java.beans.PropertyChangeListener {
 
     /**
-     * constructor
+     * Create a new LightManager instance.
      */
     public AbstractLightManager() {
         super();
     }
 
     /**
-     * get XML order
+     * Get XML order.
      *
      * @return the XML order
      */

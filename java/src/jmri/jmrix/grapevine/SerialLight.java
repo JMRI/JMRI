@@ -19,8 +19,9 @@ public class SerialLight extends AbstractLight {
 
     /**
      * Create a Light object, with only system name.
-     * <p>
-     * 'systemName' was previously validated in SerialLightManager
+     *
+     * @param systemName system name including prefix, previously validated in SerialLightManager
+     * @param _memo the associated SystemConnectionMemo
      */
     public SerialLight(String systemName, GrapevineSystemConnectionMemo _memo) {
         super(systemName);
@@ -31,8 +32,10 @@ public class SerialLight extends AbstractLight {
 
     /**
      * Create a Light object, with both system and user names.
-     * <p>
-     * 'systemName' was previously validated in SerialLightManager
+     *
+     * @param systemName system name including prefix, previously validated in SerialLightManager
+     * @param userName free form name
+     * @param _memo the associated SystemConnectionMemo
      */
     public SerialLight(String systemName, String userName, GrapevineSystemConnectionMemo _memo) {
         super(systemName, userName);
