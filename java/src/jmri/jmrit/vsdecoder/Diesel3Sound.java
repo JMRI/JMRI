@@ -47,6 +47,7 @@ class Diesel3Sound extends EngineSound {
     AudioBuffer start_buffer;
     AudioBuffer stop_buffer;
     AudioBuffer transition_buf;
+    float engine_rd;
 
     // Common variables
     Float throttle_setting; // used for handling speed changes
@@ -163,6 +164,12 @@ class Diesel3Sound extends EngineSound {
 
         is_auto_start = setXMLAutoStart(e);
         log.debug("config auto-start: {}", is_auto_start);
+
+        // Optional value
+        // Allows to adjust OpenAL attenuation
+        // Sounds with distance to listener position lower than reference-distance will not have attenuation
+        engine_rd = setXMLReferenceDistance(e); // Handle reference distance
+        log.debug("engine-sound referenceDistance: {}", engine_rd);
 
         // Get the notch sounds
         Iterator<Element> itr = (e.getChildren("notch-sound")).iterator();
@@ -554,7 +561,10 @@ class Diesel3Sound extends EngineSound {
             _parent.engine_pane.setThrottle(1); // Set EnginePane (DieselPane) notch
             // Adjust the current notch to match the throttle setting
             log.debug("Notch: {}, prev: {}, next: {}", _notch.getNotch(), _notch.getPrevNotch(), _notch.getNextNotch());
-            
+
+            _sound.setReferenceDistance(_parent.engine_rd);
+            log.debug("set reference distance to {} for engine sound", _sound.getReferenceDistance());
+
             // If we're out of whack, find the right notch for the current throttle setting.
             while (!_notch.isInLimits(_throttle)) {
                 if (_throttle > _notch.getAccelLimit()) {
