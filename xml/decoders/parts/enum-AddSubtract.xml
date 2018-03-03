@@ -17,6 +17,6 @@
     <choice xml:lang="de">Subtrahiere Wert von der Basis-Beschleunigung</choice>
     <choice xml:lang="fr">Soustraire la valeur au taux d'accélération de base (décroît le retard d'accélération)</choice>
     <choice xml:lang="it">Sottrae valore al tasso di accellerazione base</choice>
-    <choice xml:lang="nl">Waarde aftrekken van Basisversnelling (vertraging van acceleratie vermindert)
+    <choice xml:lang="nl">Waarde aftrekken van Basisversnelling (vertraging van acceleratie vermindert)</choice>
   </enumChoice>
 </enumVal>
