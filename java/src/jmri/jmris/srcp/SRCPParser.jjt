@@ -146,7 +146,6 @@ TOKEN :
 | <#X:["x","X"]>
 | <#Y:["y","Y"]>
 | <#Z:["z","Z"]>
-| <BADTOKEN:~[" "]>
 }
 
 // Lexical specifications begin here
@@ -293,7 +292,7 @@ SimpleNode get():{}
   <GET> bus() ( fb() address() |
                 ga() address() port() |
                 gl() address() |
-                sm() address() progmode() cvno() |
+                sm() address() progmode() cvno() (value())* |
                 time() |
                 power() |
                 server() |
@@ -337,7 +336,7 @@ SimpleNode connectionlitteral():{}
 SimpleNode set():{}
 {
   <SET> ( bus() ( gl() address() drivemode() address() address() (functionmode())* |
-                sm() address() progmode() cvno() value() |
+                sm() address() progmode() cvno() (value())+ |
                 ga() address() port() zeroone() (delay()|timeout()) |
                 fb() address() zeroone()|
                 time() address() address() address() address() |
@@ -513,12 +512,6 @@ SimpleNode description():{Token t; SimpleNode s; SimpleNode r;}
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
-}
-
-SimpleNode comment():{}
-{
-  //<COMMENT>
-  {return jjtThis;}
 }
 
 SimpleNode onoff():{Token t;}

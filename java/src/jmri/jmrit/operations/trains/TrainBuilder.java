@@ -123,7 +123,10 @@ public class TrainBuilder extends TrainCommon {
         _train.setStatusCode(Train.CODE_BUILDING);
         _train.setBuilt(false);
         _train.setLeadEngine(null);
-
+        
+        // backup the train's previous build report file
+        InstanceManager.getDefault(TrainManagerXml.class).savePreviousBuildStatusFile(_train.getName());
+        
         // create build report file
         File file = InstanceManager.getDefault(TrainManagerXml.class).createTrainBuildReportFile(_train.getName());
         try {
@@ -257,8 +260,10 @@ public class TrainBuilder extends TrainCommon {
         
         addCabooseOrFredToTrain(); // do all caboose and FRED changes in the train's route
 
-        // done assigning cabooses and cars with FRED, remove the rest, and save final destination
-        removeCaboosesAndCarsWithFredAndSaveFinalDestination();
+        // done assigning cabooses and cars with FRED, remove the rest
+        removeCaboosesAndCarsWithFred();
+        
+        saveCarFinalDestinations(); //save car's final destination and schedule id in case of train reset
 
         blockCarsFromStaging(); // block cars from staging
 
@@ -1579,10 +1584,10 @@ public class TrainBuilder extends TrainCommon {
 
     /**
      * Removes the remaining cabooses and cars with FRED from consideration.
-     * Also saves a car's final destination in case of train reset. 
+     * 
      * @throws BuildFailedException
      */
-    private void removeCaboosesAndCarsWithFredAndSaveFinalDestination() throws BuildFailedException {
+    private void removeCaboosesAndCarsWithFred() throws BuildFailedException {
         addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
         addLine(_buildReport, SEVEN, Bundle.getMessage("buildRemoveCarsNotNeeded"));
         for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
@@ -1597,7 +1602,14 @@ public class TrainBuilder extends TrainCommon {
                 _carList.remove(car); // remove this car from the list
                 _carIndex--;
             }
-            // save final destination and track values in case of train reset
+        }
+    }
+    
+    /**
+     * Save the car's final destination and schedule id in case of train reset
+     */
+    private void saveCarFinalDestinations() {
+        for (Car car : _carList) {
             car.setPreviousFinalDestination(car.getFinalDestination());
             car.setPreviousFinalDestinationTrack(car.getFinalDestinationTrack());
             car.setPreviousScheduleId(car.getScheduleItemId());

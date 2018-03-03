@@ -7,6 +7,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 
@@ -48,7 +49,7 @@ public class VSDOptionsDialog extends JDialog {
         JLabel x = new JLabel();
         x.setText(Bundle.getMessage("FieldSelectTrain"));
         this.add(x);
-        opsTrainComboBox = TrainManager.instance().getTrainComboBox();
+        opsTrainComboBox = InstanceManager.getDefault(TrainManager.class).getTrainComboBox();
         this.add(opsTrainComboBox);
 
         JButton closeButton = new JButton(Bundle.getMessage("ButtonOK"));

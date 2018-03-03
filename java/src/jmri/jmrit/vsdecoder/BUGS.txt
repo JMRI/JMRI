@@ -1,1 +1,0 @@
-* If you click the "Engine Start" button again (to shut it off) DURING the start-up sound, it will play the shut-down sound, but will not stop the start-up/idle sound.  The button state is then out of sync with the actual performance, so the next click of "engine start" plays the Start sequence again on an already-running engine.

@@ -34,16 +34,19 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     private final static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
 
     /**
-     * Ctor for an object being created during load process
+     * Create a connection configuration with a preexisting adapter. This is
+     * used principally when loading a configuration that defines this
+     * connection.
      *
+     * @param p the adapter to create a connection configuration for
      */
     public AbstractNetworkConnectionConfig(NetworkPortAdapter p) {
         adapter = p;
     }
 
     /**
-     * Ctor for a functional object with no preexisting adapter. Expect that the
-     * subclass setInstance() will fill the adapter member.
+     * Create a connection configuration without a preexisting adapter. Expect
+     * that the subclass setInstance() will fill the adapter member.
      */
     public AbstractNetworkConnectionConfig() {
     }
@@ -342,11 +345,11 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         showAutoConfig.setForeground(Color.blue);
         showAutoConfig.addItemListener(
                 new ItemListener() {
-                    @Override
-                    public void itemStateChanged(ItemEvent e) {
-                        setAutoNetworkConfig();
-                    }
-                });
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                setAutoNetworkConfig();
+            }
+        });
         showAutoConfig.setSelected(adapter.getMdnsConfigure());
         setAutoNetworkConfig();
 
@@ -354,11 +357,11 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         showAdvanced.setForeground(Color.blue);
         showAdvanced.addItemListener(
                 new ItemListener() {
-                    @Override
-                    public void itemStateChanged(ItemEvent e) {
-                        showAdvancedItems();
-                    }
-                });
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                showAdvancedItems();
+            }
+        });
         showAdvancedItems();
 
         init = false;  // need to reload action listeners

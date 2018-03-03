@@ -1,14 +1,16 @@
 package jmri.jmrix.grapevine;
 
 import jmri.implementation.AbstractLightTestBase;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 
 /**
- * Tests for the jmri.jmrix.grapevine.SerialLight class, low address.
+ * Tests for the jmri.jmrix.grapevine.SerialLight class.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class SerialLightTest extends AbstractLightTestBase {
 
     private GrapevineSystemConnectionMemo memo = null; 
@@ -18,12 +20,12 @@ public class SerialLightTest extends AbstractLightTestBase {
     @Before
     public void setUp() {
         // prepare an interface
-        tcis = new SerialTrafficControlScaffold();
-        tcis.registerNode(new SerialNode(1, SerialNode.NODE2002V6));
         memo = new GrapevineSystemConnectionMemo();
+        tcis = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tcis);
+        tcis.registerNode(new SerialNode(1, SerialNode.NODE2002V6, tcis));
 
-        t = new SerialLight("GL1104", "t4",memo);
+        t = new SerialLight("GL1104", "t4", memo);
     }
 
     @Override
@@ -41,6 +43,16 @@ public class SerialLightTest extends AbstractLightTestBase {
     public void checkOnMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         Assert.assertEquals("content", "81 18 81 0C", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
+    }
+
+    // reset objects
+    @After
+    public void tearDown() {
+        tcis.terminateThreads();
+        tcis = null;
+        memo = null;
+        t.dispose();
+        JUnitUtil.tearDown();
     }
 
 }

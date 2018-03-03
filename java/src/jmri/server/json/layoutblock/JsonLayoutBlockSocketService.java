@@ -1,6 +1,5 @@
 package jmri.server.json.layoutblock;
 
-import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
 import static jmri.server.json.layoutblock.JsonLayoutBlock.LAYOUTBLOCK;
@@ -26,38 +25,37 @@ import org.slf4j.LoggerFactory;
  * @author mstevetodd Copyright (C) 2016 (copied from JsonMemorySocketService)
  * @author Randall Wood
  */
-public class JsonLayoutBlockSocketService extends JsonSocketService {
+public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBlockHttpService> {
 
-    private final JsonLayoutBlockHttpService service;
     private final HashMap<String, LayoutBlockListener> layoutBlocks = new HashMap<>();
-    private Locale locale;
     private static final Logger log = LoggerFactory.getLogger(JsonLayoutBlockServiceFactory.class);
 
     public JsonLayoutBlockSocketService(JsonConnection connection) {
-        super(connection);
-        this.service = new JsonLayoutBlockHttpService(connection.getObjectMapper());
+        super(connection, new JsonLayoutBlockHttpService(connection.getObjectMapper()));
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+        this.setLocale(locale);
         String name = data.path(NAME).asText();
-        if (data.path(METHOD).asText().equals(PUT)) {
+        if (method.equals(PUT)) {
             this.connection.sendMessage(this.service.doPut(type, name, data, locale));
         } else {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
         }
         if (!this.layoutBlocks.containsKey(name)) {
             LayoutBlock layoutblock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(name);
-            LayoutBlockListener listener = new LayoutBlockListener(layoutblock);
-            layoutblock.addPropertyChangeListener(listener);
-            this.layoutBlocks.put(name, listener);
+            if (layoutblock != null) {
+                LayoutBlockListener listener = new LayoutBlockListener(layoutblock);
+                layoutblock.addPropertyChangeListener(listener);
+                this.layoutBlocks.put(name, listener);
+            }
         }
     }
 
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+        this.setLocale(locale);
         this.connection.sendMessage(this.service.doGetList(type, locale));
     }
 
@@ -84,7 +82,7 @@ public class JsonLayoutBlockSocketService extends JsonSocketService {
                         e.getPropertyName(), e.getOldValue(), e.getNewValue());
                 try {
                     try {
-                        connection.sendMessage(service.doGet(LAYOUTBLOCK, this.layoutBlock.getSystemName(), locale));
+                        connection.sendMessage(service.doGet(LAYOUTBLOCK, this.layoutBlock.getSystemName(), getLocale()));
                     } catch (JsonException ex) {
                         connection.sendMessage(ex.getJsonMessage());
                     }

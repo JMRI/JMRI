@@ -25,6 +25,9 @@ import org.slf4j.LoggerFactory;
  */
 public class TrafficController implements jmri.CommandStation {
 
+    /**
+     * Create a new Direct TrafficController instance.
+     */
     public TrafficController() {
         super();
     }

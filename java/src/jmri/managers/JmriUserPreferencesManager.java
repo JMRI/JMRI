@@ -21,7 +21,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SortOrder;
 import jmri.ConfigureManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
@@ -819,14 +818,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         }
         displayRememberMsg();
         this.savePreferencesState();
-    }
-
-    @Override
-    @Deprecated
-    public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden) {
-        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((manager) -> {
-            manager.setTableColumnPreferences(table, column, order, width, sort, hidden);
-        });
     }
 
     public String getClassDescription() {

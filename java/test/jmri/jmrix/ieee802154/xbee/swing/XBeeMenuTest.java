@@ -53,7 +53,7 @@ public class XBeeMenuTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         tc = null;
+        JUnitUtil.tearDown();
     }
 }

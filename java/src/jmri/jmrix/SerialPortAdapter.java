@@ -5,8 +5,7 @@ import org.slf4j.Logger;
 import purejavacomm.PortInUseException;
 
 /**
- * Enables basic setup of a serial interface for a jmrix implementation.
- *
+ * Enable basic set-up of a serial interface for a jmrix implementation.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
  * @see jmri.jmrix.SerialConfigException
@@ -19,7 +18,7 @@ public interface SerialPortAdapter extends PortAdapter {
     public Vector<String> getPortNames();
 
     /**
-     * Open a specified port. The appname argument is to be provided to the
+     * Open a specified port. The appName argument is to be provided to the
      * underlying OS during startup so that it can show on status displays, etc
      */
     public String openPort(String portName, String appName);
@@ -105,4 +104,5 @@ public interface SerialPortAdapter extends PortAdapter {
      */
     @Override
     public void setManufacturer(String Manufacturer);
+
 }

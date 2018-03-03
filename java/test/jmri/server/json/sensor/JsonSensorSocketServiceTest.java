@@ -38,7 +38,7 @@ public class JsonSensorSocketServiceTest extends TestCase {
             JsonSensorSocketService service = new JsonSensorSocketService(connection);
             SensorManager manager = InstanceManager.getDefault(SensorManager.class);
             Sensor sensor1 = manager.provideSensor("IS1");
-            service.onMessage(JsonSensor.SENSOR, message, Locale.ENGLISH);
+            service.onMessage(JsonSensor.SENSOR, message, JSON.POST, Locale.ENGLISH);
             // TODO: test that service is listener in SensorManager
             Assert.assertEquals(JSON.UNKNOWN, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt(-1)); // -1 not possible value
             sensor1.setKnownState(Sensor.ACTIVE);
@@ -68,27 +68,27 @@ public class JsonSensorSocketServiceTest extends TestCase {
             Sensor sensor1 = manager.provideSensor("IS1");
             // Sensor INACTIVE
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.INACTIVE);
-            service.onMessage(JsonSensor.SENSOR, message, Locale.ENGLISH);
+            service.onMessage(JsonSensor.SENSOR, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Sensor.INACTIVE, sensor1.getKnownState());
             // Sensor ACTIVE
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.ACTIVE);
-            service.onMessage(JsonSensor.SENSOR, message, Locale.ENGLISH);
+            service.onMessage(JsonSensor.SENSOR, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Sensor.ACTIVE, sensor1.getKnownState());
             // Sensor UNKNOWN - remains ACTIVE
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.UNKNOWN);
-            service.onMessage(JsonSensor.SENSOR, message, Locale.ENGLISH);
+            service.onMessage(JsonSensor.SENSOR, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Sensor.ACTIVE, sensor1.getKnownState());
             sensor1.setKnownState(Sensor.ACTIVE);
             // Sensor INCONSISTENT - remains ACTIVE
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.INCONSISTENT);
-            service.onMessage(JsonSensor.SENSOR, message, Locale.ENGLISH);
+            service.onMessage(JsonSensor.SENSOR, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Sensor.ACTIVE, sensor1.getKnownState());
             sensor1.setKnownState(Sensor.ACTIVE);
             // Sensor no value
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1");
             JsonException exception = null;
             try {
-                service.onMessage(JsonSensor.SENSOR, message, Locale.ENGLISH);
+                service.onMessage(JsonSensor.SENSOR, message, JSON.POST, Locale.ENGLISH);
             } catch (JsonException ex) {
                 exception = ex;
             }

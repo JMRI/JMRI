@@ -116,7 +116,7 @@
 
       <ul>
         <li><b>Add Node</b>. First select a node in the Image Index
-        tree. Then, use this menu item to add a sub-node the the
+        tree. Then, use this menu item to add a sub-node the
         selected node. A "sub-node" is a node that branches from
         under the selected node.</li>
 

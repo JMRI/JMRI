@@ -69,7 +69,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 getThrottleManager());
 
         if (getProgrammerManager().isAddressedModePossible()) {
-            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (getProgrammerManager().isGlobalProgrammerAvailable()) {
             jmri.InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);

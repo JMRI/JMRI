@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
  */
 public class ColorUtil {
 
-    /* 
-     * Color lists for screne colors.  
+    /*
+     * Color lists for screen colors.
      */
     public final static String ColorTrack = "track";
     public final static String ColorBlack = "black";
@@ -32,6 +32,10 @@ public class ColorUtil {
     public final static String ColorBlue = "blue";
     public final static String ColorMagenta = "magenta";
     public final static String ColorCyan = "cyan";
+    public final static String ColorClear = "clear";
+
+    public final static Color clear = setAlpha(Color.BLACK, 0);
+    public final static Color CLEAR = clear;
 
     /**
      * Handles known colors plus special value for track
@@ -72,14 +76,14 @@ public class ColorUtil {
     }
 
     /**
-     * @param string Either a hexidecimal representation of the rgb value of a 
-     * color or a color name defined as a constant. 
+     * @param string Either a hexidecimal representation of the rgb value of a
+     * color or a color name defined as a constant.
      */
     public static Color stringToColor(String string) {
         try {
             return Color.decode(string);
-        } catch(NumberFormatException nfe) {
-            switch(string) {
+        } catch (NumberFormatException nfe) {
+            switch (string) {
                case ColorBlack:
                    return Color.black;
                case ColorDarkGray:
@@ -110,35 +114,49 @@ public class ColorUtil {
                    return null;
                default:
                    // check translated strings, just in case there is one in a data file.
-                   if( string.equals(Bundle.getMessage("Black"))) {
+                    if (string.equals(Bundle.getMessage("Black"))) {
                       return Color.black;
-                   } if( string.equals(Bundle.getMessage("DarkGray"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("DarkGray"))) {
                       return Color.darkGray;
-                   } if( string.equals(Bundle.getMessage("Gray"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Gray"))) {
                       return Color.gray;
-                   } if( string.equals(Bundle.getMessage("LightGray"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("LightGray"))) {
                       return Color.lightGray;
-                   } if( string.equals(Bundle.getMessage("White"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("White"))) {
                       return Color.white;
-                   } if( string.equals(Bundle.getMessage("Red"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Red"))) {
                       return Color.red;
-                   } if( string.equals(Bundle.getMessage("Pink"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Pink"))) {
                       return Color.pink;
-                   } if( string.equals(Bundle.getMessage("Yellow"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Yellow"))) {
                       return Color.yellow;
-                   } if( string.equals(Bundle.getMessage("Green"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Green"))) {
                       return Color.green;
-                   } if( string.equals(Bundle.getMessage("Orange"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Orange"))) {
                       return Color.orange;
-                   } if( string.equals(Bundle.getMessage("Blue"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Blue"))) {
                       return Color.blue;
-                   } if( string.equals(Bundle.getMessage("Magenta"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Magenta"))) {
                       return Color.magenta;
-                   } if( string.equals(Bundle.getMessage("Cyan"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Cyan"))) {
                       return Color.cyan;
-                   } if( string.equals(Bundle.getMessage("ColorClear"))) {
-                       return null;
-                   } if( string.equals(Bundle.getMessage("None"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("ColorClear"))) {
+                        return clear;
+                    }
+                    if (string.equals(Bundle.getMessage("None"))) {
                        return null;
                    } else {
                       log.error("unknown color text '" + string + "' sent to stringToColor");
@@ -205,6 +223,22 @@ public class ColorUtil {
     }
 
     /**
+     * return the color (Black/White) that most contrasts with the specified
+     * color
+     *
+     * @param color the source color
+     * @return the contrasting color
+     */
+    public static Color contrast(@Nonnull Color color) {
+        int red = color.getRed();
+        int green = color.getGreen();
+        int blue = color.getBlue();
+        int average = (red + green + blue) / 3;
+
+        return (average >= 128) ? Color.BLACK : Color.WHITE;
+    }
+
+    /**
      * calculate the linear interpolation between two colors
      *
      * @param colorA the first color
@@ -243,7 +277,7 @@ public class ColorUtil {
      */
     @CheckReturnValue
     public static Color setAlpha(@Nonnull Color color, double alpha) {
-        return new Color(color.getRed(), color.getGreen(), color.getBlue(), 
+        return new Color(color.getRed(), color.getGreen(), color.getBlue(),
                 (int) (255.0 * alpha));
     }
 

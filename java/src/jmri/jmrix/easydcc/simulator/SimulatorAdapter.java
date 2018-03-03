@@ -100,7 +100,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
     public void configure() {
         // connect to the traffic controller
         log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
-        EasyDccTrafficController control = new EasyDccTrafficController(getSystemConnectionMemo());
+        EasyDccTrafficController control = new EasyDccSimulatorTrafficController(getSystemConnectionMemo());
         //compare with: XNetTrafficController packets = new XNetPacketizer(new LenzCommandStation());
         control.connectPort(this);
         this.getSystemConnectionMemo().setEasyDccTrafficController(control);
@@ -191,7 +191,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
                 } else {
                     buf.append("null message buffer");
                 }
-                // log.debug(buf.toString()); // generates a lot of traffic
+                log.trace(buf.toString()); // generates a lot of traffic
             }
             if (m != null) {
                 r = generateReply(m);
@@ -307,7 +307,9 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
 
             default:
                 log.debug("non-reply message detected");
-                reply.setElement(i++, EDC_OPS); // capital O for Operation
+                reply.setElement(i++, '?'); // per page 2 of the EasyDCC computer
+                                          // operations manual, an invalid 
+                                          // command returns ?<CR>
         }
         log.debug("Reply generated = {}", reply.toString());
         reply.setElement(i++, 0x0d); // add final CR for all replies

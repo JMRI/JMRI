@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<version author="Alain Carasso" version="1" lastUpdated="20180210"/>
+  <!-- Version 1 - using the 2 existing MTH PS3 definitions created by Michael Mosher, merging them into a single one  -->
+  <decoder>
+    <family name="MTH HO Full PS3 Definition" mfg="MTH Electric Trains, Inc.">
+      <model model="MTH HO Full PS3 Definition" lowVersionID="1" highVersionID="2"/>
+    </family>
+    <programming direct="yes" paged="yes" register="no" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" tooltip="PWM mode only">
+        <decVal/>
+        <label>PWM Start voltage</label>
+        <label xml:lang="it">PWM Volt Partenza</label>
+    <label xml:lang="fr">PWM V demarr.</label>
+    <label xml:lang="de">PWM Anfahrspannung</label>
+      </variable>
+      <!-- CV 3-4 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
+      <variable CV="5" item="Vhigh" tooltip="PWM mode only">
+        <decVal/>
+        <label>PWM max voltage</label>
+        <label xml:lang="it">PWM Volt Massimi (0-255):</label>
+        <label xml:lang="de">PWM Hoechstgeschwindigkeit</label>
+      </variable>
+      <!-- CV 7-8 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <!-- CV=19 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+       <!-- CV=21 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22.xml"/>
+      <variable item="Consist Address Active For F9" CV="22" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F9</label>
+      </variable>
+      <variable item="Consist Address Active For F10" CV="22" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F10</label>
+      </variable>
+      <variable item="Consist Address Active For F11" CV="22" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F11</label>
+      </variable>
+      <variable item="Consist Address Active For F12" CV="22" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F12</label>
+      </variable>
+      <variable CV="23" mask="XVVVVVVV" item="Consist Acceleration Adjustment" tooltip="PWM mode only">
+        <decVal max="127"/>
+        <label>Consist PWM Acceleration Adjustment</label>
+      </variable>
+      <variable CV="23" mask="VXXXXXXX" item="Consist Acceleration Adjustment Sign" tooltip="PWM mode only">
+        <enumVal>
+          <enumChoice choice="Adjustment Added"/>
+          <enumChoice choice="Adjustment Subtracted"/>
+        </enumVal>
+        <label>Consist PWM Acceleration Adjustment Sign</label>
+      </variable>
+      <variable CV="24" mask="XVVVVVVV" item="Consist Deceleration Adjustment" tooltip="PWM mode only">
+        <decVal max="127"/>
+        <label>Consist PWM Deceleration Adjustment</label>
+      </variable>
+      <variable CV="24" mask="VXXXXXXX" item="Consist Deceleration Adjustment Sign" tooltip="PWM mode only">
+        <enumVal>
+          <enumChoice choice="Adjustment Added"/>
+          <enumChoice choice="Adjustment Subtracted"/>
+        </enumVal>
+        <label>Consist PWM Deceleration Adjustment Sign</label>
+      </variable>
+      <variable CV="25" item="Speed Table Selection" default="0" tooltip="PWM mode only">
+        <enumVal>
+          <enumChoice choice="Default">
+            <choice>Default</choice>
+          </enumChoice>
+          <enumChoice choice="User Defined Speed Table">
+            <choice>User Defined Speed Table</choice>
+          </enumChoice>
+          <enumChoice choice="Linear Curve">
+            <choice>Linear Curve</choice>
+          </enumChoice>
+          <enumChoice choice="Slow start 3 (close to linear)">
+            <choice>Slow start 3 (close to linear)</choice>
+          </enumChoice>
+          <enumChoice choice="Slow start 4">
+            <choice>Slow start 4</choice>
+          </enumChoice>
+          <enumChoice choice="Slow start 5">
+            <choice>Slow start 5</choice>
+          </enumChoice>
+          <enumChoice choice="Slow start 6">
+            <choice>Slow start 6</choice>
+          </enumChoice>
+          <enumChoice choice="Slow start 7">
+            <choice>Slow start 7</choice>
+          </enumChoice>
+          <enumChoice choice="Slow start 8">
+            <choice>Slow start 8</choice>
+          </enumChoice>
+          <enumChoice choice="Slow start 9">
+            <choice>Slow start 9</choice>
+          </enumChoice>
+          <enumChoice choice="Slow start 10 (greatest curavture">
+            <choice>Slow start 10 (greatest curavture</choice>
+          </enumChoice>
+          <enumChoice choice="Fast start 11 (close to linear)">
+            <choice>Fast start 11 (close to linear)</choice>
+          </enumChoice>
+          <enumChoice choice="Fast start 12">
+            <choice>Fast start 12</choice>
+          </enumChoice>
+          <enumChoice choice="Fast start 13">
+            <choice>Fast start 13</choice>
+          </enumChoice>
+          <enumChoice choice="Fast start 14">
+            <choice>Fast start 14</choice>
+          </enumChoice>
+          <enumChoice choice="Fast start 15">
+            <choice>Fast start 15</choice>
+          </enumChoice>
+          <enumChoice choice="Fast start 16">
+            <choice>Fast start 16</choice>
+          </enumChoice>
+          <enumChoice choice="Fast start 17">
+            <choice>Fast start 17</choice>
+          </enumChoice>
+          <enumChoice choice="Fast start 18 (greatest curvature)">
+            <choice>Fast start 18 (greatest curvature)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>PWM Speed Table Selection</label>
+      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
+      <!-- CV=49 -50-52 added-->
+      <variable item="Short Address Alt Access" CV="49" comment="Short address" default="03">
+        <shortAddressVal/>
+        <label>Short Address Alt Access</label>
+        <comment>Short address</comment>
+      </variable>
+      <variable item="Extended Address Alt Access" CV="50" tooltip="Sets the Extended (Long) address, range 0-9999">
+        <longAddressVal/>
+        <label>Extended Address Alt Access</label>
+      </variable>
+      <variable CV="52" mask="XXXXXXXV" item="Motor Option 1">
+        <enumVal>
+          <enumChoice choice="sMPH">
+            <choice>sMPH</choice>
+          </enumChoice>
+          <enumChoice choice="PWM">
+            <choice>PWM</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Speed Mode</label>
+      </variable>
+      <variable CV="53" item="Motor Option 2" tooltip="value/8 in sMPH/sec, sMPH mode only">
+        <decVal/>
+        <label>sMPH Acceleration</label>
+      </variable>
+      <variable CV="54" item="Motor Option 3" tooltip="value/8 in sMPH/sec, sMPH mode only">
+        <decVal/>
+        <label>sMPH Deceleration</label>
+      </variable>
+      <variable CV="63" item="Consist Option 1" tooltip="value/8 in sMPH/sec, sMPH mode only">
+        <decVal/>
+        <label>Consist sMPH Acceleration</label>
+      </variable>
+      <variable CV="64" item="Consist Option 2" tooltip="value/8 in sMPH/sec, sMPH mode only">
+        <decVal/>
+        <label>Consist sMPH Deceleration</label>
+      </variable>
+      <variable CV="66" default="0" item="Forward Trim" tooltip="PWM mode only">
+        <decVal/>
+        <label>Forward Trim</label>
+      </variable>
+      <variable CV="67" item="Speed Table" tooltip="PWM mode only">
+        <speedTableVal/>
+        <label>Speed Table</label>
+      </variable>
+      <variable CV="95" default="0" item="Reverse Trim" tooltip="PWM mode only">
+        <decVal/>
+        <label>Reverse Trim</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <variable item="Function 1" CV="116" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 1</label>
+      </variable>
+      <variable item="Function 2" CV="118" default="11">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 2</label>
+      </variable>
+      <variable item="Function 3" CV="120" default="24">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 3</label>
+      </variable>
+      <variable item="Function 4" CV="122" default="23">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 4</label>
+      </variable>
+      <variable item="Function 5" CV="124" default="39">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 5</label>
+      </variable>
+      <variable item="Function 6" CV="126" default="17">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 6</label>
+      </variable>
+      <variable item="Function 7" CV="128" default="30">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 7</label>
+      </variable>
+      <variable item="Function 8" CV="130" default="33">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 8</label>
+      </variable>
+      <variable item="Function 9" CV="132" default="9">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 9</label>
+      </variable>
+      <variable item="Function 10" CV="134" default="20">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 10</label>
+      </variable>
+      <variable item="Function 11" CV="136" default="10">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 11</label>
+      </variable>
+      <variable item="Function 12" CV="138" default="4">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 12</label>
+      </variable>
+      <variable item="Function 13" CV="140" default="15">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 13</label>
+      </variable>
+      <variable item="Function 14" CV="142" default="14">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 14</label>
+      </variable>
+      <variable item="Function 15" CV="144" default="13">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 15</label>
+      </variable>
+      <variable item="Function 16" CV="146" default="12">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 16</label>
+      </variable>
+      <variable item="Function 17" CV="148" default="22">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 17</label>
+      </variable>
+      <variable item="Function 18" CV="150" default="21">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 18</label>
+      </variable>
+      <variable item="Function 19" CV="152" default="36">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 19</label>
+      </variable>
+      <variable item="Function 20" CV="154" default="35">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 20</label>
+      </variable>
+      <variable item="Function 21" CV="156" default="19">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 21</label>
+      </variable>
+      <variable item="Function 22" CV="158" default="6">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 22</label>
+      </variable>
+      <variable item="Function 23" CV="160" default="5">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 23</label>
+      </variable>
+      <variable item="Function 24" CV="162" default="18">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 24</label>
+      </variable>
+      <variable item="Function 25" CV="164" default="8">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 25</label>
+      </variable>
+      <variable item="Function 26" CV="166" default="2">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 26</label>
+      </variable>
+      <variable item="Function 27" CV="168" default="3">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 27</label>
+      </variable>
+      <variable item="Function 28" CV="170" default="29">
+        <xi:include href="http://jmri.org/xml/decoders/mth/FunctionChoice.xml"/>
+        <label>Function 28</label>
+      </variable>
+    </variables>
+      <!-- Added CV55 reset -->
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+        <mode>OPSBYTEMODE</mode>
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+      <factReset label="Reset All CVs except user speed table" CV="8" default="192">
+        <mode>OPSBYTEMODE</mode>
+        <label xml:lang="it">Reset delle CV salvo Tabella Velocita ai valori di fabbrica</label>
+      </factReset>
+      <factReset label="Reset volumes, smoke and light settings" CV="8" default="64">
+        <mode>OPSBYTEMODE</mode>
+       <label xml:lang="it">Reset volume, fumo e luci ai valori di fabbrica</label>
+      </factReset>
+      <factReset label="Reset address" CV="8" default="128">
+        <mode>OPSBYTEMODE</mode>
+        <label xml:lang="it">Reset indirizzo ai valori di fabbrica</label>
+      </factReset>
+      <factReset label="Program Track Reset All CVs" CV="55" default="55">
+        <mode>PAGEMODE</mode>
+        <mode>DIRECTMODE</mode>
+        <label xml:lang="it">Program Track Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <pane>
+    <column>
+      <row>
+        <label>
+          <text>Function 0 is always directional headlight and reverse light</text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Function 1"/>
+          <display item="Function 2"/>
+          <display item="Function 3"/>
+          <display item="Function 4"/>
+          <display item="Function 5"/>
+          <display item="Function 6"/>
+          <display item="Function 7"/>
+          <display item="Function 8"/>
+          <display item="Function 9"/>
+          <display item="Function 10"/>
+          <display item="Function 11"/>
+          <display item="Function 12"/>
+          <display item="Function 13"/>
+          <display item="Function 14"/>
+        </column>
+        <label>
+          <text>    </text>
+        </label>
+        <column>
+          <display item="Function 15"/>
+          <display item="Function 16"/>
+          <display item="Function 17"/>
+          <display item="Function 18"/>
+          <display item="Function 19"/>
+          <display item="Function 20"/>
+          <display item="Function 21"/>
+          <display item="Function 22"/>
+          <display item="Function 23"/>
+          <display item="Function 24"/>
+          <display item="Function 25"/>
+          <display item="Function 26"/>
+          <display item="Function 27"/>
+          <display item="Function 28"/>
+        </column>
+      </row>
+    </column>
+    <name>MTH Function Mapping</name>
+  </pane>
+ </decoder-config>
