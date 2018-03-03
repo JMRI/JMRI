@@ -15,7 +15,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -31,16 +32,17 @@
       <h3>Modules</h3>
 
       <ul>
-        <li>Protrak Grapevine Nodes</li>
-      </ul><a name="limitations" id="limitations"></a>
+        <li>Protrak Grapevine Nodes (1-127)</li>
 
+      </ul><a name="limitations" id="limitations"></a>
       <h2>Limitations</h2>
 
       <ul>
         <li>Fast Clocks are not yet supported. If you have one and
         want to test it with JMRI, let us know.</li>
-      </ul><a name="connecting" id="connecting"></a>
+      </ul>
 
+      <a name="connecting" id="connecting"></a>
       <h2>Connecting</h2>
 
       <h3>Settings</h3>
@@ -53,8 +55,12 @@
         <li>On the Connections tab, select "Protrak" as the System
         Manufacturer</li>
 
-        <li>Select "Grapevine (ProTrak) Layout Bus" as the System
-        Connection (the only option)</li>
+        <li>As the System Connection select either
+        <ul>
+          <li>Grapevine (ProTrak) Layout Bus</li>
+          <li>Grapevine Simulator</li>
+        </ul>
+        </li>
 
         <li>Click "Save" &amp; restart</li>
       </ul>
@@ -63,8 +69,9 @@
       to define it to the program. You can do this either from the
       <a href=
       "../../../package/apps/TabbedPreferences.shtml">Preferences
-      window</a> (under Edit in the main menu) or using the
-      <a href="../../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">
+      window</a> (under Edit in the main menu, click "Configure Nodes")
+      or using the <a href=
+      "../../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">
       Configure Nodes</a> tool in the <strong>Grapevine</strong>
       menu.</p>
 
@@ -73,14 +80,30 @@
       "../../doc/Technical/Names.shtml#type">type letter</a>, then
       a node number and a pin number.<br>
       Naming and input/output connectors are described on a
-      <a href="Names.shtml">separate page</a>. <a name="tools" id=
-      "tools"></a></p>
+      <a href="Names.shtml">separate page</a>.
 
+      <img src="images/GrapevineConfig.png" width=
+      "340" height="160" align="right" alt="Grapevine Configuration Option">
+      <p>If desired, check "Additional Conection Settings" and select an option
+      for "Auto-initialize" to have Simulator generate automatic replies from node
+      inputs/outputs:
+      <ul>
+        <li>Disabled</li>
+        <li>All possible</li>
+        <li>First 4 per bank</li>
+      </ul>
+
+      <a name="tools" id="tools"></a></p>
       <h2>JMRI Grapevine Tools</h2>
 
       <p>The <strong>Grapevine</strong> menu gives access to:</p>
 
       <ul>
+
+        <li>Communications Monitor</li>
+
+        <li>Send Command</li>
+
         <li>The <a href=
         "../../../package/jmri/jmrix/grapevine/nodetable/NodeTableFrame.shtml">
         Node Table</a> tool to check whether your Grapevine is
@@ -89,8 +112,10 @@
         <li>The <a href=
         "../../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">
         Configure Nodes</a> tool.</li>
-      </ul><a name="documentation" id="documentation"></a>
 
+      </ul>
+
+      <a name="documentation" id="documentation"></a>
       <h2>Documentation</h2>
 
       <h3>Third Party info</h3>
@@ -103,7 +128,13 @@
         <li><a href=
         "http://protrak.org/wpt/support/the-manual/">Protrak
         Manual</a></li>
-      </ul><!--#include virtual="/Footer" -->
+        <li>The <a href=
+        "http://www.protrak.org/old_site/">Older Protrak Site</a></li>
+        <li>The <a href=
+        "http://protrak.org/wpt/forum/">Protrak Forum</a></li>
+      </ul>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

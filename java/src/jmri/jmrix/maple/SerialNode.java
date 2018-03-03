@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Models a serial node, consisting of one Maple Systems HMI touch screen panel.
- * <P>
+ * <p>
  * Nodes are numbered ala the Station number, from 1 to 99.
- * <P>
+ * <p>
  * The array of sensor states is used to update sensor known state only when
  * there's a change on the serial bus. This allows for the sensor state to be
  * updated within the program, keeping this updated state until the next change
@@ -30,7 +30,7 @@ public class SerialNode extends AbstractNode {
 
     // class constants
     // node definition instance variables (must persist between runs)
-// protected int pulseWidth = 500;    // Pulse width for pulsed turnout control (milliseconds)
+    // protected int pulseWidth = 500;    // Pulse width for pulsed turnout control (milliseconds)
     private int _address = 0;
 
     // operational instance variables (should not be preserved between runs)
@@ -56,8 +56,9 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public method to return state of Sensors. Note: returns 'true' since at
-     * least one sensor is defined
+     * Get state of Sensors.
+     *
+     * @return 'true' since at least one sensor is defined
      */
     @Override
     public boolean getSensorsActive() {
@@ -66,7 +67,9 @@ public class SerialNode extends AbstractNode {
 
     /**
      * Check valid node address, must match value configured in the Maple HMI.
-     * Allowed values are 1-99
+     *
+     * @param address allowed values are 1-99
+     * @return true if in valid range
      */
     @Override
     protected boolean checkNodeAddress(int address) {
@@ -74,15 +77,17 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public access to this node's address
+     * Get this node's address
      */
     public int getAddress() {
         return _address;
     }
 
     /**
-     * Public Method to create an Initialization packet (SerialMessage) for this
-     * node Note: Maple Systems devices do not need initialization. This is here
+     * Create an Initialization packet (SerialMessage) for this
+     * node.
+     * <p>
+     * Note: Maple Systems devices do not need initialization. This is here
      * for completion.
      */
     @Override
@@ -91,8 +96,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public Method to create a Transmit packet (SerialMessage) Not used in
-     * Maple.
+     * Create a Transmit packet (SerialMessage). Not used in Maple.
      */
     @Override
     public AbstractMRMessage createOutPacket() {
@@ -112,6 +116,7 @@ public class SerialNode extends AbstractNode {
     int timeout = 0;
 
     /**
+     * {@inheritDoc}
      *
      * @return true if initialization required
      */

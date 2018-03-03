@@ -28,7 +28,7 @@ public class AcelaMonAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // create a AcelaMonFrame
+        // create an AcelaMonFrame
         AcelaMonFrame f = new AcelaMonFrame(_memo);
         try {
             f.initComponents();

@@ -63,7 +63,9 @@ abstract public class AbstractPortController implements PortAdapter {
         this.getSystemConnectionMemo().dispose();
     }
 
-    // check that this object is ready to operate
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;

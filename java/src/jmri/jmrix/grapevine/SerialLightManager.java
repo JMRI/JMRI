@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement light manager for Grapevine serial systems.
  * <p>
- * System names are "GLnnn", where G is the (multichar) system connection prefix,
+ * System names are "GxLnnn", where Gx is the (multichar) system connection prefix,
  * nnn is the bit number without padding.
  * <p>
  * Based in part on SerialTurnoutManager.java
@@ -114,7 +114,7 @@ public class SerialLightManager extends AbstractLightManager {
 
     /**
      * Allow access to SerialLightManager.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated  Since JMRI 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
     static public SerialLightManager instance() {
