@@ -36,7 +36,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
             jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
             systemMemo.setProgrammerManager(new XNetProgrammerManager(new XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
             if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
-                jmri.InstanceManager.setAddressedProgrammerManager(systemMemo.getProgrammerManager());
+                jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
             }
             if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
                 jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
@@ -79,7 +79,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
                 }
                 systemMemo.setProgrammerManager(new XNetProgrammerManager(new XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
                 if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
-                    jmri.InstanceManager.setAddressedProgrammerManager(systemMemo.getProgrammerManager());
+                    jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
                 }
                 if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
                     jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
@@ -110,7 +110,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
                 jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
                 systemMemo.setProgrammerManager(new XNetProgrammerManager(new XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
                 if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
-                    jmri.InstanceManager.setAddressedProgrammerManager(systemMemo.getProgrammerManager());
+                    jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
                 }
                 if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
                     jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
@@ -125,7 +125,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
                 }
                 systemMemo.setProgrammerManager(new XNetProgrammerManager(new XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
                 if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
-                    jmri.InstanceManager.setAddressedProgrammerManager(systemMemo.getProgrammerManager());
+                    jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
                 }
                 if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
                     jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);

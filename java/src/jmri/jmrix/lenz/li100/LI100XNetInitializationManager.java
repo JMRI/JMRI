@@ -35,7 +35,7 @@ public class LI100XNetInitializationManager extends AbstractXNetInitializationMa
             jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
             systemMemo.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(new jmri.jmrix.lenz.li100.LI100XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
             if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
-                jmri.InstanceManager.setAddressedProgrammerManager(systemMemo.getProgrammerManager());
+                jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
             }
             if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
                 jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
@@ -75,7 +75,7 @@ public class LI100XNetInitializationManager extends AbstractXNetInitializationMa
                 log.debug("Command Station is: LZ100/LZV100");
                 systemMemo.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(new jmri.jmrix.lenz.li100.LI100XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
                 if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
-                    jmri.InstanceManager.setAddressedProgrammerManager(systemMemo.getProgrammerManager());
+                    jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
                 }
                 if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
                     jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
@@ -101,7 +101,7 @@ public class LI100XNetInitializationManager extends AbstractXNetInitializationMa
                 jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
                 systemMemo.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(new jmri.jmrix.lenz.li100.LI100XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
                 if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
-                    jmri.InstanceManager.setAddressedProgrammerManager(systemMemo.getProgrammerManager());
+                    jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
                 }
                 if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
                     jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
@@ -114,7 +114,7 @@ public class LI100XNetInitializationManager extends AbstractXNetInitializationMa
                 log.debug("Command Station is: Unknown type");
                 systemMemo.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(new jmri.jmrix.lenz.li100.LI100XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
                 if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
-                    jmri.InstanceManager.setAddressedProgrammerManager(systemMemo.getProgrammerManager());
+                    jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
                 }
                 if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
                     jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
