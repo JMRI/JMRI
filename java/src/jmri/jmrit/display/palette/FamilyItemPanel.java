@@ -43,7 +43,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected ImagePanel _iconPanel;     // a panel on _iconFamilyPanel - all icons in family, shown upon [Show Icons]
     protected JPanel _familyButtonPanel;    // panel of radioButtons to select icon family
 
-    static protected boolean _suppressDragging;
+    protected boolean _suppressDragging;
     protected int _buttonPosition = 0;      // position of _iconFamilyPanel (TableItemPanels use 1)
     JPanel _bottom1Panel; // typically displays the _showIconsButton and _editIconsButton
     JPanel _bottom2Panel; // createIconFamilyButton - when all families have been deleted
