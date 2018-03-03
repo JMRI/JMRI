@@ -48,7 +48,7 @@ public class RouteManager implements InstanceManagerAutoDefault, InstanceManager
     }
 
     // stores known Route instances by id
-    protected Hashtable<String, Route> _routeHashTable = new Hashtable<String, Route>();
+    protected Hashtable<String, Route> _routeHashTable = new Hashtable<>();
 
     /**
      * @param name The string name of the Route.
@@ -132,7 +132,7 @@ public class RouteManager implements InstanceManagerAutoDefault, InstanceManager
     public List<Route> getRoutesByNameList() {
         List<Route> sortList = getList();
         // now re-sort
-        List<Route> out = new ArrayList<Route>();
+        List<Route> out = new ArrayList<>();
         for (Route route : sortList) {
             for (int j = 0; j < out.size(); j++) {
                 if (route.getName().compareToIgnoreCase(out.get(j).getName()) < 0) {
@@ -156,7 +156,7 @@ public class RouteManager implements InstanceManagerAutoDefault, InstanceManager
     public List<Route> getRoutesByIdList() {
         List<Route> sortList = getList();
         // now re-sort
-        List<Route> out = new ArrayList<Route>();
+        List<Route> out = new ArrayList<>();
         for (Route route : sortList) {
             for (int j = 0; j < out.size(); j++) {
                 try {
@@ -176,7 +176,7 @@ public class RouteManager implements InstanceManagerAutoDefault, InstanceManager
     }
 
     private List<Route> getList() {
-        List<Route> out = new ArrayList<Route>();
+        List<Route> out = new ArrayList<>();
         Enumeration<Route> en = _routeHashTable.elements();
         while (en.hasMoreElements()) {
             out.add(en.nextElement());
@@ -238,9 +238,10 @@ public class RouteManager implements InstanceManagerAutoDefault, InstanceManager
         RouteLocation rlNew = newRoute.addLocation(loc);
         // now copy the route location objects we want
         rlNew.setMaxCarMoves(rl.getMaxCarMoves());
+        rlNew.setRandomControl(rl.getRandomControl());
         rlNew.setWait(rl.getWait());
         rlNew.setDepartureTime(rl.getDepartureTime());
-        rlNew.setComment(rl.getComment());
+        rlNew.setComment(rl.getComment());     
         if (!invert) {
             rlNew.setDropAllowed(rl.isDropAllowed());
             rlNew.setPickUpAllowed(rl.isPickUpAllowed());
@@ -264,7 +265,7 @@ public class RouteManager implements InstanceManagerAutoDefault, InstanceManager
             }
             // get the max length between location
             if (rlNext == null) {
-                log.error("Can not copy route, oldNextRl is null!");
+                log.error("Can not copy route, rlNext is null!");
                 return;
             }
             rlNew.setMaxTrainLength(rlNext.getMaxTrainLength());

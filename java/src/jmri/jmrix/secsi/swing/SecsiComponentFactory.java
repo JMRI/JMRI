@@ -28,5 +28,5 @@ public class SecsiComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         }
         return new SecsiMenu(memo);
     }
-}
 
+}

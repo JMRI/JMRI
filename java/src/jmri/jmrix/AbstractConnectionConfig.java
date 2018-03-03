@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import jmri.InstanceManager;
 
 /**
- * Abstract base class for common implementation of the ConnectionConfig
+ * Abstract base class for common implementation of the ConnectionConfig.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
@@ -37,6 +37,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     }
 
     static public class SystemPrefixFormatter extends javax.swing.text.DefaultFormatter {
+        @Override
         public Object stringToValue(String text) throws java.text.ParseException {
             try {
                 if (jmri.Manager.getSystemPrefixLength(text)!= text.length()) {

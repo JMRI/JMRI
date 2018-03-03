@@ -25,10 +25,10 @@ public class SerialSignalHeadTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tcis = new SerialTrafficControlScaffold();
-        tcis.registerNode(new SerialNode(1, SerialNode.NODE2002V6));
         memo = new GrapevineSystemConnectionMemo();
+        tcis = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tcis);
+        tcis.registerNode(new SerialNode(1, SerialNode.NODE2002V6, tcis));
     }
 
     @After

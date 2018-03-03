@@ -11,24 +11,24 @@ import org.slf4j.LoggerFactory;
  * The nodes are descendents of {@link jmri.jmrix.AbstractNode}. Provides node
  * management services, but no additional protocol.
  *
- * @author jake Copyright 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficController {
 
     /**
-     * Creates a new instance of AbstractMRNodeTrafficController
+     * Create a new unnamed MRNodeTrafficController instance.
      */
     public AbstractMRNodeTrafficController() {
     }
 
     /**
-     * Initialize based on number of first and last nodes
+     * Initialize based on number of first and last nodes.
      */
     protected void init(int minNode, int maxNode) {
         this.minNode = minNode;
         this.maxNode = maxNode;
 
-        nodeArray = new AbstractNode[this.maxNode + 1];  // numbering from 0
+        nodeArray = new AbstractNode[this.maxNode + 1]; // numbering from 0
         mustInit = new boolean[this.maxNode + 1];
 
         // initialize content
@@ -40,20 +40,30 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     protected int minNode = -1;
     protected int maxNode = -1;
 
-    protected volatile int numNodes = 0;  // Incremented as Serial Nodes are created and registered
-    // Corresponds to next available address in nodeArray
+    /**
+     * Total number of SerialNodes registered with this TrafficController.
+     * Incremented as Serial Nodes are created and registered.
+     * Corresponds to the next available address in {@link nodeArray}.
+     */
+    protected volatile int numNodes = 0;
     protected AbstractNode[] nodeArray;
     private boolean[] mustInit;
 
     /**
-     * Does this node need to have initialization data sent?
+     * Does a given node need to have initialization data sent?
+     *
+     * @param i the node address (number)
+     * @return true if initialization data is required
      */
     protected boolean getMustInit(int i) {
         return mustInit[i];
     }
 
     /**
-     * Mark whether this node needs to have initialization data sent
+     * Mark whether a given node needs to have initialization data sent.
+     *
+     * @param i the node index
+     * @param v true if set to require sending initialization data
      */
     protected void setMustInit(int i, boolean v) {
         mustInit[i] = v;
@@ -70,14 +80,18 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     }
 
     /**
-     * Get the number of currently registered nodes
+     * Get the total number of currently registered nodes.
+     *
+     * @return the number of registerd nodes on this connection
      */
     public int getNumNodes() {
         return numNodes;
     }
 
     /**
-     * Public method to register a Serial node
+     * Register a Serial node on this TrafficController.
+     *
+     * @param node the node object to register
      */
     @SuppressFBWarnings(value = "VO_VOLATILE_INCREMENT", justification = "Method itself is synchronized to protect numNodes")
     public void registerNode(AbstractNode node) {
@@ -90,10 +104,12 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     }
 
     /**
-     * Public method to return the Serial node with a given index Note: To cycle
-     * through all nodes, begin with index=0, and increment your index at each
-     * call. When index exceeds the number of defined nodes, this routine
-     * returns 'null'.
+     * Get the Serial node for a given index as registered with this
+     * TrafficController.
+     *
+     * @param index the index number of the node. To cycle through all nodes,
+     *          begin with index=0, and increment your index at each call.
+     * @return the node at index, 'null' when index exceeds the number of defined nodes
      */
     public synchronized AbstractNode getNode(int index) {
         if (index >= numNodes) {
@@ -103,9 +119,11 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     }
 
     /**
-     * Public method to identify a SerialNode from its node address Note: 'addr'
-     * is the node address, numbered from 0. Returns 'null' if a SerialNode with
-     * the specified address was not found
+     * Identify a SerialNode from its node address.
+     *
+     * @param addr the node address, numbered from 0
+     * @return the node at node address, 'null' if a SerialNode with the
+     * specified address was not found
      */
     synchronized public AbstractNode getNodeFromAddress(int addr) {
         for (int i = 0; i < numNodes; i++) {
@@ -122,7 +140,9 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     protected int curSerialNodeIndex = 0;
 
     /**
-     * Public method to delete a Serial node by node address
+     * Delete a SerialNode by node address.
+     *
+     * @param nodeAddress address number for the node to be deleted
      */
     @SuppressFBWarnings(value = "VO_VOLATILE_INCREMENT", justification = "Method itself is synchronized to protect numNodes")
     public synchronized void deleteNode(int nodeAddress) {
@@ -137,7 +157,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
             log.warn("Deleting the serial node active in the polling loop");
             // just a warning, unlikely event and probably OK in any case.
         }
-        // Delete the node from the node list
+        // delete the node from the node list
         numNodes--;
         if (index < numNodes) {
             // did not delete the last node, shift
@@ -149,4 +169,5 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMRNodeTrafficController.class);
+
 }

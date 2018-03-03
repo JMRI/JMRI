@@ -4797,6 +4797,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         }
     }
 
+    @Override
     protected String getClassName() {
         return ConditionalTreeEdit.class.getName();
     }

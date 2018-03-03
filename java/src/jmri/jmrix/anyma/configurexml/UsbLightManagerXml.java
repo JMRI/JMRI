@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Uses the store method from the abstract base class, but provides a load
  * method here.
  *
- * @author George Warner Copyright (c) 2017
+ * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
 public class UsbLightManagerXml extends AbstractLightManagerConfigXML {

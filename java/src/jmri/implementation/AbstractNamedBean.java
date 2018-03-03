@@ -12,7 +12,7 @@ import jmri.NamedBean;
 
 /**
  * Abstract base for the NamedBean interface.
- * <P>
+ * <p>
  * Implements the parameter binding support.
  *
  * @author Bob Jacobsen Copyright (C) 2001
@@ -26,19 +26,24 @@ public abstract class AbstractNamedBean implements NamedBean {
     protected final String mSystemName;
 
     /**
-     * Simple constructor.
+     * Create a new NamedBean instance using only a system name.
      *
-     * @param sys the system name for this bean; must not be null
+     * @param sys the system name for this bean; must not be null and must
+     *            be unique within the layout
      */
     protected AbstractNamedBean(@Nonnull String sys) {
         this(sys, null);
     }
 
     /**
-     * Designated constructor.
+     * Create a new NamedBean instance using both a system name and
+     * (optionally) a user name.
+     * <p>
+     * Refuses construction if unable to use the normalized user name, to prevent
+     * subclass from overriding {@link #setUserName(java.lang.String)} during construction.
      *
      * @param sys  the system name for this bean; must not be null
-     * @param user the user name for this bean; can be null
+     * @param user the user name for this bean; will be normalized if needed; can be null
      * @throws jmri.NamedBean.BadUserNameException   if the user name cannot be
      *                                               normalized
      * @throws jmri.NamedBean.BadSystemNameException if the system name is null
@@ -49,7 +54,7 @@ public abstract class AbstractNamedBean implements NamedBean {
         }
         mSystemName = sys;
         // normalize the user name or refuse construction if unable to
-        // use this form to prevent subclass from overriding setUserName
+        // use this form, to prevent subclass from overriding {@link #setUserName()}
         // during construction
         AbstractNamedBean.this.setUserName(user);
     }
@@ -67,7 +72,7 @@ public abstract class AbstractNamedBean implements NamedBean {
      * <p>
      * Comments can be any valid text.
      *
-     * @param comment Null means no comment associated.
+     * @param comment 'nulln means no comment associated.
      */
     @Override
     @OverridingMethodsMustInvokeSuper
@@ -83,9 +88,9 @@ public abstract class AbstractNamedBean implements NamedBean {
     private String comment;
 
     /**
-     * if not null or empty return user name else system name
+     * Get the name string of this object.
      *
-     * @return user name or system name
+     * @return user name if not null or empty, else return system name
      */
     @Override
     public String getDisplayName() {
@@ -206,8 +211,10 @@ public abstract class AbstractNamedBean implements NamedBean {
      * {@inheritDoc}
      */
     @Nonnull
-    public String toString() { return getSystemName(); }
-
+    @Override
+    public String toString() {
+        return getSystemName();
+    }
 
     @Override
     public String getUserName() {
@@ -323,7 +330,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     }
 
     /**
-     * calculate our hash code
+     * Calculate our hash code.
      *
      * @return our hash code
      */
@@ -344,13 +351,13 @@ public abstract class AbstractNamedBean implements NamedBean {
     /**
      * {@inheritDoc} 
      * 
-     * By default, does an alphanumeric-by-chunks comparison
+     * By default, does an alphanumeric-by-chunks comparison.
      */
     @CheckReturnValue
+    @Override
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
         jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
         return ac.compare(suffix1, suffix2);
     }
-    
 
 }
