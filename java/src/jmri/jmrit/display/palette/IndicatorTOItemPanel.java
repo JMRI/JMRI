@@ -406,6 +406,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         _iconGroupsMap = ItemPalette.getLevel4Family(_itemType, _family);
         addIcons2Panel(_iconGroupsMap);
         makeDndIconPanel(_iconGroupsMap.get("ClearTrack"), "TurnoutStateClosed");
+        _iconFamilyPanel.revalidate(); // force redraw
         hideIcons();
     }
 
