@@ -712,6 +712,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     }
 
     @Test
+    @Ignore // unreliable on CI servers
     public void testSetHighlightSelectedBlockFalse() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         le.setHighlightSelectedBlock(false);
