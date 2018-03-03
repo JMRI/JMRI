@@ -12,6 +12,7 @@ import org.junit.runners.Suite;
         jmri.util.swing.mdi.PackageTest.class,
         jmri.util.swing.JCBHandleTest.class,
         FontComboUtilTest.class,
+        FontComboUtilSupportTest.class,
         EditableResizableImagePanelTest.class,
         GuiUtilBaseTest.class,
         JmriBeanComboBoxTest.class,
