@@ -1,6 +1,5 @@
 package jmri.server.json.schema;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Locale;
 import java.util.Set;
 import jmri.server.json.JSON;
@@ -44,10 +43,10 @@ public class JsonSchemaServiceCacheTest {
             }
             services.forEach((service) -> {
                 try {
-                    JsonNode node = service.doSchema(type, true, Locale.ENGLISH);
+                    service.doSchema(type, true, Locale.ENGLISH);
                 } catch (JsonException ex) {
                     if (ex.getCode() != 400) {
-                        Assert.fail("Unexpected exception for type " + type + " from service " + service);
+                        Assert.fail("Unexpected exception for type " + type + " from service " + service + "\n" + ex.getMessage() + "\n" + ex.getCause().toString());
                     }
                     Assert.assertEquals("Only no server exception expected for type " + type + " from service " + service,
                             400,
@@ -57,10 +56,10 @@ public class JsonSchemaServiceCacheTest {
                             ex.getMessage());
                 }
                 try {
-                    JsonNode node = service.doSchema(type, false, Locale.ENGLISH);
+                    service.doSchema(type, false, Locale.ENGLISH);
                 } catch (JsonException ex) {
                     if (ex.getCode() != 400) {
-                        Assert.fail("Unexpected exception for type " + type + " from service " + service);
+                        Assert.fail("Unexpected exception for type " + type + " from service " + service + "\n" + ex.getMessage() + "\n" + ex.getCause().toString());
                     }
                     Assert.assertEquals("Only no client exception expected for type " + type + " from service " + service,
                             400,
