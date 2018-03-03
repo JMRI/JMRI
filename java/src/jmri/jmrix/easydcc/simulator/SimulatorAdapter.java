@@ -46,6 +46,10 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
         setManufacturer(jmri.jmrix.easydcc.EasyDccConnectionTypeList.EASYDCC);
     }
 
+    /**
+     * {@inheritDoc}
+     * Simulated input/output pipes.
+     */
     @Override
     public String openPort(String portName, String appName) {
         try {
@@ -353,7 +357,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
      * <p>
      * Only used in the Receive thread.
      *
-     * @returns filled message, only when the message is complete.
+     * @return filled message, only when the message is complete.
      * @throws IOException when presented by the input source.
      */
     private EasyDccMessage loadChars() throws java.io.IOException {

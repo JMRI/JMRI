@@ -181,7 +181,7 @@ public class SimulatorAdapter extends TamsPortController implements
     /**
      * Get characters from the input source.
      *
-     * @returns filled message
+     * @return filled message
      * @throws IOException when presented by the input source.
      */
     private TamsMessage loadChars() throws java.io.IOException {

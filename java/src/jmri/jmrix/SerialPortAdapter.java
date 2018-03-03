@@ -18,8 +18,11 @@ public interface SerialPortAdapter extends PortAdapter {
     public Vector<String> getPortNames();
 
     /**
-     * Open a specified port. The appName argument is to be provided to the
-     * underlying OS during startup so that it can show on status displays, etc
+     * Open a specified port.
+     *
+     * @param portName name tu use for this port
+     * @param appName provided to the underlying OS during startup so
+     *                that it can show on status displays, etc.
      */
     public String openPort(String portName, String appName);
 

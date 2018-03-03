@@ -26,12 +26,18 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     SerialPort activeSerialPort = null;
 
+    /**
+     * Create a new SerialDriverAdapter.
+     */
     public SerialDriverAdapter() {
         // needs to provide a SystemConnectionMemo
         super(new GrapevineSystemConnectionMemo());
         this.manufacturerName = jmri.jmrix.grapevine.SerialConnectionTypeList.PROTRAK;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String openPort(String portName, String appName) {
         try {

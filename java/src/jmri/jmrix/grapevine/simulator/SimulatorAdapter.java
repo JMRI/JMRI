@@ -44,10 +44,13 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     private boolean outputBufferEmpty = true;
     private boolean checkBuffer = true;
     /**
-     * Simulator auto-init setting for number of banks to poll
+     * Simulator auto-init setting for number of banks to auto-reply on poll
      */
     private int autoInit = 0;
 
+    /**
+     * Create a new SimulatorAdapter.
+     */
     public SimulatorAdapter() {
         super(new GrapevineSystemConnectionMemo("G", Bundle.getMessage("GrapevineSimulatorName"))); // pass customized user name
         option1Name = "InitPreference"; // NOI18N
@@ -58,6 +61,10 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         setManufacturer(jmri.jmrix.grapevine.SerialConnectionTypeList.PROTRAK);
     }
 
+    /**
+     * {@inheritDoc}
+     * Simulated input/output pipes.
+     */
     @Override
     public String openPort(String portName, String appName) {
         try {
@@ -263,6 +270,8 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * the Grapevine <a href="../package-summary.html">Binary Message Format Summary</a>.
      *
      * @param msg the message received in the simulated node
+     * @return a single Grapevine message to confirm the requested operation, or a series
+     * of messages for each (fictitious) node/pin/state. To ignore certain commands, return null.
      */
     @SuppressWarnings("fallthrough")
     private SerialReply generateReply(SerialMessage msg) {
@@ -274,11 +283,11 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         int b2 = msg.getElement(1);            // bit + state
         int b3 = msg.getElement(2);            // element(2), must repeat node address
         int b4 = msg.getElement(3);            // bank + parity
-        int bank = (b4 & 0xF0) >> 4;           // bank # on node
+        int bank = (b4 & 0xF0) >> 4;           // bank # on node, 0 on node initialization
         log.debug("Message nodeaddress={} b1={} b2={} b3={} b4={}", nodeaddr, b1, b2, b3, b4);
 
-        if (nodeaddr == 0) { // node 0 = error
-            log.debug("general error: coded as: {}", ((b4 & 0x70) << 4 - 1));
+        if (nodeaddr == 0) { // error
+            log.debug("general error: coded as: {}", (((b4 & 0x70) << 4) - 1));
             return null;
         }
 
@@ -298,7 +307,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 if (autoInit > 0) { // not disabled
                     log.debug("start init 1 of node {}", nodeaddr);
                     NodeResponse(nodeaddr, 1, 1, autoInit); // banks 1-4
-                    log.debug("ready init 1 of node {}", nodeaddr);
                 }
                 // all replies are generated and sent by NodeResponse()
                 reply = null;
@@ -309,8 +317,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 // init reply as set in prefs autoInit
                 if (autoInit > 0) { // not disabled
                     log.debug("start init 2 of node {}", nodeaddr);
-                    //NodeResponse(nodeaddr, 5, 5, autoInit); // bank 5 = parallel
-                    log.debug("ready init 2 of node {}", nodeaddr);
+                    NodeResponse(nodeaddr, 5, 5, autoInit); // bank 5 = parallel
                 }
                 // all replies are generated and sent by NodeResponse()
                 reply = null;
@@ -367,7 +374,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * <p>
      * Only used in the Receive thread.
      *
-     * @returns filled message, only when the message is complete.
+     * @return filled message, only when the message is complete.
      * @throws IOException when presented by the input source.
      */
     private SerialMessage loadChars() throws java.io.IOException {
