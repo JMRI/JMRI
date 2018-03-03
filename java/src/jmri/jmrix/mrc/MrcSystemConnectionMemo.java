@@ -68,7 +68,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      */
     /*    public void configureCommandStation(int val) {
      getMrcTrafficController().setCommandOptions(val);
-     jmri.InstanceManager.setCommandStation(mrcTrafficController);
+     jmri.InstanceManager.store(mrcTrafficController, jmri.CommandStation.class);
      }*/
 
     /**

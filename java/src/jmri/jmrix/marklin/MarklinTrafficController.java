@@ -34,7 +34,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
         super();
         log.debug("creating a new MarklinTrafficController object");
         // set as command station too
-        jmri.InstanceManager.setCommandStation(this);
+        jmri.InstanceManager.store(this, jmri.CommandStation.class);
         this.setAllowUnexpectedReply(true);
     }
 

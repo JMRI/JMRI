@@ -48,7 +48,7 @@ public class Z21XNetInitializationManager extends XNetInitializationManager {
         /* the "raw" Command Station only works on systems that support
          Ops Mode Programming */
         systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
-        InstanceManager.setCommandStation(systemMemo.getCommandStation());
+        InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
         systemMemo.setConsistManager(new XNetConsistManager(systemMemo));
         systemMemo.setTurnoutManager(new Z21XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
         InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());

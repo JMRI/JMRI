@@ -57,7 +57,7 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
 
-        jmri.InstanceManager.setCommandStation(getCommandStation());
+        jmri.InstanceManager.store(getCommandStation(), jmri.CommandStation.class);
 
         jmri.InstanceManager.setReporterManager(getReporterManager());
 

@@ -45,7 +45,7 @@ public class ZTC611XNetInitializationManager extends AbstractXNetInitializationM
         /* the "raw" Command Station only works on systems that support
         Ops Mode Programming */
         systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
-        jmri.InstanceManager.setCommandStation(systemMemo.getCommandStation());
+        jmri.InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
         systemMemo.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
         systemMemo.setTurnoutManager(new ZTC611XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
         jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
