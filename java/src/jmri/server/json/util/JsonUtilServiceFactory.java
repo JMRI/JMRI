@@ -18,7 +18,6 @@ public class JsonUtilServiceFactory implements JsonServiceFactory<JsonUtilHttpSe
     public String[] getTypes() {
         return new String[]{JSON.GOODBYE,
             JSON.HELLO,
-            JSON.LOCALE,
             JSON.METADATA,
             JSON.NETWORK_SERVICES,
             JSON.NODE,
@@ -30,14 +29,18 @@ public class JsonUtilServiceFactory implements JsonServiceFactory<JsonUtilHttpSe
 
     @Override
     public String[] getSentTypes() {
-        // retain on behalf of JsonException for schema handling
-        return new String[]{JsonException.ERROR, JSON.PONG};
+        // retain ERROR on behalf of JsonException for schema handling
+        // retain PONG on behalf of JSON servers for schema handling
+        return new String[]{JsonException.ERROR,
+            JSON.PONG};
     }
 
     @Override
     public String[] getReceivedTypes() {
-        // retain on behalf of JsonException for schema handling
-        return new String[]{JSON.PING};
+        // retain LOCALE on behalf of JSON servers for schema handling
+        // retain PING on behalf of JSON servers for schema handling
+        return new String[]{JSON.LOCALE,
+            JSON.PING};
     }
 
     @Override

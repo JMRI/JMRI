@@ -415,35 +415,31 @@ public class JsonUtilHttpService extends JsonHttpService {
     public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
         try {
             switch (type) {
+                case JSON.NETWORK_SERVICE:
                 case JSON.NETWORK_SERVICES:
                     return doSchema(type,
                             server,
-                            "jmri/server/json/util/" + JSON.NETWORK_SERVICE + "-server.json",
-                            "jmri/server/json/util/" + JSON.NETWORK_SERVICE + "-client.json");
+                            "jmri/server/json/util/networkService-server.json",
+                            "jmri/server/json/util/networkService-client.json");
                 case JsonException.ERROR:
-                    if (server) {
-                        return doSchema(type, server,
-                                this.mapper.readTree(this.getClass().getClassLoader().getResource("jmri/server/json/util/error-server.json")));
-                    } else {
-                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "NotAClientType", type));
-                    }
-                case JSON.PING:
-                    if (!server) {
-                        return doSchema(type, server,
-                                this.mapper.readTree(this.getClass().getClassLoader().getResource("jmri/server/json/util/ping-client.json")));
-                    } else {
-                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "NotAServerType", type));
-                    }
                 case JSON.PONG:
                     if (server) {
                         return doSchema(type, server,
-                                this.mapper.readTree(this.getClass().getClassLoader().getResource("jmri/server/json/util/pong-server.json")));
+                                this.mapper.readTree(this.getClass().getClassLoader().getResource("jmri/server/json/util/" + type + "-server.json")));
                     } else {
                         throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "NotAClientType", type));
                     }
+                case JSON.LOCALE:
+                case JSON.PING:
+                    if (!server) {
+                        return doSchema(type, server,
+                                this.mapper.readTree(this.getClass().getClassLoader().getResource("jmri/server/json/util/" + type + "-client.json")));
+                    } else {
+                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "NotAServerType", type));
+                    }
+                case JSON.GOODBYE:
                 case JSON.HELLO:
                 case JSON.METADATA:
-                case JSON.NETWORK_SERVICE:
                 case JSON.NODE:
                 case JSON.PANELS:
                 case JSON.RAILROAD:

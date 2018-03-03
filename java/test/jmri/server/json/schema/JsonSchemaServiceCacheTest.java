@@ -66,7 +66,7 @@ public class JsonSchemaServiceCacheTest {
                             400,
                             ex.getCode());
                     Assert.assertEquals("Only no client exception expected for type " + type + " from service " + service,
-                            "" + type + "",
+                            "No messages from clients of type \"" + type + "\" are allowed.",
                             ex.getMessage());
                 }
             });

@@ -38,6 +38,11 @@ public class JsonMessageHttpService extends JsonHttpService {
     @Override
     public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
         switch (type) {
+            case JsonMessage.CLIENT:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/message/client-client.json",
+                        "jmri/server/json/message/client-server.json");
             case JsonMessage.MESSAGE:
                 if (server) {
                     try {
