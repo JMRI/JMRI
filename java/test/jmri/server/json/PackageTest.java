@@ -43,7 +43,8 @@ import org.junit.runners.Suite.SuiteClasses;
     JSONTest.class,
     JsonClientHandlerTest.class,
     JsonExceptionTest.class,
-    JsonHttpServiceTest.class
+    JsonHttpServiceTest.class,
+    JsonWebSocketTest.class
 })
 public class PackageTest {
 }
