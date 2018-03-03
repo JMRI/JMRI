@@ -129,12 +129,11 @@ public abstract class JsonHttpService {
      * Note that a schema must be contained in a standard object as:
      * <p>
      * {@code
-     * {"type":"schema", "data":{"schema":<em>schema</em>, "server":boolean}}
-     * }
+     * {"type":"schema", "data":{"schema":<em>schema</em>, "server":boolean}} }
      * <p>
-     * If using {@link #doSchema(boolean, java.lang.String, java.lang.String)},
-     * an implementation can be as simple as: {@code
-     * return doSchema(response, "path/to/response/schema.json", "path/to/request/schema.json");
+     * If using {@link #doSchema(java.lang.String, boolean, java.lang.String, java.lang.String)
+     * }, an implementation can be as simple as: {@code
+     * return doSchema(type, server, "path/to/client/schema.json", "path/to/server/schema.json");
      * }
      *
      * @param type   the type for which a schema is requested
@@ -148,9 +147,10 @@ public abstract class JsonHttpService {
     public abstract JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException;
 
     /**
-     * Helper to make implementing {@link #doSchema(java.lang.String, boolean)}
-     * easier. Throws a JsonException based on an IOException or
-     * NullPointerException if unable to read the schemas as resources.
+     * Helper to make implementing
+     * {@link #doSchema(java.lang.String, boolean, java.util.Locale)} easier.
+     * Throws a JsonException based on an IOException or NullPointerException if
+     * unable to read the schemas as resources.
      *
      * @param type         the type for which a schema is requested
      * @param server       true if the schema is for a message from the server;
@@ -176,8 +176,8 @@ public abstract class JsonHttpService {
     }
 
     /**
-     * Helper to make implementing {@link #doSchema(java.lang.String, boolean)}
-     * easier.
+     * Helper to make implementing
+     * {@link #doSchema(java.lang.String, boolean, java.util.Locale)} easier.
      *
      * @param type   the type for which a schema is requested
      * @param server true if the schema is for a message from the server; false
