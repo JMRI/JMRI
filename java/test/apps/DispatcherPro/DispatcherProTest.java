@@ -99,6 +99,7 @@ public class DispatcherProTest {
     }
 
     @Test
+    @Ignore // Unreliable and causing too many false failures
     public void testLaunchTmcc() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
