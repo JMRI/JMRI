@@ -11,11 +11,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
     BundleTest.class,
-    JsonConsistManagerTest.class,
-    JsonConsistServiceFactoryTest.class,
-    JsonConsistTest.class,
-    JsonConsistSocketServiceTest.class,
-    JsonConsistHttpServiceTest.class
+    JsonConsistManagerTest.class
 })
 public class PackageTest {
 }

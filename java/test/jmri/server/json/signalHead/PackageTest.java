@@ -12,8 +12,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
     BundleTest.class,
     JsonSignalHeadHttpServiceTest.class,
-    JsonSignalHeadSocketServiceTest.class,
-    JsonSignalHeadServiceFactoryTest.class
+    JsonSignalHeadSocketServiceTest.class
 })
 public class PackageTest {
 }

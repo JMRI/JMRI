@@ -10,11 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-    BundleTest.class,
-    JsonBlockServiceFactoryTest.class,
-    JsonBlockTest.class,
-    JsonBlockSocketServiceTest.class,
-    JsonBlockHttpServiceTest.class
+    BundleTest.class
 })
 public class PackageTest {
 }

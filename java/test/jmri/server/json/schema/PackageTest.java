@@ -13,8 +13,7 @@ import org.junit.runners.Suite.SuiteClasses;
     BundleTest.class,
     JsonSchemaServiceCacheTest.class,
     JsonSchemaHttpServiceTest.class,
-    JsonSchemaSocketServiceTest.class,
-    JsonSchemaServiceFactoryTest.class
+    JsonSchemaSocketServiceTest.class
 })
 public class PackageTest {
 }
