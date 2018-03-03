@@ -7,7 +7,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -41,7 +40,6 @@ abstract public class PositionableTestBase{
     }
 
     @Test
-    @Ignore("unreliable on CI servers")
     public void testGetAndSetPositionable() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Defalt Positionable", p.isPositionable());
